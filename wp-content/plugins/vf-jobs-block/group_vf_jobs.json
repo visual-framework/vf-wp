@@ -1,0 +1,63 @@
+{
+    "key": "group_vf_jobs",
+    "title": "VF Jobs (block)",
+    "fields": [
+        {
+            "key": "field_vf_jobs_heading",
+            "label": "Heading",
+            "name": "vf_jobs_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_vf_jobs_limit",
+            "label": "Display",
+            "name": "vf_jobs_limit",
+            "type": "range",
+            "instructions": "How many jobs?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 50,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_jobs"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1544084692
+}

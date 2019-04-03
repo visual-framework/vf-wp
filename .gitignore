@@ -1,0 +1,11 @@
+# General
+
+._*
+Thumbs.db
+.Spotlight-V100
+.Trashes
+.DS_Store
+Desktop.ini
+node_modules
+.sass-cache
+*.log

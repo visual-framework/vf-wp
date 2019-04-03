@@ -1,0 +1,45 @@
+{
+    "key": "group_vf_ebi_global_footer",
+    "title": "EBI VF 1.3 Global Footer (container)",
+    "fields": [
+        {
+            "key": "field_vf_ebi_global_footer_node_id",
+            "label": "Node ID",
+            "name": "vf_ebi_global_footer_node_id",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_container",
+                "operator": "==",
+                "value": "vf_ebi_global_footer"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1544084693
+}

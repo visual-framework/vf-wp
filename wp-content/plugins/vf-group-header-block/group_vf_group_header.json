@@ -1,0 +1,43 @@
+{
+    "key": "group_vf_group_header",
+    "title": "VF Group Header (block)",
+    "fields": [
+        {
+            "key": "field_vf_group_header_heading",
+            "label": "Heading",
+            "name": "vf_group_header_heading",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_group_header"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1547560760
+}

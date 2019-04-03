@@ -1,0 +1,70 @@
+{
+    "key": "group_vf_factoid",
+    "title": "VF Factoid (block)",
+    "fields": [
+        {
+            "key": "field_vf_factoid_limit",
+            "label": "Display",
+            "name": "vf_factoid_limit",
+            "type": "range",
+            "instructions": "How many factoids?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 5,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vf_factoid_id",
+            "label": "ID",
+            "name": "vf_factoid_id",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_factoid"
+            }
+        ],
+        [
+            {
+                "param": "widget",
+                "operator": "==",
+                "value": "vf_widget_factoid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1548165063
+}

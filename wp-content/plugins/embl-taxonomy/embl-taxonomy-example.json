@@ -1,0 +1,39 @@
+{
+  "terms": [
+    {
+      "name": "Activities",
+      "uuid": 200,
+      "parents": []
+    },
+    {
+      "name": "Research",
+      "uuid": 201,
+      "parents": [200]
+    },
+    {
+      "name": "Cell Division",
+      "uuid": 202,
+      "parents": [201]
+    },
+    {
+      "name": "Ellenberg Group",
+      "uuid": 203,
+      "parents": [202, 301]
+    },
+    {
+      "name": "People",
+      "uuid": 300,
+      "parents": []
+    },
+    {
+      "name": "Groups",
+      "uuid": 301,
+      "parents": [300]
+    },
+    {
+      "name": "Parentless",
+      "uuid": 400,
+      "parents": []
+    }
+  ]
+}

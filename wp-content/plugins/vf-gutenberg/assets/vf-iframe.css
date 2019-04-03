@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/**
+ * Remove gutters because Gutenberg editor has extra spacing
+ */
+.vf-inlay__content {
+  grid-template-columns:
+    var(--page-grid-gap)
+    [main-start]
+      minmax(auto, 100%)
+      minmax(18.125em, auto)
+    [main-end]
+    var(--page-grid-gap)
+  ;
+}

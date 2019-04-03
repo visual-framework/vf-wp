@@ -1,0 +1,63 @@
+{
+    "key": "group_vf_embl_news",
+    "title": "VF EMBL News (container)",
+    "fields": [
+        {
+            "key": "field_vf_embl_news_limit",
+            "label": "Display",
+            "name": "vf_embl_news_limit",
+            "type": "range",
+            "instructions": "How many articles?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "3",
+            "min": 1,
+            "max": 10,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vf_embl_news_keyword",
+            "label": "Keyword",
+            "name": "vf_embl_news_keyword",
+            "type": "text",
+            "instructions": "Filter articles by this keyword.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_container",
+                "operator": "==",
+                "value": "vf_embl_news"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1544084692
+}

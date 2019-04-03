@@ -1,0 +1,53 @@
+{
+  "name": "vf-wp",
+  "version": "0.1.2",
+  "private": true,
+  "description": "Visual Framework WordPress Theme",
+  "main": "gulpfile.js",
+  "repository": {
+    "type": "git",
+    "url": "https://git.embl.de/grp-stratcom/vf-wp.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "EMBL",
+  "license": "UNLICENSED",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "chalk": "^2.4.1",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-changed": "^3.2.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-uglify": "^3.0.1",
+    "husky": "^1.1.4",
+    "js-yaml": "^3.12.0",
+    "pump": "^3.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx gulp pre-commit",
+      "post-commit": "npx gulp post-commit"
+    }
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage"
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-object-rest-spread"
+    ]
+  }
+}

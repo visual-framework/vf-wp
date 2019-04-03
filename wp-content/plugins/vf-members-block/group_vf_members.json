@@ -1,0 +1,69 @@
+{
+    "key": "group_vf_members",
+    "title": "VF Members (block)",
+    "fields": [
+        {
+            "key": "field_vf_members_limit",
+            "label": "Limit",
+            "name": "vf_members_limit",
+            "type": "range",
+            "instructions": "Maximum number of group members to show.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 50,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vf_members_order",
+            "label": "Order",
+            "name": "vf_members_order",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "DESC": "Descending",
+                "ASC": "Ascending"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_members"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1550488100
+}

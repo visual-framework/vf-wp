@@ -1,0 +1,33 @@
+/**
+ * EMBL Taxonomy admin stylesheet for:
+ * /wp-admin/edit-tags.php?taxonomy=embl_taxonomy
+ */
+
+/* Hide empty left column where "add term" would be */
+#col-left {
+  display: none;
+}
+
+/* Expand right column so terms table is full width */
+#col-right {
+  width: 100%;
+}
+
+/* Hide unused term description */
+.wp-list-table .column-description {
+  display: none;
+}
+
+/* Hide unnecessary term slug */
+.wp-list-table .column-slug {
+  display: none;
+}
+
+@media screen and (max-width: 782px) {
+
+  /* Always show term count */
+  .wp-list-table tbody .column-posts {
+    display: block !important;
+  }
+
+}

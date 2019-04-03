@@ -1,0 +1,9 @@
+# Visual Framework WordPress Theme dev config
+
+assets_relative_path: assets
+
+content_relative_path: wp-content
+
+theme_relative_path: wp-content/themes/vf-wp
+
+pantheon_relative_path: ../vf-wp-dev

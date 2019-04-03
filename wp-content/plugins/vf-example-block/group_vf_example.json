@@ -1,0 +1,102 @@
+{
+    "key": "group_vf_example",
+    "title": "VF Example (block)",
+    "fields": [
+        {
+            "key": "field_vf_example_message",
+            "label": "Using the Example block",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "This is an example block plugin introduction. <a href=\"#\">Documentation<\/a> could be linked in this message.",
+            "new_lines": "",
+            "esc_html": 0
+        },
+        {
+            "key": "field_vf_example_text",
+            "label": "Text",
+            "name": "vf_example_text",
+            "type": "text",
+            "instructions": "Instructions, documentation, user guide, hints and tips go here.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_vf_example_select",
+            "label": "Select",
+            "name": "vf_example_select",
+            "type": "select",
+            "instructions": "Example of a dynamically populated select field.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {},
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_vf_example_range",
+            "label": "Range",
+            "name": "vf_example_range",
+            "type": "range",
+            "instructions": "Example of a range field.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_example"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1548947592
+}
