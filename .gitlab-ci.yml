@@ -1,0 +1,66 @@
+# This script runs on gitlab.ebi.ac.uk
+
+image: ebiwd/alpine-ssh
+
+variables:
+  # project specific variables can be defined here
+  GIT_SUBMODULE_STRATEGY: recursive
+  SSH_OWNER_ID: wd_drupl
+  SSH_APACHE_ID: w3_wd01
+  S3_BUCKET_DEV: origin.dev.vfwp.emblstatic.net
+  S3_BUCKET_PROD: origin.vfwp.emblstatic.net
+  # set secrets in Settings -> Pipelines -> Secret Variables
+  SSH_OWNER_KEY: secret-key
+  SSH_APACHE_KEY: secret-key
+  AWS_KEY: key
+  AWS_SECRET: secret-key
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  tags:
+    - docker
+  script:
+    - apk update && apk add zip && apk add unzip
+    - mkdir -pv data_sync
+    - cd wp-content/plugins/
+    - zip -r $CI_PROJECT_DIR/data_sync/plugins.zip .
+    - cd $CI_PROJECT_DIR/wp-content/themes/
+    - zip -r $CI_PROJECT_DIR/data_sync/themes.zip .
+  artifacts:
+    paths:
+      - data_sync/
+
+deploy-dev-aws:
+  stage: deploy
+  image: ebiwd/alpine-ssh
+  tags:
+    - docker
+  before_script:
+    - add-aws-key ${AWS_KEY} ${AWS_SECRET}
+  dependencies:
+    - build
+  script:
+    - bin/deploy-aws
+  only:
+    # only match on develop branch, or specific tag patterns
+    - develop
+    - /^v\d+\.\d+\.\d+$/
+    - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/
+
+#deploy-aws-prod:
+#  stage: deploy
+#  image: ebiwd/alpine-ssh
+#  tags:
+#    - docker
+#  before_script:
+#    - add-aws-key ${AWS_KEY} ${AWS_SECRET}
+#  script:
+#    - bin/deploy-aws prod
+#  only:
+#    # only match on specific tag patterns
+#    - /^v\d+\.\d+\.\d+$/
+#    - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/

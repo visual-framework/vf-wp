@@ -9,3 +9,5 @@ Desktop.ini
 node_modules
 .sass-cache
 *.log
+/dist/*
+/_sqldata/*
