@@ -1,0 +1,78 @@
+version: "2"
+
+services:
+  mysql:
+    image: wodby/mariadb:${MARIADB_TAG}
+    container_name: "${PROJECT_NAME}_mariadb"
+    stop_grace_period: 30s
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DOCKER_DATABASE}
+      MYSQL_USER: ${DOCKER_DATABASE_USER}
+      MYSQL_PASSWORD: ${DOCKER_DATABASE_PASS}
+    volumes:
+      - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDATA_SRC}:/var/lib/mysql # I want to manage volumes manually.
+
+  php:
+    depends_on:
+      - mysql
+    image: ebiwd/php7-apache-wptools:latest
+    container_name: "${PROJECT_NAME}_php"
+    environment:
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      DB_HOST: 'mysql'
+      DB_USER: ${DOCKER_DATABASE_USER}
+      DB_PASSWORD: ${DOCKER_DATABASE_PASS}
+      DB_NAME: ${DOCKER_DATABASE}
+      APACHE_LOG_LEVEL: debug
+      APACHE_BACKEND_HOST: php
+      APACHE_DOCUMENT_ROOT: ${VM_CORE_PATH}/${RELATIVE_DOCUMENT_ROOT}
+    volumes:
+      - ${LOCAL_CORE_PATH}/:${VM_CORE_PATH}
+    labels:
+      - 'traefik.backend=apache'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:${PROJECT_NAME}.docker.localhost'
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "${PROJECT_NAME}_mailhog"
+    labels:
+      - 'traefik.backend=mailhog'
+      - 'traefik.port=8025'
+      - 'traefik.frontend.rule=Host:mailhog.${PROJECT_NAME}.docker.localhost'
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: "${PROJECT_NAME}_pma"
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD}
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    labels:
+      - 'traefik.backend=pma'
+      - 'traefik.port=80'
+      - 'traefik.frontend.rule=Host:pma.${PROJECT_NAME}.docker.localhost'
+
+  portainer:
+    image: portainer/portainer
+    container_name: "${PROJECT_NAME}_portainer"
+    command: --no-auth -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - 'traefik.backend=portainer'
+      - 'traefik.port=9000'
+      - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.docker.localhost'
+
+  traefik:
+    image: traefik
+    container_name: "${PROJECT_NAME}_traefik"
+    command: -c /dev/null --web --docker --logLevel=INFO
+    ports:
+      - '80'
+      - '8080' # Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
