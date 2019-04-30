@@ -23,7 +23,7 @@ if (vf_html_empty($heading)) {
     );
     $heading = preg_replace(
       '#</p>#',
-      ' <a class="vf-link" href="'. get_site_url() .'/about">Read more</a></h1>',
+      ' <a class="vf-link" href="'.get_site_url().'/about">Read more</a>.</h1>',
       $heading
     );
   }
