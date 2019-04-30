@@ -2,6 +2,10 @@
 
 A textual introduction aside a group leader using the `vf-summary--profile` Visual Framework pattern.
 
+If a header post is not available in the VF Blocks (or is blank), this plugin will try to use the EMBL Who taxonomy term and pull the group description from the ContentHub.
+
+A "read more" to the about page will automatically be appended. 
+
 ## Configuration
 
 Related post:

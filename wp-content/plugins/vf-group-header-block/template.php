@@ -11,6 +11,25 @@ $heading = preg_replace(
   $heading
 );
 
+// if heading is empty, use the contenthub description
+if (vf_html_empty($heading)) {
+  if ( class_exists('VF_Cache') ) {
+    $uuid = vf__get_site_uuid();
+    $heading = '<h1 class="vf-lede">' . VF_Cache::get_post('https://dev.beta.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid='.$uuid.'&pattern=node-teaser&source=contenthub') . '</h1>';
+    $heading = preg_replace(
+      '#<p>#',
+      '<h1 class="vf-lede">',
+      $heading
+    );
+    $heading = preg_replace(
+      '#</p>#',
+      ' <a class="vf-link" href="'. get_site_url() .'/about">Read more</a></h1>',
+      $heading
+    );
+  }
+}
+
+
 $content = $vf_plugin->api_html();
 
 ?>

@@ -208,4 +208,29 @@ function vf__nav_menu_link_attributes($atts, $item, $args, $depth) {
   return $atts;
 }
 
+
+/**
+ * Shorthand to safely query the UUID of the active "who" term, if set
+ */
+function vf__get_site_uuid() {
+
+  // first we want to be sure the taxonomy plugin is enabled
+  if ( ! function_exists('embl_taxonomy_get_uuid')) {
+    print '<!-- To get the UUID, you must enable the EMBL Taxonomy plugin -->' . PHP_EOL;
+    return null;
+  }
+
+  $term_id = get_field('embl_taxonomy_term_what', 'option');
+
+  if ( ! $term_id ) {
+    print '<!-- If you wish to get the group UUID, you must set the group\'s "what" at /wp-admin/options-general.php?page=embl-settings -->';
+
+  }
+
+  $uuid = embl_taxonomy_get_uuid($term_id);
+
+  return $uuid;
+}
+
+
 ?>

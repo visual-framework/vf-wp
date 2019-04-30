@@ -4,10 +4,14 @@ get_template_part('partials/header');
 
 the_post();
 
-$vf_group_header = VF_Plugin::get_plugin('vf_group_header');
+// Only show group long description on front page
+if (is_front_page()) {
 
-if (class_exists('VF_Group_Header')) {
-  VF_Plugin::render($vf_group_header);
+  $vf_group_header = VF_Plugin::get_plugin('vf_group_header');
+
+  if (class_exists('VF_Group_Header')) {
+    VF_Plugin::render($vf_group_header);
+  }
 }
 
 ?>
