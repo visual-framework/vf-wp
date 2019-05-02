@@ -119,6 +119,19 @@ function embl_taxonomy_get_term($term_id) {
 }
 
 /**
+ * Return uuid associated with a WordPress taxonomy term
+ */
+function embl_taxonomy_get_uuid($term_id) {
+  $term = embl_taxonomy_get_term($term_id);
+  if ( ! $term->meta )  {
+    return null;
+  }
+  $uuid = end($term->meta['embl_taxonomy_ids']);
+  return $uuid;
+}
+
+
+/**
  * Return the VF stylesheet URL
  */
 function embl_taxonomy_get_url() {
