@@ -51,16 +51,18 @@ deploy-dev-aws:
     - /^v\d+\.\d+\.\d+$/
     - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/
 
-#deploy-aws-prod:
-#  stage: deploy
-#  image: ebiwd/alpine-ssh
-#  tags:
-#    - docker
-#  before_script:
-#    - add-aws-key ${AWS_KEY} ${AWS_SECRET}
-#  script:
-#    - bin/deploy-aws prod
-#  only:
-#    # only match on specific tag patterns
-#    - /^v\d+\.\d+\.\d+$/
-#    - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/
+deploy-aws-prod:
+  stage: deploy
+  image: ebiwd/alpine-ssh
+  tags:
+    - docker
+  before_script:
+    - add-aws-key ${AWS_KEY} ${AWS_SECRET}
+  dependencies:
+    - build
+  script:
+    - bin/deploy-aws prod
+  only:
+    # only match on specific tag patterns
+    - /^v\d+\.\d+\.\d+$/
+    - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/
