@@ -18,10 +18,10 @@
   display: none;
 }
 
-/* Hide unnecessary term slug */
-.wp-list-table .column-slug {
+/* If you wish to hide the term slug column */
+/* .wp-list-table .column-slug {
   display: none;
-}
+} */
 
 @media screen and (max-width: 782px) {
 
