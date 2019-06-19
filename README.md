@@ -1,8 +1,11 @@
-# Visual Framework WordPress Theme
+# Visual Framework 2.0 WordPress theme
+
+This theme allows integration with the VF 2.0. It is currently heavily tied to
+the brand-specific "VF 2.0 for the EMBL Design Language".
 
 ## Documentation
 
-* [Work in Progress, Issues, Bugs](https://git.embl.de/grp-stratcom/vf-wp/issues)
+* [Work in Progress, Issues, Bugs](https://github.com/visual-framework/vf-wp/issues)
 * [Theme and plugin architecture](docs/architecture.md)
 * [WordPress setup](docs/wordpress.md)
 * [Pantheon development](docs/development.md)
@@ -29,11 +32,10 @@ Blocks:
 * [Members block](wp-content/plugins/vf-members-block/README.md)
 * [Publications block](wp-content/plugins/vf-publications-block/README.md)
 
-## Work in Progress
 
-[**Theme demo**](http://dev-vf-theme-prototype.pantheonsite.io/) in development can be found on pantheon for now.
+## Development
 
-## Development Requirements
+### Theme and plugin development
 
 * Git
 * Node
@@ -41,3 +43,9 @@ Blocks:
 ```bash
 npm install
 ```
+
+### EMBL + EMBL-EBI site development
+
+1. `git clone --recursive https://github.com/visual-framework/vf-wp.git`
+1. `bin/dev quick`
+1. default password is in `.env`
