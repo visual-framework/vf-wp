@@ -35,6 +35,45 @@ class EMBL_Taxonomy_Register {
       add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
     }
 
+    // Add column for term UUID
+    // http://wpthemecraft.com/code-snippets/add-custom-columns-to-taxonomy-list-table/
+
+    /*
+     * filter pattern: manage_edit-{taxonomy}_columns
+     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
+     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
+     */
+    add_filter( 'manage_edit-embl_taxonomy_columns' , 'wptc_embl_taxonomy_columns' );
+    function wptc_embl_taxonomy_columns( $columns ) {
+    	// remove slug column
+    	unset($columns['slug']);
+
+    	// add column
+    	$columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID');
+    	return $columns;
+    }
+
+    /*
+     * filter pattern: manage_{taxonomy}_custom_column
+     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
+     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
+     */
+    add_filter( 'manage_embl_taxonomy_custom_column', 'wptc_embl_taxonomy_column_content', 10, 3 );
+    function wptc_embl_taxonomy_column_content( $content, $column_name, $term_id ) {
+    	// get the term object
+    	$term = get_term( $term_id, 'embl_taxonomy' );
+    	// check if column is our custom column
+    	if ( 'embl_taxonomy_term_uuid' == $column_name ) {
+        $full_term = embl_taxonomy_get_term($term->term_id);
+        // Eventually we should link back to the contenHub, however we don't currently
+        // have a good way to search by UUID
+        // https://dev.content.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid=2a270b68-46c3-4b3f-92c5-0a65eb896c86&pattern=node-display-title
+        // the above query depends on knowing the conent type
+    		$content = '<code>'.end($full_term->meta['embl_taxonomy_ids']).'</code>';
+    	}
+    	return $content;
+    }
+
     $this->set_read_only();
   }
 
