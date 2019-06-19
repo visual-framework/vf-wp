@@ -46,7 +46,7 @@ class EMBL_Taxonomy_Register {
     add_filter( 'manage_edit-embl_taxonomy_columns' , 'wptc_embl_taxonomy_columns' );
     function wptc_embl_taxonomy_columns( $columns ) {
     	// remove slug column
-    	unset($columns['slug']);
+    	// unset($columns['slug']);
 
     	// add column
     	$columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID');
