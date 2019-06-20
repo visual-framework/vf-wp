@@ -88,6 +88,10 @@ class VF_EMBL_News extends VF_Plugin {
    */
   function add_taxonomy_fields() {
     // Add filter based on EMBL Taxonomy terms
+
+    /**
+     * Code Commented based on requirement of https://gitlab.ebi.ac.uk/emblorg/backlog/issues/173
+
     if (function_exists('embl_taxonomy')) {
       acf_add_local_field(
         array(
@@ -114,6 +118,9 @@ class VF_EMBL_News extends VF_Plugin {
         )
       );
     }
+    */
+
+    
     // Add Factoid clone field
     if (class_exists('VF_Factoid')) {
       acf_add_local_field(
