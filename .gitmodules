@@ -1,3 +1,0 @@
-[submodule "bin"]
-	path = bin
-	url = https://gitlab.ebi.ac.uk/ebiwd/wordpress-bin.git
