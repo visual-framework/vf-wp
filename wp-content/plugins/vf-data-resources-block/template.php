@@ -18,7 +18,7 @@ if ( ! vf_html_empty($content)) {
 ?>
 <?php if ( ! empty($heading)) { ?>
   <div class="vf-section-header">
-    <h2 class="vf-section-header__heading vf-u-margin__bottom-r"><?php echo esc_html($heading); ?></h2>
+    <h2 class="vf-section-header__heading vf-u-margin__bottom--r"><?php echo esc_html($heading); ?></h2>
   </div>
 <?php } ?>
 <div <?php $vf_plugin->api_attr(); ?>>

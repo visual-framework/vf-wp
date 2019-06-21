@@ -28,7 +28,7 @@ function home_render_block($html, $block) {
     ob_start();
 ?>
 <section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-white">
+  <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
       <?php echo $html; ?>
     </main>
