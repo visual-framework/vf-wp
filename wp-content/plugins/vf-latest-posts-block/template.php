@@ -21,7 +21,7 @@ if (count($latest_posts)) {
   setup_postdata($post = $latest_posts[0]);
 ?>
 <section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-white">
+  <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
       <?php if ( ! empty($heading_singular)) { ?>
       <div class="vf-section-header">

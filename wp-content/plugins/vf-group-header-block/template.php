@@ -35,7 +35,7 @@ $content = $vf_plugin->api_html();
 ?>
 <?php if ( ! $vf_plugin->is_minimal()) { ?>
 <section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-white">
+  <div class="vf-inlay__content vf-u-background-color-ui--white">
   <?php if ( ! vf_html_empty($heading)) { ?>
     <main class="vf-inlay__content--main">
       <?php echo $heading; ?>

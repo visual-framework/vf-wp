@@ -16,7 +16,7 @@ if (is_front_page()) {
 
 ?>
 <section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-white">
+  <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
       <h1 class="vf-text vf-text--display-l"><?php the_title(); ?></h1>
 

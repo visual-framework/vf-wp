@@ -180,7 +180,7 @@ function vf__body_class($classes) {
   if (is_singular('vf_block') || is_singular('vf_container')) {
     return $classes;
   }
-  $classes[] = 'vf-u-background-color-ui-gray';
+  $classes[] = 'vf-u-background-color-ui--grey';
   return $classes;
 }
 
