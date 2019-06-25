@@ -176,7 +176,7 @@ class VF_Jobs extends VF_Plugin {
       if ($what) {
         $choices['what'] = sprintf(
           $format,
-          __('Jobs in my unit', 'vfwp'),
+          __('Jobs in my team', 'vfwp'),
           $what->name
         );
 
@@ -188,7 +188,7 @@ class VF_Jobs extends VF_Plugin {
           if ($cluster) {
             $choices['cluster'] = sprintf(
               $format,
-              __('Cluster jobs', 'vfwp'),
+              __('Jobs in my unit/cluster', 'vfwp'),
               $cluster->name
             );
           }
