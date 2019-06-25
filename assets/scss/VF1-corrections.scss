@@ -30,15 +30,17 @@
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
 }
 
-// removes EBI / VF1.0 link decorations
+// removes EBI / VF1.0 link decorations HACK
 a {
-  border: 0;
+  border: none !important;
 }
+
 
 // adds EBI / VF1.0 underline link decorations
 a:hover {
-  border: 1px solid currentcolor;
+text-decoration: underline;
 }
+
 
 // makes a blanket "you're all Plex Sans now!" style for headings that are out of the VF2.0 name-space
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
