@@ -30,14 +30,9 @@
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
 }
 
-// removes EBI / VF1.0 link decorations
+// removes EBI / VF1.0 link decorations HACK
 a {
-  border: none;
-}
-a.active,
-a:hover,
-a:active {
-  border: none;
+  border: none !important;
 }
 
 

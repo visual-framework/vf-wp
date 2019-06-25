@@ -55,13 +55,7 @@ img[class*="attachment"] {
 }
 
 a {
-  border: none;
-}
-
-a.active,
-a:hover,
-a:active {
-  border: none;
+  border: none !important;
 }
 
 a:hover {
