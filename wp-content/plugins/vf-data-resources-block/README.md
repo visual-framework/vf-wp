@@ -18,7 +18,7 @@ Post meta:
 | \_vf_data_resources_limit | field_vf_data_resources_limit |
 | vf_data_resources_order | [STRING] |
 | \_vf_data_resources_order | field_vf_data_resources_order |
-| vf_data_resources_heading [STRING] |
+| vf_data_resources_heading | [STRING] |
 | \_vf_data_resources_heading | field_vf_data_resources_heading |
 
 ### Limit
