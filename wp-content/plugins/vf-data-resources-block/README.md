@@ -18,6 +18,8 @@ Post meta:
 | \_vf_data_resources_limit | field_vf_data_resources_limit |
 | vf_data_resources_order | [STRING] |
 | \_vf_data_resources_order | field_vf_data_resources_order |
+| vf_data_resources_heading | [STRING] |
+| \_vf_data_resources_heading | field_vf_data_resources_heading |
 
 ### Limit
 
@@ -32,6 +34,11 @@ Maximum number of group data resources (Content Hub API).
 **Value**: string (default: "DESC")
 
 Order of data resources (Content Hub API).
+
+### Heading
+**Key**: `vf_data_resources_heading`
+**Value**: string (default: "Data resources")
+
 
 ## Global Configuration
 
