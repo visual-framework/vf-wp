@@ -48,7 +48,7 @@ npm install
 
 1. `git clone --recursive https://github.com/visual-framework/vf-wp.git`
 1. Use any of the below variation of command to build the site
-   - `bin/dev quick_group` - to build wordpress website with basic Visual Framework default configuration - Plugin/themes enabled
-   - `bin/dev quick_group_bootstrap` - to build wordpress website setup with Visual Framework dummy microsite bootstrap version
+   - `bin/dev quick_group` - to build WordPress website with basic Visual Framework default configuration - Plugin/themes enabled
+   - `bin/dev quick_group_bootstrap` - to build WordPress website setup with Visual Framework dummy microsite bootstrap version
 1. Login to admin use `bin/dev login` by default it will open when you run above commands.
 1. Other default variables like CSS/JS version, title, password is in `.env`
