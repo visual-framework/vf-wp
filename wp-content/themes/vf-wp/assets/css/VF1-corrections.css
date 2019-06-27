@@ -1,32 +1,3 @@
-/*! VF-WP - Main (Sass-compiled) */
-/**
- * Reset page grid when VF container patterns require a wrapping div
- */
-.vfwp-column-reset {
-  grid-column: 1 / -1;
-}
-
-/**
- * Ignore width and height attributes on attachments
- */
-img[class*="attachment"] {
-  width: auto;
-  height: auto;
-}
-
-/*! VF-WP - Hacks (Sass-compiled) */
-/**
- * There's no escaping it, sometimes you need workarounds.
- */
-/**
- * Fix an issue where the ::before pseudo element needs a parent element with
- * a background-color. However in the WP theme, that's <body>, and we can't
- * z-index under it :(
- */
-.vf-wp-theme .vf-navigation--main::before {
-  display: none;
-}
-
 /*
  *
  * Here lies a set of corrections that make components from VF1 look like VF2, in terms of colour

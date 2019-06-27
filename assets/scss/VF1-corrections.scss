@@ -6,7 +6,7 @@
  */
 
 // sneaks in a small change to make the EBI 'black bar' more VF2.0 with grey--darkest
-.masthead-black-bar {
+body .masthead-black-bar {
   background-color: #373a36; /* VF2.0 $vf-color--grey--darkest */
 }
 
@@ -42,13 +42,18 @@ text-decoration: underline;
 }
 
 
-// makes a blanket "you're all Plex Sans now!" style for headings that are out of the VF2.0 name-space
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+// makes a blanket "you're all Plex Sans now!" style for text and headings that are out of the VF2.0 name-space
+html body {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+
+  h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+    font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  }
 }
 
 // removes text-rendering: optimizeLegibility
-p {
+body, p {
+  -webkit-font-smoothing: unset !important;
   text-rendering: initial;
 }
 
