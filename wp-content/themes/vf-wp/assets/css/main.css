@@ -33,7 +33,7 @@ img[class*="attachment"] {
  * and typography. So as not to have to make too many 'hacks' in VF2.0
  *
  */
-.masthead-black-bar {
+body .masthead-black-bar {
   background-color: #373a36;
   /* VF2.0 $vf-color--grey--darkest */
 }
@@ -62,11 +62,16 @@ a:hover {
   text-decoration: underline;
 }
 
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+html body {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
 }
 
-p {
+html body h1, html body .h1, html body h2, html body .h2, html body h3, html body .h3, html body h4, html body .h4, html body h5, html body .h5, html body h6, html body .h6 {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+}
+
+body, p {
+  -webkit-font-smoothing: unset !important;
   text-rendering: initial;
 }
 
