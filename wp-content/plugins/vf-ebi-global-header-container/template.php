@@ -7,9 +7,7 @@ $content = $vf_plugin->api_html();
 
 if ( ! empty($content)) {
 ?>
-<header class="vf-header">
-  <div <?php $vf_plugin->api_attr(array('class' => 'vfwp-column-reset')); ?>>
-    <?php echo $content; ?>
-  </div>
-</header>
+<div <?php $vf_plugin->api_attr(array('class' => 'vfwp-column-reset')); ?>>
+  <?php echo $content; ?>
+</div>
 <?php } ?>
