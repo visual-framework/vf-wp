@@ -54,4 +54,4 @@ n.b. To develop locally you'll need to make sure your project's git submodules a
    - `bin/dev quick_group_bootstrap` - to build WordPress website setup with Visual Framework dummy microsite bootstrap version
 1. Login as admin by typing `bin/dev login`
 1. Default variables including CSS/JS version, site title, admin password are configured in `.env`
-1. Clean up/reset your local image with `bin/dev down && docker rm -v wordpresslocal`
+1. Clean up/reset your local image with `bin/dev down && docker rm -v emblebi_vf_wp`
