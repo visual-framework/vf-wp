@@ -11,6 +11,7 @@ services:
       MYSQL_USER: ${DOCKER_DATABASE_USER}
       MYSQL_PASSWORD: ${DOCKER_DATABASE_PASS}
     volumes:
+      - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDUMP_SRC}:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
       - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDATA_SRC}:/var/lib/mysql # I want to manage volumes manually.
 
   php:
