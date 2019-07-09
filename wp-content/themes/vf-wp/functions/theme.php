@@ -94,8 +94,8 @@ function vf__wp_head__inline() {
 ?>
 <style>
 .vf-wp-theme .vf-box--secondary,
-.vf-wp-theme .embl-group-page--vf-header--bg-color {
-  background: #<?php echo $theme_color; ?>;
+.vf-wp-theme .vf-masthead {
+  --vf-masthead__color--background: #<?php echo $theme_color; ?>;
 }
 </style>
 <?php

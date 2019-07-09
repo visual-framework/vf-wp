@@ -1,4 +1,4 @@
-<div data-vf-js-masthead class="vf-masthead" style="background-color: 'var(--vf-masthead__color--background', var(--vf-masthead__color--background-default)); color: var(--vf-masthead__color--foreground, var(--vf-masthead__color--foreground-default) );">
+<div data-vf-js-masthead class="vf-masthead" style="background-color: var(--vf-masthead__color--background, var(--vf-masthead__color--background-default)); color: var(--vf-masthead__color--foreground, var(--vf-masthead__color--foreground-default) );">
   <div class="vf-masthead__inner">
     <div class="vf-masthead__title">
       <h1 class="vf-masthead__heading">
