@@ -1,6 +1,6 @@
 {
     "key": "group_vf_publications",
-    "title": "VF Publications (block)",
+    "title": "VF Team and Group Publications (block)",
     "fields": [
         {
             "key": "field_vf_publications_heading",
@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": "Team publications",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -26,7 +26,27 @@
             "label": "Limit",
             "name": "vf_publications_limit",
             "type": "range",
-            "instructions": "",
+            "instructions": "Maximum number of publications to show.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 100,
+            "min": 1,
+            "max": 100,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vf_publications_order",
+            "label": "Order",
+            "name": "vf_publications_order",
+            "type": "select",
+            "instructions": "Note: this is not yet implemented",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -34,12 +54,17 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "min": 1,
-            "max": 10,
-            "step": "",
-            "prepend": "",
-            "append": ""
+            "choices": {
+                "DESC": "Descending",
+                "ASC": "Ascending"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [

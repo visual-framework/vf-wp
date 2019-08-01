@@ -1,6 +1,6 @@
 # Publications (block)
 
-**Work in progress.** To display a list of publications from the Content Hub.
+To display a list of team or group publications from the Content Hub.
 
 ## Configuration
 
@@ -16,6 +16,8 @@ Post meta:
 | -------- | ---------- |
 | vf_publications_heading | [STRING] |
 | \_vf_publications_heading | field_vf_publications_heading |
+| vf_publications_order | [STRING] |
+| \_vf_publications_order | field_vf_publications_order |
 | vf_publications_limit | [INT] |
 | \_vf_publications_limit | field_vf_publications_limit |
 
@@ -25,6 +27,13 @@ Post meta:
 **Value**: string (e.g. "Latest publications")
 
 An optional heading above the content using the `vf-section-header` VF pattern. If empty no heading is displayed.
+
+### Order
+
+**Key**: `vf_publications_order`
+**Value**: string (default: "DESC")
+
+Order of publications (Content Hub API).
 
 ### Limit
 
