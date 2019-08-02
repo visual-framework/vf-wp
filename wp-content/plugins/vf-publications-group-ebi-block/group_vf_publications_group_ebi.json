@@ -1,11 +1,11 @@
 {
-    "key": "group_vf_publications",
-    "title": "VF Team and Group Publications (block)",
+    "key": "group_vf_publications_group_ebi",
+    "title": "VF EBI Team and Group Publications (block)",
     "fields": [
         {
-            "key": "field_vf_publications_heading",
+            "key": "field_vf_publications_group_ebi_heading",
             "label": "Heading",
-            "name": "vf_publications_heading",
+            "name": "vf_publications_group_ebi_heading",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -22,9 +22,9 @@
             "maxlength": ""
         },
         {
-            "key": "field_vf_publications_limit",
+            "key": "field_vf_publications_group_ebi_limit",
             "label": "Limit",
-            "name": "vf_publications_limit",
+            "name": "vf_publications_group_ebi_limit",
             "type": "range",
             "instructions": "Maximum number of publications to show.",
             "required": 1,
@@ -42,9 +42,9 @@
             "append": ""
         },
         {
-            "key": "field_vf_publications_order",
+            "key": "field_vf_publications_group_ebi_order",
             "label": "Order",
-            "name": "vf_publications_order",
+            "name": "vf_publications_group_ebi_order",
             "type": "select",
             "instructions": "Note: this is not yet implemented",
             "required": 0,
@@ -72,7 +72,7 @@
             {
                 "param": "vf_block",
                 "operator": "==",
-                "value": "vf_publications"
+                "value": "vf_publications_group_ebi"
             }
         ]
     ],

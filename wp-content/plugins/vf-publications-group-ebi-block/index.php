@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: VF-WP Publications
-Description: VF-WP theme block.
+Plugin Name: VF-WP Publications Group EBI
+Description: Query for team publications based of EMBL-EBI specific data source (EBI Content Database).
 Version: 0.1.0
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
@@ -14,15 +14,15 @@ $path = WP_PLUGIN_DIR . '/vf-wp/vf-plugin.php';
 if ( ! file_exists($path)) return;
 require_once($path);
 
-class VF_Publications extends VF_Plugin {
+class VF_Publications_group_ebi extends VF_Plugin {
 
   protected $API = array(
-    'pattern'             => 'embl-team-publications'
+    'pattern'             => 'ebi-team-publications'
     // 'filter-content-type' => 'resource'
   );
 
   public function __construct(array $params = array()) {
-    parent::__construct('vf_publications');
+    parent::__construct('vf_publications_group_ebi');
     if (array_key_exists('init', $params)) {
       $this->init();
     }
@@ -32,19 +32,17 @@ class VF_Publications extends VF_Plugin {
     parent::initialize(
       array(
         'file'       => __FILE__,
-        'post_name'  => 'vf_publications',
-        'post_title' => 'Team publications'
+        'post_name'  => 'vf_publications_group_ebi',
+        'post_title' => 'EBI Team publications'
       )
     );
   }
 
   // Query the contentHub API, samples:
-  //   - Group: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-team-publications&title=Web%20Development
-  //   - ORCID: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-person-publications&orcid=0000-0001-5454-2815
-  //   - Name: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-person-publications&title=Maria-Jesus
+  //   - Group: https://dev.content.embl.org/api/v1/pattern.html?pattern=ebi-team-publications&title=Web%20Development
   function api_url(array $query_vars = array()) {
-    $limit = intval(get_field('vf_publications_limit', $this->post->ID));
-    $order = get_field('vf_publications_order', $this->post->ID);
+    $limit = intval(get_field('vf_publications_group_ebi_limit', $this->post->ID));
+    $order = get_field('vf_publications_group_ebi_order', $this->post->ID);
 
     $vars = array(
       'limit' => $limit ? $limit : 30,
@@ -100,8 +98,8 @@ class VF_Publications extends VF_Plugin {
     return $str;
   }
 
-} // VF_Publications
+} // VF_Publications_group_ebi
 
-$plugin = new VF_Publications(array('init' => true));
+$plugin = new VF_Publications_group_ebi(array('init' => true));
 
 ?>

@@ -1,9 +1,9 @@
 <?php
 
 global $post, $vf_plugin;
-if ( ! $vf_plugin instanceof VF_Publications) return;
+if ( ! $vf_plugin instanceof VF_Publications_group_ebi) return;
 
-$heading = trim(get_field('vf_publications_heading', $post->ID));
+$heading = trim(get_field('vf_publications_group_ebi_heading', $post->ID));
 
 $content = $vf_plugin->api_html();
 
