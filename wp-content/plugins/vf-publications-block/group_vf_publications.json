@@ -65,6 +65,51 @@
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_vf_publications_type",
+            "label": "Search type",
+            "name": "vf_publications_type",
+            "type": "select",
+            "instructions": "How you wish to search for publications.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "team": "Name of a group or team",
+                "orcid": "ORCID",
+                "person_name": "Name of a person"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_vf_publications_query",
+            "label": "Search query",
+            "name": "vf_publications_query",
+            "instructions": "The term or ID you're searching for. If you leave this blank the site will attempt to use a default, such as the associated group or team name. If you're searching for an ORCID or name of a person, you should fill this out.",
+            "type": "text",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
