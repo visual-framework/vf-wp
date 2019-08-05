@@ -16,10 +16,7 @@ require_once($path);
 
 class VF_Publications extends VF_Plugin {
 
-  protected $API = array(
-    'pattern'             => 'embl-team-publications'
-    // 'filter-content-type' => 'resource'
-  );
+  protected $API = array();
 
   public function __construct(array $params = array()) {
     parent::__construct('vf_publications');
@@ -28,6 +25,7 @@ class VF_Publications extends VF_Plugin {
     }
   }
 
+  // the site-wide default
   private function init() {
     parent::initialize(
       array(
@@ -46,18 +44,39 @@ class VF_Publications extends VF_Plugin {
     $limit = intval(get_field('vf_publications_limit', $this->post->ID));
     $order = get_field('vf_publications_order', $this->post->ID);
 
+    // load
+    $searchType = get_field('vf_publications_type', $this->post->ID) ?? 'team';
+    $searchQuery = get_field('vf_publications_query', $this->post->ID);
+
+    if ($searchType == 'team' || $searchType == 'person_name') {
+      $queryKey = 'title';
+    } else if ($searchType == 'orcid') {
+      $queryKey = 'orcid';
+    }
+
+    if ($searchType == 'team' ) {
+      $this->API['pattern'] = 'embl-team-publications';
+    } else if ($searchType == 'orcid' || $searchType == 'person_name') {
+      $this->API['pattern'] = 'embl-person-publications';
+      // no sapces allowed
+      $searchQuery = str_replace(' ', '-', $searchQuery);
+    }
+
     $vars = array(
-      'limit' => $limit ? $limit : 30,
+      'limit' => $limit ? $limit : 100,
       'sort-field-value[changed]' => $order ? $order : 'DESC'
       // 'filter-field-value-not[field_person_positions.entity.field_position_membership]' => 'leader'
     );
 
-    if (function_exists('embl_taxonomy_get_term')) {
+    // if a specific query has been given, use it
+    if ($searchQuery) {
+      $vars[$queryKey] = $searchQuery;
+    // otherwise if query for team use the name of the site, if set
+    } else if ($searchType == 'team' && function_exists('embl_taxonomy_get_term')) {
       $term_id = get_field('embl_taxonomy_term_what', 'option');
       $term = embl_taxonomy_get_term($term_id);
       if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
-        $key = 'title';
-        $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
+        $vars['title'] = $term->meta[EMBL_Taxonomy::META_NAME];
       }
     }
 

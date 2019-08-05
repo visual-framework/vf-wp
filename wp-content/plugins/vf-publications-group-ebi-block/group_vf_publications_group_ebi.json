@@ -1,6 +1,6 @@
 {
     "key": "group_vf_publications_group_ebi",
-    "title": "VF EBI Team and Group Publications (block)",
+    "title": "VF EMBL-EBI Team and Group Publications (block)",
     "fields": [
         {
             "key": "field_vf_publications_group_ebi_heading",
