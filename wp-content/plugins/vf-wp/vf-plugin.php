@@ -138,9 +138,11 @@ class VF_Plugin {
    * Return API URL base for all instances of the plugin
    */
   public function api_url(array $query_vars = array()) {
-    if (empty($this->API)) return;
-    $url = trim(get_field('vf_api_url', 'option'));
-    $url = rtrim($url, '/\\') . '/pattern.html';
+    if (empty($this->API)) {
+      return;
+    }
+    $url = VF_Cache::get_api_url();
+    $url .= '/pattern.html';
     if (is_array($this->API)) {
       $url = add_query_arg($this->API, $url);
     }
