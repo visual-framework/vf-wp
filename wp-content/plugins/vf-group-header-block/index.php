@@ -74,6 +74,45 @@ class VF_Group_Header extends VF_Plugin {
     );
   }
 
+  function heading_html() {
+    $heading = get_field('vf_group_header_heading', $this->post->ID);
+    $heading = trim($heading);
+
+    $heading = preg_replace(
+      '#<h1[^>]*?>#',
+      '<h1 class="vf-lede">',
+      $heading
+    );
+
+    if ( ! vf_html_empty($heading) || ! class_exists('VF_Cache')) {
+      return $heading;
+    }
+
+    // if heading is empty, use the contenthub description
+    $uuid = vf__get_site_uuid();
+
+    $url = VF_Cache::get_api_url();
+    $url .= '/pattern.html?filter-content-type=profiles';
+    $url .= "&filter-uuid={$uuid}";
+    $url .= '&pattern=node-teaser&source=contenthub';
+
+    $heading = VF_Cache::get_post($url);
+
+    $heading = preg_replace(
+      '#<p>#',
+      '<h1 class="vf-lede">',
+      $heading
+    );
+
+    $heading = preg_replace(
+      '#</p>#',
+      ' <a class="vf-link" href="'.home_url('/about/').'">' . __('Read more', 'vfwp') . '</a>.</h1>',
+      $heading
+    );
+
+    return $heading;
+  }
+
   function admin_head() {
 ?>
 <style>

@@ -56,8 +56,6 @@ class VF_WP {
     register_activation_hook(__FILE__, array($this, 'activate'));
     register_deactivation_hook(__FILE__, array($this, 'deactivate'));
 
-    add_action('acf/init', array($this, 'acf_init'));
-
     // ACF load and save setup - saving only useful for development
     add_filter(
       'acf/settings/load_json',
@@ -118,32 +116,6 @@ class VF_WP {
     if ($vf_containers instanceof VF_Containers) {
       $vf_containers->deactivate();
     }
-  }
-
-  /**
-   * Action `acf/init`
-   * Add field for Content Hub API URL
-   */
-  function acf_init() {
-    acf_add_local_field(
-      array(
-        'parent' => 'group_embl_setting',
-        'key' => 'field_vf_api_url',
-        'label' => __('EMBL Content Hub', 'vfwp'),
-        'name' => 'vf_api_url',
-        'type' => 'url',
-        'instructions' => '',
-        'required' => 0,
-        'conditional_logic' => 0,
-        'wrapper' => array(
-          'width' => '',
-          'class' => '',
-          'id' => '',
-        ),
-        'default_value' => '',
-        'placeholder' => '',
-      )
-    );
   }
 
   /**
