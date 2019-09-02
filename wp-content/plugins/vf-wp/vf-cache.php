@@ -25,6 +25,15 @@ class VF_Cache {
   }
 
   /**
+   * Return the EMBL Content Hub API URL from ACF options page
+   * without trailing slash
+   */
+  static public function get_api_url() {
+    $url = get_field('vf_api_url', 'option');
+    return rtrim(trim($url), '/\\');
+  }
+
+  /**
    * A more reliable way to fetch remote HTML
    * Derrived from https://www.experts-exchange.com/questions/26187506/Function-file-get-contents-connection-time-out.html
    */
@@ -139,6 +148,7 @@ class VF_Cache {
    */
   public function initialize() {
     add_action('init', array($this, 'init'));
+    add_action('acf/init', array($this, 'acf_init'));
     if (is_admin()) {
       add_filter(
         'manage_' . $this->post_type . '_posts_columns',
@@ -234,6 +244,32 @@ class VF_Cache {
       'query_var'         => false,
       'can_export'        => false
     ));
+  }
+
+  /**
+   * Action `acf/init`
+   * Add field for Content Hub API URL
+   */
+  public function acf_init() {
+    acf_add_local_field(
+      array(
+        'parent' => 'group_embl_setting',
+        'key' => 'field_vf_api_url',
+        'label' => __('EMBL Content Hub', 'vfwp'),
+        'name' => 'vf_api_url',
+        'type' => 'url',
+        'instructions' => '',
+        'required' => 0,
+        'conditional_logic' => 0,
+        'wrapper' => array(
+          'width' => '',
+          'class' => '',
+          'id' => '',
+        ),
+        'default_value' => '',
+        'placeholder' => '',
+      )
+    );
   }
 
   /**
