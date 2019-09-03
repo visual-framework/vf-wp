@@ -191,7 +191,7 @@ class VF_Plugin {
       'title'  => "VF {$this->post->post_title} (Gutenberg)",
       'fields' => array(
         array(
-          'parent'  => "group_{$key}",
+          // 'parent'  => "group_{$key}",
           'key'     => 'field_vf_block_custom',
           'name'    => "vf_block_custom",
           'label'   => 'Customize',
@@ -199,7 +199,7 @@ class VF_Plugin {
           'ui'      => true
         ),
         array(
-          'parent'  => "group_{$key}",
+          // 'parent'  => "group_{$key}",
           'key'     => "field_{$key}_clone",
           'name'    => "{$key}_clone",
           'label'   => $this->post->post_title,
@@ -241,6 +241,7 @@ class VF_Plugin {
         'render_callback' => function($block, $content, $is_preview) use ($key) {
           $custom = get_field('vf_block_custom', $block['id']);
           $fields = $custom ? get_field("{$key}_clone", $block['id']) : null;
+
           ob_start();
           VF_Plugin::render($this, $fields);
           $html = ob_get_contents();
@@ -252,6 +253,7 @@ class VF_Plugin {
           } else {
             echo $html;
           }
+
         }
       )
     );
@@ -422,14 +424,32 @@ class VF_Plugin {
       return;
     }
 
-    // Disable cache so ACF doesnt get confused
-    // `wp_cache_flush` is too severe
-    // `acf_delete_cache` is tricky for nested fields
-    if (function_exists('acf_disable_cache')) {
-      acf_disable_cache();
+    /**
+     * We're setting up postdata for the canonical plugin post but for
+     * customized blocks we need to override some ACF fields
+     * If custom field values are provided use `acf/pre_load_value` filter
+     * to bypass the plugin defaults
+     */
+    $pre_load_value = function ($value, $post_id, $field)
+      use ($plugin, $fields)
+    {
+      // Filter the plugin post only (when custom field exists)
+      if (
+        $post_id === $plugin->post()->ID &&
+        array_key_exists($field['name'], $fields)
+      ) {
+        acf_flush_value_cache($plugin->post()->ID, $field['name']);
+        $value = $fields[$field['name']];
+      }
+      return $value;
+    };
+
+    if (is_array($fields)) {
+      add_filter('acf/pre_load_value', $pre_load_value, 10, 3);
+      // acf_setup_meta($fields, $plugin->post()->ID, true);
     }
 
-
+    // Before actions
     $action = str_replace('vf_', 'vf/', $plugin->post()->post_type);
     VF_Plugin::do_actions($plugin, 'vf/plugin/before_render');
     VF_Plugin::do_actions($plugin, "{$action}/before_render");
@@ -440,20 +460,8 @@ class VF_Plugin {
     $post = $vf_plugin->post();
     setup_postdata($post);
 
-    // Override fields from Gutenberg block or clone field
-    if (is_array($fields)) {
-      if (function_exists('acf_setup_postdata')) {
-        acf_setup_postdata($fields, $post->ID, true);
-      }
-    }
-
     // Include the plugin template
     include($vf_plugin->template());
-
-    // Reset local meta and cached values
-    if (function_exists('acf_reset_postdata')) {
-      acf_reset_postdata($post->ID);
-    }
 
     // Reset globals to parent plugin (or main template loop)
     if ($parent instanceof VF_Plugin) {
@@ -465,13 +473,20 @@ class VF_Plugin {
       wp_reset_postdata();
     }
 
+    // Clear any cached values if custom config is used
+    if (is_array($fields)) {
+      remove_filter('acf/pre_load_value', $pre_load_value, 10, 3);
+      foreach (array_keys($fields) as $field_name) {
+        acf_flush_value_cache($plugin->post()->ID, $field_name);
+      }
+      // Just in case...
+      acf_reset_meta($plugin->post()->ID);
+    }
+
+    // After actions
     VF_Plugin::do_actions($plugin, 'vf/plugin/after_render');
     VF_Plugin::do_actions($plugin, "{$action}/after_render");
 
-    // Re-enable the cache
-    if (function_exists('acf_enable_cache')) {
-      acf_enable_cache();
-    }
   }
 
 } // VF_Plugin
