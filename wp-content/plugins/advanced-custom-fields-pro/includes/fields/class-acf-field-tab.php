@@ -134,7 +134,6 @@ class acf_field_tab extends acf_field {
 	*
 	*  @return	$field - the field array holding all the field options
 	*/
-	
 	function load_field( $field ) {
 		
 		// remove name to avoid caching issue
@@ -151,6 +150,7 @@ class acf_field_tab extends acf_field {
 		
 		// return
 		return $field;
+		
 	}
 	
 }
