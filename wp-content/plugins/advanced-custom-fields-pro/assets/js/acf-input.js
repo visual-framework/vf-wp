@@ -568,21 +568,7 @@
 	*/
 	
 	acf.strEscape = function( string ){
-		
-		var entityMap = {
-		  '&': '&amp;',
-		  '<': '&lt;',
-		  '>': '&gt;',
-		  '"': '&quot;',
-		  "'": '&#39;',
-		  '/': '&#x2F;',
-		  '`': '&#x60;',
-		  '=': '&#x3D;'
-		};
-		
-		return String(string).replace(/[&<>"'`=\/]/g, function (s) {
-			return entityMap[s];
-		});
+		return $('<div>').text(string).html();
 	};
 	
 	/**
@@ -777,69 +763,42 @@
 		return $el.find('select, textarea, input').serializeArray();
 	}
 	
-	
 	/**
-	*  acf.serializeAjax
+	*  acf.serializeForAjax
 	*
 	*  Returns an object containing name => value data ready to be encoded for Ajax.
 	*
-	*  @date	15/8/18
-	*  @since	5.7.3
+	*  @date	17/12/18
+	*  @since	5.8.0
 	*
 	*  @param	jQUery $el The element or form to serialize.
-	*  @param	string prefix The input prefix to scope to.
 	*  @return	object
 	*/
-	
-/*
-	acf.serializeAjax = function( $el, prefix ){
+	acf.serializeForAjax = function( $el ){
 			
 		// vars
 		var data = {};
 		var index = {};
-		var inputs = $el.find('select, textarea, input').serializeArray();
 		
-		// remove prefix
-		if( prefix !== undefined ) {
-			
-			// filter and modify
-			inputs = inputs.filter(function( item ){
-				return item.name.indexOf(prefix) === 0;
-			}).map(function( item ){
-				
-				// remove prefix from name
-				item.name = item.name.slice(prefix.length);
-				
-				// fix [foo][bar] to foo[bar]
-				if( item.name.slice(0, 1) == '[' ) {
-					item.name = item.name.slice(1).replace(']', '');
-				}
-				return item;
-			});
-		}
+		// Serialize inputs.
+		var inputs = acf.serializeArray( $el );
 		
-		// build object
+		// Loop over inputs and build data.
 		inputs.map(function( item ){
 			
-			// fix foo[] to foo[0], foo[1], etc
+			// Append to array.
 			if( item.name.slice(-2) === '[]' ) {
-				
-				// ensure index exists
-				index[ item.name ] = index[ item.name ] || 0;
-				index[ item.name ]++;
-				
-				// replace [] with [0]
-				item.name = item.name.replace('[]', '[' + (index[ item.name ]-1) + ']');
+				data[ item.name ] = data[ item.name ] || [];
+				data[ item.name ].push( item.value );
+			// Append	
+			} else {
+				data[ item.name ] = item.value;
 			}
-			
-			// append to data
-			data[ item.name ] = item.value;
 		});
 		
 		// return
 		return data;
 	};
-*/
 	
 	/**
 	*  addAction
@@ -2124,7 +2083,7 @@
 	*  @return	bool
 	*/
 	acf.isGutenberg = function(){
-		return acf.isset(window, 'wp', 'blocks');
+		return ( window.wp && wp.data && wp.data.select && wp.data.select( 'core/editor' ) );
 	};
 	
 	/**
@@ -2143,6 +2102,168 @@
 			return obj[key];
 		});
 	};
+	
+	/**
+	 * acf.debounce
+	 *
+	 * Returns a debounced version of the passed function which will postpone its execution until after `wait` milliseconds have elapsed since the last time it was invoked.
+	 *
+	 * @date	28/8/19
+	 * @since	5.8.1
+	 *
+	 * @param	function callback The callback function.
+	 * @return	int wait The number of milliseconds to wait.
+	 */
+	acf.debounce = function( callback, wait ){
+		var timeout;
+		return function(){
+			var context = this;
+			var args = arguments;
+			var later = function(){
+				callback.apply( context, args );
+			};
+			clearTimeout( timeout );
+			timeout = setTimeout( later, wait );
+		};
+	};
+	
+	/**
+	 * acf.throttle
+	 *
+	 * Returns a throttled version of the passed function which will allow only one execution per `limit` time period.
+	 *
+	 * @date	28/8/19
+	 * @since	5.8.1
+	 *
+	 * @param	function callback The callback function.
+	 * @return	int wait The number of milliseconds to wait.
+	 */
+	acf.throttle = function( callback, limit ){
+		var busy = false;
+		return function(){
+			if( busy ) return;
+			busy = true;
+			setTimeout(function(){
+				busy = false;
+			}, limit);
+			callback.apply( this, arguments );
+		};
+	};
+	
+	/**
+	 * acf.isInView
+	 *
+	 * Returns true if the given element is in view.
+	 *
+	 * @date	29/8/19
+	 * @since	5.8.1
+	 *
+	 * @param	elem el The dom element to inspect.
+	 * @return	bool
+	 */
+	acf.isInView = function( el ){
+		var rect = el.getBoundingClientRect();
+		return (
+			rect.top !== rect.bottom &&
+			rect.top >= 0 &&
+			rect.left >= 0 &&
+			rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+			rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+		);
+	};
+	
+	/**
+	 * acf.onceInView
+	 *
+	 * Watches for a dom element to become visible in the browser and then excecutes the passed callback.
+	 *
+	 * @date	28/8/19
+	 * @since	5.8.1
+	 *
+	 * @param	dom el The dom element to inspect.
+	 * @param	function callback The callback function.
+	 */
+	acf.onceInView = (function() {
+		
+		// Define list.
+		var items = [];
+		var id = 0;
+		
+		// Define check function.
+		var check = function() {
+			items.forEach(function( item ){
+				if( acf.isInView(item.el) ) {
+					item.callback.apply( this );
+					pop( item.id );
+				}
+			});
+		};
+		
+		// And create a debounced version.
+		var debounced = acf.debounce( check, 300 );
+		
+		// Define add function.
+		var push = function( el, callback ) {
+			
+			// Add event listener.
+			if( !items.length ) {
+				$(window).on( 'scroll resize', debounced ).on( 'acfrefresh orientationchange', check );
+			}
+			
+			// Append to list.
+			items.push({ id: id++, el: el, callback: callback });
+		}
+		
+		// Define remove function.
+		var pop = function( id ) {
+			
+			// Remove from list.
+			items = items.filter(function(item) {
+				return (item.id !== id);
+			});
+			
+			// Clean up listener.
+			if( !items.length ) {
+				$(window).off( 'scroll resize', debounced ).off( 'acfrefresh orientationchange', check );
+			}
+		}
+		
+		// Define returned function.
+		return function( el, callback ){
+			
+			// Allow jQuery object.
+			if( el instanceof jQuery )
+				el = el[0];
+			
+			// Execute callback if already in view or add to watch list.
+			if( acf.isInView(el) ) {
+				callback.apply( this );
+			} else {
+				push( el, callback );
+			}
+		}
+	})();
+	
+	/**
+	 * acf.once
+	 *
+	 * Creates a function that is restricted to invoking `func` once.
+	 *
+	 * @date	2/9/19
+	 * @since	5.8.1
+	 *
+	 * @param	function func The function to restrict.
+	 * @return	function
+	 */
+	acf.once = function( func ){
+		var i = 0;
+		return function(){
+			if( i++ > 0 ) {
+				return (func = undefined);
+			}
+			return func.apply(this, arguments);
+		}
+	}
 	
 	/*
 	*  exists
@@ -3529,7 +3650,15 @@
 			'change form .acf-field':	'startListening',
 			'submit form':				'stopListening'
 		},
-				
+		
+		enable: function(){
+			this.active = true;
+		},
+		
+		disable: function(){
+			this.active = false;
+		},
+		
 		reset: function(){
 			this.stopListening();
 		},
@@ -3752,6 +3881,25 @@
 (function($, undefined){
 	
 	/**
+	 * postboxManager
+	 *
+	 * Manages postboxes on the screen.
+	 *
+	 * @date	25/5/19
+	 * @since	5.8.1
+	 *
+	 * @param	void
+	 * @return	void
+	 */
+	var postboxManager = new acf.Model({
+		wait: 'prepare',
+		priority: 1,
+		initialize: function(){
+			(acf.get('postboxes') || []).map( acf.newPostbox );
+		},
+	});
+	
+	/**
 	*  acf.getPostbox
 	*
 	*  Returns a postbox instance.
@@ -3871,10 +4019,12 @@
 			// This class is added by WP to postboxes that are hidden via the "Screen Options" tab.
 			this.$el.removeClass('hide-if-js');
 			
-			// Add field group style class.
-			var style = this.get('style');
-			if( style !== 'default' ) {
-				this.$el.addClass( style );
+			// Add field group style class (ignore in block editor).
+			if( acf.get('editor') !== 'block' ) {
+				var style = this.get('style');
+				if( style !== 'default' ) {
+					this.$el.addClass( style );
+				}
 			}
 			
 			// Add .inside class.
@@ -5124,9 +5274,9 @@
 	}
 	
 	// vars
-	var globalFieldActions = [ 'prepare', 'ready', 'load', 'append', 'remove', 'sortstart', 'sortstop', 'show', 'hide', 'unload' ];
+	var globalFieldActions = [ 'prepare', 'ready', 'load', 'append', 'remove', 'unmount', 'remount', 'sortstart', 'sortstop', 'show', 'hide', 'unload' ];
 	var singleFieldActions = [ 'valid', 'invalid', 'enable', 'disable', 'new' ];
-	var singleFieldEvents = [ 'remove', 'sortstart', 'sortstop', 'show', 'hide', 'unload', 'valid', 'invalid', 'enable', 'disable' ];
+	var singleFieldEvents = [ 'remove', 'unmount', 'remount', 'sortstart', 'sortstop', 'show', 'hide', 'unload', 'valid', 'invalid', 'enable', 'disable' ];
 	
 	// add
 	globalFieldActions.map( addGlobalFieldAction );
@@ -5953,6 +6103,10 @@
 			
 			// render
 			this.renderVal( val );
+			
+			// action
+			var latLng = this.newLatLng( val.lat, val.lng );
+			acf.doAction('google_map_change', latLng, this.map, this);
 		},
 		
 		renderVal: function( val ){
@@ -5983,9 +6137,6 @@
 			
 			// show marker
 			this.map.marker.setVisible( true );
-			
-			// action
-			acf.doAction('google_map_change', latLng, this.map, this);
 			
 			// center
 			this.center();
@@ -6020,14 +6171,8 @@
 		
 		initialize: function(){
 			
-			// bail early if too early
-			if( !api.isReady() ) {
-				api.ready( this.initializeMap, this );
-				return;
-			}
-			
-			// initializeMap
-			this.initializeMap();
+			// Ensure Google API is loaded and then initialize map.
+			withAPI( this.initializeMap.bind(this) );
 		},
 		
 		newLatLng: function( lat, lng ){
@@ -6169,7 +6314,7 @@
 		    }, this);
 		    
 		    // query
-		    api.geocoder.geocode({ 'latLng' : latLng }, callback);
+		    geocoder.geocode({ 'latLng' : latLng }, callback);
 		},
 		
 		setPlace: function( place ){
@@ -6255,7 +6400,7 @@
 		    });
 		    
 		    // query
-		    api.geocoder.geocode({ 'address' : address }, callback);
+		    geocoder.geocode({ 'address' : address }, callback);
 		},
 		
 		searchLocation: function(){
@@ -6364,73 +6509,62 @@
 	
 	acf.registerFieldType( Field );
 	
-	var api = new acf.Model({
+	// Vars.
+	var loading = false;
+	var geocoder = false;
+	
+	/**
+	 * withAPI
+	 *
+	 * Loads the Google Maps API library and troggers callback.
+	 *
+	 * @date	28/3/19
+	 * @since	5.7.14
+	 *
+	 * @param	function callback The callback to excecute.
+	 * @return	void
+	 */
+	
+	function withAPI( callback ) {
 		
-		geocoder: false,
-		
-		data: {
-			status: false,
-		},
-		
-		getStatus: function(){
-			return this.get('status');
-		},
-		
-		setStatus: function( status ){
-			return this.set('status', status);
-		},
-		
-		isReady: function(){
-			
-			// loaded
-			if( this.getStatus() == 'ready' ) {
-				return true;
-			}
-			
-			// loading
-			if( this.getStatus() == 'loading' ) {
-				return false;
-			}
-			
-			// check exists (optimal)
-			if( acf.isset(window, 'google', 'maps', 'places') ) {
-				this.setStatus('ready');
-				return true;
-			}
-			
-			// load api
-			var url = acf.get('google_map_api');
-			if( url ) {
-				this.setStatus('loading');
-				
-				// enqueue
-				$.ajax({
-					url: url,
-					dataType: 'script',
-					cache: true,
-					context: this,
-					success: function(){
-						
-						// ready
-						this.setStatus('ready');
-						
-						// geocoder
-						this.geocoder = new google.maps.Geocoder();
-						
-						// action						
-						acf.doAction('google_map_api_loaded');
-					}
-				});
-			}
-			
-			// return
-			return false;
-		},
-		
-		ready: function( callback, context ){
-			acf.addAction('google_map_api_loaded', callback, 10, context);
+		// Check if geocoder exists.
+		if( geocoder ) {
+			return callback();
 		}
-	});
+		
+		// Check if geocoder API exists.
+		if( acf.isset(window, 'google', 'maps', 'Geocoder') ) {
+			geocoder = new google.maps.Geocoder();
+			return callback();
+		}
+		
+		// Geocoder will need to be loaded. Hook callback to action.
+		acf.addAction( 'google_map_api_loaded', callback );
+		
+		// Bail early if already loading API.
+		if( loading ) {
+			return;
+		}
+		
+		// load api
+		var url = acf.get('google_map_api');
+		if( url ) {
+			
+			// Set loading status.
+			loading = true;
+			
+			// Load API
+			$.ajax({
+				url: url,
+				dataType: 'script',
+				cache: true,
+				success: function(){
+					geocoder = new google.maps.Geocoder();
+					acf.doAction('google_map_api_loaded');
+				}
+			});
+		}
+	}
 	
 })(jQuery);
 
@@ -6856,7 +6990,7 @@
 		getNodeValue: function(){
 			var $node = this.get('node');
 			return {
-				title:	$node.html(),
+				title:	acf.decode( $node.html() ),
 				url:	$node.attr('href'),
 				target:	$node.attr('target')
 			};
@@ -6864,7 +6998,7 @@
 		
 		setNodeValue: function( val ){
 			var $node = this.get('node');
-			$node.html( val.title );
+			$node.text( val.title );
 			$node.attr('href', val.url);
 			$node.attr('target', val.target);
 			$node.trigger('change');
@@ -7198,15 +7332,15 @@
 			return this.$('input[type="number"]');
 		},
 		
-		setValue: function( val ){
-			
+		setValue: function( val ){			
 			this.busy = true;
 			
-			// update range input (with change)
+			// Update range input (with change).
 			acf.val( this.$input(), val );
 			
-			// update alt input (without change)
-			acf.val( this.$inputAlt(), val, true );
+			// Update alt input (without change).
+			// Read in input value to inherit min/max validation.
+			acf.val( this.$inputAlt(), this.$input().val(), true );
 			
 			this.busy = false;
 		},
@@ -7234,7 +7368,6 @@
 			'keyup [data-filter]': 					'onChangeFilter',
 			'click .choices-list .acf-rel-item': 	'onClickAdd',
 			'click [data-name="remove_item"]': 		'onClickRemove',
-			'mouseover': 							'onHover'
 		},
 		
 		$control: function(){
@@ -7280,60 +7413,59 @@
 			].join('');
 		},
 		
-		addSortable: function( self ){
-			
-			// sortable
-			this.$list('values').sortable({
-				items:					'li',
-				forceHelperSize:		true,
-				forcePlaceholderSize:	true,
-				scroll:					true,
-				update:	function(){
-					self.$input().trigger('change');
-				}
-			});
-		},
-		
 		initialize: function(){
 			
-			// scroll
-			var onScroll = this.proxy(function(e){
+			// Delay initialization until "interacted with" or "in view".
+			var delayed = this.proxy(acf.once(function(){
 				
-				// bail early if no more results
-				if( this.get('loading') || !this.get('more') ) {
-					return;	
-				}
+				// Add sortable.
+				this.$list('values').sortable({
+					items:					'li',
+					forceHelperSize:		true,
+					forcePlaceholderSize:	true,
+					scroll:					true,
+					update:	this.proxy(function(){
+						this.$input().trigger('change');
+					})
+				});
 				
-				// Scrolled to bottom
-				var $list = this.$list('choices');
-				var scrollTop = Math.ceil( $list.scrollTop() );
-				var scrollHeight = Math.ceil( $list[0].scrollHeight );
-				var innerHeight = Math.ceil( $list.innerHeight() );
-				var paged = this.get('paged') || 1;
-				if( (scrollTop + innerHeight) >= scrollHeight ) {
-					
-					// update paged
-					this.set('paged', (paged+1));
-					
-					// fetch
-					this.fetch();
-				}
+				// Avoid browser remembering old scroll position and add event.
+				this.$list('choices').scrollTop(0).on('scroll', this.proxy(this.onScrollChoices));
 				
-			});
+				// Fetch choices.
+				this.fetch();
+				
+			}));
 			
-			this.$list('choices').scrollTop(0).on('scroll', onScroll);
+			// Bind "interacted with".
+			this.$el.one( 'mouseover', delayed );
+			this.$el.one( 'focus', 'input', delayed );
 			
-			// fetch
-			this.fetch();
+			// Bind "in view".
+			acf.onceInView( this.$el, delayed );
 		},
 		
-		onHover: function( e ){
+		onScrollChoices: function(e){
+				
+			// bail early if no more results
+			if( this.get('loading') || !this.get('more') ) {
+				return;	
+			}
 			
-			// only once
-			$().off(e);
-			
-			// add sortable
-			this.addSortable( this );
+			// Scrolled to bottom
+			var $list = this.$list('choices');
+			var scrollTop = Math.ceil( $list.scrollTop() );
+			var scrollHeight = Math.ceil( $list[0].scrollHeight );
+			var innerHeight = Math.ceil( $list.innerHeight() );
+			var paged = this.get('paged') || 1;
+			if( (scrollTop + innerHeight) >= scrollHeight ) {
+				
+				// update paged
+				this.set('paged', (paged+1));
+				
+				// fetch
+				this.fetch();
+			}
 		},
 		
 		onKeypressFilter: function( e, $el ){
@@ -7409,15 +7541,16 @@
 		
 		onClickRemove: function( e, $el ){
 			
+			// Prevent default here because generic handler wont be triggered.
+			e.preventDefault();
+			
 			// vars
 			var $span = $el.parent();
 			var $li = $span.parent();
 			var id = $span.data('id');
 			
 			// remove value
-			setTimeout(function(){
-				$li.remove();
-			}, 1);
+			$li.remove();
 			
 			// show choice
 			this.$listItem('choices', id).removeClass('disabled');
@@ -7452,6 +7585,9 @@
 			// extra
 			ajaxData.action = 'acf/fields/relationship/query';
 			ajaxData.field_key = this.get('key');
+			
+			// Filter.
+			ajaxData = acf.applyFilters( 'relationship_ajax_data', ajaxData, this );
 			
 			// return
 			return ajaxData;
@@ -8764,8 +8900,8 @@
 		
 		events: {
 			'mousedown .acf-editor-wrap.delay':	'onMousedown',
-			'sortstartField': 'disableEditor',
-			'sortstopField': 'enableEditor',
+			'unmountField': 'disableEditor',
+			'remountField': 'enableEditor',
 			'removeField': 'disableEditor'
 		},
 		
@@ -10131,16 +10267,13 @@
 			}, frame);
 			
 			// update toolbar button
-/*
-			frame.on( 'toolbar:create:select', function( toolbar ) {
-				
-				toolbar.view = new wp.media.view.Toolbar.Select({
-					text: frame.options._button,
-					controller: this
-				});
-				
-			}, frame );
-*/
+			//frame.on( 'toolbar:create:select', function( toolbar ) {
+			//	toolbar.view = new wp.media.view.Toolbar.Select({
+			//		text: frame.options._button,
+			//		controller: this
+			//	});
+			//}, frame );
+
 			// on select
 			frame.on('select', function() {
 				
@@ -10410,10 +10543,33 @@
 			}
 			
 			// customize
+			this.customizeAttachmentsButton();
 			this.customizeAttachmentsRouter();
 			this.customizeAttachmentFilters();
 			this.customizeAttachmentCompat();
 			this.customizeAttachmentLibrary();
+		},
+		
+		customizeAttachmentsButton: function(){
+			
+			// validate
+			if( !acf.isset(wp, 'media', 'view', 'Button') ) {
+				return;
+			}
+			
+			// Extend
+			var Button = wp.media.view.Button;
+			wp.media.view.Button = Button.extend({
+				
+				// Fix bug where "Select" button appears blank after editing an image.
+				// Do this by simplifying Button initialize function and avoid deleting this.options.
+				initialize: function() {
+					var options = _.defaults( this.options, this.defaults );
+					this.model = new Backbone.Model( options );
+					this.listenTo( this.model, 'change', this.render );
+				}
+			});
+			
 		},
 		
 		customizeAttachmentsRouter: function(){
@@ -10552,7 +10708,7 @@
 					//});
 					
 					// Serialize data more thoroughly to allow chckbox inputs to save.
-					data = acf.serialize(this.$el);
+					data = acf.serializeForAjax(this.$el);
 					
 					this.controller.trigger( 'attachment:compat:waiting', ['waiting'] );
 					this.model.saveCompat( data ).always( _.bind( this.postSave, this ) );
@@ -10697,30 +10853,6 @@
 			'change #product-type':							'onChange'
 		},
 		
-		initialize: function(){
-			
-		},
-/*
-		
-		checkScreenEvents: function(){
-			
-			// vars
-			var events = [
-				'change #page_template',
-				'change #parent_id',
-				'change #post-formats-select input',
-				'change .categorychecklist input',
-				'change .categorychecklist select',
-				'change .acf-taxonomy-field[data-save="1"] input',
-				'change .acf-taxonomy-field[data-save="1"] select',
-				'change #product-type'	
-			];
-			
-			acf.screen.on('change', '#product-type', 'fetch');
-		},
-*/
-		
-		
 		isPost: function(){
 			return acf.get('screen') === 'post';
 		},
@@ -10776,7 +10908,7 @@
 			return null;
 		},
 		
-		getPostTerms: function(){
+		getPostCoreTerms: function(){
 			
 			// vars
 			var terms = {};
@@ -10798,9 +10930,18 @@
 			// convert any string values (tags) into array format
 			for( var tax in terms ) {
 				if( !acf.isArray(terms[tax]) ) {
-					terms[tax] = terms[tax].split(', ');
+					terms[tax] = terms[tax].split(/,[\s]?/);
 				}
 			}
+			
+			// return
+			return terms;
+		},
+		
+		getPostTerms: function(){
+			
+			// Get core terms.
+			var terms = this.getPostCoreTerms();
 			
 			// loop over taxonomy fields and add their values
 			acf.getFields({type: 'taxonomy'}).map(function( field ){
@@ -10959,6 +11100,35 @@
 				}
 			}
 			
+			// Helper function to sort metabox.
+			var sortMetabox = function( id, ids ){
+				
+				// Find position of id within ids.
+				var index = ids.indexOf( id );
+				
+				// Bail early if index not found.
+				if( index == -1 ) {
+					return false;
+				}
+				
+				// Loop over metaboxes behind (in reverse order).
+				for( var i = index-1; i >= 0; i-- ) {
+					if( $('#'+ids[i]).length ) {
+						return $('#'+ids[i]).after( $('#'+id) );
+					}
+				}
+				
+				// Loop over metaboxes infront.
+				for( var i = index+1; i < ids.length; i++ ) {
+					if( $('#'+ids[i]).length ) {
+						return $('#'+ids[i]).before( $('#'+id) );
+					}
+				}
+				
+				// Return false if not sorted.
+				return false;
+			};
+			
 			// Show these postboxes.
 			data.results.map(function( result, i ){
 				
@@ -11010,6 +11180,15 @@
 						$('#' + result.position + '-sortables').prepend( $postbox );
 					}
 					
+					// Position metabox amongst existing ACF metaboxes within the same location.
+					var order = [];
+					data.results.map(function( _result ){
+						if( result.position === _result.position && $('#' + result.position + '-sortables #' + _result.id).length ) {
+							order.push( _result.id );
+						}
+					});
+					sortMetabox(result.id, order)
+					
 					// Check 'sorted' for user preference.
 					if( data.sorted ) {
 						
@@ -11019,21 +11198,8 @@
 							// Explode string into array of ids.
 							var order = data.sorted[position].split(',');
 							
-							// Look for result.id within order.
-							var index = order.indexOf( result.id );
-							
-							// ignore if not found
-							if( index == -1 ) {
-								// do nothing	
-								
-							// try behind
-							} else if( index > 0 && (id = order[index-1]) && $('#'+id).length ) {
-								$('#'+id).after( $postbox );
-								break;
-							
-							// try ahead
-							} else if( (id = order[index+1]) && $('#'+id).length ) {
-								$('#'+id).before( $postbox );
+							// Position metabox relative to order.
+							if( sortMetabox(result.id, order) ) {
 								break;
 							}
 						}
@@ -11046,12 +11212,19 @@
 						copyEvents( $submitdiv.children('.hndle'), $postbox.children('.hndle') );
 					}
 					
-					// Initalize it.
+					// Initalize it (modifies HTML).
 					postbox = acf.newPostbox( result );
+					
+					// Trigger action.
+					acf.doAction('append', $postbox);
+					acf.doAction('append_postbox', postbox);
 				}
 				
 				// show postbox
 				postbox.showEnable();
+				
+				// Do action.
+				acf.doAction('show_postbox', postbox);
 				
 				// append
 				visible.push( result.id );
@@ -11061,6 +11234,9 @@
 			acf.getPostboxes().map(function( postbox ){
 				if( visible.indexOf( postbox.get('id') ) === -1 ) {
 					postbox.hideDisable();
+					
+					// Do action.
+					acf.doAction('hide_postbox', postbox);
 				}
 			});
 			
@@ -11073,47 +11249,179 @@
 		}
 	});
 	
-/*	
-	// tests
-	acf.registerScreenChange('#page_template', function( e, $el ){
-		return $('#page_template').val();
-	});
-	
-	acf.registerScreenData({
-		name: 'page_template',
-		change: '#page_template',
-		val: function(){
-			var $input = $(this.el);
-			return $input.length ? $input.val() : null;
-		}
-	});
-	
-	acf.registerScreenData({
-		name: 'post_terms',
-		change: '.acf-taxonomy-field[data-save="1"]',
-		val: function(){
-			var $input = $(this.el);
-			return $input.length ? $input.val() : null;
-		}
-	});
-	
-	acf.registerScreenData({
-		name: 'post_terms',
-		change: '#product-type',
-		val: function( terms ){
-			var $select = $('#product-type');
-			if( $select.length ) {
-				terms.push('product_cat:'+$select.val());
+	/**
+	*  gutenScreen
+	*
+	*  Adds compatibility with the Gutenberg edit screen.
+	*
+	*  @date	11/12/18
+	*  @since	5.8.0
+	*
+	*  @param	void
+	*  @return	void
+	*/
+	var gutenScreen = new acf.Model({
+		
+		// Wait until load to avoid 'core' issues when loading taxonomies.
+		wait: 'load',
+
+		initialize: function(){
+			
+			// Bail early if not Gutenberg.
+			if( !acf.isGutenberg() ) {
+				return;
 			}
+			
+			// Listen for changes.
+			wp.data.subscribe(this.proxy(this.onChange));
+			
+			// Customize "acf.screen.get" functions.
+			acf.screen.getPageTemplate = this.getPageTemplate;
+			acf.screen.getPageParent = this.getPageParent;
+			acf.screen.getPostType = this.getPostType;
+			acf.screen.getPostFormat = this.getPostFormat;
+			acf.screen.getPostCoreTerms = this.getPostCoreTerms;
+			
+			// Disable unload
+			acf.unload.disable();
+			
+			// Add actions.
+			//this.addAction( 'append_postbox', acf.screen.refreshAvailableMetaBoxesPerLocation );
+		},
+		
+		onChange: function(){
+			
+			// Get edits.
+			var edits = wp.data.select( 'core/editor' ).getPostEdits();
+			
+			// Check specific attributes.
+			var attributes = [
+				'template',
+				'parent',
+				'format'
+			];
+			
+			// Append taxonomy attributes.
+			var taxonomies = wp.data.select( 'core' ).getTaxonomies() || [];
+			taxonomies.map(function( taxonomy ){
+				attributes.push( taxonomy.rest_base );
+			});
+			
+			// Filter out attributes that have not changed.
+			attributes = attributes.filter(this.proxy(function( attr ){
+				return ( edits[attr] !== undefined && edits[attr] !== this.get(attr) );
+			}));
+			
+			// Trigger change if has attributes.
+			if( attributes.length ) {
+				this.triggerChange( edits )
+			}
+		},
+		
+		triggerChange: function( edits ){
+			
+			// Update this.data if edits are provided.
+			if( edits !== undefined ) {
+				this.data = edits;
+			}
+			
+			// Check screen.
+			acf.screen.check();
+		},
+				
+		getPageTemplate: function(){
+			return wp.data.select( 'core/editor' ).getEditedPostAttribute( 'template' );
+		},
+		
+		getPageParent: function( e, $el ){
+			return wp.data.select( 'core/editor' ).getEditedPostAttribute( 'parent' );
+		},
+		
+		getPostType: function(){
+			return wp.data.select( 'core/editor' ).getEditedPostAttribute( 'type' );
+		},
+		
+		getPostFormat: function( e, $el ){
+			return wp.data.select( 'core/editor' ).getEditedPostAttribute( 'format' );
+		},
+		
+		getPostCoreTerms: function(){
+			
+			// vars
+			var terms = {};
+			
+			// Loop over taxonomies.
+			var taxonomies = wp.data.select( 'core' ).getTaxonomies() || [];
+			taxonomies.map(function( taxonomy ){
+				
+				// Append selected taxonomies to terms object.
+				var postTerms = wp.data.select( 'core/editor' ).getEditedPostAttribute( taxonomy.rest_base );
+				if( postTerms ) {
+					terms[ taxonomy.slug ] = postTerms;
+				}
+			});
+			
+			// return
 			return terms;
 		}
 	});
 	
-	
-	acf.screen.get('post_terms');
-	acf.screen.getPostTerms();
-	
-*/
+	/**
+	 * acf.screen.refreshAvailableMetaBoxesPerLocation
+	 *
+	 * Refreshes the WP data state based on metaboxes found in the DOM.
+	 *
+	 * Caution. Not safe to use.
+	 * Causes duplicate dispatch listeners when saving post resulting in duplicate postmeta.
+	 *
+	 * @date	6/3/19
+	 * @since	5.7.13
+	 *
+	 * @param	void
+	 * @return	void
+	 */
+	acf.screen.refreshAvailableMetaBoxesPerLocation = function() {
+		
+		// Extract vars.
+		var select = wp.data.select( 'core/edit-post' );
+		var dispatch = wp.data.dispatch( 'core/edit-post' );
+		
+		// Load current metabox locations and data.
+		var data = {};
+		select.getActiveMetaBoxLocations().map(function( location ){
+			data[ location ] = select.getMetaBoxesPerLocation( location );
+		});
+		
+		// Generate flat array of existing ids.
+		var ids = [];
+		for( var k in data ) {
+			ids = ids.concat( data[k].map(function(m){ return m.id; }) );
+		}
+		
+		// Append ACF metaboxes.
+		acf.getPostboxes().map(function( postbox ){
+			
+			// Ignore if already exists in data.
+			if( ids.indexOf( postbox.get('id') ) !== -1 ) {
+				return;
+			}
+			
+			// Get metabox location looking at parent form.
+			var location = postbox.$el.closest('form').attr('class').replace('metabox-location-', '');
+			
+			// Ensure location exists.
+			data[ location ] = data[ location ] || [];
+			
+			// Append.
+			data[ location ].push({
+				id: postbox.get('id'),
+				title: postbox.get('title')
+			});
+		});
+		
+		// Update state.
+		dispatch.setAvailableMetaBoxesPerLocation(data);	
+	};
 
 })(jQuery);
 
@@ -12033,14 +12341,26 @@
 					$textarea.trigger('change');
 				});
 				
-				$( ed.getWin() ).on('unload', function() {
-					acf.tinymce.remove( id );
+				// Fix bug where Gutenberg does not hear "mouseup" event and tries to select multiple blocks.
+				ed.on('mouseup', function(e) {
+					var event = new MouseEvent('mouseup');
+					window.dispatchEvent(event);
 				});
 				
+				// Temporarily comment out. May not be necessary due to wysiwyg field actions.
+				//ed.on('unload', function(e) {
+				//	acf.tinymce.remove( id );
+				//});				
 			};
 			
 			// disable wp_autoresize_on (no solution yet for fixed toolbar)
 			init.wp_autoresize_on = false;
+			
+			// Enable wpautop allowing value to save without <p> tags.
+			// Only if the "TinyMCE Advanced" plugin hasn't already set this functionality.
+			if( !init.tadv_noautop ) {
+				init.wpautop = true;
+			}
 			
 			// hook for 3rd party customization
 			init = acf.applyFilters('wysiwyg_tinymce_settings', init, id, field);
@@ -12267,6 +12587,12 @@
 			}
 		},
 		onReady: function(){
+			
+			// Restore wp.editor functions used by tinymce removed in WP5.
+			if( acf.isset(window,'wp','oldEditor') ) {
+				wp.editor.autop = wp.oldEditor.autop;
+				wp.editor.removep = wp.oldEditor.removep;
+			}
 			
 			// bail early if no tinymce
 			if( !acf.isset(window,'tinymce','on') ) return;
@@ -13009,9 +13335,9 @@
 		events: {
 			'click input[type="submit"]':	'onClickSubmit',
 			'click button[type="submit"]':	'onClickSubmit',
-			'click #editor .editor-post-publish-button': 'onClickSubmitGutenberg',
+			//'click #editor .editor-post-publish-button': 'onClickSubmitGutenberg',
 			'click #save-post':				'onClickSave',
-			'mousedown #post-preview':		'onClickPreview', // use mousedown to hook in before WP click event
+			'submit form#post':				'onSubmitPost',
 			'submit form':					'onSubmit',
 		},
 		
@@ -13094,6 +13420,10 @@
 		*/
 		addInputEvents: function( $el ){
 			
+			// Bug exists in Safari where custom "invalid" handeling prevents draft from saving.
+			if( acf.get('browser') === 'safari' ) 
+				return;
+			
 			// vars
 			var $inputs = $('.acf-field [name]', $el);
 			
@@ -13175,27 +13505,6 @@
 		},
 		
 		/**
-		*  onClickPreview
-		*
-		*  Set ignore to true when previewing a post.
-		*
-		*  @date	4/9/18
-		*  @since	5.7.5
-		*
-		*  @param	object e The event object.
-		*  @param	jQuery $el The input element.
-		*  @return	void
-		*/
-		onClickPreview: function( e, $el ) {
-			this.set('ignore', true);
-			
-			// if post has previously been published but prevented by an error, WP core has
-			// added a custom 'submit.edit-post' event which causes the input buttons to become disabled.
-			// remove this event to prevent UX issues.
-			$('form#post').off('submit.edit-post');
-		},
-		
-		/**
 		*  onClickSubmitGutenberg
 		*
 		*  Custom validation event for the gutenberg editor.
@@ -13229,6 +13538,31 @@
 		},
 		
 		/**
+		 * onSubmitPost
+		 *
+		 * Callback when the 'post' form is submit.
+		 *
+		 * @date	5/3/19
+		 * @since	5.7.13
+		 *
+		 * @param	object e The event object.
+		 * @param	jQuery $el The input element.
+		 * @return	void
+		 */
+		onSubmitPost: function( e, $el ) {
+			
+			// Check if is preview.
+			if( $('input#wp-preview').val() === 'dopreview' ) {
+				
+				// Ignore validation.
+				this.set('ignore', true);
+				
+				// Unlock form to fix conflict with core "submit.edit-post" event causing all submit buttons to be disabled.
+				acf.unlockForm( $el )
+			}
+		},
+		
+		/**
 		*  onSubmit
 		*
 		*  Callback when the form is submit.
@@ -13242,27 +13576,54 @@
 		*/
 		onSubmit: function( e, $el ){
 			
-			// bail early if is disabled
-			if( !this.active ) {
-				return;
+			// Allow form to submit if...
+			if(
+				// Validation has been disabled.
+				!this.active	
+				
+				// Or this event is to be ignored.		
+				|| this.get('ignore')
+				
+				// Or this event has already been prevented.
+				|| e.isDefaultPrevented()
+			) {
+				// Return early and call reset function.
+				return this.allowSubmit();
 			}
 			
-			// bail early if is ignore
-			if( this.get('ignore') ) {
-				this.set('ignore', false);
-				return;
-			}
-			
-			// validate
+			// Validate form.
 			var valid = acf.validateForm({
 				form: $el,
 				event: this.get('originalEvent')
 			});
 			
-			// if not valid, stop event and allow validation to continue
+			// If not valid, stop event to prevent form submit.
 			if( !valid ) {
 				e.preventDefault();
 			}
+		},
+		
+		/**
+		 * allowSubmit
+		 *
+		 * Resets data during onSubmit when the form is allowed to submit.
+		 *
+		 * @date	5/3/19
+		 * @since	5.7.13
+		 *
+		 * @param	void
+		 * @return	void
+		 */
+		allowSubmit: function(){
+			
+			// Reset "ignore" state.
+			this.set('ignore', false);
+			
+			// Reset "originalEvent" object.
+			this.set('originalEvent', false);
+			
+			// Return true
+			return true;
 		}
 	});
 	
@@ -13295,10 +13656,35 @@
 			clearTimeout( this.timeout );
 			this.timeout = setTimeout(function(){
 				acf.doAction('refresh');
+				$(window).trigger('acfrefresh');
 			}, 0);
 		}
 	});
 	
+	/**
+	 * mountHelper
+	 *
+	 * Adds compatiblity for the 'unmount' and 'remount' actions added in 5.8.0
+	 *
+	 * @date	7/3/19
+	 * @since	5.7.14
+	 *
+	 * @param	void
+	 * @return	void
+	 */
+	var mountHelper = new acf.Model({
+		priority: 1,
+		actions: {
+			'sortstart': 'onSortstart',
+			'sortstop': 'onSortstop'
+		},
+		onSortstart: function( $item ){
+			acf.doAction('unmount', $item);
+		},
+		onSortstop: function( $item ){
+			acf.doAction('remount', $item);
+		}
+	});
 	
 	/**
 	*  sortableHelper
@@ -13323,7 +13709,7 @@
 				
 				// replace $placeholder children with a single td
 				// fixes "width calculation issues" due to conditional logic hiding some children
-				$placeholder.html('<td style="padding:0;" colspan="100"></td>');
+				$placeholder.html('<td style="padding:0;" colspan="' + $placeholder.children().length + '"></td>');
 				
 				// add helper class to remove absolute positioning
 				$item.addClass('acf-sortable-tr-helper');
@@ -13604,823 +13990,6 @@
 		}
 	});
 		
-})(jQuery);
-
-(function($, undefined){
-	
-	// Storage for registered block types.
-	var blockTypes = {};
-	
-	// Storage for block instances.
-	var blocks = {};
-	
-	/**
-	*  acf.getBlockTypes
-	*
-	*  Returns an array of all registered ACF block types.
-	*
-	*  @date	5/11/18
-	*  @since	5.8.0
-	*
-	*  @param	void
-	*  @return	object
-	*/
-	acf.getBlockTypes = function(){
-		return acf.objectToArray( blockTypes );
-	}
-	
-	/**
-	*  acf.getBlockType
-	*
-	*  Returns a specific block type for the given name.
-	*
-	*  @date	5/11/18
-	*  @since	5.8.0
-	*
-	*  @param	string name The block name.
-	*  @return	object|false
-	*/
-	acf.getBlockType = function( name ){
-		return blockTypes[ name ] || false;
-	}
-	
-	/**
-	*  acf.hasBlockType
-	*
-	*  Returns true if a block type exists for the given name.
-	*
-	*  @date	11/4/18
-	*  @since	5.6.9
-	*
-	*  @param	string name The block name.
-	*  @return	bool
-	*/
-	acf.hasBlockType = function( name ){
-		return blockTypes[ name ] ? true : false;
-	};
-	
-	/**
-	*  acf.getBlocks
-	*
-	*  Returns an array of all block instances.
-	*
-	*  @date	23/10/18
-	*  @since	5.8.0
-	*
-	*  @param	void
-	*  @return	array
-	*/
-	acf.getBlocks = function(){
-		return acf.objectToArray( blocks );
-	};
-	
-	/**
-	*  acf.getBlock
-	*
-	*  Returns a block instance for the given cid.
-	*
-	*  @date	10/10/18
-	*  @since	5.8.0
-	*
-	*  @param	string The block clientId.
-	*  @return	object
-	*/
-	acf.getBlock = function( cid ){
-		return blocks[ cid ] || null;
-	};
-	
-	/**
-	*  acf.newBlock
-	*
-	*  Returns a new block instance for the given props.
-	*
-	*  @date	10/10/18
-	*  @since	5.8.0
-	*
-	*  @param	object props The block properties.
-	*  @return	object
-	*/
-	acf.newBlock = function( props ){
-		
-		// Create new instance.
-		var block = new acf.models.Block( props );
-		
-		// Add to storage.
-		blocks[ block.cid ] = block;
-		
-		// Return block.
-		return block;
-	};
-	
-	/**
-	*  acf.registerBlockType
-	*
-	*  Registers a single block type.
-	*
-	*  @date	7/8/18
-	*  @since	5.7.3
-	*
-	*  @param	object blockType The block type settings localized from PHP.
-	*  @return	object The result from wp.blocks.registerBlockType().
-	*/
-	acf.registerBlockType = function( blockType ){
-		
-		// Bail early if wp.blocks does not exist.
-		if( !wp || !wp.blocks || !wp.blocks.registerBlockType ) {
-			return false;
-		}
-		
-		// Bail ealry if is excluded post_type.
-		if( blockType.post_types && blockType.post_types.length ) {
-			var postType = $('#post_type').val();
-			if( blockType.post_types.indexOf(postType) === -1 ) {
-				return false;
-			}
-		}
-		
-		// Extend block type with default functionality.
-		$.extend(blockType, {
-			
-			// Define block attributes
-			// Leave default undefined to allow WP to serialize attributes in HTML comments.
-			// @see https://github.com/WordPress/gutenberg/issues/7342
-			attributes: {
-				id: { 
-					type: 'string'
-				},
-				data: { 
-					type: 'object'
-				},
-				name: { 
-					type: 'string'
-				},
-				align: {
-		            type: 'string'
-		        },
-		        mode: {
-		            type: 'string'
-		        },
-			},
-			
-			// Callback used to render block HTML each time it is selected / deselected.
-			edit: function( props ) {
-				//console.log('edit', props);
-				// get block
-				var block = acf.getBlock( props.clientId );
-				
-				// create new block if does not yet exist
-				if( !block ) {
-					block = acf.newBlock( props );
-				}
-				
-				// render
-				return block.render( props );
-			},
-	
-			// Callback used when saving the block.
-			save: function( props ) {
-				return null;
-			}
-		});
-		
-		// Add to storage.
-		blockTypes[ blockType.name ] = blockType;
-		
-		// Register with WP.
-		var result = wp.blocks.registerBlockType( blockType.name, blockType );
-		
-		// Return result.
-		return result;
-	};
-	
-	/**
-	*  acf.models.Block
-	*
-	*  The block type model.
-	*
-	*  @date	10/10/18
-	*  @since	5.8.0
-	*
-	*  @param	void
-	*  @return	void
-	*/
-	acf.models.Block = acf.Model.extend({
-		
-		/** @var object Default data for each block. */
-		data: {
-			id:		'',
-			data:	{},
-			name: 	'',
-			align: 	'',
-			mode:	''
-		},
-		
-		/**
-		*  setup
-		*
-		*  Called during initialization to setup the instance data.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	object block The block props provided by blockType.edit().
-		*  @return	void
-		*/
-		setup: function( block ){
-			
-			// Get the blockType object.
-			var blockType = wp.blocks.getBlockType( block.name );
-			
-			// Create empty attributes holder.
-			var attributes = {};
-			
-			// If this is a newly added block.
-			if( !block.attributes.id ) {
-				
-				// Set default attributes for newly added blocks.
-				block.attributes.id = acf.uniqid('block_');
-				block.attributes.name = block.name;
-				block.attributes.mode = blockType.mode;
-				block.attributes.align = blockType.align;
-				
-				//console.log('setup new block', this, block);
-			
-			// If this is an existing block.
-			} else {
-				
-				// Check if this block is a duplicate.
-				acf.getBlocks().map(function( b ){
-					if( b.get('id') === block.attributes.id ) {
-						block.attributes.id = acf.uniqid('block_');
-					}
-				});
-				
-				//console.log('setup duplicated block', this, block);
-			}
-			
-			// Store blockType reference.
-			this.blockType = blockType;
-			
-			// copy cid
-			this.cid = block.clientId;
-			
-			// Sync block (copy data).
-			this.sync( block );
-		},
-		
-		/**
-		*  sync
-		*
-		*  Updates the local reference to "block" and syncs attributes for use with this.get().
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	object block The block props provided by blockType.edit().
-		*  @return	void
-		*/
-		sync: function( block ){
-			
-			// Store block reference.
-			this.block = block;
-			
-			// copy data
-			$.extend(this.data, block.attributes);
-		},
-		
-		/**
-		*  $selectors
-		*
-		*  jQuery selector functions to quickly find block elements.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	jQuery
-		*/
-		$block: function(){
-			return $('#block-' + this.cid);
-		},
-		
-		$inspector: function(){
-			return $('#acf-block-inspector-' + this.get('id'));
-		},
-		
-		$previewButton: function(){
-			return $('#acf-block-preview-button-' + this.get('id'));
-		},
-		
-		$panel: function(){
-			return $('#acf-block-panel-' + this.get('id'));
-		},
-		
-		$body: function(){
-			return $('#acf-block-body-' + this.get('id'));
-		},
-		
-		$fields: function(){
-			return $('#acf-block-fields-' + this.get('id'));
-		},
-		
-		$preview: function(){
-			return $('#acf-block-preview-' + this.get('id'));
-		},
-		
-		$toolbar: function(){
-			return $('.editor-block-toolbar');
-		},
-		
-		/**
-		*  supports
-		*
-		*  Checks if the blockType supports a specific option similar to this.get()
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	string name The option name.
-		*  @return	mixed|false
-		*/
-		supports: function( name ){
-			return this.blockType.supports[name] || null;
-		},
-		
-		/**
-		*  initialize
-		*
-		*  Called during initialization after instance is setup.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	void
-		*/
-		initialize: function(){
-			// do nothing
-		},
-		
-		/**
-		*  render
-		*
-		*  Renders the block HTML using Gutenberg friendly el().
-		*  Called from blockType.edit() each time the block is selected / unselected / changed.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	object block The block props provided by blockType.edit().
-		*  @return	void
-		*/
-		render: function( block ){
-			//console.log( 'render', block );
-			// WP elements
-			var el = wp.element.createElement;
-			var Fragment = wp.element.Fragment;
-			var BlockControls = wp.editor.BlockControls;
-			var Toolbar = wp.components.Toolbar;
-			var InspectorControls = wp.editor.InspectorControls;
-			var IconButton = wp.components.IconButton;
-			
-			// sync block
-			this.sync( block );
-			
-			// block DOM does not yet exist. Use timeout.
-			this.setTimeout(function(){
-				
-				// fetch fields
-				if( this.$fields().length ) {
-					this.fetchFields();
-				}
-				
-				// fetch preview
-				if( this.$preview().length ) {
-					this.fetchPreview();
-				}
-			});
-			
-			// return elements in a fragment
-			return el(
-				Fragment,
-				null,
-				
-				// block controls
-				el(
-                    BlockControls,
-                    null,
-                    el(
-	                    Toolbar,
-	                    null,
-	                    (this.supports('mode')) && el(
-		                    IconButton,
-		                    {
-			                    className: "components-icon-button components-toolbar__control",
-			                    label: (this.get('mode') == 'preview') ? acf.__('Switch to Edit') : acf.__('Switch to Preview'),
-			                    icon: (this.get('mode') == 'preview') ? 'edit' : 'welcome-view-site',
-			                    onClick: this.proxy(this.toggleMode)
-							}
-	                    )
-                    )
-                ),
-                
-                // inspector controls
-                el(
-                    InspectorControls,
-                    null,
-                    el(
-						'div',
-						{
-							id: 'acf-block-panel-' + this.get('id'),
-							className: 'acf-block-panel'
-						},
-						el(
-							'div',
-							{
-								className: 'acf-block-panel-actions'
-							},
-							(this.supports('mode')) && el(
-								'button',
-								{
-									type: 'button',
-									id: 'acf-block-preview-button-' + this.get('id'),
-									className: 'button acf-block-preview-button',
-									onClick: this.proxy(this.toggleMode)
-								},
-								(this.get('mode') == 'preview') ? acf.__('Switch to Edit') : acf.__('Switch to Preview')
-							)
-						),
-						(this.get('mode') == 'preview') && el(
-							'div',
-							{
-								id: 'acf-block-fields-' + this.get('id'),
-								className: 'acf-block-fields acf-fields',
-							}
-						)
-					)
-                ),
-                
-                // block content
-				el(
-					'div',
-					{
-						id: 'acf-block-body-' + this.get('id'),
-						className: 'acf-block-body is-' + this.get('mode')
-					},
-					(this.get('mode') == 'edit') && el(
-						'div',
-						{
-							id: 'acf-block-fields-' + this.get('id'),
-							className: 'acf-block-fields acf-fields',
-						}
-					),
-					(this.get('mode') == 'preview') && el(
-						'div',
-						{
-							id: 'acf-block-preview-' + this.get('id'),
-							className: 'acf-block-preview'
-						}
-					)
-				)
-			);
-			
-		},
-		
-		/**
-		*  fetchFields
-		*
-		*  Loads the fields HTML via AJAX.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	void
-		*/
-		fetchFields: function(){
-			
-			// vars
-			var $fields = this.$fields();
-			
-			// bail ealry if already loaded
-			if( $fields.hasClass('is-loaded') ) {
-				return;
-			}
-			
-			// add class
-			$fields.addClass('is-loading');
-			
-			// ajax
-			$.ajax({
-		    	url: acf.get('ajaxurl'),
-				dataType: 'html',
-				type: 'post',
-				cache: false,
-				data: acf.prepareForAjax({
-					action:	'acf/ajax/render_block_edit',
-					block: this.data
-				}),
-				context: this,
-				success: function( html ){
-					
-					// update classes
-					$fields.removeClass('is-loading').addClass('is-loaded');
-					
-					// append html
-					$fields.html( html );
-					
-					// append html and do action
-					acf.doAction('append', $fields);
-					
-					// add event
-					this.on( $fields, 'change keyup', 'onChange' );
-				}
-			});
-		},
-		
-		/**
-		*  fetchPreview
-		*
-		*  Loads the preview HTML via AJAX.
-		*  Uses a timeout to avoid wasted ajax requests during "change" events.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	void
-		*/
-		fetchPreview: function(){
-			
-			// vars
-			var $preview = this.$preview();
-			
-			// abort previous xhr
-			if( this.xhrPreview ) {
-				this.xhrPreview.abort();
-			}
-			
-			// bail ealry if already loaded
-			if( $preview.hasClass('is-loaded') ) {
-				return;
-			}
-			
-			// add class
-			$preview.addClass('is-loading');
-			
-			// Show loading block
-			if( !$preview.html() ) {
-				$preview.html('<div class="acf-block-loading"><i class="acf-loading"></i></div>');
-			}
-			
-			// ajax
-			this.xhrPreview = $.ajax({
-		    	url: acf.get('ajaxurl'),
-				dataType: 'html',
-				type: 'post',
-				cache: false,
-				data: acf.prepareForAjax({
-					action:	'acf/ajax/render_block_preview',
-					block: this.data
-				}),
-				context: this,
-				success: function( html ){
-					
-					// update classes
-					$preview.removeClass('is-loading').addClass('is-loaded');
-					
-					// append html
-					$preview.html( html );
-				}
-			});
-		},
-		
-		/**
-		*  toggleMode
-		*
-		*  Toggles between edit and preview mode.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	void
-		*/
-		toggleMode: function(){
-			
-			// toggle
-			if( this.get('mode') == 'preview' ) {
-				this.setAttributes({ mode: 'edit' });
-			} else {
-				this.setAttributes({ mode: 'preview' });
-			}
-		},
-		
-		/**
-		*  onChange
-		*
-		*  Triggered during "change" event.
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	object e The event object.
-		*  @param	jQuery $el The jQuery element from e.
-		*  @return	void
-		*/
-		onChange: function( e, $el ){
-			
-			// remove 'is-loaded' class from preview allowing preview to be updated
-			this.$preview().removeClass('is-loaded');
-			
-			// update attibutes (updates block and triggers render)
-			this.setAttributes({
-				data: acf.serialize( this.$fields(), 'acf-' + this.get('id') ),
-			});
-		},
-		
-		/**
-		*  setAttributes
-		*
-		*  Wrapper for this.block.setAttributes()
-		*
-		*  @date	23/10/18
-		*  @since	5.8.0
-		*
-		*  @param	object attributes An object of attributes to update.
-		*  @return	void
-		*/
-		setAttributes: function( attributes ){
-			return this.block.setAttributes( attributes );
-		}
-	});
-		
-	/**
-	*  blocksManager
-	*
-	*  Global functionality for managing blocks.
-	*
-	*  @date	7/8/18
-	*  @since	5.7.3
-	*
-	*  @param	void
-	*  @return	void
-	*/
-	var blocksManager = new acf.Model({
-		
-		// Wait until 'ready' to initialize.
-		wait: 'ready',
-		
-		/**
-		*  initialize
-		*
-		*  Setup model functionality.
-		*
-		*  @date	5/11/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	void
-		*/
-		initialize: function(){
-			
-			// 1. Register block types.
-			this.registerBlockTypes();
-			
-			// 2. Trigger refresh to fix UI
-			this.triggerRefresh();
-			
-			// 3. Customize BlockListBlock component.
-			this.customizeBlockListBlock();
-		},
-		
-		/**
-		*  registerBlockTypes
-		*
-		*  Register all localized block types.
-		*
-		*  @date	5/11/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	void
-		*/
-		registerBlockTypes: function(){
-			var blockTypes = acf.get('blockTypes');
-			if( acf.isArray(blockTypes) ) {
-				blockTypes.map( acf.registerBlockType );
-			}
-		},
-		
-		/**
-		*  triggerRefresh
-		*
-		*  Gutenberg hides all UI during initialization.
-		*  Trigger the 'refresh' action after UI is visble to fix field widths.
-		*
-		*  @date	31/10/18
-		*  @since	5.8.0
-		*
-		*  @param	void
-		*  @return	void
-		*/
-		triggerRefresh: function(){
-			
-			// Bail early if no #editor element.
-			if( !$('#editor').length ) {
-				return;
-			}
-			
-			// Use timeout to ensure triggering after fields are visible.
-			setTimeout(function(){
-				acf.doAction('refresh');
-			}, 0);
-		},
-		
-		/**
-		*  customizeBlockListBlock
-		*
-		*  Cusstomize the BlockListBlock component.
-		*  Fixes a bug where block attribute "default values" are not saved in serialized data.
-		*  Extend the default BlockListBlock component and apply a default "align" value allowing
-		*  Gutenberg to serialize the "align" setting (normally ignored).
-		*
-		*  @see		https://github.com/WordPress/gutenberg/issues/7342#issuecomment-435371583
-		*  @date	5/11/18
-		*  @since	5.8.0
-		*
-		*  @param	object BlockListBlock The BlockListBlock element.
-		*  @return	createElement
-		*/
-		customizeBlockListBlock: function(){
-			
-			// bail ealry if function does not exist
-			if( !wp || !wp.compose || !wp.compose.createHigherOrderComponent ) {
-				return;
-			}
-			
-			// Create new component.
-			var withAcfBlock = wp.compose.createHigherOrderComponent(function( BlockListBlock ) {
-				return function( props ) {
-					
-					// Check if block type exists.
-					if( acf.hasBlockType(props.block.name) ) {
-						
-						// Get block.
-						var block = acf.getBlock( props.block.clientId );
-						
-						// Create new block if does not yet exist.
-						if( !block ) {
-							block = acf.newBlock( props.block );
-						}
-					}
-					
-					// return
-					return wp.element.createElement(
-						BlockListBlock,
-						props
-					);
-				};
-			}, 'withDataAlign' );
-			
-			// Add filter.
-			wp.hooks.addFilter( 'editor.BlockListBlock', 'acf/with-acf-block', withAcfBlock );
-		}
-	});
-	
-	
-	
-		// wp.data.select( 'core/editor' )
-	// wp.data.dispatch( 'core/editor' )
-	// wp.data.dispatch( 'core/editor' ).savePost()
-	//wp.data.dispatch( 'core/editor' ).editPost({ foo: 'bar' });
-	
-	
-	
-/*
-	} else {
-		dispatch( removeNotice( SAVE_POST_NOTICE_ID ) );
-		dispatch( removeNotice( AUTOSAVE_POST_NOTICE_ID ) );
-
-		request = apiFetch( {
-			path: `/wp/v2/${ postType.rest_base }/${ post.id }`,
-			method: 'PUT',
-			data: toSend,
-		} );
-	}
-*/
-	
-
-
-	
-/*
-	wp.hooks.addFilter( 'blocks.getBlockAttributes', 'acf/blocks.getBlockAttributes', function( blockAttributes, blockType, innerHTML, attributes ){
-		console.log('blocks.getBlockAttributes', blockAttributes, blockType, innerHTML, attributes);
-		return blockAttributes;
-	});
-*/
-	
-	
 })(jQuery);
 
 (function($, undefined){
@@ -15229,5 +14798,4 @@
 // @codekit-prepend "_acf-tinymce.js";
 // @codekit-prepend "_acf-validation.js";
 // @codekit-prepend "_acf-helpers.js";
-// @codekit-prepend "_acf-blocks";
 // @codekit-prepend "_acf-compatibility";
