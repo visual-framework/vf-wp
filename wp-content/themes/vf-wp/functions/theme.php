@@ -208,6 +208,57 @@ function vf__nav_menu_link_attributes($atts, $item, $args, $depth) {
   return $atts;
 }
 
+/**
+ * Filter the blog description to load via Content Hub
+ */
+add_filter('option_blogdescription', 'vf__blog_description', 10, 1);
+
+function vf__blog_description($value) {
+  // remove filter to avoid update recursion
+  remove_filter('option_blogdescription', 'vf__blog_description', 10, 1);
+
+  if ( ! class_exists('VF_Cache')) {
+    return $value;
+  }
+
+  // generate API request
+  $uuid = vf__get_site_uuid();
+  $url = VF_Cache::get_api_url();
+  $url .= '/pattern.html';
+  $url = add_query_arg(array(
+    'filter-uuid'         => $uuid,
+    'filter-content-type' => 'profiles',
+    'pattern'             => 'node-strapline',
+    'source'              => 'contenthub',
+  ), $url);
+
+  // fetch content via the Content Hub cache
+  $description = VF_Cache::get_post($url);
+
+  // strip HTML comments
+  $description = preg_replace('#<!--(.*?)-->#s', '', $description);
+  // strip edit link
+  $description = preg_replace(
+    '#<a[^>]*class="[^"]*embl-conditional-edit[^"]*"[^>]*>.*</a>#s',
+    '', $description
+  );
+  // strip tags except for allowed
+  $description = wp_kses(
+    $description,
+    array(
+      'span' => array()
+    )
+  );
+  $description = trim($description);
+
+  // save updated description
+  if ( ! empty($description) && $value !== $description) {
+    $value = $description;
+    update_option('blogdescription', $value);
+  }
+
+  return $value;
+}
 
 /**
  * Shorthand to safely query the UUID of the active "who" term, if set
