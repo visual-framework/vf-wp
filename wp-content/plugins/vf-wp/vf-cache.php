@@ -13,9 +13,14 @@ class VF_Cache {
   private $post_type_plural = 'vf_caches';
   private $roles = array('administrator', 'editor', 'author');
 
+  // Global store
+  private $store = array();
+
   public function __construct() {
     // Nothing
   }
+
+  const MAX_AGE = 10;
 
   /**
    * Generate hash / checksum for value
@@ -92,63 +97,145 @@ class VF_Cache {
   /**
    * Retrieve HTML contents from cache by URL hash
    */
-  static public function get_post(string $url) {
-    if (empty($url)) return;
+  static public function fetch(string $url) {
+    global $vf_cache;
+    if ( ! $vf_cache instanceof VF_Cache) {
+      return;
+    }
 
+    // Validate URL
+    if (empty($url)) {
+      return;
+    }
     $url = add_query_arg('source', 'contenthub', $url);
 
-    // Looked for cached content from hashed URL
+    // Look for cached content from hashed URL
     $hash = VF_Cache::hash($url);
+
+    // Return from global store if already retrieved from database
+    if ($vf_cache->has($hash)) {
+      $html = $vf_cache->get($hash);
+      if (defined('WP_DEBUG') && WP_DEBUG) {
+        $html = "\n\n<!-- STORE HIT -->\n\n{$html}";
+      }
+      return $html;
+    }
+
     // The hash is used as `post_name` for `vf_cache` post type
     $cached = get_page_by_path($hash, OBJECT, 'vf_cache');
+
     // Cached content age in seconds (zero means not cached)
-    $cached_age = $cached ? time() - mysql2date('U', $cached->post_modified, false) : 0;
-    $max_age = 300;
+    $age = $cached ? time() - mysql2date('U', $cached->post_modified, false) : PHP_INT_MAX;
 
-    // Add or update cached if outdated
-    if ($cached_age <= 0 || $cached_age > $max_age) {
+    // Save to global store
+    $vf_cache->set(
+      $hash,
+      $cached ? $cached->post_content : '',
+      array(
+        'url' => $url,
+        'age' => $age
+      )
+    );
 
-      $content = VF_Cache::vf_curl($url);
+    return $vf_cache->get($hash);
+  }
 
-      if (! $content || $content  === false) {
-         // no reply, use (and cache) the JS loader approach
-         $content = '<link rel="import" href="' . $url . '" data-target="self" data-embl-js-content-hub-loader>';
-      }
-
-      if ( $content === strip_tags($content) ) {
-         return;
-      }
-
-      $cached = get_page_by_path($hash, OBJECT, 'vf_cache');
-      if ($cached instanceof WP_Post) {
-        wp_update_post(array(
-          'ID'           => $cached->ID,
-          'post_content' => $content
-        ));
-      } else {
-        $cached = get_post(
-            wp_insert_post(array(
-            'post_author'  => 1,
-            'post_name'    => $hash,
-            'post_title'   => $url,
-            'post_type'    => 'vf_cache',
-            'post_content' => $content,
-            'post_status'  => 'publish'
-          ), true)
-        );
-      }
+  public function update($hash) {
+    if ( ! $this->has($hash)) {
+      return;
     }
-    if ($cached) {
-      return $cached->post_content;
+
+    $data = $this->store[$hash];
+    if ( ! isset($data['url'])) {
+      return;
     }
+
+    $content = VF_Cache::vf_curl($data['url']);
+
+     // no reply, use (and cache) the JS loader approach
+    if ( ! $content) {
+       $content = '<link rel="import" href="';
+       $conetnt .= $data['url'];
+       $content .= '" data-target="self" data-embl-js-content-hub-loader>';
+    }
+
+    if ( $content === strip_tags($content) ) {
+       return;
+    }
+
+    $cached = get_page_by_path($hash, OBJECT, 'vf_cache');
+    if ($cached instanceof WP_Post) {
+      wp_update_post(array(
+        'ID'           => $cached->ID,
+        'post_content' => $content
+      ));
+    } else {
+      $cached = get_post(
+          wp_insert_post(array(
+          'post_author'  => 1,
+          'post_name'    => $hash,
+          'post_title'   => $data['url'],
+          'post_type'    => 'vf_cache',
+          'post_content' => $content,
+          'post_status'  => 'publish'
+        ), true)
+      );
+    }
+
+    $this->set(
+      $hash,
+      $content,
+      array(
+        'url' => $data['url'],
+        'age' => 0
+      )
+    );
+  }
+
+  /**
+   * Return true if data exists for key
+   */
+  public function has($key) {
+    return array_key_exists($key, $this->store);
+  }
+
+  /**
+   * Return value for key
+   */
+  public function get($key) {
+    if ($this->has($key)) {
+      $data = $this->store[$key];
+      if (isset($data['age'])) {
+        if (intval($data['age']) > VF_Cache::MAX_AGE) {
+          $this->store[$key]['expired'] = true;
+        }
+      }
+      return $data['value'];
+    }
+  }
+
+  /**
+   * Set value for key
+   */
+  public function set($key, $value, $meta) {
+    $data = array(
+      'key'   => $key,
+      'value' => $value
+    );
+    if (is_array($meta)) {
+      $data = array_merge($meta, $data);
+    }
+    $this->store[$key] = $data;
   }
 
   /**
    * Initial setup once per load
    */
   public function initialize() {
+
     add_action('init', array($this, 'init'));
     add_action('acf/init', array($this, 'acf_init'));
+    add_action('shutdown', array($this, 'shutdown'), PHP_INT_MAX);
     if (is_admin()) {
       add_filter(
         'manage_' . $this->post_type . '_posts_columns',
@@ -174,6 +261,51 @@ class VF_Cache {
       add_filter('pre_get_posts', array($this, 'pre_get_posts'));
       add_filter('user_can_richedit', array($this, 'user_can_richedit'));
     }
+  }
+
+  public function shutdown() {
+
+    // ignore_user_abort(true);
+
+    // // buffer all upcoming output
+    // ob_start();
+    // echo "TEST 1";
+
+    // // get the size of the output
+    // $size = ob_get_length();
+
+    // // send headers to tell the browser to close the connection
+    // header("Content-Length: {$size}");
+    // header('Connection: close');
+
+    // // flush all output
+    // ob_end_flush();
+    // ob_flush();
+    // flush();
+
+    // sleep(10);
+
+    // echo 'TEST 2';
+
+    ignore_user_abort(true);//avoid apache to kill the php running
+    ob_start();//start buffer output
+
+    // echo "show something to user";
+    session_write_close();//close session file on server side to avoid blocking other requests
+
+    @header("Content-Encoding: none");//send header to avoid the browser side to take content as gzip format
+    @header("Content-Length: ".ob_get_length());//send length header
+    @header("Connection: close");//or redirect to some url: header('Location: http://www.google.com');
+    ob_end_flush();
+    flush();//really send content, can't change the order:1.ob buffer to normal buffer, 2.normal buffer to output
+
+    //continue do something on server side
+    ob_start();
+    sleep(5);//the user won't wait for the 5 seconds
+    echo 'for diyism';//user can't see this
+    // file_put_contents('/tmp/process.log', ob_get_contents());
+    ob_end_clean();
+
   }
 
   /**
@@ -360,7 +492,7 @@ class VF_Cache {
 
   /**
    * Filter: `user_can_richedit`
-   * Hide the WYSIWYG editor for cache ontent
+   * Hide the WYSIWYG editor for cache content
    */
   function user_can_richedit($default) {
     if (get_post_type() === 'vf_cache') return false;

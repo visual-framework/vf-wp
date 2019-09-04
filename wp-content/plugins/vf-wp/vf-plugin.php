@@ -156,7 +156,7 @@ class VF_Plugin {
    * Return API HTML from cache
    */
   public function api_html() {
-    return VF_Cache::get_post($this->api_url());
+    return VF_Cache::fetch($this->api_url());
   }
 
   /**

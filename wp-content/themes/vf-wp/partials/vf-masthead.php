@@ -7,7 +7,7 @@
           <?php
           if ( class_exists('VF_Cache') ) {
             $uuid = vf__get_site_uuid();
-            $short_description = VF_Cache::get_post('https://dev.beta.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid='.$uuid.'&pattern=node-strapline&source=contenthub');
+            $short_description = VF_Cache::fetch('https://dev.beta.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid='.$uuid.'&pattern=node-strapline&source=contenthub');
             // we don't want any of the contentHub `div`s. `span`s are OK though
             $short_description = str_replace(array('<div', '</div>'), array('<span', '</span>'), $short_description);
             print $short_description;
