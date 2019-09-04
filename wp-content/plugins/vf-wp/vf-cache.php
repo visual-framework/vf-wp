@@ -16,11 +16,11 @@ class VF_Cache {
   // Global store
   private $store = array();
 
+  const MAX_AGE = 10;
+
   public function __construct() {
     // Nothing
   }
-
-  const MAX_AGE = 10;
 
   /**
    * Generate hash / checksum for value
@@ -103,11 +103,13 @@ class VF_Cache {
       return;
     }
 
-    // Validate URL
     if (empty($url)) {
       return;
     }
-    $url = add_query_arg('source', 'contenthub', $url);
+
+    $url = add_query_arg(array(
+      'source' => 'contenthub'
+    ), $url);
 
     // Look for cached content from hashed URL
     $hash = VF_Cache::hash($url);
@@ -115,8 +117,8 @@ class VF_Cache {
     // Return from global store if already retrieved from database
     if ($vf_cache->has($hash)) {
       $html = $vf_cache->get($hash);
-      if (defined('WP_DEBUG') && WP_DEBUG) {
-        $html = "\n\n<!-- STORE HIT -->\n\n{$html}";
+      if (vf_debug()) {
+        $html .= "\n<!--/vf:cache:store-->\n";
       }
       return $html;
     }
