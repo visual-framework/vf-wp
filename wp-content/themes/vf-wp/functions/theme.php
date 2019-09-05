@@ -233,7 +233,7 @@ function vf__blog_description($value) {
   ), $url);
 
   // fetch content via the Content Hub cache
-  $description = VF_Cache::get_post($url);
+  $description = VF_Cache::fetch($url);
 
   // strip HTML comments
   $description = preg_replace('#<!--(.*?)-->#s', '', $description);

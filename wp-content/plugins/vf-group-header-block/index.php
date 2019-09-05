@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Group Header
 Description: VF-WP theme block.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -19,7 +19,8 @@ class VF_Group_Header extends VF_Plugin {
   private $is_minimal = false;
 
   protected $API = array(
-    'filter-content-type' => 'person'
+    'filter-content-type' => 'person',
+    'source'              => 'contenthub',
   );
 
   function __construct(array $params = array()) {
@@ -92,9 +93,13 @@ class VF_Group_Header extends VF_Plugin {
     $uuid = vf__get_site_uuid();
 
     $url = VF_Cache::get_api_url();
-    $url .= '/pattern.html?filter-content-type=profiles';
-    $url .= "&filter-uuid={$uuid}";
-    $url .= '&pattern=node-teaser&source=contenthub';
+    $url .= '/pattern.html';
+    $url = add_query_arg(array(
+      'filter-uuid'         => $uuid,
+      'filter-content-type' => 'profiles',
+      'pattern'             => 'node-teaser',
+      'source'              => 'contenthub',
+    ), $url);
 
     $heading = VF_Cache::fetch($url);
 

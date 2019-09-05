@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Global Footer
 Description: VF-WP theme global container.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -18,7 +18,8 @@ class VF_Global_Footer extends VF_Plugin {
 
   protected $API = array(
     'pattern'             => 'node-body',
-    'filter-content-type' => 'article'
+    'filter-content-type' => 'article',
+    'source'              => 'contenthub',
   );
 
   function __construct(array $params = array()) {

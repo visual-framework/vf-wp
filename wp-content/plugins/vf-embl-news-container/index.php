@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EMBL News
 Description: VF-WP theme global container.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -26,7 +26,8 @@ class VF_EMBL_News extends VF_Plugin {
     'pattern'                                => 'vf-news-item-default',
     'filter-content-type'                    => 'article',
     'filter-field-value[field_article_type]' => 'article_timely',
-    'sort-field-value[created]'              => 'DESC'
+    'sort-field-value[created]'              => 'DESC',
+    'source'                                 => 'contenthub',
   );
 
   function __construct(array $params = array()) {
@@ -120,7 +121,7 @@ class VF_EMBL_News extends VF_Plugin {
     }
     */
 
-    
+
     // Add Factoid clone field
     if (class_exists('VF_Factoid')) {
       acf_add_local_field(

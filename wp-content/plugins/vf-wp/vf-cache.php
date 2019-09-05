@@ -51,11 +51,22 @@ class VF_Cache {
     // A more reliable way to fetch remote HTML derrived from:
     // https://www.experts-exchange.com/questions/26187506/Function-file-get-contents-connection-time-out.html
     $curl = curl_init();
+
+    $url = esc_url_raw($url);
+
+    // Some requests turning "Bad request" error without headers
+    $headers = array(
+      'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Cache-Control: no-cache',
+      'Connection: keep-alive',
+      'Pragma: no-cache'
+    );
+
     // http://php.net/manual/en/function.curl-setopt.php
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($curl, CURLOPT_URL,            $url);
-    curl_setopt($curl, CURLOPT_HTTPHEADER,     array(''));
+    curl_setopt($curl, CURLOPT_HTTPHEADER,     $headers);
     curl_setopt($curl, CURLOPT_USERAGENT,      'Mozilla/5.0 (compatible; EMBL VF WP; http://content.embl.org/user-agent)');
     curl_setopt($curl, CURLOPT_REFERER,        'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     curl_setopt($curl, CURLOPT_ENCODING,       'gzip,deflate');
@@ -63,8 +74,10 @@ class VF_Cache {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($curl, CURLOPT_TIMEOUT,        2);
     $html = curl_exec($curl);
+    $info = curl_getinfo($curl);
     $err = curl_errno($curl);
     curl_close($curl);
+
     return $err ? '' : $html;
   }
 
@@ -80,11 +93,6 @@ class VF_Cache {
     if (empty($url)) {
       return;
     }
-
-    // TODO: move to individual plugins?
-    $url = add_query_arg(array(
-      'source' => 'contenthub'
-    ), $url);
 
     // Look for cached content from hashed URL
     $key = VF_Cache::hash($url);

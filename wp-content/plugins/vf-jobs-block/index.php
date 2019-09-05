@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Jobs
 Description: VF-WP theme block.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -22,7 +22,8 @@ class VF_Jobs extends VF_Plugin {
 
   protected $API = array(
     'pattern'             => 'vf-jobs-snippet',
-    'filter-content-type' => 'jobs'
+    'filter-content-type' => 'jobs',
+    'source'              => 'contenthub',
   );
 
   function __construct(array $params = array()) {
