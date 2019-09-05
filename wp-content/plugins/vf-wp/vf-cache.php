@@ -10,7 +10,7 @@ if ( ! class_exists('VF_Cache') ) :
 class VF_Cache {
 
   // How often to schedule a cache update check
-  const REFRESH_RATE = 60;
+  const REFRESH_RATE = 60 * 5;
 
   const MAX_AGE = 300; // 60 * 11;
 
@@ -479,7 +479,16 @@ xhr.send();
     if ($column === 'vf_hash') {
       echo '<code>', esc_html(get_post_field('post_name', $post_id)) , '</code>';
     } else if ($column === 'vf_modified') {
-      echo get_the_modified_date('Y-m-d H:i:s', get_post($post_id));
+      // based on `class-wp-posts-list-table.php`
+      $t_time = get_the_modified_date(__('Y/m/d g:i:s a'), $post_id);
+      $h_time = sprintf(
+        __('%s ago'),
+        human_time_diff(
+          get_the_modified_date('U', $post_id),
+          current_time('timestamp')
+        )
+      );
+      echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
     }
   }
 
