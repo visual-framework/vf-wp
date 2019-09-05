@@ -96,7 +96,7 @@ class VF_Group_Header extends VF_Plugin {
     $url .= "&filter-uuid={$uuid}";
     $url .= '&pattern=node-teaser&source=contenthub';
 
-    $heading = VF_Cache::get_post($url);
+    $heading = VF_Cache::fetch($url);
 
     $heading = preg_replace(
       '#<p>#',

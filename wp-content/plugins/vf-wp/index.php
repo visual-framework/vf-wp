@@ -56,26 +56,17 @@ class VF_WP {
     register_activation_hook(__FILE__, array($this, 'activate'));
     register_deactivation_hook(__FILE__, array($this, 'deactivate'));
 
+    add_action(
+      'init',
+      array($this, 'init')
+    );
+
     // ACF load and save setup - saving only useful for development
     add_filter(
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json'),
       1
     );
-
-    // Output debug HTML comments around plugins
-    if (defined('WP_DEBUG') && WP_DEBUG) {
-      add_action(
-        'vf/plugin/before_render',
-        array($this, 'plugin_before_render'),
-        1
-      );
-      add_action(
-        'vf/plugin/after_render',
-        array($this, 'plugin_after_render'),
-        1
-      );
-    }
   }
 
   /**
@@ -128,17 +119,33 @@ class VF_WP {
     return $paths;
   }
 
+  function init() {
+    // Enable debug comments
+    if (vf_debug()) {
+      add_action(
+        'vf/plugin/before_render',
+        array($this, 'plugin_before_render'),
+        1
+      );
+      add_action(
+        'vf/plugin/after_render',
+        array($this, 'plugin_after_render'),
+        1
+      );
+    }
+  }
+
   /**
    * Output debug HTML comments around rendered plugin templates
    */
   function plugin_before_render($vf_plugin) {
     $url = $vf_plugin->api_url();
-    echo "\n<!--plugin:{$vf_plugin->post()->post_name}-->\n";
-    if ($url) echo "<!--api:{$url}-->\n";
+    echo "\n<!--vf:plugin:{$vf_plugin->post()->post_name}-->\n";
+    if ($url) echo "<!--vf:api:{$url}-->\n";
   }
 
   function plugin_after_render($vf_plugin) {
-    echo "\n<!--/plugin:{$vf_plugin->post()->post_name}-->\n";
+    echo "\n<!--/vf:plugin:{$vf_plugin->post()->post_name}-->\n";
   }
 
 } // VF_WP
