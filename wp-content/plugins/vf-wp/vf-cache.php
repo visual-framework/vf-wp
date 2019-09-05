@@ -9,10 +9,11 @@ if ( ! class_exists('VF_Cache') ) :
  */
 class VF_Cache {
 
-  // How often to schedule a cache update check
-  const REFRESH_RATE = 60 * 5;
+  // Default max page for cached content
+  const MAX_AGE = 60 * 5;
 
-  const MAX_AGE = 300; // 60 * 11;
+  // How often to schedule a cache update check
+  const REFRESH_RATE = 60 * 1;
 
   private $post_type = 'vf_cache';
   private $post_type_plural = 'vf_caches';
@@ -41,6 +42,16 @@ class VF_Cache {
   static public function get_api_url() {
     $url = get_field('vf_api_url', 'option');
     return rtrim(trim($url), '/\\');
+  }
+
+  /**
+   * Return the post modified age in seconds
+   */
+  static public function get_post_age($post) {
+    if ($post instanceof WP_Post) {
+      return time() - mysql2date('U', $post->post_modified, false);
+    }
+    return 0;
   }
 
   /**
@@ -84,7 +95,7 @@ class VF_Cache {
   /**
    * Return HTML content for URL via this cache
    */
-  static public function fetch(string $url) {
+  static public function fetch(string $url, $max_age = VF_Cache::MAX_AGE) {
     global $vf_cache;
     if ( ! $vf_cache instanceof VF_Cache) {
       trigger_error('Global variable $vf_cache is not instance of VF_Cache');
@@ -94,7 +105,10 @@ class VF_Cache {
       return;
     }
 
-    // Look for cached content from hashed URL
+    /**
+     * Look for cached content from hashed URL
+     * The hash is used as `post_name` for `vf_cache` post type
+     */
     $key = VF_Cache::hash($url);
 
     // Return from global store if already retrieved
@@ -103,24 +117,26 @@ class VF_Cache {
       return $html;
     }
 
-    // The hash is used as `post_name` for `vf_cache` post type
-    $cache_post = get_page_by_path($key, OBJECT, 'vf_cache');
-
-    // Cached content age in seconds (zero means not cached)
+    // Retrieve cached content from database
+    $value = '';
+    $hit = false;
     $age = PHP_INT_MAX;
-    $hit = $cache_post instanceof WP_Post;
-    if ($hit) {
-      $age = time() - mysql2date('U', $cache_post->post_modified, false);
+    $cache_post = get_page_by_path($key, OBJECT, 'vf_cache');
+    if ($cache_post instanceof WP_Post) {
+      $value = $cache_post->post_content;
+      $age = VF_Cache::get_post_age($cache_post);
+      $hit = true;
     }
 
     // Save to global store
     $vf_cache->set(
       $key,
-      $cache_post ? $cache_post->post_content : '',
+      $value,
       array(
-        'url' => $url,
-        'age' => $age,
-        'hit' => $hit
+        'url'     => $url,
+        'hit'     => $hit,
+        'age'     => $age,
+        'max_age' => $max_age
       )
     );
 
@@ -157,11 +173,7 @@ class VF_Cache {
    */
   public function get($key) {
     if ($this->has($key)) {
-      $value = $this->store[$key]['value'];
-      if (vf_debug()) {
-        $value .= "\n<!--/vf:cache:store-->\n";
-      }
-      return $value;
+      return $this->store[$key]['value'];
     }
   }
 
@@ -248,10 +260,10 @@ xhr.send();
    * Specify `$key` to update single post
    */
   private function update_cache_posts($key = false) {
-    $update_store = array();
+    $store = array();
     if ($key) {
       if ($this->has($key)) {
-        $update_store[$key] = $this->store[$key];
+        $store[$key] = $this->store[$key];
       }
     } else {
       $query = new WP_Query(
@@ -262,31 +274,41 @@ xhr.send();
       );
       if ($query->have_posts()) {
         foreach ($query->posts as $post) {
-          $update_store[$post->post_name] = array(
-            'url' => $post->post_title
+          $store[$post->post_name] = array(
+            'url'     => $post->post_title,
+            'age'     => VF_Cache::get_post_age($post),
+            'max_age' => get_post_meta($post->ID, 'vf_cache_max_age', true),
+            'post'    => $post
           );
         }
       }
     }
-    if (empty($update_store)) {
+    if (empty($store)) {
       return;
     }
-    foreach ($update_store as $key => $data) {
+    foreach ($store as $key => $data) {
+
+      if ($data['age'] < $data['max_age']) {
+        continue;
+      }
+
+      if (isset($data['post'])) {
+        $cache_post = $data['post'];
+      } else {
+        $cache_post = get_page_by_path($key, OBJECT, 'vf_cache');
+      }
+
       $html = VF_Cache::fetch_remote($data['url']);
       if (vf_html_empty($html)) {
         $html = '<link rel="import" href="';
         $html .= $data['url'];
         $html .= '" data-target="self" data-embl-js-content-hub-loader>';
       }
+
       // update local store
       $this->store[$key]['value'] = $html;
 
-      if (vf_debug()) {
-        $this->store[$key]['value'] .= "\n<!--/vf:cache:miss-->\n";
-      }
-
       // save to database
-      $cache_post = get_page_by_path($key, OBJECT, 'vf_cache');
       if ($cache_post instanceof WP_Post) {
         wp_update_post(array(
           'ID'           => $cache_post->ID,
@@ -302,6 +324,13 @@ xhr.send();
             'post_status'  => 'publish',
             'post_content' => $html,
           ), true)
+        );
+      }
+      if ($cache_post instanceof WP_Post) {
+        update_post_meta(
+          $cache_post->ID,
+          'vf_cache_max_age',
+          $data['max_age']
         );
       }
     }
@@ -480,15 +509,24 @@ xhr.send();
       echo '<code>', esc_html(get_post_field('post_name', $post_id)) , '</code>';
     } else if ($column === 'vf_modified') {
       // based on `class-wp-posts-list-table.php`
+      $now = current_time('timestamp');
       $t_time = get_the_modified_date(__('Y/m/d g:i:s a'), $post_id);
       $h_time = sprintf(
         __('%s ago'),
         human_time_diff(
           get_the_modified_date('U', $post_id),
-          current_time('timestamp')
+          $now
         )
       );
       echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
+
+      $max_age = get_post_meta($post_id, 'vf_cache_max_age', true);
+      if (is_numeric($max_age)) {
+        echo '<br><small>' . sprintf(
+          __('Rate: %s'),
+          human_time_diff($now + $max_age, $now)
+        ) . '</small>';
+      }
     }
   }
 

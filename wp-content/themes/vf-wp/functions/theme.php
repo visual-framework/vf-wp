@@ -232,8 +232,11 @@ function vf__blog_description($value) {
     'source'              => 'contenthub',
   ), $url);
 
+  // cache for one day
+  $max_age = 60 * 60 * 24 * 1;
+
   // fetch content via the Content Hub cache
-  $description = VF_Cache::fetch($url);
+  $description = VF_Cache::fetch($url, $max_age);
 
   // strip HTML comments
   $description = preg_replace('#<!--(.*?)-->#s', '', $description);
