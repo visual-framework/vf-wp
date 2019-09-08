@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Factoid
 Description: VF-WP theme block.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -20,7 +20,8 @@ class VF_Factoid extends VF_Plugin {
 
   protected $API = array(
     'pattern'             => 'vf-factoid',
-    'filter-content-type' => 'factoid'
+    'filter-content-type' => 'factoid',
+    'source'              => 'contenthub',
   );
 
   public function __construct(array $params = array()) {

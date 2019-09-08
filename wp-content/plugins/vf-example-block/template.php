@@ -1,8 +1,10 @@
 <?php
 
-$text = get_field('vf_example_text');
-$select = get_field('vf_example_select');
-$range = get_field('vf_example_range');
+global $post;
+
+$text = get_field('vf_example_text', $post->ID);
+$select = get_field('vf_example_select', $post->ID);
+$range = get_field('vf_example_range', $post->ID);
 
 ?>
 <div class="vf-content">

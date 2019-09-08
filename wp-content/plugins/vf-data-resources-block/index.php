@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Data resources
 Description: VF-WP theme block.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -18,7 +18,8 @@ class VF_Data_resources extends VF_Plugin {
 
   protected $API = array(
     'pattern'             => 'vf-summary-image',
-    'filter-content-type' => 'resource'
+    'filter-content-type' => 'resource',
+    'source'              => 'contenthub',
   );
 
   function __construct(array $params = array()) {

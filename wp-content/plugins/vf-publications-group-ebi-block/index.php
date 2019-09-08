@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Publications Group EBI
 Description: Query for team publications based of EMBL-EBI specific data source (EBI Content Database).
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -17,7 +17,8 @@ require_once($path);
 class VF_Publications_group_ebi extends VF_Plugin {
 
   protected $API = array(
-    'pattern'             => 'ebi-team-publications'
+    'pattern'             => 'ebi-team-publications',
+    'source'              => 'contenthub',
     // 'filter-content-type' => 'resource'
   );
 

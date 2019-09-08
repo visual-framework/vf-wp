@@ -9,9 +9,20 @@ if ( ! class_exists('VF_Cache') ) :
  */
 class VF_Cache {
 
+  // Default max page for cached content
+  const MAX_AGE = 60 * 5;
+
+  // How often to schedule a cache update check
+  const REFRESH_RATE = 60 * 1;
+
   private $post_type = 'vf_cache';
   private $post_type_plural = 'vf_caches';
   private $roles = array('administrator', 'editor', 'author');
+
+  /**
+   * Global store to save cached posts from the database
+   */
+  private $store = array();
 
   public function __construct() {
     // Nothing
@@ -34,112 +45,294 @@ class VF_Cache {
   }
 
   /**
-   * A more reliable way to fetch remote HTML
-   * Derrived from https://www.experts-exchange.com/questions/26187506/Function-file-get-contents-connection-time-out.html
+   * Return the post modified age in seconds
    */
-  static public function vf_curl($url, $timeout=2, $error_report=FALSE)  {
+  static public function get_post_age($post) {
+    if ($post instanceof WP_Post) {
+      return time() - mysql2date('U', $post->post_modified, false);
+    }
+    return 0;
+  }
+
+  /**
+   * Return HTML content for URL
+   * Plugins should use `VF_Cache::fetch()`
+   */
+  static public function fetch_remote($url)  {
+    // A more reliable way to fetch remote HTML derrived from:
+    // https://www.experts-exchange.com/questions/26187506/Function-file-get-contents-connection-time-out.html
     $curl = curl_init();
 
-    // I don't think we need these, but leeving commented in case...
-    $header[] = "";
-    // $header[] = "Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
-    // $header[] = "Cache-Control: max-age=0";
-    // $header[] = "Connection: keep-alive";
-    // $header[] = "Keep-Alive: 300";
-    // $header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
-    // $header[] = "Accept-Language: en-us,en;q=0.5";
-    // $header[] = "Pragma: "; // browsers keep this blank.
+    $url = esc_url_raw($url);
 
-    // Disable SSL as PHP does not come with a CA certificate bundle any more
-    // and you have to download this manually and set a reference to it in php.ini:
-    // https://wehavefaces.net/fixing-ssl-certificate-problem-when-performing-https-requests-in-php-e3b2bb5c58f6
-    // and that's not a great option for hosting as a service
-    // So we disable the ssl verification: https://www.drupal.org/project/uc_linkpoint_api/issues/1081534:
+    // Some requests turning "Bad request" error without headers
+    $headers = array(
+      'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+      'Cache-Control: no-cache',
+      'Connection: keep-alive',
+      'Pragma: no-cache'
+    );
+
+    // http://php.net/manual/en/function.curl-setopt.php
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-
-    // Curl options
-    // http://php.net/manual/en/function.curl-setopt.php
     curl_setopt($curl, CURLOPT_URL,            $url);
+    curl_setopt($curl, CURLOPT_HTTPHEADER,     $headers);
     curl_setopt($curl, CURLOPT_USERAGENT,      'Mozilla/5.0 (compatible; EMBL VF WP; http://content.embl.org/user-agent)');
-    // curl_setopt($curl, CURLOPT_USERAGENT,      'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6');
-    curl_setopt($curl, CURLOPT_HTTPHEADER,     $header);
     curl_setopt($curl, CURLOPT_REFERER,        'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     curl_setopt($curl, CURLOPT_ENCODING,       'gzip,deflate');
     curl_setopt($curl, CURLOPT_AUTOREFERER,    TRUE);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($curl, CURLOPT_TIMEOUT,        $timeout);
-
-    // Bootstrap
-    $htm = curl_exec($curl);
+    curl_setopt($curl, CURLOPT_TIMEOUT,        2);
+    $html = curl_exec($curl);
+    $info = curl_getinfo($curl);
     $err = curl_errno($curl);
-    $inf = curl_getinfo($curl);
     curl_close($curl);
 
-    // ON FAILURE
-    // if (!$htm) {
-    //     // PROCESS ERRORS HERE
-    //     if ($error_report) {
-    //         echo "CURL FAIL: $url TIMEOUT=$timeout, CURL_ERRNO=$err";
-    //         var_dump($inf);
-    //     }
-    //     return FALSE;
-    // }
-
-    return $htm;
+    return $err ? '' : $html;
   }
 
   /**
-   * Retrieve HTML contents from cache by URL hash
+   * Return HTML content for URL via this cache
    */
-  static public function get_post(string $url) {
-    if (empty($url)) return;
+  static public function fetch(string $url, $max_age = VF_Cache::MAX_AGE) {
+    global $vf_cache;
+    if ( ! $vf_cache instanceof VF_Cache) {
+      trigger_error('Global variable $vf_cache is not instance of VF_Cache');
+      return;
+    }
+    if (empty($url)) {
+      return;
+    }
 
-    $url = add_query_arg('source', 'contenthub', $url);
+    /**
+     * Look for cached content from hashed URL
+     * The hash is used as `post_name` for `vf_cache` post type
+     */
+    $key = VF_Cache::hash($url);
 
-    // Looked for cached content from hashed URL
-    $hash = VF_Cache::hash($url);
-    // The hash is used as `post_name` for `vf_cache` post type
-    $cached = get_page_by_path($hash, OBJECT, 'vf_cache');
-    // Cached content age in seconds (zero means not cached)
-    $cached_age = $cached ? time() - mysql2date('U', $cached->post_modified, false) : 0;
-    $max_age = 300;
+    // Return from global store if already retrieved
+    if ($vf_cache->has($key)) {
+      $html = $vf_cache->get($key);
+      return $html;
+    }
 
-    // Add or update cached if outdated
-    if ($cached_age <= 0 || $cached_age > $max_age) {
+    // Retrieve cached content from database
+    $value = '';
+    $hit = false;
+    $age = PHP_INT_MAX;
+    $cache_post = get_page_by_path($key, OBJECT, 'vf_cache');
+    if ($cache_post instanceof WP_Post) {
+      $value = $cache_post->post_content;
+      $age = VF_Cache::get_post_age($cache_post);
+      $hit = true;
+    }
 
-      $content = VF_Cache::vf_curl($url);
+    // Save to global store
+    $vf_cache->set(
+      $key,
+      $value,
+      array(
+        'url'     => $url,
+        'hit'     => $hit,
+        'age'     => $age,
+        'max_age' => $max_age
+      )
+    );
 
-      if (! $content || $content  === false) {
-         // no reply, use (and cache) the JS loader approach
-         $content = '<link rel="import" href="' . $url . '" data-target="self" data-embl-js-content-hub-loader>';
+    return $vf_cache->get($key);
+  }
+
+  /**
+   * Return true if store has key
+   */
+  public function has($key) {
+    return array_key_exists($key, $this->store);
+  }
+
+  /**
+   * Set value for key
+   */
+  public function set($key, $value, $meta) {
+    $data = array(
+      'key'   => $key,
+      'value' => $value
+    );
+    if (is_array($meta)) {
+      $data = array_merge($meta, $data);
+    }
+    $this->store[$key] = $data;
+    // force an update for initial miss
+    if (isset($data['hit']) && $data['hit'] === false) {
+      $this->update_cache_posts($key);
+    }
+  }
+
+  /**
+   * Return value for key
+   */
+  public function get($key) {
+    if ($this->has($key)) {
+      return $this->store[$key]['value'];
+    }
+  }
+
+  /**
+   * Check if a cache update needs to be scheduled and if so
+   * execute it via a client-side AJAX request
+   */
+  private function maybe_schedule_ajax() {
+    // avoid recursion
+    if (wp_doing_ajax()) {
+      return;
+    }
+    // check if a cache update is due
+    $now = time();
+    $last = intval(
+      get_option('vf_cache_update')
+    );
+    if ($now - $last < VF_Cache::REFRESH_RATE) {
+      return;
+    }
+    // generate nonce for ajax response
+    $nonce = VF_Cache::hash(rand() . $now);
+    update_option('vf_cache_nonce', $nonce);
+    update_option('vf_cache_update', $now);
+
+    /**
+     * Send AJAX request via front-end JavaScript
+     * we could trigger a cache udate server-side with: `wp_remote_post`
+     * but this seems to throw CURL errors or block loading (?)
+     */
+    $url = admin_url('admin-ajax.php');
+    $url = add_query_arg(array(
+      'action'   => 'vf_cache_update',
+      '_wpnonce' => $nonce
+    ), $url);
+
+    // Footer action callback
+    $script = function() use ($url) {
+?>
+<script>
+(function() {
+var xhr = new XMLHttpRequest();
+xhr.open('POST', <?php echo json_encode($url); ?>);
+<?php if (vf_debug()) { ?>
+xhr.addEventListener('load', function() {
+  console.log(xhr);
+});
+<?php } ?>
+xhr.send();
+})();
+</script>
+<?php
+    };
+    // Output JavaScript to footer
+    add_action('admin_footer', $script, 100);
+    add_action('wp_footer', $script, 100);
+  }
+
+  /**
+   * Handle the scheduled AJAX update; hook called by the `wp_ajax_`
+   * action from 'admin-ajax.php' endpoint
+   */
+  public function handle_schedule_ajax() {
+    ignore_user_abort(true);
+    session_write_close();
+
+    // Verify nonce to avoid unscheduled updates
+    $nonce = isset($_GET['_wpnonce']) ? $_GET['_wpnonce'] : false;
+    $check = get_option('vf_cache_nonce');
+    if ( ! $nonce || ! $check || $nonce !== $check) {
+      wp_die(vf_debug() ? '0' : '');
+    }
+    update_option('vf_cache_nonce', 0);
+    update_option('vf_cache_update', time());
+
+    // Start update
+    $this->update_cache_posts();
+
+    wp_die(vf_debug() ? '1' : '');
+  }
+
+  /**
+   * Update cached posts by requesting new HTML
+   * Specify `$key` to update single post
+   */
+  private function update_cache_posts($key = false) {
+    $store = array();
+    if ($key) {
+      if ($this->has($key)) {
+        $store[$key] = $this->store[$key];
+      }
+    } else {
+      $query = new WP_Query(
+        array(
+          'post_type'      => 'vf_cache',
+          'posts_per_page' => -1
+        )
+      );
+      if ($query->have_posts()) {
+        foreach ($query->posts as $post) {
+          $store[$post->post_name] = array(
+            'url'     => $post->post_title,
+            'age'     => VF_Cache::get_post_age($post),
+            'max_age' => get_post_meta($post->ID, 'vf_cache_max_age', true),
+            'post'    => $post
+          );
+        }
+      }
+    }
+    if (empty($store)) {
+      return;
+    }
+    foreach ($store as $key => $data) {
+
+      if ($data['age'] < $data['max_age']) {
+        continue;
       }
 
-      if ( $content === strip_tags($content) ) {
-         return;
+      if (isset($data['post'])) {
+        $cache_post = $data['post'];
+      } else {
+        $cache_post = get_page_by_path($key, OBJECT, 'vf_cache');
       }
 
-      $cached = get_page_by_path($hash, OBJECT, 'vf_cache');
-      if ($cached instanceof WP_Post) {
+      $html = VF_Cache::fetch_remote($data['url']);
+      if (vf_html_empty($html)) {
+        $html = '<link rel="import" href="';
+        $html .= $data['url'];
+        $html .= '" data-target="self" data-embl-js-content-hub-loader>';
+      }
+
+      // update local store
+      $this->store[$key]['value'] = $html;
+
+      // save to database
+      if ($cache_post instanceof WP_Post) {
         wp_update_post(array(
-          'ID'           => $cached->ID,
-          'post_content' => $content
+          'ID'           => $cache_post->ID,
+          'post_content' => $html
         ));
       } else {
-        $cached = get_post(
+        $cache_post = get_post(
             wp_insert_post(array(
             'post_author'  => 1,
-            'post_name'    => $hash,
-            'post_title'   => $url,
+            'post_name'    => $key,
+            'post_title'   => $data['url'],
             'post_type'    => 'vf_cache',
-            'post_content' => $content,
-            'post_status'  => 'publish'
+            'post_status'  => 'publish',
+            'post_content' => $html,
           ), true)
         );
       }
-    }
-    if ($cached) {
-      return $cached->post_content;
+      if ($cache_post instanceof WP_Post) {
+        update_post_meta(
+          $cache_post->ID,
+          'vf_cache_max_age',
+          $data['max_age']
+        );
+      }
     }
   }
 
@@ -147,8 +340,19 @@ class VF_Cache {
    * Initial setup once per load
    */
   public function initialize() {
+
     add_action('init', array($this, 'init'));
     add_action('acf/init', array($this, 'acf_init'));
+
+    add_action(
+      'wp_ajax_vf_cache_update',
+      array($this, 'handle_schedule_ajax')
+    );
+    add_action(
+      'wp_ajax_nopriv_vf_cache_update',
+      array($this, 'handle_schedule_ajax')
+    );
+
     if (is_admin()) {
       add_filter(
         'manage_' . $this->post_type . '_posts_columns',
@@ -178,29 +382,33 @@ class VF_Cache {
 
   /**
    * Action: plugin activation
-   * Setup post type capabilities for caontainers
    */
   public function activate() {
+    // Setup post type capabilities for caontainers
     foreach ($this->roles as $role) {
       $role = get_role($role);
-      $role->add_cap('edit_' . $this->post_type_plural);
-      $role->add_cap('edit_' . $this->post_type);
-      $role->add_cap('delete_' . $this->post_type_plural);
-      $role->add_cap('delete_' . $this->post_type);
+      if ($role) {
+        $role->add_cap('edit_' . $this->post_type_plural);
+        $role->add_cap('edit_' . $this->post_type);
+        $role->add_cap('delete_' . $this->post_type_plural);
+        $role->add_cap('delete_' . $this->post_type);
+      }
     }
   }
 
   /**
    * Action: plugin deactivation
-   * Tidy up database by removing all capabilities
    */
   public function deactivate() {
+    // Tidy up database by removing all capabilities
     foreach ($this->roles as $role) {
       $role = get_role($role);
-      $role->remove_cap('edit_' . $this->post_type_plural);
-      $role->remove_cap('edit_' . $this->post_type);
-      $role->remove_cap('delete_' . $this->post_type_plural);
-      $role->remove_cap('delete_' . $this->post_type);
+      if ($role) {
+        $role->remove_cap('edit_' . $this->post_type_plural);
+        $role->remove_cap('edit_' . $this->post_type);
+        $role->remove_cap('delete_' . $this->post_type_plural);
+        $role->remove_cap('delete_' . $this->post_type);
+      }
     }
   }
 
@@ -209,6 +417,9 @@ class VF_Cache {
    * Register custom post type
    */
   public function init() {
+    // check if a cache update can be scheduled
+    $this->maybe_schedule_ajax();
+
     register_post_type($this->post_type, array(
       'labels' => array(
         'name'          => 'VF Cache',
@@ -297,7 +508,25 @@ class VF_Cache {
     if ($column === 'vf_hash') {
       echo '<code>', esc_html(get_post_field('post_name', $post_id)) , '</code>';
     } else if ($column === 'vf_modified') {
-      echo get_the_modified_date('Y-m-d H:i:s', get_post($post_id));
+      // based on `class-wp-posts-list-table.php`
+      $now = current_time('timestamp');
+      $t_time = get_the_modified_date(__('Y/m/d g:i:s a'), $post_id);
+      $h_time = sprintf(
+        __('%s ago'),
+        human_time_diff(
+          get_the_modified_date('U', $post_id),
+          $now
+        )
+      );
+      echo '<abbr title="' . $t_time . '">' . $h_time . '</abbr>';
+
+      $max_age = get_post_meta($post_id, 'vf_cache_max_age', true);
+      if (is_numeric($max_age)) {
+        echo '<br><small>' . sprintf(
+          __('Rate: %s'),
+          human_time_diff($now + $max_age, $now)
+        ) . '</small>';
+      }
     }
   }
 
@@ -360,7 +589,7 @@ class VF_Cache {
 
   /**
    * Filter: `user_can_richedit`
-   * Hide the WYSIWYG editor for cache ontent
+   * Hide the WYSIWYG editor for cache content
    */
   function user_can_richedit($default) {
     if (get_post_type() === 'vf_cache') return false;

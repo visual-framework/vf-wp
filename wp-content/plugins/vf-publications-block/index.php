@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Publications
 Description: VF-WP theme block.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
 Text Domain: vfwp
@@ -16,7 +16,9 @@ require_once($path);
 
 class VF_Publications extends VF_Plugin {
 
-  protected $API = array();
+  protected $API = array(
+    'source' => 'contenthub',
+  );
 
   public function __construct(array $params = array()) {
     parent::__construct('vf_publications');

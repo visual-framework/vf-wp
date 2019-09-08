@@ -3,6 +3,19 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Return true if in debug mode
+ */
+function vf_debug() {
+  if (function_exists('wp_get_current_user')) {
+    $user = wp_get_current_user();
+    if ( ! array_intersect(array('administrator'), $user->roles)) {
+      return false;
+    }
+  }
+  return defined('WP_DEBUG') && WP_DEBUG;
+}
+
+/**
  * Returns true if a string is empty (including empty HTML)
  */
 function vf_html_empty($str) {

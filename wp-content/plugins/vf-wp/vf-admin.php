@@ -27,10 +27,7 @@ class VF_Admin {
    * Filter: hide ACF for non-admins
    */
   function acf_settings_show_admin() {
-    if ( ! current_user_can('administrator')) {
-      return false;
-    }
-    if ( ! defined('WP_DEBUG') || ! WP_DEBUG) {
+    if ( ! vf_debug()) {
       return false;
     }
     return true;
