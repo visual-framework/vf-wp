@@ -36,6 +36,12 @@ config.vf_blocks_path = path.resolve(
   'vf-gutenberg/assets/vf-blocks.jsx'
 );
 
+config.vf_blocks_glob = path.resolve(
+  config.plugin_path,
+  'vf-gutenberg/assets/**/*.jsx'
+);
+
+
 config.vf_blocks_webpack = {
   entry: config.vf_blocks_path,
   output: {
@@ -180,7 +186,7 @@ gulp.task('vf-blocks', () => {
 gulp.task('watch-css', () => gulp.watch(config.sass_glob, gulp.series('css')));
 gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
 gulp.task('watch-blocks', () =>
-  gulp.watch(config.vf_blocks_path, gulp.series('vf-blocks'))
+  gulp.watch(config.vf_blocks_glob, gulp.series('vf-blocks'))
 );
 gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-blocks'));
 
