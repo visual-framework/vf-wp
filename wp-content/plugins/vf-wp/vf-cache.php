@@ -207,7 +207,7 @@ class VF_Cache {
     $url = admin_url('admin-ajax.php');
     $url = add_query_arg(array(
       'action'   => 'vf_cache_update',
-      '_wpnonce' => $nonce
+      'nonce' => $nonce
     ), $url);
 
     // Footer action callback
@@ -241,7 +241,7 @@ xhr.send();
     session_write_close();
 
     // Verify nonce to avoid unscheduled updates
-    $nonce = isset($_GET['_wpnonce']) ? $_GET['_wpnonce'] : false;
+    $nonce = isset($_GET['nonce']) ? $_GET['nonce'] : false;
     $check = get_option('vf_cache_nonce');
     if ( ! $nonce || ! $check || $nonce !== $check) {
       wp_die(vf_debug() ? '0' : '');
