@@ -92,10 +92,6 @@ gulp.task('update-theme-version', callback => {
   callback();
 });
 
-// Pre-commit Git hook
-gulp.task('pre-commit', gulp.series('update-theme-version'));
-gulp.task('post-commit', f => f());
-
 // Watch
 gulp.task('watch-css', () => gulp.watch(config.sass_glob, gulp.series('css')));
 gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
