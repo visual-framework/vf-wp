@@ -58,11 +58,20 @@ class VF_Gutenberg {
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
     );
+    add_filter(
+      'block_categories',
+      array($this, 'block_categories'),
+      10, 2
+    );
+    add_filter(
+      'fetch_block',
+      array($this, 'wp_ajax_vf_gutenberg_fetch_block')
+    );
 
     // TODO: remove deprecated filters
     add_filter(
       'block_categories',
-      array($this, 'block_categories'),
+      array($this, '_deprecated_block_categories'),
       10, 2
     );
     add_action(
@@ -108,6 +117,30 @@ class VF_Gutenberg {
   }
 
   /**
+   * Action: `block_categories`
+   */
+  function block_categories($categories, $post) {
+    // if ( ! in_array($post->post_type, array('post', 'page'))) {
+    //   return $categories;
+    // }
+    return array_merge(
+      array(
+        array(
+          'slug'  => 'vf/core',
+          'title' => __('Visual Framework', 'vfwp'),
+          'icon'  => null
+        ),
+        array(
+          'slug'  => 'vf/contenthub',
+          'title' => __('EMBL Content Hub', 'vfwp'),
+          'icon'  => null
+        ),
+      ),
+      $categories
+    );
+  }
+
+  /**
    * Filter `render_block`
    * Edit compatible core blocks to use VF markup
    * Wrap other core blocks in `vf-content` class
@@ -135,12 +168,27 @@ class VF_Gutenberg {
       true
     );
     wp_enqueue_script(
+      'vf-blocks',
+      plugins_url('/assets/vf-blocks.min.js', __FILE__),
+      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
+      false,
+      true
+    );
+    wp_enqueue_script(
       'vf-gutenberg',
       plugins_url('/assets/vf-gutenberg.js', __FILE__),
       array('iframe-resizer', 'wp-editor', 'wp-blocks'),
       false,
       true
     );
+  }
+
+  /**
+   * Handle AJAX request to render block preview
+   */
+  function fetch_block() {
+    return '<b>Test</b>';
+    wp_die();
   }
 
   /**
@@ -300,7 +348,7 @@ class VF_Gutenberg {
    * WARNING: deprecated method
    * Filter `block_categories`
    */
-  function block_categories($categories, $post) {
+  function _deprecated_block_categories($categories, $post) {
     if ( ! in_array($post->post_type, array('post', 'page'))) {
       return $categories;
     }
