@@ -62,14 +62,7 @@ gulp.task('js', callback => {
         suffix: '.min'
       }),
       babel({
-        presets: [
-          [
-            '@babel/preset-env',
-            {
-              targets: 'last 3 versions, ie 11'
-            }
-          ]
-        ]
+        presets: ['@babel/preset-env']
       }),
       uglify({
         output: {

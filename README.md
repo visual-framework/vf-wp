@@ -8,7 +8,7 @@ the brand-specific "VF 2.0 for the EMBL Design Language".
 * [Work in Progress, Issues, Bugs](https://github.com/visual-framework/vf-wp/issues)
 * [Theme and plugin architecture](docs/architecture.md)
 * [WordPress setup](docs/wordpress.md)
-* [Pantheon development](docs/development.md)
+* [~~Pantheon development~~](docs/development.md)
 
 ## Plugin documentation
 
