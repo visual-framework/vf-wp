@@ -1,6 +1,6 @@
 {
   "name": "vf-wp",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "description": "Visual Framework WordPress Theme",
   "main": "gulpfile.js",
@@ -27,9 +27,6 @@
           "useBuiltIns": "usage"
         }
       ]
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-object-rest-spread"
     ]
   },
   "dependencies": {},
