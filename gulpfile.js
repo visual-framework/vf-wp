@@ -3,7 +3,6 @@ const path = require('path');
 const pump = require('pump');
 const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
-const changed = require('gulp-changed');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
@@ -29,10 +28,7 @@ config.sass_glob = [path.join(config.assets_path, 'scss/**/*.scss')];
 const js_glob = path.join(config.assets_path, 'js/*.js');
 config.js_glob = [js_glob, '!' + js_glob.replace(/\.js$/, '.min.js')];
 
-const vf_path = path.join(
-  __dirname,
-  '../vf-core/'
-);
+const vf_path = path.join(__dirname, '../vf-core/');
 
 // Compile and prefix Sass
 gulp.task('css', callback => {
@@ -53,8 +49,7 @@ gulp.task('css', callback => {
       }),
       autoprefixer({
         grid: true,
-        remove: false,
-        browsers: ['Android >= 4', 'last 4 versions', 'ie 10']
+        remove: false
       }),
       gulp.dest(path.join(config.theme_path, 'assets/css'))
     ],
@@ -108,33 +103,14 @@ gulp.task('update-theme-version', callback => {
   callback();
 });
 
-// Copy `wp-content` (plugins & theme) to Pantheon directory
-gulp.task('copy-to-pantheon', callback => {
-  console.log(chalk.blue('Copying theme to Pantheon repository...'));
-  if (!fs.existsSync(config.pantheon_path)) {
-    console.log(chalk.red('Cannot find Pantheon repository.'));
-    return callback();
-  }
-  const dest = path.join(config.pantheon_path, 'wp-content');
-  pump(
-    [gulp.src(config.content_glob), changed(dest), gulp.dest(dest)],
-    callback
-  );
-});
-
 // Pre-commit Git hook
 gulp.task('pre-commit', gulp.series('update-theme-version'));
-
-// Post-commit Git hook
-gulp.task('post-commit', gulp.series('copy-to-pantheon'));
 
 // Watch
 gulp.task('watch-css', () => gulp.watch(config.sass_glob, gulp.series('css')));
 gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
-gulp.task('watch-content', () =>
-  gulp.watch(config.content_glob, gulp.series('copy-to-pantheon'))
-);
-gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-content'));
+
+gulp.task('watch', gulp.parallel('watch-css', 'watch-js'));
 
 // Default
 gulp.task('default', gulp.series(gulp.parallel('css', 'js'), 'watch'));

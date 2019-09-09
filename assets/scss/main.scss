@@ -16,7 +16,5 @@ img[class*="attachment"] {
   height: auto;
 }
 
-@import 'hacks.scss';
-
-
-@import 'VF1-corrections.scss';
+@import "_hacks.scss";
+@import "_VF1-corrections.scss";

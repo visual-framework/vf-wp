@@ -13,23 +13,29 @@
   },
   "author": "EMBL",
   "license": "UNLICENSED",
+  "browserslist": [
+    "Android >= 4",
+    "last 3 versions",
+    "ie 11"
+  ],
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.6",
-    "chalk": "^2.4.1",
-    "gulp": "^4.0.0",
-    "gulp-autoprefixer": "^6.0.0",
+    "@babel/core": "^7.6.0",
+    "@babel/node": "^7.6.1",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "chalk": "^2.4.2",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.0",
     "gulp-babel": "^8.0.0",
-    "gulp-changed": "^3.2.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.1",
-    "husky": "^1.1.4",
-    "js-yaml": "^3.12.0",
-    "pump": "^3.0.0"
+    "gulp-uglify": "^3.0.2",
+    "husky": "^3.0.5",
+    "js-yaml": "^3.13.1",
+    "pump": "^3.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.8"
   },
   "husky": {
     "hooks": {
