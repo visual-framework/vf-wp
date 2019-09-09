@@ -24,6 +24,7 @@
     return;
   }
 
+  /*
   wp.domReady(function() {
     var blocks = wp.blocks.getBlockTypes();
 
@@ -80,4 +81,5 @@
       return settings;
     }
   );
+  */
 })();

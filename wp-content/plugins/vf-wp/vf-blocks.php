@@ -38,7 +38,7 @@ class VF_Blocks extends VF_Type {
       array(
         array(
           'slug'  => 'vf_blocks_content_hub',
-          'title' => __('EMBL Content Hub', 'vfwp'),
+          'title' => __('EMBL Content Hub (deprecated)', 'vfwp'),
           'icon'  => null
         )
       ),
