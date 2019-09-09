@@ -2,12 +2,14 @@
  * VF Button
  * https://visual-framework.github.io/vf-core/components/detail/vf-button.html
  */
+import {useVFBlock} from './vf';
 
 const {__} = wp.i18n;
-
+const {compose, withInstanceId} = wp.compose;
 const {
   InnerBlocks,
   URLInput,
+  URLInputButton,
   RichText,
   BlockControls,
   InspectorControls
@@ -26,67 +28,83 @@ const {
 } = wp.components;
 const {Component, createElement} = wp.element;
 
-const {compose, withInstanceId} = wp.compose;
-
-const Edit = function(props) {
-  const {
-    instanceId,
-    isSelected,
-    setAttributes,
-    attributes: {id, mode, url}
-  } = props;
-  const isEdit = mode === 'edit';
-  const onToggleView = () => {
-    setAttributes({mode: !isEdit ? 'edit' : 'view'});
-  };
-  const editButton = (
-    <IconButton label={__('Edit', 'vfwp')} icon="edit" onClick={onToggleView} />
+const EditButton = ({onClick}) => {
+  return (
+    <IconButton label={__('Edit', 'vfwp')} icon="edit" onClick={onClick} />
   );
-  const viewButton = (
+};
+
+const ViewButton = ({onClick}) => {
+  return (
     <IconButton
       label="__('Preview', 'vfwp')"
       icon="visibility"
-      onClick={onToggleView}
+      onClick={onClick}
     />
   );
-  const ids = {
-    url: 'vf-gutenberg-' + instanceId
+};
+
+const Edit = function(props) {
+  const {
+    isSelected,
+    instanceId,
+    setAttributes,
+    attributes: {ver, id, mode, url}
+  } = props;
+
+  // Ensure version is encoded in post content
+  if (!ver) {
+    setAttributes({ver: 1});
+  }
+
+  const isEdit = mode === 'edit';
+
+  const {data, isLoading} = useVFBlock({id, url});
+
+  const ViewControl = () => {
+    if (isLoading) {
+      return <div>{__('Loading', 'vfwp')}</div>;
+    }
+    return <div dangerouslySetInnerHTML={{__html: JSON.stringify(data)}} />;
   };
 
-  const controls = [
-    <BaseControl id={ids.url} label={__('URL', 'vfwp')}>
-      <URLInput
-        id={ids.url}
-        value={url}
-        autoFocus={false}
-        onChange={value => setAttributes({url: value})}
-        disableSuggestions={!isSelected}
-        isFullWidth
-        hasBorder
-      />
-    </BaseControl>
-  ];
-  const edit = (
-    <div className="vf-gutenberg-edit" data-id={id}>
-      {controls}
-    </div>
-  );
-  const view = (
-    <div
-      className="vf-gutenberg-view"
-      dangerouslySetInnerHTML={{__html: '<b>View</b>'}}
-    />
-  );
-  /*
-  <InspectorControls>
-    <PanelBody title={__('VF Button', 'vfwp')}>{controls}</PanelBody>
-  </InspectorControls>
-  */
+  const onToggle = () => {
+    setAttributes({mode: !isEdit ? 'edit' : 'view'});
+  };
+
   return [
     <BlockControls>
-      <Toolbar>{isEdit ? viewButton : editButton}</Toolbar>
+      <Toolbar>
+        {isEdit ? (
+          <ViewButton onClick={onToggle} />
+        ) : (
+          <EditButton onClick={onToggle} />
+        )}
+      </Toolbar>
     </BlockControls>,
-    <div className="vf-gutenberg-block">{isEdit ? edit : view}</div>
+    <div className="vf-gutenberg-block">
+      {isEdit ? (
+        <div className="vf-gutenberg-edit" data-id={id}>
+          <BaseControl
+            id={'vf-gutenberg-' + instanceId}
+            label={__('URL', 'vfwp')}>
+            <URLInput
+              id={'vf-gutenberg-' + instanceId}
+              value={url}
+              autoFocus={false}
+              onChange={value => setAttributes({url: value})}
+              disableSuggestions={!isSelected}
+              isFullWidth
+              hasBorder
+            />
+          </BaseControl>
+        </div>
+      ) : (
+        <div className="vf-gutenberg-view" data-id={id}>
+          <ViewControl />
+        </div>
+      )}
+    </div>
   ];
 };
 
@@ -97,8 +115,7 @@ export const settings = {
   keywords: [__('VF', 'vfwp'), __('Visual Framework', 'vfwp')],
   attributes: {
     ver: {
-      type: 'integer',
-      default: 1
+      type: 'integer'
     },
     id: {
       type: 'string',
@@ -117,12 +134,6 @@ export const settings = {
     className: false,
     customClassName: false
   },
-  edit: compose(withInstanceId)(Edit),
-  save: function(props) {
-    const data = {
-      ver: props.attributes.ver
-    };
-    // return JSON.stringify(data);
-    return '';
-  }
+  edit: withInstanceId(Edit),
+  save: () => null
 };

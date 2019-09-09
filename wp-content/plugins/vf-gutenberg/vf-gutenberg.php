@@ -64,8 +64,8 @@ class VF_Gutenberg {
       10, 2
     );
     add_filter(
-      'fetch_block',
-      array($this, 'wp_ajax_vf_gutenberg_fetch_block')
+      'wp_ajax_vf_gutenberg_fetch_block',
+      array($this, 'fetch_block')
     );
 
     // TODO: remove deprecated filters
@@ -174,20 +174,40 @@ class VF_Gutenberg {
       false,
       true
     );
-    wp_enqueue_script(
+
+    wp_register_script(
       'vf-gutenberg',
       plugins_url('/assets/vf-gutenberg.js', __FILE__),
       array('iframe-resizer', 'wp-editor', 'wp-blocks'),
       false,
       true
     );
+
+    global $post;
+    $post_id = $post instanceof WP_Post ? $post->ID : 0;
+    wp_localize_script('vf-gutenberg', 'vfGutenberg', array(
+      'nonce' => wp_create_nonce("vf_nonce_{$post_id}"),
+      'postId' => $post_id,
+      'instanceId' => 0
+    ));
+
+    wp_enqueue_script('vf-gutenberg');
   }
 
   /**
    * Handle AJAX request to render block preview
    */
   function fetch_block() {
-    return '<b>Test</b>';
+    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
+    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
+
+    if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
+      wp_send_json_error();
+      wp_die();
+    }
+    wp_send_json_success(
+      $_POST
+    );
     wp_die();
   }
 

@@ -36,10 +36,13 @@ config.vf_blocks_path = path.resolve(
   'vf-gutenberg/assets/vf-blocks.jsx'
 );
 
-config.vf_blocks_glob = path.resolve(
+config.vf_blocks_glob = [path.resolve(
   config.plugin_path,
   'vf-gutenberg/assets/**/*.jsx'
-);
+),path.resolve(
+  config.plugin_path,
+  'vf-gutenberg/assets/blocks/**/*.{js,jsx}'
+)];
 
 
 config.vf_blocks_webpack = {
