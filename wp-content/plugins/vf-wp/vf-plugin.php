@@ -117,6 +117,24 @@ class VF_Plugin {
   }
 
   /**
+   * Return plugin post type
+   */
+  public function type() {
+    if ( ! $this->post instanceof WP_Post) {
+      return;
+    }
+    return $this->post->post_type;
+  }
+
+  public function is_block() {
+    return $this->type() === 'vf_block';
+  }
+
+  public function is_container() {
+    return $this->type() === 'vf_container';
+  }
+
+  /**
    * Return full plugin directory path (with trailing slash)
    */
   public function dir() {
@@ -227,36 +245,39 @@ class VF_Plugin {
       )
     ));
 
-    // Register the Gutenberg block for this plugin
-    acf_register_block(
-      array(
-        'name'     => $this->post->post_name,
-        'title'    => $this->post->post_title,
-        'icon'     => 'format-aside',
-        'supports' => array(
-          'align' => false,
-          'mode'  => false
-        ),
-        'category' => 'vf_blocks_content_hub',
-        'render_callback' => function($block, $content, $is_preview) use ($key) {
-          $custom = get_field('vf_block_custom', $block['id']);
-          $fields = $custom ? get_field("{$key}_clone", $block['id']) : null;
+    // TODO: deprecated - replace with native Gutenberg block
+    if ($this->is_block()) {
+      // Register the Gutenberg block for this plugin
+      acf_register_block(
+        array(
+          'name'     => $this->post->post_name,
+          'title'    => $this->post->post_title,
+          'icon'     => 'format-aside',
+          'supports' => array(
+            'align' => false,
+            'mode'  => false
+          ),
+          'category' => 'vf_blocks_content_hub',
+          'render_callback' => function($block, $content, $is_preview) use ($key) {
+            $custom = get_field('vf_block_custom', $block['id']);
+            $fields = $custom ? get_field("{$key}_clone", $block['id']) : null;
 
-          ob_start();
-          VF_Plugin::render($this, $fields);
-          $html = ob_get_contents();
-          ob_end_clean();
-          // Use the VF Gutenberg plugin to render iframe previews if available
-          global $vf_gutenberg;
-          if ($is_preview && isset($vf_gutenberg)) {
-            $vf_gutenberg->render_preview_iframe($block, $html);
-          } else {
-            echo $html;
+            ob_start();
+            VF_Plugin::render($this, $fields);
+            $html = ob_get_contents();
+            ob_end_clean();
+            // Use the VF Gutenberg plugin to render iframe previews if available
+            global $vf_gutenberg;
+            if ($is_preview && isset($vf_gutenberg)) {
+              $vf_gutenberg->render_preview_iframe($block, $html);
+            } else {
+              echo $html;
+            }
+
           }
-
-        }
-      )
-    );
+        )
+      );
+    }
   }
 
   /**
