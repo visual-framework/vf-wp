@@ -65,7 +65,7 @@ class VF_Gutenberg {
     );
     add_filter(
       'wp_ajax_vf_gutenberg_fetch_block',
-      array($this, 'fetch_block')
+      array($this, 'ajax_fetch_block')
     );
 
     // TODO: remove deprecated filters
@@ -174,7 +174,13 @@ class VF_Gutenberg {
       false,
       true
     );
-
+    wp_enqueue_style(
+      'vf-blocks',
+      plugins_url('/assets/vf-blocks.css', __FILE__),
+      array(),
+      false,
+      'all'
+    );
     wp_register_script(
       'vf-gutenberg',
       plugins_url('/assets/vf-gutenberg.js', __FILE__),
@@ -185,19 +191,23 @@ class VF_Gutenberg {
 
     global $post;
     $post_id = $post instanceof WP_Post ? $post->ID : 0;
-    wp_localize_script('vf-gutenberg', 'vfGutenberg', array(
+    $config = array(
+      'iframeResizer' => plugins_url(
+        '/assets/iframeResizer.contentWindow.min.js',
+        __FILE__
+      ),
       'nonce' => wp_create_nonce("vf_nonce_{$post_id}"),
       'postId' => $post_id,
       'instanceId' => 0
-    ));
-
+    );
+    wp_localize_script('vf-gutenberg', 'vfGutenberg', $config);
     wp_enqueue_script('vf-gutenberg');
   }
 
   /**
    * Handle AJAX request to render block preview
    */
-  function fetch_block() {
+  function ajax_fetch_block() {
     $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
     $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
 
@@ -205,8 +215,20 @@ class VF_Gutenberg {
       wp_send_json_error();
       wp_die();
     }
+    $html = '';
+    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
+    if (function_exists('vf_get_stylesheet')) {
+      $stylesheets[] = vf_get_stylesheet();
+    }
+    foreach ($stylesheets as $href) {
+      $html .= '<link rel="stylesheet" href="' . $href . '">';
+    }
+    $html .= '<b>Test</b>';
     wp_send_json_success(
-      $_POST
+      array(
+        'hash' => hash('crc32', $html),
+        'html' => $html
+      )
     );
     wp_die();
   }

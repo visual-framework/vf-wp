@@ -1,0 +1,26 @@
+/**!
+ * VF Gutenberg plugin
+ * https://visual-framework.github.io/vf-core/
+ */
+
+.vf-gutenberg-block[data-edit='true'],
+.vf-gutenberg-block[data-loading='true'] {
+  background: #f3f4f5;
+  display: block;
+  padding: 10px;
+}
+
+.vf-gutenberg-view,
+.vf-gutenberg-edit {
+}
+
+[class^='vf-gutenberg'] .editor-url-input {
+  max-width: 300px;
+}
+
+.vf-gutenberg-iframe {
+  border: 0;
+  height: 30px;
+  min-width: 100%;
+  pointer-events: none;
+}

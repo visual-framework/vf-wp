@@ -2,7 +2,8 @@
  * VF Button
  * https://visual-framework.github.io/vf-core/components/detail/vf-button.html
  */
-import {useVFBlock} from '../hooks';
+import {useRef} from 'react';
+import {useVF, useVFBlock, useIFrameResize} from '../hooks';
 
 const {__} = wp.i18n;
 const {compose, withInstanceId} = wp.compose;
@@ -44,6 +45,21 @@ const ViewButton = ({onClick}) => {
   );
 };
 
+const ViewControl = ({data}) => {
+  const iframeEl = useRef();
+  const {onLoad} = useIFrameResize(iframeEl, data.html);
+  return (
+    <div className="vf-gutenberg-view">
+      <iframe
+        ref={iframeEl}
+        onLoad={onLoad}
+        className="vf-gutenberg-iframe"
+        scrolling="no"
+      />
+    </div>
+  );
+};
+
 const Edit = function(props) {
   const {
     isSelected,
@@ -61,11 +77,8 @@ const Edit = function(props) {
 
   const {data, isLoading} = useVFBlock({id, url});
 
-  const ViewControl = () => {
-    if (isLoading) {
-      return <div>{__('Loading', 'vfwp')}</div>;
-    }
-    return <div dangerouslySetInnerHTML={{__html: JSON.stringify(data)}} />;
+  const LoadingControl = () => {
+    return <div>{__('Loading', 'vfwp')}</div>;
   };
 
   const onToggle = () => {
@@ -82,9 +95,15 @@ const Edit = function(props) {
         )}
       </Toolbar>
     </BlockControls>,
-    <div className="vf-gutenberg-block">
+    <div
+      className="vf-gutenberg-block"
+      data-ver={ver}
+      data-id={id}
+      data-edit={isEdit}
+      data-selected={isSelected}
+      data-loading={isLoading}>
       {isEdit ? (
-        <div className="vf-gutenberg-edit" data-id={id}>
+        <div className="vf-gutenberg-edit">
           <BaseControl
             id={'vf-gutenberg-' + instanceId}
             label={__('URL', 'vfwp')}>
@@ -99,10 +118,10 @@ const Edit = function(props) {
             />
           </BaseControl>
         </div>
+      ) : isLoading ? (
+        <LoadingControl />
       ) : (
-        <div className="vf-gutenberg-view" data-id={id}>
-          <ViewControl />
-        </div>
+        <ViewControl data={data} />
       )}
     </div>
   ];

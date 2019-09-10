@@ -5,12 +5,13 @@ import React, {useState, useEffect} from 'react';
  */
 const useVF = () => {
   const vf = window.vfGutenberg || {};
-  const postId = vf.hasOwnProperty('postId') ? vf.postId : 0;
-  const nonce = vf.hasOwnProperty('nonce') ? vf.nonce : '';
-  return {
-    postId,
-    nonce
-  };
+  if (!vf.hasOwnProperty('postId')) {
+    vf.postId = 0;
+  }
+  if (!vf.hasOwnProperty('nonce')) {
+    vf.nonce = '';
+  }
+  return vf;
 };
 
 /**
@@ -31,7 +32,6 @@ const useVFBlock = attr => {
       });
       setData(data);
       setLoading(false);
-      console.log(data);
     } catch (err) {}
   };
 
@@ -42,4 +42,33 @@ const useVFBlock = attr => {
   return {data, isLoading};
 };
 
-export {useVF, useVFBlock};
+/**
+ * Hook to append iFrameResizer to content window
+ */
+const useIFrameResize = (iframeEl, html, config) => {
+  config = {
+    log: false,
+    checkOrigin: false,
+    ...(config || {})
+  };
+  const {iframeResizer} = useVF();
+  const onLoad = () => {
+    const iframe = iframeEl.current;
+    const body = iframe.contentWindow.document.body;
+    body.innerHTML = html;
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = iframeResizer;
+    script.onload = function() {
+      script.onload = null;
+      setTimeout(function() {
+        iframe.iFrameResizer.resize();
+      }, 100);
+    };
+    body.appendChild(script);
+    window.iFrameResize(config, iframe);
+  };
+  return {onLoad};
+};
+
+export {useVF, useVFBlock, useIFrameResize};

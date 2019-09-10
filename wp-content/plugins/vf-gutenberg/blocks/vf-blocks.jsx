@@ -1,5 +1,5 @@
-/**
- * VF Gutenberg blocks
+/**!
+ * VF Gutenberg plugin blocks
  * https://visual-framework.github.io/vf-core/
  */
 import * as button from './button';

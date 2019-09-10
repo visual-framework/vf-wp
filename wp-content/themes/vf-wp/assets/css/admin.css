@@ -3,14 +3,3 @@
 .wp-list-table .column-vf_modified {
   width: 10%;
 }
-
-.vf-gutenberg-view,
-.vf-gutenberg-edit {
-  background: #f3f4f5;
-  display: block;
-  padding: 10px;
-}
-
-[class^="vf-gutenberg"] .editor-url-input {
-  max-width: 300px;
-}
