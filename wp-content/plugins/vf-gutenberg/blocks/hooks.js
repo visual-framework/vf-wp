@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react';
  * Hook to use global VF Gutenberg settings from `wp_localize_script`
  */
 const useVF = () => {
-  const vf = window.VF_Gutenberg || {};
+  const vf = window.vfBlocks || {};
   if (!vf.hasOwnProperty('postId')) {
     vf.postId = 0;
   }
@@ -20,7 +20,7 @@ const useVF = () => {
 /**
  * Hook to fetch the VF Gutenberg block rendered template
  */
-const useVFBlock = attr => {
+const useVFPlugin = attr => {
   const {postId, nonce} = useVF();
   const [data, setData] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -48,12 +48,7 @@ const useVFBlock = attr => {
 /**
  * Hook to append iFrameResizer to content window
  */
-const useIFrameResize = (iframeEl, html, config) => {
-  config = {
-    log: false,
-    checkOrigin: false,
-    ...(config || {})
-  };
+const useIFrame = (iframeEl, html) => {
   const {iframeResizer} = useVF();
   const onLoad = () => {
     const iframe = iframeEl.current;
@@ -67,12 +62,25 @@ const useIFrameResize = (iframeEl, html, config) => {
       iframe.iFrameResizer.resize();
       setInterval(function() {
         iframe.iFrameResizer.resize();
-      }, 200);
+      }, 500);
     };
     body.appendChild(script);
-    window.iFrameResize(config, iframe);
+    window.iFrameResize(
+      {
+        log: false,
+        checkOrigin: false
+      },
+      iframe
+    );
   };
   return {onLoad};
 };
 
-export {useVF, useVFBlock, useIFrameResize};
+// const withId = Component => {
+//   return props => {
+//     const id = Date.now() * Math.random();
+//     return <Component {...props} instanceId={id} />;
+//   };
+// };
+
+export {useVF, useVFPlugin, useIFrame};

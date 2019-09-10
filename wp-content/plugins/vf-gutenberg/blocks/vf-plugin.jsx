@@ -1,21 +1,13 @@
 /**
- * VF Plugin (base components)
- * https://visual-framework.github.io/vf-core/components/detail/vf-button.html
+ * VF Plugin (base component)
  */
 import {useEffect, useRef} from 'react';
-import {useVF, useVFBlock, useIFrameResize} from './hooks';
+import {useVF, useVFPlugin, useIFrame} from './hooks';
 
 const {__} = wp.i18n;
 
 const {BlockControls} = wp.editor;
 const {Toolbar, IconButton} = wp.components;
-
-// const withId = Component => {
-//   return props => {
-//     const id = Date.now() * Math.random();
-//     return <Component {...props} instanceId={id} />;
-//   };
-// };
 
 const EditButton = ({onClick}) => {
   return (
@@ -35,12 +27,24 @@ const ViewButton = ({onClick}) => {
 
 const ViewControl = ({data}) => {
   const iframeEl = useRef();
-  const {onLoad} = useIFrameResize(iframeEl, data.html);
+  const {onLoad} = useIFrame(iframeEl, data.html);
+
+  // cleanup iframe resizer before unmount
+  useEffect(() => {
+    const iframe = iframeEl.current;
+    return () => {
+      if (iframe.iFrameResizer) {
+        iframe.iFrameResizer.close();
+      }
+    };
+  }, [data.hash]);
+
   return (
     <div className="vf-gutenberg-view">
       <iframe
         ref={iframeEl}
         onLoad={onLoad}
+        data-hash={data.hash}
         className="vf-gutenberg-iframe"
         scrolling="no"
       />
@@ -50,31 +54,30 @@ const ViewControl = ({data}) => {
 
 const PluginEdit = function(props) {
   const {
-    clientId,
     isSelected,
     attributes: {ver, mode}
   } = props;
+
+  const isEditing = mode === 'edit';
 
   // Ensure version is encoded in post content
   if (!ver) {
     props.setAttributes({ver: 1});
   }
 
-  const isEdit = mode === 'edit';
-
-  const {data, isLoading} = useVFBlock({
+  const {data, isLoading} = useVFPlugin({
     ...props.attributes,
     name: props.name
   });
 
   const onToggle = () => {
-    props.setAttributes({mode: !isEdit ? 'edit' : 'view'});
+    props.setAttributes({mode: !isEditing ? 'edit' : 'view'});
   };
 
   return [
     <BlockControls>
       <Toolbar>
-        {isEdit ? (
+        {isEditing ? (
           <ViewButton onClick={onToggle} />
         ) : (
           <EditButton onClick={onToggle} />
@@ -85,10 +88,10 @@ const PluginEdit = function(props) {
       className="vf-gutenberg-block"
       data-ver={ver}
       data-name={props.name}
-      data-edit={isEdit}
+      data-editing={isEditing}
       data-selected={isSelected}
       data-loading={isLoading}>
-      {isEdit ? (
+      {isEditing ? (
         <div className="vf-gutenberg-edit">{props.children}</div>
       ) : !isLoading ? (
         <ViewControl data={data} />

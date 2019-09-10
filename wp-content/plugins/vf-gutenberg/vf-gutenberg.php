@@ -249,7 +249,7 @@ class VF_Gutenberg {
         }
       }
     }
-    wp_localize_script('vf-blocks', 'VF_Gutenberg', $config);
+    wp_localize_script('vf-blocks', 'vfBlocks', $config);
 
     wp_enqueue_script('vf-blocks');
     // TODO: deprecate?
@@ -285,10 +285,11 @@ class VF_Gutenberg {
     }
     // render block
     $html = '';
-    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
+    $stylesheets = array();
     if (function_exists('vf_get_stylesheet')) {
       $stylesheets[] = vf_get_stylesheet();
     }
+    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
     foreach ($stylesheets as $href) {
       $html .= '<link rel="stylesheet" href="' . $href . '">';
     }
