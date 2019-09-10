@@ -30,13 +30,12 @@ export const settings = {
     className: false,
     customClassName: false
   },
+  save: () => null,
   edit: props => {
-    props = {...props, pluginId: 'vf_latest_posts'};
     return (
       <PluginEdit {...props}>
         <p>test</p>
       </PluginEdit>
     );
-  },
-  save: () => null
+  }
 };

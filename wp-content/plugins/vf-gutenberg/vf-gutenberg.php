@@ -44,14 +44,34 @@ class VF_Gutenberg {
 
   private $settings;
 
+  /**
+   * Convert a Gutenberg block name to a VF_Plugin post name
+   * e.g. "vf/latest-posts" to "vf_latest_posts"
+   */
+  static function name_block_to_post($str) {
+    return preg_replace('/[^\w]/', '_', $str);
+  }
+
+  /**
+   * Convert a VF_Plugin post name to a Gutenberg block name
+   * e.g. "vf_latest_posts" to "vf/latest-posts"
+   */
+  static function name_post_to_block($str) {
+    return preg_replace(
+      array('/[\W_]/', '/(^[\w]+)-/'),
+      array('-', '$1/'),
+      $str
+    );
+  }
+
   function __construct() {
     // Do nothing...
   }
 
   function initialize() {
     add_filter(
-      'render_block',
-      array($this, 'render_block'),
+      'block_categories',
+      array($this, 'block_categories'),
       10, 2
     );
     add_action(
@@ -59,13 +79,13 @@ class VF_Gutenberg {
       array($this, 'admin_enqueue_scripts')
     );
     add_filter(
-      'block_categories',
-      array($this, 'block_categories'),
-      10, 2
+      'wp_ajax_vf/gutenberg/fetch_block',
+      array($this, 'ajax_fetch_block')
     );
     add_filter(
-      'wp_ajax_vf_gutenberg_fetch_block',
-      array($this, 'ajax_fetch_block')
+      'render_block',
+      array($this, 'render_block'),
+      10, 2
     );
 
     // TODO: remove deprecated filters
@@ -142,10 +162,29 @@ class VF_Gutenberg {
 
   /**
    * Filter `render_block`
-   * Edit compatible core blocks to use VF markup
-   * Wrap other core blocks in `vf-content` class
    */
   function render_block($html, $block) {
+    /**
+     * Render VF Plugin blocks
+     */
+    if (
+      class_exists('VF_Plugin') &&
+      preg_match('/^vf\//', $block['blockName'])
+    ) {
+      $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
+      $vf_plugin = VF_Plugin::get_plugin($post_name);
+      if ($vf_plugin) {
+        ob_start();
+        VF_Plugin::render($vf_plugin);
+        $html = ob_get_contents();
+        ob_end_clean();
+        return $html;
+      }
+    }
+    /**
+     * Edit compatible core blocks to use VF markup
+     * Wrap other core blocks in `vf-content` class
+     */
     if (array_key_exists($block['blockName'], $this->compatible)) {
       $callback = $this->compatible[ $block['blockName'] ];
       $html = call_user_func($callback, $html, $block);
@@ -223,11 +262,10 @@ class VF_Gutenberg {
       wp_send_json_error();
       wp_die();
     }
-    // validate `vf_plugin`
-    if (isset($_POST['pluginId'])) {
-      if (class_exists('VF_Plugin')) {
-        $vf_plugin = VF_Plugin::get_plugin($_POST['pluginId']);
-      }
+    // validate `name`
+    if (isset($_POST['name']) && class_exists('VF_Plugin')) {
+      $post_name = VF_Gutenberg::name_block_to_post($_POST['name']);
+      $vf_plugin = VF_Plugin::get_plugin($post_name);
     }
     // render block
     $html = '';
@@ -238,7 +276,7 @@ class VF_Gutenberg {
     foreach ($stylesheets as $href) {
       $html .= '<link rel="stylesheet" href="' . $href . '">';
     }
-    if ($vf_plugin instanceof VF_Plugin) {
+    if ($vf_plugin) {
       ob_start();
       VF_Plugin::render($vf_plugin);
       $html .= ob_get_contents();

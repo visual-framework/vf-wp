@@ -50,7 +50,6 @@ const ViewControl = ({data}) => {
 
 const PluginEdit = function(props) {
   const {
-    pluginId,
     clientId,
     isSelected,
     attributes: {ver, mode}
@@ -65,8 +64,7 @@ const PluginEdit = function(props) {
 
   const {data, isLoading} = useVFBlock({
     ...props.attributes,
-    blockName: props.name,
-    pluginId
+    name: props.name
   });
 
   const LoadingControl = () => {

@@ -25,7 +25,7 @@ const useVFBlock = attr => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await wp.ajax.post('vf_gutenberg_fetch_block', {
+      const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
         ...attr,
         postId,
         nonce
