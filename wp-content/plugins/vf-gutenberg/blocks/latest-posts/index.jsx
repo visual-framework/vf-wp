@@ -32,10 +32,6 @@ export const settings = {
   },
   save: () => null,
   edit: props => {
-    return (
-      <PluginEdit {...props}>
-        <p>test</p>
-      </PluginEdit>
-    );
+    return <PluginEdit {...props}></PluginEdit>;
   }
 };

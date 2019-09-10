@@ -96,16 +96,16 @@ class VF_Gutenberg {
     );
     add_action(
       'acf/init',
-      array($this, 'acf_init')
+      array($this, '_deprecated_acf_init')
     );
     add_action(
       'admin_head',
-      array($this, 'admin_head')
+      array($this, '_deprecated_admin_head')
       , 10
     );
     add_action(
       'admin_notices',
-      array($this, 'admin_notices')
+      array($this, '_deprecated_admin_notices')
     );
 
     // ACF options
@@ -206,19 +206,19 @@ class VF_Gutenberg {
       false,
       true
     );
-    wp_enqueue_script(
-      'vf-blocks',
-      plugins_url('/assets/vf-blocks.min.js', __FILE__),
-      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
-      false,
-      true
-    );
     wp_enqueue_style(
       'vf-blocks',
       plugins_url('/assets/vf-blocks.css', __FILE__),
       array(),
       false,
       'all'
+    );
+    wp_register_script(
+      'vf-blocks',
+      plugins_url('/assets/vf-blocks.min.js', __FILE__),
+      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
+      false,
+      true
     );
     wp_register_script(
       'vf-gutenberg',
@@ -238,7 +238,21 @@ class VF_Gutenberg {
       'nonce' => wp_create_nonce("vf_nonce_{$post_id}"),
       'postId' => $post_id
     );
-    wp_localize_script('vf-gutenberg', 'vfGutenberg', $config);
+    if (class_exists('VF_Plugin')) {
+      $plugins = VF_Plugin::get_config();
+      if ( ! empty($plugins)) {
+        $config['plugins'] = array();
+        foreach ($plugins as $key => $value) {
+          if ($value['post_type'] === 'vf_block') {
+            $config['plugins'][] = VF_Gutenberg::name_post_to_block($key);
+          }
+        }
+      }
+    }
+    wp_localize_script('vf-blocks', 'VF_Gutenberg', $config);
+
+    wp_enqueue_script('vf-blocks');
+    // TODO: deprecate?
     wp_enqueue_script('vf-gutenberg');
   }
 
@@ -263,9 +277,11 @@ class VF_Gutenberg {
       wp_die();
     }
     // validate `name`
-    if (isset($_POST['name']) && class_exists('VF_Plugin')) {
-      $post_name = VF_Gutenberg::name_block_to_post($_POST['name']);
-      $vf_plugin = VF_Plugin::get_plugin($post_name);
+    if (isset($_POST['name'])) {
+      if (class_exists('VF_Plugin')) {
+        $post_name = VF_Gutenberg::name_block_to_post($_POST['name']);
+        $vf_plugin = VF_Plugin::get_plugin($post_name);
+      }
     }
     // render block
     $html = '';
@@ -284,25 +300,25 @@ class VF_Gutenberg {
     } else {
       $html .= '<b>Plugin</b>';
     }
-    // send response
     wp_send_json_success(
       array(
         'hash' => hash('crc32', $html),
         'html' => $html
       )
     );
-    wp_die();
   }
+
 
   /**
    * WARNING: deprecated code below
    */
 
+
   /**
    * WARNING: deprecated method
    * Action: `admin_notices`
    */
-  function admin_notices() {
+  function _deprecated_admin_notices() {
     if ( ! function_exists('get_current_screen')) {
       return;
     }
@@ -332,7 +348,7 @@ class VF_Gutenberg {
    * Action: `acf/init`
    * Iterate over blocks and register them
    */
-  function acf_init() {
+  function _deprecated_acf_init() {
     foreach ($this->blocks as $name => $instance) {
 
       // Register Gutenberg block with ACF
@@ -340,6 +356,9 @@ class VF_Gutenberg {
         'name'            => $instance->key(),
         'title'           => $instance->title(),
         'category'        => $this->category,
+        'supports'        => array(
+          'inserter' => function_exists('vf_debug') && vf_debug()
+        ),
         'render_callback' => array($this, 'render_callback')
       ));
 
@@ -437,7 +456,7 @@ class VF_Gutenberg {
    * WARNING: deprecated method
    * Output inline styles for Visual Framework Gutenberg blocks
    */
-  function admin_head() {
+  function _deprecated_admin_head() {
 ?>
 <style>
 .wp-block[data-type^="acf/vf-"] {
@@ -456,14 +475,14 @@ class VF_Gutenberg {
       return $categories;
     }
     return array_merge(
+      $categories,
       array(
         array(
           'slug'  => $this->category,
           'title' => __('Visual Framework (deprecated)', 'vfwp'),
           'icon'  => null
         )
-      ),
-      $categories
+      )
     );
   }
 

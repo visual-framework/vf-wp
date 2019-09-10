@@ -35,14 +35,14 @@ class VF_Blocks extends VF_Type {
       return $categories;
     }
     return array_merge(
+      $categories,
       array(
         array(
           'slug'  => 'vf_blocks_content_hub',
           'title' => __('EMBL Content Hub (deprecated)', 'vfwp'),
           'icon'  => null
         )
-      ),
-      $categories
+      )
     );
   }
 

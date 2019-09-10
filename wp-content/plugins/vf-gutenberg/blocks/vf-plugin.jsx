@@ -2,7 +2,7 @@
  * VF Plugin (base components)
  * https://visual-framework.github.io/vf-core/components/detail/vf-button.html
  */
-import {useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {useVF, useVFBlock, useIFrameResize} from './hooks';
 
 const {__} = wp.i18n;
@@ -26,7 +26,7 @@ const EditButton = ({onClick}) => {
 const ViewButton = ({onClick}) => {
   return (
     <IconButton
-      label="__('Preview', 'vfwp')"
+      label={__('Preview', 'vfwp')}
       icon="visibility"
       onClick={onClick}
     />
@@ -67,10 +67,6 @@ const PluginEdit = function(props) {
     name: props.name
   });
 
-  const LoadingControl = () => {
-    return <div>{__('Loading', 'vfwp')}</div>;
-  };
-
   const onToggle = () => {
     props.setAttributes({mode: !isEdit ? 'edit' : 'view'});
   };
@@ -94,10 +90,10 @@ const PluginEdit = function(props) {
       data-loading={isLoading}>
       {isEdit ? (
         <div className="vf-gutenberg-edit">{props.children}</div>
-      ) : isLoading ? (
-        <LoadingControl />
-      ) : (
+      ) : !isLoading ? (
         <ViewControl data={data} />
+      ) : (
+        false
       )}
     </div>
   ];

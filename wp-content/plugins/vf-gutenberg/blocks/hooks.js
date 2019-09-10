@@ -4,12 +4,15 @@ import React, {useState, useEffect} from 'react';
  * Hook to use global VF Gutenberg settings from `wp_localize_script`
  */
 const useVF = () => {
-  const vf = window.vfGutenberg || {};
+  const vf = window.VF_Gutenberg || {};
   if (!vf.hasOwnProperty('postId')) {
     vf.postId = 0;
   }
   if (!vf.hasOwnProperty('nonce')) {
     vf.nonce = '';
+  }
+  if (!vf.hasOwnProperty('plugins')) {
+    vf.plugins = [];
   }
   return vf;
 };
@@ -61,9 +64,10 @@ const useIFrameResize = (iframeEl, html, config) => {
     script.src = iframeResizer;
     script.onload = function() {
       script.onload = null;
-      setTimeout(function() {
+      iframe.iFrameResizer.resize();
+      setInterval(function() {
         iframe.iFrameResizer.resize();
-      }, 100);
+      }, 200);
     };
     body.appendChild(script);
     window.iFrameResize(config, iframe);

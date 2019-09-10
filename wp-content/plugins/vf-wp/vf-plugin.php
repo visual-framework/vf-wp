@@ -245,7 +245,9 @@ class VF_Plugin {
       )
     ));
 
-    // TODO: deprecated - replace with native Gutenberg block
+    /**
+     * WARNING: deprecated - replace with native Gutenberg block
+     */
     if ($this->is_block()) {
       // Register the Gutenberg block for this plugin
       acf_register_block(
@@ -254,8 +256,9 @@ class VF_Plugin {
           'title'    => $this->post->post_title,
           'icon'     => 'format-aside',
           'supports' => array(
-            'align' => false,
-            'mode'  => false
+            'align'    => false,
+            'mode'     => false,
+            'inserter' => function_exists('vf_debug') && vf_debug()
           ),
           'category' => 'vf_blocks_content_hub',
           'render_callback' => function($block, $content, $is_preview) use ($key) {
@@ -305,10 +308,13 @@ class VF_Plugin {
   /**
    * Return a plugin from the global option if registered
    */
-  static public function get_config($post_name) {
+  static public function get_config($post_name = null) {
     $plugins = unserialize(get_option('vf__plugins'));
     if ( ! is_array($plugins)) {
       return;
+    }
+    if ( ! $post_name) {
+      return $plugins;
     }
     if ( ! array_key_exists($post_name, $plugins)) {
       return;
