@@ -195,8 +195,7 @@ class VF_Cache {
       return;
     }
     // generate nonce for ajax response
-    $nonce = VF_Cache::hash(rand() . $now);
-    update_option('vf_cache_nonce', $nonce);
+    $nonce = wp_create_nonce("vf_nonce_{$now}");
     update_option('vf_cache_update', $now);
 
     /**
@@ -205,24 +204,25 @@ class VF_Cache {
      * but this seems to throw CURL errors or block loading (?)
      */
     $url = admin_url('admin-ajax.php');
-    $url = add_query_arg(array(
-      'action'   => 'vf_cache_update',
+    $data = array(
+      'action' => 'vf/cache/update',
       'nonce' => $nonce
-    ), $url);
+    );
 
     // Footer action callback
-    $script = function() use ($url) {
+    $script = function() use ($url, $data) {
 ?>
 <script>
 (function() {
 var xhr = new XMLHttpRequest();
-xhr.open('POST', <?php echo json_encode($url); ?>);
+xhr.open('POST', '<?php echo $url; ?>');
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 <?php if (vf_debug()) { ?>
 xhr.addEventListener('load', function() {
   console.log(xhr);
 });
 <?php } ?>
-xhr.send();
+xhr.send('<?php echo build_query($data); ?>');
 })();
 </script>
 <?php
@@ -241,18 +241,18 @@ xhr.send();
     session_write_close();
 
     // Verify nonce to avoid unscheduled updates
-    $nonce = isset($_GET['nonce']) ? $_GET['nonce'] : false;
-    $check = get_option('vf_cache_nonce');
-    if ( ! $nonce || ! $check || $nonce !== $check) {
-      wp_die(vf_debug() ? '0' : '');
-    }
-    update_option('vf_cache_nonce', 0);
-    update_option('vf_cache_update', time());
+    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
+    $update = get_option('vf_cache_update');
 
-    // Start update
+    if ( ! wp_verify_nonce($nonce, "vf_nonce_{$update}")) {
+      wp_send_json_error();
+    }
+
+    // Update cache
+    update_option('vf_cache_update', time());
     $this->update_cache_posts();
 
-    wp_die(vf_debug() ? '1' : '');
+    wp_send_json_success();
   }
 
   /**
@@ -345,11 +345,11 @@ xhr.send();
     add_action('acf/init', array($this, 'acf_init'));
 
     add_action(
-      'wp_ajax_vf_cache_update',
+      'wp_ajax_vf/cache/update',
       array($this, 'handle_schedule_ajax')
     );
     add_action(
-      'wp_ajax_nopriv_vf_cache_update',
+      'wp_ajax_nopriv_vf/cache/update',
       array($this, 'handle_schedule_ajax')
     );
 
