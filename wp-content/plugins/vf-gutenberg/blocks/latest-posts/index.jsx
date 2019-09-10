@@ -1,0 +1,42 @@
+/**
+ * VF-WP Latest Posts
+ */
+
+const {__} = wp.i18n;
+
+import PluginEdit from '../vf-plugin';
+
+export const settings = {
+  name: 'vf/latest-posts',
+  title: __('Latest Posts', 'vfwp'),
+  // icon: 'format-aside',
+  category: 'vf/contenthub',
+  keywords: [
+    __('VF', 'vfwp'),
+    __('Visual Framework', 'vfwp'),
+    __('Content Hub', 'vfwp')
+  ],
+  attributes: {
+    ver: {
+      type: 'integer'
+    },
+    mode: {
+      type: 'string'
+    }
+  },
+  supports: {
+    align: false,
+    html: false,
+    className: false,
+    customClassName: false
+  },
+  edit: props => {
+    props = {...props, pluginId: 'vf_latest_posts'};
+    return (
+      <PluginEdit {...props}>
+        <p>test</p>
+      </PluginEdit>
+    );
+  },
+  save: () => null
+};

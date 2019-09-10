@@ -197,8 +197,7 @@ class VF_Gutenberg {
         __FILE__
       ),
       'nonce' => wp_create_nonce("vf_nonce_{$post_id}"),
-      'postId' => $post_id,
-      'instanceId' => 0
+      'postId' => $post_id
     );
     wp_localize_script('vf-gutenberg', 'vfGutenberg', $config);
     wp_enqueue_script('vf-gutenberg');
@@ -208,13 +207,29 @@ class VF_Gutenberg {
    * Handle AJAX request to render block preview
    */
   function ajax_fetch_block() {
-    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
-    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
+    $post_id = 0;
+    $nonce = '';
+    $vf_plugin = null;
 
+    // validate `post_id`
+    if (isset($_POST['postId'])) {
+      $post_id = intval($_POST['postId']);
+    }
+    // validate `nonce`
+    if (isset($_POST['nonce'])) {
+      $nonce = $_POST['nonce'];
+    }
     if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
       wp_send_json_error();
       wp_die();
     }
+    // validate `vf_plugin`
+    if (isset($_POST['pluginId'])) {
+      if (class_exists('VF_Plugin')) {
+        $vf_plugin = VF_Plugin::get_plugin($_POST['pluginId']);
+      }
+    }
+    // render block
     $html = '';
     $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
     if (function_exists('vf_get_stylesheet')) {
@@ -223,7 +238,15 @@ class VF_Gutenberg {
     foreach ($stylesheets as $href) {
       $html .= '<link rel="stylesheet" href="' . $href . '">';
     }
-    $html .= '<b>Test</b>';
+    if ($vf_plugin instanceof VF_Plugin) {
+      ob_start();
+      VF_Plugin::render($vf_plugin);
+      $html .= ob_get_contents();
+      ob_end_clean();
+    } else {
+      $html .= '<b>Plugin</b>';
+    }
+    // send response
     wp_send_json_success(
       array(
         'hash' => hash('crc32', $html),

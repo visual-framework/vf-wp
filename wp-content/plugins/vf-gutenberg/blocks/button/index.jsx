@@ -75,7 +75,7 @@ const Edit = function(props) {
 
   const isEdit = mode === 'edit';
 
-  const {data, isLoading} = useVFBlock({id, url});
+  const {data, isLoading} = useVFBlock({id, url/*, vf_plugin:'vf_latest_posts'*/});
 
   const LoadingControl = () => {
     return <div>{__('Loading', 'vfwp')}</div>;
