@@ -2,7 +2,7 @@
  * VF Button
  * https://visual-framework.github.io/vf-core/components/detail/vf-button.html
  */
-import {useVFBlock} from './vf';
+import {useVFBlock} from '../hooks';
 
 const {__} = wp.i18n;
 const {compose, withInstanceId} = wp.compose;

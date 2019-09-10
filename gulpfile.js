@@ -31,22 +31,13 @@ config.js_glob = [js_glob, '!' + js_glob.replace(/\.js$/, '.min.js')];
 /**
  * Webpack configuration for VF Gutenberg plugin blocks
  */
-config.vf_blocks_path = path.resolve(
-  config.plugin_path,
-  'vf-gutenberg/assets/vf-blocks.jsx'
-);
 
-config.vf_blocks_glob = [path.resolve(
-  config.plugin_path,
-  'vf-gutenberg/assets/**/*.jsx'
-),path.resolve(
-  config.plugin_path,
-  'vf-gutenberg/assets/blocks/**/*.{js,jsx}'
-)];
-
+config.vf_blocks_glob = [
+  path.resolve(config.plugin_path, 'vf-gutenberg/blocks/**/*.{js,jsx}')
+];
 
 config.vf_blocks_webpack = {
-  entry: config.vf_blocks_path,
+  entry: path.resolve(config.plugin_path, 'vf-gutenberg/blocks/vf-blocks.jsx'),
   output: {
     path: path.resolve(config.plugin_path, 'vf-gutenberg/assets'),
     filename: 'vf-blocks.min.js'
