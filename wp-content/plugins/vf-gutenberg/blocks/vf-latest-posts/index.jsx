@@ -4,7 +4,7 @@
 
 const {__} = wp.i18n;
 
-import PluginEdit from '../vf-plugin';
+import {PluginEdit} from '../vf-plugin';
 
 export const settings = {
   name: 'vf/latest-posts',
@@ -18,9 +18,6 @@ export const settings = {
   attributes: {
     ver: {
       type: 'integer'
-    },
-    mode: {
-      type: 'string'
     }
   },
   supports: {
@@ -31,6 +28,6 @@ export const settings = {
   },
   save: () => null,
   edit: props => {
-    return <PluginEdit {...props}></PluginEdit>;
+    return <PluginEdit {...props} />;
   }
 };

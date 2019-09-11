@@ -21,7 +21,7 @@
         },
         {
             "key": "field_vf_example_text",
-            "label": "Text",
+            "label": "Text example",
             "name": "vf_example_text",
             "type": "text",
             "instructions": "Instructions, documentation, user guide, hints and tips go here.",
@@ -39,8 +39,27 @@
             "maxlength": ""
         },
         {
+            "key": "field_5d78e37d2261b",
+            "label": "Textarea example",
+            "name": "vf_example_textarea",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
             "key": "field_vf_example_select",
-            "label": "Select",
+            "label": "Select example",
             "name": "vf_example_select",
             "type": "select",
             "instructions": "Example of a dynamically populated select field.",
@@ -51,7 +70,6 @@
                 "class": "",
                 "id": ""
             },
-            "choices": {},
             "default_value": [],
             "allow_null": 0,
             "multiple": 0,
@@ -62,7 +80,7 @@
         },
         {
             "key": "field_vf_example_range",
-            "label": "Range",
+            "label": "Range example",
             "name": "vf_example_range",
             "type": "range",
             "instructions": "Example of a range field.",
@@ -74,11 +92,36 @@
                 "id": ""
             },
             "default_value": "",
-            "min": "",
-            "max": "",
+            "min": 7,
+            "max": 42,
             "step": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_5d78e3cc2261c",
+            "label": "Radio example",
+            "name": "vf_example_radio",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "red": "Red",
+                "green": "Green",
+                "blue": "Blue"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
         }
     ],
     "location": [
@@ -98,5 +141,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1548947592
+    "modified": 1568203876
 }

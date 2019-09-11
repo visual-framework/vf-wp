@@ -203,17 +203,7 @@ class VF_Gutenberg {
       'nonce' => wp_create_nonce("vf_nonce_{$post_id}"),
       'postId' => $post_id
     );
-    if (class_exists('VF_Plugin')) {
-      $plugins = VF_Plugin::get_config();
-      if ( ! empty($plugins)) {
-        $config['plugins'] = array();
-        foreach ($plugins as $key => $value) {
-          if ($value['post_type'] === 'vf_block') {
-            $config['plugins'][] = VF_Gutenberg::name_post_to_block($key);
-          }
-        }
-      }
-    }
+    $config['plugins'] = $this->get_config_plugins();
     wp_localize_script('vf-blocks', 'vfBlocks', $config);
     wp_enqueue_script('vf-blocks');
   }
@@ -264,6 +254,94 @@ class VF_Gutenberg {
     );
   }
 
+  /**
+   * Return enabled plugins and their fields for the Gutenberg editor
+   */
+  private function get_config_plugins() {
+    if ( ! class_exists('VF_Plugin')) {
+      return;
+    }
+    $plugins = VF_Plugin::get_config();
+    if (empty($plugins)) {
+      return;
+    }
+    $config = array();
+    $supported = array(
+      'text',
+      'textarea',
+      'select',
+      'range',
+      'radio'
+    );
+    $protected = array(
+      'ver',
+      'mode'
+    );
+    foreach ($plugins as $post_name => $value) {
+      if ($value['post_type'] !== 'vf_block') {
+        continue;
+      }
+      // enabled basic support
+      $block_name = VF_Gutenberg::name_post_to_block($post_name);
+      $config[$block_name] = true;
+
+      /**
+       * Map ACF fields to supported Gutenberg controls
+       */
+      $vf_plugin = VF_Plugin::get_plugin($post_name);
+      $fields = get_field_objects($vf_plugin->post()->ID);
+      if ( ! is_array($fields)) {
+        continue;
+      }
+      $data = array();
+      foreach ($fields as $key => $field) {
+        $type = $field['type'];
+        if ( ! in_array($type, $supported)) {
+          continue;
+        }
+        $name = preg_replace(
+          '#^' . preg_quote($post_name) . '_#',
+          '', $field['name']
+        );
+        if (in_array($name, $protected)) {
+          continue;
+        }
+        $attr = array(
+          'name'  => $name,
+          'type'  => $type,
+          'label' => $field['label']
+        );
+        // if ($post_name === 'vf_example') {
+        //   var_dump($field);
+        // }
+        if ($type === 'range') {
+          $attr['min'] = intval($field['min']);
+          $attr['max'] = intval($field['max']);
+        }
+        if ($type === 'select') {
+          $attr['options'] = array();
+          foreach ($field['choices'] as $k => $v) {
+            $attr['options'][] = array(
+              'label' => $v,
+              'value' => $k
+            );
+          }
+        }
+        if ($type === 'radio') {
+          $attr['options'] = array();
+          foreach ($field['choices'] as $k => $v) {
+            $attr['options'][] = array(
+              'label' => $v,
+              'value' => $k
+            );
+          }
+        }
+        $data['fields'][] = $attr;
+      }
+      $config[$block_name] = $data;
+    }
+    return $config;
+  }
 
   /**
    * WARNING: deprecated

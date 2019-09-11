@@ -9,10 +9,12 @@ import * as latest from './vf-latest-posts';
 const {registerBlockType} = wp.blocks;
 const {plugins} = useVF();
 
-if (plugins.indexOf(example.settings.name) > -1) {
+const names = Object.keys(plugins);
+
+if (names.indexOf(example.settings.name) > -1) {
   registerBlockType(example.settings.name, example.settings);
 }
 
-if (plugins.indexOf(latest.settings.name) > -1) {
+if (names.indexOf(latest.settings.name) > -1) {
   registerBlockType(latest.settings.name, latest.settings);
 }

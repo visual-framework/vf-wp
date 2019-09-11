@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import hashsum from './hashsum';
 
 /**
  * Hook to use global VF Gutenberg settings from `wp_localize_script`
@@ -11,8 +12,8 @@ const useVF = () => {
   if (!vf.hasOwnProperty('nonce')) {
     vf.nonce = '';
   }
-  if (!vf.hasOwnProperty('plugins')) {
-    vf.plugins = [];
+  if (!vf.hasOwnProperty('plugins') || !vf.plugins) {
+    vf.plugins = {};
   }
   return vf;
 };
@@ -20,7 +21,7 @@ const useVF = () => {
 /**
  * Hook to fetch the VF Gutenberg block rendered template
  */
-const useVFPlugin = attr => {
+const useVFPlugin = postData => {
   const {postId, nonce} = useVF();
   const [data, setData] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -29,7 +30,7 @@ const useVFPlugin = attr => {
     setLoading(true);
     try {
       const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
-        ...attr,
+        ...postData,
         postId,
         nonce
       });
@@ -40,9 +41,32 @@ const useVFPlugin = attr => {
 
   useEffect(() => {
     fetchData();
-  }, [...Object.values(attr)]);
+  }, [hashsum(postData)]);
 
   return {data, isLoading};
+};
+
+/**
+ * Hook to get block attributes for VF Plugin
+ * mapped from ACF field object
+ */
+const useVFPluginFields = name => {
+  const {plugins} = useVF();
+  let fields = [];
+  let attributes = {};
+  if (Object.keys(plugins).indexOf(name) > -1) {
+    const config = plugins[name];
+    if (config.hasOwnProperty('fields')) {
+      fields = config.fields;
+      fields.forEach(field => {
+        attributes[field['name']] = {type: 'string'};
+        if (field['type'] === 'range') {
+          attributes[field['name']]['type'] = 'integer';
+        }
+      });
+    }
+  }
+  return {fields, attributes};
 };
 
 /**
@@ -51,7 +75,6 @@ const useVFPlugin = attr => {
 const useIFrame = (iframe, data) => {
   const {iframeResizer} = useVF();
   const onLoad = () => {
-
     const onMessage = ev => {
       if (ev.data !== iframe.id) {
         return;
@@ -98,4 +121,4 @@ const useIFrame = (iframe, data) => {
 //   };
 // };
 
-export {useVF, useVFPlugin, useIFrame};
+export {useVF, useVFPlugin, useVFPluginFields, useIFrame};
