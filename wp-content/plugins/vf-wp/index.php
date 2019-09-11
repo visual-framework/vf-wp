@@ -30,7 +30,6 @@ function vf_footer() {
 }
 
 class VF_WP {
-
   /**
    * Initialize custom post type classes using global variables
    */
@@ -121,18 +120,19 @@ class VF_WP {
 
   function init() {
     // Enable debug comments
-    if (vf_debug()) {
-      add_action(
-        'vf/plugin/before_render',
-        array($this, 'plugin_before_render'),
-        1
-      );
-      add_action(
-        'vf/plugin/after_render',
-        array($this, 'plugin_after_render'),
-        1
-      );
+    if ( ! vf_debug()) {
+      return;
     }
+    add_action(
+      'vf/plugin/before_render',
+      array($this, 'plugin_before_render'),
+      1
+    );
+    add_action(
+      'vf/plugin/after_render',
+      array($this, 'plugin_after_render'),
+      1
+    );
   }
 
   /**
