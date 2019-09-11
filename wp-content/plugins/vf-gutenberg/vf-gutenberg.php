@@ -311,13 +311,13 @@ class VF_Gutenberg {
       return;
     }
     $screen = get_current_screen();
-    if ($screen->id === 'edit-vf_block') {
-      printf('<div class="%1$s"><p><b>%2$s</b> %3$s</p></div>',
-        esc_attr('notice notice-warning'),
-        esc_html__('These blocks are deprecated.', 'vfwp'),
-        esc_html__('Please use the native blocks within the Gutenberg page editor.', 'vfwp')
-      );
-    }
+    // if ($screen->id === 'edit-vf_block') {
+    //   printf('<div class="%1$s"><p><b>%2$s</b> %3$s</p></div>',
+    //     esc_attr('notice notice-warning'),
+    //     esc_html__('These blocks are deprecated.', 'vfwp'),
+    //     esc_html__('Please use the native blocks within the Gutenberg page editor.', 'vfwp')
+    //   );
+    // }
   }
 
   /**
