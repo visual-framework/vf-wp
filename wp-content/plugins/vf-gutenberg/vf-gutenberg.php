@@ -292,26 +292,13 @@ class VF_Gutenberg {
       , 10
     );
     add_action(
-      'admin_notices',
-      array($this, '_deprecated_admin_notices')
+      'admin_footer',
+      array($this, '_deprecated_admin_footer')
+      , 10
     );
     add_action(
-      'admin_enqueue_scripts',
-      array($this, '_deprecated_admin_enqueue_scripts')
-    );
-  }
-
-  /**
-   * WARNING: deprecated method
-   * Action: `admin_enqueue_scripts`
-   */
-  function _deprecated_admin_enqueue_scripts() {
-    wp_enqueue_script(
-      'vf-gutenberg',
-      plugins_url('/assets/vf-gutenberg.js', __FILE__),
-      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
-      false,
-      true
+      'admin_notices',
+      array($this, '_deprecated_admin_notices')
     );
   }
 
@@ -442,11 +429,13 @@ class VF_Gutenberg {
 ?>
 <script>
   window.<?php echo $id; ?> = function(iframe) {
-    window.vfGutenbergIFrame(
-      iframe,
-      <?php echo json_encode($html); ?>,
-      <?php echo json_encode($js); ?>
-    );
+    try {
+      window.vfGutenbergIFrame(
+        iframe,
+        <?php echo json_encode($html); ?>,
+        <?php echo json_encode($js); ?>
+      );
+    } catch(e) {}
   };
 </script>
 <iframe <?php echo implode(' ', $attr); ?>></iframe>
@@ -464,6 +453,37 @@ class VF_Gutenberg {
   max-width: 780px;
 }
 </style>
+<?php
+  }
+
+  /**
+   * WARNING: deprecated method
+   */
+  function _deprecated_admin_footer() {
+?>
+<script>
+(function() {
+  window.vfGutenbergIFrame = function(iframe, html, js) {
+    var body = iframe.contentWindow.document.body;
+    body.innerHTML = html;
+    // append iframeResizer content window script
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = js;
+    script.onload = function() {
+      script.onload = null;
+      var timeout = setInterval(function() {
+        if (!iframe.iFrameResizer) {
+          return clearInterval(timeout);
+        }
+      }, 1000);
+    };
+    body.appendChild(script);
+    // start iframeResizer
+    window.iFrameResize({log: false, checkOrigin: false}, iframe);
+  };
+})();
+</script>
 <?php
   }
 
