@@ -53,7 +53,7 @@ The `render()` method returns the final HTML to output in the template. The ACF 
 After a new class file is created make sure it ends with:
 
 ```php
-vf_gutenberg()->add_block(
+vf_gutenberg()->_deprecated_add_block(
   new VF_Gutenberg_Box()
 );
 ```

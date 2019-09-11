@@ -118,7 +118,7 @@ class VF_Gutenberg_Lede implements VF_Gutenberg_Block {
 
 } // VF_Gutenberg_Lede
 
-vf_gutenberg()->add_block( new VF_Gutenberg_Lede() );
+vf_gutenberg()->_deprecated_add_block( new VF_Gutenberg_Lede() );
 
 endif;
 

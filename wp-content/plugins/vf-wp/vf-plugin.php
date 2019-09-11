@@ -556,7 +556,7 @@ class VF_Plugin {
           // Use the VF Gutenberg plugin to render iframe previews if available
           global $vf_gutenberg;
           if ($is_preview && isset($vf_gutenberg)) {
-            $vf_gutenberg->render_preview_iframe($block, $html);
+            $vf_gutenberg->_deprecated_render_preview_iframe($block, $html);
           } else {
             echo $html;
           }

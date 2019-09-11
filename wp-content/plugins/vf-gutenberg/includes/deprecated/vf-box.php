@@ -124,7 +124,7 @@ class VF_Gutenberg_Box implements VF_Gutenberg_Block {
 
 } // VF_Gutenberg_Box
 
-vf_gutenberg()->add_block( new VF_Gutenberg_Box() );
+vf_gutenberg()->_deprecated_add_block( new VF_Gutenberg_Box() );
 
 endif;
 

@@ -4,7 +4,7 @@ Plugin Name: VF-WP
 Description: VF-WP theme plugin manager.
 Version: 0.1.0
 Author: EMBL-EBI Web Development
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
 */
 

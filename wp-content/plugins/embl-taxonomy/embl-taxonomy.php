@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: EMBL Taxonomy
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Description: Adds EMBL Taxonomy integration to tag posts with EMBL Taxonomy terms.
 Version: 0.0.3
 Author: EMBL-EBI Web Development

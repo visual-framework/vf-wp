@@ -1,21 +1,20 @@
 <?php
 /*
-Plugin Name: Visual Framework (Gutenberg)
-Description: Adds Visual Framework patterns to the Gutenberg editor and adapt default blocks.
+Plugin Name: VF-WP Gutenberg
+Description: Adds Visual Framework support and blocks to the Gutenberg editor.
 Version: 0.0.1
 Author: EMBL-EBI Web Development
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
-
-Documentation for new block templates:
-https://wordpress.org/gutenberg/handbook/designers-developers/developers/block-api/block-templates/
-
-Default Gutenberg block library source:
-https://github.com/WordPress/gutenberg/tree/master/packages/block-library
-
 */
-
 /**
+ * Documentation for blocks:
+ * https://developer.wordpress.org/block-editor/developers/block-api/
+ *
+ * Gutenberg block library source:
+ * https://github.com/WordPress/gutenberg/tree/master/packages/block-library
+ * https://github.com/WordPress/gutenberg/tree/master/packages
+ *
  * WordPress does not make it practical to edit the default block templates.
  * To disable default blocks and roll our own seems ill-advised.
  * Instead I'm using a filter to adapt the HTML.
@@ -25,6 +24,7 @@ https://github.com/WordPress/gutenberg/tree/master/packages/block-library
  *
  * https://github.com/WordPress/WordPress/blob/5.0-branch/wp-includes/blocks.php#L239
  * https://github.com/WordPress/WordPress/blob/5.0-branch/wp-includes/default-filters.php#L159
+ *
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -33,16 +33,10 @@ if ( ! class_exists('VF_Gutenberg') ) :
 
 class VF_Gutenberg {
 
-  // Custom block category
-  private $category = 'vf_blocks_standalone';
+  private $settings;
 
   // List of compatible core blocks
   private $compatible = array();
-
-  // List of custom VF blocks
-  private $blocks = array();
-
-  private $settings;
 
   /**
    * Convert a Gutenberg block name to a VF_Plugin post name
@@ -88,26 +82,6 @@ class VF_Gutenberg {
       10, 2
     );
 
-    // TODO: remove deprecated filters
-    add_filter(
-      'block_categories',
-      array($this, '_deprecated_block_categories'),
-      10, 2
-    );
-    add_action(
-      'acf/init',
-      array($this, '_deprecated_acf_init')
-    );
-    add_action(
-      'admin_head',
-      array($this, '_deprecated_admin_head')
-      , 10
-    );
-    add_action(
-      'admin_notices',
-      array($this, '_deprecated_admin_notices')
-    );
-
     // ACF options
     include_once('includes/settings.php');
     $this->settings = new VF_Gutenberg_Settings();
@@ -119,12 +93,7 @@ class VF_Gutenberg {
     include_once('includes/core/core-quote.php');
     include_once('includes/core/core-separator.php');
 
-    // TODO: remove deprecated blocks
-    // Register custom blocks
-    include_once('includes/deprecated/vf-block.php');
-    include_once('includes/deprecated/vf-box.php');
-    include_once('includes/deprecated/vf-lede.php');
-    include_once('includes/deprecated/vf-activity.php');
+    $this->_deprecated_init();
   }
 
   /**
@@ -220,14 +189,10 @@ class VF_Gutenberg {
       false,
       true
     );
-    wp_register_script(
-      'vf-gutenberg',
-      plugins_url('/assets/vf-gutenberg.js', __FILE__),
-      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
-      false,
-      true
-    );
-
+    /**
+     * "Localize" script by making config available
+     * in the global `vfBlocks` object
+     */
     global $post;
     $post_id = $post instanceof WP_Post ? $post->ID : 0;
     $config = array(
@@ -250,28 +215,18 @@ class VF_Gutenberg {
       }
     }
     wp_localize_script('vf-blocks', 'vfBlocks', $config);
-
     wp_enqueue_script('vf-blocks');
-    // TODO: deprecate?
-    wp_enqueue_script('vf-gutenberg');
   }
 
   /**
    * Handle AJAX request to render block preview
    */
   function ajax_fetch_block() {
-    $post_id = 0;
-    $nonce = '';
     $vf_plugin = null;
-
     // validate `post_id`
-    if (isset($_POST['postId'])) {
-      $post_id = intval($_POST['postId']);
-    }
+    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
     // validate `nonce`
-    if (isset($_POST['nonce'])) {
-      $nonce = $_POST['nonce'];
-    }
+    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
     if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
       wp_send_json_error();
       wp_die();
@@ -311,9 +266,54 @@ class VF_Gutenberg {
 
 
   /**
-   * WARNING: deprecated code below
+   * WARNING: deprecated
    */
 
+  private $_deprecated_blocks = array();
+
+  private function _deprecated_init() {
+    include_once('includes/deprecated/vf-block.php');
+    include_once('includes/deprecated/vf-box.php');
+    include_once('includes/deprecated/vf-lede.php');
+    include_once('includes/deprecated/vf-activity.php');
+
+    add_filter(
+      'block_categories',
+      array($this, '_deprecated_block_categories'),
+      10, 2
+    );
+    add_action(
+      'acf/init',
+      array($this, '_deprecated_acf_init')
+    );
+    add_action(
+      'admin_head',
+      array($this, '_deprecated_admin_head')
+      , 10
+    );
+    add_action(
+      'admin_notices',
+      array($this, '_deprecated_admin_notices')
+    );
+    add_action(
+      'admin_enqueue_scripts',
+      array($this, '_deprecated_admin_enqueue_scripts')
+    );
+  }
+
+  /**
+   * WARNING: deprecated method
+   * Action: `admin_enqueue_scripts`
+   */
+  function _deprecated_admin_enqueue_scripts() {
+    wp_enqueue_script(
+      'vf-gutenberg',
+      plugins_url('/assets/vf-gutenberg.js', __FILE__),
+      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
+      false,
+      true
+    );
+  }
 
   /**
    * WARNING: deprecated method
@@ -337,10 +337,10 @@ class VF_Gutenberg {
    * WARNING: deprecated method
    * Register an array of custom VF blocks
    */
-  function add_block(VF_Gutenberg_Block $instance) {
+  function _deprecated_add_block(VF_Gutenberg_Block $instance) {
     $key = 'acf/' . $instance->key();
-    if ( ! array_key_exists($key, $this->blocks)) {
-      $this->blocks[$key] = $instance;
+    if ( ! array_key_exists($key, $this->_deprecated_blocks)) {
+      $this->_deprecated_blocks[$key] = $instance;
     }
   }
 
@@ -350,17 +350,17 @@ class VF_Gutenberg {
    * Iterate over blocks and register them
    */
   function _deprecated_acf_init() {
-    foreach ($this->blocks as $name => $instance) {
+    foreach ($this->_deprecated_blocks as $name => $instance) {
 
       // Register Gutenberg block with ACF
       acf_register_block(array(
         'name'            => $instance->key(),
         'title'           => $instance->title(),
-        'category'        => $this->category,
+        'category'        => 'vf_blocks_standalone',
         'supports'        => array(
           'inserter' => function_exists('vf_debug') && vf_debug()
         ),
-        'render_callback' => array($this, 'render_callback')
+        'render_callback' => array($this, '_deprecated_render_callback')
       ));
 
       // Register ACF field group
@@ -395,14 +395,14 @@ class VF_Gutenberg {
    * WARNING: deprecated method
    * Render callback for ACF Gutenberg blocks
    */
-  function render_callback($block, $content, $is_preview) {
-    if ( ! array_key_exists($block['name'], $this->blocks)) {
+  function _deprecated_render_callback($block, $content, $is_preview) {
+    if ( ! array_key_exists($block['name'], $this->_deprecated_blocks)) {
       return;
     }
-    $instance = $this->blocks[ $block['name'] ];
+    $instance = $this->_deprecated_blocks[ $block['name'] ];
     $html = $instance->render($block);
     if ( $is_preview) {
-      $this->render_preview_iframe($block, $html);
+      $this->_deprecated_render_preview_iframe($block, $html);
     } else {
       echo $html;
     }
@@ -412,7 +412,7 @@ class VF_Gutenberg {
    * WARNING: deprecated method
    * Render block within an iframe
    */
-  function render_preview_iframe($block, $html) {
+  function _deprecated_render_preview_iframe($block, $html) {
     // Prepend custom CSS
     $css = plugins_url('/assets/vf-iframe.css', __FILE__);
     $pre = array(
@@ -479,7 +479,7 @@ class VF_Gutenberg {
       $categories,
       array(
         array(
-          'slug'  => $this->category,
+          'slug'  => 'vf_blocks_standalone',
           'title' => __('Visual Framework (deprecated)', 'vfwp'),
           'icon'  => null
         )
