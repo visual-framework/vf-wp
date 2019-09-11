@@ -48,30 +48,45 @@ const useVFPlugin = attr => {
 /**
  * Hook to append iFrameResizer to content window
  */
-const useIFrame = (iframeEl, html) => {
+const useIFrame = (iframe, data) => {
   const {iframeResizer} = useVF();
   const onLoad = () => {
-    const iframe = iframeEl.current;
+
+    const onMessage = ev => {
+      if (ev.data !== iframe.id) {
+        return;
+      }
+      window.removeEventListener('message', onMessage);
+      if (iframe.iFrameResizer) {
+        return;
+      }
+      window.iFrameResize(
+        {
+          log: false,
+          checkOrigin: false
+        },
+        iframe
+      );
+      setTimeout(() => {
+        iframe.iFrameResizer.resize();
+      }, 1);
+      setTimeout(() => {
+        iframe.iFrameResizer.resize();
+      }, 500);
+    };
+
+    window.addEventListener('message', onMessage);
+
     const body = iframe.contentWindow.document.body;
-    body.innerHTML = html;
+    body.innerHTML = data.html;
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.src = iframeResizer;
     script.onload = function() {
+      parent.postMessage(iframe.id, '*');
       script.onload = null;
-      iframe.iFrameResizer.resize();
-      setInterval(function() {
-        iframe.iFrameResizer.resize();
-      }, 500);
     };
     body.appendChild(script);
-    window.iFrameResize(
-      {
-        log: false,
-        checkOrigin: false
-      },
-      iframe
-    );
   };
   return {onLoad};
 };

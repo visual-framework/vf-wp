@@ -25,32 +25,33 @@ const ViewButton = ({onClick}) => {
   );
 };
 
-const ViewControl = ({data}) => {
-  const iframeEl = useRef();
-  const {onLoad} = useIFrame(iframeEl, data.html);
+/**
+ * Cannot use `<iframe onLoad...>` load event in React does not
+ * fire properly in Safari/Chrome for iframes
+ */
+const ViewControl = React.memo(({data, clientId}) => {
+  // create iframe
+  const iframeId = `iframe_${data.hash}_${clientId}`.replace(/[^\w]/g, '');
+  const iframe = document.createElement('iframe');
+  iframe.id = iframeId;
+  iframe.className = 'vf-gutenberg-iframe';
+  iframe.setAttribute('scrolling', 'no');
 
-  // cleanup iframe resizer before unmount
+  const rootEl = useRef();
+  const {onLoad} = useIFrame(iframe, data);
+
   useEffect(() => {
-    const iframe = iframeEl.current;
+    iframe.addEventListener('load', ev => onLoad(ev));
+    rootEl.current.appendChild(iframe);
     return () => {
+      // cleanup iframe resizer before unmount
       if (iframe.iFrameResizer) {
         iframe.iFrameResizer.close();
       }
     };
-  }, [data.hash]);
-
-  return (
-    <div className="vf-gutenberg-view">
-      <iframe
-        ref={iframeEl}
-        onLoad={onLoad}
-        data-hash={data.hash}
-        className="vf-gutenberg-iframe"
-        scrolling="no"
-      />
-    </div>
-  );
-};
+  });
+  return <div className="vf-gutenberg-view" ref={rootEl} />;
+});
 
 const PluginEdit = function(props) {
   const {
@@ -94,7 +95,7 @@ const PluginEdit = function(props) {
       {isEditing ? (
         <div className="vf-gutenberg-edit">{props.children}</div>
       ) : !isLoading ? (
-        <ViewControl data={data} />
+        <ViewControl data={data} clientId={props.clientId} />
       ) : (
         false
       )}

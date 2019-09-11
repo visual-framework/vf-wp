@@ -14,9 +14,12 @@
     script.src = js;
     script.onload = function() {
       script.onload = null;
-      setTimeout(function() {
+      var timeout = setInterval(function() {
+        if (!iframe.iFrameResizer) {
+          return clearInterval(timeout);
+        }
         iframe.iFrameResizer.resize();
-      }, 100);
+      }, 1000);
     };
     body.appendChild(script);
 
