@@ -69,8 +69,8 @@ class VF_Gutenberg {
       10, 2
     );
     add_action(
-      'admin_enqueue_scripts',
-      array($this, 'admin_enqueue_scripts')
+      'enqueue_block_editor_assets', // 'admin_enqueue_scripts',
+      array($this, 'enqueue_block_editor_assets')
     );
     add_filter(
       'wp_ajax_vf/gutenberg/fetch_block',
@@ -168,7 +168,7 @@ class VF_Gutenberg {
   /**
    * Enqueue WP Admin CSS and JavaScript
    */
-  function admin_enqueue_scripts() {
+  function enqueue_block_editor_assets() {
     wp_enqueue_script(
       'iframe-resizer',
       plugins_url('/assets/iframeResizer.min.js', __FILE__),

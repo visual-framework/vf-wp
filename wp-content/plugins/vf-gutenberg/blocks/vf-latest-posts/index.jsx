@@ -9,7 +9,6 @@ import PluginEdit from '../vf-plugin';
 export const settings = {
   name: 'vf/latest-posts',
   title: __('Latest Posts', 'vfwp'),
-  // icon: 'format-aside',
   category: 'vf/contenthub',
   keywords: [
     __('VF', 'vfwp'),

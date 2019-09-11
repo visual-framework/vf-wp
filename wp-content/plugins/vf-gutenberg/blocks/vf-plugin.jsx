@@ -3,11 +3,12 @@
  */
 import {useEffect, useRef} from 'react';
 import {useVF, useVFPlugin, useIFrame} from './hooks';
+import Spinner from './spinner';
 
 const {__} = wp.i18n;
 
 const {BlockControls} = wp.editor;
-const {Toolbar, IconButton} = wp.components;
+const {IconButton, Toolbar} = wp.components;
 
 const EditButton = ({onClick}) => {
   return (
@@ -29,7 +30,7 @@ const ViewButton = ({onClick}) => {
  * Cannot use `<iframe onLoad...>` load event in React does not
  * fire properly in Safari/Chrome for iframes
  */
-const ViewControl = React.memo(({data, clientId}) => {
+const PluginViewMode = React.memo(({data, clientId}) => {
   // create iframe
   const iframeId = `iframe_${data.hash}_${clientId}`.replace(/[^\w]/g, '');
   const iframe = document.createElement('iframe');
@@ -52,6 +53,10 @@ const ViewControl = React.memo(({data, clientId}) => {
   });
   return <div className="vf-gutenberg-view" ref={rootEl} />;
 });
+
+// const PluginEditMode = props => {
+//   return <div className="vf-gutenberg-edit">{props.children}</div>;
+// };
 
 const PluginEdit = function(props) {
   const {
@@ -94,13 +99,16 @@ const PluginEdit = function(props) {
       data-loading={isLoading}>
       {isEditing ? (
         <div className="vf-gutenberg-edit">{props.children}</div>
+
       ) : !isLoading ? (
-        <ViewControl data={data} clientId={props.clientId} />
+        <PluginViewMode data={data} clientId={props.clientId} />
       ) : (
-        false
+        <Spinner />
       )}
     </div>
   ];
 };
 
 export default PluginEdit;
+
+// <PluginEditMode {...props} />
