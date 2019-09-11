@@ -7,7 +7,7 @@ const {__} = wp.i18n;
 import {PluginEdit, PluginEditFields} from '../vf-plugin';
 import {useVFPluginFields} from '../hooks';
 
-const {fields, attributes} = useVFPluginFields('vf/example');
+const {fields, attrs} = useVFPluginFields('vf/example');
 
 export const settings = {
   name: 'vf/example',
@@ -19,7 +19,7 @@ export const settings = {
     __('Content Hub', 'vfwp')
   ],
   attributes: {
-    ...attributes,
+    ...attrs,
     ver: {
       type: 'integer'
     },

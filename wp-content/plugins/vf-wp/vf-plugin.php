@@ -365,6 +365,9 @@ class VF_Plugin {
     ) {
       return;
     }
+    if (empty($fields)) {
+      $fields = null;
+    }
 
     /**
      * We're setting up postdata for the canonical plugin post but for

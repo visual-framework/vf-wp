@@ -39,6 +39,25 @@ class VF_Gutenberg {
   private $compatible = array();
 
   /**
+   * Attributes from the Gutenberg block that should be ignored
+   */
+  private $protected_attrs = array(
+    'ver',
+    'mode'
+  );
+
+  /**
+   * ACF field types that are supported by Gutenberg blocks
+   */
+  private $supported_fields = array(
+    'text',
+    'textarea',
+    'select',
+    'range',
+    'radio'
+  );
+
+  /**
    * Convert a Gutenberg block name to a VF_Plugin post name
    * e.g. "vf/latest-posts" to "vf_latest_posts"
    */
@@ -69,7 +88,7 @@ class VF_Gutenberg {
       10, 2
     );
     add_action(
-      'enqueue_block_editor_assets', // 'admin_enqueue_scripts',
+      'enqueue_block_editor_assets',
       array($this, 'enqueue_block_editor_assets')
     );
     add_filter(
@@ -79,6 +98,11 @@ class VF_Gutenberg {
     add_filter(
       'render_block',
       array($this, 'render_block'),
+      10, 2
+    );
+    add_filter(
+      'render_block',
+      array($this, 'render_block_compatible'),
       10, 2
     );
 
@@ -109,9 +133,6 @@ class VF_Gutenberg {
    * Action: `block_categories`
    */
   function block_categories($categories, $post) {
-    // if ( ! in_array($post->post_type, array('post', 'page'))) {
-    //   return $categories;
-    // }
     return array_merge(
       array(
         array(
@@ -127,42 +148,6 @@ class VF_Gutenberg {
       ),
       $categories
     );
-  }
-
-  /**
-   * Filter `render_block`
-   */
-  function render_block($html, $block) {
-    /**
-     * Render VF Plugin blocks
-     */
-    if (
-      class_exists('VF_Plugin') &&
-      preg_match('/^vf\//', $block['blockName'])
-    ) {
-      $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
-      $vf_plugin = VF_Plugin::get_plugin($post_name);
-      if ($vf_plugin) {
-        ob_start();
-        VF_Plugin::render($vf_plugin);
-        $html = ob_get_contents();
-        ob_end_clean();
-        return $html;
-      }
-    }
-    /**
-     * Edit compatible core blocks to use VF markup
-     * Wrap other core blocks in `vf-content` class
-     */
-    if (array_key_exists($block['blockName'], $this->compatible)) {
-      $callback = $this->compatible[ $block['blockName'] ];
-      $html = call_user_func($callback, $html, $block);
-    } else {
-      if (strpos($block['blockName'], 'core/') === 0) {
-        $html = '<div class="vf-content">' . $html . '</div>';
-      }
-    }
-    return $html;
   }
 
   /**
@@ -194,16 +179,15 @@ class VF_Gutenberg {
      * in the global `vfBlocks` object
      */
     global $post;
-    $post_id = $post instanceof WP_Post ? $post->ID : 0;
     $config = array(
       'iframeResizer' => plugins_url(
         '/assets/iframeResizer.contentWindow.min.js',
         __FILE__
       ),
-      'nonce' => wp_create_nonce("vf_nonce_{$post_id}"),
-      'postId' => $post_id
+      'plugins' => $this->get_config_plugins(),
+      'nonce'   => wp_create_nonce("vf_nonce_{$post->ID}"),
+      'postId'  => $post->ID
     );
-    $config['plugins'] = $this->get_config_plugins();
     wp_localize_script('vf-blocks', 'vfBlocks', $config);
     wp_enqueue_script('vf-blocks');
   }
@@ -212,23 +196,13 @@ class VF_Gutenberg {
    * Handle AJAX request to render block preview
    */
   function ajax_fetch_block() {
-    $vf_plugin = null;
-    // validate `post_id`
+    // validate `post_id` and `nonce`
     $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
-    // validate `nonce`
     $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
     if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
       wp_send_json_error();
       wp_die();
     }
-    // validate `name`
-    if (isset($_POST['name'])) {
-      if (class_exists('VF_Plugin')) {
-        $post_name = VF_Gutenberg::name_block_to_post($_POST['name']);
-        $vf_plugin = VF_Plugin::get_plugin($post_name);
-      }
-    }
-    // render block
     $html = '';
     $stylesheets = array();
     if (function_exists('vf_get_stylesheet')) {
@@ -238,13 +212,12 @@ class VF_Gutenberg {
     foreach ($stylesheets as $href) {
       $html .= '<link rel="stylesheet" href="' . $href . '">';
     }
-    if ($vf_plugin) {
-      ob_start();
-      VF_Plugin::render($vf_plugin);
-      $html .= ob_get_contents();
-      ob_end_clean();
-    } else {
-      $html .= '<b>Plugin</b>';
+    // render block
+    if (isset($_POST['name'])) {
+      $html .= $this->render_block('', array(
+        'blockName' => $_POST['name'],
+        'attrs' => isset($_POST['attrs']) ? $_POST['attrs'] : false
+      ));
     }
     wp_send_json_success(
       array(
@@ -252,6 +225,60 @@ class VF_Gutenberg {
         'html' => $html
       )
     );
+  }
+
+  /**
+   * Render VF Plugin blocks
+   * Filter `render_block`
+   */
+  function render_block($html, $block) {
+    if ( ! class_exists('VF_Plugin')) {
+      return $html;
+    }
+    if ( ! preg_match('/^vf\//', $block['blockName'])) {
+      return $html;
+    }
+    $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
+    $vf_plugin = VF_Plugin::get_plugin($post_name);
+    if ( ! $vf_plugin) {
+      return $html;
+    }
+    /**
+     * Map block attributes to ACF field names
+     */
+    $fields = array();
+    if (is_array($block['attrs'])) {
+      foreach ($block['attrs'] as $key => $value) {
+        if (in_array($key, $this->protected_attrs)) {
+          continue;
+        }
+        $fields["{$post_name}_{$key}"] = $value;
+      }
+    }
+    if (empty($fields)) {
+      $fields = null;
+    }
+    ob_start();
+    VF_Plugin::render($vf_plugin, $fields);
+    $html = ob_get_contents();
+    ob_end_clean();
+    return $html;
+  }
+
+  /**
+   * Edit compatible core blocks to use VF markup
+   * Wrap other core blocks in `vf-content` class
+   */
+  public function render_block_compatible($html, $block) {
+    if (array_key_exists($block['blockName'], $this->compatible)) {
+      $callback = $this->compatible[ $block['blockName'] ];
+      $html = call_user_func($callback, $html, $block);
+    } else {
+      if (strpos($block['blockName'], 'core/') === 0) {
+        $html = '<div class="vf-content">' . $html . '</div>';
+      }
+    }
+    return $html;
   }
 
   /**
@@ -266,17 +293,6 @@ class VF_Gutenberg {
       return;
     }
     $config = array();
-    $supported = array(
-      'text',
-      'textarea',
-      'select',
-      'range',
-      'radio'
-    );
-    $protected = array(
-      'ver',
-      'mode'
-    );
     foreach ($plugins as $post_name => $value) {
       if ($value['post_type'] !== 'vf_block') {
         continue;
@@ -296,14 +312,14 @@ class VF_Gutenberg {
       $data = array();
       foreach ($fields as $key => $field) {
         $type = $field['type'];
-        if ( ! in_array($type, $supported)) {
+        if ( ! in_array($type, $this->supported_fields)) {
           continue;
         }
         $name = preg_replace(
           '#^' . preg_quote($post_name) . '_#',
           '', $field['name']
         );
-        if (in_array($name, $protected)) {
+        if (in_array($name, $this->protected_attrs)) {
           continue;
         }
         $attr = array(
@@ -311,9 +327,6 @@ class VF_Gutenberg {
           'type'  => $type,
           'label' => $field['label']
         );
-        // if ($post_name === 'vf_example') {
-        //   var_dump($field);
-        // }
         if ($type === 'range') {
           $attr['min'] = intval($field['min']);
           $attr['max'] = intval($field['max']);

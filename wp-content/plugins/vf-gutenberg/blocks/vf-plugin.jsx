@@ -72,7 +72,7 @@ const PluginPreview = React.memo(({data, clientId}) => {
 const PluginEdit = function(props) {
   const {
     isSelected,
-    attributes: {ver, mode, ...attributes}
+    attributes: {ver, mode, ...attrs}
   } = props;
 
   const hasMode = typeof mode === 'string';
@@ -84,7 +84,7 @@ const PluginEdit = function(props) {
   }
 
   const {data, isLoading} = useVFPlugin({
-    attributes: attributes,
+    attrs: attrs,
     name: props.name
   });
 
@@ -128,10 +128,10 @@ const PluginEdit = function(props) {
  * Automatically map field controls to attributes
  */
 const PluginEditFields = props => {
-  const {attributes, setAttributes, fields} = props;
+  const {attributes: attrs, setAttributes, fields} = props;
   const onUpdate = () => {
     props.setAttributes({
-      mode: attributes.mode === 'edit' ? 'view' : 'edit'
+      mode: attrs.mode === 'edit' ? 'view' : 'edit'
     });
   };
   const onChange = (name, value) => {
@@ -147,7 +147,7 @@ const PluginEditFields = props => {
           return (
             <TextControl
               label={label}
-              value={attributes[name]}
+              value={attrs[name]}
               onChange={value => onChange(name, value)}
             />
           );
@@ -156,7 +156,7 @@ const PluginEditFields = props => {
           return (
             <TextareaControl
               label={label}
-              value={attributes[name]}
+              value={attrs[name]}
               onChange={value => onChange(name, value)}
             />
           );
@@ -165,7 +165,7 @@ const PluginEditFields = props => {
           return (
             <SelectControl
               label={label}
-              value={attributes[name]}
+              value={attrs[name]}
               onChange={value => onChange(name, value)}
               options={[...field.options]}
             />
@@ -175,7 +175,7 @@ const PluginEditFields = props => {
           return (
             <RadioControl
               label={label}
-              selected={attributes[name]}
+              selected={attrs[name]}
               onChange={value => onChange(name, value)}
               options={[...field.options]}
             />
@@ -185,7 +185,7 @@ const PluginEditFields = props => {
           return (
             <RangeControl
               label={label}
-              value={parseInt(attributes[name])}
+              value={parseInt(attrs[name])}
               onChange={value => onChange(name, value)}
               min={parseInt(field['min'])}
               max={parseInt(field['max'])}

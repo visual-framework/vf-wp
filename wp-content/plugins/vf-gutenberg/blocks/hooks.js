@@ -53,20 +53,20 @@ const useVFPlugin = postData => {
 const useVFPluginFields = name => {
   const {plugins} = useVF();
   let fields = [];
-  let attributes = {};
+  let attrs = {};
   if (Object.keys(plugins).indexOf(name) > -1) {
     const config = plugins[name];
     if (config.hasOwnProperty('fields')) {
       fields = config.fields;
       fields.forEach(field => {
-        attributes[field['name']] = {type: 'string'};
+        attrs[field['name']] = {type: 'string'};
         if (field['type'] === 'range') {
-          attributes[field['name']]['type'] = 'integer';
+          attrs[field['name']]['type'] = 'integer';
         }
       });
     }
   }
-  return {fields, attributes};
+  return {fields, attrs};
 };
 
 /**
