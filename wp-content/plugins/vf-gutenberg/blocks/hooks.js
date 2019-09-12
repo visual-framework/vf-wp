@@ -83,9 +83,16 @@ export const useVFPluginFields = name => {
     if (config.hasOwnProperty('fields')) {
       fields = config.fields;
       fields.forEach(field => {
-        attrs[field['name']] = {type: 'string'};
-        if (field['type'] === 'range') {
-          attrs[field['name']]['type'] = 'integer';
+        const {name} = field;
+        attrs[name] = {type: 'string'};
+        if (name === 'range') {
+          attrs[name]['type'] = 'integer';
+        }
+        if (field['type'] === 'checkbox') {
+          attrs[name]['type'] = 'array';
+        }
+        if (field['type'] === 'toggle') {
+          attrs[name]['type'] = 'integer';
         }
       });
     }

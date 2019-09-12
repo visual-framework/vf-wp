@@ -140,32 +140,27 @@ const PluginEditFields = props => {
     <div className="vf-gutenberg-edit">
       {fields.map(field => {
         const {name, type, label} = field;
-        if (type === 'text') {
+        if (type === 'checkbox') {
           return (
-            <TextControl
-              label={label}
-              value={attrs[name]}
-              onChange={value => onChange(name, value)}
-            />
-          );
-        }
-        if (type === 'textarea') {
-          return (
-            <TextareaControl
-              label={label}
-              value={attrs[name]}
-              onChange={value => onChange(name, value)}
-            />
-          );
-        }
-        if (type === 'select') {
-          return (
-            <SelectControl
-              label={label}
-              value={attrs[name]}
-              onChange={value => onChange(name, value)}
-              options={[...field.options]}
-            />
+            <BaseControl label={label} className="components-radio-control">
+              {field.options.map(option => (
+                <div className="components-radio-control__option">
+                  <CheckboxControl
+                    label={option.label}
+                    checked={(attrs[name] || []).includes(option.value)}
+                    onChange={checked => {
+                      const attr = (attrs[name] || []).filter(
+                        v => v !== option.value
+                      );
+                      if (checked) {
+                        attr.push(option.value);
+                      }
+                      onChange(name, attr);
+                    }}
+                  />
+                </div>
+              ))}
+            </BaseControl>
           );
         }
         if (type === 'radio') {
@@ -189,6 +184,43 @@ const PluginEditFields = props => {
             />
           );
         }
+        if (type === 'select') {
+          return (
+            <SelectControl
+              label={label}
+              value={attrs[name]}
+              onChange={value => onChange(name, value)}
+              options={[...field.options]}
+            />
+          );
+        }
+        if (type === 'text') {
+          return (
+            <TextControl
+              label={label}
+              value={attrs[name]}
+              onChange={value => onChange(name, value)}
+            />
+          );
+        }
+        if (type === 'textarea') {
+          return (
+            <TextareaControl
+              label={label}
+              value={attrs[name]}
+              onChange={value => onChange(name, value)}
+            />
+          );
+        }
+        if (type === 'toggle') {
+          return (
+            <ToggleControl
+              label={label}
+              checked={attrs[name]}
+              onChange={value => onChange(name, value ? 1 : 0)}
+            />
+          );
+        }
       })}
       <Button isDefault isLarge onClick={onUpdate}>
         {__('Update', 'vfwp')}
@@ -196,19 +228,5 @@ const PluginEditFields = props => {
     </div>
   );
 };
-
-/*
-const onCheckboxChange = checked => {
-  props.setAttributes({
-    checkbox: checked
-  });
-};
-<CheckboxControl
-  heading="Checkbox"
-  label="checkbox"
-  checked={props.attributes.checkbox}
-  onChange={onCheckboxChange}
-/>
-*/
 
 export {PluginEdit, PluginEditFields};

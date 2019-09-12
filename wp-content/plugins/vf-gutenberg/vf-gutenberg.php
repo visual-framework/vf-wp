@@ -50,11 +50,13 @@ class VF_Gutenberg {
    * ACF field types that are supported by Gutenberg blocks
    */
   private $supported_fields = array(
+    'checkbox',
+    'range',
+    'radio',
+    'select',
     'text',
     'textarea',
-    'select',
-    'range',
-    'radio'
+    'true_false'
   );
 
   /**
@@ -290,19 +292,20 @@ class VF_Gutenberg {
       if ($value['post_type'] !== 'vf_block') {
         continue;
       }
+
       // enabled basic support
       $block_name = VF_Gutenberg::name_post_to_block($post_name);
       $config[$block_name] = true;
 
-      /**
-       * Map ACF fields to supported Gutenberg controls
-       */
+      // map ACF fields to supported Gutenberg controls
       $fields = acf_get_fields("group_{$post_name}");
       if ( ! is_array($fields)) {
         continue;
       }
-      $data = array();
-      foreach ($fields as $key => $field) {
+      $data = array(
+        'fields' => array()
+      );
+      foreach ($fields as $field) {
         $type = $field['type'];
         if ( ! in_array($type, $this->supported_fields)) {
           continue;
@@ -314,38 +317,43 @@ class VF_Gutenberg {
         if (in_array($name, $this->protected_attrs)) {
           continue;
         }
-        $attr = array(
-          'name'  => $name,
-          'type'  => $type,
-          'label' => $field['label']
-        );
-        if ($type === 'range') {
-          $attr['min'] = intval($field['min']);
-          $attr['max'] = intval($field['max']);
-        }
-        if ($type === 'select') {
-          $attr['options'] = array();
-          foreach ($field['choices'] as $k => $v) {
-            $attr['options'][] = array(
-              'label' => $v,
-              'value' => $k
-            );
-          }
-        }
-        if ($type === 'radio') {
-          $attr['options'] = array();
-          foreach ($field['choices'] as $k => $v) {
-            $attr['options'][] = array(
-              'label' => $v,
-              'value' => $k
-            );
-          }
-        }
-        $data['fields'][] = $attr;
+        $data['fields'][] = $this->map_acf_field_to_attr($name, $type, $field);
       }
       $config[$block_name] = $data;
     }
     return $config;
+  }
+
+  /**
+   * Map ACF field data to Gutenberg block attributes
+   */
+  private function map_acf_field_to_attr($name, $type, $field) {
+    $attr = array(
+      'name'  => $name,
+      'type'  => $type,
+      'label' => $field['label']
+    );
+    if ($type === 'range') {
+      $attr['min'] = intval($field['min']);
+      $attr['max'] = intval($field['max']);
+    }
+    if (in_array($type, array(
+      'checkbox',
+      'radio',
+      'select'
+    ))) {
+      $attr['options'] = array();
+      foreach ($field['choices'] as $k => $v) {
+        $attr['options'][] = array(
+          'label' => $v,
+          'value' => $k
+        );
+      }
+    }
+    if ($type === 'true_false') {
+      $attr['type'] = 'toggle';
+    }
+    return $attr;
   }
 
   /**

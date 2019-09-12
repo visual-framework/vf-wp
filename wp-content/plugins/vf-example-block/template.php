@@ -7,6 +7,8 @@ $textarea = get_field('vf_example_textarea', $post->ID);
 $select = get_field('vf_example_select', $post->ID);
 $range = get_field('vf_example_range', $post->ID);
 $radio = get_field('vf_example_radio', $post->ID);
+$checkbox = get_field('vf_example_checkbox', $post->ID);
+$boolean = get_field('vf_example_boolean', $post->ID);
 
 ?>
 <div class="vf-content">
@@ -17,5 +19,7 @@ $radio = get_field('vf_example_radio', $post->ID);
     <li><b><?php _e('Select:', 'vfwp'); ?></b> <?php echo $select; ?></li>
     <li><b><?php _e('Range:', 'vfwp'); ?></b> <?php echo $range; ?></li>
     <li><b><?php _e('Radio:', 'vfwp'); ?></b> <?php echo $radio; ?></li>
+    <li><b><?php _e('Checkbox:', 'vfwp'); ?></b> <?php echo implode(' ', $checkbox); ?></li>
+    <li><b><?php _e('Boolean:', 'vfwp'); ?></b> <?php echo $boolean ? '✔' : '✖'; ?></li>
   </ul>
 </div>
