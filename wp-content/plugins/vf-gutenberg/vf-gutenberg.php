@@ -154,12 +154,6 @@ class VF_Gutenberg {
    * Enqueue WP Admin CSS and JavaScript
    */
   function enqueue_block_editor_assets() {
-    wp_enqueue_script(
-      'iframe-resizer',
-      plugins_url('/assets/iframeResizer.min.js', __FILE__),
-      false,
-      true
-    );
     wp_enqueue_style(
       'vf-blocks',
       plugins_url('/assets/vf-blocks.css', __FILE__),
@@ -169,7 +163,10 @@ class VF_Gutenberg {
     );
     wp_register_script(
       'vf-blocks',
-      plugins_url('/assets/vf-blocks.min.js', __FILE__),
+      plugins_url(
+        '/assets/vf-blocks' . (vf_debug() ? '' : '.min') .  '.js',
+        __FILE__
+      ),
       array('iframe-resizer', 'wp-editor', 'wp-blocks'),
       false,
       true
@@ -180,10 +177,6 @@ class VF_Gutenberg {
      */
     global $post;
     $config = array(
-      'iframeResizer' => plugins_url(
-        '/assets/iframeResizer.contentWindow.min.js',
-        __FILE__
-      ),
       'plugins' => $this->get_config_plugins(),
       'nonce'   => wp_create_nonce("vf_nonce_{$post->ID}"),
       'postId'  => $post->ID
@@ -210,7 +203,7 @@ class VF_Gutenberg {
     }
     $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
     foreach ($stylesheets as $href) {
-      $html .= '<link rel="stylesheet" href="' . $href . '">';
+      $html .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
     }
     // render block
     if (isset($_POST['name'])) {
@@ -285,14 +278,14 @@ class VF_Gutenberg {
    * Return enabled plugins and their fields for the Gutenberg editor
    */
   private function get_config_plugins() {
+    $config = array();
     if ( ! class_exists('VF_Plugin')) {
-      return;
+      return $config;
     }
     $plugins = VF_Plugin::get_config();
     if (empty($plugins)) {
-      return;
+      return $config;
     }
-    $config = array();
     foreach ($plugins as $post_name => $value) {
       if ($value['post_type'] !== 'vf_block') {
         continue;
@@ -376,6 +369,10 @@ class VF_Gutenberg {
     add_action(
       'acf/init',
       array($this, '_deprecated_acf_init')
+    );
+    add_action(
+      'enqueue_block_editor_assets',
+      array($this, '_deprecated_enqueue_block_editor_assets')
     );
     add_action(
       'admin_head',
@@ -509,7 +506,7 @@ class VF_Gutenberg {
 
     $html = implode("\n", $pre) . $html;
 
-    $js = plugins_url('/assets/iframeResizer.contentWindow.min.js', __FILE__);
+    $js = plugins_url('/includes/deprecated/iframeResizer.contentWindow.min.js', __FILE__);
     $id = "vfGutenberg_{$block['id']}";
     $attr = array(
       "id=\"{$id}\"",
@@ -531,6 +528,18 @@ class VF_Gutenberg {
 </script>
 <iframe <?php echo implode(' ', $attr); ?>></iframe>
 <?php
+  }
+
+  /**
+   * WARNING: deprecated method
+   */
+  function _deprecated_enqueue_block_editor_assets() {
+    wp_enqueue_script(
+      'iframe-resizer',
+      plugins_url('/includes/deprecated/iframeResizer.min.js', __FILE__),
+      false,
+      true
+    );
   }
 
   /**

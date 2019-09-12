@@ -51,16 +51,13 @@ const PluginPreview = React.memo(({data, clientId}) => {
   iframe.setAttribute('scrolling', 'no');
 
   const rootEl = useRef();
-  const {onLoad} = useIFrame(iframe, data);
+  const {onLoad, onUnload} = useIFrame(iframe, data.html);
 
   useEffect(() => {
     iframe.addEventListener('load', ev => onLoad(ev));
     rootEl.current.appendChild(iframe);
     return () => {
-      // cleanup iframe resizer before unmount
-      if (iframe.iFrameResizer) {
-        iframe.iFrameResizer.close();
-      }
+      onUnload();
     };
   });
   return <div className="vf-gutenberg-view" ref={rootEl} />;

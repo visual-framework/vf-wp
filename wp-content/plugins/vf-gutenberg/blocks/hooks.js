@@ -1,19 +1,21 @@
 import React, {useState, useEffect} from 'react';
 import hashsum from './hashsum';
 
+const vfBlocks = {
+  postId: 0,
+  nonce: '',
+  plugins: {}
+};
+
 /**
  * Hook to use global VF Gutenberg settings from `wp_localize_script`
  */
 const useVF = () => {
   const vf = window.vfBlocks || {};
-  if (!vf.hasOwnProperty('postId')) {
-    vf.postId = 0;
-  }
-  if (!vf.hasOwnProperty('nonce')) {
-    vf.nonce = '';
-  }
-  if (!vf.hasOwnProperty('plugins') || !vf.plugins) {
-    vf.plugins = {};
+  for (let [key, value] of Object.entries(vfBlocks)) {
+    if (!vf.hasOwnProperty(key)) {
+      vf[key] = value;
+    }
   }
   return vf;
 };
@@ -70,48 +72,55 @@ const useVFPluginFields = name => {
 };
 
 /**
- * Hook to append iFrameResizer to content window
+ * Hook to provide load/unload functions for an iframe
+ * and adjust iframe height automatically
  */
-const useIFrame = (iframe, data) => {
-  const {iframeResizer} = useVF();
+const useIFrame = (iframe, html) => {
+  // update iframe height from `postMessage` event
+  const onMessage = ({data}) => {
+    if (data !== Object(data) || data.id !== iframe.id) {
+      return;
+    }
+    window.requestAnimationFrame(() => {
+      iframe.style.height = `${data.height}px`;
+    });
+  };
+
   const onLoad = () => {
-    const onMessage = ev => {
-      if (ev.data !== iframe.id) {
-        return;
-      }
-      window.removeEventListener('message', onMessage);
-      if (iframe.iFrameResizer) {
-        return;
-      }
-      window.iFrameResize(
-        {
-          log: false,
-          checkOrigin: false
-        },
-        iframe
-      );
-      setTimeout(() => {
-        iframe.iFrameResizer.resize();
-      }, 1);
-      setTimeout(() => {
-        iframe.iFrameResizer.resize();
-      }, 500);
-    };
+    if (!iframe.vfActive) {
+      window.addEventListener('message', onMessage);
+    }
+    iframe.vfActive = true;
 
-    window.addEventListener('message', onMessage);
-
+    // set HTML content for block
     const body = iframe.contentWindow.document.body;
-    body.innerHTML = data.html;
+    const div = '<div style="clear:both;height:0;"></div>';
+    body.innerHTML = `${div}${html}${div}`;
+
+    // create and append script to handle automatic iframe resize
+    // this cannot be inline of `html` for browser security
     const script = document.createElement('script');
     script.type = 'text/javascript';
-    script.src = iframeResizer;
-    script.onload = function() {
-      parent.postMessage(iframe.id, '*');
-      script.onload = null;
-    };
+    script.innerHTML = `
+      window.vfResize = function() {
+        window.parent.postMessage({
+            id: '${iframe.id}',
+            height: document.documentElement.scrollHeight
+          }, '*'
+        );
+      };
+      window.addEventListener('resize', window.vfResize);
+      setTimeout(window.vfResize, 1);
+    `;
     body.appendChild(script);
   };
-  return {onLoad};
+
+  const onUnload = () => {
+    window.removeEventListener('message', onMessage);
+    iframe.vfActive = false;
+  };
+
+  return {onLoad, onUnload};
 };
 
 // const withId = Component => {
