@@ -60,6 +60,11 @@ class VF_Gutenberg {
   );
 
   /**
+   * Store block data during `render_block` action
+   */
+  private $fields;
+
+  /**
    * Convert a Gutenberg block name to a VF_Plugin post name
    * e.g. "vf/latest-posts" to "vf_latest_posts"
    */
@@ -223,6 +228,19 @@ class VF_Gutenberg {
   }
 
   /**
+   * Template function for Visual Framework block templates
+   * accessible during the `render_block` action
+   */
+  function get_field($name, $default = false) {
+    if ( ! is_array($this->fields)) {
+      return $default;
+    }
+    if (isset($this->fields[$name])) {
+      return $this->fields[$name];
+    }
+  }
+
+  /**
    * Render VF Plugin blocks
    * Filter `render_block`
    */
@@ -233,30 +251,38 @@ class VF_Gutenberg {
     if ( ! preg_match('/^vf\//', $block['blockName'])) {
       return $html;
     }
+    // check for matching plugin
     $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
     $vf_plugin = VF_Plugin::get_plugin($post_name);
-    if ( ! $vf_plugin) {
-      return $html;
-    }
-    /**
-     * Map block attributes to ACF field names
-     */
-    $fields = array();
+
+    // setup fields with block attributes
+
+
+    $this->fields = array();
     if (is_array($block['attrs'])) {
       foreach ($block['attrs'] as $key => $value) {
         if (in_array($key, $this->protected_attrs)) {
           continue;
         }
-        $fields["{$post_name}_{$key}"] = $value;
+        $this->fields["{$post_name}_{$key}"] = $value;
       }
     }
-    if (empty($fields)) {
-      $fields = null;
-    }
     ob_start();
-    VF_Plugin::render($vf_plugin, $fields);
+    // render with matching plugin
+    if ($vf_plugin) {
+      VF_Plugin::render($vf_plugin, $this->fields);
+    // otherwise render with template
+    } else {
+      $path = str_replace('_', '-', $post_name);
+      $path = "includes/templates/{$path}.php";
+      $path = plugin_dir_path(__FILE__) . $path;
+      if (file_exists($path)) {
+        include($path);
+      }
+    }
     $html = ob_get_contents();
     ob_end_clean();
+    $this->fields = null;
     return $html;
   }
 

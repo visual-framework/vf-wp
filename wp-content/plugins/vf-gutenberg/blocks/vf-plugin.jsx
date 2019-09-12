@@ -74,7 +74,7 @@ const PluginEdit = function(props) {
 
   // Ensure version is encoded in post content
   if (!ver) {
-    props.setAttributes({ver: 1});
+    props.setAttributes({ver: props.ver || 1});
   }
 
   const hasMode = typeof mode === 'string';
