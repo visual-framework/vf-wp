@@ -117,7 +117,7 @@ class VF_Group_Header extends VF_Plugin {
   function admin_head() {
 ?>
 <style>
-.wp-block[data-type="acf/vf-group-header"] {
+.wp-block[data-type="vf/group-header"] {
   max-width: none;
 }
 </style>

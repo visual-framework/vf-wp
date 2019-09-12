@@ -24,7 +24,7 @@ export default (name, title) => {
     ...defaults,
     name: name,
     title: title,
-    category: 'vf/contenthub',
+    category: 'vf/wp',
     keywords: [...defaults.keywords, __('Content Hub', 'vfwp')],
     attributes: attributes,
     edit: props => {

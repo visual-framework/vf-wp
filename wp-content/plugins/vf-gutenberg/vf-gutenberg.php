@@ -144,12 +144,12 @@ class VF_Gutenberg {
       array(
         array(
           'slug'  => 'vf/core',
-          'title' => __('Visual Framework', 'vfwp'),
+          'title' => __('Visual Framework (core)', 'vfwp'),
           'icon'  => null
         ),
         array(
-          'slug'  => 'vf/contenthub',
-          'title' => __('EMBL Content Hub', 'vfwp'),
+          'slug'  => 'vf/wp',
+          'title' => __('Visual Framework (WordPress)', 'vfwp'),
           'icon'  => null
         ),
       ),
@@ -274,7 +274,7 @@ class VF_Gutenberg {
     // otherwise render with template
     } else {
       $path = str_replace('_', '-', $post_name);
-      $path = "includes/templates/{$path}.php";
+      $path = "includes/vf-core/{$path}.php";
       $path = plugin_dir_path(__FILE__) . $path;
       if (file_exists($path)) {
         include($path);

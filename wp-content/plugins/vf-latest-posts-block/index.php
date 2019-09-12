@@ -38,7 +38,7 @@ class VF_Latest_Posts extends VF_Plugin {
   function admin_head() {
 ?>
 <style>
-.wp-block[data-type="acf/vf-latest-posts"] {
+.wp-block[data-type="vf/latest-posts"] {
   max-width: none;
 }
 </style>
