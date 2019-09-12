@@ -297,8 +297,7 @@ class VF_Gutenberg {
       /**
        * Map ACF fields to supported Gutenberg controls
        */
-      $vf_plugin = VF_Plugin::get_plugin($post_name);
-      $fields = get_field_objects($vf_plugin->post()->ID);
+      $fields = acf_get_fields("group_{$post_name}");
       if ( ! is_array($fields)) {
         continue;
       }
