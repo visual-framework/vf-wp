@@ -2,7 +2,7 @@
  * VF Plugin (base component)
  */
 import {useEffect, useRef} from 'react';
-import {useVFPlugin, useIFrame} from './hooks';
+import {useVFPluginData, useIFrame} from './hooks';
 import Spinner from './spinner';
 
 const {__} = wp.i18n;
@@ -72,18 +72,23 @@ const PluginEdit = function(props) {
     attributes: {ver, mode, ...attrs}
   } = props;
 
-  const hasMode = typeof mode === 'string';
-  const isEditing = hasMode && mode === 'edit';
-
   // Ensure version is encoded in post content
   if (!ver) {
     props.setAttributes({ver: 1});
   }
 
-  const {data, isLoading} = useVFPlugin({
-    attrs: attrs,
-    name: props.name
-  });
+  const hasMode = typeof mode === 'string';
+  const isEditing = hasMode && mode === 'edit';
+
+  // Hook in conditional against the rules?
+  const [data, isLoading] = isEditing
+    ? [null, false]
+    : useVFPluginData({
+        attrs: attrs,
+        name: props.name
+      });
+
+  const isPreview = !isLoading && data;
 
   const onToggle = () => {
     props.setAttributes({mode: !isEditing ? 'edit' : 'view'});
@@ -111,7 +116,7 @@ const PluginEdit = function(props) {
         data-selected={isSelected}>
         {isEditing ? (
           props.children
-        ) : !isLoading ? (
+        ) : isPreview ? (
           <PluginPreview data={data} clientId={props.clientId} />
         ) : (
           <Spinner />

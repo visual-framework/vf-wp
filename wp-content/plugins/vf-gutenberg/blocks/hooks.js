@@ -45,16 +45,16 @@ export const useVFGutenberg = () => {
 /**
  * Hook to fetch the VF Gutenberg block rendered template
  */
-export const useVFPlugin = postData => {
-  const {postId, nonce} = useVFGutenberg();
-  const [data, setData] = useState({});
-  const [isLoading, setLoading] = useState(true);
+export const useVFPluginData = attrs => {
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    const {postId, nonce} = useVFGutenberg();
     setLoading(true);
     try {
       const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
-        ...postData,
+        ...attrs,
         postId,
         nonce
       });
@@ -65,9 +65,9 @@ export const useVFPlugin = postData => {
 
   useEffect(() => {
     fetchData();
-  }, [hashsum(postData)]);
+  }, [hashsum(attrs)]);
 
-  return {data, isLoading};
+  return [data, isLoading];
 };
 
 /**
