@@ -132,14 +132,16 @@ export const useIFrame = (iframe, html) => {
     script.type = 'text/javascript';
     script.innerHTML = `
       window.vfResize = function() {
-        window.parent.postMessage({
-            id: '${iframe.id}',
-            height: document.documentElement.scrollHeight
-          }, '*'
-        );
+        requestAnimationFrame(function() {
+          window.parent.postMessage({
+              id: '${iframe.id}',
+              height: document.documentElement.scrollHeight
+            }, '*'
+          );
+        });
       };
-      window.addEventListener('resize', window.vfResize);
-      setTimeout(window.vfResize, 1);
+      window.addEventListener('resize', vfResize);
+      window.vfResize();
     `;
     body.appendChild(script);
   };
@@ -151,10 +153,3 @@ export const useIFrame = (iframe, html) => {
 
   return {onLoad, onUnload};
 };
-
-// const withId = Component => {
-//   return props => {
-//     const id = Date.now() * Math.random();
-//     return <Component {...props} instanceId={id} />;
-//   };
-// };
