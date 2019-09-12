@@ -1,20 +1,42 @@
 /**!
- * VF Gutenberg plugin blocks
+ * VF Gutenberg blocks
  * https://visual-framework.github.io/vf-core/
  */
-import {useVF} from './hooks';
-import * as example from './vf-example';
-import * as latest from './vf-latest-posts';
+import {useVFGutenberg} from './hooks';
+
+/**
+ * Import VF Plugin block settings
+ */
+import vfDataResources from './plugins/vf-data-resources';
+import vfExample from './plugins/vf-example';
+import vfFactoid from './plugins/vf-factoid';
+import vfGroupHeader from './plugins/vf-group-header';
+import vfJobs from './plugins/vf-jobs';
+import vfLatestPosts from './plugins/vf-latest-posts';
+import vfMembers from './plugins/vf-members';
+import vfPublicationsGroupEBI from './plugins/vf-publications-group-ebi';
+import vfPublications from './plugins/vf-publications';
 
 const {registerBlockType} = wp.blocks;
-const {plugins} = useVF();
 
-const names = Object.keys(plugins);
+/**
+ * Register VF Plugins if corresponding WordPress plugin is activated
+ */
+const pluginBlocks = [
+  vfDataResources,
+  vfExample,
+  vfFactoid,
+  vfGroupHeader,
+  vfJobs,
+  vfLatestPosts,
+  vfMembers,
+  vfPublicationsGroupEBI,
+  vfPublications
+];
 
-if (names.indexOf(example.settings.name) > -1) {
-  registerBlockType(example.settings.name, example.settings);
-}
-
-if (names.indexOf(latest.settings.name) > -1) {
-  registerBlockType(latest.settings.name, latest.settings);
-}
+const {plugins: pluginData} = useVFGutenberg();
+pluginBlocks.forEach(settings => {
+  if (Object.keys(pluginData).indexOf(settings.name) > -1) {
+    registerBlockType(settings.name, settings);
+  }
+});

@@ -2,7 +2,7 @@
  * VF Plugin (base component)
  */
 import {useEffect, useRef} from 'react';
-import {useVF, useVFPlugin, useIFrame} from './hooks';
+import {useVFPlugin, useIFrame} from './hooks';
 import Spinner from './spinner';
 
 const {__} = wp.i18n;

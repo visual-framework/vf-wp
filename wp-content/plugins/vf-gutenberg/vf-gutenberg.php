@@ -173,7 +173,7 @@ class VF_Gutenberg {
     );
     /**
      * "Localize" script by making config available
-     * in the global `vfBlocks` object
+     * in the global `vfGutenberg` object
      */
     global $post;
     $config = array(
@@ -181,7 +181,7 @@ class VF_Gutenberg {
       'nonce'   => wp_create_nonce("vf_nonce_{$post->ID}"),
       'postId'  => $post->ID
     );
-    wp_localize_script('vf-blocks', 'vfBlocks', $config);
+    wp_localize_script('vf-blocks', 'vfGutenberg', $config);
     wp_enqueue_script('vf-blocks');
   }
 

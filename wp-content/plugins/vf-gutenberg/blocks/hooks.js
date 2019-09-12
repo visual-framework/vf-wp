@@ -23,18 +23,18 @@ export const useDefaults = () => ({
   save: () => null
 });
 
-const vfBlocks = {
+/**
+ * Hook to use global VF Gutenberg settings from `wp_localize_script`
+ */
+const vfGutenberg = {
   postId: 0,
   nonce: '',
   plugins: {}
 };
 
-/**
- * Hook to use global VF Gutenberg settings from `wp_localize_script`
- */
-export const useVF = () => {
-  const vf = window.vfBlocks || {};
-  for (let [key, value] of Object.entries(vfBlocks)) {
+export const useVFGutenberg = () => {
+  const vf = window.vfGutenberg || {};
+  for (let [key, value] of Object.entries(vfGutenberg)) {
     if (!vf.hasOwnProperty(key)) {
       vf[key] = value;
     }
@@ -46,7 +46,7 @@ export const useVF = () => {
  * Hook to fetch the VF Gutenberg block rendered template
  */
 export const useVFPlugin = postData => {
-  const {postId, nonce} = useVF();
+  const {postId, nonce} = useVFGutenberg();
   const [data, setData] = useState({});
   const [isLoading, setLoading] = useState(true);
 
@@ -75,7 +75,7 @@ export const useVFPlugin = postData => {
  * mapped from ACF field object
  */
 export const useVFPluginFields = name => {
-  const {plugins} = useVF();
+  const {plugins} = useVFGutenberg();
   let fields = [];
   let attrs = {};
   if (Object.keys(plugins).indexOf(name) > -1) {
