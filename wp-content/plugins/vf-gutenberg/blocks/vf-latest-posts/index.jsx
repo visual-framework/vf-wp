@@ -2,31 +2,19 @@
  * VF-WP Latest Posts
  */
 
+import {PluginEdit} from '../vf-plugin';
+import {useDefaults} from '../hooks';
+
 const {__} = wp.i18n;
 
-import {PluginEdit} from '../vf-plugin';
+const defaults = useDefaults();
 
 export const settings = {
+  ...defaults,
   name: 'vf/latest-posts',
   title: __('Latest Posts', 'vfwp'),
   category: 'vf/contenthub',
-  keywords: [
-    __('VF', 'vfwp'),
-    __('Visual Framework', 'vfwp'),
-    __('Content Hub', 'vfwp')
-  ],
-  attributes: {
-    ver: {
-      type: 'integer'
-    }
-  },
-  supports: {
-    align: false,
-    html: false,
-    className: false,
-    customClassName: false
-  },
-  save: () => null,
+  keywords: [...defaults.keywords, __('Content Hub', 'vfwp')],
   edit: props => {
     return <PluginEdit {...props} />;
   }

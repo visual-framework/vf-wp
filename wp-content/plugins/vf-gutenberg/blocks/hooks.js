@@ -1,5 +1,27 @@
 import React, {useState, useEffect} from 'react';
-import hashsum from './hashsum';
+import hashsum from './utils/hashsum';
+
+const {__} = wp.i18n;
+
+/**
+ * Hook to return default VF Gutenberg block settings
+ */
+export const useDefaults = () => ({
+  keywords: [__('VF', 'vfwp'), __('Visual Framework', 'vfwp')],
+  attributes: {
+    ver: {
+      type: 'integer'
+    }
+  },
+  supports: {
+    align: false,
+    className: false,
+    customClassName: false,
+    html: false
+  },
+  edit: () => null,
+  save: () => null
+});
 
 const vfBlocks = {
   postId: 0,
@@ -10,7 +32,7 @@ const vfBlocks = {
 /**
  * Hook to use global VF Gutenberg settings from `wp_localize_script`
  */
-const useVF = () => {
+export const useVF = () => {
   const vf = window.vfBlocks || {};
   for (let [key, value] of Object.entries(vfBlocks)) {
     if (!vf.hasOwnProperty(key)) {
@@ -23,7 +45,7 @@ const useVF = () => {
 /**
  * Hook to fetch the VF Gutenberg block rendered template
  */
-const useVFPlugin = postData => {
+export const useVFPlugin = postData => {
   const {postId, nonce} = useVF();
   const [data, setData] = useState({});
   const [isLoading, setLoading] = useState(true);
@@ -52,7 +74,7 @@ const useVFPlugin = postData => {
  * Hook to get block attributes for VF Plugin
  * mapped from ACF field object
  */
-const useVFPluginFields = name => {
+export const useVFPluginFields = name => {
   const {plugins} = useVF();
   let fields = [];
   let attrs = {};
@@ -75,7 +97,7 @@ const useVFPluginFields = name => {
  * Hook to provide load/unload functions for an iframe
  * and adjust iframe height automatically
  */
-const useIFrame = (iframe, html) => {
+export const useIFrame = (iframe, html) => {
   // update iframe height from `postMessage` event
   const onMessage = ({data}) => {
     if (data !== Object(data) || data.id !== iframe.id) {
@@ -129,5 +151,3 @@ const useIFrame = (iframe, html) => {
 //     return <Component {...props} instanceId={id} />;
 //   };
 // };
-
-export {useVF, useVFPlugin, useVFPluginFields, useIFrame};

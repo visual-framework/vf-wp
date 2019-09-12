@@ -429,6 +429,7 @@ class VF_Gutenberg {
 
       // Register Gutenberg block with ACF
       acf_register_block(array(
+        'icon'            => 'no',
         'name'            => $instance->key(),
         'title'           => $instance->title(),
         'category'        => 'vf_blocks_standalone',

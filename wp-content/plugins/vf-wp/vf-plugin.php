@@ -541,7 +541,7 @@ class VF_Plugin {
       array(
         'name'     => $this->post->post_name,
         'title'    => $this->post->post_title,
-        'icon'     => 'format-aside',
+        'icon'     => 'no',
         'supports' => array(
           'align'    => false,
           'mode'     => false,
