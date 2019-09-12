@@ -36,11 +36,12 @@ config.vf_blocks_glob = [
   path.resolve(config.plugin_path, 'vf-gutenberg/blocks/**/*.{js,jsx}')
 ];
 
-config.vf_blocks_webpack = {
+config.vf_blocks_webpack = mode => ({
+  mode: mode,
   entry: path.resolve(config.plugin_path, 'vf-gutenberg/blocks/vf-blocks.jsx'),
   output: {
     path: path.resolve(config.plugin_path, 'vf-gutenberg/assets'),
-    filename: 'vf-blocks.min.js'
+    filename: `vf-blocks${mode === 'production' ? '.min' : ''}.js`
   },
   externals: {
     wp: 'wp',
@@ -58,8 +59,9 @@ config.vf_blocks_webpack = {
               [
                 '@babel/preset-env',
                 {
-                  corejs: 3,
+                  debug: false, // mode === 'development',
                   useBuiltIns: 'usage',
+                  corejs: 3,
                   targets: {
                     browsers: ['> 1%']
                   }
@@ -81,7 +83,7 @@ config.vf_blocks_webpack = {
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   }
-};
+});
 
 /**
  * Compile and prefix Sass
@@ -162,15 +164,21 @@ gulp.task('update-theme-version', callback => {
  */
 gulp.task('vf-blocks', () => {
   return new Promise((resolve, reject) => {
-    webpack(config.vf_blocks_webpack, (err, stats) => {
-      if (err) {
-        return reject(err);
+    webpack(
+      [
+        config.vf_blocks_webpack('development'),
+        config.vf_blocks_webpack('production')
+      ],
+      (err, stats) => {
+        if (err) {
+          return reject(err);
+        }
+        if (stats.hasErrors()) {
+          return reject(new Error(stats.compilation.errors.join('\n')));
+        }
+        resolve();
       }
-      if (stats.hasErrors()) {
-        return reject(new Error(stats.compilation.errors.join('\n')));
-      }
-      resolve();
-    });
+    );
   });
 });
 
