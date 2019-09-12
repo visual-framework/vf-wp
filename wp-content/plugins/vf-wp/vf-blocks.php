@@ -14,7 +14,7 @@ class VF_Blocks extends VF_Type {
 
     add_filter(
       'block_categories',
-      array($this, 'block_categories'),
+      array($this, '_deprecated_block_categories'),
       10, 2
     );
   }
@@ -24,16 +24,10 @@ class VF_Blocks extends VF_Type {
   }
 
   /**
+   * WARNING: deprecated method
    * Add Gutenberg blocks category for Content Hub blocks
    */
-  public function block_categories($categories, $post) {
-    $post_types = array(
-      'post',
-      'page'
-    );
-    if ( ! in_array($post->post_type, $post_types)) {
-      return $categories;
-    }
+  public function _deprecated_block_categories($categories, $post) {
     return array_merge(
       $categories,
       array(

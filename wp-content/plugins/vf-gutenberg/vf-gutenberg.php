@@ -626,9 +626,6 @@ class VF_Gutenberg {
    * Filter `block_categories`
    */
   function _deprecated_block_categories($categories, $post) {
-    if ( ! in_array($post->post_type, array('post', 'page'))) {
-      return $categories;
-    }
     return array_merge(
       $categories,
       array(
