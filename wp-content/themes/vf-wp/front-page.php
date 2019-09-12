@@ -23,7 +23,12 @@ function home_render_block($html, $block) {
   if ( ! $block['blockName']) {
     return $html;
   }
-  $has_grid = array('acf/vf-latest-posts', 'acf/vf-group-header');
+  $has_grid = array(
+    'acf/vf-latest-posts',
+    'acf/vf-group-header',
+    'vf/latest-posts',
+    'vf/group-header',
+  );
   if ( ! in_array($block['blockName'], $has_grid)) {
     ob_start();
 ?>
