@@ -77,13 +77,9 @@ class VF_Group_Header extends VF_Plugin {
 
   function heading_html() {
     $heading = get_field('vf_group_header_heading', $this->post->ID);
+    $heading = esc_html($heading);
     $heading = trim($heading);
-
-    $heading = preg_replace(
-      '#<h1[^>]*?>#',
-      '<h1 class="vf-lede">',
-      $heading
-    );
+    $heading = "<h1 class=\"vf-lede\">{$heading}</h1>";
 
     if ( ! vf_html_empty($heading) || ! class_exists('VF_Cache')) {
       return $heading;

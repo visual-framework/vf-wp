@@ -1,21 +1,17 @@
 @charset "UTF-8";
 
-/**
- * Remove gutters because Gutenberg editor has extra spacing
- */
-
+/* remove extra margins */
 .vf-inlay:last-of-type {
   margin-bottom: 0;
 }
 
-/*
+/* remove gutters */
 .vf-inlay__content {
   grid-template-columns:
-    var(--page-grid-gap)
+    0
     [main-start]
-      minmax(auto, 100%)
-      minmax(18.125em, auto)
+    minmax(auto, 100%)
+    minmax(auto, 22.125em)
     [main-end]
-    var(--page-grid-gap)
-  ;
-}*/
+    0;
+}
