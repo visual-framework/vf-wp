@@ -4,7 +4,7 @@
  */
 
 .vf-gutenberg-block {
-  background-color: rgba(208, 208, 206, 0.3);
+  background-color: #f3f4f5;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 50px 50px;
@@ -30,14 +30,13 @@
   padding: 15px;
 }
 
-.vf-gutenberg-spinner {
+[class^='vf-gutenberg'] > .components-spinner {
   display: block;
-  height: 60px;
   left: 50%;
+  margin: 0;
   position: absolute;
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 60px;
 }
 
 [class^='vf-gutenberg'] .editor-url-input {

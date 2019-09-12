@@ -3,7 +3,6 @@
  */
 import {useEffect, useRef} from 'react';
 import {useVFPluginData, useIFrame} from './hooks';
-import Spinner from './spinner';
 
 const {__} = wp.i18n;
 
@@ -16,6 +15,7 @@ const {
   RadioControl,
   RangeControl,
   SelectControl,
+  Spinner,
   TextControl,
   TextareaControl,
   ToggleControl,
