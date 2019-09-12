@@ -256,8 +256,6 @@ class VF_Gutenberg {
     $vf_plugin = VF_Plugin::get_plugin($post_name);
 
     // setup fields with block attributes
-
-
     $this->fields = array();
     if (is_array($block['attrs'])) {
       foreach ($block['attrs'] as $key => $value) {

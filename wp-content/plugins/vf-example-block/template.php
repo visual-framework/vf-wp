@@ -10,6 +10,8 @@ $radio = get_field('vf_example_radio', $post->ID);
 $checkbox = get_field('vf_example_checkbox', $post->ID);
 $boolean = get_field('vf_example_boolean', $post->ID);
 
+$checkbox = is_array($checkbox) ? $checkbox : array();
+
 ?>
 <div class="vf-content">
   <h3>Example Block plugin</h3>
