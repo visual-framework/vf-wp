@@ -190,54 +190,35 @@ Gutenberg makes used of HTML comments to define blocks. A standard heading block
 VF Blocks as Gutenberg blocks are a bit more complicated. They're defined as a single HTML comment with JSON data.
 
 ```html
-<!-- wp:acf/vf-group-header {"id":"block_5c5982ee0b0c8","data":{"field_vf_block_custom":"0"},"name":"acf/vf-group-header","mode":"preview"} /-->
+<!-- wp:vf/group-header {"ver":1} /-->
 ```
 
-Here is the JSON formatted for readability:
+The plugin name (`vf_group_header`) is prefixed with `vf/` and underscores are converted to hyphens. Attributes are encoded as JSON. The version attribute (`ver`) is not necessary but will be added by Gutenberg if post content is edited.
 
-```json
-{
-  "id": "block_5c5982ee0b0c8",
-  "data": {"field_vf_block_custom": "0"},
-  "name": "acf/vf-group-header",
-  "mode": "preview"
-}
+Field attributes can be changed beyond the plugin default ACF configuration by editing the JSON content:
+
+```html
+<!-- wp:vf/group-header {"heading":"Test","ver":1} /-->
 ```
 
-The `id` is a randomly generated string. ACF prefixes with `block_`. I think the only thing that matters is that it is unique.
-
-The block name is prefixed with `acf/` and underscores are converted to hyphens.
-
-When `field_vf_block_custom` is set to `0` the default block content is used (as assigned in the post meta). If set to `1` custom content can be define for this instance in the JSON:
-
-```json
-{
-  "id": "block_5c5982ee0b0c8",
-  "data": {
-    "field_vf_block_custom": "1",
-    "field_acf/vf-group-header_clone": {
-      "field_vf_group_header_heading": "\u003ch1\u003eThe Häring group aims to understand the molecular machinery that organises eukaryotic genomes. \u003ca href=\u0022http://vfthemeprototype.lndo.site/about/\u0022\u003eRead more about the Häring group\u003c/a\u003e\u003c/h1\u003e"
-    }
-  },
-  "name": "acf/vf-group-header",
-  "mode": "preview"
-}
-```
+In the example above the `vf_group_header_heading` field value is changed. The field key prefix (`vf_group_header_`) is not required within the Gutenberg block code.
 
 HTML content should be encoded for JSON. Gutenberg converts a lot to unicode but basic encoding like this should work:
 
 ```json
-{ "field_vf_group_header_heading": "<h1>The group introduction<\/h1>" }
+{ "heading": "<h1>The group introduction<\/h1>" }
 ```
+
+Please note that most block templates will escape HTML for safety.
 
 The home page for a Groups microsite has four blocks. The `post_content` looks something like this:
 
 ```html
-<!-- wp:acf/vf-group-header {"id":"block_5c65674caae4e","data":{"field_vf_block_custom":"1","field_acf/vf-group-header_clone":{"field_vf_group_header_heading":"\u003ch1\u003eThe Häring group aims to understand the molecular machinery that organises eukaryotic genomes. \u003ca href=\u0022http://vfthemeprototype.lndo.site/about/\u0022\u003eRead more about the Häring group\u003c/a\u003e\u003c/h1\u003e"}},"name":"acf/vf-group-header","mode":"preview"} /-->
+<!-- wp:vf/group-header {"ver":1} /-->
 
-<!-- wp:acf/vf-latest-posts {"id":"block_5c65674caae4f","data":{"field_vf_block_custom":"0"},"name":"acf/vf-latest-posts","mode":"preview"} /-->
+<!-- wp:vf/latest-posts {"ver":1} /-->
 
-<!-- wp:acf/vf-publications {"id":"block_5c65674caae50","data":{"field_vf_block_custom":"1","field_acf/vf-publications_clone":{"field_vf_publications_heading":"Latest publications","field_vf_publications_count":"1"}},"name":"acf/vf-publications","mode":"preview"} /-->
+<!-- wp:vf/data-resources {"ver":1} /-->
 
-<!-- wp:acf/vf-jobs {"id":"block_5c65674caae51","data":{"field_vf_block_custom":"1","field_acf/vf-jobs_clone":{"field_vf_jobs_heading":"Latest jobs","field_vf_jobs_limit":"1"}},"name":"acf/vf-jobs","mode":"preview"} /-->
+<!-- wp:vf/jobs {"limit":1,"filter":"all","ver":1} /-->
 ```
