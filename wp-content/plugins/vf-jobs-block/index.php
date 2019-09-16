@@ -4,7 +4,7 @@ Plugin Name: VF-WP Jobs
 Description: VF-WP theme block.
 Version: 0.1.1
 Author: EMBL-EBI Web Development
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
 */
 
@@ -153,10 +153,7 @@ class VF_Jobs extends VF_Plugin {
 
     // Define choices based on settings
     $choices = array(
-      'all' => sprintf(
-        '<b>%1$s</b>',
-        __('All jobs', 'vfwp')
-      )
+      'all' => __('All jobs', 'vfwp')
     );
 
     if (function_exists('embl_taxonomy')) {
@@ -165,7 +162,7 @@ class VF_Jobs extends VF_Plugin {
       $what = $this->get_term('what');
       $where = $this->get_term('where');
 
-      $format = '<b>%1$s</b> <i>(%2$s)</i>';
+      $format = '%1$s (%2$s)';
 
       if ($where) {
         $choices['where'] = sprintf(
@@ -196,11 +193,11 @@ class VF_Jobs extends VF_Plugin {
         }
       }
 
-      $choices['term'] = sprintf(
-        $format,
-        __('Other jobs', 'vfwp'),
-        __('select a term', 'vfwp')
-      );
+      // $choices['term'] = sprintf(
+      //   $format,
+      //   __('Other jobs', 'vfwp'),
+      //   __('select a term', 'vfwp')
+      // );
     }
 
     acf_add_local_field(
@@ -228,41 +225,41 @@ class VF_Jobs extends VF_Plugin {
       )
     );
 
-    if (function_exists('embl_taxonomy')) {
-      acf_add_local_field(
-        array(
-          'parent' => 'group_vf_jobs',
-          'key' => 'field_vf_jobs_term',
-          'label' => __('Show Other', 'vfwp'),
-          'name' => 'vf_jobs_term',
-          'type' => 'taxonomy',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => array(
-            array(
-              array(
-                'field' => 'field_vf_jobs_filter',
-                'operator' => '==',
-                'value' => 'term',
-              ),
-            ),
-          ),
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'taxonomy' => 'embl_taxonomy',
-          'field_type' => 'select',
-          'allow_null' => 1,
-          'add_term' => 0,
-          'save_terms' => 0,
-          'load_terms' => 0,
-          'return_format' => 'id',
-          'multiple' => 0,
-        )
-      );
-    }
+    // if (function_exists('embl_taxonomy')) {
+    //   acf_add_local_field(
+    //     array(
+    //       'parent' => 'group_vf_jobs',
+    //       'key' => 'field_vf_jobs_term',
+    //       'label' => __('Show Other', 'vfwp'),
+    //       'name' => 'vf_jobs_term',
+    //       'type' => 'taxonomy',
+    //       'instructions' => '',
+    //       'required' => 0,
+    //       'conditional_logic' => array(
+    //         array(
+    //           array(
+    //             'field' => 'field_vf_jobs_filter',
+    //             'operator' => '==',
+    //             'value' => 'term',
+    //           ),
+    //         ),
+    //       ),
+    //       'wrapper' => array(
+    //         'width' => '',
+    //         'class' => '',
+    //         'id' => '',
+    //       ),
+    //       'taxonomy' => 'embl_taxonomy',
+    //       'field_type' => 'select',
+    //       'allow_null' => 1,
+    //       'add_term' => 0,
+    //       'save_terms' => 0,
+    //       'load_terms' => 0,
+    //       'return_format' => 'id',
+    //       'multiple' => 0,
+    //     )
+    //   );
+    // }
   }
 
 } // VF_Jobs

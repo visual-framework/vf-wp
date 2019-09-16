@@ -4,7 +4,7 @@ Plugin Name: VF-WP EBI VF 1.3 Global Header
 Description: VF-WP theme global container.
 Version: 0.1.1
 Author: EMBL-EBI Web Development
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
 */
 

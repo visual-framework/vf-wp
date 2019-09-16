@@ -1,11 +1,22 @@
 <?php
 
-$heading_singular = trim(get_field('vf_latest_posts_heading_singular'));
-$heading_plural = trim(get_field('vf_latest_posts_heading_plural'));
+global $vf_plugin;
+if ( ! $vf_plugin instanceof VF_Latest_Posts) {
+  return;
+}
+
+$post = $vf_plugin->post();
+
+$heading_singular = get_field('vf_latest_posts_heading_singular', $post->ID);
+$heading_singular = trim($heading_singular);
+
+$heading_plural = get_field('vf_latest_posts_heading_plural', $post->ID);
+$heading_plural = trim($heading_plural);
 
 if (empty($heading_singular)) {
   $heading_singular = __('Latest blog post', 'vfwp');
 }
+
 if (empty($heading_plural)) {
   $heading_plural = __('Latest posts', 'vfwp');
 }

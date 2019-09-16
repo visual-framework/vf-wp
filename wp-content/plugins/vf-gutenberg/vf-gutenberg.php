@@ -1,21 +1,20 @@
 <?php
 /*
-Plugin Name: Visual Framework (Gutenberg)
-Description: Adds Visual Framework patterns to the Gutenberg editor and adapt default blocks.
+Plugin Name: VF-WP Gutenberg
+Description: Adds Visual Framework support and blocks to the Gutenberg editor.
 Version: 0.0.1
 Author: EMBL-EBI Web Development
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
-
-Documentation for new block templates:
-https://wordpress.org/gutenberg/handbook/designers-developers/developers/block-api/block-templates/
-
-Default Gutenberg block library source:
-https://github.com/WordPress/gutenberg/tree/master/packages/block-library
-
 */
-
 /**
+ * Documentation for blocks:
+ * https://developer.wordpress.org/block-editor/developers/block-api/
+ *
+ * Gutenberg block library source:
+ * https://github.com/WordPress/gutenberg/tree/master/packages/block-library
+ * https://github.com/WordPress/gutenberg/tree/master/packages
+ *
  * WordPress does not make it practical to edit the default block templates.
  * To disable default blocks and roll our own seems ill-advised.
  * Instead I'm using a filter to adapt the HTML.
@@ -25,6 +24,7 @@ https://github.com/WordPress/gutenberg/tree/master/packages/block-library
  *
  * https://github.com/WordPress/WordPress/blob/5.0-branch/wp-includes/blocks.php#L239
  * https://github.com/WordPress/WordPress/blob/5.0-branch/wp-includes/default-filters.php#L159
+ *
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -33,44 +33,98 @@ if ( ! class_exists('VF_Gutenberg') ) :
 
 class VF_Gutenberg {
 
-  // Custom block category
-  private $category = 'vf_blocks_standalone';
-
-  // List of custom VF blocks
-  private $blocks = array();
+  private $settings;
 
   // List of compatible core blocks
   private $compatible = array();
 
-  private $settings;
+  /**
+   * Attributes from the Gutenberg block that should be ignored
+   */
+  private $protected_attrs = array(
+    'ver',
+    'mode'
+  );
+
+  /**
+   * ACF field types that are supported by Gutenberg blocks
+   */
+  private $supported_fields = array(
+    'checkbox',
+    'range',
+    'radio',
+    'select',
+    'text',
+    'textarea',
+    'true_false'
+  );
+
+  /**
+   * Store block data during `render_block` action
+   */
+  private $fields;
+
+  /**
+   * Convert a Gutenberg block name to a VF_Plugin post name
+   * e.g. "vf/latest-posts" to "vf_latest_posts"
+   */
+  static function name_block_to_post($str) {
+    return preg_replace('/[^\w]/', '_', $str);
+  }
+
+  /**
+   * Convert a VF_Plugin post name to a Gutenberg block name
+   * e.g. "vf_latest_posts" to "vf/latest-posts"
+   */
+  static function name_post_to_block($str) {
+    return preg_replace(
+      array('/[\W_]/', '/(^[\w]+)-/'),
+      array('-', '$1/'),
+      $str
+    );
+  }
 
   function __construct() {
     // Do nothing...
   }
 
   function initialize() {
-    add_filter('render_block', array($this, 'render_block'), 10, 2);
-    add_filter('block_categories', array($this, 'block_categories'), 10, 2);
-    add_action('acf/init', array($this, 'acf_init'));
-    add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
-    add_action('admin_head', array($this, 'admin_head'), 10);
+    add_filter(
+      'block_categories',
+      array($this, 'block_categories'),
+      10, 2
+    );
+    add_action(
+      'enqueue_block_editor_assets',
+      array($this, 'enqueue_block_editor_assets')
+    );
+    add_filter(
+      'wp_ajax_vf/gutenberg/fetch_block',
+      array($this, 'ajax_fetch_block')
+    );
+    add_filter(
+      'render_block',
+      array($this, 'render_block'),
+      10, 2
+    );
+    add_filter(
+      'render_block',
+      array($this, 'render_block_compatible'),
+      10, 2
+    );
 
     // ACF options
     include_once('includes/settings.php');
     $this->settings = new VF_Gutenberg_Settings();
 
     // Register core transforms
-    include_once('includes/core-button.php');
-    include_once('includes/core-file.php');
-    include_once('includes/core-image.php');
-    include_once('includes/core-quote.php');
-    include_once('includes/core-separator.php');
+    include_once('includes/core/core-button.php');
+    include_once('includes/core/core-file.php');
+    include_once('includes/core/core-image.php');
+    include_once('includes/core/core-quote.php');
+    include_once('includes/core/core-separator.php');
 
-    // Register custom blocks
-    include_once('includes/vf-block.php');
-    include_once('includes/vf-box.php');
-    include_once('includes/vf-lede.php');
-    include_once('includes/vf-activity.php');
+    $this->_deprecated_init();
   }
 
   /**
@@ -83,28 +137,337 @@ class VF_Gutenberg {
   }
 
   /**
-   * Register an array of custom VF blocks
+   * Action: `block_categories`
    */
-  function add_block(VF_Gutenberg_Block $instance) {
-    $key = 'acf/' . $instance->key();
-    if ( ! array_key_exists($key, $this->blocks)) {
-      $this->blocks[$key] = $instance;
+  function block_categories($categories, $post) {
+    return array_merge(
+      array(
+        array(
+          'slug'  => 'vf/core',
+          'title' => __('Visual Framework (core)', 'vfwp'),
+          'icon'  => null
+        ),
+        array(
+          'slug'  => 'vf/wp',
+          'title' => __('Visual Framework (WordPress)', 'vfwp'),
+          'icon'  => null
+        ),
+      ),
+      $categories
+    );
+  }
+
+  /**
+   * Enqueue WP Admin CSS and JavaScript
+   */
+  function enqueue_block_editor_assets() {
+    wp_enqueue_style(
+      'vf-blocks',
+      plugins_url('/assets/vf-blocks.css', __FILE__),
+      array(),
+      false,
+      'all'
+    );
+    wp_register_script(
+      'vf-blocks',
+      plugins_url(
+        '/assets/vf-blocks' . (vf_debug() ? '' : '.min') .  '.js',
+        __FILE__
+      ),
+      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
+      false,
+      true
+    );
+    /**
+     * "Localize" script by making config available
+     * in the global `vfGutenberg` object
+     */
+    global $post;
+    $config = array(
+      'plugins' => $this->get_config_plugins(),
+      'nonce'   => wp_create_nonce("vf_nonce_{$post->ID}"),
+      'postId'  => $post->ID
+    );
+    wp_localize_script('vf-blocks', 'vfGutenberg', $config);
+    wp_enqueue_script('vf-blocks');
+  }
+
+  /**
+   * Handle AJAX request to render block preview
+   */
+  function ajax_fetch_block() {
+    // validate `post_id` and `nonce`
+    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
+    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
+    if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
+      wp_send_json_error();
+      wp_die();
+    }
+    $html = '';
+    $stylesheets = array();
+    if (function_exists('vf_get_stylesheet')) {
+      $stylesheets[] = vf_get_stylesheet();
+    }
+    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
+    foreach ($stylesheets as $href) {
+      $html .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
+    }
+    // render block
+    if (isset($_POST['name'])) {
+      $html .= $this->render_block('', array(
+        'blockName' => $_POST['name'],
+        'attrs' => isset($_POST['attrs']) ? $_POST['attrs'] : false
+      ));
+    }
+    wp_send_json_success(
+      array(
+        'hash' => hash('crc32', $html),
+        'html' => $html
+      )
+    );
+  }
+
+  /**
+   * Template function for Visual Framework block templates
+   * accessible during the `render_block` action
+   */
+  function get_field($name, $default = false) {
+    if ( ! is_array($this->fields)) {
+      return $default;
+    }
+    if (isset($this->fields[$name])) {
+      return $this->fields[$name];
     }
   }
 
   /**
+   * Render VF Plugin blocks
+   * Filter `render_block`
+   */
+  function render_block($html, $block) {
+    if ( ! class_exists('VF_Plugin')) {
+      return $html;
+    }
+    if ( ! preg_match('/^vf\//', $block['blockName'])) {
+      return $html;
+    }
+    // check for matching plugin
+    $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
+    $vf_plugin = VF_Plugin::get_plugin($post_name);
+
+    // setup fields with block attributes
+    $this->fields = array();
+    if (is_array($block['attrs'])) {
+      foreach ($block['attrs'] as $key => $value) {
+        if (in_array($key, $this->protected_attrs)) {
+          continue;
+        }
+        $this->fields["{$post_name}_{$key}"] = $value;
+      }
+    }
+    ob_start();
+    // render with matching plugin
+    if ($vf_plugin) {
+      VF_Plugin::render($vf_plugin, $this->fields);
+    // otherwise render with template
+    } else {
+      $path = str_replace('_', '-', $post_name);
+      $path = "includes/vf-core/{$path}.php";
+      $path = plugin_dir_path(__FILE__) . $path;
+      if (file_exists($path)) {
+        include($path);
+      }
+    }
+    $html = ob_get_contents();
+    ob_end_clean();
+    $this->fields = null;
+    return $html;
+  }
+
+  /**
+   * Edit compatible core blocks to use VF markup
+   * Wrap other core blocks in `vf-content` class
+   */
+  public function render_block_compatible($html, $block) {
+    if (array_key_exists($block['blockName'], $this->compatible)) {
+      $callback = $this->compatible[ $block['blockName'] ];
+      $html = call_user_func($callback, $html, $block);
+    } else {
+      if (strpos($block['blockName'], 'core/') === 0) {
+        $html = '<div class="vf-content">' . $html . '</div>';
+      }
+    }
+    return $html;
+  }
+
+  /**
+   * Return enabled plugins and their fields for the Gutenberg editor
+   */
+  private function get_config_plugins() {
+    $config = array();
+    if ( ! class_exists('VF_Plugin')) {
+      return $config;
+    }
+    $plugins = VF_Plugin::get_config();
+    if (empty($plugins)) {
+      return $config;
+    }
+    foreach ($plugins as $post_name => $value) {
+      if ($value['post_type'] !== 'vf_block') {
+        continue;
+      }
+
+      // enabled basic support
+      $block_name = VF_Gutenberg::name_post_to_block($post_name);
+      $config[$block_name] = true;
+
+      // map ACF fields to supported Gutenberg controls
+      $fields = acf_get_fields("group_{$post_name}");
+      if ( ! is_array($fields)) {
+        continue;
+      }
+      $data = array(
+        'fields' => array()
+      );
+      foreach ($fields as $field) {
+        $type = $field['type'];
+        if ( ! in_array($type, $this->supported_fields)) {
+          continue;
+        }
+        $name = preg_replace(
+          '#^' . preg_quote($post_name) . '_#',
+          '', $field['name']
+        );
+        if (in_array($name, $this->protected_attrs)) {
+          continue;
+        }
+        $data['fields'][] = $this->map_acf_field_to_attr($name, $type, $field);
+      }
+      $config[$block_name] = $data;
+    }
+    return $config;
+  }
+
+  /**
+   * Map ACF field data to Gutenberg block attributes
+   */
+  private function map_acf_field_to_attr($name, $type, $field) {
+    $attr = array(
+      'name'  => $name,
+      'type'  => $type,
+      'label' => $field['label']
+    );
+    if ($type === 'range') {
+      $attr['min'] = intval($field['min']);
+      $attr['max'] = intval($field['max']);
+    }
+    if (in_array($type, array(
+      'checkbox',
+      'radio',
+      'select'
+    ))) {
+      $attr['options'] = array();
+      foreach ($field['choices'] as $k => $v) {
+        $attr['options'][] = array(
+          'label' => $v,
+          'value' => $k
+        );
+      }
+    }
+    if ($type === 'true_false') {
+      $attr['type'] = 'toggle';
+    }
+    return $attr;
+  }
+
+  /**
+   * WARNING: deprecated
+   */
+
+  private $_deprecated_blocks = array();
+
+  private function _deprecated_init() {
+    include_once('includes/deprecated/vf-block.php');
+    include_once('includes/deprecated/vf-box.php');
+    include_once('includes/deprecated/vf-lede.php');
+    include_once('includes/deprecated/vf-activity.php');
+
+    add_filter(
+      'block_categories',
+      array($this, '_deprecated_block_categories'),
+      10, 2
+    );
+    add_action(
+      'acf/init',
+      array($this, '_deprecated_acf_init')
+    );
+    add_action(
+      'enqueue_block_editor_assets',
+      array($this, '_deprecated_enqueue_block_editor_assets')
+    );
+    add_action(
+      'admin_head',
+      array($this, '_deprecated_admin_head')
+      , 10
+    );
+    add_action(
+      'admin_footer',
+      array($this, '_deprecated_admin_footer')
+      , 10
+    );
+    add_action(
+      'admin_notices',
+      array($this, '_deprecated_admin_notices')
+    );
+  }
+
+  /**
+   * WARNING: deprecated method
+   * Action: `admin_notices`
+   */
+  function _deprecated_admin_notices() {
+    if ( ! function_exists('get_current_screen')) {
+      return;
+    }
+    $screen = get_current_screen();
+    // if ($screen->id === 'edit-vf_block') {
+    //   printf('<div class="%1$s"><p><b>%2$s</b> %3$s</p></div>',
+    //     esc_attr('notice notice-warning'),
+    //     esc_html__('These blocks are deprecated.', 'vfwp'),
+    //     esc_html__('Please use the native blocks within the Gutenberg page editor.', 'vfwp')
+    //   );
+    // }
+  }
+
+  /**
+   * WARNING: deprecated method
+   * Register an array of custom VF blocks
+   */
+  function _deprecated_add_block(VF_Gutenberg_Block $instance) {
+    $key = 'acf/' . $instance->key();
+    if ( ! array_key_exists($key, $this->_deprecated_blocks)) {
+      $this->_deprecated_blocks[$key] = $instance;
+    }
+  }
+
+  /**
+   * WARNING: deprecated method
    * Action: `acf/init`
    * Iterate over blocks and register them
    */
-  function acf_init() {
-    foreach ($this->blocks as $name => $instance) {
+  function _deprecated_acf_init() {
+    foreach ($this->_deprecated_blocks as $name => $instance) {
 
       // Register Gutenberg block with ACF
       acf_register_block(array(
+        'icon'            => 'no',
         'name'            => $instance->key(),
         'title'           => $instance->title(),
-        'category'        => $this->category,
-        'render_callback' => array($this, 'render_callback')
+        'category'        => 'vf_blocks_standalone',
+        'supports'        => array(
+          'inserter' => function_exists('vf_debug') && vf_debug()
+        ),
+        'render_callback' => array($this, '_deprecated_render_callback')
       ));
 
       // Register ACF field group
@@ -136,33 +499,46 @@ class VF_Gutenberg {
   }
 
   /**
+   * WARNING: deprecated method
    * Render callback for ACF Gutenberg blocks
    */
-  function render_callback($block, $content, $is_preview) {
-    if ( ! array_key_exists($block['name'], $this->blocks)) {
+  function _deprecated_render_callback($block, $content, $is_preview) {
+    if ( ! array_key_exists($block['name'], $this->_deprecated_blocks)) {
       return;
     }
-    $instance = $this->blocks[ $block['name'] ];
+    $instance = $this->_deprecated_blocks[ $block['name'] ];
     $html = $instance->render($block);
     if ( $is_preview) {
-      $this->render_preview_iframe($block, $html);
+      $this->_deprecated_render_preview_iframe($block, $html);
     } else {
       echo $html;
     }
   }
 
   /**
+   * WARNING: deprecated method
    * Render block within an iframe
    */
-  function render_preview_iframe($block, $html) {
+  function _deprecated_render_preview_iframe($block, $html) {
     // Prepend custom CSS
     $css = plugins_url('/assets/vf-iframe.css', __FILE__);
-    $html = '<link rel="stylesheet" href="' . $css . '">' . $html;
+    $pre = array(
+    '<link rel="stylesheet" href="' . $css . '">'
+    );
     // Prepend Visual Framework CSS
     if (function_exists('vf_get_stylesheet')) {
-      $html = '<link rel="stylesheet" href="' . vf_get_stylesheet() . '">' . $html;
+      $pre[] = '<link rel="stylesheet" href="' . vf_get_stylesheet() . '">';
     }
-    $js = plugins_url('/assets/iframeResizer.contentWindow.min.js', __FILE__);
+
+    // Add deprecated warning
+    ob_start();
+    include 'includes/deprecated/warning.php';
+    $pre[] = ob_get_contents();
+    ob_end_clean();
+
+    $html = implode("\n", $pre) . $html;
+
+    $js = plugins_url('/includes/deprecated/iframeResizer.contentWindow.min.js', __FILE__);
     $id = "vfGutenberg_{$block['id']}";
     $attr = array(
       "id=\"{$id}\"",
@@ -173,11 +549,13 @@ class VF_Gutenberg {
 ?>
 <script>
   window.<?php echo $id; ?> = function(iframe) {
-    window.vfGutenbergIFrame(
-      iframe,
-      <?php echo json_encode($html); ?>,
-      <?php echo json_encode($js); ?>
-    );
+    try {
+      window.vfGutenbergIFrame(
+        iframe,
+        <?php echo json_encode($html); ?>,
+        <?php echo json_encode($js); ?>
+      );
+    } catch(e) {}
   };
 </script>
 <iframe <?php echo implode(' ', $attr); ?>></iframe>
@@ -185,9 +563,22 @@ class VF_Gutenberg {
   }
 
   /**
+   * WARNING: deprecated method
+   */
+  function _deprecated_enqueue_block_editor_assets() {
+    wp_enqueue_script(
+      'iframe-resizer',
+      plugins_url('/includes/deprecated/iframeResizer.min.js', __FILE__),
+      false,
+      true
+    );
+  }
+
+  /**
+   * WARNING: deprecated method
    * Output inline styles for Visual Framework Gutenberg blocks
    */
-  function admin_head() {
+  function _deprecated_admin_head() {
 ?>
 <style>
 .wp-block[data-type^="acf/vf-"] {
@@ -198,58 +589,51 @@ class VF_Gutenberg {
   }
 
   /**
-   * Enqueue WP Admin CSS and JavaScript
+   * WARNING: deprecated method
    */
-  function admin_enqueue_scripts() {
-    wp_enqueue_script(
-      'iframe-resizer',
-      plugins_url('/assets/iframeResizer.min.js', __FILE__),
-      false,
-      true
-    );
-    wp_enqueue_script(
-      'vf-gutenberg',
-      plugins_url('/assets/vf-gutenberg.js', __FILE__),
-      array('iframe-resizer', 'wp-editor', 'wp-blocks'),
-      false,
-      true
-    );
+  function _deprecated_admin_footer() {
+?>
+<script>
+(function() {
+  window.vfGutenbergIFrame = function(iframe, html, js) {
+    var body = iframe.contentWindow.document.body;
+    body.innerHTML = html;
+    // append iframeResizer content window script
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = js;
+    script.onload = function() {
+      script.onload = null;
+      var timeout = setInterval(function() {
+        if (!iframe.iFrameResizer) {
+          return clearInterval(timeout);
+        }
+      }, 1000);
+    };
+    body.appendChild(script);
+    // start iframeResizer
+    window.iFrameResize({log: false, checkOrigin: false}, iframe);
+  };
+})();
+</script>
+<?php
   }
 
   /**
+   * WARNING: deprecated method
    * Filter `block_categories`
    */
-  function block_categories($categories, $post) {
-    if ( ! in_array($post->post_type, array('post', 'page'))) {
-      return $categories;
-    }
+  function _deprecated_block_categories($categories, $post) {
     return array_merge(
+      $categories,
       array(
         array(
-          'slug'  => $this->category,
-          'title' => __('Visual Framework', 'vfwp'),
+          'slug'  => 'vf_blocks_standalone',
+          'title' => __('Visual Framework (deprecated)', 'vfwp'),
           'icon'  => null
         )
-      ),
-      $categories
+      )
     );
-  }
-
-  /**
-   * Filter `render_block`
-   * Edit compatible core blocks to use VF markup
-   * Wrap other core blocks in `vf-content` class
-   */
-  function render_block($html, $block) {
-    if (array_key_exists($block['blockName'], $this->compatible)) {
-      $callback = $this->compatible[ $block['blockName'] ];
-      $html = call_user_func($callback, $html, $block);
-    } else {
-      if (strpos($block['blockName'], 'core/') === 0) {
-        $html = '<div class="vf-content">' . $html . '</div>';
-      }
-    }
-    return $html;
   }
 
 } // VF_Gutenberg

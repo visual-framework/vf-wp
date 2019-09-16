@@ -1,0 +1,67 @@
+/**!
+ * VF Gutenberg plugin
+ * https://visual-framework.github.io/vf-core/
+ */
+
+.vf-gutenberg-block {
+  background-color: #f3f4f5;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 50px 50px;
+  display: block;
+  min-height: 100px;
+  position: relative;
+}
+
+.vf-gutenberg-block[data-editing='false'] {
+  padding: 0;
+}
+
+.vf-gutenberg-block[data-editing='true'] {
+  background-size: 0px 0px;
+}
+
+.vf-gutenberg-block[data-editing='false'][data-loading='false'] {
+  background: transparent;
+  min-height: 0;
+}
+
+.vf-gutenberg-edit {
+  max-width: 750px;
+  padding: 15px;
+}
+
+[class^='vf-gutenberg'] > .components-spinner {
+  display: block;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+[class^='vf-gutenberg'] .editor-url-input {
+  max-width: 300px;
+}
+
+[class^='vf-gutenberg'] .components-form-toggle__on,
+[class^='vf-gutenberg'] .components-form-toggle__off {
+  display: none;
+}
+
+[class^='vf-gutenberg'] .components-toggle-control__label {
+  line-height: 18px;
+}
+
+[class^='vf-gutenberg']
+  .components-radio-control__option
+  .components-base-control__field {
+  margin-bottom: 0;
+}
+
+.vf-gutenberg-iframe {
+  border: 0;
+  height: 30px;
+  min-width: 100%;
+  pointer-events: none;
+}

@@ -3,28 +3,11 @@
     "title": "VF Example (block)",
     "fields": [
         {
-            "key": "field_vf_example_message",
-            "label": "Using the Example block",
-            "name": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "This is an example block plugin introduction. <a href=\"#\">Documentation<\/a> could be linked in this message.",
-            "new_lines": "",
-            "esc_html": 0
-        },
-        {
             "key": "field_vf_example_text",
             "label": "Text",
             "name": "vf_example_text",
             "type": "text",
-            "instructions": "Instructions, documentation, user guide, hints and tips go here.",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -39,11 +22,11 @@
             "maxlength": ""
         },
         {
-            "key": "field_vf_example_select",
-            "label": "Select",
-            "name": "vf_example_select",
-            "type": "select",
-            "instructions": "Example of a dynamically populated select field.",
+            "key": "field_vf_example_textarea",
+            "label": "Textarea",
+            "name": "vf_example_textarea",
+            "type": "textarea",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -51,7 +34,25 @@
                 "class": "",
                 "id": ""
             },
-            "choices": {},
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_vf_example_select",
+            "label": "Select (dynamic)",
+            "name": "vf_example_select",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
             "default_value": [],
             "allow_null": 0,
             "multiple": 0,
@@ -65,7 +66,7 @@
             "label": "Range",
             "name": "vf_example_range",
             "type": "range",
-            "instructions": "Example of a range field.",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -74,11 +75,80 @@
                 "id": ""
             },
             "default_value": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 42,
             "step": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_vf_example_radio",
+            "label": "Radio",
+            "name": "vf_example_radio",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "red": "Red",
+                "green": "Green",
+                "blue": "Blue"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_vf_example_checkbox",
+            "label": "Checkbox",
+            "name": "vf_example_checkbox",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "cyan": "Cyan",
+                "magenta": "Magenta",
+                "yellow": "Yellow"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "save_custom": 0
+        },
+        {
+            "key": "field_vf_example_boolean",
+            "label": "Boolean",
+            "name": "vf_example_boolean",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         }
     ],
     "location": [
@@ -98,5 +168,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1548947592
+    "modified": 1568295257
 }

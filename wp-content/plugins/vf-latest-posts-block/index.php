@@ -4,7 +4,7 @@ Plugin Name: VF-WP Latest Posts
 Description: VF-WP theme block.
 Version: 0.1.1
 Author: EMBL-EBI Web Development
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
 */
 
@@ -38,7 +38,7 @@ class VF_Latest_Posts extends VF_Plugin {
   function admin_head() {
 ?>
 <style>
-.wp-block[data-type="acf/vf-latest-posts"] {
+.wp-block[data-type="vf/latest-posts"] {
   max-width: none;
 }
 </style>

@@ -76,19 +76,30 @@ class VF_Plugin {
     $this->config = $config;
 
     // Register WP hooks
-    register_activation_hook($config['file'], array($this, 'activation_hook'));
-    register_deactivation_hook($config['file'], array($this, 'deactivation_hook'));
-    add_action('plugins_loaded', array($this, 'plugins_loaded'));
+    register_activation_hook(
+      $config['file'],
+      array($this, 'activation_hook')
+    );
+    register_deactivation_hook(
+      $config['file'],
+      array($this, 'deactivation_hook')
+    );
+    add_action(
+      'plugins_loaded',
+      array($this, 'plugins_loaded')
+    );
   }
 
   public function activation_hook() {
-    if ( ! is_array($this->config)) return;
-    VF_Plugin::register($this->config);
+    if (is_array($this->config)) {
+      VF_Plugin::register($this->config);
+    }
   }
 
   public function deactivation_hook() {
-    if ( ! is_array($this->config)) return;
-    VF_Plugin::deregister($this->config);
+    if (is_array($this->config)) {
+      VF_Plugin::deregister($this->config);
+    }
   }
 
   /**
@@ -103,9 +114,19 @@ class VF_Plugin {
       return;
     }
     if (file_exists("{$this->dir()}group_{$this->post->post_name}.json")) {
-      add_action('acf/init', array($this, 'acf_init'));
-      add_filter('acf/settings/load_json', array($this, 'acf_settings_load_json'));
-      add_action('acf/update_field_group', array($this, 'acf_update_field_group'), 2, 1);
+      add_action(
+        'acf/init',
+        array($this, 'acf_init')
+      );
+      add_filter(
+        'acf/settings/load_json',
+        array($this, 'acf_settings_load_json')
+      );
+      add_action(
+        'acf/update_field_group',
+        array($this, 'acf_update_field_group'),
+        2, 1
+      );
     }
   }
 
@@ -117,11 +138,30 @@ class VF_Plugin {
   }
 
   /**
+   * Return plugin post type
+   */
+  public function type() {
+    if ( ! $this->post instanceof WP_Post) {
+      return;
+    }
+    return $this->post->post_type;
+  }
+
+  public function is_block() {
+    return $this->type() === 'vf_block';
+  }
+
+  public function is_container() {
+    return $this->type() === 'vf_container';
+  }
+
+  /**
    * Return full plugin directory path (with trailing slash)
    */
   public function dir() {
-    if ( ! file_exists($this->file)) return;
-    return plugin_dir_path($this->file);
+    if (file_exists($this->file)) {
+      return plugin_dir_path($this->file);
+    }
   }
 
   /**
@@ -178,116 +218,15 @@ class VF_Plugin {
   }
 
   /**
-   * Action: `acf/init`
-   */
-  public function acf_init() {
-
-    // ACF key used for Gutenberg field group
-    $key = 'acf/' . acf_slugify($this->post->post_name);
-
-    // Add ACF group for Gutenberg block editor
-    acf_add_local_field_group(array(
-      'key'    => "group_{$key}",
-      'title'  => "VF {$this->post->post_title} (Gutenberg)",
-      'fields' => array(
-        array(
-          // 'parent'  => "group_{$key}",
-          'key'     => 'field_vf_block_custom',
-          'name'    => "vf_block_custom",
-          'label'   => 'Customize',
-          'type'    => 'true_false',
-          'ui'      => true
-        ),
-        array(
-          // 'parent'  => "group_{$key}",
-          'key'     => "field_{$key}_clone",
-          'name'    => "{$key}_clone",
-          'label'   => $this->post->post_title,
-          'type'    => 'clone',
-          'clone'   => array("group_{$this->post->post_name}"),
-          'display' => 'group',
-          'layout'  => 'block',
-          'conditional_logic' => array(array(
-              array(
-                'field'    => 'field_vf_block_custom',
-                'operator' => '==',
-                'value'    => '1'
-              )
-            ))
-        )
-      ),
-      'location' => array(
-        array(
-          array(
-            'param'    => 'block',
-            'operator' => '==',
-            'value'    => $key
-          )
-        )
-      )
-    ));
-
-    // Register the Gutenberg block for this plugin
-    acf_register_block(
-      array(
-        'name'     => $this->post->post_name,
-        'title'    => $this->post->post_title,
-        'icon'     => 'format-aside',
-        'supports' => array(
-          'align' => false,
-          'mode'  => false
-        ),
-        'category' => 'vf_blocks_content_hub',
-        'render_callback' => function($block, $content, $is_preview) use ($key) {
-          $custom = get_field('vf_block_custom', $block['id']);
-          $fields = $custom ? get_field("{$key}_clone", $block['id']) : null;
-
-          ob_start();
-          VF_Plugin::render($this, $fields);
-          $html = ob_get_contents();
-          ob_end_clean();
-          // Use the VF Gutenberg plugin to render iframe previews if available
-          global $vf_gutenberg;
-          if ($is_preview && isset($vf_gutenberg)) {
-            $vf_gutenberg->render_preview_iframe($block, $html);
-          } else {
-            echo $html;
-          }
-
-        }
-      )
-    );
-  }
-
-  /**
-   * Filter: add load path for ACF json
-   */
-  public function acf_settings_load_json($paths) {
-    if ($this->dir()) {
-      $paths[] = rtrim($this->dir(), '/\\');
-    }
-    return $paths;
-  }
-
-  /**
-   * Action: update save path option for ACF json if this group is edited
-   */
-  public function acf_update_field_group($group) {
-    if ($this->dir()) {
-      if ($group['key'] === "group_{$this->post->post_name}") {
-        update_option('vf__acf_save_json', $this->dir());
-      }
-    }
-    return $group;
-  }
-
-  /**
    * Return a plugin from the global option if registered
    */
-  static public function get_config($post_name) {
+  static public function get_config($post_name = null) {
     $plugins = unserialize(get_option('vf__plugins'));
     if ( ! is_array($plugins)) {
       return;
+    }
+    if ( ! $post_name) {
+      return $plugins;
     }
     if ( ! array_key_exists($post_name, $plugins)) {
       return;
@@ -304,7 +243,10 @@ class VF_Plugin {
       return;
     }
     // Use extended class if it is recognised
-    if (array_key_exists('class', $config) && class_exists($config['class'])) {
+    if (
+      array_key_exists('class', $config) &&
+      class_exists($config['class'])
+    ) {
       return new $config['class']();
     // Otherwise return generic base plugin
     } else {
@@ -423,6 +365,9 @@ class VF_Plugin {
     ) {
       return;
     }
+    if (empty($fields)) {
+      $fields = null;
+    }
 
     /**
      * We're setting up postdata for the canonical plugin post but for
@@ -487,6 +432,141 @@ class VF_Plugin {
     VF_Plugin::do_actions($plugin, 'vf/plugin/after_render');
     VF_Plugin::do_actions($plugin, "{$action}/after_render");
 
+  }
+
+  /**
+   * Action: `acf/init`
+   */
+  public function acf_init() {
+    // TODO: remove at some point...
+    $this->_deprecated_acf_block();
+  }
+
+  /**
+   * Filter: add load path for ACF json
+   */
+  public function acf_settings_load_json($paths) {
+    if ($this->dir()) {
+      $paths[] = rtrim($this->dir(), '/\\');
+    }
+    return $paths;
+  }
+
+  /**
+   * Action: update save path option for ACF json if this group is edited
+   */
+  public function acf_update_field_group($group) {
+    if ($this->dir()) {
+      if ($group['key'] === "group_{$this->post->post_name}") {
+        update_option('vf__acf_save_json', $this->dir());
+      }
+    }
+    return $group;
+  }
+
+  /**
+   * WARNING: deprecated method
+   * Replaced with native Gutenberg blocks
+   */
+  private function _deprecated_acf_block() {
+    if ( ! $this->is_block()) {
+      return;
+    }
+
+    // Whitelist deprecated blocks
+    $_deprecated = array(
+      'vf_data_resources',
+      'vf_example',
+      'vf_factoid',
+      'vf_group_header',
+      'vf_jobs',
+      'vf_latest_posts',
+      'vf_members',
+      'vf_publications',
+      'vf_publications_group_ebi',
+    );
+
+    // Temporary enable deprecated blocks
+    if ( ! in_array($this->post->post_name, $_deprecated)) {
+      return;
+    }
+
+    // ACF key used for Gutenberg field group
+    $key = 'acf/' . acf_slugify($this->post->post_name);
+
+    // Add ACF group for Gutenberg block editor
+    acf_add_local_field_group(array(
+      'key'    => "group_{$key}",
+      'title'  => "VF {$this->post->post_title} (Gutenberg)",
+      'fields' => array(
+        array(
+          // 'parent'  => "group_{$key}",
+          'key'     => 'field_vf_block_custom',
+          'name'    => "vf_block_custom",
+          'label'   => 'Customize',
+          'type'    => 'true_false',
+          'ui'      => true
+        ),
+        array(
+          // 'parent'  => "group_{$key}",
+          'key'     => "field_{$key}_clone",
+          'name'    => "{$key}_clone",
+          'label'   => $this->post->post_title,
+          'type'    => 'clone',
+          'clone'   => array("group_{$this->post->post_name}"),
+          'display' => 'group',
+          'layout'  => 'block',
+          'conditional_logic' => array(array(
+              array(
+                'field'    => 'field_vf_block_custom',
+                'operator' => '==',
+                'value'    => '1'
+              )
+            ))
+        )
+      ),
+      'location' => array(
+        array(
+          array(
+            'param'    => 'block',
+            'operator' => '==',
+            'value'    => $key
+          )
+        )
+      )
+    ));
+
+    // Register the Gutenberg block for this plugin
+    acf_register_block(
+      array(
+        'name'     => $this->post->post_name,
+        'title'    => $this->post->post_title,
+        'icon'     => 'no',
+        'supports' => array(
+          'align'    => false,
+          'mode'     => false,
+          'inserter' => function_exists('vf_debug') && vf_debug()
+        ),
+        'category' => 'vf_blocks_content_hub',
+        'render_callback' => function($block, $content, $is_preview) use ($key) {
+          $custom = get_field('vf_block_custom', $block['id']);
+          $fields = $custom ? get_field("{$key}_clone", $block['id']) : null;
+
+          ob_start();
+          VF_Plugin::render($this, $fields);
+          $html = ob_get_contents();
+          ob_end_clean();
+          // Use the VF Gutenberg plugin to render iframe previews if available
+          global $vf_gutenberg;
+          if ($is_preview && isset($vf_gutenberg)) {
+            $vf_gutenberg->_deprecated_render_preview_iframe($block, $html);
+          } else {
+            echo $html;
+          }
+
+        }
+      )
+    );
   }
 
 } // VF_Plugin

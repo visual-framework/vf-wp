@@ -1,6 +1,6 @@
 {
   "name": "vf-wp",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "private": true,
   "description": "Visual Framework WordPress Theme",
   "main": "gulpfile.js",
@@ -14,9 +14,7 @@
   "author": "EMBL",
   "license": "UNLICENSED",
   "browserslist": [
-    "Android >= 4",
-    "last 3 versions",
-    "ie 11"
+    "last 1 versions"
   ],
   "babel": {
     "presets": [
@@ -27,9 +25,6 @@
           "useBuiltIns": "usage"
         }
       ]
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-object-rest-spread"
     ]
   },
   "dependencies": {},
@@ -38,22 +33,17 @@
     "@babel/node": "^7.6.1",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
     "chalk": "^2.4.2",
+    "core-js": "^3.2.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.2",
-    "husky": "^3.0.5",
     "pump": "^3.0.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx gulp pre-commit",
-      "post-commit": "npx gulp post-commit"
-    }
   }
 }

@@ -202,7 +202,7 @@ class VF_Gutenberg_Activity implements VF_Gutenberg_Block {
 
 } // VF_Gutenberg_Activity
 
-vf_gutenberg()->add_block( new VF_Gutenberg_Activity() );
+vf_gutenberg()->_deprecated_add_block( new VF_Gutenberg_Activity() );
 
 endif;
 

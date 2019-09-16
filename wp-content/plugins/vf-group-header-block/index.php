@@ -4,7 +4,7 @@ Plugin Name: VF-WP Group Header
 Description: VF-WP theme block.
 Version: 0.1.1
 Author: EMBL-EBI Web Development
-Plugin URI: https://git.embl.de/grp-stratcom/vf-wp
+Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
 */
 
@@ -77,13 +77,9 @@ class VF_Group_Header extends VF_Plugin {
 
   function heading_html() {
     $heading = get_field('vf_group_header_heading', $this->post->ID);
+    $heading = esc_html($heading);
     $heading = trim($heading);
-
-    $heading = preg_replace(
-      '#<h1[^>]*?>#',
-      '<h1 class="vf-lede">',
-      $heading
-    );
+    $heading = "<h1 class=\"vf-lede\">{$heading}</h1>";
 
     if ( ! vf_html_empty($heading) || ! class_exists('VF_Cache')) {
       return $heading;
@@ -121,7 +117,7 @@ class VF_Group_Header extends VF_Plugin {
   function admin_head() {
 ?>
 <style>
-.wp-block[data-type="acf/vf-group-header"] {
+.wp-block[data-type="vf/group-header"] {
   max-width: none;
 }
 </style>

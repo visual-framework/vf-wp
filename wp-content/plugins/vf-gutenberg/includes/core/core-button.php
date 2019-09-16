@@ -18,7 +18,7 @@ class VF_Gutenberg_Core_Button {
 
     $classes = array('vf-button');
     if ($is_outline) {
-      $classes[] = 'vf-button--outline--primary';
+      $classes[] = 'vf-button--outline';
     } else {
       $classes[] = 'vf-button--primary';
     }
