@@ -2,7 +2,7 @@
  * VF-WP Plugin block hook
  */
 
-import {PluginEdit, PluginEditFields} from '../vf-plugin';
+import {VFBlock, VFBlockFields} from '../vf-plugin';
 import {useDefaults, useVFPluginFields} from '../hooks';
 
 const {__} = wp.i18n;
@@ -10,11 +10,12 @@ const {__} = wp.i18n;
 export default (name, title) => {
   const defaults = useDefaults();
   const {fields, attrs} = useVFPluginFields(name);
+  const hasFields = fields.length > 0;
   const attributes = {
     ...attrs,
     ...defaults.attributes
   };
-  if (fields.length) {
+  if (hasFields) {
     attributes.mode = {
       type: 'string',
       default: 'view'
@@ -25,18 +26,14 @@ export default (name, title) => {
     name: name,
     title: title,
     category: 'vf/wp',
-    keywords: [...defaults.keywords, __('Content Hub', 'vfwp')],
+    keywords: [...defaults.keywords, __('Content Hub')],
     attributes: attributes,
     edit: props => {
-      if (fields.length) {
-        return (
-          <PluginEdit {...props}>
-            <PluginEditFields {...props} fields={fields} />
-          </PluginEdit>
-        );
-      } else {
-        return <PluginEdit {...props} />;
-      }
+      return (
+        <VFBlock {...props} hasFooter={hasFields}>
+          {hasFields && <VFBlockFields {...props} fields={fields} />}
+        </VFBlock>
+      );
     }
   };
 };

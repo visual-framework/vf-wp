@@ -2,7 +2,7 @@
  * VF Plugin (base component)
  */
 import {useEffect, useRef} from 'react';
-import {useVFPluginData, useIFrame, useUniqueId, useStyleName} from './hooks';
+import {useVFPluginData, useIFrame, useUniqueId} from './hooks';
 
 const {__} = wp.i18n;
 
@@ -24,19 +24,49 @@ const {
   Toolbar
 } = wp.components;
 
-const EditButton = ({onClick}) => {
+/**
+ * The togglable "Edit" button added to `BlockControls`
+ */
+const EditButton = ({onClick}) => (
+  <IconButton label={__('Edit')} icon="edit" onClick={onClick} />
+);
+
+/**
+ * The togglable "View" button added to `BlockControls`
+ */
+const ViewButton = ({onClick}) => (
+  <IconButton label={__('Preview')} icon="visibility" onClick={onClick} />
+);
+
+/**
+ * The "Update" button appended to `VFBlock` (optional)
+ */
+const UpdateButton = ({onClick}) => (
+  <Button isDefault isLarge onClick={onClick}>
+    {__('Update')}
+  </Button>
+);
+
+const VFBlockControls = ({isEditing, onToggle}) => {
   return (
-    <IconButton label={__('Edit', 'vfwp')} icon="edit" onClick={onClick} />
+    <BlockControls>
+      <Toolbar>
+        {isEditing ? (
+          <ViewButton onClick={onToggle} />
+        ) : (
+          <EditButton onClick={onToggle} />
+        )}
+      </Toolbar>
+    </BlockControls>
   );
 };
 
-const ViewButton = ({onClick}) => {
+const VFBlockEdit = ({hasFooter, onToggle, children}) => {
   return (
-    <IconButton
-      label={__('Preview', 'vfwp')}
-      icon="visibility"
-      onClick={onClick}
-    />
+    <div className="vf-gutenberg-edit">
+      {children}
+      {hasFooter && <UpdateButton onClick={onToggle} />}
+    </div>
   );
 };
 
@@ -44,7 +74,7 @@ const ViewButton = ({onClick}) => {
  * Cannot use `<iframe onLoad...>` load event in React does not
  * fire properly in Safari/Chrome for iframes
  */
-const PluginPreview = React.memo(({data, uniqueId}) => {
+const VFBlockView = React.memo(({html, uniqueId}) => {
   // create iframe
   const iframeId = `vfwp_${uniqueId}`;
   let iframe = document.getElementById(iframeId);
@@ -54,10 +84,8 @@ const PluginPreview = React.memo(({data, uniqueId}) => {
     iframe.className = 'vf-gutenberg-iframe';
     iframe.setAttribute('scrolling', 'no');
   }
-
   const rootEl = useRef();
-  const {onLoad, onUnload} = useIFrame(iframe, data.html);
-
+  const {onLoad, onUnload} = useIFrame(iframe, html);
   useEffect(() => {
     iframe.addEventListener('load', ev => onLoad(ev));
     rootEl.current.appendChild(iframe);
@@ -71,26 +99,21 @@ const PluginPreview = React.memo(({data, uniqueId}) => {
 /**
  * The default "edit" component for VF Gutenberg blocks
  */
-const PluginEdit = withInstanceId(function(props) {
+export const VFBlock = withInstanceId(function(props) {
   const {
     clientId,
     instanceId,
     isSelected,
+    hasFooter,
     attributes: {ver, mode, ...attrs}
   } = props;
 
-  const uniqueId = useUniqueId(clientId, instanceId);
+  const uniqueId = useUniqueId([clientId, instanceId]);
 
   // Ensure version is encoded in post content
   if (!ver) {
     props.setAttributes({ver: props.ver || 1});
   }
-
-  // Ensure style is encoded in post content
-  // const style = useStyleName(props.className);
-  // if (style && clientId) {
-  //   props.setAttributes({style: style});
-  // }
 
   // No `clientId` if rendered in the sidebar style preview
   const hasMode = clientId && typeof mode === 'string';
@@ -110,32 +133,23 @@ const PluginEdit = withInstanceId(function(props) {
     props.setAttributes({mode: !isEditing ? 'edit' : 'view'});
   };
 
-  const className = `vf-gutenberg-block ${props.className}`;
+  const rootAttr = {
+    className: `vf-gutenberg-block ${props.className}`,
+    'data-ver': ver,
+    'data-name': props.name,
+    'data-editing': isEditing,
+    'data-loading': isLoading,
+    'data-selected': isSelected
+  };
 
   return (
     <React.Fragment>
-      {hasMode && (
-        <BlockControls>
-          <Toolbar>
-            {isEditing ? (
-              <ViewButton onClick={onToggle} />
-            ) : (
-              <EditButton onClick={onToggle} />
-            )}
-          </Toolbar>
-        </BlockControls>
-      )}
-      <div
-        className={className}
-        data-ver={ver}
-        data-name={props.name}
-        data-editing={isEditing}
-        data-loading={isLoading}
-        data-selected={isSelected}>
+      {hasMode && <VFBlockControls {...{isEditing, onToggle}} />}
+      <div {...rootAttr}>
         {isEditing ? (
-          props.children
+          <VFBlockEdit {...{hasFooter, onToggle}} children={props.children} />
         ) : isPreview ? (
-          <PluginPreview data={data} uniqueId={uniqueId} />
+          <VFBlockView html={data.html} uniqueId={uniqueId} />
         ) : (
           <Spinner />
         )}
@@ -147,109 +161,95 @@ const PluginEdit = withInstanceId(function(props) {
 /**
  * Automatically map field controls to attributes
  */
-const PluginEditFields = props => {
+export const VFBlockFields = props => {
   const {attributes: attrs, setAttributes, fields} = props;
-  const onUpdate = () => {
-    props.setAttributes({
-      mode: attrs.mode === 'edit' ? 'view' : 'edit'
-    });
-  };
   const onChange = (name, value) => {
     const attr = {};
     attr[name] = value;
     setAttributes({...attr});
   };
-  return (
-    <div className="vf-gutenberg-edit">
-      {fields.map(field => {
-        const {name, type, label} = field;
-        if (type === 'checkbox') {
-          return (
-            <BaseControl label={label} className="components-radio-control">
-              {field.options.map(option => (
-                <div className="components-radio-control__option">
-                  <CheckboxControl
-                    label={option.label}
-                    checked={(attrs[name] || []).includes(option.value)}
-                    onChange={checked => {
-                      const attr = (attrs[name] || []).filter(
-                        v => v !== option.value
-                      );
-                      if (checked) {
-                        attr.push(option.value);
-                      }
-                      onChange(name, attr);
-                    }}
-                  />
-                </div>
-              ))}
-            </BaseControl>
-          );
-        }
-        if (type === 'radio') {
-          return (
-            <RadioControl
-              label={label}
-              selected={attrs[name]}
-              onChange={value => onChange(name, value)}
-              options={[...field.options]}
-            />
-          );
-        }
-        if (type === 'range') {
-          return (
-            <RangeControl
-              label={label}
-              value={parseInt(attrs[name])}
-              onChange={value => onChange(name, value)}
-              min={parseInt(field['min'])}
-              max={parseInt(field['max'])}
-            />
-          );
-        }
-        if (type === 'select') {
-          return (
-            <SelectControl
-              label={label}
-              value={attrs[name]}
-              onChange={value => onChange(name, value)}
-              options={[...field.options]}
-            />
-          );
-        }
-        if (type === 'text') {
-          return (
-            <TextControl
-              label={label}
-              value={attrs[name]}
-              onChange={value => onChange(name, value)}
-            />
-          );
-        }
-        if (type === 'textarea') {
-          return (
-            <TextareaControl
-              label={label}
-              value={attrs[name]}
-              onChange={value => onChange(name, value)}
-            />
-          );
-        }
-        if (type === 'toggle') {
-          return (
-            <ToggleControl
-              label={label}
-              checked={attrs[name]}
-              onChange={value => onChange(name, value ? 1 : 0)}
-            />
-          );
-        }
-      })}
-      <Button isDefault isLarge onClick={onUpdate}>
-        {__('Update', 'vfwp')}
-      </Button>
-    </div>
-  );
+  return fields.map(field => {
+    const {name, type, label} = field;
+    if (type === 'checkbox') {
+      return (
+        <BaseControl label={label} className="components-radio-control">
+          {field.options.map(option => (
+            <div className="components-radio-control__option">
+              <CheckboxControl
+                label={option.label}
+                checked={(attrs[name] || []).includes(option.value)}
+                onChange={checked => {
+                  const attr = (attrs[name] || []).filter(
+                    v => v !== option.value
+                  );
+                  if (checked) {
+                    attr.push(option.value);
+                  }
+                  onChange(name, attr);
+                }}
+              />
+            </div>
+          ))}
+        </BaseControl>
+      );
+    }
+    if (type === 'radio') {
+      return (
+        <RadioControl
+          label={label}
+          selected={attrs[name]}
+          onChange={value => onChange(name, value)}
+          options={[...field.options]}
+        />
+      );
+    }
+    if (type === 'range') {
+      return (
+        <RangeControl
+          label={label}
+          value={parseInt(attrs[name])}
+          onChange={value => onChange(name, value)}
+          min={parseInt(field['min'])}
+          max={parseInt(field['max'])}
+        />
+      );
+    }
+    if (type === 'select') {
+      return (
+        <SelectControl
+          label={label}
+          value={attrs[name]}
+          onChange={value => onChange(name, value)}
+          options={[...field.options]}
+        />
+      );
+    }
+    if (type === 'text') {
+      return (
+        <TextControl
+          label={label}
+          value={attrs[name]}
+          onChange={value => onChange(name, value)}
+        />
+      );
+    }
+    if (type === 'textarea') {
+      return (
+        <TextareaControl
+          label={label}
+          value={attrs[name]}
+          onChange={value => onChange(name, value)}
+        />
+      );
+    }
+    if (type === 'toggle') {
+      return (
+        <ToggleControl
+          label={label}
+          checked={attrs[name]}
+          onChange={value => onChange(name, value ? 1 : 0)}
+        />
+      );
+    }
+  });
 };
-
-export {PluginEdit, PluginEditFields};

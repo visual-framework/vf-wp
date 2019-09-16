@@ -43,7 +43,8 @@ class VF_Gutenberg {
    */
   private $protected_attrs = array(
     'ver',
-    'mode'
+    'mode',
+    'style'
   );
 
   /**
@@ -261,6 +262,11 @@ class VF_Gutenberg {
       foreach ($block['attrs'] as $key => $value) {
         if (in_array($key, $this->protected_attrs)) {
           continue;
+        }
+        if ($key === 'className') {
+          if (preg_match('/is-style-([^\s"]+)/', $value, $matches)) {
+            $this->fields["{$post_name}_style"] = $matches[1];
+          }
         }
         $this->fields["{$post_name}_{$key}"] = $value;
       }

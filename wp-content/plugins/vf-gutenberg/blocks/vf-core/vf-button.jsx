@@ -2,17 +2,59 @@
  * VF Framework Button
  */
 
-import {PluginEdit} from '../vf-plugin';
+import {VFBlock} from '../vf-plugin';
 
 const {__} = wp.i18n;
-const {URLInput} = wp.editor;
-const {BaseControl, Button, TextControl} = wp.components;
+const {InspectorControls, URLInput} = wp.editor;
+const {
+  BaseControl,
+  Button,
+  PanelBody,
+  SelectControl,
+  TextControl
+} = wp.components;
+
+const vfButtonAttrs = {
+  url: {
+    type: 'string'
+  },
+  label: {
+    type: 'string'
+  },
+  size: {
+    type: 'string',
+    default: 'regular'
+  }
+};
+
+const vfButtonStyles = [
+  {
+    name: 'primary',
+    label: __('Primary'),
+    isDefault: true
+  },
+  {
+    name: 'secondary',
+    label: __('Secondary')
+  },
+  {
+    name: 'tertiary',
+    label: __('Tertiary')
+  }
+];
+
+const vfButtonSizes = [
+  {label: __('Small'), value: 'small'},
+  {label: __('Regular'), value: 'regular'},
+  {label: __('Large'), value: 'large'}
+];
 
 export default {
   name: 'vf/button',
-  title: __('Button', 'vfwp'),
   category: 'vf/core',
-  keywords: [__('VF', 'vfwp'), __('Visual Framework', 'vfwp')],
+  title: __('Button'),
+  description: __('Visual Framework'),
+  keywords: [__('VF'), __('Visual Framework')],
   attributes: {
     ver: {
       type: 'integer'
@@ -21,64 +63,44 @@ export default {
       type: 'string',
       default: 'edit'
     },
-    style: {
-      type: 'string'
-    },
-    url: {
-      type: 'string'
-    },
-    label: {
-      type: 'string'
-    }
+    ...vfButtonAttrs
   },
-  styles: [
-    {
-      name: 'primary',
-      label: __('Primary', 'vfwp'),
-      isDefault: true
-    },
-    {
-      name: 'secondary',
-      label: __('Secondary', 'vfwp')
-    },
-    {
-      name: 'tertiary',
-      label: __('Tertiary', 'vfwp')
-    }
-  ],
+  styles: [...vfButtonStyles],
   supports: {
     align: false,
     className: false,
-    customClassName: false,
+    customClassName: true,
     html: false
   },
   save: () => null,
   edit: props => {
-    const {attributes: attrs, setAttributes} = props;
-    const onUpdate = () => {
-      props.setAttributes({
-        mode: attrs.mode === 'edit' ? 'view' : 'edit'
-      });
-    };
+    const {attributes, setAttributes} = props;
     return (
-      <PluginEdit {...props} ver={2}>
-        <div className="vf-gutenberg-edit">
+      <>
+        <VFBlock {...props} ver={2} hasFooter>
           <TextControl
-            label={__('Label', 'vfwp')}
-            value={attrs.label}
+            label={__('Label')}
+            value={attributes.label}
             onChange={label => setAttributes({label})}
           />
-          <BaseControl label={__('URL', 'vfwp')}>
+          <BaseControl label={__('URL')}>
             <URLInput
-              value={attrs.url}
+              value={attributes.url}
               onChange={url => setAttributes({url})}
             />
           </BaseControl>
-          <Button isDefault isLarge onClick={onUpdate}>
-            {__('Update', 'vfwp')}
-          </Button>
-        </div>
-      </PluginEdit>
+        </VFBlock>
+        <InspectorControls>
+          <PanelBody title={__('Settings')} initialOpen={false}>
+            <SelectControl
+              label={__('Size')}
+              value={attributes['size']}
+              onChange={size => setAttributes({size})}
+              options={vfButtonSizes}
+            />
+          </PanelBody>
+        </InspectorControls>
+      </>
     );
   }
 };

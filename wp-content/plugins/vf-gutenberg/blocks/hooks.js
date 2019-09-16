@@ -15,18 +15,10 @@ export const useRandomId = seed =>
   hashsum(seed + Math.floor(Math.random() * Date.now()));
 
 /**
- * Return the modifier from the WP block class ("is-style-modifier")
- */
-export const useStyleName = className => {
-  const match = (className || '').match(/is-style-([^\s"]+)/);
-  return Array.isArray(match) ? match[1] : false;
-};
-
-/**
  * Hook to return default VF Gutenberg block settings
  */
 export const useDefaults = () => ({
-  keywords: [__('VF', 'vfwp'), __('Visual Framework', 'vfwp')],
+  keywords: [__('VF'), __('Visual Framework')],
   attributes: {
     ver: {
       type: 'integer'
