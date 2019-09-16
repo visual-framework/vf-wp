@@ -4,6 +4,25 @@ import hashsum from './utils/hashsum';
 const {__} = wp.i18n;
 
 /**
+ * Return unique hash of IDs array
+ */
+export const useUniqueId = ids => hashsum(ids);
+
+/**
+ * Generate a random ID for class or ID attributes
+ */
+export const useRandomId = seed =>
+  hashsum(seed + Math.floor(Math.random() * Date.now()));
+
+/**
+ * Return the modifier from the WP block class ("is-style-modifier")
+ */
+export const useStyleName = className => {
+  const match = (className || '').match(/is-style-([^\s"]+)/);
+  return Array.isArray(match) ? match[1] : false;
+};
+
+/**
  * Hook to return default VF Gutenberg block settings
  */
 export const useDefaults = () => ({

@@ -2,9 +2,11 @@
  * VF Plugin (base component)
  */
 import {useEffect, useRef} from 'react';
-import {useVFPluginData, useIFrame} from './hooks';
+import {useVFPluginData, useIFrame, useUniqueId, useStyleName} from './hooks';
 
 const {__} = wp.i18n;
+
+const {withInstanceId} = wp.compose;
 
 const {BlockControls} = wp.editor;
 const {
@@ -42,13 +44,16 @@ const ViewButton = ({onClick}) => {
  * Cannot use `<iframe onLoad...>` load event in React does not
  * fire properly in Safari/Chrome for iframes
  */
-const PluginPreview = React.memo(({data, clientId}) => {
+const PluginPreview = React.memo(({data, uniqueId}) => {
   // create iframe
-  const iframeId = `iframe_${data.hash}_${clientId}`.replace(/[^\w]/g, '');
-  const iframe = document.createElement('iframe');
-  iframe.id = iframeId;
-  iframe.className = 'vf-gutenberg-iframe';
-  iframe.setAttribute('scrolling', 'no');
+  const iframeId = `vfwp_${uniqueId}`;
+  let iframe = document.getElementById(iframeId);
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = iframeId;
+    iframe.className = 'vf-gutenberg-iframe';
+    iframe.setAttribute('scrolling', 'no');
+  }
 
   const rootEl = useRef();
   const {onLoad, onUnload} = useIFrame(iframe, data.html);
@@ -66,18 +71,29 @@ const PluginPreview = React.memo(({data, clientId}) => {
 /**
  * The default "edit" component for VF Gutenberg blocks
  */
-const PluginEdit = function(props) {
+const PluginEdit = withInstanceId(function(props) {
   const {
+    clientId,
+    instanceId,
     isSelected,
     attributes: {ver, mode, ...attrs}
   } = props;
+
+  const uniqueId = useUniqueId(clientId, instanceId);
 
   // Ensure version is encoded in post content
   if (!ver) {
     props.setAttributes({ver: props.ver || 1});
   }
 
-  const hasMode = typeof mode === 'string';
+  // Ensure style is encoded in post content
+  // const style = useStyleName(props.className);
+  // if (style && clientId) {
+  //   props.setAttributes({style: style});
+  // }
+
+  // No `clientId` if rendered in the sidebar style preview
+  const hasMode = clientId && typeof mode === 'string';
   const isEditing = hasMode && mode === 'edit';
 
   // Hook in conditional against the rules?
@@ -94,6 +110,8 @@ const PluginEdit = function(props) {
     props.setAttributes({mode: !isEditing ? 'edit' : 'view'});
   };
 
+  const className = `vf-gutenberg-block ${props.className}`;
+
   return (
     <React.Fragment>
       {hasMode && (
@@ -108,7 +126,7 @@ const PluginEdit = function(props) {
         </BlockControls>
       )}
       <div
-        className="vf-gutenberg-block"
+        className={className}
         data-ver={ver}
         data-name={props.name}
         data-editing={isEditing}
@@ -117,14 +135,14 @@ const PluginEdit = function(props) {
         {isEditing ? (
           props.children
         ) : isPreview ? (
-          <PluginPreview data={data} clientId={props.clientId} />
+          <PluginPreview data={data} uniqueId={uniqueId} />
         ) : (
           <Spinner />
         )}
       </div>
     </React.Fragment>
   );
-};
+});
 
 /**
  * Automatically map field controls to attributes

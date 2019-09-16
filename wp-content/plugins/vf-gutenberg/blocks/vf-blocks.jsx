@@ -5,7 +5,7 @@
 import {useVFGutenberg} from './hooks';
 
 // import Visual Framework core component settings
-import vfButton from './vf-core/vf-button';
+// import vfButton from './vf-core/vf-button';
 
 // import VF Plugin block settings
 import vfDataResources from './plugins/vf-data-resources';
@@ -21,7 +21,7 @@ import vfPublications from './plugins/vf-publications';
 const {registerBlockType} = wp.blocks;
 
 // register core components
-registerBlockType(vfButton.name, vfButton);
+// registerBlockType(vfButton.name, vfButton);
 
 // register plugins if corresponding WordPress plugin is activated
 const pluginBlocks = [

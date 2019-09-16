@@ -21,6 +21,9 @@ export default {
       type: 'string',
       default: 'edit'
     },
+    style: {
+      type: 'string'
+    },
     url: {
       type: 'string'
     },
@@ -28,6 +31,21 @@ export default {
       type: 'string'
     }
   },
+  styles: [
+    {
+      name: 'primary',
+      label: __('Primary', 'vfwp'),
+      isDefault: true
+    },
+    {
+      name: 'secondary',
+      label: __('Secondary', 'vfwp')
+    },
+    {
+      name: 'tertiary',
+      label: __('Tertiary', 'vfwp')
+    }
+  ],
   supports: {
     align: false,
     className: false,
