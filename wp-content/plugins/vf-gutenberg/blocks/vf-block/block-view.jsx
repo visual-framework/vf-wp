@@ -4,7 +4,7 @@
  * within an iframe (to scope CSS and JavaScript).
  */
 import React, {useEffect, useRef} from 'react';
-import {useIFrame} from '../hooks';
+import useVFIFrame from '../hooks/use-vf-iframe';
 
 const VFBlockView = ({html, uniqueId}) => {
   // Use existing iframe appended to the DOM
@@ -21,7 +21,7 @@ const VFBlockView = ({html, uniqueId}) => {
 
   // Use an asynchronous hook to fetch the iframe content via WordPress API
   const rootEl = useRef();
-  const {onLoad, onUnload} = useIFrame(iframe, html);
+  const {onLoad, onUnload} = useVFIFrame(iframe, html);
 
   // Append the iframe element on mount - we cannot use `<iframe onLoad={} />`
   // in React, this does not fire properly in Webkit browsers for

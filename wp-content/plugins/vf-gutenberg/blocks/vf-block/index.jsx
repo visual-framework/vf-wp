@@ -4,7 +4,8 @@
  * Component has "edit" and "view" modes.
  */
 import React from 'react';
-import {useUniqueId, useVFRender} from '../hooks';
+import {useUniqueId} from '../hooks';
+import useVFRender from '../hooks/use-vf-render';
 import VFBlockControls from './block-controls';
 import VFBlockView from './block-view';
 import VFBlockEdit from './block-edit';

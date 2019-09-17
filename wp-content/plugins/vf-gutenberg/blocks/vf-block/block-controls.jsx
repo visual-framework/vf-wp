@@ -1,5 +1,5 @@
 /**
- * VFBlockControls
+ * VFBlockControls (component)
  * Toolbar to toggle between "edit" and "view" modes.
  */
 import React from 'react';
