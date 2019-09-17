@@ -3,6 +3,28 @@
     "title": "VF Example (block)",
     "fields": [
         {
+            "key": "field_vf_example_taxonomy",
+            "label": "Taxonomy",
+            "name": "vf_example_taxonomy",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl_taxonomy",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
             "key": "field_vf_example_text",
             "label": "Text",
             "name": "vf_example_text",
@@ -168,5 +190,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1568295257
+    "modified": 1568718658
 }

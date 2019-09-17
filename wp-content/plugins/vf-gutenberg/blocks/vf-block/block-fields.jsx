@@ -5,6 +5,9 @@
  * is mapped from ACF configuration.
  */
 import React from 'react';
+import TaxonomyControl from '../components/taxonomy-control';
+
+const {__} = wp.i18n;
 
 const {
   BaseControl,
@@ -87,6 +90,16 @@ const VFBlockFields = props => {
           value={attrs[name]}
           onChange={value => onChange(name, value)}
           options={[...field.options]}
+        />
+      );
+    }
+    if (type === 'taxonomy') {
+      return (
+        <TaxonomyControl
+          taxonomy={field.taxonomy}
+          label={label}
+          value={attrs[name]}
+          onChange={value => onChange(name, value)}
         />
       );
     }

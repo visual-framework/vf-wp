@@ -55,6 +55,7 @@ class VF_Gutenberg {
     'range',
     'radio',
     'select',
+    'taxonomy',
     'text',
     'textarea',
     'true_false'
@@ -102,6 +103,10 @@ class VF_Gutenberg {
     add_filter(
       'wp_ajax_vf/gutenberg/fetch_block',
       array($this, 'ajax_fetch_block')
+    );
+    add_filter(
+      'wp_ajax_vf/gutenberg/fetch_terms',
+      array($this, 'ajax_fetch_terms')
     );
     add_filter(
       'render_block',
@@ -194,16 +199,22 @@ class VF_Gutenberg {
   }
 
   /**
+   * Called from AJAX handlers to validate the nonce
+   */
+  function ajax_validate_nonce() {
+    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
+    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
+    if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
+      wp_send_json_error();
+    }
+  }
+
+  /**
    * Handle AJAX request to render block preview
    */
   function ajax_fetch_block() {
-    // validate `post_id` and `nonce`
-    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
-    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
-    if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
-      wp_send_json_error();
-      wp_die();
-    }
+
+    $this->ajax_validate_nonce();
     $html = '';
     $stylesheets = array();
     if (function_exists('vf_get_stylesheet')) {
@@ -224,6 +235,34 @@ class VF_Gutenberg {
       array(
         'hash' => hash('crc32', $html),
         'html' => $html
+      )
+    );
+  }
+
+  /**
+   * Handle AJAX request to fetch taxonomy terms
+   */
+  function ajax_fetch_terms() {
+    $this->ajax_validate_nonce();
+    $taxonomy = isset($_POST['taxonomy']) ? $_POST['taxonomy'] : '';
+    if ( ! taxonomy_exists($taxonomy)) {
+      wp_send_json_error();
+    }
+    $terms = get_terms(
+      array(
+        'taxonomy'   => $taxonomy,
+        'hide_empty' => false
+      )
+    );
+    $terms = array_map(function($term) {
+      return array(
+        'name'    => html_entity_decode($term->name),
+        'term_id' => $term->term_id,
+      );
+    }, $terms);
+    wp_send_json_success(
+      array(
+        'terms' => $terms
       )
     );
   }
@@ -362,7 +401,7 @@ class VF_Gutenberg {
     $attr = array(
       'name'  => $name,
       'type'  => $type,
-      'label' => $field['label']
+      'label' => html_entity_decode($field['label'])
     );
     if ($type === 'range') {
       $attr['min'] = intval($field['min']);
@@ -376,13 +415,16 @@ class VF_Gutenberg {
       $attr['options'] = array();
       foreach ($field['choices'] as $k => $v) {
         $attr['options'][] = array(
-          'label' => $v,
+          'label' => html_entity_decode($v),
           'value' => $k
         );
       }
     }
     if ($type === 'true_false') {
       $attr['type'] = 'toggle';
+    }
+    if ($type === 'taxonomy') {
+      $attr['taxonomy'] = $field['taxonomy'];
     }
     return $attr;
   }

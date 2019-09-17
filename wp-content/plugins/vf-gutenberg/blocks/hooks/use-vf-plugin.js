@@ -14,11 +14,15 @@ const useVFPlugin = name => {
       fields.forEach(field => {
         const {name, type} = field;
         attrs[name] = {type: 'string'};
+        if (type === 'checkbox') {
+          attrs[name]['type'] = 'array';
+        }
         if (type === 'range') {
           attrs[name]['type'] = 'integer';
         }
-        if (type === 'checkbox') {
-          attrs[name]['type'] = 'array';
+        if (type === 'taxonomy') {
+          attrs[name]['type'] = 'integer';
+          attrs[name]['default'] = '';
         }
         if (type === 'toggle') {
           attrs[name]['type'] = 'integer';

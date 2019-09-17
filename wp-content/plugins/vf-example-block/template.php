@@ -9,7 +9,7 @@ $range = get_field('vf_example_range', $post->ID);
 $radio = get_field('vf_example_radio', $post->ID);
 $checkbox = get_field('vf_example_checkbox', $post->ID);
 $boolean = get_field('vf_example_boolean', $post->ID);
-
+$taxonomy = get_field('vf_example_taxonomy', $post->ID);
 $checkbox = is_array($checkbox) ? $checkbox : array();
 
 ?>
@@ -23,5 +23,6 @@ $checkbox = is_array($checkbox) ? $checkbox : array();
     <li><b><?php _e('Radio:', 'vfwp'); ?></b> <?php echo $radio; ?></li>
     <li><b><?php _e('Checkbox:', 'vfwp'); ?></b> <?php echo implode(' ', $checkbox); ?></li>
     <li><b><?php _e('Boolean:', 'vfwp'); ?></b> <?php echo $boolean ? '✔' : '✖'; ?></li>
+    <li><b><?php _e('Taxonomy:', 'vfwp'); ?></b> <?php echo $taxonomy; ?></li>
   </ul>
 </div>
