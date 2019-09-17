@@ -50,7 +50,9 @@ n.b. To develop locally you'll need to make sure your project's git submodules a
 
 1. `git clone --recursive https://github.com/visual-framework/vf-wp.git`
 1. Use any of the below variation of command to build the site
-    #####Run command 
+ 
+    ##### Run command 
+    
     - `bin/dev quick_group` - to build WordPress website with basic Visual Framework default configuration - Plugin/themes enabled
     - `bin/dev quick_group_bootstrap` - to build WordPress website setup with Visual Framework dummy microsite bootstrap version
     - `bin/dev launch` - to launch browser
