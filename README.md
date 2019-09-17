@@ -50,8 +50,16 @@ n.b. To develop locally you'll need to make sure your project's git submodules a
 
 1. `git clone --recursive https://github.com/visual-framework/vf-wp.git`
 1. Use any of the below variation of command to build the site
-   - `bin/dev quick_group` - to build WordPress website with basic Visual Framework default configuration - Plugin/themes enabled
-   - `bin/dev quick_group_bootstrap` - to build WordPress website setup with Visual Framework dummy microsite bootstrap version
-1. Login as admin by typing `bin/dev login`
+    #####Run command 
+    - `bin/dev quick_group` - to build WordPress website with basic Visual Framework default configuration - Plugin/themes enabled
+    - `bin/dev quick_group_bootstrap` - to build WordPress website setup with Visual Framework dummy microsite bootstrap version
+    - `bin/dev launch` - to launch browser
+    - `bin/dev login`  - to login in wordpress admin
+
+    ##### Diagnostics
+
+    - `bin/dev logs`    - tail logs from containers
+    - `bin/dev pma`     - launch phpMyAdmin to view database
+    - `bin/dev down`   - to spin down docker containers
+
 1. Default variables including CSS/JS version, site title, admin password are configured in `.env`
-1. Clean up/reset your local image with `bin/dev down && bin/dev prune`
