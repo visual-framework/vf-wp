@@ -174,7 +174,14 @@ gulp.task('vf-blocks', () => {
           return reject(err);
         }
         if (stats.hasErrors()) {
-          return reject(new Error(stats.compilation.errors.join('\n')));
+          if (Array.isArray(stats.stats)) {
+            stats.stats.forEach(({compilation}) => {
+              console.log(chalk.red(compilation.errors.join('\n')));
+            });
+          } else {
+            console.log(chalk.red(stats.compilation.errors.join('\n')));
+          }
+          return reject(new Error());
         }
         resolve();
       }

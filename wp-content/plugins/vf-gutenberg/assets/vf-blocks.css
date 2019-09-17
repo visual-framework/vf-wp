@@ -3,7 +3,7 @@
  * https://visual-framework.github.io/vf-core/
  */
 
-.vf-gutenberg-block {
+.vf-block {
   background-color: #f3f4f5;
   background-position: center center;
   background-repeat: no-repeat;
@@ -13,25 +13,25 @@
   position: relative;
 }
 
-.vf-gutenberg-block[data-editing='false'] {
+.vf-block[data-editing='false'] {
   padding: 0;
 }
 
-.vf-gutenberg-block[data-editing='true'] {
+.vf-block[data-editing='true'] {
   background-size: 0px 0px;
 }
 
-.vf-gutenberg-block[data-editing='false'][data-loading='false'] {
+.vf-block[data-editing='false'][data-loading='false'] {
   background: transparent;
   min-height: 0;
 }
 
-.vf-gutenberg-edit {
+.vf-block__edit {
   max-width: 750px;
   padding: 15px;
 }
 
-[class^='vf-gutenberg'] > .components-spinner {
+.vf-block > .components-spinner {
   display: block;
   left: 50%;
   margin: 0;
@@ -40,26 +40,24 @@
   transform: translateX(-50%) translateY(-50%);
 }
 
-[class^='vf-gutenberg'] .editor-url-input {
+.vf-block .editor-url-input {
   max-width: 300px;
 }
 
-[class^='vf-gutenberg'] .components-form-toggle__on,
-[class^='vf-gutenberg'] .components-form-toggle__off {
+.vf-block .components-form-toggle__on,
+.vf-block .components-form-toggle__off {
   display: none;
 }
 
-[class^='vf-gutenberg'] .components-toggle-control__label {
+.vf-block .components-toggle-control__label {
   line-height: 18px;
 }
 
-[class^='vf-gutenberg']
-  .components-radio-control__option
-  .components-base-control__field {
+.vf-block .components-radio-control__option .components-base-control__field {
   margin-bottom: 0;
 }
 
-.vf-gutenberg-iframe {
+.vf-block__iframe {
   border: 0;
   height: 30px;
   min-width: 100%;

@@ -319,21 +319,22 @@ class VF_Gutenberg {
       return $config;
     }
     foreach ($plugins as $post_name => $value) {
-      if ($value['post_type'] !== 'vf_block') {
+      $plugin = VF_Plugin::get_plugin($post_name);
+      if ( ! $plugin->is_block()) {
         continue;
       }
-
       // enabled basic support
       $block_name = VF_Gutenberg::name_post_to_block($post_name);
       $config[$block_name] = true;
-
       // map ACF fields to supported Gutenberg controls
       $fields = acf_get_fields("group_{$post_name}");
       if ( ! is_array($fields)) {
         continue;
       }
       $data = array(
-        'fields' => array()
+        'id'     => $plugin->post()->ID,
+        'title'  => $plugin->post()->post_title,
+        'fields' => array(),
       );
       foreach ($fields as $field) {
         $type = $field['type'];

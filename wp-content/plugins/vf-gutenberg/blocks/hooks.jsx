@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import hashsum from './utils/hashsum';
+import VFBlock from './vf-block';
+import VFBlockFields from './vf-block/block-fields';
 
 const {__} = wp.i18n;
 
@@ -13,26 +15,6 @@ export const useUniqueId = ids => hashsum(ids);
  */
 export const useRandomId = seed =>
   hashsum(seed + Math.floor(Math.random() * Date.now()));
-
-/**
- * Hook to return default VF Gutenberg block settings
- */
-export const useDefaults = () => ({
-  keywords: [__('VF'), __('Visual Framework')],
-  attributes: {
-    ver: {
-      type: 'integer'
-    }
-  },
-  supports: {
-    align: false,
-    className: false,
-    customClassName: false,
-    html: false
-  },
-  edit: () => null,
-  save: () => null
-});
 
 /**
  * Hook to use global VF Gutenberg settings from `wp_localize_script`
@@ -54,38 +36,10 @@ export const useVFGutenberg = () => {
 };
 
 /**
- * Hook to fetch the VF Gutenberg block rendered template
- */
-export const useVFPluginData = attrs => {
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(false);
-
-  const fetchData = async () => {
-    const {postId, nonce} = useVFGutenberg();
-    setLoading(true);
-    try {
-      const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
-        ...attrs,
-        postId,
-        nonce
-      });
-      setData(data);
-      setLoading(false);
-    } catch (err) {}
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [hashsum(attrs)]);
-
-  return [data, isLoading];
-};
-
-/**
  * Hook to get block attributes for VF Plugin
  * mapped from ACF field object
  */
-export const useVFPluginFields = name => {
+export const useVFPlugin = name => {
   const {plugins} = useVFGutenberg();
   let fields = [];
   let attrs = {};
@@ -109,6 +63,95 @@ export const useVFPluginFields = name => {
     }
   }
   return {fields, attrs};
+};
+
+/**
+ * Hook to return default VF Gutenberg block settings
+ */
+export const useDefaults = () => ({
+  keywords: [__('VF'), __('Visual Framework')],
+  attributes: {
+    ver: {
+      type: 'integer'
+    }
+  },
+  supports: {
+    align: false,
+    className: false,
+    customClassName: false,
+    html: false
+  },
+  edit: () => null,
+  save: () => null
+});
+
+/**
+ * Generate new Gutenberg block settings from defaults.
+ * Provide `VFBlockFields` using `useVFPlugin` configuration.
+ */
+export const useVFPluginSettings = (name, title) => {
+  const defaults = useDefaults();
+  const {fields, attrs} = useVFPlugin(name);
+  const hasFields = Array.isArray(fields) && fields.length > 0;
+
+  // Setup block attributes from the VF Plugin with defaults
+  const attributes = {
+    ...attrs,
+    ...defaults.attributes
+  };
+
+  // Only enable "edit" mode when fields exist
+  if (hasFields) {
+    attributes.mode = {
+      type: 'string',
+      default: 'view'
+    };
+  }
+
+  // Return the Gutenberg settings
+  return {
+    ...defaults,
+    name: name,
+    title: title,
+    category: 'vf/wp',
+    keywords: [...defaults.keywords, __('Content Hub')],
+    attributes: attributes,
+    edit: props => {
+      return (
+        <VFBlock {...props} hasFooter={hasFields}>
+          {hasFields && <VFBlockFields {...props} fields={fields} />}
+        </VFBlock>
+      );
+    }
+  };
+};
+
+/**
+ * Hook to fetch the VF Gutenberg block rendered template
+ */
+export const useVFRender = attrs => {
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+
+  const fetchData = async () => {
+    const {postId, nonce} = useVFGutenberg();
+    setLoading(true);
+    try {
+      const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
+        ...attrs,
+        postId,
+        nonce
+      });
+      setData(data);
+      setLoading(false);
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [hashsum(attrs)]);
+
+  return [data, isLoading];
 };
 
 /**
