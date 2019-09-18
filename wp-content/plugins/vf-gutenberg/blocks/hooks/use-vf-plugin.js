@@ -12,21 +12,7 @@ const useVFPlugin = name => {
     if (config.hasOwnProperty('fields')) {
       fields = config.fields;
       fields.forEach(field => {
-        const {name, type} = field;
-        attrs[name] = {type: 'string'};
-        if (type === 'checkbox') {
-          attrs[name]['type'] = 'array';
-        }
-        if (type === 'range') {
-          attrs[name]['type'] = 'integer';
-        }
-        if (type === 'taxonomy') {
-          attrs[name]['type'] = 'integer';
-          attrs[name]['default'] = '';
-        }
-        if (type === 'toggle') {
-          attrs[name]['type'] = 'integer';
-        }
+        attrs[field.name] = {type: field.type, default: field.default};
       });
     }
   }

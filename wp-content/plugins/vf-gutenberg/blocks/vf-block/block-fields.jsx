@@ -32,11 +32,11 @@ const VFBlockFields = props => {
 
   // Map fields and return array of controls
   return fields.map(field => {
-    const {name, type, label} = field;
+    const {name, control, label} = field;
 
     // The ACF "checkbox" field returns an array of one or more checked
     // values whereas "true_false" (here "toggle") uses a boolean value
-    if (type === 'checkbox') {
+    if (control === 'checkbox') {
       return (
         // Markup similar to `RadioControl` with multiple options
         <BaseControl label={label} className="components-radio-control">
@@ -62,7 +62,19 @@ const VFBlockFields = props => {
         </BaseControl>
       );
     }
-    if (type === 'radio') {
+    if (control === 'number') {
+      return (
+        <TextControl
+          type="number"
+          label={label}
+          value={parseInt(attrs[name])}
+          onChange={value => onChange(name, parseInt(value))}
+          min={parseInt(field['min'])}
+          max={parseInt(field['max'])}
+        />
+      );
+    }
+    if (control === 'radio') {
       return (
         <RadioControl
           label={label}
@@ -72,7 +84,7 @@ const VFBlockFields = props => {
         />
       );
     }
-    if (type === 'range') {
+    if (control === 'range') {
       return (
         <RangeControl
           label={label}
@@ -80,20 +92,21 @@ const VFBlockFields = props => {
           onChange={value => onChange(name, value)}
           min={parseInt(field['min'])}
           max={parseInt(field['max'])}
+          step={parseInt(field['step']) || 1}
         />
       );
     }
-    if (type === 'select') {
+    if (control === 'select') {
       return (
         <SelectControl
           label={label}
           value={attrs[name]}
           onChange={value => onChange(name, value)}
-          options={[...field.options]}
+          options={[{label: __('Select…'), value: ''}, ...field.options]}
         />
       );
     }
-    if (type === 'taxonomy') {
+    if (control === 'taxonomy') {
       return (
         <TaxonomyControl
           taxonomy={field.taxonomy}
@@ -103,16 +116,17 @@ const VFBlockFields = props => {
         />
       );
     }
-    if (type === 'text') {
+    if (control === 'text') {
       return (
         <TextControl
+          type={field.acf}
           label={label}
           value={attrs[name]}
           onChange={value => onChange(name, value)}
         />
       );
     }
-    if (type === 'textarea') {
+    if (control === 'textarea') {
       return (
         <TextareaControl
           label={label}
@@ -122,7 +136,7 @@ const VFBlockFields = props => {
       );
     }
     // Return integer value to match ACF field instead of boolean
-    if (type === 'toggle') {
+    if (control === 'true_false') {
       return (
         <ToggleControl
           label={label}

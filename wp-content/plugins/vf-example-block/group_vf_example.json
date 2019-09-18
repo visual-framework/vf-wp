@@ -3,28 +3,6 @@
     "title": "VF Example (block)",
     "fields": [
         {
-            "key": "field_vf_example_taxonomy",
-            "label": "Taxonomy",
-            "name": "vf_example_taxonomy",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "taxonomy": "embl_taxonomy",
-            "field_type": "select",
-            "allow_null": 0,
-            "add_term": 0,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
-            "multiple": 0
-        },
-        {
             "key": "field_vf_example_text",
             "label": "Text",
             "name": "vf_example_text",
@@ -99,7 +77,7 @@
             "default_value": "",
             "min": 0,
             "max": 42,
-            "step": "",
+            "step": 3,
             "prepend": "",
             "append": ""
         },
@@ -171,6 +149,83 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_vf_example_taxonomy",
+            "label": "Taxonomy",
+            "name": "vf_example_taxonomy",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl_taxonomy",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_vf_example_number",
+            "label": "Number",
+            "name": "vf_example_number",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 10,
+            "max": 70,
+            "step": ""
+        },
+        {
+            "key": "field_vf_example_email",
+            "label": "Email",
+            "name": "vf_example_email",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vf_example_url",
+            "label": "URL",
+            "name": "vf_example_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
         }
     ],
     "location": [
@@ -190,5 +245,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1568718658
+    "modified": 1568790870
 }

@@ -52,13 +52,16 @@ class VF_Gutenberg {
    */
   private $supported_fields = array(
     'checkbox',
+    'email',
+    'number',
     'range',
     'radio',
     'select',
     'taxonomy',
     'text',
     'textarea',
-    'true_false'
+    'true_false',
+    'url'
   );
 
   /**
@@ -399,13 +402,44 @@ class VF_Gutenberg {
    */
   private function map_acf_field_to_attr($name, $type, $field) {
     $attr = array(
-      'name'  => $name,
-      'type'  => $type,
-      'label' => html_entity_decode($field['label'])
+      'acf'     => $type,
+      'control' => $type,
+      'name'    => $name,
+      'type'    => 'string',
+      'label'   => html_entity_decode($field['label']),
+      'default' => '',
     );
-    if ($type === 'range') {
+    if (in_array($type, array(
+      'checkbox'
+    ))) {
+      $attr['type'] = 'array';
+      $attr['default'] = array();
+    }
+    if (in_array($type, array(
+      'number'
+    ))) {
+      $attr['type'] = 'number';
+    }
+    if (in_array($type, array(
+      'email',
+      'url'
+    ))) {
+      $attr['control'] = 'text';
+    }
+    if (in_array($type, array(
+      'range',
+      'taxonomy',
+      'true_false'
+    ))) {
+      $attr['type'] = 'integer';
+    }
+    if (in_array($type, array(
+      'number',
+      'range'
+    ))) {
       $attr['min'] = intval($field['min']);
       $attr['max'] = intval($field['max']);
+      $attr['step'] = intval($field['step']);
     }
     if (in_array($type, array(
       'checkbox',
@@ -419,9 +453,6 @@ class VF_Gutenberg {
           'value' => $k
         );
       }
-    }
-    if ($type === 'true_false') {
-      $attr['type'] = 'toggle';
     }
     if ($type === 'taxonomy') {
       $attr['taxonomy'] = $field['taxonomy'];
