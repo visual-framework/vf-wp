@@ -44,6 +44,7 @@ class VF_Gutenberg {
   private $protected_attrs = array(
     'ver',
     'mode',
+    'style',
     'defaults'
   );
 
