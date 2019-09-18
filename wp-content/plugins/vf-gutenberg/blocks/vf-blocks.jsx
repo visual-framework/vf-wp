@@ -7,12 +7,14 @@ import useVFSettings from './hooks/use-vf-settings';
 // Import Visual Framework core component settings
 import vfButton from './vf-core/vf-button';
 import vfBox from './vf-core/vf-box';
+import vfLede from './vf-core/vf-lede';
 
 const {registerBlockType} = wp.blocks;
 
 // Register core blocks
 registerBlockType(vfButton.name, vfButton);
 registerBlockType(vfBox.name, vfBox);
+registerBlockType(vfLede.name, vfLede);
 
 // Register VF Plugin blocks from "localized" global settings
 const {plugins} = useVFGutenberg();
