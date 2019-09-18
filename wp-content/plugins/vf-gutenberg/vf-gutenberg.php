@@ -44,7 +44,7 @@ class VF_Gutenberg {
   private $protected_attrs = array(
     'ver',
     'mode',
-    'style'
+    'defaults'
   );
 
   /**
@@ -302,6 +302,11 @@ class VF_Gutenberg {
     $this->fields = array();
     if (is_array($block['attrs'])) {
       foreach ($block['attrs'] as $key => $value) {
+        // Ignore customization and use ACF settings
+        if ($key === 'defaults' && intval($value) === 1) {
+          $this->fields = null;
+          break;
+        }
         if (in_array($key, $this->protected_attrs)) {
           continue;
         }

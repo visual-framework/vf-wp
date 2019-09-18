@@ -12,7 +12,7 @@ const {Button} = wp.components;
 // "Update" button optionally appended to `VFBlockEdit` footer
 const UpdateButton = ({onClick}) => (
   <Button isDefault isLarge onClick={onClick}>
-    {__('Update')}
+    {__('Preview')}
   </Button>
 );
 
