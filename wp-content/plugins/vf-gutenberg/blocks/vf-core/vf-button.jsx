@@ -81,6 +81,7 @@ export default {
             <URLInput
               value={attributes.url}
               onChange={url => setAttributes({url})}
+              autoFocus={false}
             />
           </BaseControl>
         </VFBlock>
