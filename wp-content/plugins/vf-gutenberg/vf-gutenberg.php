@@ -294,6 +294,7 @@ class VF_Gutenberg {
     if ( ! preg_match('/^vf\//', $block['blockName'])) {
       return $html;
     }
+
     // check for matching plugin
     $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
     $vf_plugin = VF_Plugin::get_plugin($post_name);
@@ -318,10 +319,12 @@ class VF_Gutenberg {
         $this->fields["{$post_name}_{$key}"] = $value;
       }
     }
+    $rendered = false;
     ob_start();
     // render with matching plugin
     if ($vf_plugin) {
       VF_Plugin::render($vf_plugin, $this->fields);
+      $rendered = true;
     // otherwise render with template
     } else {
       $path = str_replace('_', '-', $post_name);
@@ -329,9 +332,12 @@ class VF_Gutenberg {
       $path = plugin_dir_path(__FILE__) . $path;
       if (file_exists($path)) {
         include($path);
+        $rendered = true;
       }
     }
-    $html = ob_get_contents();
+    if ($rendered) {
+      $html = ob_get_contents();
+    }
     ob_end_clean();
     $this->fields = null;
     return $html;
