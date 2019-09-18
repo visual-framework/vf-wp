@@ -35,13 +35,14 @@ const VFBlock = props => {
   const isEditing = hasMode && mode === 'edit';
 
   // Hook in conditional against the rules?
-  const [data, isLoading] = isEditing
-    ? [null, false]
+  const data = isEditing
+    ? null
     : useVFRender({
         attrs: attrs,
         name: props.name
       });
 
+  const isLoading = data === null;
   const isPreview = !isLoading && data;
 
   const onToggle = () => {
