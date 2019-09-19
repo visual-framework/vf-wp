@@ -2,7 +2,6 @@
  * TaxonomyControl (component)
  * Wrapper for `SelectControl` using API taxonomy terms
  */
-
 import React from 'react';
 import useVFTerms from '../hooks/use-vf-terms';
 

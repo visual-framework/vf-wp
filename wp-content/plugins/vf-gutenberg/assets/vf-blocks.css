@@ -44,6 +44,10 @@
   max-width: 300px;
 }
 
+.vf-block .components-base-control {
+  margin-bottom: 16px;
+}
+
 .vf-block .components-form-toggle__on,
 .vf-block .components-form-toggle__off {
   display: none;
@@ -53,14 +57,18 @@
   line-height: 18px;
 }
 
+.vf-block .components-radio-control__option .vf-block .components-base-control {
+  margin-bottom: 0;
+}
+
 .vf-block .components-radio-control__option .components-base-control__field {
   margin-bottom: 0;
 }
 
 .vf-block .components-base-control__rich-text {
-  background: white;
-  padding: 8px;
-  position: relative;
+  border-bottom: 1px solid #e2e4e7;
+  box-shadow: 0 2px 0 0 #fff;
+  padding-bottom: 4px;
 }
 
 .vf-block__iframe {

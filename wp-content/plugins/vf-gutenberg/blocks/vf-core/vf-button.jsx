@@ -3,10 +3,11 @@
  */
 import React from 'react';
 import VFBlock from '../vf-block';
+import VFBlockFields from '../vf-block/block-fields';
 
 const {__} = wp.i18n;
-const {InspectorControls, URLInput} = wp.editor;
-const {BaseControl, PanelBody, SelectControl, TextControl} = wp.components;
+const {InspectorControls} = wp.editor;
+const {PanelBody, SelectControl} = wp.components;
 
 const vfButtonAttrs = {
   url: {
@@ -20,6 +21,19 @@ const vfButtonAttrs = {
     default: 'regular'
   }
 };
+
+const vfButtonFields = [
+  {
+    name: 'label',
+    control: 'text',
+    label: 'Label'
+  },
+  {
+    name: 'url',
+    control: 'url',
+    label: 'URL'
+  }
+];
 
 const vfButtonStyles = [
   {
@@ -71,19 +85,8 @@ export default {
     const {attributes, setAttributes} = props;
     return (
       <>
-        <VFBlock {...props} ver={2} hasFooter>
-          <TextControl
-            label={__('Label')}
-            value={attributes.label}
-            onChange={label => setAttributes({label})}
-          />
-          <BaseControl label={__('URL')}>
-            <URLInput
-              value={attributes.url}
-              onChange={url => setAttributes({url})}
-              autoFocus={false}
-            />
-          </BaseControl>
+        <VFBlock {...props} ver={1} hasFooter>
+          <VFBlockFields {...props} fields={vfButtonFields} />
         </VFBlock>
         <InspectorControls>
           <PanelBody title={__('Settings')} initialOpen={false}>

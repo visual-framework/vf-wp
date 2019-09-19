@@ -3,10 +3,9 @@
  */
 import React from 'react';
 import VFBlock from '../vf-block';
+import VFBlockFields from '../vf-block/block-fields';
 
 const {__} = wp.i18n;
-const {RichText} = wp.editor;
-const {BaseControl} = wp.components;
 
 const vfBoxAttrs = {
   heading: {
@@ -16,6 +15,25 @@ const vfBoxAttrs = {
     type: 'string'
   }
 };
+
+const vfBoxFields = [
+  {
+    name: 'heading',
+    control: 'rich',
+    default: '',
+    label: '',
+    tag: 'h3',
+    placeholder: 'Type box heading…'
+  },
+  {
+    name: 'text',
+    control: 'rich',
+    default: '',
+    label: '',
+    tag: 'p',
+    placeholder: 'Type box content…'
+  }
+];
 
 const vfBoxStyles = [
   {
@@ -58,25 +76,9 @@ export default {
   },
   save: () => null,
   edit: props => {
-    const {attributes, setAttributes} = props;
     return (
       <VFBlock {...props} ver={1} hasFooter>
-        <BaseControl>
-          <RichText
-            tagName="h3"
-            value={attributes.heading}
-            placeholder={__('Type heading…')}
-            onChange={heading => setAttributes({heading})}
-          />
-        </BaseControl>
-        <BaseControl>
-          <RichText
-            tagName="p"
-            value={attributes.text}
-            placeholder={__('Type paragraph…')}
-            onChange={text => setAttributes({text})}
-          />
-        </BaseControl>
+        <VFBlockFields {...props} fields={vfBoxFields} />
       </VFBlock>
     );
   }

@@ -106,12 +106,14 @@ const VFBlockFields = props => {
         );
       }
       if (control === 'rich') {
+        const tag = field.tag || 'p';
+        const placeholder = field.placeholder || __('Type content…');
         return (
           <RichControl
             label={label}
             value={attrs[name]}
-            tag={field.tag || 'p'}
-            placeholder={__('Type content…')}
+            tag={tag}
+            placeholder={placeholder}
             onChange={value => onChange(name, value)}
           />
         );
@@ -139,7 +141,7 @@ const VFBlockFields = props => {
       if (control === 'text') {
         return (
           <TextControl
-            type={field.acf}
+            type="text"
             label={label}
             value={attrs[name]}
             onChange={value => onChange(name, value)}
