@@ -85,9 +85,13 @@ class VF_Cache {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($curl, CURLOPT_TIMEOUT,        2);
     $html = curl_exec($curl);
-    $info = curl_getinfo($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     $err = curl_errno($curl);
     curl_close($curl);
+
+    if ( ! in_array(intval($http_code), array(200, 302))) {
+      $err = true;
+    }
 
     return $err ? '' : $html;
   }
