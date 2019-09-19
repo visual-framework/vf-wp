@@ -10,7 +10,7 @@ $content = $vf_plugin->api_html();
 <?php if ( ! $vf_plugin->is_minimal()) { ?>
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
-  <?php if ( ! vf_html_empty($heading)) { ?>
+  <?php if ( ! vf_cache_empty($heading)) { ?>
     <main class="vf-inlay__content--main">
       <?php echo $heading; ?>
     </main>
@@ -18,7 +18,7 @@ $content = $vf_plugin->api_html();
     <aside class="vf-inlay__content--additional">
 <?php } // is_minimal ?>
 
-    <?php if ( ! vf_html_empty($content)) { ?>
+    <?php if ( ! vf_cache_empty($content)) { ?>
     <div <?php $vf_plugin->api_attr(); ?>>
       <?php echo $content; ?>
     </div>

@@ -7,7 +7,9 @@ $heading = trim(get_field('vf_jobs_heading', $post->ID));
 
 $content = $vf_plugin->api_html();
 
-if ( ! empty($content)) {
+if (vf_cache_empty($content)) {
+  return;
+}
 ?>
 <div <?php $vf_plugin->api_attr(); ?>>
 
@@ -28,4 +30,3 @@ if ( ! empty($content)) {
   ?>
 
 </div>
-<?php } ?>
