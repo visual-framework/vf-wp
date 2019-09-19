@@ -63,7 +63,7 @@ class VF_Cache {
     // https://www.experts-exchange.com/questions/26187506/Function-file-get-contents-connection-time-out.html
     $curl = curl_init();
 
-    // $url = esc_url_raw($url);
+    $url = esc_url_raw($url);
 
     // Some requests turning "Bad request" error without headers
     $headers = array(
@@ -88,6 +88,7 @@ class VF_Cache {
     $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     $err = curl_errno($curl);
     curl_close($curl);
+
 
     if ( ! in_array(intval($http_code), array(200, 302))) {
       $err = true;
