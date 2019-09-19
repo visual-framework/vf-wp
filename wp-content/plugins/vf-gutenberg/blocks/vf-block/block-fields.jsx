@@ -6,6 +6,7 @@
  */
 import React from 'react';
 import TaxonomyControl from '../components/taxonomy-control';
+import URLControl from '../components/url-control';
 
 const {__} = wp.i18n;
 
@@ -149,6 +150,15 @@ const VFBlockFields = props => {
             label={label}
             checked={attrs[name]}
             onChange={value => onChange(name, value ? 1 : 0)}
+          />
+        );
+      }
+      if (control === 'url') {
+        return (
+          <URLControl
+            label={label}
+            value={attrs[name]}
+            onChange={value => onChange(name, value)}
           />
         );
       }

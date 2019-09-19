@@ -433,8 +433,7 @@ class VF_Gutenberg {
       $attr['type'] = 'number';
     }
     if (in_array($type, array(
-      'email',
-      'url'
+      'email'
     ))) {
       $attr['control'] = 'text';
     }
