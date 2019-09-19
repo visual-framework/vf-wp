@@ -63,8 +63,6 @@ class VF_Cache {
     // https://www.experts-exchange.com/questions/26187506/Function-file-get-contents-connection-time-out.html
     $curl = curl_init();
 
-    $url = esc_url_raw($url);
-
     // Some requests turning "Bad request" error without headers
     $headers = array(
       'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -89,7 +87,6 @@ class VF_Cache {
     $err = curl_errno($curl);
     curl_close($curl);
 
-
     if ( ! in_array(intval($http_code), array(200, 302))) {
       $err = true;
     }
@@ -106,6 +103,7 @@ class VF_Cache {
       trigger_error('Global variable $vf_cache is not instance of VF_Cache');
       return;
     }
+    $url = esc_url_raw($url);
     if (empty($url)) {
       return;
     }
@@ -280,7 +278,7 @@ xhr.send('<?php echo build_query($data); ?>');
       if ($query->have_posts()) {
         foreach ($query->posts as $post) {
           $store[$post->post_name] = array(
-            'url'     => $post->post_title,
+            'url'     => get_post_meta($post->ID, 'vf_cache_url', true),
             'age'     => VF_Cache::get_post_age($post),
             'max_age' => get_post_meta($post->ID, 'vf_cache_max_age', true),
             'post'    => $post
@@ -329,6 +327,11 @@ xhr.send('<?php echo build_query($data); ?>');
         $cache_post->ID,
         'vf_cache_max_age',
         $data['max_age']
+      );
+      update_post_meta(
+        $cache_post->ID,
+        'vf_cache_url',
+        $data['url']
       );
 
       $html = VF_Cache::fetch_remote($data['url']);
@@ -562,9 +565,10 @@ xhr.send('<?php echo build_query($data); ?>');
     unset($actions['inline hide-if-no-js']);
     unset($actions['view']);
     // Add view link to open content hub response
+    $url = get_post_meta($post->ID, 'vf_cache_url', true);
     $actions['view'] = sprintf(
       '<a href="%1$s" target="_blank">%2$s</a>',
-      esc_attr($post->post_title),
+      esc_attr($url),
       __('View', 'vfwp')
     );
     return $actions;
