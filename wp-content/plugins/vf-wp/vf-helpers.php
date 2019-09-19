@@ -16,10 +16,21 @@ function vf_debug() {
 }
 
 /**
- * Returns true if a string is empty (including empty HTML)
+ * Return true if a string is empty (including empty HTML)
  */
 function vf_html_empty($str) {
   return preg_match('#\S#', strip_tags($str)) !== 1;
+}
+
+/**
+ * Return true if no text content nor Content Hub loader
+ */
+function vf_cache_empty($str) {
+  if (vf_html_empty($str)) {
+    if (strpos($str, 'data-embl-js-content-hub-loader') === false) {
+      return true;
+    }
+  }
 }
 
 /**

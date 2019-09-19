@@ -85,9 +85,14 @@ class VF_Cache {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($curl, CURLOPT_TIMEOUT,        2);
     $html = curl_exec($curl);
-    $info = curl_getinfo($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     $err = curl_errno($curl);
     curl_close($curl);
+
+
+    if ( ! in_array(intval($http_code), array(200, 302))) {
+      $err = true;
+    }
 
     return $err ? '' : $html;
   }
@@ -292,29 +297,16 @@ xhr.send('<?php echo build_query($data); ?>');
         continue;
       }
 
+      // Retrieve the cache post
       if (isset($data['post'])) {
         $cache_post = $data['post'];
       } else {
         $cache_post = get_page_by_path($key, OBJECT, 'vf_cache');
       }
 
-      $html = VF_Cache::fetch_remote($data['url']);
-      if (vf_html_empty($html)) {
-        $html = '<link rel="import" href="';
-        $html .= $data['url'];
-        $html .= '" data-target="self" data-embl-js-content-hub-loader>';
-      }
-
-      // update local store
-      $this->store[$key]['value'] = $html;
-
-      // save to database
-      if ($cache_post instanceof WP_Post) {
-        wp_update_post(array(
-          'ID'           => $cache_post->ID,
-          'post_content' => $html
-        ));
-      } else {
+      // Add new cache post before fetching to avoid duplicates if
+      // parallel updates are somehow triggered
+      if ( ! $cache_post instanceof WP_Post) {
         $cache_post = get_post(
             wp_insert_post(array(
             'post_author'  => 1,
@@ -322,17 +314,38 @@ xhr.send('<?php echo build_query($data); ?>');
             'post_title'   => $data['url'],
             'post_type'    => 'vf_cache',
             'post_status'  => 'publish',
-            'post_content' => $html,
+            'post_content' => '',
           ), true)
         );
       }
-      if ($cache_post instanceof WP_Post) {
-        update_post_meta(
-          $cache_post->ID,
-          'vf_cache_max_age',
-          $data['max_age']
-        );
+
+      // Something has gone very wrong...
+      if ( ! $cache_post instanceof WP_Post) {
+        continue;
       }
+
+      // Ensure meta data is set
+      update_post_meta(
+        $cache_post->ID,
+        'vf_cache_max_age',
+        $data['max_age']
+      );
+
+      $html = VF_Cache::fetch_remote($data['url']);
+
+      // Fallback to Content Hub loader
+      if (vf_html_empty($html)) {
+        $html = '<link rel="import" href="';
+        $html .= $data['url'];
+        $html .= '" data-target="self" data-embl-js-content-hub-loader>';
+      }
+
+      // update local store and database
+      $this->store[$key]['value'] = $html;
+      wp_update_post(array(
+        'ID'           => $cache_post->ID,
+        'post_content' => $html
+      ));
     }
   }
 
