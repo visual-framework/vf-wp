@@ -14,6 +14,8 @@ $checkbox = is_array($checkbox) ? $checkbox : array();
 $number = get_field('vf_example_number', $post->ID);
 $email = get_field('vf_example_email', $post->ID);
 $url = get_field('vf_example_url', $post->ID);
+$rich = get_field('vf_example_rich', $post->ID);
+
 ?>
 <div class="vf-content">
   <h3>Example Block plugin</h3>
@@ -29,5 +31,6 @@ $url = get_field('vf_example_url', $post->ID);
     <li><b><?php _e('Number:', 'vfwp'); ?></b> <?php echo $number; ?></li>
     <li><b><?php _e('Email:', 'vfwp'); ?></b> <?php echo $email; ?></li>
     <li><b><?php _e('URL:', 'vfwp'); ?></b> <?php echo $url; ?></li>
+    <li><b><?php _e('Rich:', 'vfwp'); ?></b> <?php echo $rich; ?></li>
   </ul>
 </div>

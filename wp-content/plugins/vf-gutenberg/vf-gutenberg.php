@@ -62,7 +62,8 @@ class VF_Gutenberg {
     'text',
     'textarea',
     'true_false',
-    'url'
+    'url',
+    'wysiwyg'
   );
 
   /**
@@ -467,6 +468,9 @@ class VF_Gutenberg {
     }
     if ($type === 'taxonomy') {
       $attr['taxonomy'] = $field['taxonomy'];
+    }
+    if ($type === 'wysiwyg') {
+      $attr['control'] = 'rich';
     }
     return $attr;
   }

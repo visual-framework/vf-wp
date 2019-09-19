@@ -57,6 +57,12 @@
   margin-bottom: 0;
 }
 
+.vf-block .components-base-control__rich-text {
+  background: white;
+  padding: 8px;
+  position: relative;
+}
+
 .vf-block__iframe {
   border: 0;
   height: 30px;

@@ -7,6 +7,7 @@
 import React from 'react';
 import TaxonomyControl from '../components/taxonomy-control';
 import URLControl from '../components/url-control';
+import RichControl from '../components/rich-control';
 
 const {__} = wp.i18n;
 
@@ -101,6 +102,17 @@ const VFBlockFields = props => {
             min={parseInt(field['min'])}
             max={parseInt(field['max'])}
             step={parseInt(field['step']) || 1}
+          />
+        );
+      }
+      if (control === 'rich') {
+        return (
+          <RichControl
+            label={label}
+            value={attrs[name]}
+            tag={field.tag || 'p'}
+            placeholder={__('Type content…')}
+            onChange={value => onChange(name, value)}
           />
         );
       }
