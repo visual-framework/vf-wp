@@ -27,12 +27,12 @@ Below I'll start with a high-level overview of containers and blocks before gett
 
 ## Container plugins
 
-[See container plugin documentation.](docs/containers.md)
+[See container plugin documentation.](/docs/containers.md)
 
 ## Block plugins
 
-[See block plugin documentation.](docs/blocks.md)
+[See block plugin documentation.](/docs/blocks.md)
 
 ## VF-WP plugin
 
-[See vf-wp plugin documentation.](wp-content/plugins/vf-wp/README.md)
+[See vf-wp plugin documentation.](/wp-content/plugins/vf-wp/README.md)
