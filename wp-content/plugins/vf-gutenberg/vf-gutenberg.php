@@ -43,7 +43,9 @@ class VF_Gutenberg {
    */
   private $protected_attrs = array(
     'ver',
-    'mode'
+    'mode',
+    'style',
+    'defaults'
   );
 
   /**
@@ -51,12 +53,17 @@ class VF_Gutenberg {
    */
   private $supported_fields = array(
     'checkbox',
+    'email',
+    'number',
     'range',
     'radio',
     'select',
+    'taxonomy',
     'text',
     'textarea',
-    'true_false'
+    'true_false',
+    'url',
+    'wysiwyg'
   );
 
   /**
@@ -101,6 +108,10 @@ class VF_Gutenberg {
     add_filter(
       'wp_ajax_vf/gutenberg/fetch_block',
       array($this, 'ajax_fetch_block')
+    );
+    add_filter(
+      'wp_ajax_vf/gutenberg/fetch_terms',
+      array($this, 'ajax_fetch_terms')
     );
     add_filter(
       'render_block',
@@ -193,16 +204,22 @@ class VF_Gutenberg {
   }
 
   /**
+   * Called from AJAX handlers to validate the nonce
+   */
+  function ajax_validate_nonce() {
+    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
+    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
+    if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
+      wp_send_json_error();
+    }
+  }
+
+  /**
    * Handle AJAX request to render block preview
    */
   function ajax_fetch_block() {
-    // validate `post_id` and `nonce`
-    $post_id = isset($_POST['postId']) ? intval($_POST['postId']) : 0;
-    $nonce = isset($_POST['nonce']) ? $_POST['nonce'] : '';
-    if ( ! wp_verify_nonce($nonce, "vf_nonce_{$post_id}")) {
-      wp_send_json_error();
-      wp_die();
-    }
+
+    $this->ajax_validate_nonce();
     $html = '';
     $stylesheets = array();
     if (function_exists('vf_get_stylesheet')) {
@@ -223,6 +240,34 @@ class VF_Gutenberg {
       array(
         'hash' => hash('crc32', $html),
         'html' => $html
+      )
+    );
+  }
+
+  /**
+   * Handle AJAX request to fetch taxonomy terms
+   */
+  function ajax_fetch_terms() {
+    $this->ajax_validate_nonce();
+    $taxonomy = isset($_POST['taxonomy']) ? $_POST['taxonomy'] : '';
+    if ( ! taxonomy_exists($taxonomy)) {
+      wp_send_json_error();
+    }
+    $terms = get_terms(
+      array(
+        'taxonomy'   => $taxonomy,
+        'hide_empty' => false
+      )
+    );
+    $terms = array_map(function($term) {
+      return array(
+        'name'    => html_entity_decode($term->name),
+        'term_id' => $term->term_id,
+      );
+    }, $terms);
+    wp_send_json_success(
+      array(
+        'terms' => $terms
       )
     );
   }
@@ -251,6 +296,7 @@ class VF_Gutenberg {
     if ( ! preg_match('/^vf\//', $block['blockName'])) {
       return $html;
     }
+
     // check for matching plugin
     $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
     $vf_plugin = VF_Plugin::get_plugin($post_name);
@@ -259,16 +305,28 @@ class VF_Gutenberg {
     $this->fields = array();
     if (is_array($block['attrs'])) {
       foreach ($block['attrs'] as $key => $value) {
+        // Ignore customization and use ACF settings
+        if ($key === 'defaults' && intval($value) === 1) {
+          $this->fields = null;
+          break;
+        }
         if (in_array($key, $this->protected_attrs)) {
           continue;
+        }
+        if ($key === 'className') {
+          if (preg_match('/is-style-([^\s"]+)/', $value, $matches)) {
+            $this->fields["{$post_name}_style"] = $matches[1];
+          }
         }
         $this->fields["{$post_name}_{$key}"] = $value;
       }
     }
+    $rendered = false;
     ob_start();
     // render with matching plugin
     if ($vf_plugin) {
       VF_Plugin::render($vf_plugin, $this->fields);
+      $rendered = true;
     // otherwise render with template
     } else {
       $path = str_replace('_', '-', $post_name);
@@ -276,9 +334,12 @@ class VF_Gutenberg {
       $path = plugin_dir_path(__FILE__) . $path;
       if (file_exists($path)) {
         include($path);
+        $rendered = true;
       }
     }
-    $html = ob_get_contents();
+    if ($rendered) {
+      $html = ob_get_contents();
+    }
     ob_end_clean();
     $this->fields = null;
     return $html;
@@ -313,21 +374,22 @@ class VF_Gutenberg {
       return $config;
     }
     foreach ($plugins as $post_name => $value) {
-      if ($value['post_type'] !== 'vf_block') {
+      $plugin = VF_Plugin::get_plugin($post_name);
+      if ( ! $plugin->is_block()) {
         continue;
       }
-
       // enabled basic support
       $block_name = VF_Gutenberg::name_post_to_block($post_name);
       $config[$block_name] = true;
-
       // map ACF fields to supported Gutenberg controls
       $fields = acf_get_fields("group_{$post_name}");
       if ( ! is_array($fields)) {
         continue;
       }
       $data = array(
-        'fields' => array()
+        'id'     => $plugin->post()->ID,
+        'title'  => $plugin->post()->post_title,
+        'fields' => array(),
       );
       foreach ($fields as $field) {
         $type = $field['type'];
@@ -353,13 +415,43 @@ class VF_Gutenberg {
    */
   private function map_acf_field_to_attr($name, $type, $field) {
     $attr = array(
-      'name'  => $name,
-      'type'  => $type,
-      'label' => $field['label']
+      'acf'     => $type,
+      'control' => $type,
+      'name'    => $name,
+      'type'    => 'string',
+      'label'   => html_entity_decode($field['label']),
+      'default' => '',
     );
-    if ($type === 'range') {
+    if (in_array($type, array(
+      'checkbox'
+    ))) {
+      $attr['type'] = 'array';
+      $attr['default'] = array();
+    }
+    if (in_array($type, array(
+      'number'
+    ))) {
+      $attr['type'] = 'number';
+    }
+    if (in_array($type, array(
+      'email'
+    ))) {
+      $attr['control'] = 'text';
+    }
+    if (in_array($type, array(
+      'range',
+      'taxonomy',
+      'true_false'
+    ))) {
+      $attr['type'] = 'integer';
+    }
+    if (in_array($type, array(
+      'number',
+      'range'
+    ))) {
       $attr['min'] = intval($field['min']);
       $attr['max'] = intval($field['max']);
+      $attr['step'] = intval($field['step']);
     }
     if (in_array($type, array(
       'checkbox',
@@ -369,13 +461,16 @@ class VF_Gutenberg {
       $attr['options'] = array();
       foreach ($field['choices'] as $k => $v) {
         $attr['options'][] = array(
-          'label' => $v,
+          'label' => html_entity_decode($v),
           'value' => $k
         );
       }
     }
-    if ($type === 'true_false') {
-      $attr['type'] = 'toggle';
+    if ($type === 'taxonomy') {
+      $attr['taxonomy'] = $field['taxonomy'];
+    }
+    if ($type === 'wysiwyg') {
+      $attr['control'] = 'rich';
     }
     return $attr;
   }

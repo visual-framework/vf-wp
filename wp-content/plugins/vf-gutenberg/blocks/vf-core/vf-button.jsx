@@ -1,18 +1,67 @@
 /**
  * VF Framework Button
  */
+import React from 'react';
+import {InspectorControls} from '@wordpress/block-editor';
+import {PanelBody, SelectControl} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
+import VFBlock from '../vf-block';
+import VFBlockFields from '../vf-block/block-fields';
 
-import {PluginEdit} from '../vf-plugin';
+const vfButtonAttrs = {
+  url: {
+    type: 'string'
+  },
+  label: {
+    type: 'string'
+  },
+  size: {
+    type: 'string',
+    default: 'regular'
+  }
+};
 
-const {__} = wp.i18n;
-const {URLInput} = wp.editor;
-const {BaseControl, Button, TextControl} = wp.components;
+const vfButtonFields = [
+  {
+    name: 'label',
+    control: 'text',
+    label: 'Label'
+  },
+  {
+    name: 'url',
+    control: 'url',
+    label: 'URL'
+  }
+];
+
+const vfButtonStyles = [
+  {
+    name: 'primary',
+    label: __('Primary'),
+    isDefault: true
+  },
+  {
+    name: 'secondary',
+    label: __('Secondary')
+  },
+  {
+    name: 'tertiary',
+    label: __('Tertiary')
+  }
+];
+
+const vfButtonSizes = [
+  {label: __('Small'), value: 'small'},
+  {label: __('Regular'), value: 'regular'},
+  {label: __('Large'), value: 'large'}
+];
 
 export default {
   name: 'vf/button',
-  title: __('Button', 'vfwp'),
   category: 'vf/core',
-  keywords: [__('VF', 'vfwp'), __('Visual Framework', 'vfwp')],
+  title: __('Button'),
+  description: __('Visual Framework'),
+  keywords: [__('VF'), __('Visual Framework')],
   attributes: {
     ver: {
       type: 'integer'
@@ -21,64 +70,34 @@ export default {
       type: 'string',
       default: 'edit'
     },
-    style: {
-      type: 'string'
-    },
-    url: {
-      type: 'string'
-    },
-    label: {
-      type: 'string'
-    }
+    ...vfButtonAttrs
   },
-  styles: [
-    {
-      name: 'primary',
-      label: __('Primary', 'vfwp'),
-      isDefault: true
-    },
-    {
-      name: 'secondary',
-      label: __('Secondary', 'vfwp')
-    },
-    {
-      name: 'tertiary',
-      label: __('Tertiary', 'vfwp')
-    }
-  ],
+  styles: [...vfButtonStyles],
   supports: {
     align: false,
     className: false,
-    customClassName: false,
+    customClassName: true,
     html: false
   },
   save: () => null,
   edit: props => {
-    const {attributes: attrs, setAttributes} = props;
-    const onUpdate = () => {
-      props.setAttributes({
-        mode: attrs.mode === 'edit' ? 'view' : 'edit'
-      });
-    };
+    const {attributes, setAttributes} = props;
     return (
-      <PluginEdit {...props} ver={2}>
-        <div className="vf-gutenberg-edit">
-          <TextControl
-            label={__('Label', 'vfwp')}
-            value={attrs.label}
-            onChange={label => setAttributes({label})}
-          />
-          <BaseControl label={__('URL', 'vfwp')}>
-            <URLInput
-              value={attrs.url}
-              onChange={url => setAttributes({url})}
+      <>
+        <VFBlock {...props} ver={1} hasFooter>
+          <VFBlockFields {...props} fields={vfButtonFields} />
+        </VFBlock>
+        <InspectorControls>
+          <PanelBody title={__('Settings')} initialOpen={false}>
+            <SelectControl
+              label={__('Size')}
+              value={attributes['size']}
+              onChange={size => setAttributes({size})}
+              options={vfButtonSizes}
             />
-          </BaseControl>
-          <Button isDefault isLarge onClick={onUpdate}>
-            {__('Update', 'vfwp')}
-          </Button>
-        </div>
-      </PluginEdit>
+          </PanelBody>
+        </InspectorControls>
+      </>
     );
   }
 };

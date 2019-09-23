@@ -45,6 +45,13 @@ config.vf_blocks_webpack = mode => ({
   },
   externals: {
     wp: 'wp',
+    '@wordpress': 'wp',
+    '@wordpress/blocks': 'wp.blocks',
+    '@wordpress/block-editor': 'wp.blockEditor',
+    '@wordpress/components': 'wp.components',
+    '@wordpress/compose': 'wp.compose',
+    '@wordpress/element': 'wp.element',
+    '@wordpress/i18n': 'wp.i18n',
     react: 'React',
     'react-dom': 'ReactDOM'
   },
@@ -174,7 +181,14 @@ gulp.task('vf-blocks', () => {
           return reject(err);
         }
         if (stats.hasErrors()) {
-          return reject(new Error(stats.compilation.errors.join('\n')));
+          if (Array.isArray(stats.stats)) {
+            stats.stats.forEach(({compilation}) => {
+              console.log(chalk.red(compilation.errors.join('\n')));
+            });
+          } else {
+            console.log(chalk.red(stats.compilation.errors.join('\n')));
+          }
+          return reject(new Error());
         }
         resolve();
       }
