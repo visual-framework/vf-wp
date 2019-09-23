@@ -8,26 +8,42 @@ const webpack = require('webpack');
 const chalk = require('chalk');
 
 /**
- * Setup configuration paths
+ * File paths
  */
-const config = {
-  content_path: path.resolve(__dirname, 'wp-content')
-};
+const contentPath = path.resolve(__dirname, 'wp-content');
+const themePath = path.join(contentPath, 'themes/vf-wp');
+const pluginPath = path.join(contentPath, 'plugins');
+const assetsPath = path.join(themePath, 'assets');
 
-config.theme_path = path.resolve(config.content_path, 'themes/vf-wp');
-config.plugin_path = path.resolve(config.content_path, 'plugins');
-config.assets_path = path.resolve(config.theme_path, 'assets');
+/**
+ * Glob paths
+ */
+const contentGlob = path.join(contentPath, '**/*');
+const sassGlob = [path.join(assetsPath, 'scss/**/*.scss')];
+const jsGlob = (jsGlob => [jsGlob, '!' + jsGlob.replace(/\.js$/, '.min.js')])(
+  path.join(assetsPath, 'js/*.js')
+);
+const blocksGlob = [path.join(pluginPath, 'vf-gutenberg/blocks/**/*.{js,jsx}')];
 
-config.content_glob = path.join(config.content_path, '**/*');
-config.style_path = path.join(config.theme_path, 'style.css');
-config.sass_glob = [path.join(config.assets_path, 'scss/**/*.scss')];
-
-const js_glob = path.join(config.assets_path, 'js/*.js');
-config.js_glob = [js_glob, '!' + js_glob.replace(/\.js$/, '.min.js')];
-
-config.vf_blocks_glob = [
-  path.resolve(config.plugin_path, 'vf-gutenberg/blocks/**/*.{js,jsx}')
-];
+/**
+ * VF-WP theme Sass
+ */
+gulp.task('css', callback => {
+  pump(
+    [
+      gulp.src(sassGlob),
+      sass({
+        outputStyle: 'expanded'
+      }),
+      autoprefixer({
+        grid: true,
+        remove: false
+      }),
+      gulp.dest(path.join(assetsPath, 'css'))
+    ],
+    callback
+  );
+});
 
 /**
  * Return a Webpack callback function for the Node API to handle errors
@@ -48,40 +64,8 @@ const handleWebpack = (resolve, reject) => (err, stats) => {
 };
 
 /**
- * Compile and prefix Sass
- * TODO: remove VF includes - not necessary?
+ * VF-WP theme JavaScript
  */
-// const vf_path = path.join(__dirname, '../vf-core/');
-gulp.task('css', callback => {
-  pump(
-    [
-      gulp.src(config.sass_glob),
-      sass({
-        outputStyle: 'expanded'
-        // includePaths: [
-        //   vf_path,
-        //   path.join(vf_path, 'assets/scss'),
-        //   path.join(vf_path, 'components/utilities'),
-        //   path.join(vf_path, 'components/elements'),
-        //   path.join(vf_path, 'components/blocks'),
-        //   path.join(vf_path, 'components/containers'),
-        //   path.join(vf_path, 'components/grids')
-        // ]
-      }),
-      autoprefixer({
-        grid: true,
-        remove: false
-      }),
-      gulp.dest(path.join(config.assets_path, 'css'))
-    ],
-    callback
-  );
-});
-
-/**
- * Compress and minify JavaScript from theme directory
- */
-
 const vfwpWebpack = require('./vf-wp.webpack.js');
 
 gulp.task('js', callback => {
@@ -94,12 +78,11 @@ gulp.task('js', callback => {
 });
 
 /**
- * Build VF Gutenberg blocks plugin
+ * VF Gutenberg plugin JavaScript
  */
-
 const vfGutenbergWebpack = require('./vf-gutenberg.webpack.js');
 
-gulp.task('vf-blocks', () => {
+gulp.task('blocks', () => {
   return new Promise((resolve, reject) => {
     webpack(
       [
@@ -114,11 +97,12 @@ gulp.task('vf-blocks', () => {
 /**
  * Watch tasks
  */
-gulp.task('watch-css', () => gulp.watch(config.sass_glob, gulp.series('css')));
-gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
-gulp.task('watch-blocks', () =>
-  gulp.watch(config.vf_blocks_glob, gulp.series('vf-blocks'))
-);
+gulp.task('watch-css', () => gulp.watch(sassGlob, gulp.series('css')));
+
+gulp.task('watch-js', () => gulp.watch(jsGlob, gulp.series('js')));
+
+gulp.task('watch-blocks', () => gulp.watch(blocksGlob, gulp.series('blocks')));
+
 gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-blocks'));
 
 /**
@@ -126,5 +110,5 @@ gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-blocks'));
  */
 gulp.task(
   'default',
-  gulp.series(gulp.parallel('css', 'js', 'vf-blocks'), 'watch')
+  gulp.series(gulp.parallel('css', 'js', 'blocks'), 'watch')
 );
