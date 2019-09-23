@@ -1,6 +1,6 @@
 # VF-WP plugin
 
-[See Architecture documentation.](docs/architecture.md)
+[See Architecture documentation.](/docs/architecture.md)
 
 This plugin provides core functionality for the VF-WP theme and plugins documented above.
 

@@ -2,11 +2,11 @@
 
 Containers represent a horizontal slice of the page template.
 
-* [Beta](wp-content/plugins/vf-beta-container/README.md)
-* [Breadcrumbs](wp-content/plugins/vf-breadcrumbs-container/README.md)
-* [EMBL News](wp-content/plugins/vf-embl-news-container/README.md)
-* [Global Footer](wp-content/plugins/vf-global-footer-container/README.md)
-* [Global Header](wp-content/plugins/vf-global-header-container/README.md)
+* [Beta](/wp-content/plugins/vf-beta-container/README.md)
+* [Breadcrumbs](/wp-content/plugins/vf-breadcrumbs-container/README.md)
+* [EMBL News](/wp-content/plugins/vf-embl-news-container/README.md)
+* [Global Footer](/wp-content/plugins/vf-global-footer-container/README.md)
+* [Global Header](/wp-content/plugins/vf-global-header-container/README.md)
 
 ## Architecture
 
