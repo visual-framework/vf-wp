@@ -157,12 +157,7 @@ class VF_Gutenberg {
           'slug'  => 'vf/core',
           'title' => __('Visual Framework (core)', 'vfwp'),
           'icon'  => null
-        ),
-        array(
-          'slug'  => 'vf/wp',
-          'title' => __('Visual Framework (WordPress)', 'vfwp'),
-          'icon'  => null
-        ),
+        )
       ),
       $categories
     );

@@ -11,7 +11,11 @@ class VF_Blocks extends VF_Type {
 
   public function initialize() {
     parent::initialize();
-
+    add_filter(
+      'block_categories',
+      array($this, 'block_categories'),
+      10, 2
+    );
     add_filter(
       'block_categories',
       array($this, '_deprecated_block_categories'),
@@ -21,6 +25,22 @@ class VF_Blocks extends VF_Type {
 
   public function activate() {
     parent::activate();
+  }
+
+  /**
+   * Action: `block_categories`
+   */
+  function block_categories($categories, $post) {
+    return array_merge(
+      array(
+        array(
+          'slug'  => 'vf/wp',
+          'title' => __('Visual Framework (WordPress)', 'vfwp'),
+          'icon'  => null
+        ),
+      ),
+      $categories
+    );
   }
 
   /**
