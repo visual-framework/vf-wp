@@ -28,7 +28,7 @@ const blocksGlob = [path.join(pluginPath, 'vf-gutenberg/blocks/**/*.{js,jsx}')];
 /**
  * VF-WP theme Sass
  */
-gulp.task('css', callback => {
+const cssTask = callback => {
   pump(
     [
       gulp.src(sassGlob),
@@ -43,7 +43,9 @@ gulp.task('css', callback => {
     ],
     callback
   );
-});
+};
+cssTask.description = 'Compile vf-wp theme Sass';
+gulp.task('css', cssTask);
 
 /**
  * Return a Webpack callback function for the Node API to handle errors
@@ -67,22 +69,22 @@ const handleWebpack = (resolve, reject) => (err, stats) => {
  * VF-WP theme JavaScript
  */
 const vfwpWebpack = require('./vf-wp.webpack.js');
-
-gulp.task('js', callback => {
+const jsTask = callback => {
   return new Promise((resolve, reject) => {
     webpack(
       vfwpWebpack({}, {mode: 'production'}),
       handleWebpack(resolve, reject)
     );
   });
-});
+};
+jsTask.description = 'Compile vf-wp theme JavaScript';
+gulp.task('js', jsTask);
 
 /**
  * VF Gutenberg plugin JavaScript
  */
 const vfGutenbergWebpack = require('./vf-gutenberg.webpack.js');
-
-gulp.task('blocks', () => {
+const blockTask = () => {
   return new Promise((resolve, reject) => {
     webpack(
       [
@@ -92,7 +94,9 @@ gulp.task('blocks', () => {
       handleWebpack(resolve, reject)
     );
   });
-});
+};
+blockTask.description = 'Compile vf-gutenberg plugin React';
+gulp.task('blocks', blockTask);
 
 /**
  * Watch tasks
