@@ -2,12 +2,11 @@
  * VF Framework Button
  */
 import React from 'react';
+import {InspectorControls} from '@wordpress/block-editor';
+import {PanelBody, SelectControl} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 import VFBlock from '../vf-block';
 import VFBlockFields from '../vf-block/block-fields';
-
-const {__} = wp.i18n;
-const {InspectorControls} = wp.editor;
-const {PanelBody, SelectControl} = wp.components;
 
 const vfButtonAttrs = {
   url: {

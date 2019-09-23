@@ -3,10 +3,9 @@
  * Toolbar to toggle between "edit" and "view" modes.
  */
 import React from 'react';
-
-const {__} = wp.i18n;
-const {BlockControls} = wp.editor;
-const {Button, IconButton, Toolbar} = wp.components;
+import {BlockControls} from '@wordpress/block-editor';
+import {Button, IconButton, Toolbar} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 
 // The togglable "Edit" button added to `BlockControls`
 const EditButton = ({onClick}) => (

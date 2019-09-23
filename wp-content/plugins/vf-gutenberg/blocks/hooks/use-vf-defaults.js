@@ -1,7 +1,7 @@
 /**
  * Return default Gutenberg block settings for a VF block
  */
-const {__} = wp.i18n;
+import {__} from '@wordpress/i18n';
 
 const useVFDefaults = () => ({
   description: __('Visual Framework (WordPress)'),

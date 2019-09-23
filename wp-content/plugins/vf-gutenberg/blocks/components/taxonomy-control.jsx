@@ -3,10 +3,9 @@
  * Wrapper for `SelectControl` using API taxonomy terms
  */
 import React from 'react';
+import {SelectControl} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 import useVFTerms from '../hooks/use-vf-terms';
-
-const {__} = wp.i18n;
-const {SelectControl} = wp.components;
 
 const TaxonomyControl = props => {
   let options = [{label: __('Loading…'), value: props.value}];

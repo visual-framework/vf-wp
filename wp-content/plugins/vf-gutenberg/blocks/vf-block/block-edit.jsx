@@ -5,9 +5,8 @@
  * to automatically generate controls.
  */
 import React from 'react';
-
-const {__} = wp.i18n;
-const {Button} = wp.components;
+import {Button} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 
 // "Update" button optionally appended to `VFBlockEdit` footer
 const UpdateButton = ({onClick}) => (

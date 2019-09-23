@@ -3,14 +3,13 @@
  * Provide `VFBlockFields` using `useVFPlugin` configuration.
  */
 import React from 'react';
+import {InspectorControls} from '@wordpress/block-editor';
+import {ToggleControl, PanelBody} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 import useVFDefaults from './use-vf-defaults';
 import useVFPlugin from './use-vf-plugin';
 import VFBlockFields from '../vf-block/block-fields';
 import VFBlock from '../vf-block';
-
-const {__} = wp.i18n;
-const {InspectorControls} = wp.editor;
-const {ToggleControl, PanelBody} = wp.components;
 
 const useVFSettings = (name, title) => {
   const defaults = useVFDefaults();

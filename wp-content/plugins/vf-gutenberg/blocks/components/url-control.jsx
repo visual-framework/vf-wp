@@ -3,10 +3,9 @@
  * Wrapper for `URLInput`
  */
 import React from 'react';
-
-const {__} = wp.i18n;
-const {URLInput} = wp.editor;
-const {BaseControl} = wp.components;
+import {URLInput} from '@wordpress/block-editor';
+import {BaseControl} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 
 const URLControl = props => {
   return (

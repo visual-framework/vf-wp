@@ -2,10 +2,9 @@
  * VF Framework Box
  */
 import React from 'react';
+import {__} from '@wordpress/i18n';
 import VFBlock from '../vf-block';
 import VFBlockFields from '../vf-block/block-fields';
-
-const {__} = wp.i18n;
 
 const vfBoxAttrs = {
   heading: {

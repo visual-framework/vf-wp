@@ -45,6 +45,13 @@ config.vf_blocks_webpack = mode => ({
   },
   externals: {
     wp: 'wp',
+    '@wordpress': 'wp',
+    '@wordpress/blocks': 'wp.blocks',
+    '@wordpress/block-editor': 'wp.blockEditor',
+    '@wordpress/components': 'wp.components',
+    '@wordpress/compose': 'wp.compose',
+    '@wordpress/element': 'wp.element',
+    '@wordpress/i18n': 'wp.i18n',
     react: 'React',
     'react-dom': 'ReactDOM'
   },

@@ -5,13 +5,7 @@
  * is mapped from ACF configuration.
  */
 import React from 'react';
-import TaxonomyControl from '../components/taxonomy-control';
-import URLControl from '../components/url-control';
-import RichControl from '../components/rich-control';
-
-const {__} = wp.i18n;
-
-const {
+import {
   BaseControl,
   CheckboxControl,
   RadioControl,
@@ -20,7 +14,11 @@ const {
   TextControl,
   TextareaControl,
   ToggleControl
-} = wp.components;
+} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
+import TaxonomyControl from '../components/taxonomy-control';
+import URLControl from '../components/url-control';
+import RichControl from '../components/rich-control';
 
 const VFBlockFields = props => {
   const {attributes: attrs, setAttributes, fields} = props;

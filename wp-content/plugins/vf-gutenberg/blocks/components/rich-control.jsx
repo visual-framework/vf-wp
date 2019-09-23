@@ -3,10 +3,9 @@
  * Wrapper for `InnerBlocks`
  */
 import React, {useState} from 'react';
-
-const {__} = wp.i18n;
-const {RichText} = wp.editor;
-const {BaseControl} = wp.components;
+import {RichText} from '@wordpress/block-editor';
+import {BaseControl} from '@wordpress/components';
+import {__} from '@wordpress/i18n';
 
 const RichControl = props => {
   return (
