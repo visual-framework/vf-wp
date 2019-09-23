@@ -38,10 +38,7 @@
     "core-js": "^3.2.1",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.2",
     "pump": "^3.0.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8"
