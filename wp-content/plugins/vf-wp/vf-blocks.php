@@ -16,11 +16,6 @@ class VF_Blocks extends VF_Type {
       array($this, 'block_categories'),
       10, 2
     );
-    add_filter(
-      'block_categories',
-      array($this, '_deprecated_block_categories'),
-      10, 2
-    );
   }
 
   public function activate() {
@@ -40,23 +35,6 @@ class VF_Blocks extends VF_Type {
         ),
       ),
       $categories
-    );
-  }
-
-  /**
-   * WARNING: deprecated method
-   * Add Gutenberg blocks category for Content Hub blocks
-   */
-  public function _deprecated_block_categories($categories, $post) {
-    return array_merge(
-      $categories,
-      array(
-        array(
-          'slug'  => 'vf_blocks_content_hub',
-          'title' => __('EMBL Content Hub (deprecated)', 'vfwp'),
-          'icon'  => null
-        )
-      )
     );
   }
 
