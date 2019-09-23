@@ -46,7 +46,8 @@ class VF_Members extends VF_Plugin {
     $vars = array(
       'limit' => $limit ? $limit : 30,
       'sort-field-value[changed]' => $order ? $order : 'DESC',
-      'filter-field-value-not[field_person_positions.entity.field_position_membership]' => 'leader'
+      'filter-field-value-not[field_person_positions.entity.field_position_membership]' => 'leader',
+      'filter-fields-empty' => 'field_person_visible_internally',
     );
 
     if (function_exists('embl_taxonomy_get_term')) {
