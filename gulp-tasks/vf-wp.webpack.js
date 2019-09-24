@@ -9,7 +9,6 @@ module.exports = (env, argv) => {
     mode: isProduction ? 'production' : 'development',
     entry: {
       admin: path.resolve(assetsPath, 'js/admin.js'),
-      head: path.resolve(assetsPath, 'js/head.js'),
       main: path.resolve(assetsPath, 'js/main.js')
     },
     output: {
@@ -32,8 +31,7 @@ module.exports = (env, argv) => {
                     corejs: 3,
                     targets: {
                       browsers: ['> 1%']
-                    },
-                    exclude: ['es.string.replace']
+                    }
                   }
                 ]
               ]

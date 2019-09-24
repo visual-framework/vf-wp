@@ -79,7 +79,7 @@ add_action('wp_head', 'vf__wp_head__inline', 5);
 
 function vf__wp_head__inline() {
   // Output inline JavaScript
-  $path = get_template_directory() . '/assets/js/head.min.js';
+  $path = get_template_directory() . '/assets/js/head.js';
   if (file_exists($path)) {
 ?>
 <script>
