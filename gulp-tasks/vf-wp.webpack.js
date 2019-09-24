@@ -1,7 +1,7 @@
 const path = require('path');
 
-const contentPath = path.resolve(__dirname, 'wp-content');
-const assetsPath = path.resolve(contentPath, 'themes/vf-wp/assets');
+const contentPath = path.resolve(__dirname, '../wp-content');
+const assetsPath = path.join(contentPath, 'themes/vf-wp/assets');
 
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';

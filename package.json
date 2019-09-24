@@ -41,6 +41,7 @@
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.0",
     "gulp-sass": "^4.0.2",
+    "nunjucks": "^3.2.0",
     "pump": "^3.0.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9"

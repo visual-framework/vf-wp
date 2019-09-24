@@ -1,6 +1,6 @@
 const path = require('path');
 
-const contentPath = path.resolve(__dirname, 'wp-content');
+const contentPath = path.resolve(__dirname, '../wp-content');
 const pluginPath = path.resolve(contentPath, 'plugins');
 
 module.exports = (env, argv) => {

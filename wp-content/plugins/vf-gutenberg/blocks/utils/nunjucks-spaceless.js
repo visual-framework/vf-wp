@@ -31,4 +31,5 @@ function SpacelessExtension() {
   };
 }
 
-export default SpacelessExtension;
+// export default SpacelessExtension;
+module.exports = SpacelessExtension;
