@@ -13,7 +13,7 @@ const useVFTemplateRender = (name, attrs) => {
   const hash = useHashsum(attrs);
   const nunjucks = useNunjucks();
 
-  const renderTemplate = async () => {
+  const renderTemplate = () => {
     // return matching hash from internal store
     if (store.hasOwnProperty(hash)) {
       setData(store[hash]);

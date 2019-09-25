@@ -20,7 +20,6 @@ const VFBlock = props => {
     instanceId,
     isSelected,
     hasFooter,
-    hasTemplate,
     attributes: {ver, mode, ...attrs}
   } = props;
 
@@ -37,11 +36,15 @@ const VFBlock = props => {
 
   // Hook in conditional against the rules?
   const data = (() => {
+    if ('render' in attrs) {
+      const render = useVFTemplateRender(props.name, attrs);
+      if (render) {
+        props.setAttributes({render: render.html});
+      }
+      return {html: attrs.render};
+    }
     if (isEditing) {
       return null;
-    }
-    if (hasTemplate) {
-      return useVFTemplateRender(props.name, attrs);
     }
     return useVFPluginRender(props.name, attrs);
   })();

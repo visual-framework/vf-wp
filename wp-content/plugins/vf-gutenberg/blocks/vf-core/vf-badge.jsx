@@ -50,7 +50,7 @@ export default {
   save: () => null,
   edit: props => {
     return (
-      <VFBlock {...props} ver={1} hasFooter hasTemplate>
+      <VFBlock {...props} ver={1} hasFooter>
         <VFBlockFields {...props} fields={vfBadgeFields} />
       </VFBlock>
     );

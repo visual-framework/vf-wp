@@ -21,7 +21,7 @@ const useVFPluginRender = (name, attrs) => {
     const {postId, nonce} = useVFGutenberg();
     try {
       const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
-        ...attrs,
+        attrs,
         name,
         postId,
         nonce
