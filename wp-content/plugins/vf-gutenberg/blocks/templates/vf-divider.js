@@ -1,7 +1,7 @@
 /**
  * Precompiled Nunjucks template: @visual-framework/vf-divider
  */
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-divider"] = (function() {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf/divider"] = (function() {
 function root(env, context, frame, runtime, cb) {
 var lineno = 0;
 var colno = 0;

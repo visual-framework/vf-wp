@@ -1,7 +1,7 @@
 /**
  * Precompiled Nunjucks template: @visual-framework/vf-blockquote
  */
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-blockquote"] = (function() {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf/blockquote"] = (function() {
 function root(env, context, frame, runtime, cb) {
 var lineno = 0;
 var colno = 0;

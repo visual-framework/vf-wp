@@ -8,7 +8,8 @@ import {Spinner} from '@wordpress/components';
 import {withInstanceId} from '@wordpress/compose';
 import {__} from '@wordpress/i18n';
 import {useUniqueId} from '../hooks';
-import useVFRender from '../hooks/use-vf-render';
+import useVFPluginRender from '../hooks/use-vf-plugin-render';
+import useVFTemplateRender from '../hooks/use-vf-template-render';
 import VFBlockControls from './block-controls';
 import VFBlockView from './block-view';
 import VFBlockEdit from './block-edit';
@@ -19,6 +20,7 @@ const VFBlock = props => {
     instanceId,
     isSelected,
     hasFooter,
+    hasTemplate,
     attributes: {ver, mode, ...attrs}
   } = props;
 
@@ -34,12 +36,15 @@ const VFBlock = props => {
   const isEditing = hasMode && mode === 'edit';
 
   // Hook in conditional against the rules?
-  const data = isEditing
-    ? null
-    : useVFRender({
-        attrs: attrs,
-        name: props.name
-      });
+  const data = (() => {
+    if (isEditing) {
+      return null;
+    }
+    if (hasTemplate) {
+      return useVFTemplateRender(props.name, attrs);
+    }
+    return useVFPluginRender(props.name, attrs);
+  })();
 
   const isLoading = data === null;
   const isPreview = !isLoading && data;

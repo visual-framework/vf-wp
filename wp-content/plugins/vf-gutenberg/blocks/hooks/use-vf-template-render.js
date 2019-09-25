@@ -3,28 +3,26 @@
  * returning fetched data. Cache results in store.
  */
 import {useEffect, useState} from 'react';
-import useVFGutenberg from './use-vf-gutenberg';
+import useNunjucks from './use-nunjucks';
 import {useHashsum} from './';
 
 const store = {};
 
-const useVFRender = attrs => {
+const useVFTemplateRender = (name, attrs) => {
   const [data, setData] = useState(null);
   const hash = useHashsum(attrs);
+  const nunjucks = useNunjucks();
 
-  const fetchData = async () => {
+  const renderTemplate = async () => {
     // return matching hash from internal store
     if (store.hasOwnProperty(hash)) {
       setData(store[hash]);
       return;
     }
-    const {postId, nonce} = useVFGutenberg();
     try {
-      const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
-        ...attrs,
-        postId,
-        nonce
-      });
+      const data = {
+        html: nunjucks.render(name, attrs)
+      };
       store[hash] = data;
       setData(data);
     } catch (err) {}
@@ -32,10 +30,10 @@ const useVFRender = attrs => {
 
   // provide attributes hash to avoid rerenders
   useEffect(() => {
-    fetchData();
+    renderTemplate();
   }, [hash]);
 
   return data;
 };
 
-export default useVFRender;
+export default useVFTemplateRender;

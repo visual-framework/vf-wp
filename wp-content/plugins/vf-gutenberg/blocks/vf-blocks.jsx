@@ -9,11 +9,13 @@ import useVFSettings from './hooks/use-vf-settings';
 // import vfButton from './vf-core/vf-button';
 // import vfBox from './vf-core/vf-box';
 // import vfLede from './vf-core/vf-lede';
+import vfBadge from './vf-core/vf-badge';
 
 // Register core blocks
 // registerBlockType(vfButton.name, vfButton);
 // registerBlockType(vfBox.name, vfBox);
 // registerBlockType(vfLede.name, vfLede);
+registerBlockType(vfBadge.name, vfBadge);
 
 // Register VF Plugin blocks from "localized" global settings
 const {plugins} = useVFGutenberg();

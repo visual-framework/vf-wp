@@ -47,7 +47,10 @@ const task = () => {
       console.log(chalk.green(`Precompiling: ${package}`));
       const js = (() => {
         try {
-          return nunjucks.precompile(src, {env: env, name: name});
+          return nunjucks.precompile(src, {
+            env: env,
+            name: name.replace(/^vf-/, 'vf/')
+          });
         } catch (err) {
           console.log(chalk.red(err));
         }
