@@ -186,8 +186,20 @@ class VF_Gutenberg {
      * "Localize" script by making config available
      * in the global `vfGutenberg` object
      */
+    $prefix = '<div style="clear:both;height:0;"></div>';
+    $suffix = $prefix;
+    $stylesheets = array();
+    if (function_exists('vf_get_stylesheet')) {
+      $stylesheets[] = vf_get_stylesheet();
+    }
+    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
+    foreach ($stylesheets as $href) {
+      $prefix .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
+    }
     global $post;
     $config = array(
+      'renderPrefix' => $prefix,
+      'renderSuffix' => $suffix,
       'plugins' => $this->get_config_plugins(),
       'nonce'   => wp_create_nonce("vf_nonce_{$post->ID}"),
       'postId'  => $post->ID
@@ -211,18 +223,8 @@ class VF_Gutenberg {
    * Handle AJAX request to render block preview
    */
   function ajax_fetch_block() {
-
     $this->ajax_validate_nonce();
     $html = '';
-    $stylesheets = array();
-    if (function_exists('vf_get_stylesheet')) {
-      $stylesheets[] = vf_get_stylesheet();
-    }
-    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
-    foreach ($stylesheets as $href) {
-      $html .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
-    }
-    // render block
     if (isset($_POST['name'])) {
       $html .= $this->render_block('', array(
         'blockName' => $_POST['name'],

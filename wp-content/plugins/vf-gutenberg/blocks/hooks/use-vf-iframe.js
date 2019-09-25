@@ -21,8 +21,7 @@ const useVFIFrame = (iframe, html) => {
 
     // set HTML content for block
     const body = iframe.contentWindow.document.body;
-    const div = '<div style="clear:both;height:0;"></div>';
-    body.innerHTML = `${div}${html}${div}`;
+    body.innerHTML = html;
 
     // create and append script to handle automatic iframe resize
     // this cannot be inline of `html` for browser security

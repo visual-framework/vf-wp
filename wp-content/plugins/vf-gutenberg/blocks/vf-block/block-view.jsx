@@ -4,9 +4,12 @@
  * within an iframe (to scope CSS and JavaScript).
  */
 import React, {useEffect, useRef} from 'react';
+import useVFGutenberg from '../hooks/use-vf-gutenberg';
 import useVFIFrame from '../hooks/use-vf-iframe';
 
 const VFBlockView = ({html, uniqueId}) => {
+  const {renderPrefix, renderSuffix} = useVFGutenberg();
+
   // Use existing iframe appended to the DOM
   const iframeId = `vfwp_${uniqueId}`;
   let iframe = document.getElementById(iframeId);
@@ -21,7 +24,10 @@ const VFBlockView = ({html, uniqueId}) => {
 
   // Use an asynchronous hook to fetch the iframe content via WordPress API
   const rootEl = useRef();
-  const {onLoad, onUnload} = useVFIFrame(iframe, html);
+  const {onLoad, onUnload} = useVFIFrame(
+    iframe,
+    `${renderPrefix}${html}${renderSuffix}`
+  );
 
   // Append the iframe element on mount - we cannot use `<iframe onLoad={} />`
   // in React, this does not fire properly in Webkit browsers for
