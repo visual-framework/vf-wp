@@ -49,7 +49,7 @@ const task = () => {
         try {
           return nunjucks.precompile(src, {
             env: env,
-            name: name.replace(/^vf-/, 'vf/')
+            name: name
           });
         } catch (err) {
           console.log(chalk.red(err));

@@ -21,7 +21,7 @@ const useVFTemplateRender = (name, attrs) => {
     }
     try {
       const data = {
-        html: nunjucks.render(name, attrs)
+        html: nunjucks.render(name.replace(/^vf\//, 'vf-'), attrs)
       };
       store[hash] = data;
       setData(data);

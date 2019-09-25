@@ -1,7 +1,7 @@
 /**
  * Precompiled Nunjucks template: @visual-framework/vf-badge
  */
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf/badge"] = (function() {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-badge"] = (function() {
 function root(env, context, frame, runtime, cb) {
 var lineno = 0;
 var colno = 0;
