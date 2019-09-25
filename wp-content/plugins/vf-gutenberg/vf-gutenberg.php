@@ -318,8 +318,13 @@ class VF_Gutenberg {
     }
     $rendered = false;
     ob_start();
+    // use template render
+    $render = $this->get_field("{$post_name}_render");
+    if ($render) {
+      echo $render;
+      $rendered = true;
     // render with matching plugin
-    if ($vf_plugin) {
+    } else if ($vf_plugin) {
       VF_Plugin::render($vf_plugin, $this->fields);
       $rendered = true;
     // otherwise render with template

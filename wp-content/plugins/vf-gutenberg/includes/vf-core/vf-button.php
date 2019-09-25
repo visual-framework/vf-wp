@@ -2,20 +2,20 @@
 
 global $vf_gutenberg;
 
-$url = $vf_gutenberg->get_field('vf_button_url');
-$label = $vf_gutenberg->get_field('vf_button_label');
-$style = $vf_gutenberg->get_field('vf_button_style');
+$href = $vf_gutenberg->get_field('vf_button_href');
+$text = $vf_gutenberg->get_field('vf_button_text');
+$theme = $vf_gutenberg->get_field('vf_button_theme');
 $size = $vf_gutenberg->get_field('vf_button_size');
 
-$label = trim($label);
-if (empty($label)) {
-  $label = 'Button';
+$text = trim($text);
+if (empty($text)) {
+  $text = 'Button';
 }
 
 $classes = array('vf-button');
 
-if (is_string($style)) {
-  $classes[] = "vf-button--{$style}";
+if (is_string($theme)) {
+  $classes[] = "vf-button--{$theme}";
 } else {
   $classes[] = "vf-button--primary";
 }
@@ -29,6 +29,6 @@ if ($size === 'large') {
 }
 
 ?>
-<a href="<?php echo esc_url($url); ?>" class="<?php echo implode(' ', $classes); ?>">
-  <?php echo esc_html($label); ?>
+<a href="<?php echo esc_url($href); ?>" class="<?php echo implode(' ', $classes); ?>">
+  <?php echo esc_html($text); ?>
 </a>

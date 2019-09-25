@@ -2,7 +2,7 @@
  * Generate new Gutenberg block settings from defaults.
  * Provide `VFBlockFields` using `useVFPlugin` configuration.
  */
-import React from 'react';
+import React, {Fragment} from 'react';
 import {InspectorControls} from '@wordpress/block-editor';
 import {ToggleControl, PanelBody} from '@wordpress/components';
 import {__} from '@wordpress/i18n';
@@ -11,7 +11,7 @@ import useVFPlugin from './use-vf-plugin';
 import VFBlockFields from '../vf-block/block-fields';
 import VFBlock from '../vf-block';
 
-const useVFSettings = (name, title) => {
+const useVFPluginSettings = (name, title) => {
   const defaults = useVFDefaults();
   const {fields, attrs} = useVFPlugin(name);
   const hasFields = Array.isArray(fields) && fields.length > 0;
@@ -22,7 +22,7 @@ const useVFSettings = (name, title) => {
     ...defaults.attributes
   };
 
-  // Only enable "edit" mode when fields exist
+  // Enable "edit" mode when fields exist
   if (hasFields) {
     attributes.mode = {
       type: 'string',
@@ -42,7 +42,8 @@ const useVFSettings = (name, title) => {
     name: name,
     title: title,
     category: 'vf/wp',
-    keywords: [...defaults.keywords, __('Content Hub')],
+    description: __('Visual Framework (WordPress)'),
+    keywords: [...defaults.keywords, __('EMBL Content Hub')],
     attributes: attributes,
     edit: props => {
       const isDefaults = !!props.attributes.defaults;
@@ -59,7 +60,7 @@ const useVFSettings = (name, title) => {
       };
 
       return (
-        <>
+        <Fragment>
           {hasFields && (
             <InspectorControls>
               <PanelBody title={__('Block Settings')}>
@@ -74,10 +75,10 @@ const useVFSettings = (name, title) => {
               </VFBlockFields>
             )}
           </VFBlock>
-        </>
+        </Fragment>
       );
     }
   };
 };
 
-export default useVFSettings;
+export default useVFPluginSettings;

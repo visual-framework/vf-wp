@@ -4,7 +4,6 @@
 import {__} from '@wordpress/i18n';
 
 const useVFDefaults = () => ({
-  description: __('Visual Framework (WordPress)'),
   keywords: [__('VF'), __('Visual Framework')],
   attributes: {
     ver: {
