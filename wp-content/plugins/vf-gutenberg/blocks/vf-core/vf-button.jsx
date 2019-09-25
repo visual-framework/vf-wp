@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import {__} from '@wordpress/i18n';
+import {withTransientAttribute} from '../hooks';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-button';
 
@@ -41,9 +42,7 @@ const settings = useVFCoreSettings({
   ]
 });
 
-settings.supports.customClassName = true;
-
-settings.supports.styles = [
+settings.styles = [
   {
     name: 'primary',
     label: __('Primary'),
@@ -58,6 +57,10 @@ settings.supports.styles = [
     label: __('Tertiary')
   }
 ];
+
+settings.supports.customClassName = true;
+
+settings.edit = withTransientAttribute('theme', settings.edit);
 
 export default settings;
 
