@@ -4,12 +4,21 @@
   "private": true,
   "description": "Visual Framework WordPress Theme",
   "main": "gulpfile.js",
+  "vfConfig": {
+    "vfName": "VF WordPress",
+    "vfNamespace": "vfwp-",
+    "vfComponentPath": "./components",
+    "vfBuildDestination": "./wp-content/themes/vf-wp/css",
+    "vfThemePath": "@frctl/mandelbrot"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/visual-framework/vf-wp.git"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp build && echo \"🏋 Build completed\" && exit 0",
+    "update-components": "yarn upgrade-interactive --latest"
   },
   "author": "EMBL",
   "license": "UNLICENSED",
@@ -27,12 +36,35 @@
       ]
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "del": "^5.1.0",
+    "gulp-better-rollup": "^4.0.1",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-notify": "^3.2.0",
+    "list-stream": "^1.0.1"
+  },
   "devDependencies": {
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.1",
     "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
+    "@visual-framework/embl-grid": "^1.0.0-alpha.6",
+    "@visual-framework/vf-banner": "1.0.0-alpha.6",
+    "@visual-framework/vf-code-example": "^1.0.0-alpha.6",
+    "@visual-framework/vf-content": "^1.0.0-beta.6",
+    "@visual-framework/vf-core": "^2.0.0-beta.3",
+    "@visual-framework/vf-global-header": "^1.0.0-alpha.6",
+    "@visual-framework/vf-grid": "^1.0.0-alpha.6",
+    "@visual-framework/vf-grid-page": "^1.0.0-alpha.6",
+    "@visual-framework/vf-heading": "^1.0.0-beta.6",
+    "@visual-framework/vf-intro": "^1.0.0-beta.6",
+    "@visual-framework/vf-lede": "^1.0.0-beta.6",
+    "@visual-framework/vf-logo": "^1.0.0-alpha.6",
+    "@visual-framework/vf-navigation": "^1.0.0-alpha.6",
+    "@visual-framework/vf-no-js": "1.0.0-rc.6",
+    "@visual-framework/vf-sass-config": "^1.0.0-beta.6",
+    "@visual-framework/vf-sass-utilities": "^1.0.0-beta.6",
+    "@visual-framework/vf-text": "^1.0.0-beta.6",
     "babel-loader": "^8.0.6",
     "chalk": "^2.4.2",
     "core-js": "^3.2.1",
@@ -40,8 +72,14 @@
     "gulp-autoprefixer": "^7.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
     "gulp-sass": "^4.0.2",
+    "gulp-shell": "^0.7.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-stylelint": "^9.0.0",
+    "gulp-svgmin": "^2.2.0",
     "gulp-uglify": "^3.0.2",
+    "gulp-watch": "^5.0.1",
     "pump": "^3.0.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8"
