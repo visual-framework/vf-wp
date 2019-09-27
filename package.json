@@ -8,7 +8,7 @@
     "vfName": "VF WordPress",
     "vfNamespace": "vfwp-",
     "vfComponentPath": "./vf-components",
-    "vfBuildDestination": "./wp-content/themes/vf-wp/css",
+    "vfBuildDestination": "./wp-content/themes/vf-wp/assets",
     "vfThemePath": "@frctl/mandelbrot"
   },
   "repository": {
