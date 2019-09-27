@@ -92,3 +92,10 @@ a.vf-button {
 a.vf-button:hover {
   opacity: 1;
 }
+
+#data-protection-banner {
+  background-color: #373a36 !important;
+}
+#data-protection-banner .row {
+  max-width: 76.5em;
+}
