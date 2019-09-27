@@ -41,7 +41,7 @@ Blocks:
 * Node
 
 ```bash
-npm install
+yarn install
 ```
 
 ### EMBL + EMBL-EBI site development
