@@ -7,7 +7,7 @@
   "vfConfig": {
     "vfName": "VF WordPress",
     "vfNamespace": "vfwp-",
-    "vfComponentPath": "./components",
+    "vfComponentPath": "./vf-components",
     "vfBuildDestination": "./wp-content/themes/vf-wp/css",
     "vfThemePath": "@frctl/mandelbrot"
   },
