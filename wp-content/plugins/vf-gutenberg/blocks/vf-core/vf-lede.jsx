@@ -3,54 +3,33 @@
  */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import VFBlock from '../vf-block';
-import VFBlockFields from '../vf-block/block-fields';
+import {withTransientAttributeMap} from '../hooks/with-transient';
+import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import template from '../templates/vf-lede';
 
-const vfLedeAttrs = {
-  text: {
-    type: 'string'
-  }
-};
-
-const vfLedeFields = [
-  {
-    name: 'text',
-    control: 'rich',
-    default: '',
-    label: '',
-    tag: 'h1',
-    placeholder: 'Type lede heading…'
-  }
-];
-
-export default {
+const settings = useVFCoreSettings({
   name: 'vf/lede',
-  category: 'vf/core',
   title: __('Lede'),
-  description: __('Visual Framework'),
-  keywords: [__('VF'), __('Visual Framework')],
   attributes: {
-    ver: {
-      type: 'integer'
-    },
-    mode: {
+    text: {
       type: 'string',
-      default: 'edit'
-    },
-    ...vfLedeAttrs
+      default: __('Lede heading…')
+    }
   },
-  supports: {
-    align: false,
-    className: false,
-    customClassName: true,
-    html: false
-  },
-  save: () => null,
-  edit: props => {
-    return (
-      <VFBlock {...props} ver={1} hasFooter>
-        <VFBlockFields {...props} fields={vfLedeFields} />
-      </VFBlock>
-    );
-  }
-};
+  fields: [
+    {
+      name: 'text',
+      control: 'rich',
+      label: '',
+      tag: 'h1',
+      placeholder: 'Type lede heading…'
+    }
+  ]
+});
+
+settings.edit = withTransientAttributeMap(
+  [{from: 'text', to: 'vf_lede_text'}],
+  settings.edit
+);
+
+export default settings;

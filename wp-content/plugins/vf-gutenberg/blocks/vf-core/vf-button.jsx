@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import {withTransientAttribute} from '../hooks';
+import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-button';
 
@@ -60,7 +60,7 @@ settings.styles = [
 
 settings.supports.customClassName = true;
 
-settings.edit = withTransientAttribute('theme', settings.edit);
+settings.edit = withTransientStyle('theme', settings.edit);
 
 export default settings;
 

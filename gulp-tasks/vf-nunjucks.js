@@ -12,11 +12,10 @@ const SpacelessExtension = require(path.join(
 ));
 
 const components = [
-  'vf-badge',
-  'vf-blockquote',
-  'vf-button',
-  'vf-divider',
-  'vf-figure'
+  // Elements
+  ...['vf-badge', 'vf-blockquote', 'vf-button', 'vf-divider', 'vf-figure'],
+  // Blocks
+  ...['vf-box', 'vf-lede']
 ];
 
 const env = new nunjucks.Environment(null, {

@@ -26,17 +26,3 @@ export const useStyleName = className => {
   const match = (className || '').match(/is-style-([^\s"]+)/);
   return match ? match[1] : '';
 };
-
-/**
- * Wrap block edit function to add transient property
- * assigned to custom attribute.
- */
-export const withTransientAttribute = (attr, edit) => {
-  return props => {
-    props.transient = {
-      ...(props.transient || {}),
-      [attr]: useStyleName(props.className) || props.attributes[attr]
-    };
-    return edit(props);
-  };
-};
