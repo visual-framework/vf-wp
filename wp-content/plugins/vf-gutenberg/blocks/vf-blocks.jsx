@@ -7,6 +7,7 @@ import useVFPluginSettings from './hooks/use-vf-plugin-settings';
 
 // Import Visual Framework core component settings
 import vfBadge from './vf-core/vf-badge';
+import vfBlockquote from './vf-core/vf-blockquote';
 import vfBox from './vf-core/vf-box';
 import vfButton from './vf-core/vf-button';
 import vfDivider from './vf-core/vf-divider';
@@ -16,6 +17,7 @@ import vfLede from './vf-core/vf-lede';
 [
   // Elements
   vfBadge,
+  vfBlockquote,
   vfButton,
   vfDivider,
   // Blocks
