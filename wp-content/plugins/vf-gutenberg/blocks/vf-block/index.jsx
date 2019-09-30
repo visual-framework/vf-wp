@@ -78,7 +78,11 @@ const VFBlock = props => {
       {isEditable && <VFBlockControls {...{isEditing, onToggle}} />}
       <div {...rootAttr}>
         {isEditing ? (
-          <VFBlockEdit onToggle={onToggle} children={props.children} />
+          <VFBlockEdit
+            onToggle={onToggle}
+            children={props.children}
+            hasFooter={props.hasFooter}
+          />
         ) : isPreview ? (
           <VFBlockView html={data.html} uniqueId={uniqueId} />
         ) : (
