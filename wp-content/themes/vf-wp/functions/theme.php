@@ -147,6 +147,7 @@ function vf__wp_enqueue_scripts() {
   wp_enqueue_style(
     'vfwp',
     $dir . '/assets/css/main.css',
+    $dir . '/assets/css/styles.css',
     array('vf'),
     $theme->version,
     'all'
@@ -158,6 +159,14 @@ function vf__wp_enqueue_scripts() {
     $dir . '/assets/js/accessible-autocomplete.min.js',
     array(),
     '1.6.2',
+    true
+  );
+  // Register VF JS
+  wp_register_script(
+    'vf-scripts',
+    $dir . '/assets/scripts/scripts.js',
+    array(),
+    $theme->version,
     true
   );
   wp_register_style(
@@ -181,6 +190,8 @@ function vf__body_class($classes) {
     return $classes;
   }
   $classes[] = 'vf-u-background-color-ui--grey';
+  $classes[] = 'ebi-vf1-integration'; // enable the VF 1.x workarounds
+    // todo: make this class conditional/optional toggle so it's only appended to EBI groups
   return $classes;
 }
 
