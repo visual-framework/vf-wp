@@ -1,4 +1,8 @@
 <?php
+/**
+ * WARNING: deprecated
+ * Now using Nunjucks template from `@visual-framework` package
+ */
 
 global $vf_gutenberg;
 

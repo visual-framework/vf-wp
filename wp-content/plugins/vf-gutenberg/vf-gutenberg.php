@@ -330,7 +330,7 @@ class VF_Gutenberg {
     // otherwise render with template
     } else {
       $path = str_replace('_', '-', $post_name);
-      $path = "includes/vf-core/{$path}.php";
+      $path = "includes/templates/{$path}.php";
       $path = plugin_dir_path(__FILE__) . $path;
       if (file_exists($path)) {
         include($path);
