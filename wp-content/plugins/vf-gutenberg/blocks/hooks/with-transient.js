@@ -15,7 +15,7 @@ export const withTransientAttribute = (attr, edit) => {
 };
 
 /**
- * Add the block style to a transient property
+ * Wrap block edit function to add block style as transient property
  * Optionally use BEM notation
  */
 export const withTransientStyle = (opts, edit) => {

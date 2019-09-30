@@ -96,7 +96,7 @@ frame = frame.pop();
 ;
 }
 if(runtime.contextOrFrameLookup(context, frame, "size")) {
-t_1 += "  vf-text-button--";
+t_1 += "  vf-button--";
 t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "size"), env.opts.autoescape);
 t_1 += "\n";
 ;
