@@ -165,3 +165,6 @@ html, button {
 /* Local components */
 @import 'vf-sample/vf-sample.scss';
 @import 'vf-local-overrides/vf-local-overrides.scss';
+
+// Compatibility fixes when using with the EBI 1.x CSS
+@import 'ebi-vf1-integration/ebi-vf1-integration.scss';
