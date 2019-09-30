@@ -8,7 +8,7 @@ $content = $vf_plugin->api_html();
 if ( ! empty($content)) {
 ?>
 
-<div class="vfwp-column-reset vf-body vf-body__additional-content vf-u-background-color-ui--white">
+<div class="vf-u-grid--reset vf-body vf-body__additional-content vf-u-background-color-ui--white">
   <hr class="vf-divider">
   <section class="vf-news-container | embl-grid embl-grid--has-sidebar">
     <div class="vf-section-header">

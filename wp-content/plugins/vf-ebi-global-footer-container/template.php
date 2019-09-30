@@ -7,7 +7,7 @@ $content = $vf_plugin->api_html();
 
 if ( ! empty($content)) {
 ?>
-<div <?php $vf_plugin->api_attr(array('class' => 'vfwp-column-reset')); ?>>
+<div <?php $vf_plugin->api_attr(array('class' => 'vf-u-grid--reset')); ?>>
   <?php echo $content; ?>
 </div>
 <?php } ?>
