@@ -237,12 +237,20 @@ gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
 gulp.task('watch-blocks', () =>
   gulp.watch(config.vf_blocks_glob, gulp.series('vf-blocks'))
 );
-gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-blocks'));
+gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-blocks', 'vf-watch'));
+
+/**
+ * Build task
+ */
+gulp.task(
+  'build',
+  gulp.parallel('css', 'js', 'vf-css', 'vf-scripts', 'vf-blocks')
+);
 
 /**
  * Default task
  */
 gulp.task(
   'default',
-  gulp.series(gulp.parallel('css', 'js', 'vf-blocks'), 'watch')
+  gulp.series(gulp.parallel('css', 'js', 'vf-css', 'vf-scripts', 'vf-blocks'), 'watch')
 );

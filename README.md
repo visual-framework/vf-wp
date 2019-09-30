@@ -32,7 +32,6 @@ Blocks:
 * [Members block](wp-content/plugins/vf-members-block/README.md)
 * [Publications block](wp-content/plugins/vf-publications-block/README.md)
 
-
 ## Development
 
 ### Theme and plugin development
@@ -43,6 +42,17 @@ Blocks:
 ```bash
 yarn install
 ```
+
+This project makes use of [Visual Framework components](https://visual-framework.github.io/vf-welcome) to build its CSS and JS.
+
+- `gulp vf-css` 
+     - to build `vf-components/vf-componenet-rollup/index.scss` 
+     - to make `wp-content/themes/vf-wp/assets/css/styles.css`
+- `gulp vf-scripts` 
+     - to build `vf-components/vf-componenet-rollup/scripts.scss` 
+     - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
+
+Nb: the `gulp build` command will also invoke the above. 
 
 ### EMBL + EMBL-EBI site development
 
