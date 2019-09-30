@@ -16,6 +16,7 @@ import {
   ToggleControl
 } from '@wordpress/components';
 import {__} from '@wordpress/i18n';
+import CheckboxesControl from '../components/checkboxes-control';
 import TaxonomyControl from '../components/taxonomy-control';
 import URLControl from '../components/url-control';
 import RichControl from '../components/rich-control';
@@ -40,33 +41,17 @@ const VFBlockFields = props => {
   controls.push(
     fields.map(field => {
       const {name, control, label} = field;
-
       // The ACF "checkbox" field returns an array of one or more checked
       // values whereas "true_false" (here "toggle") uses a boolean value
       if (control === 'checkbox') {
         return (
-          // Markup similar to `RadioControl` with multiple options
-          <BaseControl label={label} className="components-radio-control">
-            {field.options.map(option => (
-              <div className="components-radio-control__option">
-                <CheckboxControl
-                  label={option.label}
-                  checked={(attrs[name] || []).includes(option.value)}
-                  onChange={checked => {
-                    // Remove checkbox value from attribute array
-                    const attr = (attrs[name] || []).filter(
-                      v => v !== option.value
-                    );
-                    // Re-append value if checked
-                    if (checked) {
-                      attr.push(option.value);
-                    }
-                    onChange(name, attr);
-                  }}
-                />
-              </div>
-            ))}
-          </BaseControl>
+          <CheckboxesControl
+            name={name}
+            attrs={attrs}
+            field={field}
+            label={label}
+            onChange={onChange}
+          />
         );
       }
       if (control === 'number') {
