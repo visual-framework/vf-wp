@@ -22,7 +22,7 @@ const settings = useVFCoreSettings({
       control: 'rich',
       label: '',
       tag: 'h1',
-      placeholder: 'Type lede heading…'
+      placeholder: __('Type lede heading…')
     }
   ]
 });

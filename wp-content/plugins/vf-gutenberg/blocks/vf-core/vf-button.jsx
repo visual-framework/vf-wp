@@ -60,7 +60,7 @@ settings.styles = [
 
 settings.supports.customClassName = true;
 
-settings.edit = withTransientStyle('theme', settings.edit);
+settings.edit = withTransientStyle({key: 'theme'}, settings.edit);
 
 export default settings;
 

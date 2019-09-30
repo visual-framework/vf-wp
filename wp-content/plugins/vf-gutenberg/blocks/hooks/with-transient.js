@@ -16,13 +16,17 @@ export const withTransientAttribute = (attr, edit) => {
 
 /**
  * Add the block style to a transient property
+ * Optionally use BEM notation
  */
-export const withTransientStyle = (key, edit) => {
-  return props =>
-    withTransientAttribute(
-      {key: key, value: useStyleName(props.className)},
-      edit
-    )(props);
+export const withTransientStyle = (opts, edit) => {
+  return props => {
+    const isBEM = 'BEM' in opts;
+    const style = useStyleName(props.className);
+    const name = props.name.replace(/^vf\//, 'vf-');
+    const value = isBEM ? `${name}--${style}` : style;
+    const wrapped = withTransientAttribute({key: opts.key, value}, edit);
+    return isBEM && !style ? edit(props) : wrapped(props);
+  };
 };
 
 /**

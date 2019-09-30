@@ -3,38 +3,42 @@
  */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import VFBlock from '../vf-block';
-import VFBlockFields from '../vf-block/block-fields';
+import {withTransientStyle} from '../hooks/with-transient';
+import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import template from '../templates/vf-box';
 
-const vfBoxAttrs = {
-  heading: {
-    type: 'string'
+const settings = useVFCoreSettings({
+  name: 'vf/box',
+  title: __('Box'),
+  attributes: {
+    heading: {
+      type: 'string'
+    },
+    text: {
+      type: 'string'
+    }
   },
-  text: {
-    type: 'string'
-  }
-};
+  fields: [
+    {
+      name: 'heading',
+      control: 'rich',
+      default: '',
+      label: '',
+      tag: 'h3',
+      placeholder: __('Type box heading…')
+    },
+    {
+      name: 'text',
+      control: 'rich',
+      default: '',
+      label: '',
+      tag: 'p',
+      placeholder: __('Type box content…')
+    }
+  ]
+});
 
-const vfBoxFields = [
-  {
-    name: 'heading',
-    control: 'rich',
-    default: '',
-    label: '',
-    tag: 'h3',
-    placeholder: 'Type box heading…'
-  },
-  {
-    name: 'text',
-    control: 'rich',
-    default: '',
-    label: '',
-    tag: 'p',
-    placeholder: 'Type box content…'
-  }
-];
-
-const vfBoxStyles = [
+settings.styles = [
   {
     name: 'default',
     label: __('Default'),
@@ -50,35 +54,8 @@ const vfBoxStyles = [
   }
 ];
 
-export default {
-  name: 'vf/box',
-  category: 'vf/core',
-  title: __('Box'),
-  description: __('Visual Framework'),
-  keywords: [__('VF'), __('Visual Framework')],
-  attributes: {
-    ver: {
-      type: 'integer'
-    },
-    mode: {
-      type: 'string',
-      default: 'edit'
-    },
-    ...vfBoxAttrs
-  },
-  styles: [...vfBoxStyles],
-  supports: {
-    align: false,
-    className: false,
-    customClassName: true,
-    html: false
-  },
-  save: () => null,
-  edit: props => {
-    return (
-      <VFBlock {...props} ver={1} hasFooter>
-        <VFBlockFields {...props} fields={vfBoxFields} />
-      </VFBlock>
-    );
-  }
-};
+settings.supports.customClassName = true;
+
+settings.edit = withTransientStyle({key: 'class', BEM: true}, settings.edit);
+
+export default settings;
