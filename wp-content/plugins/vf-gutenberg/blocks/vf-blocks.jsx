@@ -9,11 +9,19 @@ import useVFPluginSettings from './hooks/use-vf-plugin-settings';
 import vfBadge from './vf-core/vf-badge';
 import vfBox from './vf-core/vf-box';
 import vfButton from './vf-core/vf-button';
+import vfDivider from './vf-core/vf-divider';
 import vfLede from './vf-core/vf-lede';
 
 // Register VF Core blocks
-const vfCore = [vfBadge, vfBox, vfButton, vfLede];
-vfCore.forEach(settings => registerBlockType(settings.name, settings));
+[
+  // Elements
+  vfBadge,
+  vfButton,
+  vfDivider,
+  // Blocks
+  vfBox,
+  vfLede
+].forEach(settings => registerBlockType(settings.name, settings));
 
 // Register VF Plugin blocks from "localized" global settings
 const {plugins} = useVFGutenberg();

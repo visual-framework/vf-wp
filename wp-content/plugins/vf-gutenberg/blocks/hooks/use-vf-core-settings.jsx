@@ -65,7 +65,7 @@ const useVFCoreSettings = settings => {
           <VFBlock {...props} ver={1} hasFooter>
             <VFBlockFields {...props} fields={blockFields} />
           </VFBlock>
-          {inspectorFields.length && (
+          {!!inspectorFields.length && (
             <InspectorControls>
               <PanelBody title={__('Settings')} initialOpen={false}>
                 <VFBlockFields {...props} fields={inspectorFields} />
