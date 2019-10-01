@@ -7,7 +7,7 @@ import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-button';
 
-const settings = useVFCoreSettings({
+export default useVFCoreSettings({
   name: 'vf/button',
   title: __('Button'),
   attributes: {
@@ -49,27 +49,21 @@ const settings = useVFCoreSettings({
         {label: __('Large'), value: 'lg'}
       ]
     }
-  ]
+  ],
+  styles: [
+    {
+      name: 'primary',
+      label: __('Primary'),
+      isDefault: true
+    },
+    {
+      name: 'secondary',
+      label: __('Secondary')
+    },
+    {
+      name: 'tertiary',
+      label: __('Tertiary')
+    }
+  ],
+  withHOC: [[withTransientStyle, {key: 'theme'}]]
 });
-
-settings.styles = [
-  {
-    name: 'primary',
-    label: __('Primary'),
-    isDefault: true
-  },
-  {
-    name: 'secondary',
-    label: __('Secondary')
-  },
-  {
-    name: 'tertiary',
-    label: __('Tertiary')
-  }
-];
-
-settings.supports.customClassName = true;
-
-settings.edit = withTransientStyle({key: 'theme'}, settings.edit);
-
-export default settings;

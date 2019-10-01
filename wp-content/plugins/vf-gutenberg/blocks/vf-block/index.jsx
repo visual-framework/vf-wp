@@ -30,9 +30,13 @@ const VFBlock = props => {
   // No `props.clientId` if rendered in the sidebar style preview
   const isEditable = props.clientId && typeof mode === 'string';
   const isEditing = isEditable && mode === 'edit';
+  const isRenderable = props.hasRender !== false;
 
   // Hook in conditional against the rules?
   const data = (() => {
+    if (!isRenderable) {
+      return null;
+    }
     /**
      * Include transient properties in the attributes passed to the render
      * function that will not be saved to the block JSON.
@@ -57,7 +61,7 @@ const VFBlock = props => {
     return isEditing ? null : useVFPluginRender(props.name, renderAttrs);
   })();
 
-  const isLoading = data === null;
+  const isLoading = isRenderable && data === null;
   const isPreview = !isLoading && data;
 
   const onToggle = () => {
@@ -75,13 +79,14 @@ const VFBlock = props => {
 
   return (
     <Fragment>
-      {isEditable && <VFBlockControls {...{isEditing, onToggle}} />}
+      {isEditable && isRenderable && (
+        <VFBlockControls {...{isEditing, onToggle}} />
+      )}
       <div {...rootAttr}>
         {isEditing ? (
           <VFBlockEdit
-            onToggle={onToggle}
+            onToggle={props.hasFooter ? onToggle : null}
             children={props.children}
-            hasFooter={props.hasFooter}
           />
         ) : isPreview ? (
           <VFBlockView html={data.html} uniqueId={uniqueId} />

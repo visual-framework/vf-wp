@@ -8,7 +8,7 @@ import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-summary';
 
-const settings = useVFCoreSettings({
+export default useVFCoreSettings({
   name: 'vf/summary',
   title: __('Summary'),
   attributes: {
@@ -36,12 +36,14 @@ const settings = useVFCoreSettings({
       tag: 'p',
       placeholder: __('Type summary text…')
     }
+  ],
+  withHOC: [
+    [
+      withTransientAttributeMap,
+      [
+        {from: 'title', to: 'summary__title'},
+        {from: 'text', to: 'summary__text'}
+      ]
+    ]
   ]
 });
-
-settings.edit = withTransientAttributeMap(
-  [{from: 'title', to: 'summary__title'}, {from: 'text', to: 'summary__text'}],
-  settings.edit
-);
-
-export default settings;

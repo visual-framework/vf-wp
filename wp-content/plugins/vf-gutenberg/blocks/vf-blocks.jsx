@@ -6,6 +6,8 @@ import useVFGutenberg from './hooks/use-vf-gutenberg';
 import useVFPluginSettings from './hooks/use-vf-plugin-settings';
 
 // Import Visual Framework core component settings
+import vfActivityItem from './vf-core/vf-activity-item';
+import vfActivityList from './vf-core/vf-activity-list';
 import vfBadge from './vf-core/vf-badge';
 import vfBlockquote from './vf-core/vf-blockquote';
 import vfBox from './vf-core/vf-box';
@@ -22,8 +24,10 @@ import vfLede from './vf-core/vf-lede';
   vfButton,
   vfDivider,
   // Blocks
+  vfActivityItem,
+  vfActivityList,
   vfBox,
-  vfLede,
+  vfLede
   // vfSummary
 ].forEach(settings => registerBlockType(settings.name, settings));
 

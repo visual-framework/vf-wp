@@ -1,16 +1,17 @@
+import {select} from '@wordpress/data';
 import {useStyleName} from './';
 
 /**
  * Wrap block edit function to add transient property
  * assigned to custom attribute.
  */
-export const withTransientAttribute = (attr, edit) => {
+export const withTransientAttribute = (Edit, attr) => {
   return props => {
     props.transient = {
       ...(props.transient || {}),
       [attr.key]: attr.value || props.attributes[attr.key]
     };
-    return edit(props);
+    return Edit(props);
   };
 };
 
@@ -18,30 +19,33 @@ export const withTransientAttribute = (attr, edit) => {
  * Wrap block edit function to add block style as transient property
  * Optionally use BEM notation
  */
-export const withTransientStyle = (opts, edit) => {
+export const withTransientStyle = (Edit, opts) => {
   return props => {
     const isBEM = 'BEM' in opts;
     const style = useStyleName(props.className);
     const name = props.name.replace(/^vf\//, 'vf-');
     const value = isBEM ? `${name}--${style}` : style;
-    const wrapped = withTransientAttribute({key: opts.key, value}, edit);
-    return isBEM && !style ? edit(props) : wrapped(props);
+    if (isBEM && !style) {
+      return Edit(props);
+    }
+    return withTransientAttribute(Edit, {
+      key: opts.key,
+      value
+    })(props);
   };
 };
 
 /**
  * Wrap the Gutenberg block settings `edit` function.
  * Map block attributes to transient ones to support potential compatibility
- * changes to the Nunjucks template.
- * code example:
+ * changes to the Nunjucks template; example:
 
-settings.edit = withTransientAttributeMap(
-  [{from: 'text', to: 'vf_lede_text'}],
-  settings.edit
-);
+  settings.edit = withTransientAttributeMap(settings.edit, [
+    {from: 'text', to: 'vf_lede_text'}
+  ]);
 
  */
-export const withTransientAttributeMap = (map, edit) => {
+export const withTransientAttributeMap = (Edit, map) => {
   return props => {
     props.transient = {
       ...(props.transient || {})
@@ -51,6 +55,27 @@ export const withTransientAttributeMap = (map, edit) => {
         props.transient[item.to] = props.attributes[item.from];
       }
     });
-    return edit(props);
+    return Edit(props);
+  };
+};
+
+/**
+ * Wrap the Gutenberg block settings `edit` function.
+ * Add `<InnerBlocks.Content />` content as a transient property.
+ */
+export const withTransientInnerBlocks = Edit => {
+  return props => {
+    const innerBlocks = select('core/block-editor').getBlocks(props.clientId);
+    props.transient = {
+      ...(props.transient || {}),
+      innerBlocks: []
+    };
+    innerBlocks.forEach(block =>
+      props.transient.innerBlocks.push({
+        name: block.name,
+        attributes: {...block.attributes}
+      })
+    );
+    return Edit(props);
   };
 };

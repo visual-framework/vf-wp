@@ -7,7 +7,7 @@ import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-box';
 
-const settings = useVFCoreSettings({
+export default useVFCoreSettings({
   name: 'vf/box',
   title: __('Box'),
   attributes: {
@@ -35,27 +35,21 @@ const settings = useVFCoreSettings({
       tag: 'p',
       placeholder: __('Type box content…')
     }
-  ]
+  ],
+  styles: [
+    {
+      name: 'default',
+      label: __('Default'),
+      isDefault: true
+    },
+    {
+      name: 'factoid',
+      label: __('Factoid')
+    },
+    {
+      name: 'inlay',
+      label: __('Inlay')
+    }
+  ],
+  withHOC: [[withTransientStyle, {key: 'class', BEM: true}]]
 });
-
-settings.styles = [
-  {
-    name: 'default',
-    label: __('Default'),
-    isDefault: true
-  },
-  {
-    name: 'factoid',
-    label: __('Factoid')
-  },
-  {
-    name: 'inlay',
-    label: __('Inlay')
-  }
-];
-
-settings.supports.customClassName = true;
-
-settings.edit = withTransientStyle({key: 'class', BEM: true}, settings.edit);
-
-export default settings;

@@ -19,6 +19,7 @@ module.exports = (env, argv) => {
       '@wordpress/block-editor': 'wp.blockEditor',
       '@wordpress/components': 'wp.components',
       '@wordpress/compose': 'wp.compose',
+      '@wordpress/data': 'wp.data',
       '@wordpress/element': 'wp.element',
       '@wordpress/i18n': 'wp.i18n',
       react: 'React',

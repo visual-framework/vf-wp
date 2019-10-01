@@ -7,7 +7,7 @@ import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-lede';
 
-const settings = useVFCoreSettings({
+export default useVFCoreSettings({
   name: 'vf/lede',
   title: __('Lede'),
   attributes: {
@@ -24,12 +24,6 @@ const settings = useVFCoreSettings({
       tag: 'h1',
       placeholder: __('Type lede heading…')
     }
-  ]
+  ],
+  withHOC: [[withTransientAttributeMap, [{from: 'text', to: 'vf_lede_text'}]]]
 });
-
-settings.edit = withTransientAttributeMap(
-  [{from: 'text', to: 'vf_lede_text'}],
-  settings.edit
-);
-
-export default settings;

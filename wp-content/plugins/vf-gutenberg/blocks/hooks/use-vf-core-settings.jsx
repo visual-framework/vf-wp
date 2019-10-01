@@ -4,33 +4,41 @@
  */
 import React, {Fragment} from 'react';
 import {__} from '@wordpress/i18n';
-import {InspectorControls} from '@wordpress/block-editor';
+import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody} from '@wordpress/components';
 import useVFDefaults from './use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
 import VFBlock from '../vf-block';
 
 const useVFCoreSettings = settings => {
-  let {name, title, attributes, fields} = settings;
+  let {attributes, fields, styles, allowedBlocks} = settings;
 
   const defaults = useVFDefaults();
-  const hasFields = Array.isArray(fields) && fields.length > 0;
+
+  const hasBlocks = Array.isArray(allowedBlocks);
+  const hasFields = Array.isArray(fields) && fields.length;
+  const hasStyles = Array.isArray(styles) && styles.length;
+  const hasRender = settings.hasRender !== false;
 
   // Setup block attributes
   attributes = {
     ...defaults.attributes,
-    ...attributes,
-    render: {
-      type: 'string',
-      default: ''
-    }
+    ...(attributes || {})
   };
 
-  // Enable "edit" mode when fields exist
-  if (hasFields) {
+  // Enable "render" attribute for templates
+  if (hasRender) {
+    attributes.render = {
+      type: 'string',
+      default: ''
+    };
+  }
+
+  // Enable "edit" attribute for fields or inner blocks
+  if (hasFields || hasBlocks) {
     attributes.mode = {
       type: 'string',
-      default: 'view'
+      default: hasRender ? 'view' : 'edit'
     };
   }
 
@@ -47,34 +55,55 @@ const useVFCoreSettings = settings => {
     });
   }
 
+  const Save = () => {
+    return hasBlocks ? (
+      <Fragment>
+        <InnerBlocks.Content />
+      </Fragment>
+    ) : null;
+  };
+
+  let Edit = props => {
+    return (
+      <Fragment>
+        <VFBlock {...props} ver={1} hasRender={hasRender} hasFooter={hasRender}>
+          {!!blockFields.length && (
+            <VFBlockFields {...props} fields={blockFields} />
+          )}
+          {hasBlocks && <InnerBlocks allowedBlocks={allowedBlocks} />}
+        </VFBlock>
+        {!!inspectorFields.length && (
+          <InspectorControls>
+            <PanelBody title={__('Settings')} initialOpen={false}>
+              <VFBlockFields {...props} fields={inspectorFields} />
+            </PanelBody>
+          </InspectorControls>
+        )}
+      </Fragment>
+    );
+  };
+
+  // Wrap higher-order components
+  if (Array.isArray(settings.withHOC)) {
+    settings.withHOC.forEach(([HoC, ...args]) => (Edit = HoC(Edit, ...args)));
+  }
+
   // Return the Gutenberg settings
   return {
     ...defaults,
-    name: name,
-    title: title,
+    name: settings.name,
+    title: settings.title,
     category: 'vf/core',
     description: __('Visual Framework (core)'),
     keywords: [...defaults.keywords],
     attributes: attributes,
+    styles: hasStyles ? styles : [],
     supports: {
-      ...defaults.supports
+      ...defaults.supports,
+      customClassName: hasStyles
     },
-    edit: props => {
-      return (
-        <Fragment>
-          <VFBlock {...props} ver={1} hasFooter>
-            <VFBlockFields {...props} fields={blockFields} />
-          </VFBlock>
-          {!!inspectorFields.length && (
-            <InspectorControls>
-              <PanelBody title={__('Settings')} initialOpen={false}>
-                <VFBlockFields {...props} fields={inspectorFields} />
-              </PanelBody>
-            </InspectorControls>
-          )}
-        </Fragment>
-      );
-    }
+    edit: Edit,
+    save: Save
   };
 };
 
