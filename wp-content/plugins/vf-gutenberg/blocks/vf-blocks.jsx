@@ -12,6 +12,7 @@ import vfBox from './vf-core/vf-box';
 import vfButton from './vf-core/vf-button';
 import vfDivider from './vf-core/vf-divider';
 import vfLede from './vf-core/vf-lede';
+// import vfSummary from './vf-core/vf-summary';
 
 // Register VF Core blocks
 [
@@ -22,7 +23,8 @@ import vfLede from './vf-core/vf-lede';
   vfDivider,
   // Blocks
   vfBox,
-  vfLede
+  vfLede,
+  // vfSummary
 ].forEach(settings => registerBlockType(settings.name, settings));
 
 // Register VF Plugin blocks from "localized" global settings
