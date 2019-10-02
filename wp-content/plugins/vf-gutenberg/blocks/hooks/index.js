@@ -1,6 +1,7 @@
 /**
  * Misc hooks
  */
+import {useState} from 'react';
 import hashsum from '../utils/hashsum';
 
 /**
@@ -9,9 +10,20 @@ import hashsum from '../utils/hashsum';
 export const useHashsum = obj => hashsum(obj);
 
 /**
- * Return a unique ID from hash of IDs array
+ * Return a unique ID for Gutenberg block instance
  */
-export const useUniqueId = ids => useHashsum(ids);
+const ids = {};
+export const useUniqueId = ({clientId, name}) => {
+  const [uniqueId, setUniqueId] = useState(null);
+  if (!uniqueId) {
+    if (!ids.hasOwnProperty(name)) {
+      ids[name] = 0;
+    }
+    ids[name]++;
+    setUniqueId(useHashsum([clientId, ids[name]]));
+  }
+  return uniqueId;
+};
 
 /**
  * Return a random ID using a random hash value

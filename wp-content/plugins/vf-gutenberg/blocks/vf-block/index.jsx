@@ -3,23 +3,22 @@
  * Provide a base component for VF Gutenberg blocks.
  * Component has "edit" and "view" modes.
  */
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {Spinner} from '@wordpress/components';
-import {withInstanceId} from '@wordpress/compose';
 import {__} from '@wordpress/i18n';
-import {useUniqueId} from '../hooks';
-import useVFPluginRender from '../hooks/use-vf-plugin-render';
-import useVFTemplateRender from '../hooks/use-vf-template-render';
+// import {withInstanceId} from '@wordpress/compose';
+import {useUniqueId, useHashsum} from '../hooks';
+import useVFRender from '../hooks/use-vf-render';
 import VFBlockControls from './block-controls';
 import VFBlockView from './block-view';
 import VFBlockEdit from './block-edit';
 
 const VFBlock = props => {
-  const uniqueId = useUniqueId([props.clientId, props.instanceId]);
+  const uniqueId = useUniqueId(props);
 
   // extract attributes
   const {
-    attributes: {ver, mode, ...attrs}
+    attributes: {ver, mode}
   } = props;
 
   // ensure version is encoded in post content
@@ -32,37 +31,10 @@ const VFBlock = props => {
   const isEditing = isEditable && mode === 'edit';
   const isRenderable = props.hasRender !== false;
 
-  // Hook in conditional against the rules?
-  const data = (() => {
-    if (!isRenderable) {
-      return null;
-    }
-    /**
-     * Include transient properties in the attributes passed to the render
-     * function that will not be saved to the block JSON.
-     */
-    const renderAttrs = {...attrs, ...(props.transient || {})};
-    // render using Nunjucks template
-    if ('render' in attrs) {
-      const render = useVFTemplateRender(props.name, renderAttrs);
-      if (!render) {
-        return null;
-      }
-      let html = attrs.render;
-      // update attribute for main block only and not style previews
-      if (props.clientId) {
-        props.setAttributes({render: render.html});
-      } else {
-        html = render.html;
-      }
-      return {html};
-    }
-    // render using server-side plugin
-    return isEditing ? null : useVFPluginRender(props.name, renderAttrs);
-  })();
+  let render = useVFRender(props, {isEditing});
 
-  const isLoading = isRenderable && data === null;
-  const isPreview = !isLoading && data;
+  const isLoading = isRenderable && render === null;
+  const isPreview = !isLoading && render;
 
   const onToggle = () => {
     props.setAttributes({mode: !isEditing ? 'edit' : 'view'});
@@ -89,7 +61,7 @@ const VFBlock = props => {
             children={props.children}
           />
         ) : isPreview ? (
-          <VFBlockView html={data.html} uniqueId={uniqueId} />
+          <VFBlockView html={render.html} uniqueId={uniqueId} />
         ) : (
           <Spinner />
         )}
@@ -99,4 +71,4 @@ const VFBlock = props => {
 };
 
 // Wrap with HoC
-export default withInstanceId(VFBlock);
+export default VFBlock;
