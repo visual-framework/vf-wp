@@ -16,22 +16,18 @@ import VFBlockEdit from './block-edit';
 const VFBlock = props => {
   const uniqueId = useUniqueId(props);
 
-  // extract attributes
-  const {
-    attributes: {ver, mode}
-  } = props;
-
   // ensure version is encoded in post content
-  if (!ver) {
+  if (!props.attributes.ver) {
     props.setAttributes({ver: props.ver || 1});
   }
 
   // No `props.clientId` if rendered in the sidebar style preview
-  const isEditable = props.clientId && typeof mode === 'string';
-  const isEditing = isEditable && mode === 'edit';
+  const isEditable =
+    props.clientId && typeof props.attributes.mode === 'string';
+  const isEditing = isEditable && props.attributes.mode === 'edit';
   const isRenderable = props.hasRender !== false;
 
-  let render = useVFRender(props, {isEditing});
+  const render = useVFRender(props, {isEditing});
 
   const isLoading = isRenderable && render === null;
   const isPreview = !isLoading && render;
@@ -42,7 +38,7 @@ const VFBlock = props => {
 
   const rootAttr = {
     className: `vf-block ${props.className}`,
-    'data-ver': ver,
+    'data-ver': props.attributes.ver,
     'data-name': props.name,
     'data-editing': isEditing,
     'data-loading': isLoading,
@@ -70,5 +66,4 @@ const VFBlock = props => {
   );
 };
 
-// Wrap with HoC
 export default VFBlock;
