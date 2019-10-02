@@ -12,7 +12,8 @@ export default useVFCoreSettings({
   isRenderable: false,
   attributes: {
     text: {
-      type: 'string'
+      type: 'string',
+      default: '<strong>Author</strong> published <a href="#">\'Article Title\'</a> on <a href="#">Source</a>.'
     }
   },
   fields: [

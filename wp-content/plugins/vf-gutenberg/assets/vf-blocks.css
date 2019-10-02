@@ -77,9 +77,17 @@
 }
 
 .vf-block .components-base-control__rich-text {
-  border-bottom: 1px solid #e2e4e7;
-  box-shadow: 0 2px 0 0 #fff;
-  padding-bottom: 4px;
+  background: #fff;
+  border: 1px solid #8d96a0;
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
+.vf-block .components-base-control__rich-text:focus-within {
+  border-color: #00a0d2;
+  box-shadow: 0 0 0 1px #00a0d2;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
 }
 
 .vf-block__iframe {

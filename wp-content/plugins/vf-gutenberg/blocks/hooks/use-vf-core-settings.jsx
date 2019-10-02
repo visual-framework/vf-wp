@@ -106,6 +106,7 @@ const useVFCoreSettings = settings => {
     name: settings.name,
     title: settings.title,
     category: 'vf/core',
+    parent: settings.parent || null,
     description: __('Visual Framework (core)'),
     keywords: [...defaults.keywords],
     attributes: attributes,
