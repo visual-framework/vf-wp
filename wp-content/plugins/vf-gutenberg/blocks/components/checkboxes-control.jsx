@@ -5,6 +5,7 @@
 import React from 'react';
 import {BaseControl, CheckboxControl} from '@wordpress/components';
 import {__} from '@wordpress/i18n';
+import {useHashsum} from '../hooks';
 
 const CheckboxesControl = props => {
   const {attrs, field, label, name, onChange} = props;
@@ -12,7 +13,9 @@ const CheckboxesControl = props => {
     // Markup similar to `RadioControl` with multiple options
     <BaseControl label={label} className="components-radio-control">
       {field.options.map(option => (
-        <div className="components-radio-control__option">
+        <div
+          key={useHashsum(option)}
+          className="components-radio-control__option">
           <CheckboxControl
             label={option.label}
             checked={(attrs[name] || []).includes(option.value)}

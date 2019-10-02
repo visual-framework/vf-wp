@@ -16,6 +16,7 @@ import {
   ToggleControl
 } from '@wordpress/components';
 import {__} from '@wordpress/i18n';
+import {useHashsum} from '../hooks';
 import CheckboxesControl from '../components/checkboxes-control';
 import TaxonomyControl from '../components/taxonomy-control';
 import URLControl from '../components/url-control';
@@ -41,11 +42,13 @@ const VFBlockFields = props => {
   controls.push(
     fields.map(field => {
       const {name, control, label} = field;
+      const key = useHashsum(field);
       // The ACF "checkbox" field returns an array of one or more checked
       // values whereas "true_false" (here "toggle") uses a boolean value
       if (control === 'checkbox') {
         return (
           <CheckboxesControl
+            key={key}
             name={name}
             attrs={attrs}
             field={field}
@@ -57,6 +60,7 @@ const VFBlockFields = props => {
       if (control === 'number') {
         return (
           <TextControl
+            key={key}
             type="number"
             label={label}
             value={parseInt(attrs[name])}
@@ -69,6 +73,7 @@ const VFBlockFields = props => {
       if (control === 'radio') {
         return (
           <RadioControl
+            key={key}
             label={label}
             selected={attrs[name]}
             onChange={value => onChange(name, value)}
@@ -79,6 +84,7 @@ const VFBlockFields = props => {
       if (control === 'range') {
         return (
           <RangeControl
+            key={key}
             label={label}
             value={parseInt(attrs[name])}
             onChange={value => onChange(name, value)}
@@ -93,6 +99,7 @@ const VFBlockFields = props => {
         const placeholder = field.placeholder || __('Type content…');
         return (
           <RichControl
+            key={key}
             label={label}
             value={attrs[name]}
             tag={tag}
@@ -104,6 +111,7 @@ const VFBlockFields = props => {
       if (control === 'select') {
         return (
           <SelectControl
+            key={key}
             label={label}
             value={attrs[name]}
             onChange={value => onChange(name, value)}
@@ -114,6 +122,7 @@ const VFBlockFields = props => {
       if (control === 'taxonomy') {
         return (
           <TaxonomyControl
+            key={key}
             taxonomy={field.taxonomy}
             label={label}
             value={attrs[name]}
@@ -124,6 +133,7 @@ const VFBlockFields = props => {
       if (control === 'text') {
         return (
           <TextControl
+            key={key}
             type="text"
             label={label}
             value={attrs[name]}
@@ -134,6 +144,7 @@ const VFBlockFields = props => {
       if (control === 'textarea') {
         return (
           <TextareaControl
+            key={key}
             label={label}
             value={attrs[name]}
             onChange={value => onChange(name, value)}
@@ -144,6 +155,7 @@ const VFBlockFields = props => {
       if (control === 'true_false') {
         return (
           <ToggleControl
+            key={key}
             label={label}
             checked={attrs[name]}
             onChange={value => onChange(name, value ? 1 : 0)}
@@ -153,6 +165,7 @@ const VFBlockFields = props => {
       if (control === 'url') {
         return (
           <URLControl
+            key={key}
             label={label}
             value={attrs[name]}
             onChange={value => onChange(name, value)}
