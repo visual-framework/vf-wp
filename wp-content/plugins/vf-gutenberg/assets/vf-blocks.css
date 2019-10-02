@@ -9,7 +9,6 @@
   background-repeat: no-repeat;
   background-size: 50px 50px;
   display: block;
-  min-height: 50px;
   position: relative;
 }
 
@@ -19,6 +18,10 @@
 
 .vf-block[data-editing='true'] {
   background-size: 0px 0px;
+}
+
+.vf-block[data-editing='false'][data-loading='true'] {
+  min-height: 100px;
 }
 
 .vf-block[data-editing='false'][data-loading='false'] {
@@ -81,7 +84,9 @@
 
 .vf-block__iframe {
   border: 0;
+  display: block;
   height: 30px;
+  margin: 0;
   min-width: 100%;
   pointer-events: none;
 }

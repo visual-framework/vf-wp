@@ -7,11 +7,13 @@ import {useStyleName} from './';
  */
 export const withTransientAttribute = (Edit, attr) => {
   return props => {
-    props.transient = {
-      ...(props.transient || {}),
-      [attr.key]: attr.value || props.attributes[attr.key]
-    };
-    return Edit(props);
+    return Edit({
+      ...props,
+      transient: {
+        ...(props.transient || {}),
+        [attr.key]: attr.value || props.attributes[attr.key]
+      }
+    });
   };
 };
 
@@ -47,15 +49,16 @@ export const withTransientStyle = (Edit, opts) => {
  */
 export const withTransientAttributeMap = (Edit, map) => {
   return props => {
-    props.transient = {
-      ...(props.transient || {})
-    };
+    // props.transient = {
+    //   ...(props.transient || {})
+    // };
+    const transient = {...(props.transient || {})};
     map.forEach(item => {
       if (props.attributes.hasOwnProperty(item.from)) {
-        props.transient[item.to] = props.attributes[item.from];
+        transient[item.to] = props.attributes[item.from];
       }
     });
-    return Edit(props);
+    return Edit({...props, transient});
   };
 };
 
@@ -66,16 +69,16 @@ export const withTransientAttributeMap = (Edit, map) => {
 export const withTransientInnerBlocks = Edit => {
   return props => {
     const innerBlocks = select('core/block-editor').getBlocks(props.clientId);
-    props.transient = {
+    const transient = {
       ...(props.transient || {}),
       innerBlocks: []
     };
     innerBlocks.forEach(block =>
-      props.transient.innerBlocks.push({
+      transient.innerBlocks.push({
         name: block.name,
         attributes: {...block.attributes}
       })
     );
-    return Edit(props);
+    return Edit({...props, transient});
   };
 };
