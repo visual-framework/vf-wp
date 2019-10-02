@@ -8,6 +8,7 @@ import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-box';
 
 export default useVFCoreSettings({
+  ver: '1.0.2',
   name: 'vf/box',
   title: __('Box'),
   attributes: {

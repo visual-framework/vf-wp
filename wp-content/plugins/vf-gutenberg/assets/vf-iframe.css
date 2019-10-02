@@ -16,10 +16,10 @@
     0;
 }
 
-.vf-box {
+.vf-box:last-of-type {
   margin-bottom: 0;
 }
 
-.vf-activity {
+.vf-activity:last-of-type {
   margin-bottom: 0;
 }

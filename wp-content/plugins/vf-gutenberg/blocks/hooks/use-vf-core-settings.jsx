@@ -11,14 +11,18 @@ import VFBlockFields from '../vf-block/block-fields';
 import VFBlock from '../vf-block';
 
 const useVFCoreSettings = settings => {
-  let {attributes, fields, styles, allowedBlocks} = settings;
-
   const defaults = useVFDefaults();
 
+  // get block settings
+  let {attributes, fields, styles, allowedBlocks} = settings;
+
+  // block options
   const hasBlocks = Array.isArray(allowedBlocks);
   const hasFields = Array.isArray(fields) && fields.length;
   const hasStyles = Array.isArray(styles) && styles.length;
-  const hasRender = settings.hasRender !== false;
+
+  // Assume true unless specifically opted out
+  const isRenderable = settings.isRenderable !== false;
 
   // Setup block attributes
   attributes = {
@@ -26,19 +30,19 @@ const useVFCoreSettings = settings => {
     ...(attributes || {})
   };
 
-  // Enable "render" attribute for templates
-  if (hasRender) {
+  // Enable `render` attribute for Nunjucks template
+  if (isRenderable) {
     attributes.render = {
       type: 'string',
       default: ''
     };
   }
 
-  // Enable "edit" attribute for fields or inner blocks
+  // Enable `mode` attribute
   if (hasFields || hasBlocks) {
     attributes.mode = {
       type: 'string',
-      default: hasRender ? 'view' : 'edit'
+      default: 'edit'
     };
   }
 
@@ -64,9 +68,17 @@ const useVFCoreSettings = settings => {
   };
 
   let Edit = props => {
+    const ver = settings.ver;
+    const isEditable = !!(props.clientId && 'mode' in attributes);
+    const isEditing = props.attributes.mode === 'edit';
     return (
       <Fragment>
-        <VFBlock {...props} ver={1} hasRender={hasRender} hasFooter={hasRender}>
+        <VFBlock
+          {...props}
+          ver={ver}
+          isRenderable={isRenderable}
+          isEditable={isEditable}
+          isEditing={isEditing}>
           {!!blockFields.length && (
             <VFBlockFields {...props} fields={blockFields} />
           )}

@@ -186,7 +186,7 @@ class VF_Gutenberg {
      * "Localize" script by making config available
      * in the global `vfGutenberg` object
      */
-    $prefix = '<div style="clear:both;height:0;"></div>';
+    $prefix = '<wbr style="display:block;clear:both;height:0;">';
     $suffix = $prefix;
     $stylesheets = array();
     if (function_exists('vf_get_stylesheet')) {

@@ -7,7 +7,7 @@ const useVFDefaults = () => ({
   keywords: [__('VF'), __('Visual Framework')],
   attributes: {
     ver: {
-      type: 'integer'
+      type: 'string'
     }
   },
   supports: {

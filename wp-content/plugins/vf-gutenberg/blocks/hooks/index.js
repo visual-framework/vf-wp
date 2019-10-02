@@ -12,15 +12,15 @@ export const useHashsum = obj => hashsum(obj);
 /**
  * Return a unique ID for Gutenberg block instance
  */
-const ids = {};
+const idStore = {};
 export const useUniqueId = ({clientId, name}) => {
   const [uniqueId, setUniqueId] = useState(null);
   if (!uniqueId) {
-    if (!ids.hasOwnProperty(name)) {
-      ids[name] = 0;
+    if (!idStore.hasOwnProperty(name)) {
+      idStore[name] = 0;
     }
-    ids[name]++;
-    setUniqueId(useHashsum([clientId, ids[name]]));
+    idStore[name]++;
+    setUniqueId(useHashsum([clientId, idStore[name]]));
   }
   return uniqueId;
 };

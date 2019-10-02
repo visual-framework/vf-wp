@@ -8,10 +8,11 @@ import useVFRenderTemplate from './use-vf-render-template';
 
 const renderStore = {};
 
-const useVFRender = (props, {isEditing}) => {
+const useVFRender = props => {
   const [data, setData] = useState(null);
-  if (props.hasRender === false) {
-    return data;
+  const [isLoading, setLoading] = useState(false);
+  if (props.isRenderable === false) {
+    return [data, false];
   }
 
   const hasTemplate = 'render' in props.attributes;
@@ -22,7 +23,7 @@ const useVFRender = (props, {isEditing}) => {
   delete renderAttrs['mode'];
   delete renderAttrs['render'];
 
-  const renderHash = useHashsum(renderAttrs);
+  const renderHash = useHashsum([props.name, renderAttrs]);
 
   const fetchData = async () => {
     if (renderStore.hasOwnProperty(renderHash)) {
@@ -33,10 +34,12 @@ const useVFRender = (props, {isEditing}) => {
     if (hasTemplate) {
       newData = await useVFRenderTemplate(props.name, renderAttrs);
     } else {
-      if (isEditing) {
+      if (props.isEditing) {
         return;
       }
+      setLoading(true);
       newData = await useVFRenderPlugin(props.name, renderAttrs);
+      setLoading(false);
     }
     renderStore[renderHash] = newData;
     setData(newData);
@@ -45,42 +48,13 @@ const useVFRender = (props, {isEditing}) => {
   // provide attributes hash to avoid rerenders
   useEffect(() => {
     fetchData();
-  }, [renderHash, isEditing]);
+  }, [renderHash, props.isEditing]);
 
   if (data && hasTemplate) {
     props.setAttributes({render: data.html});
   }
 
-  return data;
+  return [data, isLoading];
 };
 
 export default useVFRender;
-
-// // Hook in conditional against the rules?
-// const data = (() => {
-//   if (!isRenderable) {
-//     return null;
-//   }
-//   /**
-//    * Include transient properties in the attributes passed to the render
-//    * function that will not be saved to the block JSON.
-//    */
-
-//   render using Nunjucks template
-//   if ('render' in attrs) {
-//     const render = useVFRenderTemplate(props.name, renderAttrs);
-//     if (!render) {
-//       return null;
-//     }
-//     let html = attrs.render;
-//     // update attribute for main block only and not style previews
-//     if (props.clientId) {
-//       props.setAttributes({render: render.html});
-//     } else {
-//       html = render.html;
-//     }
-//     return {html};
-//   }
-//   // render using server-side plugin
-//   return isEditing ? null : useVFRenderPlugin(props.name, renderAttrs);
-// })();

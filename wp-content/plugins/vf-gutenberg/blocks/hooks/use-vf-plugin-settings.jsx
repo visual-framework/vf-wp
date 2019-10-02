@@ -11,18 +11,22 @@ import useVFPlugin from './use-vf-plugin';
 import VFBlockFields from '../vf-block/block-fields';
 import VFBlock from '../vf-block';
 
-const useVFPluginSettings = (name, title) => {
+const useVFPluginSettings = settings => {
   const defaults = useVFDefaults();
-  const {fields, attrs} = useVFPlugin(name);
-  const hasFields = Array.isArray(fields) && fields.length > 0;
 
-  // Setup block attributes from the VF Plugin with defaults
-  const attributes = {
-    ...attrs,
-    ...defaults.attributes
+  // get block settings
+  let {attributes, fields} = useVFPlugin(settings.name);
+
+  // block options
+  const hasFields = Array.isArray(fields) && fields.length;
+
+  // Setup block attributes
+  attributes = {
+    ...defaults.attributes,
+    ...(attributes || {})
   };
 
-  // Enable "edit" mode when fields exist
+  // Enable `mode` attribute
   if (hasFields) {
     attributes.mode = {
       type: 'string',
@@ -30,54 +34,61 @@ const useVFPluginSettings = (name, title) => {
     };
   }
 
-  // Use the ACF defaults in the template
+  // Enable `defaults` attribute to use ACF template defaults
   attributes.defaults = {
     type: 'integer',
     default: 0
   };
 
+  const Edit = props => {
+    const isDefaults = !!props.attributes.defaults;
+    const isEditing = props.attributes.mode === 'edit';
+
+    const DefaultsControl = () => {
+      return (
+        <ToggleControl
+          label={__('Use defaults')}
+          checked={isDefaults}
+          onChange={value => props.setAttributes({defaults: value ? 1 : 0})}
+          help={__('Disable custom settings and use the block defaults.')}
+        />
+      );
+    };
+
+    return (
+      <Fragment>
+        <VFBlock
+          {...props}
+          isEditable={hasFields}
+          isEditing={isEditing}
+          isRenderable>
+          {hasFields && (
+            <VFBlockFields {...props} fields={isDefaults ? [] : fields}>
+              {isDefaults && <DefaultsControl />}
+            </VFBlockFields>
+          )}
+        </VFBlock>
+        {hasFields && (
+          <InspectorControls>
+            <PanelBody title={__('Block Settings')}>
+              <DefaultsControl />
+            </PanelBody>
+          </InspectorControls>
+        )}
+      </Fragment>
+    );
+  };
+
   // Return the Gutenberg settings
   return {
     ...defaults,
-    name: name,
-    title: title,
+    name: settings.name,
+    title: settings.title,
     category: 'vf/wp',
     description: __('Visual Framework (WordPress)'),
     keywords: [...defaults.keywords, __('EMBL Content Hub')],
     attributes: attributes,
-    edit: props => {
-      const isDefaults = !!props.attributes.defaults;
-
-      const DefaultsControl = () => {
-        return (
-          <ToggleControl
-            label={__('Use defaults')}
-            checked={isDefaults}
-            onChange={value => props.setAttributes({defaults: value ? 1 : 0})}
-            help={__('Disable custom settings and use the block defaults.')}
-          />
-        );
-      };
-
-      return (
-        <Fragment>
-          {hasFields && (
-            <InspectorControls>
-              <PanelBody title={__('Block Settings')}>
-                <DefaultsControl />
-              </PanelBody>
-            </InspectorControls>
-          )}
-          <VFBlock {...props} hasFooter={hasFields}>
-            {hasFields && (
-              <VFBlockFields {...props} fields={isDefaults ? [] : fields}>
-                {isDefaults && <DefaultsControl />}
-              </VFBlockFields>
-            )}
-          </VFBlock>
-        </Fragment>
-      );
-    }
+    edit: Edit
   };
 };
 

@@ -9,7 +9,7 @@ export default useVFCoreSettings({
   name: 'vf/activity-item',
   title: __('Activity Item'),
   parent: ['vf/activity-list'],
-  hasRender: false,
+  isRenderable: false,
   attributes: {
     text: {
       type: 'string'

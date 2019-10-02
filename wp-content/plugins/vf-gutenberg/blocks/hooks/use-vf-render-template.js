@@ -4,8 +4,8 @@
 import useNunjucks from './use-nunjucks';
 
 const useVFRenderTemplate = (name, attrs) => {
-  const nunjucks = useNunjucks();
   try {
+    const nunjucks = useNunjucks();
     return {
       html: nunjucks.render(name.replace(/^vf\//, 'vf-'), attrs)
     };

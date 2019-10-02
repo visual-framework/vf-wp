@@ -33,7 +33,7 @@ import vfLede from './vf-core/vf-lede';
 
 // Register VF Plugin blocks from "localized" global settings
 const {plugins} = useVFGutenberg();
-for (const [key, plugin] of Object.entries(plugins)) {
-  const settings = useVFPluginSettings(key, plugin.title);
-  registerBlockType(key, settings);
+for (const [name, plugin] of Object.entries(plugins)) {
+  const settings = useVFPluginSettings({name, title: plugin.title});
+  registerBlockType(name, settings);
 }
