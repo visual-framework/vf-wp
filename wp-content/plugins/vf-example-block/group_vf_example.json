@@ -151,6 +151,23 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_5d958cc25e82d",
+            "label": "Date",
+            "name": "vf_example_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "F j, Y",
+            "first_day": 1
+        },
+        {
             "key": "field_vf_example_taxonomy",
             "label": "Taxonomy",
             "name": "vf_example_taxonomy",
@@ -264,5 +281,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1568879003
+    "modified": 1570082144
 }

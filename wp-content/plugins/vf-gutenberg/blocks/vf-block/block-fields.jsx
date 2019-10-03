@@ -18,6 +18,7 @@ import {
 import {__} from '@wordpress/i18n';
 import {useHashsum} from '../hooks';
 import CheckboxesControl from '../components/checkboxes-control';
+import DateControl from '../components/date-control';
 import TaxonomyControl from '../components/taxonomy-control';
 import URLControl from '../components/url-control';
 import RichControl from '../components/rich-control';
@@ -57,16 +58,32 @@ const VFBlockFields = props => {
           />
         );
       }
+      if (control === 'date') {
+        let date = new Date(attrs[name]);
+        if (isNaN(date.getTime())) {
+          date = Date.now();
+        }
+        return (
+          <DateControl
+            key={key}
+            label={label}
+            currentDate={date}
+            onChange={value => onChange(name, value)}
+          />
+        );
+      }
       if (control === 'number') {
+        const min = parseInt(field['min']) || 1;
+        const max = parseInt(field['max']) || 10;
         return (
           <TextControl
             key={key}
             type="number"
             label={label}
-            value={parseInt(attrs[name])}
+            value={parseInt(attrs[name]) || min}
             onChange={value => onChange(name, parseInt(value))}
-            min={parseInt(field['min'])}
-            max={parseInt(field['max'])}
+            min={min}
+            max={max}
           />
         );
       }
@@ -82,15 +99,18 @@ const VFBlockFields = props => {
         );
       }
       if (control === 'range') {
+        const min = parseInt(field['min']) || 1;
+        const max = parseInt(field['max']) || 10;
+        const step = parseInt(field['step']) || 1;
         return (
           <RangeControl
             key={key}
             label={label}
-            value={parseInt(attrs[name])}
+            value={parseInt(attrs[name]) || min}
             onChange={value => onChange(name, value)}
-            min={parseInt(field['min'])}
-            max={parseInt(field['max'])}
-            step={parseInt(field['step']) || 1}
+            step={step}
+            min={min}
+            max={max}
           />
         );
       }

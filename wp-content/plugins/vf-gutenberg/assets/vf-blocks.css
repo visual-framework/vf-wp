@@ -59,6 +59,11 @@
   margin-bottom: 16px;
 }
 
+.vf-block .components-datetime__date {
+  border: 0;
+  margin: 0;
+}
+
 .vf-block .components-form-toggle__on,
 .vf-block .components-form-toggle__off {
   display: none;

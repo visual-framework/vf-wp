@@ -53,6 +53,7 @@ class VF_Gutenberg {
    */
   private $supported_fields = array(
     'checkbox',
+    'date_picker',
     'email',
     'number',
     'range',
@@ -471,6 +472,9 @@ class VF_Gutenberg {
     }
     if ($type === 'wysiwyg') {
       $attr['control'] = 'rich';
+    }
+    if ($type === 'date_picker') {
+      $attr['control'] = 'date';
     }
     return $attr;
   }
