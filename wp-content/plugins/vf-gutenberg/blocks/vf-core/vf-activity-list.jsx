@@ -34,7 +34,8 @@ export default useVFCoreSettings({
   fields: [
     {
       name: 'heading',
-      control: 'text'
+      control: 'text',
+      label: __('Heading')
     }
   ],
   allowedBlocks: ['vf/activity-item'],
