@@ -4,7 +4,10 @@
 import React from 'react';
 import {__} from '@wordpress/i18n';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import {withTransientInnerBlocks} from '../hooks/with-transient';
+import {
+  withTransientInnerBlocks,
+  withTransientAttributeMap
+} from '../hooks/with-transient';
 import template from '../templates/vf-activity-list';
 
 const withActivityItems = Edit => {
@@ -22,6 +25,22 @@ const withActivityItems = Edit => {
 export default useVFCoreSettings({
   name: 'vf/activity-list',
   title: __('Activity List'),
+  attributes: {
+    heading: {
+      type: 'string',
+      default: __('Activity List')
+    }
+  },
+  fields: [
+    {
+      name: 'heading',
+      control: 'text'
+    }
+  ],
   allowedBlocks: ['vf/activity-item'],
-  withHOC: [[withActivityItems], [withTransientInnerBlocks]]
+  withHOC: [
+    [withTransientAttributeMap, [{from: 'heading', to: 'date'}]],
+    [withActivityItems],
+    [withTransientInnerBlocks]
+  ]
 });
