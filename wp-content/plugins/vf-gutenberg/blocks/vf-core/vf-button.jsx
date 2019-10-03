@@ -7,6 +7,23 @@ import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from '../templates/vf-button';
 
+const withBEMModifiers = Edit => {
+  return props => {
+    const transient = {...(props.transient || {})};
+    transient.style = [];
+    if (props.attributes.outline) {
+      transient.style.push('outline');
+    }
+    if (props.attributes.rounded) {
+      transient.style.push('rounded');
+    }
+    if (props.attributes.pill) {
+      transient.style.push('pill');
+    }
+    return Edit({...props, transient});
+  };
+};
+
 export default useVFCoreSettings({
   name: 'vf/button',
   title: __('Button'),
@@ -26,6 +43,15 @@ export default useVFCoreSettings({
     size: {
       type: 'string',
       default: ''
+    },
+    outline: {
+      type: 'integer'
+    },
+    rounded: {
+      type: 'integer'
+    },
+    pill: {
+      type: 'integer'
     }
   },
   fields: [
@@ -48,6 +74,24 @@ export default useVFCoreSettings({
         {label: __('Small'), value: 'sm'},
         {label: __('Large'), value: 'lg'}
       ]
+    },
+    {
+      name: 'outline',
+      control: 'true_false',
+      label: __('Outline'),
+      inspector: true
+    },
+    {
+      name: 'rounded',
+      control: 'true_false',
+      label: __('Rounded'),
+      inspector: true
+    },
+    {
+      name: 'pill',
+      control: 'true_false',
+      label: __('Pill'),
+      inspector: true
     }
   ],
   styles: [
@@ -65,5 +109,5 @@ export default useVFCoreSettings({
       label: __('Tertiary')
     }
   ],
-  withHOC: [[withTransientStyle, {key: 'theme'}]]
+  withHOC: [[withBEMModifiers], [withTransientStyle, {key: 'theme'}]]
 });
