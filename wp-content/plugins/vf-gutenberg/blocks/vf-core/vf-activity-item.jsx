@@ -13,7 +13,8 @@ export default useVFCoreSettings({
   attributes: {
     text: {
       type: 'string',
-      default: '<strong>Author</strong> published <a href="#">\'Article Title\'</a> on <a href="#">Source</a>.'
+      default:
+        '<strong>Author</strong> published <a href="#">\'Article Title\'</a> on <a href="#">Source</a>.'
     }
   },
   fields: [

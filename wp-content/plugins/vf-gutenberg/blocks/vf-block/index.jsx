@@ -33,7 +33,7 @@ const VFBlock = props => {
   const hasEdit = isEditable && isEditing;
 
   // show "view" mode when not editing and render is available
-  const hasView = (!isEditable || !isEditing) && (!isLoading && render);
+  const hasView = !hasEdit && (!isLoading && render);
 
   // add DOM attributes for styling
   const rootAttrs = {
