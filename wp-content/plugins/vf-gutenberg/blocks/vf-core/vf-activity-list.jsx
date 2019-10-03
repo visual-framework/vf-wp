@@ -12,13 +12,16 @@ import template from '../templates/vf-activity-list';
 
 const withActivityItems = Edit => {
   return props => {
-    props.transient.list = [];
-    props.transient.innerBlocks.forEach(block => {
-      if (block.name === 'vf/activity-item') {
-        props.transient.list.push(block.attributes.text);
-      }
-    });
-    return Edit(props);
+    const transient = {...(props.transient || {})};
+    transient.list = [];
+    if (Array.isArray(transient.innerBlocks)) {
+      transient.innerBlocks.forEach(block => {
+        if (block.name === 'vf/activity-item') {
+          transient.list.push(block.attributes.text);
+        }
+      });
+    }
+    return Edit({...props, transient});
   };
 };
 
