@@ -15,7 +15,7 @@ const components = [
   // Elements
   ...['vf-badge', 'vf-blockquote', 'vf-button', 'vf-divider', 'vf-figure'],
   // Blocks
-  ...['vf-activity-list', 'vf-box', 'vf-lede', 'vf-summary']
+  ...['vf-activity-list', 'vf-box', 'vf-breadcrumbs', 'vf-lede', 'vf-summary']
 ];
 
 const env = new nunjucks.Environment(null, {

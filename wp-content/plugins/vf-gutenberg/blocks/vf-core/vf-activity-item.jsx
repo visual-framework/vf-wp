@@ -1,5 +1,5 @@
 /**
- * VF Framework Badge
+ * VF Framework Activity List
  */
 import React from 'react';
 import {__} from '@wordpress/i18n';

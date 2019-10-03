@@ -1,5 +1,5 @@
 /**
- * VF Framework Lede (WIP)
+ * VF Framework Summary (WIP)
  * TODO: Summary title link (hard-coded in Nunjucks template)
  */
 import React from 'react';
