@@ -16,6 +16,7 @@ import vfBreadcrumbs from './vf-core/vf-breadcrumbs';
 import vfButton from './vf-core/vf-button';
 import vfDivider from './vf-core/vf-divider';
 import vfGridColumn from './vf-core/vf-grid-column';
+import vfGrid from './vf-core/vf-grid';
 import vfLede from './vf-core/vf-lede';
 // import vfSummary from './vf-core/vf-summary';
 
@@ -23,6 +24,7 @@ import vfLede from './vf-core/vf-lede';
 [
   // Grid
   vfGridColumn,
+  vfGrid,
   // Elements
   vfBadge,
   vfBlockquote,

@@ -113,7 +113,8 @@ const useVFCoreSettings = settings => {
     styles: hasStyles ? styles : [],
     supports: {
       ...defaults.supports,
-      customClassName: hasStyles
+      customClassName: hasStyles,
+      inserter: settings.isInsertable !== false
     },
     edit: Edit,
     save: Save
