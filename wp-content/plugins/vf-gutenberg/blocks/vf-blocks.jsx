@@ -15,11 +15,14 @@ import vfBreadcrumbsItem from './vf-core/vf-breadcrumbs-item';
 import vfBreadcrumbs from './vf-core/vf-breadcrumbs';
 import vfButton from './vf-core/vf-button';
 import vfDivider from './vf-core/vf-divider';
+import vfGridColumn from './vf-core/vf-grid-column';
 import vfLede from './vf-core/vf-lede';
 // import vfSummary from './vf-core/vf-summary';
 
 // Register VF Core blocks
 [
+  // Grid
+  vfGridColumn,
   // Elements
   vfBadge,
   vfBlockquote,
