@@ -16,10 +16,14 @@
     0;
 }
 
+.vf-activity:last-of-type {
+  margin-bottom: 0;
+}
+
 .vf-box:last-of-type {
   margin-bottom: 0;
 }
 
-.vf-activity:last-of-type {
+.vf-divider:last-of-type {
   margin-bottom: 0;
 }
