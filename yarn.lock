@@ -981,6 +981,14 @@
   version "1.0.0-alpha.7"
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-content-meta-properties/-/embl-content-meta-properties-1.0.0-alpha.7.tgz#462c92ca444238d3c728a36cc47576dc859c965d"
 
+"@visual-framework/embl-grid@^1.0.0-alpha.7":
+  version "1.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-grid/-/embl-grid-1.0.0-alpha.7.tgz#42a118dd7ca12d4a4b1234d2aa324dcd09c6eaf2"
+
+"@visual-framework/embl-logo@^1.0.0-alpha.7":
+  version "1.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-logo/-/embl-logo-1.0.0-alpha.7.tgz#14859e324fdc421ea36d1b196b766e0fcda5f7b2"
+
 "@visual-framework/vf-activity-group@^1.0.0-alpha.7":
   version "1.0.0-alpha.7"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-group/-/vf-activity-group-1.0.0-alpha.7.tgz#67d3d72559d606a2aac5a4b004a24ea387c63b9f"
