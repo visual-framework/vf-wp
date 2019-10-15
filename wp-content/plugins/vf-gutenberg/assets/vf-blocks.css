@@ -287,6 +287,9 @@
 
 .wp-block[data-type='vf/grid-column'] {
   border: 1px dashed #e2e4e7;
+}
+
+.wp-block[data-type='vf/grid'] .wp-block {
   margin-left: 0;
   margin-right: 0;
   max-width: none;

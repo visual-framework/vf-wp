@@ -1,11 +1,13 @@
 /**
  * VF Framework Grid
  */
-import React from 'react';
-import {InnerBlocks} from '@wordpress/block-editor';
-import {Button, ButtonGroup, Placeholder} from '@wordpress/components';
+import React, {Fragment} from 'react';
+import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
+import {PanelBody, Placeholder} from '@wordpress/components';
+import {withDispatch} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
+import ColumnsControl from '../components/columns-control';
 
 const defaults = useVFDefaults();
 
@@ -43,55 +45,81 @@ settings.save = props => {
   );
 };
 
-settings.edit = props => {
+const withGridDispatch = Edit => {
+  return withDispatch((dispatch, ownProps, {select}) => {
+    const {getBlocks} = select('core/block-editor');
+    const {replaceInnerBlocks} = dispatch('core/block-editor');
+
+    // `columns` attribute `onChange` callback
+    const setColumns = newColumns => {
+      const prevColumns = ownProps.attributes.columns;
+      // merge inner blocks when number of columns is reduced
+      if (newColumns < prevColumns) {
+        const columnBlocks = getBlocks(ownProps.clientId);
+        const mergeBlocks = [];
+        for (let i = newColumns - 1; i < prevColumns; i++) {
+          mergeBlocks.push(...columnBlocks[i].innerBlocks);
+        }
+        replaceInnerBlocks(
+          columnBlocks[newColumns - 1].clientId,
+          mergeBlocks,
+          false
+        );
+      }
+
+      // update block attributes
+      ownProps.setAttributes({columns: newColumns, wizard: 0});
+    };
+    return {
+      setColumns
+    };
+  })(Edit);
+};
+
+settings.edit = withGridDispatch(props => {
+  const {columns, wizard} = props.attributes;
+
   // ensure version is encoded in post content
   props.setAttributes({ver});
 
   // turn on setup wizard if no columns are defined
-  const {columns, wizard} = props.attributes;
   if (columns === 0) {
-    props.setAttributes({wizard: 1 /*, columns: 2*/});
+    props.setAttributes({wizard: 1});
   }
 
-  // callback to set number of columns
-  const setColumns = count => {
-    props.setAttributes({columns: count, wizard: 0});
+  const controlProps = {
+    columns,
+    min: 1,
+    max: 6,
+    onChange: props.setColumns
   };
 
+  // return setup wizard
   if (wizard === 1) {
     return (
-      <Placeholder
-        label={__('Grid Setup')}
-        icon={'admin-generic'}
-        instructions={__('Select the number of columns for the grid')}>
-        <ButtonGroup aria-label={__('Number of Columns')}>
-          {Array(6)
-            .fill()
-            .map((x, i) => (
-              <Button key={i} isLarge onClick={() => setColumns(i + 1)}>
-                {i + 1}
-              </Button>
-            ))}
-        </ButtonGroup>
+      <Placeholder label={__('Grid Setup')} icon={'admin-generic'}>
+        <ColumnsControl {...controlProps} />
       </Placeholder>
     );
   }
 
-  const gridAttrs = {
-    className: 'vf-block-grid',
-    'data-ver': ver,
-    'data-columns': columns
-  };
-
+  // return inner blocks and inspector controls
   return (
-    <div {...gridAttrs}>
-      <InnerBlocks
-        allowedBlocks={['vf/grid-column']}
-        template={Array(columns).fill(['vf/grid-column'])}
-        templateLock="all"
-      />
-    </div>
+    <Fragment>
+      <InspectorControls>
+        <PanelBody title={__('Settings')} initialOpen>
+          <ColumnsControl {...controlProps} isInspector />
+        </PanelBody>
+      </InspectorControls>
+      <div className={'vf-block-grid'} data-ver={ver} data-columns={columns}>
+        <InnerBlocks
+          allowedBlocks={['vf/grid-column']}
+          template={Array(columns).fill(['vf/grid-column'])}
+          templateLock="all"
+        />
+      </div>
+    </Fragment>
   );
-};
+});
 
 export default settings;
