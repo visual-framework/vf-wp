@@ -102,9 +102,23 @@ function vf__wp_head__inline() {
 }
 
 /**
+ * Allow enqueued scripts to use `async` or `defer` attributes
+ *  by prefixing `--async` or `--defer` to the `$handle`
+ */
+if ( ! is_admin()) {
+  add_filter('script_loader_tag', 'vf__script_loader_tag', 10, 2);
+}
+function vf__script_loader_tag($tag, $handle) {
+  if (preg_match('#--(async|defer)$#', $handle, $matches)) {
+    $tag = str_replace('<script ', "<script {$matches[1]} ", $tag);
+  }
+  return $tag;
+}
+
+/**
  * Load CSS and JavaScript assets
  */
-add_action('wp_enqueue_scripts', 'vf__wp_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'vf__wp_enqueue_scripts', 20);
 
 function vf__wp_enqueue_scripts() {
   $theme = wp_get_theme();
