@@ -43,6 +43,16 @@ class VF_EBI_Global_Footer extends VF_Plugin {
       array($this, 'enqueue_assets'),
       10
     );
+
+    // Ideally this should go in some sort of "EBI CSS+JS plugin" along with
+    // the v1.3 CSS+JS
+    add_filter('body_class', 'vf_ebi_global_footer__body_class');
+
+    function vf_ebi_global_footer__body_class($classes) {
+      $classes[] = 'ebi-vf1-integration'; // enable the VF 1.x workarounds
+      return $classes;
+    }
+    
   }
 
   function api_url(array $query_vars = array()) {
