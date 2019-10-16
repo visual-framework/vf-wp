@@ -209,9 +209,11 @@ gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
  */
 gulp.task(
   'build',
-  'vf-css:generate-component-css',
-  gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks'),
-  'vf-component-assets'
+  gulp.series(
+    'vf-css:generate-component-css',
+    gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks'),
+    'vf-component-assets'
+  )
 );
 
 /**
