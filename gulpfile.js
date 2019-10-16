@@ -4,7 +4,6 @@ const pump = require('pump');
 const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
 const rename = require('gulp-rename');
-const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
 const webpack = require('webpack');
@@ -55,8 +54,6 @@ config.plugin_path = path.resolve(config.content_path, 'plugins');
 config.assets_path = path.resolve(config.theme_path, 'assets');
 
 config.content_glob = path.join(config.content_path, '**/*');
-config.style_path = path.join(config.theme_path, 'style.css');
-config.sass_glob = [path.join(config.assets_path, 'scss/**/*.scss')];
 
 const js_glob = path.join(config.assets_path, 'js/*.js');
 config.js_glob = [js_glob, '!' + js_glob.replace(/\.js$/, '.min.js')];
@@ -123,37 +120,6 @@ config.vf_blocks_webpack = mode => ({
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   }
-});
-
-/**
- * Compile and prefix Sass
- * TODO: remove VF includes - not necessary?
- */
-// const vf_path = path.join(__dirname, '../vf-core/');
-gulp.task('css', callback => {
-  pump(
-    [
-      gulp.src(config.sass_glob),
-      sass({
-        outputStyle: 'expanded'
-        // includePaths: [
-        //   vf_path,
-        //   path.join(vf_path, 'assets/scss'),
-        //   path.join(vf_path, 'components/utilities'),
-        //   path.join(vf_path, 'components/elements'),
-        //   path.join(vf_path, 'components/blocks'),
-        //   path.join(vf_path, 'components/containers'),
-        //   path.join(vf_path, 'components/grids')
-        // ]
-      }),
-      autoprefixer({
-        grid: true,
-        remove: false
-      }),
-      gulp.dest(path.join(config.assets_path, 'css'))
-    ],
-    callback
-  );
 });
 
 /**
@@ -232,19 +198,18 @@ gulp.task('vf-blocks', () => {
 /**
  * Watch tasks
  */
-gulp.task('watch-css', () => gulp.watch(config.sass_glob, gulp.series('css')));
 gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
 gulp.task('watch-blocks', () =>
   gulp.watch(config.vf_blocks_glob, gulp.series('vf-blocks'))
 );
-gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-blocks', 'vf-watch'));
+gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
 
 /**
  * Build task
  */
 gulp.task(
   'build',
-  gulp.parallel('css', 'js', 'vf-css', 'vf-scripts', 'vf-blocks')
+  gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks')
 );
 
 /**
@@ -252,5 +217,5 @@ gulp.task(
  */
 gulp.task(
   'default',
-  gulp.series(gulp.parallel('css', 'js', 'vf-css', 'vf-scripts', 'vf-blocks'), 'watch')
+  gulp.series(gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks'), 'watch')
 );
