@@ -18,16 +18,24 @@ import {
 import {__} from '@wordpress/i18n';
 import {useHashsum} from '../hooks';
 import CheckboxesControl from '../components/checkboxes-control';
+import ColumnsControl from '../components/columns-control';
 import DateControl from '../components/date-control';
 import TaxonomyControl from '../components/taxonomy-control';
 import URLControl from '../components/url-control';
 import RichControl from '../components/rich-control';
 
+// Allow control name variations to match ACF fields
+const DATE_CONTROLS = ['date', 'date_picker'];
+const RICH_CONTROLS = ['rich', 'wysiwyg'];
+const TEXT_CONTROLS = ['text', 'email'];
+const BOOL_CONTROLS = ['bool', 'boolean', 'toggle', 'true_false'];
+
+// Fields component
 const VFBlockFields = props => {
   const {attributes: attrs, setAttributes, fields} = props;
 
   // Generic event handler to update an attribute
-  const onChange = (name, value) => {
+  const handleChange = (name, value) => {
     const attr = {};
     attr[name] = value;
     setAttributes({...attr});
@@ -42,8 +50,12 @@ const VFBlockFields = props => {
   // Map fields and add array of controls
   controls.push(
     fields.map(field => {
-      const {name, control, label} = field;
+      let {control, help, label, name, onChange} = field;
       const key = useHashsum(field);
+
+      // Fallback to default handler
+      onChange = typeof onChange === 'function' ? onChange : handleChange;
+
       // The ACF "checkbox" field returns an array of one or more checked
       // values whereas "true_false" (here "toggle") uses a boolean value
       if (control === 'checkbox') {
@@ -58,7 +70,23 @@ const VFBlockFields = props => {
           />
         );
       }
-      if (control === 'date') {
+      // Custom control to manage number of grid columns
+      if (control === 'columns') {
+        const min = parseInt(field.min) || 1;
+        const max = parseInt(field.max) || 6;
+        const value = parseInt(field.value) || 0;
+        return (
+          <ColumnsControl
+            key={key}
+            min={min}
+            max={max}
+            value={value}
+            onChange={field.onChange}
+            isInspector={!!field.isInspector}
+          />
+        );
+      }
+      if (DATE_CONTROLS.includes(control)) {
         let date = new Date(attrs[name]);
         if (isNaN(date.getTime())) {
           date = Date.now();
@@ -114,7 +142,7 @@ const VFBlockFields = props => {
           />
         );
       }
-      if (control === 'rich') {
+      if (RICH_CONTROLS.includes(control)) {
         const tag = field.tag || 'p';
         const placeholder = field.placeholder || __('Type content…');
         return (
@@ -150,7 +178,7 @@ const VFBlockFields = props => {
           />
         );
       }
-      if (control === 'text') {
+      if (TEXT_CONTROLS.includes(control)) {
         return (
           <TextControl
             key={key}
@@ -172,10 +200,11 @@ const VFBlockFields = props => {
         );
       }
       // Return integer value to match ACF field instead of boolean
-      if (control === 'true_false') {
+      if (BOOL_CONTROLS.includes(control)) {
         return (
           <ToggleControl
             key={key}
+            help={help}
             label={label}
             checked={attrs[name]}
             onChange={value => onChange(name, value ? 1 : 0)}

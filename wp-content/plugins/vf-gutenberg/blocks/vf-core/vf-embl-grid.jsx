@@ -1,5 +1,6 @@
 /**
- * VF Framework Grid
+ * VF EMBL Grid
+ * Based on `vf-grid.jsx`
  */
 import React, {Fragment} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
@@ -15,8 +16,8 @@ const ver = '1.0.0';
 
 const settings = {
   ...defaults,
-  name: 'vf/grid',
-  title: __('Grid'),
+  name: 'vf/embl-grid',
+  title: __('EMBL Grid'),
   category: 'vf/core',
   description: __('Visual Framework (core)'),
   attributes: {
@@ -28,6 +29,14 @@ const settings = {
     columns: {
       type: 'integer',
       default: 0
+    },
+    sidebar: {
+      type: 'integer',
+      default: 0
+    },
+    centered: {
+      type: 'integer',
+      default: 0
     }
   }
 };
@@ -36,8 +45,8 @@ settings.save = props => {
   if (props.attributes.placeholder === 1) {
     return null;
   }
-  const {columns} = props.attributes;
-  const className = `vf-grid | vf-grid__col-${columns}`;
+  // const {columns} = props.attributes;
+  const className = `embl-grid`;
   return (
     <div className={className}>
       <InnerBlocks.Content />
@@ -66,12 +75,32 @@ const withGridDispatch = Edit => {
           false
         );
       }
-
       // Update block attributes
-      ownProps.setAttributes({columns: newColumns, placeholder: 0});
+      ownProps.setAttributes({
+        placeholder: 0,
+        columns: newColumns
+      });
+      if (newColumns !== 3) {
+        ownProps.setAttributes({sidebar: 0, centered: 0});
+      }
     };
+
+    // Toggle attribute `onChange` callback
+    const setToggle = (name, value) => {
+      value = value ? 1 : 0;
+      ownProps.setAttributes({
+        sidebar: 0,
+        centered: 0,
+        [name]: value
+      });
+      if (value) {
+        setColumns(3);
+      }
+    };
+
     return {
-      setColumns
+      setColumns,
+      setToggle
     };
   })(Edit);
 };
@@ -79,10 +108,10 @@ const withGridDispatch = Edit => {
 settings.edit = withGridDispatch(props => {
   const {columns, placeholder} = props.attributes;
 
-  // Ensure version is encoded in post content
+  // ensure version is encoded in post content
   props.setAttributes({ver});
 
-  // Turn on setup placeholder if no columns are defined
+  // turn on setup placeholder if no columns are defined
   if (columns === 0) {
     props.setAttributes({placeholder: 1});
   }
@@ -91,10 +120,22 @@ settings.edit = withGridDispatch(props => {
   const fields = [
     {
       control: 'columns',
-      min: 1,
-      max: 6,
+      min: 2,
+      max: 4,
       value: columns,
       onChange: props.setColumns
+    },
+    {
+      label: __('With Sidebar'),
+      control: 'toggle',
+      name: 'sidebar',
+      onChange: props.setToggle
+    },
+    {
+      label: __('Centered Content'),
+      control: 'toggle',
+      name: 'centered',
+      onChange: props.setToggle
     }
   ];
 
@@ -102,8 +143,8 @@ settings.edit = withGridDispatch(props => {
   if (placeholder === 1) {
     return (
       <div className={`vf-block vf-block--placeholder ${props.className}`}>
-        <Placeholder label={__('Grid')} icon={'admin-generic'}>
-          <VFBlockFields fields={fields} />
+        <Placeholder label={__('EMBL Grid')} icon={'admin-generic'}>
+          <VFBlockFields {...props} fields={fields} />
         </Placeholder>
       </div>
     );
@@ -111,13 +152,15 @@ settings.edit = withGridDispatch(props => {
 
   // Amend fields for inspector
   fields[0].isInspector = true;
+  fields[1].help = __('3 column only.');
+  fields[2].help = fields[1].help;
 
   // Return inner blocks and inspector controls
   return (
     <Fragment>
       <InspectorControls>
         <PanelBody title={__('Settings')} initialOpen>
-          <VFBlockFields fields={fields} />
+          <VFBlockFields {...props} fields={fields} />
         </PanelBody>
       </InspectorControls>
       <div className={'vf-block-grid'} data-ver={ver} data-columns={columns}>

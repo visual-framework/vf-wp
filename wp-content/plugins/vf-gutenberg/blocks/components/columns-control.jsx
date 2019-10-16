@@ -7,14 +7,14 @@ import {__} from '@wordpress/i18n';
 import {BaseControl, Button, ButtonGroup} from '@wordpress/components';
 
 const ColumnsControl = props => {
-  const {columns, min, max, onChange} = props;
+  const {value, min, max, onChange} = props;
   const control = {
     label: __('Number of Columns')
   };
   if (props.isInspector) {
-    control.help = __('Reducing columns may reorganise the content within.');
+    control.help = __('Content may be reorganised when columns are reduced.');
   }
-  const isPressed = i => i + min === columns;
+  const isPressed = i => i + min === value;
   return (
     <BaseControl {...control}>
       <ButtonGroup aria-label={control.label}>

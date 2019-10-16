@@ -435,11 +435,6 @@ class VF_Gutenberg {
       $attr['type'] = 'number';
     }
     if (in_array($type, array(
-      'email'
-    ))) {
-      $attr['control'] = 'text';
-    }
-    if (in_array($type, array(
       'range',
       'taxonomy',
       'true_false'
@@ -469,12 +464,6 @@ class VF_Gutenberg {
     }
     if ($type === 'taxonomy') {
       $attr['taxonomy'] = $field['taxonomy'];
-    }
-    if ($type === 'wysiwyg') {
-      $attr['control'] = 'rich';
-    }
-    if ($type === 'date_picker') {
-      $attr['control'] = 'date';
     }
     return $attr;
   }
