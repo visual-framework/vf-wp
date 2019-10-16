@@ -80,9 +80,9 @@ const VFBlockFields = props => {
             key={key}
             min={min}
             max={max}
+            help={help}
             value={value}
             onChange={field.onChange}
-            isInspector={!!field.isInspector}
           />
         );
       }

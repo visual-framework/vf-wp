@@ -11,8 +11,8 @@ const ColumnsControl = props => {
   const control = {
     label: __('Number of Columns')
   };
-  if (props.isInspector) {
-    control.help = __('Content may be reorganised when columns are reduced.');
+  if (props.help) {
+    control.help = props.help;
   }
   const isPressed = i => i + min === value;
   return (

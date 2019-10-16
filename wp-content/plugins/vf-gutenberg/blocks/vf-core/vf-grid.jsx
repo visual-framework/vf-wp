@@ -110,7 +110,7 @@ settings.edit = withGridDispatch(props => {
   }
 
   // Amend fields for inspector
-  fields[0].isInspector = true;
+  fields[0].help = __('Content may be reorganised when columns are reduced.');
 
   // Return inner blocks and inspector controls
   return (

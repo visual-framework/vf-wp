@@ -42,11 +42,17 @@ const settings = {
 };
 
 settings.save = props => {
-  if (props.attributes.placeholder === 1) {
+  const {placeholder, sidebar, centered} = props.attributes;
+  if (placeholder === 1) {
     return null;
   }
-  // const {columns} = props.attributes;
-  const className = `embl-grid`;
+  let className = 'embl-grid';
+  if (!!sidebar) {
+    className += ' embl-grid--has-sidebar';
+  }
+  if (!!centered) {
+    className += ' embl-grid--has-centered-content';
+  }
   return (
     <div className={className}>
       <InnerBlocks.Content />
@@ -106,7 +112,7 @@ const withGridDispatch = Edit => {
 };
 
 settings.edit = withGridDispatch(props => {
-  const {columns, placeholder} = props.attributes;
+  const {columns, sidebar, centered, placeholder} = props.attributes;
 
   // ensure version is encoded in post content
   props.setAttributes({ver});
@@ -151,7 +157,7 @@ settings.edit = withGridDispatch(props => {
   }
 
   // Amend fields for inspector
-  fields[0].isInspector = true;
+  fields[0].help = __('Content may be reorganised when columns are reduced.');
   fields[1].help = __('3 column only.');
   fields[2].help = fields[1].help;
 
@@ -163,7 +169,12 @@ settings.edit = withGridDispatch(props => {
           <VFBlockFields {...props} fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <div className={'vf-block-grid'} data-ver={ver} data-columns={columns}>
+      <div
+        className={'vf-block-grid'}
+        data-ver={ver}
+        data-embl={true}
+        data-sidebar={sidebar}
+        data-centered={centered}>
         <InnerBlocks
           allowedBlocks={['vf/grid-column']}
           template={Array(columns).fill(['vf/grid-column'])}
