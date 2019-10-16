@@ -58,7 +58,7 @@ function vf__admin_enqueue_scripts() {
 
   wp_enqueue_style(
     'vf_admin',
-    $dir . '/assets/css/admin.css',
+    $dir . '/assets/assets/vfwp-admin/vfwp-admin.css',
     array(),
     $theme->version,
     'all'

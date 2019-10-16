@@ -160,7 +160,6 @@ function vf__wp_enqueue_scripts() {
   // Add theme specific stylesheet
   wp_enqueue_style(
     'vfwp',
-    $dir . '/assets/css/main.css',
     $dir . '/assets/css/styles.css',
     array('vf'),
     $theme->version,

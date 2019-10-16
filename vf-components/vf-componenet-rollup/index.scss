@@ -163,6 +163,7 @@ html, button {
 
 /* Local components */
 @import 'vf-local-overrides/vf-local-overrides.scss';
-@import 'vfwp-admin/vfwp-admin.scss';
 @import 'vfwp-main/vfwp-main.scss';
 
+// @import 'vfwp-admin/vfwp-admin.scss';
+// vfwp-admin.css is instead included in admin.php
