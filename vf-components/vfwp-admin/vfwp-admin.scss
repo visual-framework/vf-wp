@@ -7,6 +7,14 @@
 // If you don't have any Sass, you can trim this block down to:
 // "This page was intentionally left blank"
 
+@import 'package.variables.scss';
+// Debug information from component's `package.json`:
+// ---
+/*!
+ * Component: #{map-get($componentInfo, 'name')}
+ * Version: #{map-get($componentInfo, 'version')}
+ * Location: #{map-get($componentInfo, 'location')}
+ */
 
 @import 'vfwp-admin.variables.scss';
 
