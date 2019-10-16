@@ -69,7 +69,7 @@ html, button {
   @import 'vf-link/vf-link--primary.scss';
   @import 'vf-link/vf-link--secondary.scss';
   @import 'vf-link/vf-link--disabled.scss';
-@import 'vf-logo/vf-logo.scss';
+// @import 'vf-logo/vf-logo.scss';
 @import 'embl-logo/embl-logo.scss';
 @import 'vf-form__core/vf-form__core.scss';
 @import 'vf-button/vf-button.scss';
@@ -146,11 +146,11 @@ html, button {
 
 /* All Visual Framework Boilerplates */
 
-@import 'embl-group-page/embl-group-page.scss';
+// @import 'embl-group-page/embl-group-page.scss';
 
 /* All Visual Framework Deprecated components */
 
-@import 'vf-deprecated/vf-deprecated.scss';
+// @import 'vf-deprecated/vf-deprecated.scss';
 
 /* All Visual Framework Utility and high-specificity components */
 
@@ -158,15 +158,11 @@ html, button {
 @import 'vf-text/vf-text.scss';
 @import 'vf-utility-classes/vf-utility-classes.scss';
 
-// This is a demonstration of vf-core's ability to warn and proceed on missing
-// sass imports
-@import 'vf-somepattern/vf-i-dont-exist.scss';
-
-/* Local components */
-@import 'vf-sample/vf-sample.scss';
-@import 'vf-local-overrides/vf-local-overrides.scss';
-@import 'vf-wpadmin/vf-wpadmin.scss';
-@import 'vf-wpmain/vf-wpmain.scss';
-
 // Compatibility fixes when using with the EBI 1.x CSS
 @import 'ebi-vf1-integration/ebi-vf1-integration.scss';
+
+/* Local components */
+@import 'vf-local-overrides/vf-local-overrides.scss';
+@import 'vfwp-admin/vfwp-admin.scss';
+@import 'vfwp-main/vfwp-main.scss';
+
