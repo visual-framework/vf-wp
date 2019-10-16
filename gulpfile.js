@@ -209,7 +209,9 @@ gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
  */
 gulp.task(
   'build',
-  gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks')
+  'vf-css:generate-component-css',
+  gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks'),
+  'vf-component-assets'
 );
 
 /**
@@ -217,5 +219,5 @@ gulp.task(
  */
 gulp.task(
   'default',
-  gulp.series(gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks'), 'watch')
+  gulp.series(gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks', 'vf-component-assets', 'vf-css:generate-component-css'), 'watch')
 );
