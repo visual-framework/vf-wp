@@ -161,7 +161,7 @@ function vf__wp_enqueue_scripts() {
   wp_enqueue_style(
     'vfwp',
     $dir . '/assets/css/styles.css',
-    array('vf'),
+    array(),
     $theme->version,
     'all'
   );
