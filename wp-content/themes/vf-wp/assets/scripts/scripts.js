@@ -1303,4 +1303,10 @@ function vfLocalOverrides(firstPassedVar) {
  * Import this as a quick way to get *everything*,
  *
  */
+vfBanner();
+vfMastheadSetStyle();
+vfTabs();
+vfFormFloatLabels();
+emblContentHub();
+emblBreadcrumbs();
 vfLocalOverrides();

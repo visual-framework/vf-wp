@@ -45,12 +45,13 @@ yarn install
 
 This project makes use of [Visual Framework components](https://visual-framework.github.io/vf-welcome) to build its CSS and JS.
 
-- `gulp vf-css` 
+- `gulp build` 
      - to build `vf-components/vf-componenet-rollup/index.scss` 
-     - to make `wp-content/themes/vf-wp/assets/css/styles.css`
-- `gulp vf-scripts` 
+          - to make `wp-content/themes/vf-wp/assets/css/styles.css`
      - to build `vf-components/vf-componenet-rollup/scripts.scss` 
-     - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
+          - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
+- `gulp default`
+     - to launch local developement of the above with a `watch` task
 
 Nb: the `gulp build` command will also invoke the above. 
 
