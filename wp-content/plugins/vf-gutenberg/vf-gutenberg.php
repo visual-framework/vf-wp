@@ -76,8 +76,8 @@ class VF_Gutenberg {
    * Convert a Gutenberg block name to a VF_Plugin post name
    * e.g. "vf/latest-posts" to "vf_latest_posts"
    */
-  static function name_block_to_post($str) {
-    return preg_replace('/[^\w]/', '_', $str);
+  static function name_block_to_post($str, $separator = '_') {
+    return preg_replace('/[^\w]/', $separator, $str);
   }
 
   /**
@@ -166,9 +166,11 @@ class VF_Gutenberg {
    * Enqueue WP Admin CSS and JavaScript
    */
   function enqueue_block_editor_assets() {
+    $vfwp_blocks = get_template_directory_uri()
+      . '/assets/assets/vfwp-gutenberg-blocks/vfwp-gutenberg-blocks.css';
     wp_enqueue_style(
       'vfwp-gutenberg-blocks',
-      get_template_directory_uri() . '/assets/assets/vfwp-gutenberg-blocks/vfwp-gutenberg-blocks.css',
+      $vfwp_blocks,
       array(),
       false,
       'all'
@@ -189,12 +191,26 @@ class VF_Gutenberg {
      */
     $prefix = '<wbr style="display:block;clear:both;height:0;">';
     $suffix = $prefix;
-    $stylesheets = array();
-    $stylesheets[] = get_template_directory_uri() . '/assets/css/styles.css';
-    $stylesheets[] = get_template_directory_uri() . '/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css';
-    foreach ($stylesheets as $href) {
-      $prefix .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
+
+    // Inline stylesheets to prefix
+    $dir = get_template_directory();
+    $stylesheets = array(
+      "{$dir}/assets/css/styles.css",
+      "{$dir}/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css"
+    );
+    foreach ($stylesheets as $path) {
+      if (file_exists($path)) {
+        ob_start();
+?>
+<style type="text/css">
+<?php include($path); ?>
+</style>
+<?php
+        $prefix .= ob_get_contents();
+        ob_end_clean();
+      }
     }
+
     global $post;
     $config = array(
       'renderPrefix' => $prefix,
@@ -223,21 +239,13 @@ class VF_Gutenberg {
    */
   function ajax_fetch_block() {
     $this->ajax_validate_nonce();
-    $html = '';
-    $stylesheets = array();
-    $stylesheets[] = get_template_directory_uri() . '/assets/css/styles.css';
-    $stylesheets[] = get_template_directory_uri() . '/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css';
-    // $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
-    foreach ($stylesheets as $href) {
-      $html .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
+    if (!isset($_POST['name'])) {
+      wp_send_json_error();
     }
-    // render block
-    if (isset($_POST['name'])) {
-      $html .= $this->render_block('', array(
-        'blockName' => $_POST['name'],
-        'attrs' => isset($_POST['attrs']) ? $_POST['attrs'] : false
-      ));
-    }
+    $html = $this->render_block('', array(
+      'blockName' => $_POST['name'],
+      'attrs'     => isset($_POST['attrs']) ? $_POST['attrs'] : false
+    ));
     wp_send_json_success(
       array(
         'hash' => hash('crc32', $html),
