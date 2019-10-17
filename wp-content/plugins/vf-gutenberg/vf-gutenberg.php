@@ -222,9 +222,7 @@ class VF_Gutenberg {
     $this->ajax_validate_nonce();
     $html = '';
     $stylesheets = array();
-    if (function_exists('vf_get_stylesheet')) {
-      $stylesheets[] = vf_get_stylesheet();
-    }
+    $stylesheets[] = get_template_directory_uri() . '/assets/css/styles.css';
     $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
     foreach ($stylesheets as $href) {
       $html .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';

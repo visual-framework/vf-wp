@@ -160,8 +160,8 @@ function vf__wp_enqueue_scripts() {
   // Add theme specific stylesheet
   wp_enqueue_style(
     'vfwp',
-    $dir . '/assets/css/main.css',
-    array('vf'),
+    $dir . '/assets/css/styles.css',
+    array(),
     $theme->version,
     'all'
   );
@@ -172,6 +172,14 @@ function vf__wp_enqueue_scripts() {
     $dir . '/assets/js/accessible-autocomplete.min.js',
     array(),
     '1.6.2',
+    true
+  );
+  // Register VF JS
+  wp_register_script(
+    'vf-scripts',
+    $dir . '/assets/scripts/scripts.js',
+    array(),
+    $theme->version,
     true
   );
   wp_register_style(

@@ -4,26 +4,56 @@ const pump = require('pump');
 const gulp = require('gulp');
 const autoprefixer = require('gulp-autoprefixer');
 const rename = require('gulp-rename');
-const sass = require('gulp-sass');
 const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
 const webpack = require('webpack');
 const chalk = require('chalk');
 
+// -----------------------------------------------------------------------------
+// Configuration
+// -----------------------------------------------------------------------------
+
+// Pull in some optional configuration from the package.json file, a la:
+// "vfConfig": {
+//   "vfName": "My Component Library",
+//   "vfNameSpace": "myco-",
+//   "vfComponentPath": "./src/components",
+//   "vfComponentDirectories": [
+//      "vf-core-components",
+//      "../node_modules/your-optional-collection-of-dependencies"
+//     NOTE: Don't forget to symlink: `cd components` `ln -s ../node_modules/your-optional-collection-of-dependencies`
+//    ],
+//   "vfBuildDestination": "./build",
+//   "vfThemePath": "@frctl/mandelbrot"
+// },
+// all settings are optional
+// todo: this could/should become a JS module
+const config = JSON.parse(fs.readFileSync('./package.json'));
+const vfCoreConfig = JSON.parse(fs.readFileSync(require.resolve('@visual-framework/vf-core/package.json')));
+config.vfConfig = config.vfConfig || [];
+global.vfName = config.vfConfig.vfName || "Visual Framework 2.0";
+global.vfNamespace = config.vfConfig.vfNamespace || "vf-";
+global.vfComponentPath = config.vfConfig.vfComponentPath || path.resolve('.', __dirname + '/components');
+global.vfBuildDestination = config.vfConfig.vfBuildDestination || __dirname + '/temp/build-files';
+global.vfThemePath = config.vfConfig.vfThemePath || './tools/vf-frctl-theme';
+global.vfVersion = vfCoreConfig.version || 'not-specified';
+const componentPath = path.resolve('.', global.vfComponentPath).replace(/\\/g, '/');
+const componentDirectories = config.vfConfig.vfComponentDirectories || ['vf-core-components'];
+const buildDestionation = path.resolve('.', global.vfBuildDestination).replace(/\\/g, '/');
+
+// Tasks to build/run vf-core component system
+require('./node_modules/\@visual-framework/vf-core/tools/gulp-tasks/_gulp_rollup.js')(gulp, path, componentPath, componentDirectories, buildDestionation);
+
 /**
  * Setup configuration paths
  */
-const config = {
-  content_path: path.resolve(__dirname, 'wp-content')
-};
+config.content_path = path.resolve(__dirname, 'wp-content');
 
 config.theme_path = path.resolve(config.content_path, 'themes/vf-wp');
 config.plugin_path = path.resolve(config.content_path, 'plugins');
 config.assets_path = path.resolve(config.theme_path, 'assets');
 
 config.content_glob = path.join(config.content_path, '**/*');
-config.style_path = path.join(config.theme_path, 'style.css');
-config.sass_glob = [path.join(config.assets_path, 'scss/**/*.scss')];
 
 const js_glob = path.join(config.assets_path, 'js/*.js');
 config.js_glob = [js_glob, '!' + js_glob.replace(/\.js$/, '.min.js')];
@@ -90,37 +120,6 @@ config.vf_blocks_webpack = mode => ({
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   }
-});
-
-/**
- * Compile and prefix Sass
- * TODO: remove VF includes - not necessary?
- */
-// const vf_path = path.join(__dirname, '../vf-core/');
-gulp.task('css', callback => {
-  pump(
-    [
-      gulp.src(config.sass_glob),
-      sass({
-        outputStyle: 'expanded'
-        // includePaths: [
-        //   vf_path,
-        //   path.join(vf_path, 'assets/scss'),
-        //   path.join(vf_path, 'components/utilities'),
-        //   path.join(vf_path, 'components/elements'),
-        //   path.join(vf_path, 'components/blocks'),
-        //   path.join(vf_path, 'components/containers'),
-        //   path.join(vf_path, 'components/grids')
-        // ]
-      }),
-      autoprefixer({
-        grid: true,
-        remove: false
-      }),
-      gulp.dest(path.join(config.assets_path, 'css'))
-    ],
-    callback
-  );
 });
 
 /**
@@ -199,17 +198,28 @@ gulp.task('vf-blocks', () => {
 /**
  * Watch tasks
  */
-gulp.task('watch-css', () => gulp.watch(config.sass_glob, gulp.series('css')));
 gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
 gulp.task('watch-blocks', () =>
   gulp.watch(config.vf_blocks_glob, gulp.series('vf-blocks'))
 );
-gulp.task('watch', gulp.parallel('watch-css', 'watch-js', 'watch-blocks'));
+gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
+
+/**
+ * Build task
+ */
+gulp.task(
+  'build',
+  gulp.series(
+    'vf-css:generate-component-css',
+    gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks'),
+    'vf-component-assets'
+  )
+);
 
 /**
  * Default task
  */
 gulp.task(
   'default',
-  gulp.series(gulp.parallel('css', 'js', 'vf-blocks'), 'watch')
+  gulp.series(gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks', 'vf-component-assets', 'vf-css:generate-component-css'), 'watch')
 );
