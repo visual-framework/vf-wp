@@ -40,13 +40,8 @@ https://dev.assets.emblstatic.net/vf/develop/scripts/scripts.js
 Versioned URLs of CSS, JS:
 
 ```
-https://dev.assets.emblstatic.net/vf/v2.0/css/styles.min.css
-https://dev.assets.emblstatic.net/vf/v2.0/scripts/scripts.js
-```
-
-```
-https://dev.assets.emblstatic.net/vf/v2.0.0-alpha.4/css/styles.min.css
-https://dev.assets.emblstatic.net/vf/v2.0.0-alpha.4/scripts/scripts.js
+https://dev.assets.emblstatic.net/vf/v2.0.0-beta.3/css/styles.min.css
+https://dev.assets.emblstatic.net/vf/v2.0.0-beta.3/scripts/scripts.js
 ```
 
 EMBL ContentHub API:

@@ -26,10 +26,20 @@ the brand-specific "VF 2.0 for the EMBL Design Language".
 
 ```bash
 # Install dev dependencies
-npm install
-# List build tasks
-npx gulp --tasks
+yarn install
 ```
+
+This project makes use of [Visual Framework components](https://visual-framework.github.io/vf-welcome) to build its CSS and JS.
+
+- `gulp build`
+     - to build `vf-components/vf-componenet-rollup/index.scss`
+          - to make `wp-content/themes/vf-wp/assets/css/styles.css`
+     - to build `vf-components/vf-componenet-rollup/scripts.scss`
+          - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
+- `gulp default`
+     - to launch local developement of the above with a `watch` task
+
+Nb: the `gulp build` command will also invoke the above.
 
 ### EMBL + EMBL-EBI site development
 

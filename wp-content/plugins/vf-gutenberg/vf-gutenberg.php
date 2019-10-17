@@ -226,6 +226,13 @@ class VF_Gutenberg {
   function ajax_fetch_block() {
     $this->ajax_validate_nonce();
     $html = '';
+    $stylesheets = array();
+    $stylesheets[] = get_template_directory_uri() . '/assets/css/styles.css';
+    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
+    foreach ($stylesheets as $href) {
+      $html .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
+    }
+    // render block
     if (isset($_POST['name'])) {
       $html .= $this->render_block('', array(
         'blockName' => $_POST['name'],

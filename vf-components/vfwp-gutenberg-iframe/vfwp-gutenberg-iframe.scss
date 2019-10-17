@@ -1,0 +1,47 @@
+// vfwp-gutenberg-iframe
+
+// **Thinking about deleting this file?**
+// If your component needs no CSS/Sass, we still recommend leaving the
+// scss files in place. As this is primarily a CSS framework, it is better to
+// leave the empty files so you know a file wasn't accidently omitted.
+// If you don't have any Sass, you can trim this block down to:
+// "This page was intentionally left blank"
+
+@import 'package.variables.scss';
+// Debug information from component's `package.json`:
+// ---
+/*!
+ * Component: #{map-get($componentInfo, 'name')}
+ * Version: #{map-get($componentInfo, 'version')}
+ * Location: #{map-get($componentInfo, 'location')}
+ */
+
+@import 'vfwp-gutenberg-iframe.variables.scss';
+
+/* remove extra margins */
+.vf-inlay:last-of-type {
+  margin-bottom: 0;
+}
+
+/* remove gutters */
+.vf-inlay__content {
+  grid-template-columns:
+    0
+    [main-start]
+    minmax(auto, 100%)
+    minmax(auto, 22.125em)
+    [main-end]
+    0;
+}
+
+.vf-activity:last-of-type {
+  margin-bottom: 0;
+}
+
+.vf-box:last-of-type {
+  margin-bottom: 0;
+}
+
+.vf-divider:last-of-type {
+  margin-bottom: 0;
+}
