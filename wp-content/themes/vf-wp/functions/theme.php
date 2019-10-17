@@ -203,8 +203,6 @@ function vf__body_class($classes) {
     return $classes;
   }
   $classes[] = 'vf-u-background-color-ui--grey';
-  $classes[] = 'ebi-vf1-integration'; // enable the VF 1.x workarounds
-    // todo: make this class conditional/optional toggle so it's only appended to EBI groups
   return $classes;
 }
 
