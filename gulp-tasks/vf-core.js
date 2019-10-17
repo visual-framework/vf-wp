@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const gulp = require('gulp');
+const del = require('del');
 
 // -----------------------------------------------------------------------------
 // Configuration
@@ -53,3 +54,7 @@ require('../node_modules/@visual-framework/vf-core/tools/gulp-tasks/_gulp_rollup
   componentDirectories,
   buildDestionation
 );
+
+gulp.task('vf-wp-clean:assets', function(){
+  return del([buildDestionation+'/assets/**'], {force:true});
+});

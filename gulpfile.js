@@ -14,13 +14,20 @@ require('./gulp-tasks/vf-core');
 gulp.task('js', jsTask);
 gulp.task('blocks', blocksTask);
 
+
 /**
  * Watch tasks
  */
 
 gulp.task('watch-js', () => gulp.watch(jsGlob, gulp.series('js')));
 gulp.task('watch-blocks', () => gulp.watch(blocksGlob, gulp.series('blocks')));
-gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
+gulp.task(
+  'watch',
+  gulp.series(
+    'vf-wp-clean:assets',
+    gulp.parallel('watch-js', 'watch-blocks', 'vf-watch')
+  )
+);
 
 /**
  * Build tasks
@@ -28,6 +35,7 @@ gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
 gulp.task(
   'build',
   gulp.series(
+    'vf-wp-clean:assets',
     'vf-css:generate-component-css',
     gulp.parallel('js', 'blocks', 'vf-css', 'vf-scripts'),
     'vf-component-assets'
