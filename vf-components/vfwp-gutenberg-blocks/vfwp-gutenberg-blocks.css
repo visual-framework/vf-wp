@@ -39,11 +39,35 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+:root {
+  --page-grid-gap: 16px;
+  --embl-grid-module--prime: 200px;
+  --embl-grid-spacing-normaliser: 6px;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --page-grid-gap: 30px;
+  }
+}
+
 /*!
  * Component: @visual-framework/vfwp-gutenberg-blocks
  * Version: 0.0.1
  * Location: components/vfwp-gutenberg-blocks
  */
+:root {
+  --page-grid-gap: 16px;
+  --embl-grid-module--prime: 200px;
+  --embl-grid-spacing-normaliser: 6px;
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --page-grid-gap: 30px;
+  }
+}
+
 .vf-block {
   background-color: rgba(139, 139, 150, 0.1);
   /*background-color: #f3f4f5;*/
@@ -88,6 +112,15 @@
 .vf-block__edit {
   max-width: 750px;
   padding: 15px;
+}
+
+.vf-block__iframe {
+  border: 0;
+  display: block;
+  height: 30px;
+  margin: 0;
+  min-width: 100%;
+  pointer-events: none;
 }
 
 .vf-block .editor-inner-blocks {
@@ -147,21 +180,13 @@
   outline-offset: -2px;
 }
 
-.vf-block__iframe {
-  border: 0;
-  display: block;
-  height: 30px;
-  margin: 0;
-  min-width: 100%;
-  pointer-events: none;
-}
-
-.wp-block[data-type='vf/grid'] {
-  max-width: none;
-}
-
 .wp-block[data-type='vf/grid-column'] {
   border: 1px dashed #e2e4e7;
+}
+
+.wp-block[data-type='vf/grid'],
+.wp-block[data-type='vf/embl-grid'] {
+  max-width: none;
 }
 
 .wp-block[data-type='vf/grid'] .wp-block,
@@ -172,29 +197,23 @@
 }
 
 .wp-block[data-type='vf/embl-grid'] {
-  max-width: none;
+  /* EMBL Grid: align placeholder controls */
+  /* EMBL Grid: center placeholder controls */
+  /* EMBL Grid: center placeholder controls */
 }
 
-/* EMBL Grid: align placeholder controls */
-.wp-block[data-type='vf/embl-grid']
-.components-placeholder
-.components-base-control {
+.wp-block[data-type='vf/embl-grid'] .components-placeholder .components-base-control {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
 }
 
-/* EMBL Grid: center placeholder controls */
-.wp-block[data-type='vf/embl-grid']
-.components-placeholder
-.components-toggle-control {
+.wp-block[data-type='vf/embl-grid'] .components-placeholder .components-toggle-control {
   -ms-flex-preferred-size: auto;
       flex-basis: auto;
   margin: 0 8px;
 }
 
-/* EMBL Grid: center placeholder controls */
-.wp-block[data-type='vf/embl-grid']
-.components-placeholder
+.wp-block[data-type='vf/embl-grid'] .components-placeholder
 .components-toggle-control
 .components-base-control__field {
   -webkit-box-pack: center;

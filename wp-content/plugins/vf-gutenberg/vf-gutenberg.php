@@ -167,8 +167,8 @@ class VF_Gutenberg {
    */
   function enqueue_block_editor_assets() {
     wp_enqueue_style(
-      'vf-blocks',
-      plugins_url('/assets/vf-blocks.css', __FILE__),
+      'vfwp-gutenberg-blocks',
+      get_template_directory_uri() . '/assets/assets/vfwp-gutenberg-blocks/vfwp-gutenberg-blocks.css',
       array(),
       false,
       'all'
@@ -190,10 +190,8 @@ class VF_Gutenberg {
     $prefix = '<wbr style="display:block;clear:both;height:0;">';
     $suffix = $prefix;
     $stylesheets = array();
-    if (function_exists('vf_get_stylesheet')) {
-      $stylesheets[] = vf_get_stylesheet();
-    }
-    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
+    $stylesheets[] = get_template_directory_uri() . '/assets/css/styles.css';
+    $stylesheets[] = get_template_directory_uri() . '/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css';
     foreach ($stylesheets as $href) {
       $prefix .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
     }
@@ -228,7 +226,8 @@ class VF_Gutenberg {
     $html = '';
     $stylesheets = array();
     $stylesheets[] = get_template_directory_uri() . '/assets/css/styles.css';
-    $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
+    $stylesheets[] = get_template_directory_uri() . '/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css';
+    // $stylesheets[] = plugins_url('/assets/vf-iframe.css', __FILE__);
     foreach ($stylesheets as $href) {
       $html .= '<link onload="window.vfResize();" rel="stylesheet" href="' . $href . '">';
     }
