@@ -8,6 +8,7 @@ const uglify = require('gulp-uglify');
 const babel = require('gulp-babel');
 const webpack = require('webpack');
 const chalk = require('chalk');
+const del = require('del');
 
 // -----------------------------------------------------------------------------
 // Configuration
@@ -195,6 +196,12 @@ gulp.task('vf-blocks', () => {
   });
 });
 
+// Clean built assets
+gulp.task('vf-wp-clean:assets', function(){
+  return del([buildDestionation+'/assets/**'], {force:true});
+});
+
+
 /**
  * Watch tasks
  */
@@ -202,7 +209,12 @@ gulp.task('watch-js', () => gulp.watch(config.js_glob, gulp.series('js')));
 gulp.task('watch-blocks', () =>
   gulp.watch(config.vf_blocks_glob, gulp.series('vf-blocks'))
 );
-gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
+gulp.task('watch', 
+  gulp.series(
+    'vf-wp-clean:assets',
+    gulp.parallel('watch-js', 'watch-blocks', 'vf-watch')
+  )
+);
 
 /**
  * Build task
@@ -210,6 +222,7 @@ gulp.task('watch', gulp.parallel('watch-js', 'watch-blocks', 'vf-watch'));
 gulp.task(
   'build',
   gulp.series(
+    'vf-wp-clean:assets',
     'vf-css:generate-component-css',
     gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks'),
     'vf-component-assets'
@@ -221,5 +234,9 @@ gulp.task(
  */
 gulp.task(
   'default',
-  gulp.series(gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks', 'vf-component-assets', 'vf-css:generate-component-css'), 'watch')
+  gulp.series(
+    'vf-wp-clean:assets',
+    gulp.parallel('js', 'vf-css', 'vf-scripts', 'vf-blocks', 'vf-component-assets', 'vf-css:generate-component-css'), 
+    'watch'
+  )
 );
