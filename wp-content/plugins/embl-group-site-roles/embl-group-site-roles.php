@@ -62,7 +62,7 @@ function egsr_activation(){
 
     if($user_exist){
         $site_url = get_site_url();
-        $body_msg = '<p>In EMBL Group websites, default Wordpress roles "Author", "Contributor", "Editor" and "Subscriber" will be deprecated in favour of EMBL custom ones.</p>'; 
+        $body_msg = '<p>In EMBL Group websites, default Wordpress roles "Author", "Contributor", "Editor" and "Subscriber" will be deprecated in favour of EMBL custom ones.</p>';
         $error_msg = '<p class="error">
         This plugin cannot be activated because users with either one of the above-mentioned Wordpress roles are active. <br>You can temporarily set those users as having no roles, and after activating the plugin replace them with EMBL custom ones: 
         "EMBL Group Admin", "EMBL Group Editor" or "EMBL Staff"</p><p><a href="' . $site_url . '/wp-admin/users.php">Users List Page&raquo;</a></p>';
@@ -148,15 +148,15 @@ function egsr_add_default_wp_roles()
 */
 function egsr_change_roles_names() {
     global $wp_roles;
-    
+
     if ( ! isset( $wp_roles ) )
     $wp_roles = new WP_Roles();
-    
+
     $wp_site_roles = egsr_default_wp_site_roles();
     foreach ($wp_site_roles as $key => $value) {
         // Change role name
         $wp_roles->roles[$key]['name'] = $wp_roles->roles[$key]['name'] .' (Deprecated)';
-        $wp_roles->role_names['contributor'] = $wp_roles->role_names[$key] .'$wp_roles->roles[$key]'; 
+        $wp_roles->role_names['contributor'] = $wp_roles->role_names[$key] .'$wp_roles->roles[$key]';
     }
 }
 
@@ -180,7 +180,7 @@ function egsr_remove_wp_roles(){
 */
 function egsr_custom_site_roles(){
 
-    return Array ( 
+    return Array (
         // STAFF_ROLE  => Array (
         //     'label' => STAFF_ROLE_LABEL,
         //     'caps' => egsr_staff_cap(),
@@ -202,7 +202,7 @@ function egsr_custom_site_roles(){
 */
 function egsr_default_wp_site_roles(){
 
-    return Array ( 
+    return Array (
         AUTHOR_ROLE  => Array (
             'label' => AUTHOR_ROLE_LABEL,
             'caps' => egsr_author_cap(),
@@ -225,19 +225,19 @@ function egsr_default_wp_site_roles(){
 
 /*
 * EMBL staff role capabilities. Limited permissions
-*/ 
+*/
 function egsr_staff_cap(){
-    
-    return Array ( 
+
+    return Array (
         'read'  => true,
     );
 }
 
 /*
 * EMBL Group Member role capabilities (= WP Editor)
-*/ 
+*/
 function egsr_group_editor_cap(){
-    return Array ( 
+    return Array (
         'delete_others_pages'       => true,
         'delete_others_posts'       => true,
         'delete_pages'              => true,
@@ -264,15 +264,16 @@ function egsr_group_editor_cap(){
         'read_private_posts'        => true,
         'unfiltered_html'           => true,
         'upload_files'              => true,
+        'edit_theme_options'        => true,
     );
 }
 
 
 /*
 * EMBL Group Admin role capabilities
-*/ 
+*/
 function egsr_group_admin_cap(){
-    return Array ( 
+    return Array (
         'add_users'                 => true,
         'create_users'              => true,
         'delete_users'              => true,
@@ -304,6 +305,7 @@ function egsr_group_admin_cap(){
         'read_private_posts'        => true,
         'unfiltered_html'           => true,
         'upload_files'              => true,
+        'edit_theme_options'        => true,
     );
 }
 
@@ -315,9 +317,9 @@ function egsr_group_admin_cap(){
 
 /*
 * Default WP Admin role capabilities for Author
-*/ 
+*/
 function egsr_author_cap(){
-    return Array ( 
+    return Array (
         'delete_posts'              => true,
         'delete_published_posts'    => true,
         'edit_posts'                => true,
@@ -330,9 +332,9 @@ function egsr_author_cap(){
 
 /*
 * Default WP Admin role capabilities for Contributor
-*/ 
+*/
 function egsr_contributor_cap(){
-    return Array ( 
+    return Array (
         'delete_posts'              => true,
         'edit_posts'                => true,
         'read'                      => true,
@@ -342,9 +344,9 @@ function egsr_contributor_cap(){
 
 /*
 * Default WP Admin role capabilities for Editor
-*/ 
+*/
 function egsr_editor_cap(){
-    return Array ( 
+    return Array (
         'delete_others_pages'       => true,
         'delete_others_posts'       => true,
         'delete_pages'              => true,
@@ -376,9 +378,9 @@ function egsr_editor_cap(){
 
 /*
 * Default WP role capabilities for Subscriber
-*/ 
+*/
 function egsr_subscriber_cap(){
-    return Array ( 
+    return Array (
         'read'  => true,
     );
 }
