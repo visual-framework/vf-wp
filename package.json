@@ -17,13 +17,15 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "vfwp": "npx webpack --mode=production --config=gulp-tasks/vf-wp.webpack.js",
+    "vfgutenberg": "npx webpack --mode=production --config=gulp-tasks/vf-gutenberg.webpack.js",
     "build": "gulp build && echo \"🏋 Build completed\" && exit 0",
     "update-components": "yarn upgrade-interactive --latest"
   },
   "author": "EMBL",
   "license": "UNLICENSED",
   "browserslist": [
-    "last 1 versions"
+    "> 1%"
   ],
   "babel": {
     "presets": [
@@ -102,9 +104,6 @@
     "babel-loader": "^8.0.6",
     "chalk": "^2.4.2",
     "core-js": "^3.3.2",
-    "gulp-replace": "^1.0.0",
-    "gulp-uglify": "^3.0.2",
-    "pump": "^3.0.0",
     "webpack": "^4.41.1",
     "webpack-cli": "^3.3.9"
   }

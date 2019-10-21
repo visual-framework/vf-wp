@@ -1,41 +1,60 @@
 /**
- * Fetch the rendered template for a VF Gutenberg block asynchronously,
- * returning fetched data. Cache results in store.
+ * Render the template for a VF Gutenberg block asynchronously
  */
 import {useEffect, useState} from 'react';
-import useVFGutenberg from './use-vf-gutenberg';
 import {useHashsum} from './';
+import useVFRenderPlugin from './use-vf-render-plugin';
+import useVFRenderTemplate from './use-vf-render-template';
 
-const store = {};
+const renderStore = {};
 
-const useVFRender = attrs => {
+const useVFRender = props => {
   const [data, setData] = useState(null);
-  const hash = useHashsum(attrs);
+  const [isLoading, setLoading] = useState(false);
+  if (props.isRenderable === false) {
+    return [data, false];
+  }
+
+  const hasTemplate = 'render' in props.attributes;
+
+  // extract attributes and remove protected
+  const renderAttrs = {...props.attributes, ...(props.transient || {})};
+  delete renderAttrs['ver'];
+  delete renderAttrs['mode'];
+  delete renderAttrs['render'];
+
+  const renderHash = useHashsum([props.name, renderAttrs]);
 
   const fetchData = async () => {
-    // return matching hash from internal store
-    if (store.hasOwnProperty(hash)) {
-      setData(store[hash]);
+    if (renderStore.hasOwnProperty(renderHash)) {
+      setData(renderStore[renderHash]);
       return;
     }
-    const {postId, nonce} = useVFGutenberg();
-    try {
-      const data = await wp.ajax.post('vf/gutenberg/fetch_block', {
-        ...attrs,
-        postId,
-        nonce
-      });
-      store[hash] = data;
-      setData(data);
-    } catch (err) {}
+    let newData = null;
+    if (hasTemplate) {
+      newData = await useVFRenderTemplate(props.name, renderAttrs);
+    } else {
+      if (props.isEditing) {
+        return;
+      }
+      setLoading(true);
+      newData = await useVFRenderPlugin(props.name, renderAttrs);
+      setLoading(false);
+    }
+    renderStore[renderHash] = newData;
+    setData(newData);
   };
 
   // provide attributes hash to avoid rerenders
   useEffect(() => {
     fetchData();
-  }, [hash]);
+  }, [renderHash, props.isEditing]);
 
-  return data;
+  if (data && hasTemplate) {
+    props.setAttributes({render: data.html});
+  }
+
+  return [data, isLoading];
 };
 
 export default useVFRender;

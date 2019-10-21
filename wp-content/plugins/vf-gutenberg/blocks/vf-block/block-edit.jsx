@@ -16,11 +16,11 @@ const UpdateButton = ({onClick}) => (
 );
 
 const VFBlockEdit = props => {
-  const {hasFooter, onToggle} = props;
+  const {onToggle} = props;
   return (
     <div className="vf-block__edit">
       {props.children}
-      {hasFooter && <UpdateButton onClick={onToggle} />}
+      {onToggle && <UpdateButton onClick={onToggle} />}
     </div>
   );
 };

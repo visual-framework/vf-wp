@@ -1,84 +1,56 @@
 /**
- * VF Framework Box
- */
+Block Name: Box
+*/
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import VFBlock from '../vf-block';
-import VFBlockFields from '../vf-block/block-fields';
+import {withTransientStyle} from '../hooks/with-transient';
+import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import template from '../templates/vf-box';
 
-const vfBoxAttrs = {
-  heading: {
-    type: 'string'
-  },
-  text: {
-    type: 'string'
-  }
-};
-
-const vfBoxFields = [
-  {
-    name: 'heading',
-    control: 'rich',
-    default: '',
-    label: '',
-    tag: 'h3',
-    placeholder: 'Type box heading…'
-  },
-  {
-    name: 'text',
-    control: 'rich',
-    default: '',
-    label: '',
-    tag: 'p',
-    placeholder: 'Type box content…'
-  }
-];
-
-const vfBoxStyles = [
-  {
-    name: 'default',
-    label: __('Default'),
-    isDefault: true
-  },
-  {
-    name: 'factoid',
-    label: __('Factoid')
-  },
-  {
-    name: 'inlay',
-    label: __('Inlay')
-  }
-];
-
-export default {
+export default useVFCoreSettings({
+  ver: '1.0.2',
   name: 'vf/box',
-  category: 'vf/core',
   title: __('Box'),
-  description: __('Visual Framework'),
-  keywords: [__('VF'), __('Visual Framework')],
   attributes: {
-    ver: {
-      type: 'integer'
+    heading: {
+      type: 'string'
     },
-    mode: {
-      type: 'string',
-      default: 'edit'
+    text: {
+      type: 'string'
+    }
+  },
+  fields: [
+    {
+      name: 'heading',
+      control: 'rich',
+      default: '',
+      label: '',
+      tag: 'h3',
+      placeholder: __('Type box heading…')
     },
-    ...vfBoxAttrs
-  },
-  styles: [...vfBoxStyles],
-  supports: {
-    align: false,
-    className: false,
-    customClassName: true,
-    html: false
-  },
-  save: () => null,
-  edit: props => {
-    return (
-      <VFBlock {...props} ver={1} hasFooter>
-        <VFBlockFields {...props} fields={vfBoxFields} />
-      </VFBlock>
-    );
-  }
-};
+    {
+      name: 'text',
+      control: 'rich',
+      default: '',
+      label: '',
+      tag: 'p',
+      placeholder: __('Type box content…')
+    }
+  ],
+  styles: [
+    {
+      name: 'default',
+      label: __('Default'),
+      isDefault: true
+    },
+    {
+      name: 'factoid',
+      label: __('Factoid')
+    },
+    {
+      name: 'inlay',
+      label: __('Inlay')
+    }
+  ],
+  withHOC: [[withTransientStyle, {key: 'class', BEM: true}]]
+});

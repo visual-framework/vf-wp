@@ -8,29 +8,13 @@ the brand-specific "VF 2.0 for the EMBL Design Language".
 * [Work in Progress, Issues, Bugs](https://github.com/visual-framework/vf-wp/issues)
 * [Theme and plugin architecture](docs/architecture.md)
 * [WordPress setup](docs/wordpress.md)
-* [~~Pantheon development~~](docs/development.md)
 
 ## Plugin documentation
 
 * [EMBL Taxonomy](wp-content/plugins/embl-taxonomy/README.md)
 * [VF Gutenberg](wp-content/plugins/vf-gutenberg/README.md)
-
-Containers:
-
-* [Beta container](wp-content/plugins/vf-beta-container/README.md)
-* [Breadcrumbs container](wp-content/plugins/vf-breadcrumbs-container/README.md)
-* [EMBL News container](wp-content/plugins/vf-embl-news-container/README.md)
-* [Global Footer container](wp-content/plugins/vf-global-footer-container/README.md)
-* [Global Header container](wp-content/plugins/vf-global-header-container/README.md)
-
-Blocks:
-
-* [Factoid block](wp-content/plugins/vf-factoid-block/README.md)
-* [Group Header block](wp-content/plugins/vf-group-header-block/README.md)
-* [Jobs block](wp-content/plugins/vf-jobs-block/README.md)
-* [Latest Posts block](wp-content/plugins/vf-latest-posts-block/README.md)
-* [Members block](wp-content/plugins/vf-members-block/README.md)
-* [Publications block](wp-content/plugins/vf-publications-block/README.md)
+* [Containers](docs/containers.md)
+* [Blocks](docs/blocks.md)
 
 ## Development
 
@@ -38,22 +22,24 @@ Blocks:
 
 * Git
 * Node
+* Gulp (optional)
 
 ```bash
+# Install dev dependencies
 yarn install
 ```
 
 This project makes use of [Visual Framework components](https://visual-framework.github.io/vf-welcome) to build its CSS and JS.
 
-- `gulp build` 
-     - to build `vf-components/vf-componenet-rollup/index.scss` 
+- `gulp build`
+     - to build `vf-components/vf-componenet-rollup/index.scss`
           - to make `wp-content/themes/vf-wp/assets/css/styles.css`
-     - to build `vf-components/vf-componenet-rollup/scripts.scss` 
+     - to build `vf-components/vf-componenet-rollup/scripts.scss`
           - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
 - `gulp default`
      - to launch local developement of the above with a `watch` task
 
-Nb: the `gulp build` command will also invoke the above. 
+Nb: the `gulp build` command will also invoke the above.
 
 ### EMBL + EMBL-EBI site development
 
@@ -61,9 +47,9 @@ n.b. To develop locally you'll need to make sure your project's git submodules a
 
 1. `git clone --recursive https://github.com/visual-framework/vf-wp.git`
 1. Use any of the below variation of command to build the site
- 
-    ##### Run command 
-    
+
+    ##### Run command
+
     - `bin/dev quick_group` - to build WordPress website with basic Visual Framework default configuration - Plugin/themes enabled
     - `bin/dev quick_group_bootstrap` - to build WordPress website setup with Visual Framework dummy microsite bootstrap version
     - `bin/dev launch` - to launch browser

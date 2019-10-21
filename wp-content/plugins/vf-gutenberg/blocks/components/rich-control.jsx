@@ -1,8 +1,8 @@
 /**
  * RichControl (component)
- * Wrapper for `InnerBlocks`
+ * Wrapper for `RichText`
  */
-import React, {useState} from 'react';
+import React from 'react';
 import {RichText} from '@wordpress/block-editor';
 import {BaseControl} from '@wordpress/components';
 import {__} from '@wordpress/i18n';

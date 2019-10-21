@@ -79,6 +79,20 @@ class VF_Gutenberg_Settings {
       'description' => '',
       'modified' => 1544016028,
     ));
+
+    acf_add_local_field(
+      array(
+        'parent'        => 'group_vf_setting',
+        'key'           => 'field_vf_gutenberg_enable_core_blocks',
+        'label'         => '(Alpha) Gutenberg blocks',
+        'name'          => 'vf_gutenberg_core_blocks_optin',
+        'type'          => 'true_false',
+        'message'       => 'Opt-in to enable core Visual Framework Gutenberg blocks',
+        'instructions'  => 'This is an alpha feature and breaking changes are expected. In future updates stable blocks will be enabled by default.',
+        'default_value' => 0,
+        'ui'            => 1,
+      )
+    );
   }
 
 } // VF_Gutenberg_Settings

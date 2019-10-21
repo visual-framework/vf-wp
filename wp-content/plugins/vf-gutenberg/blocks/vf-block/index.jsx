@@ -1,56 +1,44 @@
 /**
  * VFBlock (component)
- * Provide a base component for VF Gutenberg blocks.
- * Component has "edit" and "view" modes.
+ * Base component for VF Gutenberg blocks.
+ * The component supports "edit" and "view" modes.
+ * See `useVFPluginSettings` and `useVFCoreSettings` for usage.
  */
-import React from 'react';
+import React, {Fragment, useState} from 'react';
 import {Spinner} from '@wordpress/components';
-import {withInstanceId} from '@wordpress/compose';
 import {__} from '@wordpress/i18n';
 import {useUniqueId} from '../hooks';
 import useVFRender from '../hooks/use-vf-render';
 import VFBlockControls from './block-controls';
-import VFBlockView from './block-view';
 import VFBlockEdit from './block-edit';
+import VFBlockView from './block-view';
 
 const VFBlock = props => {
-  const {
-    clientId,
-    instanceId,
-    isSelected,
-    hasFooter,
-    attributes: {ver, mode, ...attrs}
-  } = props;
+  const {isEditing, isEditable, isRenderable, isSelected} = props;
+  const uniqueId = useUniqueId(props);
+  const [render, isLoading] = useVFRender(props);
 
-  const uniqueId = useUniqueId([clientId, instanceId]);
+  // ensure version is encoded in post content
+  props.setAttributes({ver: props.ver || '1.0.0'});
 
-  // Ensure version is encoded in post content
-  if (!ver) {
-    props.setAttributes({ver: props.ver || 1});
-  }
-
-  // No `clientId` if rendered in the sidebar style preview
-  const hasMode = clientId && typeof mode === 'string';
-  const isEditing = hasMode && mode === 'edit';
-
-  // Hook in conditional against the rules?
-  const data = isEditing
-    ? null
-    : useVFRender({
-        attrs: attrs,
-        name: props.name
-      });
-
-  const isLoading = data === null;
-  const isPreview = !isLoading && data;
-
+  // callback to toggle block mode
   const onToggle = () => {
-    props.setAttributes({mode: !isEditing ? 'edit' : 'view'});
+    props.setAttributes({mode: isEditing ? 'view' : 'edit'});
   };
 
-  const rootAttr = {
+  // show block controls if both modes exist
+  const hasControls = isEditable && isRenderable;
+
+  // show "edit" mode when edit state is active
+  const hasEdit = isEditable && isEditing;
+
+  // show "view" mode when not editing and render is available
+  const hasView = !hasEdit && (!isLoading && render);
+
+  // add DOM attributes for styling
+  const rootAttrs = {
     className: `vf-block ${props.className}`,
-    'data-ver': ver,
+    'data-ver': props.attributes.ver,
     'data-name': props.name,
     'data-editing': isEditing,
     'data-loading': isLoading,
@@ -58,20 +46,20 @@ const VFBlock = props => {
   };
 
   return (
-    <>
-      {hasMode && <VFBlockControls {...{isEditing, onToggle}} />}
-      <div {...rootAttr}>
-        {isEditing ? (
-          <VFBlockEdit {...{hasFooter, onToggle}} children={props.children} />
-        ) : isPreview ? (
-          <VFBlockView html={data.html} uniqueId={uniqueId} />
-        ) : (
-          <Spinner />
+    <Fragment>
+      {hasControls && <VFBlockControls {...{isEditing, onToggle}} />}
+      <div {...rootAttrs}>
+        {hasEdit && (
+          <VFBlockEdit
+            onToggle={isRenderable ? onToggle : null}
+            children={props.children}
+          />
         )}
+        {hasView && <VFBlockView html={render.html} uniqueId={uniqueId} />}
+        {isLoading && <Spinner />}
       </div>
-    </>
+    </Fragment>
   );
 };
 
-// Wrap with HoC
-export default withInstanceId(VFBlock);
+export default VFBlock;

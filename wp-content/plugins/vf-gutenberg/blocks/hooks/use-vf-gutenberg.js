@@ -5,6 +5,8 @@
 
 // Default properties
 const vfGutenberg = {
+  renderPrefix: '',
+  renderSuffix: '',
   postId: 0,
   nonce: '',
   plugins: {}
