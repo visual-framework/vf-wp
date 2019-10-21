@@ -310,3 +310,20 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
+
+.wp-block[data-type='core/archives'],
+.wp-block[data-type='core/categories'],
+.wp-block[data-type='core/latest-posts'] {
+  --vf-text-margin--bottom: 0;
+}
+
+.wp-block[data-type='core/archives'] li,
+.wp-block[data-type='core/categories'] li,
+.wp-block[data-type='core/latest-posts'] li {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin-bottom: 8px;
+}

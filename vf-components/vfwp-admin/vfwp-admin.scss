@@ -115,3 +115,15 @@
     @include set-type(text-body--3);
   }
 }
+
+// Widget blocks
+.wp-block[data-type='core/archives'],
+.wp-block[data-type='core/categories'],
+.wp-block[data-type='core/latest-posts'] {
+  --vf-text-margin--bottom: 0;
+
+  li {
+    @include set-type(text-body--2);
+    margin-bottom: map-get($vf-spacing-map, vf-spacing--sm);
+  }
+}
