@@ -211,14 +211,23 @@ class VF_Gutenberg {
       }
     }
 
+    // For now enable vf-core blocks by opt-in option
+    $optin = false;
+    if (function_exists('get_field')) {
+      $optin = get_field('vf_gutenberg_core_blocks_optin', 'option');
+    }
+
     global $post;
+
     $config = array(
       'renderPrefix' => $prefix,
       'renderSuffix' => $suffix,
+      'coreOptin'    => $optin ? 1 : 0,
       'plugins' => $this->get_config_plugins(),
       'nonce'   => wp_create_nonce("vf_nonce_{$post->ID}"),
       'postId'  => $post->ID
     );
+
     wp_localize_script('vf-blocks', 'vfGutenberg', $config);
     wp_enqueue_script('vf-blocks');
   }

@@ -21,29 +21,34 @@ import vfGrid from './vf-core/vf-grid';
 import vfLede from './vf-core/vf-lede';
 // import vfSummary from './vf-core/vf-summary';
 
-// Register VF Core blocks
-[
-  // Grid
-  vfGridColumn,
-  vfEMBLGrid,
-  vfGrid,
-  // Elements
-  vfBadge,
-  vfBlockquote,
-  vfButton,
-  vfDivider,
-  // Blocks
-  vfActivityItem,
-  vfActivityList,
-  vfBox,
-  vfBreadcrumbsItem,
-  vfBreadcrumbs,
-  vfLede
-  // vfSummary
-].forEach(settings => registerBlockType(settings.name, settings));
+// Get "localized" global script settings
+const {plugins, coreOptin} = useVFGutenberg();
 
-// Register VF Plugin blocks from "localized" global settings
-const {plugins} = useVFGutenberg();
+// Register VF Core blocks
+if (parseInt(coreOptin) === 1) {
+  const coreBlocks = [
+    // Grid
+    vfGridColumn,
+    vfEMBLGrid,
+    vfGrid,
+    // Elements
+    vfBadge,
+    vfBlockquote,
+    vfButton,
+    vfDivider,
+    // Blocks
+    vfActivityItem,
+    vfActivityList,
+    vfBox,
+    vfBreadcrumbsItem,
+    vfBreadcrumbs,
+    vfLede
+    // vfSummary
+  ];
+  coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
+}
+
+// Register VF Plugin blocks
 for (const [name, plugin] of Object.entries(plugins)) {
   const settings = useVFPluginSettings({name, title: plugin.title});
   registerBlockType(name, settings);
