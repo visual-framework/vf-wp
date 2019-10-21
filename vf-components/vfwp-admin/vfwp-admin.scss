@@ -30,6 +30,17 @@
   }
 }
 
+// Placeholder block
+.wp-block {
+  .block-editor-default-block-appender {
+    --vf-text-margin--bottom: 0;
+
+    .block-editor-default-block-appender__content {
+      @include set-type(text-body--2);
+    }
+  }
+}
+
 // Heading block
 .wp-block[data-type='core/heading'] {
   --vf-text-margin--bottom: 0;
@@ -98,7 +109,7 @@
 
 // Table block
 .wp-block[data-type='core/table'] {
-    --vf-text-margin--bottom: 0;
+  --vf-text-margin--bottom: 0;
 
   .editor-rich-text {
     @include set-type(text-body--3);

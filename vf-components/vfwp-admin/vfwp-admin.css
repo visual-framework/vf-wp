@@ -179,6 +179,18 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
+.wp-block .block-editor-default-block-appender {
+  --vf-text-margin--bottom: 0;
+}
+
+.wp-block .block-editor-default-block-appender .block-editor-default-block-appender__content {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
 .wp-block[data-type='core/heading'] {
   --vf-text-margin--bottom: 0;
 }
