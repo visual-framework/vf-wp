@@ -1,6 +1,6 @@
 /**
- * VF Framework Box
- */
+Block Name: Box
+*/
 import React from 'react';
 import {__} from '@wordpress/i18n';
 import {withTransientStyle} from '../hooks/with-transient';

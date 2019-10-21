@@ -1,7 +1,7 @@
 /**
- * VF Framework Summary (WIP)
- * TODO: Summary title link (hard-coded in Nunjucks template)
- */
+Block Name: Summary (WIP)
+Todo: Summary title link (hard-coded in Nunjucks template)
+*/
 import React from 'react';
 import {__} from '@wordpress/i18n';
 import {withTransientAttributeMap} from '../hooks/with-transient';

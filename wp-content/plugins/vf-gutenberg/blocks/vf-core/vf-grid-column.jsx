@@ -1,6 +1,6 @@
 /**
- * VF Framework Grid Column
- */
+Block Name: Grid Column
+*/
 import React from 'react';
 import {InnerBlocks} from '@wordpress/block-editor';
 import {select} from '@wordpress/data';
@@ -17,7 +17,7 @@ const settings = {
   title: __('Grid Column'),
   category: 'vf/core',
   description: __('Visual Framework (core)'),
-  parent: ['vf/grid'],
+  parent: ['vf/grid', 'vf/embl-grid'],
   supports: {
     ...defaults.supports,
     inserter: false

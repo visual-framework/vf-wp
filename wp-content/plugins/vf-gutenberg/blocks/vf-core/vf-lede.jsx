@@ -1,6 +1,6 @@
 /**
- * VF Framework Lede
- */
+Block Name: Lede
+*/
 import React from 'react';
 import {__} from '@wordpress/i18n';
 import {withTransientAttributeMap} from '../hooks/with-transient';

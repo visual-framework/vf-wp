@@ -1,6 +1,6 @@
 /**
- * VF Framework Grid
- */
+Block Name: Grid
+*/
 import React, {Fragment} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';

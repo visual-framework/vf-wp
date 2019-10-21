@@ -1,6 +1,6 @@
 /**
- * VF Framework Badge
- */
+Block Name: Badge
+*/
 import React from 'react';
 import {__} from '@wordpress/i18n';
 import {withTransientStyle} from '../hooks/with-transient';

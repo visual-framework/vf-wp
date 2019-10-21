@@ -1,6 +1,6 @@
 /**
- * VF Framework Activity List Item
- */
+Block Name: Activity List
+*/
 import React from 'react';
 import {__} from '@wordpress/i18n';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';

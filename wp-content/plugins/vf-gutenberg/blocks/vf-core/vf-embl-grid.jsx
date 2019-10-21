@@ -1,7 +1,7 @@
 /**
- * VF EMBL Grid
- * Based on `vf-grid.jsx`
- */
+Block Name: Grid
+Based on `vf-grid.jsx`
+*/
 import React, {Fragment} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
