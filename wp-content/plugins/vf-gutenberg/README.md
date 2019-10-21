@@ -29,12 +29,14 @@ Most of the VF blocks are rendered using an `<iframe>` within the Gutenberg edit
 
 ## Global Options
 
-The global options `vf_cdn_stylesheet` and `vf_cdn_javascript` are added to the `vf-settings` options page. Template functions exist for convenience. They will return `null` if the option is empty.
+The global options `vf_cdn_stylesheet` and `vf_cdn_javascript` are added to the `vf-settings` options page. Template functions will return `null` if the option is empty, or the opt-in option is zero.
 
 ```php
 $stylesheet = vf_get_stylesheet();
 $javascript = vf_get_javascript();
 ```
+
+The `vf_cdn_stylesheet_optin` and `vf_cdn_javascript_optin` options must be toggled on (value: `1`) to use these assets.
 
 ## WordPress Core Blocks
 

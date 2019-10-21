@@ -34,32 +34,30 @@ class VF_Gutenberg_Settings {
           'label' => 'CDN Stylesheet',
           'name' => 'vf_cdn_stylesheet',
           'type' => 'url',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'default_value' => '',
-          'placeholder' => '',
+        ),
+        array(
+          'key' => 'field_vf_cdn_stylesheet_optin',
+          'label' => '',
+          'name' => 'vf_cdn_stylesheet_optin',
+          'type' => 'true_false',
+          'message' => 'Include CDN Stylesheet on front-end',
+          'default_value' => 0,
+          'ui' => 1,
         ),
         array(
           'key' => 'field_vf_cdn_javascript',
           'label' => 'CDN JavaScript',
           'name' => 'vf_cdn_javascript',
           'type' => 'url',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'default_value' => '',
-          'placeholder' => '',
+        ),
+        array(
+          'key' => 'field_vf_cdn_javascript_optin',
+          'label' => '',
+          'name' => 'vf_cdn_javascript_optin',
+          'type' => 'true_false',
+          'message' => 'Include CDN JavaScript on front-end',
+          'default_value' => 0,
+          'ui' => 1,
         ),
       ),
       'location' => array(
@@ -92,6 +90,10 @@ function vf_get_stylesheet() {
   if ( ! function_exists('get_field')) {
     return null;
   }
+  $optin = (bool) get_field('vf_cdn_stylesheet_optin', 'option');
+  if (!$optin) {
+    return null;
+  }
   $url = trim(get_field('vf_cdn_stylesheet', 'option'));
   return empty($url) ? null : $url;
 }
@@ -101,6 +103,10 @@ function vf_get_stylesheet() {
  */
 function vf_get_javascript() {
   if ( ! function_exists('get_field')) {
+    return null;
+  }
+  $optin = (bool) get_field('vf_cdn_javascript_optin', 'option');
+  if (!$optin) {
     return null;
   }
   $url = trim(get_field('vf_cdn_javascript', 'option'));
