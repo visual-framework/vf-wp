@@ -1,13 +1,11 @@
 // vfwp-admin
 
-// **Thinking about deleting this file?**
-// If your component needs no CSS/Sass, we still recommend leaving the
-// scss files in place. As this is primarily a CSS framework, it is better to
-// leave the empty files so you know a file wasn't accidently omitted.
-// If you don't have any Sass, you can trim this block down to:
-// "This page was intentionally left blank"
+@import 'vf-font-plex-sans/vf-font-plex-sans.scss';
+
+@import 'vfwp-admin.variables.scss';
 
 @import 'package.variables.scss';
+
 // Debug information from component's `package.json`:
 // ---
 /*!
@@ -16,11 +14,116 @@
  * Location: #{map-get($componentInfo, 'location')}
  */
 
-@import 'vfwp-admin.variables.scss';
-
 .wp-list-table {
   .column-vf_hash,
   .column-vf_modified {
     width: 10%;
+  }
+}
+
+// Post title as `h1` heading
+.editor-post-title__block {
+  --vf-text-margin--bottom: 0;
+
+  .editor-post-title__input {
+    @include set-type(text-heading--1);
+  }
+}
+
+// Placeholder block
+.wp-block {
+  .block-editor-default-block-appender {
+    --vf-text-margin--bottom: 0;
+
+    .block-editor-default-block-appender__content {
+      @include set-type(text-body--2);
+    }
+  }
+}
+
+// Heading block
+.wp-block[data-type='core/heading'] {
+  --vf-text-margin--bottom: 0;
+
+  h1 {
+    @include set-type(text-heading--1);
+  }
+  h2 {
+    @include set-type(text-heading--2);
+  }
+  h3 {
+    @include set-type(text-heading--3);
+  }
+  h4 {
+    @include set-type(text-heading--4);
+  }
+  h5 {
+    @include set-type(text-heading--5);
+  }
+  h6 {
+    @include set-type(text-heading--5);
+  }
+}
+
+// Paragraph block
+.wp-block[data-type='core/paragraph'] {
+  --vf-text-margin--bottom: 0;
+
+  .editor-rich-text {
+    p {
+      @include set-type(text-body--2);
+    }
+  }
+}
+
+// List block
+.wp-block[data-type='core/list'] {
+  --vf-text-margin--bottom: 0;
+
+  .editor-rich-text {
+    li {
+      @include set-type(text-body--2);
+      margin-bottom: map-get($vf-spacing-map, vf-spacing--sm);
+    }
+  }
+}
+
+// Quote block
+.wp-block[data-type='core/quote'] {
+  --vf-text-margin--bottom: 16px;
+
+  .editor-rich-text {
+    p {
+      @include set-type(text-body--2);
+    }
+  }
+
+  .wp-block-quote__citation {
+    @include set-type(text-body--4);
+  }
+
+  .wp-block-quote {
+    border-left: 4px solid #d0d0ce;
+  }
+}
+
+// Table block
+.wp-block[data-type='core/table'] {
+  --vf-text-margin--bottom: 0;
+
+  .editor-rich-text {
+    @include set-type(text-body--3);
+  }
+}
+
+// Widget blocks
+.wp-block[data-type='core/archives'],
+.wp-block[data-type='core/categories'],
+.wp-block[data-type='core/latest-posts'] {
+  --vf-text-margin--bottom: 0;
+
+  li {
+    @include set-type(text-body--2);
+    margin-bottom: map-get($vf-spacing-map, vf-spacing--sm);
   }
 }
