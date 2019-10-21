@@ -261,3 +261,40 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
   margin-bottom: 8px;
 }
+
+.wp-block[data-type='core/quote'] {
+  --vf-text-margin--bottom: 16px;
+}
+
+.wp-block[data-type='core/quote'] .editor-rich-text p {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.wp-block[data-type='core/quote'] .wp-block-quote__citation {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.57;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.wp-block[data-type='core/quote'] .wp-block-quote {
+  border-left: 4px solid #d0d0ce;
+}
+
+.wp-block[data-type='core/table'] {
+  --vf-text-margin--bottom: 0;
+}
+
+.wp-block[data-type='core/table'] .editor-rich-text {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.71;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}

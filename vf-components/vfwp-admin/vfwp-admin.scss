@@ -76,3 +76,31 @@
     }
   }
 }
+
+// Quote block
+.wp-block[data-type='core/quote'] {
+  --vf-text-margin--bottom: 16px;
+
+  .editor-rich-text {
+    p {
+      @include set-type(text-body--2);
+    }
+  }
+
+  .wp-block-quote__citation {
+    @include set-type(text-body--4);
+  }
+
+  .wp-block-quote {
+    border-left: 4px solid #d0d0ce;
+  }
+}
+
+// Table block
+.wp-block[data-type='core/table'] {
+    --vf-text-margin--bottom: 0;
+
+  .editor-rich-text {
+    @include set-type(text-body--3);
+  }
+}
