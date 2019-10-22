@@ -11,36 +11,39 @@ import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
 
 // Return a transform object for grids using `vf/grid-column`
-export const fromGrid = (fromBlock, toBlock, min, max) => {
+export const fromColumns = (fromBlock, toBlock, min, max) => {
   return {
     type: 'block',
     blocks: [fromBlock],
-    isMatch: attributes => {
-      const {columns} = attributes;
-      return columns >= min && columns <= max;
-    },
     transform: (attributes, innerBlocks) => {
-      const {placeholder, columns} = attributes;
-      return createBlock(toBlock, {placeholder, columns}, innerBlocks);
-    }
-  };
-};
-
-// Return a transform object from `core/columns` to `vf/grid-column`
-export const fromColumns = (toBlock, min, max) => {
-  return {
-    type: 'block',
-    blocks: ['core/columns'],
-    isMatch: attributes => {
-      const {columns} = attributes;
-      return columns >= min && columns <= max;
-    },
-    transform: (attributes, innerBlocks) => {
-      const {columns} = attributes;
-      const newInnerBlocks = innerBlocks.map(columnBlock =>
-        createBlock('vf/grid-column', {}, columnBlock.innerBlocks)
+      // Map column props
+      let innerProps = innerBlocks.map(block => ({
+        attributes: {...block.attributes},
+        innerBlocks: [...block.innerBlocks]
+      }));
+      // Fill empty props to match min number of columns
+      while (innerProps.length < min) {
+        innerProps.push({});
+      }
+      // Merge end props to match max number of columns
+      while (innerProps.length > max) {
+        const mergeProps = innerProps.pop();
+        innerProps[innerProps.length - 1].innerBlocks.push(
+          ...mergeProps.innerBlocks
+        );
+      }
+      // Return new grid block with inner columns
+      return createBlock(
+        toBlock,
+        {columns: innerProps.length},
+        innerProps.map(props =>
+          createBlock(
+            'vf/grid-column',
+            props.attributes || {},
+            props.innerBlocks || []
+          )
+        )
       );
-      return createBlock(toBlock, {columns}, newInnerBlocks);
     }
   };
 };
@@ -173,8 +176,8 @@ settings.edit = withGridDispatch(props => {
 // Block transforms
 settings.transforms = {
   from: [
-    fromColumns('vf/grid', MIN_COLUMNS, MAX_COLUMNS),
-    fromGrid('vf/embl-grid', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS)
+    fromColumns('core/columns', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS),
+    fromColumns('vf/embl-grid', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS)
   ]
 };
 

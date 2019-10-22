@@ -9,7 +9,7 @@ import {withDispatch} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
-import {fromColumns, fromGrid} from './vf-grid';
+import {fromColumns} from './vf-grid';
 
 const defaults = useVFDefaults();
 
@@ -192,8 +192,8 @@ settings.edit = withGridDispatch(props => {
 // Block transforms
 settings.transforms = {
   from: [
-    fromColumns('vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS),
-    fromGrid('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)
+    fromColumns('core/columns', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS),
+    fromColumns('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)
   ]
 };
 
