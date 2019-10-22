@@ -10,8 +10,8 @@ import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
 
-// Return a Gutenberg transform object for grids using `vf/grid-column`
-export const gridTransform = (fromBlock, toBlock, min, max) => {
+// Return a transform object for grids using `vf/grid-column`
+export const fromGrid = (fromBlock, toBlock, min, max) => {
   return {
     type: 'block',
     blocks: [fromBlock],
@@ -26,6 +26,25 @@ export const gridTransform = (fromBlock, toBlock, min, max) => {
   };
 };
 
+// Return a transform object from `core/columns` to `vf/grid-column`
+export const fromColumns = (toBlock, min, max) => {
+  return {
+    type: 'block',
+    blocks: ['core/columns'],
+    isMatch: attributes => {
+      const {columns} = attributes;
+      return columns >= min && columns <= max;
+    },
+    transform: (attributes, innerBlocks) => {
+      const {columns} = attributes;
+      const newInnerBlocks = innerBlocks.map(columnBlock =>
+        createBlock('vf/grid-column', {}, columnBlock.innerBlocks)
+      );
+      return createBlock(toBlock, {columns}, newInnerBlocks);
+    }
+  };
+};
+
 const defaults = useVFDefaults();
 
 const ver = '1.0.0';
@@ -36,7 +55,7 @@ const MAX_COLUMNS = 6;
 const settings = {
   ...defaults,
   name: 'vf/grid',
-  title: __('Grid'),
+  title: __('VF Grid'),
   category: 'vf/core',
   description: __('Visual Framework (core)'),
   attributes: {
@@ -122,7 +141,7 @@ settings.edit = withGridDispatch(props => {
   if (placeholder === 1) {
     return (
       <div className={`vf-block vf-block--placeholder ${props.className}`}>
-        <Placeholder label={__('Grid')} icon={'admin-generic'}>
+        <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
           <VFBlockFields fields={fields} />
         </Placeholder>
       </div>
@@ -153,7 +172,10 @@ settings.edit = withGridDispatch(props => {
 
 // Block transforms
 settings.transforms = {
-  from: [gridTransform('vf/embl-grid', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS)]
+  from: [
+    fromColumns('vf/grid', MIN_COLUMNS, MAX_COLUMNS),
+    fromGrid('vf/embl-grid', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS)
+  ]
 };
 
 export default settings;
