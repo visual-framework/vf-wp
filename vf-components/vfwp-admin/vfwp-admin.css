@@ -259,6 +259,7 @@
   line-height: 1.421;
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  line-height: 1.421 !important;
 }
 
 .wp-block[data-type='core/list'] {

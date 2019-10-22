@@ -72,6 +72,8 @@
   .editor-rich-text {
     p {
       @include set-type(text-body--2);
+      // override WordPress defaults :(
+      line-height: 1.421 !important;
     }
   }
 }
