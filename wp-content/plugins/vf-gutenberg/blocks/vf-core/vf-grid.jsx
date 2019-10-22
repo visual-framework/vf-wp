@@ -2,6 +2,7 @@
 Block Name: Grid
 */
 import React, {Fragment} from 'react';
+import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {withDispatch} from '@wordpress/data';
@@ -9,9 +10,28 @@ import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
 
+// Return a Gutenberg transform object for grids using `vf/grid-column`
+export const gridTransform = (fromBlock, toBlock, min, max) => {
+  return {
+    type: 'block',
+    blocks: [fromBlock],
+    isMatch: attributes => {
+      const {columns} = attributes;
+      return columns >= min && columns <= max;
+    },
+    transform: (attributes, innerBlocks) => {
+      const {placeholder, columns} = attributes;
+      return createBlock(toBlock, {placeholder, columns}, innerBlocks);
+    }
+  };
+};
+
 const defaults = useVFDefaults();
 
 const ver = '1.0.0';
+
+const MIN_COLUMNS = 1;
+const MAX_COLUMNS = 6;
 
 const settings = {
   ...defaults,
@@ -91,8 +111,8 @@ settings.edit = withGridDispatch(props => {
   const fields = [
     {
       control: 'columns',
-      min: 1,
-      max: 6,
+      min: MIN_COLUMNS,
+      max: MAX_COLUMNS,
       value: columns,
       onChange: props.setColumns
     }
@@ -130,5 +150,10 @@ settings.edit = withGridDispatch(props => {
     </Fragment>
   );
 });
+
+// Block transforms
+settings.transforms = {
+  from: [gridTransform('vf/embl-grid', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS)]
+};
 
 export default settings;
