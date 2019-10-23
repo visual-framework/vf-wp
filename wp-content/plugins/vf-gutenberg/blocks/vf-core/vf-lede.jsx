@@ -3,9 +3,9 @@ Block Name: Lede
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
+import template from '@visual-framework/vf-lede/vf-lede.precompiled';
 import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import template from '../templates/vf-lede';
 
 export default useVFCoreSettings({
   name: 'vf/lede',

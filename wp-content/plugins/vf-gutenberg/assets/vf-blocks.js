@@ -163,6 +163,17 @@ eval("/**\n * Precompiled Nunjucks template: vf-divider.njk\n */\n(function() {(
 
 /***/ }),
 
+/***/ "./node_modules/@visual-framework/vf-lede/vf-lede.precompiled.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@visual-framework/vf-lede/vf-lede.precompiled.js ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/**\n * Precompiled Nunjucks template: vf-lede.njk\n */\n(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})[\"vf-lede\"] = (function() {\nfunction root(env, context, frame, runtime, cb) {\nvar lineno = 0;\nvar colno = 0;\nvar output = \"\";\ntry {\nvar parentTemplate = null;\noutput += \"<p class=\\\"vf-lede\\\">\";\noutput += runtime.suppressValue(env.getFilter(\"safe\").call(context, runtime.contextOrFrameLookup(context, frame, \"vf_lede_text\")), env.opts.autoescape);\noutput += \"</p>\\n\";\nif(parentTemplate) {\nparentTemplate.rootRenderFunc(env, context, frame, runtime, cb);\n} else {\ncb(null, output);\n}\n;\n} catch (e) {\n  cb(runtime.handleError(e, lineno, colno));\n}\n}\nreturn {\nroot: root\n};\n\n})();\n})();\n\n\n//# sourceURL=webpack:///./node_modules/@visual-framework/vf-lede/vf-lede.precompiled.js?");
+
+/***/ }),
+
 /***/ "./node_modules/core-js/internals/a-function.js":
 /*!******************************************************!*\
   !*** ./node_modules/core-js/internals/a-function.js ***!
@@ -1679,17 +1690,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./wp-content/plugins/vf-gutenberg/blocks/templates/vf-lede.js":
-/*!*********************************************************************!*\
-  !*** ./wp-content/plugins/vf-gutenberg/blocks/templates/vf-lede.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Precompiled Nunjucks template: @visual-framework/vf-lede\n */\n(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})[\"vf-lede\"] = (function() {\nfunction root(env, context, frame, runtime, cb) {\nvar lineno = 0;\nvar colno = 0;\nvar output = \"\";\ntry {\nvar parentTemplate = null;\noutput += \"<p class=\\\"vf-lede\\\">\";\noutput += runtime.suppressValue(env.getFilter(\"safe\").call(context, runtime.contextOrFrameLookup(context, frame, \"vf_lede_text\")), env.opts.autoescape);\noutput += \"</p>\\n\";\nif(parentTemplate) {\nparentTemplate.rootRenderFunc(env, context, frame, runtime, cb);\n} else {\ncb(null, output);\n}\n;\n} catch (e) {\n  cb(runtime.handleError(e, lineno, colno));\n}\n}\nreturn {\nroot: root\n};\n\n})();\n})();\n\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/templates/vf-lede.js?");
-
-/***/ }),
-
 /***/ "./wp-content/plugins/vf-gutenberg/blocks/utils/hashsum.js":
 /*!*****************************************************************!*\
   !*** ./wp-content/plugins/vf-gutenberg/blocks/utils/hashsum.js ***!
@@ -1960,7 +1960,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ \"@wordpress/i18n\");\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _hooks_with_transient__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/with-transient */ \"./wp-content/plugins/vf-gutenberg/blocks/hooks/with-transient.js\");\n/* harmony import */ var _hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/use-vf-core-settings */ \"./wp-content/plugins/vf-gutenberg/blocks/hooks/use-vf-core-settings.jsx\");\n/* harmony import */ var _templates_vf_lede__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../templates/vf-lede */ \"./wp-content/plugins/vf-gutenberg/blocks/templates/vf-lede.js\");\n/* harmony import */ var _templates_vf_lede__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_templates_vf_lede__WEBPACK_IMPORTED_MODULE_4__);\n/**\nBlock Name: Lede\n*/\n\n\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Object(_hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_3__[\"default\"])({\n  name: 'vf/lede',\n  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Lede'),\n  attributes: {\n    text: {\n      type: 'string',\n      default: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Lede heading…')\n    }\n  },\n  fields: [{\n    name: 'text',\n    control: 'rich',\n    label: '',\n    tag: 'h1',\n    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Type lede heading…')\n  }],\n  withHOC: [[_hooks_with_transient__WEBPACK_IMPORTED_MODULE_2__[\"withTransientAttributeMap\"], [{\n    from: 'text',\n    to: 'vf_lede_text'\n  }]]]\n}));\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/vf-core/vf-lede.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ \"@wordpress/i18n\");\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _visual_framework_vf_lede_vf_lede_precompiled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @visual-framework/vf-lede/vf-lede.precompiled */ \"./node_modules/@visual-framework/vf-lede/vf-lede.precompiled.js\");\n/* harmony import */ var _visual_framework_vf_lede_vf_lede_precompiled__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_visual_framework_vf_lede_vf_lede_precompiled__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _hooks_with_transient__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/with-transient */ \"./wp-content/plugins/vf-gutenberg/blocks/hooks/with-transient.js\");\n/* harmony import */ var _hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks/use-vf-core-settings */ \"./wp-content/plugins/vf-gutenberg/blocks/hooks/use-vf-core-settings.jsx\");\n/**\nBlock Name: Lede\n*/\n\n\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Object(_hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_4__[\"default\"])({\n  name: 'vf/lede',\n  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Lede'),\n  attributes: {\n    text: {\n      type: 'string',\n      default: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Lede heading…')\n    }\n  },\n  fields: [{\n    name: 'text',\n    control: 'rich',\n    label: '',\n    tag: 'h1',\n    placeholder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Type lede heading…')\n  }],\n  withHOC: [[_hooks_with_transient__WEBPACK_IMPORTED_MODULE_3__[\"withTransientAttributeMap\"], [{\n    from: 'text',\n    to: 'vf_lede_text'\n  }]]]\n}));\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/vf-core/vf-lede.jsx?");
 
 /***/ }),
 
