@@ -19,7 +19,6 @@ import vfGridColumn from './vf-core/vf-grid-column';
 import vfEMBLGrid from './vf-core/vf-embl-grid';
 import vfGrid from './vf-core/vf-grid';
 import vfLede from './vf-core/vf-lede';
-// import vfSummary from './vf-core/vf-summary';
 
 // Get "localized" global script settings
 const {plugins, coreOptin} = useVFGutenberg();
@@ -43,7 +42,6 @@ if (parseInt(coreOptin) === 1) {
     vfBreadcrumbsItem,
     vfBreadcrumbs,
     vfLede
-    // vfSummary
   ];
   coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
 }
