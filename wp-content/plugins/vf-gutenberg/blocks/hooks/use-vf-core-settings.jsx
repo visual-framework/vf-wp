@@ -116,6 +116,9 @@ const useVFCoreSettings = settings => {
       customClassName: hasStyles,
       inserter: settings.isInsertable !== false
     },
+    transforms: {
+      ...(settings.transforms || null)
+    },
     edit: Edit,
     save: Save
   };
