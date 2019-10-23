@@ -3,9 +3,9 @@ Block Name: Breadcrumbs
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
+import template from '@visual-framework/vf-breadcrumbs/vf-breadcrumbs.precompiled';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import {withTransientInnerBlocks} from '../hooks/with-transient';
-import template from '../templates/vf-breadcrumbs';
 
 const withBreadcrumbsItems = Edit => {
   return props => {
