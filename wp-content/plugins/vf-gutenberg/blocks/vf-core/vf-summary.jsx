@@ -2,11 +2,12 @@
 Block Name: Summary (WIP)
 Todo: Summary title link (hard-coded in Nunjucks template)
 */
+/*
 import React from 'react';
 import {__} from '@wordpress/i18n';
+import template from '@visual-framework/vf-summary/vf-summary.precompiled';
 import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import template from '../templates/vf-summary';
 
 export default useVFCoreSettings({
   name: 'vf/summary',
@@ -47,3 +48,4 @@ export default useVFCoreSettings({
     ]
   ]
 });
+*/
