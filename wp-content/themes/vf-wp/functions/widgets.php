@@ -18,7 +18,7 @@ function vf__widgets_init() {
     'WP_Widget_Media_Image',
     'WP_Widget_Media_Video',
     'WP_Widget_Meta',
-    'WP_Widget_Pages',
+    // 'WP_Widget_Pages',
     // 'WP_Widget_Search',
     // 'WP_Widget_Text',
     // 'WP_Widget_Recent_Posts',
@@ -62,59 +62,6 @@ function vf__widget_text_content($text, $settings, $instance) {
 }
 
 /**
- * Modify default "Recent Entries" widget code
- * https://visual-framework.github.io/vf-core/components/detail/vf-link-list.html
- */
-add_filter('vf/render_widget_recent_entries', 'vf__render_widget_recent_entries');
-
-function vf__render_widget_recent_entries($html) {
-  $html = str_replace('vf-box vf-box--inlay', 'vf-links vf-box vf-box--inlay', $html);
-  $html = str_replace('vf-box__heading', 'vf-links__heading', $html);
-  $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
-  $html = str_replace('<li>', '<li class="vf-list__item">', $html);
-  $html = str_replace('<a ', '<a class="vf-list__link" ', $html);
-  return $html;
-}
-
-/**
- * Modify the "Categories" widget code
- */
-add_filter('vf/render_widget_categories', 'vf__render_widget_categories');
-
-function vf__render_widget_categories($html) {
-  // Replace hidden text class
-  $html = str_replace('screen-reader-text', 'vf-sr-only', $html);
-  // Add select class
-  $html = preg_replace(
-    '#<select[^>]*?>#',
-    '<select class="vf-form__select" id="cat" name="cat">',
-    $html
-  );
-  // Add `vf-list` classes
-  $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
-  $html = preg_replace(
-    '#<li\s+class="(cat-item[^"]*?)"#',
-    '<li class="$1 vf-list__item"',
-    $html
-  );
-  return $html;
-}
-
-/**
- * Modify the "Search" widget code
- */
-add_filter('vf/render_widget_search', 'vf__render_widget_search');
-
-function vf__render_widget_search($html) {
-  // Remove `vf-box` classes
-  $html = preg_replace(
-    '#(widget\s+?widget_search)\s+?vf-box\s+?vf-box--inlay#',
-    '$1', $html
-  );
-  return $html;
-}
-
-/**
  * Template function to render a dynamic sidebar and widgets
  */
 function vf_sidebar($id) {
@@ -148,6 +95,78 @@ function vf_sidebar($id) {
   }
 
   echo $html;
+}
+
+/**
+ * Modify default "Recent Entries" widget code
+ * https://visual-framework.github.io/vf-core/components/detail/vf-link-list.html
+ */
+add_filter('vf/render_widget_recent_entries', 'vf__render_widget_recent_entries');
+
+function vf__render_widget_recent_entries($html) {
+  $html = str_replace('vf-box vf-box--inlay', 'vf-links vf-box vf-box--inlay', $html);
+  $html = str_replace('vf-box__heading', 'vf-links__heading', $html);
+  $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+  $html = str_replace('<li>', '<li class="vf-list__item">', $html);
+  $html = str_replace('<a ', '<a class="vf-list__link" ', $html);
+  return $html;
+}
+
+/**
+ * Modify the "Categories" widget code
+ */
+add_filter('vf/render_widget_categories', 'vf__render_widget_categories');
+
+function vf__render_widget_categories($html) {
+  // Replace hidden text class
+  $html = str_replace('screen-reader-text', 'vf-sr-only', $html);
+  // Add select class
+  $html = preg_replace(
+    '#<select[^>]*?>#',
+    '<select class="vf-form__select" id="cat" name="cat">',
+    $html
+  );
+  // Add `vf-list` classes
+  $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+  $html = preg_replace(
+    '#<li\s+class="(cat-item[^"]*?)"#',
+    '<li class="$1 | vf-list__item"',
+    $html
+  );
+  return $html;
+}
+
+/**
+ * Modify the "Categories" widget code
+ */
+add_filter('vf/render_widget_pages', 'vf__render_widget_pages');
+
+function vf__render_widget_pages($html) {
+  // Replace hidden text class
+  // $html = str_replace('screen-reader-text', 'vf-sr-only', $html);
+
+  // Add `vf-list` classes
+  $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+  $html = preg_replace(
+    '#<li\s+class="(page_item[^"]*?)"#',
+    '<li class="$1 | vf-list__item"',
+    $html
+  );
+  return $html;
+}
+
+/**
+ * Modify the "Search" widget code
+ */
+add_filter('vf/render_widget_search', 'vf__render_widget_search');
+
+function vf__render_widget_search($html) {
+  // Remove `vf-box` classes
+  $html = preg_replace(
+    '#(widget\s+?widget_search)\s+?vf-box\s+?vf-box--inlay#',
+    '$1', $html
+  );
+  return $html;
 }
 
 ?>
