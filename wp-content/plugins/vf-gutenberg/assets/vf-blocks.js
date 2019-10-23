@@ -152,6 +152,17 @@ eval("/**\n * Precompiled Nunjucks template: vf-button.njk\n */\n(function() {(w
 
 /***/ }),
 
+/***/ "./node_modules/@visual-framework/vf-divider/vf-divider.precompiled.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@visual-framework/vf-divider/vf-divider.precompiled.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("/**\n * Precompiled Nunjucks template: vf-divider.njk\n */\n(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})[\"vf-divider\"] = (function() {\nfunction root(env, context, frame, runtime, cb) {\nvar lineno = 0;\nvar colno = 0;\nvar output = \"\";\ntry {\nvar parentTemplate = null;\noutput += \"<hr\\n\";\noutput += \"\\n\";\nif(runtime.contextOrFrameLookup(context, frame, \"id\")) {\noutput += \" id=\\\"\";\noutput += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, \"id\"), env.opts.autoescape);\noutput += \"\\\"\";\n;\n}\noutput += \"\\nclass=\\\"vf-divider\";\nif(runtime.contextOrFrameLookup(context, frame, \"override_class\")) {\noutput += \" | \";\noutput += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, \"override_class\"), env.opts.autoescape);\n;\n}\noutput += \"\\\">\\n\";\nif(parentTemplate) {\nparentTemplate.rootRenderFunc(env, context, frame, runtime, cb);\n} else {\ncb(null, output);\n}\n;\n} catch (e) {\n  cb(runtime.handleError(e, lineno, colno));\n}\n}\nreturn {\nroot: root\n};\n\n})();\n})();\n\n\n//# sourceURL=webpack:///./node_modules/@visual-framework/vf-divider/vf-divider.precompiled.js?");
+
+/***/ }),
+
 /***/ "./node_modules/core-js/internals/a-function.js":
 /*!******************************************************!*\
   !*** ./node_modules/core-js/internals/a-function.js ***!
@@ -1668,17 +1679,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ "./wp-content/plugins/vf-gutenberg/blocks/templates/vf-divider.js":
-/*!************************************************************************!*\
-  !*** ./wp-content/plugins/vf-gutenberg/blocks/templates/vf-divider.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Precompiled Nunjucks template: @visual-framework/vf-divider\n */\n(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})[\"vf-divider\"] = (function() {\nfunction root(env, context, frame, runtime, cb) {\nvar lineno = 0;\nvar colno = 0;\nvar output = \"\";\ntry {\nvar parentTemplate = null;\noutput += \"<hr\\n\";\noutput += \"\\n\";\nif(runtime.contextOrFrameLookup(context, frame, \"id\")) {\noutput += \" id=\\\"\";\noutput += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, \"id\"), env.opts.autoescape);\noutput += \"\\\"\";\n;\n}\noutput += \"\\nclass=\\\"vf-divider\";\nif(runtime.contextOrFrameLookup(context, frame, \"override_class\")) {\noutput += \" | \";\noutput += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, \"override_class\"), env.opts.autoescape);\n;\n}\noutput += \"\\\">\\n\";\nif(parentTemplate) {\nparentTemplate.rootRenderFunc(env, context, frame, runtime, cb);\n} else {\ncb(null, output);\n}\n;\n} catch (e) {\n  cb(runtime.handleError(e, lineno, colno));\n}\n}\nreturn {\nroot: root\n};\n\n})();\n})();\n\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/templates/vf-divider.js?");
-
-/***/ }),
-
 /***/ "./wp-content/plugins/vf-gutenberg/blocks/templates/vf-lede.js":
 /*!*********************************************************************!*\
   !*** ./wp-content/plugins/vf-gutenberg/blocks/templates/vf-lede.js ***!
@@ -1912,7 +1912,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ \"@wordpress/i18n\");\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../hooks/use-vf-core-settings */ \"./wp-content/plugins/vf-gutenberg/blocks/hooks/use-vf-core-settings.jsx\");\n/* harmony import */ var _templates_vf_divider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../templates/vf-divider */ \"./wp-content/plugins/vf-gutenberg/blocks/templates/vf-divider.js\");\n/* harmony import */ var _templates_vf_divider__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_templates_vf_divider__WEBPACK_IMPORTED_MODULE_3__);\n/**\nBlock Name: Divider\n*/\n\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Object(_hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_2__[\"default\"])({\n  name: 'vf/divider',\n  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Divider'),\n  attributes: {}\n}));\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/vf-core/vf-divider.jsx?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ \"@wordpress/i18n\");\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _visual_framework_vf_divider_vf_divider_precompiled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @visual-framework/vf-divider/vf-divider.precompiled */ \"./node_modules/@visual-framework/vf-divider/vf-divider.precompiled.js\");\n/* harmony import */ var _visual_framework_vf_divider_vf_divider_precompiled__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_visual_framework_vf_divider_vf_divider_precompiled__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks/use-vf-core-settings */ \"./wp-content/plugins/vf-gutenberg/blocks/hooks/use-vf-core-settings.jsx\");\n/**\nBlock Name: Divider\n*/\n\n\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Object(_hooks_use_vf_core_settings__WEBPACK_IMPORTED_MODULE_3__[\"default\"])({\n  name: 'vf/divider',\n  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__[\"__\"])('Divider'),\n  attributes: {}\n}));\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/vf-core/vf-divider.jsx?");
 
 /***/ }),
 
