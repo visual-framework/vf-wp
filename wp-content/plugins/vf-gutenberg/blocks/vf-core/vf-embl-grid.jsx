@@ -9,10 +9,14 @@ import {withDispatch} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
+import {fromColumns} from './transforms/grid';
 
 const defaults = useVFDefaults();
 
 const ver = '1.0.0';
+
+const MIN_COLUMNS = 2;
+const MAX_COLUMNS = 4;
 
 const settings = {
   ...defaults,
@@ -126,8 +130,8 @@ settings.edit = withGridDispatch(props => {
   const fields = [
     {
       control: 'columns',
-      min: 2,
-      max: 4,
+      min: MIN_COLUMNS,
+      max: MAX_COLUMNS,
       value: columns,
       onChange: props.setColumns
     },
@@ -184,5 +188,13 @@ settings.edit = withGridDispatch(props => {
     </Fragment>
   );
 });
+
+// Block transforms
+settings.transforms = {
+  from: [
+    fromColumns('core/columns', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS),
+    fromColumns('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)
+  ]
+};
 
 export default settings;
