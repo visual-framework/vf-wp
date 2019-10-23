@@ -16,7 +16,9 @@ const withBreadcrumbsItems = Edit => {
         if (block.name === 'vf/breadcrumbs-item') {
           transient.breadcrumbs.push({
             text: block.attributes.text,
-            url: block.attributes.url
+            url: block.attributes.url,
+            // Nunjucks template changed from `url`?
+            breadcrumb_href: block.attributes.url
           });
         }
       });
@@ -28,7 +30,6 @@ const withBreadcrumbsItems = Edit => {
 export default useVFCoreSettings({
   name: 'vf/breadcrumbs',
   title: __('Breadcrumbs'),
-
   allowedBlocks: ['vf/breadcrumbs-item'],
   withHOC: [[withBreadcrumbsItems], [withTransientInnerBlocks]]
 });
