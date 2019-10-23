@@ -1,5 +1,6 @@
 /**
 Block Name: Grid Column
+Description: Block is used by both `vf/grid` and `vf/embl-grid`
 */
 import React, {Fragment} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';

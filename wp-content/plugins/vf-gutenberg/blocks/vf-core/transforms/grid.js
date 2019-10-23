@@ -16,10 +16,14 @@ export const fromColumns = (fromBlock, toBlock, min, max) => {
     // Transform function
     transform: (attributes, innerBlocks) => {
       // Map column props
-      let innerProps = innerBlocks.map(block => ({
-        attributes: {...block.attributes},
-        innerBlocks: [...block.innerBlocks]
-      }));
+      let innerProps = innerBlocks.map(block => {
+        // Reset `span` to default; only `vf/grid` supports it
+        const newProps = {
+          attributes: {...block.attributes, span: 1},
+          innerBlocks: [...block.innerBlocks]
+        };
+        return newProps;
+      });
       // Fill empty props to match min number of columns
       while (innerProps.length < min) {
         innerProps.push({});
