@@ -90,6 +90,13 @@ function vf__render_widget_categories($html) {
     '<select class="vf-form__select" id="cat" name="cat">',
     $html
   );
+  // Add `vf-list` classes
+  $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+  $html = preg_replace(
+    '#<li\s+class="(cat-item[^"]*?)"#',
+    '<li class="$1 vf-list__item"',
+    $html
+  );
   return $html;
 }
 
