@@ -9,7 +9,7 @@ import {withDispatch} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
-import {fromColumns} from './vf-grid';
+import {fromColumns} from './transforms/grid';
 
 const defaults = useVFDefaults();
 

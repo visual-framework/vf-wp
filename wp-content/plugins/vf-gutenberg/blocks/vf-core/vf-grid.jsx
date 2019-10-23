@@ -2,51 +2,13 @@
 Block Name: Grid
 */
 import React, {Fragment} from 'react';
-import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {withDispatch} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
-
-// Return a transform object for grids using `vf/grid-column`
-export const fromColumns = (fromBlock, toBlock, min, max) => {
-  return {
-    type: 'block',
-    blocks: [fromBlock],
-    transform: (attributes, innerBlocks) => {
-      // Map column props
-      let innerProps = innerBlocks.map(block => ({
-        attributes: {...block.attributes},
-        innerBlocks: [...block.innerBlocks]
-      }));
-      // Fill empty props to match min number of columns
-      while (innerProps.length < min) {
-        innerProps.push({});
-      }
-      // Merge end props to match max number of columns
-      while (innerProps.length > max) {
-        const mergeProps = innerProps.pop();
-        innerProps[innerProps.length - 1].innerBlocks.push(
-          ...mergeProps.innerBlocks
-        );
-      }
-      // Return new grid block with inner columns
-      return createBlock(
-        toBlock,
-        {columns: innerProps.length},
-        innerProps.map(props =>
-          createBlock(
-            'vf/grid-column',
-            props.attributes || {},
-            props.innerBlocks || []
-          )
-        )
-      );
-    }
-  };
-};
+import {fromColumns} from './transforms/grid';
 
 const defaults = useVFDefaults();
 
