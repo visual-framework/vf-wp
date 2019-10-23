@@ -8,7 +8,7 @@ add_action('widgets_init', 'vf__widgets_init');
 function vf__widgets_init() {
 
   $widgets = array(
-    'WP_Widget_Archives',
+    // 'WP_Widget_Archives',
     'WP_Widget_Calendar',
     // 'WP_Widget_Categories',
     'WP_Widget_Custom_HTML',
@@ -113,6 +113,26 @@ function vf__render_widget_recent_entries($html) {
 }
 
 /**
+ * Modify the "Archives" widget code
+ */
+add_filter('vf/render_widget_archive', 'vf__render_widget_archive');
+
+function vf__render_widget_archive($html) {
+  // Replace hidden text class
+  $html = str_replace('screen-reader-text', 'vf-sr-only', $html);
+  // Add select class
+  $html = preg_replace(
+    '#<select([^>]*?)>#',
+    '<select $1 class="vf-form__select">',
+    $html
+  );
+  // Add `vf-list` classes
+  $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+  $html = str_replace('<li>', '<li class="vf-list__item">', $html);
+  return $html;
+}
+
+/**
  * Modify the "Categories" widget code
  */
 add_filter('vf/render_widget_categories', 'vf__render_widget_categories');
@@ -137,7 +157,7 @@ function vf__render_widget_categories($html) {
 }
 
 /**
- * Modify the "Categories" widget code
+ * Modify the "Pages" widget code
  */
 add_filter('vf/render_widget_pages', 'vf__render_widget_pages');
 
