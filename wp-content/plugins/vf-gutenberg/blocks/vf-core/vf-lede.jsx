@@ -6,6 +6,7 @@ import {__} from '@wordpress/i18n';
 import template from '@visual-framework/vf-lede/vf-lede.precompiled';
 import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import {fromCore} from './transforms/lede';
 
 export default useVFCoreSettings({
   name: 'vf/lede',
@@ -25,5 +26,8 @@ export default useVFCoreSettings({
       placeholder: __('Type lede heading…')
     }
   ],
+  transforms: {
+    from: [fromCore()]
+  },
   withHOC: [[withTransientAttributeMap, [{from: 'text', to: 'vf_lede_text'}]]]
 });

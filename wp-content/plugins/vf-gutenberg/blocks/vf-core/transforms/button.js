@@ -4,7 +4,7 @@
 import React from 'react';
 import {createBlock} from '@wordpress/blocks';
 
-export const fromButton = () => {
+export const fromCore = () => {
   return {
     type: 'block',
     blocks: ['core/button'],

@@ -6,7 +6,7 @@ import {__} from '@wordpress/i18n';
 import template from '@visual-framework/vf-button/vf-button.precompiled';
 import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import {fromButton} from './transforms/button';
+import {fromCore} from './transforms/button';
 
 const withBEMModifiers = Edit => {
   return props => {
@@ -111,7 +111,7 @@ export default useVFCoreSettings({
     }
   ],
   transforms: {
-    from: [fromButton()]
+    from: [fromCore()]
   },
   withHOC: [[withBEMModifiers], [withTransientStyle, {key: 'theme'}]]
 });
