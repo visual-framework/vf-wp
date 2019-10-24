@@ -5,6 +5,7 @@ import React from 'react';
 import {__} from '@wordpress/i18n';
 import template from '@visual-framework/vf-blockquote/vf-blockquote.precompiled';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import {fromParagraph, fromQuote} from './transforms/blockquote';
 
 export default useVFCoreSettings({
   name: 'vf/blockquote',
@@ -23,5 +24,8 @@ export default useVFCoreSettings({
       tag: 'p',
       placeholder: __('Type blockquote…')
     }
-  ]
+  ],
+  transforms: {
+    from: [fromParagraph(), fromQuote()]
+  }
 });

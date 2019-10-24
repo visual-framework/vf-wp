@@ -9,6 +9,7 @@ import {
   withTransientInnerBlocks,
   withTransientAttributeMap
 } from '../hooks/with-transient';
+import {fromCore} from './transforms/activity-list';
 
 const withActivityItems = Edit => {
   return props => {
@@ -42,6 +43,9 @@ export default useVFCoreSettings({
     }
   ],
   allowedBlocks: ['vf/activity-item'],
+  transforms: {
+    from: [fromCore()]
+  },
   withHOC: [
     [withTransientAttributeMap, [{from: 'heading', to: 'date'}]],
     [withActivityItems],
