@@ -11,7 +11,7 @@ if ( ! class_exists('VF_Publications')) {
 
 $vf_publications = VF_Plugin::get_plugin('vf_publications');
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -74,6 +74,6 @@ $keyword = $vf_publications->get_query_keyword();
 </section>
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

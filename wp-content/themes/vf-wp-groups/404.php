@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 ?>
 <section class="vf-inlay">
@@ -12,6 +12,6 @@ get_template_part('partials/header');
 </section>
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

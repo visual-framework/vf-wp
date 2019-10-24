@@ -11,7 +11,7 @@ if ( ! class_exists('VF_Members')) {
 
 $vf_members = VF_Plugin::get_plugin('vf_members');
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -41,6 +41,6 @@ the_post();
 </section>
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 $title = get_the_title(get_option('page_for_posts'));
 
@@ -50,6 +50,6 @@ if (is_search()) {
 </section>
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

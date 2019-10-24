@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -32,6 +32,6 @@ if (is_front_page()) {
 </section>
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

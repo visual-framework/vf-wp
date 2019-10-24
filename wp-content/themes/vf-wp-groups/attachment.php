@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -25,6 +25,6 @@ if (class_exists('VF_Group_Header')) {
 </section>
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

@@ -29,7 +29,7 @@ $title = get_the_title();
 if (comments_open()) {
 ?>
 <hr class="vf-divider">
-<h2 class="vf-text vf-text--heading-l"><?php _e('Leave a Reply', 'vfwp'); ?></h2>
+<h2 class="vf-text vf-text-heading--2"><?php _e('Leave a Reply', 'vfwp'); ?></h2>
 <?php
 }
 vf_comment_form();

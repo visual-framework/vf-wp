@@ -11,7 +11,7 @@ if ( ! class_exists('VF_Jobs')) {
 
 $vf_jobs = VF_Plugin::get_plugin('vf_jobs');
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -144,6 +144,6 @@ function vf__jobs_filter_script() {
 <?php
 } // Action: `vf__jobs_filter_script`
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

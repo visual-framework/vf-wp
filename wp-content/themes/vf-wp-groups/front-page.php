@@ -6,7 +6,7 @@ if (get_option('show_on_front') !== 'page') {
   exit;
 }
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -73,6 +73,6 @@ foreach ($blocks as $i => $html) {
 // Remove filter just in case
 remove_filter('render_block', 'home_render_block', 11, 2);
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>
