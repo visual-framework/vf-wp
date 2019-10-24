@@ -39,16 +39,34 @@ function vf__after_setup_theme() {
   // VF font sizes
   add_theme_support('editor-font-sizes', array(
     array(
-      'name' => __('small', $domain),
+      'name' => __('Extra Small', $domain),
+      'shortName' => __( 'XS', $domain),
+      'size' => 13.99,
+      'slug' => 'extra-small'
+    ),
+    array(
+      'name' => __('Small', $domain),
       'shortName' => __( 'S', $domain),
       'size' => 14,
       'slug' => 'small'
     ),
     array(
-      'name' => __('large', $domain),
+      'name' => __('Regular', $domain),
+      'shortName' => __( 'R', $domain),
+      'size' => 16,
+      'slug' => 'regular'
+    ),
+    array(
+      'name' => __('Large', $domain),
       'shortName' => __( 'L', $domain),
       'size' => 19,
       'slug' => 'large'
+    ),
+    array(
+      'name' => __('Extra Large', $domain),
+      'shortName' => __( 'XL', $domain),
+      'size' => 32,
+      'slug' => 'extra-large'
     ),
   ));
 }

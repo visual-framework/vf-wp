@@ -133,6 +133,7 @@ class VF_Gutenberg {
     include_once('includes/core/core-button.php');
     include_once('includes/core/core-file.php');
     include_once('includes/core/core-image.php');
+    include_once('includes/core/core-paragraph.php');
     include_once('includes/core/core-quote.php');
     include_once('includes/core/core-separator.php');
   }

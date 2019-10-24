@@ -14,6 +14,30 @@
  * Location: #{map-get($componentInfo, 'location')}
  */
 
+@mixin editor-font-sizes {
+  .has-extra-large-font-size {
+    @include set-type(text-body--1);
+  }
+
+  .has-large-font-size {
+    @include set-type(text-body--2);
+  }
+
+  .has-regular-font-size {
+    @include set-type(text-body--3);
+  }
+
+  .has-small-font-size {
+    @include set-type(text-body--4);
+  }
+
+  .has-extra-small-font-size {
+    @include set-type(text-body--5);
+  }
+}
+
+@include editor-font-sizes;
+
 .wp-list-table {
   .column-vf_hash,
   .column-vf_modified {
@@ -75,6 +99,8 @@
       // override WordPress defaults :(
       line-height: 1.421 !important;
     }
+
+    @include editor-font-sizes;
   }
 }
 

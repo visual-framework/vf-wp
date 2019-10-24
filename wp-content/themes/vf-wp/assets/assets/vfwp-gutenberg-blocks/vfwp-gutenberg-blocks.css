@@ -78,6 +78,10 @@
   position: relative;
 }
 
+.vf-block .vf-block {
+  background: transparent;
+}
+
 .vf-block[data-editing='false'] {
   padding: 0;
 }
