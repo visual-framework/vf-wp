@@ -6,15 +6,16 @@ the brand-specific "VF 2.0 for the EMBL Design Language".
 ## Documentation
 
 * [Work in Progress, Issues, Bugs](https://github.com/visual-framework/vf-wp/issues)
-* [Theme and plugin architecture](docs/architecture.md)
-* [WordPress setup](docs/wordpress.md)
+* [Theme and plugin architecture](/docs/architecture.md)
+* [Theming documentation](/wp-content/themes/vf-wp/README.md)
+* [WordPress setup](/docs/wordpress.md)
 
 ## Plugin documentation
 
-* [EMBL Taxonomy](wp-content/plugins/embl-taxonomy/README.md)
-* [VF Gutenberg](wp-content/plugins/vf-gutenberg/README.md)
-* [Containers](docs/containers.md)
-* [Blocks](docs/blocks.md)
+* [EMBL Taxonomy](/wp-content/plugins/embl-taxonomy/README.md)
+* [VF Gutenberg](/wp-content/plugins/vf-gutenberg/README.md)
+* [Containers](/docs/containers.md)
+* [Blocks](/docs/blocks.md)
 
 ## Development
 
