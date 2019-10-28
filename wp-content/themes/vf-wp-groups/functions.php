@@ -34,11 +34,8 @@ function vfwp__body_class($classes) {
  */
 add_action('wp_head', 'vfwp__wp_head');
 
-define('VF_THEME_COLOR', '009f4d');
-
 function vfwp__wp_head() {
-  // Output theme customisation
-  $theme_color = get_theme_mod('vf_theme_color', VF_THEME_COLOR);
+  $theme_color = get_theme_mod('vf_theme_color', '009f4d');
 ?>
 <style>
 .vf-wp-theme .vf-box--secondary,
@@ -52,27 +49,33 @@ function vfwp__wp_head() {
 /**
  * Load CSS and JavaScript assets
  */
-add_action('wp_enqueue_scripts', 'vfwp__wp_enqueue_scripts', 21);
+add_action('wp_enqueue_scripts', 'vfwp__wp_enqueue_scripts', 10);
 
 function vfwp__wp_enqueue_scripts() {
-  $dir = untrailingslashit(get_template_directory_uri());
+  $dir = untrailingslashit(get_stylesheet_directory_uri());
 
-  // Register script - let plugins enqueue as necessary
-  wp_register_script(
-    'accessible-autocomplete',
-    $dir . '/assets/js/accessible-autocomplete.min.js',
-    array(),
-    '1.6.2',
-    true
-  );
-
-  wp_register_style(
-    'accessible-autocomplete',
-    $dir . '/assets/css/vf-accessible-autocomplete.css',
-    array('vfwp'),
-    '1.6.2',
-    'all'
-  );
+  // Register assets for "Jobs" template
+  if (
+    is_page_template('template-jobs.php') &&
+    function_exists('embl_taxonomy')
+  ) {
+    wp_register_script(
+      'accessible-autocomplete',
+      $dir . '/assets/js/accessible-autocomplete.min.js',
+      array(),
+      '1.6.2',
+      true
+    );
+    wp_register_style(
+      'accessible-autocomplete',
+      $dir . '/assets/css/vf-accessible-autocomplete.css',
+      array(),
+      '1.6.2',
+      'all'
+    );
+    wp_enqueue_script('accessible-autocomplete');
+    wp_enqueue_style('accessible-autocomplete');
+  }
 }
 
 /**
