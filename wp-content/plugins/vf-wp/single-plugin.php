@@ -1,11 +1,12 @@
 <?php
+/**
+ * Theme template for `single-vf_block` and `single-vf_container`
+ * Previews are accessible via the WordPress admin area
+ */
 
 get_template_part('partials/head');
 
 the_post();
-
-?>
-<?php
 
 global $post;
 
@@ -15,9 +16,6 @@ if (class_exists('VF_Plugin')) {
     VF_Plugin::render($vf_plugin);
   }
 }
-
-?>
-<?php
 
 get_template_part('partials/foot');
 

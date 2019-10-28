@@ -66,6 +66,11 @@ class VF_WP {
       array($this, 'acf_settings_load_json'),
       1
     );
+
+    add_filter(
+      'single_template',
+      array($this, 'single_template')
+    );
   }
 
   /**
@@ -106,6 +111,22 @@ class VF_WP {
     if ($vf_containers instanceof VF_Containers) {
       $vf_containers->deactivate();
     }
+  }
+
+  /**
+   * Return the post type template for blocks and containers
+   */
+  function single_template($template) {
+    global $post, $vf_blocks, $vf_containers;
+    if (in_array($post->post_type,
+      array(
+        $vf_blocks->type(),
+        $vf_containers->type()
+      )
+    )) {
+      return plugin_dir_path(__FILE__) . 'single-plugin.php';
+    }
+    return $template;
   }
 
   /**

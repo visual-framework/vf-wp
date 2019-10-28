@@ -22,6 +22,13 @@ class VF_Type {
     // Nothing
   }
 
+  /**
+   * Return plugin post type
+   */
+  public function type() {
+    return $this->post_type;
+  }
+
   public function initialize() {
     add_action(
       'init',
