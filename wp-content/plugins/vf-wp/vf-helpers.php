@@ -46,4 +46,12 @@ function vf_search_keyword($str) {
   return $str;
 }
 
+/**
+ * Return true if last post in `while (have_posts())` loop?
+ */
+function vf_last_post() {
+  global $wp_query;
+  return $wp_query->current_post + 1 >= $wp_query->post_count;
+}
+
 ?>
