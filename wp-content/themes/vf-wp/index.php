@@ -2,28 +2,9 @@
 
 get_header();
 
-$title = get_the_title(get_option('page_for_posts'));
+global $vf_theme;
 
-if (is_search()) {
-  $title = sprintf(__('Search: %s', 'vfwp'), get_search_query());
-} elseif (is_category()) {
-  $title = sprintf(__('Category: %s', 'vfwp'), single_term_title('', false));
-} elseif (is_tag()) {
-  $title = sprintf(__('Tag: %s', 'vfwp'), single_term_title('', false));
-} elseif (is_author()) {
-  $title = sprintf(__('Author: %s', 'vfwp'), get_the_author_meta('display_name'));
-} elseif (is_year()) {
-  $title = sprintf(__('Year: %s', 'vfwp'), get_the_date('Y'));
-} elseif (is_month()) {
-  $title = sprintf(__('Month: %s', 'vfwp'), get_the_date('F Y'));
-} elseif (is_day()) {
-  $title = sprintf(__('Day: %s', 'vfwp'), get_the_date());
-} elseif (is_post_type_archive()) {
-  $title = sprintf(__('Type: %s', 'vfwp'), post_type_archive_title('', false));
-} elseif (is_tax()) {
-  $tax = get_taxonomy(get_queried_object()->taxonomy);
-  $title = sprintf(__('%s Archives:', 'vfwp'), $tax->labels->singular_name);
-}
+$title = $vf_theme->get_title();
 
 ?>
 <section class="vf-grid">

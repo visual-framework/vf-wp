@@ -4,6 +4,18 @@ The Visual Framework WordPress theme provides a set of basic templates and theme
 
 **Child themes** like `vf-wp-groups` are an example of utilising this framework.
 
+## Global Class
+
+```php
+global $vf_theme;
+```
+
+Theme templates can access a global instance of `VF_Theme` that has helpful methods.
+
+#### `$vf_theme->get_title()`
+
+Return the default page title for blog archive templates (used for `<h1>`, etc). Can be filtered with `vf/theme/get_title`.
+
 ## Theme Hooks
 
 [Hooks](https://developer.wordpress.org/plugins/hooks/) are a way to customise things in WordPress. The VF-WP theme provides:
