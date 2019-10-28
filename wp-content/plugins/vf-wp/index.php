@@ -67,9 +67,15 @@ class VF_WP {
       1
     );
 
+    // Handle templates
     add_filter(
       'single_template',
       array($this, 'single_template')
+    );
+    add_filter(
+      'body_class',
+      array($this, 'body_class'),
+      30, 1
     );
   }
 
@@ -114,19 +120,41 @@ class VF_WP {
   }
 
   /**
-   * Return the post type template for blocks and containers
+   * Return true if current template is a single block or container
    */
-  function single_template($template) {
+  private function is_singular() {
     global $post, $vf_blocks, $vf_containers;
-    if (in_array($post->post_type,
-      array(
+    if ($post instanceof WP_Post &&
+      in_array($post->post_type, array(
         $vf_blocks->type(),
         $vf_containers->type()
       )
     )) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Return the post type template for blocks and containers
+   */
+  function single_template($template) {
+    if ($this->is_singular()) {
       return plugin_dir_path(__FILE__) . 'single-plugin.php';
     }
     return $template;
+  }
+
+  /**
+   * Strip theme classes from blocks and containers single template
+   */
+  function body_class($classes) {
+    if ($this->is_singular()) {
+      $classes = array_map(function($class) {
+        return strpos($class, 'vf-') === 0 ? '' : $class;
+      }, $classes);
+    }
+    return $classes;
   }
 
   /**

@@ -18,6 +18,27 @@ class VF_Theme {
       array($this, 'wp_head'),
       5
     );
+    if ( ! is_admin()) {
+      add_filter(
+        'script_loader_tag',
+        array($this, 'script_loader_tag'),
+        10, 2
+      );
+    }
+    add_action(
+      'wp_enqueue_scripts',
+      array($this, 'wp_enqueue_scripts'),
+      20
+    );
+    add_filter(
+      'body_class',
+      array($this, 'body_class')
+    );
+    add_filter(
+      'option_blogdescription',
+      array($this, 'option_blogdescription'),
+      10, 1
+    );
   }
 
   public function after_setup_theme() {
@@ -202,6 +223,148 @@ class VF_Theme {
     }
   }
 
+  /**
+   * Load CSS and JavaScript assets
+   */
+  public function wp_enqueue_scripts() {
+    $theme = wp_get_theme();
+    $dir = untrailingslashit(get_template_directory_uri());
+
+    // Use jQuery supplied by theme and enqueue in footer
+    wp_deregister_script('jquery');
+    wp_register_script(
+      'jquery',
+      $dir . '/assets/js/jquery-3.3.1.min.js',
+      false,
+      '3.3.1',
+      true
+    );
+    wp_enqueue_script('jquery');
+
+    // Add VF stylesheet if global option exists
+    if (function_exists('vf_get_stylesheet') && vf_get_stylesheet()) {
+      wp_enqueue_style(
+        'vf',
+        vf_get_stylesheet(),
+        array(),
+        $theme->version,
+        'all'
+      );
+    }
+
+    // Add VF JavaScript if global option exists
+    if (function_exists('vf_get_javascript') && vf_get_javascript()) {
+      wp_enqueue_script(
+        'vf',
+        vf_get_javascript(),
+        array('jquery'),
+        $theme->version,
+        true
+      );
+    }
+
+    // Add theme specific stylesheet
+    wp_enqueue_style(
+      'vfwp',
+      $dir . '/assets/css/styles.css',
+      array(),
+      $theme->version,
+      'all'
+    );
+
+    // Enqueue VF JS
+    wp_enqueue_script(
+      'vf-scripts',
+      $dir . '/assets/scripts/scripts.js',
+      array(),
+      $theme->version,
+      true
+    );
+  }
+
+  /**
+   * Append <body> class for Visual Framework
+   */
+  public function body_class($classes) {
+    $classes[] = 'vf-body';
+    $classes[] = 'vf-wp-theme';
+    return $classes;
+  }
+
+  /**
+   * Allow enqueued scripts to use `async` or `defer` attributes
+   *  by prefixing `--async` or `--defer` to the `$handle`
+   */
+  public function script_loader_tag($tag, $handle) {
+    if (preg_match('#--(async|defer)$#', $handle, $matches)) {
+      $tag = str_replace('<script ', "<script {$matches[1]} ", $tag);
+    }
+    return $tag;
+  }
+
+  /**
+   * Filter the blog description to load via Content Hub
+   */
+  public function option_blogdescription($value) {
+    // remove filter to avoid update recursion
+    remove_filter(
+      'option_blogdescription',
+      array($this, 'option_blogdescription'),
+      10, 1
+    );
+
+    if ( ! class_exists('VF_Cache')) {
+      return $value;
+    }
+
+    // generate API request
+    $term_id = get_field('embl_taxonomy_term_what', 'option');
+    $uuid = embl_taxonomy_get_uuid($term_id);
+
+    if ( ! $uuid) {
+      return $value;
+    }
+
+    $url = VF_Cache::get_api_url();
+    $url .= '/pattern.html';
+    $url = add_query_arg(array(
+      'filter-uuid'         => $uuid,
+      'filter-content-type' => 'profiles',
+      'pattern'             => 'node-strapline',
+      'source'              => 'contenthub',
+    ), $url);
+
+    // cache for one day
+    $max_age = 60 * 60 * 24 * 1;
+
+    // fetch content via the Content Hub cache
+    $description = VF_Cache::fetch($url, $max_age);
+
+    // strip HTML comments
+    $description = preg_replace('#<!--(.*?)-->#s', '', $description);
+    // strip edit link
+    $description = preg_replace(
+      '#<a[^>]*class="[^"]*embl-conditional-edit[^"]*"[^>]*>.*</a>#s',
+      '', $description
+    );
+    // strip tags except for allowed
+    $description = wp_kses(
+      $description,
+      array(
+        'span' => array()
+      )
+    );
+    $description = trim($description);
+
+    // save updated description
+    if ( ! empty($description) && $value !== $description) {
+      $value = $description;
+      update_option('blogdescription', $value);
+    }
+
+    return $value;
+  }
+
 } // VF_WP
 
 endif;
@@ -209,238 +372,6 @@ endif;
 global $vf_theme;
 if ( ! isset($vf_theme)) {
   $vf_theme = new VF_Theme();
-}
-
-
-define('VF_THEME_COLOR', '009f4d');
-
-
-/**
- * Filter page query
- */
-add_filter('pre_get_posts','vf__pre_get_posts');
-
-function vf__pre_get_posts($query) {
-  if (is_admin()) {
-    return $query;
-  }
-  if ( ! $query->is_main_query()) {
-    return $query;
-  }
-  // Exclude non posts from search
-  if ($query->is_search()) {
-    $query->set('post_type', 'post');
-  }
-  return $query;
-}
-
-/**
- * Output inline <head> stuff
- */
-add_action('wp_head', 'vf__wp_head__inline', 5);
-
-function vf__wp_head__inline() {
-  // Output theme customisation
-  $theme_color = get_theme_mod('vf_theme_color', VF_THEME_COLOR);
-?>
-<style>
-.vf-wp-theme .vf-box--secondary,
-.vf-wp-theme .vf-masthead {
-  --vf-masthead__color--background: #<?php echo $theme_color; ?>;
-}
-</style>
-<?php
-}
-
-/**
- * Allow enqueued scripts to use `async` or `defer` attributes
- *  by prefixing `--async` or `--defer` to the `$handle`
- */
-if ( ! is_admin()) {
-  add_filter('script_loader_tag', 'vf__script_loader_tag', 10, 2);
-}
-function vf__script_loader_tag($tag, $handle) {
-  if (preg_match('#--(async|defer)$#', $handle, $matches)) {
-    $tag = str_replace('<script ', "<script {$matches[1]} ", $tag);
-  }
-  return $tag;
-}
-
-/**
- * Load CSS and JavaScript assets
- */
-add_action('wp_enqueue_scripts', 'vf__wp_enqueue_scripts', 20);
-
-function vf__wp_enqueue_scripts() {
-  $theme = wp_get_theme();
-  $dir = get_template_directory_uri();
-
-  // Use jQuery supplied by theme and enqueue in footer
-  wp_deregister_script('jquery');
-  wp_register_script(
-    'jquery',
-    $dir . '/assets/js/jquery-3.3.1.min.js',
-    false,
-    '3.3.1',
-    true
-  );
-  wp_enqueue_script('jquery');
-
-  // Add VF stylesheet if global option exists
-  if (function_exists('vf_get_stylesheet') && vf_get_stylesheet()) {
-    wp_enqueue_style(
-      'vf',
-      vf_get_stylesheet(),
-      array(),
-      $theme->version,
-      'all'
-    );
-  }
-
-  // Add VF JavaScript if global option exists
-  if (function_exists('vf_get_javascript') && vf_get_javascript()) {
-    wp_enqueue_script(
-      'vf',
-      vf_get_javascript(),
-      array('jquery'),
-      $theme->version,
-      true
-    );
-  }
-
-  // Add theme specific stylesheet
-  wp_enqueue_style(
-    'vfwp',
-    $dir . '/assets/css/styles.css',
-    array(),
-    $theme->version,
-    'all'
-  );
-
-  // Enqueue VF JS
-  wp_enqueue_script(
-    'vf-scripts',
-    $dir . '/assets/scripts/scripts.js',
-    array(),
-    $theme->version,
-    true
-  );
-
-  // Register script - let plugins enqueue as necessary
-  wp_register_script(
-    'accessible-autocomplete',
-    $dir . '/assets/js/accessible-autocomplete.min.js',
-    array(),
-    '1.6.2',
-    true
-  );
-  wp_register_style(
-    'accessible-autocomplete',
-    $dir . '/assets/css/vf-accessible-autocomplete.css',
-    array('vfwp'),
-    '1.6.2',
-    'all'
-  );
-}
-
-/**
- * Append <body> class for Visual Framework
- */
-add_filter('body_class', 'vf__body_class');
-
-function vf__body_class($classes) {
-  $classes[] = 'vf-body';
-  $classes[] = 'vf-wp-theme';
-  if (is_singular('vf_block') || is_singular('vf_container')) {
-    return $classes;
-  }
-  $classes[] = 'vf-u-background-color-ui--grey';
-  return $classes;
-}
-
-/**
- * Add VF class to primary menu items
- */
-add_filter('nav_menu_css_class', 'vf__nav_menu_css_class', 10, 4);
-
-function vf__nav_menu_css_class($classes, $item, $args, $depth) {
-  if (in_array($args->theme_location, array('primary', 'secondary'))) {
-    return ['vf-navigation__item'];
-  }
-  return $classes;
-}
-
-/**
- * Add VF class to primary menu items
- */
-add_filter('nav_menu_link_attributes', 'vf__nav_menu_link_attributes', 10, 4);
-
-function vf__nav_menu_link_attributes($atts, $item, $args, $depth) {
-  if (in_array($args->theme_location, array('primary', 'secondary'))) {
-    $atts['class'] = 'vf-navigation__link';
-  }
-  return $atts;
-}
-
-/**
- * Filter the blog description to load via Content Hub
- */
-add_filter('option_blogdescription', 'vf__blog_description', 10, 1);
-
-function vf__blog_description($value) {
-  // remove filter to avoid update recursion
-  remove_filter('option_blogdescription', 'vf__blog_description', 10, 1);
-
-  if ( ! class_exists('VF_Cache')) {
-    return $value;
-  }
-
-  // generate API request
-  $term_id = get_field('embl_taxonomy_term_what', 'option');
-  $uuid = embl_taxonomy_get_uuid($term_id);
-
-  if ( ! $uuid) {
-    return $value;
-  }
-
-  $url = VF_Cache::get_api_url();
-  $url .= '/pattern.html';
-  $url = add_query_arg(array(
-    'filter-uuid'         => $uuid,
-    'filter-content-type' => 'profiles',
-    'pattern'             => 'node-strapline',
-    'source'              => 'contenthub',
-  ), $url);
-
-  // cache for one day
-  $max_age = 60 * 60 * 24 * 1;
-
-  // fetch content via the Content Hub cache
-  $description = VF_Cache::fetch($url, $max_age);
-
-  // strip HTML comments
-  $description = preg_replace('#<!--(.*?)-->#s', '', $description);
-  // strip edit link
-  $description = preg_replace(
-    '#<a[^>]*class="[^"]*embl-conditional-edit[^"]*"[^>]*>.*</a>#s',
-    '', $description
-  );
-  // strip tags except for allowed
-  $description = wp_kses(
-    $description,
-    array(
-      'span' => array()
-    )
-  );
-  $description = trim($description);
-
-  // save updated description
-  if ( ! empty($description) && $value !== $description) {
-    $value = $description;
-    update_option('blogdescription', $value);
-  }
-
-  return $value;
 }
 
 ?>
