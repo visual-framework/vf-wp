@@ -27,13 +27,6 @@ function vf__admin_head() {
       }
     }
   }
-?>
-<style>
-.wp-block {
-  max-width: 780px;
-}
-</style>
-<?php
 }
 
 /**
