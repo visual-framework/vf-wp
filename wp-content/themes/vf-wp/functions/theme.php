@@ -2,74 +2,166 @@
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
-add_action('after_setup_theme', 'vf__after_setup_theme');
+if ( ! class_exists('VFWP') ) :
+
+class VF_Theme {
+
+  public function __construct() {
+    add_action(
+      'after_setup_theme',
+      array($this, 'after_setup_theme')
+    );
+    add_action(
+      'wp_head',
+      array($this, 'wp_head'),
+      5
+    );
+  }
+
+  public function after_setup_theme() {
+    $theme = wp_get_theme();
+    $domain = $theme->get('TextDomain');
+    load_theme_textdomain($domain, get_template_directory() . '/languages');
+
+    register_nav_menu('primary', __('Primary', $domain));
+    register_nav_menu('secondary', __('Secondary', $domain));
+
+    add_theme_support('title-tag');
+
+    add_theme_support(
+      'html5',
+      array(
+        'comment-list',
+        'comment-form',
+        'search-form',
+        'gallery',
+        'caption'
+      )
+    );
+
+    add_theme_support('disable-custom-font-sizes');
+    add_theme_support('disable-custom-colors');
+    add_theme_support('responsive-embeds');
+
+    /**
+     * Setup and filter initial Gutenberg editor color palette
+     * https://developer.wordpress.org/block-editor/developers/themes/theme-support/#block-color-palettes
+     */
+    $color_palette = apply_filters(
+      'vf/theme/editor_color_palette',
+      array(
+        array(
+          'name' => __('EMBL Grey', $domain),
+          'slug' => 'embl-grey',
+          'color' => '#707372',
+        ),
+        array(
+          'name' => __('EMBL Green', $domain),
+          'slug' => 'embl-green',
+          'color' => '#009f4d',
+        ),
+        array(
+          'name' => __('EMBL Blue', $domain),
+          'slug' => 'embl-blue',
+          'color' => '#307fe2',
+        ),
+        array(
+          'name' => __('EMBL Red', $domain),
+          'slug' => 'embl-red',
+          'color' => '#e40046',
+        ),
+        // array(
+        //   'name' => __('EMBL Purple', $domain),
+        //   'slug' => 'embl-purple',
+        //   'color' => '#8246af',
+        // ),
+        // array(
+        //   'name' => __('EMBL Orange', $domain),
+        //   'slug' => 'embl-orange',
+        //   'color' => '#ffa300',
+        // ),
+        // array(
+        //   'name' => __('EMBL Yellow', $domain),
+        //   'slug' => 'embl-yellow',
+        //   'color' => '#ffcd00',
+        // ),
+      )
+    );
+    add_theme_support(
+      'editor-color-palette',
+      $color_palette
+    );
+
+    /**
+     * Setup and filter initial Gutenberg editor font sizes
+     * https://developer.wordpress.org/block-editor/developers/themes/theme-support/#block-font-sizes
+     */
+    $font_sizes = apply_filters(
+      'vf/theme/editor_font_sizes',
+      array(
+        array(
+          'name' => __('Extra Small', $domain),
+          'shortName' => __( 'XS', $domain),
+          'size' => 13.99,
+          'slug' => 'extra-small'
+        ),
+        array(
+          'name' => __('Small', $domain),
+          'shortName' => __( 'S', $domain),
+          'size' => 14,
+          'slug' => 'small'
+        ),
+        array(
+          'name' => __('Regular', $domain),
+          'shortName' => __( 'R', $domain),
+          'size' => 16,
+          'slug' => 'regular'
+        ),
+        array(
+          'name' => __('Large', $domain),
+          'shortName' => __( 'L', $domain),
+          'size' => 19,
+          'slug' => 'large'
+        ),
+        array(
+          'name' => __('Extra Large', $domain),
+          'shortName' => __( 'XL', $domain),
+          'size' => 32,
+          'slug' => 'extra-large'
+        ),
+      )
+    );
+    add_theme_support(
+      'editor-font-sizes',
+      $font_sizes
+    );
+  }
+
+  /**
+   * Output inline JavaScript to `<head>`
+   */
+  public function wp_head() {
+    $path = untrailingslashit(get_template_directory());
+    $path = "{$path}/assets/js/head.js";
+    if (file_exists($path)) {
+      echo "<script>\n";
+      include($path);
+      echo "</script>\n";
+    }
+  }
+
+} // VF_WP
+
+endif;
+
+global $vf_theme;
+if ( ! isset($vf_theme)) {
+  $vf_theme = new VF_Theme();
+}
+
 
 define('VF_THEME_COLOR', '009f4d');
 
-function vf__after_setup_theme() {
-  $theme = wp_get_theme();
-  $domain = $theme->get('TextDomain');
-  load_theme_textdomain($domain, get_template_directory() . '/languages');
-
-  register_nav_menu('primary', __('Primary', $domain));
-  register_nav_menu('secondary', __('Secondary', $domain));
-
-  add_theme_support('title-tag');
-
-  add_theme_support(
-    'html5',
-    array(
-      'comment-list',
-      'comment-form',
-      'search-form',
-      'gallery',
-      'caption'
-    )
-  );
-
-  // Gutenberg config
-  add_theme_support('disable-custom-font-sizes');
-  add_theme_support('disable-custom-colors');
-  add_theme_support('responsive-embeds');
-  add_theme_support('editor-styles');
-
-  // No color palette
-  add_theme_support('editor-color-palette', array());
-
-  // VF font sizes
-  add_theme_support('editor-font-sizes', array(
-    array(
-      'name' => __('Extra Small', $domain),
-      'shortName' => __( 'XS', $domain),
-      'size' => 13.99,
-      'slug' => 'extra-small'
-    ),
-    array(
-      'name' => __('Small', $domain),
-      'shortName' => __( 'S', $domain),
-      'size' => 14,
-      'slug' => 'small'
-    ),
-    array(
-      'name' => __('Regular', $domain),
-      'shortName' => __( 'R', $domain),
-      'size' => 16,
-      'slug' => 'regular'
-    ),
-    array(
-      'name' => __('Large', $domain),
-      'shortName' => __( 'L', $domain),
-      'size' => 19,
-      'slug' => 'large'
-    ),
-    array(
-      'name' => __('Extra Large', $domain),
-      'shortName' => __( 'XL', $domain),
-      'size' => 32,
-      'slug' => 'extra-large'
-    ),
-  ));
-}
 
 /**
  * Filter page query
@@ -96,17 +188,6 @@ function vf__pre_get_posts($query) {
 add_action('wp_head', 'vf__wp_head__inline', 5);
 
 function vf__wp_head__inline() {
-  // Output inline JavaScript
-  $path = get_template_directory() . '/assets/js/head.js';
-  if (file_exists($path)) {
-?>
-<script>
-<?php include($path); ?>
-
-</script>
-<?php
-  }
-
   // Output theme customisation
   $theme_color = get_theme_mod('vf_theme_color', VF_THEME_COLOR);
 ?>
