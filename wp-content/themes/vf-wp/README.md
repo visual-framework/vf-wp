@@ -12,9 +12,11 @@ global $vf_theme;
 
 Theme templates can access a global instance of `VF_Theme` that has helpful methods.
 
-#### `$vf_theme->get_title()`
+##### `$vf_theme->get_title()`
 
-Return the default page title for blog archive templates (used for `<h1>`, etc). Can be filtered with `vf/theme/get_title`.
+Return the default page title for blog archive templates (used for `<h1>`, etc).
+
+Can be filtered with `vf/theme/get_title`.
 
 ## Theme Hooks
 
