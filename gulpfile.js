@@ -14,7 +14,6 @@ require('./gulp-tasks/vf-core');
 gulp.task('js', jsTask);
 gulp.task('blocks', blocksTask);
 
-
 /**
  * Watch tasks
  */
