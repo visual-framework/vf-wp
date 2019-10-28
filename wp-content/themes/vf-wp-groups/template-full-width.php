@@ -5,8 +5,6 @@
 
 get_header();
 
-the_post();
-
 ?>
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">

@@ -13,8 +13,6 @@ $vf_jobs = VF_Plugin::get_plugin('vf_jobs');
 
 get_header();
 
-the_post();
-
 $vf_group_header = VF_Plugin::get_plugin('vf_group_header');
 
 if (class_exists('VF_Group_Header')) {

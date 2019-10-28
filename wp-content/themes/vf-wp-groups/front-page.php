@@ -8,8 +8,6 @@ if (get_option('show_on_front') !== 'page') {
 
 get_header();
 
-the_post();
-
 // Make sure blocks are not being wrapped in paragraphs
 $priority = has_filter('the_content', 'wpautop');
 if ($priority) {

@@ -13,8 +13,6 @@ $vf_publications = VF_Plugin::get_plugin('vf_publications');
 
 get_header();
 
-the_post();
-
 $keyword = $vf_publications->get_query_keyword();
 
 ?>

@@ -2,8 +2,6 @@
 
 get_header();
 
-the_post();
-
 // Only show group long description on front page
 if (is_front_page()) {
 
