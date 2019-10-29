@@ -5,7 +5,7 @@ The Visual Framework WordPress theme provides a set of basic templates and theme
 **Child themes** like `vf-wp-groups` are an example of utilising this framework.
 
 * [Global Class](#global-class)
-* [Filters](#filter-hooks)
+* [Filter Hooks](#filter-hooks)
 
 ## Global Class
 
@@ -85,7 +85,7 @@ Filter widgets passed to [`unregister_widget`](https://codex.wordpress.org/Funct
 
 ##### `$widgets`
 
-(array) A list of PHP class names (e.g. "WP_Widget_Calendar").
+(array) A list of PHP class names (e.g. `'WP_Widget_Calendar'`).
 
 ### Widget Sidebars
 
@@ -93,7 +93,7 @@ Filter widgets passed to [`unregister_widget`](https://codex.wordpress.org/Funct
 apply_filters( 'vf/widgets/sidebars', $sidebars );
 ```
 
-Filter the default sidebars that are registered for the theme.
+Filter the default sidebars that will be registered for the theme.
 
 #### Parameters
 
