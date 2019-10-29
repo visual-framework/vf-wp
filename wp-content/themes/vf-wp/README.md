@@ -5,6 +5,7 @@ The Visual Framework WordPress theme provides a set of basic templates and theme
 **Child themes** like `vf-wp-groups` are an example of utilising this framework.
 
 * [Global Class](#global-class)
+* [Template Functions](#template-functions)
 * [Filter Hooks](#filter-hooks)
 
 ## Global Class
@@ -20,6 +21,24 @@ Theme templates can access a global instance of `VF_Theme` that has helpful meth
 Return the default page title for blog archive templates (used for `<h1>`, etc).
 
 Can be filtered with `vf/theme/get_title`.
+
+## Template Functions
+
+### `vf_header();`
+
+Call the `vf_header` action to output all VF plugin containers that are configured *before* the main page template.
+
+By default this function is called in `partials/header.php` after the opening `<body>` tag.
+
+### `vf_footer();`
+
+Call the `vf_footer` action output all VF plugin containers that are configured *after* the main page template.
+
+By default this function is called in `partials/footer.php` before the closing `</body>` tag.
+
+### `vf_sidebar( $id );`
+
+This function wraps — and is used in place of — [`dynamic_sidebar`](https://developer.wordpress.org/reference/functions/dynamic_sidebar/). It ensures that theme filters are applied to each widget upon render (see: [render widgets hook](#render-widgets)).
 
 ## Theme Hooks
 
