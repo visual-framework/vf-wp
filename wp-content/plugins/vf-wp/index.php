@@ -17,7 +17,7 @@ require_once('vf-plugin.php');
 require_once('vf-type.php');
 require_once('vf-blocks.php');
 require_once('vf-containers.php');
-require_once('vf-admin.php');
+require_once('vf-acf.php');
 
 // Add action hook after opening `<body>` tag
 function vf_header() {
@@ -35,7 +35,12 @@ class VF_WP {
    */
   public function __construct() {
 
-    global $vf_cache, $vf_blocks, $vf_containers;
+    global $vf_acf, $vf_cache, $vf_blocks, $vf_containers;
+
+    if ( ! isset($vf_acf)) {
+      $vf_acf = new VF_ACF();
+      $vf_acf->initialize();
+    }
 
     if ( ! isset($vf_cache)) {
       $vf_cache = new VF_Cache();
@@ -203,10 +208,6 @@ global $vf_wp;
 
 if ( ! isset($vf_wp)) {
   $vf_wp = new VF_WP();
-
-  if (is_admin()) {
-    $vf_admin = new VF_Admin();
-  }
 }
 
 ?>

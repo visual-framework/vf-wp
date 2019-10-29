@@ -2,7 +2,7 @@
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VFWP') ) :
+if ( ! class_exists('VF_Theme') ) :
 
 class VF_Theme {
 
@@ -418,7 +418,7 @@ class VF_Theme {
     return $value;
   }
 
-} // VF_WP
+} // VF_Theme
 
 endif;
 

@@ -2,11 +2,11 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_Admin') ) :
+if ( ! class_exists('VF_ACF') ) :
 
-class VF_Admin {
+class VF_ACF {
 
-  function __construct() {
+  function initialize() {
     add_filter(
       'acf/settings/show_admin',
       array($this, 'acf_settings_show_admin')
@@ -63,7 +63,7 @@ class VF_Admin {
     return $group;
   }
 
-} // VF_Admin
+} // VF_ACF
 
 endif;
 
