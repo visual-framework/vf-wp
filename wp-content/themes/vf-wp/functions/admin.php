@@ -56,14 +56,6 @@ function vf__admin_enqueue_scripts() {
     $theme->version,
     'all'
   );
-
-  wp_enqueue_script(
-    'vf_admin',
-    $dir . '/assets/js/admin.min.js',
-    array('jquery'),
-    $theme->version,
-    true
-  );
 }
 
 /**
@@ -119,22 +111,6 @@ function vf__customize_register($wp_customize) {
 
   // No way!
   $wp_customize->remove_section('custom_css');
-}
-
-/**
- * Enqueue Gutenberg edtior assets
- */
-add_action('enqueue_block_editor_assets', 'vf__enqueue_block_editor_assets');
-
-function vf__enqueue_block_editor_assets() {
-  $theme = wp_get_theme();
-  $dir = get_template_directory_uri();
-  wp_enqueue_script(
-    'vf_admin', $dir . '/assets/js/admin.min.js',
-    array('wp-editor', 'wp-blocks', 'wp-element'),
-    $theme->version,
-    true
-  );
 }
 
 /**

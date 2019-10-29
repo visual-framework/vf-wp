@@ -268,7 +268,7 @@ class VF_Theme {
    */
   public function wp_head() {
     $path = untrailingslashit(get_template_directory());
-    $path = "{$path}/assets/js/head.js";
+    $path = "{$path}/assets/scripts/head.js";
     if (file_exists($path)) {
       echo "<script>\n";
       include($path);
@@ -287,9 +287,9 @@ class VF_Theme {
     wp_deregister_script('jquery');
     wp_register_script(
       'jquery',
-      $dir . '/assets/js/jquery-3.3.1.min.js',
+      $dir . '/assets/scripts/jquery-3.4.1.min.js',
       false,
-      '3.3.1',
+      '3.4.1',
       true
     );
     wp_enqueue_script('jquery');

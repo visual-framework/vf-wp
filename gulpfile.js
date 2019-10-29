@@ -2,8 +2,6 @@
  * VF-WP Gulp
  */
 const gulp = require('gulp');
-
-const {jsTask, jsGlob} = require('./gulp-tasks/vf-wp');
 const {blocksTask, blocksGlob} = require('./gulp-tasks/vf-gutenberg');
 require('./gulp-tasks/vf-core');
 
@@ -11,23 +9,17 @@ require('./gulp-tasks/vf-core');
  * Load tasks
  */
 
-gulp.task('js', jsTask);
-gulp.task('blocks', blocksTask);
-
+gulp.task('vf-gutenberg', blocksTask);
 
 /**
  * Watch tasks
  */
 
-gulp.task('watch-js', () => gulp.watch(jsGlob, gulp.series('js')));
-gulp.task('watch-blocks', () => gulp.watch(blocksGlob, gulp.series('blocks')));
-gulp.task(
-  'watch',
-  gulp.series(
-    'vf-wp-clean:assets',
-    gulp.parallel('watch-js', 'watch-blocks', 'vf-watch')
-  )
+gulp.task('vf-gutenberg-watch', () =>
+  gulp.watch(blocksGlob, gulp.series('vf-gutenberg'))
 );
+
+gulp.task('watch', gulp.parallel('vf-gutenberg-watch', 'vf-watch'));
 
 /**
  * Build tasks
@@ -37,7 +29,7 @@ gulp.task(
   gulp.series(
     'vf-wp-clean:assets',
     'vf-css:generate-component-css',
-    gulp.parallel('js', 'blocks', 'vf-css', 'vf-scripts'),
+    gulp.parallel('vf-gutenberg', 'vf-css', 'vf-scripts'),
     'vf-component-assets'
   )
 );
