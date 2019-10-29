@@ -8,13 +8,13 @@ if ( ! class_exists('VF_Admin') ) :
 
 class VF_Admin {
 
-  private $vf_admin_lock;
+  private $lock;
 
   public function __construct() {
-    // Initialize sub-modules
-    if ( ! $this->vf_admin_lock) {
-      $this->vf_admin_lock = new VF_Admin_Lock();
-    }
+
+    // Initialize sub-class instances
+    $this->lock = new VF_Admin_Lock();
+
     // Add admin hooks
     add_action(
       'admin_head',

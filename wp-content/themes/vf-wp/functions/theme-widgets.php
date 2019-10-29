@@ -2,9 +2,9 @@
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_Widgets') ) :
+if ( ! class_exists('VF_Theme_Widgets') ) :
 
-class VF_Widgets {
+class VF_Theme_Widgets {
 
   public function __construct() {
     add_action(
@@ -256,7 +256,7 @@ class VF_Widgets {
     echo $html;
   }
 
-} // VF_Widgets
+} // VF_Theme_Widgets
 
 endif;
 
@@ -265,7 +265,7 @@ endif;
  */
 if ( ! function_exists('vf_sidebar')) {
   function vf_sidebar($id) {
-    VF_Widgets::render_sidebar($id);
+    VF_Theme_Widgets::render_sidebar($id);
   }
 }
 

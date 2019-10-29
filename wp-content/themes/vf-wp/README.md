@@ -40,6 +40,14 @@ By default this function is called in `partials/footer.php` before the closing `
 
 This function wraps — and is used in place of — [`dynamic_sidebar`](https://developer.wordpress.org/reference/functions/dynamic_sidebar/). It ensures that theme filters are applied to each widget upon render (see: [render widgets hook](#render-widgets)).
 
+#### `vf_pagination();`
+
+Output the `vf-pagination` component markup based on [`paginate_links`](https://developer.wordpress.org/reference/functions/paginate_links/).
+
+#### `vf_comment_form();`
+
+Output the current post comment form with VF markup.
+
 ## Theme Hooks
 
 [Hooks](https://developer.wordpress.org/plugins/hooks/) are a way to customise things in WordPress. The VF-WP theme provides:
