@@ -4,6 +4,9 @@ The Visual Framework WordPress theme provides a set of basic templates and theme
 
 **Child themes** like `vf-wp-groups` are an example of utilising this framework.
 
+* [Global Class](#global-class)
+* [Filters](#filter-hooks)
+
 ## Global Class
 
 ```php
@@ -69,3 +72,45 @@ Filter all options passed to [`add_theme_support`](https://developer.wordpress.o
 ##### `$supports`
 
 (array) A list of either strings (e.g. `'title-tag'`), or nested arrays (e.g. `array('editor-font-sizes', array(...))`).
+
+### Unregister Widgets
+
+```php
+apply_filters( 'vf/widgets/unregister', $widgets );
+```
+
+Filter widgets passed to [`unregister_widget`](https://codex.wordpress.org/Function_Reference/unregister_widget) to remove theme support.
+
+#### Parameters
+
+##### `$widgets`
+
+(array) A list of PHP class names (e.g. "WP_Widget_Calendar").
+
+### Widget Sidebars
+
+```php
+apply_filters( 'vf/widgets/sidebars', $sidebars );
+```
+
+Filter the default sidebars that are registered for the theme.
+
+#### Parameters
+
+##### `$sidebars`
+
+(array) A list of multiple sidebar args passed to [`register_sidebar`](https://developer.wordpress.org/reference/functions/register_sidebar/).
+
+### Render Widgets
+
+```php
+apply_filters( 'vf/widgets/render/${widget_name}', $widgets );
+```
+
+Filter the HTML of a single widget, e.g. `vf/widgets/render/archives`.
+
+#### Parameters
+
+##### `$html`
+
+(string) The rendered widget HTML about to be outputted in the template.

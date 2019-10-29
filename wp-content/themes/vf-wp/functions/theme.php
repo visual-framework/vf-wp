@@ -422,9 +422,4 @@ class VF_Theme {
 
 endif;
 
-global $vf_theme;
-if ( ! isset($vf_theme)) {
-  $vf_theme = new VF_Theme();
-}
-
 ?>

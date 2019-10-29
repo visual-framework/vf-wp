@@ -114,9 +114,4 @@ class VF_Admin {
 
 endif;
 
-global $vf_admin;
-if ( ! isset($vf_admin)) {
-  $vf_admin = new VF_Admin();
-}
-
 ?>
