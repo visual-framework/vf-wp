@@ -129,7 +129,8 @@ function vf__jobs_filter_script() {
       name: $field.name,
       defaultValue: $field.value,
       placeholder: $field.placeholder,
-      cssNamespace: 'vf-autocomplete',
+      cssNamespace: 'vfwp-autocomplete',
+      displayMenu: 'overlay',
       showNoOptionsFound: false
     };
 

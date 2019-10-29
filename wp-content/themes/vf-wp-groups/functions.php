@@ -52,29 +52,31 @@ function vfwp__wp_head() {
 add_action('wp_enqueue_scripts', 'vfwp__wp_enqueue_scripts', 10);
 
 function vfwp__wp_enqueue_scripts() {
-  $dir = untrailingslashit(get_stylesheet_directory_uri());
+  $dir = untrailingslashit(get_template_directory_uri());
+
 
   // Register assets for "Jobs" template
   if (
     is_page_template('template-jobs.php') &&
     function_exists('embl_taxonomy')
   ) {
+    $assets = $dir . '/assets/assets/vfwp-autocomplete';
     wp_register_script(
-      'accessible-autocomplete',
-      $dir . '/assets/js/accessible-autocomplete.min.js',
+      'vfwp-autocomplete',
+      $assets . '/vfwp-autocomplete.js',
       array(),
-      '1.6.2',
+      '2.0.1',
       true
     );
     wp_register_style(
-      'accessible-autocomplete',
-      $dir . '/assets/css/vf-accessible-autocomplete.css',
+      'vfwp-autocomplete',
+      $assets . '/vfwp-autocomplete.css',
       array(),
-      '1.6.2',
+      '2.0.1',
       'all'
     );
-    wp_enqueue_script('accessible-autocomplete');
-    wp_enqueue_style('accessible-autocomplete');
+    wp_enqueue_script('vfwp-autocomplete');
+    wp_enqueue_style('vfwp-autocomplete');
   }
 }
 
