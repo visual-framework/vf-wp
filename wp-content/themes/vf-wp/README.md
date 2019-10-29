@@ -24,19 +24,19 @@ Can be filtered with `vf/theme/get_title`.
 
 ## Template Functions
 
-### `vf_header();`
+#### `vf_header();`
 
-Call the `vf_header` action to output all VF plugin containers that are configured *before* the main page template.
+Call the `vf_header` action to output all [VF plugin](/docs/architecture.md) containers that are configured **before** the main page template.
 
 By default this function is called in `partials/header.php` after the opening `<body>` tag.
 
-### `vf_footer();`
+#### `vf_footer();`
 
-Call the `vf_footer` action output all VF plugin containers that are configured *after* the main page template.
+Call the `vf_footer` action output all [VF plugin](/docs/architecture.md) containers that are configured **after** the main page template.
 
 By default this function is called in `partials/footer.php` before the closing `</body>` tag.
 
-### `vf_sidebar( $id );`
+#### `vf_sidebar( $id );`
 
 This function wraps — and is used in place of — [`dynamic_sidebar`](https://developer.wordpress.org/reference/functions/dynamic_sidebar/). It ensures that theme filters are applied to each widget upon render (see: [render widgets hook](#render-widgets)).
 
@@ -81,7 +81,7 @@ Filter available font sizes in the Gutenberg editor.
 ### Theme Supports Filter
 
 ```php
-apply_filters( 'vf/theme/supports', $supports );
+apply_filters( 'vf/theme/supports', array $supports );
 ```
 
 Filter all options passed to [`add_theme_support`](https://developer.wordpress.org/reference/functions/add_theme_support/). The font size and color palette filters are appended to `$supports` before this filter is applied.
@@ -95,7 +95,7 @@ Filter all options passed to [`add_theme_support`](https://developer.wordpress.o
 ### Unregister Widgets
 
 ```php
-apply_filters( 'vf/widgets/unregister', $widgets );
+apply_filters( 'vf/widgets/unregister', array $widgets );
 ```
 
 Filter widgets passed to [`unregister_widget`](https://codex.wordpress.org/Function_Reference/unregister_widget) to remove theme support.
@@ -109,7 +109,7 @@ Filter widgets passed to [`unregister_widget`](https://codex.wordpress.org/Funct
 ### Widget Sidebars
 
 ```php
-apply_filters( 'vf/widgets/sidebars', $sidebars );
+apply_filters( 'vf/widgets/sidebars', array $sidebars );
 ```
 
 Filter the default sidebars that will be registered for the theme.
@@ -123,7 +123,7 @@ Filter the default sidebars that will be registered for the theme.
 ### Render Widgets
 
 ```php
-apply_filters( 'vf/widgets/render/${widget_name}', $widgets );
+apply_filters( 'vf/widgets/render/${widget_name}', string $html );
 ```
 
 Filter the HTML of a single widget, e.g. `vf/widgets/render/archives`.
