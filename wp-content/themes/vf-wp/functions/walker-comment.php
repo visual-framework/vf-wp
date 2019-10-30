@@ -1,7 +1,11 @@
 <?php
 
+if( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! class_exists('VF_Walker_Comment') ) :
+
 // Extend default Walker
-class VFWP_Walker_Comment extends Walker_Comment {
+class VF_Walker_Comment extends Walker_Comment {
 
   /**
    * Empty string to pass by reference to parent methods and ignore
@@ -94,6 +98,8 @@ class VFWP_Walker_Comment extends Walker_Comment {
 <?php
   }
 
-}
+} // VF_Walker_Comment
+
+endif;
 
 ?>

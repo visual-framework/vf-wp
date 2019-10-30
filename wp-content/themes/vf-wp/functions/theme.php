@@ -58,6 +58,9 @@ class VF_Theme {
     );
   }
 
+  /**
+   * Return the default page title for blog archive templates
+   */
   public function get_title() {
     $title = get_the_title(get_option('page_for_posts'));
     if (is_search()) {
@@ -111,6 +114,9 @@ class VF_Theme {
     return $title;
   }
 
+  /**
+   * Setup theme
+   */
   public function after_setup_theme() {
     // Setup theme translation domain
     $theme = wp_get_theme();

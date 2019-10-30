@@ -20,7 +20,7 @@ $title = get_the_title();
   ?></h3>
   <ol class="vf-discussion__list | vf-list"><?php
     wp_list_comments(array(
-      'walker' => new VFWP_Walker_Comment(),
+      'walker' => new VF_Walker_Comment(),
       'style' => 'ol'
     ));
   ?></ol>
