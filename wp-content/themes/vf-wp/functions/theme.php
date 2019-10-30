@@ -362,7 +362,6 @@ class VF_Theme {
    * Append <body> class for Visual Framework
    */
   public function body_class($classes) {
-    $classes[] = 'vf-body';
     $classes[] = 'vf-wp-theme';
     return $classes;
   }
