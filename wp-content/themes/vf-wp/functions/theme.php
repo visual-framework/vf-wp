@@ -115,6 +115,17 @@ class VF_Theme {
   }
 
   /**
+   * Return true if last post in `while (have_posts())` loop?
+   */
+  public function is_last_post() {
+    global $wp_query;
+    if ($wp_query instanceof WP_Query) {
+      return $wp_query->current_post + 1 >= $wp_query->post_count;
+    }
+    return false;
+  }
+
+  /**
    * Setup theme
    */
   public function after_setup_theme() {

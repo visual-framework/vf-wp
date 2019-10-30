@@ -14,8 +14,8 @@ $title = $vf_theme->get_title();
       <?php
       while (have_posts()) {
         the_post();
-        include(locate_template('partials/vf-summary--article.php', false, false));
-        if ( ! vf_last_post()) {
+        get_template_part('partials/vf-summary--article');
+        if ( ! $vf_theme->is_last_post()) {
           echo '<hr class="vf-divider">';
         }
       }
