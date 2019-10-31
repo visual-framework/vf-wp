@@ -1,34 +1,31 @@
 <?php
+/**
+* Template Name: Full-width page
+*/
 
 get_header();
 
 ?>
 <main class="vf-body">
-  <section class="vf-intro | embl-grid embl-grid--has-centered-content">
-    <div></div>
-    <div>
+  <section class="vf-grid vf-grid__col-1">
+    <div class="vf-intro">
       <h1 class="vf-intro__heading"><?php the_title(); ?></h1>
     </div>
-    <div></div>
   </section>
-  <!--/embl-grid-->
-  <section class="embl-grid embl-grid--has-centered-content">
-    <div></div>
+  <!--/vf-grid-->
+  <section class="vf-grid vf-grid__col-1">
     <div>
       <?php the_content(); ?>
     </div>
-    <div></div>
   </section>
-  <!--/embl-grid-->
+  <!--/vf-grid-->
   <?php if (comments_open() || get_comments_number()) { ?>
-  <section class="embl-grid embl-grid--has-centered-content">
-    <div></div>
+  <section class="vf-grid vf-grid__col-1">
     <div>
       <?php comments_template(); ?>
     </div>
-    <div></div>
   </section>
-  <!--/embl-grid-->
+  <!--/vf-grid-->
   <?php } ?>
 </main>
 <!--/vf-body-->
