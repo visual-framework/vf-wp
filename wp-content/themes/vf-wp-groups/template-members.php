@@ -13,6 +13,8 @@ $vf_members = VF_Plugin::get_plugin('vf_members');
 
 get_header();
 
+global $vf_theme;
+
 ?>
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
@@ -31,7 +33,8 @@ get_header();
         echo '<hr class="vf-divider">';
       }
 
-      the_content();
+      // the_content();
+      $vf_theme->the_content();
 
       ?>
     </main>

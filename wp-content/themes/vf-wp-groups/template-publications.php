@@ -15,6 +15,8 @@ get_header();
 
 $keyword = $vf_publications->get_query_keyword();
 
+global $vf_theme;
+
 ?>
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
@@ -26,7 +28,8 @@ $keyword = $vf_publications->get_query_keyword();
 
       echo '<hr class="vf-divider">';
 
-      the_content();
+      // the_content();
+      $vf_theme->the_content();
 
       ?>
     </main>

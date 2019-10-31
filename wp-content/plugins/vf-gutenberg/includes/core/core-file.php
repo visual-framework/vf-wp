@@ -28,7 +28,7 @@ class VF_Gutenberg_Core_File {
       $html
     );
 
-    return "<div class=\"vf-content\">{$html}</div>";
+    return $html;
   }
 
 } // VF_Gutenberg_Core_File

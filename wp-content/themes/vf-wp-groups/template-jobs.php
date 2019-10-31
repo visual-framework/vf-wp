@@ -21,12 +21,19 @@ if (class_exists('VF_Group_Header')) {
 
 $keyword = $vf_jobs->get_query_keyword();
 
+global $vf_theme;
+
 ?>
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
       <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
-      <?php the_content(); ?>
+      <?php
+
+      // the_content();
+      $vf_theme->the_content();
+
+      ?>
     </main>
     <aside class="vf-inlay__content--additional">
       <form role="search" class="vf-form | vf-search vf-search--inline" method="get" action="<?php the_permalink(); ?>">

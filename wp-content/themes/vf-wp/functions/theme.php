@@ -2,6 +2,7 @@
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
+require_once('theme-content.php');
 require_once('theme-comments.php');
 require_once('theme-pagination.php');
 require_once('theme-widgets.php');
@@ -11,9 +12,10 @@ if ( ! class_exists('VF_Theme') ) :
 class VF_Theme {
 
   // Sub-class instances
-  private $comments;
-  private $pagination;
-  private $widgets;
+  private $theme_content;
+  private $theme_comments;
+  private $theme_pagination;
+  private $theme_widgets;
 
   // Translation domain
   private $domain = '';
@@ -21,9 +23,10 @@ class VF_Theme {
   public function __construct() {
 
     // Initialize sub-class instances
-    $this->comments = new VF_Theme_Comments();
-    $this->pagination = new VF_Theme_Pagination();
-    $this->widgets = new VF_Theme_Widgets();
+    $this->theme_content    = new VF_Theme_Content();
+    $this->theme_comments   = new VF_Theme_Comments();
+    $this->theme_pagination = new VF_Theme_Pagination();
+    $this->theme_widgets    = new VF_Theme_Widgets();
 
     // Add theme hooks
     add_action(
@@ -112,6 +115,13 @@ class VF_Theme {
     }
     $title = apply_filters('vf/theme/get_title', $title);
     return $title;
+  }
+
+  /**
+   * Render the post content
+   */
+  public function the_content() {
+    $this->theme_content->the_content();
   }
 
   /**

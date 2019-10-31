@@ -378,10 +378,6 @@ class VF_Gutenberg {
     if (array_key_exists($block['blockName'], $this->compatible)) {
       $callback = $this->compatible[ $block['blockName'] ];
       $html = call_user_func($callback, $html, $block);
-    } else {
-      if (strpos($block['blockName'], 'core/') === 0) {
-        $html = '<div class="vf-content">' . $html . '</div>';
-      }
     }
     return $html;
   }

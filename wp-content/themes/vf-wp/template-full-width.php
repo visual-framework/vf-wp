@@ -5,6 +5,8 @@
 
 get_header();
 
+global $vf_theme;
+
 ?>
 <main class="vf-body">
   <section class="vf-grid vf-grid__col-1">
@@ -15,7 +17,12 @@ get_header();
   <!--/vf-grid-->
   <section class="vf-grid vf-grid__col-1">
     <div>
-      <?php the_content(); ?>
+      <?php
+
+      // the_content();
+      $vf_theme->the_content();
+
+      ?>
     </div>
   </section>
   <!--/vf-grid-->

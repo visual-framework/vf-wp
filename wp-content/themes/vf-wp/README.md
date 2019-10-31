@@ -22,6 +22,10 @@ Return the default page title for blog archive templates (used for `<h1>`, etc).
 
 Can be filtered with `vf/theme/get_title`.
 
+##### `$vf_theme->the_content()`
+
+Used in place of `the_content();` to output post content. Block filters and wrappers are applied. By default headings, lists, and paragraphs are wrapped in `<div class="vf-content">`.
+
 ## Template Functions
 
 #### `vf_header();`

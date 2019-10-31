@@ -2,6 +2,8 @@
 
 get_header();
 
+global $vf_theme;
+
 ?>
 <main class="vf-body">
   <section class="vf-intro | embl-grid embl-grid--has-centered-content">
@@ -15,7 +17,12 @@ get_header();
   <section class="embl-grid embl-grid--has-centered-content">
     <div></div>
     <div>
-      <?php the_content(); ?>
+      <?php
+
+      // the_content();
+      $vf_theme->the_content();
+
+      ?>
     </div>
     <div></div>
   </section>
