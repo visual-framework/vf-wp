@@ -26,12 +26,9 @@ $keyword = $vf_jobs->get_query_keyword();
   <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
       <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
-
       <?php the_content(); ?>
-
     </main>
     <aside class="vf-inlay__content--additional">
-
       <form role="search" class="vf-form | vf-search vf-search--inline" method="get" action="<?php the_permalink(); ?>">
         <div class="vf-form__item | vf-search__item">
           <label class="vf-form__label vf-sr-only | vf-search__label" for="filter_keyword"><?php _e('Search jobs by keyword:', 'vfwp'); ?></label>
@@ -39,7 +36,6 @@ $keyword = $vf_jobs->get_query_keyword();
         </div>
         <input type="submit" class="vf-search__button | vf-button vf-button--primary" value="<?php esc_attr_e('Search', 'vfwp'); ?>">
       </form>
-
     </aside>
   </div>
 </section>
