@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Theme Comments
+ * Sub-class initiated by `VF_Theme`
+ * Provides the global `vf_comment_form` template function
+ * for comments form with Visual Framework markup.
+ */
 if( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VF_Theme_Comments') ) :

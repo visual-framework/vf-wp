@@ -1,4 +1,8 @@
 <?php
+/**
+ * VF Theme
+ * Provides the global `$vf_theme` instance.
+ */
 
 if( ! defined( 'ABSPATH' ) ) exit;
 

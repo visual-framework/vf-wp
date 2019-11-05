@@ -1,4 +1,10 @@
 <?php
+/**
+ * Theme Widgets
+ * Sub-class initiated by `VF_Theme`
+ * Provides the global `vf_sidebar($id)` template function
+ * for sidebar and widgets with Visual Framework markup.
+ */
 
 if( ! defined( 'ABSPATH' ) ) exit;
 

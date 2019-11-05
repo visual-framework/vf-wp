@@ -1,4 +1,11 @@
 <?php
+/**
+ * Theme Content
+ * Sub-class initiated by `VF_Theme`
+ * Provides the global `$vf_theme->the_content()` wrapper for `the_content()`.
+ * This applies several custom filters for Gutenberg blocks.
+ * By default headings, lists, and paragraphs are wrapped.
+ */
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
@@ -6,39 +13,40 @@ if ( ! class_exists('VF_Theme_Content') ) :
 
 class VF_Theme_Content {
 
+  // List of Gutenberg blocks to wrap (populated by filter)
   private $wrapped = array();
 
   public function __construct() {
     // Add content hooks
     add_filter(
-      'vf/theme/content/block/wrapped',
+      'vf/theme/content/wrapped_blocks',
       array($this, 'block_wrapped'),
       9, 1
     );
     add_filter(
-      'vf/theme/content/block/is_wrapped',
+      'vf/theme/content/is_block_wrapped',
       array($this, 'block_is_wrapped'),
       9, 4
     );
     add_filter(
-      'vf/theme/content/block/open_wrap',
+      'vf/theme/content/open_block_wrap',
       array($this, 'block_open_wrap'),
       9, 3
     );
     add_filter(
-      'vf/theme/content/block/close_wrap',
+      'vf/theme/content/close_block_wrap',
       array($this, 'block_close_wrap'),
       9, 3
     );
     // Setup defaults
     $this->wrapped = apply_filters(
-      'vf/theme/content/block/wrapped',
+      'vf/theme/content/wrapped_blocks',
       array()
     );
   }
 
   /**
-   * Filter: `vf/theme/content/block/wrapped`
+   * Filter: `vf/theme/content/wrapped_blocks`
    * Add default wrapped block list
    */
   public function block_wrapped($wrapped) {
@@ -51,7 +59,7 @@ class VF_Theme_Content {
   }
 
   /**
-   * Filter: `vf/theme/content/block/is_wrapped`
+   * Filter: `vf/theme/content/is_block_wrapped`
    * Return true if block should be wrapped
    * e.g. with `<div class="vf-content"> [...] </div>`
    */
@@ -60,7 +68,7 @@ class VF_Theme_Content {
   }
 
   /**
-   * Filter: `vf/theme/content/block/open_wrap`
+   * Filter: `vf/theme/content/open_block_wrap`
    * Return content block prefixed HTML
    */
   public function block_open_wrap($html) {
@@ -69,7 +77,7 @@ class VF_Theme_Content {
   }
 
   /**
-   * Filter: `vf/theme/content/block/close_wrap`
+   * Filter: `vf/theme/content/close_block_wrap`
    * Return content block suffixed HTML
    */
   public function block_close_wrap($html) {
@@ -98,11 +106,12 @@ class VF_Theme_Content {
    */
   public function the_content() {
     global $post;
-    $open = '<!--[BLOCK]-->';
-    $close = '<!--[/BLOCK]-->';
-    $final = '<!--[/BLOCKS]-->';
+    // Temporary markers
+    $open = '<!--[VF_BLOCK]-->';
+    $close = '<!--[/VF_BLOCK]-->';
+    $final = '<!--[/VF_CONTENT]-->';
     /**
-     * Apply a render block filter to add open/close comments
+     * Apply a render block filter to add markers
      * Also prefix each block with its name in a comment
      * Capture the complete page content
      */
@@ -176,23 +185,23 @@ class VF_Theme_Content {
       }
       $block_name = $this->get_block_name($block_html);
       $is_wrap = (bool) apply_filters(
-        'vf/theme/content/block/is_wrapped',
+        'vf/theme/content/is_block_wrapped',
         false, $block_name, $blocks, $i
       );
       // Close open wrapper if block is standalone
       if ( ! $is_wrap && $was_wrap) {
-        echo apply_filters('vf/theme/content/block/close_wrap', '');
+        echo apply_filters('vf/theme/content/close_block_wrap', '');
       }
       // Open new wrapper if not already open
       if ($is_wrap && ! $was_wrap) {
-        echo apply_filters('vf/theme/content/block/open_wrap', '');
+        echo apply_filters('vf/theme/content/open_block_wrap', '');
       }
       $was_wrap = $is_wrap;
       echo $block_html;
     }
     // Close final block if left open
     if ($was_wrap) {
-      echo apply_filters('vf/theme/content/block/close_wrap', '');
+      echo apply_filters('vf/theme/content/close_block_wrap', '');
     }
   }
 

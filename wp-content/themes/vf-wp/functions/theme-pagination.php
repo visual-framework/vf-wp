@@ -1,4 +1,10 @@
 <?php
+/**
+ * Theme Pagination
+ * Sub-class initiated by `VF_Theme`
+ * Provides the global `vf_pagination` template function
+ * for pagination with Visual Framework markup.
+ */
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
