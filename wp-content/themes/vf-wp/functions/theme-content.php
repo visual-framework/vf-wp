@@ -13,6 +13,13 @@ if ( ! class_exists('VF_Theme_Content') ) :
 
 class VF_Theme_Content {
 
+  // Default wrapped blocks
+  public const WRAPPED = array(
+    'core/heading',
+    'core/list',
+    'core/paragraph'
+  );
+
   // List of Gutenberg blocks to wrap (populated by filter)
   private $wrapped = array();
 
@@ -31,12 +38,12 @@ class VF_Theme_Content {
     add_filter(
       'vf/theme/content/open_block_wrap',
       array($this, 'block_open_wrap'),
-      9, 3
+      9, 1
     );
     add_filter(
       'vf/theme/content/close_block_wrap',
       array($this, 'block_close_wrap'),
-      9, 3
+      9, 1
     );
     // Setup defaults
     $this->wrapped = apply_filters(
@@ -50,11 +57,7 @@ class VF_Theme_Content {
    * Add default wrapped block list
    */
   public function block_wrapped($wrapped) {
-    $wrapped = array_merge($wrapped, array(
-      'core/heading',
-      'core/list',
-      'core/paragraph'
-    ));
+    $wrapped = array_merge($wrapped, VF_Theme_Content::WRAPPED);
     return array_unique($wrapped);
   }
 
@@ -72,7 +75,7 @@ class VF_Theme_Content {
    * Return content block prefixed HTML
    */
   public function block_open_wrap($html) {
-    $html = "<div class=\"vf-content\">\n";
+    $html = "<!--[vf/content]-->\n<div class=\"vf-content\">\n";
     return $html;
   }
 
@@ -81,7 +84,7 @@ class VF_Theme_Content {
    * Return content block suffixed HTML
    */
   public function block_close_wrap($html) {
-    $html = "</div>\n<!--/vf-content-->\n";
+    $html = "</div>\n";
     return $html;
   }
 
@@ -178,6 +181,10 @@ class VF_Theme_Content {
   public function render_blocks($blocks) {
     $is_wrap = false;
     $was_wrap = false;
+    $solo_wrap = apply_filters(
+      'vf/theme/content/is_solo_wrap',
+      false
+    );
     // Iternate over top-level blocks
     foreach ($blocks as $i => $block_html) {
       if (preg_match('#\S#', $block_html) !== 1) {
@@ -188,9 +195,21 @@ class VF_Theme_Content {
         'vf/theme/content/is_block_wrapped',
         false, $block_name, $blocks, $i
       );
-      // Close open wrapper if block is standalone
-      if ( ! $is_wrap && $was_wrap) {
+      $block_html = apply_filters(
+        'vf/theme/content/render_block',
+        $block_html, $block_name
+      );
+      // Close open wrapper...
+      if (
+          // ... if blocks are wrapped individually
+          ($was_wrap && $solo_wrap) ||
+          // ... or the next block is not wrapped
+          ($was_wrap && ! $is_wrap)
+        ) {
         echo apply_filters('vf/theme/content/close_block_wrap', '');
+        if ($solo_wrap) {
+          $was_wrap = false;
+        }
       }
       // Open new wrapper if not already open
       if ($is_wrap && ! $was_wrap) {

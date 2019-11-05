@@ -8,56 +8,78 @@ if (get_option('show_on_front') !== 'page') {
 
 get_header();
 
-// Make sure blocks are not being wrapped in paragraphs
-$priority = has_filter('the_content', 'wpautop');
-if ($priority) {
-  remove_filter('the_content', 'wpautop', $priority);
-}
+global $vf_theme;
 
-// Add filter to wrap blocks in VF grid containers if needed
-add_filter('render_block', 'home_render_block', 11, 2);
+$has_wrap = array(
+  'acf/vf-latest-posts',
+  'acf/vf-group-header',
+  'vf/latest-posts',
+  'vf/group-header',
+);
 
-function home_render_block($html, $block) {
-  if ( ! $block['blockName']) {
-    return $html;
-  }
-  $has_grid = array(
-    'acf/vf-latest-posts',
-    'acf/vf-group-header',
-    'vf/latest-posts',
-    'vf/group-header',
-  );
-  if ( ! in_array($block['blockName'], $has_grid)) {
-    ob_start();
-?>
+$open_wrap = function($html = '') {
+  return '
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
-      <?php echo $html; ?>
+  ' . $html;
+};
+
+$close_wrap = function($html = '') {
+  return $html . '
     </main>
   </div>
 </section>
-<?php
-    // $html = "\n" . '<section class="vf-inlay"><div class="vf-grid">' . $html . '</div></section>' . "\n";
-    $html = ob_get_contents();
-    ob_end_clean();
-  }
-  $html .= '<!-- vf:divider -->';
-  return $html;
-}
+<!--[/VF_INLAY]-->
+  ';
+};
 
-// Capture the rendered post content
+$render_block = function($block_html, $block_name)
+  use ($has_wrap, $open_wrap, $close_wrap)
+{
+  // Append placeholder
+  $placeholder = "\n<!--[/VF_INLAY]-->\n";
+  if (in_array($block_name, $has_wrap)) {
+    return $block_html . $placeholder;
+  }
+  // Add wrapper and placeholder if block isn't going to be wrapped
+  if ( ! in_array($block_name, VF_Theme_Content::WRAPPED)) {
+    return
+        $open_wrap()
+      . $block_html
+      . $close_wrap()
+      . $placeholder;
+  }
+  return $block_html;
+};
+
+add_filter(
+  'vf/theme/content/open_block_wrap',
+  $open_wrap,
+  10, 1
+);
+
+add_filter(
+  'vf/theme/content/close_block_wrap',
+  $close_wrap,
+  10, 1
+);
+
+add_filter(
+  'vf/theme/content/render_block',
+  $render_block,
+  10, 2
+);
+
+// Capture rendered content
 ob_start();
-the_content();
+$vf_theme->the_content();
 $html = ob_get_contents();
 ob_end_clean();
 
-// Remove empty content and add VF divider patterns
-$blocks = explode('<!-- vf:divider -->', $html);
-foreach ($blocks as $i => $html) {
-  if (empty(trim(strip_tags($html)))) {
-    continue;
-  }
+// Add VF divider patterns and output content
+$inlays = explode('<!--[/VF_INLAY]-->', $html);
+foreach ($inlays as $i => $html) {
   if ($i !== 0) {
     $html = preg_replace(
       '#(<main[^>]*?vf-inlay__content--main[^>]*?>)#',
@@ -67,9 +89,6 @@ foreach ($blocks as $i => $html) {
   }
   echo $html;
 }
-
-// Remove filter just in case
-remove_filter('render_block', 'home_render_block', 11, 2);
 
 get_footer();
 
