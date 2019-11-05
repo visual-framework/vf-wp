@@ -2,8 +2,10 @@
  * Return default Gutenberg block settings for a VF block
  */
 import {__} from '@wordpress/i18n';
+import Icon from '../components/icon';
 
 const useVFDefaults = () => ({
+  icon: Icon,
   keywords: [__('VF'), __('Visual Framework')],
   attributes: {
     ver: {
