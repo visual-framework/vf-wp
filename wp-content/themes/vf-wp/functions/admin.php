@@ -5,19 +5,22 @@
  */
 if( ! defined( 'ABSPATH' ) ) exit;
 
+include_once('admin-customize.php');
 include_once('admin-lock.php');
 
 if ( ! class_exists('VF_Admin') ) :
 
 class VF_Admin {
 
-  // Instance of `VF_Admin_Lock`
-  private $lock;
+  // Sub-class instances
+  private $admin_customize;
+  private $admin_lock;
 
   public function __construct() {
 
     // Initialize sub-class instances
-    $this->lock = new VF_Admin_Lock();
+    $this->admin_customize = new VF_Admin_Customize();
+    $this->admin_lock      = new VF_Admin_Lock();
 
     // Add admin hooks
     add_action(
@@ -27,10 +30,6 @@ class VF_Admin {
     add_action(
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
-    );
-    add_action(
-      'customize_register',
-      array($this, 'customize_register')
     );
   }
 
@@ -72,46 +71,6 @@ class VF_Admin {
       $theme->version,
       'all'
     );
-  }
-
-  /**
-   * Add theme customisation
-   */
-  function customize_register($wp_customize) {
-
-    $wp_customize->add_section('vf_theme' , array(
-      'title'    => __('Visual Framework', 'vfwp'),
-      'priority' => 30
-    ));
-
-    $wp_customize->add_setting('vf_theme_color', array(
-      'capability' => 'edit_theme_options',
-      'sanitize_callback' => 'themeslug_sanitize_select',
-      'default' => '009f4d',
-    ) );
-
-    $wp_customize->add_control('vf_theme_color', array(
-      'type' => 'select',
-      'section' => 'vf_theme',
-      'label' => __( 'Custom Select Option' ),
-      'description' => __( 'This is a custom select option.' ),
-      'choices' => array(
-        '009f4d' => __( 'EMBL Green' ),
-        '007c80' => __( 'EMBL-EBI Petrol' ),
-      ),
-    ) );
-
-    function themeslug_sanitize_select( $input, $setting ) {
-      // Ensure input is a slug.
-      $input = sanitize_key( $input );
-      // Get list of choices from the control associated with the setting.
-      $choices = $setting->manager->get_control( $setting->id )->choices;
-      // If the input is a valid key, return it; otherwise, return the default.
-      return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
-    }
-
-    // No way!
-    $wp_customize->remove_section('custom_css');
   }
 
 } // VF_Admin
