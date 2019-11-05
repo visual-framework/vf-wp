@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * VF Admin
+ * Theme hooks and functions related to the WordPress admin area.
+ */
 if( ! defined( 'ABSPATH' ) ) exit;
 
 include_once('admin-lock.php');
@@ -8,6 +11,7 @@ if ( ! class_exists('VF_Admin') ) :
 
 class VF_Admin {
 
+  // Instance of `VF_Admin_Lock`
   private $lock;
 
   public function __construct() {
