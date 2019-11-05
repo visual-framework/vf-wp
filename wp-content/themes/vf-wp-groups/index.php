@@ -10,7 +10,9 @@ $title = $vf_theme->get_title();
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
-      <h1 class="vf-text vf-text-heading--1"><?php echo esc_html($title); ?></h1>
+      <h1 class="vf-text vf-text-heading--1">
+        <?php echo esc_html($title); ?>
+      </h1>
       <?php
       while (have_posts()) {
         the_post();
