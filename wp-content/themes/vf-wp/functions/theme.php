@@ -24,6 +24,22 @@ class VF_Theme {
   // Translation domain
   private $domain = '';
 
+  /**
+   * Wrapper for `apply_filters` allowing for experimental tag
+   */
+  static public function apply_filters() {
+    $args = func_get_args();
+    $tag1 = array_shift($args);
+    $value = apply_filters($tag1, ...$args);
+    // Update value and apply experimental filters
+    $tag2 = preg_replace('#^vf/#', 'vf/__experimental__/', $tag1);
+    if ($tag2 !== $tag1) {
+      $args[0] = $value;
+      $value = apply_filters($tag2, ...$args);
+    }
+    return $value;
+  }
+
   public function __construct() {
 
     // Initialize sub-class instances

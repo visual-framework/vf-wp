@@ -57,17 +57,17 @@ $render_block = function($block_html, $block_name)
 
 // Add filters
 add_filter(
-  'vf/theme/content/open_block_wrap',
+  'vf/__experimental__/theme/content/open_block_wrap',
   $open_wrap,
   10, 1
 );
 add_filter(
-  'vf/theme/content/close_block_wrap',
+  'vf/__experimental__/theme/content/close_block_wrap',
   $close_wrap,
   10, 1
 );
 add_filter(
-  'vf/theme/content/render_block',
+  'vf/__experimental__/theme/content/render_block',
   $render_block,
   10, 2
 );
