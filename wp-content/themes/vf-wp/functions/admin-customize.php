@@ -30,7 +30,7 @@ class VF_Admin_Customize {
     ));
 
     // Allow child theme access
-    do_action('vf/admin/customize', $wp_customize);
+    VF_Theme::do_action('vf/admin/customize', $wp_customize);
   }
 
 } // VF_Admin_Customize

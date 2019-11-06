@@ -64,7 +64,7 @@ class VF_Theme_Widgets {
    */
   public function widgets_init() {
     // Setup and filter the theme widgets
-    $widgets = apply_filters('vf/widgets/unregister', array());
+    $widgets = VF_Theme::apply_filters('vf/widgets/unregister', array());
     if (is_array($widgets)) {
       foreach ($widgets as $name) {
         if (is_string($name)) {
@@ -73,7 +73,7 @@ class VF_Theme_Widgets {
       }
     }
     // Setup and filter the theme sidebars
-    $sidebars = apply_filters('vf/widgets/sidebars', array());
+    $sidebars = VF_Theme::apply_filters('vf/widgets/sidebars', array());
     if (is_array($sidebars)) {
       foreach ($sidebars as $sidebar) {
         if (is_array($sidebar)) {
@@ -251,7 +251,7 @@ class VF_Theme_Widgets {
           '#<div\s+class="widget\s+widget_(\w+)[^>]*?>#',
           $code, $match
         )) {
-          $widgets[$i] = apply_filters(
+          $widgets[$i] = VF_Theme::apply_filters(
             "vf/widgets/render/{$match[1]}",
             $code
           );

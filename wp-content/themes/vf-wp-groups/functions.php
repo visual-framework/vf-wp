@@ -9,7 +9,7 @@ class VF_Child_Theme {
   public function __construct() {
     // Add child theme hooks
     add_action(
-      'vf/admin/customize',
+      'vf/__experimental__/admin/customize',
       array($this, 'admin_customize')
     );
     add_filter(

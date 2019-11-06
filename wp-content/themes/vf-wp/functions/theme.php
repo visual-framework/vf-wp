@@ -40,6 +40,19 @@ class VF_Theme {
     return $value;
   }
 
+  /**
+   * Wrapper for `do_action` allowing for experimental tag
+   */
+  static public function do_action() {
+    $args = func_get_args();
+    $tag1 = array_shift($args);
+    do_action($tag1, ...$args);
+    $tag2 = preg_replace('#^vf/#', 'vf/__experimental__/', $tag1);
+    if ($tag2 !== $tag1) {
+      do_action($tag2, ...$args);
+    }
+  }
+
   public function __construct() {
 
     // Initialize sub-class instances
@@ -133,7 +146,7 @@ class VF_Theme {
         $tax->labels->singular_name
       );
     }
-    $title = apply_filters('vf/theme/get_title', $title);
+    $title = VF_Theme::apply_filters('vf/theme/get_title', $title);
     return $title;
   }
 
@@ -203,7 +216,7 @@ class VF_Theme {
     );
 
     // Filter and validate supports
-    $supports = apply_filters('vf/theme/supports', $supports);
+    $supports = VF_Theme::apply_filters('vf/theme/supports', $supports);
     if ( ! is_array($supports)) {
       $supports = array();
     }
@@ -264,7 +277,7 @@ class VF_Theme {
       // ),
     );
     // Apply filters
-    $color_palette = apply_filters(
+    $color_palette = VF_Theme::apply_filters(
       'vf/theme/editor_color_palette',
       $color_palette
     );
@@ -315,7 +328,7 @@ class VF_Theme {
       ),
     );
     // Apply filters
-    $font_sizes = apply_filters(
+    $font_sizes = VF_Theme::apply_filters(
       'vf/theme/editor_font_sizes',
       $font_sizes
     );
