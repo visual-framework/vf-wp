@@ -8,6 +8,11 @@ class VF_Child_Theme {
 
   public function __construct() {
     // Add child theme hooks
+    add_filter(
+      'option_blogdescription',
+      array($this, 'option_blogdescription'),
+      10, 1
+    );
     add_action(
       'vf/__experimental__/admin/customize',
       array($this, 'admin_customize')
@@ -38,6 +43,69 @@ class VF_Child_Theme {
       array($this, 'nav_menu_link_attributes'),
       10, 4
     );
+  }
+
+  /**
+   * Filter the blog description to load via Content Hub
+   */
+  public function option_blogdescription($value) {
+    // remove filter to avoid update recursion
+    remove_filter(
+      'option_blogdescription',
+      array($this, 'option_blogdescription'),
+      10, 1
+    );
+
+    if ( ! class_exists('VF_Cache')) {
+      return $value;
+    }
+
+    // generate API request
+    $term_id = get_field('embl_taxonomy_term_what', 'option');
+    $uuid = embl_taxonomy_get_uuid($term_id);
+
+    if ( ! $uuid) {
+      return $value;
+    }
+
+    $url = VF_Cache::get_api_url();
+    $url .= '/pattern.html';
+    $url = add_query_arg(array(
+      'filter-uuid'         => $uuid,
+      'filter-content-type' => 'profiles',
+      'pattern'             => 'node-strapline',
+      'source'              => 'contenthub',
+    ), $url);
+
+    // cache for one day
+    $max_age = 60 * 60 * 24 * 1;
+
+    // fetch content via the Content Hub cache
+    $description = VF_Cache::fetch($url, $max_age);
+
+    // strip HTML comments
+    $description = preg_replace('#<!--(.*?)-->#s', '', $description);
+    // strip edit link
+    $description = preg_replace(
+      '#<a[^>]*class="[^"]*embl-conditional-edit[^"]*"[^>]*>.*</a>#s',
+      '', $description
+    );
+    // strip tags except for allowed
+    $description = wp_kses(
+      $description,
+      array(
+        'span' => array()
+      )
+    );
+    $description = trim($description);
+
+    // save updated description
+    if ( ! empty($description) && $value !== $description) {
+      $value = $description;
+      update_option('blogdescription', $value);
+    }
+
+    return $value;
   }
 
   /**
