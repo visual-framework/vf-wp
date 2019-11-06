@@ -155,24 +155,3 @@ add_action(
 ```
 
 The `VF_Plugin` extended instance is passed as the first argument to the callback.
-
-### Widget Actions
-
-The theme generates an action before rendering sidebar widgets.
-
-```php
-add_filter('vf/render_widget_search', 'render_widget_search');
-
-function render_widget_search($html) {
-  // Do something...
-  return $html;
-}
-```
-
-The action is based on the standard widget class attribute. Plugins that register a new widget should use markup like:
-
-```html
-<div class="widget widget_vf_factoid">
-```
-
-The callback should return the edited HTML.

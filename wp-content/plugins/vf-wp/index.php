@@ -17,7 +17,7 @@ require_once('vf-plugin.php');
 require_once('vf-type.php');
 require_once('vf-blocks.php');
 require_once('vf-containers.php');
-require_once('vf-admin.php');
+require_once('vf-acf.php');
 
 // Add action hook after opening `<body>` tag
 function vf_header() {
@@ -35,7 +35,12 @@ class VF_WP {
    */
   public function __construct() {
 
-    global $vf_cache, $vf_blocks, $vf_containers;
+    global $vf_acf, $vf_cache, $vf_blocks, $vf_containers;
+
+    if ( ! isset($vf_acf)) {
+      $vf_acf = new VF_ACF();
+      $vf_acf->initialize();
+    }
 
     if ( ! isset($vf_cache)) {
       $vf_cache = new VF_Cache();
@@ -65,6 +70,17 @@ class VF_WP {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json'),
       1
+    );
+
+    // Handle templates
+    add_filter(
+      'single_template',
+      array($this, 'single_template')
+    );
+    add_filter(
+      'body_class',
+      array($this, 'body_class'),
+      30, 1
     );
   }
 
@@ -106,6 +122,44 @@ class VF_WP {
     if ($vf_containers instanceof VF_Containers) {
       $vf_containers->deactivate();
     }
+  }
+
+  /**
+   * Return true if current template is a single block or container
+   */
+  private function is_singular() {
+    global $post, $vf_blocks, $vf_containers;
+    if ($post instanceof WP_Post &&
+      in_array($post->post_type, array(
+        $vf_blocks->type(),
+        $vf_containers->type()
+      )
+    )) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Return the post type template for blocks and containers
+   */
+  function single_template($template) {
+    if ($this->is_singular()) {
+      return plugin_dir_path(__FILE__) . 'single-plugin.php';
+    }
+    return $template;
+  }
+
+  /**
+   * Strip theme classes from blocks and containers single template
+   */
+  function body_class($classes) {
+    if ($this->is_singular()) {
+      $classes = array_map(function($class) {
+        return strpos($class, 'vf-') === 0 ? '' : $class;
+      }, $classes);
+    }
+    return $classes;
   }
 
   /**
@@ -154,10 +208,6 @@ global $vf_wp;
 
 if ( ! isset($vf_wp)) {
   $vf_wp = new VF_WP();
-
-  if (is_admin()) {
-    $vf_admin = new VF_Admin();
-  }
 }
 
 ?>
