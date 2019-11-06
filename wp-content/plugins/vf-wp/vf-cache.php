@@ -55,6 +55,16 @@ class VF_Cache {
   }
 
   /**
+   * Return fallback HTML (used by client-side JavaScript)
+   */
+  static public function fetch_fallback($url) {
+    $html = '<link rel="import" href="';
+    $html .= $url;
+    $html .= '" data-target="self" data-embl-js-content-hub-loader>';
+    return $html;
+  }
+
+  /**
    * Return HTML content for URL
    * Plugins should use `VF_Cache::fetch()`
    */
@@ -83,15 +93,21 @@ class VF_Cache {
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($curl, CURLOPT_TIMEOUT,        2);
     $html = curl_exec($curl);
-    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    $http_code = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
     $err = curl_errno($curl);
     curl_close($curl);
 
-    if ( ! in_array(intval($http_code), array(200, 302))) {
-      $err = true;
+    // Return CURL error number or HTML
+    if ($err) {
+      return $err;
     }
 
-    return $err ? '' : $html;
+    // Return HTTP code as error number
+    if ( ! in_array($http_code, array(200, 302))) {
+      return $http_code;
+    }
+
+    return $html;
   }
 
   /**
@@ -334,13 +350,21 @@ xhr.send('<?php echo build_query($data); ?>');
         $data['url']
       );
 
+      // Fetch new content
       $html = VF_Cache::fetch_remote($data['url']);
 
+      // Update error status
+      $error = is_numeric($html) ? $html : 0;
+      update_post_meta($cache_post->ID, 'vf_cache_error', $error);
+
+      // Keep old content for now
+      if ($error && ! vf_html_empty($cache_post->post_content)) {
+        continue;
+      }
+
       // Fallback to Content Hub loader
-      if (vf_html_empty($html)) {
-        $html = '<link rel="import" href="';
-        $html .= $data['url'];
-        $html .= '" data-target="self" data-embl-js-content-hub-loader>';
+      if ($html === $error || vf_html_empty($html)) {
+        $html = VF_Cache::fetch_fallback($data['url']);
       }
 
       // update local store and database
@@ -524,9 +548,21 @@ xhr.send('<?php echo build_query($data); ?>');
     if ($column === 'vf_hash') {
       echo '<code>', esc_html(get_post_field('post_name', $post_id)) , '</code>';
     } else if ($column === 'vf_modified') {
+
+      // show error icon
+      $error = (int) get_post_meta($post_id, 'vf_cache_error', true);
+      if ($error === 0) {
+        echo '<span class="dashicons dashicons-yes"></span>';
+      } else {
+        echo '<span class="dashicons dashicons-no-alt" style="color:#a00;"></span>';
+      }
+
       // based on `class-wp-posts-list-table.php`
       $now = current_time('timestamp');
-      $t_time = get_the_modified_date(__('Y/m/d g:i:s a'), $post_id);
+      $t_time = get_the_modified_date(__('Y/m/d g:i:sa'), $post_id);
+      if ($error) {
+        $t_time .= ' (' . esc_attr($error) . ')';
+      }
       $h_time = sprintf(
         __('%s ago'),
         human_time_diff(
