@@ -309,7 +309,7 @@ xhr.send('<?php echo build_query($data); ?>');
             wp_insert_post(array(
             'post_author'  => 1,
             'post_name'    => $key,
-            'post_title'   => $data['url'],
+            'post_title'   => basename(urldecode($data['url'])),
             'post_type'    => 'vf_cache',
             'post_status'  => 'publish',
             'post_content' => '',
