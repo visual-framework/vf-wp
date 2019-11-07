@@ -123,7 +123,7 @@ function embl_taxonomy_get_term($term_id) {
  */
 function embl_taxonomy_get_uuid($term_id) {
   $term = embl_taxonomy_get_term($term_id);
-  if ( ! $term->meta )  {
+  if ( ! $term || ! $term->meta)  {
     return null;
   }
   $uuid = end($term->meta['embl_taxonomy_ids']);

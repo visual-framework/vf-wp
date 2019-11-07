@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Beta
 Description: VF-WP theme global container.
-Version: 0.1.1
+Version: 0.2.0
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -42,7 +42,12 @@ class VF_Beta extends VF_Plugin {
     );
 
     add_action(
-      'vf/container/after_render/post_name=vf_breadcrumbs',
+      'vf/container/after_render/post_name=vf_global_header',
+      array($this, 'after_vf_breadcrumbs')
+    );
+
+    add_action(
+      'vf/container/after_render/post_name=vf_ebi_global_header',
       array($this, 'after_vf_breadcrumbs')
     );
   }

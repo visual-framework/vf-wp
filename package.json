@@ -1,6 +1,6 @@
 {
   "name": "vf-wp",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "private": true,
   "description": "Visual Framework WordPress Theme",
   "main": "gulpfile.js",
@@ -18,7 +18,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "vfwp": "npx webpack --mode=production --config=gulp-tasks/vf-wp.webpack.js",
     "vfgutenberg": "npx webpack --mode=production --config=gulp-tasks/vf-gutenberg.webpack.js",
     "build": "gulp build && echo \"🏋 Build completed\" && exit 0",
     "update-components": "yarn upgrade-interactive --latest"

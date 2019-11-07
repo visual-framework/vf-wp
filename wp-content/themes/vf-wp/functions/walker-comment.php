@@ -1,7 +1,13 @@
 <?php
+/**
+ * VF Walker Comment
+ * Extends the default `Walker_Comment` to add Visual Framework markup.
+ */
+if( ! defined( 'ABSPATH' ) ) exit;
 
-// Extend default Walker
-class VFWP_Walker_Comment extends Walker_Comment {
+if ( ! class_exists('VF_Walker_Comment') ) :
+
+class VF_Walker_Comment extends Walker_Comment {
 
   /**
    * Empty string to pass by reference to parent methods and ignore
@@ -94,6 +100,8 @@ class VFWP_Walker_Comment extends Walker_Comment {
 <?php
   }
 
-}
+} // VF_Walker_Comment
+
+endif;
 
 ?>

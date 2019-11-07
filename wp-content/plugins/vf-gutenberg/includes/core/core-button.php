@@ -42,7 +42,7 @@ class VF_Gutenberg_Core_Button {
     $html .= strip_tags($label);
     $html .= '</a>';
 
-    return "<div class=\"vf-content\"><p>{$html}</p></div>";
+    return "<p>{$html}</p>";
   }
 
 } // VF_Gutenberg_Core_Button

@@ -3,23 +3,41 @@
 * Template Name: Full-width page
 */
 
-get_template_part('partials/header');
+get_header();
 
-the_post();
+global $vf_theme;
 
 ?>
-<section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-ui--white">
-    <main class="vf-inlay__content--full-width">
-      <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
+<main class="vf-body">
+  <section class="vf-grid vf-grid__col-1">
+    <div class="vf-intro">
+      <h1 class="vf-intro__heading"><?php the_title(); ?></h1>
+    </div>
+  </section>
+  <!--/vf-grid-->
+  <section class="vf-grid vf-grid__col-1">
+    <div>
+      <?php
 
-      <?php the_content(); ?>
+      // the_content();
+      $vf_theme->the_content();
 
-    </main>
-  </div>
-</section>
+      ?>
+    </div>
+  </section>
+  <!--/vf-grid-->
+  <?php if (comments_open() || get_comments_number()) { ?>
+  <section class="vf-grid vf-grid__col-1">
+    <div>
+      <?php comments_template(); ?>
+    </div>
+  </section>
+  <!--/vf-grid-->
+  <?php } ?>
+</main>
+<!--/vf-body-->
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

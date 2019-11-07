@@ -64,9 +64,6 @@ class VF_Gutenberg_Core_Paragraph {
       $html
     );
 
-    // Wrap in content class
-    $html = '<div class="vf-content">' . $html . '</div>';
-
     return $html;
   }
 

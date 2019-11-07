@@ -1498,6 +1498,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var reac
 
 /***/ }),
 
+/***/ "./wp-content/plugins/vf-gutenberg/blocks/components/icon.jsx":
+/*!********************************************************************!*\
+  !*** ./wp-content/plugins/vf-gutenberg/blocks/components/icon.jsx ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ \"@wordpress/components\");\n/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);\n/**\n * Icon (component)\n * VF Gutenberg block icon\n */\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__[\"SVG\"], {\n  viewBox: \"0 0 24 24\",\n  xmlns: \"http://www.w3.org/2000/svg\"\n}, wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__[\"Path\"], {\n  d: \"M19 7h-1V5h-4v2h-4V5H6v2H5c-1.1 0-2 .9-2 2v10h18V9c0-1.1-.9-2-2-2zm0 10H5V9h14v8z\"\n}), wp.element.createElement(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__[\"Path\"], {\n  d: \"M10.943 16c.522-1.854.972-3.726 1.386-5.58h-1.323a126.482 126.482 0 01-.918 4.383h-.081c-.342-1.44-.657-2.988-.936-4.428l-1.35.09c.414 1.854.873 3.681 1.395 5.535h1.827zm5.161-2.169H14.16V16h-1.332v-5.58h3.636v1.098H14.16v1.296h1.944v1.017z\"\n})));\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/components/icon.jsx?");
+
+/***/ }),
+
 /***/ "./wp-content/plugins/vf-gutenberg/blocks/components/rich-control.jsx":
 /*!****************************************************************************!*\
   !*** ./wp-content/plugins/vf-gutenberg/blocks/components/rich-control.jsx ***!
@@ -1578,7 +1590,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var core
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ \"@wordpress/i18n\");\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);\n/**\n * Return default Gutenberg block settings for a VF block\n */\n\n\nconst useVFDefaults = () => ({\n  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__[\"__\"])('VF'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__[\"__\"])('Visual Framework')],\n  attributes: {\n    ver: {\n      type: 'string'\n    }\n  },\n  supports: {\n    align: false,\n    className: false,\n    customClassName: false,\n    html: false\n  },\n  edit: () => null,\n  save: () => null\n});\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (useVFDefaults);\n\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/hooks/use-vf-defaults.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ \"@wordpress/i18n\");\n/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _components_icon__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/icon */ \"./wp-content/plugins/vf-gutenberg/blocks/components/icon.jsx\");\n/**\n * Return default Gutenberg block settings for a VF block\n */\n\n\n\nconst useVFDefaults = () => ({\n  icon: _components_icon__WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__[\"__\"])('VF'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__[\"__\"])('Visual Framework')],\n  attributes: {\n    ver: {\n      type: 'string'\n    }\n  },\n  supports: {\n    align: false,\n    className: false,\n    customClassName: false,\n    html: false\n  },\n  edit: () => null,\n  save: () => null\n});\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (useVFDefaults);\n\n\n//# sourceURL=webpack:///./wp-content/plugins/vf-gutenberg/blocks/hooks/use-vf-defaults.js?");
 
 /***/ }),
 

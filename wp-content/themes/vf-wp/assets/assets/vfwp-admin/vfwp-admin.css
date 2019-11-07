@@ -232,6 +232,10 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
+.wp-block {
+  max-width: 780px;
+}
+
 .wp-block .block-editor-default-block-appender {
   --vf-text-margin--bottom: 0;
 }

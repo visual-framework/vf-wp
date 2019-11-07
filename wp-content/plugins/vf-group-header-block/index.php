@@ -86,7 +86,12 @@ class VF_Group_Header extends VF_Plugin {
     }
 
     // if heading is empty, use the contenthub description
-    $uuid = vf__get_site_uuid();
+    $term_id = get_field('embl_taxonomy_term_what', 'option');
+    $uuid = embl_taxonomy_get_uuid($term_id);
+
+    if ( ! $uuid) {
+      return $heading;
+    }
 
     $url = VF_Cache::get_api_url();
     $url .= '/pattern.html';

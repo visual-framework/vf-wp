@@ -43,7 +43,6 @@ class VF_Jobs extends VF_Plugin {
     );
 
     add_action('init', array($this, 'add_taxonomy_fields'), 11);
-    add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'), 11);
   }
 
   function api_url(array $query_vars = array()) {
@@ -129,20 +128,6 @@ class VF_Jobs extends VF_Plugin {
       $str = vf_search_keyword($_GET['filter_keyword']);
     }
     return $str;
-  }
-
-  /**
-   * Action: `wp_enqueue_scripts`
-   * Enqueue the autocomplete CSS and JavaScript on the "Jobs" template
-   */
-  function enqueue_assets() {
-    if ( ! function_exists('embl_taxonomy')) {
-      return;
-    }
-    if (is_page_template('template-jobs.php')) {
-      wp_enqueue_script('accessible-autocomplete');
-      wp_enqueue_style('accessible-autocomplete');
-    }
   }
 
   /**
