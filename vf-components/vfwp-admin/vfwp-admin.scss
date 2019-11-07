@@ -45,6 +45,35 @@
   }
 }
 
+.post-type-vf_block,
+.post-type-vf_container {
+  // Auto-shrink Gutenberg editor
+  .edit-post-visual-editor {
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 1;
+  }
+
+  // Ensure some visual spacing
+  .editor-block-list__layout {
+    min-height: 10px;
+  }
+
+  // Auto-grow the post meta boxes below
+  .edit-post-layout__metaboxes {
+    flex-grow: 1;
+
+    &:empty {
+      flex-grow: 0;
+    }
+
+    // Hide ACF field settings
+    .acf-hndle-cog {
+      display: none !important;
+    }
+  }
+}
+
 // Post title as `h1` heading
 .editor-post-title__block {
   --vf-text-margin--bottom: 0;
