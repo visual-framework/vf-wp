@@ -38,6 +38,10 @@ class VF_Type {
       'template_redirect',
       array($this, 'template_redirect')
     );
+    add_filter('allowed_block_types',
+      array($this, 'allowed_block_types'),
+      10, 2
+    );
     add_filter(
       'acf/location/rule_types',
       array($this, 'acf_rule_types')
@@ -139,7 +143,8 @@ class VF_Type {
       'public'             => false,
       'show_ui'            => true,
       'show_in_admin_bar'  => false,
-      'supports'           => array('title'),
+      'show_in_rest'       => true,
+      'supports'           => array('title', 'editor'),
       'rewrite'            => false,
       'publicly_queryable' => true,
       'query_var'          => true,
@@ -157,6 +162,17 @@ class VF_Type {
         $wp_query->set_404();
       }
     }
+  }
+
+  /**
+   * Disallow all Gutenberg blocks for the post type by default.
+   * Effectively disabling the editor.
+   */
+  public function allowed_block_types($allowed, $post) {
+    if ($post->post_type === $this->post_type) {
+      return false;
+    }
+    return $allowed;
   }
 
   /**
