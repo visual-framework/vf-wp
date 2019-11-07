@@ -14,6 +14,12 @@
  * Location: #{map-get($componentInfo, 'location')}
  */
 
+.vfwp-notice {
+  a {
+    text-decoration: none;
+  }
+}
+
 @mixin editor-font-sizes {
   .has-extra-large-font-size {
     @include set-type(text-body--1);

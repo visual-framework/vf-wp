@@ -169,6 +169,10 @@
  * Version: 0.0.1
  * Location: components/vfwp-admin
  */
+.vfwp-notice a {
+  text-decoration: none;
+}
+
 .has-extra-large-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 32px;

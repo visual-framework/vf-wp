@@ -11,6 +11,10 @@ class VF_ACF {
       'acf/settings/show_admin',
       array($this, 'acf_settings_show_admin')
     );
+    add_action(
+      'admin_notices',
+      array($this, 'admin_notices')
+    );
     add_filter(
       'acf/settings/save_json',
       array($this, 'acf_settings_save_json'),
@@ -31,6 +35,38 @@ class VF_ACF {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Action: add notice to ACF screens
+   */
+  public function admin_notices() {
+    if ( ! function_exists('get_current_screen')) {
+      return;
+    }
+    // if (vf_debug()) {
+    //   return;
+    // }
+    $ids = array(
+      'edit-acf-field-group',
+      'acf-field-group',
+    );
+    $screen = get_current_screen();
+    if ( ! in_array($screen->id, $ids)) {
+      return;
+    }
+    printf('<div class="%1$s"><h3><b>%2$s</b></h3><p><b>%3$s</b> %4$s</p><p>%5$s</p></div>',
+      esc_attr('notice notice-warning | vfwp-notice'),
+      esc_html__('Attention!', 'vfwp'),
+      esc_html__('Advanced custom fields should not be synced or edited on live websites.', 'vfwp'),
+      esc_html__('Only configure them during development of plugins or themes. Visit the repository below to find developer documentation:', 'vfwp'),
+      sprintf(
+        '<a href="%1$s" target="_blank">%2$s %3$s</a>',
+        esc_attr('https://github.com/visual-framework/vf-wp'),
+        '<span class="dashicons dashicons-external"></span>',
+        esc_html__('VF-WP on GitHub', 'vfwp')
+      )
+    );
   }
 
   /**
