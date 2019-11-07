@@ -80,6 +80,8 @@ class VF_Gutenberg_Settings {
       'modified' => 1544016028,
     ));
 
+    // Optin by default
+    /*
     acf_add_local_field(
       array(
         'parent'        => 'group_vf_setting',
@@ -93,6 +95,7 @@ class VF_Gutenberg_Settings {
         'ui'            => 1,
       )
     );
+    */
   }
 
 } // VF_Gutenberg_Settings
