@@ -113,7 +113,7 @@ class VF_Plugin {
     if ( ! $this->post instanceof WP_Post) {
       return;
     }
-    if (file_exists("{$this->dir()}group_{$this->post->post_name}.json")) {
+    if ($this->is_acf()) {
       add_filter(
         'acf/settings/load_json',
         array($this, 'acf_settings_load_json')
@@ -152,6 +152,21 @@ class VF_Plugin {
   }
 
   /**
+   * Return true if plugin has ACF configuration
+   */
+  public function is_acf() {
+    $path = "{$this->dir()}group_{$this->post->post_name}.json";
+    return file_exists($path);
+  }
+
+  /**
+   * Return true if plugin has API configuration
+   */
+  public function is_api() {
+    return empty($this->API) === false;
+  }
+
+  /**
    * Return full plugin directory path (with trailing slash)
    */
   public function dir() {
@@ -174,8 +189,8 @@ class VF_Plugin {
    * Return API URL base for all instances of the plugin
    */
   public function api_url(array $query_vars = array()) {
-    if (empty($this->API)) {
-      return;
+    if ( ! $this->is_api()) {
+      return '';
     }
     $url = VF_Cache::get_api_url();
     $url .= '/pattern.html';

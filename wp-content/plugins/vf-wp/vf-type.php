@@ -34,9 +34,18 @@ class VF_Type {
       'init',
       array($this, 'init')
     );
+    add_filter(
+      'wp_insert_post_data',
+      array($this, 'wp_insert_post_data'),
+      10, 2
+    );
     add_action(
       'template_redirect',
       array($this, 'template_redirect')
+    );
+    add_filter('allowed_block_types',
+      array($this, 'allowed_block_types'),
+      10, 2
     );
     add_filter(
       'acf/location/rule_types',
@@ -139,12 +148,36 @@ class VF_Type {
       'public'             => false,
       'show_ui'            => true,
       'show_in_admin_bar'  => false,
-      'supports'           => array('title'),
+      'show_in_rest'       => true,
+      'supports'           => array('title', 'editor'),
       'rewrite'            => false,
       'publicly_queryable' => true,
       'query_var'          => true,
       'can_export'         => false
     ));
+  }
+
+  /**
+   * Disallow slug changes for this type
+   */
+  public function wp_insert_post_data($data, $postarr) {
+    // Ignore new posts
+    if (empty($postarr['ID']) || empty($postarr['post_type'])) {
+      return $data;
+    }
+    // Ignore other post types
+    if ($postarr['post_type'] !== $this->post_type) {
+      return $data;
+    }
+    // Disallow slug changes
+    $post_name = get_post_field('post_name', $postarr['ID'], 'raw');
+    if ($post_name !== $postarr['post_name']) {
+      wp_die(new WP_Error(
+        "{$this->post_type}_edit_post_name",
+        __('The slug cannot be edited for this container.', 'vfwp')
+      ));
+    }
+    return $data;
   }
 
   /**
@@ -157,6 +190,17 @@ class VF_Type {
         $wp_query->set_404();
       }
     }
+  }
+
+  /**
+   * Disallow all Gutenberg blocks for the post type by default.
+   * Effectively disabling the editor.
+   */
+  public function allowed_block_types($allowed, $post) {
+    if ($post->post_type === $this->post_type) {
+      return false;
+    }
+    return $allowed;
   }
 
   /**
@@ -234,7 +278,7 @@ class VF_Type {
     $offset = array_search('date', array_keys($columns));
     $columns = array_merge(
       array_slice($columns, 0, $offset),
-      array('vf_template' => __('Template', 'vfwp')),
+      array('vf_meta' => __('Meta', 'vfwp')),
       array_slice($columns, $offset)
     );
     return $columns;
@@ -244,16 +288,56 @@ class VF_Type {
    * Action: output template path for posts table in custom column
    */
   public function posts_custom_column($column, $post_id) {
-    if ($column !== 'vf_template') return;
-    $plugin = VF_Plugin::get_plugin(get_post_field('post_name', $post_id));
-    if ( ! $plugin) return;
-    $path = $plugin->template();
-    if ( ! $path) return;
-    $offset = strpos($path, 'wp-content');
-    if ($offset) {
-      $path = substr($path, $offset + 10);
+    if ($column !== 'vf_meta') {
+      return;
     }
-    echo $path;
+    $post_name = get_post_field('post_name', $post_id, 'raw');
+    $plugin = VF_Plugin::get_plugin($post_name);
+    if ( ! $plugin) {
+      return;
+    }
+    $icons = array();
+    $path = $plugin->template();
+    if ($path) {
+      $offset = strpos($path, 'wp-content');
+      if ($offset) {
+        $path = substr($path, $offset + 10);
+      }
+      $icons[] = '<span class="dashicons dashicons-edit"></span> <abbr title="'
+        . esc_attr(sprintf(
+            __('Plugin has %1$s', 'vfwp'),
+            sprintf(
+              __('PHP template: %1$s', 'vfwp'),
+              $path
+            )
+          ))
+        . '">'
+        . esc_html__('PHP', 'vfwp')
+        . '</abbr>';
+    }
+    if ($plugin->is_acf()) {
+      $icons[] = '<span class="dashicons dashicons-admin-generic"></span> <abbr title="'
+        . esc_attr(sprintf(
+            __('Plugin has %1$s', 'vfwp'),
+            __('Advanced Custom Fields configuration', 'vfwp')
+          ))
+        . '">'
+        . esc_html__('ACF', 'vfwp')
+        . '</abbr>';
+    }
+    if ($plugin->is_api()) {
+      $icons[] = '<span class="dashicons dashicons-external"></span> <abbr title="'
+        . esc_attr(sprintf(
+            __('Plugin has %1$s', 'vfwp'),
+            __('Content Hub API integration', 'vfwp')
+          ))
+        . '">'
+        . esc_html__('API', 'vfwp')
+        . '</abbr>';
+    }
+    if ( ! empty($icons)) {
+      echo '<p>', implode('&nbsp; ', $icons), '</p>';
+    }
   }
 
 } // VF_Type
