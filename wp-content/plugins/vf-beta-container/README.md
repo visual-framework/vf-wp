@@ -31,7 +31,8 @@ Unlike other containers the Beta notification is not part of the general page st
 Instead it is rendered using an action hook:
 
 ```
-vf/container/after_render/post_name=vf_breadcrumbs
+vf/plugin/after_render/container/vf_global_header
+vf/plugin/after_render/container/vf_ebi_global_header
 ```
 
 The callback uses the WordPress template function `is_front_page()` to only show the Beta container on the home page. This behaviour can be changed in the plugin `index.php` class.

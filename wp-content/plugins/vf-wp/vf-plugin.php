@@ -130,7 +130,10 @@ class VF_Plugin {
    * Return plugin post
    */
   public function post() {
-    return $this->post;
+    if ($this->post instanceof WP_Post) {
+      return $this->post;
+    }
+    return null;
   }
 
   /**
@@ -356,10 +359,12 @@ class VF_Plugin {
    * Trigger action hooks before and after a plugin is rendered
    */
   static public function do_actions($plugin, $action) {
-    if ( ! $plugin instanceof VF_Plugin ) return;
+    if ( ! $plugin instanceof VF_Plugin) {
+      return;
+    }
     do_action($action, $plugin);
-    if ($plugin->post() instanceof WP_Post) {
-      do_action("{$action}/post_name={$plugin->post()->post_name}", $plugin);
+    if ($plugin->post()) {
+      do_action("{$action}/{$plugin->post()->post_name}", $plugin);
     }
   }
 
@@ -406,9 +411,9 @@ class VF_Plugin {
     }
 
     // Before actions
-    $action = str_replace('vf_', 'vf/', $plugin->post()->post_type);
+    $action = preg_replace('#^vf_#', '', $plugin->post()->post_type);
     VF_Plugin::do_actions($plugin, 'vf/plugin/before_render');
-    VF_Plugin::do_actions($plugin, "{$action}/before_render");
+    VF_Plugin::do_actions($plugin, "vf/plugin/{$action}/before_render");
 
     // Setup globals so plugin template acts as if the main query
     global $post, $vf_plugin;
@@ -441,7 +446,7 @@ class VF_Plugin {
 
     // After actions
     VF_Plugin::do_actions($plugin, 'vf/plugin/after_render');
-    VF_Plugin::do_actions($plugin, "{$action}/after_render");
+    VF_Plugin::do_actions($plugin, "vf/plugin/{$action}/after_render");
 
   }
 

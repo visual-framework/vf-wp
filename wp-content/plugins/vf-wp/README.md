@@ -132,16 +132,16 @@ The VF core plugin hooks into these actions to render the containers before and 
 *Before* a block is rendered these actions are called sequentially:
 
 1. `vf/plugin/before_render`
-2. `vf/plugin/before_render?post_name=vf_jobs`
-3. `vf/block/before_render`
-4. `vf/block/before_render?post_name=vf_jobs`
+2. `vf/plugin/before_render/vf_jobs`
+3. `vf/plugin/block/before_render`
+3. `vf/plugin/block/before_render/vf_jobs`
 
 and *After* a block is rendered:
 
 1. `vf/plugin/after_render`
-2. `vf/plugin/after_render?post_name=vf_jobs`
-3. `vf/block/after_render`
-4. `vf/block/after_render?post_name=vf_jobs`
+2. `vf/plugin/after_render/vf_jobs`
+3. `vf/plugin/container/after_render`
+4. `vf/plugin/container/after_render/vf_jobs`
 
 Containers have the same actions – replace `block` with `container`.
 
@@ -149,7 +149,7 @@ Use the standard WordPress [`add_actions`](https://developer.wordpress.org/refer
 
 ```php
 add_action(
-  'vf/container/after_render/post_name=vf_breadcrumbs',
+  'vf/plugin/after_render/vf_breadcrumbs',
   'after_breadcrumbs_callback'
 );
 ```

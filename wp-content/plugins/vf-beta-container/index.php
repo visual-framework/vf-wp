@@ -42,13 +42,13 @@ class VF_Beta extends VF_Plugin {
     );
 
     add_action(
-      'vf/container/after_render/post_name=vf_global_header',
-      array($this, 'after_vf_breadcrumbs')
+      'vf/plugin/container/after_render/vf_global_header',
+      array($this, 'after_header_container')
     );
 
     add_action(
-      'vf/container/after_render/post_name=vf_ebi_global_header',
-      array($this, 'after_vf_breadcrumbs')
+      'vf/plugin/container/after_render/vf_ebi_global_header',
+      array($this, 'after_header_container')
     );
   }
 
@@ -61,10 +61,10 @@ class VF_Beta extends VF_Plugin {
   }
 
   /**
-   * Action: `vf/plugin/after_render/post_name=vf_breadcrumbs`
-   * Render this plugin once after `vf_breadcrumbs` on the homepage
+   * Action: `vf/plugin/container/after_render/*`
+   * Render this plugin once after header container on the homepage
    */
-  function after_vf_breadcrumbs($vf_plugin) {
+  function after_header_container($vf_plugin) {
     if ( ! $this->rendered && is_front_page()) {
       VF_Plugin::render($this);
       $this->rendered = true;
