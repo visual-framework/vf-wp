@@ -34,6 +34,11 @@ class VF_Type {
       'init',
       array($this, 'init')
     );
+    add_filter(
+      'wp_insert_post_data',
+      array($this, 'wp_insert_post_data'),
+      10, 2
+    );
     add_action(
       'template_redirect',
       array($this, 'template_redirect')
@@ -153,6 +158,29 @@ class VF_Type {
   }
 
   /**
+   * Disallow slug changes for this type
+   */
+  public function wp_insert_post_data($data, $postarr) {
+    // Ignore new posts
+    if (empty($postarr['ID']) || empty($postarr['post_type'])) {
+      return $data;
+    }
+    // Ignore other post types
+    if ($postarr['post_type'] !== $this->post_type) {
+      return $data;
+    }
+    // Disallow slug changes
+    $post_name = get_post_field('post_name', $postarr['ID'], 'raw');
+    if ($post_name !== $postarr['post_name']) {
+      wp_die(new WP_Error(
+        "{$this->post_type}_edit_post_name",
+        __('The slug cannot be edited for this container.', 'vfwp')
+      ));
+    }
+    return $data;
+  }
+
+  /**
    * Restrict viewing default VF_Plugin posts standalone
    */
   public function template_redirect() {
@@ -263,7 +291,7 @@ class VF_Type {
     if ($column !== 'vf_meta') {
       return;
     }
-    $post_name = get_post_field('post_name', $post_id);
+    $post_name = get_post_field('post_name', $post_id, 'raw');
     $plugin = VF_Plugin::get_plugin($post_name);
     if ( ! $plugin) {
       return;
