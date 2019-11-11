@@ -215,13 +215,17 @@ class VF_Type {
    * Add custom ACF locaion values for post type based on `post_name`
    */
   public function acf_rule_values($choices) {
-    $plugins = get_posts(array(
+    $posts = get_posts(array(
       'posts_per_page' => -1,
       'post_type'      => $this->post_type
     ));
-    if (is_array($plugins)) {
-      foreach($plugins as $plugin) {
-        $choices[$plugin->post_name] = $plugin->post_title;
+    if ( ! is_array($posts)) {
+      return $choices;
+    }
+    foreach($posts as $post) {
+      $plugin = VF_Plugin::get_plugin($post->post_name);
+      if ($plugin) {
+        $choices[$post->post_name] = $post->post_title;
       }
     }
     return $choices;
@@ -232,8 +236,12 @@ class VF_Type {
    */
   public function acf_rule_match($match, $rule, $options) {
     global $post;
-    if ( ! $post instanceof WP_Post) return;
-    if ($post->post_type !== $this->post_type) return;
+    if ( ! $post instanceof WP_Post) {
+      return;
+    }
+    if ($post->post_type !== $this->post_type) {
+      return;
+    }
     if ($rule['operator'] === '==') {
       return $rule['value'] === $post->post_name;
     }
