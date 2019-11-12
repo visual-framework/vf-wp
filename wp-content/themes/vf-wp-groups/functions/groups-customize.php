@@ -47,19 +47,31 @@ class VF_Groups_Customize {
    * Action: `vf/admin/customize`
    */
   public function admin_customize($wp_customize) {
-    // Add setting
+    // Theme color
     $wp_customize->add_setting('vf_theme_color', array(
       'default'           => array_keys($this->theme_colors)[0],
       'sanitize_callback' => array($this, 'admin_customize_sanitize'),
     ));
-    // Add control
     $wp_customize->add_control('vf_theme_color', array(
       'type'        => 'select',
       'section'     => 'vf_theme',
       'label'       => __('Theme Color', 'vfwp'),
-      'description' => __('Used for the header background and other design accents.', 'vfwp'),
+      'description' => __('Used for the hero background and other design accents.', 'vfwp'),
       'choices'     => $this->theme_colors,
     ));
+    // Hero image
+    $wp_customize->add_setting('vf_hero_image', array());
+    $wp_customize->add_control(
+      new WP_Customize_Image_Control(
+        $wp_customize,
+        'vf_hero_image',
+        array(
+          'label'     => __('Hero background image', 'vfwp'),
+          'settings'  => 'vf_hero_image',
+          'section'   => 'vf_theme',
+        )
+      )
+    );
   }
 
   /**
@@ -70,6 +82,9 @@ class VF_Groups_Customize {
       'vf_theme_color',
       array_keys($this->theme_colors)[0]
     );
+    $hero_image = get_theme_mod('vf_hero_image');
+    // Get attachment ID to retrieve cropped version?
+    // $hero_image_id = attachment_url_to_postid($hero_image);
   ?>
 <style>
 .vf-wp-theme .vf-masthead,
