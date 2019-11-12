@@ -20,10 +20,6 @@ class VF_Groups_Theme {
       array($this, 'option_blogdescription'),
       10, 1
     );
-    add_action(
-      'vf/__experimental__/admin/customize',
-      array($this, 'admin_customize')
-    );
     add_filter(
       'pre_get_posts',
       array($this, 'pre_get_posts')
@@ -113,43 +109,6 @@ class VF_Groups_Theme {
     }
 
     return $value;
-  }
-
-  /**
-   * Admin Customize
-   * Action: `vf/admin/customize`
-   */
-  public function admin_customize($wp_customize) {
-    // Add setting
-    $wp_customize->add_setting('vf_theme_color', array(
-      'capability' => 'edit_theme_options',
-      'sanitize_callback' => array($this, 'admin_customize_sanitize'),
-      'default' => '009f4d',
-    ));
-    // Add control
-    $wp_customize->add_control('vf_theme_color', array(
-      'type' => 'select',
-      'section' => 'vf_theme',
-      'label' => __('Custom Select Option'),
-      'description' => __('This is a custom select option.'),
-      'choices' => array(
-        '009f4d' => __('EMBL Green'),
-        '007c80' => __('EMBL-EBI Petrol'),
-      ),
-    ));
-  }
-
-  /**
-   * Admin Customize: `sanitize_callback` for select values
-   */
-  public function admin_customize_sanitize($input, $setting) {
-    $input = sanitize_key($input);
-    $choices = $setting->manager->get_control($setting->id)->choices;
-    return (
-      array_key_exists($input, $choices)
-      ? $input
-      : $setting->default
-    );
   }
 
   /**
