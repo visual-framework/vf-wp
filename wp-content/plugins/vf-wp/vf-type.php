@@ -162,16 +162,26 @@ class VF_Type {
    */
   public function wp_insert_post_data($data, $postarr) {
     // Ignore new posts
-    if (empty($postarr['ID']) || empty($postarr['post_type'])) {
+    if (
+      empty($postarr['ID']) ||
+      empty($postarr['post_type']) ||
+      empty($postarr['post_status'])
+    ) {
       return $data;
     }
     // Ignore other post types
     if ($postarr['post_type'] !== $this->post_type) {
       return $data;
     }
-    // Disallow slug changes
+    // Ignore non-published posts
+    if ($postarr['post_status'] !== 'publish') {
+      return $data;
+    }
+    // Get existing post name and matching plugin
     $post_name = get_post_field('post_name', $postarr['ID'], 'raw');
-    if ($post_name !== $postarr['post_name']) {
+    $plugin = VF_Plugin::get_plugin($post_name);
+    // Disallow slug changes
+    if ($plugin && $post_name !== $postarr['post_name']) {
       wp_die(new WP_Error(
         "{$this->post_type}_edit_post_name",
         __('The slug cannot be edited for this container.', 'vfwp')

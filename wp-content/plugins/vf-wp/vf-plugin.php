@@ -252,6 +252,9 @@ class VF_Plugin {
    * Return new plugin class instance from `post_name`
    */
   static public function get_plugin($post_name) {
+    if (empty($post_name)) {
+      return;
+    }
     $config = VF_Plugin::get_config($post_name);
     if ( ! is_array($config)) {
       return;
