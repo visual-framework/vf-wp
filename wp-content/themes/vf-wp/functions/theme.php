@@ -87,6 +87,10 @@ class VF_Theme {
       'body_class',
       array($this, 'body_class')
     );
+
+    // Hook for child themes to use the `VF_Theme` class
+    // Child `functions.php` runs before the parent theme
+    VF_Theme::do_action('vf/theme/init');
   }
 
   /**
