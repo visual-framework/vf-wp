@@ -19,6 +19,10 @@ class VF_Groups_Customize {
       array($this, 'customize_theme_colors'),
       9, 1
     );
+    add_action(
+      'wp_head',
+      array($this, 'wp_head')
+    );
     // Setup defaults
     $this->theme_colors = VF_Theme::apply_filters(
       'vf/admin/customize/theme_colors',
@@ -45,18 +49,35 @@ class VF_Groups_Customize {
   public function admin_customize($wp_customize) {
     // Add setting
     $wp_customize->add_setting('vf_theme_color', array(
-      'capability' => 'edit_theme_options',
+      'default'           => array_keys($this->theme_colors)[0],
       'sanitize_callback' => array($this, 'admin_customize_sanitize'),
-      'default' => array_keys($this->theme_colors)[0],
     ));
     // Add control
     $wp_customize->add_control('vf_theme_color', array(
-      'type' => 'select',
-      'section' => 'vf_theme',
-      'label' => __('Theme Color', 'vfwp'),
+      'type'        => 'select',
+      'section'     => 'vf_theme',
+      'label'       => __('Theme Color', 'vfwp'),
       'description' => __('Used for the header background and other design accents.', 'vfwp'),
-      'choices' => $this->theme_colors,
+      'choices'     => $this->theme_colors,
     ));
+  }
+
+  /**
+   * Output custom inline <head> stuff
+   */
+  public function wp_head() {
+    $theme_color = get_theme_mod(
+      'vf_theme_color',
+      array_keys($this->theme_colors)[0]
+    );
+  ?>
+<style>
+.vf-wp-theme .vf-masthead,
+.vf-wp-theme .vf-box--secondary {
+  --vf-masthead__color--background: #<?php echo $theme_color; ?>;
+}
+</style>
+  <?php
   }
 
   /**

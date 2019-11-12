@@ -29,10 +29,6 @@ class VF_Groups_Theme {
       array($this, 'body_class')
     );
     add_action(
-      'wp_head',
-      array($this, 'wp_head')
-    );
-    add_action(
       'wp_enqueue_scripts',
       array($this, 'wp_enqueue_scripts')
     );
@@ -135,21 +131,6 @@ class VF_Groups_Theme {
     $classes[] = 'vf-body';
     $classes[] = 'vf-u-background-color-ui--grey';
     return $classes;
-  }
-
-  /**
-   * Output inline <head> stuff
-   */
-  public function wp_head() {
-    $theme_color = get_theme_mod('vf_theme_color', '009f4d');
-  ?>
-  <style>
-  .vf-wp-theme .vf-box--secondary,
-  .vf-wp-theme .vf-masthead {
-    --vf-masthead__color--background: #<?php echo $theme_color; ?>;
-  }
-  </style>
-  <?php
   }
 
   /**
