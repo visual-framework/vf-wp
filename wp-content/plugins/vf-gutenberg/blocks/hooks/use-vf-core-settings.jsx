@@ -14,7 +14,7 @@ const useVFCoreSettings = settings => {
   const defaults = useVFDefaults();
 
   // get block settings
-  let {attributes, fields, styles, allowedBlocks} = settings;
+  let {attributes, example, fields, styles, allowedBlocks} = settings;
 
   // block options
   const hasBlocks = Array.isArray(allowedBlocks);
@@ -27,7 +27,19 @@ const useVFCoreSettings = settings => {
   // Setup block attributes
   attributes = {
     ...defaults.attributes,
-    ...(attributes || {})
+    ...(attributes || {}),
+    __isExample: {
+      type: 'integer',
+      default: 0
+    }
+  };
+
+  // Setup example attributes
+  example = {...example};
+  example.attributes = {
+    ...example.attributes,
+    mode: 'view',
+    __isExample: 1
   };
 
   // Enable `render` attribute for Nunjucks template
@@ -69,7 +81,9 @@ const useVFCoreSettings = settings => {
 
   let Edit = props => {
     const ver = settings.ver;
-    const isEditable = !!(props.clientId && 'mode' in attributes);
+    const isEditable = !!(
+      props.attributes.mode && props.attributes.__isExample !== 1
+    );
     const isEditing = props.attributes.mode === 'edit';
     return (
       <Fragment>
@@ -110,6 +124,7 @@ const useVFCoreSettings = settings => {
     description: __('Visual Framework (core)'),
     keywords: [...defaults.keywords],
     attributes: attributes,
+    example: example,
     styles: hasStyles ? styles : [],
     supports: {
       ...defaults.supports,
