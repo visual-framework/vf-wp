@@ -4,11 +4,25 @@
  * within an iframe (to scope CSS and JavaScript).
  */
 import React, {useEffect, useRef} from 'react';
+import {SandBox} from '@wordpress/components';
 import useVFGutenberg from '../hooks/use-vf-gutenberg';
 import useVFIFrame from '../hooks/use-vf-iframe';
 
 const VFBlockView = ({html, uniqueId}) => {
   const {renderPrefix, renderSuffix} = useVFGutenberg();
+
+  // `SandBox` component does not update height properly...
+  /*
+  return (
+    <div className="vf-block__view">
+      <SandBox
+        html={`${renderPrefix}${html}${renderSuffix}`}
+        type="vf-block-frame"
+        title="Preview"
+      />
+    </div>
+  );
+  */
 
   // Use existing iframe appended to the DOM
   const iframeId = `vfwp_${uniqueId}`;
