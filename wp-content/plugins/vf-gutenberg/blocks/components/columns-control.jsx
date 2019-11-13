@@ -9,7 +9,8 @@ import {BaseControl, Button, ButtonGroup} from '@wordpress/components';
 const ColumnsControl = props => {
   const {value, min, max, onChange} = props;
   const control = {
-    label: __('Number of Columns')
+    label: __('Number of Columns'),
+    className: 'components-vf-control'
   };
   if (props.help) {
     control.help = props.help;
