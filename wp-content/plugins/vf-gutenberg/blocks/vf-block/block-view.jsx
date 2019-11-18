@@ -8,7 +8,8 @@ import {SandBox} from '@wordpress/components';
 import useVFGutenberg from '../hooks/use-vf-gutenberg';
 import useVFIFrame from '../hooks/use-vf-iframe';
 
-const VFBlockView = ({html, uniqueId}) => {
+const VFBlockView = props => {
+  const {html, uniqueId, hasWidth} = props;
   const {renderPrefix, renderSuffix} = useVFGutenberg();
 
   // `SandBox` component does not update height properly...
@@ -40,7 +41,8 @@ const VFBlockView = ({html, uniqueId}) => {
   const rootEl = useRef();
   const {onLoad, onUnload} = useVFIFrame(
     iframe,
-    `${renderPrefix}${html}${renderSuffix}`
+    `${renderPrefix}${html}${renderSuffix}`,
+    hasWidth
   );
 
   // Append the iframe element on mount - we cannot use `<iframe onLoad={} />`

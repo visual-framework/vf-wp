@@ -55,7 +55,13 @@ const VFBlock = props => {
             children={props.children}
           />
         )}
-        {hasView && <VFBlockView html={render.html} uniqueId={uniqueId} />}
+        {hasView && (
+          <VFBlockView
+            html={render.html}
+            uniqueId={uniqueId}
+            hasWidth={props.attributes.__isExample}
+          />
+        )}
         {isLoading && <Spinner />}
       </div>
     </Fragment>

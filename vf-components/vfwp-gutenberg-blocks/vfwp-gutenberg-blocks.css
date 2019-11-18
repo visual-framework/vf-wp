@@ -193,6 +193,12 @@
   display: block;
 }
 
+.block-editor-block-styles .wp-block[data-type^="vf/"] {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .wp-block[data-type='vf/grid'],
 .wp-block[data-type='vf/embl-grid'] {
   max-width: none;
