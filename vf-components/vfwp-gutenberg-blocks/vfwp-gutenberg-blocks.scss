@@ -94,6 +94,12 @@
     margin-bottom: 16px;
   }
 
+  .components-base-control__label {
+    & + .components-select-control__input {
+      display: block;
+    }
+  }
+
   .components-datetime__date {
     border: 0;
     margin: 0;
