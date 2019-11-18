@@ -24,11 +24,6 @@ class VF_WP_Groups_Header extends VF_Plugin {
     if (array_key_exists('init', $params)) {
       $this->init();
     }
-    // Activate plugin manually
-    if ( ! $this->post()) {
-      $this->activation_hook();
-    }
-    $this->plugins_loaded();
   }
 
   private function init() {
@@ -40,6 +35,11 @@ class VF_WP_Groups_Header extends VF_Plugin {
         'post_type'  => 'vf_container'
       )
     );
+    // Activate plugin manually
+    if ( ! $this->post()) {
+      $this->activation_hook();
+    }
+    $this->plugins_loaded();
   }
 
 } // VF_WP_Groups_Header
