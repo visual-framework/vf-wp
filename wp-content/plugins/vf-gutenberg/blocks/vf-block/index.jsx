@@ -59,7 +59,7 @@ const VFBlock = props => {
           <VFBlockView
             html={render.html}
             uniqueId={uniqueId}
-            hasWidth={props.attributes.__isExample}
+            isExample={props.attributes.__isExample}
           />
         )}
         {isLoading && <Spinner />}

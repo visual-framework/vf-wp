@@ -2,17 +2,43 @@
  * Return `onLoad` and `onUnload` functions for an iframe.
  * Adjust iframe height automatically whilst mounted.
  */
-const useVFIFrame = (iframe, html, hasWidth) => {
+
+import React, {useState} from 'react';
+
+const useVFIFrame = (iframeId, html, hasWidth) => {
+  const [height, setHeight] = useState(30);
+  const [width, setWidth] = useState(100);
+
+  // Use existing iframe appended to the DOM
+  let iframe = document.getElementById(iframeId);
+
+  // or create a new iframe element
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = iframeId;
+    iframe.className = 'vf-block__iframe';
+    iframe.setAttribute('scrolling', 'no');
+  }
+
+  iframe.style.height = `${height}px`;
+  if (hasWidth) {
+    iframe.style.width = `${width}px`;
+  }
+
   // update iframe height from `postMessage` event
   const onMessage = ({data}) => {
     if (data !== Object(data) || data.id !== iframe.id) {
       return;
     }
     window.requestAnimationFrame(() => {
-      iframe.style.height = `${data.height}px`;
+      setHeight(data.height);
       if (hasWidth) {
-        iframe.style.width = `${data.width}px`;
+        setWidth(data.width);
       }
+      // iframe.style.height = `${data.height}px`;
+      // if (hasWidth) {
+      //   iframe.style.width = `${data.width}px`;
+      // }
     });
   };
 
@@ -35,9 +61,9 @@ ${html}
 </body>
 </html>`;
 
-  if (hasWidth) {
-    body.style.width = 'max-content';
-  }
+    if (hasWidth) {
+      body.style.width = 'max-content';
+    }
 
     // create and append script to handle automatic iframe resize
     // this cannot be inline of `html` for browser security
@@ -67,7 +93,7 @@ ${html}
     iframe.vfActive = false;
   };
 
-  return {onLoad, onUnload};
+  return {iframe, onLoad, onUnload};
 };
 
 export default useVFIFrame;
