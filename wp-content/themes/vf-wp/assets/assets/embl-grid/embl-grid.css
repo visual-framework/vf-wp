@@ -41,16 +41,11 @@
 
 /*!
  * Component: @visual-framework/embl-grid
- * Version: 1.0.0-alpha.8
+ * Version: 1.0.0-alpha.9
  * Location: components/vf-core-
  */
 .embl-grid {
-  display: grid;
   grid-column: main;
-  grid-column-gap: var(--page-grid-gap);
-  /* stylelint-disable declaration-colon-space-after */
-  grid-template-columns: calc(var(--embl-grid-module--prime) + var(--embl-grid-spacing-normaliser)) repeat(auto-fit, minmax(288px, 1fr));
-  /* stylelint-enable */
   margin-bottom: 48px;
 }
 
@@ -68,6 +63,16 @@
 @media (max-width: 845px) {
   .embl-grid > *:not(:first-child) {
     grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 600px) {
+  .embl-grid {
+    display: grid;
+    grid-column-gap: var(--page-grid-gap);
+    /* stylelint-disable declaration-colon-space-after */
+    grid-template-columns: calc(var(--embl-grid-module--prime) + var(--embl-grid-spacing-normaliser)) repeat(auto-fit, minmax(288px, 1fr));
+    /* stylelint-enable */
   }
 }
 
