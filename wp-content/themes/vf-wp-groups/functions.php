@@ -2,6 +2,10 @@
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
+// Child theme container plugins
+require_once('vf-wp-groups-header/index.php');
+
+// Child theme functions
 require_once('functions/groups-theme.php');
 
 /**

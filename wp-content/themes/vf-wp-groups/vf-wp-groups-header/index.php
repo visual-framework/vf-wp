@@ -14,9 +14,9 @@ $path = WP_PLUGIN_DIR . '/vf-wp/vf-plugin.php';
 if ( ! file_exists($path)) return;
 require_once($path);
 
-class VF_Groups_Header extends VF_Plugin {
+class VF_WP_Groups_Header extends VF_Plugin {
 
-  private $post_name = 'vf_groups_header';
+  private $post_name = 'vf_wp_groups_header';
   protected $file = __FILE__;
 
   function __construct(array $params = array()) {
@@ -36,15 +36,15 @@ class VF_Groups_Header extends VF_Plugin {
       array(
         'file'       => $this->file,
         'post_name'  => $this->post_name,
-        'post_title' => 'Groups Header',
+        'post_title' => 'VF-WP Groups Header',
         'post_type'  => 'vf_container'
       )
     );
   }
 
-} // VF_Groups_Header
+} // VF_WP_Groups_Header
 
-$plugin = new VF_Groups_Header(
+$plugin = new VF_WP_Groups_Header(
   array('init' => true)
 );
 
