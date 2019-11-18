@@ -144,6 +144,10 @@
   margin-bottom: 16px;
 }
 
+.vf-block .components-base-control__label + .components-select-control__input {
+  display: block;
+}
+
 .vf-block .components-datetime__date {
   border: 0;
   margin: 0;

@@ -79,7 +79,7 @@
 
 /*!
  * Component: @visual-framework/vf-masthead
- * Version: 1.0.0-alpha.8
+ * Version: 1.0.0-alpha.9
  * Location: components/vf-core-
  */
 .vf-masthead {
@@ -105,6 +105,12 @@
   margin: 0 auto;
   max-width: 76.5em;
   width: 100%;
+}
+
+@media (max-width: 600px) {
+  .vf-masthead__inner {
+    padding: 1em;
+  }
 }
 
 .vf-masthead__title {
@@ -301,7 +307,7 @@
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 1.0.0-alpha.8
+ * Version: 1.0.0-alpha.9
  * Location: components/vf-core-
  */
 .vf-navigation__list {
