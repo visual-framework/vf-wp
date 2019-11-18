@@ -181,6 +181,10 @@
   padding: 6px 8px;
 }
 
+.vf-block .components-base-control__rich-text .editor-rich-text__editable {
+  margin: 0;
+}
+
 .vf-block .components-base-control__rich-text:focus-within {
   border-color: #00a0d2;
   -webkit-box-shadow: 0 0 0 1px #00a0d2;
