@@ -155,6 +155,20 @@ class VF_Plugin {
   }
 
   /**
+   * Return true if plugin is loaded from plugins directory
+   */
+  public function is_plugin() {
+    return strpos($this->dir(), 'wp-content/plugins') !== false;
+  }
+
+  /**
+   * Return true if plugin is loaded from theme directory
+   */
+  public function is_theme() {
+    return strpos($this->dir(), 'wp-content/themes') !== false;
+  }
+
+  /**
    * Return true if plugin has ACF configuration
    */
   public function is_acf() {

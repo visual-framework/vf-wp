@@ -1,6 +1,6 @@
 # Groups Header (container)
 
-VF-WP theme Groups Header with hero and navigation blocks.
+VF-WP Groups theme global container. Includes hero and navigation.
 
 ## Configuration
 
