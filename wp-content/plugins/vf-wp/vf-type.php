@@ -78,6 +78,13 @@ class VF_Type {
       array($this, 'posts_custom_column'),
       10, 2
     );
+    add_filter(
+      'map_meta_cap',
+      array($this, 'map_meta_cap'),
+      10, 4
+    );
+    // $this->deactivate();
+    // $this->activate();
   }
 
   /**
@@ -86,10 +93,11 @@ class VF_Type {
    */
   public function activate() {
     $role = get_role('administrator');
-    $role->add_cap('read_' . $this->post_type);
-    $role->add_cap('edit_' . $this->post_type);
-    $role->add_cap('edit_' . $this->post_type_plural);
-    $role->add_cap('edit_others_' . $this->post_type_plural);
+    if ( ! $role) {
+      return;
+    }
+    $role->add_cap("edit_$this->post_type_plural");
+    $role->add_cap("publish_$this->post_type_plural");
   }
 
   /**
@@ -98,20 +106,61 @@ class VF_Type {
    */
   public function deactivate() {
     $role = get_role('administrator');
-    $role->remove_cap('edit_' . $this->post_type);
-    $role->remove_cap('read_' . $this->post_type);
-    $role->remove_cap('delete_' . $this->post_type);
-    $role->remove_cap('edit_' . $this->post_type_plural);
-    $role->remove_cap('edit_others_' . $this->post_type_plural);
-    $role->remove_cap('publish_' . $this->post_type_plural);
-    $role->remove_cap('read_private_' . $this->post_type_plural);
-    $role->remove_cap('delete_' . $this->post_type_plural);
-    $role->remove_cap('delete_private_' . $this->post_type_plural);
-    $role->remove_cap('delete_published_' . $this->post_type_plural);
-    $role->remove_cap('delete_others_' . $this->post_type_plural);
-    $role->remove_cap('edit_private_' . $this->post_type_plural);
-    $role->remove_cap('edit_published_' . $this->post_type_plural);
-    $role->remove_cap('create_' . $this->post_type_plural);
+    if ( ! $role) {
+      return;
+    }
+    $role->remove_cap("edit_$this->post_type_plural");
+    $role->remove_cap("publish_$this->post_type_plural");
+  }
+
+  /**
+   * Map meta capabilities to the custom post type
+   */
+  public function map_meta_cap($caps, $cap, $user_id, $args) {
+    /*
+    // Ignore non-admin roles
+    $user = get_userdata($user_id);
+    if ( ! $user || empty(
+      array_intersect(array('administrator'), $user->roles)
+    )) {
+      return $caps;
+    }
+    */
+    // Ignore unrelated post types
+    $meta_caps = array(
+      "read_{$this->post_type}",
+      "edit_{$this->post_type}",
+      "delete_{$this->post_type}",
+      "create_{$this->post_type_plural}"
+    );
+    if ( ! in_array($cap, $meta_caps)) {
+      return $caps;
+    }
+    // Anyone can read/view
+    if ($cap === $meta_caps[0]) {
+      $caps = array(
+        'read'
+      );
+    }
+    // Allow editing posts (assigned to admin roles)
+    if ($cap === $meta_caps[1]) {
+      $caps = array(
+        "edit_{$this->post_type_plural}"
+      );
+    }
+    // Disallow deleting posts
+    if ($cap === $meta_caps[2]) {
+      $caps = array(
+        "delete_{$this->post_type_plural}__unassigned"
+      );
+    }
+    // Disallow creating posts
+    if ($cap === $meta_caps[3]) {
+      $caps = array(
+        "create_{$this->post_type_plural}__unassigned"
+      );
+    }
+    return $caps;
   }
 
   /**
@@ -127,22 +176,24 @@ class VF_Type {
         $this->post_type_plural
       ),
       'capabilities'    => array(
-        'edit_post'   => 'edit_' . $this->post_type,
-        'read_post'   => 'read_' . $this->post_type,
-        'delete_post' => 'delete_' . $this->post_type,
-
-        'edit_posts'         => 'edit_' . $this->post_type_plural,
-        'edit_others_posts'  => 'edit_others_' . $this->post_type_plural,
-        'publish_posts'      => 'publish_' . $this->post_type_plural,
-        'read_private_posts' => 'read_private_' . $this->post_type_plural,
-
-        'delete_posts'           => 'delete_' . $this->post_type_plural,
-        'delete_private_posts'   => 'delete_private_' . $this->post_type_plural,
-        'delete_published_posts' => 'delete_published_' . $this->post_type_plural,
-        'delete_others_posts'    => 'delete_others_' . $this->post_type_plural,
-        'edit_private_posts'     => 'edit_private_' . $this->post_type_plural,
-        'edit_published_posts'   => 'edit_published_' . $this->post_type_plural,
-        'create_posts'           => 'create_' . $this->post_type_plural
+        // Meta capabilities
+        'edit_post'           => "edit_{$this->post_type}",
+        'read_post'           => "read_{$this->post_type}",
+        'delete_post'         => "delete_{$this->post_type}",
+        // Primitive capabilities used outside of map_meta_cap():
+        'edit_posts'          => "edit_$this->post_type_plural",
+        'edit_others_posts'   => "edit_$this->post_type_plural",
+        'publish_posts'       => "publish_$this->post_type_plural",
+        'read_private_posts'  => "read_$this->post_type_plural",
+        // Primitive capabilities used within map_meta_cap():
+        'read'                   => 'read',
+        'delete_posts'           => "delete_{$this->post_type_plural}",
+        'delete_private_posts'   => "delete_{$this->post_type_plural}",
+        'delete_published_posts' => "delete_{$this->post_type_plural}",
+        'delete_others_posts'    => "delete_{$this->post_type_plural}",
+        'edit_private_posts'     => "edit_$this->post_type_plural",
+        'edit_published_posts'   => "edit_$this->post_type_plural",
+        'create_posts'           => "create_$this->post_type_plural"
       ),
       'map_meta_cap'       => false,
       'public'             => false,
