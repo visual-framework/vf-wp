@@ -20,30 +20,6 @@
   }
 }
 
-@mixin editor-font-sizes {
-  .has-extra-large-font-size {
-    @include set-type(text-body--1);
-  }
-
-  .has-large-font-size {
-    @include set-type(text-body--2);
-  }
-
-  .has-regular-font-size {
-    @include set-type(text-body--3);
-  }
-
-  .has-small-font-size {
-    @include set-type(text-body--4);
-  }
-
-  .has-extra-small-font-size {
-    @include set-type(text-body--5);
-  }
-}
-
-@include editor-font-sizes;
-
 .wp-list-table {
   .column-vf_hash,
   .column-vf_modified {
@@ -89,23 +65,7 @@
   }
 }
 
-// Placeholder block
-.wp-block {
-  max-width: 780px;
-
-  .block-editor-default-block-appender {
-    --vf-text-margin--bottom: 0;
-
-    .block-editor-default-block-appender__content {
-      @include set-type(text-body--2);
-    }
-  }
-}
-
-// Heading block
-.wp-block[data-type='core/heading'] {
-  --vf-text-margin--bottom: 0;
-
+.editor-styles-wrapper {
   h1 {
     @include set-type(text-heading--1);
   }
@@ -124,24 +84,55 @@
   h6 {
     @include set-type(text-heading--5);
   }
-}
 
-// Paragraph block
-.wp-block[data-type='core/paragraph'] {
-  --vf-text-margin--bottom: 0;
+  p {
+    @include set-type(text-body--2);
+    // override WordPress defaults :(
+    // line-height: 1.421 !important;
+  }
 
-  .editor-rich-text {
-    p {
-      @include set-type(text-body--2);
-      // override WordPress defaults :(
-      line-height: 1.421 !important;
-    }
+  .has-extra-large-font-size {
+    @include set-type(text-body--1);
+  }
 
-    @include editor-font-sizes;
+  .has-large-font-size {
+    @include set-type(text-body--2);
+  }
+
+  .has-regular-font-size {
+    @include set-type(text-body--3);
+  }
+
+  .has-small-font-size {
+    @include set-type(text-body--4);
+  }
+
+  .has-extra-small-font-size {
+    @include set-type(text-body--5);
   }
 }
 
-// List block
+// Placeholder block
+.wp-block {
+  max-width: 780px;
+
+  .block-editor-default-block-appender {
+    --vf-text-margin--bottom: 0;
+
+    .block-editor-default-block-appender__content {
+      @include set-type(text-body--2);
+    }
+  }
+}
+
+.wp-block[data-type='core/heading'] {
+  --vf-text-margin--bottom: 0;
+}
+
+.wp-block[data-type='core/paragraph'] {
+  --vf-text-margin--bottom: 0;
+}
+
 .wp-block[data-type='core/list'] {
   --vf-text-margin--bottom: 0;
 
@@ -153,7 +144,6 @@
   }
 }
 
-// Quote block
 .wp-block[data-type='core/quote'] {
   --vf-text-margin--bottom: 16px;
 
@@ -172,7 +162,6 @@
   }
 }
 
-// Table block
 .wp-block[data-type='core/table'] {
   --vf-text-margin--bottom: 0;
 

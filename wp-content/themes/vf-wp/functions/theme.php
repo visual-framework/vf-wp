@@ -184,6 +184,7 @@ class VF_Theme {
       'disable-custom-font-sizes',
       'disable-custom-colors',
       'responsive-embeds',
+      'editor-styles',
       array(
         'html5',
         array(

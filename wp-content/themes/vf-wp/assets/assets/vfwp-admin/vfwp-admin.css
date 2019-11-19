@@ -173,51 +173,6 @@
   text-decoration: none;
 }
 
-.has-extra-large-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 1.3125;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.has-large-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 1.421;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.has-regular-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.71;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.has-small-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.57;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.has-extra-small-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.57;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
 .wp-list-table .column-vf_hash,
 .wp-list-table .column-vf_modified {
   width: 10%;
@@ -271,6 +226,114 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
+.editor-styles-wrapper h1 {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.547;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper h2 {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.333;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper h3 {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.333;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper h4 {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.29;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper h5 {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper h6 {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper p {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper .has-extra-large-font-size {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.3125;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper .has-large-font-size {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper .has-regular-font-size {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.71;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper .has-small-font-size {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.57;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.editor-styles-wrapper .has-extra-small-font-size {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.57;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
 .wp-block {
   max-width: 780px;
 }
@@ -292,117 +355,8 @@
   --vf-text-margin--bottom: 0;
 }
 
-.wp-block[data-type='core/heading'] h1 {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 42px;
-  font-weight: 700;
-  line-height: 1.547;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/heading'] h2 {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1.333;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/heading'] h3 {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  line-height: 1.333;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/heading'] h4 {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 21px;
-  font-weight: 500;
-  line-height: 1.29;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/heading'] h5 {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 500;
-  line-height: 1.5;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/heading'] h6 {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 500;
-  line-height: 1.5;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
 .wp-block[data-type='core/paragraph'] {
   --vf-text-margin--bottom: 0;
-}
-
-.wp-block[data-type='core/paragraph'] .editor-rich-text p {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 1.421;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  line-height: 1.421 !important;
-}
-
-.wp-block[data-type='core/paragraph'] .editor-rich-text .has-extra-large-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 32px;
-  font-weight: 500;
-  line-height: 1.3125;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/paragraph'] .editor-rich-text .has-large-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 1.421;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/paragraph'] .editor-rich-text .has-regular-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.71;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/paragraph'] .editor-rich-text .has-small-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.57;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-}
-
-.wp-block[data-type='core/paragraph'] .editor-rich-text .has-extra-small-font-size {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.57;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .wp-block[data-type='core/list'] {
