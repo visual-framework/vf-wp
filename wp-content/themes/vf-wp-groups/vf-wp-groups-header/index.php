@@ -31,7 +31,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
       array(
         'file'       => $this->file,
         'post_name'  => $this->post_name,
-        'post_title' => 'VF-WP Groups Header',
+        'post_title' => 'Groups Header',
         'post_type'  => 'vf_container'
       )
     );

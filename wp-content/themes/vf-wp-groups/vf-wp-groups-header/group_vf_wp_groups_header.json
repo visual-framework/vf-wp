@@ -1,0 +1,48 @@
+{
+    "key": "group_vf_wp_groups_header",
+    "title": "VF-WP Groups Header",
+    "fields": [
+        {
+            "key": "field_vf_test",
+            "label": "Test",
+            "name": "vf_text",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_container",
+                "operator": "==",
+                "value": "vf_wp_groups_header"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "VF-WP Groups theme container.",
+    "modified": 1574163816
+}
