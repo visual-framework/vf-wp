@@ -130,6 +130,7 @@ class VF_Gutenberg {
     $this->settings = new VF_Gutenberg_Settings();
 
     // Register core transforms
+    include_once('includes/core/core-colors.php');
     include_once('includes/core/core-button.php');
     include_once('includes/core/core-file.php');
     include_once('includes/core/core-image.php');
@@ -141,9 +142,17 @@ class VF_Gutenberg {
   /**
    * Register an array of core compatible block callbacks
    */
-  function add_compatible(string $key, callable $callback) {
-    if ( ! array_key_exists($key, $this->compatible)) {
-      $this->compatible[$key] = $callback;
+  function add_compatible($keys, callable $callback) {
+    if ( ! is_array($keys)) {
+      $keys = array($keys);
+    }
+    foreach ($keys as $key) {
+      if (is_string($key)) {
+        if ( ! array_key_exists($key, $this->compatible)) {
+          $this->compatible[$key] = array();
+        }
+        $this->compatible[$key][] = $callback;
+      }
     }
   }
 
@@ -381,8 +390,10 @@ class VF_Gutenberg {
    */
   public function render_block_compatible($html, $block) {
     if (array_key_exists($block['blockName'], $this->compatible)) {
-      $callback = $this->compatible[ $block['blockName'] ];
-      $html = call_user_func($callback, $html, $block);
+      $callbacks = $this->compatible[ $block['blockName'] ];
+      foreach ($callbacks as $fn) {
+        $html = call_user_func($fn, $html, $block);
+      }
     }
     return $html;
   }

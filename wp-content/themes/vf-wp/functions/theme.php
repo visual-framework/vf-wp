@@ -184,6 +184,7 @@ class VF_Theme {
       'disable-custom-font-sizes',
       'disable-custom-colors',
       'responsive-embeds',
+      'editor-styles',
       array(
         'html5',
         array(
@@ -237,37 +238,37 @@ class VF_Theme {
     $color_palette = array(
       array(
         'name' => __('EMBL Grey', $this->domain),
-        'slug' => 'embl-grey',
+        'slug' => 'grey',
         'color' => '#707372',
       ),
       array(
         'name' => __('EMBL Green', $this->domain),
-        'slug' => 'embl-green',
+        'slug' => 'green',
         'color' => '#009f4d',
       ),
       array(
         'name' => __('EMBL Blue', $this->domain),
-        'slug' => 'embl-blue',
+        'slug' => 'blue',
         'color' => '#307fe2',
       ),
       array(
         'name' => __('EMBL Red', $this->domain),
-        'slug' => 'embl-red',
+        'slug' => 'red',
         'color' => '#e40046',
       ),
       // array(
       //   'name' => __('EMBL Purple', $this->domain),
-      //   'slug' => 'embl-purple',
+      //   'slug' => 'purple',
       //   'color' => '#8246af',
       // ),
       // array(
       //   'name' => __('EMBL Orange', $this->domain),
-      //   'slug' => 'embl-orange',
+      //   'slug' => 'orange',
       //   'color' => '#ffa300',
       // ),
       // array(
       //   'name' => __('EMBL Yellow', $this->domain),
-      //   'slug' => 'embl-yellow',
+      //   'slug' => 'yellow',
       //   'color' => '#ffcd00',
       // ),
     );
