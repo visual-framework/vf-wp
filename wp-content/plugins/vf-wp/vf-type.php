@@ -12,6 +12,7 @@ class VF_Type {
   protected $post_type = 'vf_block';
   protected $post_type_plural = 'vf_blocks';
   protected $description = 'VF Blocks';
+
   protected $labels = array(
     'name'          => 'VF Blocks',
     'singular_name' => 'Block',
@@ -83,8 +84,6 @@ class VF_Type {
       array($this, 'map_meta_cap'),
       10, 4
     );
-    // $this->deactivate();
-    // $this->activate();
   }
 
   /**
@@ -111,56 +110,6 @@ class VF_Type {
     }
     $role->remove_cap("edit_$this->post_type_plural");
     $role->remove_cap("publish_$this->post_type_plural");
-  }
-
-  /**
-   * Map meta capabilities to the custom post type
-   */
-  public function map_meta_cap($caps, $cap, $user_id, $args) {
-    /*
-    // Ignore non-admin roles
-    $user = get_userdata($user_id);
-    if ( ! $user || empty(
-      array_intersect(array('administrator'), $user->roles)
-    )) {
-      return $caps;
-    }
-    */
-    // Ignore unrelated post types
-    $meta_caps = array(
-      "read_{$this->post_type}",
-      "edit_{$this->post_type}",
-      "delete_{$this->post_type}",
-      "create_{$this->post_type_plural}"
-    );
-    if ( ! in_array($cap, $meta_caps)) {
-      return $caps;
-    }
-    // Anyone can read/view
-    if ($cap === $meta_caps[0]) {
-      $caps = array(
-        'read'
-      );
-    }
-    // Allow editing posts (assigned to admin roles)
-    if ($cap === $meta_caps[1]) {
-      $caps = array(
-        "edit_{$this->post_type_plural}"
-      );
-    }
-    // Disallow deleting posts
-    if ($cap === $meta_caps[2]) {
-      $caps = array(
-        "delete_{$this->post_type_plural}__unassigned"
-      );
-    }
-    // Disallow creating posts
-    if ($cap === $meta_caps[3]) {
-      $caps = array(
-        "create_{$this->post_type_plural}__unassigned"
-      );
-    }
-    return $caps;
   }
 
   /**
@@ -206,6 +155,48 @@ class VF_Type {
       'query_var'          => true,
       'can_export'         => false
     ));
+  }
+
+  /**
+   * Filter: `map_meta_cap`
+   * Map meta capabilities to the custom post type
+   */
+  public function map_meta_cap($caps, $cap, $user_id, $args) {
+    // Ignore unrelated post types
+    $meta_caps = array(
+      "read_{$this->post_type}",
+      "edit_{$this->post_type}",
+      "delete_{$this->post_type}",
+      "create_{$this->post_type_plural}"
+    );
+    if ( ! in_array($cap, $meta_caps)) {
+      return $caps;
+    }
+    // Anyone can read/view
+    if ($cap === $meta_caps[0]) {
+      $caps = array(
+        'read'
+      );
+    }
+    // Allow editing posts (assigned to admin roles)
+    if ($cap === $meta_caps[1]) {
+      $caps = array(
+        "edit_{$this->post_type_plural}"
+      );
+    }
+    // Disallow deleting posts
+    if ($cap === $meta_caps[2]) {
+      $caps = array(
+        "delete_{$this->post_type_plural}__unassigned"
+      );
+    }
+    // Disallow creating posts
+    if ($cap === $meta_caps[3]) {
+      $caps = array(
+        "create_{$this->post_type_plural}__unassigned"
+      );
+    }
+    return $caps;
   }
 
   /**
