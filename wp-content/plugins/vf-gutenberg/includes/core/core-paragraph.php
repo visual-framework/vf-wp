@@ -14,7 +14,6 @@ class VF_Gutenberg_Core_Paragraph {
     'extra-small' => 'vf-text--body vf-text-body--5',
   );
 
-
   /**
    * Filter `core/paragraph` default Gutenberg block
    * Add `vf-text` markup
@@ -24,22 +23,6 @@ class VF_Gutenberg_Core_Paragraph {
     // Replace WordPress font size classes
     $html = preg_replace_callback(
       '#(<p[^>]*?)class="(.*?)has-([a-z-]+?)-font-size(.*?)"([^>]*?>)#',
-      /*
-      array(6) {
-        [0]=>
-        string(37) "<p class="has-extra-small-font-size">"
-        [1]=>
-        string(3) "<p "
-        [2]=>
-        string(0) ""
-        [3]=>
-        string(11) "extra-small"
-        [4]=>
-        string(0) ""
-        [5]=>
-        string(1) ">"
-      }
-      */
       function ($matches) {
         // Return unchanged if size is not recognised
         if ( ! array_key_exists($matches[3],
@@ -63,7 +46,6 @@ class VF_Gutenberg_Core_Paragraph {
       },
       $html
     );
-
     return $html;
   }
 
