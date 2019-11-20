@@ -14,12 +14,19 @@ import VFBlockEdit from './block-edit';
 import VFBlockView from './block-view';
 
 const VFBlock = props => {
-  const {isEditing, isEditable, isRenderable, isSelected} = props;
+  const {isEditing, isEditable, isPlugin, isRenderable, isSelected} = props;
   const uniqueId = useUniqueId(props);
   const [render, isLoading] = useVFRender(props);
 
   // ensure version is encoded in post content
-  props.setAttributes({ver: props.ver || '1.0.0'});
+  if (!props.attributes.ver) {
+    const newAttr = {ver: props.ver || '1.0.0'};
+    // use defaults for VF plugin blocks
+    if (isPlugin) {
+      newAttr.defaults = 1;
+    }
+    props.setAttributes(newAttr);
+  }
 
   // callback to toggle block mode
   const onToggle = () => {

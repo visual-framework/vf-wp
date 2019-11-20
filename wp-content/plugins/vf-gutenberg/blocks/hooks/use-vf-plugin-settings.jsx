@@ -59,9 +59,10 @@ const useVFPluginSettings = settings => {
       <Fragment>
         <VFBlock
           {...props}
+          isPlugin
+          isRenderable
           isEditable={hasFields}
-          isEditing={isEditing}
-          isRenderable>
+          isEditing={isEditing}>
           {hasFields && (
             <VFBlockFields {...props} fields={isDefaults ? [] : fields}>
               {isDefaults && <DefaultsControl />}
