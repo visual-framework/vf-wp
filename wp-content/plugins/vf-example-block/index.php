@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Example
 Description: VF-WP theme block (developer example).
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -26,10 +26,16 @@ require_once($path);
  */
 class VF_Example extends VF_Plugin {
 
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_example',
+    'post_title' => 'Example',
+  );
+
   public function __construct(array $params = array()) {
     /**
      * Parent constructor sets up local variables.
-     * Importantly: `$this->post` (or `$plugin->post()` outside)
      */
     parent::__construct('vf_example');
 
@@ -43,13 +49,7 @@ class VF_Example extends VF_Plugin {
      * Initialize to add plugin registration hooks.
      * The related `vf_block` or `vf_container` post is created (or updated.)
      */
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_example',
-        'post_title' => 'Example'
-      )
-    );
+    parent::initialize();
 
     /**
      * Add ACF filter hook to dynamically populate a select field

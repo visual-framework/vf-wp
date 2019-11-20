@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Publications Group EBI
 Description: Query for team publications based of EMBL-EBI specific data source (EBI Content Database).
-Version: 0.1.2
+Version: 0.1.3
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -16,6 +16,13 @@ require_once($path);
 
 class VF_Publications_group_ebi extends VF_Plugin {
 
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_publications_group_ebi',
+    'post_title' => 'EBI Team publications',
+  );
+
   protected $API = array(
     'pattern'             => 'ebi-team-publications',
     'source'              => 'contenthub',
@@ -25,25 +32,15 @@ class VF_Publications_group_ebi extends VF_Plugin {
   public function __construct(array $params = array()) {
     parent::__construct('vf_publications_group_ebi');
     if (array_key_exists('init', $params)) {
-      $this->init();
+      parent::initialize();
     }
-  }
-
-  private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_publications_group_ebi',
-        'post_title' => 'EBI Team publications'
-      )
-    );
   }
 
   // Query the contentHub API, samples:
   //   - Group: https://dev.content.embl.org/api/v1/pattern.html?pattern=ebi-team-publications&title=Web%20Development
   function api_url(array $query_vars = array()) {
-    $limit = intval(get_field('vf_publications_group_ebi_limit', $this->post->ID));
-    $order = get_field('vf_publications_group_ebi_order', $this->post->ID);
+    $limit = intval(get_field('vf_publications_group_ebi_limit', $this->post()->ID));
+    $order = get_field('vf_publications_group_ebi_order', $this->post()->ID);
 
     $vars = array(
       'limit' => $limit ? $limit : 30,

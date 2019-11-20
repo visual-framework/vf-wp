@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EBI VF 1.3 Global Footer
 Description: VF-WP theme global container.
-Version: 0.1.2
+Version: 0.1.3
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -15,6 +15,14 @@ if ( ! file_exists($path)) return;
 require_once($path);
 
 class VF_EBI_Global_Footer extends VF_Plugin {
+
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_ebi_global_footer',
+    'post_title' => 'EBI VF 1.3 Global Footer',
+    'post_type'  => 'vf_container',
+  );
 
   protected $API = array(
     'pattern'             => 'node-body',
@@ -30,14 +38,7 @@ class VF_EBI_Global_Footer extends VF_Plugin {
   }
 
   private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_ebi_global_footer',
-        'post_title' => 'EBI VF 1.3 Global Footer',
-        'post_type'  => 'vf_container'
-      )
-    );
+    parent::initialize();
     add_action(
       'wp_enqueue_scripts',
       array($this, 'enqueue_assets'),
@@ -52,11 +53,11 @@ class VF_EBI_Global_Footer extends VF_Plugin {
       $classes[] = 'ebi-vf1-integration'; // enable the VF 1.x workarounds
       return $classes;
     }
-    
+
   }
 
   function api_url(array $query_vars = array()) {
-    $id = intval(get_field('vf_ebi_global_footer_node_id', $this->post->ID));
+    $id = intval(get_field('vf_ebi_global_footer_node_id', $this->post()->ID));
     $vars = array(
       'filter-id' => $id ? $id : 6683
     );

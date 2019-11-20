@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Beta
 Description: VF-WP theme global container.
-Version: 0.2.0
+Version: 0.2.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -15,6 +15,14 @@ if ( ! file_exists($path)) return;
 require_once($path);
 
 class VF_Beta extends VF_Plugin {
+
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_beta',
+    'post_title' => 'Beta',
+    'post_type'  => 'vf_container',
+  );
 
   protected $API = array(
     'pattern'             => 'node-body',
@@ -32,14 +40,7 @@ class VF_Beta extends VF_Plugin {
   }
 
   private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_beta',
-        'post_title' => 'Beta',
-        'post_type'  => 'vf_container'
-      )
-    );
+    parent::initialize();
 
     add_action(
       'vf/plugin/container/after_render/vf_global_header',
@@ -53,7 +54,7 @@ class VF_Beta extends VF_Plugin {
   }
 
   function api_url(array $query_vars = array()) {
-    $id = intval(get_field('vf_beta_node_id', $this->post->ID));
+    $id = intval(get_field('vf_beta_node_id', $this->post()->ID));
     $vars = array(
       'filter-id' => $id ? $id : 580
     );

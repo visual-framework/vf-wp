@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EMBL News
 Description: VF-WP theme global container.
-Version: 0.1.1
+Version: 0.1.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -16,10 +16,12 @@ require_once($path);
 
 class VF_EMBL_News extends VF_Plugin {
 
-  private $exists = array(
-    'field_display_title',
-    'field_teaser',
-    'field_canonical_location'
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_embl_news',
+    'post_title' => 'EMBL News',
+    'post_type'  => 'vf_container',
   );
 
   protected $API = array(
@@ -30,6 +32,12 @@ class VF_EMBL_News extends VF_Plugin {
     'source'                                 => 'contenthub',
   );
 
+  private $exists = array(
+    'field_display_title',
+    'field_teaser',
+    'field_canonical_location'
+  );
+
   function __construct(array $params = array()) {
     parent::__construct('vf_embl_news');
     if (array_key_exists('init', $params)) {
@@ -38,21 +46,13 @@ class VF_EMBL_News extends VF_Plugin {
   }
 
   private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_embl_news',
-        'post_title' => 'EMBL News',
-        'post_type'  => 'vf_container'
-      )
-    );
-
+    parent::initialize();
     add_action('init', array($this, 'add_taxonomy_fields'), 11);
   }
 
   function api_url(array $query_vars = array()) {
     $limit = intval(
-      get_field('vf_embl_news_limit', $this->post->ID)
+      get_field('vf_embl_news_limit', $this->post()->ID)
     );
 
     $vars = array(
@@ -64,7 +64,7 @@ class VF_EMBL_News extends VF_Plugin {
 
     // Use "Keyword" filter
     $keyword = vf_search_keyword(
-      get_field('vf_embl_news_keyword', $this->post->ID)
+      get_field('vf_embl_news_keyword', $this->post()->ID)
     );
     if ( ! empty($keyword)) {
       $vars[$filter_key] = $keyword;
@@ -73,7 +73,7 @@ class VF_EMBL_News extends VF_Plugin {
     // Prioritise "Term" filter
     if (function_exists('embl_taxonomy_get_term')) {
       $term = embl_taxonomy_get_term(
-        get_field('vf_embl_news_term', $this->post->ID)
+        get_field('vf_embl_news_term', $this->post()->ID)
       );
       if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
         $vars[$filter_key] = $term->meta[EMBL_Taxonomy::META_NAME];

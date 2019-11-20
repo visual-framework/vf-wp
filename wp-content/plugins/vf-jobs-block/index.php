@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Jobs
 Description: VF-WP theme block.
-Version: 0.1.2
+Version: 0.1.3
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -15,6 +15,13 @@ if ( ! file_exists($path)) return;
 require_once($path);
 
 class VF_Jobs extends VF_Plugin {
+
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_jobs',
+    'post_title' => 'Jobs',
+  );
 
   private $term_who;
   private $term_what;
@@ -34,19 +41,12 @@ class VF_Jobs extends VF_Plugin {
   }
 
   private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_jobs',
-        'post_title' => 'Jobs'
-      )
-    );
-
+    parent::initialize();
     add_action('init', array($this, 'add_taxonomy_fields'), 11);
   }
 
   function api_url(array $query_vars = array()) {
-    $limit = intval(get_field('vf_jobs_limit', $this->post->ID));
+    $limit = intval(get_field('vf_jobs_limit', $this->post()->ID));
 
     $vars = array(
       'limit' => $limit ? $limit : 10
@@ -65,7 +65,7 @@ class VF_Jobs extends VF_Plugin {
     // Otherwise use defaults
     } else if (function_exists('embl_taxonomy')) {
       $term = null;
-      $filter = get_field('vf_jobs_filter', $this->post->ID);
+      $filter = get_field('vf_jobs_filter', $this->post()->ID);
       switch ( $filter ) {
         case 'cluster':
           $term = $this->get_term('what');
@@ -84,7 +84,7 @@ class VF_Jobs extends VF_Plugin {
           $filter_key = 'filter-field-contains[field_jobs_duty_station]';
           break;
         case 'term':
-          $term = get_field('vf_jobs_term', $this->post->ID);
+          $term = get_field('vf_jobs_term', $this->post()->ID);
           $term = intval($term);
           if (is_int($term)) {
             $term = embl_taxonomy_get_term($term);

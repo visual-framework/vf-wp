@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Publications
 Description: VF-WP theme block.
-Version: 0.1.2
+Version: 0.1.3
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -16,6 +16,13 @@ require_once($path);
 
 class VF_Publications extends VF_Plugin {
 
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_publications',
+    'post_title' => 'Team publications',
+  );
+
   protected $API = array(
     'source' => 'contenthub',
   );
@@ -23,19 +30,8 @@ class VF_Publications extends VF_Plugin {
   public function __construct(array $params = array()) {
     parent::__construct('vf_publications');
     if (array_key_exists('init', $params)) {
-      $this->init();
+      parent::initialize();
     }
-  }
-
-  // the site-wide default
-  private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_publications',
-        'post_title' => 'Team publications'
-      )
-    );
   }
 
   // Query the contentHub API, samples:
@@ -43,12 +39,12 @@ class VF_Publications extends VF_Plugin {
   //   - ORCID: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-person-publications&orcid=0000-0001-5454-2815
   //   - Name: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-person-publications&title=Maria-Jesus
   function api_url(array $query_vars = array()) {
-    $limit = intval(get_field('vf_publications_limit', $this->post->ID));
-    $order = get_field('vf_publications_order', $this->post->ID);
+    $limit = intval(get_field('vf_publications_limit', $this->post()->ID));
+    $order = get_field('vf_publications_order', $this->post()->ID);
 
     // load
-    $searchType = get_field('vf_publications_type', $this->post->ID) ?? 'team';
-    $searchQuery = get_field('vf_publications_query', $this->post->ID);
+    $searchType = get_field('vf_publications_type', $this->post()->ID) ?? 'team';
+    $searchQuery = get_field('vf_publications_query', $this->post()->ID);
 
     if ($searchType == 'team' || $searchType == 'person_name') {
       $queryKey = 'title';

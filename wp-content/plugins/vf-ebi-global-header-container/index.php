@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EBI VF 1.3 Global Header
 Description: VF-WP theme global container.
-Version: 0.1.1
+Version: 0.1.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -16,6 +16,14 @@ require_once($path);
 
 class VF_EBI_Global_Header extends VF_Plugin {
 
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_ebi_global_header',
+    'post_title' => 'EBI VF 1.3 Global Header',
+    'post_type'  => 'vf_container',
+  );
+
   protected $API = array(
     'pattern'             => 'node-body',
     'filter-content-type' => 'article',
@@ -25,23 +33,12 @@ class VF_EBI_Global_Header extends VF_Plugin {
   public function __construct(array $params = array()) {
     parent::__construct('vf_ebi_global_header');
     if (array_key_exists('init', $params)) {
-      $this->init();
+      parent::initialize();
     }
   }
 
-  private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_ebi_global_header',
-        'post_title' => 'EBI VF 1.3 Global Header',
-        'post_type'  => 'vf_container'
-      )
-    );
-  }
-
   function api_url(array $query_vars = array()) {
-    $id = intval(get_field('vf_ebi_global_header_node_id', $this->post->ID));
+    $id = intval(get_field('vf_ebi_global_header_node_id', $this->post()->ID));
     $vars = array(
       'filter-id' => $id ? $id : 6682
     );

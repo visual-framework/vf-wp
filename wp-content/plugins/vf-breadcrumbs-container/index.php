@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Breadcrumbs
 Description: VF-WP theme global container.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -16,22 +16,19 @@ require_once($path);
 
 class VF_Breadcrumbs extends VF_Plugin {
 
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_breadcrumbs',
+    'post_title' => 'Breadcrumbs',
+    'post_type'  => 'vf_container',
+  );
+
   function __construct(array $params = array()) {
     parent::__construct('vf_breadcrumbs');
     if (array_key_exists('init', $params)) {
-      $this->init();
+      parent::initialize();
     }
-  }
-
-  private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_breadcrumbs',
-        'post_title' => 'Breadcrumbs',
-        'post_type'  => 'vf_container'
-      )
-    );
   }
 
 } // VF_Breadcrumbs

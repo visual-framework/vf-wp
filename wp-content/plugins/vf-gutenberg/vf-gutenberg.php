@@ -406,11 +406,11 @@ class VF_Gutenberg {
     if ( ! class_exists('VF_Plugin')) {
       return $config;
     }
-    $plugins = VF_Plugin::get_config();
-    if (empty($plugins)) {
+    global $vf_plugins;
+    if (empty($vf_plugins)) {
       return $config;
     }
-    foreach ($plugins as $post_name => $value) {
+    foreach ($vf_plugins as $post_name => $value) {
       $plugin = VF_Plugin::get_plugin($post_name);
       if ( ! $plugin->is_block()) {
         continue;
