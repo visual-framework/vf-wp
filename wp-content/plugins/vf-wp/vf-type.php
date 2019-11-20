@@ -357,13 +357,33 @@ class VF_Type {
       return;
     }
     $icons = array();
+    if ($plugin->is_plugin()) {
+      $icons[] = '<abbr title="'
+        . esc_attr(sprintf(
+            __('Plugin loaded from %1$s', 'vfwp'),
+            __('plugins directory', 'vfwp')
+          ))
+        . '">'
+        . '<span class="dashicons dashicons-admin-plugins"></span>'
+        . '</abbr>';
+    }
+    else if ($plugin->is_theme()) {
+      $icons[] = '<abbr title="'
+        . esc_attr(sprintf(
+            __('Plugin loaded from %1$s', 'vfwp'),
+            __('theme directory', 'vfwp')
+          ))
+        . '">'
+        . '<span class="dashicons dashicons-admin-appearance"></span>'
+        . '</abbr>';
+    }
     $path = $plugin->template();
     if ($path) {
       $offset = strpos($path, 'wp-content');
       if ($offset) {
         $path = substr($path, $offset + 10);
       }
-      $icons[] = '<span class="dashicons dashicons-edit"></span> <abbr title="'
+      $icons[] = '<abbr title="'
         . esc_attr(sprintf(
             __('Plugin has %1$s', 'vfwp'),
             sprintf(
@@ -372,31 +392,31 @@ class VF_Type {
             )
           ))
         . '">'
-        . esc_html__('PHP', 'vfwp')
+        . '<span class="dashicons dashicons-edit"></span>'
         . '</abbr>';
     }
     if ($plugin->is_acf()) {
-      $icons[] = '<span class="dashicons dashicons-admin-generic"></span> <abbr title="'
+      $icons[] = '<abbr title="'
         . esc_attr(sprintf(
             __('Plugin has %1$s', 'vfwp'),
             __('Advanced Custom Fields configuration', 'vfwp')
           ))
         . '">'
-        . esc_html__('ACF', 'vfwp')
+        . '<span class="dashicons dashicons-admin-generic"></span>'
         . '</abbr>';
     }
     if ($plugin->is_api()) {
-      $icons[] = '<span class="dashicons dashicons-external"></span> <abbr title="'
+      $icons[] = '<abbr title="'
         . esc_attr(sprintf(
             __('Plugin has %1$s', 'vfwp'),
             __('Content Hub API integration', 'vfwp')
           ))
         . '">'
-        . esc_html__('API', 'vfwp')
+        . '<span class="dashicons dashicons-external"></span>'
         . '</abbr>';
     }
     if ( ! empty($icons)) {
-      echo '<p>', implode('&nbsp; ', $icons), '</p>';
+      echo implode('&nbsp; ', $icons);
     }
   }
 

@@ -75,6 +75,18 @@ class VF_Plugin {
     // Save config for action hooks
     $this->config = $config;
 
+    // Auto activate
+    if (
+      isset($config['activate']) &&
+      $config['activate'] === true
+    ) {
+      if ( ! $this->post()) {
+        $this->activation_hook();
+      }
+      $this->plugins_loaded();
+      return;
+    }
+
     // Register WP hooks
     register_activation_hook(
       $config['file'],
@@ -152,6 +164,20 @@ class VF_Plugin {
 
   public function is_container() {
     return $this->type() === 'vf_container';
+  }
+
+  /**
+   * Return true if plugin is loaded from plugins directory
+   */
+  public function is_plugin() {
+    return strpos($this->dir(), 'wp-content/plugins') !== false;
+  }
+
+  /**
+   * Return true if plugin is loaded from theme directory
+   */
+  public function is_theme() {
+    return strpos($this->dir(), 'wp-content/themes') !== false;
   }
 
   /**

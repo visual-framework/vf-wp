@@ -1,6 +1,10 @@
 <?php get_template_part('partials/head'); ?>
 <?php vf_header(); ?>
-<header class="vf-header vf-header--inlay">
-  <?php get_template_part('partials/vf-masthead'); ?>
-  <?php get_template_part('partials/vf-navigation'); ?>
-</header>
+<?php
+
+if (class_exists('VF_WP_Groups_Header')) {
+  $header = new VF_WP_Groups_Header();
+  VF_Plugin::render($header);
+}
+
+?>
