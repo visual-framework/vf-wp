@@ -16,6 +16,13 @@ require_once($path);
 
 class VF_Group_Header extends VF_Plugin {
 
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_group_header',
+    'post_title' => 'Group Header',
+  );
+
   private $is_minimal = false;
 
   protected $API = array(
@@ -33,20 +40,13 @@ class VF_Group_Header extends VF_Plugin {
     }
   }
 
-  function is_minimal() {
-    return $this->is_minimal;
+  private function init() {
+    parent::initialize();
+    add_action('admin_head', array($this, 'admin_head'), 15);
   }
 
-  private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_group_header',
-        'post_title' => 'Group Header'
-      )
-    );
-
-    add_action('admin_head', array($this, 'admin_head'), 15);
+  function is_minimal() {
+    return $this->is_minimal;
   }
 
   function api_url(array $query_vars = array()) {
@@ -76,7 +76,7 @@ class VF_Group_Header extends VF_Plugin {
   }
 
   function heading_html() {
-    $heading = get_field('vf_group_header_heading', $this->post->ID);
+    $heading = get_field('vf_group_header_heading', $this->post()->ID);
     $heading = esc_html($heading);
     $heading = trim($heading);
     $heading = "<h1 class=\"vf-lede\">{$heading}</h1>";

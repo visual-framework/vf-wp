@@ -36,40 +36,11 @@ The `VF_Plugin` class is extended by all Block and Container plugins.
 
 It provides common methods to:
 
-* Register the plugin in the global option
+* Register and initialise the plugin
 * Insert the custom post for the plugin
 * Load custom ACF config from the plugin directory
 * Return the template path from the plugin directory
 * Render a plugin template (static method)
-
-### The `vf__plugins` option
-
-This option is set in the `wp_options` database table to keep track of all activated VF plugins and to help resolve template paths. It is automatically managed by `VF_Plugin` as they are activated or deactivated.
-
-The value is a serialized PHP array that follows this format:
-
-```php
-array (
-  'vf_page_template' =>
-  array (
-    'post_type' => 'vf_container',
-  ),
-  'vf_breadcrumbs' =>
-  array (
-    'post_type'       => 'vf_container',
-    'class'           => 'VF_Breadcrumbs',
-    'plugin__dirname' => 'vf-breadcrumbs-container',
-  ),
-  'vf_jobs' =>
-  array (
-    'post_type'       => 'vf_block',
-    'class'           => 'VF_Jobs',
-    'plugin__dirname' => 'vf-jobs-block',
-  )
-)
-```
-
-The array keys, such as `vf_breadcrumbs`, are the `post_name` of the Block or Container. **Because of this all `vf_block` and `vf_container` plugins should have a unique `post_name` despite being two different post types**.
 
 ## Plugin ACF configuration
 

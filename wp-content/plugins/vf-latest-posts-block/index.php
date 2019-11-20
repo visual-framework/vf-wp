@@ -16,6 +16,13 @@ require_once($path);
 
 class VF_Latest_Posts extends VF_Plugin {
 
+  protected $file = __FILE__;
+
+  protected $config = array(
+    'post_name'  => 'vf_latest_posts',
+    'post_title' => 'Latest Posts',
+  );
+
   public function __construct(array $params = array()) {
     parent::__construct('vf_latest_posts');
     if (array_key_exists('init', $params)) {
@@ -24,14 +31,7 @@ class VF_Latest_Posts extends VF_Plugin {
   }
 
   private function init() {
-    parent::initialize(
-      array(
-        'file'       => __FILE__,
-        'post_name'  => 'vf_latest_posts',
-        'post_title' => 'Latest Posts'
-      )
-    );
-
+    parent::initialize();
     add_action('admin_head', array($this, 'admin_head'), 15);
   }
 
