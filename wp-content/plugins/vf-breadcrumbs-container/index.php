@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Breadcrumbs
 Description: VF-WP theme global container.
-Version: 0.1.0
+Version: 0.1.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp

@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EMBL News
 Description: VF-WP theme global container.
-Version: 0.1.1
+Version: 0.1.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp

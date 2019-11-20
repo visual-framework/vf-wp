@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Beta
 Description: VF-WP theme global container.
-Version: 0.2.0
+Version: 0.2.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp

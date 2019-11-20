@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EBI VF 1.3 Global Footer
 Description: VF-WP theme global container.
-Version: 0.1.2
+Version: 0.1.3
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -52,7 +52,7 @@ class VF_EBI_Global_Footer extends VF_Plugin {
       $classes[] = 'ebi-vf1-integration'; // enable the VF 1.x workarounds
       return $classes;
     }
-    
+
   }
 
   function api_url(array $query_vars = array()) {
