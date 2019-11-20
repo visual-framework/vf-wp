@@ -27,19 +27,15 @@ class VF_WP_Groups_Header extends VF_Plugin {
   }
 
   private function init() {
+
     parent::initialize(
       array(
-        'file'       => $this->file,
         'post_name'  => $this->post_name,
         'post_title' => 'Groups Header',
-        'post_type'  => 'vf_container'
+        'post_type'  => 'vf_container',
+        'activate'   => true
       )
     );
-    // Activate plugin manually
-    if ( ! $this->post()) {
-      $this->activation_hook();
-    }
-    $this->plugins_loaded();
   }
 
 } // VF_WP_Groups_Header

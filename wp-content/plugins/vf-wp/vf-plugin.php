@@ -75,6 +75,18 @@ class VF_Plugin {
     // Save config for action hooks
     $this->config = $config;
 
+    // Auto activate
+    if (
+      isset($config['activate']) &&
+      $config['activate'] === true
+    ) {
+      if ( ! $this->post()) {
+        $this->activation_hook();
+      }
+      $this->plugins_loaded();
+      return;
+    }
+
     // Register WP hooks
     register_activation_hook(
       $config['file'],
