@@ -50,6 +50,10 @@ class VF_Admin_Reusable {
     // Add query filters when viewing instance usage
     if (is_numeric($this->post_id)) {
       add_action(
+        'admin_notices',
+        array($this, 'admin_notices')
+      );
+      add_action(
         'pre_get_posts',
         array($this, 'pre_get_posts'),
         10, 1
@@ -135,7 +139,10 @@ class VF_Admin_Reusable {
    * Modify query to filter posts that have instance usage
    */
   public function posts_where($where, $query) {
-    if ( ! is_numeric($this->post_id)) {
+    if (
+      ! is_numeric($this->post_id) ||
+      ! $query->is_main_query()
+    ) {
       return;
     }
     if ($query->get('post_type') === 'any') {
@@ -155,7 +162,7 @@ class VF_Admin_Reusable {
     $columns = array_merge(
       array_slice($columns, 0, $offset + 1),
       array(
-        'vf_instances' => __('Used', 'vfwp')
+        'vf_instances' => __('Usage', 'vfwp')
       ),
       array_slice($columns, $offset + 1)
     );
@@ -189,6 +196,31 @@ class VF_Admin_Reusable {
     if ($count > 0) {
       echo '</a>';
     }
+  }
+
+  /**
+   * Add admin notice when viewing instance usage
+   */
+  public function admin_notices() {
+    if ( ! function_exists('get_current_screen')) {
+      return;
+    }
+    $screen = get_current_screen();
+    if ($screen->id !== 'edit-wp_block') {
+      return;
+    }
+    printf('<div class="%1$s"><p>%2$s &nbsp; %3$s</p></div>',
+      esc_attr('notice notice-warning'),
+      sprintf(
+        esc_html__('You are viewing pages that use the "%1$s" reusable block', 'vfwp'),
+        '<b>' . get_the_title($this->post_id) . '</b>'
+      ),
+      ' <a href="'
+        . admin_url('edit.php?post_type=wp_block')
+        . '" class="button button-small">'
+        . esc_html__('Return', 'vfwp')
+        . '</a>'
+    );
   }
 
 } // VF_Admin_Reusable
