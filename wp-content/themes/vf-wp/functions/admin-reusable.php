@@ -74,7 +74,7 @@ class VF_Admin_Reusable {
     }
     $post_type_object->_builtin = false;
     $post_type_object->labels->name = __('Reusable Blocks');
-    $post_type_object->labels->menu_name = __('Reusable Blocks');
+    $post_type_object->labels->menu_name = __('Reusables', 'vfwp');
     $post_type_object->show_in_menu = true;
     $post_type_object->menu_position = 20;
     $post_type_object->menu_icon = 'dashicons-layout';
