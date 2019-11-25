@@ -8,14 +8,46 @@ import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import template from './templates/vf-video.precompiled';
 // import {fromCore} from './transforms/video';
 
-const withRatioPadding = Edit => {
+const RATIOS = {
+  '2:1': {
+    label: __('(2:1) Cinema'),
+    ratio: '2:1',
+    width: 640,
+    height: 320
+  },
+  '16:9': {
+    label: __('(16:9) Widescreen'),
+    ratio: '16:9',
+    width: 640,
+    height: 360
+  },
+  '4:3': {
+    label: __('(4:3) Standard'),
+    ratio: '4:3',
+    width: 640,
+    height: 480
+  },
+  '1:1': {
+    label: __('(1:1) Square'),
+    ratio: '1:1',
+    width: 640,
+    height: 640
+  }
+};
+
+const withRatioAttributes = Edit => {
   return props => {
     const transient = {...(props.transient || {})};
-    const ratio = props.attributes.ratio || '';
+    let {ratio, width, height} = props.attributes;
+    ratio = ratio || '';
+    transient.padding = (100 / width) * height;
     const pattern = /(\d+):(\d+)/;
-    if (pattern.test(ratio)) {
+    if (pattern.test(ratio) && ratio in RATIOS) {
       const [, r1, r2] = ratio.match(pattern);
       transient.padding = (100 / r1) * r2;
+      props.setAttributes({
+        ...RATIOS[ratio]
+      });
     }
     return Edit({...props, transient});
   };
@@ -32,17 +64,17 @@ export default useVFCoreSettings({
       type: 'integer',
       default: 1
     },
+    ratio: {
+      type: 'string',
+      default: '16:9'
+    },
     width: {
       type: 'integer',
-      default: 640
+      default: RATIOS['16:9'].width
     },
     height: {
       type: 'integer',
-      default: 360
-    },
-    ratio: {
-      type: 'string',
-      default: ''
+      default: RATIOS['16:9'].height
     }
   },
   fields: [
@@ -55,17 +87,28 @@ export default useVFCoreSettings({
     {
       name: 'ratio',
       control: 'select',
-      label: __('Aspect Ratio'),
+      label: __('Preset Ratio'),
       inspector: true,
-      options: [
-        {label: __('Widescreen (16:9)'), value: '16:9'},
-        {label: __('Standard (4:3)'), value: '4:3'},
-        {label: __('Square (1:1)'), value: '1:1'}
-      ]
+      options: Object.keys(RATIOS).map(key => ({
+        label: RATIOS[key].label,
+        value: key
+      }))
+    },
+    {
+      name: 'width',
+      control: 'number',
+      label: __('Width'),
+      inspector: true
+    },
+    {
+      name: 'height',
+      control: 'number',
+      label: __('Height'),
+      inspector: true
     }
   ],
   withHOC: [
-    [withRatioPadding],
+    [withRatioAttributes],
     [withTransientAttributeMap, [{from: 'url', to: 'src'}]]
   ]
 });
