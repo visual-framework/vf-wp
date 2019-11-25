@@ -217,6 +217,7 @@ const VFBlockFields = props => {
             key={key}
             label={label}
             value={attrs[name]}
+            disableSuggestions={field.disableSuggestions === true}
             onChange={value => onChange(name, value)}
           />
         );

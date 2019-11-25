@@ -137,7 +137,43 @@
 }
 
 .vf-block .editor-url-input {
-  max-width: 300px;
+  background: #fff;
+  border: 1px solid #7e8993;
+  border-radius: 4px;
+  -webkit-transition: -webkit-box-shadow 0.1s linear;
+  transition: -webkit-box-shadow 0.1s linear;
+  transition: box-shadow 0.1s linear;
+  transition: box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear;
+}
+
+.vf-block .editor-url-input.has-suggestions {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.vf-block .editor-url-input:not(.has-suggestions) input[type='text'] {
+  max-width: none;
+  width: 100%;
+}
+
+.vf-block .editor-url-input:not(.has-suggestions) .components-spinner {
+  visibility: hidden;
+}
+
+.vf-block .editor-url-input input[type='text'] {
+  border-color: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.vf-block .editor-url-input:focus-within {
+  border: 1px solid #007cba;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 0 0 1px #007cba;
+          box-shadow: 0 0 0 1px #007cba;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
 }
 
 .vf-block .components-base-control {
@@ -176,21 +212,25 @@
 
 .vf-block .components-base-control__rich-text {
   background: #fff;
-  border: 1px solid #8d96a0;
+  border: 1px solid #7e8993;
   border-radius: 4px;
   padding: 6px 8px;
+  -webkit-transition: -webkit-box-shadow 0.1s linear;
+  transition: -webkit-box-shadow 0.1s linear;
+  transition: box-shadow 0.1s linear;
+  transition: box-shadow 0.1s linear, -webkit-box-shadow 0.1s linear;
+}
+
+.vf-block .components-base-control__rich-text:focus-within {
+  border-color: #007cba;
+  -webkit-box-shadow: 0 0 0 1px #007cba;
+          box-shadow: 0 0 0 1px #007cba;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
 }
 
 .vf-block .components-base-control__rich-text .editor-rich-text__editable {
   margin: 0;
-}
-
-.vf-block .components-base-control__rich-text:focus-within {
-  border-color: #00a0d2;
-  -webkit-box-shadow: 0 0 0 1px #00a0d2;
-          box-shadow: 0 0 0 1px #00a0d2;
-  outline: 2px solid transparent;
-  outline-offset: -2px;
 }
 
 .components-vf-control .components-button-group {

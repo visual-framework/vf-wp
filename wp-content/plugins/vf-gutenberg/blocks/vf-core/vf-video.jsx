@@ -32,7 +32,8 @@ export default useVFCoreSettings({
     {
       name: 'url',
       control: 'url',
-      label: 'URL'
+      label: 'URL',
+      disableSuggestions: true
     }
   ],
   withHOC: [[withTransientAttributeMap, [{from: 'url', to: 'src'}]]]
