@@ -5,8 +5,7 @@ import React from 'react';
 import {__} from '@wordpress/i18n';
 import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import template from './templates/vf-video.precompiled';
-// import {fromCore} from './transforms/video';
+import template from './templates/vf-embed.precompiled';
 
 const RATIOS = {
   '2:1': {
@@ -61,8 +60,8 @@ const withRatioAttributes = Edit => {
 };
 
 export default useVFCoreSettings({
-  name: 'vf/video',
-  title: __('Video / Embed'),
+  name: 'vf/embed',
+  title: __('Embed'),
   attributes: {
     url: {
       type: 'string'

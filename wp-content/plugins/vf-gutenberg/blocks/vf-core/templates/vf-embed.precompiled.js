@@ -1,5 +1,6 @@
 /**
- * Precompiled Nunjucks template: vf-video.njk
+ * Precompiled Nunjucks template: vf-embed.njk
+ * based on vf-video.njk
 
 {% if src %}
 <div class="vf-video"{% if style %} style="{{ style }}"{% endif %}>
@@ -8,7 +9,7 @@
 {% endif %}
 
  */
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-video"] = (function() {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-embed"] = (function() {
 function root(env, context, frame, runtime, cb) {
 var lineno = 0;
 var colno = 0;

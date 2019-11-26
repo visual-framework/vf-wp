@@ -15,11 +15,11 @@ import vfBreadcrumbsItem from './vf-core/vf-breadcrumbs-item';
 import vfBreadcrumbs from './vf-core/vf-breadcrumbs';
 import vfButton from './vf-core/vf-button';
 import vfDivider from './vf-core/vf-divider';
+import vfEmbed from './vf-core/vf-embed';
 import vfGridColumn from './vf-core/vf-grid-column';
 import vfEMBLGrid from './vf-core/vf-embl-grid';
 import vfGrid from './vf-core/vf-grid';
 import vfLede from './vf-core/vf-lede';
-import vfVideo from './vf-core/vf-video';
 
 // Get "localized" global script settings
 const {plugins, coreOptin} = useVFGutenberg();
@@ -43,7 +43,7 @@ if (parseInt(coreOptin) === 1) {
     vfBreadcrumbsItem,
     vfBreadcrumbs,
     vfLede,
-    vfVideo
+    vfEmbed
   ];
   coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
 }
