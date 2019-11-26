@@ -15,6 +15,7 @@ import vfBreadcrumbsItem from './vf-core/vf-breadcrumbs-item';
 import vfBreadcrumbs from './vf-core/vf-breadcrumbs';
 import vfButton from './vf-core/vf-button';
 import vfDivider from './vf-core/vf-divider';
+import vfEmbed from './vf-core/vf-embed';
 import vfGridColumn from './vf-core/vf-grid-column';
 import vfEMBLGrid from './vf-core/vf-embl-grid';
 import vfGrid from './vf-core/vf-grid';
@@ -41,7 +42,8 @@ if (parseInt(coreOptin) === 1) {
     vfBox,
     vfBreadcrumbsItem,
     vfBreadcrumbs,
-    vfLede
+    vfLede,
+    vfEmbed
   ];
   coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
 }
