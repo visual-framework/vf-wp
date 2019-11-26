@@ -52,7 +52,8 @@ const withRatioAttributes = Edit => {
     if (maxWidth) {
       style += ` --vf-video-max-width: ${maxWidth}px;`;
       style += ' max-width: var(--vf-video-max-width);';
-      style += ` padding-bottom: calc(${height} / ${width} * (100% - (100% - var(--vf-video-max-width))));`;
+      // style += ` padding-bottom: calc(${height} / ${width} * (100% - (100% - var(--vf-video-max-width))));`;
+      style += ` padding-bottom: calc(${height} / ${width} * var(--vf-video-max-width));`;
     }
     transient.style = style;
     return Edit({...props, transient});
