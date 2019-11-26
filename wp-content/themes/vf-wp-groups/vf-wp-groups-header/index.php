@@ -27,8 +27,32 @@ class VF_WP_Groups_Header extends VF_Plugin {
   function __construct(array $params = array()) {
     parent::__construct();
     if (array_key_exists('init', $params)) {
-      parent::initialize();
+      $this->init();
     }
+  }
+
+  private function init() {
+    parent::initialize();
+    add_action(
+      'wp_enqueue_scripts',
+      array($this, 'wp_enqueue_scripts')
+    );
+  }
+
+  /**
+   * Temporarily enqueue hero component CSS
+   */
+  function wp_enqueue_scripts() {
+    $dir = untrailingslashit(
+      get_stylesheet_directory_uri()
+    );
+    wp_enqueue_style(
+      'vf-hero',
+      "{$dir}/vf-wp-groups-header/vf-hero.css",
+      array('vfwp'),
+      '0.0.1',
+      'all'
+    );
   }
 
 } // VF_WP_Groups_Header
