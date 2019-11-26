@@ -101,8 +101,8 @@ const VFBlockFields = props => {
         );
       }
       if (control === 'number') {
-        const min = parseInt(field['min']) || 1;
-        const max = parseInt(field['max']) || 10;
+        const min = parseInt(field['min']) || undefined;
+        const max = parseInt(field['max']) || undefined;
         return (
           <TextControl
             key={key}
@@ -110,6 +110,7 @@ const VFBlockFields = props => {
             label={label}
             value={parseInt(attrs[name]) || min}
             onChange={value => onChange(name, parseInt(value))}
+            help={help}
             min={min}
             max={max}
           />

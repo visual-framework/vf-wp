@@ -38,17 +38,24 @@ const RATIOS = {
 const withRatioAttributes = Edit => {
   return props => {
     const transient = {...(props.transient || {})};
-    let {ratio, width, height} = props.attributes;
+    let {ratio, width, height, maxWidth} = props.attributes;
     ratio = ratio || '';
-    transient.padding = (100 / width) * height;
+    let padding = (100 / width) * height;
     const pattern = /(\d+):(\d+)/;
     if (pattern.test(ratio) && ratio in RATIOS) {
       const [, r1, r2] = ratio.match(pattern);
-      transient.padding = (100 / r1) * r2;
+      padding = (100 / r1) * r2;
       props.setAttributes({
         ...RATIOS[ratio]
       });
     }
+    let style = `padding-top: 0; padding-bottom: ${padding}%;`;
+    if (maxWidth) {
+      style += ` --vf-video-max-width: ${maxWidth}px;`;
+      style += ' max-width: var(--vf-video-max-width);';
+      style += ` padding-bottom: calc(${height} / ${width} * (100% - (100% - var(--vf-video-max-width))));`;
+    }
+    transient.style = style;
     return Edit({...props, transient});
   };
 };
@@ -75,6 +82,10 @@ export default useVFCoreSettings({
     height: {
       type: 'integer',
       default: RATIOS['16:9'].height
+    },
+    maxWidth: {
+      type: 'integer',
+      default: 0
     }
   },
   fields: [
@@ -98,13 +109,26 @@ export default useVFCoreSettings({
       name: 'width',
       control: 'number',
       label: __('Width'),
-      inspector: true
+      inspector: true,
+      max: 1920,
+      min: 320
     },
     {
       name: 'height',
       control: 'number',
       label: __('Height'),
-      inspector: true
+      inspector: true,
+      max: 1080,
+      min: 180
+    },
+    {
+      name: 'maxWidth',
+      control: 'number',
+      label: __('Maximum Width'),
+      help: __('Restrict embed size to this width.'),
+      inspector: true,
+      max: 1920,
+      min: 0
     }
   ],
   withHOC: [

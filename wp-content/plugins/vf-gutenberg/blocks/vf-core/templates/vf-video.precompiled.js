@@ -2,7 +2,7 @@
  * Precompiled Nunjucks template: vf-video.njk
 
 {% if src %}
-<div class="vf-video"{% if padding %} style="padding-bottom: {{ padding }}%"{% endif %}>
+<div class="vf-video"{% if style %} style="{{ style }}"{% endif %}>
     <iframe width="{{ width }}" height="{{ height }}" src="{{ src }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 </div>
 {% endif %}
@@ -17,10 +17,10 @@ try {
 var parentTemplate = null;
 if(runtime.contextOrFrameLookup(context, frame, "src")) {
 output += "\n<div class=\"vf-video\"";
-if(runtime.contextOrFrameLookup(context, frame, "padding")) {
-output += " style=\"padding-bottom: ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "padding"), env.opts.autoescape);
-output += "%\"";
+if(runtime.contextOrFrameLookup(context, frame, "style")) {
+output += " style=\"";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "style"), env.opts.autoescape);
+output += "\"";
 ;
 }
 output += ">\n    <iframe width=\"";
