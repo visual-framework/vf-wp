@@ -109,6 +109,7 @@ export default useVFCoreSettings({
       name: 'width',
       control: 'number',
       label: __('Width'),
+      help: __('Deselect preset to set a custom width.'),
       inspector: true,
       max: 1920,
       min: 320
@@ -117,6 +118,7 @@ export default useVFCoreSettings({
       name: 'height',
       control: 'number',
       label: __('Height'),
+      help: __('Deselect preset to set a custom height.'),
       inspector: true,
       max: 1080,
       min: 180
@@ -125,7 +127,7 @@ export default useVFCoreSettings({
       name: 'maxWidth',
       control: 'number',
       label: __('Maximum Width'),
-      help: __('Restrict embed size to this width.'),
+      help: __('Restrict embed resize to this width.'),
       inspector: true,
       max: 1920,
       min: 0
