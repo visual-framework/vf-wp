@@ -16,6 +16,9 @@ require_once($path);
 
 class VF_WP_Groups_Header extends VF_Plugin {
 
+  const MAX_WIDTH = 1224;
+  const MAX_HEIGHT = 348;
+
   protected $file = __FILE__;
 
   protected $config = array(
@@ -28,11 +31,17 @@ class VF_WP_Groups_Header extends VF_Plugin {
     parent::__construct();
     if (array_key_exists('init', $params)) {
       $this->init();
+
+
     }
   }
 
   private function init() {
     parent::initialize();
+    add_action(
+      'after_setup_theme',
+      array($this, 'after_setup_theme')
+    );
     add_action(
       'wp_enqueue_scripts',
       array($this, 'wp_enqueue_scripts')
@@ -46,6 +55,18 @@ class VF_WP_Groups_Header extends VF_Plugin {
       'vf_wp_groups_header/hero_text',
       array($this, 'filter_hero_text'),
       9, 1
+    );
+  }
+
+  /**
+   * Theme setup
+   */
+  public function after_setup_theme() {
+    add_image_size(
+      'vf-hero',
+      self::MAX_WIDTH,
+      self::MAX_HEIGHT,
+      array('center', 'center')
     );
   }
 
@@ -68,13 +89,31 @@ class VF_WP_Groups_Header extends VF_Plugin {
   /**
    * Return design level
    */
-  public function get_level() {
+  public function get_hero_theme() {
     $field = get_field_object(
-      'field_vf_wp_groups_header_level',
+      'field_vf_hero_theme',
+      $this->post()->ID
+    );
+    $theme = get_field(
+      'vf_hero_theme',
+      $this->post()->ID
+    );
+    if (empty($theme) || $theme === 'default') {
+      $theme = $field['default_value'][0];
+    }
+    return $theme;
+  }
+
+  /**
+   * Return design level
+   */
+  public function get_hero_level() {
+    $field = get_field_object(
+      'field_vf_hero_level',
       $this->post()->ID
     );
     $level = get_field(
-      'vf_wp_groups_header_level',
+      'vf_hero_level',
       $this->post()->ID
     );
     if ( ! is_numeric($level)) {
@@ -114,10 +153,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
    * Return `vf-hero` "text" from custom fields or Content Hub
    */
   public function get_hero_text() {
-    $text = get_field(
-      'vf_hero_text',
-      $this->post()->ID
-    );
+    $text = get_field('vf_hero_text',$this->post()->ID);
     $text = trim($text);
     // If text is empty use the Content Hub description
     if (vf_html_empty($text) && class_exists('VF_Cache')) {
@@ -141,6 +177,17 @@ class VF_WP_Groups_Header extends VF_Plugin {
       $text
     );
     return $text;
+  }
+
+  /**
+   * Return `vf-hero` image
+   */
+  public function get_hero_image() {
+    $image = get_field('vf_hero_image', $this->post()->ID);
+    if ( ! is_array($image)) {
+      return null;
+    }
+    return $image;
   }
 
   /**

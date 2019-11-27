@@ -3,15 +3,15 @@
     "title": "Groups Header",
     "fields": [
         {
-            "key": "field_vf_wp_groups_header_level",
-            "label": "Design Level",
-            "name": "vf_wp_groups_header_level",
+            "key": "field_vf_hero_level",
+            "label": "Level",
+            "name": "vf_hero_level",
             "type": "range",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -21,6 +21,35 @@
             "step": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_vf_hero_theme",
+            "label": "Theme",
+            "name": "vf_hero_theme",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary"
+            },
+            "default_value": [
+                "default"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
         },
         {
             "key": "field_vf_hero_heading",
@@ -59,6 +88,30 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_vf_hero_image",
+            "label": "Hero Image",
+            "name": "vf_hero_image",
+            "type": "image",
+            "instructions": "Recommended size: 1224×348 (larger images are cropped).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "vf-hero",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpeg,jpg,png"
         }
     ],
     "location": [
@@ -78,5 +131,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1574854131
+    "modified": 1574862563
 }
