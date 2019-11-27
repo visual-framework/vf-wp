@@ -66,11 +66,41 @@ class VF_WP_Groups_Header extends VF_Plugin {
   }
 
   /**
+   * Return design level
+   */
+  public function get_level() {
+    $field = get_field_object(
+      'field_vf_wp_groups_header_level',
+      $this->post()->ID
+    );
+    $level = get_field(
+      'vf_wp_groups_header_level',
+      $this->post()->ID
+    );
+    if ( ! is_numeric($level)) {
+      $level = $field['default_value'];
+    }
+    return (int) $level;
+  }
+
+  /**
    * Return `vf-hero` "heading" from custom fields or Content Hub
    */
   public function get_hero_heading() {
+    $field = get_field_object(
+      'field_vf_hero_heading',
+      $this->post()->ID
+    );
+    $heading = get_field(
+      'vf_hero_heading',
+      $this->post()->ID
+    );
+    $heading = trim($heading);
+    if (empty($heading)) {
+      $heading = $field['default_value'];
+    }
     $heading = sprintf(
-      __('About the %1$s group', 'vfwp'),
+      $heading,
       get_bloginfo('name')
     );
     $heading = apply_filters(
@@ -84,7 +114,10 @@ class VF_WP_Groups_Header extends VF_Plugin {
    * Return `vf-hero` "text" from custom fields or Content Hub
    */
   public function get_hero_text() {
-    $text = get_field('vf_hero_text', $this->post()->ID);
+    $text = get_field(
+      'vf_hero_text',
+      $this->post()->ID
+    );
     $text = trim($text);
     // If text is empty use the Content Hub description
     if (vf_html_empty($text) && class_exists('VF_Cache')) {

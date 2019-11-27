@@ -4,7 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 global $vf_plugin;
 
-// TODO - move to admin config
+$level = $vf_plugin->get_level();
+
 $levels = array(
   'easy',
   'normal',
@@ -12,10 +13,9 @@ $levels = array(
   'difficult',
   'extreme',
 );
-$level = $levels[0];
 
 $classes = array('vf-hero');
-$classes[] = "vf-hero--{$level}";
+$classes[] = "vf-hero--{$levels[$level - 1]}";
 
 ?>
 <section class="<?php echo esc_attr(implode(' ', $classes)); ?>">
