@@ -1,16 +1,31 @@
 <?php
+/**
+ * VF-WP Groups Header template
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 global $vf_plugin;
 global $parent;
 global $post;
 
-// Reset query to main template (not `$vf_plugin->post()`)
-wp_reset_postdata();
+if ( ! $vf_plugin instanceof VF_WP_Groups_Header) {
+  return;
+}
 
-// $test = get_field('vf_text', $vf_plugin->post()->ID);
+// Reset query to main template (not `$vf_plugin->post()`)
+// wp_reset_postdata();
+
+?>
+<?php
 
 ?>
 <header class="vf-header vf-header--inlay">
   <?php get_template_part('vf-wp-groups-header/vf-masthead'); ?>
   <?php get_template_part('vf-wp-groups-header/vf-navigation'); ?>
 </header>
+
+<div style="grid-column: main;">
+  <?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
+</div>
+
