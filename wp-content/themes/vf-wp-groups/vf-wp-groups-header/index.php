@@ -53,7 +53,17 @@ class VF_WP_Groups_Header extends VF_Plugin {
     );
     add_filter(
       'vf_wp_groups_header/hero_text',
-      array($this, 'filter_hero_text'),
+      array($this, 'filter_hero_text_cleanup'),
+      8, 1
+    );
+    add_filter(
+      'vf_wp_groups_header/hero_text',
+      array($this, 'filter_hero_text_link'),
+      9, 1
+    );
+    add_filter(
+      'vf_wp_groups_header/hero_link',
+      array($this, 'filter_hero_link'),
       9, 1
     );
   }
@@ -150,10 +160,18 @@ class VF_WP_Groups_Header extends VF_Plugin {
   }
 
   /**
+   * Default filter for hero heading
+   */
+  public function filter_hero_heading($heading) {
+    $heading = esc_html($heading);
+    return $heading;
+  }
+
+  /**
    * Return `vf-hero` "text" from custom fields or Content Hub
    */
   public function get_hero_text() {
-    $text = get_field('vf_hero_text',$this->post()->ID);
+    $text = get_field('vf_hero_text', $this->post()->ID);
     $text = trim($text);
     // If text is empty use the Content Hub description
     if (vf_html_empty($text) && class_exists('VF_Cache')) {
@@ -180,28 +198,9 @@ class VF_WP_Groups_Header extends VF_Plugin {
   }
 
   /**
-   * Return `vf-hero` image
-   */
-  public function get_hero_image() {
-    $image = get_field('vf_hero_image', $this->post()->ID);
-    if ( ! is_array($image)) {
-      return null;
-    }
-    return $image;
-  }
-
-  /**
-   * Default filter for hero heading
-   */
-  public function filter_hero_heading($heading) {
-    $heading = esc_html($heading);
-    return $heading;
-  }
-
-  /**
    * Default filter for hero text
    */
-  public function filter_hero_text($text) {
+  public function filter_hero_text_cleanup($text) {
     // Cleanup Content Hub response
     $text = preg_replace(
       '#<[^>]*?embl-conditional-edit[^>]*?>.*?</[^>]*?>#',
@@ -216,13 +215,77 @@ class VF_WP_Groups_Header extends VF_Plugin {
       'em'     => array(),
       'strong' => array(),
     ));
-    // Append "Read more" link
-    $text .= '<a class="vf-link" href="'
-      . home_url('/about/')
-      . '">'
-      . esc_html__('Read more', 'vfwp')
-      . '</a>';
     return $text;
+  }
+
+  /**
+   * Default filter for hero text
+   */
+  public function filter_hero_text_link($text) {
+    // Append "Read more" link
+    $link = $this->get_hero_link();
+    if (is_array($link)) {
+      $text .= '<a class="vf-link" href="'
+        . esc_url($link['url'])
+        . '">'
+        . $link['title']
+        . '</a>';
+    }
+    return $text;
+  }
+
+  /**
+   * Return `vf-hero` "link" from custom fields
+   */
+  public function get_hero_link() {
+    $link = get_field('vf_hero_link', $this->post()->ID);
+    $link = apply_filters(
+      'vf_wp_groups_header/hero_link',
+      $link
+    );
+    if ( ! is_array($link)) {
+      $link = null;
+    }
+    return $link;
+  }
+
+  /**
+   * Default filter for hero link
+   */
+  public function filter_hero_link($link) {
+    if ( ! is_array($link)) {
+      $link = null;
+      //  Use "Read more" (/about/) as fallback if page exists
+      $page = get_page_by_path('/about/');
+      if ($page instanceof WP_Post) {
+        $link = array(
+          'title' => __('Read more', 'vfwp'),
+          'url'   => get_the_permalink($page->ID)
+        );
+      }
+    }
+    if ($link) {
+      $title = $link['title'];
+      $title = trim($title);
+      $title = esc_html($title);
+      // Replace single whitespace with non-breaking to avoid widows
+      if (preg_match('#^[^\s]+?\s[^\s]+?$#', $title)) {
+        $title = preg_replace('#\s+?#', '&nbsp;', $title);
+      }
+      $link['title'] = $title;
+    }
+    return $link;
+  }
+
+  /**
+   * Return `vf-hero` image
+   */
+  public function get_hero_image() {
+    $image = get_field('vf_hero_image', $this->post()->ID);
+    if ( ! is_array($image)) {
+      return null;
+    }
+    return $image;
   }
 
 } // VF_WP_Groups_Header
