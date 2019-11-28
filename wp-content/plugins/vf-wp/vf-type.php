@@ -155,6 +155,15 @@ class VF_Type {
       'query_var'          => true,
       'can_export'         => false
     ));
+
+    // Lock post content preview
+    $post_type_object = get_post_type_object($this->post_type);
+    if ($post_type_object) {
+      $post_type_object->template = array(
+        array('vf/plugin', array()),
+      );
+      $post_type_object->template_lock = 'insert';
+    }
   }
 
   /**
