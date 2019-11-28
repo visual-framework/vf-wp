@@ -18,8 +18,8 @@ const useVFCoreSettings = settings => {
 
   // block options
   const hasBlocks = Array.isArray(allowedBlocks);
-  const hasFields = Array.isArray(fields) && fields.length;
-  const hasStyles = Array.isArray(styles) && styles.length;
+  const hasFields = !!(Array.isArray(fields) && fields.length);
+  const hasStyles = !!(Array.isArray(styles) && styles.length);
 
   // Assume true unless specifically opted out
   const isRenderable = settings.isRenderable !== false;

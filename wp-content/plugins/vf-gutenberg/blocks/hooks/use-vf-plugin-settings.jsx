@@ -18,7 +18,7 @@ const useVFPluginSettings = settings => {
   let {attributes, fields} = useVFPlugin(settings.name);
 
   // block options
-  const hasFields = Array.isArray(fields) && fields.length;
+  const hasFields = !!(Array.isArray(fields) && fields.length);
 
   // Setup block attributes
   attributes = {
