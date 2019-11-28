@@ -137,6 +137,24 @@ class VF_Plugin {
   }
 
   /**
+   * Return true if plugin is rendered in `vf/plugin` Gutenberg block
+   */
+  public function __experimental__is_admin_render() {
+    $ref = get_field("{$this->post()->post_name}_ref", $this->post()->ID);
+    return $ref === $this->post()->post_name;
+  }
+
+  /**
+   * Return true if plugin can be previewed in the WP Admin post editor
+   */
+  public function __experimental__has_admin_preview() {
+    return array_key_exists(
+      '__experimental__has_admin_preview',
+      $this->config
+    );
+  }
+
+  /**
    * Return full plugin directory path (with trailing slash)
    */
   public function dir() {
@@ -253,23 +271,35 @@ class VF_Plugin {
       OBJECT,
       $config['post_type']
     );
+
+    // Add generic plugin preview block to post content
+    $post_content = '';
+    if (array_key_exists('__experimental__has_admin_preview', $config)) {
+      $post_content = '<!-- wp:vf/plugin {"ver":"1.0.0","ref":"'
+        . $config['post_name']
+        . '","defaults":1} /-->';
+    }
+
+    // Insert if newly activated
     if ( ! $plugin instanceof WP_Post) {
       $plugin = get_post(
           wp_insert_post(array(
-          'post_author' => 1,
-          'post_name'   => $config['post_name'],
-          'post_title'  => $config['post_title'],
-          'post_type'   => $config['post_type'],
-          'post_status' => 'publish'
+          'post_author'  => 1,
+          'post_name'    => $config['post_name'],
+          'post_title'   => $config['post_title'],
+          'post_type'    => $config['post_type'],
+          'post_content' => $post_content,
+          'post_status'  => 'publish'
         ), true)
       );
     }
     // Ensure plugin post is published and update title
     if ($plugin instanceof WP_Post) {
       wp_update_post(array(
-        'ID'          => $plugin->ID,
-        'post_title'  => $config['post_title'],
-        'post_status' => 'publish'
+        'ID'           => $plugin->ID,
+        'post_title'   => $config['post_title'],
+        'post_content' => $post_content,
+        'post_status'  => 'publish'
       ));
     }
   }

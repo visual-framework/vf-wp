@@ -250,6 +250,13 @@ class VF_Type {
    */
   public function allowed_block_types($allowed, $post) {
     if ($post->post_type === $this->post_type) {
+      // Check if plugin supports editor preview
+      $plugin = VF_Plugin::get_plugin($post->post_name);
+      if ($plugin && $plugin->__experimental__is_admin_render()) {
+        return array(
+          'vf/plugin'
+        );
+      }
       return false;
     }
     return $allowed;

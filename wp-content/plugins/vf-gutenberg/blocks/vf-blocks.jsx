@@ -51,5 +51,9 @@ if (parseInt(coreOptin) === 1) {
 // Register VF Plugin blocks
 for (const [name, plugin] of Object.entries(plugins)) {
   const settings = useVFPluginSettings({name, title: plugin.title});
+  // Disable inserter for generic preview block
+  if (name === 'vf/plugin') {
+    settings.supports.inserter = false;
+  }
   registerBlockType(name, settings);
 }

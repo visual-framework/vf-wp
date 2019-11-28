@@ -330,33 +330,50 @@ class VF_Gutenberg {
     if ( ! preg_match('/^vf\//', $block['blockName'])) {
       return $html;
     }
+    if (
+      ! array_key_exists('attrs', $block) ||
+      ! is_array($block['attrs'])
+    ) {
+      $block['attrs'] = array();
+    }
+    // setup empty custom fields
+    $this->fields = array();
+
+    // Get plugin name from block
+    $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
+
+    // Get true name from `ref` attribute for generic preview
+    if (
+      $post_name === 'vf_plugin' &&
+      array_key_exists('ref', $block['attrs'])
+    ) {
+      $post_name = $block['attrs']['ref'];
+      $block['attrs']['defaults'] = 0;
+    }
 
     // check for matching plugin
-    $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
     $vf_plugin = VF_Plugin::get_plugin($post_name);
 
     // setup fields with block attributes
-    $this->fields = array();
-    if (is_array($block['attrs'])) {
-      foreach ($block['attrs'] as $key => $value) {
-        // Ignore customization and use ACF settings
-        if ($key === 'defaults' && intval($value) === 1) {
-          $this->fields = null;
-          break;
-        }
-        if (in_array($key, $this->protected_attrs)) {
-          continue;
-        }
-        if ($key === 'className') {
-          if (preg_match('/is-style-([^\s"]+)/', $value, $matches)) {
-            $this->fields["{$post_name}_style"] = $matches[1];
-          }
-        }
-        $this->fields["{$post_name}_{$key}"] = $value;
+    foreach ($block['attrs'] as $key => $value) {
+      // Ignore customization and use ACF settings
+      if ($key === 'defaults' && intval($value) === 1) {
+        $this->fields = null;
+        break;
       }
+      if (in_array($key, $this->protected_attrs)) {
+        continue;
+      }
+      if ($key === 'className') {
+        if (preg_match('/is-style-([^\s"]+)/', $value, $matches)) {
+          $this->fields["{$post_name}_style"] = $matches[1];
+        }
+      }
+      $this->fields["{$post_name}_{$key}"] = $value;
     }
-    $rendered = false;
+
     ob_start();
+    $rendered = false;
     // use template render
     $render = $this->get_field("{$post_name}_render");
     if ($render) {
@@ -444,6 +461,17 @@ class VF_Gutenberg {
       }
       $config[$block_name] = $data;
     }
+    // Add generic plugin for previews
+    $config['vf/plugin'] = array(
+      'title'      => __('Preview', 'vfwp'),
+      'inserter'   => false,
+      'fields'     => [],
+      'attributes' => array(
+        'ref' => array(
+          'type' => 'string'
+        )
+      )
+    );
     return $config;
   }
 

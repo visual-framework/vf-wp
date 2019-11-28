@@ -22,7 +22,8 @@ $classes[] = "vf-hero--{$levels[$level - 1]}";
 $classes[] = " | vf-hero-theme--{$theme}";
 
 $attr = array(
-  'class' => implode(' ', $classes)
+  'class' => implode(' ', $classes),
+  'style' => ''
 );
 
 // Add background image for levels...

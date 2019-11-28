@@ -16,6 +16,9 @@ require_once($path);
 
 class VF_WP_Groups_Header extends VF_Plugin {
 
+  // Temporary - TODO: remove once theme CSS includes component
+  const STYLESHEET = '/vf-wp-groups-header/vf-hero.css';
+
   const MAX_WIDTH = 1224;
   const MAX_HEIGHT = 348;
 
@@ -25,14 +28,15 @@ class VF_WP_Groups_Header extends VF_Plugin {
     'post_name'  => 'vf_wp_groups_header',
     'post_title' => 'Groups Header',
     'post_type'  => 'vf_container',
+
+    // Allow block to be previewed in WP admin
+    '__experimental__has_admin_preview' => true
   );
 
   function __construct(array $params = array()) {
     parent::__construct();
     if (array_key_exists('init', $params)) {
       $this->init();
-
-
     }
   }
 
@@ -41,10 +45,6 @@ class VF_WP_Groups_Header extends VF_Plugin {
     add_action(
       'after_setup_theme',
       array($this, 'after_setup_theme')
-    );
-    add_action(
-      'wp_enqueue_scripts',
-      array($this, 'wp_enqueue_scripts')
     );
     add_filter(
       'vf_wp_groups_header/hero_heading',
@@ -66,6 +66,29 @@ class VF_WP_Groups_Header extends VF_Plugin {
       array($this, 'filter_hero_link'),
       9, 1
     );
+    // Temporary - TODO: remove once theme CSS includes component
+    if (defined('self::STYLESHEET')) {
+      add_action(
+        'wp_enqueue_scripts',
+        array($this, 'wp_enqueue_scripts')
+      );
+    }
+  }
+
+  /**
+   * Temporary - TODO: remove once theme CSS includes component
+   */
+  public function wp_enqueue_scripts() {
+    $dir = untrailingslashit(
+      get_stylesheet_directory_uri()
+    );
+    wp_enqueue_style(
+      'vf-hero',
+      $dir . self::STYLESHEET,
+      array('vfwp'),
+      '0.0.1',
+      'all'
+    );
   }
 
   /**
@@ -77,22 +100,6 @@ class VF_WP_Groups_Header extends VF_Plugin {
       self::MAX_WIDTH,
       self::MAX_HEIGHT,
       array('center', 'center')
-    );
-  }
-
-  /**
-   * Temporarily enqueue hero component CSS
-   */
-  public function wp_enqueue_scripts() {
-    $dir = untrailingslashit(
-      get_stylesheet_directory_uri()
-    );
-    wp_enqueue_style(
-      'vf-hero',
-      "{$dir}/vf-wp-groups-header/vf-hero.css",
-      array('vfwp'),
-      '0.0.1',
-      'all'
     );
   }
 
@@ -109,7 +116,10 @@ class VF_WP_Groups_Header extends VF_Plugin {
       $this->post()->ID
     );
     if (empty($theme) || $theme === 'default') {
-      $theme = $field['default_value'][0];
+      $theme = $field['default_value'];
+    }
+    if (is_array($theme)) {
+      $theme = $theme[0];
     }
     return $theme;
   }

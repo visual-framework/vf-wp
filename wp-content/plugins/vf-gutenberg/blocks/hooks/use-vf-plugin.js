@@ -9,6 +9,9 @@ const useVFPlugin = name => {
   let attributes = {};
   if (Object.keys(plugins).indexOf(name) > -1) {
     const config = plugins[name];
+    if (config.hasOwnProperty('attributes')) {
+      attributes = {...config.attributes};
+    }
     if (config.hasOwnProperty('fields')) {
       fields = config.fields;
       fields.forEach(field => {
