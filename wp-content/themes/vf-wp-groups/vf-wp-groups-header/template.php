@@ -25,7 +25,4 @@ if ( ! $vf_plugin instanceof VF_WP_Groups_Header) {
   <?php get_template_part('vf-wp-groups-header/vf-navigation'); ?>
 </header>
 
-<div style="grid-column: main;">
-  <?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
-</div>
-
+<?php get_template_part('vf-wp-groups-header/vf-hero'); ?>

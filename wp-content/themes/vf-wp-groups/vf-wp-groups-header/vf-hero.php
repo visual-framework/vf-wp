@@ -30,6 +30,7 @@ $image = $vf_plugin->get_hero_image();
 if ($image && in_array($level, array(2, 3, 4))) {
   $attr['style'] = 'background-image: var(--vf-hero-bg-image);';
 }
+$attr['style'] .= ' grid-column: main;';
 
 // Convert attributes array to string
 $attr_str = array_map(
