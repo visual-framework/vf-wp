@@ -51,6 +51,11 @@ $attr_str = array_map(
 </style>
 <?php } ?>
 <section <?php echo implode(' ', $attr_str); ?>>
+  <?php if ( ! $image) { ?>
+  <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="vf-lens | vf-hero__lens">
+    <path fill="" d="M1,1V199H199V1z"/>
+  </svg>
+  <?php } ?>
   <?php if (in_array($level, array(5))) { ?>
   <div class="vf-hero__image">
     <?php echo wp_get_attachment_image($image['ID'], 'vf-hero'); ?>

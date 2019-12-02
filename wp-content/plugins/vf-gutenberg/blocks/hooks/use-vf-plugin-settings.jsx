@@ -6,6 +6,7 @@ import React, {Fragment} from 'react';
 import {InspectorControls} from '@wordpress/block-editor';
 import {ToggleControl, PanelBody} from '@wordpress/components';
 import {__} from '@wordpress/i18n';
+import {withTransientACF} from '../hooks/with-transient';
 import useVFDefaults from './use-vf-defaults';
 import useVFPlugin from './use-vf-plugin';
 import VFBlockFields from '../vf-block/block-fields';
@@ -40,7 +41,7 @@ const useVFPluginSettings = settings => {
     default: 0
   };
 
-  const Edit = props => {
+  let Edit = props => {
     const isDefaults = !!props.attributes.defaults;
     const isEditing = props.attributes.mode === 'edit';
 
@@ -79,6 +80,11 @@ const useVFPluginSettings = settings => {
       </Fragment>
     );
   };
+
+  // Wrap higher-order components
+  if (settings.name === 'vf/plugin') {
+    Edit = withTransientACF(Edit);
+  }
 
   // Return the Gutenberg settings
   return {

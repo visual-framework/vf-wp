@@ -30,6 +30,17 @@ class VF_Plugin {
   }
 
   /**
+   * Return full config for plugin
+   */
+  public function config() {
+    $config = $this->config;
+    if ($this->post()) {
+      $config['post_id'] = $this->post()->ID;
+    }
+    return $config;
+  }
+
+  /**
    * Initialize a new plugin that is extending this class
    */
   protected function initialize() {

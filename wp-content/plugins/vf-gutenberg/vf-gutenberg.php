@@ -369,7 +369,12 @@ class VF_Gutenberg {
           $this->fields["{$post_name}_style"] = $matches[1];
         }
       }
-      $this->fields["{$post_name}_{$key}"] = $value;
+      // Prefix field key with `post_name` if not already
+      if (strpos($key, 'vf_') !== 0) {
+        $this->fields["{$post_name}_{$key}"] = $value;
+      } else {
+        $this->fields[$key] = $value;
+      }
     }
 
     ob_start();

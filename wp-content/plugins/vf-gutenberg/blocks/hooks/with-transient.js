@@ -1,4 +1,5 @@
 import {select} from '@wordpress/data';
+import {addAction, hasAction} from '@wordpress/hooks';
 import {useStyleName} from './';
 
 /**
@@ -80,5 +81,28 @@ export const withTransientInnerBlocks = Edit => {
       })
     );
     return Edit({...props, transient});
+  };
+};
+
+/**
+ * Experimental - add transient props from ACF action (external script)
+ * Allows for "live" block preview (rendered server-side)
+ */
+export const withTransientACF = Edit => {
+  const transient = {};
+  return props => {
+    if (!hasAction('vf__experimental__acf_update', 'vf')) {
+      addAction('vf__experimental__acf_update', 'vf', data => {
+        transient[data.name] = data.value;
+        props.setAttributes({__isACF: Date.now()});
+      });
+    }
+    return Edit({
+      ...props,
+      transient: {
+        ...(props.transient || {}),
+        ...transient
+      }
+    });
   };
 };

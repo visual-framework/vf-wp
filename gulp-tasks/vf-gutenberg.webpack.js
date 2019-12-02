@@ -21,6 +21,7 @@ module.exports = (env, argv) => {
       '@wordpress/compose': 'wp.compose',
       '@wordpress/data': 'wp.data',
       '@wordpress/element': 'wp.element',
+      '@wordpress/hooks': 'wp.hooks',
       '@wordpress/i18n': 'wp.i18n',
       react: 'React',
       'react-dom': 'ReactDOM'
