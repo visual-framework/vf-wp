@@ -54,7 +54,12 @@ $attr_str = array_map(
   <?php } ?>
   <?php if ( ! $image || $level === 1) { ?>
   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="vf-lens | vf-hero__lens">
+<?php
+/**
+ * Awaiting assets from designer
+
     <path fill="" d="M1,1V199H199V1z"/>
+*/ ?>
   </svg>
   <?php } ?>
   <?php if (in_array($level, array(5))) { ?>
