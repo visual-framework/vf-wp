@@ -17,6 +17,7 @@ const VFBlock = props => {
   const {isEditing, isEditable, isPlugin, isRenderable, isSelected} = props;
   const uniqueId = useUniqueId(props);
   const [render, isLoading] = useVFRender(props);
+  const [minHeight, setMinHeight] = useState(100);
 
   // ensure version is encoded in post content
   if (!props.attributes.ver) {
@@ -42,6 +43,12 @@ const VFBlock = props => {
   // show "view" mode when not editing and render is available
   const hasView = !hasEdit && (!isLoading && render);
 
+  // height change callback
+  const onHeight = height => height !== minHeight && setMinHeight(height);
+  if (hasEdit) {
+    onHeight(100);
+  }
+
   // add DOM attributes for styling
   const rootAttrs = {
     className: `vf-block ${props.className}`,
@@ -49,7 +56,10 @@ const VFBlock = props => {
     'data-name': props.name,
     'data-editing': isEditing,
     'data-loading': isLoading,
-    'data-selected': isSelected
+    'data-selected': isSelected,
+    style: {
+      minHeight: `${minHeight}px`
+    }
   };
 
   return (
@@ -62,7 +72,13 @@ const VFBlock = props => {
             children={props.children}
           />
         )}
-        {hasView && <VFBlockView html={render.html} uniqueId={uniqueId} />}
+        {hasView && (
+          <VFBlockView
+            html={render.html}
+            uniqueId={uniqueId}
+            onHeight={onHeight}
+          />
+        )}
         {isLoading && <Spinner />}
       </div>
     </Fragment>
