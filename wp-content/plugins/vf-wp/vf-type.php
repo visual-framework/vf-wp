@@ -91,6 +91,10 @@ class VF_Type {
    * Setup post type capabilities for caontainers
    */
   public function activate() {
+    $this->activate_roles();
+  }
+
+  private function activate_roles() {
     $role = get_role('administrator');
     if ( ! $role) {
       return;
@@ -104,6 +108,10 @@ class VF_Type {
    * Tidy up database by removing all capabilities
    */
   public function deactivate() {
+    $this->deactivate_roles();
+  }
+
+  private function deactivate_roles() {
     $role = get_role('administrator');
     if ( ! $role) {
       return;
@@ -164,6 +172,9 @@ class VF_Type {
       );
       $post_type_object->template_lock = 'insert';
     }
+
+    // Ensure admin roles are activated
+    $this->activate_roles();
   }
 
   /**
