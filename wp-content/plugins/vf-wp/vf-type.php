@@ -155,6 +155,15 @@ class VF_Type {
       'query_var'          => true,
       'can_export'         => false
     ));
+
+    // Lock post content preview
+    $post_type_object = get_post_type_object($this->post_type);
+    if ($post_type_object) {
+      $post_type_object->template = array(
+        array('vf/plugin', array()),
+      );
+      $post_type_object->template_lock = 'insert';
+    }
   }
 
   /**
@@ -250,6 +259,13 @@ class VF_Type {
    */
   public function allowed_block_types($allowed, $post) {
     if ($post->post_type === $this->post_type) {
+      // Check if plugin supports editor preview
+      $plugin = VF_Plugin::get_plugin($post->post_name);
+      if ($plugin && $plugin->__experimental__is_admin_render()) {
+        return array(
+          'vf/plugin'
+        );
+      }
       return false;
     }
     return $allowed;

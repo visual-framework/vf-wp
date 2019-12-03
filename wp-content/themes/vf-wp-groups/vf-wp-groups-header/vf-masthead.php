@@ -1,3 +1,8 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+?>
 <style>
   .vf-masthead {
     background-color: var(--vf-masthead__color--background, var(--vf-masthead__color--background-default));

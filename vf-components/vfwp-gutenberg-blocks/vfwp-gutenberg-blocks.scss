@@ -189,6 +189,10 @@
   }
 }
 
+.wp-block[data-type='vf/plugin'] {
+  max-width: none;
+}
+
 // .wp-block[data-type='vf/grid-column'] {
 //   border: 1px dashed #e2e4e7;
 // }

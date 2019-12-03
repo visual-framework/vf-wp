@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Example
 Description: VF-WP theme block (developer example).
-Version: 0.1.1
+Version: 0.1.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -31,6 +31,9 @@ class VF_Example extends VF_Plugin {
   protected $config = array(
     'post_name'  => 'vf_example',
     'post_title' => 'Example',
+
+    // Allow block to be previewed in WP admin
+    '__experimental__has_admin_preview' => true
   );
 
   public function __construct(array $params = array()) {

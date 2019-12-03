@@ -1,3 +1,8 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+?>
 <nav class="vf-navigation vf-navigation--main">
   <ul class="vf-navigation__list | vf-list--inline">
 <?php
