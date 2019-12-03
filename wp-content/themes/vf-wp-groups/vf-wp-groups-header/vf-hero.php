@@ -18,6 +18,7 @@ $levels = array(
 
 // Setup root HTML classes and attributes
 $classes = array('vf-hero');
+$classes[] = 'vf-hero--inlay';
 $classes[] = "vf-hero--{$levels[$level - 1]}";
 $classes[] = " | vf-hero-theme--{$theme}";
 
@@ -29,9 +30,9 @@ $attr = array(
 // Add background image for levels...
 $image = $vf_plugin->get_hero_image();
 if ($image && in_array($level, array(2, 3, 4))) {
-  $attr['style'] = 'background-image: var(--vf-hero-bg-image);';
+  // $attr['style'] = 'background-image: var(--vf-hero-bg-image);';
 }
-$attr['style'] .= ' grid-column: main;';
+// $attr['style'] .= ' grid-column: main;';
 
 // Convert attributes array to string
 $attr_str = array_map(
@@ -43,15 +44,15 @@ $attr_str = array_map(
 );
 
 ?>
-<?php if ($image) { ?>
-<style>
-:root {
-  --vf-hero-bg-image: url('<?php echo esc_url($image['sizes']['vf-hero']); ?>');
-}
-</style>
-<?php } ?>
 <section <?php echo implode(' ', $attr_str); ?>>
-  <?php if ( ! $image) { ?>
+  <?php if ($image) { ?>
+  <style>
+  .vf-hero {
+    --vf-hero-bg-image: url('<?php echo esc_url($image['sizes']['vf-hero']); ?>');
+  }
+  </style>
+  <?php } ?>
+  <?php if ( ! $image || $level === 1) { ?>
   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="vf-lens | vf-hero__lens">
     <path fill="" d="M1,1V199H199V1z"/>
   </svg>
