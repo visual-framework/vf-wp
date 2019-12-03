@@ -64,7 +64,7 @@ function egsr_activation(){
         $site_url = get_site_url();
         $body_msg = '<p>In EMBL Group websites, default Wordpress roles "Author", "Contributor", "Editor" and "Subscriber" will be deprecated in favour of EMBL custom ones.</p>';
         $error_msg = '<p class="error">
-        This plugin cannot be activated because users with either one of the above-mentioned Wordpress roles are active. <br>You can temporarily set those users as having no roles, and after activating the plugin replace them with EMBL custom ones: 
+        This plugin cannot be activated because users with either one of the above-mentioned Wordpress roles are active. <br>You can temporarily set those users as having no roles, and after activating the plugin replace them with EMBL custom ones:
         "EMBL Group Admin", "EMBL Group Editor" or "EMBL Staff"</p><p><a href="' . $site_url . '/wp-admin/users.php">Users List Page&raquo;</a></p>';
         deactivate_plugins( basename( __FILE__ ) );
         wp_die( '<h1>Error</h1>' . $body_msg . $error_msg, 'Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
@@ -306,6 +306,12 @@ function egsr_group_admin_cap(){
         'unfiltered_html'           => true,
         'upload_files'              => true,
         'edit_theme_options'        => true,
+
+        // VF-WP theme and plugin capabilities
+        'edit_vf_blocks'            => true,
+        'publish_vf_blocks'         => true,
+        'edit_vf_containers'        => true,
+        'publish_vf_containers'     => true,
     );
 }
 
