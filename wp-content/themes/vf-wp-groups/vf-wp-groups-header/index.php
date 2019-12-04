@@ -17,7 +17,7 @@ require_once($path);
 class VF_WP_Groups_Header extends VF_Plugin {
 
   // Temporary - TODO: remove once theme CSS includes component
-  const STYLESHEET = '/vf-wp-groups-header/vf-hero.css';
+  const STYLESHEET = '/vf-wp-groups-header/vf-wp-groups-header.css';
 
   const MAX_WIDTH = 1224;
   const MAX_HEIGHT = 348;

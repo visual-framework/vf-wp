@@ -6,6 +6,7 @@ if ( ! class_exists('VF_Groups_Customize') ) :
 
 class VF_Groups_Customize {
 
+  private $themes;
   private $theme_colors;
 
   public function __construct() {
@@ -15,19 +16,45 @@ class VF_Groups_Customize {
       array($this, 'admin_customize')
     );
     add_filter(
+      'vf/__experimental__/admin/customize/themes',
+      array($this, 'customize_themes'),
+      9, 1
+    );
+    add_filter(
       'vf/__experimental__/admin/customize/theme_colors',
       array($this, 'customize_theme_colors'),
       9, 1
+    );
+    add_filter(
+      'body_class',
+      array($this, 'body_class')
     );
     add_action(
       'wp_head',
       array($this, 'wp_head')
     );
     // Setup defaults
+    $this->themes = VF_Theme::apply_filters(
+      'vf/admin/customize/themes',
+      array()
+    );
     $this->theme_colors = VF_Theme::apply_filters(
       'vf/admin/customize/theme_colors',
       array()
     );
+  }
+
+  /**
+   * Filter: `vf/admin/customize/themes`
+   * Add default themes list
+   */
+  public function customize_themes($themes) {
+    $themes = array_merge($themes, array(
+      'primary'   => __('Primary', 'vfwp'),
+      'secondary' => __('Secondary', 'vfwp'),
+      'tertiary'  => __('Tertiary', 'vfwp'),
+    ));
+    return array_unique($themes);
   }
 
   /**
@@ -47,6 +74,18 @@ class VF_Groups_Customize {
    * Action: `vf/admin/customize`
    */
   public function admin_customize($wp_customize) {
+    // Global theme
+    $wp_customize->add_setting('vf_theme', array(
+      'default'           => array_keys($this->themes)[0],
+      'sanitize_callback' => array($this, 'admin_customize_sanitize'),
+    ));
+    $wp_customize->add_control('vf_theme', array(
+      'type'        => 'select',
+      'section'     => 'vf_theme',
+      'label'       => __('Theme', 'vfwp'),
+      'description' => __('Used for general design variations.', 'vfwp'),
+      'choices'     => $this->themes,
+    ));
     // Theme color
     $wp_customize->add_setting('vf_theme_color', array(
       'default'           => array_keys($this->theme_colors)[0],
@@ -55,10 +94,22 @@ class VF_Groups_Customize {
     $wp_customize->add_control('vf_theme_color', array(
       'type'        => 'select',
       'section'     => 'vf_theme',
-      'label'       => __('Theme Color', 'vfwp'),
-      'description' => __('Used for the hero background and other design accents.', 'vfwp'),
+      'label'       => __('Primary Theme Color', 'vfwp'),
+      'description' => __('Used for general design accents.', 'vfwp'),
       'choices'     => $this->theme_colors,
     ));
+  }
+
+  /**
+   * Add global theme to body class attribute
+   */
+  public function body_class($classes) {
+    $theme = get_theme_mod(
+      'vf_theme',
+      array_keys($this->themes)[0]
+    );
+    $classes[] = "vf-global-theme--{$theme}";
+    return $classes;
   }
 
   /**
