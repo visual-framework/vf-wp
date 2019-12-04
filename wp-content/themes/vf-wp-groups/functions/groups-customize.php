@@ -164,7 +164,7 @@ class VF_Groups_Customize {
     );
   ?>
 <style>
-.vf-wp-theme .vf-masthead,
+/*.vf-wp-theme .vf-masthead,*/
 .vf-wp-theme .vf-box--secondary {
   --vf-masthead__color--background: #<?php echo $theme_color; ?>;
 }
