@@ -19,6 +19,14 @@ export default useVFCoreSettings({
       type: 'string'
     }
   },
+  example: {
+    attributes: {
+      heading: __('Did You Know?'),
+      text: __(
+        'Invasive cancer is the leading cause of death in the developed world and the second leading in the developing world.'
+      )
+    }
+  },
   fields: [
     {
       name: 'heading',
