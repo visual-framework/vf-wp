@@ -129,7 +129,7 @@ class VF_Groups_Theme {
    */
   public function body_class($classes) {
     $classes[] = 'vf-body';
-    $classes[] = 'vf-u-background-color-ui--grey';
+    // $classes[] = 'vf-u-background-color-ui--grey';
     return $classes;
   }
 
