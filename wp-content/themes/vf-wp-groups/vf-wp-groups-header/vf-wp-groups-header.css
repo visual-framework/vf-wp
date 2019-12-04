@@ -1,9 +1,3 @@
-/*!
- * Component: @visual-framework/vf-hero
- * Version: 0.0.1
- * Location: components/vf-hero
- */
-/* stylelint-disable */
 .vf-hero {
   background-color: #ffffff;
   background-color: rgba(calc( (0 + var(--vf-hero-bg-color) ) * 255), calc( (0 + var(--vf-hero-bg-color) ) * 255), calc( (0 + var(--vf-hero-bg-color) ) * 255), calc( (0 + var(--vf-hero-bg-color) ) * 100));
@@ -231,4 +225,149 @@
   position: absolute;
   width: 100%;
 }
-/* stylelint-enable */
+.vf-navigation--main .vf-navigation__list {
+  padding: .75rem;
+}
+.vf-navigation--main .vf-navigation__item {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.57;
+  margin: 0 0 0 0;
+}
+.vf-navigation--main .vf-navigation__item:not(:first-child) {
+  margin-left: 2rem;
+}
+.vf-navigation--main .vf-navigation__link {
+  color: #a8a99e;
+  padding: .75rem 0;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.vf-navigation--main .vf-navigation__link:focus, .vf-navigation--main .vf-navigation__link:hover {
+  color: #54585a;
+}
+.vf-global-layout--normal .vf-navigation--main {
+  border: 1px solid #a8a99e;
+  border-bottom: 0;
+}
+.vf-global-layout--medium .vf-navigation--main {
+  border: 1px solid #a8a99e;
+  border-bottom: 0;
+}
+.vf-global-layout--medium .vf-navigation--main .vf-navigation__list {
+  padding-bottom: 1.25rem;
+}
+.vf-global-layout--hard .vf-navigation--main {
+  border: 1px solid #a8a99e;
+  border-bottom: 0;
+}
+.vf-global-layout--hard .vf-navigation--main .vf-navigation__list {
+  padding-top: calc(2px + .75em);
+  padding-bottom: 1.25rem;
+}
+.vf-global-layout--hard .vf-navigation--main .vf-navigation__link:focus, .vf-global-layout--hard .vf-navigation--main .vf-navigation__link:hover {
+  border-top: 3px solid var(--navigation--main--top-border-color, #000000);
+}
+.vf-global-layout--extreme .vf-navigation--main {
+  border-bottom: 1px solid #a8a99e;
+}
+.vf-global-theme--primary {
+  --navigation--main--top-border-color: #18974c;
+}
+.vf-global-theme--secondary {
+  --navigation--main--top-border-color: #3b6fb6;
+}
+
+.vf-masthead {
+  color: #000000;
+}
+@media (min-width: 1024px) {
+  .vf-masthead {
+    padding-top: 48px;
+  }
+}
+.vf-masthead__inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0 auto;
+  max-width: 76.5em;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .vf-masthead__inner {
+    padding: 1em;
+  }
+}
+.vf-masthead__title {
+  -ms-flex-item-align: unset;
+      align-self: unset;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+}
+.vf-masthead__heading {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 42px;
+  font-weight: 700;
+  line-height: 1.547;
+  margin: 0 0 8px 0;
+  color: #373a36;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.vf-masthead__heading--additional {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 0 0;
+  color: #707372;
+  position: relative;
+  top: -4px;
+}
+.vf-masthead__sub-heading {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  color: #707372;
+}
+.vf-masthead__heading__link {
+  color: #373a36;
+  color: inherit;
+  text-decoration: none;
+  z-index: 5150;
+}
+.vf-masthead__heading__link:visited {
+  color: #373a36;
+}
+.vf-masthead__heading__link:hover {
+  color: #373a36;
+}
+.vf-masthead__subheading {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.57;
+  margin: 0 0 0 0;
+  color: #373a36;
+  text-transform: uppercase;
+}
+.vf-masthead__subheading a {
+  color: inherit;
+  text-decoration: none;
+  z-index: 5150;
+}

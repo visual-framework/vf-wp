@@ -3,12 +3,18 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
+<?php
+/**
+ * Design change no longer has background colour...
+
 <style>
   .vf-masthead {
     background-color: var(--vf-masthead__color--background, var(--vf-masthead__color--background-default));
     color: var(--vf-masthead__color--foreground, var(--vf-masthead__color--foreground-default));
   }
 </style>
+*/
+?>
 <div data-vf-js-masthead class="vf-masthead">
   <div class="vf-masthead__inner">
     <div class="vf-masthead__title">
