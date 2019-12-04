@@ -7,6 +7,7 @@ if ( ! class_exists('VF_Groups_Customize') ) :
 class VF_Groups_Customize {
 
   private $themes;
+  private $theme_layouts;
   private $theme_colors;
 
   public function __construct() {
@@ -18,6 +19,11 @@ class VF_Groups_Customize {
     add_filter(
       'vf/__experimental__/admin/customize/themes',
       array($this, 'customize_themes'),
+      9, 1
+    );
+    add_filter(
+      'vf/__experimental__/admin/customize/theme_layouts',
+      array($this, 'customize_theme_layouts'),
       9, 1
     );
     add_filter(
@@ -38,6 +44,10 @@ class VF_Groups_Customize {
       'vf/admin/customize/themes',
       array()
     );
+    $this->theme_layouts = VF_Theme::apply_filters(
+      'vf/admin/customize/theme_layouts',
+      array()
+    );
     $this->theme_colors = VF_Theme::apply_filters(
       'vf/admin/customize/theme_colors',
       array()
@@ -55,6 +65,21 @@ class VF_Groups_Customize {
       'tertiary'  => __('Tertiary', 'vfwp'),
     ));
     return array_unique($themes);
+  }
+
+  /**
+   * Filter: `vf/admin/customize/theme_layouts`
+   * Add default layouts list
+   */
+  public function customize_theme_layouts($layouts) {
+    $layouts = array_merge($layouts, array(
+      'easy'    => __('1', 'vfwp'),
+      'normal'  => __('2', 'vfwp'),
+      'medium'  => __('3', 'vfwp'),
+      'hard'    => __('4', 'vfwp'),
+      'extreme' => __('5', 'vfwp'),
+    ));
+    return array_unique($layouts);
   }
 
   /**
@@ -86,6 +111,18 @@ class VF_Groups_Customize {
       'description' => __('Used for general design variations.', 'vfwp'),
       'choices'     => $this->themes,
     ));
+    // Theme layout
+    $wp_customize->add_setting('vf_theme_layout', array(
+      'default'           => array_keys($this->theme_layouts)[0],
+      'sanitize_callback' => array($this, 'admin_customize_sanitize'),
+    ));
+    $wp_customize->add_control('vf_theme_layout', array(
+      'type'        => 'select',
+      'section'     => 'vf_theme',
+      'label'       => __('Theme Layout', 'vfwp'),
+      'description' => __('Used for general design variations.', 'vfwp'),
+      'choices'     => $this->theme_layouts,
+    ));
     // Theme color
     $wp_customize->add_setting('vf_theme_color', array(
       'default'           => array_keys($this->theme_colors)[0],
@@ -108,7 +145,12 @@ class VF_Groups_Customize {
       'vf_theme',
       array_keys($this->themes)[0]
     );
+    $layout = get_theme_mod(
+      'vf_theme_layout',
+      array_keys($this->theme_layouts)[0]
+    );
     $classes[] = "vf-global-theme--{$theme}";
+    $classes[] = "vf-global-layout--{$layout}";
     return $classes;
   }
 
