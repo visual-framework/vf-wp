@@ -8,6 +8,10 @@ Containers represent a horizontal slice of the page template.
 * [Global Footer](/wp-content/plugins/vf-global-footer-container/README.md)
 * [Global Header](/wp-content/plugins/vf-global-header-container/README.md)
 
+Child theme containers:
+
+* [Groups Header](/wp-content/themes/vf-wp-groups/vf-wp-groups-header/README.md)
+
 ## Architecture
 
 The **Settings > VF Settings** option page in the Admin area defines the order.
