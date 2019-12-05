@@ -211,6 +211,9 @@ class VF_WP_Groups_Header extends VF_Plugin {
    * Default filter for hero text
    */
   public function filter_hero_text_cleanup($text) {
+    if ( ! apply_filters('vf_wp_groups_header/hero_text_cleanup', true)) {
+      return $text;
+    }
     // Cleanup Content Hub response
     $text = preg_replace(
       '#<[^>]*?embl-conditional-edit[^>]*?>.*?</[^>]*?>#',
@@ -232,6 +235,9 @@ class VF_WP_Groups_Header extends VF_Plugin {
    * Default filter for hero text
    */
   public function filter_hero_text_link($text) {
+    if ( ! apply_filters('vf_wp_groups_header/hero_text_link', true)) {
+      return $text;
+    }
     // Append "Read more" link
     $link = $this->get_hero_link();
     if (is_array($link)) {
