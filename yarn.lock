@@ -1526,10 +1526,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-news-container/-/vf-news-container-1.0.0-alpha.8.tgz#a210875d56257c7e24f5abd0c8e11bbe73536c52"
   integrity sha512-mCBEPwXsIvs4QqjAxq5lHp0V8yUyWduR3HHeaCgVIMI70dPVcV3E1vEo7QPDcoPX2WWunJ1y8i6KrRTOTIbg/g==
 
-"@visual-framework/vf-no-js@1.0.0-rc.7":
-  version "1.0.0-rc.7"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-no-js/-/vf-no-js-1.0.0-rc.7.tgz#fc8d1915282c5f406eb0504b153e79e724b2ad1f"
-  integrity sha512-mDIkI1v0Nf9qRX/svorteLJr+Ec52+Kwy5J3cPcYtx3IGNO9Ncdn7w3B8EDafiHOfjEPafWisHu3i/h9yQtp7Q==
+"@visual-framework/vf-no-js@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-no-js/-/vf-no-js-1.0.0.tgz#d1824789965e003af075e89434bdcc4c7b4caebc"
+  integrity sha512-vdFgPUQgqPNOhm+gVUWmMqaqBrwjfzwqNCQxwc0FLDhtVdN2tUzc4CEcBBVvDHHbiA0bF0tlEC5lrXCPv6e/vg==
 
 "@visual-framework/vf-page-header@^1.0.0-alpha.8":
   version "1.0.0-alpha.8"
