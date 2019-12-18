@@ -41,8 +41,8 @@
 
 /*!
 * Component: @visual-framework/vf-button
-* Version: 1.0.0-beta.9
-* Location: components/vf-core-
+* Version: 1.0.0-rc.1
+* Location: components/vf-button
 */
 .vf-button {
   --vf-button__color__background--default: var(--vf-color--grey);

@@ -10,7 +10,7 @@ try {
 var parentTemplate = null;
 output += "<a href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "logo_href"), env.opts.autoescape);
-output += "\" class=\"embl-logo\">\n  <span class=\"vf-sr-only\" for=\"text\">";
+output += "\" class=\"embl-logo\">\n  <span class=\"vf-u-sr-only\" for=\"text\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "logo_text"), env.opts.autoescape);
 output += "</span>\n</a>\n";
 if(runtime.contextOrFrameLookup(context, frame, "deprecated_text")) {
