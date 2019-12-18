@@ -8,6 +8,17 @@ var colno = 0;
 var output = "";
 try {
 var parentTemplate = null;
+if(runtime.contextOrFrameLookup(context, frame, "global_layout")) {
+output += " <div class=\"vf-global-layout--";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "global_layout"), env.opts.autoescape);
+if(runtime.contextOrFrameLookup(context, frame, "global_theme")) {
+output += " vf-global-theme--";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "global_theme"), env.opts.autoescape);
+;
+}
+output += "\">";
+;
+}
 output += "<nav class=\"vf-navigation";
 if(runtime.contextOrFrameLookup(context, frame, "classModifier")) {
 output += " vf-navigation--";
@@ -46,6 +57,10 @@ output += "</a>\n    </li>\n";
 }
 frame = frame.pop();
 output += "  </ul>\n</nav>\n";
+if(runtime.contextOrFrameLookup(context, frame, "global_layout")) {
+output += "</div>";
+;
+}
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

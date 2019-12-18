@@ -42,20 +42,9 @@
 html:not(.vf-disable-deprecated) {
   /*!
   * Component: @visual-framework/vf-sass-utilities
-  * Version: 1.0.0-beta.9
-  * Location: components/vf-core-
+  * Version: 1.0.0-rc.1
+  * Location: components/vf-sass-utilities
   */
-}
-
-html:not(.vf-disable-deprecated) .vf-js .vf-sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
 }
 
 html:not(.vf-disable-deprecated) .vf-et-al {
@@ -72,4 +61,15 @@ html:not(.vf-disable-deprecated) .vf-et-al::after {
 
 html:not(.vf-disable-deprecated) .vf-no-wrap {
   white-space: nowrap;
+}
+
+html.vf-js:not(.vf-disable-deprecated) .vf-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

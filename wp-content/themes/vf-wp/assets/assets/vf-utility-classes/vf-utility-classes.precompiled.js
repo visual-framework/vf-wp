@@ -11,7 +11,7 @@ var parentTemplate = null;
 output += "\n<div class=\"vf-content\">\n\n";
 output += runtime.suppressValue(env.getExtension("markdown")["run"](context,function(cb) {
 if(!cb) { cb = function(err) { if(err) { throw err; }}}
-var t_1 = "";t_1 += "\n### Et al.\n\n- `.vf-et-al` for use in publications lists and similar\n\n<span class=\"vf-et-al\">Jon Smith, Jane Johnson, </span>\n\n### Screenreader text\n\n- `.vf-sr-only` some things should only be shown to screen readers\n\n<span class=\"vf-sr-only\">Like this text</span>\n\n### No-wrap.\n\n- `.vf-no-wrap` keep text together, as much as possible\n\nI'm some words that can break awkwardly but keep the <span class=\"vf-no-wrap\">Company Name</span> together.\n\n### Text-colours\n\nSame colour options as background colours, with a prefix of\n";
+var t_1 = "";t_1 += "\n### Et al.\n\n- `.vf-u-text--et-al` for use in publications lists and similar\n\n<span class=\"vf-u-text--et-al\">Jon Smith, Jane Johnson, </span>\n\n### Screenreader text\n\n- `.vf-u-sr-only` some things should only be shown to screen readers\n\n<span class=\"vf-u-sr-only\">Like this text</span>\n\n### No-wrap.\n\n- `.vf-u-text--no-wrap` keep text together, as much as possible\n\nI'm some words that can break awkwardly but keep the <span class=\"vf-u-text--no-wrap\">Company Name</span> together.\n\n### Text-colours\n\nSame colour options as background colours, with a prefix of\n";
 cb(null, t_1);
 ;
 return t_1;

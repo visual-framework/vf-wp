@@ -35,12 +35,12 @@ output += "      <a\n      href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"page_href"), env.opts.autoescape);
 output += "\"\n      class=\"vf-pagination__link\">\n        ";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"page_number"), env.opts.autoescape);
-output += "<span class=\"vf-sr-only\"> page</span>\n      </a>\n";
+output += "<span class=\"vf-u-sr-only\"> page</span>\n      </a>\n";
 ;
 }
 else {
 if(runtime.memberLookup((t_4),"item_modifier") == "vf-pagination__item--is-active") {
-output += "      <span class=\"vf-pagination__label\" aria-current=\"page\">\n        <span class=\"vf-sr-only\">Page </span>";
+output += "      <span class=\"vf-pagination__label\" aria-current=\"page\">\n        <span class=\"vf-u-sr-only\">Page </span>";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"page_number"), env.opts.autoescape);
 output += "\n      </span>\n";
 ;
