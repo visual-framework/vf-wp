@@ -1257,10 +1257,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-content-meta-properties/-/embl-content-meta-properties-1.0.0.tgz#127fb5c99e88315228894c2b3350227d87589e34"
   integrity sha512-8o+EEq/YqOeD7xXo3pBbfewxyOGGpGwzuRLtaFBIEInpkWya6HbPlWvXTZrAlIpeqmHidwwRJgMzqVE4Zjv0Yg==
 
-"@visual-framework/embl-grid@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/embl-grid/-/embl-grid-1.0.0.tgz#b061fbb1396b1cb3d9fa2a0ab5e9a28c38339d0c"
-  integrity sha512-iQpnzSL7/BSqvsXou8SGRELqcZgGQTCDGxKkLSrM+6nnXnoMB7uNJ+92awX4CzuzVmMwZMHku6e8oH57WAKpBQ==
+"@visual-framework/embl-grid@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-grid/-/embl-grid-1.0.1.tgz#f952356502b67501e784c9848edaf19227f0506f"
+  integrity sha512-o46FViXDjoQi4gBeIQ8dXPw2M+x55wZL9C8f62XjNhBgIhHUV5z1jAi3u1n9lPr3mNi5uU1nuMDu/+5r1yowRw==
 
 "@visual-framework/embl-logo@1.0.0":
   version "1.0.0"
