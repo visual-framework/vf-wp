@@ -882,10 +882,58 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@frctl/fractal@^1.1.0-alpha.0", "@frctl/fractal@^1.2.0-beta.3":
+"@frctl/fractal@^1.1.0-alpha.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@frctl/fractal/-/fractal-1.2.0.tgz#43fbefd47a03f849dc8698da06024c93fa0ee562"
   integrity sha512-2GuwhMy2jUXjmHWin8aklPJPD9EmPFBaSaOXDPMz2xJZn290h+G/hIjb44ufeG1JqOHvIUP5VjUABTw8onUDhA==
+  dependencies:
+    "@allmarkedup/fang" "^1.0.0"
+    "@frctl/handlebars" "^1.1.3"
+    "@frctl/mandelbrot" "^1.1.0"
+    anymatch "^1.3.0"
+    bluebird "^3.5.2"
+    browser-sync "^2.26.4"
+    chalk "^1.1.3"
+    chokidar "^1.6.0"
+    cli-table3 "^0.5.0"
+    co "^4.6.0"
+    columnify "^1.5.4"
+    diff "^3.5.0"
+    express "^4.14.0"
+    fs-extra "^0.30.0"
+    globby "^6.0.0"
+    gray-matter "^2.0.2"
+    handlebars "^4.0.13"
+    highlight.js "^9.5.0"
+    inquirer "^1.1.2"
+    istextorbinary "^2.1.0"
+    js-beautify "1.6.14"
+    js-yaml "^3.13.1"
+    liftoff "^2.3.0"
+    lodash "^4.17.11"
+    log-update "^1.0.2"
+    marked "^0.6.2"
+    mime "^1.3.4"
+    minimist "^1.2.0"
+    mixwith "^0.1.1"
+    mocha "^5.0.3"
+    nunjucks "^3.1.3"
+    path-to-regexp "^1.5.3"
+    portscanner "^1.0.0"
+    readable-stream "^2.1.4"
+    require-all "^2.0.0"
+    semver "^5.3.0"
+    sinon "^3.2.1"
+    snyk "^1.124.1"
+    throat "^3.0.0"
+    update-notifier "^1.0.2"
+    vinyl "^1.2.0"
+    vorpal "^1.12.0"
+
+"@frctl/fractal@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@frctl/fractal/-/fractal-1.2.1.tgz#a4b3049b91c8a626c8339c14853835a9a1279fa8"
+  integrity sha512-ayTMnhcmp8JRDu83nWromr3MfaXUMjFEBVDTXrWu+dcUT9rYdgzk96AMcwjWlg30r/r+i3iOtMaiQ6Zbr6EiHA==
   dependencies:
     "@allmarkedup/fang" "^1.0.0"
     "@frctl/handlebars" "^1.1.3"
@@ -1357,12 +1405,12 @@
     "@visual-framework/vf-list" "^1.0.0"
     "@visual-framework/vf-text" "^1.0.1"
 
-"@visual-framework/vf-core@2.0.0-rc.1":
-  version "2.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.0.0-rc.1.tgz#5f675607ac252fa08994b087ce62145b6b9a228a"
-  integrity sha512-MXTPKquX5oO7+Fy5GKO5lb2mYSNRn5kkekvP0m47AfMM9wVq6FEIVOo9V6jHPpxGLcULhzORumjemjmcEWNAMw==
+"@visual-framework/vf-core@2.0.0-rc.2":
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.0.0-rc.2.tgz#6280f57614b5d60553108c715b7eb2069fabb0de"
+  integrity sha512-mjjsdsCWobQEBPKaAHDhR/yNPu8QIYSReiS2370MQfKuwLFIxA/d0hcJAdIVpynNNJRJtAo+HjOfO2L/8fQ02w==
   dependencies:
-    "@frctl/fractal" "^1.2.0-beta.3"
+    "@frctl/fractal" "^1.2.1"
     "@frctl/nunjucks" "^2.0.1"
     chalk "^3.0.0"
     del "^5.0.0"
@@ -1375,23 +1423,23 @@
     gulp-cssnano "^2.1.3"
     gulp-delete-lines "^0.0.7"
     gulp-notify "^3.2.0"
-    gulp-rename "^1.4.0"
+    gulp-rename "^2.0.0"
     gulp-replace-path "^0.4.0"
     gulp-sass "^4.0.2"
     gulp-shell "^0.7.1"
     gulp-sourcemaps "^2.6.5"
-    gulp-stylelint "^10.0.0"
+    gulp-stylelint "^11.0.0"
     gulp-svgmin "^2.2.0"
     gulp-watch "^5.0.1"
     highlight.js "^9.15.10"
     install "^0.13.0"
     list-stream "^2.0.0"
-    marked "^0.7.0"
+    marked "^0.8.0"
     npm "^6.12.1"
     rollup "^1.26.0"
     rollup-plugin-includepaths "^0.2.3"
     stylelint "^12.0.0"
-    stylelint-order "^3.0.0"
+    stylelint-order "^4.0.0"
     stylelint-scss "^3.12.0"
     theo "^8.1.4"
     vinyl-source-stream "^2.0.0"
@@ -6260,10 +6308,10 @@ gulp-notify@^3.2.0:
     plugin-error "^0.1.2"
     through2 "^2.0.3"
 
-gulp-rename@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.4.0.tgz#de1c718e7c4095ae861f7296ef4f3248648240bd"
-  integrity sha512-swzbIGb/arEoFK89tPY58vg3Ok1bw+d35PfUNwWqdo7KM4jkmuGA78JiDNqR+JeZFaeeHnRg9N7aihX3YPmsyg==
+gulp-rename@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-2.0.0.tgz#9bbc3962b0c0f52fc67cd5eaff6c223ec5b9cf6c"
+  integrity sha512-97Vba4KBzbYmR5VBs9mWmK+HwIf5mj+/zioxfZhOKeXtx5ZjBk57KFlePf5nxq9QsTtFl0ejnHE3zTC9MHXqyQ==
 
 gulp-replace-path@^0.4.0:
   version "0.4.0"
@@ -6317,17 +6365,17 @@ gulp-sourcemaps@^2.6.5:
     strip-bom-string "1.X"
     through2 "2.X"
 
-gulp-stylelint@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-10.0.0.tgz#4e2bfa13765274cded63597b337184cd6d3f95d5"
-  integrity sha512-k4NZwtqRIiFnk0g1yb4UZ/+axnTVPMMDqzz1XPMLI0PPBgx91TDBzbVZexuMLUeVNoEYW8iMRUKrk3NDS+WNJw==
+gulp-stylelint@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-11.0.0.tgz#f1154f9a8b31b43b5819d8be1845e68d7b2a6a66"
+  integrity sha512-Hk2DungSqeWIye5hgmB36IMN9oIIsOBieAaQZw0HAVuIljDGcfH6ng0wmJf3G418jv6KCdgpTZb0EIN1L5KXEw==
   dependencies:
-    chalk "^2.4.2"
+    chalk "^3.0.0"
     fancy-log "^1.3.3"
     mkdirp "^0.5.1"
     plugin-error "^1.0.1"
     source-map "^0.7.3"
-    strip-ansi "^5.2.0"
+    strip-ansi "^6.0.0"
     through2 "^3.0.1"
 
 gulp-svgmin@^2.2.0:
@@ -8596,10 +8644,10 @@ marked@^0.6.2:
   resolved "https://registry.yarnpkg.com/marked/-/marked-0.6.3.tgz#79babad78af638ba4d522a9e715cdfdd2429e946"
   integrity sha512-Fqa7eq+UaxfMriqzYLayfqAE40WN03jf+zHjT18/uXNuzjq3TY0XTbrAoPeqSJrAmPz11VuUA+kBPYOhHt9oOQ==
 
-marked@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-0.7.0.tgz#b64201f051d271b1edc10a04d1ae9b74bb8e5c0e"
-  integrity sha512-c+yYdCZJQrsRjTPhUx7VKkApw9bwDkNbHUKo1ovgcfDjb2kc8rLuRbIFyXL5WOEUwzSSKo3IXpph2K6DqB/KZg==
+marked@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.8.0.tgz#ec5c0c9b93878dc52dd54be8d0e524097bd81a99"
+  integrity sha512-MyUe+T/Pw4TZufHkzAfDj6HarCBWia2y27/bhuYkTaiUnfDYFnCP3KUN+9oM7Wi6JA2rymtVYbQu3spE0GCmxQ==
 
 matchdep@^2.0.0:
   version "2.0.0"
@@ -10810,6 +10858,15 @@ postcss@^7.0.21, postcss@^7.0.23:
   version "7.0.25"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.25.tgz#dd2a2a753d50b13bed7a2009b4a18ac14d9db21e"
   integrity sha512-NXXVvWq9icrm/TgQC0O6YVFi4StfJz46M1iNd/h6B26Nvh/HKI+q4YZtFN/EjcInZliEscO/WL10BXnc1E5nwg==
+  dependencies:
+    chalk "^2.4.2"
+    source-map "^0.6.1"
+    supports-color "^6.1.0"
+
+postcss@^7.0.26:
+  version "7.0.26"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.26.tgz#5ed615cfcab35ba9bbb82414a4fa88ea10429587"
+  integrity sha512-IY4oRjpXWYshuTDFxMVkJDtWIk2LhsTlu8bZnbEJA4+bYT16Lvpo8Qv6EvDumhYRgzjZl489pmsY3qVgJQ08nA==
   dependencies:
     chalk "^2.4.2"
     source-map "^0.6.1"
@@ -13071,13 +13128,13 @@ style-search@^0.1.0:
   resolved "https://registry.yarnpkg.com/style-search/-/style-search-0.1.0.tgz#7958c793e47e32e07d2b5cafe5c0bf8e12e77902"
   integrity sha1-eVjHk+R+MuB9K1yv5cC/jhLneQI=
 
-stylelint-order@^3.0.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-3.1.1.tgz#ba9ea6844d1482f97f31204e7c9605c7b792c294"
-  integrity sha512-4gP/r8j/6JGZ/LL41b2sYtQqfwZl4VSqTp7WeIwI67v/OXNQ08dnn64BGXNwAUSgb2+YIvIOxQaMzqMyQMzoyQ==
+stylelint-order@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-4.0.0.tgz#2a945c2198caac3ff44687d7c8582c81d044b556"
+  integrity sha512-bXV0v+jfB0+JKsqIn3mLglg1Dj2QCYkFHNfL1c+rVMEmruZmW5LUqT/ARBERfBm8SFtCuXpEdatidw/3IkcoiA==
   dependencies:
     lodash "^4.17.15"
-    postcss "^7.0.17"
+    postcss "^7.0.26"
     postcss-sorting "^5.0.1"
 
 stylelint-scss@^3.12.0:
