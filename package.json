@@ -62,7 +62,7 @@
     "@visual-framework/vf-config": "0.0.3-alpha.0",
     "@visual-framework/vf-content": "1.0.2",
     "@visual-framework/vf-core": "2.0.0-rc.2",
-    "@visual-framework/vf-design-tokens": "1.0.1",
+    "@visual-framework/vf-design-tokens": "1.0.2",
     "@visual-framework/vf-discussion": "1.0.0-beta.1",
     "@visual-framework/vf-divider": "1.0.0",
     "@visual-framework/vf-extensions": "1.0.0-alpha.2",
