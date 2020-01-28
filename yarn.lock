@@ -1419,10 +1419,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-banner/-/vf-banner-1.0.1.tgz#8bb6eb0943b44a87c2c667d91902bb1b4ce51f0a"
   integrity sha512-B/jSyRQTMkqMlUQRi2uJ17bgb+1mXKhTh2aXqsP4nAw/jvkT1jGx9yh7bCleFISWISSV7mlAkA36qzFIxj6Ulg==
 
-"@visual-framework/vf-blockquote@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-blockquote/-/vf-blockquote-1.0.1.tgz#ae910d934d7167e2bf03703b8843b655994b3775"
-  integrity sha512-LOod1nKZ6mI2fe/AaXoT7rG4Z8M2APldjQ0zHuH1XrKgCgDJZBVjcX0FFnyDaTo+Q19c+g0WfWeD32eDBJoxFw==
+"@visual-framework/vf-blockquote@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-blockquote/-/vf-blockquote-1.0.2.tgz#115df82feb36505c505e94597aa947bd0b988b4f"
+  integrity sha512-6LpVfTXHFkFxfjzsM7Z9emyolP5pYWYSRyHNPQYnJVBrKvvITjD7t1rArgMGgfMKHXcOY2pLVuzKFCi5lTFSXA==
 
 "@visual-framework/vf-box@^1.0.0":
   version "1.0.0"
@@ -1454,20 +1454,20 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-0.0.3-alpha.0.tgz#c9b1e8b9f578f9051a594ccfe70917d73ef08b63"
   integrity sha512-889c1uFx7vqRn4eBtGD5trmtN4euGPiw1TA7z4mIGDXqqzl2CACTujv3qJsA063aRgKJ0ieR5H815+I/10zd6Q==
 
-"@visual-framework/vf-content@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.0.2.tgz#b1f9c64adf6a00a5572a73942f6c54645f9ecc79"
-  integrity sha512-uPJX0n26b/5Yt41p1KRvZQRm0GfMOSTM49ufAcqJw+H9S5MYbWAGNGLjUN9N0WJaf4wwkuQwU6qHXT4St1970A==
+"@visual-framework/vf-content@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.0.3.tgz#6fde502766f6d806a7f63ba5cc758b8b3b79897a"
+  integrity sha512-n7nfCuE/8iMfDjwFmck+xaKTtVA5AGTENhy94RnXOfii8zWycG8zzJKy5DMSN1D+Za7SHdhHgtkRu0f7xhsjKg==
   dependencies:
     "@visual-framework/vf-badge" "^1.0.0"
-    "@visual-framework/vf-blockquote" "^1.0.1"
+    "@visual-framework/vf-blockquote" "^1.0.2"
     "@visual-framework/vf-box" "^1.0.0"
     "@visual-framework/vf-button" "^1.0.0"
     "@visual-framework/vf-divider" "^1.0.0"
     "@visual-framework/vf-figure" "^1.0.0-beta.1"
     "@visual-framework/vf-form__core" "^1.0.0-beta.1"
     "@visual-framework/vf-heading" "^1.0.0"
-    "@visual-framework/vf-link" "^1.0.0"
+    "@visual-framework/vf-link" "^1.0.1"
     "@visual-framework/vf-list" "^1.0.0"
     "@visual-framework/vf-text" "^1.0.1"
 
@@ -1656,10 +1656,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-link-list/-/vf-link-list-1.0.0.tgz#35d65233c98a32c3e3410a0f7e121930a9f59132"
   integrity sha512-lgWLmIvptLhoaTBnrvc904ZFEdIF2uBtcxHMZw/NvyhlAk/oi4KO9AAyeFikKArfqWL5pTHkLLY1F4kaycUOpg==
 
-"@visual-framework/vf-link@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-link/-/vf-link-1.0.0.tgz#3ac3641c66fb2383ea8a8e143df08ac8013456d0"
-  integrity sha512-uh60oahrQBagzbCwbCTQ6asXLS9Yh94y7UGC68fE2x6t2x4dO4/OICgFlALL2MLD/kTkMWN+j2ehDCmsKzqgxA==
+"@visual-framework/vf-link@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-link/-/vf-link-1.0.1.tgz#9fbf751833c5ee51874ebfbac040ed8662cef2f0"
+  integrity sha512-/5CAUUSuzKItD7d/jg4VIONJaBtK+zVcrbqm47TLmpIekBJBp8a5tsgd4hrxl0UYWJ0jr/IM+qpnbi/5umostw==
 
 "@visual-framework/vf-list@^1.0.0":
   version "1.0.0"
