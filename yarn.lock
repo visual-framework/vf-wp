@@ -1575,7 +1575,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-1.0.0.tgz#58cf45d130ac7385687c068aab3280e00fa5c235"
   integrity sha512-WixIx/dLaZ4KKckpFeYPnXWt5ueywiKxfM7hVACxWG4e+nylW5FOvRdHrDPCgE336wmWjrxH32jzWg5ufz30/A==
 
-"@visual-framework/vf-card-container@^1.0.0-alpha.1":
+"@visual-framework/vf-card-container@1.0.0-alpha.1":
   version "1.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-card-container/-/vf-card-container-1.0.0-alpha.1.tgz#befce896f5167eae5be550d74bac6b8a63195217"
   integrity sha512-a5fm9U642m1DrD9IZvnmUucX8x9Rn8iJ728J4WQFwVZBzv9lwIIzkHC/OG6se1tcHi75lrZC37fQ7igCJuO6GA==
@@ -1777,7 +1777,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-heading/-/vf-heading-1.0.0.tgz#c3c07b9c5830492dcebc8de8a7085ffce4ccf9b6"
   integrity sha512-x5d26AErY2LoTGvmpfxtlJoupl0TvsF2qf+Bog+UOfcJEdBBKc817W1obI80uVuT70PIpuO/gCAB95yrofVdCg==
 
-"@visual-framework/vf-hero@^1.0.0-alpha.1":
+"@visual-framework/vf-hero@1.0.0-alpha.1":
   version "1.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-1.0.0-alpha.1.tgz#f2eb5d8f2a30948df23a3ebbcf19d82228d42e16"
   integrity sha512-EzXZqRnQ7DAv1r1YHJbFnSchlFn9SxNy/lwLhVgDekx+dl9WkbkMod06HDErQnUh27LhQAy/ee/xuziF7bctwg==
