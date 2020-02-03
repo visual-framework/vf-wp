@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0-rc.1
- * Location: components/vf-list
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-list {
   list-style-type: none;
@@ -105,13 +105,17 @@
 
 .vf-list__link {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-list__link:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-list__link:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
@@ -123,8 +127,8 @@
 
 /*!
  * Component: @visual-framework/vf-blockquote
- * Version: 1.0.0-rc.1
- * Location: components/vf-blockquote
+ * Version: 1.0.2
+ * Location: components/vf-core-
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -148,10 +152,19 @@
   top: 0;
 }
 
+.vf-blockquote--pullquote {
+  position: static;
+}
+
+.vf-blockquote--pullquote:before {
+  content: 'This component variant has not yet been implement, see the README.md for more information.';
+  display: block;
+}
+
 /*!
  * Component: @visual-framework/vf-activity-list
- * Version: 1.0.0-alpha.8
- * Location: components/vf-activity-list
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-core-
  */
 .vf-activity {
   margin-bottom: 54px;
@@ -186,13 +199,17 @@
 
 .vf-activity__item > a {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-activity__item > a:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-activity__item > a:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 

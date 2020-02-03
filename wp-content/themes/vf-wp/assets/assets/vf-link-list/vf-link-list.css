@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -115,8 +115,8 @@
 
 /*!
  * Component: @visual-framework/vf-link-list
- * Version: 1.0.0-rc.1
- * Location: components/vf-link-list
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-links__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -167,14 +167,18 @@
 
 .vf-links__list--secondary .vf-list__link {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #707372;
   text-decoration: none;
 }
 
 .vf-links__list--secondary .vf-list__link:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-links__list--secondary .vf-list__link:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 

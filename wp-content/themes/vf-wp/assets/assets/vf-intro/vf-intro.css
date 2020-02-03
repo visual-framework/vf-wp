@@ -41,18 +41,22 @@
 
 /*!
  * Component: @visual-framework/vf-text
- * Version: 1.0.0
- * Location: components/vf-text
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 .vf-text-body > a {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-text-body > a:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-text-body > a:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
@@ -118,8 +122,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -192,8 +196,8 @@
 
 /*!
  * Component: @visual-framework/vf-intro
- * Version: 1.0.0-rc.1
- * Location: components/vf-intro
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-intro {
   margin: 0 0 110px 0;
@@ -259,13 +263,17 @@
 
 .vf-intro__text > a {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-intro__text > a:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-intro__text > a:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 

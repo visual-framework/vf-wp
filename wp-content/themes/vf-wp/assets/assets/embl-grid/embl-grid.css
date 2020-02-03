@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/embl-grid
- * Version: 1.0.0-rc.1
- * Location: components/embl-grid
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 .embl-grid {
   grid-column: main;
@@ -114,7 +114,7 @@
     background-color: #d8d8d8;
     content: '';
     height: 100%;
-    left: -18px;
+    left: calc(var(--page-grid-gap) / -2);
     position: absolute;
     width: 1px;
   }

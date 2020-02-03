@@ -1575,6 +1575,11 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-1.0.0.tgz#58cf45d130ac7385687c068aab3280e00fa5c235"
   integrity sha512-WixIx/dLaZ4KKckpFeYPnXWt5ueywiKxfM7hVACxWG4e+nylW5FOvRdHrDPCgE336wmWjrxH32jzWg5ufz30/A==
 
+"@visual-framework/vf-card-container@^1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-card-container/-/vf-card-container-1.0.0-alpha.1.tgz#befce896f5167eae5be550d74bac6b8a63195217"
+  integrity sha512-a5fm9U642m1DrD9IZvnmUucX8x9Rn8iJ728J4WQFwVZBzv9lwIIzkHC/OG6se1tcHi75lrZC37fQ7igCJuO6GA==
+
 "@visual-framework/vf-card@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-card/-/vf-card-1.0.2.tgz#5100b3e1bb28a9aff2b1e31703dcdba5035f15a4"
@@ -1585,10 +1590,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-code-example/-/vf-code-example-1.0.0.tgz#7d1604e65eac40366b5a90866a6ad45f79721780"
   integrity sha512-VXLXik4ntr9O+AdXsjHKYCNL2ewKCBTIu953Dtsi2gjNzIm/qP48Cc5FHcojkQLrqcjpFKVwFiqv+fMDMx0RpA==
 
-"@visual-framework/vf-config@0.0.3-alpha.0":
-  version "0.0.3-alpha.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-0.0.3-alpha.0.tgz#c9b1e8b9f578f9051a594ccfe70917d73ef08b63"
-  integrity sha512-889c1uFx7vqRn4eBtGD5trmtN4euGPiw1TA7z4mIGDXqqzl2CACTujv3qJsA063aRgKJ0ieR5H815+I/10zd6Q==
+"@visual-framework/vf-config@1.0.0-alpha.0":
+  version "1.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.0-alpha.0.tgz#a58a75fd569cceb71d2e63a29621c607a9f8386e"
+  integrity sha512-I+n1HuirL8xTXZHAJ7Oy9Sie7a/ja0IrMvwKTTr+ekTgGBGVr038ogtE6W01YYgHT4rI/tFRPga0RDzBpnS35w==
 
 "@visual-framework/vf-content@1.0.3":
   version "1.0.3"
@@ -1771,6 +1776,11 @@
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-heading/-/vf-heading-1.0.0.tgz#c3c07b9c5830492dcebc8de8a7085ffce4ccf9b6"
   integrity sha512-x5d26AErY2LoTGvmpfxtlJoupl0TvsF2qf+Bog+UOfcJEdBBKc817W1obI80uVuT70PIpuO/gCAB95yrofVdCg==
+
+"@visual-framework/vf-hero@^1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-1.0.0-alpha.1.tgz#f2eb5d8f2a30948df23a3ebbcf19d82228d42e16"
+  integrity sha512-EzXZqRnQ7DAv1r1YHJbFnSchlFn9SxNy/lwLhVgDekx+dl9WkbkMod06HDErQnUh27LhQAy/ee/xuziF7bctwg==
 
 "@visual-framework/vf-inlay@1.0.0-rc.1":
   version "1.0.0-rc.1"

@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -115,8 +115,8 @@
 
 /*!
  * Component: @visual-framework/vf-badge
- * Version: 1.0.0-rc.1
- * Location: components/vf-badge
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-badge {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -176,6 +176,11 @@
   color: #ffffff;
 }
 
+.vf-badge--primary:visited:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .vf-badge--primary:hover {
   color: #ffffff;
 }
@@ -196,6 +201,11 @@ a.vf-badge--primary:hover {
   color: #ffffff;
 }
 
+.vf-badge--secondary:visited:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .vf-badge--secondary:hover {
   color: #ffffff;
 }
@@ -211,6 +221,11 @@ a.vf-badge--primary:hover {
   color: #ffffff;
 }
 
+.vf-badge--tertiary:visited:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
 .vf-badge--tertiary:hover {
   color: #ffffff;
 }
@@ -222,7 +237,12 @@ a.vf-badge--primary:hover {
 }
 
 .vf-badge--outline:visited {
-  color: #54585a;
+  color: #734595;
+}
+
+.vf-badge--outline:visited:hover {
+  color: #734595;
+  text-decoration: underline;
 }
 
 .vf-badge--outline:hover {
@@ -231,18 +251,22 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-text
- * Version: 1.0.0
- * Location: components/vf-text
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 .vf-text-body > a {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-text-body > a:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-text-body > a:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
@@ -308,18 +332,22 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-link
- * Version: 1.0.0-rc.1
- * Location: components/vf-link
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 .vf-link {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-link:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-link:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
@@ -330,22 +358,52 @@ a.vf-badge--primary:hover {
 }
 
 .vf-link--visited {
-  color: #54585a;
+  color: #734595;
 }
 
 .vf-link--hover {
   color: #193f90;
 }
 
+.vf-u-background-color--grey--dark .vf-link {
+  border-bottom: none;
+  text-decoration: none;
+  color: #a8d2ff;
+}
+
+.vf-u-background-color--grey--dark .vf-link:visited {
+  color: #cba3d8;
+  border-bottom: none;
+}
+
+.vf-u-background-color--grey--dark .vf-link:visited:hover {
+  color: #cba3d8;
+  text-decoration: underline;
+}
+
+.vf-u-background-color--grey--dark .vf-link:hover {
+  color: #a8d2ff;
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+.vf-u-background-color--grey--dark .vf-link--visited {
+  color: #cba3d8;
+}
+
+.vf-u-background-color--grey--dark .vf-link--hover {
+  color: #a8d2ff;
+}
+
 /*!
  * Component: @visual-framework/vf-form__core
- * Version: 1.0.0-beta.0
- * Location: components/vf-form/vf-form__core
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */
 /*!
  * Component: @visual-framework/vf-form__helper
- * Version: 1.0.0-alpha.7
- * Location: components/vf-form/vf-form__helper
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-core-
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -364,8 +422,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__input
- * Version: 1.0.0-alpha.9
- * Location: components/vf-form/vf-form__input
+ * Version: 1.0.0-alpha.10
+ * Location: components/vf-core-
  */
 .vf-form__input:not([type='file']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -558,8 +616,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__select
- * Version: 1.0.0-alpha.7
- * Location: components/vf-form/vf-form__select
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-core-
  */
 .vf-form__select {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -606,8 +664,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__checkbox
- * Version: 1.0.0-alpha.7
- * Location: components/vf-form/vf-form__checkbox
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-core-
  */
 .vf-form__item.vf-form__item--checkbox {
   margin-bottom: 16px;
@@ -663,8 +721,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__radio
- * Version: 1.0.0-alpha.7
- * Location: components/vf-form/vf-form__radio
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-core-
  */
 .vf-form__radio {
   opacity: 0;
@@ -717,8 +775,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__textarea
- * Version: 1.0.0-alpha.8
- * Location: components/vf-form/vf-form__textarea
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-core-
  */
 .vf-form__textarea {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -744,8 +802,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__item
- * Version: 1.0.0-alpha.8
- * Location: components/vf-form/vf-form__item
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-core-
  */
 .vf-form__item {
   display: block;
@@ -759,8 +817,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__label
- * Version: 1.0.0-alpha.8
- * Location: components/vf-form/vf-form__label
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-core-
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -778,8 +836,8 @@ a.vf-badge--primary:hover {
 
 /*!
 * Component: @visual-framework/vf-button
-* Version: 1.0.0-rc.1
-* Location: components/vf-button
+* Version: 1.0.0
+* Location: components/vf-core-
 */
 .vf-button {
   --vf-button__color__background--default: var(--vf-color--grey);
@@ -913,8 +971,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--secondary {
 }
 
 html:not(.vf-disable-deprecated) .vf-text-button--secondary:visited {
-  background-color: #54585a;
-  border-color: #54585a;
+  background-color: #734595;
+  border-color: #734595;
 }
 
 html:not(.vf-disable-deprecated) .vf-text-button--secondary:hover {
@@ -933,7 +991,7 @@ html:not(.vf-disable-deprecated) .vf-button--outline.vf-text--button--secondary 
 }
 
 html:not(.vf-disable-deprecated) .vf-button--outline.vf-text--button--secondary:visited {
-  background-color: #54585a;
+  background-color: #734595;
   color: #ffffff;
 }
 
@@ -959,8 +1017,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-figure
- * Version: 1.0.0-beta.0
- * Location: components/vf-figure
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */
 .vf-figure {
   margin: 0;
@@ -988,8 +1046,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0-rc.1
- * Location: components/vf-list
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-list {
   list-style-type: none;
@@ -1052,13 +1110,17 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 .vf-list__link {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-list__link:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-list__link:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
@@ -1070,8 +1132,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-blockquote
- * Version: 1.0.0-rc.1
- * Location: components/vf-blockquote
+ * Version: 1.0.2
+ * Location: components/vf-core-
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1095,10 +1157,19 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   top: 0;
 }
 
+.vf-blockquote--pullquote {
+  position: static;
+}
+
+.vf-blockquote--pullquote:before {
+  content: 'This component variant has not yet been implement, see the README.md for more information.';
+  display: block;
+}
+
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0-rc.8
- * Location: components/vf-divider
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-divider {
   background-color: #d8d8d8;
@@ -1111,8 +1182,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-box
- * Version: 1.0.0-rc.1
- * Location: components/vf-box
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-box {
   background-color: #54585a;
@@ -1190,8 +1261,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.0.0
- * Location: components/vf-content
+ * Version: 1.0.3
+ * Location: components/vf-core-
  */
 .vf-content h1:not([class*='vf-']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1278,13 +1349,17 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 .vf-content a:not([class*='vf-']) {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-content a:not([class*='vf-']):visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-content a:not([class*='vf-']):visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
@@ -1295,7 +1370,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 }
 
 .vf-content a:not([class*='vf-']):visited {
-  color: #54585a;
+  color: #734595;
 }
 
 .vf-content a:not([class*='vf-']):hover {

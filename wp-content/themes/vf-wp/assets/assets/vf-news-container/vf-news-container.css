@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-grid
- * Version: 1.0.0-rc.1
- * Location: components/vf-grid
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -127,12 +127,6 @@
   [class*='grid__'] {
     grid-auto-flow: unset;
   }
-  .vf-grid__col-1 > * + * {
-    border-top: 1px solid #707372;
-  }
-  .vf-grid__col-1 > * + *:last-of-type {
-    margin-bottom: 0;
-  }
   .vf-grid__col-1 {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -181,8 +175,8 @@
 /* stylelint-enable order/order */
 /*!
  * Component: @visual-framework/vf-summary
- * Version: 1.0.0-rc.1
- * Location: components/vf-summary
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 .vf-summary {
   --vf-text-margin--bottom: 16px;
@@ -267,18 +261,22 @@
 
 .vf-summary__link {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-summary__link:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-summary__link:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
 .vf-summary__link:hover {
-  color: #3b77ed;
+  color: #193f90;
   border-bottom: none;
   text-decoration: underline;
 }
@@ -358,36 +356,44 @@
 
 .vf-summary__link {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-summary__link:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-summary__link:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
 .vf-summary__link:hover {
-  color: #3b77ed;
+  color: #193f90;
   border-bottom: none;
   text-decoration: underline;
 }
 
 .vf-summary__link--secondary {
   border-bottom: none;
-  text-decoration: underline;
-  color: #707372;
+  text-decoration: none;
+  color: #ffffff;
 }
 
 .vf-summary__link--secondary:visited {
   color: #d0d0ce;
   border-bottom: none;
+}
+
+.vf-summary__link--secondary:visited:hover {
+  color: #d0d0ce;
   text-decoration: underline;
 }
 
 .vf-summary__link--secondary:hover {
-  color: #3b77ed;
+  color: #ffffff;
   border-bottom: none;
   text-decoration: underline;
 }
@@ -495,21 +501,91 @@
 
 /*!
  * Component: @visual-framework/vf-section-header
- * Version: 1.0.0-rc.1
- * Location: components/vf-section-header
+ * Version: 1.0.2
+ * Location: components/vf-core-
  */
 .vf-section-header__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  margin: 0;
+  margin: 0 0 0 0;
+}
+
+.vf-section-header__heading + .vf-section-header__subheading,
+.vf-section-header__heading + .vf-section-header__content {
+  margin-top: 24px;
+}
+
+.vf-section-header__heading--is-link {
+  border-bottom: none;
+  text-decoration: none;
+  color: #3b6fb6;
+  color: #3b6fb6;
+  cursor: pointer;
+  display: block;
+}
+
+.vf-section-header__heading--is-link:visited {
+  color: #734595;
+  border-bottom: none;
+}
+
+.vf-section-header__heading--is-link:visited:hover {
+  color: #734595;
+  text-decoration: underline;
+}
+
+.vf-section-header__heading--is-link:hover {
+  color: #193f90;
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+.vf-section-header__heading--is-link .vf-section-header__icon {
+  fill: currentColor;
+  margin-left: 4px;
+  -webkit-transform: translateY(4px);
+          transform: translateY(4px);
+  -webkit-transition-duration: 125ms;
+          transition-duration: 125ms;
+  -webkit-transition-property: transformX;
+  transition-property: transformX;
+  -webkit-transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+          transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+.vf-section-header__heading--is-link:hover .vf-section-header__icon, .vf-section-header__heading--is-link:focus .vf-section-header__icon {
+  -webkit-transform: translateX(4px) translateY(4px);
+          transform: translateX(4px) translateY(4px);
+}
+
+.vf-section-header__subheading {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.29;
+  margin: 0 0 0 0;
+}
+
+.vf-section-header__text {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: 0 0 8px 0;
+}
+
+.vf-section-header__heading + .vf-section-header__text {
+  margin-top: 24px;
+}
+
+.vf-section-header__subheading + .vf-section-header__text {
+  margin-top: 16px;
 }
 
 /*!
  * Component: @visual-framework/vf-news-container
- * Version: 1.0.0-beta.0
- * Location: components/vf-news-container
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */

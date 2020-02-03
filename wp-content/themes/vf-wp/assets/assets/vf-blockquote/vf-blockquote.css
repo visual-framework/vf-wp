@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-blockquote
- * Version: 1.0.0-rc.1
- * Location: components/vf-blockquote
+ * Version: 1.0.2
+ * Location: components/vf-core-
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -64,4 +64,13 @@
   left: 12px;
   height: 100%;
   top: 0;
+}
+
+.vf-blockquote--pullquote {
+  position: static;
+}
+
+.vf-blockquote--pullquote:before {
+  content: 'This component variant has not yet been implement, see the README.md for more information.';
+  display: block;
 }

@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -115,18 +115,22 @@
 
 /*!
  * Component: @visual-framework/vf-link
- * Version: 1.0.0-rc.1
- * Location: components/vf-link
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 .vf-link {
   border-bottom: none;
-  text-decoration: underline;
+  text-decoration: none;
   color: #3b6fb6;
 }
 
 .vf-link:visited {
-  color: #54585a;
+  color: #734595;
   border-bottom: none;
+}
+
+.vf-link:visited:hover {
+  color: #734595;
   text-decoration: underline;
 }
 
@@ -137,17 +141,47 @@
 }
 
 .vf-link--visited {
-  color: #54585a;
+  color: #734595;
 }
 
 .vf-link--hover {
   color: #193f90;
 }
 
+.vf-u-background-color--grey--dark .vf-link {
+  border-bottom: none;
+  text-decoration: none;
+  color: #a8d2ff;
+}
+
+.vf-u-background-color--grey--dark .vf-link:visited {
+  color: #cba3d8;
+  border-bottom: none;
+}
+
+.vf-u-background-color--grey--dark .vf-link:visited:hover {
+  color: #cba3d8;
+  text-decoration: underline;
+}
+
+.vf-u-background-color--grey--dark .vf-link:hover {
+  color: #a8d2ff;
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+.vf-u-background-color--grey--dark .vf-link--visited {
+  color: #cba3d8;
+}
+
+.vf-u-background-color--grey--dark .vf-link--hover {
+  color: #a8d2ff;
+}
+
 /*!
  * Component: @visual-framework/vf-video-teaser
- * Version: 1.0.0-beta.0
- * Location: components/vf-video-teaser
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */
 .vf-video-teaser__image {
   display: block;
