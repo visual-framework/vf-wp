@@ -104,7 +104,7 @@ add_filter('the_category', __NAMESPACE__ . '\\add_class_to_category',10,3);
 function mag1_widgets_init() {
 
 	register_sidebar( array(
-		'name'          => 'Magazine cover 1',
+		'name'          => 'Magazine right',
 		'id'            => 'magazine_cover_1',
 		'before_widget' => '<div>',
 		'after_widget'  => '</div>',
@@ -119,7 +119,7 @@ add_action( 'widgets_init', 'mag1_widgets_init' );
 function mag2_widgets_init() {
 
 	register_sidebar( array(
-		'name'          => 'Magazine cover 2',
+		'name'          => 'Magazine cover left',
 		'id'            => 'magazine_cover_2',
 		'before_widget' => '<div>',
 		'after_widget'  => '</div>',
@@ -129,6 +129,36 @@ function mag2_widgets_init() {
 
 }
 add_action( 'widgets_init', 'mag2_widgets_init' );
+
+ // TOPICS WIDGET 1
+ function top1_widgets_init() {
+
+	register_sidebar( array(
+		'name'          => 'Topics left',
+		'id'            => 'topics_left',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>',
+		'before_title'  => '',
+		'after_title'   => '',
+	) );
+
+}
+add_action( 'widgets_init', 'top1_widgets_init' );
+
+ // TOPICS WIDGET 2
+ function top2_widgets_init() {
+
+	register_sidebar( array(
+		'name'          => 'Topics right',
+		'id'            => 'topics_right',
+		'before_widget' => '<div>',
+		'after_widget'  => '</div>',
+		'before_title'  => '',
+		'after_title'   => '',
+	) );
+
+}
+add_action( 'widgets_init', 'top2_widgets_init' );
 
 // REMOVE LIST FROM CATEGORY
 

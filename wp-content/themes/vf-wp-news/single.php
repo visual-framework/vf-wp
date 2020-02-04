@@ -49,12 +49,12 @@ the_post();
 		<p class="vf-text--body vf-text-body--3"><?php the_tags(); ?></p>
 
 		<div class="vf-links vf-links--tight vf-links__list--s | vf-u-margin__top--xxl">
-			<h3 class="vf-links__heading">Source article</h3>
 			<?php if( have_rows('article_sources') ): ?>
 			<?php while( have_rows('article_sources') ): the_row(); 
 			
         $source = get_sub_field('source_link');
 		$description = get_sub_field('description');?>
+					<p class="vf-text--body vf-text-body--3">Source article:</p>
 			<ul class="vf-links__list vf-links__list--secondary | vf-list">
 				<li class="vf-list__item">
 					<a class="vf-list__link" href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a>

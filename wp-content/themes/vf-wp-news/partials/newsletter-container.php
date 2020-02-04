@@ -1,5 +1,5 @@
-<div class="vf-grid | vf-u-background-color--green--dark | newsletter-container" style="--page-grid-gap: 0">
-    <div class="vf-u-background-color--green--dark | vf-u-padding--md">
+<div class="vf-grid | vf-u-background-color--grey--dark | newsletter-container" style="--page-grid-gap: 0">
+    <div class="vf-u-background-color--grey--dark| vf-u-padding--md">
         <h3 class="vf-text vf-text-heading--4 | newsletter-title">Subscribe to our monthly e-newsletter</h3>
         <form action="" class="vf-form">
             <div class="vf-form__item" data-vf-js-form-floatlabel>
@@ -11,21 +11,21 @@
             </div>
         </form>
     </div>
-    <div class="vf-u-background-color--green--dark | vf-u-padding--md">
+    <div class="vf-u-background-color--grey--dark | vf-u-padding--md">
         <h3 class="vf-text vf-text-heading--4 | newsletter-title">Newsletter Archive</h3>
-        <a href="https://us19.campaign-archive.com/home/?u=0e036bd015172d9634dbdba98&id=35e7ef8d6f" class="vf-link press-link">Read past editions of our monthly e-newsletter</a>
+        <a href="https://us19.campaign-archive.com/home/?u=0e036bd015172d9634dbdba98&id=35e7ef8d6f" class="vf-link press-link" style="color: white;">Read past editions of our monthly e-newsletter</a>
     </div>
-    <div class="vf-u-background-color--green | vf-u-padding--md">
+    <div class="vf-u-background-color--grey--dark | vf-u-padding--md">
         <h3 class="vf-text vf-text-heading--4 | newsletter-title">For press</h3>
-        <a href="http://www.embl.de/aboutus/communication_outreach/media_relations/index.html?_ga=2.70344536.995063798.1574846519-497306958.1561211067" class="vf-link | vf-u-padding__bottom--sm | press-link">Press release archive</a>
-        <a href="https://www.embl.de/aboutus/communication_outreach/members/index.php?s_personId=CP-60027884&_ga=2.70344536.995063798.1574846519-497306958.1561211067" class="vf-link | vf-u-padding__bottom--sm | press-link">Contact Press Office</a>
+        <a href="http://www.embl.de/aboutus/communication_outreach/media_relations/index.html?_ga=2.70344536.995063798.1574846519-497306958.1561211067" class="vf-link | vf-u-padding__bottom--sm | press-link" style="color: white;">Press release archive</a>
+        <a href="https://www.embl.de/aboutus/communication_outreach/members/index.php?s_personId=CP-60027884&_ga=2.70344536.995063798.1574846519-497306958.1561211067" class="vf-link | vf-u-padding__bottom--sm | press-link" style="color: white;">Contact Press Office</a>
     </div>
-	        <div class="vf-u-background-color--green | vf-u-padding--md">
+	        <div class="vf-u-background-color--grey--dark | vf-u-padding--md">
             <h3 class="vf-text vf-text-heading--4 | newsletter-title">Follow us</h3>
-            <i class="social fab fa-twitter-square"></i>
-            <i class="social fab fa-facebook-square"></i>
-            <i class="social fab fa-linkedin"></i>
-            <i class="social fab fa-youtube-square"></i>
-            <i class="social fab fa-instagram"></i>
+            <a href="https://twitter.com/embl"><i class="social fab fa-twitter-square"></i></a>
+            <a href="https://www.facebook.com/embl.org/"><i class="social fab fa-facebook-square"></i></a>
+            <a href="https://www.linkedin.com/company/embl/"><i class="social fab fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/channel/UCyd8h6EUXckAJh7xKN1d28g"><i class="social fab fa-youtube-square"></i></a>
+            <a href="https://www.instagram.com/embl_org/?hl=en"><i class="social fab fa-instagram"></i></a>
         </div>
 </div>

@@ -41,6 +41,14 @@ if (is_search()) {
 }
 
 ?>
+<script>
+var homeIcon = document.querySelector('.hero-right-column');
+
+window.onResize = function() {
+  if (window.innerWidth <= 1100) homeIcon.classList.add('vf-grid');
+  else homeIcon.classList.remove('vf-grid');
+};
+</script>
 <section class="vf-inlay | vf-u-background-color--white">
 	<section class="vf-inlay__content | vf-u-background-color-ui--grey | hero-container">
 		<main class="vf-inlay__content--main | vf-u-margin--0">
@@ -192,4 +200,6 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 	<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
 </section>
+
 <?php get_template_part('partials/footer'); ?>
+

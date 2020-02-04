@@ -40,9 +40,7 @@ if (is_search()) {
 						<div class="vf-content | author-description">
 							<h4 class="author-name"><?php the_author(); ?></h4>
 							<p class="vf-summary__text"><?php echo nl2br(get_the_author_meta('description')); ?> </p>
-							<i class="fas fa-envelope"></i>
-							<i class="fab fa-linkedin"></i>
-							<i class="fab fa-twitter-square"></i>
+							<i class="fas fa-envelope" style="font-size: 16px;"></i><p class="vf-summary__text" style="display: inline-block;"><?php echo nl2br(get_the_author_meta('email')); ?></p>
 						</div>
 					</div>
 				</div>

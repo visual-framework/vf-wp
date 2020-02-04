@@ -11,16 +11,12 @@
 				<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
 					<?php dynamic_sidebar( 'magazine_cover_1' ); ?>
 				</div><?php endif; ?>
-				<div class="topic-list">
-					<h3 class="vf-text vf-text-heading--5 | vf-u-margin__left--sm | embl-etc">Issue 93, Summer 2019</h3>
-					<ul class="vf-list vf-list | vf-u-margin__left--lg">
-						<li class="vf-list__item  | vf-u-margin__bottom--0">&ndash;&nbsp;Robots grow bio-inspired shapes
-						</li>
-						<li class="vf-list__item  | vf-u-margin__bottom--0">&ndash;&nbsp;Wielding the genetic scissors
-						</li>
-						<li class="vf-list__item  | vf-u-margin__bottom--0">&ndash;&nbsp;Twenty years of EMBLEM</li>
-					</ul>
-				</div>
+
+				<?php if ( is_active_sidebar( 'topics_left' ) ) : ?>
+				<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+					<?php dynamic_sidebar( 'topics_left' ); ?>
+				</div><?php endif; ?>
+
 				<a class="vf-link | magazine-download" href="https://www.embl.de/aboutus/communication_outreach/publications/newsletter/issues/issue93.pdf">Download PDF</a>
 			</div>
 			<div class="magazine">
@@ -28,15 +24,10 @@
 				<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
 					<?php dynamic_sidebar( 'magazine_cover_2' ); ?>
 				</div><?php endif; ?>
-				<div class="topic-list" style="color: #fff;">
-					<h3 class="vf-text vf-text-heading--5 | vf-u-margin__left--sm | embl-etc">Issue 92, Winter 2018</h3>
-					<ul class="vf-list vf-list | vf-u-margin__left--lg">
-						<li class="vf-list__item | vf-u-margin__bottom--0">&ndash;&nbsp;Constructing tissue shapes with light</li>
-						<li class="vf-list__item | vf-u-margin__bottom--0">&ndash;&nbsp;In the flesh</li>
-						<li class="vf-list__item | vf-u-margin__bottom--0">&ndash;&nbsp;Translating science into designs
-						</li>
-					</ul>
-				</div>
+				<?php if ( is_active_sidebar( 'topics_right' ) ) : ?>
+				<div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+					<?php dynamic_sidebar( 'topics_right' ); ?>
+				</div><?php endif; ?>
 				<a class="vf-link | magazine-download" href="https://www.embl.de/aboutus/communication_outreach/publications/newsletter/issues/issue92.pdf">Download PDF</a>
 			</div>
 		</div>
