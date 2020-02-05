@@ -51,34 +51,26 @@ window.onResize = function() {
 </script>
 <section class="vf-inlay | vf-u-background-color--white">
 	<section class="vf-inlay__content | vf-u-background-color-ui--grey | hero-container">
-		<main class="vf-inlay__content--main | vf-u-margin--0">
-			<div class="vf-content">
-				<div class="hero-left-column">
-					<?php 
-					$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
+		<main class="vf-inlay__content--main |  hero-left-column | vf-content vf-u-margin--0">
+			<?php 
+			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();
 while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post();
 $ids[] = get_the_ID(); ?>
-					<?php include(locate_template('partials/vf-summary--article--color.php', false, false)); ?>
-					<?php endwhile;?>
-					<?php wp_reset_postdata(); ?>
-
-				</div>
-			</div>
+			<?php include(locate_template('partials/vf-summary--article--color.php', false, false)); ?>
+			<?php endwhile;?>
+			<?php wp_reset_postdata(); ?>
 		</main>
 
-		<main class="vf-inlay__content--additional">
-			<div class="hero-right-column">
-				<?php
+		<main class="vf-inlay__content--additional | hero-right-column">
+			<?php
 $cardsPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 2, 'meta_key' => 'featured',
-		'meta_value' => '1' ));
+	'meta_value' => '1' ));
 while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post(); 
-					$ids[] = get_the_ID(); ?>
-				<?php include(locate_template('partials/vf-summary--article-no-excerpt.php', false, false)); ?>
-				<?php endwhile; ?>
-				<?php wp_reset_postdata(); ?>
-
-			</div>
+				$ids[] = get_the_ID(); ?>
+			<?php include(locate_template('partials/vf-summary--article-no-excerpt.php', false, false)); ?>
+			<?php endwhile; ?>
+			<?php wp_reset_postdata(); ?>
 		</main>
 	</section>
 

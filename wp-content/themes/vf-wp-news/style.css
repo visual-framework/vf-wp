@@ -299,6 +299,7 @@ Text Domain:	 vf-wp-news-main
 	  box-shadow: none;
   }
   
+
   .hero-right-column article,
   .pow-container,
   .author-container {
@@ -307,11 +308,34 @@ Text Domain:	 vf-wp-news-main
   
   .hero-left-column .article-summary {
 	  min-height: 277px;
-	  color: #fff;
+    color: #fff;
   }
   
+  /* Grow the main news article to match the sidebar */
+  .hero-left-column .vf-summary--article {
+    display: flex;
+    flex-direction: column;
+    background: blue;
+    height: 100%;
+  }
+  
+  /* gap between news items on homepage */
+  .hero-right-column {
+    grid-gap: 10px 0;
+    display: grid;
+  }
   .hero-right-column article {
-	  margin-bottom: 10px;
+    margin-bottom: 0;  
+  }
+
+  /* equalize the height of the articles beneath the large screen width */
+  @media (max-width: 1024px)  {
+    .hero-right-column article {
+      display: flex;
+      flex-direction: column;
+      height: 96%;
+      background: white;
+    }
   }
   
   .hero-right-column .vf-summary__title {

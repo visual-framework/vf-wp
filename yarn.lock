@@ -1782,11 +1782,6 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-1.0.0-alpha.1.tgz#f2eb5d8f2a30948df23a3ebbcf19d82228d42e16"
   integrity sha512-EzXZqRnQ7DAv1r1YHJbFnSchlFn9SxNy/lwLhVgDekx+dl9WkbkMod06HDErQnUh27LhQAy/ee/xuziF7bctwg==
 
-"@visual-framework/vf-inlay@1.0.0-rc.1":
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-inlay/-/vf-inlay-1.0.0-rc.1.tgz#2c2994c7d5b2e4093eb1e76dffc24861ce24bc95"
-  integrity sha512-neL/yTBNQ6h4meOSLmj3UTOXlZTd/ySxuXdgk6iLvLODEAn30im61vNYoKXFxQGUhVEx+cxkhO7c9Mh8x1TPMA==
-
 "@visual-framework/vf-intro@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-intro/-/vf-intro-1.0.0.tgz#84471ab869855d9123b1e6929d137c3e3fc53670"

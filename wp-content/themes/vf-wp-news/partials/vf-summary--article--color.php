@@ -4,7 +4,7 @@ $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 
 ?>
-<article class="vf-summary vf-summary--article">
+<article class="vf-summary vf-summary--article" style="background-color: <?php the_field('color'); ?>">
 	<div class="post-image">
 		<a style="display: grid;" href="<?php the_permalink(); ?>">
 			<?php the_post_thumbnail(); ?>
