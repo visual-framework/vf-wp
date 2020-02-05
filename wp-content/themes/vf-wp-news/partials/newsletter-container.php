@@ -18,7 +18,7 @@
     <div class="vf-u-background-color--grey--dark | vf-u-padding--md">
         <h3 class="vf-text vf-text-heading--4 | newsletter-title">For press</h3>
         <a href="http://www.embl.de/aboutus/communication_outreach/media_relations/index.html?_ga=2.70344536.995063798.1574846519-497306958.1561211067" class="vf-link | vf-u-padding__bottom--sm | press-link" style="color: white;">Press release archive</a>
-        <a href="https://www.embl.de/aboutus/communication_outreach/members/index.php?s_personId=CP-60027884&_ga=2.70344536.995063798.1574846519-497306958.1561211067" class="vf-link | vf-u-padding__bottom--sm | press-link" style="color: white;">Contact Press Office</a>
+        <a href="https://www.embl.de/aboutus/communication_outreach/media_relations/index.html" class="vf-link | vf-u-padding__bottom--sm | press-link" style="color: white;">Contact Press Office</a>
     </div>
 	        <div class="vf-u-background-color--grey--dark | vf-u-padding--md">
             <h3 class="vf-text vf-text-heading--4 | newsletter-title">Follow us</h3>

@@ -312,11 +312,6 @@ Text Domain:	 vf-wp-news-main
   
   .hero-right-column article {
 	  margin-bottom: 10px;
-	  box-shadow: 1px 0px 3px #ccc;
-  }
-  
-  .hero-left-column article {
-	  box-shadow: 1px 0px 3px #ccc;
   }
   
   .hero-right-column .vf-summary__title {
