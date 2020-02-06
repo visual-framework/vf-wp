@@ -197,12 +197,12 @@ Text Domain:	 vf-wp-news-main
   }
   
   .category-latest .vf-summary__title {
-	  font-size: 19px;
-	  font-weight: 400;
+	  font-size: 24px;
+	  font-weight: 500;
   }
   
   .category-latest .vf-summary__text {
-	  font-size: 16px;
+	  font-size: 19px;
   }
   
   /* ---CONTENT PAGE----*/
@@ -287,12 +287,12 @@ Text Domain:	 vf-wp-news-main
   }
   
   .latest-posts-container .vf-summary__title {
-	  font-size: 19px;
-	  font-weight: 400;
+	  font-size: 24px;
+	  font-weight: 500;
   }
   
   .latest-posts-container .vf-summary__text {
-	  font-size: 16px;
+	  font-size: 19px;
   }
   
   .pow-container .post-image {
@@ -444,7 +444,8 @@ Text Domain:	 vf-wp-news-main
   /* narrows the first embl-grid column on the homepage latest news */
   
   .embl-grid.latest {
-	  --embl-grid-module--prime: 95px;
+    --embl-grid-spacing-normaliser: -30px;
+	  --embl-grid-module--prime: 120px;
 		  margin-bottom: 0;
   
   }

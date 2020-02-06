@@ -30,8 +30,8 @@ if (is_search()) {
 <section class="vf-inlay">
     <div class="vf-inlay__content" style="background-color: #fff;">
         <main class="vf-inlay__content--full-width category-container">
-            <div class="latest-title-column">
-                <h3 class="vf-links__heading"><?php wp_title(''); ?></h3>&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+            <div>
+                <h3 class="vf-section-header__heading vf-u-margin__bottom--md"><?php wp_title(''); ?></h3>
             </div>
             <div class="vf-grid vf-grid__col-3 category-latest">
                 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 

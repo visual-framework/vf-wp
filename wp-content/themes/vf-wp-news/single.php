@@ -74,8 +74,7 @@ the_post();
 <section class="vf-inlay">
 	<div class="vf-inlay__content | related-posts-container vf-u-background-color-ui--off-white">
 		<main class="vf-inlay__content--full-width">
-			<h3 class="vf-links__heading">More from this category</h3>&nbsp;&nbsp;<i
-				class="fas fa-arrow-circle-right"></i>
+			<h3 class="vf-section-header__heading">More from this category</h3>
 			<div class="vf-grid vf-grid__col-3">
 				<?php
 $args = array(

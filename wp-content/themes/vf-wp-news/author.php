@@ -50,8 +50,8 @@ if (is_search()) {
 
 	<div class="vf-inlay__content | vf-u-background-color-ui--white">
 		<main class="vf-inlay__content--full-width">
-			<div class="latest-title-column">
-				<h3 class="vf-links__heading">Articles by <?php the_author(); ?></h3>&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+			<div>
+				<h3 class="vf-section-header__heading vf-u-margin__bottom--md">Articles by <?php the_author(); ?></h3>
 			</div>
 			<div class="vf-grid | vf-grid__col-3 | category-latest">
 				<?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -76,7 +76,7 @@ if ( $post->ID == $do_not_duplicate ) continue; ?>
 		<main class="vf-inlay__content--full-width">
 			<div class="embl-grid | category-latest | category-top-stories">
 				<div style="min-width: 141px;">
-					<h3 class="vf-links__heading">Popular</h3>&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+					<h3 class="vf-section-header__heading">Popular</h3>
 				</div>
 				<div class="vf-grid vf-grid__col-3">
 					<?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));

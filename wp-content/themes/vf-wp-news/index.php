@@ -41,14 +41,7 @@ if (is_search()) {
 }
 
 ?>
-<script>
-var homeIcon = document.querySelector('.hero-right-column');
 
-window.onResize = function() {
-  if (window.innerWidth <= 1100) homeIcon.classList.add('vf-grid');
-  else homeIcon.classList.remove('vf-grid');
-};
-</script>
 <section class="vf-inlay | vf-u-background-color--white">
 	<section class="vf-inlay__content | vf-u-background-color-ui--grey | hero-container">
 		<main class="vf-inlay__content--main |  hero-left-column | vf-content vf-u-margin--0">
@@ -77,12 +70,10 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 	<div class="vf-inlay__content vf-u-background-color-ui--white">
 		<main class="vf-inlay__content--full-width | latest-posts-container">
 			<div class="embl-grid latest">
-				<div class="latest-title-column">
-					<a href="<?php site_url(); ?>/archive" class="vf-link vf-links__heading">Latest&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
-				</div>
+			<div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="<?php site_url(); ?>archive.php"> Latest <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path></svg></a></div>
 				<div class="vf-grid vf-grid__col-3">
 					<?php 
-					$latestPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 3));
+					$latestPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 3, 'category__not_in' => 487));
 					while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
 					<?php	$ids[] = get_the_ID(); ?>
 					<?php include(locate_template('partials/vf-summary--article.php', false, false)); ?>
@@ -93,11 +84,11 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 			</div>
 
 			<div class="embl-grid latest">
-				<div class="latest-title-column">
+				<div>
 				</div>
 				<div class="vf-grid vf-grid__col-3">
 					<?php 
-					$latestPostLoop2 = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 3));
+					$latestPostLoop2 = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 3, 'category__not_in' => 487));
 	while ($latestPostLoop2->have_posts()) : $latestPostLoop2->the_post(); ?>
 					<?php	$ids[] = get_the_ID(); ?>
 
@@ -110,11 +101,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 			<hr class="vf-divider">
 
 			<div class="embl-grid latest">
-				<div class="latest-title-column">
-					<a href="<?php echo esc_url( $science_link ); ?>"
-						class="vf-link vf-links__heading">Science&nbsp;&nbsp;<i
-						class="fas fa-arrow-circle-right"></i></a>
-				</div>
+			<div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="<?php echo esc_url( $science_link ); ?>"> Science <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path></svg></a></div>
 				<div class="vf-grid vf-grid__col-3">
 					<?php 
 					$scienceLoop = new WP_Query(array('category_name' => 'science', 'post__not_in' => $ids, 'posts_per_page' => 3));
@@ -130,10 +117,8 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 			<hr class="vf-divider">
 
 			<div class="embl-grid latest">
-				<div class="latest-title-column">
-					<a href="<?php echo esc_url( $lab_link ); ?>" class="vf-link vf-links__heading">Lab
-						Matters&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i></a>
-				</div>
+			<div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="<?php echo esc_url( $lab_link ); ?>"> Lab Matters <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path></svg></a></div>
+
 				<div class="vf-grid vf-grid__col-3">
 					<?php 
 					$labMattersLoop = new WP_Query(array('category_name' => 'lab-matters','post__not_in' => $ids, 'posts_per_page' => 3));
@@ -149,10 +134,8 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 			<hr class="vf-divider">
 
 			<div class="embl-grid latest">
-				<div class="latest-title-column">
-					<a href="<?php echo esc_url( $alumni_link ); ?>"
-						class="vf-link vf-links__heading">Alumni&nbsp;&nbsp;<i
-						class="fas fa-arrow-circle-right"></i></a> </div>
+			<div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="<?php echo esc_url( $alumni_link ); ?>"> Alumni <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path></svg></a></div>
+
 				<div class="vf-grid vf-grid__col-3">
 					<?php 
 					$alumniLoop = new WP_Query(array('category_name' => 'alumni','post__not_in' => $ids, 'posts_per_page' => 3));
@@ -168,10 +151,8 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 			<hr class="vf-divider">
 
 			<div class="embl-grid latest">
-				<div class="latest-title-column">
-					<a href="<?php echo esc_url( $events_link ); ?>"
-						class="vf-link vf-links__heading">Events&nbsp;&nbsp;<i
-						class="fas fa-arrow-circle-right"></i></a> </div>
+			<div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="<?php echo esc_url( $events_link ); ?>"> Events <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path></svg></a></div>
+
 				<div class="vf-grid vf-grid__col-3">
 					<?php 
 					$eventsLoop = new WP_Query(array('category_name' => 'events','post__not_in' => $ids, 'posts_per_page' => 3));
