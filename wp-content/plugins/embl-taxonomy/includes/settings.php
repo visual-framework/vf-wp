@@ -10,7 +10,7 @@ if ( ! class_exists('EMBL_Taxonomy_Settings') ) :
 class EMBL_Taxonomy_Settings {
 
   private $defaults = array(
-    'embl_taxonomy' => 'https://dev.beta.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub'
+    'embl_taxonomy' => 'https://wwww.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub'
   );
 
   private $props = array(

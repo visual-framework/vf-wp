@@ -47,7 +47,7 @@ https://dev.assets.emblstatic.net/vf/v2.0.0-beta.3/scripts/scripts.js
 EMBL ContentHub API:
 
 ```
-https://dev.beta.embl.org/api/v1/
+https://www.embl.org/api/v1/
 ```
 
 * Add and activate **ACF Pro** (Advanced Custom Fields) plugin
