@@ -153,7 +153,7 @@ The `TERM_ID` refers to the `wp_terms` table primary key.
 `options_embl_taxonomy` is the URL for the EMBL Taxonomy JSON feed. For example:
 
 ```
-https://dev.beta.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub
+https://www.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub
 ```
 
 If the three term options are set meta tags will be outputted in the `<head>`.
