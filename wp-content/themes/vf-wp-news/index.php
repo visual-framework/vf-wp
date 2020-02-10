@@ -79,7 +79,6 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 					<?php include(locate_template('partials/vf-summary--article.php', false, false)); ?>
 					<?php endwhile; ?>
 					<?php wp_reset_postdata(); ?>
-
 				</div>
 			</div>
 

@@ -33,7 +33,7 @@ if (is_search()) {
 			<div class="vf-grid | pow-article">
 				<div class="vf-content | pow-article-summary">
 					<h3 class="vf-links__heading | vf-u-margin__top--sm | author-heading">About the author</h3>
-					<div class="vf-grid | vf-u-padding--0 | author-summary">
+					<div class="vf-grid | vf-u-padding--0 | author-summary" style="max-width: fit-content;">
 						<div class="author-avatar">
 							<?php echo get_avatar( get_the_author_meta( 'ID' ), 90 ); ?>
 						</div>
@@ -55,15 +55,14 @@ if (is_search()) {
 			</div>
 			<div class="vf-grid | vf-grid__col-3 | category-latest">
 				<?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-$args = array(
-    'posts_per_page' => 6,
-    'paged' => $page,
-	'author__in' => $user_id
-	
-); 
-query_posts($args);?>
+				$args = array(
+    			'posts_per_page' => 6,
+   				'paged' => $page,
+				'author__in' => $user_id); 
+				query_posts($args);?>
+				
 				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
-if ( $post->ID == $do_not_duplicate ) continue; ?>
+				if ( $post->ID == $do_not_duplicate ) continue; ?>
 				<?php include(locate_template('partials/vf-summary--article.php', false, false)); ?>
 				<?php endwhile; endif; ?>
 			</div>
@@ -80,8 +79,8 @@ if ( $post->ID == $do_not_duplicate ) continue; ?>
 				</div>
 				<div class="vf-grid vf-grid__col-3">
 					<?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));
-	while ($popular->have_posts()) : $popular->the_post(); 
-	include(locate_template('partials/vf-summary--article-no-excerpt.php', false, false));?>
+					while ($popular->have_posts()) : $popular->the_post(); 
+					include(locate_template('partials/vf-summary--article-no-excerpt.php', false, false));?>
 					<?php endwhile; wp_reset_postdata(); ?>
 				</div>
 			</div>

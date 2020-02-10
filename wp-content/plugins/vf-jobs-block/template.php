@@ -29,6 +29,9 @@ if (vf_cache_empty($content)) {
       echo '<!-- As no content was found for this query, the jobs header has also been hidden. -->';
     }
     echo $content . PHP_EOL;
+    if ($was_no_result_found < 1) {
+      echo '<div><a href="vf-link" href="//www.embl.org/jobs">View all EMBL jobs</a></div>' . PHP_EOL;
+    }
   ?>
 
 </div>
