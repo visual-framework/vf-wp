@@ -32,16 +32,15 @@ Text Domain:	 vf-wp-news-main
   }
   
   .post-image img:hover {
-	  transform: scale(1.10);
+	   transform: scale(1.10);
 	   opacity: 0.8;
 		 filter: alpha(opacity=40);
   }
   
   .post-image {
-		  position: relative;
+		position: relative;
 	  overflow: hidden;
 	  background-color: #000;
-  /* 	box-shadow: 0px 0px 5px #ccc; */
   }
   
   
@@ -76,6 +75,10 @@ Text Domain:	 vf-wp-news-main
   }
   
   /* ------ NEWSLETTER ------ */
+
+  .social:hover {
+    color: #A8A99E;
+  }
   
   .press-link {
 	  display: block;
@@ -230,8 +233,8 @@ Text Domain:	 vf-wp-news-main
   }
   
   .related-posts-container .vf-summary__title {
-	  font-size: 19px;
-	  font-weight: 400;
+	  font-size: 24px;
+	  font-weight: 500;
 	  margin: 16px 0;
   }
   
@@ -315,7 +318,6 @@ Text Domain:	 vf-wp-news-main
   .hero-left-column .vf-summary--article {
     display: flex;
     flex-direction: column;
-    background: blue;
     height: 100%;
   }
   
@@ -367,7 +369,8 @@ Text Domain:	 vf-wp-news-main
   
   .pow-title .vf-summary__link,
   .pow-title .vf-summary__link:visited,
-  .pow-title .vf-summary__link:hover {
+  .pow-title .vf-summary__link:hover,
+  .pow-title .vf-summary__link:visited:hover {
 	  font-size: 24px;
 	  color: #ffffff;
   }
@@ -378,6 +381,11 @@ Text Domain:	 vf-wp-news-main
 	  color: #ffffff;
   }
   
+  .pow-article-summary .vf-section-header__heading--is-link:visited,
+  .pow-article-summary .vf-section-header__heading--is-link:visited:hover  {
+	  color: #D0D0CE;
+  }
+
   .pow-article-summary .vf-summary__text {
 	  font-size: 19px;
 	  color: #D0D0CE;
@@ -390,7 +398,9 @@ Text Domain:	 vf-wp-news-main
   }
   
   .pow-container img {
-	  max-width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: flex;
   }
   
   .pow-summary-title,
@@ -445,19 +455,15 @@ Text Domain:	 vf-wp-news-main
   
   .embl-grid.latest {
     --embl-grid-spacing-normaliser: -30px;
-	  --embl-grid-module--prime: 120px;
+	  --embl-grid-module--prime: 140px;
 		  margin-bottom: 0;
   
   }
   
-  .embl-grid.category-latest {
+  .embl-grid.category-latest,
+  .embl-grid.related-posts-container  {
 	  --embl-grid-module--prime: 95px;
 		  margin-bottom: 0;
   
   }
   
-  .embl-grid.related-posts-container {
-	  --embl-grid-module--prime: 95px;
-		  margin-bottom: 0;
-  
-  }
