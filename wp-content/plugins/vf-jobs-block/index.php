@@ -52,8 +52,8 @@ class VF_Jobs extends VF_Plugin {
       'limit' => $limit ? $limit : 10
     );
 
-    $sort_key = 'sort-field-value[field_jobs_expiration]';
-    $sort_order = 'ASC';
+    $sort_key = 'sort-field-value[created]';
+    $sort_order = 'DESC';
     $vars[$sort_key] = $sort_order;
 
     $filter_key = 'filter-all-fields';
