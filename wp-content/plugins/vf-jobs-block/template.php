@@ -15,6 +15,8 @@ if (vf_cache_empty($content)) {
 
   <?php
     $was_no_result_found = strpos($content,'Unfortunately no content was found for this query');
+    // @todo: this method to detecting no results found no longer works due to how caching is handeled, 
+    //        but maybe that's ok and we should be fine with showing the header + more jobs link
     if ($was_no_result_found < 1) {
       if ( ! empty($heading)) {
       ?>
