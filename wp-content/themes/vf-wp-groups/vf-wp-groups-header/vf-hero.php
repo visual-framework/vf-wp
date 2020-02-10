@@ -12,7 +12,7 @@ $levels = array(
   'easy',
   'normal',
   'medium',
-  'difficult',
+  'hard',
   'extreme',
 );
 
