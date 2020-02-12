@@ -1570,10 +1570,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-1.0.0.tgz#943438fc629eb360a02d9f02af2b3120b08acfac"
   integrity sha512-P90GeDSciaAh6qIOhp+x/D3GsuI7joUzLYLG6w4WsHFEqXM/z3giyxi+Lr9Xzt2QFrt6clLj88F8QexqIzX5/w==
 
-"@visual-framework/vf-button@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-1.0.0.tgz#58cf45d130ac7385687c068aab3280e00fa5c235"
-  integrity sha512-WixIx/dLaZ4KKckpFeYPnXWt5ueywiKxfM7hVACxWG4e+nylW5FOvRdHrDPCgE336wmWjrxH32jzWg5ufz30/A==
+"@visual-framework/vf-button@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-1.0.1.tgz#ea65913c085ea46f43c724f4faec04cd54bcf2c1"
+  integrity sha512-hu3Lmokm0KNCOcXXnJUI3vBfyxc/iaaUX43MC3b5G4cu05jzvXjrdhAnmVoQiv0AA2RdTppwxmGhb99NaQp3aQ==
 
 "@visual-framework/vf-card-container@1.0.0-alpha.1":
   version "1.0.0-alpha.1"
@@ -1595,15 +1595,15 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.0-alpha.0.tgz#a58a75fd569cceb71d2e63a29621c607a9f8386e"
   integrity sha512-I+n1HuirL8xTXZHAJ7Oy9Sie7a/ja0IrMvwKTTr+ekTgGBGVr038ogtE6W01YYgHT4rI/tFRPga0RDzBpnS35w==
 
-"@visual-framework/vf-content@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.0.3.tgz#6fde502766f6d806a7f63ba5cc758b8b3b79897a"
-  integrity sha512-n7nfCuE/8iMfDjwFmck+xaKTtVA5AGTENhy94RnXOfii8zWycG8zzJKy5DMSN1D+Za7SHdhHgtkRu0f7xhsjKg==
+"@visual-framework/vf-content@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.0.4.tgz#e78743913ab80a0f01eeedf0a1bf29af982f0d42"
+  integrity sha512-ZOfGATX6FeZsCT62ErGpLve6hWjaQgEz4Qvq4+yBnIKNgdlt2r9vnHcQxbkqLieD9t2G5uxRfUUjQPywLhbW8A==
   dependencies:
     "@visual-framework/vf-badge" "^1.0.0"
     "@visual-framework/vf-blockquote" "^1.0.2"
     "@visual-framework/vf-box" "^1.0.0"
-    "@visual-framework/vf-button" "^1.0.0"
+    "@visual-framework/vf-button" "^1.0.1"
     "@visual-framework/vf-divider" "^1.0.0"
     "@visual-framework/vf-figure" "^1.0.0-beta.1"
     "@visual-framework/vf-form__core" "^1.0.0-beta.1"
