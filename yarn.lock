@@ -1654,10 +1654,10 @@
     yeoman-generator "^4.2.0"
     yosay "^2.0.2"
 
-"@visual-framework/vf-design-tokens@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-1.0.2.tgz#76d805ce3b674e9edb64887aa181b2f58d4317c4"
-  integrity sha512-kr/dg1b9HXw5tExkleTIvk6l+bAUFrNIGqvj9lD94UgVDBrX2Ow56xXPjIoXEavBPT3FkvMGVxCJuiL3uyPjaw==
+"@visual-framework/vf-design-tokens@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-1.0.3.tgz#adfb9ba83a84677043d77af8649ebbb51c1cefff"
+  integrity sha512-nW+NoZCtHjIPnr/2AmRlDMuL204iPyQ59BoKKEsCpJuNyeQp/Eue5ddtG2FNFzE/yG6mz1a3wHNudFFHKto7Yw==
 
 "@visual-framework/vf-discussion@1.0.0-beta.1":
   version "1.0.0-beta.1"
