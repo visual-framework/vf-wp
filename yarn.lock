@@ -1812,10 +1812,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.0.0-rc.1.tgz#50cd975543fcc78fa9fa8e78c918e66642be1b8f"
   integrity sha512-JqSKE7LYd2qQpaRoRaEPIsppaylEGiPSKe1F/9GeNTa33z4FlIpQQSYqVi9HYHLbPbZw8pBwsdk7UJikqSur6Q==
 
-"@visual-framework/vf-navigation@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-navigation/-/vf-navigation-1.0.0.tgz#fef717c130c0c3cca6ee840aad212c5f379adc21"
-  integrity sha512-t2hSq/dm9thwKbUtMH9ba++Y5tg+t41So+CQKGavQ0poXtuk4i54RQ/vGL6C8WmldB/FIzX0ryevcvYct07sKQ==
+"@visual-framework/vf-navigation@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-navigation/-/vf-navigation-1.0.1.tgz#a10347d027d72997fe730f566ea892dbc75542e9"
+  integrity sha512-Gn4gk50NOvTVAS1N4sCAxh4QyLO4g+Pvb5BUCrQUJ4TbBBqCofLCNxiaXXds1I9Ly1f5tTO+IUtqEYownRzLCQ==
 
 "@visual-framework/vf-news-container@1.0.0-beta.1":
   version "1.0.0-beta.1"
