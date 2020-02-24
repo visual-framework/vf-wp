@@ -1703,21 +1703,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-1.0.0-alpha.8.tgz#45acd748abb1dff9fd694ad2b52c620e37aa20c0"
   integrity sha512-J1zqpOGKMTLRv7ATjiEbbTL+fyoY+/YzesTYgieuKZLe/kpg19qCTpZiukp070oM9g+LdlOocnrx9Akr4vCidA==
 
-"@visual-framework/vf-form__core@1.0.0-beta.1":
-  version "1.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__core/-/vf-form__core-1.0.0-beta.1.tgz#de06b54b18e830aef49fc8973de67ab7e15d8b38"
-  integrity sha512-waPvXQ4AU+MfF6OwBXLTcrHnpzd/2YYSxO/rGq2HU/BtOezgTSNzzA7WPwLvhsVFHQ+6Nf2KgLWyBgtyyjMjIg==
-  dependencies:
-    "@visual-framework/vf-form__checkbox" "^1.0.0-alpha.8"
-    "@visual-framework/vf-form__helper" "^1.0.0-alpha.8"
-    "@visual-framework/vf-form__input" "^1.0.0-alpha.10"
-    "@visual-framework/vf-form__item" "^1.0.0-alpha.9"
-    "@visual-framework/vf-form__label" "^1.0.0-alpha.9"
-    "@visual-framework/vf-form__radio" "^1.0.0-alpha.8"
-    "@visual-framework/vf-form__select" "^1.0.0-alpha.8"
-    "@visual-framework/vf-form__textarea" "^1.0.0-alpha.9"
-
-"@visual-framework/vf-form__core@^1.0.0-beta.2":
+"@visual-framework/vf-form__core@1.0.0-beta.2", "@visual-framework/vf-form__core@^1.0.0-beta.2":
   version "1.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__core/-/vf-form__core-1.0.0-beta.2.tgz#935e119d9c2238e52f55b75394ef1065c91f85bb"
   integrity sha512-0pXFyKxdFkGdxgLvivTKKp/e5j0m50lCpDuiJKO+mwY2rH83RfApdXS1NNa4m7U04BWbYu/8dRj7IBTAczUJ/g==
