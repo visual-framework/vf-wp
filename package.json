@@ -72,7 +72,7 @@
     "@visual-framework/vf-font-plex-sans": "1.0.0",
     "@visual-framework/vf-footer": "1.0.2",
     "@visual-framework/vf-form__checkbox": "1.0.0-alpha.8",
-    "@visual-framework/vf-form__core": "1.0.0-beta.1",
+    "@visual-framework/vf-form__core": "1.0.0-beta.2",
     "@visual-framework/vf-form__helper": "1.0.0-alpha.8",
     "@visual-framework/vf-form__input": "1.0.0-alpha.10",
     "@visual-framework/vf-form__radio": "1.0.0-alpha.8",
