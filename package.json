@@ -51,7 +51,7 @@
     "@visual-framework/ebi-vf1-integration": "1.0.0",
     "@visual-framework/embl-breadcrumbs-lookup": "1.0.0-beta.1",
     "@visual-framework/embl-conditional-edit": "1.0.0",
-    "@visual-framework/embl-content-hub-loader": "1.0.1",
+    "@visual-framework/embl-content-hub-loader": "1.0.2",
     "@visual-framework/embl-content-meta-properties": "1.0.0",
     "@visual-framework/embl-grid": "1.0.2",
     "@visual-framework/embl-logo": "1.0.2",

@@ -1508,10 +1508,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-conditional-edit/-/embl-conditional-edit-1.0.0.tgz#24b6fabc2e12ff85287135b7ec48e2372bd59a09"
   integrity sha512-grlXDpID4ZoRjiDH85vqb6Rf9uhYkugRQU7kfluxiemI727auGxd3LOsjddV1Mr2OF9hEgGhhBplXHS6S3OTlw==
 
-"@visual-framework/embl-content-hub-loader@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/embl-content-hub-loader/-/embl-content-hub-loader-1.0.1.tgz#1d699abc487007874c7b39d3ac93cdd28515230b"
-  integrity sha512-59GSaM6QfOD0Y6YI7dXLLQ8SlMCj/vVV+uMkTgjZsbOuZEFPKHyJnZ1vbDPsB/5EEIWunOYHIYlWyzeKa+/jMQ==
+"@visual-framework/embl-content-hub-loader@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-content-hub-loader/-/embl-content-hub-loader-1.0.2.tgz#62764004200998bb4c4a25aeaacd7e88ecb5739a"
+  integrity sha512-veMZRAnFXfZa+kJl9kKp9AvuOXY9Rrh/tuObZ0BXdb2avKe68FXofKupsMP95gqhYvDFNry6GXMLJ9WEJblFuA==
 
 "@visual-framework/embl-content-meta-properties@1.0.0":
   version "1.0.0"
