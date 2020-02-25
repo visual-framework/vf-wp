@@ -1498,10 +1498,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/ebi-vf1-integration/-/ebi-vf1-integration-1.0.0.tgz#faa84314aafc9db20755db3ab15f46ec98b4fcd8"
   integrity sha512-4IXouxgqEBsFNUl3nexSYG5TxW+ktet2CJr+Ht3cwKr7SyZKKylEj9fAKo6206l7zYrEhwf+J7lUP04b0f9m9A==
 
-"@visual-framework/embl-breadcrumbs-lookup@1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/embl-breadcrumbs-lookup/-/embl-breadcrumbs-lookup-1.0.0-beta.2.tgz#70876c12827975c836dc0cbcefbe019e2c913ea5"
-  integrity sha512-OxwCSZK9dOlhOZqAvc9SQR4jZgS//mmPosCUt9N8Z3onBovHKKvqZFZcs+uAsKJHGk7RW1/6ZOcBH75IDF4ZmQ==
+"@visual-framework/embl-breadcrumbs-lookup@1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-breadcrumbs-lookup/-/embl-breadcrumbs-lookup-1.0.0-beta.3.tgz#c8abb03f13f3230bb6a2474a38112a2506d0c445"
+  integrity sha512-eZH7td5Zkgsqa0mKaCrtK4bhR9Gw3nJohaAT00KYStb/cwpp3uZm2jlsZGxFqPIasdCL9+I9Q4p0Iu056y7U1w==
 
 "@visual-framework/embl-conditional-edit@1.0.0":
   version "1.0.0"
