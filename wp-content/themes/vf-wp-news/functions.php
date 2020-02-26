@@ -58,10 +58,7 @@ function add_slug_class_wp_list_categories($list) {
     return $list;
 }
 
- ?>
 
-
-<?php 
 
 // POPULAR POSTS 
 
@@ -104,7 +101,7 @@ add_filter('the_category', __NAMESPACE__ . '\\add_class_to_category',10,3);
 function mag1_widgets_init() {
 
 	register_sidebar( array(
-		'name'          => 'Magazine right',
+		'name'          => 'Magazine cover right',
 		'id'            => 'magazine_cover_1',
 		'before_widget' => '<div>',
 		'after_widget'  => '</div>',

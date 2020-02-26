@@ -25,3 +25,4 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 			</div>
 </article>
 <!--/vf-summary-->
+

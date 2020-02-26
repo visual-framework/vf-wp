@@ -26,9 +26,7 @@ the_post();
 				<p class="vf-meta__date | vf-text-body--5"><?php echo reading_time(); ?> read</p>
 			</div>
 			<div class="vf-meta__details">
-				<p class="vf-meta__topics | vf-text-body--5">Topics:&nbsp;
-				<a class="vf-meta__topics | vf-text-body--6"><?php the_category(); ?></a>
-				</p>
+				<p class="vf-meta__topics | vf-text-body--6"><?php the_category(); ?></p>
 			</div>
 		</div>
 	</div>
@@ -46,7 +44,24 @@ the_post();
 			</figcaption>
 		</figure>
 			<?php the_content(); ?>
-		<p class="vf-text--body vf-text-body--3"><?php the_tags(); ?></p>
+
+			<hr class="vf-divider">
+
+		<div class="vf-links vf-links--tight vf-links__list--s | vf-u-margin__top--xxl">
+			<?php if( have_rows('related_links') ): ?>
+				<p class="vf-text--body vf-text-body--3">Related links:</p>
+			<?php while( have_rows('related_links') ): the_row(); 
+			
+        $source = get_sub_field('related_link');
+		$description = get_sub_field('description');?>
+			<ul class="vf-links__list vf-links__list--secondary | vf-list">
+				<li class="vf-list__item">
+					<a class="vf-list__link" href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a>
+				</li>
+			</ul>
+			<?php endwhile; ?>
+			<?php endif; ?>
+		</div>
 
 		<div class="vf-links vf-links--tight vf-links__list--s | vf-u-margin__top--xxl">
 			<?php if( have_rows('article_sources') ): ?>
@@ -63,6 +78,7 @@ the_post();
 			<?php endwhile; ?>
 			<?php endif; ?>
 		</div>
+		<p class="vf-text--body vf-text-body--3"><?php the_tags(); ?></p>
 	</div>
 
 	<div class="social-share-box">
@@ -72,9 +88,9 @@ the_post();
 </main>
 
 <section class="vf-inlay">
-	<div class="vf-inlay__content | related-posts-container vf-u-background-color-ui--off-white">
+	<div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs">
 		<main class="vf-inlay__content--full-width">
-			<h3 class="vf-section-header__heading">More from this category</h3>
+			<h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
 			<div class="vf-grid vf-grid__col-3">
 				<?php
 $args = array(
@@ -96,18 +112,18 @@ $query = new wp_query( $args );
 
 foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
 
-				<?php include(locate_template('partials/vf-summary--article-no-excerpt.php', false, false)); ?>
+				<?php include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
 				<?php endforeach;
 wp_reset_postdata(); ?>
 			</div>
 		</main>
 	</div>
-
 	<?php include(locate_template('partials/pow-container.php', false, false)); ?>
-
+	
 	<?php include(locate_template('partials/embletc-container.php', false, false)); ?>
-
+	
 	<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
-
+	
 </section>
+
 <?php get_template_part('partials/footer');?>
