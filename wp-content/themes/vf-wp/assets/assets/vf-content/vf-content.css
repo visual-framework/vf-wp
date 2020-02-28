@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-heading
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -115,8 +115,8 @@
 
 /*!
  * Component: @visual-framework/vf-badge
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.1
+ * Location: components/vf-badge
  */
 .vf-badge {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -251,8 +251,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-text
- * Version: 1.0.1
- * Location: components/vf-core-
+ * Version: 1.0.0
+ * Location: components/vf-text
  */
 .vf-text-body > a {
   border-bottom: none;
@@ -332,8 +332,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-link
- * Version: 1.0.1
- * Location: components/vf-core-
+ * Version: 1.0.2
+ * Location: components/vf-link
  */
 .vf-link {
   border-bottom: none;
@@ -397,13 +397,13 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__core
- * Version: 1.0.0-beta.1
- * Location: components/vf-core-
+ * Version: 1.0.0-beta.2
+ * Location: components/vf-form/vf-form__core
  */
 /*!
  * Component: @visual-framework/vf-form__helper
- * Version: 1.0.0-alpha.8
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.7
+ * Location: components/vf-form/vf-form__helper
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -422,8 +422,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__input
- * Version: 1.0.0-alpha.10
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-form/vf-form__input
  */
 .vf-form__input:not([type='file']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -616,8 +616,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__select
- * Version: 1.0.0-alpha.8
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.7
+ * Location: components/vf-form/vf-form__select
  */
 .vf-form__select {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -664,8 +664,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__checkbox
- * Version: 1.0.0-alpha.8
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.7
+ * Location: components/vf-form/vf-form__checkbox
  */
 .vf-form__item.vf-form__item--checkbox {
   margin-bottom: 16px;
@@ -721,8 +721,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__radio
- * Version: 1.0.0-alpha.8
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.7
+ * Location: components/vf-form/vf-form__radio
  */
 .vf-form__radio {
   opacity: 0;
@@ -775,8 +775,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__textarea
- * Version: 1.0.0-alpha.9
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-form/vf-form__textarea
  */
 .vf-form__textarea {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -802,8 +802,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__item
- * Version: 1.0.0-alpha.9
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-form/vf-form__item
  */
 .vf-form__item {
   display: block;
@@ -817,8 +817,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__label
- * Version: 1.0.0-alpha.9
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-form/vf-form__label
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -836,8 +836,8 @@ a.vf-badge--primary:hover {
 
 /*!
 * Component: @visual-framework/vf-button
-* Version: 1.0.0
-* Location: components/vf-core-
+* Version: 1.0.2
+* Location: components/vf-button
 */
 .vf-button {
   --vf-button__color__background--default: var(--vf-color--grey);
@@ -860,6 +860,7 @@ a.vf-badge--primary:hover {
   border: 4px solid var(--vf-button-border-color, var(--vf-button__color__background--default));
   -webkit-box-shadow: 8px 8px 0 var(--vf-button-shadow-background-color, var(--vf-button__color__background--default-dark)), -5px -5px rgba(0, 0, 0, 0);
           box-shadow: 8px 8px 0 var(--vf-button-shadow-background-color, var(--vf-button__color__background--default-dark)), -5px -5px rgba(0, 0, 0, 0);
+  color: #ffffff;
   color: var(--vf-button-text-color, #ffffff);
   cursor: pointer;
   display: inline-block;
@@ -922,10 +923,12 @@ a.vf-button:hover, a.vf-button:focus {
 
 .vf-button--outline {
   --vf-button-background-color: #ffffff;
+  color: #3b6fb6;
   color: var(--vf-button-border-color, var(--vf-button__color__background--default));
 }
 
 .vf-button--outline:hover {
+  color: #3b6fb6;
   color: var(--vf-button-border-color);
 }
 
@@ -1017,8 +1020,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-figure
- * Version: 1.0.0-beta.1
- * Location: components/vf-core-
+ * Version: 1.0.0-beta.0
+ * Location: components/vf-figure
  */
 .vf-figure {
   margin: 0;
@@ -1046,8 +1049,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-list
  */
 .vf-list {
   list-style-type: none;
@@ -1133,7 +1136,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-blockquote
  * Version: 1.0.2
- * Location: components/vf-core-
+ * Location: components/vf-blockquote
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1168,8 +1171,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.8
+ * Location: components/vf-divider
  */
 .vf-divider {
   background-color: #d8d8d8;
@@ -1182,15 +1185,19 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-box
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.1
+ * Location: components/vf-box
  */
 .vf-box {
-  background-color: #54585a;
-  border-color: #54585a;
+  --box-text-color: var( --vf-box-theme-color--foreground, var(--vf-theme-color--foreground, #000000));
+  --box-background-color: var(--vf-box-theme-color--background, var(--vf-theme-color--background, #ffffff));
+  background-color: #ffffff;
+  background-color: var(--box-background-color);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  color: #ffffff;
+  color: #000000;
+  color: var(--box-text-color);
+  display: block;
   margin-bottom: 24px;
   padding: 24px 16px;
   width: 100%;
@@ -1198,6 +1205,31 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 .vf-box :last-child {
   margin-bottom: 0;
+}
+
+.vf-box--is-link {
+  text-decoration: none;
+  -webkit-transition-duration: 250ms;
+          transition-duration: 250ms;
+  -webkit-transition-property: -webkit-box-shadow;
+  transition-property: -webkit-box-shadow;
+  transition-property: box-shadow;
+  transition-property: box-shadow, -webkit-box-shadow;
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
+}
+
+.vf-box--is-link:hover {
+  -webkit-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
+  -webkit-transition-duration: 250ms;
+          transition-duration: 250ms;
+  -webkit-transition-property: -webkit-box-shadow;
+  transition-property: -webkit-box-shadow;
+  transition-property: box-shadow;
+  transition-property: box-shadow, -webkit-box-shadow;
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
 }
 
 .vf-box__heading {
@@ -1230,22 +1262,40 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   padding: 32px;
 }
 
-.vf-box--primary {
-  background-color: #193f90;
-  border-color: #193f90;
-  color: #ffffff;
+.vf-box--easy {
+  --box-text-color: var(--vf-box-theme-color--background, var(--vf-theme-color--background));
+  --box-background-color: #ffffff;
+  border-bottom: 4px solid;
 }
 
-.vf-box--secondary {
-  background-color: #18974c;
-  border-color: #18974c;
-  color: #ffffff;
+.vf-box--normal {
+  --box-text-color: var(--vf-box-theme-color--foreground, var(--vf-theme-color--foreground, #ffffff));
+  --box-background-color: var(--vf-box-theme-color--background, var(--vf-theme-color--background, #000000));
 }
 
-.vf-box--tertiary {
-  background-color: #54585a;
-  border-color: #54585a;
-  color: #ffffff;
+.vf-box-theme--primary {
+  --vf-box-theme-color--foreground: #ffffff;
+  --vf-box-theme-color--background: #18974c;
+}
+
+.vf-box-theme--secondary {
+  --vf-box-theme-color--foreground: #ffffff;
+  --vf-box-theme-color--background: #3b6fb6;
+}
+
+.vf-box-theme--tertiary {
+  --vf-box-theme-color--foreground: #ffffff;
+  --vf-box-theme-color--background: #707372;
+}
+
+.vf-box-theme--quaternary {
+  --vf-box-theme-color--foreground: #000000;
+  --vf-box-theme-color--background: #f4c61f;
+}
+
+.vf-box-theme--quinary {
+  --vf-box-theme-color--background: #f3f3f3;
+  --vf-box-theme-color--foreground: #000000;
 }
 
 .vf-box--rounded {
@@ -1256,13 +1306,12 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   background-color: transparent;
   border-style: solid;
   border-width: 2px;
-  color: #000000;
 }
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.0.3
- * Location: components/vf-core-
+ * Version: 1.0.5
+ * Location: components/vf-content
  */
 .vf-content h1:not([class*='vf-']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;

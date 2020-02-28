@@ -8,7 +8,7 @@ var colno = 0;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<footer class=\"vf-footer | vf-body\">\n  <div class=\"vf-footer__inner\">\n    <p class=\"vf-footer__notice\">A description of a site or organisation and what its goals are.</p>\n    <div class=\"vf-footer__links-group | vf-grid\">\n      <div class=\"vf-links\">\n        <h4 class=\"vf-links__heading\">Category</h4>\n        <ul class=\"vf-links__list | vf-list\">\n          <li class=\"vf-list__item\">\n            <a class=\"vf-list__link\" href=\"";
+output += "<footer class=\"vf-footer\">\n  <div class=\"vf-footer__inner\">\n    <p class=\"vf-footer__notice\">A description of a site or organisation and what its goals are.</p>\n    <div class=\"vf-footer__links-group | vf-grid\">\n      <div class=\"vf-links\">\n        <h4 class=\"vf-links__heading\">Category</h4>\n        <ul class=\"vf-links__list | vf-list\">\n          <li class=\"vf-list__item\">\n            <a class=\"vf-list__link\" href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "footer__url"), env.opts.autoescape);
 output += "\">A link</a>\n          </li>\n          <li class=\"vf-list__item\">\n            <a class=\"vf-list__link\" href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "footer__url"), env.opts.autoescape);

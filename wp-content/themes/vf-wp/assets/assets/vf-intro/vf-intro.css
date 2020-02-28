@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-text
- * Version: 1.0.1
- * Location: components/vf-core-
+ * Version: 1.0.0
+ * Location: components/vf-text
  */
 .vf-text-body > a {
   border-bottom: none;
@@ -122,8 +122,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-heading
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -196,8 +196,8 @@
 
 /*!
  * Component: @visual-framework/vf-intro
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-intro
  */
 .vf-intro {
   margin: 0 0 110px 0;

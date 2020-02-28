@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-banner
- * Version: 1.0.1
- * Location: components/vf-core-
+ * Version: 1.0.2
+ * Location: components/vf-banner
  */
 .vf-banner {
   -webkit-box-sizing: border-box;
@@ -52,6 +52,10 @@
 
 .vf-banner .vf-badge {
   margin-right: 16px;
+}
+
+.vf-banner [class*='vf-text'] .vf-link {
+  text-decoration: underline;
 }
 
 .vf-banner--blocking {

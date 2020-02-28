@@ -8,7 +8,7 @@ var colno = 0;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<section class=\"vf-hero vf-hero--easy\">\n  <div class=\"vf-hero__content\">\n";
+output += "<section class=\"vf-hero vf-hero--very-easy\">\n  <div class=\"vf-hero__content\">\n";
 if(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading")) {
 output += " <h2 class=\"vf-hero__heading\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading"), env.opts.autoescape);

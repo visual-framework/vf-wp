@@ -8,7 +8,7 @@ var colno = 0;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<section class=\"vf-hero vf-hero--easy\">\n\n  <div class=\"vf-hero__content\">\n";
+output += "<section class=\"vf-hero vf-hero--very-easy\">\n\n  <div class=\"vf-hero__content\">\n";
 if(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading")) {
 output += " <h2 class=\"vf-hero__heading\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading"), env.opts.autoescape);
@@ -21,7 +21,7 @@ output += "<a class=\"vf-link\" href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link"), env.opts.autoescape);
 output += "\"> ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link_text"), env.opts.autoescape);
-output += "</a></p>\n  </div>\n\n</section>\n\n<section class=\"vf-hero vf-hero--normal\">\n  <style>.vf-hero {--vf-hero-bg-image: url('../../assets/vf-hero/assets/vf-intro-group.png');}</style>\n\n  <div class=\"vf-hero__content\">\n";
+output += "</a></p>\n  </div>\n\n</section>\n\n<section class=\"vf-hero vf-hero--easy\">\n  <style>.vf-hero {--vf-hero-bg-image: url('../../assets/vf-hero/assets/vf-intro-group.png');}</style>\n\n  <div class=\"vf-hero__content\">\n";
 if(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading")) {
 output += " <h2 class=\"vf-hero__heading\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading"), env.opts.autoescape);
@@ -34,7 +34,7 @@ output += "<a class=\"vf-link\" href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link"), env.opts.autoescape);
 output += "\"> ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link_text"), env.opts.autoescape);
-output += "</a></p>\n  </div>\n\n</section>\n\n<section class=\"vf-hero vf-hero--medium | vf-hero-theme--primary\">\n  <style>.vf-hero {--vf-hero-bg-image: url('../../assets/vf-hero/assets/vf-intro-group.png');}</style>\n\n  <div class=\"vf-hero__content\">\n";
+output += "</a></p>\n  </div>\n\n</section>\n\n<section class=\"vf-hero vf-hero--normal | vf-hero-theme--primary\">\n  <style>.vf-hero {--vf-hero-bg-image: url('../../assets/vf-hero/assets/vf-intro-group.png');}</style>\n\n  <div class=\"vf-hero__content\">\n";
 if(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading")) {
 output += " <h2 class=\"vf-hero__heading\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading"), env.opts.autoescape);

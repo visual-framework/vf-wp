@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-form__input
- * Version: 1.0.0-alpha.10
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-form/vf-form__input
  */
 .vf-form__input:not([type='file']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
