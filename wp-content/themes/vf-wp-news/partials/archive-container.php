@@ -2,10 +2,9 @@
 		<main class="vf-inlay__content--full-width | vf-u-margin--0">
 			<div class="vf-grid" style="--page-grid-gap: 0px;">
 				<div class="vf-links vf-links--tight vf-links__list--s">
-					<h3 class="vf-links__heading">Last 6 months</h3>&nbsp;&nbsp;<i
-						class="fas fa-arrow-circle-right"></i>
+					<h3 class="vf-links__heading">Last 6 months:</h3>
 				</div>
-				<div class="vf-links vf-links--tight vf-links__list--s | border-right">
+				<div class="vf-links vf-links--tight vf-links__list--s">
 					<ul class="vf-links__list vf-links__list--secondary | vf-list">
 						<?php 
 $args = array(
@@ -23,7 +22,7 @@ wp_get_archives( $args );
 				</div>
 
 				<div class="vf-links vf-links--tight vf-links__list--s | vf-u-padding__left--lg">
-					<h3 class="vf-links__heading">By year</h3>&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+					<h3 class="vf-links__heading">By year:</h3>
 				</div>
 				<div class="vf-links vf-links--tight vf-links__list--s | vf-u-background-color--gre | ">
 					<ul class="vf-links__list vf-links__list--secondary | vf-list">
@@ -42,8 +41,8 @@ wp_get_archives( $args );
 					</ul>
 				</div>
 
-				<div class="vf-links vf-links--tight vf-links__list--s| vf-u-padding__left--lg | border-left">
-					<h3 class="vf-links__heading">By topics</h3>&nbsp;&nbsp;<i class="fas fa-arrow-circle-right"></i>
+				<div class="vf-links vf-links--tight vf-links__list--s| vf-u-padding__left--lg">
+					<h3 class="vf-links__heading">By topics:</h3>
 				</div>
 				<div class="vf-links vf-links--tight vf-links__list--s">
 					<ul class="vf-links__list vf-links__list--secondary | vf-list">

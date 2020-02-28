@@ -27,11 +27,9 @@ if (is_search()) {
 
 ?>
 
-<section class="vf-inlay">
-    <div class="vf-inlay__content" style="background-color: #fff;">
-        <main class="vf-inlay__content--full-width category-container">
-            <div>
-                <h3 class="vf-section-header__heading vf-u-margin__bottom--md"><?php wp_title(''); ?></h3>
+
+            <div class="vf-grid">
+                <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;"><?php wp_title(''); ?></h3>
             </div>
             <div class="vf-grid vf-grid__col-3 category-latest">
                 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
@@ -39,9 +37,12 @@ if ( $post->ID == $do_not_duplicate ) continue; ?>
                 <?php include(locate_template('partials/vf-summary--article.php', false, false)); ?>
                 <?php endwhile; endif; ?>
             </div>
-            <?php vf_pagination();?>
-        </main>
-    </div>
+            <div class="vf-grid" style="margin: 4%">			<?php vf_pagination();
+      ?>
+</div>
+
+<section class="vf-inlay">
+
 	
 	<?php include(locate_template('partials/archive-container.php', false, false)); ?>
 
