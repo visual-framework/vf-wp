@@ -13,7 +13,7 @@ the_post();
 
 <main class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
 	<div class="article-left-col">
-		<div class="vf-article-meta-information | author-box" style="display: block;">
+		<div class="vf-article-meta-information | author-box">
 			<div class="vf-author | vf-article-meta-info__author">
 				<?php echo get_avatar( get_the_author_meta( 'ID' ), 48); ?>
 				<p class="vf-author__name | vf-text-body--5">

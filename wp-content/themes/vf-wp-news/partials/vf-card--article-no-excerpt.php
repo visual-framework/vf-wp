@@ -12,7 +12,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
     <h3 class="vf-card__title">
 	<a href="<?php the_permalink(); ?>" class="vf-link vf-link--secondary"><?php echo $title; ?></a>
 	</h3>
-	<time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+	<time class="vf-summary__date vf-u-text-color--grey | vf-u-margin__left--0" title="<?php the_time('c'); ?>"
                 datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
         <span class="vf-summary__meta | vf-u-margin__bottom--xs ">
 			<p class="vf-summary__meta vf-u-margin__bottom--xs vf-u-margin__top--xs">By&nbsp;<a class="vf-summary__author vf-summary__link" href="<?php echo $author_url; ?>"

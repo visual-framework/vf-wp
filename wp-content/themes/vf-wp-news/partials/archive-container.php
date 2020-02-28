@@ -21,7 +21,7 @@ wp_get_archives( $args );
 					</ul>
 				</div>
 
-				<div class="vf-links vf-links--tight vf-links__list--s | vf-u-padding__left--lg">
+				<div class="vf-links vf-links--tight vf-links__list--s">
 					<h3 class="vf-links__heading">By year:</h3>
 				</div>
 				<div class="vf-links vf-links--tight vf-links__list--s | vf-u-background-color--gre | ">
@@ -41,7 +41,7 @@ wp_get_archives( $args );
 					</ul>
 				</div>
 
-				<div class="vf-links vf-links--tight vf-links__list--s| vf-u-padding__left--lg">
+				<div class="vf-links vf-links--tight vf-links__list--s">
 					<h3 class="vf-links__heading">By topics:</h3>
 				</div>
 				<div class="vf-links vf-links--tight vf-links__list--s">

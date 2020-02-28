@@ -17,7 +17,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
             <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo $title; ?></a>
         </h2>
         <p class="vf-summary__text | vf-u-margin__bottom--sm"><?php echo get_the_excerpt(); ?></p>
-        <time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+        <time class="vf-summary__date | vf-u-margin__left--0" title="<?php the_time('c'); ?>"
                 datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
         <span class="vf-summary__meta | vf-u-margin__bottom--xs vf-u-margin__top--xs">
             <p class="vf-summary__meta">By&nbsp;</p>
