@@ -7,11 +7,14 @@ get_template_part('partials/header');
 the_post();
 ?>
 
-<div class="vf-grid">
-                <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;"><?php wp_title(''); ?></h3>
-            </div>
-            <div class="vf-grid vf-grid__col-3 category-latest">
-			<?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+<section class="vf-inlay">
+	<div class="vf-inlay__content vf-u-background-color-ui--white">
+		<main class="vf-inlay__content--full-width | vf-u-margin__bottom--0 | category-container">
+			<div>
+				<h2 class="vf-text vf-text-heading--1" style="font-weight: 400;">Archive</h2>
+			</div>
+			<div class="vf-grid vf-grid__col-3 | category-latest">
+				<?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array(
     'posts_per_page' => 9,
     'paged' => $page,); 

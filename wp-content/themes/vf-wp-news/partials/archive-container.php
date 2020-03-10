@@ -1,12 +1,13 @@
-<div class="vf-inlay__content | vf-u-background-color--grey--dark | vf-u-padding__top--md | vf-u-padding__bottom--md | archive-container">
-		<main class="vf-inlay__content--full-width | vf-u-margin--0">
-			<div class="vf-grid" style="--page-grid-gap: 0px;">
-				<div class="vf-links vf-links--tight vf-links__list--s">
-					<h3 class="vf-links__heading">Last 6 months:</h3>
-				</div>
-				<div class="vf-links vf-links--tight vf-links__list--s">
-					<ul class="vf-links__list vf-links__list--secondary | vf-list">
-						<?php 
+<div
+  class="vf-inlay__content | vf-u-background-color--grey--dark | vf-u-padding__top--md | vf-u-padding__bottom--md | archive-container">
+  <main class="vf-inlay__content--full-width | vf-u-margin--0">
+    <div class="vf-grid" style="--page-grid-gap: 0px;">
+      <div class="vf-links vf-links--tight vf-links__list--s">
+        <h3 class="vf-links__heading">Last 6 months:</h3>
+      </div>
+      <div class="vf-links vf-links--tight vf-links__list--s">
+        <ul class="vf-links__list vf-links__list--secondary | vf-list">
+          <?php 
 $args = array(
     'type'            => 'monthly',
 	'limit'           => '6',
@@ -18,15 +19,15 @@ $args = array(
 );
 wp_get_archives( $args );
 ?>
-					</ul>
-				</div>
+        </ul>
+      </div>
 
-				<div class="vf-links vf-links--tight vf-links__list--s">
-					<h3 class="vf-links__heading">By year:</h3>
-				</div>
-				<div class="vf-links vf-links--tight vf-links__list--s | vf-u-background-color--gre | ">
-					<ul class="vf-links__list vf-links__list--secondary | vf-list">
-						<?php 
+      <div class="vf-links vf-links--tight vf-links__list--s">
+        <h3 class="vf-links__heading">By year:</h3>
+      </div>
+      <div class="vf-links vf-links--tight vf-links__list--s | vf-u-background-color--gre | ">
+        <ul class="vf-links__list vf-links__list--secondary | vf-list">
+          <?php 
 $args = array(
 	'format' => 'custom',
     'type'            => 'yearly',
@@ -38,23 +39,23 @@ $args = array(
 );
 wp_get_archives( $args );
 ?>
-					</ul>
-				</div>
+        </ul>
+      </div>
 
-				<div class="vf-links vf-links--tight vf-links__list--s">
-					<h3 class="vf-links__heading">By topics:</h3>
-				</div>
-				<div class="vf-links vf-links--tight vf-links__list--s">
-					<ul class="vf-links__list vf-links__list--secondary | vf-list">
-						<?php 
+      <div class="vf-links vf-links--tight vf-links__list--s">
+        <h3 class="vf-links__heading">By topics:</h3>
+      </div>
+      <div class="vf-links vf-links--tight vf-links__list--s">
+        <ul class="vf-links__list vf-links__list--secondary | vf-list">
+          <?php 
 			$args = array(
 	'title_li' => '',
 	'show_count' => true
 );
 wp_list_categories( $args );
 ?>
-					</ul>
-				</div>
-			</div>
-		</main>
-	</div>
+        </ul>
+      </div>
+    </div>
+  </main>
+</div>

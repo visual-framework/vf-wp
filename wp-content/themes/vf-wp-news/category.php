@@ -26,39 +26,39 @@ if (is_search()) {
 }
 ?>
 
-			<div class="vf-grid">
-				<h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;"><?php wp_title(''); ?></h2>
-			</div>
-			<div class="vf-grid vf-grid__col-3 | category-latest">
-				<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
+<div class="vf-grid">
+  <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;"><?php wp_title(''); ?></h2>
+</div>
+<div class="vf-grid vf-grid__col-3 | category-latest">
+  <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
 if ( $post->ID == $do_not_duplicate ) continue; ?>
-				<?php include(locate_template('partials/vf-summary--article.php', false, false)); ?>
-				<?php endwhile; endif; ?>
-			</div>
-			<div class="vf-grid" style="margin: 4%">
+  <?php include(locate_template('partials/vf-summary--article.php', false, false)); ?>
+  <?php endwhile; endif; ?>
+</div>
+<div class="vf-grid" style="margin: 4%">
 
-			<?php vf_pagination(); ?>
-</div>		
+  <?php vf_pagination(); ?>
+</div>
 
 
 <section class="vf-inlay">
-	<div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs">
-		<main class="vf-inlay__content--full-width">
-			<h3 class="vf-section-header__heading | vf-u-margin__bottom--md">Popular</h3>
-			<div class="vf-grid vf-grid__col-3">
-			<?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'cat' => get_query_var('cat')));
+  <div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs">
+    <main class="vf-inlay__content--full-width">
+      <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">Popular</h3>
+      <div class="vf-grid vf-grid__col-3">
+        <?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'cat' => get_query_var('cat')));
 	while ($popular->have_posts()) : $popular->the_post(); 
 	include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
-					<?php endwhile; wp_reset_postdata(); ?>
-			</div>
-		</main>
-	</div>
+        <?php endwhile; wp_reset_postdata(); ?>
+      </div>
+    </main>
+  </div>
 
-	<?php include(locate_template('partials/embletc-container.php', false, false)); ?>
+  <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
 
-	<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
-	
-	</section>
+  <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
+
+</section>
 
 
 <?php get_template_part('partials/footer');?>
