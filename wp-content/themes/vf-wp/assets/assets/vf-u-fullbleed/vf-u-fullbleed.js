@@ -1,4 +1,4 @@
-// <%= componentName %>
+// vf-ui-fullbleed
 
 // Don't need JS? Then feel free to delete this file.
 
@@ -37,10 +37,7 @@
 // // By default your component should be usable with js imports
 // export { vfcomponentName };
 //
-// // You should also import it at ./components/vf-component-rollup/scripts.js
-// // import { vfcomponentName } from '<%= componentName %>/<%= componentName %>';
-// // Or import directly
-// // import { vfcomponentName } from '../components/raw/<%= componentName %>/<%= componentName %>.js';
+// // You should also import it at ./components/vf-core/scripts.js
+// // import { vfcomponentName } from '../components/raw/vf-component/vf-component.js';
 // // And, if needed, invoke it
 // // vfcomponentName();
-

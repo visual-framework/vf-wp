@@ -1,7 +1,7 @@
 /**
- * Precompiled Nunjucks template: vf-link-list.njk
+ * Precompiled Nunjucks template: vf-link-list--easy.njk
  */
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-link-list"] = (function() {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-link-list--easy"] = (function() {
 function root(env, context, frame, runtime, cb) {
 var lineno = 0;
 var colno = 0;
@@ -52,12 +52,7 @@ output += "\n";
 }
 output += "        ";
 output += runtime.suppressValue(runtime.memberLookup((item),"text"), env.opts.autoescape);
-output += "\n";
-if(runtime.contextOrFrameLookup(context, frame, "svg")) {
-output += "        <svg class=\"vf-icon vf-icon__arrown--down | vf-list__icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><title>arrow-button-down</title><path d=\"M.249,7.207,11.233,19.678h0a1.066,1.066,0,0,0,1.539,0L23.751,7.207a.987.987,0,0,0-.107-1.414l-1.85-1.557a1.028,1.028,0,0,0-1.438.111L12.191,13.8a.25.25,0,0,1-.379,0L3.644,4.346A1.021,1.021,0,0,0,2.948,4a1,1,0,0,0-.741.238L.356,5.793A.988.988,0,0,0,0,6.478.978.978,0,0,0,.249,7.207Z\"/></svg>\n";
-;
-}
-output += "      </a>\n";
+output += "\n\n        <svg class=\"vf-icon vf-icon__arrown--down | vf-list__icon\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><title>arrow-button-down</title><path d=\"M.249,7.207,11.233,19.678h0a1.066,1.066,0,0,0,1.539,0L23.751,7.207a.987.987,0,0,0-.107-1.414l-1.85-1.557a1.028,1.028,0,0,0-1.438.111L12.191,13.8a.25.25,0,0,1-.379,0L3.644,4.346A1.021,1.021,0,0,0,2.948,4a1,1,0,0,0-.741.238L.356,5.793A.988.988,0,0,0,0,6.478.978.978,0,0,0,.249,7.207Z\"/></svg>\n      </a>\n";
 (function(cb) {if(runtime.memberLookup((item),"badge")) {
 env.getExtension("render")["run"](context,"@vf-badge", function(t_5,t_4) {
 if(t_5) { cb(t_5); return; }
@@ -73,7 +68,7 @@ output += runtime.suppressValue(runtime.memberLookup((item),"meta"), env.opts.au
 output += "</p>\n";
 ;
 }
-output += "\n    </li>\n";
+output += "    </li>\n";
 next(t_1);
 });
 }, function(t_8,t_7) {
