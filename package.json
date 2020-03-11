@@ -39,11 +39,11 @@
     ]
   },
   "dependencies": {
-    "@visual-framework/embl-notifications": "^1.0.0-alpha.0",
-    "@visual-framework/vf-analytics-google": "^1.0.0-alpha.0",
+    "@visual-framework/embl-notifications": "1.0.0-alpha.0",
+    "@visual-framework/vf-analytics-google": "1.0.0-alpha.0",
     "@visual-framework/vf-card-container": "1.0.0-alpha.3",
     "@visual-framework/vf-hero": "1.0.0-alpha.2",
-    "@visual-framework/vf-u-fullbleed": "^1.0.0-alpha.1",
+    "@visual-framework/vf-u-fullbleed": "1.0.0-alpha.1",
     "list-stream": "2.0.0"
   },
   "devDependencies": {
