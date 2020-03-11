@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 function hookpress_ajax_get_fields() {
 	global $wpdb, $hookpress_actions, $hookpress_filters;
@@ -6,14 +7,14 @@ function hookpress_ajax_get_fields() {
 		$args = $hookpress_actions[$_POST['hook']];
 	if ($_POST['type'] == 'filter')
 		$args = $hookpress_filters[$_POST['hook']];
-
-	$fields = array();
+  $fields = array();
 	if (is_array($args)) {
-		foreach ($args as $arg) {
-			if (ereg('[A-Z]+',$arg))
-				$fields = array_merge($fields,hookpress_get_fields($arg));
+    foreach ($args as $index => $arg) {
+			if (ctype_upper($arg)) {
+        $fields = array_merge($fields,hookpress_get_fields($arg));
+      }
 			else
-				$fields[] = $arg;
+        $fields[] = $arg;
 		}
 	}
 
@@ -36,59 +37,55 @@ function hookpress_ajax_add_fields() {
 	$nonce = $_POST['_nonce'];
 	$nonce_compare = 'submit-webhook';
 
-	if ( wp_verify_nonce( $nonce, $nonce_compare ) ) :
+	if (current_user_can('manage_options') && wp_verify_nonce( $nonce, $nonce_compare ) ) {
+    if( isset($_POST['id']) ){
 
-	if( isset($_POST['id']) ){
+      $id = (int) $_POST['id'];
+      $edithook = array(
+        'url' => sanitize_text_field($_POST['url']),
+        'type' => sanitize_text_field($_POST['type']),
+        'hook' => sanitize_text_field($_POST['hook']),
+        'enabled' => sanitize_text_field($_POST['enabled']),
+        'fields' => explode(',', sanitize_text_field($_POST['fields']))
+      );
+      hookpress_update_hook( $id, $edithook );
 
-		$id = (int) $_POST['id'];
-		$edithook = array(
-			'url'=>$_POST['url'],
-			'type'=>$_POST['type'],
-			'hook'=>$_POST['hook'],
-			'enabled'=>$_POST['enabled'],
-			'fields'=>split(',',$_POST['fields'])
-		);
-		hookpress_update_hook( $id, $edithook );
+    } else {
+      // register the new webhook
+      $newhook = array(
+        'url' => sanitize_text_field($_POST['url']),
+        'type' => sanitize_text_field($_POST['type']),
+        'hook' => sanitize_text_field($_POST['hook']),
+        'fields' => explode(',', sanitize_text_field($_POST['fields'])),
+        'enabled' => true
+      );
+      $id = hookpress_add_hook($newhook);
+    }
 
-	} else {
-
-		// register the new webhook
-		$newhook = array(
-			'url'=>$_POST['url'],
-			'type'=>$_POST['type'],
-			'hook'=>$_POST['hook'],
-			'fields'=>split(',',$_POST['fields']),
-			'enabled'=>true
-		);
-		$id = hookpress_add_hook($newhook);
-	}
-
-	endif;
-
-	// generate the return value
-	header("Content-Type: text/html; charset=UTF-8");
-	echo hookpress_print_webhook_row($id);
+    // generate the return value
+    header("Content-Type: text/html; charset=UTF-8");
+    echo hookpress_print_webhook_row($id);
+  }
 	exit;
 }
 
 function hookpress_ajax_set_enabled() {
 	$nonce = $_POST['_nonce'];
-	$id = $_POST['id'];
-	$enabled = $_POST['enabled'];
+	$id = (int) $_POST['id'];
+	$enabled = sanitize_text_field($_POST['enabled']);
 
-	$nonce_compare = ($enabled == 'true'?'activate-webhook-' . $id:'deactivate-webhook-' . $id ); 
+	$nonce_compare = ($enabled == 'true' ? 'activate-webhook-' . $id : 'deactivate-webhook-' . $id); 
 
-	if ( wp_verify_nonce( $nonce, $nonce_compare ) ) :
+	if (current_user_can('manage_options') && wp_verify_nonce( $nonce, $nonce_compare ) ) {
 
 		// update the webhook
 		$webhooks = hookpress_get_hooks();
-		$webhooks[$id]['enabled'] = ($enabled == 'true'?true:false);
+		$webhooks[$id]['enabled'] = ($enabled == 'true' ? true : false);
 		hookpress_update_hook( $id, $webhooks[$id] );
 
-	endif;
-
-	header("Content-Type: text/html; charset=UTF-8");
-	echo hookpress_print_webhook_row($id);
+    header("Content-Type: text/html; charset=UTF-8");
+    echo hookpress_print_webhook_row($id);
+  }
 	exit;
 }
 
@@ -104,10 +101,12 @@ function hookpress_ajax_delete_hook() {
 	if ( !wp_verify_nonce( $nonce, $nonce_compare ) )
 		die("ERROR: invalid nonce");
 
-	 if (!$webhooks[$id])
+	if (!$webhooks[$id])
 		die("ERROR: no webhook found for that id");
-	hookpress_delete_hook( $id );
-	echo "ok";
+  if (current_user_can('manage_options')) {
+    hookpress_delete_hook( $id );
+	  echo "ok";
+  }
 	exit;
 }
 

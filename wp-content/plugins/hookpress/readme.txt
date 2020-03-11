@@ -1,12 +1,11 @@
 === HookPress ===
-Contributors: mitchoyoshitaka, automattic
+Contributors: mitchoyoshitaka, automattic, shenzhuxi
 Author: mitcho (Michael Yoshitaka Erlewine)
 Author URI: http://mitcho.com/
-Plugin URI: http://mitcho.com/code/
-Donate link: http://tinyurl.com/donatetomitcho
+Plugin URI: https://wordpress.org/plugins/hookpress/
 Tags: hook, filter, action, plugin, webhook, webhooks, notification, internal
 Requires at least: 3.6
-Tested up to: 4.1
+Tested up to: 5.2
 Stable tag: 1.14
 
 HookPress turns your WordPress-internal hooks into webhooks. Possible uses include generating push notifications or extending WordPress with non-PHP.

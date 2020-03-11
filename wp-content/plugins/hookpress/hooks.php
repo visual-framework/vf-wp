@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 // ACTIONS:
 
 global $hookpress_actions, $hookpress_filters;

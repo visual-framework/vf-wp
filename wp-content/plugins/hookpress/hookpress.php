@@ -8,7 +8,7 @@ Author: mitcho (Michael Yoshitaka Erlewine)
 Author URI: http://mitcho.com/
 Donate link: http://tinyurl.com/donatetomitcho
 */
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 define('HOOKPRESS_PRIORITY',12838790321);
 $hookpress_version = "1.14";
 require('includes.php');
@@ -18,7 +18,7 @@ function hookpress_init() {
 
 	if ( !get_option('hookpress_version') ||
 		 version_compare($hookpress_version,get_option('hookpress_version')) > 0 )
-		update_option('hookpress_version',$hookpress_version);
+		update_option('hookpress_version', $hookpress_version);
 
 	add_action('admin_menu', 'hookpress_config_page');
 }

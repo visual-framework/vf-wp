@@ -340,48 +340,49 @@ var setEvents = function setEvents() {
 </style>
 
 <div class="wrap">
-		<h2>
-			<?php _e('HookPress','hookpress');?> <small><?php 
-			
-			$display_version = $hookpress_version;
-			$split = explode('.',$display_version);
-			if (strlen($split[1]) != 1) {
-				$pos = strpos($display_version,'.')+2;
-				$display_version = substr($display_version,0,$pos).'.'.substr($display_version,$pos);
-			}
-			echo $display_version;
-			?></small>
-		</h2>
-		
+  <h2>
+    <?php _e('HookPress','hookpress');?> <small><?php 
+    
+    $display_version = $hookpress_version;
+    $split = explode('.',$display_version);
+    if (strlen($split[1]) != 1) {
+      $pos = strpos($display_version,'.')+2;
+      $display_version = substr($display_version,0,$pos).'.'.substr($display_version,$pos);
+    }
+    echo $display_version;
+    ?></small>
+  </h2>	
 	<form method="post">
-
-			<a href='http://tinyurl.com/donatetomitcho' target='_new'><img src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" name="submit" alt="<?php _e('Donate to mitcho (Michael Yoshitaka Erlewine) for this plugin via PayPal');?>" title="<?php _e('Donate to mitcho (Michael Yoshitaka Erlewine) for this plugin via PayPal','hookpress');?>" style="float:right" /></a>
-
-	<p><small><?php _e('by <a href="http://mitcho.com/">mitcho (Michael 芳貴 Erlewine)</a>','hookpress');?>.</small></p>
-
-	<h3><?php _e("Webhooks","hookpress");?></h3>
-
-<?php echo hookpress_print_webhooks_table();?>
-
-	<p><input id="newwebhook" class="thickbox button" type="button" value="<?php _e("Add webhook",'hookpress');?>" title="<?php _e('Add new webhook','hookpress');?>" alt="#TB_inline?height=330&width=500&inlineId=hookpress-webhook"/></p>
-		
-</form>
+    <h3><?php _e("Webhooks","hookpress");?></h3>
+    <?php echo hookpress_print_webhooks_table();?>
+	  <p><input id="newwebhook" class="thickbox button" type="button" value="<?php _e("Add webhook",'hookpress');?>" title="<?php _e('Add new webhook','hookpress');?>" alt="#TB_inline?height=330&width=500&inlineId=hookpress-webhook"/></p>
+  </form>
+</div>
 
 <div id='hookpress-webhook' style='display:none;'>
-<form id='newform'>
-<table>
-<tr><td><label style='font-weight: bold' for='newhook'><?php _e("WordPress hook type",'hookpress');?>: </label></td><td><input type='radio' id='action' class='newtype' name='newtype' checked='checked'> <?php _e("action","hookpress");?></input> <input type='radio' id='filter' class='newtype' name='newtype'> <?php _e("filter","hookpress");?></input></td></tr>
-<tr>
-<td><label style='font-weight: bold' for='newhook' id='action_or_filter'></label></td>
-<td><select name='newhook' id='newhook'></select></td></tr>
-<tr><td style='vertical-align: top'><label style='font-weight: bold' for='newfields'><?php _e("Fields",'hookpress');?>: </label><br/><small><?php _e("Ctrl-click on Windows or Command-click on Mac to select multiple. The <code>hook</code> field with the relevant hook name is always sent.");?></small><br/><span id='filtermessage'><small><?php _e('The first argument of a filter must always be sent and should be returned by the webhook, with modification.','hookpress');?></small></span></td><td><select style='vertical-align: top' name='newfields' id='newfields' multiple='multiple' size='8'>
-	</select></td></tr>
-<tr><td><label style='font-weight: bold' for='newurl'><?php _e("URL",'hookpress');?>: </label></td><td><input name='newurl' id='newurl' size='40' value='http://'></input></td></tr>
-</table>
-<?php	echo "<input type='hidden' id='submit-nonce' name='submit-nonce' value='" . wp_create_nonce( 'submit-webhook') . "' />"; ?>
-	<center><span id='newindicator'></span><br/>
-	<input type='button' class='button' id='newsubmit' value='<?php _e('Add new webhook','hookpress');?>'/>
-	<input type='button' class='button' id='newcancel' value='<?php _e('Cancel');?>'/></center>
-
-</form>
+  <form id='newform'>
+    <table>
+      <tr>
+        <td><label style='font-weight: bold' for='newhook'><?php _e("WordPress hook type",'hookpress');?>: </label></td><td><input type='radio' id='action' class='newtype' name='newtype' checked='checked'> <?php _e("action","hookpress");?></input> <input type='radio' id='filter' class='newtype' name='newtype'> <?php _e("filter","hookpress");?></input></td>
+      </tr>
+      <tr>
+        <td><label style='font-weight: bold' for='newhook' id='action_or_filter'></label></td>
+        <td><select name='newhook' id='newhook'></select></td>
+      </tr>
+      <tr>
+        <td style='vertical-align: top'><label style='font-weight: bold' for='newfields'><?php _e("Fields",'hookpress');?>: </label><br/>
+        <small><?php _e("Ctrl-click on Windows or Command-click on Mac to select multiple. The <code>hook</code> field with the relevant hook name is always sent.");?></small><br/><span id='filtermessage'><small><?php _e('The first argument of a filter must always be sent and should be returned by the webhook, with modification.','hookpress');?></small>
+        </span>
+        </td>
+        <td><select style='vertical-align: top' name='newfields' id='newfields' multiple='multiple' size='8'></select></td>
+      </tr>
+      <tr><td><label style='font-weight: bold' for='newurl'><?php _e("URL",'hookpress');?>: </label></td><td><input name='newurl' id='newurl' size='40' value='http://'></input></td></tr>
+    </table>
+    <?php	echo "<input type='hidden' id='submit-nonce' name='submit-nonce' value='" . wp_create_nonce( 'submit-webhook') . "' />"; ?>
+    <center>
+      <span id='newindicator'></span><br/>
+      <input type='button' class='button' id='newsubmit' value='<?php _e('Add new webhook','hookpress');?>'/>
+      <input type='button' class='button' id='newcancel' value='<?php _e('Cancel');?>'/>
+    </center>
+  </form>
 </div>

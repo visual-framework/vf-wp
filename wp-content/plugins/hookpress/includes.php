@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit;
 require('services.php');
 require('hooks.php');
 
@@ -97,7 +97,7 @@ if ($desc['type'] == 'filter')
 		
 	$fields = array();
 	foreach ($args as $arg) {
-		if (ereg('[A-Z]+',$arg))
+		if (ctype_upper($arg))
 			$fields = array_merge($fields,hookpress_get_fields($arg));
 		else
 			$fields[] = $arg;
@@ -316,6 +316,10 @@ function hookpress_generic_action($id,$args) {
 	$user_agent = "HookPress/{$hookpress_version} (compatible; WordPress {$wp_version}; +http://mitcho.com/code/hookpress/)";
 	
 	$request = apply_filters( 'hookpress_request', array('user-agent' => $user_agent, 'body' => $obj_to_post, 'referer' => get_bloginfo('url')) );
-	
-	return wp_remote_post($desc['url'], $request);
+  $response = wp_remote_post($desc['url'], $request);
+  if (is_wp_error($response) ) {
+     $error_message = $response->get_error_message();
+     //TODO: error handling
+  }
+	return $response;
 }
