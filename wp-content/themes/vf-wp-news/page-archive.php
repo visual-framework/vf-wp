@@ -27,7 +27,6 @@ query_posts($args);?>
       ?>
 </div>
 
-<section class="vf-inlay">
 
 	
 	<?php include(locate_template('partials/archive-container.php', false, false)); ?>

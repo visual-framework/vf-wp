@@ -201,11 +201,10 @@ function my_acf_collor_pallete_script() {
         
         acf.add_filter('color_picker_args', function( args, $field ){
 
-            // do something to args
             args.palettes = ['#007B53', '#54585A','#A6093D','#193F90','#563D82','#B65417', '#6CC24A', '#D0D0CE','#E58F9E','#8BB8E8','#CBA3D8','#EFC06E']
             
             console.log(args);
-            // return
+
             return args;
         });
         
@@ -221,13 +220,13 @@ function my_acf_collor_pallete_css() {
     <style>
 		
 		
-        .acf-color_picker .iris-picker .iris-border{
+        .acf-color_picker .iris-picker .iris-border {
             width: 200px !important;
             height: 10px !important;
         }
         .acf-color_picker .wp-picker-input-wrap,
         .acf-color_picker .iris-picker .iris-slider,
-        .acf-color_picker .iris-picker .iris-square{
+        .acf-color_picker .iris-picker .iris-square {
             display:none !important;
         }
     </style>
@@ -235,5 +234,7 @@ function my_acf_collor_pallete_css() {
 }
 
 add_action('acf/input/admin_head', 'my_acf_collor_pallete_css');
+
+
 
 ?>

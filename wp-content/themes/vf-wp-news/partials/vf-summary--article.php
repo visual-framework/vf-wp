@@ -2,6 +2,7 @@
 
 $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
+$user_id = get_the_author_meta('ID');
 
 ?>
 
@@ -21,7 +22,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
     <span class="vf-summary__meta | vf-u-margin__bottom--xs vf-u-margin__top--xs">
       <p class="vf-summary__meta">By&nbsp;</p>
-      <a class="vf-summary__author vf-summary__link" href="<?php echo $author_url; ?>"><?php the_author(); ?></a>
+      <a class="vf-summary__author vf-summary__link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
     </span>
     <div class="vf-summary__meta | topics-info">
       <p class="vf-summary__meta"><a class="vf-link"><?php the_category(); ?>&nbsp;&nbsp;&nbsp;</a></p>

@@ -60,5 +60,4 @@ if ( $post->ID == $do_not_duplicate ) continue; ?>
 
 </section>
 
-
 <?php get_template_part('partials/footer');?>

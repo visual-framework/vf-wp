@@ -2,7 +2,7 @@
 
 $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
-
+$user_id = get_the_author_meta('ID');
 ?>
 
 <style>
@@ -35,13 +35,13 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
     <span class="vf-summary__meta | vf-u-margin__bottom--xs vf-u-margin__top--xs">
       <p class="vf-summary__meta vf-u-text-color--ui--white">By&nbsp;</p>
-      <a class="vf-summary__author vf-summary__link" href="<?php echo $author_url; ?>"
+      <a class="vf-summary__author vf-summary__link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"
         style="color: <?php the_field('link_color'); ?>"><?php the_author(); ?></a>
     </span>
     <span class="vf-summary__meta | category-link-color">
       <a class="vf-summary__meta"
-        style="color: <?php the_field('link_color'); ?>"><?php echo get_the_category_list(','); ?>&nbsp;&nbsp;&nbsp;</a>
-      <p class="vf-summary__meta vf-u-text-color--ui--white"><?php echo reading_time(); ?> read</p>
+        style="color: <?php the_field('link_color'); ?>"><?php echo get_the_category_list(','); ?></a>
+
     </span>
   </div>
 </article>

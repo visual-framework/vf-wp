@@ -40,8 +40,8 @@ if (is_search()) {
         </h2>
         <p class="vf-u-text-color--ui--white"><?php echo nl2br(get_the_author_meta('description')); ?> </p>
         <i class="fas fa-envelope" style="font-size: 14px;"></i>
-        <p class="vf-text--body vf-text-body--5 | vf-u-text-color--ui--white" style="display: inline-block;">
-          <?php echo nl2br(get_the_author_meta('email')); ?></p>
+        <a href="mailto:<?php echo nl2br(get_the_author_meta('email')); ?>" class="vf-link" style="display: inline-block; color: white;">
+          <?php echo nl2br(get_the_author_meta('email')); ?></a>
       </div>
     </div>
   </div>
@@ -49,7 +49,7 @@ if (is_search()) {
 
 
 <div class="vf-grid">
-  <h3 class="vf-section-header__heading vf-u-margin__bottom--md">Articles by <?php the_author(); ?></h3>
+  <h3 class="vf-section-header__heading vf-u-margin__bottom--xl">Articles by <?php the_author(); ?></h3>
 </div>
 <div class="vf-grid | vf-grid__col-3 | category-latest">
   <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -67,9 +67,6 @@ if (is_search()) {
 <div class="vf-grid" style="margin: 4%"> <?php vf_pagination();
       ?>
 </div>
-
-
-
 
 <section class="vf-inlay">
   <div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs">

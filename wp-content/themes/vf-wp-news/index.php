@@ -18,6 +18,7 @@ $category_pow = get_cat_ID( 'picture of the week' );
 $pow_link = get_category_link( $category_pow );
 
 $title = get_the_title(get_option('page_for_posts'));
+$author_url = get_author_posts_url(get_the_author_meta('ID'));
 
 if (is_search()) {
   $title = sprintf(__('Search: %s', 'vfwp'), get_search_query());
@@ -73,7 +74,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 <section class="vf-summary-container | embl-grid" style="grid-column-gap: 0;">
 
   <div class="vf-section-header | vf-u-margin__bottom--md">
-    <a href="<?php site_url(); ?>/archive" class="vf-section-header__heading vf-section-header__heading--is-link">Latest
+    <a href="<?php site_url(); ?>/news/archive" class="vf-section-header__heading vf-section-header__heading--is-link">Latest
       <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
         <path

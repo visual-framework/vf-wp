@@ -29,7 +29,7 @@
         </div><?php endif; ?>
       </div>
     </div>
-    <p class="vf-text--body">Looking for past print editions of <span style="font-style: italic;">EMBLetc.</span>?
+    <p class="vf-text--body">Looking for past print editions of <em>EMBLetc.</em>?
       Browse our archive, going back 20 years.
     </p>
     <a class="vf-link | magazine-download"

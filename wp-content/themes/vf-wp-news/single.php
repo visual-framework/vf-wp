@@ -3,6 +3,7 @@
 $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
+$tags = get_the_tags($post->ID);
 
 
 get_template_part('partials/header');
@@ -25,7 +26,6 @@ the_post();
       <div class="vf-meta__details">
         <time class="vf-meta__date | vf-text-body--5" title="<?php the_time('c'); ?>"
           datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
-        <p class="vf-meta__date | vf-text-body--5"><?php echo reading_time(); ?> read</p>
       </div>
       <div class="vf-meta__details">
         <p class="vf-meta__topics | vf-text-body--6"><?php the_category(); ?></p>
@@ -47,68 +47,58 @@ the_post();
     </figure>
     <?php the_content(); ?>
 
-    <hr class="vf-divider">
-
-    <div class="vf-links vf-links__list--easy | vf-u-margin__top--xxl">
-      <?php if( have_rows('article_sources') ): ?>
-      <?php while( have_rows('article_sources') ): the_row(); 
-			
-        $source = get_sub_field('source_link_url');
-		$description = get_sub_field('source_description');?>
-      <p class="vf-text--body vf-text-body--3">Source article:</p>
-      <ul class="vf-links__list | vf-list">
-        <li class="vf-list__item">
-          <a class="vf-list__link | vf-text--body vf-text-body--3"
-            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a>
-        </li>
-      </ul>
-      <?php endwhile; ?>
-      <?php endif; ?>
+    <div class="social-share-box">
+      <?php echo do_shortcode('[Sassy_Social_Share]') ?>
     </div>
-
-    <div class="vf-links vf-links__list--easy | vf-u-margin__top--xxl">
-      <?php if( have_rows('related_links') ): ?>
-      <p class="vf-text--body vf-text-body--3">Related links:</p>
-      <?php while( have_rows('related_links') ): the_row(); 
-			
-        $source = get_sub_field('link_url');
-		$description = get_sub_field('link_description');?>
-      <ul class="vf-links__list | vf-list">
-        <li class="vf-list__item">
-          <a class="vf-list__link | vf-text--body vf-text-body--3"
-            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a>
-        </li>
-      </ul>
-      <?php endwhile; ?>
-      <?php endif; ?>
-    </div>
-
-    <div class="vf-links vf-links--tight vf-links__list--s | vf-u-margin__top--xxl">
-      <?php if( have_rows('pdf_archive_link') ): ?>
-      <?php while( have_rows('pdf_archive_link') ): the_row(); 
-			
-        $source = get_sub_field('pdf_archive_link');
-		$description = get_sub_field('description_pdf_archive_link');?>
-      <p class="vf-text--body vf-text-body--3">PDF archive:</p>
-      <ul class="vf-links__list vf-links__list--easy | vf-list">
-        <li class="vf-list__item">
-          <a class="vf-list__link | vf-text--body vf-text-body--3"
-            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a>
-        </li>
-      </ul>
-      <?php endwhile; ?>
-      <?php endif; ?>
-    </div>
-
-
-    <p class="vf-text--body vf-text-body--3"><?php the_tags(); ?></p>
-  </div>
-
-  <div class="social-share-box">
-    <?php echo do_shortcode('[Sassy_Social_Share]') ?>
-  </div>
 
 </main>
+
+<div class="embl-grid embl-grid--has-centered-content | vf-content">
+  <div></div>
+  <div>
+    <div class="embl-grid | vf-u-margin__top--xxl">
+      <div>
+        <?php if( have_rows('article_sources') ): ?>
+        <h4 class="vf-text vf-text-heading--5">Source articles:</h4>
+      </div>
+      <div>
+        <?php while( have_rows('article_sources') ): the_row(); 
+			
+      $source = get_sub_field('source_link_url');
+      $description = get_sub_field('source_description');?>
+        <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
+            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
+        <?php endwhile; ?>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <div class="embl-grid">
+      <div>
+        <?php if( have_rows('related_links') ): ?>
+        <h4 class="vf-text vf-text-heading--5">Related links:</h4>
+      </div>
+      <div>
+        <?php while( have_rows('related_links') ): the_row(); 
+			
+      $source = get_sub_field('link_url');
+      $description = get_sub_field('link_description');?>
+        <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
+            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
+        <?php endwhile; ?>
+        <?php endif; ?>
+      </div>
+    </div>
+
+    <h4 class="vf-text vf-text-heading--5">Tags:</h4>
+    <?php foreach($tags as $tag) :  ?>
+    <a class="vf-link vf-link--secondary | vf-text--body vf-text-body--3"
+      href="<?php site_url();?>/news/?tag=<?php print_r($tag->slug); ?>"><?php print_r($tag->name . ', '); ?></a>
+    <?php endforeach; ?>
+  </div>
+</div>
+<div></div>
+</div>
 
 <section class="vf-inlay">
   <div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs">
@@ -116,31 +106,32 @@ the_post();
       <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php
-$args = array(
-	'posts_per_page' => 3, 
-	'post__not_in'   => array( get_the_ID() ), 
-	'no_found_rows'  => true, 
-);
+          $args = array(
+            'posts_per_page' => 3, 
+            'post__not_in'   => array( get_the_ID() ), 
+            'no_found_rows'  => true, 
+          );
 
-$cats = wp_get_post_terms( get_the_ID(), 'category' ); 
-$cats_ids = array();  
-foreach( $cats as $related_cat ) {
-	$cats_ids[] = $related_cat->term_id; 
-}
-if ( ! empty( $cats_ids ) ) {
-	$args['category__in'] = $cats_ids;
-}
+          $cats = wp_get_post_terms( get_the_ID(), 'category' ); 
+          $cats_ids = array();  
+          foreach( $cats as $related_cat ) {
+            $cats_ids[] = $related_cat->term_id; 
+          }
+          if ( ! empty( $cats_ids ) ) {
+            $args['category__in'] = $cats_ids;
+          }
 
-$query = new wp_query( $args );
+          $query = new wp_query( $args );
 
-foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
+          foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
 
         <?php include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
-        <?php endforeach;
-wp_reset_postdata(); ?>
+        <?php endforeach; wp_reset_postdata(); ?>
       </div>
+
     </main>
   </div>
+
   <?php include(locate_template('partials/pow-container.php', false, false)); ?>
 
   <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
