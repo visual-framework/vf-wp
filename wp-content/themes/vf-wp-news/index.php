@@ -43,10 +43,10 @@ if (is_search()) {
 
 ?>
 
-<section class="vf-inlay | vf-u-background-color--white vf-u-margin__bottom--xxl">
+<section class="vf-inlay | vf-u-background-color-ui--grey vf-u-margin__bottom--xxl">
 
-  <section class="vf-inlay__content | vf-u-background-color-ui--grey | hero-container">
-    <main class="vf-inlay__content--main |  hero-left-column | vf-content | vf-u-margin__bottom--md">
+  <section class="vf-inlay__content | vf-u-background-color-ui--grey | vf-u-fullbleed  | hero-container">
+    <main class="vf-inlay__content--main | vf-content | vf-u-margin__bottom--md |  hero-left-column">
       <?php 
 			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();

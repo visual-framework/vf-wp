@@ -14,10 +14,10 @@ $user_id = get_the_author_meta('ID');
   }
 </style>
 
-<article class="vf-summary vf-summary--article vf-u-margin__bottom--md"
-  style="background-color: <?php the_field('color'); ?>; min-height: 100%;">
+<article class="vf-summary vf-summary--article vf-u-margin__bottom--xl"
+  style="background-color: <?php the_field('color'); ?>; min-height: 100%; display: block;">
   <!-- <div class="post-image"> -->
-  <a style="display: flex;" href="<?php the_permalink(); ?>">
+  <a href="<?php the_permalink(); ?>">
     <?php the_post_thumbnail(); ?>
   </a>
   <!-- <div class="overlay">
