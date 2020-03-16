@@ -46,7 +46,7 @@ the_post();
       </figcaption>
     </figure>
     <?php the_content(); ?>
-
+</div>
     <div class="social-share-box">
       <?php echo do_shortcode('[Sassy_Social_Share]') ?>
     </div>
@@ -55,10 +55,11 @@ the_post();
 
 <div class="embl-grid embl-grid--has-centered-content | vf-content">
   <div></div>
+
   <div>
-    <div class="embl-grid | vf-u-margin__top--xxl">
-      <div>
-        <?php if( have_rows('article_sources') ): ?>
+    <?php if( have_rows('article_sources') ): ?>
+      <div class="embl-grid">
+        <div>
         <h4 class="vf-text vf-text-heading--5">Source articles:</h4>
       </div>
       <div>
@@ -69,13 +70,13 @@ the_post();
         <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
             href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
         <?php endwhile; ?>
-        <?php endif; ?>
       </div>
     </div>
+    <?php endif; ?>
 
-    <div class="embl-grid">
-      <div>
-        <?php if( have_rows('related_links') ): ?>
+    <?php if( have_rows('related_links') ): ?>
+      <div class="embl-grid">
+        <div>
         <h4 class="vf-text vf-text-heading--5">Related links:</h4>
       </div>
       <div>
@@ -86,9 +87,9 @@ the_post();
         <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
             href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
         <?php endwhile; ?>
-        <?php endif; ?>
       </div>
     </div>
+    <?php endif; ?>
 
     <h4 class="vf-text vf-text-heading--5">Tags:</h4>
     <?php foreach($tags as $tag) :  ?>
@@ -96,9 +97,9 @@ the_post();
       href="<?php site_url();?>/news/?tag=<?php print_r($tag->slug); ?>"><?php print_r($tag->name . ', '); ?></a>
     <?php endforeach; ?>
   </div>
-</div>
 <div></div>
 </div>
+
 
 <section class="vf-inlay">
   <div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs">

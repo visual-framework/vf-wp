@@ -25,7 +25,7 @@ $user_id = get_the_author_meta('ID');
 			  </p>
 		</div> -->
   </div>
-  <div class="article-summary" style="background-color: <?php the_field('color'); ?>; padding: 0 16px 0 16px;">
+  <div class="article-summary" style="background-color: <?php the_field('color'); ?>; padding: 0 24px 16px 24px;">
     <h2 class="vf-summary__title | vf-u-margin__top--sm">
       <a href="<?php the_permalink(); ?>" class="vf-link vf-link--secondary | vf-text vf-text-heading--2"
         style="color: white;"><?php echo $title; ?></a>

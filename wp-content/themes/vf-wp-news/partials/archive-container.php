@@ -1,5 +1,5 @@
 <div
-  class="vf-inlay__content | vf-u-background-color--grey--dark | vf-u-padding__top--md | vf-u-padding__bottom--md | archive-container">
+  class="vf-inlay__content | vf-u-background-color--green--dark | vf-u-padding__top--md | vf-u-padding__bottom--md | archive-container">
   <main class="vf-inlay__content--full-width | vf-u-margin--0">
     <div class="vf-grid" style="--page-grid-gap: 0px;">
       <div class="vf-links vf-links--tight vf-links__list--s">
@@ -25,7 +25,7 @@ wp_get_archives( $args );
       <div class="vf-links vf-links--tight vf-links__list--s">
         <h3 class="vf-links__heading">By year:</h3>
       </div>
-      <div class="vf-links vf-links--tight vf-links__list--s | vf-u-background-color--gre | ">
+      <div class="vf-links vf-links--tight vf-links__list--s | ">
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
           <?php 
 $args = array(

@@ -201,7 +201,7 @@ function my_acf_collor_pallete_script() {
         
         acf.add_filter('color_picker_args', function( args, $field ){
 
-            args.palettes = ['#007B53', '#54585A','#A6093D','#193F90','#563D82','#B65417', '#6CC24A', '#D0D0CE','#E58F9E','#8BB8E8','#CBA3D8','#EFC06E']
+            args.palettes = ['#007B53', '#54585A','#A6093D','#193F90','#563D82','#B65417']
             
             console.log(args);
 

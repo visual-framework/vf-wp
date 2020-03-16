@@ -2,7 +2,8 @@
   style="--page-grid-gap: 0; border-top: solid 8px #A8A99E">
   <div class="vf-u-background-color--grey--dark| vf-u-padding--md">
     <h3 class="vf-text vf-text-heading--4 | newsletter-title">Subscribe to our monthly e-newsletter</h3>
-    <form action="" class="vf-form">
+    <?php echo do_shortcode('[mc4wp_form id="7843"]') ?>
+    <!-- <form action="" class="vf-form">
       <div class="vf-form__item" data-vf-js-form-floatlabel>
         <label class="vf-form__label | vf-sr-only" for="text">Email</label>
         <input type="text" id="text" class="vf-form__input" placeholder="Email"
@@ -10,7 +11,7 @@
         <button class="vf-button vf-button--primary vf-button--sm | vf-u-float__right"
           style="margin-top: 20px; margin-right: 0; float: right;">Subscribe</button>
       </div>
-    </form>
+    </form> -->
   </div>
   <div class="vf-u-background-color--grey--dark | vf-u-padding--md">
     <h3 class="vf-text vf-text-heading--4">Newsletter Archive</h3>

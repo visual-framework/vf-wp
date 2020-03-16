@@ -13,7 +13,7 @@ $user_id = get_the_author_meta('ID');
       <?php the_post_thumbnail(); ?>
     </a>
   </div>
-  <div class="article-summary">
+  <div class="article-summary | vf-u-background-color-ui--white | vf-u-padding--md">
     <h2 class="vf-summary__title | vf-u-margin__bottom--sm vf-u-margin__top--sm">
       <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo $title; ?></a>
     </h2>
