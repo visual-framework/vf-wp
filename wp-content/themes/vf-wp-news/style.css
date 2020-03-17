@@ -245,3 +245,9 @@ Text Domain:	 vf-wp-news-main
       padding: 0 !important;
     }
   }
+
+  @media (max-width: 1023px) {
+    .hero-left-column {
+      padding-right: 0 !important;
+    }
+  }
