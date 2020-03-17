@@ -95,7 +95,7 @@ Text Domain:	 vf-wp-news-main
   }
   
   .embl-etc-left-col .embl-etc-heading {
-	  margin: 5px 0 0 10px;
+	  margin-top: 5px;
 	  font-size: 40px;
 	  font-style: italic;
 	  font-weight: 100;
@@ -250,4 +250,8 @@ Text Domain:	 vf-wp-news-main
     .hero-left-column {
       padding-right: 0 !important;
     }
+  }
+
+  .pow-container {
+    display: block !important;
   }
