@@ -1,5 +1,5 @@
-<div class="vf-grid | vf-u-background-color--grey--dark | vf-u-text-color--ui--white | newsletter-container"
-  style="--page-grid-gap: 0; border-top: solid 8px #A8A99E">
+<div class="vf-grid | vf-u-background-color--grey--dark | vf-u-text-color--ui--white | vf-u-fullbleed | newsletter-container"
+  style="--page-grid-gap: 0;">
   <div class="vf-u-background-color--grey--dark| vf-u-padding--md">
     <h3 class="vf-text vf-text-heading--4 | newsletter-title">Subscribe to our monthly e-newsletter</h3>
     <?php echo do_shortcode('[mc4wp_form id="7843"]') ?>
@@ -25,7 +25,7 @@
     <a href="https://www.embl.de/aboutus/communication_outreach/media_relations/index.html"
       class="vf-link | vf-u-padding__bottom--sm | press-link" style="color: white;">Contact Press Office</a>
   </div>
-  <div class="vf-u-background-color--grey--dark | vf-u-padding--md">
+  <div class="vf-u-background-color--grey--dark | vf-u-padding--md | vf-u-fullbleed ">
     <h3 class="vf-text vf-text-heading--4">Follow us</h3>
     <a href="https://twitter.com/embl"><i class="social fab fa-twitter-square"></i></a>
     <a href="https://www.facebook.com/embl.org/"><i class="social fab fa-facebook-square"></i></a>

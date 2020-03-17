@@ -193,13 +193,13 @@ Text Domain:	 vf-wp-news-main
     } 
   }
 
-  .hero-container {
-    grid-template-columns: inherit !important;
+  .vf-inlay .hero-container {
+    grid-template-columns: unset !important;
   }
   
   /* adds a badge to the masthead */
   @media (max-width: 1023px) {
-    
+
 .vf-header .vf-masthead {
   padding-left: 0 !important;
 }

@@ -1,4 +1,4 @@
-<div class="embl-grid | vf-u-padding__top--xs | vf-u-margin__bottom--xs | embl-etc-container"
+<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue--dark | vf-u-margin__bottom--xs | vf-u-fullbleed"
   style="grid-column-gap: 0">
   <div class="embl-etc-left-col | vf-u-background-color--blue--dark | vf-u-margin__right--0">
     <h3 class="vf-text vf-text-heading--2 | vf-u-text-color--ui--white |embl-etc | embl-etc-heading">EMBLetc.</h3>

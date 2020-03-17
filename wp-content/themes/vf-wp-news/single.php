@@ -102,7 +102,7 @@ the_post();
 
 
 <section class="vf-inlay">
-  <div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs">
+  <div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--md | vf-u-fullbleed">
     <main class="vf-inlay__content--full-width">
       <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
       <div class="vf-grid vf-grid__col-3">

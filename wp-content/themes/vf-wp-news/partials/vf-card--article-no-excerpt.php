@@ -5,7 +5,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 
 ?>
-<div class="vf-card vf-card--normal vf-card-theme--primary vf-u-margin__bottom--md">
+<div class="vf-card vf-card--easy vf-card-theme--primary vf-u-margin__bottom--md">
   <a style="display: flex;" href="<?php the_permalink(); ?>">
     <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
   </a>
