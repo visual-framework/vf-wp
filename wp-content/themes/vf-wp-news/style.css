@@ -252,6 +252,7 @@ Text Domain:	 vf-wp-news-main
     }
   }
 
-  .pow-container {
+  .pow-container,
+  .category-more {
     display: block !important;
   }

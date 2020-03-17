@@ -74,7 +74,7 @@ if (is_search()) {
     </main>
   </div>
 
-  <div class="vf-inlay__content vf-u-background-color-ui-white | vf-u-padding__top--md">
+  <div class="vf-inlay__content vf-u-background-color-ui-white | vf-u-padding__top--md | category-more">
     <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
       <div class="vf-grid | vf-u-margin__top--xl">
         <h3 class="vf-section-header__heading | vf-u-margin__bottom--xl">Popular</h3>
