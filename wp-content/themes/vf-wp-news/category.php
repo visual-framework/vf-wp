@@ -47,7 +47,7 @@ if ( $post->ID == $do_not_duplicate ) continue; ?>
     </main>
   </div>
 
-  <div class="vf-inlay__content vf-u-background-color-ui-white">
+  <div class="vf-inlay__content vf-u-background-color-ui-white | category-more">
     <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
 
       <div class="| vf-u-margin__top--xl">

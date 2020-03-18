@@ -1,5 +1,4 @@
-<div
-  class="vf-inlay__content | vf-u-background-color--green--dark | vf-u-padding__top--md | vf-u-padding__bottom--md | archive-container">
+<div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-padding__top--md | vf-u-padding__bottom--md | vf-u-margin__bottom--sm  | archive-container">
   <main class="vf-inlay__content--full-width | vf-u-margin--0">
     <div class="vf-grid" style="--page-grid-gap: 0px;">
       <div class="vf-links vf-links--tight vf-links__list--s">
@@ -50,7 +49,9 @@ wp_get_archives( $args );
           <?php 
 			$args = array(
 	'title_li' => '',
-	'show_count' => true
+  'show_count' => true,
+  'before' => '<li class="vf-list__item">',
+  'after'  => '</li>'
 );
 wp_list_categories( $args );
 ?>
