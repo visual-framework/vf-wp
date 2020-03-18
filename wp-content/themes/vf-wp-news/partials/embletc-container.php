@@ -1,7 +1,7 @@
-<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue--dark | vf-u-margin__bottom--xs | vf-u-fullbleed"
+<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue--dark | vf-u-fullbleed vf-u-padding__top--xl vf-u-padding__bottom--xl"
   style="grid-column-gap: 0">
   <div class="embl-etc-left-col | vf-u-background-color--blue--dark | vf-u-margin__right--0">
-    <h3 class="vf-text vf-text-heading--2 | vf-u-text-color--ui--white |embl-etc | embl-etc-heading">EMBLetc.</h3>
+    <h3 class="vf-text vf-text-heading--2 | vf-u-text-color--ui--white | vf-u-padding__bottom--xl | embl-etc-heading">EMBLetc.</h3>
   </div>
   <div class="embl-etc-right-col | vf-u-background-color--blue | vf-u-text-color--ui--white | vf-u-padding--md">
     <h3 class="vf-text vf-text-heading--4 | embl-etc">Read the latest Issues of our magazine - <span

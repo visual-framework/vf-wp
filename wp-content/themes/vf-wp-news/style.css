@@ -10,24 +10,6 @@ Text Domain:	 vf-wp-news-main
 */
 
 
-  /* ------ POW photo hover effect ------ */
-
-  /* .post-image {
-		position: relative;
-	  overflow: hidden;
-	  background-color: #000;
-  } 
-  
-  .post-image img {
-	  transition: transform .1s linear;
-  }
-  
-  .post-image img:hover {
-	   transform: scale(1.10);
-	   opacity: 0.8;
-		 filter: alpha(opacity=40);
-  }
-   */
   /* ------ Archive page ------ */
 
   .archive-container i {
@@ -252,7 +234,25 @@ Text Domain:	 vf-wp-news-main
     }
   }
 
+/* fullbleed adjustments */
+
   .pow-container,
   .category-more {
     display: block !important;
   }
+
+  .vf-inlay:last-of-type {
+    margin-bottom: 0 !important;
+  }
+
+  .vf-u-fullbleed::before {
+    grid-column: unset !important;
+  }
+
+  .embl-etc-right-col {
+    margin-top: -1.5em;
+    margin-bottom: -1.5em;
+    padding-top: 2.5em;
+    padding-bottom: 1em;
+  }
+
