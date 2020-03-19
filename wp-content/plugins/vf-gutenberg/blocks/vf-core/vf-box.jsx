@@ -8,7 +8,7 @@ import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 
 export default useVFCoreSettings({
-  ver: '1.0.0',
+  ver: '1.0.2',
   name: 'vf/box',
   title: __('Box'),
   attributes: {
