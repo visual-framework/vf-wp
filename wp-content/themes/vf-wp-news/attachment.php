@@ -1,27 +1,43 @@
 <?php
 
 get_template_part('partials/header');
+$attachment_id = wp_get_attachment_url();
 
-the_post();
-
-$vf_group_header = VF_Plugin::get_plugin('vf_group_header');
-
-if (class_exists('VF_Group_Header')) {
-  VF_Plugin::render($vf_group_header);
-}
 
 ?>
-<section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-ui--white">
-    <main class="vf-inlay__content--main">
-      <h1 class="vf-text vf-text--display-l"><?php the_title(); ?></h1>
+<main
+  class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
+  <div>
 
-      <div class="vf-content">
-        <?php echo wp_get_attachment_image( get_the_ID(), 'large' ); ?>
-      </div>
-
-    </main>
   </div>
+
+  <div class="vf-content | vf-u-margin__bottom--xxl">
+    <h2><?php the_title(); ?></h2>
+
+    <?php echo wp_get_attachment_image( get_the_ID(), 'medium_large' ); ?>
+    <figcaption class="vf-figure__caption">
+    <?php the_excerpt(); ?>      
+    </figcaption>
+
+    <p>Download:</p>
+		<?php
+			$images = array();
+			$image_sizes = get_intermediate_image_sizes();
+			array_unshift( $image_sizes, 'full' );
+			foreach( $image_sizes as $image_size ) {
+				$image = wp_get_attachment_image_src( get_the_ID(), $image_size );
+				$name = $image_size . ' (' . $image[1] . 'x' . $image[2] . ')';
+				$images[] = '<a href="' . $image[0] . '">' . $name . '</a>';
+			}
+
+			echo implode( ' | ', $images );
+		?> 
+</div>
+
+</main>
+<section class="vf-inlay">
+
+<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 </section>
 <?php
 

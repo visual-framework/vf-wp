@@ -1,18 +1,19 @@
 <?php
 
+
 // CHILD THEME CSS FILE
- 
+
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
 function my_theme_enqueue_styles() {
- 
-    $parent_style = 'parent-style'; 
- 
+	
+	$parent_style = 'parent-style'; 
+	
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'child-style',
-        get_stylesheet_directory_uri() . '/style.css',
-        array( $parent_style ),
-        wp_get_theme()->get('Version')
-    );
+	get_stylesheet_directory_uri() . '/style.css',
+	array( $parent_style ),
+	wp_get_theme()->get('Version')
+);
 }
 
 
@@ -21,24 +22,18 @@ function my_theme_enqueue_styles() {
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'title-tag' );
 
-// ESTIMATED READING TIME 
- 
-function reading_time() {
-	$content = get_post_field( 'post_content', $post->ID );
-	$word_count = str_word_count( strip_tags( $content ) );
-	$readingtime = ceil($word_count / 200);
-		if ($readingtime == 1) {
-	$timer = " min";
-		} else {
-	$timer = " min";
-}
-	$totalreadingtime = $readingtime . $timer;
-		return $totalreadingtime;
-}
+// REMOVES CUSTOM IMAGE SIZES
 
-if ( ! isset( $content_width ) ) {
-	$content_width = 800;
+function remove_extra_image_sizes() {
+	foreach ( get_intermediate_image_sizes() as $size ) {
+		if ( !in_array( $size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
+			remove_image_size( $size );
+		}
+	}
 }
+ 
+add_action('init', 'remove_extra_image_sizes');
+
 
 //ASSIGNING CLASSES TO CATEGORIES
 
@@ -57,8 +52,6 @@ function add_slug_class_wp_list_categories($list) {
 
     return $list;
 }
-
-
 
 // POPULAR POSTS 
 
