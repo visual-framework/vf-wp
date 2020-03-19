@@ -1514,7 +1514,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-list/-/vf-activity-list-1.0.0-alpha.9.tgz#27956846db8628356770d8e2d44a8bef1c1dafd7"
   integrity sha512-NG+MOe9aKKyBtGPhzajKldjfd9wb8zpZg1+b6UJKq6WK5D8y9egJ69mZBzFoaT48NZr4X8jrkzArH8cPMvgYLw==
 
-"@visual-framework/vf-analytics-google@1.0.0-alpha.0":
+"@visual-framework/vf-analytics-google@^1.0.0-alpha.0":
   version "1.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-analytics-google/-/vf-analytics-google-1.0.0-alpha.0.tgz#6ed7eebecd88b13152efacd3b75f4c4362b9c7d9"
   integrity sha512-n8o83fdulHCnLBGxVIq2pQyTSVtTkIe+0Pn0TtHv85LjtSG1/kXD43T1OHZ0qJDQtSW7ZuMpyD9sgDHhNdtxzg==
