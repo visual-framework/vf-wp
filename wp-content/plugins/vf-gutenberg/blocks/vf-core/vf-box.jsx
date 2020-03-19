@@ -3,43 +3,43 @@ Block Name: Box
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import template from '@visual-framework/vf-box/vf-box.precompiled';
+import template from './templates/vf-box.precompiled';
 import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 
 export default useVFCoreSettings({
-  ver: '1.0.2',
+  ver: '1.0.0',
   name: 'vf/box',
   title: __('Box'),
   attributes: {
-    heading: {
+    box_heading: {
       type: 'string'
     },
-    text: {
+    box_text: {
       type: 'string'
     }
   },
   example: {
     attributes: {
-      heading: __('Did You Know?'),
-      text: __(
+      box_heading: __('Did You Know?'),
+      box_text: __(
         'Invasive cancer is the leading cause of death in the developed world and the second leading in the developing world.'
       )
     }
   },
   fields: [
     {
-      name: 'heading',
+      name: 'box_heading',
       control: 'rich',
-      default: '',
+      // default: '',
       label: '',
       tag: 'h3',
       placeholder: __('Type box heading…')
     },
     {
-      name: 'text',
+      name: 'box_text',
       control: 'rich',
-      default: '',
+      // default: '',
       label: '',
       tag: 'p',
       placeholder: __('Type box content…')
@@ -57,8 +57,8 @@ export default useVFCoreSettings({
     },
     {
       name: 'inlay',
-      label: __('Inlay')
+      label: __('Inlayed')
     }
   ],
-  withHOC: [[withTransientStyle, {key: 'class', BEM: true}]]
+  withHOC: [[withTransientStyle, {key: 'box_modifier', BEM: true}]]
 });
