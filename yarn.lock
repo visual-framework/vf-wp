@@ -1559,10 +1559,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-card-container/-/vf-card-container-1.0.0-alpha.3.tgz#826fc53c25d223f7969b4e436a0bdf0d246eb9ce"
   integrity sha512-G1mMSYd1w9Igo/jtx5MnlvsPiLV49UeAKUDAtPNZzYysVdtphEd2Pmve9v81gne6TsN0LS6OU350pchhTznXUw==
 
-"@visual-framework/vf-card@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-card/-/vf-card-1.0.4.tgz#a93aa284578ee229d32e5696ca89ee3e76db8106"
-  integrity sha512-qU6gWRaAprqIBzUqZn7u+gFe4Cr2l3Uj/qXnZhUJoQd2NTPTJkORli6UEvxy/bBO+QbEVtwdNtyogDsveDOM2g==
+"@visual-framework/vf-card@1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-card/-/vf-card-1.0.5.tgz#41c7ecbc28041aadf30ce0d088a08fb18bbd06c8"
+  integrity sha512-8/yUnlz8lCgETjGUwqNOeqa6owbx6ZHCkkGxWNmdUahG2gKJ+kGMtqlVO+0cQV55oU/W+mLLQCN8W1vRgQ+KBQ==
 
 "@visual-framework/vf-code-example@1.0.0":
   version "1.0.0"
