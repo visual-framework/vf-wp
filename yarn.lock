@@ -1497,10 +1497,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-logo/-/embl-logo-1.0.3.tgz#c242cd2974e0c2efb812b4c904ac903017b47fd1"
   integrity sha512-e+z2Cs3g6XB+DVlCOJPtCqqx31e4DMPE1np9HqRXipZHeGMdHfBFc5s1kg8kfA4pMupLqxVh4BLJSbBKoFKuBw==
 
-"@visual-framework/embl-notifications@1.0.0-alpha.0":
-  version "1.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/embl-notifications/-/embl-notifications-1.0.0-alpha.0.tgz#5cd492a0408ce463b79384deedd21ece095cafaa"
-  integrity sha512-TN3WVxAVTgy0P1RkeksykWT/BhLRq35hhEoRmFcSdg6jUsAv/5Hn02C7rMfVR5DVwtr9hFxJ/8ny+SMArk8o6Q==
+"@visual-framework/embl-notifications@1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-notifications/-/embl-notifications-1.0.0-alpha.1.tgz#52b6146c037189690a9ff52a0e9e7d4f3bc190fa"
+  integrity sha512-RMS6VVBJUnuESniEMwmejXOIfQJcja8+vtSGRO1TOIQztXHN0aCCq/etUQM5BzE4rL5ASEtP5fTF9C322Jx7VQ==
 
 "@visual-framework/vf-activity-group@1.0.0-alpha.9":
   version "1.0.0-alpha.9"
