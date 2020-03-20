@@ -94,6 +94,10 @@ Text Domain:	 vf-wp-news-main
   
   /* ---CONTENT PAGE----*/
   
+  .tags-inline {
+    display: inline-block;
+  }
+
   .vf-figure img {
 	  margin-bottom: 4px;
   }

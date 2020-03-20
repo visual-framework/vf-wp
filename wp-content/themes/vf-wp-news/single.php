@@ -46,10 +46,10 @@ the_post();
       </figcaption>
     </figure>
     <?php the_content(); ?>
-</div>
-    <div class="social-share-box">
-      <?php echo do_shortcode('[Sassy_Social_Share]') ?>
-    </div>
+  </div>
+  <div class="social-share-box">
+    <?php echo do_shortcode('[Sassy_Social_Share]') ?>
+  </div>
 
 </main>
 
@@ -58,8 +58,8 @@ the_post();
 
   <div>
     <?php if( have_rows('article_sources') ): ?>
-      <div class="embl-grid">
-        <div>
+    <div class="embl-grid">
+      <div>
         <h4 class="vf-text vf-text-heading--5">Source articles:</h4>
       </div>
       <div>
@@ -75,8 +75,8 @@ the_post();
     <?php endif; ?>
 
     <?php if( have_rows('related_links') ): ?>
-      <div class="embl-grid">
-        <div>
+    <div class="embl-grid">
+      <div>
         <h4 class="vf-text vf-text-heading--5">Related links:</h4>
       </div>
       <div>
@@ -91,18 +91,23 @@ the_post();
     </div>
     <?php endif; ?>
 
-    <h4 class="vf-text vf-text-heading--5">Tags:</h4>
-    <?php foreach($tags as $tag) :  ?>
-    <a class="vf-link vf-link--secondary | vf-text--body vf-text-body--3"
-      href="<?php site_url();?>/news/?tag=<?php print_r($tag->slug); ?>"><?php print_r($tag->name . ', '); ?></a>
-    <?php endforeach; ?>
+    <p class="vf-text--body vf-text-body--3 | tags-inline">Tags:</p>
+    <?php
+    $tags = get_the_tags($post->ID);
+if ($tags) {
+   $tagslist = array();
+   foreach($tags as $tag) {
+      $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-link vf-link--secondary | vf-text--body vf-text-body--3' . $tag->term_id . '">' . $tag->name . '</a>';
+   }
+   echo implode(', ', $tagslist);
+} ?>
   </div>
-<div></div>
+  <div></div>
 </div>
 
-
 <section class="vf-inlay">
-  <div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--md | vf-u-fullbleed | category-more">
+  <div
+    class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--md | vf-u-fullbleed | category-more">
     <main class="vf-inlay__content--full-width">
       <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
       <div class="vf-grid vf-grid__col-3">
