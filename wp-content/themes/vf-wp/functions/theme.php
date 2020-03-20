@@ -371,6 +371,10 @@ class VF_Theme {
     );
     wp_enqueue_script('jquery');
 
+    // remove all default gutenberg styling
+    // this file: wp-includes/css/dist/block-library/style.min.css
+    wp_dequeue_style('wp-block-library');
+
     // Add VF stylesheet if global option exists
     if (function_exists('vf_get_stylesheet') && vf_get_stylesheet()) {
       wp_enqueue_style(

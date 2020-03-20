@@ -1959,7 +1959,6 @@ vfBanner();
 vfMastheadSetStyle();
 vfGaIndicateLoaded();
 vfTabs();
-vfTree.vfTree();
 vfFormFloatLabels();
 emblContentHub();
 emblBreadcrumbs();
