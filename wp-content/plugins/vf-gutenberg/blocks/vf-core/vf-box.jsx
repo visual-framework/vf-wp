@@ -3,7 +3,7 @@ Block Name: Box
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import template from './templates/vf-box.precompiled';
+import template from '@visual-framework/vf-box/vf-box.precompiled';
 import {withTransientStyle} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 
