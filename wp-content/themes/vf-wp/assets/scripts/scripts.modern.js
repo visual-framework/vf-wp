@@ -19,8 +19,8 @@ vfGaIndicateLoaded();
 import { vfTabs } from 'vf-tabs/vf-tabs';
 vfTabs();
 
-import { vfTree } from 'vf-tree/vf-tree';
-vfTree();
+// import { vfTree } from 'vf-tree/vf-tree';
+// vfTree();
 
 import { vfFormFloatLabels } from 'vf-form__core/assets/vf-form__float-labels.js';
 vfFormFloatLabels();
