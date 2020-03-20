@@ -34,7 +34,9 @@ while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
         </span>
       </div>
       <a href="<?php the_permalink(); ?>" style="margin: auto;">
-        <?php the_post_thumbnail(); ?>
+      <figure class="vf-figure">
+      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
+    </figure>
       </a>
     </div>
     <?php endwhile; ?>

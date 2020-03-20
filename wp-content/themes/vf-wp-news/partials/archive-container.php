@@ -7,7 +7,7 @@
       <div class="vf-links vf-links--tight vf-links__list--s">
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
           <?php 
-$args = array(
+$month = array(
     'type'            => 'monthly',
 	'limit'           => '6',
     'show_post_count' => true,
@@ -16,7 +16,7 @@ $args = array(
 	'before' => '<li class="vf-list__item">',
     'after'  => '</li>'
 );
-wp_get_archives( $args );
+wp_get_archives( $month );
 ?>
         </ul>
       </div>
@@ -27,7 +27,7 @@ wp_get_archives( $args );
       <div class="vf-links vf-links--tight vf-links__list--s | ">
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
           <?php 
-$args = array(
+$year = array(
 	'format' => 'custom',
     'type'            => 'yearly',
     'show_post_count' => true,
@@ -36,7 +36,7 @@ $args = array(
 	'before' => '<li class="vf-list__item">',
     'after'  => '</li>'
 );
-wp_get_archives( $args );
+wp_get_archives( $year );
 ?>
         </ul>
       </div>
@@ -47,13 +47,13 @@ wp_get_archives( $args );
       <div class="vf-links vf-links--tight vf-links__list--s">
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
           <?php 
-			$args = array(
+			$cat = array(
 	'title_li' => '',
   'show_count' => true,
   'before' => '<li class="vf-list__item">',
   'after'  => '</li>'
 );
-wp_list_categories( $args );
+wp_list_categories( $cat );
 ?>
         </ul>
       </div>

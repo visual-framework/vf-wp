@@ -28,7 +28,7 @@ the_post();
           datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
       </div>
       <div class="vf-meta__details">
-        <p class="vf-meta__topics | vf-text-body--6"><?php the_category(); ?></p>
+        <p class="vf-text-body--5"><?php echo get_the_category_list(','); ?></p>
       </div>
     </div>
   </div>
