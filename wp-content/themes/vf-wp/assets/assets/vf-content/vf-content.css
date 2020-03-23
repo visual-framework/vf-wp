@@ -1185,7 +1185,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-box
- * Version: 1.0.2
+ * Version: 1.0.3
  * Location: components/vf-box
  */
 .vf-box {
@@ -1250,6 +1250,17 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
+.vf-content .vf-box__text a,
+.vf-box__text a {
+  color: currentColor;
+  text-decoration: underline;
+}
+
+.vf-content .vf-box__text a:hover,
+.vf-box__text a:hover {
+  color: currentColor;
+}
+
 .vf-box--s {
   padding: 16px;
 }
@@ -1310,7 +1321,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.0.7
+ * Version: 1.0.8
  * Location: components/vf-content
  */
 .vf-content h1:not([class*='vf-']) {
@@ -1507,6 +1518,22 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   left: 12px;
   height: 100%;
   top: 0;
+}
+
+.vf-content blockquote:not([class*='vf-']) p:last-of-type:not([class*='vf-']) {
+  margin-bottom: 0;
+}
+
+.vf-content figcaption:not([class*='vf-']),
+.vf-content cite:not([class*='vf-']) {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.57;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  color: #707372;
+  font-style: italic;
 }
 
 .vf-content__standfirst {
