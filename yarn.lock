@@ -1764,10 +1764,15 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-blockquote/-/vf-blockquote-1.0.2.tgz#115df82feb36505c505e94597aa947bd0b988b4f"
   integrity sha512-6LpVfTXHFkFxfjzsM7Z9emyolP5pYWYSRyHNPQYnJVBrKvvITjD7t1rArgMGgfMKHXcOY2pLVuzKFCi5lTFSXA==
 
-"@visual-framework/vf-box@1.0.2", "@visual-framework/vf-box@^1.0.2":
+"@visual-framework/vf-box@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-1.0.2.tgz#0facac2ab9ec7cec0ab50caa40c012834c23dd0a"
   integrity sha512-wXYENaXN5MsPxU7AGXxCJAWNwBkI4MrdRYpT1+Zi4l+DBXApGxnXTALMYMEXmWjp0qvHlzs1FoZo9hLwm5PHhw==
+
+"@visual-framework/vf-box@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-1.0.3.tgz#3fecbd581509006607d3870e36a23330264924e3"
+  integrity sha512-im9iodv/qbLBIk13Hol3eM5OCWVaAmxqIhFHWFw8oNPAsaAvDFg1FM6jp2Wb/cYkIfRlc46+u7rLd8bKSVLBeQ==
 
 "@visual-framework/vf-breadcrumbs@1.0.0":
   version "1.0.0"
@@ -1799,14 +1804,14 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.0-alpha.0.tgz#a58a75fd569cceb71d2e63a29621c607a9f8386e"
   integrity sha512-I+n1HuirL8xTXZHAJ7Oy9Sie7a/ja0IrMvwKTTr+ekTgGBGVr038ogtE6W01YYgHT4rI/tFRPga0RDzBpnS35w==
 
-"@visual-framework/vf-content@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.0.7.tgz#9fb5d3f21c7ad8461dcba478511b6f5c19b848d9"
-  integrity sha512-FJagAHSTgSKb+8tj10/7iwIFClhDu/uOJxIbrD72/lCPdCV8ApO7aLjjfd6BWUWh7z8XAMc/ghMHjtdBAF/wig==
+"@visual-framework/vf-content@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.0.8.tgz#be56510c8cb631ebdabb96581a214002c313e724"
+  integrity sha512-dJm7I/oJ1DDFhH/iTGlCk3pyW7oZVozyet4yrkzlWNZvduLftayzWpRY1Z5nw+/vHCGSdjJxfN7pjoqPZ4fiOA==
   dependencies:
     "@visual-framework/vf-badge" "^1.0.1"
     "@visual-framework/vf-blockquote" "^1.0.2"
-    "@visual-framework/vf-box" "^1.0.2"
+    "@visual-framework/vf-box" "^1.0.3"
     "@visual-framework/vf-button" "^1.0.2"
     "@visual-framework/vf-divider" "^1.0.0"
     "@visual-framework/vf-figure" "^1.0.0-beta.2"
