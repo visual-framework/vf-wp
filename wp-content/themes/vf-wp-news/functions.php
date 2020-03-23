@@ -3,10 +3,20 @@
 // Replacing factoid boxes in old articles
 
 function factoid_function( $atts, $content = null ) {
-    return '<div class="vf-box vf-box--normal vf-box-theme--primary | factoid-box">' . '<p class="vf-box__text">' . $content . '</p>' . '</div>';
+$content = str_replace('<p', '<p class="vf-box__text"', $content);
+$content = str_replace('<h2', '<h2 class="vf-box__heading"', $content);
+    return '<div class="vf-box vf-box--normal vf-box-theme--primary">' .  $content . '</div>';
 }
+
 add_shortcode('fact-box', 'factoid_function');
 
+// removes empty <p> in factoid box
+
+add_filter('the_content', 'remove_empty_p', 20, 1);
+function remove_empty_p($content){
+    $content = force_balance_tags($content);
+    return preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
+}
 
 // CHILD THEME CSS FILE
 

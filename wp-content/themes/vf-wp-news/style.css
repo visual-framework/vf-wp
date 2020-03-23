@@ -214,23 +214,3 @@ Text Domain:	 vf-wp-news-main
     padding-bottom: 1em;
   }
 
-/* Makes content in fac-box shortcode to look as vf-box - a dirty way to do that*/
-
-.factoid-box h2 {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif !important;
-  font-size: 21px !important;
-  font-weight: 500 !important;
-  line-height: 1.29 !important;
-  margin: 0 0 16px 0 !important;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0 !important;
-  padding-top: 0 !important;
-}
-
-.factoid-box p {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif !important;
-  font-size: 16px !important;
-  font-weight: 400 !important;
-  line-height: 1.71 !important;
-  margin: 0 !important;
-  margin: 0 !important;
-}

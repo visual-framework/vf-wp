@@ -19,3 +19,17 @@
 .vf-content.embl-grid > div > h4 {
   margin-top: 4px;
 }
+
+.vf-box__text {
+
+  // some times there's a link inside the text in old WP posts.
+  // the vf-box might also be inside of `vf-content`
+  .vf-content & a,
+  a {
+    color: currentColor;
+    text-decoration: underline;
+    &:hover {
+      color: currentColor;
+    }
+  }
+}
