@@ -66,9 +66,9 @@ the_post();
         <?php while( have_rows('article_sources') ): the_row(); 
 			
       $source = get_sub_field('source_link_url');
-      $description = get_sub_field('source_description');?>
+      $description = get_sub_field('source_description', false, false);?>
         <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
-            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
+            href="<?php echo esc_url( $source ); ?>"><?php echo ($description) ?></a></p>
         <?php endwhile; ?>
       </div>
     </div>
