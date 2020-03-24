@@ -112,7 +112,7 @@
     "core-js": "3.6.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "webpack": "4.42.0",
+    "webpack": "4.42.1",
     "webpack-cli": "3.3.11"
   }
 }
