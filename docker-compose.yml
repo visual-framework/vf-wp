@@ -69,7 +69,7 @@ services:
       - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.docker.localhost'
 
   traefik:
-    image: traefik:1.7.23-alpine
+    image: traefik:1.7.24-alpine
     container_name: "${PROJECT_NAME}_traefik"
     command: -c /dev/null --web --docker --logLevel=INFO
     ports:
