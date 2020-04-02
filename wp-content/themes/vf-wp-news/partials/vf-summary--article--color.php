@@ -16,14 +16,25 @@ $user_id = get_the_author_meta('ID');
 
 <article class="vf-summary vf-summary--article vf-u-margin__bottom--xl"
   style="background-color: <?php the_field('color'); ?>; min-height: 100%; display: block;">
-  <!-- <div class="post-image"> -->
-  <a href="<?php the_permalink(); ?>">
-    <?php the_post_thumbnail(); ?>
-  </a>
-  <!-- <div class="overlay">
-			  <p class="vf-u-margin--0">
-			  </p>
-		</div> -->
+  <?php
+
+if( get_field( 'youtube_url' ) ) {
+    $videoid = get_field( 'youtube_url' );
+    echo '<div class="embed-container vf-card__image"><iframe src="' . $videoid . '" frameborder="0" allowfullscreen></iframe></div>';
+} 
+
+else if ( get_field( 'mp4_url' ) ) { 
+  $mp4url = get_field( 'mp4_url' );
+  echo '<div><video muted="muted" class="vf-card__image" autoplay loop><source src="' . $mp4url . '" type="video/mp4"></video></div>';
+}
+
+else { ?>
+    <a style="display: flex;" href="<?php the_permalink(); ?>">
+      <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
+    </a>
+    <?php
+}
+?>
   </div>
   <div class="article-summary" style="background-color: <?php the_field('color'); ?>; padding: 0 24px 16px 24px;">
     <h2 class="vf-summary__title | vf-u-margin__top--sm">

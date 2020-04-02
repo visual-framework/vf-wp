@@ -5,10 +5,27 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 
 ?>
+
 <div class="vf-card vf-card--easy vf-card-theme--primary vf-u-margin__bottom--md">
-  <a style="display: flex;" href="<?php the_permalink(); ?>">
-    <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
-  </a>
+<?php
+
+if( get_field( 'youtube_url' ) ) {
+    $videoid = get_field( 'youtube_url' );
+    echo '<div class="embed-container embed-padding-hero vf-card__image"><iframe src="' . $videoid . '" frameborder="0" allowfullscreen></iframe></div>';
+} 
+
+else if ( get_field( 'mp4_url' ) ) { 
+  $mp4url = get_field( 'mp4_url' );
+  echo '<div><video muted="muted" class="vf-card__image" autoplay loop><source src="' . $mp4url . '" type="video/mp4"></video></div>';
+}
+
+else { ?>
+    <a style="display: flex;" href="<?php the_permalink(); ?>">
+      <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
+    </a>
+    <?php
+}
+?>
   <div class="vf-card__content">
     <h3 class="vf-card__title">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>

@@ -15,22 +15,36 @@ the_post();
 <main
   class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
   <div class="article-left-col">
-    <div class="vf-article-meta-information | author-box" style="display: block;">
-      <div class="vf-author | vf-article-meta-info__author">
-        <?php echo get_avatar( get_the_author_meta( 'ID' ), 48); ?>
-        <p class="vf-author__name | vf-text-body--5">
-          <a class="vf-link"
-            href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
+
+    <aside class="vf-article-meta-information">
+    <div class="vf-author | vf-article-meta-info__author">
+        <p class="vf-author__name | vf-text-body--6">
+            <a class="vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
         </p>
-      </div>
-      <div class="vf-meta__details">
-        <time class="vf-meta__date | vf-text-body--5" title="<?php the_time('c'); ?>"
-          datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
-      </div>
-      <div class="vf-meta__details">
-        <p class="vf-text-body--5"><?php echo get_the_category_list(','); ?></p>
+        <a class="vf-author--avatar__link | vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+            <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, $default, $alt, array('class' => 'vf-author--avatar')); ?>
+        </a>
+    </div>
+    <div class="vf-meta__details">
+      <p class="vf-meta__date | vf-text-body--6"><time title="<?php the_time('c'); ?>"
+        datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
+        <p class="vf-meta__topics | vf-text-body--6"><?php echo get_the_category_list(','); ?></p>
+    </div>
+    <?php if( have_rows('in_this_article') ): ?>
+      <div class="vf-links | vf-article-meta-info__links">
+      <h6 class="vf-text vf-text-body--6">In this article</h6>
+
+        <?php while( have_rows('in_this_article') ): the_row(); 
+			
+      $anchor = get_sub_field('anchor');
+      $heading = get_sub_field('heading_description');?>
+        <a href="<?php echo esc_url( $anchor ); ?>" class="vf-link | vf-text-body--6"><?php echo esc_html($heading) ?></a>
+
+        <?php endwhile; ?>
       </div>
     </div>
+    <?php endif; ?>
+</aside>
   </div>
 
   <div class="vf-content | vf-u-padding__bottom--xxl">
@@ -38,13 +52,33 @@ the_post();
     <h2>
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
     </h2>
-    <figure class="vf-figure">
-      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
+    <?php
 
+if( get_field( 'youtube_url' ) ) {
+    $videoid = get_field( 'youtube_url' );
+    $caption = get_field('video_caption');
+    echo '<div class="vf-u-margin__bottom--xs embed-container embed-padding-main"><iframe src="' . $videoid . '" frameborder="0" allowfullscreen class="vf-card__image"></iframe></div><figcaption class="vf-figure__caption">' . $caption . '</figcaption>';
+} 
+
+else if ( get_field( 'mp4_url' ) ) { 
+  $mp4url = get_field( 'mp4_url' );
+  $caption = get_field('video_caption');
+  echo '<div><video muted="muted" class="vf-card__image" controls><source src="' . $mp4url . '" type="video/mp4"></video></div><figcaption class="vf-figure__caption">' . $caption . '</figcaption>';
+}
+
+else { ?>
+
+<figure class="vf-figure">
+      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
       <figcaption class="vf-figure__caption">
         <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
       </figcaption>
     </figure>
+    <?php
+  
+}
+?>
+
     <?php the_content(); ?>
   </div>
   <div class="social-share-box">
