@@ -1697,10 +1697,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-breadcrumbs-lookup/-/embl-breadcrumbs-lookup-1.0.0-beta.4.tgz#ce46f882d9633d2f41228cb797e4c79131cbb1bd"
   integrity sha512-NovJ0iFEI3jLLsQ55LQyvWb3hBOf+b8p2Ru43Z5ftYbzH+T+bhgsFND0a39Lea17L6TG0Ia1H0jMviWnx/b7Qw==
 
-"@visual-framework/embl-conditional-edit@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/embl-conditional-edit/-/embl-conditional-edit-1.0.0.tgz#24b6fabc2e12ff85287135b7ec48e2372bd59a09"
-  integrity sha512-grlXDpID4ZoRjiDH85vqb6Rf9uhYkugRQU7kfluxiemI727auGxd3LOsjddV1Mr2OF9hEgGhhBplXHS6S3OTlw==
+"@visual-framework/embl-conditional-edit@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-conditional-edit/-/embl-conditional-edit-1.0.1.tgz#8dca51d419d3f79f6bbed82bf2d7a0ae73c18230"
+  integrity sha512-qprMHa/CLhXNh8bSIpvLMaYFbPns49XZQb26uOFpAHinkNmJvRgOAfOsi2VEFangom4mzhgNuXO4HkhGIwAm5Q==
 
 "@visual-framework/embl-content-hub-loader@1.0.4":
   version "1.0.4"
