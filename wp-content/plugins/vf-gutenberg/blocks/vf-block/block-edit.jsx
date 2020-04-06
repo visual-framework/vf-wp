@@ -10,7 +10,7 @@ import {__} from '@wordpress/i18n';
 
 // "Update" button optionally appended to `VFBlockEdit` footer
 const UpdateButton = ({onClick}) => (
-  <Button isDefault isLarge onClick={onClick}>
+  <Button isSecondary isLarge onClick={onClick}>
     {__('Preview')}
   </Button>
 );

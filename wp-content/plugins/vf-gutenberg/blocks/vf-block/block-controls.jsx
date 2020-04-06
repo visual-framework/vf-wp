@@ -4,17 +4,17 @@
  */
 import React from 'react';
 import {BlockControls} from '@wordpress/block-editor';
-import {Button, IconButton, Toolbar} from '@wordpress/components';
+import {Button, Toolbar} from '@wordpress/components';
 import {__} from '@wordpress/i18n';
 
 // The togglable "Edit" button added to `BlockControls`
 const EditButton = ({onClick}) => (
-  <IconButton label={__('Edit')} icon="edit" onClick={onClick} />
+  <Button label={__('Edit')} icon="edit" onClick={onClick} />
 );
 
 // The togglable "View" button added to `BlockControls`
 const ViewButton = ({onClick}) => (
-  <IconButton label={__('Preview')} icon="visibility" onClick={onClick} />
+  <Button label={__('Preview')} icon="visibility" onClick={onClick} />
 );
 
 const VFBlockControls = props => {
