@@ -1,6 +1,6 @@
 {
     "key": "group_vf_containers",
-    "title": "VF Containers",
+    "title": "Theme Containers (deprecated)",
     "fields": [
         {
             "key": "field_vf_containers",
@@ -51,13 +51,13 @@
             {
                 "param": "options_page",
                 "operator": "==",
-                "value": "vf-settings"
+                "value": "vfwp-settings"
             }
         ]
     ],
-    "menu_order": 20,
+    "menu_order": 200,
     "position": "normal",
-    "style": "seamless",
+    "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",

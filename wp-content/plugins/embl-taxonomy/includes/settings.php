@@ -56,17 +56,17 @@ class EMBL_Taxonomy_Settings {
 
     // Add options page
     acf_add_options_page(array(
-      'menu_title'  => 'EMBL Settings',
-      'menu_slug'   => 'embl-settings',
+      'menu_title'  => __('EMBL Settings', 'vfwp'),
+      'menu_slug'   => 'vfwp-settings',
       'parent_slug' => 'options-general.php',
-      'page_title'  => 'EMBL Settings',
+      'page_title'  => __('EMBL Settings', 'vfwp'),
       'capability'  => 'manage_options'
     ));
 
     // Register field group
     acf_add_local_field_group(array(
       'key' => 'group_embl_setting',
-      'title' => 'EMBL Taxonomy Settings',
+      'title' => 'EMBL Taxonomy',
       'fields' => array(
         array(
           'key' => 'field_embl_taxonomy',
@@ -156,13 +156,13 @@ class EMBL_Taxonomy_Settings {
           array(
             'param' => 'options_page',
             'operator' => '==',
-            'value' => 'embl-settings',
+            'value' => 'vfwp-settings',
           ),
         ),
       ),
       'menu_order' => 20,
       'position' => 'normal',
-      'style' => 'seamless',
+      'style' => 'default',
       'label_placement' => 'top',
       'instruction_placement' => 'label',
       'hide_on_screen' => '',

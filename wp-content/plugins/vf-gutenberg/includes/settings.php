@@ -17,17 +17,17 @@ class VF_Gutenberg_Settings {
 
     // Add options page
     acf_add_options_page(array(
-      'menu_title'  => 'VF Settings',
-      'menu_slug'   => 'vf-settings',
+      'menu_title'  => __('EMBL Settings', 'vfwp'),
+      'menu_slug'   => 'vfwp-settings',
       'parent_slug' => 'options-general.php',
-      'page_title'  => 'Visual Framework Settings',
+      'page_title'  => __('EMBL Settings', 'vfwp'),
       'capability'  => 'manage_options'
     ));
 
     // Register field group
     acf_add_local_field_group(array(
       'key' => 'group_vf_setting',
-      'title' => 'VF Settings',
+      'title' => __('Visual Framework', 'vfwp'),
       'fields' => array(
         array(
           'key' => 'field_vf_cdn_stylesheet',
@@ -40,7 +40,7 @@ class VF_Gutenberg_Settings {
           'label' => '',
           'name' => 'vf_cdn_stylesheet_optin',
           'type' => 'true_false',
-          'message' => 'Include CDN Stylesheet on front-end',
+          'message' => __('Include CDN Stylesheet on front-end', 'vfwp'),
           'default_value' => 0,
           'ui' => 1,
         ),
@@ -55,7 +55,7 @@ class VF_Gutenberg_Settings {
           'label' => '',
           'name' => 'vf_cdn_javascript_optin',
           'type' => 'true_false',
-          'message' => 'Include CDN JavaScript on front-end',
+          'message' => __('Include CDN JavaScript on front-end', 'vfwp'),
           'default_value' => 0,
           'ui' => 1,
         ),
@@ -65,13 +65,13 @@ class VF_Gutenberg_Settings {
           array(
             'param' => 'options_page',
             'operator' => '==',
-            'value' => 'vf-settings',
+            'value' => 'vfwp-settings',
           ),
         ),
       ),
-      'menu_order' => 10,
+      'menu_order' => 100,
       'position' => 'normal',
-      'style' => 'seamless',
+      'style' => 'default',
       'label_placement' => 'top',
       'instruction_placement' => 'label',
       'hide_on_screen' => '',
