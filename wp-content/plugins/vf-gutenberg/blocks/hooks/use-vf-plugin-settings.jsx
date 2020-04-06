@@ -91,9 +91,9 @@ const useVFPluginSettings = settings => {
     ...defaults,
     name: settings.name,
     title: settings.title,
-    category: 'vf/wp',
-    description: __('Visual Framework (WordPress)'),
-    keywords: [...defaults.keywords, __('EMBL Content Hub')],
+    category: 'vf/hub',
+    description: __('EMBL – Content Hub'),
+    keywords: [...defaults.keywords, __('EMBL – Content Hub')],
     attributes: attributes,
     edit: Edit
   };

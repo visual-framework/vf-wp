@@ -164,7 +164,7 @@ class VF_Gutenberg {
       array(
         array(
           'slug'  => 'vf/core',
-          'title' => __('Visual Framework (core)', 'vfwp'),
+          'title' => __('EMBL – Visual Framework', 'vfwp'),
           'icon'  => null
         )
       ),

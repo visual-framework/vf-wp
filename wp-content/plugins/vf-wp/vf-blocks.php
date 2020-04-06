@@ -29,8 +29,8 @@ class VF_Blocks extends VF_Type {
     return array_merge(
       array(
         array(
-          'slug'  => 'vf/wp',
-          'title' => __('Visual Framework (WordPress)', 'vfwp'),
+          'slug'  => 'vf/hub',
+          'title' => __('EMBL – Content Hub', 'vfwp'),
           'icon'  => null
         ),
       ),
