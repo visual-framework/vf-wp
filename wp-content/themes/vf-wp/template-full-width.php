@@ -5,6 +5,9 @@
 
 get_header();
 
+global $post;
+setup_postdata($post);
+
 global $vf_theme;
 
 ?>
