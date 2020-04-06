@@ -11,10 +11,10 @@ class VF_Containers extends VF_Type {
 
   protected $post_type = 'vf_container';
   protected $post_type_plural = 'vf_containers';
-  protected $description = 'VF Containers';
+  protected $description = 'Containers';
 
   protected $labels = array(
-    'name'          => 'VF Containers',
+    'name'          => 'Containers',
     'singular_name' => 'Container',
     'edit_item'     => 'Edit Container'
   );

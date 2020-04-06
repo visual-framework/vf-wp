@@ -65,6 +65,15 @@ class VF_WP {
       array($this, 'init')
     );
 
+     add_action('acf/init',
+      array($this, 'acf_init')
+    );
+
+    add_action(
+      'admin_menu',
+      array($this, 'admin_menu')
+    );
+
     // ACF load and save setup - saving only useful for development
     add_filter(
       'acf/settings/load_json',
@@ -123,6 +132,38 @@ class VF_WP {
       $vf_containers->deactivate();
     }
   }
+  /**
+   * Action: `admin_menu`
+   */
+  public function admin_menu() {
+    add_menu_page(
+      __('Content Hub', 'vfwp'),
+      __('Content Hub', 'vfwp'),
+      'manage_options',
+      'vf-settings',
+      '',
+      'dashicons-admin-settings',
+      50
+    );
+  }
+
+  /**
+   * Action `acf/init`
+   */
+  public function acf_init() {
+    if ( ! function_exists('acf_add_options_page')) {
+      return;
+    }
+    // Add options page
+    acf_add_options_page(array(
+      'menu_title'  => __('Settings', 'vfwp'),
+      'menu_slug'   => 'vf-settings',
+      'parent_slug' => 'vf-settings',
+      'page_title'  => __('Settings', 'vfwp'),
+      'capability'  => 'manage_options'
+    ));
+  }
+
 
   /**
    * Return true if current template is a single block or container

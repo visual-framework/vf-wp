@@ -15,15 +15,6 @@ class VF_Gutenberg_Settings {
    */
   function acf_init() {
 
-    // Add options page
-    acf_add_options_page(array(
-      'menu_title'  => __('EMBL Settings', 'vfwp'),
-      'menu_slug'   => 'vfwp-settings',
-      'parent_slug' => 'options-general.php',
-      'page_title'  => __('EMBL Settings', 'vfwp'),
-      'capability'  => 'manage_options'
-    ));
-
     // Register field group
     acf_add_local_field_group(array(
       'key' => 'group_vf_setting',
@@ -65,7 +56,7 @@ class VF_Gutenberg_Settings {
           array(
             'param' => 'options_page',
             'operator' => '==',
-            'value' => 'vfwp-settings',
+            'value' => 'vf-settings',
           ),
         ),
       ),
@@ -79,23 +70,6 @@ class VF_Gutenberg_Settings {
       'description' => '',
       'modified' => 1544016028,
     ));
-
-    // Optin by default
-    /*
-    acf_add_local_field(
-      array(
-        'parent'        => 'group_vf_setting',
-        'key'           => 'field_vf_gutenberg_enable_core_blocks',
-        'label'         => '(Alpha) Gutenberg blocks',
-        'name'          => 'vf_gutenberg_core_blocks_optin',
-        'type'          => 'true_false',
-        'message'       => 'Opt-in to enable core Visual Framework Gutenberg blocks',
-        'instructions'  => 'This is an alpha feature and breaking changes are expected. In future updates stable blocks will be enabled by default.',
-        'default_value' => 0,
-        'ui'            => 1,
-      )
-    );
-    */
   }
 
 } // VF_Gutenberg_Settings

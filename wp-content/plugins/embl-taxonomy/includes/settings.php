@@ -49,19 +49,9 @@ class EMBL_Taxonomy_Settings {
    * Action `acf/init`
    */
   function acf_init() {
-    // Bail early if ACF plugin is not active (dependency for options page)
-    if ( ! function_exists('acf_add_options_page')) {
+    if ( ! function_exists('acf_add_local_field_group')) {
       return;
     }
-
-    // Add options page
-    acf_add_options_page(array(
-      'menu_title'  => __('EMBL Settings', 'vfwp'),
-      'menu_slug'   => 'vfwp-settings',
-      'parent_slug' => 'options-general.php',
-      'page_title'  => __('EMBL Settings', 'vfwp'),
-      'capability'  => 'manage_options'
-    ));
 
     // Register field group
     acf_add_local_field_group(array(
@@ -156,7 +146,7 @@ class EMBL_Taxonomy_Settings {
           array(
             'param' => 'options_page',
             'operator' => '==',
-            'value' => 'vfwp-settings',
+            'value' => 'vf-settings',
           ),
         ),
       ),

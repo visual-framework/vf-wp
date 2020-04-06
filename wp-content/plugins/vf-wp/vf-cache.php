@@ -462,11 +462,11 @@ xhr.send('<?php echo build_query($data); ?>');
 
     register_post_type($this->post_type, array(
       'labels' => array(
-        'name'          => 'VF Cache',
+        'name'          => 'Cache',
         'singular_name' => 'Cache',
         'edit_item'     => 'Edit Cache'
       ),
-      'description'     => 'VF Cache',
+      'description'     => 'Cache',
       'capability_type' => $this->post_type,
       'capabilities'    => array(
         'edit_post'   => 'edit_' . $this->post_type,
@@ -490,6 +490,7 @@ xhr.send('<?php echo build_query($data); ?>');
       'public'            => false,
       'show_ui'           => true,
       'show_in_admin_bar' => false,
+      'show_in_menu'      => 'vf-settings',
       'supports'          => array('title', 'editor'),
       'rewrite'           => false,
       'query_var'         => false,
