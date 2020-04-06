@@ -30,10 +30,14 @@ class VF_Admin_Reusable {
       $this->post_id = intval($_GET[$var]);
     }
     // Add admin hooks
+    // add_action(
+    //   'registered_post_type',
+    //   array($this, 'registered_post_type'),
+    //   10, 2
+    // );
     add_action(
-      'registered_post_type',
-      array($this, 'registered_post_type'),
-      10, 2
+      'admin_menu',
+      array($this, 'admin_menu')
     );
     // Add columns for "Reusable Blocks" table
     if ($this->post_id === null) {
@@ -66,19 +70,49 @@ class VF_Admin_Reusable {
   }
 
   /**
+   * Action: `admin_menu`
+   * Add "Reusable Blocks" to the admin menu
+   */
+  public function admin_menu() {
+    // add_menu_page(
+    //   __('Reusable Blocks', 'vfwp'),
+    //   __('Reusable Blocks', 'vfwp'),
+    //   'edit_pages',
+    //   'edit.php?post_type=wp_block',
+    //   '',
+    //   'dashicons-layout',
+    //   20
+    // );
+    add_submenu_page(
+      'edit.php',
+      __('Reusable Blocks', 'vfwp'),
+      __('Reusable Blocks', 'vfwp'),
+      'edit_posts',
+      'edit.php?post_type=wp_block'
+    );
+    add_submenu_page(
+      'edit.php?post_type=page',
+      __('Reusable Blocks', 'vfwp'),
+      __('Reusable Blocks', 'vfwp'),
+      'edit_pages',
+      'edit.php?post_type=wp_block'
+    );
+  }
+
+  /**
    * Expose the "Reusable Blocks" post type in the admin menu
    */
-  public function registered_post_type($post_type, $post_type_object) {
-    if ($post_type !== 'wp_block') {
-      return;
-    }
-    $post_type_object->_builtin = false;
-    $post_type_object->labels->name = __('Reusable Blocks');
-    $post_type_object->labels->menu_name = __('Reusable Blocks');
-    $post_type_object->show_in_menu = true;
-    $post_type_object->menu_position = 20;
-    $post_type_object->menu_icon = 'dashicons-layout';
-  }
+  // public function registered_post_type($post_type, $post_type_object) {
+  //   if ($post_type !== 'wp_block') {
+  //     return;
+  //   }
+  //   $post_type_object->_builtin = false;
+  //   $post_type_object->labels->name = __('Reusable Blocks');
+  //   $post_type_object->labels->menu_name = __('Reusable Blocks');
+  //   $post_type_object->show_in_menu = true;
+  //   $post_type_object->menu_position = 20;
+  //   $post_type_object->menu_icon = 'dashicons-layout';
+  // }
 
   /**
    * Return instance markup to search within post content
