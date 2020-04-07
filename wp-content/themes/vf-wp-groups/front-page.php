@@ -32,7 +32,10 @@ $is_wrapped = function($is_wrap, $block_name, $blocks, $i) {
 
 // Prepend the opening wrapper elements
 $open_wrap = function($html, $is_wrap, $block_name) use ($render_block) {
-  $has_wrap = $is_wrap || ! VF_Gutenberg::is_block_standalone($block_name);
+  $has_wrap = $is_wrap;
+  if ( ! $has_wrap && class_exists('VF_Gutenberg')) {
+    $has_wrap = ! VF_Gutenberg::is_block_standalone($block_name);
+  }
   if ($has_wrap) {
     $html = '
 <section class="vf-inlay">
@@ -46,7 +49,11 @@ $open_wrap = function($html, $is_wrap, $block_name) use ($render_block) {
 
 // Append the closing wrapper elements
 $close_wrap = function($html, $is_wrap, $block_name) {
-  $has_wrap = $is_wrap || ! VF_Gutenberg::is_block_standalone($block_name);
+  $has_wrap = $is_wrap;
+  if ( ! $has_wrap && class_exists('VF_Gutenberg')) {
+    $has_wrap = ! VF_Gutenberg::is_block_standalone($block_name);
+  }
+
   if ($has_wrap) {
     $html .= '
     </main>

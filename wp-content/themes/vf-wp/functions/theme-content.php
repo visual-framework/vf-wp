@@ -13,23 +13,8 @@ if ( ! class_exists('VF_Theme_Content') ) :
 
 class VF_Theme_Content {
 
-  // // Default wrapped blocks
-  // public const WRAPPED = array(
-  //   'core/heading',
-  //   'core/list',
-  //   'core/paragraph'
-  // );
-
-  // // List of Gutenberg blocks to wrap (populated by filter)
-  // private $wrapped = array();
-
   public function __construct() {
     // Add content hooks
-    // add_filter(
-    //   'vf/theme/content/wrapped_blocks',
-    //   array($this, 'wrapped_blocks'),
-    //   9, 1
-    // );
     add_filter(
       'vf/theme/content/is_block_wrapped',
       array($this, 'is_block_wrapped'),
@@ -45,21 +30,7 @@ class VF_Theme_Content {
       array($this, 'close_block_wrap'),
       9, 2
     );
-    // // Setup defaults
-    // $this->wrapped = VF_Theme::apply_filters(
-    //   'vf/theme/content/wrapped_blocks',
-    //   array()
-    // );
   }
-
-  /**
-   * Filter: `vf/theme/content/wrapped_blocks`
-   * Add default wrapped block list
-   */
-  // public function wrapped_blocks($wrapped) {
-  //   $wrapped = array_merge($wrapped, VF_Theme_Content::WRAPPED);
-  //   return array_unique($wrapped);
-  // }
 
   /**
    * Filter: `vf/theme/content/is_block_wrapped`
@@ -67,21 +38,13 @@ class VF_Theme_Content {
    * e.g. with `<div class="vf-content"> [...] </div>`
    */
   public function is_block_wrapped($is_wrap, $block_name, $blocks, $i) {
-    // return in_array($block_name, $this->wrapped);
-    // var_dump($block_name);
-
     // Ignore non `vf` blocks
     if ( ! preg_match('#^vf/(.+)#', $block_name)) {
       return true;
     }
-    // Check if block is a `VF_Plugin`
-    $post_name = VF_Gutenberg::name_block_to_post($block_name);
-    $plugin = VF_Plugin::get_plugin($post_name);
-    if ( ! $plugin) {
-      return true;
-    }
-    if ($plugin) {
-      if ($plugin->is_template_standalone()) {
+    // Don't wrap standalone VF blocks
+    if (class_exists('VF_Gutenberg')) {
+      if (VF_Gutenberg::is_block_standalone($block_name)) {
         return false;
       }
     }
