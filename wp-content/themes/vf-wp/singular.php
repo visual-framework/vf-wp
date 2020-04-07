@@ -22,7 +22,6 @@ global $vf_theme;
     <div>
       <?php
 
-      // the_content();
       $vf_theme->the_content();
 
       ?>
