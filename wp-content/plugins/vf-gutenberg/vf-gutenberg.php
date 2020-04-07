@@ -92,6 +92,9 @@ class VF_Gutenberg {
     );
   }
 
+  /**
+   * Return true if template has grid wrappers and should not be contained
+   */
   static function is_block_standalone($block_name) {
     $post_name = VF_Gutenberg::name_block_to_post($block_name);
     if (class_exists('VF_Plugin')) {

@@ -147,7 +147,6 @@ class VF_Plugin {
     return empty($this->API) === false;
   }
 
-
   /**
    * Return true if template has grid wrappers and should not be contained
    */

@@ -23,13 +23,29 @@ class VF_Theme_Content {
     add_filter(
       'vf/theme/content/open_block_wrap',
       array($this, 'open_block_wrap'),
-      9, 3
+      9, 2
     );
     add_filter(
       'vf/theme/content/close_block_wrap',
       array($this, 'close_block_wrap'),
       9, 2
     );
+  }
+
+  /**
+   * Return the block name prefixed as HTML comment
+   * <!--[core-embed/youtube]-->
+   */
+  static public function get_block_name($html) {
+    $open = preg_quote('<!--[');
+    $close = preg_quote(']-->');
+    if (preg_match(
+      "#^\s*{$open}([^\]]*){$close}#",
+      $html, $match
+    ) === 1) {
+      return $match[1];
+    }
+    return '';
   }
 
   /**
@@ -53,40 +69,20 @@ class VF_Theme_Content {
 
   /**
    * Filter: `vf/theme/content/open_block_wrap`
-   * Return content block prefixed HTML
+   * Return default block opening wrapper
    */
-  public function open_block_wrap($html, $is_wrap, $block_name) {
-    if ($is_wrap) {
-      $html = "<!--[vf/content]-->\n<div class=\"vf-content\">\n{$html}";
-    }
+  public function open_block_wrap($html, $block_name) {
+    $html = "<!--[vf/content]-->\n<div class=\"vf-content\">\n{$html}";
     return $html;
   }
 
   /**
    * Filter: `vf/theme/content/close_block_wrap`
-   * Return content block suffixed HTML
+   * Return default block closing wrapper
    */
-  public function close_block_wrap($html, $is_wrap) {
-    if ($is_wrap) {
-      $html = "{$html}</div>\n";
-    }
+  public function close_block_wrap($html, $block_name) {
+    $html = "{$html}</div>\n";
     return $html;
-  }
-
-  /**
-   * Return the block name prefixed as HTML comment
-   * <!--[core-embed/youtube]-->
-   */
-  public function get_block_name($html) {
-    $open = preg_quote('<!--[');
-    $close = preg_quote(']-->');
-    if (preg_match(
-      "#^\s*{$open}([^\]]*){$close}#",
-      $html, $match
-    ) === 1) {
-      return $match[1];
-    }
-    return '';
   }
 
   /**
@@ -170,59 +166,69 @@ class VF_Theme_Content {
     $is_open = false;
     $is_wrap = false;
     foreach ($blocks as $i => $block_html) {
-      $block_name = $this->get_block_name($block_html);
+      // Apply before filter
+      $block_name = VF_Theme_Content::get_block_name($block_html);
       $block_html = VF_Theme::apply_filters(
-        'vf/theme/content/render_block',
+        'vf/theme/content/render_block_before',
         $block_html, $block_name, $i
       );
       if (preg_match('#\S#', $block_html) !== 1) {
         continue;
       }
-      $was_wrap = $is_wrap;
       $is_wrap = (bool) VF_Theme::apply_filters(
         'vf/theme/content/is_block_wrapped',
         false, $block_name, $blocks, $i
       );
+      $before  = '';
       $prefix = '';
       $suffix = '';
       if ($is_wrap) {
         // Open wrapper if closed
         if ( ! $is_open) {
-          $prefix = VF_Theme::apply_filters(
+          $before = VF_Theme::apply_filters(
             'vf/theme/content/open_block_wrap',
-            '', true, $block_name
+            '', $block_name
           );
           $is_open = true;
         }
       } else {
         // Close wrapper if open
         if ($is_open) {
-          $prefix = VF_Theme::apply_filters(
+          $before = VF_Theme::apply_filters(
             'vf/theme/content/close_block_wrap',
-            '', $was_wrap, $block_name
+            '', $block_name
           );
         }
-        // Optional suffix for no-wrap
-        $prefix .= VF_Theme::apply_filters(
-          'vf/theme/content/open_block_wrap',
-          '', false, $block_name
-        );
-        // Optional suffix for no-wrap
-        $suffix = VF_Theme::apply_filters(
-          'vf/theme/content/close_block_wrap',
-          '', false, $block_name
-        );
         $is_open = false;
       }
+
+      // Optional prefix
+      $prefix = VF_Theme::apply_filters(
+        'vf/theme/content/block_prefix',
+        '', $block_name, $is_open
+      );
+
+      // Optional suffix
+      $suffix = VF_Theme::apply_filters(
+        'vf/theme/content/block_suffix',
+        '', $block_name, $is_open
+      );
+
+      // Apply after filter
       $block_html = "{$prefix}{$block_html}{$suffix}";
-      echo $block_html;
+      $block_html = VF_Theme::apply_filters(
+        'vf/theme/content/render_block_after',
+        $block_html, $block_name, $i, $is_open
+      );
+
+      // Render block
+      echo "{$before}{$block_html}";
     }
     // Close final wrapper if open
     if ($is_open) {
-      // echo $this->get_close_container();
       echo VF_Theme::apply_filters(
         'vf/theme/content/close_block_wrap',
-        '', true, $block_name
+        '', $block_name
       );
     }
   }
