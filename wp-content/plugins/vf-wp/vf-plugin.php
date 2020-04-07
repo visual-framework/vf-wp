@@ -147,6 +147,14 @@ class VF_Plugin {
     return empty($this->API) === false;
   }
 
+
+  /**
+   * Return true if template has grid wrappers and should not be contained
+   */
+  public function is_template_standalone() {
+    return false;
+  }
+
   /**
    * Return true if plugin is rendered in `vf/plugin` Gutenberg block
    */

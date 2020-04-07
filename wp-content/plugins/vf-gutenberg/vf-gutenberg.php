@@ -92,6 +92,15 @@ class VF_Gutenberg {
     );
   }
 
+  static function is_block_standalone($block_name) {
+    $post_name = VF_Gutenberg::name_block_to_post($block_name);
+    $plugin = VF_Plugin::get_plugin($post_name);
+    if ($plugin) {
+      return $plugin->is_template_standalone();
+    }
+    return false;
+  }
+
   function __construct() {
     // Do nothing...
   }
