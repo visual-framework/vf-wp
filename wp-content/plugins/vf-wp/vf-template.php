@@ -19,6 +19,19 @@ class VF_Template {
     return 'vf_template';
   }
 
+  static public function default_template() {
+    return array(
+      array(
+        'vf/container-page-template',
+        array()
+      ),
+    );
+  }
+
+  // public function default_content() {
+  //   return '<!-- wp:vf/container-page-template {"ver":"1.0.0","defaults":1} /-->' + "\n";
+  // }
+
   /**
    * Reference: `get_post_type_labels`
    * https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/post.php
@@ -63,6 +76,14 @@ class VF_Template {
       'init',
       array($this, 'init')
     );
+    add_action(
+      'vf_header',
+      array($this, 'vf_header')
+    );
+    add_action(
+      'vf_footer',
+      array($this, 'vf_footer')
+    );
   }
 
   /**
@@ -71,7 +92,7 @@ class VF_Template {
    * https://developer.wordpress.org/reference/functions/register_post_type/
    */
   public function init() {
-    register_post_type(VF_Template::type(), array(
+    register_post_type(VF_Template::type(),array(
       'labels'              => VF_Template::labels(),
       'description'         => __('Theme Templates', 'vfwp'),
       'public'              => false,
@@ -98,6 +119,20 @@ class VF_Template {
     $placeholder = new VF_Container_Placeholder(
       array('init' => true)
     );
+
+    // Set default Gutenberg template
+    $post_type_object = get_post_type_object(VF_Template::type());
+    if ($post_type_object) {
+      $post_type_object->template = VF_Template::default_template();
+    }
+  }
+
+  public function vf_header() {
+    var_dump('HEADER CONTAINERS');
+  }
+
+  public function vf_footer() {
+    var_dump('FOOTER CONTAINERS');
   }
 
 } // VF_Template
