@@ -76,6 +76,11 @@ class VF_Templates {
       'init',
       array($this, 'init')
     );
+    add_filter(
+      'theme_page_templates',
+      array($this, 'theme_page_templates'),
+      999, 1
+    );
     add_action(
       'vf_header',
       array($this, 'vf_header')
@@ -133,7 +138,36 @@ class VF_Templates {
   }
 
   /**
-   * Return array of `VF_Plugin` post names in the template post content
+   * Action: `theme_page_templates`
+   * Prepend templates to the "Page Attributes" option
+   */
+  public function theme_page_templates($page_templates) {
+    // Label pre-defined templates provide by the child theme
+    $templates = array();
+    foreach ($page_templates as $key => $value) {
+      $templates[$key] = "${value} (theme)";
+    }
+    // Get dynamic templates
+    $dynamic = array();
+    $post_type = VF_Templates::type();
+    $query = new WP_Query(array(
+      'posts_per_page' => -1,
+      'post_type'      => $post_type,
+      'post_status'    => 'publish'
+    ));
+    if ($query->post_count > 0) {
+      foreach ($query->posts as $post) {
+        if ($post->post_name === 'default') {
+          continue;
+        }
+        $dynamic["{$post_type}_{$post->post_name}.php"] = "{$post->post_title}";
+      }
+    }
+    return array_merge($dynamic, $templates);
+  }
+
+  /**
+   * Return array of `VF_Plugin` names in the template post content
    */
   public function get_template_plugins($template) {
     $containers = array();
@@ -153,12 +187,23 @@ class VF_Templates {
   }
 
   /**
-   * Return `vf_template` assigned to `$post_id`
+   * Return array of `VF_Plugin` names for current template hierarchy
    */
-  public function get_containers() {
+  public function get_template_containers() {
     $post_name = 'default';
-    // Todo: get $post_name based on page attribute
-
+    global $post;
+    if ($post instanceof WP_Post) {
+      $template_slug = get_page_template_slug($post);
+      if (
+        preg_match(
+          '#^' . preg_quote(VF_Templates::type()) .  '_(.*?)\.php#',
+          $template_slug,
+          $matches
+        ) === 1
+      ) {
+        $post_name = $matches[1];
+      }
+    }
     $query = new WP_Query(array(
       'posts_per_page' => 1,
       'post_type'      => VF_Templates::type(),
@@ -178,7 +223,7 @@ class VF_Templates {
    * Render template containers ABOVE the page template
    */
   public function vf_header() {
-    $containers = $this->get_containers();
+    $containers = $this->get_template_containers();
     $offset = array_search('vf_page_template', $containers);
     if ($offset === false) {
       return;
@@ -195,7 +240,7 @@ class VF_Templates {
    * Render template containers BELOW the page template
    */
   public function vf_footer() {
-    $containers = $this->get_containers();
+    $containers = $this->get_template_containers();
     $offset = array_search('vf_page_template', $containers);
     if ($offset === false) {
       return;
