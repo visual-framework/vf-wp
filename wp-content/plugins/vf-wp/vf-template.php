@@ -2,6 +2,8 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+require_once('vf-template-placeholder.php');
+
 if ( ! class_exists('VF_Template') ) :
 
 /**
@@ -91,6 +93,11 @@ class VF_Template {
       'can_export'          => true,
       'delete_with_user'    => false,
     ));
+
+    // Register the placeholder container plugin
+    $placeholder = new VF_Container_Placeholder(
+      array('init' => true)
+    );
   }
 
 } // VF_Template

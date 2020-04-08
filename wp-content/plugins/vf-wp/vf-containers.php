@@ -37,14 +37,6 @@ class VF_Containers extends VF_Type {
 
   public function activate() {
     parent::activate();
-
-    // Register Page Template container
-    // This is a placeholder for the normal WordPress template
-    VF_Plugin::register(array(
-      'post_name'  => 'vf_page_template',
-      'post_title' => 'Page Template',
-      'post_type' => $this->post_type
-    ));
   }
 
   static public function block_category() {

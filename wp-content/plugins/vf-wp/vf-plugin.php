@@ -55,7 +55,7 @@ class VF_Plugin {
     $vf_plugins[$this->config['post_name']] = $this->config;
 
     // "Activate" immediately if loaded via theme directory
-    if ($this->is_theme()) {
+    if ($this->is_builtin() || $this->is_theme()) {
       if ( ! $this->post()) {
         $this->activation_hook();
       }
@@ -116,6 +116,13 @@ class VF_Plugin {
 
   public function is_container() {
     return $this->config['post_type'] === 'vf_container';
+  }
+
+  /**
+   * Return true if plugin is predefined
+   */
+  public function is_builtin() {
+    return false;
   }
 
   /**
@@ -361,13 +368,21 @@ class VF_Plugin {
   static public function render($plugin, $fields = null, $parent = null) {
     if ( ! $plugin instanceof VF_Plugin ||
          ! $plugin->post() instanceof WP_Post ||
-         ! $plugin->post()->post_status === 'publish' ||
-         ! $plugin->template()
+         ! $plugin->post()->post_status === 'publish'
     ) {
       return;
     }
     if (empty($fields)) {
       $fields = null;
+    }
+    // User callback method if defined by plugin
+    if (method_exists($plugin, 'template_callback')) {
+      $plugin->template_callback($fields);
+      return;
+    }
+    // Use template file if defined by plugin
+    if ( ! $plugin->template()) {
+      return;
     }
 
     /**
