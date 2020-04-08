@@ -167,6 +167,25 @@ class VF_Templates {
   }
 
   /**
+   * Return and validate template post
+   */
+  public function get_template_post($post_name) {
+    $query = new WP_Query(array(
+      'posts_per_page' => 1,
+      'post_type'      => VF_Templates::type(),
+      'post_name__in'  => array($post_name),
+      'post_status'    => 'publish'
+    ));
+    if ($query->post_count === 0) {
+      return null;
+    }
+    if ( ! has_blocks($query->posts[0])) {
+      return null;
+    }
+    return $query->posts[0];
+  }
+
+  /**
    * Return array of `VF_Plugin` names in the template post content
    */
   public function get_template_plugins($template) {
@@ -190,32 +209,25 @@ class VF_Templates {
    * Return array of `VF_Plugin` names for current template hierarchy
    */
   public function get_template_containers() {
-    $post_name = 'default';
+    // Defer to "default" template
+    $template = $this->get_template_post('default');
+    // Attempt to find template from post attribute
     global $post;
     if ($post instanceof WP_Post) {
       $template_slug = get_page_template_slug($post);
       if (
         preg_match(
           '#^' . preg_quote(VF_Templates::type()) .  '_(.*?)\.php#',
-          $template_slug,
-          $matches
+          $template_slug, $matches
         ) === 1
       ) {
-        $post_name = $matches[1];
+        $alternate = $this->get_template_post($matches[1]);
+        if ($alternate) {
+          $template = $alternate;
+        }
       }
     }
-    $query = new WP_Query(array(
-      'posts_per_page' => 1,
-      'post_type'      => VF_Templates::type(),
-      'post_name__in'  => array($post_name)
-    ));
-    if ($query->post_count === 0) {
-      return array();
-    }
-    if ( ! has_blocks($query->posts[0])) {
-      return array();
-    }
-    return $this->get_template_plugins($query->posts[0]);
+    return $this->get_template_plugins($template);
   }
 
   /**

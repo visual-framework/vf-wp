@@ -4,6 +4,10 @@
  * Previews are accessible via the WordPress admin area
  */
 
+if ( ! is_user_logged_in()) {
+  return;
+}
+
 show_admin_bar(false);
 
 get_template_part('partials/head');
