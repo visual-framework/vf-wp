@@ -6,11 +6,11 @@ import useVFGutenberg from './use-vf-gutenberg';
 const useVFRenderPlugin = async (name, attrs) => {
   try {
     // Return empty HTML if iframe URL is set as transient property
-    if (attrs.defaults === 1 && attrs.hasOwnProperty('preview')) {
+    if (attrs.defaults === 1 && !!attrs.preview) {
       return {
         hash: name,
         html: '',
-        src: attrs['preview']
+        src: attrs.preview
       };
     }
     // Otherwise fetch block render
