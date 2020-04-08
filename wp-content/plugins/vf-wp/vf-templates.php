@@ -2,14 +2,14 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-require_once('vf-template-placeholder.php');
+require_once('vf-templates-placeholder.php');
 
-if ( ! class_exists('VF_Template') ) :
+if ( ! class_exists('VF_Templates') ) :
 
 /**
  * Represent a custom post type for Visual Framework WP templates
  */
-class VF_Template {
+class VF_Templates {
 
   public function __construct() {
     // Nothing
@@ -19,7 +19,7 @@ class VF_Template {
     return 'vf_template';
   }
 
-  static public function default_template() {
+  static public function default_blocks() {
     return array(
       array(
         'vf/container-page-template',
@@ -84,6 +84,11 @@ class VF_Template {
       'vf_footer',
       array($this, 'vf_footer')
     );
+    add_action(
+      'admin_print_footer_scripts',
+      array($this, 'admin_print_footer_scripts'),
+      100
+    );
   }
 
   /**
@@ -92,13 +97,13 @@ class VF_Template {
    * https://developer.wordpress.org/reference/functions/register_post_type/
    */
   public function init() {
-    register_post_type(VF_Template::type(),array(
-      'labels'              => VF_Template::labels(),
+    register_post_type(VF_Templates::type(),array(
+      'labels'              => VF_Templates::labels(),
       'description'         => __('Theme Templates', 'vfwp'),
       'public'              => false,
       'hierarchical'        => false,
       'exclude_from_search' => true,
-      'publicly_queryable'  => false,
+      'publicly_queryable'  => true,
       'show_ui'             => true,
       'show_in_menu'        => true,
       'show_in_nav_menus'   => false,
@@ -121,21 +126,133 @@ class VF_Template {
     );
 
     // Set default Gutenberg template
-    $post_type_object = get_post_type_object(VF_Template::type());
+    $post_type_object = get_post_type_object(VF_Templates::type());
     if ($post_type_object) {
-      $post_type_object->template = VF_Template::default_template();
+      $post_type_object->template = VF_Templates::default_blocks();
     }
   }
 
+  /**
+   * Return array of `VF_Plugin` post names in the template post content
+   */
+  public function get_template_plugins($template) {
+    $containers = array();
+    if ( ! $template instanceof WP_Post) {
+      return $containers;
+    }
+    $blocks = parse_blocks($template->post_content);
+    foreach ($blocks as $i => $block) {
+      if ( ! $block['blockName']) {
+        continue;
+      }
+      $containers[] = VF_Gutenberg::name_block_to_post(
+        $block['blockName']
+      );
+    }
+    return $containers;
+  }
+
+  /**
+   * Return `vf_template` assigned to `$post_id`
+   */
+  public function get_containers() {
+    $post_name = 'default';
+    // Todo: get $post_name based on page attribute
+
+    $query = new WP_Query(array(
+      'posts_per_page' => 1,
+      'post_type'      => VF_Templates::type(),
+      'post_name__in'  => array($post_name)
+    ));
+    if ($query->post_count === 0) {
+      return array();
+    }
+    if ( ! has_blocks($query->posts[0])) {
+      return array();
+    }
+    return $this->get_template_plugins($query->posts[0]);
+  }
+
+  /**
+   * Action: `vf_header`
+   * Render template containers ABOVE the page template
+   */
   public function vf_header() {
-    var_dump('HEADER CONTAINERS');
+    $containers = $this->get_containers();
+    $offset = array_search('vf_page_template', $containers);
+    if ($offset === false) {
+      return;
+    }
+    $containers = array_slice($containers, 0, $offset);
+    foreach ($containers as $post_name) {
+      $container = VF_Plugin::get_plugin($post_name);
+      VF_Plugin::render($container);
+    }
   }
 
+  /**
+   * Action: `vf_footer`
+   * Render template containers BELOW the page template
+   */
   public function vf_footer() {
-    var_dump('FOOTER CONTAINERS');
+    $containers = $this->get_containers();
+    $offset = array_search('vf_page_template', $containers);
+    if ($offset === false) {
+      return;
+    }
+    $containers = array_slice($containers, $offset + 1);
+    foreach ($containers as $post_name) {
+      $container = VF_Plugin::get_plugin($post_name);
+      VF_Plugin::render($container);
+    }
   }
 
-} // VF_Template
+  /**
+   * Only allow container blocks in the "Template" post type
+   */
+  public function admin_print_footer_scripts() {
+    $screen = get_current_screen();
+    if (
+      ! $screen ||
+        $screen->parent_base !== 'edit' ||
+        $screen->post_type !== VF_Templates::type()
+    ) {
+      return;
+    }
+    $category = VF_Containers::block_category();
+?>
+<script type="text/javascript">
+(function() {
+  const onReady = () => {
+    if (typeof wp !== 'object') {
+      return;
+    }
+    wp.domReady(() => {
+      if (typeof wp.blocks !== 'object') {
+        return;
+      }
+      const blocks = wp.blocks.getBlockTypes();
+      blocks.forEach(block => {
+        // Disable non-containers
+        if (block.category !== '<?php echo $category; ?>') {
+          wp.blocks.unregisterBlockType(block.name);
+          return;
+        }
+        // Enable containers
+        block.supports.inserter = true;
+      });
+    });
+  };
+  document.addEventListener(
+    'DOMContentLoaded',
+    onReady
+  );
+})();
+</script>
+<?php
+  }
+
+} // VF_Templates
 
 endif;
 

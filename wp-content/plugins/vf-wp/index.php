@@ -17,7 +17,7 @@ require_once('vf-plugin.php');
 require_once('vf-type.php');
 require_once('vf-blocks.php');
 require_once('vf-containers.php');
-require_once('vf-template.php');
+require_once('vf-templates.php');
 require_once('vf-acf.php');
 
 // Add action hook after opening `<body>` tag
@@ -40,7 +40,7 @@ class VF_WP {
     global $vf_cache;
     global $vf_blocks;
     global $vf_containers;
-    global $vf_template;
+    global $vf_templates;
 
     if ( ! isset($vf_acf)) {
       $vf_acf = new VF_ACF();
@@ -62,9 +62,9 @@ class VF_WP {
       $vf_containers->initialize();
     }
 
-    if ( ! isset($vf_template)) {
-      $vf_template = new VF_Template();
-      $vf_template->initialize();
+    if ( ! isset($vf_templates)) {
+      $vf_templates = new VF_Templates();
+      $vf_templates->initialize();
     }
 
     register_activation_hook(
@@ -181,10 +181,6 @@ class VF_WP {
     ));
   }
 
-  public static function single_template_path() {
-    return plugin_dir_path(__FILE__) . 'single-plugin.php';
-  }
-
   /**
    * Return true if current template is a single block or container
    */
@@ -206,7 +202,10 @@ class VF_WP {
    */
   function single_template($template) {
     if ($this->is_singular()) {
-      return VF_WP::single_template_path();
+      return plugin_dir_path(__FILE__) . 'single-plugin.php';
+    }
+    if (is_singular('vf_template')) {
+      return plugin_dir_path(__FILE__) . 'single-template.php';
     }
     return $template;
   }

@@ -41,13 +41,13 @@ class VF_Container_Placeholder extends VF_Plugin {
 
   public function template_callback() {
 ?>
-<div class="vf-banner vf-banner--info">
+<div class="vf-banner vf-banner--info" style="grid-column: main;">
   <div class="vf-banner__content">
     <p class="vf-banner__text">
       <?php echo esc_html_e('This is a placeholder for the page content.', 'vfwp'); ?>
     </p>
   </div>
-<div>
+</div>
 <?php
   }
 

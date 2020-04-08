@@ -121,7 +121,7 @@ class VF_ACF {
    */
   function acf_update_field_group($group) {
     $core_groups = array(
-      // Deprecated in favour of `VF_Template`
+      // Deprecated in favour of `VF_Templates`
       // 'group_vf_containers'
     );
     if (in_array($group['key'], $core_groups)) {
