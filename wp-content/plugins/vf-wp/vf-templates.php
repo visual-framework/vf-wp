@@ -77,6 +77,11 @@ class VF_Templates {
       array($this, 'init')
     );
     add_filter(
+      'block_categories',
+      array($this, 'block_categories'),
+      999, 2
+    );
+    add_filter(
       'theme_page_templates',
       array($this, 'theme_page_templates'),
       999, 1
@@ -89,11 +94,11 @@ class VF_Templates {
       'vf_footer',
       array($this, 'vf_footer')
     );
-    add_action(
-      'admin_print_footer_scripts',
-      array($this, 'admin_print_footer_scripts'),
-      100
-    );
+    // add_action(
+    //   'admin_print_footer_scripts',
+    //   array($this, 'admin_print_footer_scripts'),
+    //   100
+    // );
   }
 
   /**
@@ -135,6 +140,17 @@ class VF_Templates {
     if ($post_type_object) {
       $post_type_object->template = VF_Templates::default_blocks();
     }
+  }
+
+  /**
+   * Action: `block_categories`
+   * Only allow container category in Gutenberg editor
+   */
+  public function block_categories($categories, $post) {
+    if ($post->post_type === VF_Templates::type()) {
+      $categories = VF_Containers::block_categories(array(), $post);
+    }
+    return $categories;
   }
 
   /**
@@ -268,6 +284,7 @@ class VF_Templates {
    * Only allow container blocks in the "Template" post type
    */
   public function admin_print_footer_scripts() {
+    /*
     $screen = get_current_screen();
     if (
       ! $screen ||
@@ -307,6 +324,7 @@ class VF_Templates {
 })();
 </script>
 <?php
+*/
   }
 
 } // VF_Templates

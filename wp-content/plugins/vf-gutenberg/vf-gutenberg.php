@@ -480,7 +480,6 @@ class VF_Gutenberg {
         $data['fields']   = array();
         $data['supports'] = array(
           'customClassName' => false,
-          'inserter'        => false,
           'reusable'        => false
         );
       }

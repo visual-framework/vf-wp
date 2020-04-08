@@ -29,7 +29,7 @@ class VF_Blocks extends VF_Type {
   /**
    * Action: `block_categories`
    */
-  function block_categories($categories, $post) {
+  static public function block_categories($categories, $post) {
     return array_merge(
       array(
         array(
