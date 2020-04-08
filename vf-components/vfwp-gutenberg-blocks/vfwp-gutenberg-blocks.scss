@@ -193,6 +193,10 @@
   max-width: none;
 }
 
+.wp-block[data-type^='vf/container-'] {
+  max-width: none;
+}
+
 // .wp-block[data-type='vf/grid-column'] {
 //   border: 1px dashed #e2e4e7;
 // }

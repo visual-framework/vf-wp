@@ -97,7 +97,7 @@ class VF_Containers extends VF_Type {
       return;
     }
     $total = count($containers);
-    $start = array_keys($placeholder)[count($placeholder) - 1];
+    $start = array_keys($placeholder)[count($placeholder) - 1] + 1;
     for ($i = $start; $i < count($containers); $i++) {
       if (array_key_exists('vf_container_name', $containers[$i])) {
         $container = VF_Plugin::get_plugin($containers[$i]['vf_container_name']);

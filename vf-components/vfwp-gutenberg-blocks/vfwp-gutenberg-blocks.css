@@ -241,6 +241,10 @@
   max-width: none;
 }
 
+.wp-block[data-type^='vf/container-'] {
+  max-width: none;
+}
+
 .wp-block[data-type='vf/grid'],
 .wp-block[data-type='vf/embl-grid'] {
   max-width: none;
