@@ -478,7 +478,9 @@ class VF_Gutenberg {
         $data['category'] = VF_Containers::block_category();
         $data['fields']   = array();
         $data['supports'] = array(
-          'inserter' => false
+          'customClassName' => false,
+          'inserter'        => false,
+          'reusable'        => false
         );
       }
       $config[$block_name] = $data;
@@ -489,7 +491,9 @@ class VF_Gutenberg {
       'category'   => VF_Blocks::block_category(),
       'fields'     => [],
       'supports'   => array(
-        'inserter' => false
+        'customClassName' => false,
+        'inserter'        => false,
+        'reusable'        => false
       ),
       'attributes' => array(
         'ref' => array(

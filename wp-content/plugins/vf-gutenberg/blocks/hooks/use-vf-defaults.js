@@ -6,7 +6,7 @@ import Icon from '../components/icon';
 
 const useVFDefaults = () => ({
   icon: Icon,
-  keywords: [__('VF'), __('Visual Framework')],
+  keywords: [__('VF'), __('Visual Framework'), __('EMBL')],
   attributes: {
     ver: {
       type: 'string'

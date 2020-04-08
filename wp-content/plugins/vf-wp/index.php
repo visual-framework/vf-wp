@@ -17,6 +17,7 @@ require_once('vf-plugin.php');
 require_once('vf-type.php');
 require_once('vf-blocks.php');
 require_once('vf-containers.php');
+require_once('vf-template.php');
 require_once('vf-acf.php');
 
 // Add action hook after opening `<body>` tag
@@ -35,7 +36,11 @@ class VF_WP {
    */
   public function __construct() {
 
-    global $vf_acf, $vf_cache, $vf_blocks, $vf_containers;
+    global $vf_acf;
+    global $vf_cache;
+    global $vf_blocks;
+    global $vf_containers;
+    global $vf_template;
 
     if ( ! isset($vf_acf)) {
       $vf_acf = new VF_ACF();
@@ -57,8 +62,20 @@ class VF_WP {
       $vf_containers->initialize();
     }
 
-    register_activation_hook(__FILE__, array($this, 'activate'));
-    register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+    if ( ! isset($vf_template)) {
+      $vf_template = new VF_Template();
+      $vf_template->initialize();
+    }
+
+    register_activation_hook(
+      __FILE__,
+      array($this, 'activate')
+    );
+
+    register_deactivation_hook(
+      __FILE__,
+      array($this, 'deactivate')
+    );
 
     add_action(
       'init',

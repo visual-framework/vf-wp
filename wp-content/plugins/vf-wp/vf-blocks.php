@@ -22,6 +22,10 @@ class VF_Blocks extends VF_Type {
     parent::activate();
   }
 
+  static public function block_category() {
+    return 'vf/blocks';
+  }
+
   /**
    * Action: `block_categories`
    */
@@ -29,7 +33,7 @@ class VF_Blocks extends VF_Type {
     return array_merge(
       array(
         array(
-          'slug'  => 'vf/hub',
+          'slug'  => VF_Blocks::block_category(),
           'title' => __('EMBL – Content Hub', 'vfwp'),
           'icon'  => null
         ),

@@ -92,8 +92,8 @@ const useVFPluginSettings = settings => {
     name: settings.name,
     title: settings.title,
     category: settings.category,
-    description: __('EMBL – Content Hub'),
-    keywords: [...defaults.keywords, __('EMBL – Content Hub')],
+    description: '',
+    keywords: [...defaults.keywords],
     attributes: attributes,
     supports: supports,
     edit: Edit

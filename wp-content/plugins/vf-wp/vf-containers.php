@@ -21,9 +21,18 @@ class VF_Containers extends VF_Type {
 
   public function initialize() {
     parent::initialize();
-
     add_action('vf_header', array($this, 'header_containers'));
     add_action('vf_footer', array($this, 'footer_containers'));
+    add_filter(
+      'block_categories',
+      array($this, 'block_categories'),
+      10, 2
+    );
+    add_action(
+      'admin_print_footer_scripts',
+      array($this, 'admin_print_footer_scripts'),
+      100
+    );
   }
 
   public function activate() {
@@ -36,6 +45,26 @@ class VF_Containers extends VF_Type {
       'post_title' => 'Page Template',
       'post_type' => $this->post_type
     ));
+  }
+
+  static public function block_category() {
+    return 'vf/containers';
+  }
+
+  /**
+   * Action: `block_categories`
+   */
+  function block_categories($categories, $post) {
+    return array_merge(
+      array(
+        array(
+          'slug'  => VF_Containers::block_category(),
+          'title' => __('EMBL – Containers', 'vfwp'),
+          'icon'  => null
+        ),
+      ),
+      $categories
+    );
   }
 
   /**
@@ -83,6 +112,54 @@ class VF_Containers extends VF_Type {
         VF_Plugin::render($container);
       }
     }
+  }
+
+  /**
+   * Only allow container blocks in the "Template" post type
+   */
+  public function admin_print_footer_scripts() {
+    if ( ! class_exists('VF_Template')) {
+      return;
+    }
+    $screen = get_current_screen();
+    if (
+      ! $screen ||
+        $screen->parent_base !== 'edit' ||
+        $screen->post_type !== VF_Template::type()
+    ) {
+      return;
+    }
+    $category = VF_Containers::block_category();
+?>
+<script type="text/javascript">
+(function() {
+  const onReady = () => {
+    if (typeof wp !== 'object') {
+      return;
+    }
+    wp.domReady(() => {
+      if (typeof wp.blocks !== 'object') {
+        return;
+      }
+      const blocks = wp.blocks.getBlockTypes();
+      blocks.forEach(block => {
+        // Disable non-containers
+        if (block.category !== '<?php echo $category; ?>') {
+          wp.blocks.unregisterBlockType(block.name);
+          return;
+        }
+        // Enable containers
+        block.supports.inserter = true;
+      });
+    });
+  };
+  document.addEventListener(
+    'DOMContentLoaded',
+    onReady
+  );
+})();
+</script>
+<?php
   }
 
 } // VF_Containers
