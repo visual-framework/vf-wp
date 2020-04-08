@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-form__textarea
- * Version: 1.0.0-alpha.10
- * Location: components/vf-form/vf-form__textarea
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__textarea {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -61,7 +61,7 @@
   width: 100%;
 }
 
-.vf-form__textarea:focus {
+.vf-form__textarea:hover, .vf-form__textarea:focus {
   border-color: #54585a;
   outline: 0;
 }

@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -116,7 +116,7 @@
 /*!
  * Component: @visual-framework/vf-link-list
  * Version: 1.0.1
- * Location: components/vf-link-list
+ * Location: components/vf-core-
  */
 .vf-links__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;

@@ -49,8 +49,8 @@
 
 /*!
  * Component: @visual-framework/vf-summary
- * Version: 1.0.2
- * Location: components/vf-summary
+ * Version: 1.0.3
+ * Location: components/vf-core-
  */
 .vf-summary {
   --vf-text-margin--bottom: 16px;
@@ -355,21 +355,21 @@
 .vf-summary__link--secondary {
   border-bottom: none;
   text-decoration: none;
-  color: #ffffff;
+  color: #373a36;
 }
 
 .vf-summary__link--secondary:visited {
-  color: #d0d0ce;
+  color: #734595;
   border-bottom: none;
 }
 
 .vf-summary__link--secondary:visited:hover {
-  color: #d0d0ce;
+  color: #734595;
   text-decoration: underline;
 }
 
 .vf-summary__link--secondary:hover {
-  color: #ffffff;
+  color: #000000;
   border-bottom: none;
   text-decoration: underline;
 }
