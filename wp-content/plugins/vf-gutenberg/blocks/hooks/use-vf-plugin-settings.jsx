@@ -16,7 +16,7 @@ const useVFPluginSettings = settings => {
   const defaults = useVFDefaults();
 
   // get block settings
-  let {attributes, fields} = useVFPlugin(settings.name);
+  let {attributes, fields, supports} = useVFPlugin(settings.name);
 
   // block options
   const hasFields = !!(Array.isArray(fields) && fields.length);
@@ -91,10 +91,11 @@ const useVFPluginSettings = settings => {
     ...defaults,
     name: settings.name,
     title: settings.title,
-    category: 'vf/hub',
+    category: settings.category,
     description: __('EMBL – Content Hub'),
     keywords: [...defaults.keywords, __('EMBL – Content Hub')],
     attributes: attributes,
+    supports: supports,
     edit: Edit
   };
 };

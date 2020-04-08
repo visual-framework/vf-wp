@@ -77,17 +77,20 @@ class VF_Gutenberg {
    * e.g. "vf/latest-posts" to "vf_latest_posts"
    */
   static function name_block_to_post($str, $separator = '_') {
-    return preg_replace('/[^\w]/', $separator, $str);
+    $str = str_replace('vf/container-', 'vf/', $str);
+    $str = preg_replace('/[^\w]/', $separator, $str);
+    return $str;
   }
 
   /**
    * Convert a VF_Plugin post name to a Gutenberg block name
    * e.g. "vf_latest_posts" to "vf/latest-posts"
    */
-  static function name_post_to_block($str) {
+  static function name_post_to_block($str, $prefix = '') {
+    $prefix = empty($prefix) ? '' : "{$prefix}-";
     return preg_replace(
       array('/[\W_]/', '/(^[\w]+)-/'),
-      array('-', '$1/'),
+      array('-', '$1/' . $prefix),
       $str
     );
   }
@@ -437,22 +440,24 @@ class VF_Gutenberg {
     }
     foreach ($vf_plugins as $post_name => $value) {
       $plugin = VF_Plugin::get_plugin($post_name);
-      if ( ! $plugin->is_block()) {
-        continue;
-      }
-      // enabled basic support
-      $block_name = VF_Gutenberg::name_post_to_block($post_name);
-      $config[$block_name] = true;
+      // add prefix for containers to avoid conflicts
+      $block_name = VF_Gutenberg::name_post_to_block(
+        $post_name, $plugin->is_container() ? 'container' : ''
+      );
+      // block settings
+      $data = array(
+        'id'          => $plugin->post()->ID,
+        'title'       => $plugin->post()->post_title,
+        'category'    => VF_Blocks::block_category(),
+        'isBlock'     => $plugin->is_block(),
+        'isContainer' => $plugin->is_container(),
+        'fields'      => array(),
+      );
       // map ACF fields to supported Gutenberg controls
       $fields = acf_get_fields("group_{$post_name}");
       if ( ! is_array($fields)) {
-        continue;
+        $fields = array();
       }
-      $data = array(
-        'id'     => $plugin->post()->ID,
-        'title'  => $plugin->post()->post_title,
-        'fields' => array(),
-      );
       foreach ($fields as $field) {
         $type = $field['type'];
         if ( ! in_array($type, $this->supported_fields)) {
@@ -467,13 +472,25 @@ class VF_Gutenberg {
         }
         $data['fields'][] = $this->map_acf_field_to_attr($name, $type, $field);
       }
+      // Set container category
+      // Hide by default and disable custom fields
+      if ($plugin->is_container()) {
+        $data['category'] = VF_Containers::block_category();
+        $data['fields']   = array();
+        $data['supports'] = array(
+          'inserter' => false
+        );
+      }
       $config[$block_name] = $data;
     }
     // Add generic plugin for previews
     $config['vf/plugin'] = array(
       'title'      => __('Preview', 'vfwp'),
-      'inserter'   => false,
+      'category'   => VF_Blocks::block_category(),
       'fields'     => [],
+      'supports'   => array(
+        'inserter' => false
+      ),
       'attributes' => array(
         'ref' => array(
           'type' => 'string'
