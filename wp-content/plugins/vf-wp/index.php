@@ -181,6 +181,9 @@ class VF_WP {
     ));
   }
 
+  public static function single_template_path() {
+    return plugin_dir_path(__FILE__) . 'single-plugin.php';
+  }
 
   /**
    * Return true if current template is a single block or container
@@ -203,7 +206,7 @@ class VF_WP {
    */
   function single_template($template) {
     if ($this->is_singular()) {
-      return plugin_dir_path(__FILE__) . 'single-plugin.php';
+      return VF_WP::single_template_path();
     }
     return $template;
   }

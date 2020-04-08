@@ -8,6 +8,7 @@ const useVFPlugin = name => {
   let fields = [];
   let supports = {};
   let attributes = {};
+  let preview = false;
   if (Object.keys(plugins).indexOf(name) > -1) {
     const config = plugins[name];
     if (config.hasOwnProperty('attributes')) {
@@ -22,8 +23,13 @@ const useVFPlugin = name => {
     if (config.hasOwnProperty('supports')) {
       supports = {...config.supports};
     }
+    if (config.hasOwnProperty('preview')) {
+      if (/^http/.test(config.preview)) {
+        preview = config.preview;
+      }
+    }
   }
-  return {attributes, fields, supports};
+  return {attributes, fields, supports, preview};
 };
 
 export default useVFPlugin;

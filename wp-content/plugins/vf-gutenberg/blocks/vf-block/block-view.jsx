@@ -8,24 +8,14 @@ import {SandBox} from '@wordpress/components';
 import useVFGutenberg from '../hooks/use-vf-gutenberg';
 import useVFIFrame from '../hooks/use-vf-iframe';
 
-const VFBlockView = ({html, uniqueId, onHeight}) => {
+const VFBlockView = ({render, uniqueId, onHeight}) => {
   const {renderPrefix, renderSuffix} = useVFGutenberg();
-
-  // `SandBox` component does not update height properly...
-  /*
-  return (
-    <div className="vf-block__view">
-      <SandBox
-        html={`${renderPrefix}${html}${renderSuffix}`}
-        type="vf-block-frame"
-        title="Preview"
-      />
-    </div>
-  );
-  */
 
   // Use existing iframe appended to the DOM
   const iframeId = `vfwp_${uniqueId}`;
+  const iframeHTML = render.html
+    ? `${renderPrefix}${render.html}${renderSuffix}`
+    : '';
   let iframe = document.getElementById(iframeId);
 
   // or create a new iframe element
@@ -34,15 +24,14 @@ const VFBlockView = ({html, uniqueId, onHeight}) => {
     iframe.id = iframeId;
     iframe.className = 'vf-block__iframe';
     iframe.setAttribute('scrolling', 'no');
+    if (render.src) {
+      iframe.src = render.src;
+    }
   }
 
   // Use an asynchronous hook to fetch the iframe content via WordPress API
   const rootEl = useRef();
-  const {onLoad, onUnload} = useVFIFrame(
-    iframe,
-    `${renderPrefix}${html}${renderSuffix}`,
-    onHeight
-  );
+  const {onLoad, onUnload} = useVFIFrame(iframe, iframeHTML, onHeight);
 
   // Append the iframe element on mount - we cannot use `<iframe onLoad={} />`
   // in React, this does not fire properly in Webkit browsers for

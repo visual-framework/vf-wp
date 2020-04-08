@@ -41,7 +41,7 @@ const VFBlock = props => {
   const hasEdit = isEditable && isEditing;
 
   // show "view" mode when not editing and render is available
-  const hasView = !hasEdit && (!isLoading && render);
+  const hasView = !hasEdit && !isLoading && render;
 
   // height change callback
   const onHeight = height => height !== minHeight && setMinHeight(height);
@@ -74,7 +74,7 @@ const VFBlock = props => {
         )}
         {hasView && (
           <VFBlockView
-            html={render.html}
+            render={render}
             uniqueId={uniqueId}
             onHeight={onHeight}
           />

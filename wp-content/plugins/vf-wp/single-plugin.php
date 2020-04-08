@@ -4,11 +4,12 @@
  * Previews are accessible via the WordPress admin area
  */
 
+show_admin_bar(false);
+
 get_template_part('partials/head');
 
-the_post();
-
 global $post;
+setup_postdata($post);
 
 if (class_exists('VF_Plugin')) {
   $vf_plugin = VF_Plugin::get_plugin($post->post_name);
@@ -20,3 +21,8 @@ if (class_exists('VF_Plugin')) {
 get_template_part('partials/foot');
 
 ?>
+<style type="text/css">
+  html {
+    margin: 0 !important;
+  }
+</style>

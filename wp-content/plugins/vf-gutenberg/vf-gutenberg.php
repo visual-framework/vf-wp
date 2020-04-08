@@ -475,6 +475,7 @@ class VF_Gutenberg {
       // Set container category
       // Hide by default and disable custom fields
       if ($plugin->is_container()) {
+        $data['preview']  = get_permalink($data['id']);
         $data['category'] = VF_Containers::block_category();
         $data['fields']   = array();
         $data['supports'] = array(
