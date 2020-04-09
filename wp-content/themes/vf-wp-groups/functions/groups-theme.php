@@ -5,14 +5,17 @@ if( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists('VF_Groups_Theme') ) :
 
 require_once('groups-customize.php');
+require_once('groups-templates.php');
 
 class VF_Groups_Theme {
 
   private $theme_customize;
+  private $theme_templates;
 
   public function __construct() {
     // Initialize sub-class instances
     $this->theme_customize = new VF_Groups_Customize();
+    $this->theme_templates = new VF_Groups_Templates();
 
     // Add child theme hooks
     add_filter(

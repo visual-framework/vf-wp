@@ -39,7 +39,7 @@ class VF_Templates {
    * Return default template post content
    */
   static public function default_template() {
-    return '
+    $post_content = '
 
 <!-- wp:vf/container-global-header /-->
 
@@ -48,6 +48,11 @@ class VF_Templates {
 <!-- wp:vf/container-global-footer /-->
 
 ';
+    $post_content = apply_filters(
+      'vf/templates/post_content/default',
+      $post_content
+    );
+    return $post_content;
   }
 
   /**
@@ -106,6 +111,10 @@ class VF_Templates {
       'init',
       array($this, 'init')
     );
+    add_action(
+      'after_switch_theme',
+      array($this, 'after_switch_theme')
+    );
     add_filter(
       'user_has_cap',
       array($this, 'user_has_cap'),
@@ -141,10 +150,18 @@ class VF_Templates {
     // );
   }
 
+  public function activate() {
+    $this->setup_default_template();
+  }
+
+  public function deactivate() {
+    // Do nothing...
+  }
+
   /**
    * Setup default template after plugin activation
    */
-  public function activate() {
+  public function setup_default_template() {
     $post = $this->get_template_post('default');
     if ($post) {
       if (has_blocks($post)) {
@@ -165,10 +182,6 @@ class VF_Templates {
         'post_status'  => 'publish'
       ), true)
     );
-  }
-
-  public function deactivate() {
-    // Do nothing...
   }
 
   /**
@@ -213,11 +226,18 @@ class VF_Templates {
   }
 
   /**
+   * Action: `after_switch_theme`
+   */
+  public function after_switch_theme() {
+    $this->setup_default_template();
+  }
+
+  /**
    * Filter: `user_has_cap`
    * Do not allow "Default" template to be deleted by user
    */
   public function user_has_cap($allcaps, $cap, $args) {
-    if ($args[0] === 'delete_post') {
+    if (count($args) > 2 && preg_match('#^delete_#', $args[0])) {
       $post = get_post($args[2]);
       if ($this->is_template_post($post, 'default')) {
         $allcaps[$cap[0]] = false;
