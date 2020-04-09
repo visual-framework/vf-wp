@@ -7,6 +7,27 @@ const useVFRenderPlugin = async (name, attrs) => {
   try {
     // Return empty HTML if iframe URL is set as transient property
     if (attrs.defaults === 1 && !!attrs.preview) {
+      // const data = await fetch(attrs.preview)
+      //   .then(response => {
+      //     if (response.status !== 200) {
+      //       throw new Error();
+      //     }
+      //     return response.text();
+      //   })
+      //   .then(html => {
+      //     return {
+      //       hash: name,
+      //       html: html
+      //     };
+      //   })
+      //   .catch(err => {
+      //     return {
+      //       hash: name,
+      //       html: '',
+      //       src: attrs.preview
+      //     };
+      //   });
+      // return data;
       return {
         hash: name,
         html: '',

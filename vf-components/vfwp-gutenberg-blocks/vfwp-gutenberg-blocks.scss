@@ -196,6 +196,11 @@
 .wp-block[data-type^='vf/container-'] {
   border: 1px dashed #8d96a0;
   max-width: none;
+
+  .vf-block {
+    background-color: rgba(139, 139, 150, 0.1);
+    padding: 7px;
+  }
 }
 
 // .wp-block[data-type='vf/grid-column'] {
