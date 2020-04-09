@@ -28,9 +28,17 @@ class VF_Templates {
     );
   }
 
-  // public function default_content() {
-  //   return '<!-- wp:vf/container-page-template {"ver":"1.0.0","defaults":1} /-->' + "\n";
-  // }
+  static public function default_template() {
+    return '
+
+<!-- wp:vf/container-global-header /-->
+
+<!-- wp:vf/container-page-template /-->
+
+<!-- wp:vf/container-global-footer /-->
+
+';
+  }
 
   /**
    * Reference: `get_post_type_labels`
@@ -99,6 +107,36 @@ class VF_Templates {
     //   array($this, 'admin_print_footer_scripts'),
     //   100
     // );
+  }
+
+  /**
+   * Setup default template after plugin activation
+   */
+  public function activate() {
+    $default = $this->get_template_post('default');
+    if ($default) {
+      if (has_blocks($default)) {
+        return;
+      }
+      wp_delete_post($default->ID, true);
+    }
+    // Insert new default post
+    $post_content = VF_Templates::default_template();
+    $post_content = trim($post_content) . "\n";
+    $default = get_post(
+        wp_insert_post(array(
+        'post_author'  => 1,
+        'post_name'    => 'default',
+        'post_title'   => __('Default', 'theme'),
+        'post_type'    => VF_Templates::type(),
+        'post_content' => $post_content,
+        'post_status'  => 'publish'
+      ), true)
+    );
+  }
+
+  public function deactivate() {
+    // Do nothing...
   }
 
   /**
@@ -195,9 +233,6 @@ class VF_Templates {
     if ($query->post_count === 0) {
       return null;
     }
-    if ( ! has_blocks($query->posts[0])) {
-      return null;
-    }
     return $query->posts[0];
   }
 
@@ -207,6 +242,9 @@ class VF_Templates {
   public function get_template_plugins($template) {
     $containers = array();
     if ( ! $template instanceof WP_Post) {
+      return $containers;
+    }
+    if ( ! has_blocks($template)) {
       return $containers;
     }
     $blocks = parse_blocks($template->post_content);
@@ -253,13 +291,9 @@ class VF_Templates {
   public function vf_header() {
     $containers = $this->get_template_containers();
     $offset = array_search('vf_page_template', $containers);
-    if ($offset === false) {
-      return;
-    }
-    $containers = array_slice($containers, 0, $offset);
-    foreach ($containers as $post_name) {
-      $container = VF_Plugin::get_plugin($post_name);
-      VF_Plugin::render($container);
+    if ($offset !== false) {
+      $containers = array_slice($containers, 0, $offset);
+      $this->render_containers($containers);
     }
   }
 
@@ -270,11 +304,20 @@ class VF_Templates {
   public function vf_footer() {
     $containers = $this->get_template_containers();
     $offset = array_search('vf_page_template', $containers);
-    if ($offset === false) {
-      return;
+    if ($offset !== false) {
+      $containers = array_slice($containers, $offset + 1);
+      $this->render_containers($containers);
     }
-    $containers = array_slice($containers, $offset + 1);
+  }
+
+  /**
+   * Shared method for `vf_header` and `vf_footer`
+   */
+  private function render_containers($containers) {
     foreach ($containers as $post_name) {
+      if ($post_name === 'vf_page_template') {
+        continue;
+      }
       $container = VF_Plugin::get_plugin($post_name);
       VF_Plugin::render($container);
     }

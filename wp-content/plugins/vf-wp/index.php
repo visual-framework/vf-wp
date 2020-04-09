@@ -114,19 +114,21 @@ class VF_WP {
    * Trigger activation hooks for custom post type classes
    */
   public function activate() {
-
-    global $vf_cache, $vf_blocks, $vf_containers;
-
+    global $vf_cache;
+    global $vf_blocks;
+    global $vf_containers;
+    global $vf_templates;
     if ($vf_cache instanceof VF_Cache) {
       $vf_cache->activate();
     }
-
     if ($vf_blocks instanceof VF_Blocks) {
       $vf_blocks->activate();
     }
-
     if ($vf_containers instanceof VF_Containers) {
       $vf_containers->activate();
+    }
+    if ($vf_templates instanceof VF_Templates) {
+      $vf_templates->activate();
     }
   }
 
@@ -134,19 +136,21 @@ class VF_WP {
    * Trigger deactivation hooks for custom post type classes
    */
   public function deactivate() {
-
-    global $vf_cache, $vf_blocks, $vf_containers;
-
+    global $vf_cache;
+    global $vf_blocks;
+    global $vf_containers;
+    global $vf_templates;
     if ($vf_cache instanceof VF_Cache) {
       $vf_cache->deactivate();
     }
-
     if ($vf_blocks instanceof VF_Blocks) {
       $vf_blocks->deactivate();
     }
-
     if ($vf_containers instanceof VF_Containers) {
       $vf_containers->deactivate();
+    }
+    if ($vf_templates instanceof VF_Templates) {
+      $vf_templates->deactivate();
     }
   }
   /**
