@@ -27,10 +27,6 @@ class VF_Groups_Theme {
       'pre_get_posts',
       array($this, 'pre_get_posts')
     );
-    add_filter(
-      'body_class',
-      array($this, 'body_class')
-    );
     add_action(
       'wp_enqueue_scripts',
       array($this, 'wp_enqueue_scripts')
@@ -125,15 +121,6 @@ class VF_Groups_Theme {
       $query->set('post_type', 'post');
     }
     return $query;
-  }
-
-  /**
-   * Append <body> class for Visual Framework
-   */
-  public function body_class($classes) {
-    $classes[] = 'vf-body';
-    // $classes[] = 'vf-u-background-color-ui--grey';
-    return $classes;
   }
 
   /**
