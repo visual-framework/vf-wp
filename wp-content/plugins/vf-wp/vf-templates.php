@@ -19,15 +19,25 @@ class VF_Templates {
     return 'vf_template';
   }
 
-  static public function default_blocks() {
-    return array(
-      array(
-        'vf/container-page-template',
-        array()
-      ),
-    );
+  /**
+   * Return true if `$post` is valid `vf_template`
+   */
+  static public function is_template_post($post, $post_name = '') {
+    if ( ! $post instanceof WP_Post) {
+      return false;
+    }
+    if ($post->post_type !== VF_Templates::type()) {
+      return false;
+    }
+    if ( ! empty($post_name) &&  $post->post_name !== $post_name) {
+      return false;
+    }
+    return true;
   }
 
+  /**
+   * Return default template post content
+   */
   static public function default_template() {
     return '
 
@@ -38,6 +48,18 @@ class VF_Templates {
 <!-- wp:vf/container-global-footer /-->
 
 ';
+  }
+
+  /**
+   * Return new block template for Gutenberg editor
+   */
+  static public function new_template_blocks() {
+    return array(
+      array(
+        'vf/container-page-template',
+        array()
+      ),
+    );
   }
 
   /**
@@ -88,6 +110,11 @@ class VF_Templates {
       'user_has_cap',
       array($this, 'user_has_cap'),
       10, 3
+    );
+    add_filter(
+      'display_post_states',
+      array($this, 'display_post_states'),
+      10, 2
     );
     add_filter(
       'block_categories',
@@ -181,7 +208,7 @@ class VF_Templates {
     // Set default Gutenberg template
     $post_type_object = get_post_type_object(VF_Templates::type());
     if ($post_type_object) {
-      $post_type_object->template = VF_Templates::default_blocks();
+      $post_type_object->template = VF_Templates::new_template_blocks();
     }
   }
 
@@ -192,15 +219,21 @@ class VF_Templates {
   public function user_has_cap($allcaps, $cap, $args) {
     if ($args[0] === 'delete_post') {
       $post = get_post($args[2]);
-      if (
-        $post instanceof WP_Post &&
-        $post->post_type === VF_Templates::type() &&
-        $post->post_name === 'default'
-      ) {
+      if ($this->is_template_post($post, 'default')) {
         $allcaps[$cap[0]] = false;
       }
     }
     return $allcaps;
+  }
+
+  /**
+   * Filter: `display_post_states`
+   */
+  public function display_post_states($post_states, $post) {
+    if ($this->is_template_post($post, 'default')) {
+      $post_states[] = __('Default Template', 'vfwp');
+    }
+    return $post_states;
   }
 
   /**
@@ -263,13 +296,13 @@ class VF_Templates {
    * Return array of `VF_Plugin` names in the template post content
    */
   public function get_template_plugins($template) {
-    $containers = array();
-    if ( ! $template instanceof WP_Post) {
-      return $containers;
+    if ( ! $this->is_template_post($template)) {
+      return array();
     }
     if ( ! has_blocks($template)) {
-      return $containers;
+      return array();
     }
+    $containers = array();
     $blocks = parse_blocks($template->post_content);
     foreach ($blocks as $i => $block) {
       if ( ! $block['blockName']) {
