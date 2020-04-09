@@ -8,7 +8,15 @@ Version:		 1.0.0
 Text Domain:	 vfwp
 */
 
-
 .vf-box__text {
 	color: black !important;
+}
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
 }

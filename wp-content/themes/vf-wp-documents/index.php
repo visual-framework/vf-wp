@@ -33,7 +33,7 @@ get_template_part('partials/vf-intro');
 
 $query = new WP_Query(
 array(
-    'posts_per_page' => 6,
+    'posts_per_page' => 8,
     'post_type'      => 'document',
     'post_status'    => 'publish'
   )

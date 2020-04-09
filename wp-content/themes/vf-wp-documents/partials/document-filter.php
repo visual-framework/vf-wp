@@ -35,9 +35,16 @@ $monthly_archives = wp_get_archives(array(
   'post_type' => 'document'
 ));
 
-// Get current year/month if quieried
+// Attempt to get year/month filter
 $year = (string) get_query_var('year');
 $month = str_pad(get_query_var('monthnum'), 2, '0', STR_PAD_LEFT);
+
+// Use the `m` query filter (in case `s` search query is set)
+$m = get_query_var('m');
+if (strlen($m) === 6) {
+  $year = substr($m, 0, 4);
+  $month = substr($m, 4, 2);
+}
 
 // Parse all year/month values from URLs to create date filter
 if (preg_match_all(
@@ -61,7 +68,12 @@ if (preg_match_all(
 
     <input type="hidden" name="post_type" value="document">
 
-    <input type="hidden" name="s" value="<?php esc_attr_e(get_search_query()); ?>">
+    <?php
+    $search = trim(get_search_query());
+    if ( ! empty($search)) {
+    ?>
+    <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
+    <?php } ?>
 
     <select class='vf-form__select' id='vf-form__select' name="document_topics">
       <option value="">
