@@ -1,0 +1,14 @@
+/*
+Theme Name:		 VF-WP Documents
+Theme URI:		 https://github.com/visual-framework/vf-wp/tree/master/wp-content/themes/vf-wp-documents/
+Description:	 Visual Framework WordPress Theme for EMBL Documents
+Author:			 Szymon Kasprzyk
+Template:		 vf-wp
+Version:		 1.0.0
+Text Domain:	 vfwp
+*/
+
+
+.vf-box__text {
+	color: black !important;
+}
