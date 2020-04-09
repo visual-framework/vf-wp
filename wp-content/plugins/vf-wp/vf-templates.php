@@ -85,6 +85,11 @@ class VF_Templates {
       array($this, 'init')
     );
     add_filter(
+      'user_has_cap',
+      array($this, 'user_has_cap'),
+      10, 3
+    );
+    add_filter(
       'block_categories',
       array($this, 'block_categories'),
       999, 2
@@ -113,17 +118,17 @@ class VF_Templates {
    * Setup default template after plugin activation
    */
   public function activate() {
-    $default = $this->get_template_post('default');
-    if ($default) {
-      if (has_blocks($default)) {
+    $post = $this->get_template_post('default');
+    if ($post) {
+      if (has_blocks($post)) {
         return;
       }
-      wp_delete_post($default->ID, true);
+      wp_delete_post($post->ID, true);
     }
     // Insert new default post
     $post_content = VF_Templates::default_template();
     $post_content = trim($post_content) . "\n";
-    $default = get_post(
+    $post = get_post(
         wp_insert_post(array(
         'post_author'  => 1,
         'post_name'    => 'default',
@@ -178,6 +183,24 @@ class VF_Templates {
     if ($post_type_object) {
       $post_type_object->template = VF_Templates::default_blocks();
     }
+  }
+
+  /**
+   * Filter: `user_has_cap`
+   * Do not allow "Default" template to be deleted by user
+   */
+  public function user_has_cap($allcaps, $cap, $args) {
+    if ($args[0] === 'delete_post') {
+      $post = get_post($args[2]);
+      if (
+        $post instanceof WP_Post &&
+        $post->post_type === VF_Templates::type() &&
+        $post->post_name === 'default'
+      ) {
+        $allcaps[$cap[0]] = false;
+      }
+    }
+    return $allcaps;
   }
 
   /**
