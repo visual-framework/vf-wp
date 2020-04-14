@@ -32,7 +32,7 @@
     <p class="vf-text--body">Looking for past print editions of <em>EMBLetc.</em>?
       Browse our archive, going back 20 years.
     </p>
-    <a class="vf-link | magazine-download"
+    <a class="vf-link"
       href="https://www.embl.de/aboutus/communication_outreach/publications/newsletter/index.html?_ga=2.67662041.995063798.1574846519-497306958.1561211067"
       style="color: white;"><em>EMBLetc. </em>archive</a>
   </div>

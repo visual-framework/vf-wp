@@ -66,16 +66,18 @@ else if ( get_field( 'mp4_url' ) ) {
   echo '<div><video muted="muted" class="vf-card__image" controls><source src="' . $mp4url . '" type="video/mp4"></video></div><figcaption class="vf-figure__caption">' . $caption . '</figcaption>';
 }
 
-else { ?>
-
-<figure class="vf-figure">
-      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
-      <figcaption class="vf-figure__caption">
-        <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
-      </figcaption>
-    </figure>
-    <?php
-  
+else { 
+      $show = get_post_meta( get_the_ID(), 'show_featured_image', true );
+       if ( $show == '1' ): //not displaying
+      else:?>
+      <figure class="vf-figure">
+          <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
+          <figcaption class="vf-figure__caption">
+            <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
+          </figcaption>
+        </figure>
+        <?php
+      endif;
 }
 ?>
 
