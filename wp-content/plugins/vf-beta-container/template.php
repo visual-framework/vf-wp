@@ -1,5 +1,9 @@
 <?php
 
+// DEPRECATED – no template
+return;
+
+/*
 global $vf_plugin;
 if ( ! $vf_plugin instanceof VF_Beta) return;
 
@@ -14,4 +18,4 @@ if ( ! vf_html_empty($content)) {
     </section>
   </div>
 </div>
-<?php } ?>
+<?php } */ ?>

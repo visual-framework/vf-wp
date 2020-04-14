@@ -1,8 +1,9 @@
 <?php
 /*
-Plugin Name: VF-WP Beta
-Description: VF-WP theme global container.
-Version: 0.2.1
+Deprecated: 0.2.2
+Plugin Name: VF-WP Beta (Deprecated)
+Description: This plugin is deprecated and can be uninstalled.
+Version: 0.2.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -32,13 +33,19 @@ class VF_Beta extends VF_Plugin {
 
   private $rendered = false;
 
+  /**
+   * DEPRECATED - do not call constructor
+   */
   function __construct(array $params = array()) {
-    parent::__construct('vf_beta');
-    if (array_key_exists('init', $params)) {
-      $this->init();
-    }
+    // parent::__construct('vf_beta');
+    // if (array_key_exists('init', $params)) {
+    //   $this->init();
+    // }
   }
 
+  /**
+   * DEPRECATED - do not initialize
+   */
   private function init() {
     parent::initialize();
 
