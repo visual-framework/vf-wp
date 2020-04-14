@@ -10,8 +10,9 @@ Text Domain: vfwp
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-require_once('includes/acf.php');
-require_once('includes/register.php');
+require_once(plugin_dir_path(__FILE__) . 'includes/acf.php');
+require_once(plugin_dir_path(__FILE__) . 'includes/register.php');
+require_once(plugin_dir_path(__FILE__) . 'includes/template.php');
 
 if ( ! class_exists('VF_Events') ) :
 
@@ -19,6 +20,7 @@ class VF_Events {
 
   private $acf;
   private $register;
+  private $template;
 
   // Return custom post type
   static public function type() {
@@ -47,7 +49,8 @@ class VF_Events {
   public function initialize() {
     // Initialize sub-class instances
     $this->acf = new VF_Events_ACF(__FILE__);
-    $this->register = new VF_Events_Register();
+    $this->register = new VF_Events_Register(__FILE__);
+    $this->template = new VF_Events_Template(__FILE__);
 
     // Add hooks
     register_activation_hook(

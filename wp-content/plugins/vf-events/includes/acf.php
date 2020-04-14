@@ -7,10 +7,10 @@ if ( ! class_exists('VF_Events_ACF') ) :
 class VF_Events_ACF {
 
   // Root plugin `__FILE__`
-  private $plugin;
+  private $file;
 
-  function __construct($plugin) {
-    $this->plugin = $plugin;
+  function __construct($file) {
+    $this->file = $file;
     // Cannot do anything without ACF plugin
     if ( ! class_exists('ACF')) {
       return;
@@ -20,6 +20,11 @@ class VF_Events_ACF {
     add_action(
       'pre_get_posts',
       array($this, 'pre_get_posts')
+    );
+    add_filter(
+      'acf/format_value',
+      array($this, 'acf_format_value'),
+      10, 3
     );
     add_filter(
       "manage_{$post_type}_posts_columns",
@@ -56,6 +61,24 @@ class VF_Events_ACF {
   }
 
   /**
+   * Filter: `acf/format_value`
+   */
+  public function acf_format_value($value, $post_id, $field) {
+    // Ignore non-event posts
+    if (get_post_type($post_id) !== VF_Events::type()) {
+      return $value;
+    }
+    // Format date values
+    if (VF_Events::is_key_date($field['name']) && ! empty($value)) {
+      $time = strtotime($value);
+      if ($time !== false) {
+        $value = date(VF_Events::date_format(), $time);
+      }
+    }
+    return $value;
+  }
+
+  /**
    * Filter: `manage_{$post_type}_posts_columns`
    */
   public function posts_columns($columns) {
@@ -82,13 +105,6 @@ class VF_Events_ACF {
     // Get meta value
     $value = get_field($column, $post_id);
     $value = trim($value);
-    // Format date values
-    if (VF_Events::is_key_date($column) && ! empty($value)) {
-      $time = strtotime($value);
-      if ($time !== false) {
-        $value = date(VF_Events::date_format(), $time);
-      }
-    }
     echo esc_html($value);
   }
 
@@ -108,7 +124,7 @@ class VF_Events_ACF {
    * Filter: `acf/settings/load_json`
    */
   public function acf_settings_load_json($paths) {
-    $dir = plugin_dir_path($this->plugin);
+    $dir = plugin_dir_path($this->file);
     $paths[] = "{$dir}acf-json";
     return $paths;
   }

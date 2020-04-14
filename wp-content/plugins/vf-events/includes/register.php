@@ -6,7 +6,12 @@ if ( ! class_exists('VF_Events_Register') ) :
 
 class VF_Events_Register {
 
-  function __construct() {
+  // Root plugin `__FILE__`
+  private $file;
+
+  function __construct($file) {
+    $this->file = $file;
+    // Add hooks
     add_action(
       'init',
       array($this, 'init_register')
