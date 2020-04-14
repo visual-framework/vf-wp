@@ -20,6 +20,26 @@ class VF_Events {
   private $acf;
   private $register;
 
+  // Return custom post type
+  static public function type() {
+    return 'vf_event';
+  }
+
+  // Return default date format
+  static public function date_format() {
+    return 'j M Y';
+  }
+
+  /**
+   * Return true if `$key` is a date meta property
+   */
+  static public function is_key_date($key) {
+    return preg_match(
+      '#' . preg_quote(VF_Events::type()) . '_(.*?)_date$#',
+      $key
+    );
+  }
+
   function __construct() {
     // Do nothing...
   }

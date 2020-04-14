@@ -18,7 +18,7 @@ class VF_Events_Register {
    * Register the custom post type
    */
   public function init_register() {
-    register_post_type('vf_event', array(
+    register_post_type(VF_Events::type(), array(
       'labels'              => $this->get_labels(),
       'description'         => __('Events', 'vfwp'),
       'public'              => true,
