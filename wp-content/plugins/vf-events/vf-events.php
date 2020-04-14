@@ -22,11 +22,23 @@ class VF_Events {
     // Do nothing...
   }
 
-  /**
-   * Setup sub-instances
-   */
   public function initialize() {
+    // Initialize sub-instances
     $this->register = new VF_Events_Register();
+    // Add hooks
+    register_activation_hook(
+      __FILE__,
+      array($this, 'activate')
+    );
+  }
+
+  /**
+   * Action: `register_activation_hook`
+   */
+  public function activate() {
+    // Ensure custom post type is registered then flush permalinks
+    $this->register->init_register();
+    flush_rewrite_rules();
   }
 
 } // VF_Events
