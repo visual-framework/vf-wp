@@ -43,7 +43,6 @@ add_filter(
  * Load ACF JSON from theme
  */
 function vf_wp_documents__acf_settings_load_json($paths) {
-  unset($paths[0]);
   $paths[] = get_stylesheet_directory() . '/acf-json';
   return $paths;
 }
