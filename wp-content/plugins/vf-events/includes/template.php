@@ -43,13 +43,15 @@ class VF_Events_Template {
     $post_type = VF_Events::type();
     // Choose archive template
     if (is_post_type_archive($post_type)) {
-      $template = "{$this->plugin_template_path()}/archive.php";
-      $override = "{$this->theme_template_path()}/archive-{$post_type}.php";
+      $archive = "archive-{$post_type}.php";
+      $template = "{$this->plugin_template_path()}/{$archive}";
+      $override = "{$this->theme_template_path()}/{$archive}";
      }
      // Choose single template
     if (is_singular($post_type)) {
-      $template = "{$this->plugin_template_path()}/single.php";
-      $override = "{$this->theme_template_path()}/single-{$post_type}.php";
+      $single = "single-{$post_type}.php";
+      $template = "{$this->plugin_template_path()}/{$single}";
+      $override = "{$this->theme_template_path()}/{$single}";
     }
     // Prefer theme template if it exists
     if ( ! empty($override) && file_exists($override)) {
