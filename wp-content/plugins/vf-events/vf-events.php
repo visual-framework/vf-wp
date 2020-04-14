@@ -10,12 +10,14 @@ Text Domain: vfwp
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_Events') ) :
-
+require_once('includes/acf.php');
 require_once('includes/register.php');
+
+if ( ! class_exists('VF_Events') ) :
 
 class VF_Events {
 
+  private $acf;
   private $register;
 
   function __construct() {
@@ -23,8 +25,10 @@ class VF_Events {
   }
 
   public function initialize() {
-    // Initialize sub-instances
+    // Initialize sub-class instances
+    $this->acf = new VF_Events_ACF(__FILE__);
     $this->register = new VF_Events_Register();
+
     // Add hooks
     register_activation_hook(
       __FILE__,

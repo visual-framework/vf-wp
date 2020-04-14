@@ -7,7 +7,6 @@ if ( ! class_exists('VF_Events_Register') ) :
 class VF_Events_Register {
 
   function __construct() {
-    // Do nothing...
     add_action(
       'init',
       array($this, 'init_register')
@@ -34,7 +33,7 @@ class VF_Events_Register {
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-calendar',
       'capability_type'     => 'page',
-      'supports'            => array('title', 'editor', 'excerpt'),
+      'supports'            => array('title', 'editor'),
       'has_archive'         => true,
       'rewrite'             => array(
         'slug' => 'events'

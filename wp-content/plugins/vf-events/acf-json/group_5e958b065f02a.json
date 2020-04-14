@@ -1,0 +1,43 @@
+{
+  "key": "group_5e958b065f02a",
+  "title": "Event Location",
+  "fields": [
+    {
+      "key": "field_5e958b24aa2e0",
+      "label": "Location",
+      "name": "vf_event_location",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "vf_event"
+      }
+    ]
+  ],
+  "menu_order": 2,
+  "position": "side",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "`vf_event` post type",
+  "modified": 1586859858
+}

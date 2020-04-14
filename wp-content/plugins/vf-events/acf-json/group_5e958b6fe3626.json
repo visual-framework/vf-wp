@@ -1,0 +1,58 @@
+{
+  "key": "group_5e958b6fe3626",
+  "title": "Event Dates",
+  "fields": [
+    {
+      "key": "field_5e958b775297f",
+      "label": "Start Date",
+      "name": "vf_event_start_date",
+      "type": "date_picker",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "display_format": "Y/m/d",
+      "return_format": "Y/m/d",
+      "first_day": 1
+    },
+    {
+      "key": "field_5e958fe7ce1a3",
+      "label": "End Date",
+      "name": "vf_event_end_date",
+      "type": "date_picker",
+      "instructions": "Optional for multi-day events.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "display_format": "Y/m/d",
+      "return_format": "Y/m/d",
+      "first_day": 1
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "vf_event"
+      }
+    ]
+  ],
+  "menu_order": 1,
+  "position": "side",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "`vf_event` post type",
+  "modified": 1586859858
+}
