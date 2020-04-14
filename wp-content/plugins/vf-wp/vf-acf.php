@@ -121,7 +121,8 @@ class VF_ACF {
    */
   function acf_update_field_group($group) {
     $core_groups = array(
-      'group_vf_containers'
+      // Deprecated in favour of `VF_Templates`
+      // 'group_vf_containers'
     );
     if (in_array($group['key'], $core_groups)) {
       update_option('vf__acf_save_json', plugin_dir_path(__FILE__));

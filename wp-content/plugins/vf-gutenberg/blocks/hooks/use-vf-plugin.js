@@ -6,7 +6,9 @@ import useVFGutenberg from './use-vf-gutenberg';
 const useVFPlugin = name => {
   const {plugins} = useVFGutenberg();
   let fields = [];
+  let supports = {};
   let attributes = {};
+  let preview = false;
   if (Object.keys(plugins).indexOf(name) > -1) {
     const config = plugins[name];
     if (config.hasOwnProperty('attributes')) {
@@ -18,8 +20,16 @@ const useVFPlugin = name => {
         attributes[field.name] = {type: field.type, default: field.default};
       });
     }
+    if (config.hasOwnProperty('supports')) {
+      supports = {...config.supports};
+    }
+    if (config.hasOwnProperty('preview')) {
+      if (/^http/.test(config.preview)) {
+        preview = config.preview;
+      }
+    }
   }
-  return {attributes, fields};
+  return {attributes, fields, supports, preview};
 };
 
 export default useVFPlugin;

@@ -10,7 +10,7 @@ if ( ! class_exists('EMBL_Taxonomy_Settings') ) :
 class EMBL_Taxonomy_Settings {
 
   private $defaults = array(
-    'embl_taxonomy' => 'https://wwww.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub'
+    'embl_taxonomy' => 'https://www.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub'
   );
 
   private $props = array(
@@ -49,24 +49,14 @@ class EMBL_Taxonomy_Settings {
    * Action `acf/init`
    */
   function acf_init() {
-    // Bail early if ACF plugin is not active (dependency for options page)
-    if ( ! function_exists('acf_add_options_page')) {
+    if ( ! function_exists('acf_add_local_field_group')) {
       return;
     }
-
-    // Add options page
-    acf_add_options_page(array(
-      'menu_title'  => 'EMBL Settings',
-      'menu_slug'   => 'embl-settings',
-      'parent_slug' => 'options-general.php',
-      'page_title'  => 'EMBL Settings',
-      'capability'  => 'manage_options'
-    ));
 
     // Register field group
     acf_add_local_field_group(array(
       'key' => 'group_embl_setting',
-      'title' => 'EMBL Taxonomy Settings',
+      'title' => 'EMBL Taxonomy',
       'fields' => array(
         array(
           'key' => 'field_embl_taxonomy',
@@ -156,13 +146,13 @@ class EMBL_Taxonomy_Settings {
           array(
             'param' => 'options_page',
             'operator' => '==',
-            'value' => 'embl-settings',
+            'value' => 'vf-settings',
           ),
         ),
       ),
       'menu_order' => 20,
       'position' => 'normal',
-      'style' => 'seamless',
+      'style' => 'default',
       'label_placement' => 'top',
       'instruction_placement' => 'label',
       'hide_on_screen' => '',

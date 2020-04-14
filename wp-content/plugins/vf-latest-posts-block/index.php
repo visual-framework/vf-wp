@@ -35,6 +35,10 @@ class VF_Latest_Posts extends VF_Plugin {
     add_action('admin_head', array($this, 'admin_head'), 15);
   }
 
+  function is_template_standalone() {
+    return true;
+  }
+
   function admin_head() {
 ?>
 <style>

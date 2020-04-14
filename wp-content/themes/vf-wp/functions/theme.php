@@ -421,6 +421,7 @@ class VF_Theme {
    */
   public function body_class($classes) {
     $classes[] = 'vf-wp-theme';
+    $classes[] = 'vf-body';
     return $classes;
   }
 

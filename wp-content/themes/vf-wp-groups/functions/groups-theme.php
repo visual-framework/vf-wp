@@ -5,14 +5,17 @@ if( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists('VF_Groups_Theme') ) :
 
 require_once('groups-customize.php');
+require_once('groups-templates.php');
 
 class VF_Groups_Theme {
 
   private $theme_customize;
+  private $theme_templates;
 
   public function __construct() {
     // Initialize sub-class instances
     $this->theme_customize = new VF_Groups_Customize();
+    $this->theme_templates = new VF_Groups_Templates();
 
     // Add child theme hooks
     add_filter(
@@ -23,10 +26,6 @@ class VF_Groups_Theme {
     add_filter(
       'pre_get_posts',
       array($this, 'pre_get_posts')
-    );
-    add_filter(
-      'body_class',
-      array($this, 'body_class')
     );
     add_action(
       'wp_enqueue_scripts',
@@ -122,15 +121,6 @@ class VF_Groups_Theme {
       $query->set('post_type', 'post');
     }
     return $query;
-  }
-
-  /**
-   * Append <body> class for Visual Framework
-   */
-  public function body_class($classes) {
-    $classes[] = 'vf-body';
-    // $classes[] = 'vf-u-background-color-ui--grey';
-    return $classes;
   }
 
   /**

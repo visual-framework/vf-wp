@@ -6,7 +6,10 @@ import React, {Fragment} from 'react';
 import {InspectorControls} from '@wordpress/block-editor';
 import {ToggleControl, PanelBody} from '@wordpress/components';
 import {__} from '@wordpress/i18n';
-import {withTransientACF} from '../hooks/with-transient';
+import {
+  withTransientAttribute,
+  withTransientACF
+} from '../hooks/with-transient';
 import useVFDefaults from './use-vf-defaults';
 import useVFPlugin from './use-vf-plugin';
 import VFBlockFields from '../vf-block/block-fields';
@@ -16,7 +19,7 @@ const useVFPluginSettings = settings => {
   const defaults = useVFDefaults();
 
   // get block settings
-  let {attributes, fields} = useVFPlugin(settings.name);
+  let {attributes, fields, supports, preview} = useVFPlugin(settings.name);
 
   // block options
   const hasFields = !!(Array.isArray(fields) && fields.length);
@@ -86,15 +89,22 @@ const useVFPluginSettings = settings => {
     Edit = withTransientACF(Edit);
   }
 
+  // Add transient attribute for iframe preview if set
+  Edit = withTransientAttribute(Edit, {
+    key: 'preview',
+    value: preview ? preview : false
+  });
+
   // Return the Gutenberg settings
   return {
     ...defaults,
     name: settings.name,
     title: settings.title,
-    category: 'vf/wp',
-    description: __('Visual Framework (WordPress)'),
-    keywords: [...defaults.keywords, __('EMBL Content Hub')],
+    category: settings.category,
+    description: '',
+    keywords: [...defaults.keywords],
     attributes: attributes,
+    supports: supports,
     edit: Edit
   };
 };

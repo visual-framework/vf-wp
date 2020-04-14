@@ -45,15 +45,15 @@ if (parseInt(coreOptin) === 1) {
     vfLede,
     vfEmbed
   ];
-  coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
+  coreBlocks.forEach((settings) => registerBlockType(settings.name, settings));
 }
 
 // Register VF Plugin blocks
 for (const [name, plugin] of Object.entries(plugins)) {
-  const settings = useVFPluginSettings({name, title: plugin.title});
-  // Disable inserter for generic preview block
-  if (name === 'vf/plugin') {
-    settings.supports.inserter = false;
-  }
+  const settings = useVFPluginSettings({
+    name,
+    title: plugin.title,
+    category: plugin.category
+  });
   registerBlockType(name, settings);
 }

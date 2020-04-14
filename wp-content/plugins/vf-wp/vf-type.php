@@ -11,10 +11,10 @@ class VF_Type {
 
   protected $post_type = 'vf_block';
   protected $post_type_plural = 'vf_blocks';
-  protected $description = 'VF Blocks';
+  protected $description = 'Blocks';
 
   protected $labels = array(
-    'name'          => 'VF Blocks',
+    'name'          => 'Blocks',
     'singular_name' => 'Block',
     'edit_item'     => 'Edit Block'
   );
@@ -157,6 +157,7 @@ class VF_Type {
       'show_ui'            => true,
       'show_in_admin_bar'  => false,
       'show_in_rest'       => true,
+      'show_in_menu'       => 'vf-settings',
       'supports'           => array('title', 'editor'),
       'rewrite'            => false,
       'publicly_queryable' => true,

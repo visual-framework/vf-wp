@@ -38,11 +38,9 @@ module.exports = (env, argv) => {
                   '@babel/preset-env',
                   {
                     debug: false,
+                    targets: '> 1%, not dead',
                     useBuiltIns: 'usage',
-                    corejs: 3,
-                    targets: {
-                      browsers: ['> 1%']
-                    }
+                    corejs: 3
                   }
                 ],
                 [

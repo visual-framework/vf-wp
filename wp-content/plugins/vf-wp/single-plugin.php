@@ -4,11 +4,16 @@
  * Previews are accessible via the WordPress admin area
  */
 
+if ( ! is_user_logged_in()) {
+  return;
+}
+
+show_admin_bar(false);
+
 get_template_part('partials/head');
 
-the_post();
-
 global $post;
+setup_postdata($post);
 
 if (class_exists('VF_Plugin')) {
   $vf_plugin = VF_Plugin::get_plugin($post->post_name);
@@ -16,6 +21,14 @@ if (class_exists('VF_Plugin')) {
     VF_Plugin::render($vf_plugin);
   }
 }
+
+?>
+<style type="text/css">
+  html {
+    margin: 0 !important;
+  }
+</style>
+<?php
 
 get_template_part('partials/foot');
 

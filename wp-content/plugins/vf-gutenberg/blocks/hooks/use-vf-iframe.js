@@ -2,7 +2,7 @@
  * Return `onLoad` and `onUnload` functions for an iframe.
  * Adjust iframe height automatically whilst mounted.
  */
-const useVFIFrame = (iframe, html, onHeight) => {
+const useVFIFrame = (iframe, iframeHTML, onHeight) => {
   // update iframe height from `postMessage` event
   const onMessage = ({data}) => {
     if (data !== Object(data) || data.id !== iframe.id) {
@@ -22,7 +22,9 @@ const useVFIFrame = (iframe, html, onHeight) => {
 
     // set HTML content for block
     const body = iframe.contentWindow.document.body;
-    body.innerHTML = html;
+    if (iframeHTML) {
+      body.innerHTML = iframeHTML;
+    }
 
     // create and append script to handle automatic iframe resize
     // this cannot be inline of `html` for browser security

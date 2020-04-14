@@ -49,6 +49,10 @@ class VF_Group_Header extends VF_Plugin {
     return $this->is_minimal;
   }
 
+  function is_template_standalone() {
+    return ! $this->is_minimal();
+  }
+
   function api_url(array $query_vars = array()) {
     $vars = array(
       'pattern'  => 'vf-summary-profile-r',

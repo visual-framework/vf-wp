@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -116,7 +116,7 @@
 /*!
  * Component: @visual-framework/vf-badge
  * Version: 1.0.1
- * Location: components/vf-badge
+ * Location: components/vf-core-
  */
 .vf-badge {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -251,8 +251,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-text
- * Version: 1.0.0
- * Location: components/vf-text
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 .vf-text-body > a {
   border-bottom: none;
@@ -333,7 +333,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-link
  * Version: 1.0.2
- * Location: components/vf-link
+ * Location: components/vf-core-
  */
 .vf-link {
   border-bottom: none;
@@ -397,13 +397,13 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__core
- * Version: 1.0.0-beta.3
- * Location: components/vf-form/vf-form__core
+ * Version: 1.0.1
+ * Location: components/vf-core-
  */
 /*!
  * Component: @visual-framework/vf-form__helper
- * Version: 1.0.0-alpha.9
- * Location: components/vf-form/vf-form__helper
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -414,24 +414,22 @@ a.vf-badge--primary:hover {
   color: #707372;
 }
 
-.vf-form__floatlabel .vf-form__helper {
-  left: 24px;
-  position: relative;
-  top: 12px;
+.vf-form__helper--error {
+  color: #d32f2f;
+  margin-bottom: 4px;
 }
 
 /*!
  * Component: @visual-framework/vf-form__input
- * Version: 1.0.0-alpha.11
- * Location: components/vf-form/vf-form__input
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__input:not([type='file']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.71;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: 0 0 4px 0;
   border-color: #f3f3f3;
   border-style: solid;
   border-width: 3px;
@@ -439,7 +437,7 @@ a.vf-badge--primary:hover {
           box-sizing: border-box;
   color: #54585a;
   display: block;
-  padding: 12px 24px;
+  padding: 8px 12px;
   width: 100%;
 }
 
@@ -460,11 +458,6 @@ a.vf-badge--primary:hover {
   transition: all .2s ease-in-out;
   visibility: hidden;
   z-index: 1;
-}
-
-.vf-form__input {
-  position: relative;
-  top: 24px;
 }
 
 .vf-form__input .vf-form__wrap {
@@ -494,50 +487,50 @@ a.vf-badge--primary:hover {
 }
 
 .vf-form__input::-webkit-input-placeholder, .vf-form__select::-webkit-input-placeholder, .vf-form__textarea::-webkit-input-placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input::-moz-placeholder, .vf-form__select::-moz-placeholder, .vf-form__textarea::-moz-placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input:-ms-input-placeholder, .vf-form__select:-ms-input-placeholder, .vf-form__textarea:-ms-input-placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input::-ms-input-placeholder, .vf-form__select::-ms-input-placeholder, .vf-form__textarea::-ms-input-placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input::placeholder,
 .vf-form__select::placeholder,
 .vf-form__textarea::placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input::-moz-placeholder,
 .vf-form__select::-moz-placeholder,
 .vf-form__textarea::-moz-placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input:-ms-input-placeholder,
 .vf-form__select:-ms-input-placeholder,
 .vf-form__textarea:-ms-input-placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input::-webkit-input-placeholder,
 .vf-form__select::-webkit-input-placeholder,
 .vf-form__textarea::-webkit-input-placeholder {
-  color: #54585a;
+  color: #a8a99e;
 }
 
 .vf-form__input .vf-form__select {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  color: #54585a;
+  color: #a8a99e;
   cursor: pointer;
   position: relative;
 }
@@ -602,22 +595,51 @@ a.vf-badge--primary:hover {
   opacity: 0;
 }
 
-/*
-* Default floatLabel theme.
-* modify it as you wish!
-*/
-.vf-form__item.vf-form__floatlabel {
-  position: relative;
+.vf-form__input:disabled {
+  background: #f3f3f3;
+  cursor: not-allowed;
 }
 
-.vf-form__floatlabel .vf-form__label {
-  position: absolute;
+.vf-form__input:disabled::-moz-placeholder {
+  color: #18974c;
+}
+
+.vf-form__input:disabled::placeholder, .vf-form__input:disabled::-moz-placeholder, .vf-form__input:disabled::-ms-input-placeholder, .vf-form__input:disabled::-webkit-input-placeholder {
+  color: #18974c;
+}
+
+.vf-form__input:invalid {
+  border-color: #d32f2f;
+}
+
+/*!
+ * Component: @visual-framework/vf-form__legend
+ * Version: 1.0.0
+ * Location: components/vf-core-
+ */
+.vf-form__legend {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: 0 0 8px 0;
+}
+
+/*!
+ * Component: @visual-framework/vf-form__fieldset
+ * Version: 1.0.0
+ * Location: components/vf-core-
+ */
+.vf-form__fieldset {
+  border: 0;
+  margin-bottom: 20px;
+  padding: 0;
 }
 
 /*!
  * Component: @visual-framework/vf-form__select
  * Version: 1.0.0-alpha.9
- * Location: components/vf-form/vf-form__select
+ * Location: components/vf-core-
  */
 .vf-form__select {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -664,8 +686,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__checkbox
- * Version: 1.0.0-alpha.9
- * Location: components/vf-form/vf-form__checkbox
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__item.vf-form__item--checkbox {
   margin-bottom: 16px;
@@ -689,9 +711,9 @@ a.vf-badge--primary:hover {
   content: '';
   display: inline-block;
   height: 16px;
-  margin-right: 10px;
+  margin-right: 8px;
   position: relative;
-  top: 6px;
+  top: 3px;
   width: 16px;
 }
 
@@ -721,8 +743,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__radio
- * Version: 1.0.0-alpha.9
- * Location: components/vf-form/vf-form__radio
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__radio {
   opacity: 0;
@@ -743,9 +765,9 @@ a.vf-badge--primary:hover {
   content: '';
   display: inline-block;
   height: 16px;
-  margin-right: 10px;
+  margin-right: 8px;
   position: relative;
-  top: 6px;
+  top: 4px;
   width: 16px;
 }
 
@@ -775,8 +797,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__textarea
- * Version: 1.0.0-alpha.10
- * Location: components/vf-form/vf-form__textarea
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__textarea {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -795,20 +817,18 @@ a.vf-badge--primary:hover {
   width: 100%;
 }
 
-.vf-form__textarea:focus {
+.vf-form__textarea:hover, .vf-form__textarea:focus {
   border-color: #54585a;
   outline: 0;
 }
 
 /*!
  * Component: @visual-framework/vf-form__item
- * Version: 1.0.0-alpha.10
- * Location: components/vf-form/vf-form__item
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__item {
-  display: block;
   margin-bottom: 32px;
-  position: relative;
 }
 
 .vf-form__item--inline .vf-form__label {
@@ -817,27 +837,33 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__label
- * Version: 1.0.0-alpha.10
- * Location: components/vf-form/vf-form__label
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 19px;
   font-weight: 400;
-  line-height: 1.57;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  margin: 0 0 4px 0;
-  color: #707372;
+  line-height: 1.421;
+  margin: 0 0 8px 0;
   display: block;
-  left: 24px;
-  position: relative;
+}
+
+.vf-form__label--required {
+  float: right;
+  margin-bottom: 0;
+}
+
+.vf-form__label--required .vf-icon svg {
+  fill: #d32f2f;
+  height: 12px;
+  width: 16px;
 }
 
 /*!
 * Component: @visual-framework/vf-button
 * Version: 1.0.2
-* Location: components/vf-button
+* Location: components/vf-core-
 */
 .vf-button {
   --vf-button__color__background--default: var(--vf-color--grey);
@@ -1021,7 +1047,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-figure
  * Version: 1.0.0-beta.2
- * Location: components/vf-figure
+ * Location: components/vf-core-
  */
 .vf-figure {
   margin: 0;
@@ -1049,8 +1075,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0-rc.1
- * Location: components/vf-list
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-list {
   list-style-type: none;
@@ -1136,7 +1162,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-blockquote
  * Version: 1.0.2
- * Location: components/vf-blockquote
+ * Location: components/vf-core-
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1171,8 +1197,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0-rc.8
- * Location: components/vf-divider
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-divider {
   background-color: #d8d8d8;
@@ -1186,7 +1212,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-box
  * Version: 1.0.3
- * Location: components/vf-box
+ * Location: components/vf-core-
  */
 .vf-box {
   --box-text-color: var( --vf-box-theme-color--foreground, var(--vf-theme-color--foreground, #000000));
@@ -1321,21 +1347,18 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.0.8
- * Location: components/vf-content
+ * Version: 1.0.10
+ * Location: components/vf-core-
  */
 .vf-content h1:not([class*='vf-']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 42px;
   font-weight: 700;
   line-height: 1.547;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  margin: 0;
+  margin: 0 0 0 0;
 }
 
 .vf-content h1:not([class*='vf-']) + small {
-  display: block;
   margin-bottom: 35px;
   margin-top: 22px;
 }
@@ -1345,10 +1368,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   font-size: 30px;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  display: block;
-  margin-bottom: 39px;
+  margin: 0 0 39px 0;
   margin-top: 0;
   padding-top: 13px;
 }
@@ -1358,10 +1378,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   font-size: 24px;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  display: block;
-  margin: 24px 0 13px 0;
+  margin: 0 0 13px 0;
+  margin-top: 24px;
 }
 
 .vf-content h4:not([class*='vf-']) {
@@ -1369,10 +1387,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   font-size: 21px;
   font-weight: 500;
   line-height: 1.29;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  display: block;
-  margin: 24px 0 13px;
+  margin: 0 0 13px 0;
+  margin-top: 24px;
 }
 
 .vf-content h5:not([class*='vf-']) {
@@ -1380,10 +1396,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   font-size: 19px;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  display: block;
-  margin: 24px 0 13px;
+  margin: 0 0 13px 0;
+  margin-top: 24px;
 }
 
 .vf-content h6:not([class*='vf-']) {
@@ -1391,10 +1405,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   font-size: 19px;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  display: block;
-  margin: 24px 0 13px;
+  margin: 0 0 13px 0;
+  margin-top: 24px;
 }
 
 .vf-content p:not([class*='vf-']) {
@@ -1402,8 +1414,6 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   font-size: 19px;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 24px 0;
 }
 
@@ -1534,6 +1544,10 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
   color: #707372;
   font-style: italic;
+}
+
+.vf-content .vf-video {
+  margin-bottom: 32px;
 }
 
 .vf-content__standfirst {

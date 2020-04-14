@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP
 Description: VF-WP theme plugin manager.
-Version: 0.1.1
+Version: 0.2.0
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -17,6 +17,7 @@ require_once('vf-plugin.php');
 require_once('vf-type.php');
 require_once('vf-blocks.php');
 require_once('vf-containers.php');
+require_once('vf-templates.php');
 require_once('vf-acf.php');
 
 // Add action hook after opening `<body>` tag
@@ -35,7 +36,11 @@ class VF_WP {
    */
   public function __construct() {
 
-    global $vf_acf, $vf_cache, $vf_blocks, $vf_containers;
+    global $vf_acf;
+    global $vf_cache;
+    global $vf_blocks;
+    global $vf_containers;
+    global $vf_templates;
 
     if ( ! isset($vf_acf)) {
       $vf_acf = new VF_ACF();
@@ -57,12 +62,33 @@ class VF_WP {
       $vf_containers->initialize();
     }
 
-    register_activation_hook(__FILE__, array($this, 'activate'));
-    register_deactivation_hook(__FILE__, array($this, 'deactivate'));
+    if ( ! isset($vf_templates)) {
+      $vf_templates = new VF_Templates();
+      $vf_templates->initialize();
+    }
+
+    register_activation_hook(
+      __FILE__,
+      array($this, 'activate')
+    );
+
+    register_deactivation_hook(
+      __FILE__,
+      array($this, 'deactivate')
+    );
 
     add_action(
       'init',
       array($this, 'init')
+    );
+
+     add_action('acf/init',
+      array($this, 'acf_init')
+    );
+
+    add_action(
+      'admin_menu',
+      array($this, 'admin_menu')
     );
 
     // ACF load and save setup - saving only useful for development
@@ -88,19 +114,21 @@ class VF_WP {
    * Trigger activation hooks for custom post type classes
    */
   public function activate() {
-
-    global $vf_cache, $vf_blocks, $vf_containers;
-
+    global $vf_cache;
+    global $vf_blocks;
+    global $vf_containers;
+    global $vf_templates;
     if ($vf_cache instanceof VF_Cache) {
       $vf_cache->activate();
     }
-
     if ($vf_blocks instanceof VF_Blocks) {
       $vf_blocks->activate();
     }
-
     if ($vf_containers instanceof VF_Containers) {
       $vf_containers->activate();
+    }
+    if ($vf_templates instanceof VF_Templates) {
+      $vf_templates->activate();
     }
   }
 
@@ -108,20 +136,53 @@ class VF_WP {
    * Trigger deactivation hooks for custom post type classes
    */
   public function deactivate() {
-
-    global $vf_cache, $vf_blocks, $vf_containers;
-
+    global $vf_cache;
+    global $vf_blocks;
+    global $vf_containers;
+    global $vf_templates;
     if ($vf_cache instanceof VF_Cache) {
       $vf_cache->deactivate();
     }
-
     if ($vf_blocks instanceof VF_Blocks) {
       $vf_blocks->deactivate();
     }
-
     if ($vf_containers instanceof VF_Containers) {
       $vf_containers->deactivate();
     }
+    if ($vf_templates instanceof VF_Templates) {
+      $vf_templates->deactivate();
+    }
+  }
+  /**
+   * Action: `admin_menu`
+   */
+  public function admin_menu() {
+    add_menu_page(
+      __('Content Hub', 'vfwp'),
+      __('Content Hub', 'vfwp'),
+      'manage_options',
+      'vf-settings',
+      '',
+      'dashicons-admin-settings',
+      50
+    );
+  }
+
+  /**
+   * Action `acf/init`
+   */
+  public function acf_init() {
+    if ( ! function_exists('acf_add_options_page')) {
+      return;
+    }
+    // Add options page
+    acf_add_options_page(array(
+      'menu_title'  => __('Settings', 'vfwp'),
+      'menu_slug'   => 'vf-settings',
+      'parent_slug' => 'vf-settings',
+      'page_title'  => __('Settings', 'vfwp'),
+      'capability'  => 'manage_options'
+    ));
   }
 
   /**
@@ -146,6 +207,9 @@ class VF_WP {
   function single_template($template) {
     if ($this->is_singular()) {
       return plugin_dir_path(__FILE__) . 'single-plugin.php';
+    }
+    if (is_singular('vf_template')) {
+      return plugin_dir_path(__FILE__) . 'single-template.php';
     }
     return $template;
   }

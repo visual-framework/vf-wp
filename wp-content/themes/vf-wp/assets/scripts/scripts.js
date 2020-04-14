@@ -21,8 +21,6 @@
  * Clear the cooke. This is mostly a development tool.
  */
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function vfBannerReset(vfBannerCookieNameAndVersion) {
   vfBannerSetCookie(vfBannerCookieNameAndVersion, false);
 }
@@ -518,137 +516,15 @@ function vfTabs(scope) {
   });
 } // vf-form__float-labels
 
-/*
- * A note on the Visual Framework and JavaScript:
- * The VF is primairly a CSS framework so we've included only a minimal amount
- * of JS in components and it's fully optional (just remove the JavaScript selectors
- * i.e. `data-vf-js-tabs`). So if you'd rather use Angular or Bootstrap for your
- * tabs, the Visual Framework won't get in the way.
- *
- * When querying the DOM for elements that should be acted on:
- * 🚫 Don't: const tabs = document.querySelectorAll('.vf-tabs');
- * ✅ Do:    const tabs = document.querySelectorAll('[data-vf-js-tabs]');
- *
- * This allows users who would prefer not to have this JS engange on an element
- * to drop `data-vf-js-component` and still maintain CSS styling.
- */
-
 /**
- * The global function for this component
- * @example vfcomponentName(firstPassedVar)
- * @param {string} [firstPassedVar]  - An option to be passed
- */
+  * The global function for this component
+  * @example vfcomponentName(firstPassedVar)
+  * @param {string} [firstPassedVar]  - An option to be passed
+  */
 
 
 function vfFormFloatLabels() {
-  function addFloatLabel(self) {
-    var label = document.createElement('label');
-    var id = 'label-' + new Date().getTime();
-    label.setAttribute('id', id);
-    self.dataset.inputOf = id;
-    self.parentNode.insertBefore(label, self);
-    label.innerHTML = self.getAttribute('placeholder'); // not namespaced as this is a HTML-native attribute
-
-    label.classList.add('vf-form__label');
-  }
-
-  function floatLabelKeyUp(event) {
-    var self = event.target;
-
-    if (!self.dataset.inputOf && !!self.value) {
-      addFloatLabel(self);
-    } else {
-      var label = document.querySelector('#' + self.dataset.inputOf);
-
-      if (!self.value && !!label) {
-        setTimeout(function () {
-          label.parentNode.removeChild(label);
-          delete self.dataset.inputOf;
-        }, 10);
-      }
-    }
-  }
-
-  function wrapElement(element) {
-    var parent = element.parentNode;
-    var sibling = element.nextElementSibling;
-    var div = document.createElement('div');
-    div.appendChild(element);
-
-    if (!sibling) {
-      parent.appendChild(div);
-    } else {
-      parent.insertBefore(div, sibling);
-    }
-  }
-
-  var floatLabels = document.querySelectorAll('[data-vf-js-form-floatlabel]');
-
-  if (floatLabels.length === 0) {
-    // console.warn('There are no `[data-vf-js-form-floatlabel]` to process; exiting');
-    return false;
-  }
-
-  var inputs = [].slice.call(floatLabels);
-
-  if (typeof inputs != "undefined") {
-    for (var i in inputs) {
-      if (_typeof(inputs[i]) == "object") {
-        // prevent execution on array functions
-        wrapElement(inputs[i]);
-
-        if (!!inputs[i].value) {
-          addFloatLabel(inputs[i]);
-        }
-
-        inputs[i].classList.add('vf-form__floatlabel'); // .vf-form__floatlabel
-
-        inputs[i].addEventListener('keyup', floatLabelKeyUp);
-      }
-    }
-  }
-
-  function checkEmail(str) {
-    var errorElem = document.getElementById('error'); // email regex
-
-    var re = /^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (!re.test(str)) {
-      if (document.getElementById('email-error')) {// do nothing
-      } else {
-        var el = document.getElementById('email-form'),
-            elChild = document.createElement('div'),
-            parent = elChild;
-        elChild.innerHTML = '<div id="email-error" class="mt-b-form__message mt-b-form__message--inline-error"><p>Your email is incorrect</p></div>';
-      }
-
-      el.parentNode.appendChild(elChild);
-    } else {
-      var elem = document.getElementById('email-error');
-      elem.parentNode.removeChild(elem);
-    }
-  }
-
-  function checkForm() {
-    var canSubmit = true;
-    var emailcheck = /^(([^<>()[\]\\.,;:\s@\']+(\.[^<>()[\]\\.,;:\s@\']+)*)|(\'.+\'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    var emailField = document.getElementById('username').value;
-    var passwordField = document.forms['loginform'].querySelector('.form__input--password').value;
-
-    if (!emailcheck.test(emailField)) {
-      canSubmit = false;
-    }
-
-    if (passwordField.length < 5) {
-      canSubmit = false;
-    }
-
-    if (canSubmit) {
-      document.forms['loginform'].querySelector('.mt-b-button__item').disabled = false;
-    } else {
-      document.forms['loginform'].querySelector('.mt-b-button__item').disabled = true;
-    }
-  }
+  console.log('vfFormFloatLabels is no longer required as of 1.0.0-beta.4, you can remove it from your scripts.js');
 } // embl-content-hub-loader__html-imports
 // A trimmed down version of
 // https://github.com/AshleyScirra/html-imports-polyfill/blob/master/htmlimports.js
@@ -783,21 +659,25 @@ function emblConditionalEdit() {
  * and adds `.embl-coditional-edit__enabled` to display the edit links
  * @param {string} [url] - the url to check for an enabling param
  * @param {element} [element] - the scopped element to be processed
+ * @param {string} [referrer] - what part of the page is asking for a check, we pass this to avoid recursion
  */
 
 
-function emblConditionalEditDetectParam(url, element) {
+function emblConditionalEditDetectParam(url, element, referrer) {
   var captured = /embl-conditional-edit=([^&]+)/.exec(url);
 
-  if (captured == null) {
+  if (captured == null && referrer != 'iframe') {
     // value not found
     // also try against any parent iframe url
     if (window.self !== window.top) {
-      emblConditionalEditDetectParam(parent.window.location, element);
+      console.log(url, parent.window.location.href);
+      emblConditionalEditDetectParam(parent.window.location.href, element, 'iframe');
     }
 
     return;
   }
+
+  captured = captured || false; // avoid null
 
   captured = captured[1];
 
@@ -814,31 +694,47 @@ function emblConditionalEditDetectParam(url, element) {
 
 
 function emblNotificationsInject(message) {
-  var output = document.createElement('div');
+  var output = document.createElement('div'); // @todo:
+  // - add support in contentHub for extra button text, link
+  // preperation
+
+  message.body = message.body.replace(/<[/]?[p>]+>/g, ' '); // no <p> tags allowed in inline messages, preserve a space to not colide words
+  // add vf-link to link
+
+  message.body = message.body.replace('<a href=', '<a class="vf-link" href='); // we might need a more clever regex, but this should also avoid links that aleady have a class
+  // Learn more link is conditionally shown
+
+  if (message.field_notification_link) {
+    message.body = "".concat(message.body, " <a class=\"vf-link\" href=\"").concat(message.field_notification_link, "\">Learn more</a>");
+  } // custom button text
+
+
+  message.field_notification_button_text = message.field_notification_button_text || 'Close notice'; // notification memory and cookie options
+
+  if (message.field_notification_cookie == "True") {
+    output.dataset.vfJsBannerCookieName = message.cookieName;
+    output.dataset.vfJsBannerCookieVersion = message.cookieVersion;
+
+    if (message.field_notification_auto_accept == "True") {
+      output.dataset.vfJsBannerAutoAccept = true;
+    }
+  }
 
   if (message.field_notification_position == 'fixed') {
-    message.body = message.body.replace(/<[/]?[p>]+>/g, ' '); // no <p> tags allowed in inline messages, preserve a space to not colide words
-
     output.classList.add('vf-banner', 'vf-banner--fixed', 'vf-banner--bottom', 'vf-banner--notice');
     output.dataset.vfJsBanner = true;
     output.dataset.vfJsBannerState = message.field_notification_presentation;
-    output.dataset.vfJsBannerButtonText = "Close notice"; // These features are not yet supported by the notification content type in the EMBL contentHub
-    // output.dataset.vfJsBannerCookieName = "CookieName";
-    // output.dataset.vfJsBannerCookieVersion = "CookieVersion";
+    output.dataset.vfJsBannerButtonText = message.field_notification_button_text; // These features are not yet supported by the notification content type in the EMBL contentHub
     // output.dataset.vfJsBannerExtraButton = "<a href='#'>Optional button</a><a target='_blank' href='#'>New tab button</a>";
-    // output.dataset.vfJsBannerAutoAccept = false;
-    // <h4 class="vf-text vf-text-heading--4"><a class="vf-link" href="${message.field_notification_link}">${message.title}</a></h4>
 
-    output.innerHTML = "\n      <div class=\"vf-banner__content | vf-grid\" data-vf-js-banner-text>\n        <p class=\"vf-text vf-text-body--2\">".concat(message.body, " <a class=\"vf-link\" href=\"").concat(message.field_notification_link, "\">Learn more</a></p>\n      </div>");
+    output.innerHTML = "\n      <div class=\"vf-banner__content | vf-grid\" data-vf-js-banner-text>\n        <p class=\"vf-text vf-text-body--2\">".concat(message.body, "</p>\n      </div>");
     var target = document.body.firstChild;
     target.parentNode.prepend(output);
     vfBanner();
   } else if (message.field_notification_position == 'inline') {
-    message.body = message.body.replace(/<[/]?[p>]+>/g, ''); // no <p> tags allowed in inline messages
-
     output.classList.add('vf-grid'); // we wrap in vf-grid for layout
 
-    output.innerHTML = "\n      <div class=\"vf-banner vf-banner--phase | vf-content\">\n        <div class=\"vf-banner__content\">\n          <p class=\"vf-text-body--3\">".concat(message.body, "</p>\n        </div>\n      </div>"); // insert after `vf-header` or at after `vf-body`
+    output.innerHTML = "\n      <div class=\"vf-banner vf-banner--phase | vf-content\">\n        <div class=\"vf-banner__content\">\n          <p class=\"vf-banner__text\">".concat(message.body, "</p>\n        </div>\n      </div>"); // insert after `vf-header` or at after `vf-body`
     // @todo: add support for where "inline" message should be shown
     // @todo: don't rely on the presence of vf-header to show inline notification, maybe <div data-notifications-go-here>
 
@@ -858,19 +754,13 @@ function emblNotificationsInject(message) {
 
     }
   } else if (message.field_notification_position == 'top') {
-    message.body = message.body.replace(/<[/]?[p>]+>/g, ''); // no <p> tags allowed in inline messages
-
     output.classList.add('vf-banner', 'vf-banner--fixed', 'vf-banner--top', 'vf-banner--phase');
     output.dataset.vfJsBanner = true;
     output.dataset.vfJsBannerState = message.field_notification_presentation;
-    output.dataset.vfJsBannerButtonText = "Close notice"; // These features are not yet supported by the notification content type in the EMBL contentHub
-    // output.dataset.vfJsBannerCookieName = "CookieName";
-    // output.dataset.vfJsBannerCookieVersion = "CookieVersion";
+    output.dataset.vfJsBannerButtonText = message.field_notification_button_text; // These features are not yet supported by the notification content type in the EMBL contentHub
     // output.dataset.vfJsBannerExtraButton = "<a href='#'>Optional button</a><a target='_blank' href='#'>New tab button</a>";
-    // output.dataset.vfJsBannerAutoAccept = false;
-    // <h4 class="vf-text vf-text-heading--4"><a class="vf-link" href="${message.field_notification_link}">${message.title}</a></h4>
 
-    output.innerHTML = "\n      <div class=\"vf-banner__content\" data-vf-js-banner-text>\n        <p class=\"vf-text vf-text-body--3\">".concat(message.body, " <a class=\"vf-link\" href=\"").concat(message.field_notification_link, "\">Learn more</a></p>\n      </div>");
+    output.innerHTML = "\n      <div class=\"vf-banner__content\" data-vf-js-banner-text>\n        <p class=\"vf-banner__text\">".concat(message.body, "</p>\n      </div>");
     var _target3 = document.body.firstChild;
 
     _target3.parentNode.prepend(output);

@@ -2,13 +2,8 @@
 
 get_header();
 
-// Only show group long description on front page
-if (is_front_page()) {
-  $vf_group_header = VF_Plugin::get_plugin('vf_group_header');
-  if (class_exists('VF_Group_Header')) {
-    VF_Plugin::render($vf_group_header);
-  }
-}
+global $post;
+setup_postdata($post);
 
 global $vf_theme;
 

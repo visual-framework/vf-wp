@@ -42,7 +42,7 @@
 /*!
  * Component: @visual-framework/vf-box
  * Version: 1.0.3
- * Location: components/vf-box
+ * Location: components/vf-core-
  */
 .vf-box {
   --box-text-color: var( --vf-box-theme-color--foreground, var(--vf-theme-color--foreground, #000000));

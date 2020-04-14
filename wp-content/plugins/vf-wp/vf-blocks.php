@@ -22,15 +22,19 @@ class VF_Blocks extends VF_Type {
     parent::activate();
   }
 
+  static public function block_category() {
+    return 'vf/blocks';
+  }
+
   /**
    * Action: `block_categories`
    */
-  function block_categories($categories, $post) {
+  static public function block_categories($categories, $post) {
     return array_merge(
       array(
         array(
-          'slug'  => 'vf/wp',
-          'title' => __('Visual Framework (WordPress)', 'vfwp'),
+          'slug'  => VF_Blocks::block_category(),
+          'title' => __('EMBL – Content Hub', 'vfwp'),
           'icon'  => null
         ),
       ),
