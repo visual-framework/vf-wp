@@ -50,13 +50,45 @@ class VF_Events_ACF {
    */
   public function pre_get_posts($query) {
     // Handle order by date metadata in admin table
-    if (is_admin() && $query->is_main_query()) {
+    if (
+      is_admin() &&
+      $query->is_main_query()
+    ) {
       $orderby = $query->get('orderby');
       if (VF_Events::is_key_date($orderby)) {
         $query->set('meta_key', $orderby);
         $query->set('meta_type', 'numeric');
         $query->set('orderby', 'meta_value');
       }
+    }
+    // Handle archive template order
+    if (
+      ! is_admin() &&
+      $query->is_main_query() &&
+      is_post_type_archive(VF_Events::type())
+    ) {
+      $key = 'vf_event_start_date';
+      $today = date('Ymd');
+      $query->set('meta_key', $key);
+      $query->set('meta_type', 'numeric');
+      $query->set('orderby', 'meta_value');
+      $query->set('order', 'ASC');
+      $meta_query = array(
+        'relation' => 'AND',
+        array(
+          'key'     => $key,
+          'compare' => 'EXISTS'
+        ),
+        array(
+          'key'     => $key,
+          'value'   => $today,
+          'compare' => '>='
+        )
+      );
+      $query->set(
+        'meta_query',
+        $meta_query
+      );
     }
   }
 

@@ -15,8 +15,8 @@
         "class": "",
         "id": ""
       },
-      "display_format": "Y/m/d",
-      "return_format": "Y/m/d",
+      "display_format": "j M Y",
+      "return_format": "Ymd",
       "first_day": 1
     },
     {
@@ -32,8 +32,8 @@
         "class": "",
         "id": ""
       },
-      "display_format": "Y/m/d",
-      "return_format": "Y/m/d",
+      "display_format": "j M Y",
+      "return_format": "Ymd",
       "first_day": 1
     }
   ],
@@ -54,5 +54,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "`vf_event` post type",
-  "modified": 1586859858
+  "modified": 1586880963
 }
