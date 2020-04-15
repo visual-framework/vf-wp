@@ -16,6 +16,17 @@ The `vf_event` post type has custom meta properties:
 
 ‡ The `vf_event_start_date` value is used to order archives instead of the standard `post_date` (published date). The start date is required for events to appear in the archives.
 
+Event meta is included in the WordPress REST API:
+
+```json
+{
+  "vf_event_start_date": {
+    "value": "20200917",
+    "formatted": "17 September 2020"
+  }
+}
+```
+
 ## Archives
 
 The default events archive displays upcoming events ordered nearest to farthest in the future. The archive URL is:
@@ -50,11 +61,13 @@ The global options are:
 | vf_event_past_title | [TEXT] |
 | vf_events_per_page | [NUMBER] |
 
-† If the date format is `custom` the custom text string is used. See the ACF JSON file for default values.
+† If the date format is `custom` the custom text string is used.
+
+See the ACF JSON file for default values.
 
 ## Templates
 
-Default templates exist for event archive and singular pages. Themes can override or customize them using standard template naming. If required, copy the files from `vf-events/templates` into your theme directory:
+Default templates exist for event **archive** and **singular** pages. Themes can override or customize them using standard template naming. If required copy the files from `vf-events/templates` into your theme directory:
 
 ```
 archive-vf_event.php
@@ -62,6 +75,8 @@ single-vf_event.php
 ```
 
 ## Template Functions
+
+
 
 ```php
 VF_Events::is_upcoming_archive();
@@ -85,5 +100,5 @@ Returns the archive title ("Upcoming Events", or "Past Events" by default).
 VF_Events::get_archive_pages();
 ```
 
-Returns and array of `next` and `previous` archive page URLs. These values will be `false` if there is no page.
+Returns an array of `next` and `previous` archive page URLs. These values will be `false` if there is no page.
 
