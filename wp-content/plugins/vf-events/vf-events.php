@@ -100,6 +100,38 @@ class VF_Events {
     );
   }
 
+  /**
+   * Return true if viewing past events archive
+   */
+  static public function is_past_archive() {
+    if ( ! is_post_type_archive(VF_Events::type())) {
+      return false;
+    }
+    $order = get_query_var('order');
+    return $order === 'DESC';
+  }
+
+  /**
+   * Return true if viewing upcoming events archive
+   */
+  static public function is_upcoming_archive() {
+    if ( ! is_post_type_archive(VF_Events::type())) {
+      return false;
+    }
+    return ! VF_Events::is_past_archive();
+  }
+
+  /**
+   * Return events archive link
+   */
+  static public function get_archive_link($is_past = false) {
+    $url = get_post_type_archive_link(VF_Events::type());
+    if ($is_past) {
+      $url = "{$url}past/";
+    }
+    return $url;
+  }
+
   // Return date format from ACF options page
   static public function get_date_format() {
     $format = 'j F Y';
@@ -120,7 +152,7 @@ class VF_Events {
   /**
    * Return the page title for archive templates
    */
-  static public function get_archive_title() {
+  static public function get_archive_title($is_past = null) {
     $post_type_object = get_post_type_object(
       VF_Events::type()
     );
@@ -131,8 +163,10 @@ class VF_Events {
     $upcoming_title = trim($upcoming_title);
     $title = $upcoming_title;
     // Get past events title
-    $order = get_query_var('order');
-    if ($order === 'DESC') {
+    if ( ! is_bool($is_past)) {
+      $is_past = VF_Events::is_past_archive();
+    }
+    if ($is_past) {
       $past_title = get_field('vf_event_past_title', 'options');
       $past_title = trim($past_title);
       $title = $past_title;

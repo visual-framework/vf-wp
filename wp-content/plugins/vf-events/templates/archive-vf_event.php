@@ -103,6 +103,21 @@ get_header();
     <!--/vf-pagination-->
     <?php } ?>
 
+    <?php
+    // View alternate past/upcoming archives
+    $is_past = VF_Events::is_past_archive();
+    $alt_url = VF_Events::get_archive_link( ! $is_past);
+    $alt_title = sprintf(
+      _x('View %1$s', 'event archive link', 'vfwp'),
+      VF_Events::get_archive_title( ! $is_past)
+    );
+    ?>
+    <p class="vf-text-body">
+      <a href="<?php echo esc_url($alt_url); ?>">
+        <?php echo esc_html($alt_title); ?>
+      </a>
+    </p>
+
   </div>
   <div><!--empty--></div>
 </div>
