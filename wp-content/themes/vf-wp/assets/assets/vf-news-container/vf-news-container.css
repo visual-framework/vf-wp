@@ -31,8 +31,8 @@
 
 :root {
   --vf-ui-color--black: #000000;
-  --vf-ui-color--grey: #f3f3f3;
-  --vf-ui-color--grey--light: #d8d8d8;
+  --vf-ui-color--grey: #d8d8d8;
+  --vf-ui-color--grey--light: #f3f3f3;
   --vf-ui-color--yellow: #fffadc;
   --vf-ui-color--red: #d32f2f;
   --vf-ui-color--white: #ffffff;
@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-grid
- * Version: 1.0.2
- * Location: components/vf-core-
+ * Version: 1.0.3
+ * Location: components/vf-grid
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -107,9 +107,11 @@
 
 @supports (display: grid) {
   .vf-grid {
+    -webkit-column-gap: var(--page-grid-gap);
+       -moz-column-gap: var(--page-grid-gap);
+            column-gap: var(--page-grid-gap);
     display: grid;
     grid-column: main;
-    grid-column-gap: var(--page-grid-gap);
   }
   @media (min-width: 840px) {
     .vf-grid {
@@ -175,8 +177,8 @@
 /* stylelint-enable order/order */
 /*!
  * Component: @visual-framework/vf-summary
- * Version: 1.0.3
- * Location: components/vf-core-
+ * Version: 1.0.4
+ * Location: components/vf-summary
  */
 .vf-summary {
   --vf-text-margin--bottom: 16px;
@@ -188,8 +190,10 @@
 
 .vf-summary {
   align-self: start;
+  -webkit-column-gap: 16px;
+     -moz-column-gap: 16px;
+          column-gap: 16px;
   display: grid;
-  grid-column-gap: 16px;
   margin-bottom: 2rem;
   position: relative;
 }
@@ -266,12 +270,12 @@
 }
 
 .vf-summary__link:visited {
-  color: #734595;
+  color: #3b6fb6;
   border-bottom: none;
 }
 
 .vf-summary__link:visited:hover {
-  color: #734595;
+  color: #3b6fb6;
   text-decoration: underline;
 }
 
@@ -328,7 +332,9 @@
 }
 
 .vf-summary--profile {
-  grid-column-gap: 16px;
+  -webkit-column-gap: 16px;
+     -moz-column-gap: 16px;
+          column-gap: 16px;
   grid-template-columns: minmax(0, var(--vf-icon--avatar-width)) 1fr;
   grid-template-rows: auto;
   margin-bottom: 48px;
@@ -361,12 +367,12 @@
 }
 
 .vf-summary__link:visited {
-  color: #734595;
+  color: #3b6fb6;
   border-bottom: none;
 }
 
 .vf-summary__link:visited:hover {
-  color: #734595;
+  color: #3b6fb6;
   text-decoration: underline;
 }
 
@@ -383,12 +389,12 @@
 }
 
 .vf-summary__link--secondary:visited {
-  color: #734595;
+  color: #373a36;
   border-bottom: none;
 }
 
 .vf-summary__link--secondary:visited:hover {
-  color: #734595;
+  color: #373a36;
   text-decoration: underline;
 }
 
@@ -502,7 +508,7 @@
 /*!
  * Component: @visual-framework/vf-section-header
  * Version: 1.1.0
- * Location: components/vf-core-
+ * Location: components/vf-section-header
  */
 .vf-section-header__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -603,6 +609,6 @@
 
 /*!
  * Component: @visual-framework/vf-news-container
- * Version: 1.0.0-beta.1
- * Location: components/vf-core-
+ * Version: 1.0.0-beta.0
+ * Location: components/vf-news-container
  */

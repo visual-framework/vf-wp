@@ -31,8 +31,8 @@
 
 :root {
   --vf-ui-color--black: #000000;
-  --vf-ui-color--grey: #f3f3f3;
-  --vf-ui-color--grey--light: #d8d8d8;
+  --vf-ui-color--grey: #d8d8d8;
+  --vf-ui-color--grey--light: #f3f3f3;
   --vf-ui-color--yellow: #fffadc;
   --vf-ui-color--red: #d32f2f;
   --vf-ui-color--white: #ffffff;
@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-grid
- * Version: 1.0.2
- * Location: components/vf-core-
+ * Version: 1.0.3
+ * Location: components/vf-grid
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -107,9 +107,11 @@
 
 @supports (display: grid) {
   .vf-grid {
+    -webkit-column-gap: var(--page-grid-gap);
+       -moz-column-gap: var(--page-grid-gap);
+            column-gap: var(--page-grid-gap);
     display: grid;
     grid-column: main;
-    grid-column-gap: var(--page-grid-gap);
   }
   @media (min-width: 840px) {
     .vf-grid {
@@ -175,8 +177,8 @@
 /* stylelint-enable order/order */
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-heading
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -249,8 +251,8 @@
 
 /*!
  * Component: @visual-framework/vf-activity-list
- * Version: 1.0.0-alpha.9
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-activity-list
  */
 .vf-activity {
   margin-bottom: 54px;
@@ -290,12 +292,12 @@
 }
 
 .vf-activity__item > a:visited {
-  color: #734595;
+  color: #3b6fb6;
   border-bottom: none;
 }
 
 .vf-activity__item > a:visited:hover {
-  color: #734595;
+  color: #3b6fb6;
   text-decoration: underline;
 }
 
@@ -319,8 +321,8 @@
 
 /*!
  * Component: @visual-framework/vf-activity-group
- * Version: 1.0.0-alpha.9
- * Location: components/vf-core-
+ * Version: 1.0.0-alpha.8
+ * Location: components/vf-activity-group
  */
 .vf-activity-group {
   background-color: #d0d0ce;

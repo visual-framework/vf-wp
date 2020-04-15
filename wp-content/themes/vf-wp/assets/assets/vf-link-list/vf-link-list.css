@@ -31,8 +31,8 @@
 
 :root {
   --vf-ui-color--black: #000000;
-  --vf-ui-color--grey: #f3f3f3;
-  --vf-ui-color--grey--light: #d8d8d8;
+  --vf-ui-color--grey: #d8d8d8;
+  --vf-ui-color--grey--light: #f3f3f3;
   --vf-ui-color--yellow: #fffadc;
   --vf-ui-color--red: #d32f2f;
   --vf-ui-color--white: #ffffff;
@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-heading
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -115,8 +115,8 @@
 
 /*!
  * Component: @visual-framework/vf-link-list
- * Version: 1.0.1
- * Location: components/vf-core-
+ * Version: 1.0.2
+ * Location: components/vf-link-list
  */
 .vf-links__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -145,12 +145,18 @@
 }
 
 .vf-links__list--has-image .vf-list__link {
+  -webkit-column-gap: 8px;
+     -moz-column-gap: 8px;
+          column-gap: 8px;
   display: grid;
-  grid-template-columns: minmax(0, 60px) auto;
+  grid-template-columns: minmax(0, 32px) auto;
 }
 
 .vf-list__image {
+  height: auto;
   justify-self: center;
+  max-width: 100%;
+  width: 100%;
 }
 
 .vf-links__meta {
@@ -173,12 +179,12 @@
 }
 
 .vf-links__list--secondary .vf-list__link:visited {
-  color: #734595;
+  color: #707372;
   border-bottom: none;
 }
 
 .vf-links__list--secondary .vf-list__link:visited:hover {
-  color: #734595;
+  color: #707372;
   text-decoration: underline;
 }
 
@@ -223,8 +229,9 @@
 }
 
 .vf-links__list--very-easy .vf-links__list {
-  list-style-position: inside;
+  list-style-position: outside;
   list-style-type: square;
+  margin-left: 1em;
 }
 
 .vf-links__list--easy .vf-links__heading {
@@ -232,11 +239,13 @@
 }
 
 .vf-links__list--easy .vf-links__list {
+  -webkit-column-gap: 40px;
+     -moz-column-gap: 40px;
+          column-gap: 40px;
   display: grid;
   grid-column: 1 / -1;
-  grid-column-gap: 40px;
-  grid-row-gap: 30px;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  row-gap: 30px;
 }
 
 .vf-links__list--easy .vf-list__item {
