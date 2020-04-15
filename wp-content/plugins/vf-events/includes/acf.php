@@ -52,47 +52,80 @@ class VF_Events_ACF {
    * Action: `pre_get_posts`
    */
   public function pre_get_posts($query) {
+    // Ignore non-event queries
+    if ($query->get('post_type') !== VF_Events::type()) {
+      return;
+    }
+    if ( ! $query->is_main_query()) {
+      return;
+    }
     // Handle order by date metadata in admin table
-    if (
-      is_admin() &&
-      $query->is_main_query()
-    ) {
-      $orderby = $query->get('orderby');
-      if (VF_Events::is_key_date($orderby)) {
-        $query->set('meta_key', $orderby);
-        $query->set('meta_type', 'numeric');
-        $query->set('orderby', 'meta_value');
-      }
+    if (is_admin()) {
+      $this->pre_get_posts_admin($query);
+      return;
     }
     // Handle archive template order
-    if (
-      ! is_admin() &&
-      $query->is_main_query() &&
-      is_post_type_archive(VF_Events::type())
-    ) {
-      $key = 'vf_event_start_date';
-      $today = date('Ymd');
-      $query->set('meta_key', $key);
-      $query->set('meta_type', 'numeric');
-      $query->set('orderby', 'meta_value');
-      $query->set('order', 'ASC');
-      $meta_query = array(
-        'relation' => 'AND',
-        array(
-          'key'     => $key,
-          'compare' => 'EXISTS'
-        ),
-        array(
-          'key'     => $key,
-          'value'   => $today,
-          'compare' => '>='
-        )
-      );
-      $query->set(
-        'meta_query',
-        $meta_query
+    if ($query->is_archive()) {
+      $this->pre_get_posts_archive($query);
+      return;
+    }
+  }
+
+  /**
+   * Main query for events admin edit posts table
+   */
+  private function pre_get_posts_admin($query) {
+    $orderby = $query->get('orderby');
+    if ( ! VF_Events::is_key_date($orderby)) {
+      return;
+    }
+    $query->set('meta_key', $orderby);
+    $query->set('meta_type', 'numeric');
+    $query->set('orderby', 'meta_value');
+  }
+
+  /**
+   * Main query for events archive template
+   */
+  private function pre_get_posts_archive($query) {
+    $key = 'vf_event_start_date';
+    $today = date('Ymd');
+    // Default to upcoming events
+    $order = $query->get('order');
+    if (empty($order)) {
+      $order = 'ASC';
+    }
+    $query->set('meta_key', $key);
+    $query->set('meta_type', 'numeric');
+    $query->set('orderby', 'meta_value');
+    $query->set('order', $order);
+    $meta_query = array(
+      'relation' => 'AND',
+      array(
+        'key'     => $key,
+        'compare' => 'EXISTS'
+      )
+    );
+    // Filter by upcoming events
+    if ($order === 'ASC') {
+      $meta_query[] = array(
+        'key'     => $key,
+        'value'   => $today,
+        'compare' => '>='
       );
     }
+    // Filter by past events
+    if ($order === 'DESC') {
+      $meta_query[] = array(
+        'key'     => $key,
+        'value'   => $today,
+        'compare' => '<'
+      );
+    }
+    $query->set(
+      'meta_query',
+      $meta_query
+    );
   }
 
   /**
