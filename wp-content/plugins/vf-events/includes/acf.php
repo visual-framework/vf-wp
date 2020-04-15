@@ -88,8 +88,19 @@ class VF_Events_ACF {
    * Main query for events archive template
    */
   private function pre_get_posts_archive($query) {
+    // Meta key to order by numeric value
     $key = 'vf_event_start_date';
+    // Meta value for comparison
     $today = date('Ymd');
+
+    // Events per page
+    $ppp = get_field('vf_events_per_page', 'option');
+    $ppp = intval($ppp);
+    if (is_nan($ppp) || $ppp < 1 || $ppp > 100) {
+      $ppp = 10;
+    }
+    $query->set('posts_per_page', $ppp);
+
     // Default to upcoming events
     $order = $query->get('order');
     if (empty($order)) {

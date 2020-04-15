@@ -17,3 +17,8 @@
 .acf-field[data-name^="vf_event_"][data-name$="_title"] .acf-input-wrap {
   max-width: 300px;
 }
+
+/* "Events per page" field - restrict width */
+.acf-field[data-name="vf_events_per_page"] .acf-input-wrap {
+  max-width: 100px;
+}

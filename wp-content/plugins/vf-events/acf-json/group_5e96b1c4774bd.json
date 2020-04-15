@@ -1,0 +1,128 @@
+{
+    "key": "group_5e96b1c4774bd",
+    "title": "Events Settings",
+    "fields": [
+        {
+            "key": "field_5e96b1d21890d",
+            "label": "Date Format",
+            "name": "vf_event_date_format",
+            "type": "radio",
+            "instructions": "Format how event dates are displayed.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "j F Y": "<code>j F Y</code> 15 February 2020",
+                "j M Y": "<code>j M Y</code> 15 Feb 2020",
+                "F j, Y": "<code>F j, Y</code> Feburary 15, 2020",
+                "custom": "Custom <em>(enter below)</em>"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "j F Y",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5e96b420a2e0d",
+            "label": "Date Format (custom)",
+            "name": "vf_event_date_format_custom",
+            "type": "text",
+            "instructions": "For help see <a href=\"https://wordpress.org/support/article/formatting-date-and-time/\" target=\"_blank\">Formatting Date and Time</a>.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Y-m-d",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5e96b9b967712",
+            "label": "Upcoming Events - Page Title",
+            "name": "vf_event_upcoming_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Upcoming Events",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5e96ba3267713",
+            "label": "Past Events - Page Title",
+            "name": "vf_event_past_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Past Events",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5e96c2cd8452b",
+            "label": "Events per page",
+            "name": "vf_events_per_page",
+            "type": "number",
+            "instructions": "Number of events to show before pagination.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 10,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 1,
+            "max": 100,
+            "step": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "vf-events-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "`vf_event` options page",
+    "modified": 1586938888
+}
