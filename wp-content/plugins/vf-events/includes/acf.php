@@ -21,6 +21,9 @@ class VF_Events_ACF {
       'pre_get_posts',
       array($this, 'pre_get_posts')
     );
+    add_action('acf/init',
+      array($this, 'acf_init')
+    );
     add_filter(
       'acf/format_value',
       array($this, 'acf_format_value'),
@@ -90,6 +93,19 @@ class VF_Events_ACF {
         $meta_query
       );
     }
+  }
+
+  /**
+   * Action: `acf/init`
+   */
+  public function acf_init() {
+    acf_add_options_page(array(
+      'menu_slug'   => 'vf-events-settings',
+      'menu_title'  => __('Settings', 'vfwp'),
+      'page_title'  => __('Events Settings', 'vfwp'),
+      'parent_slug' => 'edit.php?post_type=' . VF_Events::type(),
+      'capability'  => 'manage_options'
+    ));
   }
 
   /**

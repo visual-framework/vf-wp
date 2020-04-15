@@ -2,10 +2,23 @@
 
 get_header();
 
-// Use post type label for archive heading
-$post_type_object = get_post_type_object(
-  VF_Events::type()
-);
+// Use post type label for default title
+// $post_type_object = get_post_type_object(
+//   VF_Events::type()
+// );
+// $title = $post_type_object->label;
+
+$title = __('Upcoming Events', 'vfwp');
+
+$upcoming_title = get_field('vf_event_upcoming_title', 'options');
+$upcoming_title = trim($upcoming_title);
+
+$past_title = get_field('vf_event_past_title', 'options');
+$past_title = trim($past_title);
+
+if ( ! empty($upcoming_title)) {
+  $title = $upcoming_title;
+}
 
 // Get pagination vars and URLs
 global $wp_query;
@@ -41,7 +54,7 @@ if (
   <div><!--empty--></div>
   <div>
     <h1 class="vf-intro__heading">
-      <?php echo $post_type_object->label; ?>
+      <?php echo esc_html($title); ?>
     </h1>
   </div>
   <div><!--empty--></div>

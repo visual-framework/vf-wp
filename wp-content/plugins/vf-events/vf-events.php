@@ -27,9 +27,21 @@ class VF_Events {
     return 'vf_event';
   }
 
-  // Return default date format
+  // Return date format from ACF options page
   static public function date_format() {
-    return 'j M Y';
+    $format = 'j F Y';
+    if ( ! function_exists('get_field')) {
+      return $format;
+    }
+    $option = get_field('vf_event_date_format', 'option');
+    if ($option === 'custom') {
+      $option = get_field('vf_event_date_format_custom', 'option');
+    }
+    $option = trim($option);
+    if ( ! empty($option)) {
+      $format = $option;
+    }
+    return $format;
   }
 
   /**
@@ -57,6 +69,10 @@ class VF_Events {
       __FILE__,
       array($this, 'activate')
     );
+    add_action(
+      'admin_enqueue_scripts',
+      array($this, 'admin_enqueue_scripts')
+    );
   }
 
   /**
@@ -66,6 +82,20 @@ class VF_Events {
     // Ensure custom post type is registered then flush permalinks
     $this->register->init_register();
     flush_rewrite_rules();
+  }
+
+  /**
+   * Action: `admin_enqueue_scripts`
+   */
+  public function admin_enqueue_scripts() {
+    $plugin = get_plugin_data(__FILE__);
+    wp_enqueue_style(
+      'vf-events-admin',
+      plugin_dir_url(__FILE__) . 'assets/admin.css',
+      array(),
+      $plugin['Version'],
+      'all'
+    );
   }
 
 } // VF_Events
