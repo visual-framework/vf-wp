@@ -69,15 +69,12 @@ class VF_Events_ACF {
     if ($query->get('post_type') !== VF_Events::type()) {
       return;
     }
-    if ( ! $query->is_main_query()) {
-      return;
-    }
     // Handle order by date metadata in admin table
-    if (is_admin()) {
+    if (is_admin() && $query->is_main_query()) {
       $this->pre_get_posts_admin($query);
       return;
     }
-    // Handle archive template order
+    // Handle archive template order (and `VF_Events:get_events()`)
     if ($query->is_archive()) {
       $this->pre_get_posts_archive($query);
       return;
@@ -107,7 +104,10 @@ class VF_Events_ACF {
     $today = date('Ymd');
 
     // Events per page
-    $ppp = get_field('vf_events_per_page', 'option');
+    $ppp = $query->get('posts_per_page');
+    if ( ! is_numeric($ppp)) {
+      $ppp = get_field('vf_events_per_page', 'option');
+    }
     $ppp = intval($ppp);
     if (is_nan($ppp) || $ppp < 1 || $ppp > 100) {
       $ppp = 10;
@@ -156,12 +156,28 @@ class VF_Events_ACF {
    * Action: `acf/init`
    */
   public function acf_init() {
+    // Add "Event Settings" options page
     acf_add_options_page(array(
       'menu_slug'   => 'vf-events-settings',
       'menu_title'  => __('Settings', 'vfwp'),
       'page_title'  => __('Events Settings', 'vfwp'),
       'parent_slug' => 'edit.php?post_type=' . VF_Events::type(),
       'capability'  => 'manage_options'
+    ));
+    // Register "Events List" block
+    global $vf_events;
+    $template = $vf_events->template()->get_template(
+      'blocks/vf-events-list.php'
+    );
+    acf_register_block_type(array(
+      'name'            => 'vf-events-list',
+      'title'           => 'Events List',
+      'category'        => 'vf/wp',
+      'render_template' => $template,
+      'supports'        => array(
+        'align'           => false,
+        'customClassName' => false
+      )
     ));
   }
 

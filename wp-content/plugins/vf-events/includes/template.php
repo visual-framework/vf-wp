@@ -22,7 +22,7 @@ class VF_Events_Template {
    */
   public function plugin_template_path() {
     $path = plugin_dir_path($this->file);
-    $path = rtrim($path, '/\\') . '/templates';
+    $path = $path . 'templates';
     return $path;
   }
 
@@ -36,26 +36,30 @@ class VF_Events_Template {
   }
 
   /**
-   * Filter: `template_include`
+   * Return the full template path
    */
-  public function template_include($template) {
-    $override = null;
-    $post_type = VF_Events::type();
-    // Choose archive template
-    if (is_post_type_archive($post_type)) {
-      $archive = "archive-{$post_type}.php";
-      $template = "{$this->plugin_template_path()}/{$archive}";
-      $override = "{$this->theme_template_path()}/{$archive}";
-     }
-     // Choose single template
-    if (is_singular($post_type)) {
-      $single = "single-{$post_type}.php";
-      $template = "{$this->plugin_template_path()}/{$single}";
-      $override = "{$this->theme_template_path()}/{$single}";
-    }
+  public function get_template($file) {
+    $template = "{$this->plugin_template_path()}/{$file}";
+    $override = "{$this->theme_template_path()}/{$file}";
     // Prefer theme template if it exists
     if ( ! empty($override) && file_exists($override)) {
       $template = $override;
+    }
+    return $template;
+  }
+
+  /**
+   * Filter: `template_include`
+   */
+  public function template_include($template) {
+    $post_type = VF_Events::type();
+    // Choose archive template
+    if (is_post_type_archive($post_type)) {
+      return $this->get_template("archive-{$post_type}.php");
+    }
+    // Choose single template
+    if (is_singular($post_type)) {
+      return $this->get_template("single-{$post_type}.php");
     }
     return $template;
   }

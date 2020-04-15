@@ -82,6 +82,12 @@ class VF_WP {
       array($this, 'init')
     );
 
+    add_filter(
+      'block_categories',
+      array($this, 'block_categories'),
+      10, 2
+    );
+
      add_action('acf/init',
       array($this, 'acf_init')
     );
@@ -153,6 +159,7 @@ class VF_WP {
       $vf_templates->deactivate();
     }
   }
+
   /**
    * Action: `admin_menu`
    */
@@ -165,6 +172,22 @@ class VF_WP {
       '',
       'dashicons-admin-settings',
       50
+    );
+  }
+
+  /**
+   * Action: `block_categories`
+   */
+  static public function block_categories($categories, $post) {
+    return array_merge(
+      array(
+        array(
+          'slug'  => 'vf/wp',
+          'title' => __('EMBL – WordPress', 'vfwp'),
+          'icon'  => null
+        ),
+      ),
+      $categories
     );
   }
 

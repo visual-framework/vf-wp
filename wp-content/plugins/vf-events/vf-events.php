@@ -51,6 +51,10 @@ class VF_Events {
     );
   }
 
+  public function template() {
+    return $this->template;
+  }
+
   /**
    * Action: `register_activation_hook`
    */
@@ -119,6 +123,21 @@ class VF_Events {
       return false;
     }
     return ! VF_Events::is_past_archive();
+  }
+
+  /**
+   * Return `WP_Query` for ordered event posts
+   */
+  static public function get_events($args) {
+    $args = array(
+      'post_type'      => VF_Events::type(),
+      'post_status'    => 'publish',
+      'posts_per_page' => $args['posts_per_page'],
+      'order'          => (bool) $args['is_past'] ? 'DESC' : 'ASC'
+    );
+    $query = new WP_Query($args);
+    $query->set('is_archive', false);
+    return $query;
   }
 
   /**
