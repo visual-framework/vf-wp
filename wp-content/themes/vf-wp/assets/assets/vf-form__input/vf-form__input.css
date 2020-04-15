@@ -31,8 +31,8 @@
 
 :root {
   --vf-ui-color--black: #000000;
-  --vf-ui-color--grey: #f3f3f3;
-  --vf-ui-color--grey--light: #d8d8d8;
+  --vf-ui-color--grey: #d8d8d8;
+  --vf-ui-color--grey--light: #f3f3f3;
   --vf-ui-color--yellow: #fffadc;
   --vf-ui-color--red: #d32f2f;
   --vf-ui-color--white: #ffffff;
@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-form__input
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.1
+ * Location: components/vf-form/vf-form__input
  */
 .vf-form__input:not([type='file']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -50,7 +50,11 @@
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 4px 0;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   border-color: #f3f3f3;
+  border-radius: 0;
   border-style: solid;
   border-width: 3px;
   -webkit-box-sizing: border-box;

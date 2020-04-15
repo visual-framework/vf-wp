@@ -31,8 +31,8 @@
 
 :root {
   --vf-ui-color--black: #000000;
-  --vf-ui-color--grey: #f3f3f3;
-  --vf-ui-color--grey--light: #d8d8d8;
+  --vf-ui-color--grey: #d8d8d8;
+  --vf-ui-color--grey--light: #f3f3f3;
   --vf-ui-color--yellow: #fffadc;
   --vf-ui-color--red: #d32f2f;
   --vf-ui-color--white: #ffffff;
@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-footer
- * Version: 1.0.2
- * Location: components/vf-core-
+ * Version: 1.0.3
+ * Location: components/vf-footer
  */
 .vf-footer {
   background-color: #54585a;
@@ -78,7 +78,9 @@
 
 .vf-footer__legal {
   color: #ffffff;
-  grid-column-gap: var(--page-grid-gap);
+  -webkit-column-gap: var(--page-grid-gap);
+     -moz-column-gap: var(--page-grid-gap);
+          column-gap: var(--page-grid-gap);
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
