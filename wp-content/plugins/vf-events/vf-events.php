@@ -22,40 +22,13 @@ class VF_Events {
   private $register;
   private $template;
 
+  function __construct() {
+    // Do nothing...
+  }
+
   // Return custom post type
   static public function type() {
     return 'vf_event';
-  }
-
-  // Return date format from ACF options page
-  static public function date_format() {
-    $format = 'j F Y';
-    if ( ! function_exists('get_field')) {
-      return $format;
-    }
-    $option = get_field('vf_event_date_format', 'option');
-    if ($option === 'custom') {
-      $option = get_field('vf_event_date_format_custom', 'option');
-    }
-    $option = trim($option);
-    if ( ! empty($option)) {
-      $format = $option;
-    }
-    return $format;
-  }
-
-  /**
-   * Return true if `$key` is a date meta property
-   */
-  static public function is_key_date($key) {
-    return preg_match(
-      '#' . preg_quote(VF_Events::type()) . '_(.*?)_date$#',
-      $key
-    );
-  }
-
-  function __construct() {
-    // Do nothing...
   }
 
   public function initialize() {
@@ -63,11 +36,14 @@ class VF_Events {
     $this->acf = new VF_Events_ACF(__FILE__);
     $this->register = new VF_Events_Register(__FILE__);
     $this->template = new VF_Events_Template(__FILE__);
-
     // Add hooks
     register_activation_hook(
       __FILE__,
       array($this, 'activate')
+    );
+    add_action(
+      'init',
+      array($this, 'init')
     );
     add_action(
       'admin_enqueue_scripts',
@@ -85,6 +61,32 @@ class VF_Events {
   }
 
   /**
+   * Action: `init`
+   */
+  public function init() {
+    // Get events post type vars
+    $post_type_object = get_post_type_object(
+      VF_Events::type()
+    );
+    $type = $post_type_object->name;
+    $slug = $post_type_object->rewrite['slug'];
+    $rules = array();
+    // Add rewrite rule for "Past Events" archive
+    $rules[] = array(
+      $slug . '/past/?$',
+      'index.php?post_type=' . $type . '&order=DESC',
+    );
+    // Add rewrite rule for "Past Events" pagination
+    $rules[] = array(
+      $slug . '/past/page/([0-9]{1,})/?$',
+      'index.php?post_type=' . $type . '&order=DESC&paged=$matches[1]',
+    );
+    foreach ($rules as $rule) {
+      add_rewrite_rule($rule[0], $rule[1], 'top');
+    }
+  }
+
+  /**
    * Action: `admin_enqueue_scripts`
    */
   public function admin_enqueue_scripts() {
@@ -96,6 +98,87 @@ class VF_Events {
       $plugin['Version'],
       'all'
     );
+  }
+
+  // Return date format from ACF options page
+  static public function get_date_format() {
+    $format = 'j F Y';
+    if ( ! function_exists('get_field')) {
+      return $format;
+    }
+    $option = get_field('vf_event_date_format', 'option');
+    if ($option === 'custom') {
+      $option = get_field('vf_event_date_format_custom', 'option');
+    }
+    $option = trim($option);
+    if ( ! empty($option)) {
+      $format = $option;
+    }
+    return $format;
+  }
+
+  /**
+   * Return the page title for archive templates
+   */
+  static public function get_archive_title() {
+    $post_type_object = get_post_type_object(
+      VF_Events::type()
+    );
+    if ( ! function_exists('get_field')) {
+      return $post_type_object->label;
+    }
+    $upcoming_title = get_field('vf_event_upcoming_title', 'options');
+    $upcoming_title = trim($upcoming_title);
+    $title = $upcoming_title;
+    // Get past events title
+    $order = get_query_var('order');
+    if ($order === 'DESC') {
+      $past_title = get_field('vf_event_past_title', 'options');
+      $past_title = trim($past_title);
+      $title = $past_title;
+    }
+    // Use post type label for default title
+    if (empty($title)) {
+      $title = $post_type_object->label;
+    }
+    return $title;
+  }
+
+  /**
+   * Return pagination URL
+   */
+  static public function get_archive_pages() {
+    // Get pagination vars and URLs
+    global $wp_query;
+    $found = intval($wp_query->found_posts);
+    $limit = $wp_query->get(
+      'posts_per_page',
+      get_option('posts_per_page')
+    );
+    $pages = intval(
+      ceil($found / $limit)
+    );
+    $pagination = array(
+      'next'     => false,
+      'previous' => false
+    );
+    if (
+      preg_match(
+        '#href="([^"]*)"#is',
+        get_next_posts_link('', $pages),
+        $matches)
+    ) {
+      $pagination['next'] = trim($matches[1]);
+    }
+    if (
+      preg_match(
+        '#href="([^"]*)"#is',
+        get_previous_posts_link('', $pages),
+        $matches)
+    ) {
+      $pagination['previous'] = trim($matches[1]);
+    }
+    return $pagination;
   }
 
 } // VF_Events

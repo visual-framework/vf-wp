@@ -49,6 +49,16 @@ class VF_Events_ACF {
   }
 
   /**
+   * Return true if `$key` is a date meta property
+   */
+  static public function is_key_date($key) {
+    return preg_match(
+      '#' . preg_quote(VF_Events::type()) . '_(.*?)_date$#',
+      $key
+    );
+  }
+
+  /**
    * Action: `pre_get_posts`
    */
   public function pre_get_posts($query) {
@@ -76,7 +86,7 @@ class VF_Events_ACF {
    */
   private function pre_get_posts_admin($query) {
     $orderby = $query->get('orderby');
-    if ( ! VF_Events::is_key_date($orderby)) {
+    if ( ! VF_Events_ACF::is_key_date($orderby)) {
       return;
     }
     $query->set('meta_key', $orderby);
@@ -161,10 +171,10 @@ class VF_Events_ACF {
       return $value;
     }
     // Format date values
-    if (VF_Events::is_key_date($field['name']) && ! empty($value)) {
+    if (VF_Events_ACF::is_key_date($field['name']) && ! empty($value)) {
       $time = strtotime($value);
       if ($time !== false) {
-        $value = date(VF_Events::date_format(), $time);
+        $value = date(VF_Events::get_date_format(), $time);
       }
     }
     return $value;
