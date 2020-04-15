@@ -42,6 +42,9 @@ class VF_Events_ACF {
       "manage_edit-{$post_type}_sortable_columns",
       array($this, 'sortable_columns')
     );
+    add_action('rest_api_init',
+      array($this, 'rest_api_init')
+    );
     add_filter(
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
@@ -220,6 +223,28 @@ class VF_Events_ACF {
       'vf_event_end_date'   => 'vf_event_end_date',
     ));
     return $columns;
+  }
+
+  /**
+   * Add metadata to REST API
+   */
+  public function rest_api_init() {
+    $fields = array(
+      'vf_event_start_date',
+      'vf_event_end_date',
+      'vf_event_location'
+    );
+    foreach ($fields as $key) {
+      $callback = function($obj) use ($key) {
+        return array(
+          'value'     => get_field($key, $obj['id'], false),
+          'formatted' => get_field($key, $obj['id'], true)
+        );
+      };
+      register_rest_field(VF_Events::type(), $key, array(
+          'get_callback' => $callback
+      ));
+    }
   }
 
   /**
