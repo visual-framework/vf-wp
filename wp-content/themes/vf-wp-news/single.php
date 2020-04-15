@@ -52,9 +52,9 @@ the_post();
 
   <div class="vf-content | vf-u-padding__bottom--xxl">
     <h1><?php the_title(); ?></h1>
-    <h2>
+    <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
-    </h2>
+    </p>
     <?php
 
 if( get_field( 'youtube_url' ) ) {
