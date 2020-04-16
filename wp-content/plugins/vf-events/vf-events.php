@@ -126,6 +126,48 @@ class VF_Events {
   }
 
   /**
+   * Return true if query is related to events
+   */
+  static public function is_query_events($query = null) {
+    if ( ! $query instanceof WP_Query) {
+      global $wp_query;
+      $query = $wp_query;
+    }
+    if (VF_Events::is_query_events_post($query)) {
+      return true;
+    }
+    if (VF_Events::is_query_events_taxonomy($query)) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Return true if query is related to events post type
+   */
+  static public function is_query_events_post($query) {
+    $obj = $query->get_queried_object();
+    return (
+      $obj instanceof WP_Post_Type &&
+      $obj->name === VF_Events::type()
+    );
+  }
+
+  /**
+   * Return true if query is related to an events taxonomy
+   */
+  static public function is_query_events_taxonomy($query) {
+    $obj = $query->get_queried_object();
+    return (
+      $obj instanceof WP_Term &&
+      preg_match(
+        '#^' . preg_quote(VF_Events::type()) . '_#',
+        $obj->taxonomy
+      )
+    );
+  }
+
+  /**
    * Return `WP_Query` for ordered event posts
    */
   static public function get_events($args) {

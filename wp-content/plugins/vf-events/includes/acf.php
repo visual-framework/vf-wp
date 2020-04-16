@@ -70,15 +70,15 @@ class VF_Events_ACF {
    */
   public function pre_get_posts($query) {
     // Ignore non-event queries
-    if ($query->get('post_type') !== VF_Events::type()) {
+    if ( ! VF_Events::is_query_events($query)) {
       return;
     }
-    // Handle order by date metadata in admin table
+    // Handle main admin query
     if (is_admin() && $query->is_main_query()) {
       $this->pre_get_posts_admin($query);
       return;
     }
-    // Handle archive template order (and `VF_Events:get_events()`)
+    // Handle archive template (and `VF_Events:get_events()`)
     if ($query->is_archive()) {
       $this->pre_get_posts_archive($query);
       return;

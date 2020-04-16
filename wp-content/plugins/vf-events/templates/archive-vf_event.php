@@ -111,12 +111,14 @@ get_header();
       _x('View %1$s', 'event archive link', 'vfwp'),
       VF_Events::get_archive_title( ! $is_past)
     );
+    if ( ! is_tax()) {
     ?>
     <p class="vf-text-body">
       <a href="<?php echo esc_url($alt_url); ?>">
         <?php echo esc_html($alt_title); ?>
       </a>
     </p>
+    <?php } ?>
 
   </div>
   <div><!--empty--></div>

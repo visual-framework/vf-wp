@@ -53,13 +53,15 @@ class VF_Events_Template {
    */
   public function template_include($template) {
     $post_type = VF_Events::type();
-    // Choose archive template
-    if (is_post_type_archive($post_type)) {
-      return $this->get_template("archive-{$post_type}.php");
-    }
-    // Choose single template
-    if (is_singular($post_type)) {
-      return $this->get_template("single-{$post_type}.php");
+    if (VF_Events::is_query_events()) {
+      // Choose archive template
+      if (is_archive() || is_tax()) {
+        return $this->get_template("archive-{$post_type}.php");
+      }
+      // Choose single template
+      if (is_singular()) {
+        return $this->get_template("single-{$post_type}.php");
+      }
     }
     return $template;
   }
