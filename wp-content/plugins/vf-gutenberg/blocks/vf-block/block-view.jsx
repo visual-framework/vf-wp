@@ -39,12 +39,11 @@ const VFBlockView = ({render, uniqueId, onHeight}) => {
   useEffect(() => {
     iframe.addEventListener('load', ev => onLoad(ev));
     rootEl.current.appendChild(iframe);
-
     // Cleanup after dismount
     return () => {
       onUnload();
     };
-  });
+  }, [render.hash]);
 
   return <div className="vf-block__view" ref={rootEl} />;
 };
