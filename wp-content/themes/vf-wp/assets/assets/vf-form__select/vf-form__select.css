@@ -47,7 +47,7 @@
 /*!
  * Component: @visual-framework/vf-form__helper
  * Version: 1.0.0
- * Location: components/vf-form/vf-form__helper
+ * Location: components/vf-core-
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -477,7 +477,7 @@
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 1.0.0
- * Location: components/vf-form/vf-form__item
+ * Location: components/vf-core-
  */
 .vf-form__item {
   margin-bottom: 32px;
@@ -490,7 +490,7 @@
 /*!
  * Component: @visual-framework/vf-form__label
  * Version: 1.0.0
- * Location: components/vf-form/vf-form__label
+ * Location: components/vf-core-
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;

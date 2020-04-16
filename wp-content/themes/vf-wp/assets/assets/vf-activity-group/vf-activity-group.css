@@ -177,8 +177,8 @@
 /* stylelint-enable order/order */
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -251,8 +251,8 @@
 
 /*!
  * Component: @visual-framework/vf-activity-list
- * Version: 1.0.0-alpha.8
- * Location: components/vf-activity-list
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-core-
  */
 .vf-activity {
   margin-bottom: 54px;
@@ -321,8 +321,8 @@
 
 /*!
  * Component: @visual-framework/vf-activity-group
- * Version: 1.0.0-alpha.8
- * Location: components/vf-activity-group
+ * Version: 1.0.0-alpha.9
+ * Location: components/vf-core-
  */
 .vf-activity-group {
   background-color: #d0d0ce;

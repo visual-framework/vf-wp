@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -116,7 +116,7 @@
 /*!
  * Component: @visual-framework/vf-badge
  * Version: 1.0.1
- * Location: components/vf-badge
+ * Location: components/vf-core-
  */
 .vf-badge {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -403,7 +403,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__helper
  * Version: 1.0.0
- * Location: components/vf-form/vf-form__helper
+ * Location: components/vf-core-
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -833,7 +833,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 1.0.0
- * Location: components/vf-form/vf-form__item
+ * Location: components/vf-core-
  */
 .vf-form__item {
   margin-bottom: 32px;
@@ -846,7 +846,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__label
  * Version: 1.0.0
- * Location: components/vf-form/vf-form__label
+ * Location: components/vf-core-
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1105,8 +1105,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0-rc.1
- * Location: components/vf-list
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-list {
   list-style-type: none;
@@ -1192,7 +1192,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-blockquote
  * Version: 1.0.2
- * Location: components/vf-blockquote
+ * Location: components/vf-core-
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1227,8 +1227,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0-rc.8
- * Location: components/vf-divider
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-divider {
   background-color: #d8d8d8;
