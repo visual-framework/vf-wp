@@ -192,7 +192,16 @@ class VF_Events {
     }
     // Use post type label for default title
     if (empty($title)) {
-      $title = $post_type_object->label;
+      $title = sprintf(
+        _x('Upcoming %1$s', 'events archive title', 'vfwp'),
+        $post_type_object->label
+      );
+      if ($is_past) {
+        $title = sprintf(
+          _x('Past %1$s', 'events archive title', 'vfwp'),
+          $post_type_object->label
+        );
+      }
     }
     return $title;
   }
