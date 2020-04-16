@@ -561,6 +561,74 @@ class VF_Gutenberg {
     return $attr;
   }
 
+  /**
+   * Callback for `acf_register_block_type` to render within iframe
+   * $args = array($block, $content, $is_preview, $post_id)
+   */
+  static function acf_render_template($args, $template) {
+    if ( ! file_exists($template)) {
+      if ($args[2]) {
+        echo __('Block template missing.', 'vfwp');
+      }
+      return;
+    }
+    // Capture the block template
+    ob_start();
+    // Output head include for preview
+    if ($args[2]) {
+      get_template_part('partials/head');
+    }
+    // Load template
+    load_template($template, true, false);
+    // Output foot include for preview
+    if ($args[2]) {
+      get_template_part('partials/foot');
+    }
+    $html = ob_get_contents();
+    ob_end_clean();
+    // Render block if not admin preview
+    if ($args[2] !== true) {
+      echo $html;
+      return;
+    }
+    $id = "vfwp_{$args[0]['id']}";
+?>
+<script>
+window.<?php echo $id; ?> = function() {
+  const iframe = document.getElementById('<?php echo $id; ?>');
+  iframe.vfActive = true;
+  var doc = iframe.contentWindow.document;
+  doc.body.innerHTML = <?php echo json_encode($html); ?>;
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.innerHTML = `
+window.vfResize = () => {
+  requestAnimationFrame(() => {
+    window.parent.postMessage({
+        id: '<?php echo $id; ?>',
+        height: document.documentElement.scrollHeight
+      }, '*'
+    );
+  });
+};
+window.addEventListener('resize', window.vfResize);
+setTimeout(window.vfResize, 100);
+`;
+  doc.body.appendChild(script);
+};
+</script>
+<div class="vf-block" data-editing="false" data-loading="false">
+  <div class="vf-block__view">
+    <iframe
+      class="vf-block__iframe"
+      id="<?php echo $id; ?>"
+      onload="<?php echo "setTimeout(()=>{{$id}();}, 1);"; ?>"
+      scrolling="no"></iframe>
+  </div>
+</div>
+<?php
+  }
+
 } // VF_Gutenberg
 
 function vf_gutenberg() {

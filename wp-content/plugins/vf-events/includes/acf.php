@@ -168,16 +168,35 @@ class VF_Events_ACF {
       'parent_slug' => 'edit.php?post_type=' . VF_Events::type(),
       'capability'  => 'manage_options'
     ));
+
     // Register "Events List" block
-    global $vf_events;
-    $template = $vf_events->template()->get_template(
-      'blocks/vf-events-list.php'
-    );
+    $callback = function() {
+      global $vf_events;
+      $template = $vf_events->template()->get_template(
+        'blocks/vf-events-list.php'
+      );
+
+      // Use `locate_template` when registering blocks from a theme
+
+      // $template = locate_template(
+      //   'blocks/vf-events-list.php',
+      //   false, false
+      // );
+
+      // Use VF_Gutenberg to render within an iframe
+      if (class_exists('VF_Gutenberg')) {
+        VF_Gutenberg::acf_render_template(func_get_args(), $template);
+      // Or load template
+      } else {
+        load_template($template, true, false);
+      }
+    };
+
     acf_register_block_type(array(
       'name'            => 'vf-events-list',
       'title'           => 'Events List',
       'category'        => 'vf/wp',
-      'render_template' => $template,
+      'render_callback' => $callback,
       'supports'        => array(
         'align'           => false,
         'customClassName' => false
