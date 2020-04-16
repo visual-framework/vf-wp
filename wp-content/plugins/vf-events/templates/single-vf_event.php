@@ -1,4 +1,4 @@
-<?
+<?php
 
 get_header();
 
@@ -56,7 +56,7 @@ $location = get_field(
   <div><!--empty--></div>
 </main>
 <!--/vf-intro-->
-<?
+<?php
 
 get_footer();
 

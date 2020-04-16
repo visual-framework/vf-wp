@@ -1,4 +1,4 @@
-<?
+<?php
 
 get_header();
 
@@ -124,7 +124,7 @@ get_header();
   <div><!--empty--></div>
 </div>
 <!--/embl-grid-->
-<?
+<?php
 
 get_footer();
 
