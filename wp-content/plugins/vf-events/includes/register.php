@@ -23,7 +23,10 @@ class VF_Events_Register {
    * Register the custom post type
    */
   public function init_register() {
-    register_post_type(VF_Events::type(), array(
+
+    $event_type = VF_Events::type();
+
+    register_post_type($event_type, array(
       'labels'              => $this->get_labels(),
       'description'         => __('Events', 'vfwp'),
       'public'              => true,
@@ -49,6 +52,20 @@ class VF_Events_Register {
       'taxonomies'          => array(
         'embl_taxonomy',
         'event_type'
+      ),
+    ));
+
+    register_taxonomy("{$event_type}_type", array($event_type), array(
+      'labels'             => $this->get_type_labels(),
+      'hierarchical'       => true,
+      'show_ui'            => true,
+      'show_admin_column'  => true,
+      'query_var'          => true,
+      'publicly_queryable' => true,
+      'show_in_rest'       => true,
+      'show_in_nav_menus'  => false,
+      'rewrite'             => array(
+        'slug' => 'event-types'
       ),
     ));
   }
@@ -91,52 +108,24 @@ class VF_Events_Register {
     );
   }
 
+  public function get_type_labels() {
+    return array(
+      'name'              => _x( 'Types', 'taxonomy general name', 'vfwp' ),
+      'singular_name'     => _x( 'Type', 'taxonomy singular name', 'vfwp' ),
+      'search_items'      => __( 'Search Types', 'vfwp' ),
+      'all_items'         => __( 'All Types', 'vfwp' ),
+      'parent_item'       => __( 'Parent Type', 'vfwp' ),
+      'parent_item_colon' => __( 'Parent Type:', 'vfwp' ),
+      'edit_item'         => __( 'Edit Type', 'vfwp' ),
+      'update_item'       => __( 'Update Type', 'vfwp' ),
+      'add_new_item'      => __( 'Add New Type', 'vfwp' ),
+      'new_item_name'     => __( 'New Type Name', 'vfwp' ),
+      'menu_name'         => __( 'Types', 'vfwp' ),
+    );
+  }
+
 } // VF_Events_Register
 
-function vf_event_type_labels() {
-  return array(
-    'name'              => _x( 'Types', 'taxonomy general name', 'vfwp' ),
-    'singular_name'     => _x( 'Type', 'taxonomy singular name', 'vfwp' ),
-    'search_items'      => __( 'Search Types', 'vfwp' ),
-    'all_items'         => __( 'All Types', 'vfwp' ),
-    'parent_item'       => __( 'Parent Type', 'vfwp' ),
-    'parent_item_colon' => __( 'Parent Type:', 'vfwp' ),
-    'edit_item'         => __( 'Edit Type', 'vfwp' ),
-    'update_item'       => __( 'Update Type', 'vfwp' ),
-    'add_new_item'      => __( 'Add New Type', 'vfwp' ),
-    'new_item_name'     => __( 'New Type Name', 'vfwp' ),
-    'menu_name'         => __( 'Types', 'vfwp' ),
-  );
-}
-
-/**
- * Action: `init`
- * Register custom taxonomy
- */
-add_action(
-  'init',
-  'vf_events_type__init'
-);
-
-function vf_events_type__init() {
-
-  register_taxonomy('event_type', array('VF_Events'), array(
-    'labels'             => vf_event_type_labels(),
-    'hierarchical'       => true,
-    'show_ui'            => true,
-    'show_admin_column'  => true,
-    'query_var'          => true,
-    'publicly_queryable' => true,
-    'show_in_nav_menus'  => false,
-    'rewrite'            => false,
-    'show_in_rest'       => true,
-  ));
-
-
-}
 endif;
-
-
-
 
 ?>
