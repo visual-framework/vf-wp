@@ -89,11 +89,14 @@ class VF_WP_Groups_Header extends VF_Plugin {
       'vf_hero_theme',
       $this->post()->ID
     );
-    if (empty($theme) || $theme === 'default') {
-      $theme = $field['default_value'];
-    }
     if (is_array($theme)) {
       $theme = $theme[0];
+    }
+    if (empty($theme) || $theme === 'default') {
+      $theme = get_theme_mod(
+        'vf_theme',
+        $field['default_value']
+      );
     }
     return $theme;
   }
@@ -102,18 +105,17 @@ class VF_WP_Groups_Header extends VF_Plugin {
    * Return design level
    */
   public function get_hero_level() {
-    $field = get_field_object(
-      'field_vf_hero_level',
-      $this->post()->ID
-    );
-    $level = get_field(
+    $level = (int) get_field(
       'vf_hero_level',
       $this->post()->ID
     );
-    if ( ! is_numeric($level)) {
-      $level = $field['default_value'];
+    if ($level === 0 || ! is_numeric($level)) {
+      $level = get_theme_mod(
+        'vf_theme_layout',
+        1
+      );
     }
-    return (int) $level;
+    return $level;
   }
 
   /**

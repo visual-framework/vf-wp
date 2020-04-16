@@ -15,8 +15,8 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": 1,
-            "min": 1,
+            "default_value": 0,
+            "min": 0,
             "max": 5,
             "step": "",
             "prepend": "",

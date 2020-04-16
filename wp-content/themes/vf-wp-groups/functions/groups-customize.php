@@ -26,19 +26,27 @@ class VF_Groups_Customize {
       array($this, 'customize_theme_layouts'),
       9, 1
     );
+    /**
+     * @deprecated https://github.com/visual-framework/vf-wp/issues/141
+     *
     add_filter(
       'vf/__experimental__/admin/customize/theme_colors',
       array($this, 'customize_theme_colors'),
       9, 1
     );
+    */
     add_filter(
       'body_class',
       array($this, 'body_class')
     );
+    /**
+     * @deprecated https://github.com/visual-framework/vf-wp/issues/141
+     *
     add_action(
       'wp_head',
       array($this, 'wp_head')
     );
+    */
     // Setup defaults
     $this->themes = VF_Theme::apply_filters(
       'vf/admin/customize/themes',
@@ -48,10 +56,14 @@ class VF_Groups_Customize {
       'vf/admin/customize/theme_layouts',
       array()
     );
+    /**
+     * @deprecated https://github.com/visual-framework/vf-wp/issues/141
+     *
     $this->theme_colors = VF_Theme::apply_filters(
       'vf/admin/customize/theme_colors',
       array()
     );
+    */
   }
 
   /**
@@ -73,11 +85,11 @@ class VF_Groups_Customize {
    */
   public function customize_theme_layouts($layouts) {
     $layouts = array_merge($layouts, array(
-      'easy'    => __('1', 'vfwp'),
-      'normal'  => __('2', 'vfwp'),
-      'medium'  => __('3', 'vfwp'),
-      'hard'    => __('4', 'vfwp'),
-      'extreme' => __('5', 'vfwp'),
+      'very-easy' => __('Very Easy', 'vfwp'),
+      'easy'      => __('Easy', 'vfwp'),
+      'normal'    => __('Normal', 'vfwp'),
+      'hard'      => __('Hard', 'vfwp'),
+      'extreme'   => __('Extreme', 'vfwp'),
     ));
     return array_unique($layouts);
   }
@@ -85,7 +97,9 @@ class VF_Groups_Customize {
   /**
    * Filter: `vf/admin/customize/theme_colors`
    * Add default color list
+   * @deprecated https://github.com/visual-framework/vf-wp/issues/141
    */
+  /*
   public function customize_theme_colors($colors) {
     $colors = array_merge($colors, array(
       '009f4d' => __('EMBL Green', 'vfwp'),
@@ -93,6 +107,7 @@ class VF_Groups_Customize {
     ));
     return array_unique($colors);
   }
+  */
 
   /**
    * Admin Customize
@@ -123,6 +138,9 @@ class VF_Groups_Customize {
       'description' => __('Used for general design variations.', 'vfwp'),
       'choices'     => $this->theme_layouts,
     ));
+    /**
+     * @deprecated https://github.com/visual-framework/vf-wp/issues/141
+     *
     // Theme color
     $wp_customize->add_setting('vf_theme_color', array(
       'default'           => array_keys($this->theme_colors)[0],
@@ -135,6 +153,7 @@ class VF_Groups_Customize {
       'description' => __('Used for general design accents.', 'vfwp'),
       'choices'     => $this->theme_colors,
     ));
+    */
   }
 
   /**
@@ -156,7 +175,9 @@ class VF_Groups_Customize {
 
   /**
    * Output custom inline <head> stuff
+   * @deprecated https://github.com/visual-framework/vf-wp/issues/141
    */
+  /*
   public function wp_head() {
     $theme_color = get_theme_mod(
       'vf_theme_color',
@@ -164,13 +185,13 @@ class VF_Groups_Customize {
     );
   ?>
 <style>
-/*.vf-wp-theme .vf-masthead,*/
 .vf-wp-theme .vf-box--secondary {
   --vf-masthead__color--background: #<?php echo $theme_color; ?>;
 }
 </style>
   <?php
   }
+  */
 
   /**
    * Admin Customize: `sanitize_callback` for select values

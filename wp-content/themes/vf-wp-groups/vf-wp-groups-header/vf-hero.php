@@ -15,11 +15,14 @@ $levels = array(
   'hard',
   'extreme',
 );
+if (is_numeric($level)) {
+  $level = $levels[intval($level) - 1];
+}
 
 // Setup root HTML classes and attributes
 $classes = array('vf-hero');
 $classes[] = 'vf-hero--inlay';
-$classes[] = "vf-hero--{$levels[$level - 1]}";
+$classes[] = "vf-hero--{$level}";
 $classes[] = " | vf-hero-theme--{$theme}";
 
 $attr = array(
