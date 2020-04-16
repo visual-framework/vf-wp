@@ -16,9 +16,6 @@ require_once($path);
 
 class VF_WP_Groups_Header extends VF_Plugin {
 
-  // Temporary - TODO: remove once theme CSS includes component
-  const STYLESHEET = '/vf-wp-groups-header/vf-wp-groups-header.css';
-
   const MAX_WIDTH = 1224;
   const MAX_HEIGHT = 348;
 
@@ -65,29 +62,6 @@ class VF_WP_Groups_Header extends VF_Plugin {
       'vf_wp_groups_header/hero_link',
       array($this, 'filter_hero_link'),
       9, 1
-    );
-    // Temporary - TODO: remove once theme CSS includes component
-    if (defined('self::STYLESHEET')) {
-      add_action(
-        'wp_enqueue_scripts',
-        array($this, 'wp_enqueue_scripts')
-      );
-    }
-  }
-
-  /**
-   * Temporary - TODO: remove once theme CSS includes component
-   */
-  public function wp_enqueue_scripts() {
-    $dir = untrailingslashit(
-      get_stylesheet_directory_uri()
-    );
-    wp_enqueue_style(
-      'vf-hero',
-      $dir . self::STYLESHEET,
-      array('vfwp'),
-      '0.0.1',
-      'all'
     );
   }
 
