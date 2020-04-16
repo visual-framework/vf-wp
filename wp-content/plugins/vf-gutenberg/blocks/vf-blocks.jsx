@@ -57,3 +57,18 @@ for (const [name, plugin] of Object.entries(plugins)) {
   });
   registerBlockType(name, settings);
 }
+
+// Handle iframe preview resizing globally
+// TODO: remove necessity from `useVFIFrame`
+window.addEventListener('message', ({data}) => {
+  if (data !== Object(data) || ! /^vfwp_/.test(data.id)) {
+    return;
+  }
+  const iframe = document.getElementById(data.id);
+  if ( ! iframe || ! iframe.vfActive) {
+    return;
+  }
+  window.requestAnimationFrame(() => {
+    iframe.style.height = `${data.height}px`;
+  });
+});

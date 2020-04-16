@@ -3,13 +3,15 @@
  * Adjust iframe height automatically whilst mounted.
  */
 const useVFIFrame = (iframe, iframeHTML, onHeight) => {
+  // TOTO: handle by global in `vf-blocks.jsx` - is onHeight necessary?
   // update iframe height from `postMessage` event
   const onMessage = ({data}) => {
     if (data !== Object(data) || data.id !== iframe.id) {
       return;
     }
     window.requestAnimationFrame(() => {
-      iframe.style.height = `${data.height}px`;
+      // TODO: now handled by global
+      // iframe.style.height = `${data.height}px`;
       onHeight(data.height);
     });
   };
@@ -31,8 +33,8 @@ const useVFIFrame = (iframe, iframeHTML, onHeight) => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.innerHTML = `
-      window.vfResize = function() {
-        requestAnimationFrame(function() {
+      window.vfResize = () => {
+        requestAnimationFrame(() => {
           window.parent.postMessage({
               id: '${iframe.id}',
               height: document.documentElement.scrollHeight

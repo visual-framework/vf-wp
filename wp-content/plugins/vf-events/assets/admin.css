@@ -1,0 +1,24 @@
+/**
+ * VF-WP Events plugin admin stylesheet
+ */
+
+/* "Date Format" field - match `description` style */
+.acf-field[data-name="vf_event_date_format"] label em {
+  color: #666;
+  font-style: italic;
+}
+
+/* "Date Format (custom)" field - restrict width */
+.acf-field[data-name="vf_event_date_format_custom"] .acf-input-wrap {
+  max-width: 100px;
+}
+
+/* "Upcoming/Past Events Title" field - restrict width */
+.acf-field[data-name^="vf_event_"][data-name$="_title"] .acf-input-wrap {
+  max-width: 300px;
+}
+
+/* "Events per page" field - restrict width */
+.acf-field[data-name="vf_events_per_page"] .acf-input-wrap {
+  max-width: 100px;
+}
