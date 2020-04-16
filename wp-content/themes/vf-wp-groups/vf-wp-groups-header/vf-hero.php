@@ -9,9 +9,9 @@ $theme = $vf_plugin->get_hero_theme();
 $level = $vf_plugin->get_hero_level();
 
 $levels = array(
+  'very-easy',
   'easy',
   'normal',
-  'medium',
   'hard',
   'extreme',
 );
