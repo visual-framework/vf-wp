@@ -30,6 +30,10 @@ class VF_Events_ACF {
       10, 3
     );
     add_filter(
+      'acf/prepare_field/name=vf_event_archive',
+      array($this, 'acf_prepare_field_vf_event_archive')
+    );
+    add_filter(
       "manage_{$post_type}_posts_columns",
       array($this, 'posts_columns')
     );
@@ -197,6 +201,15 @@ class VF_Events_ACF {
       }
     }
     return $value;
+  }
+
+  /**
+   * Filter the `vf_event_archive` field to update archive titles
+   */
+  public function acf_prepare_field_vf_event_archive($field) {
+    $field['choices']['upcoming'] = VF_Events::get_archive_title(false);
+    $field['choices']['past'] = VF_Events::get_archive_title(true);
+    return $field;
   }
 
   /**
