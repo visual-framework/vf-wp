@@ -147,10 +147,19 @@ class VF_Events {
    */
   static public function is_query_events_post($query) {
     $obj = $query->get_queried_object();
-    return (
+    if (
+      $obj instanceof WP_Post &&
+      $obj->post_type === VF_Events::type()
+    ) {
+      return true;
+    }
+    if (
       $obj instanceof WP_Post_Type &&
       $obj->name === VF_Events::type()
-    );
+    ) {
+      return true;
+    }
+    return false;
   }
 
   /**
