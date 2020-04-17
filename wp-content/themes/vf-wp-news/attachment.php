@@ -1,8 +1,8 @@
 <?php
 
-get_template_part('partials/header');
-$attachment_id = wp_get_attachment_url();
+get_header();
 
+$attachment_id = wp_get_attachment_url();
 
 ?>
 <main
@@ -16,7 +16,7 @@ $attachment_id = wp_get_attachment_url();
 
     <?php echo wp_get_attachment_image( get_the_ID(), 'medium_large' ); ?>
     <figcaption class="vf-figure__caption">
-    <?php the_excerpt(); ?>      
+    <?php the_excerpt(); ?>
     </figcaption>
 
     <p>Download:</p>
@@ -31,7 +31,7 @@ $attachment_id = wp_get_attachment_url();
 			}
 
 			echo implode( ' | ', $images );
-		?> 
+		?>
 </div>
 
 </main>
@@ -39,8 +39,4 @@ $attachment_id = wp_get_attachment_url();
 
 <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 </section>
-<?php
-
-get_template_part('partials/footer');
-
-?>
+<?php get_footer(); ?>

@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 $category_science = get_cat_ID( 'science' );
 $science_link = get_category_link( $category_science );
@@ -47,7 +47,7 @@ if (is_search()) {
 
   <section class="vf-inlay__content | vf-u-background-color-ui--grey | vf-u-fullbleed | hero-container">
     <main class="vf-inlay__content--main | vf-content | vf-u-margin__bottom--md |  hero-left-column">
-      <?php 
+      <?php
 			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();
 while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post();
@@ -61,7 +61,7 @@ $ids[] = get_the_ID(); ?>
       <?php
 $cardsPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 2, 'meta_key' => 'featured',
 	'meta_value' => '1' ));
-while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post(); 
+while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 				$ids[] = get_the_ID(); ?>
       <?php include(locate_template('partials/vf-card--article-no-excerpt.php', false, false)); ?>
       <?php endwhile; ?>
@@ -82,7 +82,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
           fill="" fill-rule="nonzero" /></svg></a></div>
 
   <div class="vf-section-content | vf-grid vf-grid__col-3">
-    <?php 
+    <?php
 		$latestPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 6, 'category__not_in' => 6));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
@@ -109,7 +109,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
           fill="" fill-rule="nonzero" /></svg></a></div>
 
   <div class="vf-section-content | vf-grid vf-grid__col-3">
-    <?php 
+    <?php
 		$latestPostLoop = new WP_Query(array('category_name' => 'science','post__not_in' => $ids, 'posts_per_page' => 3));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
@@ -134,7 +134,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
           fill="" fill-rule="nonzero" /></svg></a></div>
 
   <div class="vf-section-content | vf-grid vf-grid__col-3">
-    <?php 
+    <?php
 		$latestPostLoop = new WP_Query(array('category_name' => 'lab-matters','post__not_in' => $ids, 'posts_per_page' => 3));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
@@ -160,7 +160,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
           fill="" fill-rule="nonzero" /></svg></a></div>
 
   <div class="vf-section-content | vf-grid vf-grid__col-3">
-    <?php 
+    <?php
 		$latestPostLoop = new WP_Query(array('category_name' => 'alumni','post__not_in' => $ids, 'posts_per_page' => 3));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
@@ -186,7 +186,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
           fill="" fill-rule="nonzero" /></svg></a></div>
 
   <div class="vf-section-content | vf-grid vf-grid__col-3">
-    <?php 
+    <?php
 		$latestPostLoop = new WP_Query(array('category_name' => 'events','post__not_in' => $ids, 'posts_per_page' => 3));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
@@ -208,4 +208,4 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
 </section>
 
-<?php get_template_part('partials/footer'); ?>
+<?php get_footer(); ?>

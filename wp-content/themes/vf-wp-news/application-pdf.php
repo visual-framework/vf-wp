@@ -1,6 +1,7 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
+
 $attachment_id = wp_get_attachment_url();
 
 ?>
@@ -22,6 +23,6 @@ $attachment_id = wp_get_attachment_url();
 
 <?php
 
-get_template_part('partials/footer');
+get_footer();
 
 ?>

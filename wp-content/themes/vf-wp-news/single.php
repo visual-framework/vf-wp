@@ -6,7 +6,7 @@ $user_id = get_the_author_meta('ID');
 $tags = get_the_tags($post->ID);
 
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -34,11 +34,11 @@ the_post();
       <div class="vf-links vf-links--tight vf-links__list--s">
         <p class="vf-links__heading">In this article</p>
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
-        
-        <?php while( have_rows('in_this_article') ): the_row(); 
+
+        <?php while( have_rows('in_this_article') ): the_row();
         $anchor = get_sub_field('anchor');
         $heading = get_sub_field('heading_description');?>
-      
+
          <li class="vf-list__item">
           <a href="<?php echo esc_url( $anchor ); ?>" class="vf-list__link"><?php echo esc_html($heading) ?></a>
          </li>
@@ -61,15 +61,15 @@ if( get_field( 'youtube_url' ) ) {
     $videoid = get_field( 'youtube_url' );
     $caption = get_field('video_caption');
     echo '<div class="vf-u-margin__bottom--xs embed-container embed-padding-main"><iframe src="' . $videoid . '" frameborder="0" allowfullscreen class="vf-card__image"></iframe></div><figcaption class="vf-figure__caption">' . $caption . '</figcaption>';
-} 
+}
 
-else if ( get_field( 'mp4_url' ) ) { 
+else if ( get_field( 'mp4_url' ) ) {
   $mp4url = get_field( 'mp4_url' );
   $caption = get_field('video_caption');
   echo '<div><video muted="muted" class="vf-card__image" controls><source src="' . $mp4url . '" type="video/mp4"></video></div><figcaption class="vf-figure__caption">' . $caption . '</figcaption>';
 }
 
-else { 
+else {
       $show = get_post_meta( get_the_ID(), 'show_featured_image', true );
        if ( $show == '1' ): //not displaying
       else:?>
@@ -102,8 +102,8 @@ else {
         <h4 class="vf-text vf-text-heading--5">Source articles:</h4>
       </div>
       <div>
-        <?php while( have_rows('article_sources') ): the_row(); 
-			
+        <?php while( have_rows('article_sources') ): the_row();
+
       $source = get_sub_field('source_link_url');
       $description = get_sub_field('source_description', false, false);?>
         <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
@@ -119,8 +119,8 @@ else {
         <h4 class="vf-text vf-text-heading--5">Related links:</h4>
       </div>
       <div>
-        <?php while( have_rows('related_links') ): the_row(); 
-			
+        <?php while( have_rows('related_links') ): the_row();
+
       $source = get_sub_field('link_url');
       $description = get_sub_field('link_description');?>
         <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
@@ -152,15 +152,15 @@ if ($tags) {
       <div class="vf-grid vf-grid__col-3">
         <?php
           $args = array(
-            'posts_per_page' => 3, 
-            'post__not_in'   => array( get_the_ID() ), 
-            'no_found_rows'  => true, 
+            'posts_per_page' => 3,
+            'post__not_in'   => array( get_the_ID() ),
+            'no_found_rows'  => true,
           );
 
-          $cats = wp_get_post_terms( get_the_ID(), 'category' ); 
-          $cats_ids = array();  
+          $cats = wp_get_post_terms( get_the_ID(), 'category' );
+          $cats_ids = array();
           foreach( $cats as $related_cat ) {
-            $cats_ids[] = $related_cat->term_id; 
+            $cats_ids[] = $related_cat->term_id;
           }
           if ( ! empty( $cats_ids ) ) {
             $args['category__in'] = $cats_ids;
@@ -185,4 +185,4 @@ if ($tags) {
 
 </section>
 
-<?php get_template_part('partials/footer');?>
+<?php get_footer(); ?>

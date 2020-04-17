@@ -2,7 +2,7 @@
 /*
 Template Name: Archives
 */
-get_template_part('partials/header');
+get_header();
 
 the_post();
 ?>
@@ -18,7 +18,7 @@ the_post();
         <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array(
     'posts_per_page' => 10,
-    'paged' => $page,); 
+    'paged' => $page,);
 query_posts($args);?>
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
         <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
@@ -38,4 +38,4 @@ query_posts($args);?>
 
 </section>
 
-<?php get_template_part('partials/footer');?>
+<?php get_footer(); ?>

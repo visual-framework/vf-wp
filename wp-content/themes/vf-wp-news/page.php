@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 the_post();
 
@@ -17,8 +17,4 @@ the_post();
     </main>
   </div>
 </section>
-<?php
-
-get_template_part('partials/footer');
-
-?>
+<?php get_footer(); ?>

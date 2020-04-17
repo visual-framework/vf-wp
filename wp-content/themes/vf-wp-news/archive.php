@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 $title = get_the_title(get_option('page_for_posts'));
 
@@ -34,7 +34,7 @@ if (is_search()) {
           <?php wp_title(''); ?></h3>
       </div>
       <div class="vf-grid vf-grid__col-2">
-        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
 if ( $post->ID == $do_not_duplicate ) continue; ?>
         <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
         <?php endwhile; endif; ?>
@@ -53,4 +53,4 @@ if ( $post->ID == $do_not_duplicate ) continue; ?>
 
 </section>
 
-<?php get_template_part('partials/footer');?>
+<?php get_footer(); ?>
