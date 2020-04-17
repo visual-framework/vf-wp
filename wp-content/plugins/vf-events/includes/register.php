@@ -62,7 +62,7 @@ class VF_Events_Register {
       'show_admin_column'  => true,
       'query_var'          => true,
       'publicly_queryable' => true,
-      'show_in_rest'       => true,
+      'show_in_rest'       => false,
       'show_in_nav_menus'  => false,
       'rewrite'             => array(
         'slug' => 'event-types'
@@ -110,7 +110,7 @@ class VF_Events_Register {
 
   public function get_type_labels() {
     return array(
-      'name'              => _x( 'Types', 'taxonomy general name', 'vfwp' ),
+      'name'              => _x( 'Type', 'taxonomy general name', 'vfwp' ),
       'singular_name'     => _x( 'Type', 'taxonomy singular name', 'vfwp' ),
       'search_items'      => __( 'Search Types', 'vfwp' ),
       'all_items'         => __( 'All Types', 'vfwp' ),
@@ -120,7 +120,7 @@ class VF_Events_Register {
       'update_item'       => __( 'Update Type', 'vfwp' ),
       'add_new_item'      => __( 'Add New Type', 'vfwp' ),
       'new_item_name'     => __( 'New Type Name', 'vfwp' ),
-      'menu_name'         => __( 'Types', 'vfwp' ),
+      'menu_name'         => __( 'Type', 'vfwp' ),
     );
   }
 

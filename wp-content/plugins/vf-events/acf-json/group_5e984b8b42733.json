@@ -1,7 +1,67 @@
 {
     "key": "group_5e984b8b42733",
-    "title": "Event information",
+    "title": "Event Information",
     "fields": [
+        {
+            "key": "field_5e9868ea11ada",
+            "label": "Event type",
+            "name": "vf_event_event_type",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "vf_event_type",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_5e958b24aa2e0",
+            "label": "Location",
+            "name": "vf_event_location",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5e9850b053db2",
+            "label": "Venue",
+            "name": "vf_event_venue",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
         {
             "key": "field_5e984617574e1",
             "label": "Summary",
@@ -23,7 +83,7 @@
         },
         {
             "key": "field_5e984a8536343",
-            "label": "Additional Info",
+            "label": "Additional Information",
             "name": "vf_event_additional_info",
             "type": "wysiwyg",
             "instructions": "",
@@ -85,25 +145,6 @@
             "save_other_choice": 0
         },
         {
-            "key": "field_5e9850b053db2",
-            "label": "Venue",
-            "name": "vf_event_venue",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_5e9850ee53db3",
             "label": "Unique Identifier",
             "name": "vf_event_unique_identifier",
@@ -121,28 +162,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_5e9868ea11ada",
-            "label": "Event type",
-            "name": "vf_event_event_type",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "taxonomy": "event_type",
-            "field_type": "select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "id",
-            "multiple": 0
         }
     ],
     "location": [

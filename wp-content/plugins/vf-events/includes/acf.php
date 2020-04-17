@@ -280,6 +280,21 @@ class VF_Events_ACF {
     $fields = array(
       'vf_event_start_date',
       'vf_event_end_date',
+      'vf_event_submission_opening',
+      'vf_event_submission_closing',
+      'vf_event_registration_opening',
+      'vf_event_registration_closing',
+      'vf_event_summary',
+      'vf_event_additional_info',
+      'vf_event_registration_fee',
+      'vf_event_canceled',
+      'vf_event_venue',
+      'vf_event_unique_identifier',
+      'vf_event_event_type',
+      'vf_event_more_information_link',
+      'vf_event_registration_link',
+      'vf_event_start_time',
+      'vf_event_end_time',
       'vf_event_location'
     );
     foreach ($fields as $key) {
