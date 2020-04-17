@@ -22,7 +22,7 @@ the_post();
             <a class="vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
         </p>
         <a class="vf-author--avatar__link | vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
-            <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, $default, $alt, array('class' => 'vf-author--avatar')); ?>
+            <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array('class' => 'vf-author--avatar')); ?>
         </a>
     </div>
     <div class="vf-meta__details">
