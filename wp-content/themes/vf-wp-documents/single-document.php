@@ -37,15 +37,17 @@ get_template_part('partials/vf-intro');
           <p class="vf-box__text">Last update: <?php the_field('last_update'); ?></p>
           <p class="vf-box__text">File type: <?php the_field('file_type'); ?></p>
           <p class="vf-box__text">Document category: <?php
-		 foreach ( $categories as $category ) :
+    if (is_array($categories)) {
+		  foreach ( $categories as $category ) {
 		?> <a href="<?php echo esc_url( get_term_link( $category->term_id ) ); ?>"
               title="<?php echo esc_attr( $category->name ); ?>"><?php echo esc_html( $category->name); ?></a>
-            <?php endforeach; ?> </p>
+            <?php } } ?> </p>
           <p class="vf-box__text">Document type: <?php
-		 foreach ( $dtypes as $dtype ) :
+    if (is_array($dtypes)) {
+		  foreach ( $dtypes as $dtype ) {
 		?> <a href="<?php echo esc_url( get_term_link( $dtype->term_id ) ); ?>"
               title="<?php echo esc_attr( $dtype->name ); ?>"><?php echo esc_html( $dtype->name); ?></a>
-            <?php endforeach; ?> </p>
+            <?php } } ?> </p>
           <p class="vf-box__text">Available in languages: <?php if( have_rows('file_upload') ): ?>
 
             <?php while( have_rows('file_upload') ): the_row();

@@ -26,6 +26,7 @@ $types = get_the_terms( $post->ID , 'document_types' );
 
 	<p class="vf-summary__meta">Document type:
 <?php
+  if (is_array($types)) {
 		 foreach ( $types as $type ) :
 		?> <a href="<?php echo esc_url( get_term_link( $type->term_id ) ); ?>" title="<?php echo esc_attr( $type->name ); ?>"><?php echo esc_html( $type->name); ?></a>         <?php endforeach; ?>
        </p>
@@ -42,7 +43,7 @@ $types = get_the_terms( $post->ID , 'document_types' );
 
         <a href="<?php echo $file['url']; ?>"><?php echo esc_html($language) ?></a>&nbsp;
         <?php endwhile; ?>
-    <?php endif; ?>
+    <?php endif; } ?>
 	</p>
 	</article>
 
