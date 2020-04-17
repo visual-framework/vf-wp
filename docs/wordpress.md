@@ -73,22 +73,41 @@ To setup the Visual Framework theme:
 
 **Note: the `vf-wp` plugin is required for all other VF plugins.**
 
-In `wp_options` table add (autoload = `no`):
+### Configure the default template
 
-| option_name | option_value |
-| ----------- | ------------ |
-| options_vf_containers | 5 |
-| \_options_vf_containers | field_vf_containers |
-| options_vf_containers_0_vf_container_name | vf_global_header |
-| \_options_vf_containers_0_vf_container_name | field_vf_container_name |
-| options_vf_containers_1_vf_container_name | vf_breadcrumbs |
-| \_options_vf_containers_1_vf_container_name | field_vf_container_name |
-| options_vf_containers_2_vf_container_name | vf_page_template |
-| \_options_vf_containers_2_vf_container_name | field_vf_container_name |
-| options_vf_containers_3_vf_container_name | vf_embl_news |
-| \_options_vf_containers_3_vf_container_name | field_vf_container_name |
-| options_vf_containers_4_vf_container_name | vf_global_footer |
-| \_options_vf_containers_4_vf_container_name | field_vf_container_name |
+The theme allows for dynamic page templates. These are configured as posts with the type `vf_template`. There should be at least one `default` post of this type which is usually inserted when the `vf-wp` plugin is activated.
+
+After the theme and plugins are activated ensure this post exists:
+
+| post_type | post_name | post_content |
+| --------- | --------- | ------------ |
+| vf_template | default | see examples below... |
+
+The `post_content` for basic EMBL sites:
+
+```html
+<!-- wp:vf/container-global-header /-->
+
+<!-- wp:vf/container-page-template /-->
+
+<!-- wp:vf/container-global-footer /-->
+```
+
+or for Group sites:
+
+```html
+<!-- wp:vf/container-ebi-global-header /-->
+
+<!-- wp:vf/container-breadcrumbs /-->
+
+<!-- wp:vf/container-wp-groups-header /-->
+
+<!-- wp:vf/container-page-template /-->
+
+<!-- wp:vf/container-embl-news /-->
+
+<!-- wp:vf/container-ebi-global-footer /-->
+```
 
 ### Content setup
 

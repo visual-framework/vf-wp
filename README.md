@@ -14,6 +14,7 @@ the brand-specific "VF 2.0 for the EMBL Design Language".
 
 * [EMBL Taxonomy](/wp-content/plugins/embl-taxonomy/README.md)
 * [VF Gutenberg](/wp-content/plugins/vf-gutenberg/README.md)
+* [Events](/wp-content/plugins/vf-events/README.md)
 * [Containers](/docs/containers.md)
 * [Blocks](/docs/blocks.md)
 
