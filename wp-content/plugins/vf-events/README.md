@@ -27,6 +27,8 @@ Event meta is included in the WordPress REST API:
 }
 ```
 
+For all meta properties see the [JSON config files](/wp-content/plugins/vf-events/acf-json).
+
 ## Archives
 
 The default events archive displays upcoming events ordered nearest to farthest in the future. The archive URL is:
