@@ -50,12 +50,15 @@ if ( $query->have_posts() ) {
 
 wp_reset_postdata();
 
+// $archive = get_post_type_archive_link('document');
+$archive = home_url('/?post_type=document');
+
 ?>
 
     </div>
     <!--/vf-grid-->
 
-    <a href="<?php echo get_post_type_archive_link('document'); ?>" class="vf-button vf-button--primary vf-button--sm">
+    <a href="<?php echo esc_url($archive); ?>" class="vf-button vf-button--primary vf-button--sm">
       <?php esc_html_e('View all'); ?>
     </a>
 

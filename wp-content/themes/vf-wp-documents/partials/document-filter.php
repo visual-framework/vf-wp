@@ -62,8 +62,11 @@ if (preg_match_all(
   }
 }
 
+// $archive = get_post_type_archive_link('document');
+$archive = home_url('/?post_type=document');
+
 ?>
-<form action="<?php echo get_post_type_archive_link('document'); ?>" method="get">
+<form action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
     <input type="hidden" name="post_type" value="document">

@@ -144,7 +144,10 @@ function vf_wp_documents__init() {
     'capability_type'     => 'page',
     'supports'            => array('title', 'editor', 'excerpt'),
     'has_archive'         => true,
-    'rewrite'             => true,
+    'rewrite'             => array(
+      'slug'       => '/',
+      'with_front' => false
+    ),
     'query_var'           => true,
     'can_export'          => true,
     'delete_with_user'    => false,
