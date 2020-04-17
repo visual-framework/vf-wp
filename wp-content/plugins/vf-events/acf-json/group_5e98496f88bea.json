@@ -1,0 +1,57 @@
+{
+    "key": "group_5e98496f88bea",
+    "title": "Event Abstract Submission Dates",
+    "fields": [
+        {
+            "key": "field_5e98496f8b8e9",
+            "label": "Opening date",
+            "name": "vf_event_submission_opening",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "Ymd",
+            "first_day": 1
+        },
+        {
+            "key": "field_5e98496f8b97a",
+            "label": "Closing date",
+            "name": "vf_event_submission_closing",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "Ymd",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "vf_event"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "`vf_event` post type"
+}

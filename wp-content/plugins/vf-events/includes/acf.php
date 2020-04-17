@@ -70,15 +70,15 @@ class VF_Events_ACF {
    */
   public function pre_get_posts($query) {
     // Ignore non-event queries
-    if ($query->get('post_type') !== VF_Events::type()) {
+    if ( ! VF_Events::is_query_events($query)) {
       return;
     }
-    // Handle order by date metadata in admin table
+    // Handle main admin query
     if (is_admin() && $query->is_main_query()) {
       $this->pre_get_posts_admin($query);
       return;
     }
-    // Handle archive template order (and `VF_Events:get_events()`)
+    // Handle archive template (and `VF_Events:get_events()`)
     if ($query->is_archive()) {
       $this->pre_get_posts_archive($query);
       return;
@@ -280,6 +280,21 @@ class VF_Events_ACF {
     $fields = array(
       'vf_event_start_date',
       'vf_event_end_date',
+      'vf_event_submission_opening',
+      'vf_event_submission_closing',
+      'vf_event_registration_opening',
+      'vf_event_registration_closing',
+      'vf_event_summary',
+      'vf_event_additional_info',
+      'vf_event_registration_fee',
+      'vf_event_canceled',
+      'vf_event_venue',
+      'vf_event_unique_identifier',
+      'vf_event_event_type',
+      'vf_event_more_information_link',
+      'vf_event_registration_link',
+      'vf_event_start_time',
+      'vf_event_end_time',
       'vf_event_location'
     );
     foreach ($fields as $key) {
