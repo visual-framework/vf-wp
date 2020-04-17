@@ -179,6 +179,10 @@ class VF_Theme_Content {
         'vf/theme/content/is_block_wrapped',
         false, $block_name, $blocks, $i
       );
+      $is_wrap = (bool) VF_Theme::apply_filters(
+        "vf/theme/content/is_block_wrapped/name={$block_name}",
+        $is_wrap, $blocks, $i
+      );
       $before  = '';
       $prefix = '';
       $suffix = '';

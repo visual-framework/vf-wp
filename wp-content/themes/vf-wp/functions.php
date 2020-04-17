@@ -7,6 +7,9 @@ require_once('functions/walker-comment.php');
 require_once('functions/admin.php');
 require_once('functions/theme.php');
 
+// Require container classes
+require_once("blocks/vfwp-latest-posts/index.php");
+
 global $vf_admin;
 if ( ! isset($vf_admin)) {
   $vf_admin = new VF_Admin();

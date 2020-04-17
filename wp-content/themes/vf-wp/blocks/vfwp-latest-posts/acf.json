@@ -1,0 +1,62 @@
+{
+  "key": "group_5e9967ec34eec",
+  "title": "Latest Posts",
+  "fields": [
+    {
+      "key": "field_5e99679631cbd",
+      "label": "Heading (singular)",
+      "name": "heading_singular",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5e9967a331cbe",
+      "label": "Heading (plural)",
+      "name": "heading_plural",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/vfwp-latest-posts"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "seamless",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": 1,
+  "description": "`acf/vfwp-latest-posts` block",
+  "modified": 1587111791
+}
