@@ -30,7 +30,8 @@ gulp.task(
     'vf-wp-clean:assets',
     'vf-css:generate-component-css',
     gulp.parallel('vf-gutenberg', 'vf-css', 'vf-scripts'),
-    'vf-component-assets'
+    'vf-component-assets',
+    'vf-css:production'
   )
 );
 
