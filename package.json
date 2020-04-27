@@ -47,7 +47,7 @@
     "@babel/preset-env": "7.9.5",
     "@babel/preset-react": "7.9.4",
     "@visual-framework/ebi-vf1-integration": "1.0.1",
-    "@visual-framework/embl-breadcrumbs-lookup": "1.0.0-beta.5",
+    "@visual-framework/embl-breadcrumbs-lookup": "1.0.0-rc.0",
     "@visual-framework/embl-conditional-edit": "1.0.2",
     "@visual-framework/embl-content-hub-loader": "1.0.4",
     "@visual-framework/embl-content-meta-properties": "1.0.1",
