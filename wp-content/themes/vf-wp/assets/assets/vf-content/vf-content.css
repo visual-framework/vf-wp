@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-heading
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -116,7 +116,7 @@
 /*!
  * Component: @visual-framework/vf-badge
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-badge
  */
 .vf-badge {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -397,13 +397,13 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__core
- * Version: 1.0.2
+ * Version: 1.0.3
  * Location: components/vf-form/vf-form__core
  */
 /*!
  * Component: @visual-framework/vf-form__helper
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__helper
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -690,11 +690,17 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__checkbox
- * Version: 1.0.1
+ * Version: 1.0.2
  * Location: components/vf-form/vf-form__checkbox
  */
 .vf-form__item.vf-form__item--checkbox {
   margin-bottom: 16px;
+}
+
+.vf-form__item--checkbox .vf-form__checkbox + .vf-form__label::before {
+  border-color: #f3f3f3;
+  margin-right: 8px;
+  top: 8px;
 }
 
 .vf-form__checkbox {
@@ -711,14 +717,13 @@ a.vf-badge--primary:hover {
 
 .vf-form__checkbox + .vf-form__label::before {
   background: #ffffff;
-  border: 3px solid #f3f3f3;
+  border: 3px solid;
   content: '';
   display: inline-block;
-  height: 16px;
-  margin-right: 8px;
+  height: 24px;
   position: relative;
   top: 3px;
-  width: 16px;
+  width: 24px;
 }
 
 .vf-form__checkbox:hover + .vf-form__label:before {
@@ -730,7 +735,10 @@ a.vf-badge--primary:hover {
 }
 
 .vf-form__checkbox:checked + .vf-form__label:before {
-  background: #3b6fb6;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctitle%3Echeck%3C/title%3E%3Cpath d='M23.146,5.4,20.354,2.6a.5.5,0,0,0-.708,0L7.854,14.4a.5.5,0,0,1-.708,0L4.354,11.6a.5.5,0,0,0-.708,0L.854,14.4a.5.5,0,0,0,0,.707L7.146,21.4a.5.5,0,0,0,.708,0L23.146,6.1A.5.5,0,0,0,23.146,5.4Z' fill='%233b6fb6'/%3E%3C/svg%3E");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 80%;
   border-color: #3b6fb6;
 }
 
@@ -833,7 +841,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__item
  */
 .vf-form__item {
   margin-bottom: 32px;
@@ -845,8 +853,8 @@ a.vf-badge--primary:hover {
 
 /*!
  * Component: @visual-framework/vf-form__label
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.1
+ * Location: components/vf-form/vf-form__label
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -863,7 +871,7 @@ a.vf-badge--primary:hover {
 }
 
 .vf-form__label--required .vf-icon svg {
-  fill: #d32f2f;
+  fill: #3b6fb6;
   height: 12px;
   width: 16px;
 }
@@ -1105,8 +1113,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-list
  */
 .vf-list {
   list-style-type: none;
@@ -1192,7 +1200,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-blockquote
  * Version: 1.0.2
- * Location: components/vf-core-
+ * Location: components/vf-blockquote
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1227,8 +1235,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.8
+ * Location: components/vf-divider
  */
 .vf-divider {
   background-color: #d8d8d8;
@@ -1377,7 +1385,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.1.0
+ * Version: 1.1.1
  * Location: components/vf-content
  */
 .vf-content h1:not([class*='vf-']) {
