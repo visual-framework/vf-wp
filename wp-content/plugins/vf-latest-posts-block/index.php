@@ -37,6 +37,10 @@ class VF_Latest_Posts extends VF_Plugin {
   private function init() {
     parent::initialize();
     add_action('admin_head', array($this, 'admin_head'), 15);
+    add_action(
+      'admin_print_footer_scripts',
+      array($this, 'admin_print_footer_scripts')
+    );
   }
 
   function is_template_standalone() {
@@ -50,6 +54,36 @@ class VF_Latest_Posts extends VF_Plugin {
   max-width: none;
 }
 </style>
+<?php
+  }
+
+  function admin_print_footer_scripts() {
+    if ( ! function_exists('get_current_screen')) {
+      return;
+    }
+    $screen = get_current_screen();
+    if ($screen->base !== 'post' || $screen->id !== 'vf_block') {
+      return;
+    }
+    global $post;
+    if (
+      ! $post instanceof WP_Post ||
+      ! $post->post_name === $this->config['post_name']
+    ) {
+      return;
+    }
+?>
+<script type="text/javascript">
+(function(wp) {
+  wp.data.dispatch('core/notices').createNotice(
+    'error',
+    'This block is deprecated! Please refer to the new version found in the "EMBL – WordPress" editor category.',
+    {
+      isDismissible: false
+    }
+  );
+})(window.wp);
+</script>
 <?php
   }
 
