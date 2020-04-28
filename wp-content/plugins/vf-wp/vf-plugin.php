@@ -155,6 +155,15 @@ class VF_Plugin {
   }
 
   /**
+   * Return true if plugin is deprecated (override per plugin)
+   * New Gutenberg blocks cannot be added (`inserter` = `false`)
+   * Existing Gutenberg blocks are still rendered if plugin is active
+   */
+  public function is_deprecated() {
+    return false;
+  }
+
+  /**
    * Return true if template has grid wrappers and should not be contained
    */
   public function is_template_standalone() {

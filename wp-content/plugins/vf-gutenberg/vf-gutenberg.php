@@ -483,6 +483,9 @@ class VF_Gutenberg {
           'reusable'        => false
         );
       }
+      if ($plugin->is_deprecated()) {
+        $data['supports']['inserter'] = false;
+      }
       $config[$block_name] = $data;
     }
     // Add generic plugin for previews
