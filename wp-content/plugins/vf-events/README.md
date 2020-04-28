@@ -102,6 +102,6 @@ VF_Events::get_archive_pages();
 
 Returns an array of `next` and `previous` archive page URLs. These values will be `false` if there is no page.
 
-# Gutenberg Block
+## Gutenberg block
 
 This plugin registers an "Events List" block using ACF.

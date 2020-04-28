@@ -2,6 +2,8 @@
 
 **This plugin is deprecated** – the block can be replaced by an `acf/vfwp-latest-posts` block provided by the `vf-wp` theme.
 
+Please refer to the new [Latest Posts README](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md).
+
 * * *
 
 The latest WordPress blog post in a `vf-summary--article` Visual Framework pattern followed by three more aside in a `vf-box--inlay` pattern.
