@@ -37,6 +37,6 @@ An optional heading above the single post using the `vf-section-header` VF patte
 
 ### Heading (plural)
 
-Ttemplate default: "Latest posts"
+Template default: "Latest posts"
 
 An optional heading inside the box aside above the three additional posts. If empty no heading is displayed.
