@@ -1,6 +1,6 @@
 # Latest Posts (block)
 
-The latest WordPress blog post in a `vf-summary--article` Visual Framework pattern followed by three more aside in a `vf-box--inlay` pattern.
+Display the latest WordPress blog post in a `vf-summary--article` Visual Framework pattern followed by three more aside in a `vf-box--inlay` pattern.
 
 ## Configuration
 
@@ -13,7 +13,7 @@ ACF / Block data:
 
 Block `name`: `acf/vfwp-latest-posts`
 
-Block `id` must be unique per instance in the post content. If multiple instances use a random ID, e.g. [uniqid('block_')](https://www.php.net/manual/en/function.uniqid.php).
+Block `id` must be unique per instance in the post content. Use a random ID, e.g. [`uniqid('block_')`](https://www.php.net/manual/en/function.uniqid.php).
 
 ### Block (minimal/defaults)
 
@@ -31,14 +31,12 @@ Full block `data` and `mode` properties should be added if configured.
 
 ### Heading (singular)
 
-**Key**: `vf_latest_posts_heading_singular`
-**Value**: string (template default: "Latest blog post")
+Template default: "Latest blog post"
 
 An optional heading above the single post using the `vf-section-header` VF pattern. If empty no heading is displayed.
 
 ### Heading (plural)
 
-**Key**: `vf_latest_posts_heading_singular`
-**Value**: string (template default: "Latest posts")
+Ttemplate default: "Latest posts"
 
 An optional heading inside the box aside above the three additional posts. If empty no heading is displayed.
