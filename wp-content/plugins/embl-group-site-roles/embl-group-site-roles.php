@@ -265,6 +265,14 @@ function egsr_group_editor_cap(){
         'unfiltered_html'           => true,
         'upload_files'              => true,
         'edit_theme_options'        => true,
+        'level_7' => true,
+        'level_6' => true,
+        'level_5' => true,
+        'level_4' => true,
+        'level_3' => true,
+        'level_2' => true,
+        'level_1' => true,
+        'level_0' => true,
     );
 }
 
