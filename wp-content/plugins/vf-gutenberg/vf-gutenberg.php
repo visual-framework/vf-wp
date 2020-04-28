@@ -566,32 +566,34 @@ class VF_Gutenberg {
    * $args = array($block, $content, $is_preview, $post_id)
    */
   static function acf_render_template($args, $template) {
+    $is_preview = $args[2];
     if ( ! file_exists($template)) {
-      if ($args[2]) {
+      if ($is_preview) {
         echo __('Block template missing.', 'vfwp');
       }
       return;
     }
+    $block = $args[0];
     // Capture the block template
     ob_start();
     // Output head include for preview
-    if ($args[2]) {
+    if ($is_preview) {
       get_template_part('partials/head');
     }
     // Load template
-    load_template($template, true, false);
+    include($template);
     // Output foot include for preview
-    if ($args[2]) {
+    if ($is_preview) {
       get_template_part('partials/foot');
     }
     $html = ob_get_contents();
     ob_end_clean();
     // Render block if not admin preview
-    if ($args[2] !== true) {
+    if ($is_preview !== true) {
       echo $html;
       return;
     }
-    $id = "vfwp_{$args[0]['id']}";
+    $id = "vfwp_{$block['id']}";
 ?>
 <script>
 window.<?php echo $id; ?> = function() {

@@ -1,4 +1,8 @@
-# Latest Posts (block)
+# Latest Posts (block) – DEPRECATED
+
+**This plugin is deprecated** – the block can be replaced by an `acf/vfwp-latest-posts` block provided by the `vf-wp` theme.
+
+* * *
 
 The latest WordPress blog post in a `vf-summary--article` Visual Framework pattern followed by three more aside in a `vf-box--inlay` pattern.
 

@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: VF-WP Latest Posts
+Plugin Name: VF-WP Latest Posts (Deprecated)
 Description: VF-WP theme block.
 Version: 0.1.2
 Author: EMBL-EBI Web Development

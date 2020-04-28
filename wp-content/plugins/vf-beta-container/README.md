@@ -2,6 +2,8 @@
 
 **This plugin is deprecated** – notificated are added via the content hub.
 
+* * *
+
 Display the Beta notification from the Content Hub.
 
 ## Configuration

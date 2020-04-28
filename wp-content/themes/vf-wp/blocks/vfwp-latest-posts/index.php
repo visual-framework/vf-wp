@@ -78,11 +78,13 @@ class VFWP_Latest_Posts {
   public function acf_init() {
     // Setup render callback using VF Gutenberg plugin or fallback
     $callback = function() {
+      $args = func_get_args();
       $template = $this->get_template();
       if (class_exists('VF_Gutenberg')) {
-        VF_Gutenberg::acf_render_template(func_get_args(), $template);
+        VF_Gutenberg::acf_render_template($args, $template);
       } else {
-        load_template($template, true, false);
+        $block = $args[0];
+        include($template);
       }
     };
     // Register the Gutenberg block with ACF
