@@ -17,41 +17,89 @@ the_post();
   <div class="article-left-col">
 
     <aside class="vf-article-meta-information">
-    <div class="vf-author | vf-article-meta-info__author">
+      <div class="vf-author | vf-article-meta-info__author">
         <p class="vf-author__name">
-            <a class="vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
+          <a class="vf-link"
+            href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
         </p>
-        <a class="vf-author--avatar__link | vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
-            <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array('class' => 'vf-author--avatar')); ?>
+        <a class="vf-author--avatar__link | vf-link"
+          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+          <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array('class' => 'vf-author--avatar')); ?>
         </a>
-    </div>
-    <div class="vf-meta__details">
-      <p class="vf-meta__date"><time title="<?php the_time('c'); ?>"
-        datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
+      </div>
+      <div class="vf-meta__details">
+        <p class="vf-meta__date"><time title="<?php the_time('c'); ?>"
+            datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
         <p class="vf-meta__topics"><?php echo get_the_category_list(','); ?></p>
-    </div>
-    <?php if( have_rows('in_this_article') ): ?>
+      </div>
+      <?php if( have_rows('in_this_article') ): ?>
       <div class="vf-links vf-links--tight vf-links__list--s">
         <p class="vf-links__heading">In this article</p>
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
 
-        <?php while( have_rows('in_this_article') ): the_row();
+          <?php while( have_rows('in_this_article') ): the_row();
         $anchor = get_sub_field('anchor');
         $heading = get_sub_field('heading_description');?>
 
-         <li class="vf-list__item">
-          <a href="<?php echo esc_url( $anchor ); ?>" class="vf-list__link"><?php echo esc_html($heading) ?></a>
-         </li>
-    <?php endwhile; ?>
+          <li class="vf-list__item">
+            <a href="<?php echo esc_url( $anchor ); ?>" class="vf-list__link"><?php echo esc_html($heading) ?></a>
+          </li>
+          <?php endwhile; ?>
         </ul>
+      </div>
+      <?php endif; ?>
+
+    </aside>
+    <?php 
+
+if( get_field('press_contact') == 'EMBL-EBI' ) { ?>
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-box__heading">Press contact:</p>
+      <p class="vf-box__text"><b>Oana Stroe</b></br>EMBL-EBI, Wellcome Genome Campus, Hinxton, Cambridgeshire, CB10 1SD,
+        UK</p>
+      <p class="vf-box__text"><a>stroe@ebi.ac.uk</a>, <a>contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
+    </div>
+    <?php }
+else if( get_field('press_contact') == 'EMBL' ) { ?>
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-box__heading">Press contact:</p>
+      <p class="vf-box__text"><b>Annika Grandison</b></br>Engagement Team Lead, Meyerhofstraße 1, 69117 Heidelberg,
+        Germany</p>
+      <p class="vf-box__text"><a href="mailto:annika.grandison@embl.org">Email</a></br>+49 6221 387-8443</p>
+      <p class="vf-box__text"><b>Mathias Jäger</b></br>EMBL Press Officer, Meyerhofstraße 1, 69117 Heidelberg, Germany
+      </p>
+      <p class="vf-box__text"><a href="mailto:mathias.jaeger@embl.de">Email</a></br>+49 6221 387-8726</p>
+    </div>
+    <?php }
+else {} ?>
+
+  </div>
+  <div class="vf-content | vf-u-padding__bottom--xxl">
+    <h1><?php the_title(); ?></h1>
+
+    <?php if( have_rows('translations') ): 
+                    $all_fields_count = count(get_field('translations'));
+                    $fields_count = 1;
+      ?>
+    <div class="vf-banner vf-banner--alert vf-banner--info">
+      <div class="vf-banner__content">
+        <p class="vf-banner__text">This article is also available in
+          <?php while( have_rows('translations') ): the_row(); 
+        $anchor = get_sub_field('translation_anchor');
+        $language = get_sub_field('translation_language', false, false);?>
+          <a href="<?php echo esc_url( $anchor ); ?>"><?php echo ($language) ?></a><?php 
+       if ($fields_count == $all_fields_count - 1) {
+          echo " and"; } 
+         else if ($fields_count == $all_fields_count) {
+          echo "."; } 
+        else {
+          echo ","; }
+        $fields_count++; ?>
+          <?php endwhile; ?></p>
       </div>
     </div>
     <?php endif; ?>
-</aside>
-  </div>
 
-  <div class="vf-content | vf-u-padding__bottom--xxl">
-    <h1><?php the_title(); ?></h1>
     <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
     </p>
@@ -73,13 +121,13 @@ else {
       $show = get_post_meta( get_the_ID(), 'show_featured_image', true );
        if ( $show == '1' ): //not displaying
       else:?>
-      <figure class="vf-figure">
-          <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
-          <figcaption class="vf-figure__caption">
-            <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
-          </figcaption>
-        </figure>
-        <?php
+    <figure class="vf-figure">
+      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
+      <figcaption class="vf-figure__caption">
+        <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
+      </figcaption>
+    </figure>
+    <?php
       endif;
 }
 ?>
