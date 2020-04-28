@@ -1,6 +1,6 @@
 <?php
 
-get_template_part('partials/header');
+get_header();
 
 $title = get_the_title(get_option('page_for_posts'));
 $user_id = get_the_author_meta('ID');
@@ -60,10 +60,10 @@ if (is_search()) {
 				$args = array(
     			'posts_per_page' => 6,
    				'paged' => $page,
-				'author__in' => $user_id); 
+				'author__in' => $user_id);
 				query_posts($args);?>
 
-        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
 				if ( $post->ID == $do_not_duplicate ) continue; ?>
         <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
         <?php endwhile; endif; ?>
@@ -81,7 +81,7 @@ if (is_search()) {
       </div>
       <div class="vf-grid vf-grid__col-3">
         <?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));
-					while ($popular->have_posts()) : $popular->the_post(); 
+					while ($popular->have_posts()) : $popular->the_post();
 					include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false));?>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
@@ -93,4 +93,4 @@ if (is_search()) {
   <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
 </section>
-<?php get_template_part('partials/footer'); ?>
+<?php get_footer(); ?>
