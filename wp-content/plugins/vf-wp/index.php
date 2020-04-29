@@ -183,7 +183,7 @@ class VF_WP {
       array(
         array(
           'slug'  => 'vf/wp',
-          'title' => __('EMBL – WordPress', 'vfwp'),
+          'title' => __('EMBL – WordPress (local content)', 'vfwp'),
           'icon'  => null
         ),
       ),
