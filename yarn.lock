@@ -1655,17 +1655,17 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.0-alpha.0.tgz#a58a75fd569cceb71d2e63a29621c607a9f8386e"
   integrity sha512-I+n1HuirL8xTXZHAJ7Oy9Sie7a/ja0IrMvwKTTr+ekTgGBGVr038ogtE6W01YYgHT4rI/tFRPga0RDzBpnS35w==
 
-"@visual-framework/vf-content@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.1.1.tgz#72f191bae528e1a0816b1e0a1585320b06e309ef"
-  integrity sha512-a1Xgnfsr3bREnKuM0GCMXiRrCr6QcLfwmAE/958xrzlLMvsSYhoa9C1VaQDzpLdVj2tUns+VArOhbVeOK/TKCw==
+"@visual-framework/vf-content@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.1.2.tgz#3656865b1d585bd25437f1443c5146be441ee0ba"
+  integrity sha512-BiU8kxRs/2/w37R/F31+bXTNoAHNx4fKmhWg7vfz6PuJ+PVZbsh+swIpyYh8mdlaLsk+s0ix/LFi/p+cepkicw==
   dependencies:
     "@visual-framework/vf-badge" "^1.0.1"
     "@visual-framework/vf-blockquote" "^1.0.2"
     "@visual-framework/vf-box" "^1.0.4"
     "@visual-framework/vf-button" "^1.0.3"
     "@visual-framework/vf-divider" "^1.0.0"
-    "@visual-framework/vf-figure" "^1.0.0-beta.3"
+    "@visual-framework/vf-figure" "^1.1.0"
     "@visual-framework/vf-form__core" "^1.0.3"
     "@visual-framework/vf-heading" "^1.0.0"
     "@visual-framework/vf-link" "^1.0.3"
@@ -1738,10 +1738,10 @@
     luxon "^1.22.2"
     touch "^3.1.0"
 
-"@visual-framework/vf-figure@^1.0.0-beta.3":
-  version "1.0.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-figure/-/vf-figure-1.0.0-beta.3.tgz#39b2126aef47cf1a1493ac7160e0176c4bb87052"
-  integrity sha512-EWCwozMwZ7tkuVbYZJUnZzU+lViWt0PeZU/b7PytzFNUYTOZY7UVbbV7J9B5qMUHaD0e9WHUjT6DVCBh5zpWsg==
+"@visual-framework/vf-figure@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-figure/-/vf-figure-1.1.0.tgz#ebb8680095a1f25c0a223bd6c88a9884af6a8c09"
+  integrity sha512-7esF2iz7yzWhIUzXwfrlFzpIu8sHQOVscBkQTSRhtaMXIIOyPwQGyIt1cKvZV/0BRwwzq2JBfjxYEPlp/4OXYA==
 
 "@visual-framework/vf-font-plex-mono@1.0.0":
   version "1.0.0"
