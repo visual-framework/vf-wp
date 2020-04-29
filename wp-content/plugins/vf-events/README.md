@@ -78,8 +78,6 @@ single-vf_event.php
 
 ## Template Functions
 
-
-
 ```php
 VF_Events::is_upcoming_archive();
 ```
@@ -104,3 +102,6 @@ VF_Events::get_archive_pages();
 
 Returns an array of `next` and `previous` archive page URLs. These values will be `false` if there is no page.
 
+## Gutenberg block
+
+This plugin registers an "Events List" block using ACF.

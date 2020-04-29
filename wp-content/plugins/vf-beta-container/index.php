@@ -17,6 +17,10 @@ require_once($path);
 
 class VF_Beta extends VF_Plugin {
 
+  public function is_deprecated() {
+    return true;
+  }
+
   protected $file = __FILE__;
 
   protected $config = array(

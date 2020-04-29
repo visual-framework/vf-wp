@@ -2,20 +2,20 @@
 
 global $post;
 
-$text = get_field('vf_example_text', $post->ID);
-$textarea = get_field('vf_example_textarea', $post->ID);
-$select = get_field('vf_example_select', $post->ID);
-$range = get_field('vf_example_range', $post->ID);
-$radio = get_field('vf_example_radio', $post->ID);
-$checkbox = get_field('vf_example_checkbox', $post->ID);
-$boolean = get_field('vf_example_boolean', $post->ID);
-$date = get_field('vf_example_date', $post->ID);
-$taxonomy = get_field('vf_example_taxonomy', $post->ID);
+$text = get_field('vf_example_text');
+$textarea = get_field('vf_example_textarea');
+$select = get_field('vf_example_select');
+$range = get_field('vf_example_range');
+$radio = get_field('vf_example_radio');
+$checkbox = get_field('vf_example_checkbox');
+$boolean = get_field('vf_example_boolean');
+$date = get_field('vf_example_date');
+$taxonomy = get_field('vf_example_taxonomy');
 $checkbox = is_array($checkbox) ? $checkbox : array();
-$number = get_field('vf_example_number', $post->ID);
-$email = get_field('vf_example_email', $post->ID);
-$url = get_field('vf_example_url', $post->ID);
-$rich = get_field('vf_example_rich', $post->ID);
+$number = get_field('vf_example_number');
+$email = get_field('vf_example_email');
+$url = get_field('vf_example_url');
+$rich = get_field('vf_example_rich');
 
 ?>
 <div class="vf-content">

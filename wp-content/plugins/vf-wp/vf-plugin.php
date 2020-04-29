@@ -155,6 +155,15 @@ class VF_Plugin {
   }
 
   /**
+   * Return true if plugin is deprecated (override per plugin)
+   * New Gutenberg blocks cannot be added (`inserter` = `false`)
+   * Existing Gutenberg blocks are still rendered if plugin is active
+   */
+  public function is_deprecated() {
+    return false;
+  }
+
+  /**
    * Return true if template has grid wrappers and should not be contained
    */
   public function is_template_standalone() {
@@ -385,29 +394,12 @@ class VF_Plugin {
       return;
     }
 
-    /**
-     * We're setting up postdata for the canonical plugin post but for
-     * customized blocks we need to override some ACF fields
-     * If custom field values are provided use `acf/pre_load_value` filter
-     * to bypass the plugin defaults
-     */
-    $pre_load_value = function ($value, $post_id, $field)
-      use ($plugin, $fields)
-    {
-      // Filter the plugin post only (when custom field exists)
-      if (
-        $post_id === $plugin->post()->ID &&
-        array_key_exists($field['name'], $fields)
-      ) {
-        acf_flush_value_cache($plugin->post()->ID, $field['name']);
-        $value = $fields[$field['name']];
-      }
-      return $value;
-    };
-
+    // Flush the ACF cache and setup post meta
     if (is_array($fields)) {
-      add_filter('acf/pre_load_value', $pre_load_value, 10, 3);
-      // acf_setup_meta($fields, $plugin->post()->ID, true);
+      foreach (array_keys($fields) as $field_name) {
+        acf_flush_value_cache($plugin->post()->ID, $field_name);
+      }
+      acf_setup_meta($fields, $plugin->post()->ID, true);
     }
 
     // Before actions
@@ -424,6 +416,14 @@ class VF_Plugin {
     // Include the plugin template
     include($vf_plugin->template());
 
+    // Flush the ACF cache *again* and reset the post meta
+    if (is_array($fields)) {
+      acf_reset_meta($post->ID);
+      foreach (array_keys($fields) as $field_name) {
+        acf_flush_value_cache($post->ID, $field_name);
+      }
+    }
+
     // Reset globals to parent plugin (or main template loop)
     if ($parent instanceof VF_Plugin) {
       $vf_plugin = $parent;
@@ -432,16 +432,6 @@ class VF_Plugin {
     } else {
       $vf_plugin = null;
       wp_reset_postdata();
-    }
-
-    // Clear any cached values if custom config is used
-    if (is_array($fields)) {
-      remove_filter('acf/pre_load_value', $pre_load_value, 10, 3);
-      foreach (array_keys($fields) as $field_name) {
-        acf_flush_value_cache($plugin->post()->ID, $field_name);
-      }
-      // Just in case...
-      acf_reset_meta($plugin->post()->ID);
     }
 
     // After actions
