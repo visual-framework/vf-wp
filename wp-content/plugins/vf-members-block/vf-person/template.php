@@ -26,7 +26,16 @@ $value = trim($value);
 // Show default preview instruction
 if (empty($value)) {
   if ($is_preview) {
-    echo '<b>', __('Enter a search query to find a person.', 'vfwp'), '</b>';
+?>
+<div class="vf-banner vf-banner--phase vf-banner--alert vf-banner--info">
+  <div class="vf-banner__content">
+    <p class="vf-text--body-r vf-banner__text">
+      <?php esc_html_e('Enter a search query to find a person.', 'vfwp'); ?>
+    </p>
+  </div>
+</div>
+<!--/vf-banner-->
+<?php
   }
   return;
 }
@@ -63,7 +72,16 @@ if (
   || ( vf_html_empty($content) && $is_preview )
 ) {
   if ($is_preview) {
-    echo '<b>', __('No person found.', 'vfwp'), '</b>';
+?>
+<div class="vf-banner vf-banner--phase vf-banner--alert vf-banner--danger">
+  <div class="vf-banner__content">
+    <p class="vf-text--body-r vf-banner__text">
+      <?php esc_html_e('No person found.', 'vfwp'); ?>
+    </p>
+  </div>
+</div>
+<!--/vf-banner-->
+<?php
   }
   return;
 }
