@@ -68,7 +68,7 @@ class VF_Latest_Posts extends VF_Plugin {
     global $post;
     if (
       ! $post instanceof WP_Post ||
-      ! $post->post_name === $this->config['post_name']
+      $post->post_name !== $this->config['post_name']
     ) {
       return;
     }
