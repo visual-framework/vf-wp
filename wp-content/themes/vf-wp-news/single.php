@@ -51,26 +51,64 @@ the_post();
 
     </aside>
     <?php 
+if( get_field('press_contact') == 'EMBL-EBI Oana Stroe' ) { ?>
+<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+  <p class="vf-box__text"><b>Oana Stroe</b></br>Sr. Communications Officer</br></br>EMBL-EBI, Wellcome Genome Campus,
+    Hinxton, Cambridgeshire, CB10 1SD,
+    UK</p>
+  <p class="vf-box__text"><a href="mailto:stroe@ebi.ac.uk">stroe@ebi.ac.uk</a></br>+44 1223 494369</p>
+</div>
+<?php }
 
-if( get_field('press_contact') == 'EMBL-EBI' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-box__heading">Press contact:</p>
-      <p class="vf-box__text"><b>Oana Stroe</b></br>EMBL-EBI, Wellcome Genome Campus, Hinxton, Cambridgeshire, CB10 1SD,
-        UK</p>
-      <p class="vf-box__text"><a>stroe@ebi.ac.uk</a>, <a>contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
-    </div>
-    <?php }
-else if( get_field('press_contact') == 'EMBL' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-box__heading">Press contact:</p>
-      <p class="vf-box__text"><b>Annika Grandison</b></br>Engagement Team Lead, Meyerhofstraße 1, 69117 Heidelberg,
-        Germany</p>
-      <p class="vf-box__text"><a href="mailto:annika.grandison@embl.org">Email</a></br>+49 6221 387-8443</p>
-      <p class="vf-box__text"><b>Mathias Jäger</b></br>EMBL Press Officer, Meyerhofstraße 1, 69117 Heidelberg, Germany
-      </p>
-      <p class="vf-box__text"><a href="mailto:mathias.jaeger@embl.de">Email</a></br>+49 6221 387-8726</p>
-    </div>
-    <?php }
+else if( get_field('press_contact') == 'EMBL Annika Grandison' ) { ?>
+<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+  <p class="vf-box__text"><b>Annika Grandison</b></br>Engagement Team Lead</br></br>Meyerhofstraße 1, 69117 Heidelberg,
+    Germany</p>
+  <p class="vf-box__text"><a href="mailto:annika.grandison@embl.org">Email</a></br>+49 6221 387-8443</p>
+</div>
+<?php }
+
+ else if( get_field('press_contact') == 'EMBL-EBI Rodica Petrusevschi' ) { ?>
+<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+  <p class="vf-box__text"><b>Rodica Petrusevschi</b></br>Digital Strategy Officer</br></br>EMBL-EBI, Wellcome Genome
+    Campus, Hinxton, Cambridgeshire, CB10 1SD,
+    UK</p>
+  <p class="vf-box__text"><a>petrusevschi@ebi.ac.uk</a></br>+44 1223 494369</p>
+</div>
+<?php }
+
+else if( get_field('press_contact') == 'EMBL Mathias Jaeger' ) { ?>
+<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+  <p class="vf-box__text"><b>Mathias Jäger</b></br>EMBL Press Officer</br></br>Meyerhofstraße 1, 69117 Heidelberg,
+    Germany
+  </p>
+  <p class="vf-box__text"><a href="mailto:mathias.jaeger@embl.de">Email</a></br>+49 6221 387-8726</p>
+</div>
+<?php }
+
+else if( get_field('press_contact') == 'EMBL Generic' ) { ?>
+<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+  <p class="vf-box__text"><b>EMBL Press Office</b></br></br>Meyerhofstraße 1, 69117 Heidelberg, Germany
+  </p>
+  <p class="vf-box__text"><a href="mailto:pressoffice@embl.de">pressoffice@embl.de</a></br>+49 6221 387-8726</p>
+</div>
+<?php }
+
+else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
+<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+  <p class="vf-box__text"><b>EMBL-EBI</br>Press Office</b></br></br>EMBL-EBI, Wellcome Genome Campus, Hinxton,
+    Cambridgeshire, CB10 1SD,
+    UK</p>
+  <p class="vf-box__text"><a href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
+</div>
+<?php }
+            
 else {} ?>
 
   </div>
@@ -178,7 +216,7 @@ else {
     </div>
     <?php endif; ?>
 
-    <p class="vf-text--body vf-text-body--3 | tags-inline">Tags:</p>
+    <p class="vf-text--body vf-text-body--3 | tags-inline">Tags:
     <?php
     $tags = get_the_tags($post->ID);
 if ($tags) {
@@ -187,7 +225,7 @@ if ($tags) {
       $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-link vf-link--secondary | vf-text--body vf-text-body--3' . $tag->term_id . '">' . $tag->name . '</a>';
    }
    echo implode(', ', $tagslist);
-} ?>
+} ?></p>
   </div>
   <div></div>
 </div>
