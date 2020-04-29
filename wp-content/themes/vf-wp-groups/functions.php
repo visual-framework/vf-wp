@@ -19,4 +19,9 @@ add_action('vf/__experimental__/theme/init', function() {
   }
 });
 
+// Add feature image support
+
+add_theme_support( 'post-thumbnails' );
+add_theme_support( 'title-tag' );
+
 ?>
