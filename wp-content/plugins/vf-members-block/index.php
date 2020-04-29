@@ -14,6 +14,9 @@ $path = WP_PLUGIN_DIR . '/vf-wp/vf-plugin.php';
 if ( ! file_exists($path)) return;
 require_once($path);
 
+// Include the additional `VF_Person` block
+require_once('vf-person/index.php');
+
 class VF_Members extends VF_Plugin {
 
   protected $file = __FILE__;
