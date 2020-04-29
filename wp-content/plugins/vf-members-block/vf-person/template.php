@@ -23,10 +23,19 @@ if ($field === 'embl_id') {
 }
 $value = trim($value);
 
-// Get pattern size
-$size = get_field('size');
-if (empty($size)) {
-  $size = 's';
+// Show default preview instruction
+if (empty($value)) {
+  if ($is_preview) {
+    echo '<b>', __('Enter a search query to find a person.', 'vfwp'), '</b>';
+  }
+  return;
+}
+
+// Get pattern variation
+$variation = get_field('variation');
+$suffix = '';
+if ( ! empty($variation)) {
+  $suffix = "-{$variation}";
 }
 
 // Setup base API URL
@@ -34,7 +43,7 @@ $url = VF_Cache::get_api_url();
 $url .= '/pattern.html';
 $url = add_query_arg(array(
   'source'              => 'contenthub',
-  'pattern'             => "vf-summary-profile-{$size}",
+  'pattern'             => "vf-summary-profile{$suffix}",
   'filter-content-type' => 'person',
   'limit'               => 1
 ), $url);
@@ -59,7 +68,13 @@ if (
   return;
 }
 
+// Add hash attribute to opening tag
+$content = preg_replace(
+  '#^\s*<([^>]*?)>#',
+  '<$1 data-cache="' . esc_attr($hash) . '">',
+  $content
+);
+
+echo $content;
+
 ?>
-<div data-cache="<?php esc_url($hash); ?>">
-  <?php echo $content; ?>
-</div>
