@@ -54,7 +54,6 @@ deploy-dev-aws:
   only:
     # only match on develop branch, or specific tag patterns
     - develop
-    - master
     - /^v\d+\.\d+\.\d+$/
     - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/
 
