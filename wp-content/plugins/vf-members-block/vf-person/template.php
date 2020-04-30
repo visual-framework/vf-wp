@@ -64,7 +64,9 @@ $url = add_query_arg(array(
 
 // Request HTML from the Content Hub API
 $content = VF_Cache::fetch($url);
-$hash = VF_Cache::hash($url);
+$hash = VF_Cache::hash(
+  esc_url_raw($url)
+);
 
 // Escape and show error if nothing found
 if (

@@ -238,7 +238,7 @@ class VF_Plugin {
   public function api_attr(array $attr = array()) {
     $url = $this->api_url();
     $attr = array_merge(array(
-      'data-cache' => VF_Cache::hash($url)
+      'data-cache' => VF_Cache::hash(esc_url_raw($url))
       // 'data-api'   => $url
     ), $attr);
     $value = array_reduce(
