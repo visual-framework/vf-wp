@@ -3,9 +3,9 @@ Block Name: Video
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
+import template from '@visual-framework/vf-embed/vf-embed.precompiled';
 import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import template from './templates/vf-embed.precompiled';
 
 const RATIOS = {
   '2:1': {
@@ -38,24 +38,26 @@ const withRatioAttributes = Edit => {
   return props => {
     const transient = {...(props.transient || {})};
     let {ratio, width, height, maxWidth} = props.attributes;
-    ratio = ratio || '';
-    let padding = (100 / width) * height;
-    const pattern = /(\d+):(\d+)/;
-    if (pattern.test(ratio) && ratio in RATIOS) {
-      const [, r1, r2] = ratio.match(pattern);
-      padding = (100 / r1) * r2;
-      props.setAttributes({
-        ...RATIOS[ratio]
-      });
-    }
-    let style = `padding-top: 0; padding-bottom: ${padding}%;`;
-    if (maxWidth) {
-      style += ` --vf-video-max-width: ${maxWidth}px;`;
-      style += ' max-width: var(--vf-video-max-width);';
-      // style += ` padding-bottom: calc(${height} / ${width} * (100% - (100% - var(--vf-video-max-width))));`;
-      style += ` padding-bottom: calc(${height} / ${width} * var(--vf-video-max-width));`;
-    }
-    transient.style = style;
+    // ratio = ratio || '';
+    // let padding = (100 / width) * height;
+    // const pattern = /(\d+):(\d+)/;
+    // if (pattern.test(ratio) && ratio in RATIOS) {
+    //   const [, r1, r2] = ratio.match(pattern);
+    //   padding = (100 / r1) * r2;
+    //   props.setAttributes({
+    //     ...RATIOS[ratio]
+    //   });
+    // }
+    // let style = `padding-top: 0; padding-bottom: ${padding}%;`;
+    // if (maxWidth) {
+    //   style += ` --vf-video-max-width: ${maxWidth}px;`;
+    //   style += ' max-width: var(--vf-video-max-width);';
+    //   // style += ` padding-bottom: calc(${height} / ${width} * (100% - (100% - var(--vf-video-max-width))));`;
+    //   style += ` padding-bottom: calc(${height} / ${width} * var(--vf-video-max-width));`;
+    // }
+    transient.AspectRatio = 'vf-embed--16x9';
+    transient.maxWidth = `${maxWidth}px`;
+    // transient.style = style;
     return Edit({...props, transient});
   };
 };
@@ -135,6 +137,6 @@ export default useVFCoreSettings({
   ],
   withHOC: [
     [withRatioAttributes],
-    [withTransientAttributeMap, [{from: 'url', to: 'src'}]]
+    [withTransientAttributeMap, [{from: 'url', to: 'video_href'}]]
   ]
 });
