@@ -40,53 +40,27 @@
 }
 
 /*!
- * Component: @visual-framework/vf-figure
- * Version: 1.1.0
- * Location: components/vf-figure
+ * Component: @visual-framework/vf-embed
+ * Version: 1.0.0
+ * Location: components/vf-embed
  */
-.vf-figure {
-  margin: 0;
+.vf-embed {
+  max-width: var(--vf-embed-max-width, 100%);
+  position: relative;
 }
 
-.vf-figure__image {
-  margin: 0 0 21px 0;
-}
-
-.vf-figure__caption {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.57;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  color: #707372;
-  font-style: italic;
-}
-
-.vf-figure__image {
-  height: auto;
-  max-width: 100%;
+.vf-embed > * {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
   width: 100%;
 }
 
-.vf-figure--float {
-  display: table;
+.vf-embed--16x9 {
+  padding-bottom: calc(9 / 16 * (100% - (100% - var(--vf-embed-max-width, 100%))));
 }
 
-.vf-figure--float .vf-figure__image {
-  max-width: unset;
-  width: auto;
-}
-
-.vf-figure--float .vf-figure__caption {
-  caption-side: bottom;
-  display: table-caption;
-}
-
-.vf-figure--float-inline-start {
-  float: left;
-}
-
-.vf-figure--float-inline-end {
-  float: right;
+.vf-embed--4x3 {
+  padding-bottom: calc(3 / 4 * (100% - (100% - var(--vf-embed-max-width, 100%))));
 }
