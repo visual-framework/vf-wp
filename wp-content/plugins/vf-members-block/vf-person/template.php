@@ -90,7 +90,7 @@ if (
 
 // Add hash attribute to opening tag
 $content = preg_replace(
-  '#^\s*<([^>]*?)>#',
+  '#^\s*<([^>]+?)>#',
   '<$1 data-cache="' . esc_attr($hash) . '">',
   $content
 );

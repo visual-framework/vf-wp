@@ -14,14 +14,14 @@ if (vf_cache_empty($content)) {
 
 // Add grid layout classes to wrapping element
 $content = preg_replace(
-  '#^(\s*<[^>]*?vf-content-hub-html)#',
+  '#^(\s*<[^>]+?vf-content-hub-html)#',
   '$1 vf-grid vf-grid__col-2',
   $content
 );
 
 // Add hash attribute to opening tag
 $content = preg_replace(
-  '#^\s*<([^>]*?)>#',
+  '#^\s*<([^>]+?)>#',
   '<$1 data-cache="' . esc_attr($hash) . '">',
   $content
 );

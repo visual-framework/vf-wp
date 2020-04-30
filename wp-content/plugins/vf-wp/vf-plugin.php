@@ -233,21 +233,10 @@ class VF_Plugin {
   }
 
   /**
-   * Return HTML attributes for wrapping element
+   * @Deprecated
    */
-  public function api_attr(array $attr = array()) {
-    $url = $this->api_url();
-    $attr = array_merge(array(
-      'data-cache' => VF_Cache::hash(esc_url_raw($url))
-      // 'data-api'   => $url
-    ), $attr);
-    $value = array_reduce(
-      array_keys($attr),
-      function($value, $key) use ($attr) {
-        return $value .= $key . '="' . esc_attr($attr[$key]) . '" ';
-      },
-    '');
-    echo trim($value);
+  public function api_attr($attr) {
+    return '';
   }
 
   /**
