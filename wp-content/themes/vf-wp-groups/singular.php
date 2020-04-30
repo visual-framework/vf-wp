@@ -20,12 +20,21 @@ global $vf_theme;
       </aside>
 
     <main class="vf-inlay__content--main">
+
+      <?php
+      if (has_post_thumbnail()) {
+        $caption = get_the_post_thumbnail_caption();
+      ?>
       <figure class="vf-figure">
           <?php the_post_thumbnail('full', array('class' => 'vf-figure__image | vf-u-margin__bottom--sm')); ?>
+          <?php if ( ! vf_html_empty($caption)) { ?>
           <figcaption class="vf-figure__caption">
-            <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
+            <?php echo esc_html($caption); ?>
           </figcaption>
+          <?php } ?>
         </figure>
+      <?php } ?>
+
       <?php
 
       // the_content();
