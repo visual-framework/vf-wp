@@ -1,0 +1,129 @@
+{
+  "key": "group_5ea93b5d10f9d",
+  "title": "VF Person (block)",
+  "fields": [
+    {
+      "key": "field_5ea93b6c43753",
+      "label": "Search by",
+      "name": "field",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "full_name": "Full Name",
+        "embl_id": "EMBL CP-ID"
+      },
+      "default_value": ["full_name"],
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 0,
+      "return_format": "value",
+      "ajax": 0,
+      "placeholder": ""
+    },
+    {
+      "key": "field_5ea93bf243754",
+      "label": "Full Name",
+      "name": "full_name",
+      "type": "text",
+      "instructions": "Find person by name, e.g. \"Ken Hawkins\".",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5ea93b6c43753",
+            "operator": "==",
+            "value": "full_name"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ea93bfb43755",
+      "label": "EMBL CP-ID",
+      "name": "embl_id",
+      "type": "text",
+      "instructions": "Find person by EMBL CP-ID, e.g. \"CP-60022294\".",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5ea93b6c43753",
+            "operator": "==",
+            "value": "embl_id"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5ea94bd34f1b9",
+      "label": "Variation",
+      "name": "variation",
+      "type": "select",
+      "instructions": "Design variation.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "s": "Small",
+        "r": "Regular",
+        "l": "Large",
+        "": "Full"
+      },
+      "default_value": ["r"],
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 0,
+      "return_format": "value",
+      "ajax": 0,
+      "placeholder": ""
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/vf-person"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": ""
+}
