@@ -55,22 +55,33 @@ global $vf_theme;
         datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
         <p class="vf-meta__topics"><?php echo get_the_category_list(','); ?></p>
     </div>
-    <p class="vf-text--body vf-text-body--3 | vf-u-margin__left--sm">Tags:
     <?php
-      $tags = get_the_tags($post->ID);
-      if ($tags) {
-        $tagslist = array();
-        foreach($tags as $tag) {
-        $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-link vf-link--secondary | vf-text--body vf-text-body--3' . $tag->term_id . '">' . $tag->name . '</a>';
-        }
-       echo implode(', ', $tagslist);
-      } ?></p>
+    $tags = get_the_tags($post->ID);
+    if (is_array($tags)) {
+    ?>
+    <p class="vf-text--body vf-text-body--3 | vf-u-margin__left--sm">
+      <?php esc_html_e('Tags:', 'vfwp'); ?>
+    <?php
+      $tagslist = array();
+      foreach($tags as $tag) {
+        $tagslist[] = '<a  href="'
+          . get_tag_link($tag->term_id)
+          . '" class="vf-link vf-link--secondary | vf-text--body vf-text-body--3'
+          . esc_attr($tag->term_id)
+          . '">'
+          . esc_html($tag->name)
+          . '</a>';
+      }
+      echo implode(', ', $tagslist);
+    ?>
+    </p>
+    <?php } ?>
     </div>
     <div class="vf-u-margin__top--md">
     <?php vf_sidebar('sidebar-blog'); ?>
     </div>
     </aside>
-    
+
     <?php } ?>
   </div>
 </section>
