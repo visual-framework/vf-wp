@@ -1,6 +1,6 @@
 {
   "key": "group_5ea93b5d10f9d",
-  "title": "VF Person (block)",
+  "title": "VF Person",
   "fields": [
     {
       "key": "field_5ea93b6c43753",
@@ -125,5 +125,6 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": ""
+  "description": "VF Person ACF Gutenberg block",
+  "modified": 1588594586
 }
