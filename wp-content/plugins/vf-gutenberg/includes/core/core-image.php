@@ -15,12 +15,17 @@ class VF_Gutenberg_Core_Image {
       $classes = $matches[2];
       $classes = str_replace(
         'alignleft',
-        ' | vf-figure--float vf-figure--float-inline-start  ',
+        ' | vf-figure--align vf-figure--align-inline-start  ',
         $classes
       );
       $classes = str_replace(
         'alignright',
-        ' | vf-figure--float vf-figure--float-inline-end ',
+        ' | vf-figure--align vf-figure--align-inline-end ',
+        $classes
+      );
+      $classes = str_replace(
+        'aligncenter',
+        ' | vf-figure--align vf-figure--align-centered ',
         $classes
       );
       $attr = array(
