@@ -38,26 +38,31 @@ const withRatioAttributes = Edit => {
   return props => {
     const transient = {...(props.transient || {})};
     let {ratio, width, height, maxWidth} = props.attributes;
-    // ratio = ratio || '';
-    // let padding = (100 / width) * height;
-    // const pattern = /(\d+):(\d+)/;
-    // if (pattern.test(ratio) && ratio in RATIOS) {
-    //   const [, r1, r2] = ratio.match(pattern);
-    //   padding = (100 / r1) * r2;
-    //   props.setAttributes({
-    //     ...RATIOS[ratio]
-    //   });
-    // }
-    // let style = `padding-top: 0; padding-bottom: ${padding}%;`;
-    // if (maxWidth) {
-    //   style += ` --vf-video-max-width: ${maxWidth}px;`;
-    //   style += ' max-width: var(--vf-video-max-width);';
-    //   // style += ` padding-bottom: calc(${height} / ${width} * (100% - (100% - var(--vf-video-max-width))));`;
-    //   style += ` padding-bottom: calc(${height} / ${width} * var(--vf-video-max-width));`;
-    // }
-    transient.AspectRatio = 'vf-embed--16x9';
-    transient.maxWidth = `${maxWidth}px`;
-    // transient.style = style;
+
+    if (ratio && ratio in RATIOS) {
+      width = RATIOS[ratio].width;
+      height = RATIOS[ratio].height;
+      props.setAttributes({width, height});
+    }
+
+    if (isNaN(width)) {
+      width = RATIOS['16:9'].width;
+      props.setAttributes({width});
+    }
+
+    if (isNaN(height)) {
+      height = RATIOS['16:9'].height;
+      props.setAttributes({height});
+    }
+
+    transient.vf_embed_variant_custom = true;
+    transient.vf_embed_custom_ratio_X = width;
+    transient.vf_embed_custom_ratio_Y = height;
+    if (maxWidth > 0) {
+      transient.maxWidth = `${maxWidth}px`;
+    } else {
+      transient.maxWidth = 'none';
+    }
     return Edit({...props, transient});
   };
 };
@@ -78,15 +83,13 @@ export default useVFCoreSettings({
       default: '16:9'
     },
     width: {
-      type: 'integer',
-      default: RATIOS['16:9'].width
+      type: 'integer'
     },
     height: {
-      type: 'integer',
-      default: RATIOS['16:9'].height
+      type: 'integer'
     },
     maxWidth: {
-      type: 'integer',
+      type: 'string',
       default: 0
     }
   },
