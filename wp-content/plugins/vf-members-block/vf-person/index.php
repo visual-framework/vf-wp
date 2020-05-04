@@ -34,7 +34,7 @@ class VF_Person {
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
-      'title'    => 'Person',
+      'title'    => __('Person', 'vfwp'),
       'category' => VF_Blocks::block_category(),
       'supports' => array(
         'align'           => false,
