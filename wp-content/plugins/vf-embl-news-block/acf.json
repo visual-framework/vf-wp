@@ -36,7 +36,7 @@
         "id": ""
       },
       "choices": {
-        "latest": "Latest (any)",
+        "latest": "Latest",
         "taxonomy": "EMBL Taxonomy",
         "keyword": "Keyword",
         "ids": "Specific ID(s)",
@@ -49,6 +49,37 @@
       "return_format": "value",
       "ajax": 0,
       "placeholder": ""
+    },
+    {
+      "key": "field_5eb029fdc00fb",
+      "label": "Latest",
+      "name": "",
+      "type": "message",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5eb01560283da",
+            "operator": "==",
+            "value": "latest"
+          }
+        ],
+        [
+          {
+            "field": "field_5eb01560283da",
+            "operator": "==empty"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "message": "Show the latest news with no filter.",
+      "new_lines": "wpautop",
+      "esc_html": 0
     },
     {
       "key": "field_5eb01627283db",
@@ -179,5 +210,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF EMBL News ACF Gutenberg block",
-  "modified": 1588602129
+  "modified": 1588603591
 }
