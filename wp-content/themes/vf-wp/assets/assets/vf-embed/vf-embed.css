@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-embed
- * Version: 1.0.0
- * Location: components/vf-embed
+ * Version: 1.1.0
+ * Location: components/vf-core-
  */
 .vf-embed {
   max-width: var(--vf-embed-max-width, 100%);
@@ -63,4 +63,8 @@
 
 .vf-embed--4x3 {
   padding-bottom: calc(3 / 4 * (100% - (100% - var(--vf-embed-max-width, 100%))));
+}
+
+.vf-embed--custom-ratio {
+  padding-bottom: calc( var(--vf-embed-custom-ratio-y) / var(--vf-embed-custom-ratio-x) * (100% - (100% - var(--vf-embed-max-width, 100%))));
 }
