@@ -63,13 +63,16 @@ const withRatioAttributes = Edit => {
     } else {
       transient.vf_embed_max_width = '100%';
     }
-    transient.vf_embedded_content = `<iframe width="${width}" height="${height}" src="${transient.src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    transient.vf_embedded_content = '';
+    if (transient.src) {
+      transient.vf_embedded_content = `<iframe width="${width}" height="${height}" src="${transient.src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
     return Edit({...props, transient});
   };
 };
 
 export default useVFCoreSettings({
-  version: '2.0.0',
+
   name: 'vf/embed',
   title: __('Embed'),
   attributes: {
