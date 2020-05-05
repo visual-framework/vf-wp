@@ -2,7 +2,7 @@
 /*
 * Plugin Name: EMBL Group Site Roles
 * Description: Custom roles setup for EMBL Groups websites
-* Version: 0.0.1
+* Version: 1.0.0-beta.1
 * Text Domain: embl-group-site-roles
 * Author: Joseph Rossetto <jros@ebi.ac.uk>
 */

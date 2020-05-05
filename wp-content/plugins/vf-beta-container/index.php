@@ -3,7 +3,7 @@
 Deprecated: 0.2.2
 Plugin Name: VF-WP Beta (Deprecated)
 Description: This plugin is deprecated and can be uninstalled.
-Version: 0.2.2
+Version: 1.0.0-beta.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
