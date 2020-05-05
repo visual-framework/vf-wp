@@ -1,0 +1,112 @@
+
+    {
+        "key": "group_5ea6deb66ee9c",
+        "title": "Press release",
+        "fields": [
+            {
+                "key": "field_5ea6df25ad189",
+                "label": "Translations",
+                "name": "translations",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "",
+                "sub_fields": [
+                    {
+                        "key": "field_5ea6e002ad18a",
+                        "label": "Language",
+                        "name": "translation_language",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_5ea6e040ad18b",
+                        "label": "Anchor",
+                        "name": "translation_anchor",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_5ea6e0f4cc547",
+                "label": "Press contact",
+                "name": "press_contact",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "None": "None",
+                    "EMBL Generic": "EMBL Generic:",
+                    "EMBL Mathias Jaeger": "EMBL Mathias Jaeger",
+                    "EMBL Annika Grandison": "EMBL Annika Grandison",
+                    "EMBL-EBI Generic": "EMBL-EBI Generic",
+                    "EMBL-EBI Oana Stroe": "EMBL-EBI Oana Stroe",
+                    "EMBL-EBI Rodica Petrusevschi": "EMBL-EBI Rodica Petrusevschi"
+                },
+                "default_value": [
+                    "None"
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "return_format": "value",
+                "ajax": 0,
+                "placeholder": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "post"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "left",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": ""
+    }
