@@ -607,17 +607,29 @@ window.<?php echo $id; ?> = function() {
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.innerHTML = `
-window.vfResize = () => {
-  requestAnimationFrame(() => {
+if (ResizeObserver) {
+  const observer = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+      window.parent.postMessage({
+          id: '<?php echo $id; ?>',
+          height: entry.contentRect.height
+        }, '*'
+      );
+    });
+  });
+  observer.observe(document.body);
+} else {
+  const vfResize = () => {
     window.parent.postMessage({
         id: '<?php echo $id; ?>',
         height: document.documentElement.scrollHeight
       }, '*'
     );
-  });
-};
-window.addEventListener('resize', window.vfResize);
-setTimeout(window.vfResize, 100);
+  };
+  window.addEventListener('resize', vfResize);
+  setTimeout(vfResize, 100);
+  vfResize();
+}
 `;
   doc.body.appendChild(script);
 };

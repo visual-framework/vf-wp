@@ -33,17 +33,29 @@ const useVFIFrame = (iframe, iframeHTML, onHeight) => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
     script.innerHTML = `
-      window.vfResize = () => {
-        requestAnimationFrame(() => {
-          window.parent.postMessage({
-              id: '${iframe.id}',
-              height: document.documentElement.scrollHeight
-            }, '*'
-          );
-        });
-      };
-      window.addEventListener('resize', vfResize);
-      window.vfResize();
+if (ResizeObserver) {
+  const observer = new ResizeObserver(entries => {
+    entries.forEach(entry => {
+      window.parent.postMessage({
+          id: '${iframe.id}',
+          height: entry.contentRect.height
+        }, '*'
+      );
+    });
+  });
+  observer.observe(document.body);
+} else {
+  const vfResize = () => {
+    window.parent.postMessage({
+        id: '${iframe.id}',
+        height: document.documentElement.scrollHeight
+      }, '*'
+    );
+  };
+  window.addEventListener('resize', vfResize);
+  setTimeout(vfResize, 100);
+  vfResize();
+}
     `;
     body.appendChild(script);
   };
