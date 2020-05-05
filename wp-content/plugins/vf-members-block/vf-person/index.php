@@ -17,8 +17,8 @@ class VF_Person {
    * Constructor - add hooks
    */
   public function __construct() {
-    add_action('acf/init',
-      array($this, 'acf_init')
+    add_action('after_setup_theme',
+      array($this, 'after_setup_theme')
     );
     add_filter(
       'acf/settings/load_json',
@@ -60,9 +60,9 @@ class VF_Person {
   }
 
   /**
-   * Action: `acf/init`
+   * Action: `after_setup_theme`
    */
-  public function acf_init() {
+  public function after_setup_theme() {
     // Setup render callback using VF Gutenberg plugin or fallback
     $callback = function() {
       $args = func_get_args();

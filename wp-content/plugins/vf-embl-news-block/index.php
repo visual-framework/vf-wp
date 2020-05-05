@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EMBL News (Gutenberg block)
 Description: VF-WP theme Gutenberg block.
-Version: 1.0.0-beta.1
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -25,8 +25,8 @@ class VF_EMBL_News_Block {
    * Constructor - add hooks
    */
   public function __construct() {
-    add_action('acf/init',
-      array($this, 'acf_init')
+    add_action('after_setup_theme',
+      array($this, 'after_setup_theme')
     );
     add_filter(
       'acf/settings/load_json',
@@ -68,9 +68,9 @@ class VF_EMBL_News_Block {
   }
 
   /**
-   * Action: `acf/init`
+   * Action: `after_setup_theme`
    */
-  public function acf_init() {
+  public function after_setup_theme() {
     // Setup render callback using VF Gutenberg plugin or fallback
     $callback = function() {
       $args = func_get_args();
