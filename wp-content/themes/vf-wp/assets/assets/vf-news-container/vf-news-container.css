@@ -41,8 +41,8 @@
 
 /*!
  * Component: @visual-framework/vf-grid
- * Version: 1.0.4
- * Location: components/vf-grid
+ * Version: 1.0.5
+ * Location: components/vf-core-
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -104,8 +104,8 @@
   }
   .vf-grid > * {
     -webkit-box-flex: 0;
-        -ms-flex: 0 0 calc(50% - 20px);
-            flex: 0 0 calc(50% - 20px);
+        -ms-flex: 0 0 49.18305%;
+            flex: 0 0 49.18305%;
   }
 }
 
@@ -182,7 +182,7 @@
 /*!
  * Component: @visual-framework/vf-summary
  * Version: 1.0.4
- * Location: components/vf-summary
+ * Location: components/vf-core-
  */
 .vf-summary {
   --vf-text-margin--bottom: 16px;
@@ -512,7 +512,7 @@
 /*!
  * Component: @visual-framework/vf-section-header
  * Version: 1.1.1
- * Location: components/vf-section-header
+ * Location: components/vf-core-
  */
 .vf-section-header__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -613,6 +613,6 @@
 
 /*!
  * Component: @visual-framework/vf-news-container
- * Version: 1.0.0-beta.0
- * Location: components/vf-news-container
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */

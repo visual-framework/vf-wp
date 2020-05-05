@@ -8,18 +8,37 @@ var colno = 0;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<div class=\"vf-embed ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "AspectRatio"), env.opts.autoescape);
-output += "\"";
-if(runtime.contextOrFrameLookup(context, frame, "maxWidth")) {
-output += " style=\"--vf-embed-max-width: ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "maxWidth"), env.opts.autoescape);
-output += ";\"";
+output += "<div\n  class=\"vf-embed";
+if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_16x9") == true) {
+output += " vf-embed--16x9";
 ;
 }
-output += ">\n  <iframe width=\"560\" height=\"315\" src=\"";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "video_href"), env.opts.autoescape);
-output += "\" frameborder=\"0\" allow=\"autoplay; encrypted-media\" allowfullscreen></iframe>\n</div>\n";
+if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_4x3") == true) {
+output += " vf-embed--4x3";
+;
+}
+if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_custom") == true) {
+output += " vf-embed--custom-ratio";
+;
+}
+output += "\"\n\n  style=\"";
+if(runtime.contextOrFrameLookup(context, frame, "vf_embed_max_width")) {
+output += "--vf-embed-max-width: ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_max_width"), env.opts.autoescape);
+output += ";\n";
+;
+}
+if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_custom") == true) {
+output += "    --vf-embed-custom-ratio-x: ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_custom_ratio_X"), env.opts.autoescape);
+output += ";\n    --vf-embed-custom-ratio-y: ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_custom_ratio_Y"), env.opts.autoescape);
+output += ";";
+;
+}
+output += "\"\n>";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embedded_content"), env.opts.autoescape);
+output += "</div>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

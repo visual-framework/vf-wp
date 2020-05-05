@@ -3,9 +3,9 @@ Block Name: Video
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
+import template from '@visual-framework/vf-embed/vf-embed.precompiled';
 import {withTransientAttributeMap} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import template from './templates/vf-embed.precompiled';
 
 const RATIOS = {
   '2:1': {
@@ -38,29 +38,41 @@ const withRatioAttributes = Edit => {
   return props => {
     const transient = {...(props.transient || {})};
     let {ratio, width, height, maxWidth} = props.attributes;
-    ratio = ratio || '';
-    let padding = (100 / width) * height;
-    const pattern = /(\d+):(\d+)/;
-    if (pattern.test(ratio) && ratio in RATIOS) {
-      const [, r1, r2] = ratio.match(pattern);
-      padding = (100 / r1) * r2;
-      props.setAttributes({
-        ...RATIOS[ratio]
-      });
+
+    if (ratio && ratio in RATIOS) {
+      width = RATIOS[ratio].width;
+      height = RATIOS[ratio].height;
+      props.setAttributes({width, height});
     }
-    let style = `padding-top: 0; padding-bottom: ${padding}%;`;
-    if (maxWidth) {
-      style += ` --vf-video-max-width: ${maxWidth}px;`;
-      style += ' max-width: var(--vf-video-max-width);';
-      // style += ` padding-bottom: calc(${height} / ${width} * (100% - (100% - var(--vf-video-max-width))));`;
-      style += ` padding-bottom: calc(${height} / ${width} * var(--vf-video-max-width));`;
+
+    if (isNaN(width)) {
+      width = RATIOS['16:9'].width;
+      props.setAttributes({width});
     }
-    transient.style = style;
+
+    if (isNaN(height)) {
+      height = RATIOS['16:9'].height;
+      props.setAttributes({height});
+    }
+
+    transient.vf_embed_variant_custom = true;
+    transient.vf_embed_custom_ratio_X = width;
+    transient.vf_embed_custom_ratio_Y = height;
+    if (maxWidth > 0) {
+      transient.vf_embed_max_width = `${maxWidth}px`;
+    } else {
+      transient.vf_embed_max_width = '100%';
+    }
+    transient.vf_embedded_content = '';
+    if (transient.src) {
+      transient.vf_embedded_content = `<iframe width="${width}" height="${height}" src="${transient.src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+    }
     return Edit({...props, transient});
   };
 };
 
 export default useVFCoreSettings({
+
   name: 'vf/embed',
   title: __('Embed'),
   attributes: {
@@ -76,15 +88,13 @@ export default useVFCoreSettings({
       default: '16:9'
     },
     width: {
-      type: 'integer',
-      default: RATIOS['16:9'].width
+      type: 'integer'
     },
     height: {
-      type: 'integer',
-      default: RATIOS['16:9'].height
+      type: 'integer'
     },
     maxWidth: {
-      type: 'integer',
+      type: 'string',
       default: 0
     }
   },
