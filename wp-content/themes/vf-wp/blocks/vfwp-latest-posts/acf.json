@@ -57,6 +57,6 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": 1,
-  "description": "`acf/vfwp-latest-posts` block",
-  "modified": 1587111791
+  "description": "VF-WP Latest News ACF Gutenberg block",
+  "modified": 1588597831
 }

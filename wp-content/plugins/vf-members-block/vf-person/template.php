@@ -5,10 +5,10 @@ Query vars:
 &pattern=vf-summary-profile-s&filter-content-type=person
 
 by Full Name:
-&filter-field-contains[field_person_full_name]=Ken%20Hawkins&limit=1&source=contenthub
+&filter-field-contains[field_person_full_name]=Ken%20Hawkins&limit=1
 
 by EMBL CP-ID:
-&filter-field-contains[field_person_embl_id]=CP-60022294&limit=1&source=contenthub
+&filter-field-contains[field_person_embl_id]=CP-60022294&limit=1
 
 */
 
@@ -27,9 +27,9 @@ $value = trim($value);
 if (empty($value)) {
   if ($is_preview) {
 ?>
-<div class="vf-banner vf-banner--phase vf-banner--alert vf-banner--info">
+<div class="vf-banner vf-banner--alert vf-banner--info">
   <div class="vf-banner__content">
-    <p class="vf-text--body-r vf-banner__text">
+    <p class="vf-banner__text">
       <?php esc_html_e('Enter a search query to find a person.', 'vfwp'); ?>
     </p>
   </div>
@@ -75,9 +75,9 @@ if (
 ) {
   if ($is_preview) {
 ?>
-<div class="vf-banner vf-banner--phase vf-banner--alert vf-banner--danger">
+<div class="vf-banner vf-banner--alert vf-banner--danger">
   <div class="vf-banner__content">
-    <p class="vf-text--body-r vf-banner__text">
+    <p class="vf-banner__text">
       <?php esc_html_e('No person found.', 'vfwp'); ?>
     </p>
   </div>

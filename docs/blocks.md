@@ -18,5 +18,6 @@ Blocks have the custom post type: `vf_block`.
 
 Other blocks are registered with ACF:
 
+* [EMBL News](/wp-content/plugins/vf-embl-news-block/README.md)
 * [Latest Posts](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md)
 * [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)

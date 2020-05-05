@@ -1,16 +1,24 @@
 <?php
+/*
+Plugin Name: VF-WP EMBL News (Gutenberg block)
+Description: VF-WP theme Gutenberg block.
+Version: 0.1.0
+Author: EMBL-EBI Web Development
+Plugin URI: https://github.com/visual-framework/vf-wp
+Text Domain: vfwp
+*/
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_Person') ) :
+if ( ! class_exists('VF_EMBL_News_Block') ) :
 
-class VF_Person {
+class VF_EMBL_News_Block {
 
   /**
    * Return the block name
    */
   static public function get_name() {
-    return 'vf-person';
+    return 'vf-embl-news';
   }
 
   /**
@@ -34,7 +42,7 @@ class VF_Person {
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
-      'title'    => __('Person', 'vfwp'),
+      'title'    => __('EMBL News', 'vfwp'),
       'category' => VF_Blocks::block_category(),
       'supports' => array(
         'align'           => false,
@@ -91,10 +99,10 @@ class VF_Person {
     return $paths;
   }
 
-} // VF_Person
+} // VF_EMBL_News_Block
 
 // Initialize one instance
-$vf_person = new VF_Person();
+$vf_embl_news_block = new VF_EMBL_News_Block();
 
 endif;
 
