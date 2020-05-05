@@ -59,15 +59,17 @@ const withRatioAttributes = Edit => {
     transient.vf_embed_custom_ratio_X = width;
     transient.vf_embed_custom_ratio_Y = height;
     if (maxWidth > 0) {
-      transient.maxWidth = `${maxWidth}px`;
+      transient.vf_embed_max_width = `${maxWidth}px`;
     } else {
-      transient.maxWidth = 'none';
+      transient.vf_embed_max_width = '100%';
     }
+    transient.vf_embedded_content = `<iframe width="${width}" height="${height}" src="${transient.src}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
     return Edit({...props, transient});
   };
 };
 
 export default useVFCoreSettings({
+  version: '2.0.0',
   name: 'vf/embed',
   title: __('Embed'),
   attributes: {
@@ -140,6 +142,6 @@ export default useVFCoreSettings({
   ],
   withHOC: [
     [withRatioAttributes],
-    [withTransientAttributeMap, [{from: 'url', to: 'video_href'}]]
+    [withTransientAttributeMap, [{from: 'url', to: 'src'}]]
   ]
 });
