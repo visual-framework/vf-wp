@@ -4,6 +4,7 @@ $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 $tags = get_the_tags($post->ID);
+$social_url = get_the_permalink(); 
 
 
 get_header();
@@ -52,62 +53,64 @@ the_post();
     </aside>
     <?php 
 if( get_field('press_contact') == 'EMBL-EBI Oana Stroe' ) { ?>
-<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
-  <p class="vf-box__text"><b>Oana Stroe</b></br>Sr. Communications Officer</br></br>EMBL-EBI, Wellcome Genome Campus,
-    Hinxton, Cambridgeshire, CB10 1SD,
-    UK</p>
-  <p class="vf-box__text"><a href="mailto:stroe@ebi.ac.uk">stroe@ebi.ac.uk</a></br>+44 1223 494369</p>
-</div>
-<?php }
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-box__text"><b>Oana Stroe</b></br>Sr. Communications Officer</br></br>EMBL-EBI, Wellcome Genome
+        Campus,
+        Hinxton, Cambridgeshire, CB10 1SD,
+        UK</p>
+      <p class="vf-box__text"><a href="mailto:stroe@ebi.ac.uk">stroe@ebi.ac.uk</a></br>+44 1223 494369</p>
+    </div>
+    <?php }
 
 else if( get_field('press_contact') == 'EMBL Annika Grandison' ) { ?>
-<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
-  <p class="vf-box__text"><b>Annika Grandison</b></br>Engagement Team Lead</br></br>Meyerhofstraße 1, 69117 Heidelberg,
-    Germany</p>
-  <p class="vf-box__text"><a href="mailto:annika.grandison@embl.org">Email</a></br>+49 6221 387-8443</p>
-</div>
-<?php }
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-box__text"><b>Annika Grandison</b></br>Engagement Team Lead</br></br>Meyerhofstraße 1, 69117
+        Heidelberg,
+        Germany</p>
+      <p class="vf-box__text"><a href="mailto:annika.grandison@embl.org">Email</a></br>+49 6221 387-8443</p>
+    </div>
+    <?php }
 
  else if( get_field('press_contact') == 'EMBL-EBI Rodica Petrusevschi' ) { ?>
-<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
-  <p class="vf-box__text"><b>Rodica Petrusevschi</b></br>Digital Strategy Officer</br></br>EMBL-EBI, Wellcome Genome
-    Campus, Hinxton, Cambridgeshire, CB10 1SD,
-    UK</p>
-  <p class="vf-box__text"><a>petrusevschi@ebi.ac.uk</a></br>+44 1223 494369</p>
-</div>
-<?php }
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-box__text"><b>Rodica Petrusevschi</b></br>Digital Strategy Officer</br></br>EMBL-EBI, Wellcome Genome
+        Campus, Hinxton, Cambridgeshire, CB10 1SD,
+        UK</p>
+      <p class="vf-box__text"><a>petrusevschi@ebi.ac.uk</a></br>+44 1223 494369</p>
+    </div>
+    <?php }
 
 else if( get_field('press_contact') == 'EMBL Mathias Jaeger' ) { ?>
-<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
-  <p class="vf-box__text"><b>Mathias Jäger</b></br>EMBL Press Officer</br></br>Meyerhofstraße 1, 69117 Heidelberg,
-    Germany
-  </p>
-  <p class="vf-box__text"><a href="mailto:mathias.jaeger@embl.de">Email</a></br>+49 6221 387-8726</p>
-</div>
-<?php }
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-box__text"><b>Mathias Jäger</b></br>EMBL Press Officer</br></br>Meyerhofstraße 1, 69117 Heidelberg,
+        Germany
+      </p>
+      <p class="vf-box__text"><a href="mailto:mathias.jaeger@embl.de">Email</a></br>+49 6221 387-8726</p>
+    </div>
+    <?php }
 
 else if( get_field('press_contact') == 'EMBL Generic' ) { ?>
-<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
-  <p class="vf-box__text"><b>EMBL Press Office</b></br></br>Meyerhofstraße 1, 69117 Heidelberg, Germany
-  </p>
-  <p class="vf-box__text"><a href="mailto:pressoffice@embl.de">pressoffice@embl.de</a></br>+49 6221 387-8726</p>
-</div>
-<?php }
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-box__text"><b>EMBL Press Office</b></br></br>Meyerhofstraße 1, 69117 Heidelberg, Germany
+      </p>
+      <p class="vf-box__text"><a href="mailto:pressoffice@embl.de">pressoffice@embl.de</a></br>+49 6221 387-8726</p>
+    </div>
+    <?php }
 
 else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
-<div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-  <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
-  <p class="vf-box__text"><b>EMBL-EBI</br>Press Office</b></br></br>EMBL-EBI, Wellcome Genome Campus, Hinxton,
-    Cambridgeshire, CB10 1SD,
-    UK</p>
-  <p class="vf-box__text"><a href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
-</div>
-<?php }
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-box__text"><b>EMBL-EBI</br>Press Office</b></br></br>EMBL-EBI, Wellcome Genome Campus, Hinxton,
+        Cambridgeshire, CB10 1SD,
+        UK</p>
+      <p class="vf-box__text"><a href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
+    </div>
+    <?php }
             
 else {} ?>
 
@@ -171,64 +174,100 @@ else {
 ?>
 
     <?php the_content(); ?>
-  </div>
-  <div class="social-share-box">
-    <?php echo do_shortcode('[Sassy_Social_Share]') ?>
-  </div>
 
-</main>
-
-<div class="embl-grid embl-grid--has-centered-content | vf-content">
-  <div></div>
-
-  <div>
     <?php if( have_rows('article_sources') ): ?>
-    <div class="embl-grid">
-      <div>
-        <h4 class="vf-text vf-text-heading--5">Source articles:</h4>
-      </div>
+    <div class="vf-u-margin__top--xxl | vf-box vf-box--normal vf-box-theme--quinary">
+      <h4 class="vf-box__heading">Source articles:</h4>
       <div>
         <?php while( have_rows('article_sources') ): the_row();
 
       $source = get_sub_field('source_link_url');
       $description = get_sub_field('source_description', false, false);?>
-        <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
+        <p class="vf-box__text"><a class="vf-link vf-link--secondary"
             href="<?php echo esc_url( $source ); ?>"><?php echo ($description) ?></a></p>
         <?php endwhile; ?>
       </div>
     </div>
     <?php endif; ?>
-
     <?php if( have_rows('related_links') ): ?>
-    <div class="embl-grid">
-      <div>
-        <h4 class="vf-text vf-text-heading--5">Related links:</h4>
-      </div>
+    <div class="vf-u-margin__top--xxl vf-u-margin__bottom--xxl | vf-box vf-box--normal vf-box-theme--quinary">
+      <h4 class="vf-box__heading">Related links</h4>
+
       <div>
         <?php while( have_rows('related_links') ): the_row();
 
       $source = get_sub_field('link_url');
       $description = get_sub_field('link_description');?>
-        <p class="vf-text--body vf-text-body--3"><a class="vf-link vf-link--secondary"
+        <p class="vf-box__text | vf-u-margin__bottom--sm"><a class="vf-link vf-link--secondary"
             href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
         <?php endwhile; ?>
       </div>
     </div>
     <?php endif; ?>
-
-    <p class="vf-text--body vf-text-body--3 | tags-inline">Tags:
-    <?php
+    <p class="vf-text-body vf-text-body--3 | tags-inline">Tags:
+      <?php
     $tags = get_the_tags($post->ID);
 if ($tags) {
    $tagslist = array();
    foreach($tags as $tag) {
-      $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-link vf-link--secondary | vf-text--body vf-text-body--3' . $tag->term_id . '">' . $tag->name . '</a>';
+      $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-link vf-link--secondary' . $tag->term_id . '">' . $tag->name . '</a>';
    }
    echo implode(', ', $tagslist);
 } ?></p>
   </div>
-  <div></div>
-</div>
+  <div class="social-box">
+
+    <?php include(locate_template('partials/social-icons.php', false, false)); ?>
+
+    <div class="vf-social-links | vf-u-margin__bottom--xxl">
+      <h3 class="vf-social-links__heading">
+        Share the article
+      </h3>
+      <ul class="vf-social-links__list">
+        <li class="vf-social-links__item">
+          <a class="vf-social-links__link"
+            href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
+            <span class="vf-u-sr-only">twitter</span>
+
+            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+              <use xlink:href="#vf-social--twitter"></use>
+            </svg>
+          </a>
+
+        </li>
+        <li class="vf-social-links__item">
+
+          <a class="vf-social-links__link"
+            href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
+            <span class="vf-u-sr-only">facebook</span>
+
+            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--facebook" width="24" height="24"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+              <use xlink:href="#vf-social--facebook"></use>
+            </svg>
+          </a>
+        </li>
+
+        <li class="vf-social-links__item">
+          <a class="vf-social-links__link"
+            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+            <span class="vf-u-sr-only">linkedin</span>
+
+            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+              <use xlink:href="#vf-social--linkedin"></use>
+            </svg>
+
+          </a>
+
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+</main>
 
 <section class="vf-inlay">
   <div
