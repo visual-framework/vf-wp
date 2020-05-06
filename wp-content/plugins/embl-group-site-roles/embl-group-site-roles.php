@@ -2,7 +2,7 @@
 /*
 * Plugin Name: EMBL Group Site Roles
 * Description: Custom roles setup for EMBL Groups websites
-* Version: 1.0.0-beta.1
+* Version: 1.0.0-beta.2
 * Text Domain: embl-group-site-roles
 * Author: Joseph Rossetto <jros@ebi.ac.uk>
 */
@@ -28,6 +28,41 @@ add_action('admin_menu', 'egsr_admin_menu');
 add_action('init', 'egsr_add_group_site_roles');         // Add custom roles
 
 add_action('init', 'egsr_remove_wp_roles');   // Remove default WP roles
+
+add_action('admin_init', 'egsr_fix_nine_year_old_bug');
+
+/**
+ * Users with custom roles were not appearing in the author select
+ * https://core.trac.wordpress.org/ticket/16841#comment:60
+ */
+function egsr_fix_nine_year_old_bug() {
+  // Iterate over custom roles
+  $roles = egsr_custom_site_roles();
+  foreach ($roles as $key => $role) {
+    // Get all users with this role
+    $users = new WP_User_Query(array(
+      'role' => $key
+    ));
+    $users = $users->get_results();
+    if ( ! is_array($users)) {
+      continue;
+    }
+    // Iterate over users in role and add legacy capability
+    // Level 0–7 equivalent to Editor role
+    // https://github.com/WordPress/WordPress/blob/master/wp-admin/includes/schema.php#L743
+    foreach ($users as $user) {
+      if ( ! $user->has_cap('level_7')) {
+        $user->add_cap('level_7');
+      }
+      // Make sure group admins can asign custom roles
+      if ($key === GROUP_ADMIN_ROLE) {
+        $user->add_cap('promote_users');
+      } else {
+        $user->remove_cap('promote_users');
+      }
+    }
+  }
+}
 
 // ==========================================================================
 
@@ -285,6 +320,7 @@ function egsr_group_admin_cap(){
         'add_users'                 => true,
         'create_users'              => true,
         'delete_users'              => true,
+        'promote_users'             => true,
         'delete_others_pages'       => true,
         'delete_others_posts'       => true,
         'delete_pages'              => true,
