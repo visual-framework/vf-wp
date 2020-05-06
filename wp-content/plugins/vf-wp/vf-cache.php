@@ -132,6 +132,18 @@ class VF_Cache {
       return;
     }
 
+    // Bypass the cache if disabled
+    if (VF_Cache::is_disabled()) {
+      // Fetch new content
+      $html = VF_Cache::fetch_remote($url);
+      // Check error status
+      $error = is_numeric($html) ? $html : 0;
+      if ($html === $error || vf_html_empty($html)) {
+        return '';
+      }
+      return $html;
+    }
+
     /**
      * Look for cached content from hashed URL
      * The hash is used as `post_name` for `vf_cache` post type
@@ -272,11 +284,17 @@ xhr.send('<?php echo build_query($data); ?>');
     $update = get_option('vf_cache_update');
 
     if ( ! wp_verify_nonce($nonce, "vf_nonce_{$update}")) {
-      wp_send_json_error();
+      wp_send_json_error(__('Invalid nonce', 'vfwp'));
     }
 
     // Update cache
     update_option('vf_cache_update', time());
+
+    // Skip update if cache is disabled
+    if (VF_Cache::is_disabled()) {
+      wp_send_json_error(__('Cache disabled', 'vfwp'));
+    }
+
     $this->update_cache_posts();
 
     wp_send_json_success();
