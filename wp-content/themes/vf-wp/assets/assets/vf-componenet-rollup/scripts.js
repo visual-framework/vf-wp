@@ -14,7 +14,7 @@ import { vfMastheadSetStyle } from 'vf-masthead/vf-masthead';
 vfMastheadSetStyle();
 
 import { vfGaIndicateLoaded } from 'vf-analytics-google/vf-analytics-google';
-vfGaIndicateLoaded(); 
+vfGaIndicateLoaded();
 
 import { vfTabs } from 'vf-tabs/vf-tabs';
 vfTabs();
@@ -38,6 +38,5 @@ emblBreadcrumbs();
 import { emblContentMetaProperties_Read } from 'embl-content-meta-properties/embl-content-meta-properties';
 
 import { emblNotifications } from 'embl-notifications/embl-notifications';
-emblNotifications();
-
-// No default invokation
+// if you use embl-content-hub-loader, it will automatically invoke emblNotifications
+// emblNotifications();
