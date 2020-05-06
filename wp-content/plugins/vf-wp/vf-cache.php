@@ -45,6 +45,14 @@ class VF_Cache {
   }
 
   /**
+   * Return true if the cache is disabled
+   */
+  static public function is_disabled() {
+    $is_disabled = get_field('vf_cache_disabled', 'option');
+    return in_array($is_disabled, array(true, 1));
+  }
+
+  /**
    * Return the post modified age in seconds
    */
   static public function get_post_age($post) {
@@ -122,6 +130,18 @@ class VF_Cache {
     $url = esc_url_raw($url);
     if (empty($url)) {
       return;
+    }
+
+    // Bypass the cache if disabled
+    if (VF_Cache::is_disabled()) {
+      // Fetch new content
+      $html = VF_Cache::fetch_remote($url);
+      // Check error status
+      $error = is_numeric($html) ? $html : 0;
+      if ($html === $error || vf_html_empty($html)) {
+        return '';
+      }
+      return $html;
     }
 
     /**
@@ -264,11 +284,17 @@ xhr.send('<?php echo build_query($data); ?>');
     $update = get_option('vf_cache_update');
 
     if ( ! wp_verify_nonce($nonce, "vf_nonce_{$update}")) {
-      wp_send_json_error();
+      wp_send_json_error(__('Invalid nonce', 'vfwp'));
     }
 
     // Update cache
     update_option('vf_cache_update', time());
+
+    // Skip update if cache is disabled
+    if (VF_Cache::is_disabled()) {
+      wp_send_json_error(__('Cache disabled', 'vfwp'));
+    }
+
     $this->update_cache_posts();
 
     wp_send_json_success();
@@ -394,6 +420,10 @@ xhr.send('<?php echo build_query($data); ?>');
     );
 
     if (is_admin()) {
+      add_action(
+        'admin_notices',
+        array($this, 'admin_notices')
+      );
       add_filter(
         'manage_' . $this->post_type . '_posts_columns',
         array($this, 'manage_vf_cache_posts_columns'),
@@ -503,25 +533,64 @@ xhr.send('<?php echo build_query($data); ?>');
    * Add field for Content Hub API URL
    */
   public function acf_init() {
-    acf_add_local_field(
-      array(
-        'parent' => 'group_embl_setting',
-        'key' => 'field_vf_api_url',
-        'label' => __('EMBL Content Hub', 'vfwp'),
-        'name' => 'vf_api_url',
-        'type' => 'url',
-        'instructions' => '',
-        'required' => 0,
-        'conditional_logic' => 0,
-        'wrapper' => array(
-          'width' => '',
-          'class' => '',
-          'id' => '',
+    acf_add_local_field_group(array(
+      'key' => 'group_5eb28cf840399',
+      'title' => __('Cache Settings', 'vfwp'),
+      'fields' => array(
+        array(
+          'key' => 'field_vf_api_url',
+          'label' => __('EMBL Content Hub', 'vfwp'),
+          'name' => 'vf_api_url',
+          'type' => 'url',
+          'instructions' => '',
+          'required' => 0,
+          'conditional_logic' => 0,
+          'wrapper' => array(
+            'width' => '',
+            'class' => '',
+            'id' => '',
+          ),
+          'default_value' => '',
+          'placeholder' => '',
         ),
-        'default_value' => '',
-        'placeholder' => '',
-      )
-    );
+        array(
+          'key' => 'field_vf_cache_disabled',
+          'label' => __('Disable Cache', 'vfwp'),
+          'name' => 'vf_cache_disabled',
+          'type' => 'true_false',
+          'instructions' => __('Disable the Content Hub cache. This is not advised for live websites.', 'vfwp'),
+          'required' => 0,
+          'conditional_logic' => 0,
+          'wrapper' => array(
+            'width' => '',
+            'class' => '',
+            'id' => '',
+          ),
+          'message' => '',
+          'default_value' => 0,
+          'ui' => 1,
+          'ui_on_text' => '',
+          'ui_off_text' => '',
+        ),
+      ),
+      'location' => array(
+        array(
+          array(
+            'param' => 'options_page',
+            'operator' => '==',
+            'value' => 'vf-settings',
+          ),
+        ),
+      ),
+      'menu_order' => 100,
+      'position' => 'normal',
+      'style' => 'default',
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'hide_on_screen' => '',
+      'active' => true,
+      'description' => '',
+    ));
   }
 
   /**
@@ -648,6 +717,31 @@ xhr.send('<?php echo build_query($data); ?>');
   function user_can_richedit($default) {
     if (get_post_type() === 'vf_cache') return false;
     return $default;
+  }
+
+  /**
+   * Add admin notice when cache is disabled
+   */
+  public function admin_notices() {
+    if ( ! function_exists('get_current_screen')) {
+      return;
+    }
+    $screen = get_current_screen();
+    if ($screen->id !== 'edit-vf_cache') {
+      return;
+    }
+
+    if (VF_Cache::is_disabled()) {
+      printf('<div class="%1$s"><p>%2$s %3$s</p></div>',
+        esc_attr('notice notice-error'),
+        esc_html__('The Content Hub cache is currently disabled', 'vfwp'),
+        ' <a href="'
+          . admin_url('admin.php?page=vf-settings')
+          . '" class="button button-small">'
+          . esc_html__('View Settings', 'vfwp')
+          . '</a>'
+      );
+    }
   }
 
 } // VF_Cache

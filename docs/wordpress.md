@@ -27,6 +27,7 @@ In `wp_options` table set:
 | options_vf_cdn_stylesheet | [CDN URL] | no |
 | options_vf_cdn_javascript | [CDN URL] | no |
 | options_vf_api_url | [API URL] | no |
+| options_vf_cache_disabled | 0 | no |
 
 ### CDN and API URLs (examples):
 
