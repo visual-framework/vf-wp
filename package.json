@@ -84,7 +84,7 @@
     "@visual-framework/vf-global-header": "1.0.0-rc.2",
     "@visual-framework/vf-grid": "1.0.5",
     "@visual-framework/vf-grid-page": "1.0.0",
-    "@visual-framework/vf-header": "1.0.0-rc.2",
+    "@visual-framework/vf-header": "1.0.0",
     "@visual-framework/vf-heading": "1.0.0",
     "@visual-framework/vf-hero": "1.2.0",
     "@visual-framework/vf-intro": "1.0.2",
