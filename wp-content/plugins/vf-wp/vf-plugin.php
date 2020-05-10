@@ -73,6 +73,9 @@ class VF_Plugin {
     }
     // Add ACF JSON locations
     if ($this->is_acf()) {
+      add_action('after_setup_theme',
+        array($this, 'after_setup_theme')
+      );
       add_filter(
         'acf/settings/load_json',
         array($this, 'acf_settings_load_json')
@@ -427,6 +430,51 @@ class VF_Plugin {
     VF_Plugin::do_actions($plugin, 'vf/plugin/after_render');
     VF_Plugin::do_actions($plugin, "vf/plugin/{$action}/after_render");
 
+  }
+
+  /**
+   * Action: `after_setup_theme`
+   */
+  public function after_setup_theme() {
+    if ( ! $this->is_acf()) {
+      return;
+    }
+    $name = str_replace('_', '-', $this->post()->post_name);
+    $title = $this->post()->post_title;
+    $category = VF_Blocks::block_category();
+
+    if ($this->post()->post_type === 'vf_container') {
+      // $name = "container-{$name}";
+      $name = preg_replace('#^vf-#', 'vf-container-', $name);
+      $category = VF_Containers::block_category();
+    }
+
+    // Setup render callback using VF Gutenberg plugin or fallback
+    $callback = function() {
+      $args = func_get_args();
+      $template = $this->template();
+      if (class_exists('VF_Gutenberg')) {
+        VF_Gutenberg::acf_render_template($args, $template);
+      } else {
+        $block = $args[0];
+        include($template);
+      }
+    };
+    // Register the Gutenberg block with ACF
+    acf_register_block_type(array_merge(
+      array(
+        'name'     => $name,
+        'title'    => $title,
+        'category' => $category,
+        'supports' => array(
+          'align'           => false,
+          'customClassName' => false
+        )
+      ),
+      array(
+        'render_callback' => $callback
+      )
+    ));
   }
 
   /**

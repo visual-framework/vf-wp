@@ -143,11 +143,11 @@ class VF_Templates {
       'vf_footer',
       array($this, 'vf_footer')
     );
-    // add_action(
-    //   'admin_print_footer_scripts',
-    //   array($this, 'admin_print_footer_scripts'),
-    //   100
-    // );
+    add_action(
+      'admin_print_footer_scripts',
+      array($this, 'admin_print_footer_scripts'),
+      100
+    );
   }
 
   public function activate() {
@@ -262,7 +262,7 @@ class VF_Templates {
    */
   public function block_categories($categories, $post) {
     if ($post->post_type === VF_Templates::type()) {
-      $categories = VF_Containers::block_categories(array(), $post);
+      $categories = VF_Containers::block_categories($categories, $post);
     }
     return $categories;
   }
@@ -403,7 +403,6 @@ class VF_Templates {
    * Only allow container blocks in the "Template" post type
    */
   public function admin_print_footer_scripts() {
-    /*
     $screen = get_current_screen();
     if (
       ! $screen ||
@@ -421,9 +420,6 @@ class VF_Templates {
       return;
     }
     wp.domReady(() => {
-      if (typeof wp.blocks !== 'object') {
-        return;
-      }
       const blocks = wp.blocks.getBlockTypes();
       blocks.forEach(block => {
         // Disable non-containers
@@ -432,7 +428,7 @@ class VF_Templates {
           return;
         }
         // Enable containers
-        block.supports.inserter = true;
+        // block.supports.inserter = true;
       });
     });
   };
@@ -443,7 +439,6 @@ class VF_Templates {
 })();
 </script>
 <?php
-*/
   }
 
 } // VF_Templates
