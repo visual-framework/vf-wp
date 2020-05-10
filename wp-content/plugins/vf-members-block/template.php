@@ -1,12 +1,28 @@
 <?php
 
-$limit = get_field('vf_members_limit');
-$order = get_field('vf_members_order');
-$varition = get_field('vf_members_variation');
-$leader = get_field('vf_members_leader');
-$team = get_field('vf_members_team');
-$term_id = get_field('vf_members_term');
-$keyword = get_field('vf_members_keyword');
+$id = false;
+
+// Use plugin defaults for ACF blocks if not customized
+if (class_exists('VF_Plugin')) {
+  global $vf_plugin;
+  if (isset($block) && get_field('defaults')) {
+    $name = $block['name'];
+    $name = str_replace('-', '_', $name);
+    $name = str_replace('acf/', '', $name);
+    $vf_plugin = VF_Plugin::get_plugin($name);
+  }
+  if ($vf_plugin) {
+    $id = $vf_plugin->post()->ID;
+  }
+}
+
+$limit = get_field('vf_members_limit', $id);
+$order = get_field('vf_members_order', $id);
+$varition = get_field('vf_members_variation', $id);
+$leader = get_field('vf_members_leader', $id);
+$team = get_field('vf_members_team', $id);
+$term_id = get_field('vf_members_term', $id);
+$keyword = get_field('vf_members_keyword', $id);
 
 $limit = intval($limit);
 $limit = $limit < 1 || $limit > 50 ? 50 : $limit;
