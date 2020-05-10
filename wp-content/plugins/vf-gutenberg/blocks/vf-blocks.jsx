@@ -48,7 +48,9 @@ if (parseInt(coreOptin) === 1) {
   coreBlocks.forEach((settings) => registerBlockType(settings.name, settings));
 }
 
-// Register VF Plugin blocks
+// DEPRECATED
+// Register deprecated VF Plugin blocks for legacy support
+// These blocks are placed by full ACF versions
 for (const [name, plugin] of Object.entries(plugins)) {
   const settings = useVFPluginSettings({
     name,

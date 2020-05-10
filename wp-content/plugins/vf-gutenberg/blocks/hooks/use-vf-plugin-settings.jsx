@@ -1,4 +1,8 @@
 /**
+ * DEPRECATED
+ * These plugins exist as a legacy fallback
+ * Only new ACF versions are visible to the editor
+ *
  * Generate new Gutenberg block settings from defaults.
  * Provide `VFBlockFields` using `useVFPlugin` configuration.
  */
@@ -29,6 +33,13 @@ const useVFPluginSettings = settings => {
     ...defaults.attributes,
     ...(attributes || {})
   };
+
+  // Avoid future usage
+  supports = {
+    ...supports,
+    inserter: false,
+    reusable: false
+  }
 
   // Enable `mode` attribute
   if (hasFields) {
