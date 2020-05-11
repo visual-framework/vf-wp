@@ -19,7 +19,7 @@ if (class_exists('VF_Group_Header')) {
   VF_Plugin::render($vf_group_header);
 }
 
-$keyword = $vf_jobs->get_query_keyword();
+$keyword = isset($_GET['filter_keyword']) ? vf_search_keyword($_GET['filter_keyword']) : '';
 
 global $vf_theme;
 
@@ -68,8 +68,8 @@ function vf__jobs_filter_script() {
   }
   $wp_terms = embl_taxonomy()->register->get_wp_taxonomy();
 
-  $vf_jobs = VF_Plugin::get_plugin('vf_jobs');
-  $keyword = $vf_jobs->get_query_keyword();
+
+  $keyword = isset($_GET['filter_keyword']) ? vf_search_keyword($_GET['filter_keyword']) : '';
 
   $options = array();
   $exclude = array('Who', 'What', 'Where');

@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Jobs
 Description: VF-WP theme block.
-Version: 1.0.0-beta.1
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -23,16 +23,6 @@ class VF_Jobs extends VF_Plugin {
     'post_title' => 'Jobs',
   );
 
-  private $term_who;
-  private $term_what;
-  private $term_where;
-
-  protected $API = array(
-    'pattern'             => 'vf-jobs-snippet',
-    'filter-content-type' => 'jobs',
-    'source'              => 'contenthub',
-  );
-
   function __construct(array $params = array()) {
     parent::__construct('vf_jobs');
     if (array_key_exists('init', $params)) {
@@ -42,96 +32,14 @@ class VF_Jobs extends VF_Plugin {
 
   private function init() {
     parent::initialize();
-    add_action('init', array($this, 'add_taxonomy_fields'), 11);
-  }
-
-  function api_url(array $query_vars = array()) {
-    $limit = intval(get_field('vf_jobs_limit', $this->post()->ID));
-
-    $vars = array(
-      'limit' => $limit ? $limit : 10
-    );
-
-    $sort_key = 'sort-field-value[created]';
-    $sort_order = 'DESC';
-    $vars[$sort_key] = $sort_order;
-
-    $filter_key = 'filter-all-fields';
-
-    // Prioritize user keyword search if defined
-    if ( ! empty($this->get_query_keyword())) {
-      $vars[$filter_key] = $this->get_query_keyword();
-
-    // Otherwise use defaults
-    } else if (function_exists('embl_taxonomy')) {
-      $term = null;
-      $filter = get_field('vf_jobs_filter', $this->post()->ID);
-      switch ( $filter ) {
-        case 'cluster':
-          $term = $this->get_term('what');
-          $parent_count = count($term->meta['embl_taxonomy_ids']) - 2;
-          if ($parent_count > 0) {
-            $term = embl_taxonomy_get_term($term->meta['embl_taxonomy_ids'][$parent_count]);
-          }
-          $filter_key = 'filter-all-fields';
-          break;
-        case 'what':
-          $term = $this->get_term('what');
-          $filter_key = 'filter-field-contains[field_jobs_group]';
-          break;
-        case 'where':
-          $term = $this->get_term('where');
-          $filter_key = 'filter-field-contains[field_jobs_duty_station]';
-          break;
-        case 'term':
-          $term = get_field('vf_jobs_term', $this->post()->ID);
-          $term = intval($term);
-          if (is_int($term)) {
-            $term = embl_taxonomy_get_term($term);
-          }
-          break;
-      }
-      if ($term instanceof WP_Term) {
-        // $where_last_word = explode(' ',$term->name);
-        // $where_last_word = array_pop($where_last_word);
-        $vars[$filter_key] = $term->meta[EMBL_Taxonomy::META_NAME];
-      }
-    }
-
-    return parent::api_url(
-      array_merge($vars, $query_vars)
+    add_action('after_setup_theme',
+      array($this, 'add_taxonomy_fields'),
+      10
     );
   }
 
   /**
-   * Return the global config
-   */
-  function get_term($key = '') {
-    if ( ! function_exists('embl_taxonomy_get_term')) {
-      return null;
-    }
-    $key = "term_{$key}";
-    if ( ! $this->$key instanceof WP_Term) {
-      $this->$key = embl_taxonomy_get_term(
-        embl_taxonomy()->settings->get_field("embl_taxonomy_{$key}")
-      );
-    }
-    return $this->$key;
-  }
-
-  /**
-   * Return the keyword value to filter by from the query string
-   */
-  function get_query_keyword() {
-    $str = '';
-    if (array_key_exists('filter_keyword', $_GET)) {
-      $str = vf_search_keyword($_GET['filter_keyword']);
-    }
-    return $str;
-  }
-
-  /**
-   * Action: `init`
+   * Action: `after_setup_theme`
    * Add additional configuration if the EMBL Taxonomy plugin exists
    * Cannot run on `acf/init` because taxonomy is not registered
    */
@@ -144,9 +52,15 @@ class VF_Jobs extends VF_Plugin {
 
     if (function_exists('embl_taxonomy')) {
       // Get global settings
-      $who = $this->get_term('who');
-      $what = $this->get_term('what');
-      $where = $this->get_term('where');
+      $who = embl_taxonomy_get_term(
+        embl_taxonomy()->settings->get_field('embl_taxonomy_term_who')
+      );
+      $what = embl_taxonomy_get_term(
+        embl_taxonomy()->settings->get_field('embl_taxonomy_term_what')
+      );
+      $where = embl_taxonomy_get_term(
+        embl_taxonomy()->settings->get_field('embl_taxonomy_term_where')
+      );
 
       $format = '%1$s (%2$s)';
 
@@ -157,18 +71,17 @@ class VF_Jobs extends VF_Plugin {
           $where->name
         );
       }
+
       if ($what) {
         $choices['what'] = sprintf(
           $format,
           __('Jobs in my team', 'vfwp'),
           $what->name
         );
-
         // If there is a "what" and it has parents, enable a cluster choice
         $what_parent_count = count($what->meta['embl_taxonomy_ids']) - 2;
         if ($what_parent_count > 0) {
           $cluster = embl_taxonomy_get_term($what->meta['embl_taxonomy_ids'][$what_parent_count]);
-
           if ($cluster) {
             $choices['cluster'] = sprintf(
               $format,
