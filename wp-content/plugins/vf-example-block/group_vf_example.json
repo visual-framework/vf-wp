@@ -271,6 +271,13 @@
                 "operator": "==",
                 "value": "vf_example"
             }
+        ],
+        [
+          {
+            "param": "block",
+            "operator": "==",
+            "value": "acf/vf-example"
+          }
         ]
     ],
     "menu_order": 0,
