@@ -2017,10 +2017,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-list/-/vf-list-1.0.0.tgz#b9811e51b9abf7951f02525c9d71b70fe04d3ec3"
   integrity sha512-8JID0VCV4+X5zvX7DjCyzqXJX4is9wehf0fLDJJnBPzwziJ+Rgy9PdzH6AAbcEWUTdlLtSczWE7uMJyMst5tGQ==
 
-"@visual-framework/vf-masthead@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.0.2.tgz#4c64a624fae5acf89f20c6fa90e2016dcac6f948"
-  integrity sha512-zZ6ECTp47onr07ubUgHXARjWuEwEFdOvenewgSt/qlUq3hYdbViCKIjsdX8isXtX+6Sql8EE4n4g8TtuGJh4zg==
+"@visual-framework/vf-masthead@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.0.3.tgz#1e22cce9ada1c43d2341af29fd4b7576d72afa76"
+  integrity sha512-ENA0GF9nRh5LN7NHDS5xIch3hA9IHXcDzG/yl0eQvZO+ZK3ASSR/XSbB/5ujLHZ5wWMuGUVG0n00OZlfxQeFLQ==
 
 "@visual-framework/vf-navigation@1.2.0":
   version "1.2.0"
