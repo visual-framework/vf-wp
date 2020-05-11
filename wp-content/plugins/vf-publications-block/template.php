@@ -30,7 +30,7 @@ if (empty($searchType)) {
   $searchType = 'team';
 }
 
-$searchQuery = get_field('vf_publications_query',$acf_id);
+$searchQuery = get_field('vf_publications_query', $acf_id);
 $searchQuery = trim($searchQuery);
 $searchQuery = str_replace(' ', '-', $searchQuery);
 

@@ -44,20 +44,3 @@ Order of publications (Content Hub API).
 **Value**: integer (range: 1–10, default: 1)
 
 Maximum number of publications to display (Content Hub API).
-
-## Page Template
-
-The theme includes a page template entitled "Publications" (`template-publications.php`).
-
-This template provides a sidebar form to manage query string values:
-
-* `filter_keyword` (text field)
-* `filter_year` (select field, e.g. "2019")
-
-The `VF_Publications_group_ebi` class has two methods (`get_query_year()`, `get_query_keyword()`) that can be used for API calls.
-
-For the `post_id` of the "Publications" page:
-
-| meta_key | meta_value |
-| -------- | ---------- |
-| \_wp_page_template | template-publications.php |

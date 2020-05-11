@@ -74,6 +74,13 @@
                 "operator": "==",
                 "value": "vf_publications_group_ebi"
             }
+        ],
+        [
+          {
+            "param": "block",
+            "operator": "==",
+            "value": "acf/vf-publications-group-ebi"
+          }
         ]
     ],
     "menu_order": 0,
@@ -84,5 +91,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1543831498
+    "modified": 1589192031
 }
