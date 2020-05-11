@@ -4,7 +4,7 @@ $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 $tags = get_the_tags($post->ID);
-$social_url = get_the_permalink(); 
+$social_url = get_the_permalink();
 
 
 get_header();
@@ -51,10 +51,10 @@ the_post();
       <?php endif; ?>
 
     </aside>
-    <?php 
+    <?php
 if( get_field('press_contact') == 'EMBL-EBI Oana Stroe' ) { ?>
     <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>Oana Stroe</b></br>Sr. Communications Officer</br></br>EMBL-EBI, Wellcome Genome
         Campus,
         Hinxton, Cambridgeshire, CB10 1SD,
@@ -65,7 +65,7 @@ if( get_field('press_contact') == 'EMBL-EBI Oana Stroe' ) { ?>
 
 else if( get_field('press_contact') == 'EMBL Annika Grandison' ) { ?>
     <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>Annika Grandison</b></br>Engagement Team Lead</br></br>Meyerhofstraße 1, 69117
         Heidelberg,
         Germany</p>
@@ -75,7 +75,7 @@ else if( get_field('press_contact') == 'EMBL Annika Grandison' ) { ?>
 
  else if( get_field('press_contact') == 'EMBL-EBI Rodica Petrusevschi' ) { ?>
     <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>Rodica Petrusevschi</b></br>Digital Strategy Officer</br></br>EMBL-EBI, Wellcome Genome
         Campus, Hinxton, Cambridgeshire, CB10 1SD,
         UK</p>
@@ -85,7 +85,7 @@ else if( get_field('press_contact') == 'EMBL Annika Grandison' ) { ?>
 
 else if( get_field('press_contact') == 'EMBL Mathias Jaeger' ) { ?>
     <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>Mathias Jäger</b></br>EMBL Press Officer</br></br>Meyerhofstraße 1, 69117 Heidelberg,
         Germany
       </p>
@@ -95,7 +95,7 @@ else if( get_field('press_contact') == 'EMBL Mathias Jaeger' ) { ?>
 
 else if( get_field('press_contact') == 'EMBL Generic' ) { ?>
     <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>EMBL Press Office</b></br></br>Meyerhofstraße 1, 69117 Heidelberg, Germany
       </p>
       <p class="vf-box__text"><a href="mailto:pressoffice@embl.de">pressoffice@embl.de</a></br>+49 6221 387-8726</p>
@@ -104,35 +104,35 @@ else if( get_field('press_contact') == 'EMBL Generic' ) { ?>
 
 else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
     <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact:</p>
+      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>EMBL-EBI</br>Press Office</b></br></br>EMBL-EBI, Wellcome Genome Campus, Hinxton,
         Cambridgeshire, CB10 1SD,
         UK</p>
       <p class="vf-box__text"><a href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
     </div>
     <?php }
-            
+
 else {} ?>
 
   </div>
   <div class="vf-content | vf-u-padding__bottom--xxl">
     <h1><?php the_title(); ?></h1>
 
-    <?php if( have_rows('translations') ): 
+    <?php if( have_rows('translations') ):
                     $all_fields_count = count(get_field('translations'));
                     $fields_count = 1;
       ?>
     <div class="vf-banner vf-banner--alert vf-banner--info">
       <div class="vf-banner__content">
         <p class="vf-banner__text">This article is also available in
-          <?php while( have_rows('translations') ): the_row(); 
+          <?php while( have_rows('translations') ): the_row();
         $anchor = get_sub_field('translation_anchor');
         $language = get_sub_field('translation_language', false, false);?>
-          <a href="<?php echo esc_url( $anchor ); ?>"><?php echo ($language) ?></a><?php 
+          <a href="<?php echo esc_url( $anchor ); ?>"><?php echo ($language) ?></a><?php
        if ($fields_count == $all_fields_count - 1) {
-          echo " and"; } 
+          echo " and"; }
          else if ($fields_count == $all_fields_count) {
-          echo "."; } 
+          echo "."; }
         else {
           echo ","; }
         $fields_count++; ?>
