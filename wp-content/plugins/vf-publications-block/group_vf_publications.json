@@ -119,6 +119,13 @@
                 "operator": "==",
                 "value": "vf_publications"
             }
+        ],
+        [
+          {
+            "param": "block",
+            "operator": "==",
+            "value": "acf/vf-publications"
+          }
         ]
     ],
     "menu_order": 0,
@@ -129,5 +136,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1543831498
+    "modified": 1589189297
 }
