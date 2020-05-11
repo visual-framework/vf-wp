@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Factoid
 Description: VF-WP theme block.
-Version: 1.0.0-beta.1
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
