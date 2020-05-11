@@ -1,7 +1,7 @@
 /**!
- * VF Plugin block preview
+ * VF-WP Plugins
  */
-(function($, wp, acf) {
+(function ($, wp, acf) {
   if (
     typeof $ !== 'function' ||
     typeof wp !== 'object' ||
@@ -14,22 +14,34 @@
   if (typeof config !== 'object') {
     return;
   }
-  wp.domReady(function() {
-    var fields = acf.getFields();
-    fields.forEach(function(field) {
-      var data = field.data;
+
+  /**
+   * Setup live preview update
+   */
+  const __experimental__has_admin_preview = () => {
+    // Configure ACF fields
+    const fields = acf.getFields();
+    fields.forEach(field => {
+      const data = field.data;
       // Get related input field for jQuery
-      var $input = field.$input();
+      const $input = field.$input();
       if (!$input || !$input.length) {
         return;
       }
-      data.value = field.val();
-      wp.hooks.doAction('vf__experimental__acf_update', data);
       // Bind change event to WordPress hook
-      $input.on('change', function(e) {
+      const onChange = ev => {
         data.value = field.val();
         wp.hooks.doAction('vf__experimental__acf_update', data);
-      });
+      };
+      $input.on('change', onChange);
+      // Update initial preview props
+      onChange(null);
     });
-  });
+  };
+
+  const wpDomReady = () => {
+    __experimental__has_admin_preview();
+  };
+
+  wp.domReady(wpDomReady);
 })(window.jQuery, window.wp, window.acf);
