@@ -165,7 +165,15 @@ function vfBannerInsert(banner, bannerId, scope) {
 
 
   if (banner.vfJsBannerButtonText && (banner.vfJsBannerState === 'blocking' || banner.vfJsBannerState === 'dismissible')) {
-    generatedBannerHtml += '<button class="vf-button vf-button--secondary" data-vf-js-banner-close>' + banner.vfJsBannerButtonText + '</button>';
+    if (banner.vfJsBannerButtonTheme == 'primary') {
+      generatedBannerHtml += '<button class="vf-button vf-button--primary" data-vf-js-banner-close>' + banner.vfJsBannerButtonText + '</button>';
+    } else if (banner.vfJsBannerButtonTheme == 'secondary') {
+      generatedBannerHtml += '<button class="vf-button vf-button--secondary" data-vf-js-banner-close>' + banner.vfJsBannerButtonText + '</button>';
+    } else if (banner.vfJsBannerButtonTheme == 'tertiary') {
+      generatedBannerHtml += '<button class="vf-button vf-button--tertary" data-vf-js-banner-close>' + banner.vfJsBannerButtonText + '</button>';
+    } else {
+      generatedBannerHtml += '<button class="vf-button vf-button--secondary" data-vf-js-banner-close>' + banner.vfJsBannerButtonText + '</button>';
+    }
   }
 
   generatedBannerHtml += '</div>'; // set the html of the banner
@@ -252,38 +260,45 @@ function vfMastheadSetStyle() {
 
     var cBrightness = 255; // default to above the threshold
 
-    if (regHex.test(hexcode)) {
-      var cutHex = function cutHex(h) {
-        return h.charAt(0) == "#" ? h.substring(1, 7) : h;
-      };
+    var modalAlertClasses = ['vf-masthead--with-title-block'];
+    var modal = document.querySelector('.vf-masthead');
 
-      var hexToR = function hexToR(h) {
-        return parseInt(cutHex(h).substring(0, 2), 16);
-      };
+    if (modal.classList.contains(modalAlertClasses)) {} else {
+      if (regHex.test(hexcode)) {
+        var cutHex = function cutHex(h) {
+          return h.charAt(0) == "#" ? h.substring(1, 7) : h;
+        };
 
-      var hexToG = function hexToG(h) {
-        return parseInt(cutHex(h).substring(2, 4), 16);
-      };
+        var hexToR = function hexToR(h) {
+          return parseInt(cutHex(h).substring(0, 2), 16);
+        };
 
-      var hexToB = function hexToB(h) {
-        return parseInt(cutHex(h).substring(4, 6), 16);
-      };
+        var hexToG = function hexToG(h) {
+          return parseInt(cutHex(h).substring(2, 4), 16);
+        };
 
-      var getCorrectTextColor = function getCorrectTextColor(hex) {
-        var hRed = hexToR(hex);
-        var hGreen = hexToG(hex);
-        var hBlue = hexToB(hex);
-        return (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
-      };
+        var hexToB = function hexToB(h) {
+          return parseInt(cutHex(h).substring(4, 6), 16);
+        };
 
-      if (!bannerBGC) return;
-      bannerBGC = bannerBGC.trim();
-      cBrightness = getCorrectTextColor(bannerBGC);
+        var getCorrectTextColor = function getCorrectTextColor(hex) {
+          var hRed = hexToR(hex);
+          var hGreen = hexToG(hex);
+          var hBlue = hexToB(hex);
+          return (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
+        };
 
-      if (cBrightness > threshold) {
-        el.style.setProperty('--vf-masthead__color--foreground', "#000000");
-      } else if (cBrightness < threshold) {
-        el.style.setProperty('--vf-masthead__color--foreground', "#FFFFFF");
+        if (!bannerBGC) return;
+        bannerBGC = bannerBGC.trim();
+        cBrightness = getCorrectTextColor(bannerBGC);
+
+        if (cBrightness > threshold) {
+          el.style.setProperty('--vf-masthead__color--foreground-default', "#000000");
+        } else if (cBrightness < threshold) {
+          el.style.setProperty('--vf-masthead__color--foreground-default', "#FFFFFF");
+        }
+      } else {
+        el.style.setProperty('--vf-masthead__bg-image', "none");
       }
     }
   }

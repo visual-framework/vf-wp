@@ -1411,7 +1411,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.1.3
+ * Version: 1.1.4
  * Location: components/vf-core-
  */
 .vf-content h1:not([class*='vf-']) {
@@ -1663,12 +1663,12 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
   margin-bottom: 32px;
 }
 
-.vf-content .vf-figure--float-inline-start {
+.vf-content .vf-figure--align-inline-start {
   margin-bottom: 32px;
   margin-right: 32px;
 }
 
-.vf-content .vf-figure--float-inline-end {
+.vf-content .vf-figure--align-inline-end {
   margin-bottom: 32px;
   margin-left: 32px;
 }
