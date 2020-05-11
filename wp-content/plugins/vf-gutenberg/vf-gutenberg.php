@@ -276,7 +276,7 @@ class VF_Gutenberg {
    * Callback for `acf_register_block_type` to render within iframe
    * $args = array($block, $content, $is_preview, $post_id)
    */
-  static function acf_render_template($args, $template) {
+  static function acf_render_template($args, $template, $acf_id = false) {
     $is_preview = $args[2];
     if ( ! file_exists($template)) {
       if ($is_preview) {

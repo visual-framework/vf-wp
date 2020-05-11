@@ -74,10 +74,14 @@ class VF_Blocks extends VF_Type {
       $callback = function() use ($plugin) {
         $args = func_get_args();
         $template = $plugin->template();
+        $block = $args[0];
+        $acf_id = $plugin->post()->ID;
+        if ( ! get_field('defaults', $block['id'])) {
+          $acf_id = $block['id'];
+        }
         if (class_exists('VF_Gutenberg')) {
-          VF_Gutenberg::acf_render_template($args, $template);
+          VF_Gutenberg::acf_render_template($args, $template, $acf_id);
         } else {
-          $block = $args[0];
           include($template);
         }
       };
