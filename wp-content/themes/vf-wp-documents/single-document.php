@@ -9,7 +9,7 @@ $topics = get_the_terms( $post->ID , 'document_topic' );
 get_template_part('partials/vf-intro');
 
 ?>
-<div class="vf-grid">
+<div class="embl-grid">
   <div>
     <?php get_template_part('partials/document-filter'); ?>
   </div>
