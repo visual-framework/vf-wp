@@ -1,4 +1,4 @@
-# Publications (block)
+# Publications Group EBI (block)
 
 To display a list of team or group publications from the Content Hub.
 
