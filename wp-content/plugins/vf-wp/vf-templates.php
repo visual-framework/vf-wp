@@ -126,11 +126,6 @@ class VF_Templates {
       10, 2
     );
     add_filter(
-      'block_categories',
-      array($this, 'block_categories'),
-      999, 2
-    );
-    add_filter(
       'theme_page_templates',
       array($this, 'theme_page_templates'),
       999, 1
@@ -142,11 +137,6 @@ class VF_Templates {
     add_action(
       'vf_footer',
       array($this, 'vf_footer')
-    );
-    add_action(
-      'admin_print_footer_scripts',
-      array($this, 'admin_print_footer_scripts'),
-      100
     );
   }
 
@@ -254,17 +244,6 @@ class VF_Templates {
       $post_states[] = __('Default Template', 'vfwp');
     }
     return $post_states;
-  }
-
-  /**
-   * Action: `block_categories`
-   * Only allow container category in Gutenberg editor
-   */
-  public function block_categories($categories, $post) {
-    if ($post->post_type === VF_Templates::type()) {
-      $categories = VF_Containers::block_categories($categories, $post);
-    }
-    return $categories;
   }
 
   /**
@@ -397,48 +376,6 @@ class VF_Templates {
       $container = VF_Plugin::get_plugin($post_name);
       VF_Plugin::render($container);
     }
-  }
-
-  /**
-   * Only allow container blocks in the "Template" post type
-   */
-  public function admin_print_footer_scripts() {
-    $screen = get_current_screen();
-    if (
-      ! $screen ||
-        $screen->parent_base !== 'edit' ||
-        $screen->post_type !== VF_Templates::type()
-    ) {
-      return;
-    }
-    $category = VF_Containers::block_category();
-?>
-<script type="text/javascript">
-(function() {
-  const onReady = () => {
-    if (typeof wp !== 'object') {
-      return;
-    }
-    wp.domReady(() => {
-      const blocks = wp.blocks.getBlockTypes();
-      blocks.forEach(block => {
-        // Disable non-containers
-        if (block.category !== '<?php echo $category; ?>') {
-          wp.blocks.unregisterBlockType(block.name);
-          return;
-        }
-        // Enable containers
-        // block.supports.inserter = true;
-      });
-    });
-  };
-  document.addEventListener(
-    'DOMContentLoaded',
-    onReady
-  );
-})();
-</script>
-<?php
   }
 
 } // VF_Templates

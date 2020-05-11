@@ -188,7 +188,7 @@ class VF_Gutenberg {
         '/assets/vf-blocks' . (vf_debug() ? '' : '.min') .  '.js',
         __FILE__
       ),
-      array('wp-editor', 'wp-blocks'),
+      array('wp-editor', 'wp-blocks', 'vf-plugin'),
       false,
       true
     );
@@ -535,8 +535,12 @@ if (ResizeObserver) {
         $data['fields']   = array();
         $data['supports'] = array(
           'customClassName' => false,
-          'reusable'        => false
+          'reusable'        => false,
+          'inserter'        => false
         );
+        if ($post_name === 'vf_page_template') {
+          $data['supports']['multiple'] = false;
+        }
       }
       if ($plugin->is_deprecated()) {
         $data['supports']['inserter'] = false;

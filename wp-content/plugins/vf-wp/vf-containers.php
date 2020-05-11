@@ -21,11 +21,11 @@ class VF_Containers extends VF_Type {
 
   public function initialize() {
     parent::initialize();
-    // add_filter(
-    //   'block_categories',
-    //   array($this, 'block_categories'),
-    //   10, 2
-    // );
+    add_filter(
+      'block_categories',
+      array($this, 'block_categories'),
+      10, 2
+    );
   }
 
   public function activate() {
@@ -38,7 +38,6 @@ class VF_Containers extends VF_Type {
 
   /**
    * Action: `block_categories`
-   * Do not add by default - only enabled for `vf_template` post type
    */
   static public function block_categories($categories, $post) {
     return array_merge(

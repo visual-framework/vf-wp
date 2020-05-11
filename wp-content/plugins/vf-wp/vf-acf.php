@@ -32,15 +32,13 @@ class VF_ACF {
   }
 
   /**
-   * Enqeue script for live plugin previews
+   * Enqeue script for plugins
    */
   function enqueue_block_editor_assets() {
     global $post;
-    $plugin = VF_Plugin::get_plugin($post->post_name);
 
-    if ( ! $plugin || ! $plugin->__experimental__has_admin_preview()) {
-      return;
-    }
+    // If editing plugin post
+    $plugin = VF_Plugin::get_plugin($post->post_name);
 
     wp_register_script(
       'vf-plugin',
@@ -52,10 +50,10 @@ class VF_ACF {
       false,
       true
     );
-
-    $local = $plugin->config();
-
-    wp_localize_script('vf-plugin', 'vfPlugin', $local);
+    wp_localize_script('vf-plugin', 'vfPlugin', array(
+      'plugin' => $plugin ? $plugin->config() : null,
+      'post_type' => get_post_type()
+    ));
     wp_enqueue_script('vf-plugin');
   }
 
