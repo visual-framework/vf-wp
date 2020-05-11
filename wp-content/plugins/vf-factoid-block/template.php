@@ -12,7 +12,7 @@ $id = trim($id);
 $vars = array(
   'source'              => 'contenthub',
   'filter-content-type' => 'factoid',
-  'pattern'             => "vf-factoid",
+  'pattern'             => 'vf-factoid',
   'limit'               => $limit
 );
 
