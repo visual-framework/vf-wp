@@ -5,21 +5,22 @@ get_header();
 get_template_part('partials/vf-intro');
 
 ?>
+
 <div class="embl-grid">
 
   <div>
     <?php get_template_part('partials/document-filter'); ?>
   </div>
 
-  <div class="vf-content">
-    <div class="vf-grid vf-grid__col-2">
 
-<?php
+    <div class="vf-grid vf-grid__col-2 | vf-content">
+
+    <?php
 
 if ( have_posts() ) {
   while ( have_posts() ) {
     the_post();
-    get_template_part('partials/vf-summary--article-no-thumbnail');
+    get_template_part('partials/vf-summary--document');
   }
 } else {
   echo '<p>', __('No documents found', 'vfwp'), '</p>';
@@ -29,12 +30,20 @@ if ( have_posts() ) {
 
     </div>
     <!--/vf-grid-->
-  </div>
+    <div class="vf-grid"> <?php vf_pagination();?></div>
+
   <!--/vf-content-->
 </div>
 <!--/embl-grid-->
+
+
 <?php
 
 get_footer();
 
 ?>
+
+
+
+
+

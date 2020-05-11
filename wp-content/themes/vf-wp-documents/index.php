@@ -1,8 +1,8 @@
 <?php
 
 if (
-  is_tax('document_topics') ||
-  is_tax('document_types')
+  is_tax('document_topic') ||
+  is_tax('document_type')
 ) {
   get_template_part('archive-document');
   return;
@@ -12,8 +12,9 @@ get_header();
 
 get_template_part('partials/vf-intro');
 
+$page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 ?>
-<div class="embl-grid">
+<div class="vf-grid">
 
   <div>
     <?php get_template_part('partials/document-filter'); ?>
@@ -21,32 +22,22 @@ get_template_part('partials/vf-intro');
 
   <div class="vf-content">
 
-    <p><?php
-      printf(
-        esc_html__('There are currently %1$d documents in the repository', 'vfwp'),
-        get_all_them_posts()
-      ); ?></p>
+<h4 class="vf-text vf-text-heading--4 | vf-u-margin__top--0">Recently added:</h4>
 
     <div class="vf-grid vf-grid__col-2">
 
 <?php
 
-$query = new WP_Query(
-array(
-    'posts_per_page' => 8,
-    'post_type'      => 'document',
-    'post_status'    => 'publish'
-  )
-);
+ $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+ $args = array(
+  'post_type' => 'document',
+  'posts_per_page' => 10,
+  'paged' => $page,);
+query_posts($args);?>
 
-if ( $query->have_posts() ) {
-  while ( $query->have_posts() ) {
-    $query->the_post();
-    get_template_part('partials/vf-summary--article-no-thumbnail');
-  }
-} else {
-  echo '<p>', __('No documents found', 'vfwp'), '</p>';
-}
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+<?php get_template_part('partials/vf-summary--document'); ?>
+<?php endwhile; endif; 
 
 wp_reset_postdata();
 
@@ -57,10 +48,9 @@ $archive = home_url('/?post_type=document');
 
     </div>
     <!--/vf-grid-->
-
-    <a href="<?php echo esc_url($archive); ?>" class="vf-button vf-button--primary vf-button--sm">
-      <?php esc_html_e('View all'); ?>
-    </a>
+    <div class="vf-grid"> <?php vf_pagination();
+      ?>
+      </div>
 
   </div>
   <!--/vf-content-->

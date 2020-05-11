@@ -1,55 +1,11 @@
 {
-    "key": "group_5e8adea23bacc",
-    "title": "Document custom fields",
+    "key": "group_5e9ff067b08b8",
+    "title": "Document details",
     "fields": [
         {
-            "key": "field_5e8b42965f35f",
-            "label": "Document category",
-            "name": "document_category",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "taxonomy": "categories",
-            "field_type": "radio",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "id",
-            "multiple": 0
-        },
-        {
-            "key": "field_5e8ae0cc627eb",
-            "label": "Document type",
-            "name": "document_type",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "taxonomy": "types",
-            "field_type": "radio",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "id",
-            "multiple": 0
-        },
-        {
-            "key": "field_5e8ae120532b1",
+            "key": "field_5e9ff067b765d",
             "label": "File upload",
-            "name": "file_upload",
+            "name": "vf-document_file_upload",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -63,10 +19,10 @@
             "min": 0,
             "max": 0,
             "layout": "table",
-            "button_label": "Add language",
+            "button_label": "Add document",
             "sub_fields": [
                 {
-                    "key": "field_5e8ae13b532b2",
+                    "key": "field_5e9ff067bff46",
                     "label": "Language",
                     "name": "language",
                     "type": "select",
@@ -94,7 +50,7 @@
                     "placeholder": ""
                 },
                 {
-                    "key": "field_5e8ae183532b3",
+                    "key": "field_5e9ff067bffa5",
                     "label": "File",
                     "name": "file",
                     "type": "file",
@@ -115,9 +71,121 @@
             ]
         },
         {
-            "key": "field_5e8b154d22ca5",
+            "key": "field_5e9ff067b75cd",
+            "label": "Document topic",
+            "name": "vf-document_topic",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "document_topic",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_5e9ff067b761b",
+            "label": "Document type",
+            "name": "vf-document_type",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "document_type",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_5eb129aabf2c9",
+            "label": "Annexes",
+            "name": "vf-document_annexes",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add language",
+            "sub_fields": [
+                {
+                    "key": "field_5eb129aabf2ca",
+                    "label": "Language",
+                    "name": "language",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "English": "EN",
+                        "Deutsch": "DE",
+                        "French": "FR",
+                        "Italian": "IT",
+                        "Spanish": "ES"
+                    },
+                    "default_value": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "return_format": "label",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5eb129aabf2cb",
+                    "label": "File",
+                    "name": "file",
+                    "type": "file",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_size": "",
+                    "max_size": "",
+                    "mime_types": ""
+                }
+            ]
+        },
+        {
+            "key": "field_5e9ff067c791f",
             "label": "Last update",
-            "name": "last_update",
+            "name": "vf-document_last_update",
             "type": "date_picker",
             "instructions": "",
             "required": 0,
@@ -132,10 +200,10 @@
             "first_day": 1
         },
         {
-            "key": "field_5e8b15db44cd4",
+            "key": "field_5e9ff067ca90b",
             "label": "File type",
-            "name": "file_type",
-            "type": "text",
+            "name": "vf-document_file_type",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -144,11 +212,22 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "choices": {
+                "PDF": "PDF",
+                "DOC": "DOC",
+                "PPT": "PPT",
+                "XLS": "XLS",
+                "JPG": "JPG"
+            },
+            "default_value": [
+                "PDF"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -167,6 +246,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
-    "modified": 1586441479
+    "description": ""
 }
