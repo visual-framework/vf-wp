@@ -40,6 +40,14 @@ If configured they require a `data` and `mode` property with `field_defaults` se
 <!-- wp:acf/vf-members {"id":"block_5eb937ea938af","name":"acf/vf-members","data":{"field_defaults":"0","field_vf_members_limit":"2","field_vf_members_order":"DESC","field_5ea988878eacf":"default","field_5ea983003e756":"0","field_vf_members_variation":"s"},"mode":"preview"} /-->
 ```
 
+Old plugin versions used the format:
+
+```html
+<!-- wp:vf/members {"ver":"1.0.0"} /-->
+```
+
+This format is now deprecated. Existing block used in this way are rendered with the new ACF templates to support backwards compatibility.
+
 ## Page Templates
 
 Blocks registered via a plugin can be hard-coded into theme templates:

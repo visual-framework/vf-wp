@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Latest Posts (block)
 
 Display the latest WordPress blog post in a `vf-summary--article` Visual Framework pattern followed by three more aside in a `vf-box--inlay` pattern.
