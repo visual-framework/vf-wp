@@ -41,11 +41,11 @@ class VF_Templates {
   static public function default_template() {
     $post_content = '
 
-<!-- wp:vf/container-global-header /-->
+<!-- wp:acf/vf-container-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
 
-<!-- wp:vf/container-page-template /-->
+<!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vvf-container-page-template"} /-->
 
-<!-- wp:vf/container-global-footer /-->
+<!-- wp:acf/vf-container-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
 
 ';
     $post_content = apply_filters(
@@ -61,7 +61,7 @@ class VF_Templates {
   static public function new_template_blocks() {
     return array(
       array(
-        'vf/container-page-template',
+        'acf/vf-container-page-template',
         array()
       ),
     );
@@ -108,8 +108,12 @@ class VF_Templates {
   public function initialize() {
     // Add hooks
     add_action(
-      'init',
-      array($this, 'init')
+      'plugins_loaded',
+      array($this, 'plugins_loaded')
+    );
+    add_action(
+      'after_setup_theme',
+      array($this, 'after_setup_theme')
     );
     add_action(
       'after_switch_theme',
@@ -175,11 +179,20 @@ class VF_Templates {
   }
 
   /**
-   * Action: `init`
-   * Register custom post type
+   * Action: `plugins_loaded`
+   */
+  public function plugins_loaded() {
+    // Register the placeholder container plugin
+    $placeholder = new VF_Container_Placeholder(
+      array('init' => true)
+    );
+  }
+
+  /**
+   * Action: `after_setup_theme`
    * https://developer.wordpress.org/reference/functions/register_post_type/
    */
-  public function init() {
+  public function after_setup_theme() {
     register_post_type(VF_Templates::type(),array(
       'labels'              => VF_Templates::labels(),
       'description'         => __('Theme Templates', 'vfwp'),
@@ -202,11 +215,6 @@ class VF_Templates {
       'can_export'          => true,
       'delete_with_user'    => false,
     ));
-
-    // Register the placeholder container plugin
-    $placeholder = new VF_Container_Placeholder(
-      array('init' => true)
-    );
 
     // Set default Gutenberg template
     $post_type_object = get_post_type_object(VF_Templates::type());
@@ -307,7 +315,7 @@ class VF_Templates {
       if ( ! $block['blockName']) {
         continue;
       }
-      $containers[] = VF_Gutenberg::name_block_to_post(
+      $containers[] = VF_Containers::name_block_to_post(
         $block['blockName']
       );
     }

@@ -18,7 +18,7 @@ class VF_Blocks extends VF_Type {
     );
     add_action('after_setup_theme',
       array($this, 'after_setup_theme'),
-      11
+      20
     );
   }
 
@@ -51,31 +51,32 @@ class VF_Blocks extends VF_Type {
    */
   public function after_setup_theme() {
     global $vf_plugins;
+    if ( ! is_array($vf_plugins)) {
+      return;
+    }
 
+    // Iterate over registered block plugins
     foreach ($vf_plugins as $key => $config) {
-
       if ($config['post_type'] !== $this->type()) {
         continue;
       }
+
+      // Skip unknown or deprecated plugins
       $plugin = VF_Plugin::get_plugin($key);
       if ( ! $plugin || $plugin->is_deprecated()) {
         continue;
       }
+
+      // ACF block settings
       $name = str_replace('_', '-', $key);
       $title = $plugin->post()->post_title;
-      $category = VF_Blocks::block_category();
-
-      // if ($plugin->post()->post_type === 'vf_container') {
-      //   $name = preg_replace('#^vf-#', 'vf-container-', $name);
-      //   $category = VF_Containers::block_category();
-      // }
 
       // Setup render callback using VF Gutenberg plugin or fallback
       $callback = function() use ($plugin) {
         $args = func_get_args();
+        $acf_id = $plugin->post()->ID;
         $template = $plugin->template();
         $block = $args[0];
-        $acf_id = $plugin->post()->ID;
         if ( ! get_field('defaults', $block['id'])) {
           $acf_id = $block['id'];
         }
@@ -91,7 +92,7 @@ class VF_Blocks extends VF_Type {
         array(
           'name'     => $name,
           'title'    => $title,
-          'category' => $category,
+          'category' => VF_Blocks::block_category(),
           'supports' => array(
             'align'           => false,
             'customClassName' => false

@@ -277,14 +277,8 @@ class VF_Gutenberg {
    * $args = array($block, $content, $is_preview, $post_id)
    */
   static function acf_render_template($args, $template, $acf_id = false) {
-    $is_preview = $args[2];
-    if ( ! file_exists($template)) {
-      if ($is_preview) {
-        echo __('Block template missing.', 'vfwp');
-      }
-      return;
-    }
     $block = $args[0];
+    $is_preview = $args[2];
     // Capture the block template
     ob_start();
     // Output head include for preview
@@ -292,7 +286,24 @@ class VF_Gutenberg {
       get_template_part('partials/head');
     }
     // Load template
-    include($template);
+    if (is_callable($template)) {
+      call_user_func($template);
+    } else {
+      if (file_exists($template)) {
+        include($template);
+      } else if ($is_preview) {
+?>
+<div class="vf-banner vf-banner--alert vf-banner--danger">
+  <div class="vf-banner__content">
+    <p class="vf-banner__text">
+      <?php esc_html_e('Block template missing.', 'vfwp'); ?>
+    </p>
+  </div>
+</div>
+<!--/vf-banner-->
+<?php
+      }
+    }
     // Output foot include for preview
     if ($is_preview) {
       get_template_part('partials/foot');
