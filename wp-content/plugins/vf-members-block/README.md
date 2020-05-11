@@ -6,15 +6,15 @@ A list of group members using the `vf-summary--profile` Visual Framework pattern
 
 ACF / Block data:
 
-| field key | field name | type |
-| --------- | ---------- | ---- |
-| field_vf_members_limit | vf_members_limit | [STRING] |
-| field_vf_members_order | vf_members_order | [STRING] |
-| field_vf_members_variation | vf_members_variation |  |
-| field_5ea988878eacf | vf_members_team |  |
-| field_5ea98b26aaf6c | vf_members_term |  |
-| field_5ea98b56aaf6d | vf_members_keyword |  |
-| field_5ea983003e756 | vf_members_leader |  |
+| field key | field name |
+| --------- | ---------- |
+| field_vf_members_limit | vf_members_limit |
+| field_vf_members_order | vf_members_order |
+| field_vf_members_variation | vf_members_variation |
+| field_5ea988878eacf | vf_members_team |
+| field_5ea98b26aaf6c | vf_members_term |
+| field_5ea98b56aaf6d | vf_members_keyword |
+| field_5ea983003e756 | vf_members_leader |
 
 Block `name`: `acf/vf-members`
 

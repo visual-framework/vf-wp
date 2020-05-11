@@ -10,9 +10,9 @@ A "read more" to the about page will automatically be appended.
 
 ACF / Block data:
 
-| field key | field name | type |
-| --------- | ---------- | ---- |
-| field_vf_group_header_heading | vf_group_header_heading | [STRING] |
+| field key | field name |
+| --------- | ---------- |
+| field_vf_group_header_heading | vf_group_header_heading |
 
 Block `name`: `acf/vf-group-header`
 

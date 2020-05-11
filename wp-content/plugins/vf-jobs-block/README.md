@@ -6,12 +6,12 @@ A list of one or more available jobs using the `vf-summary--job` Visual Framewor
 
 ACF / Block data:
 
-| field key | field name | type |
-| --------- | ---------- | ---- |
-| field_vf_jobs_heading | vf_jobs_heading | [STRING] |
-| field_vf_jobs_limit | vf_jobs_limit | [INT] |
-| field_vf_jobs_filter | vf_jobs_filter | [STRING] † |
-| field_vf_jobs_term | field_vf_jobs_term | [TERM] † |
+| field key | field name |
+| --------- | ---------- |
+| field_vf_jobs_heading | vf_jobs_heading |
+| field_vf_jobs_limit | vf_jobs_limit |
+| field_vf_jobs_filter | vf_jobs_filter † |
+| field_vf_jobs_term | field_vf_jobs_term † |
 
 Block `name`: `acf/vf-jobs`
 

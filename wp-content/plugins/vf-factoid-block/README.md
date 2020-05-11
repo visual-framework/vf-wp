@@ -6,10 +6,10 @@ Boxed content using the `vf-factoid` Visual Framework pattern.
 
 ACF / Block data:
 
-| field key | field name | type |
-| --------- | ---------- | ---- |
-| field_vf_factoid_limit | vf_factoid_limit | [INT] |
-| field_vf_factoid_id | vf_factoid_id | [STRING] |
+| field key | field name |
+| --------- | ---------- |
+| field_vf_factoid_limit | vf_factoid_limit |
+| field_vf_factoid_id | vf_factoid_id |
 
 Block `name`: `acf/vf-factoid`
 
