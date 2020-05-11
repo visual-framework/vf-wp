@@ -7,22 +7,32 @@ different logic and features arise over time.
 
 ## Configuration
 
-Related post:
+ACF / Block data:
+
+| field key | field name |
+| --------- | ---------- |
+| field_vf_publications_group_ebi_heading | vf_publications_group_ebi_heading |
+| field_vf_publications_group_ebi_limit | vf_publications_group_ebi_limit |
+| field_vf_publications_group_ebi_order | vf_publications_group_ebi_order |
+
+Block `name`: `acf/vf-publications-group-ebi`
+
+See plugin JSON file for source of truth.
+
+### Related post
 
 | post_name | post_type |
 | --------- | --------- |
 | vf_publications_group_ebi | vf_block |
 
-Post meta:
+Default values can be assigned to this post using post meta and the "field name" listed above.
+
+For example in `wp_postmeta`:
 
 | meta_key | meta_value |
 | -------- | ---------- |
-| vf_publications_group_ebi_heading | [STRING] |
+| vf_publications_group_ebi_heading | "Publications" |
 | \_vf_publications_group_ebi_heading | field_vf_publications_group_ebi_heading |
-| vf_publications_group_ebi_order | [STRING] |
-| \_vf_publications_group_ebi_order | field_vf_publications_group_ebi_order |
-| vf_publications_group_ebi_limit | [INT] |
-| \_vf_publications_group_ebi_limit | field_vf_publications_group_ebi_limit |
 
 ### Heading
 
