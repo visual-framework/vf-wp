@@ -14,7 +14,7 @@ get_template_part('partials/vf-intro');
 
 $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 ?>
-<div class="vf-grid">
+<div class="embl-grid">
 
   <div>
     <?php get_template_part('partials/document-filter'); ?>
