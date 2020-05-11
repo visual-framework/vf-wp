@@ -1,5 +1,7 @@
 <?php
 
+
+
 if( ! defined( 'ABSPATH' ) ) exit;
 
 function get_all_them_posts() {
@@ -142,7 +144,7 @@ function vf_wp_documents__init() {
     'menu_position'       => 20,
     'menu_icon'           => 'dashicons-media-document',
     'capability_type'     => 'page',
-    'supports'            => array('title', 'editor', 'excerpt'),
+    'supports'            => array('title', 'editor'),
     'has_archive'         => true,
     'rewrite'             => array(
       'slug'       => '/',
@@ -152,12 +154,12 @@ function vf_wp_documents__init() {
     'can_export'          => true,
     'delete_with_user'    => false,
     'taxonomies'          => array(
-      'document_topics',
-      'document_types'
+      'document_topic',
+      'document_type'
     ),
   ));
 
-  register_taxonomy('document_topics', array('document'), array(
+  register_taxonomy('document_topic', array('document'), array(
     'labels'             => vf_wp_document_topic_labels(),
     'hierarchical'       => true,
     'show_ui'            => true,
@@ -166,10 +168,10 @@ function vf_wp_documents__init() {
     'publicly_queryable' => true,
     'show_in_nav_menus'  => false,
     'rewrite'            => false,
-    'show_in_rest'       => true,
+    'show_in_rest'       => false,
   ));
 
-  register_taxonomy('document_types', array('document'), array(
+  register_taxonomy('document_type', array('document'), array(
     'labels'             => vf_wp_document_type_labels(),
     'hierarchical'       => true,
     'show_ui'            => true,
@@ -178,7 +180,7 @@ function vf_wp_documents__init() {
     'publicly_queryable' => true,
     'show_in_nav_menus'  => false,
     'rewrite'            => false,
-    'show_in_rest'       => true,
+    'show_in_rest'       => false,
   ));
 
 }
