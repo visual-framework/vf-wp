@@ -23,6 +23,8 @@
       if (!$input || !$input.length) {
         return;
       }
+      data.value = field.val();
+      wp.hooks.doAction('vf__experimental__acf_update', data);
       // Bind change event to WordPress hook
       $input.on('change', function(e) {
         data.value = field.val();

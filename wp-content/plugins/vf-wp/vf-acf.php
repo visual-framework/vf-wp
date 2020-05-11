@@ -48,7 +48,7 @@ class VF_ACF {
         '/assets/vf-plugin.js',
         __FILE__
       ),
-      array('vf-blocks'),
+      array('wp-editor', 'wp-blocks'),
       false,
       true
     );
