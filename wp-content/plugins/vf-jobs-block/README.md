@@ -10,8 +10,8 @@ ACF / Block data:
 | --------- | ---------- | ---- |
 | field_vf_jobs_heading | vf_jobs_heading | [STRING] |
 | field_vf_jobs_limit | vf_jobs_limit | [INT] |
-| field_vf_jobs_filter | vf_jobs_filter | [STRING] | †
-| field_vf_jobs_term | field_vf_jobs_term | [TERM] | †
+| field_vf_jobs_filter | vf_jobs_filter | [STRING] † |
+| field_vf_jobs_term | field_vf_jobs_term | [TERM] † |
 
 Block `name`: `acf/vf-jobs`
 
@@ -31,8 +31,8 @@ For example in `wp_postmeta`:
 
 | meta_key | meta_value |
 | -------- | ---------- |
-| vf_data_resources_limit | 100 |
-| \_vf_data_resources_limit | field_vf_data_resources_limit |
+| vf_jobs_heading | "Jobs" |
+| \_vf_jobs_heading | field_vf_jobs_heading |
 
 ### Heading
 
