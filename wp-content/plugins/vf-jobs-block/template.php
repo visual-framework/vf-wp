@@ -108,6 +108,6 @@ $content = preg_replace(
   }
   echo $content . PHP_EOL;
   if ($was_no_result_found < 1) {
-    echo '<p><a href="vf-link" href="//www.embl.org/jobs">View all EMBL jobs</a></p>' . PHP_EOL;
+    echo '<p><a class="vf-link" href="//www.embl.org/jobs">View all EMBL jobs</a></p>' . PHP_EOL;
   }
 ?>
