@@ -4,21 +4,33 @@ A textual introduction aside a group leader using the `vf-summary--profile` Visu
 
 If a header post is not available in the VF Blocks (or is blank), this plugin will try to use the EMBL Who taxonomy term and pull the group description from the ContentHub.
 
-A "read more" to the about page will automatically be appended. 
+A "read more" to the about page will automatically be appended.
 
 ## Configuration
 
-Related post:
+ACF / Block data:
+
+| field key | field name | type |
+| --------- | ---------- | ---- |
+| field_vf_group_header_heading | vf_group_header_heading | [STRING] |
+
+Block `name`: `acf/vf-group-header`
+
+See plugin JSON file for source of truth.
+
+### Related post
 
 | post_name | post_type |
 | --------- | --------- |
 | vf_group_header | vf_block |
 
-Post meta:
+Default values can be assigned to this post using post meta and the "field name" listed above.
+
+For example in `wp_postmeta`:
 
 | meta_key | meta_value |
 | -------- | ---------- |
-| vf_group_header_heading | [HTML] |
+| vf_group_header_heading | "Resources" |
 | \_vf_group_header_heading | field_vf_group_header_heading |
 
 ### Heading

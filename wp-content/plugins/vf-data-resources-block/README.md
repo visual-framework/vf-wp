@@ -16,7 +16,7 @@ Block `name`: `acf/vf-data-resources`
 
 See plugin JSON file for source of truth.
 
-## Related post
+### Related post
 
 | post_name | post_type |
 | --------- | --------- |
