@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Publications (block)
 
 To display a list of team or group publications from the Content Hub.

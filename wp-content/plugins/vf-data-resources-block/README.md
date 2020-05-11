@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Data resources (block)
 
 A list of group data resources using the `vf-summary--profile` Visual Framework pattern.

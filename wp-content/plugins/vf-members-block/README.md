@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Members (block)
 
 A list of group members using the `vf-summary--profile` Visual Framework pattern.

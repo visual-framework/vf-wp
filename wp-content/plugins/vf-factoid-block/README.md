@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Factoid (block)
 
 Boxed content using the `vf-factoid` Visual Framework pattern.

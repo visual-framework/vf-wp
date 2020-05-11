@@ -1,4 +1,4 @@
-# VF-WP Block plugins
+# VF-WP Blocks
 
 Blocks are small, reusable content patterns. Blocks may appear within the Gutenberg editor, sidebar widgets, or rendered elsewhere in a template.
 

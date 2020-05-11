@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Latest Posts (block) – DEPRECATED
 
 **This plugin is deprecated** – the block can be replaced by an `acf/vfwp-latest-posts` block provided by the `vf-wp` theme.

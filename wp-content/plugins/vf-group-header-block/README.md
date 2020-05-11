@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Group Header (block)
 
 A textual introduction aside a group leader using the `vf-summary--profile` Visual Framework pattern.

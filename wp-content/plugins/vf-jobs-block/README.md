@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Jobs (block)
 
 A list of one or more available jobs using the `vf-summary--job` Visual Framework pattern.

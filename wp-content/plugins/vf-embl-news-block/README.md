@@ -1,3 +1,5 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # EMBL News (block)
 
 A list of latest news articles from the Content Hub. Using the `vf-summary--news` Visual Framework pattern.
