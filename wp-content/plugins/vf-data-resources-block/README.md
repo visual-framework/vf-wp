@@ -7,10 +7,14 @@ A list of group data resources using the `vf-summary--profile` Visual Framework 
 ACF / Block data:
 
 | field key | field name | type |
-| -------- | --------- | ---------- |
+| --------- | ---------- | ---- |
 | field_vf_data_resources_heading | vf_data_resources_heading | [STRING] |
 | field_vf_data_resources_limit | vf_data_resources_limit | [INT] |
 | field_vf_data_resources_order | vf_data_resources_order | [INT] |
+
+Block `name`: `acf/vf-data-resources`
+
+See plugin JSON file for source of truth.
 
 ## Related post
 

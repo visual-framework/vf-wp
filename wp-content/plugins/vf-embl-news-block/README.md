@@ -6,8 +6,8 @@ A list of latest news articles from the Content Hub. Using the `vf-summary--news
 
 ACF / Block data:
 
-| meta_key | meta_name | meta_value |
-| -------- | --------- | ---------- |
+| field key | field name | type |
+| --------- | ---------- | ---- |
 | field_5eb014ed283d9 | limit | [INT] |
 | field_5eb01560283da | type | [STRING] † |
 | field_5eb01627283db | embl_terms | [TERM_ID] ‡ |
