@@ -4,20 +4,36 @@ A list of group members using the `vf-summary--profile` Visual Framework pattern
 
 ## Configuration
 
-Related post:
+ACF / Block data:
+
+| field key | field name | type |
+| --------- | ---------- | ---- |
+| field_vf_members_limit | vf_members_limit | [STRING] |
+| field_vf_members_order | vf_members_order | [STRING] |
+| field_vf_members_variation | vf_members_variation |  |
+| field_5ea988878eacf | vf_members_team |  |
+| field_5ea98b26aaf6c | vf_members_term |  |
+| field_5ea98b56aaf6d | vf_members_keyword |  |
+| field_5ea983003e756 | vf_members_leader |  |
+
+Block `name`: `acf/vf-members`
+
+See plugin JSON file for source of truth.
+
+### Related post
 
 | post_name | post_type |
 | --------- | --------- |
 | vf_members | vf_block |
 
-Post meta:
+Default values can be assigned to this post using post meta and the "field name" listed above.
+
+For example in `wp_postmeta`:
 
 | meta_key | meta_value |
 | -------- | ---------- |
-| vf_members_limit | [INT] |
+| vf_members_limit | 10 |
 | \_vf_members_limit | field_vf_members_limit |
-| vf_members_order | [STRING] |
-| \_vf_members_order | field_vf_members_order |
 
 ### Limit
 
