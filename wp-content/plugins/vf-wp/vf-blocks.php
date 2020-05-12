@@ -20,6 +20,11 @@ class VF_Blocks extends VF_Type {
       array($this, 'after_setup_theme'),
       20
     );
+    add_filter(
+      'acf/pre_render_fields',
+      array($this, 'acf_pre_render_fields'),
+      10, 2
+    );
   }
 
   public function activate() {
@@ -162,6 +167,50 @@ class VF_Blocks extends VF_Type {
         'description' => '',
       ));
     }
+  }
+
+  /**
+   * Filter: `acf/pre_render_fields`
+   */
+  public function acf_pre_render_fields($fields, $post_id) {
+    // Return if not Gutenberg block
+    if ( ! preg_match('/^block_/', $post_id)) {
+      return $fields;
+    }
+    // Return if field group is empty
+    $fields = array_filter($fields);
+    if (empty($fields)) {
+      return $fields;
+    }
+    // Return if "Defaults" toggle has not been prepended
+    if ($fields[0]['key'] !== 'field_defaults') {
+      return $fields;
+    }
+    // Iterate over fields
+    foreach ($fields as $i => $field) {
+      if ($field['key'] === 'field_defaults') {
+        continue;
+      }
+      // Create conditional logic array if missing
+      $logic = $field['conditional_logic'];
+      if ( ! is_array($logic)) {
+        $logic = array(array());
+      }
+      // Prepend "AND" condition to all logic clauses
+      foreach ($logic as $k => $condition) {
+        if ( ! is_array($condition)) {
+          continue;
+        }
+        array_unshift($condition, array(
+          'field'    => 'field_defaults',
+          'operator' => '==',
+          'value'    => '0'
+        ));
+        $logic[$k] = $condition;
+      }
+      $fields[$i]['conditional_logic'] = $logic;
+    }
+    return $fields;
   }
 
 } // VF_Blocks
