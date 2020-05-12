@@ -535,22 +535,6 @@ if (ResizeObserver) {
       }
       $config[$block_name] = $data;
     }
-    // Add generic plugin for previews
-    $config['vf/plugin'] = array(
-      'title'      => __('Preview', 'vfwp'),
-      'category'   => VF_Blocks::block_category(),
-      'fields'     => [],
-      'supports'   => array(
-        'customClassName' => false,
-        'inserter'        => false,
-        'reusable'        => false
-      ),
-      'attributes' => array(
-        'ref' => array(
-          'type' => 'string'
-        )
-      )
-    );
     return $config;
   }
 

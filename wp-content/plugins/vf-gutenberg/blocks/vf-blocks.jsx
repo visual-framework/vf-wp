@@ -45,7 +45,7 @@ if (parseInt(coreOptin) === 1) {
     vfLede,
     vfEmbed
   ];
-  coreBlocks.forEach((settings) => registerBlockType(settings.name, settings));
+  coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
 }
 
 // Register any deprecated VF Plugin blocks for legacy support
@@ -59,14 +59,25 @@ for (const [name, plugin] of Object.entries(deprecatedPlugins)) {
   registerBlockType(name, settings);
 }
 
+// Register experimental preview block
+const settings = useVFPluginSettings({
+  name: 'vf/plugin',
+  title: 'Preview',
+  category: 'vf/wp'
+});
+settings.attributes.ref = {
+  type: 'string'
+};
+registerBlockType('vf/plugin', settings);
+
 // Handle iframe preview resizing globally
 // TODO: remove necessity from `useVFIFrame`
 window.addEventListener('message', ({data}) => {
-  if (data !== Object(data) || ! /^vfwp_/.test(data.id)) {
+  if (data !== Object(data) || !/^vfwp_/.test(data.id)) {
     return;
   }
   const iframe = document.getElementById(data.id);
-  if ( ! iframe || ! iframe.vfActive) {
+  if (!iframe || !iframe.vfActive) {
     return;
   }
   window.requestAnimationFrame(() => {
