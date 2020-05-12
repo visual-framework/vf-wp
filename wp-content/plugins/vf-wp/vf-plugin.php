@@ -373,10 +373,6 @@ class VF_Plugin {
     if (empty($fields)) {
       $fields = null;
     }
-    // Use template file if defined by plugin
-    if ( ! $plugin->template()) {
-      return;
-    }
 
     $acf_id = $plugin->post()->ID;
 
@@ -399,12 +395,15 @@ class VF_Plugin {
     $post = $vf_plugin->post();
     setup_postdata($post);
 
-    // User callback method if defined by plugin
+    // User callback method if set by plugin
     if (method_exists($plugin, 'template_callback')) {
       $plugin->template_callback(null, '', false, $acf_id);
     } else {
-      // Include the plugin template
-      include($vf_plugin->template());
+      // Include the plugin template if set by plugin
+      $template = $vf_plugin->template();
+      if (file_exists($template)) {
+        include($template);
+      }
     }
 
     // Flush the ACF cache *again* and reset the post meta

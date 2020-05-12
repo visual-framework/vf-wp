@@ -39,33 +39,10 @@ class VF_Gutenberg {
   private $compatible = array();
 
   /**
-   * Convert a Gutenberg block name to a VF_Plugin post name
-   * e.g. "vf/latest-posts" to "vf_latest_posts"
-   */
-  static function name_block_to_post($str, $separator = '_') {
-    $str = str_replace('vf/container-', 'vf/', $str);
-    $str = preg_replace('/[^\w]/', $separator, $str);
-    return $str;
-  }
-
-  /**
-   * Convert a VF_Plugin post name to a Gutenberg block name
-   * e.g. "vf_latest_posts" to "vf/latest-posts"
-   */
-  static function name_post_to_block($str, $prefix = '') {
-    $prefix = empty($prefix) ? '' : "{$prefix}-";
-    return preg_replace(
-      array('/[\W_]/', '/(^[\w]+)-/'),
-      array('-', '$1/' . $prefix),
-      $str
-    );
-  }
-
-  /**
    * Return true if template has grid wrappers and should not be contained
    */
   static function is_block_standalone($block_name) {
-    $post_name = VF_Gutenberg::name_block_to_post($block_name);
+    $post_name = VF_Blocks::name_block_to_post($block_name);
     if (class_exists('VF_Plugin')) {
       $plugin = VF_Plugin::get_plugin($post_name);
       if ($plugin) {
@@ -446,7 +423,7 @@ if (ResizeObserver) {
     $fields = array();
 
     // Get plugin name from block
-    $post_name = VF_Gutenberg::name_block_to_post($block['blockName']);
+    $post_name = VF_Blocks::name_block_to_post($block['blockName']);
 
     // Get true name from `ref` attribute for generic preview
     if (
@@ -508,9 +485,12 @@ if (ResizeObserver) {
     foreach ($vf_plugins as $post_name => $value) {
       $plugin = VF_Plugin::get_plugin($post_name);
       // add prefix for containers to avoid conflicts
-      $block_name = VF_Gutenberg::name_post_to_block(
-        $post_name, $plugin->is_container() ? 'container' : ''
-      );
+      $block_name = $post_name;
+      if ($plugin->is_container()) {
+        $block_name = preg_replace('/^vf_/', 'vf_container_', $block_name);
+      }
+      $block_name = VF_Blocks::name_post_to_block($block_name, 'vf/');
+      $block_name = str_replace('vf/vf-', 'vf/', $block_name);
       // block settings
       $data = array(
         'id'          => $plugin->post()->ID,

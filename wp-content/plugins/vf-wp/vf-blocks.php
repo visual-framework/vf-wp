@@ -47,6 +47,26 @@ class VF_Blocks extends VF_Type {
   }
 
   /**
+   * Convert a Gutenberg block name to a VF_Plugin post name
+   * e.g. `acf/vf-latest-posts` to `vf_latest_posts`
+   * e.g. `vf/latest-posts` to `vf_latest_posts` (legacy support)
+   */
+  static function name_block_to_post($str, $separator = '_') {
+    $str = str_replace('acf/', '', $str);
+    $str = preg_replace('/[^\w]/', $separator, $str);
+    return $str;
+  }
+
+  /**
+   * Convert a VF_Plugin post name to a Gutenberg block name
+   * e.g. `vf_latest_posts` to `acf/vf-latest-posts`
+   */
+  static function name_post_to_block($str, $prefix = 'acf/', $separator = '-') {
+    $str = preg_replace('/[\W_]/', $separator, $str);
+    return "{$prefix}$str";
+  }
+
+  /**
    * Action: `after_setup_theme`
    */
   public function after_setup_theme() {
@@ -67,10 +87,6 @@ class VF_Blocks extends VF_Type {
         continue;
       }
 
-      // ACF block settings
-      $name = str_replace('_', '-', $key);
-      $title = $plugin->post()->post_title;
-
       // Setup render callback using VF Gutenberg plugin or fallback
       $callback = function() use ($plugin) {
         $args = func_get_args();
@@ -90,8 +106,8 @@ class VF_Blocks extends VF_Type {
       // Register the Gutenberg block with ACF
       acf_register_block_type(array_merge(
         array(
-          'name'     => $name,
-          'title'    => $title,
+          'name'     => VF_Blocks::name_post_to_block($key, ''),
+          'title'    => $plugin->post()->post_title,
           'category' => VF_Blocks::block_category(),
           'supports' => array(
             'align'           => false,

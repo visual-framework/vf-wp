@@ -59,7 +59,7 @@ class VF_Containers extends VF_Type {
   /**
    * Convert a Gutenberg block name to a VF_Plugin post name
    * e.g. `acf/vf-container-global-header` to `vf_global_header`
-   * e.g. `vf/container-global-header` to `vf_global_header`
+   * e.g. `vf/container-global-header` to `vf_global_header` (legacy support)
    */
   static function name_block_to_post($str, $separator = '_') {
     $str = str_replace('acf/vf-container-', 'vf/', $str);
