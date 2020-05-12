@@ -12,8 +12,10 @@ if ($is_preview) {
     </p>
   </div>
 </div>
-<?php } else { ?>
+<?php
+  return;
+}
+?>
 <nav class="vf-breadcrumbs embl-breadcrumbs-lookup" aria-label="Breadcrumb" data-embl-js-breadcrumbs-lookup>
   <div class="vf-list vf-list--inline | vf-breadcrumbs__list | embl-breadcrumbs-lookup--ghosting"></div>
 </nav>
-<?php } ?>

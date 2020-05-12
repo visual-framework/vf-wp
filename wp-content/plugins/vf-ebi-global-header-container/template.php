@@ -1,5 +1,23 @@
 <?php
 
+// Block preview in Gutenberg editor
+$is_preview = isset($is_preview) && $is_preview;
+
+if ($is_preview) {
+?>
+<div class="vf-banner vf-banner--info" style="grid-column: main;">
+  <div class="vf-banner__content">
+    <p class="vf-banner__text">
+      <?php echo esc_html_e('This is a placeholder for the EBI Global Header container.', 'vfwp'); ?>
+    </p>
+  </div>
+</div>
+<?php
+  return;
+}
+?>
+<?php
+
 $acf_id = isset($acf_id) ? $acf_id : false;
 
 $id = get_field('vf_ebi_global_header_node_id', $acf_id);
