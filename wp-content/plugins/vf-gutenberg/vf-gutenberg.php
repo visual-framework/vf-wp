@@ -351,6 +351,7 @@ if (ResizeObserver) {
 }
 `;
   doc.body.appendChild(script);
+  doc.body.classList.add('ebi-vf1-integration');
 };
 </script>
 <div class="vf-block" data-editing="false" data-loading="false">
