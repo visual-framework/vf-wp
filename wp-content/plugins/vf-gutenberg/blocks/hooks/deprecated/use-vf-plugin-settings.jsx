@@ -13,11 +13,11 @@ import {__} from '@wordpress/i18n';
 import {
   withTransientAttribute,
   withTransientACF
-} from '../hooks/with-transient';
-import useVFDefaults from './use-vf-defaults';
+} from '../with-transient';
+import useVFDefaults from '../use-vf-defaults';
 import useVFPlugin from './use-vf-plugin';
-import VFBlockFields from '../vf-block/block-fields';
-import VFBlock from '../vf-block';
+import VFBlockFields from '../../vf-block/block-fields';
+import VFBlock from '../../vf-block';
 
 const useVFPluginSettings = settings => {
   const defaults = useVFDefaults();

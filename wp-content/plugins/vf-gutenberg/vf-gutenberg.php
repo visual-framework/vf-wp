@@ -184,12 +184,12 @@ class VF_Gutenberg {
     global $post;
 
     $config = array(
-      'renderPrefix' => $prefix,
-      'renderSuffix' => $suffix,
-      'coreOptin'    => 1,
-      'plugins' => $this->deprecated__get_config_plugins(),
-      'nonce'   => wp_create_nonce("vf_nonce_{$post->ID}"),
-      'postId'  => $post->ID
+      'renderPrefix'      => $prefix,
+      'renderSuffix'      => $suffix,
+      'coreOptin'         => 1,
+      'postId'            => $post->ID,
+      'nonce'             => wp_create_nonce("vf_nonce_{$post->ID}"),
+      'deprecatedPlugins' => $this->deprecated__get_config_plugins(),
     );
 
     wp_localize_script('vf-blocks', 'vfGutenberg', $config);
@@ -404,7 +404,6 @@ if (ResizeObserver) {
       return $block['attrs']['render'];
     }
 
-
     // setup empty custom fields
     $fields = array();
 
@@ -468,6 +467,15 @@ if (ResizeObserver) {
     if (empty($vf_plugins)) {
       return $config;
     }
+    global $post;
+    // Get array of block names included in this post
+    $blocks = parse_blocks($post->post_content);
+    $allowed_blocks = array();
+    foreach ($blocks as $block) {
+      if (preg_match('/^vf\//', $block['blockName'])) {
+        $allowed_blocks[] = $block['blockName'];
+      }
+    }
     foreach ($vf_plugins as $post_name => $value) {
       $plugin = VF_Plugin::get_plugin($post_name);
       // add prefix for containers to avoid conflicts
@@ -477,6 +485,10 @@ if (ResizeObserver) {
       }
       $block_name = VF_Blocks::name_post_to_block($block_name, 'vf/');
       $block_name = str_replace('vf/vf-', 'vf/', $block_name);
+      // Only allow legacy blocks already included in the post
+      if ( ! in_array($block_name, $allowed_blocks)) {
+        continue;
+      }
       // block settings
       $data = array(
         'id'          => $plugin->post()->ID,

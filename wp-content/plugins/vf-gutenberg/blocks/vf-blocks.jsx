@@ -3,7 +3,7 @@
  */
 import {registerBlockType} from '@wordpress/blocks';
 import useVFGutenberg from './hooks/use-vf-gutenberg';
-import useVFPluginSettings from './hooks/use-vf-plugin-settings';
+import useVFPluginSettings from './hooks/deprecated/use-vf-plugin-settings';
 
 // Import Visual Framework core component settings
 import vfActivityItem from './vf-core/vf-activity-item';
@@ -22,7 +22,7 @@ import vfGrid from './vf-core/vf-grid';
 import vfLede from './vf-core/vf-lede';
 
 // Get "localized" global script settings
-const {plugins, coreOptin} = useVFGutenberg();
+const {coreOptin, deprecatedPlugins} = useVFGutenberg();
 
 // Register VF Core blocks
 if (parseInt(coreOptin) === 1) {
@@ -48,10 +48,9 @@ if (parseInt(coreOptin) === 1) {
   coreBlocks.forEach((settings) => registerBlockType(settings.name, settings));
 }
 
-// DEPRECATED
-// Register deprecated VF Plugin blocks for legacy support
-// These blocks are placed by full ACF versions
-for (const [name, plugin] of Object.entries(plugins)) {
+// Register any deprecated VF Plugin blocks for legacy support
+// These blocks were replaced by full ACF versions
+for (const [name, plugin] of Object.entries(deprecatedPlugins)) {
   const settings = useVFPluginSettings({
     name,
     title: plugin.title,
