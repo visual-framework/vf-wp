@@ -23,6 +23,11 @@ class VF_Jobs extends VF_Plugin {
     'post_title' => 'Jobs',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   function __construct(array $params = array()) {
     parent::__construct('vf_jobs');
     if (array_key_exists('init', $params)) {

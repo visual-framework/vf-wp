@@ -23,6 +23,11 @@ class VF_Publications_Group_EBI extends VF_Plugin {
     'post_title' => 'EBI Team publications',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   public function __construct(array $params = array()) {
     parent::__construct('vf_publications_group_ebi');
     if (array_key_exists('init', $params)) {

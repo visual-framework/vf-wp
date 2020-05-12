@@ -23,6 +23,11 @@ class VF_Publications extends VF_Plugin {
     'post_title' => 'Team publications',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   public function __construct(array $params = array()) {
     parent::__construct('vf_publications');
     if (array_key_exists('init', $params)) {

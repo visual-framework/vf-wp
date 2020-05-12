@@ -23,6 +23,11 @@ class VF_Group_Header extends VF_Plugin {
     'post_title' => 'Group Header',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   private $is_minimal = false;
 
   function __construct(array $params = array()) {

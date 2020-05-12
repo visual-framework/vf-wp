@@ -23,7 +23,12 @@ class VF_Data_resources extends VF_Plugin {
     'post_title' => 'Data resources',
   );
 
-  function __construct(array $params = array()) {
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
+  public function __construct(array $params = array()) {
     parent::__construct('vf_data_resources');
     if (array_key_exists('init', $params)) {
       parent::initialize();

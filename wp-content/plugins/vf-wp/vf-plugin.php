@@ -13,8 +13,6 @@ class VF_Plugin {
   protected $file;
   // Saved config for plugin activation
   protected $config;
-  // Plugin contentHub API settings
-  protected $API;
 
   // `WP_Post` of custom post type (e.g. `vf_block`)
   private $post;
@@ -151,7 +149,7 @@ class VF_Plugin {
    * Return true if plugin has API configuration
    */
   public function is_api() {
-    return empty($this->API) === false;
+    return false;
   }
 
   /**
@@ -205,38 +203,6 @@ class VF_Plugin {
     if (file_exists($path)) {
       return $path;
     }
-  }
-
-  /**
-   * Return API URL base for all instances of the plugin
-   */
-  public function api_url(array $query_vars = array()) {
-    if ( ! $this->is_api()) {
-      return '';
-    }
-    $url = VF_Cache::get_api_url();
-    $url .= '/pattern.html';
-    if (is_array($this->API)) {
-      $url = add_query_arg($this->API, $url);
-    }
-    if (count($query_vars)) {
-      $url = add_query_arg($query_vars, $url);
-    }
-    return $url;
-  }
-
-  /**
-   * Return API HTML from cache
-   */
-  public function api_html() {
-    return VF_Cache::fetch($this->api_url());
-  }
-
-  /**
-   * @Deprecated
-   */
-  public function api_attr($attr) {
-    return '';
   }
 
   /**

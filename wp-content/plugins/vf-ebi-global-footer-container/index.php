@@ -24,6 +24,11 @@ class VF_EBI_Global_Footer extends VF_Plugin {
     'post_type'  => 'vf_container',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   public function __construct(array $params = array()) {
     parent::__construct('vf_ebi_global_footer');
     if (array_key_exists('init', $params)) {

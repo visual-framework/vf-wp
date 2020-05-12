@@ -24,6 +24,11 @@ class VF_EMBL_News extends VF_Plugin {
     'post_type'  => 'vf_container',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   function __construct(array $params = array()) {
     parent::__construct('vf_embl_news');
     if (array_key_exists('init', $params)) {

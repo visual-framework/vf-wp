@@ -24,6 +24,11 @@ class VF_Global_Header extends VF_Plugin {
     'post_type'  => 'vf_container',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   public function __construct(array $params = array()) {
     parent::__construct('vf_global_header');
     if (array_key_exists('init', $params)) {

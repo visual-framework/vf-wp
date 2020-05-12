@@ -26,6 +26,11 @@ class VF_Members extends VF_Plugin {
     'post_title' => 'Members',
   );
 
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
+
   function __construct(array $params = array()) {
     parent::__construct('vf_members');
     if (array_key_exists('init', $params)) {
