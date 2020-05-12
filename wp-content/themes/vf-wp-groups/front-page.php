@@ -10,9 +10,12 @@ get_header();
 
 global $vf_theme;
 
-// Do not wrap any `vf` blocks by default
+// Do not wrap any `vf` plugin blocks by default
 $is_wrapped = function($is_wrap, $block_name, $blocks, $i) {
-  if (preg_match('#^vf/(.+)#', $block_name)) {
+  $plugin = VF_Plugin::get_plugin(
+    VF_Blocks::name_block_to_post($block_name)
+  );
+  if ($plugin) {
     $is_wrap = false;
   }
   return $is_wrap;
@@ -39,25 +42,21 @@ $close_wrap = function($html, $block_name) {
 };
 
 $block_prefix = function($html, $block_name, $has_wrap) use ($open_wrap) {
-  if (
-    class_exists('VF_Gutenberg') &&
-    preg_match('#^vf/(.+)#', $block_name)
-  ) {
-    if ( ! VF_Gutenberg::is_block_standalone($block_name)) {
-      $html = $open_wrap('', $block_name);
-    }
+  $plugin = VF_Plugin::get_plugin(
+    VF_Blocks::name_block_to_post($block_name)
+  );
+  if ($plugin && ! $plugin->is_template_standalone()) {
+    $html = $open_wrap('', $block_name);
   }
   return $html;
 };
 
 $block_suffix = function($html, $block_name, $has_wrap) use ($close_wrap) {
-  if (
-    class_exists('VF_Gutenberg') &&
-    preg_match('#^vf/(.+)#', $block_name)
-  ) {
-    if ( ! VF_Gutenberg::is_block_standalone($block_name)) {
-      $html = $close_wrap('', $block_name);
-    }
+  $plugin = VF_Plugin::get_plugin(
+    VF_Blocks::name_block_to_post($block_name)
+  );
+  if ($plugin && ! $plugin->is_template_standalone()) {
+    $html = $close_wrap('', $block_name);
   }
   return $html;
 };

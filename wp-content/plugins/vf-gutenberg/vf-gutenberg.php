@@ -38,20 +38,6 @@ class VF_Gutenberg {
   // List of compatible core blocks
   private $compatible = array();
 
-  /**
-   * Return true if template has grid wrappers and should not be contained
-   */
-  static function is_block_standalone($block_name) {
-    $post_name = VF_Blocks::name_block_to_post($block_name);
-    if (class_exists('VF_Plugin')) {
-      $plugin = VF_Plugin::get_plugin($post_name);
-      if ($plugin) {
-        return $plugin->is_template_standalone();
-      }
-    }
-    return false;
-  }
-
   function __construct() {
     // Do nothing...
   }

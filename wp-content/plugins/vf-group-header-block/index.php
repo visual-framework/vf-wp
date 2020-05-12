@@ -38,6 +38,16 @@ class VF_Group_Header extends VF_Plugin {
   private function init() {
     parent::initialize();
     add_action('admin_head', array($this, 'admin_head'), 15);
+    // Do no wrap in `vf-content` classes
+    add_filter(
+      'vf/theme/content/is_block_wrapped/name=acf/vf-group-header',
+      '__return_false'
+    );
+    // Support older version
+    add_filter(
+      'vf/theme/content/is_block_wrapped/name=vf/group-header',
+      '__return_false'
+    );
   }
 
   function is_minimal() {
