@@ -74,6 +74,9 @@ $render_block_after = function($block_html, $block_name, $i) {
       );
     }
   }
+  if (vf_html_empty($block_html)) {
+    $block_html = '';
+  }
   return $block_html;
 };
 
