@@ -5,9 +5,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-global $vf_plugin;
-global $post;
-
+$vf_plugin = VF_Plugin::get_plugin('vf_wp_groups_header');
 if ( ! $vf_plugin instanceof VF_WP_Groups_Header) {
   return;
 }

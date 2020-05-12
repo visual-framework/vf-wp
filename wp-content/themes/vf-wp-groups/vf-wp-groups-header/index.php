@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Groups Header
 Description: VF-WP Groups theme global container.
-Version: 0.1.0
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
