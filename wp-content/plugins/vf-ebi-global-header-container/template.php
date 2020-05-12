@@ -5,7 +5,7 @@ $is_preview = isset($is_preview) && $is_preview;
 
 if ($is_preview) {
 ?>
-<div class="vf-banner vf-banner--info" style="grid-column: main;">
+<div class="vf-banner vf-banner--info">
   <div class="vf-banner__content">
     <p class="vf-banner__text">
       <?php echo esc_html_e('This is a placeholder for the EBI Global Header container.', 'vfwp'); ?>

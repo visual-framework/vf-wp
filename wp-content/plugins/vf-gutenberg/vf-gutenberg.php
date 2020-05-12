@@ -341,10 +341,26 @@ if (ResizeObserver) {
     if (!isset($_POST['name'])) {
       wp_send_json_error();
     }
+    $block_name = $_POST['name'];
     $html = $this->deprecated__render_block('', array(
-      'blockName' => $_POST['name'],
+      'blockName' => $block_name,
       'attrs'     => isset($_POST['attrs']) ? $_POST['attrs'] : false
     ));
+    if ($block_name !== 'vf/plugin') {
+      ob_start();
+?>
+<div class="vf-banner vf-banner--info">
+  <div class="vf-banner__content">
+    <p class="vf-banner__text">
+      <?php echo esc_html_e('There is a new version of this block. Please replace when convenient.', 'vfwp'); ?>
+    </p>
+  </div>
+</div>
+<br>
+<?php
+      $html = ob_get_contents() . $html;
+      ob_end_clean();
+    }
     wp_send_json_success(
       array(
         'hash' => hash('crc32', $html),
