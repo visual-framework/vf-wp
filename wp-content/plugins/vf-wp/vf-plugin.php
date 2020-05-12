@@ -373,22 +373,19 @@ class VF_Plugin {
     if (empty($fields)) {
       $fields = null;
     }
-    // User callback method if defined by plugin
-    if (method_exists($plugin, 'template_callback')) {
-      $plugin->template_callback($fields);
-      return;
-    }
     // Use template file if defined by plugin
     if ( ! $plugin->template()) {
       return;
     }
 
+    $acf_id = $plugin->post()->ID;
+
     // Flush the ACF cache and setup post meta
     if (is_array($fields)) {
       foreach (array_keys($fields) as $field_name) {
-        acf_flush_value_cache($plugin->post()->ID, $field_name);
+        acf_flush_value_cache($acf_id, $field_name);
       }
-      acf_setup_meta($fields, $plugin->post()->ID, true);
+      acf_setup_meta($fields, $acf_id, true);
     }
 
     // Before actions
@@ -402,14 +399,19 @@ class VF_Plugin {
     $post = $vf_plugin->post();
     setup_postdata($post);
 
-    // Include the plugin template
-    include($vf_plugin->template());
+    // User callback method if defined by plugin
+    if (method_exists($plugin, 'template_callback')) {
+      $plugin->template_callback(null, '', false, $acf_id);
+    } else {
+      // Include the plugin template
+      include($vf_plugin->template());
+    }
 
     // Flush the ACF cache *again* and reset the post meta
     if (is_array($fields)) {
-      acf_reset_meta($post->ID);
+      acf_reset_meta($acf_id);
       foreach (array_keys($fields) as $field_name) {
-        acf_flush_value_cache($post->ID, $field_name);
+        acf_flush_value_cache($acf_id, $field_name);
       }
     }
 

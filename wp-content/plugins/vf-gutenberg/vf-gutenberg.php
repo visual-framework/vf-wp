@@ -287,7 +287,7 @@ class VF_Gutenberg {
     }
     // Load template
     if (is_callable($template)) {
-      call_user_func($template);
+      call_user_func($template, $block, '', $is_preview, $acf_id);
     } else {
       if (file_exists($template)) {
         include($template);
