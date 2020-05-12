@@ -29,6 +29,11 @@
       settings.supports.inserter = false;
     }
 
+    // Hide old legacy containers (were replaced by ACF)
+    if (isContainer && /^vf\/container-/.test(name)) {
+      settings.supports.inserter = false;
+    }
+
     return settings;
   };
 

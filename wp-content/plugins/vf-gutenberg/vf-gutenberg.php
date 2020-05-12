@@ -548,11 +548,9 @@ if (ResizeObserver) {
         $data['supports'] = array(
           'customClassName' => false,
           'reusable'        => false,
-          'inserter'        => false
+          'inserter'        => false,
+          'multiple'        => false,
         );
-        if ($post_name === 'vf_page_template') {
-          $data['supports']['multiple'] = false;
-        }
       }
       if ($plugin->is_deprecated()) {
         $data['supports']['inserter'] = false;

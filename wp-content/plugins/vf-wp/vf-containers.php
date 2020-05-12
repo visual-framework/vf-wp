@@ -128,9 +128,10 @@ class VF_Containers extends VF_Type {
           'title'    => $plugin->post()->post_title,
           'category' => VF_Containers::block_category(),
           'supports' => array(
-            'mode'            => false,
+            'customClassName' => false,
             'align'           => false,
-            'customClassName' => false
+            'multiple'        => false,
+            'mode'            => false,
           )
         ),
         array(
