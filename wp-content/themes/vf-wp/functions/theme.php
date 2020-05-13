@@ -87,10 +87,34 @@ class VF_Theme {
       'body_class',
       array($this, 'body_class')
     );
+    add_filter(
+      'get_the_excerpt',
+      array($this, 'get_the_excerpt')
+    );
 
     // Hook for child themes to use the `VF_Theme` class
     // Child `functions.php` runs before the parent theme
     VF_Theme::do_action('vf/theme/init');
+  }
+
+  /**
+   * Filter the excerpt
+   */
+  function get_the_excerpt($excerpt, $limit = 300) {
+    $excerpt = strip_shortcodes($excerpt);
+    $excerpt = strip_tags($excerpt);
+    if ($limit > 0 && strlen($excerpt) > $limit) {
+      $excerpt = substr($excerpt, 0, $limit);
+      $excerpt = substr($excerpt, 0, strripos($excerpt, ' '));
+    }
+    $excerpt = trim(preg_replace('/\s+/', ' ', $excerpt));
+    if (empty($excerpt)) {
+      return '';
+    }
+    if ($limit > 0) {
+      $excerpt = "{$excerpt}&hellip;";
+    }
+    return $excerpt;
   }
 
   /**

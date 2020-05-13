@@ -22,7 +22,13 @@ if (count($latest_posts)) {
   // Setup first post data so template tags work
   global $post;
   $old_post = $post;
-  setup_postdata($post = $latest_posts[0]);
+  $post = $latest_posts[0];
+  setup_postdata($post);
+
+  $excerpt = apply_filters(
+    'get_the_excerpt',
+    $post->post_content
+  );
 ?>
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
@@ -43,7 +49,7 @@ if (count($latest_posts)) {
           <a class="vf-summary__link" href="<?php the_permalink(); ?>#respond"><?php _e('Leave a comment', 'vfwp'); ?></a>
       <?php } ?>
         </span>
-        <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
+        <p class="vf-summary__text"><?php echo $excerpt; ?></p>
       </article>
       <!--/vf-summary-->
     </main>
@@ -65,6 +71,7 @@ if (count($latest_posts)) {
 </section>
 <?php
   // Reset post data back to plugin
-  setup_postdata($post = $old_post);
+  $post = $old_post;
+  setup_postdata($post);
 }
 ?>
