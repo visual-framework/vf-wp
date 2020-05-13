@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Team publications",
+            "default_value": "",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -136,5 +136,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1589189297
+    "modified": 1589355252
 }

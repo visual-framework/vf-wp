@@ -15,7 +15,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Data resources",
+            "default_value": "",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -91,5 +91,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1589178926
+    "modified": 1589355112
 }
