@@ -141,6 +141,7 @@ function vf_wp_documents__init() {
     'show_in_nav_menus'   => true,
     'show_in_admin_bar'   => true,
     'show_in_rest'        => true,
+    'rest_base'           => 'documents',
     'menu_position'       => 20,
     'menu_icon'           => 'dashicons-media-document',
     'capability_type'     => 'page',
