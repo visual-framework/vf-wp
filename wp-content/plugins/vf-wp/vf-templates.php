@@ -41,11 +41,11 @@ class VF_Templates {
   static public function default_template() {
     $post_content = '
 
-<!-- wp:vf/container-global-header /-->
+<!-- wp:acf/vf-container-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
 
-<!-- wp:vf/container-page-template /-->
+<!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vvf-container-page-template"} /-->
 
-<!-- wp:vf/container-global-footer /-->
+<!-- wp:acf/vf-container-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
 
 ';
     $post_content = apply_filters(
@@ -61,7 +61,15 @@ class VF_Templates {
   static public function new_template_blocks() {
     return array(
       array(
-        'vf/container-page-template',
+        'acf/vf-container-global-header',
+        array()
+      ),
+      array(
+        'acf/vf-container-page-template',
+        array()
+      ),
+      array(
+        'acf/vf-container-global-footer',
         array()
       ),
     );
@@ -108,8 +116,12 @@ class VF_Templates {
   public function initialize() {
     // Add hooks
     add_action(
-      'init',
-      array($this, 'init')
+      'plugins_loaded',
+      array($this, 'plugins_loaded')
+    );
+    add_action(
+      'after_setup_theme',
+      array($this, 'after_setup_theme')
     );
     add_action(
       'after_switch_theme',
@@ -126,11 +138,6 @@ class VF_Templates {
       10, 2
     );
     add_filter(
-      'block_categories',
-      array($this, 'block_categories'),
-      999, 2
-    );
-    add_filter(
       'theme_page_templates',
       array($this, 'theme_page_templates'),
       999, 1
@@ -143,11 +150,6 @@ class VF_Templates {
       'vf_footer',
       array($this, 'vf_footer')
     );
-    // add_action(
-    //   'admin_print_footer_scripts',
-    //   array($this, 'admin_print_footer_scripts'),
-    //   100
-    // );
   }
 
   public function activate() {
@@ -185,11 +187,20 @@ class VF_Templates {
   }
 
   /**
-   * Action: `init`
-   * Register custom post type
+   * Action: `plugins_loaded`
+   */
+  public function plugins_loaded() {
+    // Register the placeholder container plugin
+    $placeholder = new VF_Container_Placeholder(
+      array('init' => true)
+    );
+  }
+
+  /**
+   * Action: `after_setup_theme`
    * https://developer.wordpress.org/reference/functions/register_post_type/
    */
-  public function init() {
+  public function after_setup_theme() {
     register_post_type(VF_Templates::type(),array(
       'labels'              => VF_Templates::labels(),
       'description'         => __('Theme Templates', 'vfwp'),
@@ -212,11 +223,6 @@ class VF_Templates {
       'can_export'          => true,
       'delete_with_user'    => false,
     ));
-
-    // Register the placeholder container plugin
-    $placeholder = new VF_Container_Placeholder(
-      array('init' => true)
-    );
 
     // Set default Gutenberg template
     $post_type_object = get_post_type_object(VF_Templates::type());
@@ -254,17 +260,6 @@ class VF_Templates {
       $post_states[] = __('Default Template', 'vfwp');
     }
     return $post_states;
-  }
-
-  /**
-   * Action: `block_categories`
-   * Only allow container category in Gutenberg editor
-   */
-  public function block_categories($categories, $post) {
-    if ($post->post_type === VF_Templates::type()) {
-      $categories = VF_Containers::block_categories(array(), $post);
-    }
-    return $categories;
   }
 
   /**
@@ -328,7 +323,7 @@ class VF_Templates {
       if ( ! $block['blockName']) {
         continue;
       }
-      $containers[] = VF_Gutenberg::name_block_to_post(
+      $containers[] = VF_Containers::name_block_to_post(
         $block['blockName']
       );
     }
@@ -397,53 +392,6 @@ class VF_Templates {
       $container = VF_Plugin::get_plugin($post_name);
       VF_Plugin::render($container);
     }
-  }
-
-  /**
-   * Only allow container blocks in the "Template" post type
-   */
-  public function admin_print_footer_scripts() {
-    /*
-    $screen = get_current_screen();
-    if (
-      ! $screen ||
-        $screen->parent_base !== 'edit' ||
-        $screen->post_type !== VF_Templates::type()
-    ) {
-      return;
-    }
-    $category = VF_Containers::block_category();
-?>
-<script type="text/javascript">
-(function() {
-  const onReady = () => {
-    if (typeof wp !== 'object') {
-      return;
-    }
-    wp.domReady(() => {
-      if (typeof wp.blocks !== 'object') {
-        return;
-      }
-      const blocks = wp.blocks.getBlockTypes();
-      blocks.forEach(block => {
-        // Disable non-containers
-        if (block.category !== '<?php echo $category; ?>') {
-          wp.blocks.unregisterBlockType(block.name);
-          return;
-        }
-        // Enable containers
-        block.supports.inserter = true;
-      });
-    });
-  };
-  document.addEventListener(
-    'DOMContentLoaded',
-    onReady
-  );
-})();
-</script>
-<?php
-*/
   }
 
 } // VF_Templates

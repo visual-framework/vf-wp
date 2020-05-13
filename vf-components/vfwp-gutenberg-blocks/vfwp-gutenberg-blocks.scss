@@ -193,7 +193,8 @@
   max-width: none;
 }
 
-.wp-block[data-type^='vf/container-'] {
+.wp-block[data-type^='vf/container-'],
+.wp-block[data-type^='acf/vf-container-'] {
   border: 1px dashed #8d96a0;
   max-width: none;
 

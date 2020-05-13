@@ -25,38 +25,6 @@ class VF_ACF {
       array($this, 'acf_update_field_group'),
       1, 1
     );
-    add_action(
-      'enqueue_block_editor_assets',
-      array($this, 'enqueue_block_editor_assets')
-    );
-  }
-
-  /**
-   * Enqeue script for live plugin previews
-   */
-  function enqueue_block_editor_assets() {
-    global $post;
-    $plugin = VF_Plugin::get_plugin($post->post_name);
-
-    if ( ! $plugin || ! $plugin->__experimental__has_admin_preview()) {
-      return;
-    }
-
-    wp_register_script(
-      'vf-plugin',
-      plugins_url(
-        '/assets/vf-plugin.js',
-        __FILE__
-      ),
-      array('vf-blocks'),
-      false,
-      true
-    );
-
-    $local = $plugin->config();
-
-    wp_localize_script('vf-plugin', 'vfPlugin', $local);
-    wp_enqueue_script('vf-plugin');
   }
 
   /**
@@ -76,9 +44,6 @@ class VF_ACF {
     if ( ! function_exists('get_current_screen')) {
       return;
     }
-    // if (vf_debug()) {
-    //   return;
-    // }
     $ids = array(
       'edit-acf-field-group',
       'acf-field-group',

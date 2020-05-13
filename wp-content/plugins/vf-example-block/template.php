@@ -1,21 +1,22 @@
 <?php
 
-global $post;
+$acf_id = isset($acf_id) ? $acf_id : false;
 
-$text = get_field('vf_example_text');
-$textarea = get_field('vf_example_textarea');
-$select = get_field('vf_example_select');
-$range = get_field('vf_example_range');
-$radio = get_field('vf_example_radio');
-$checkbox = get_field('vf_example_checkbox');
-$boolean = get_field('vf_example_boolean');
-$date = get_field('vf_example_date');
-$taxonomy = get_field('vf_example_taxonomy');
+$text = get_field('vf_example_text', $acf_id);
+$textarea = get_field('vf_example_textarea', $acf_id);
+$select = get_field('vf_example_select', $acf_id);
+$range = get_field('vf_example_range', $acf_id);
+$radio = get_field('vf_example_radio', $acf_id);
+$checkbox = get_field('vf_example_checkbox', $acf_id);
+$boolean = get_field('vf_example_boolean', $acf_id);
+$date = get_field('vf_example_date', $acf_id);
+$taxonomy = get_field('vf_example_taxonomy', $acf_id);
+$number = get_field('vf_example_number', $acf_id);
+$email = get_field('vf_example_email', $acf_id);
+$url = get_field('vf_example_url', $acf_id);
+$rich = get_field('vf_example_rich', $acf_id);
+
 $checkbox = is_array($checkbox) ? $checkbox : array();
-$number = get_field('vf_example_number');
-$email = get_field('vf_example_email');
-$url = get_field('vf_example_url');
-$rich = get_field('vf_example_rich');
 
 ?>
 <div class="vf-content">

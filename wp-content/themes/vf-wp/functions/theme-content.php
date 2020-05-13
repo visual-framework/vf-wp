@@ -54,15 +54,11 @@ class VF_Theme_Content {
    * e.g. with `<div class="vf-content"> [...] </div>`
    */
   public function is_block_wrapped($is_wrap, $block_name, $blocks, $i) {
-    // Ignore non `vf` blocks
-    if ( ! preg_match('#^vf/(.+)#', $block_name)) {
-      return true;
-    }
-    // Don't wrap standalone VF blocks
-    if (class_exists('VF_Gutenberg')) {
-      if (VF_Gutenberg::is_block_standalone($block_name)) {
-        return false;
-      }
+    $plugin = VF_Plugin::get_plugin(
+      VF_Blocks::name_block_to_post($block_name)
+    );
+    if ($plugin && $plugin->is_template_standalone()) {
+      return false;
     }
     return true;
   }

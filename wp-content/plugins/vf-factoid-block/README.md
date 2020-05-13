@@ -1,25 +1,36 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Factoid (block)
 
 Boxed content using the `vf-factoid` Visual Framework pattern.
 
 ## Configuration
 
-Related post:
+ACF / Block data:
+
+| field key | field name |
+| --------- | ---------- |
+| field_vf_factoid_limit | vf_factoid_limit |
+| field_vf_factoid_id | vf_factoid_id |
+
+Block `name`: `acf/vf-factoid`
+
+See plugin JSON file for source of truth.
+
+### Related post
 
 | post_name | post_type |
 | --------- | --------- |
 | vf_factoid | vf_block |
 
-Post meta:
+Default values can be assigned to this post using post meta and the "field name" listed above.
+
+For example in `wp_postmeta`:
 
 | meta_key | meta_value |
 | -------- | ---------- |
-| vf_factoid_limit | [INT] |
+| vf_factoid_limit | 3 |
 | \_vf_factoid_limit | field_vf_factoid_limit |
-| vf_factoid_id | [INT] |
-| \_vf_factoid_id | field_vf_factoid_id |
-| vf_factoid_topic | [INT] |
-| \_vf_factoid_topic | field_vf_factoid_topic |
 
 ### Limit
 

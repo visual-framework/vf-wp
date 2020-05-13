@@ -16,17 +16,17 @@ class VF_Groups_Templates {
   public function post_content_default($post_content) {
     return '
 
-<!-- wp:vf/container-global-header /-->
+<!-- wp:acf/vf-container-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
 
-<!-- wp:vf/container-breadcrumbs /-->
+<!-- wp:acf/vf-container-breadcrumbs {"id":"' . uniqid('block_') . '","name":"acf/vf-container-breadcrumbs"} /-->
 
-<!-- wp:vf/container-wp-groups-header /-->
+<!-- wp:acf/vf-container-wp-groups-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-wp-groups-header"} /-->
 
-<!-- wp:vf/container-page-template /-->
+<!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vf-container-page-template"} /-->
 
-<!-- wp:vf/container-embl-news /-->
+<!-- wp:acf/vf-container-embl-news {"id":"' . uniqid('block_') . '","name":"acf/vf-container-embl-news"} /-->
 
-<!-- wp:vf/container-global-footer /-->
+<!-- wp:acf/vf-container-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
 
 ';
   }

@@ -32,10 +32,14 @@ class VF_Person {
    * https://developer.wordpress.org/block-editor/developers/block-api/block-registration/
    */
   public function get_config() {
+    $category = 'vf/wp';
+    if (class_exists('VF_Blocks')) {
+      $category = VF_Blocks::block_category();
+    }
     return array(
       'name'     => $this->get_name(),
       'title'    => __('Person', 'vfwp'),
-      'category' => VF_Blocks::block_category(),
+      'category' => $category,
       'supports' => array(
         'align'           => false,
         'customClassName' => false

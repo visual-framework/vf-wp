@@ -271,6 +271,13 @@
                 "operator": "==",
                 "value": "vf_example"
             }
+        ],
+        [
+          {
+            "param": "block",
+            "operator": "==",
+            "value": "acf/vf-example"
+          }
         ]
     ],
     "menu_order": 0,
@@ -281,5 +288,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1570082144
+    "modified": 1589178926
 }

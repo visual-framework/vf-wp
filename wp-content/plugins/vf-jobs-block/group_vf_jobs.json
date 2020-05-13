@@ -34,7 +34,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
+            "default_value": 50,
             "min": 1,
             "max": 50,
             "step": "",
@@ -49,6 +49,13 @@
                 "operator": "==",
                 "value": "vf_jobs"
             }
+        ],
+        [
+          {
+            "param": "block",
+            "operator": "==",
+            "value": "acf/vf-jobs"
+          }
         ]
     ],
     "menu_order": 0,
@@ -59,5 +66,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1544084692
+    "modified": 1589185169
 }

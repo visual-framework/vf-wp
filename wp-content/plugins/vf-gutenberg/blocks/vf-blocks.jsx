@@ -3,7 +3,7 @@
  */
 import {registerBlockType} from '@wordpress/blocks';
 import useVFGutenberg from './hooks/use-vf-gutenberg';
-import useVFPluginSettings from './hooks/use-vf-plugin-settings';
+import useVFPluginSettings from './hooks/deprecated/use-vf-plugin-settings';
 
 // Import Visual Framework core component settings
 import vfActivityItem from './vf-core/vf-activity-item';
@@ -22,7 +22,7 @@ import vfGrid from './vf-core/vf-grid';
 import vfLede from './vf-core/vf-lede';
 
 // Get "localized" global script settings
-const {plugins, coreOptin} = useVFGutenberg();
+const {coreOptin, deprecatedPlugins} = useVFGutenberg();
 
 // Register VF Core blocks
 if (parseInt(coreOptin) === 1) {
@@ -45,11 +45,12 @@ if (parseInt(coreOptin) === 1) {
     vfLede,
     vfEmbed
   ];
-  coreBlocks.forEach((settings) => registerBlockType(settings.name, settings));
+  coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
 }
 
-// Register VF Plugin blocks
-for (const [name, plugin] of Object.entries(plugins)) {
+// Register any deprecated VF Plugin blocks for legacy support
+// These blocks were replaced by full ACF versions
+for (const [name, plugin] of Object.entries(deprecatedPlugins)) {
   const settings = useVFPluginSettings({
     name,
     title: plugin.title,
@@ -58,14 +59,25 @@ for (const [name, plugin] of Object.entries(plugins)) {
   registerBlockType(name, settings);
 }
 
+// Register experimental preview block
+const settings = useVFPluginSettings({
+  name: 'vf/plugin',
+  title: 'Preview',
+  category: 'vf/wp'
+});
+settings.attributes.ref = {
+  type: 'string'
+};
+registerBlockType('vf/plugin', settings);
+
 // Handle iframe preview resizing globally
 // TODO: remove necessity from `useVFIFrame`
 window.addEventListener('message', ({data}) => {
-  if (data !== Object(data) || ! /^vfwp_/.test(data.id)) {
+  if (data !== Object(data) || !/^vfwp_/.test(data.id)) {
     return;
   }
   const iframe = document.getElementById(data.id);
-  if ( ! iframe || ! iframe.vfActive) {
+  if (!iframe || !iframe.vfActive) {
     return;
   }
   window.requestAnimationFrame(() => {

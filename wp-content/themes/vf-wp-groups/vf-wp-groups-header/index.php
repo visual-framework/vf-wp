@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Groups Header
 Description: VF-WP Groups theme global container.
-Version: 0.1.0
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -166,7 +166,8 @@ class VF_WP_Groups_Header extends VF_Plugin {
       $term_uuid = embl_taxonomy_get_uuid($term_id);
       // Query Content Hub via cache
       if ($term_uuid) {
-        $url = VF_Cache::get_api_url() . '/pattern.html';
+        $url = VF_Cache::get_api_url();
+        $url .= '/pattern.html';
         $url = add_query_arg(array(
           'filter-uuid'         => $term_uuid,
           'filter-content-type' => 'profiles',

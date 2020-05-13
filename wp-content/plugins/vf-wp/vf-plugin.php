@@ -13,8 +13,6 @@ class VF_Plugin {
   protected $file;
   // Saved config for plugin activation
   protected $config;
-  // Plugin contentHub API settings
-  protected $API;
 
   // `WP_Post` of custom post type (e.g. `vf_block`)
   private $post;
@@ -151,7 +149,7 @@ class VF_Plugin {
    * Return true if plugin has API configuration
    */
   public function is_api() {
-    return empty($this->API) === false;
+    return false;
   }
 
   /**
@@ -205,38 +203,6 @@ class VF_Plugin {
     if (file_exists($path)) {
       return $path;
     }
-  }
-
-  /**
-   * Return API URL base for all instances of the plugin
-   */
-  public function api_url(array $query_vars = array()) {
-    if ( ! $this->is_api()) {
-      return '';
-    }
-    $url = VF_Cache::get_api_url();
-    $url .= '/pattern.html';
-    if (is_array($this->API)) {
-      $url = add_query_arg($this->API, $url);
-    }
-    if (count($query_vars)) {
-      $url = add_query_arg($query_vars, $url);
-    }
-    return $url;
-  }
-
-  /**
-   * Return API HTML from cache
-   */
-  public function api_html() {
-    return VF_Cache::fetch($this->api_url());
-  }
-
-  /**
-   * @Deprecated
-   */
-  public function api_attr($attr) {
-    return '';
   }
 
   /**
@@ -373,22 +339,15 @@ class VF_Plugin {
     if (empty($fields)) {
       $fields = null;
     }
-    // User callback method if defined by plugin
-    if (method_exists($plugin, 'template_callback')) {
-      $plugin->template_callback($fields);
-      return;
-    }
-    // Use template file if defined by plugin
-    if ( ! $plugin->template()) {
-      return;
-    }
+
+    $acf_id = $plugin->post()->ID;
 
     // Flush the ACF cache and setup post meta
     if (is_array($fields)) {
       foreach (array_keys($fields) as $field_name) {
-        acf_flush_value_cache($plugin->post()->ID, $field_name);
+        acf_flush_value_cache($acf_id, $field_name);
       }
-      acf_setup_meta($fields, $plugin->post()->ID, true);
+      acf_setup_meta($fields, $acf_id, true);
     }
 
     // Before actions
@@ -402,14 +361,22 @@ class VF_Plugin {
     $post = $vf_plugin->post();
     setup_postdata($post);
 
-    // Include the plugin template
-    include($vf_plugin->template());
+    // User callback method if set by plugin
+    if (method_exists($plugin, 'template_callback')) {
+      $plugin->template_callback(null, '', false, $acf_id);
+    } else {
+      // Include the plugin template if set by plugin
+      $template = $vf_plugin->template();
+      if (file_exists($template)) {
+        include($template);
+      }
+    }
 
     // Flush the ACF cache *again* and reset the post meta
     if (is_array($fields)) {
-      acf_reset_meta($post->ID);
+      acf_reset_meta($acf_id);
       foreach (array_keys($fields) as $field_name) {
-        acf_flush_value_cache($post->ID, $field_name);
+        acf_flush_value_cache($acf_id, $field_name);
       }
     }
 

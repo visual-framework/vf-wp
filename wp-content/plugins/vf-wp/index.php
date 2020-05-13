@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP
 Description: VF-WP theme plugin manager.
-Version: 1.0.0-beta.2
+Version: 1.0.0-beta.3
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -77,11 +77,6 @@ class VF_WP {
       array($this, 'deactivate')
     );
 
-    add_action(
-      'init',
-      array($this, 'init')
-    );
-
     add_filter(
       'block_categories',
       array($this, 'block_categories'),
@@ -90,6 +85,11 @@ class VF_WP {
 
      add_action('acf/init',
       array($this, 'acf_init')
+    );
+
+    add_action(
+      'enqueue_block_editor_assets',
+      array($this, 'enqueue_block_editor_assets')
     );
 
     add_action(
@@ -104,16 +104,27 @@ class VF_WP {
       1
     );
 
-    // Handle templates
     add_filter(
       'single_template',
       array($this, 'single_template')
     );
+
     add_filter(
       'body_class',
       array($this, 'body_class'),
       30, 1
     );
+
+    if (vf_debug()) {
+      add_action(
+        'vf/plugin/before_render',
+        array($this, 'plugin_before_render')
+      );
+      add_action(
+        'vf/plugin/after_render',
+        array($this, 'plugin_after_render')
+      );
+    }
   }
 
   /**
@@ -161,21 +172,6 @@ class VF_WP {
   }
 
   /**
-   * Action: `admin_menu`
-   */
-  public function admin_menu() {
-    add_menu_page(
-      __('Content Hub', 'vfwp'),
-      __('Content Hub', 'vfwp'),
-      'manage_options',
-      'vf-settings',
-      '',
-      'dashicons-admin-settings',
-      50
-    );
-  }
-
-  /**
    * Action: `block_categories`
    */
   static public function block_categories($categories, $post) {
@@ -188,6 +184,47 @@ class VF_WP {
         ),
       ),
       $categories
+    );
+  }
+
+  /**
+   * Enqeue script for plugins
+   */
+  function enqueue_block_editor_assets() {
+    global $post;
+
+    // If editing plugin post
+    $plugin = VF_Plugin::get_plugin($post->post_name);
+
+    wp_register_script(
+      'vf-plugin',
+      plugins_url(
+        '/assets/vf-plugin.js',
+        __FILE__
+      ),
+      array('wp-editor', 'wp-blocks'),
+      false,
+      true
+    );
+    wp_localize_script('vf-plugin', 'vfPlugin', array(
+      'plugin' => $plugin ? $plugin->config() : null,
+      'post_type' => get_post_type()
+    ));
+    wp_enqueue_script('vf-plugin');
+  }
+
+  /**
+   * Action: `admin_menu`
+   */
+  public function admin_menu() {
+    add_menu_page(
+      __('Content Hub', 'vfwp'),
+      __('Content Hub', 'vfwp'),
+      'manage_options',
+      'vf-settings',
+      '',
+      'dashicons-admin-settings',
+      50
     );
   }
 
@@ -259,30 +296,11 @@ class VF_WP {
     return $paths;
   }
 
-  function init() {
-    // Enable debug comments
-    if ( ! vf_debug()) {
-      return;
-    }
-    add_action(
-      'vf/plugin/before_render',
-      array($this, 'plugin_before_render'),
-      1
-    );
-    add_action(
-      'vf/plugin/after_render',
-      array($this, 'plugin_after_render'),
-      1
-    );
-  }
-
   /**
    * Output debug HTML comments around rendered plugin templates
    */
   function plugin_before_render($vf_plugin) {
-    $url = $vf_plugin->api_url();
     echo "\n<!--vf:plugin:{$vf_plugin->post()->post_name}-->\n";
-    if ($url) echo "<!--vf:api:{$url}-->\n";
   }
 
   function plugin_after_render($vf_plugin) {

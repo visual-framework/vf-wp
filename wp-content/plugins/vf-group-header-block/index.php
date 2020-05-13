@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Group Header
 Description: VF-WP theme block.
-Version: 1.0.0-beta.1
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -23,12 +23,12 @@ class VF_Group_Header extends VF_Plugin {
     'post_title' => 'Group Header',
   );
 
-  private $is_minimal = false;
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
 
-  protected $API = array(
-    'filter-content-type' => 'person',
-    'source'              => 'contenthub',
-  );
+  private $is_minimal = false;
 
   function __construct(array $params = array()) {
     parent::__construct('vf_group_header');
@@ -43,6 +43,16 @@ class VF_Group_Header extends VF_Plugin {
   private function init() {
     parent::initialize();
     add_action('admin_head', array($this, 'admin_head'), 15);
+    // Do no wrap in `vf-content` classes
+    add_filter(
+      'vf/theme/content/is_block_wrapped/name=acf/vf-group-header',
+      '__return_false'
+    );
+    // Support older version
+    add_filter(
+      'vf/theme/content/is_block_wrapped/name=vf/group-header',
+      '__return_false'
+    );
   }
 
   function is_minimal() {
@@ -53,80 +63,11 @@ class VF_Group_Header extends VF_Plugin {
     return ! $this->is_minimal();
   }
 
-  function api_url(array $query_vars = array()) {
-    $vars = array(
-      'pattern'  => 'vf-summary-profile-r',
-      'limit' => 1,
-      'sort-field-value[changed]' => 'DESC',
-      'filter-field-value[field_person_positions.entity.field_position_membership]' => 'leader'
-    );
-
-    if ($this->is_minimal()) {
-      $vars['pattern'] = 'vf-summary-profile-l';
-    }
-
-    if (function_exists('embl_taxonomy_get_term')) {
-      $term_id = get_field('embl_taxonomy_term_what', 'option');
-      $term = embl_taxonomy_get_term($term_id);
-      if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
-        $key = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.title]';
-        $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
-      }
-    }
-
-    return parent::api_url(
-      array_merge($vars, $query_vars)
-    );
-  }
-
-  function heading_html() {
-    $heading = get_field('vf_group_header_heading', $this->post()->ID);
-    $heading = esc_html($heading);
-    $heading = trim($heading);
-    $heading = "<h1 class=\"vf-lede\">{$heading}</h1>";
-
-    if ( ! vf_html_empty($heading) || ! class_exists('VF_Cache')) {
-      return $heading;
-    }
-
-    // if heading is empty, use the contenthub description
-    $term_id = get_field('embl_taxonomy_term_what', 'option');
-    $uuid = embl_taxonomy_get_uuid($term_id);
-
-    if ( ! $uuid) {
-      return $heading;
-    }
-
-    $url = VF_Cache::get_api_url();
-    $url .= '/pattern.html';
-    $url = add_query_arg(array(
-      'filter-uuid'         => $uuid,
-      'filter-content-type' => 'profiles',
-      'pattern'             => 'node-teaser',
-      'source'              => 'contenthub',
-    ), $url);
-
-    $heading = VF_Cache::fetch($url);
-
-    $heading = preg_replace(
-      '#<p>#',
-      '<h1 class="vf-lede">',
-      $heading
-    );
-
-    $heading = preg_replace(
-      '#</p>#',
-      ' <a class="vf-link" href="'.home_url('/about/').'">' . __('Read more', 'vfwp') . '</a>.</h1>',
-      $heading
-    );
-
-    return $heading;
-  }
-
   function admin_head() {
 ?>
 <style>
-.wp-block[data-type="vf/group-header"] {
+.wp-block[data-type="vf/group-header"],
+.wp-block[data-type="acf/vf-group-header"] {
   max-width: none;
 }
 </style>

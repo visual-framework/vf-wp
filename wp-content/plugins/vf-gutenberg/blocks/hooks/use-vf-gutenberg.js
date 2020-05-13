@@ -9,7 +9,7 @@ const vfGutenberg = {
   renderSuffix: '',
   postId: 0,
   nonce: '',
-  plugins: {}
+  deprecatedPlugins: {}
 };
 
 const useVFGutenberg = () => {

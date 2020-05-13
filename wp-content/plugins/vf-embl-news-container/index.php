@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP EMBL News
 Description: VF-WP theme global container.
-Version: 1.0.0-beta.1
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -24,19 +24,10 @@ class VF_EMBL_News extends VF_Plugin {
     'post_type'  => 'vf_container',
   );
 
-  protected $API = array(
-    'pattern'                                => 'vf-news-item-default',
-    'filter-content-type'                    => 'article',
-    'filter-field-value[field_article_type]' => 'article_timely',
-    'sort-field-value[created]'              => 'DESC',
-    'source'                                 => 'contenthub',
-  );
-
-  private $exists = array(
-    'field_display_title',
-    'field_teaser',
-    'field_canonical_location'
-  );
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
 
   function __construct(array $params = array()) {
     parent::__construct('vf_embl_news');
@@ -48,39 +39,6 @@ class VF_EMBL_News extends VF_Plugin {
   private function init() {
     parent::initialize();
     add_action('init', array($this, 'add_taxonomy_fields'), 11);
-  }
-
-  function api_url(array $query_vars = array()) {
-    $limit = intval(
-      get_field('vf_embl_news_limit', $this->post()->ID)
-    );
-
-    $vars = array(
-      'filter-fields-exists' => implode(',', $this->exists),
-      'limit' => $limit ? $limit : 3
-    );
-
-    $filter_key = 'filter-field-contains[field_teaser]';
-
-    // Use "Keyword" filter
-    $keyword = vf_search_keyword(
-      get_field('vf_embl_news_keyword', $this->post()->ID)
-    );
-    if ( ! empty($keyword)) {
-      $vars[$filter_key] = $keyword;
-    }
-
-    // Prioritise "Term" filter
-    if (function_exists('embl_taxonomy_get_term')) {
-      $term = embl_taxonomy_get_term(
-        get_field('vf_embl_news_term', $this->post()->ID)
-      );
-      if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
-        $vars[$filter_key] = $term->meta[EMBL_Taxonomy::META_NAME];
-      }
-    }
-
-    return parent::api_url(array_merge($vars, $query_vars));
   }
 
   /**

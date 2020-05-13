@@ -1,11 +1,53 @@
 <?php
 
-global $vf_plugin;
-if ( ! $vf_plugin instanceof VF_EMBL_News) return;
+$acf_id = isset($acf_id) ? $acf_id : false;
 
-$content = $vf_plugin->api_html();
+$limit = get_field('vf_embl_news_limit', $acf_id);
+$limit = intval($limit);
+$limit = $limit < 1 || $limit > 3 ? 3 : $limit;
+
+$vars = array(
+  'source'               => 'contenthub',
+  'pattern'              => 'vf-news-item-default',
+  'filter-content-type'  => 'article',
+  'limit'                => $limit,
+  'filter-field-value[field_article_type]' => 'article_timely',
+  'sort-field-value[created]'              => 'DESC',
+);
+
+$vars['filter-fields-exists'] = implode(',', array(
+  'field_display_title',
+  'field_teaser',
+  'field_canonical_location'
+));
+
+$filter_key = 'filter-field-contains[field_teaser]';
+
+// Use "Keyword" filter
+$keyword = get_field('vf_embl_news_keyword', $acf_id);
+$keyword = vf_search_keyword($keyword);
+if ( ! empty($keyword)) {
+  $vars[$filter_key] = $keyword;
+}
+
+// Prioritise "Term" filter
+if (function_exists('embl_taxonomy_get_term')) {
+  $term_id = get_field('vf_embl_news_term', $acf_id);
+  $term = embl_taxonomy_get_term($term_id);
+  if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
+    $vars[$filter_key] = $term->meta[EMBL_Taxonomy::META_NAME];
+  }
+}
+
+// Setup base API URL
+$url = VF_Cache::get_api_url();
+$url .= '/pattern.html';
+$url = add_query_arg($vars, $url);
+
+// Request HTML from the Content Hub API
+$content = VF_Cache::fetch($url);
 $hash = VF_Cache::hash(
-  esc_url_raw($vf_plugin->api_url())
+  esc_url_raw($url)
 );
 
 if (vf_cache_empty($content)) {
@@ -39,7 +81,7 @@ $content = preg_replace(
       <?php
       if (class_exists('VF_Factoid')) {
         $vf_factoid = VF_Plugin::get_plugin('vf_factoid');
-        $fields = get_field('vf_embl_news_factoid');
+        $fields = get_field('vf_embl_news_factoid', $acf_id);
         if (is_array($fields)) {
           VF_Plugin::render($vf_factoid, $fields, $vf_plugin);
         }

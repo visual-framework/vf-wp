@@ -1,16 +1,17 @@
 /**
+ * DEPRECATED
  * Return block attributes for a VF Plugin (mapped from ACF field object)
  */
-import useVFGutenberg from './use-vf-gutenberg';
+import useVFGutenberg from '../use-vf-gutenberg';
 
 const useVFPlugin = name => {
-  const {plugins} = useVFGutenberg();
+  const {deprecatedPlugins} = useVFGutenberg();
   let fields = [];
   let supports = {};
   let attributes = {};
   let preview = false;
-  if (Object.keys(plugins).indexOf(name) > -1) {
-    const config = plugins[name];
+  if (Object.keys(deprecatedPlugins).indexOf(name) > -1) {
+    const config = deprecatedPlugins[name];
     if (config.hasOwnProperty('attributes')) {
       attributes = {...config.attributes};
     }

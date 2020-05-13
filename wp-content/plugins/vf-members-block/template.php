@@ -1,11 +1,80 @@
 <?php
 
-global $post, $vf_plugin;
-if ( ! $vf_plugin instanceof VF_Members) return;
+$acf_id = isset($acf_id) ? $acf_id : false;
 
-$content = $vf_plugin->api_html();
+$limit = get_field('vf_members_limit', $acf_id);
+$order = get_field('vf_members_order', $acf_id);
+$varition = get_field('vf_members_variation', $acf_id);
+$leader = get_field('vf_members_leader', $acf_id);
+$team = get_field('vf_members_team', $acf_id);
+$term_id = get_field('vf_members_term', $acf_id);
+$keyword = get_field('vf_members_keyword', $acf_id);
+
+$limit = intval($limit);
+$limit = $limit < 1 || $limit > 50 ? 50 : $limit;
+
+if (empty($order)) {
+  $order = 'DESC';
+}
+
+if (empty($varition)) {
+  $varition = 'l';
+}
+
+if (is_array($varition)) {
+  $varition = $varition[0];
+}
+
+$leader = boolval($leader);
+
+$keyword = trim($keyword);
+
+$vars = array(
+  'source'                    => 'contenthub',
+  'filter-content-type'       => 'person',
+  'pattern'                   => "vf-summary-profile-{$varition}",
+  'limit'                     => $limit,
+  'sort-field-value[changed]' => $order,
+  'filter-fields-empty'       => 'field_person_visible_internally',
+);
+
+if ($leader !== true) {
+  $vars['filter-field-value-not[field_person_positions.entity.field_position_membership]'] = 'leader';
+}
+
+$key = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.title]';
+
+// Search based on EMBL Taxonomy (default or specified)
+if (function_exists('embl_taxonomy_get_term')) {
+  // Use specified term
+  $term = null;
+  if ($team === 'taxonomy' && is_numeric($term_id)) {
+    $term = embl_taxonomy_get_term(intval($term_id));
+  }
+  // Use default
+  if ( ! $term instanceof WP_Term) {
+    $term_id = get_field('embl_taxonomy_term_what', 'option');
+    $term = embl_taxonomy_get_term($term_id);
+  }
+  if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
+    $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
+  }
+}
+
+// Search by keyword
+if ($team === 'keyword' && ! empty($keyword)) {
+  $vars[$key] = $keyword;
+}
+
+// Setup base API URL
+$url = VF_Cache::get_api_url();
+$url .= '/pattern.html';
+$url = add_query_arg($vars, $url);
+
+// Request HTML from the Content Hub API
+$content = VF_Cache::fetch($url);
 $hash = VF_Cache::hash(
-  esc_url_raw($vf_plugin->api_url())
+  esc_url_raw($url)
 );
 
 if (vf_cache_empty($content)) {

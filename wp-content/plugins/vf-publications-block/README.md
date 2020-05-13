@@ -1,25 +1,39 @@
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
+
 # Publications (block)
 
 To display a list of team or group publications from the Content Hub.
 
 ## Configuration
 
-Related post:
+ACF / Block data:
+
+| field key | field name |
+| --------- | ---------- |
+| field_vf_publications_heading | vf_publications_heading |
+| field_vf_publications_limit | vf_publications_limit |
+| field_vf_publications_order | vf_publications_order |
+| field_vf_publications_type | vf_publications_type |
+| field_vf_publications_query | vf_publications_query |
+
+Block `name`: `acf/vf-publications`
+
+See plugin JSON file for source of truth.
+
+### Related post
 
 | post_name | post_type |
 | --------- | --------- |
 | vf_publications | vf_block |
 
-Post meta:
+Default values can be assigned to this post using post meta and the "field name" listed above.
+
+For example in `wp_postmeta`:
 
 | meta_key | meta_value |
 | -------- | ---------- |
-| vf_publications_heading | [STRING] |
+| vf_publications_heading | "Publications" |
 | \_vf_publications_heading | field_vf_publications_heading |
-| vf_publications_order | [STRING] |
-| \_vf_publications_order | field_vf_publications_order |
-| vf_publications_limit | [INT] |
-| \_vf_publications_limit | field_vf_publications_limit |
 
 ### Heading
 

@@ -1,4 +1,8 @@
 /**
+ * DEPRECATED
+ * These plugins exist as a legacy fallback
+ * Only new ACF versions are visible to the editor
+ *
  * Generate new Gutenberg block settings from defaults.
  * Provide `VFBlockFields` using `useVFPlugin` configuration.
  */
@@ -9,11 +13,11 @@ import {__} from '@wordpress/i18n';
 import {
   withTransientAttribute,
   withTransientACF
-} from '../hooks/with-transient';
-import useVFDefaults from './use-vf-defaults';
+} from '../with-transient';
+import useVFDefaults from '../use-vf-defaults';
 import useVFPlugin from './use-vf-plugin';
-import VFBlockFields from '../vf-block/block-fields';
-import VFBlock from '../vf-block';
+import VFBlockFields from '../../vf-block/block-fields';
+import VFBlock from '../../vf-block';
 
 const useVFPluginSettings = settings => {
   const defaults = useVFDefaults();
@@ -29,6 +33,13 @@ const useVFPluginSettings = settings => {
     ...defaults.attributes,
     ...(attributes || {})
   };
+
+  // Avoid future usage
+  supports = {
+    ...supports,
+    inserter: false,
+    reusable: false
+  }
 
   // Enable `mode` attribute
   if (hasFields) {

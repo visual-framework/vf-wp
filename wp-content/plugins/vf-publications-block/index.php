@@ -2,7 +2,7 @@
 /*
 Plugin Name: VF-WP Publications
 Description: VF-WP theme block.
-Version: 1.0.0-beta.1
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
@@ -23,64 +23,16 @@ class VF_Publications extends VF_Plugin {
     'post_title' => 'Team publications',
   );
 
-  protected $API = array(
-    'source' => 'contenthub',
-  );
+  // Plugin uses Content Hub API
+  public function is_api() {
+    return true;
+  }
 
   public function __construct(array $params = array()) {
     parent::__construct('vf_publications');
     if (array_key_exists('init', $params)) {
       parent::initialize();
     }
-  }
-
-  // Query the contentHub API, samples:
-  //   - Group: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-team-publications&title=Web%20Development
-  //   - ORCID: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-person-publications&orcid=0000-0001-5454-2815
-  //   - Name: https://dev.content.embl.org/api/v1/pattern.html?pattern=embl-person-publications&title=Maria-Jesus
-  function api_url(array $query_vars = array()) {
-    $limit = intval(get_field('vf_publications_limit', $this->post()->ID));
-    $order = get_field('vf_publications_order', $this->post()->ID);
-
-    // load
-    $searchType = get_field('vf_publications_type', $this->post()->ID) ?? 'team';
-    $searchQuery = get_field('vf_publications_query', $this->post()->ID);
-
-    if ($searchType == 'team' || $searchType == 'person_name') {
-      $queryKey = 'title';
-    } else if ($searchType == 'orcid') {
-      $queryKey = 'orcid';
-    }
-
-    if ($searchType == 'team' ) {
-      $this->API['pattern'] = 'embl-team-publications';
-    } else if ($searchType == 'orcid' || $searchType == 'person_name') {
-      $this->API['pattern'] = 'embl-person-publications';
-      // no sapces allowed
-      $searchQuery = str_replace(' ', '-', $searchQuery);
-    }
-
-    $vars = array(
-      'limit' => $limit ? $limit : 100,
-      'sort-field-value[changed]' => $order ? $order : 'DESC'
-      // 'filter-field-value-not[field_person_positions.entity.field_position_membership]' => 'leader'
-    );
-
-    // if a specific query has been given, use it
-    if ($searchQuery) {
-      $vars[$queryKey] = $searchQuery;
-    // otherwise if query for team use the name of the site, if set
-    } else if ($searchType == 'team' && function_exists('embl_taxonomy_get_term')) {
-      $term_id = get_field('embl_taxonomy_term_what', 'option');
-      $term = embl_taxonomy_get_term($term_id);
-      if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
-        $vars['title'] = $term->meta[EMBL_Taxonomy::META_NAME];
-      }
-    }
-
-    return parent::api_url(
-      array_merge($vars, $query_vars)
-    );
   }
 
   /**
