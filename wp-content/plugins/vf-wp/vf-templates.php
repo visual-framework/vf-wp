@@ -213,6 +213,7 @@ class VF_Templates {
       'show_in_nav_menus'   => false,
       'show_in_admin_bar'   => true,
       'show_in_rest'        => true,
+      'rest_base'           => VF_Templates::type() . 's',
       'menu_position'       => 40,
       'menu_icon'           => 'dashicons-layout',
       'capability_type'     => 'page',

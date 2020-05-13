@@ -157,6 +157,7 @@ class VF_Type {
       'show_ui'            => true,
       'show_in_admin_bar'  => false,
       'show_in_rest'       => true,
+      'rest_base'          => $this->post_type_plural,
       'show_in_menu'       => 'vf-settings',
       'supports'           => array('title', 'editor'),
       'rewrite'            => false,

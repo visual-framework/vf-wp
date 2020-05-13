@@ -38,6 +38,7 @@ class VF_Events_Register {
       'show_in_nav_menus'   => true,
       'show_in_admin_bar'   => true,
       'show_in_rest'        => true,
+      'rest_base'           => "{$event_type}s",
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-calendar',
       'capability_type'     => 'page',
