@@ -61,7 +61,15 @@ class VF_Templates {
   static public function new_template_blocks() {
     return array(
       array(
+        'acf/vf-container-global-header',
+        array()
+      ),
+      array(
         'acf/vf-container-page-template',
+        array()
+      ),
+      array(
+        'acf/vf-container-global-footer',
         array()
       ),
     );
