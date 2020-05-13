@@ -365,9 +365,13 @@ class VF_Theme {
   }
 
   /**
-   * Output inline JavaScript to `<head>`
+   * Action: `wp_head`
    */
   public function wp_head() {
+    // IE11 polyfill
+    // https://github.com/visual-framework/vf-wp/issues/238
+    echo '<script nomodule src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>';
+    // Inline scripts
     $path = untrailingslashit(get_template_directory());
     $path = "{$path}/assets/scripts/head.js";
     if (file_exists($path)) {
