@@ -18,9 +18,10 @@ Blocks added in the Gutenberg editor can be individually configured. See the ind
 
 Other blocks are registered with ACF Gutenberg only:
 
+* [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)
 * [EMBL News](/wp-content/plugins/vf-embl-news-block/README.md)
 * [Latest Posts](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md)
-* [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)
+* [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md)
 
 They have no defaults block post.
 
