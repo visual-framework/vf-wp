@@ -169,6 +169,39 @@
       "multiple": 0,
       "return_format": "object",
       "ui": 1
+    },
+    {
+      "key": "field_5ebd374c3e3f0",
+      "label": "Style",
+      "name": "event_style",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5eba88575b33d",
+            "operator": "==",
+            "value": "event"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "default": "Default",
+        "alternate": "Alternate"
+      },
+      "default_value": ["default"],
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 0,
+      "return_format": "value",
+      "ajax": 0,
+      "placeholder": ""
     }
   ],
   "location": [
@@ -188,5 +221,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Summary ACF Gutenberg block",
-  "modified": 1589450979
+  "modified": 1589458972
 }

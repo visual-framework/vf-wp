@@ -123,31 +123,65 @@ if ( $type === 'event' ) {
     $admin_banner(__('Please select an event for this summary.', 'vfwp'));
     return;
   }
+  $event_style = get_field('event_style');
+  if (empty($event_style)) {
+    $event_style = 'default';
+  }
+  if (is_array($event_style)) {
+    $event_style = $event_style[0];
+  }
   // Setup first post data so template tags work
   global $post;
   $old_post = $post;
   setup_postdata($post = $object_event);
   $location = get_field('vf_event_location',$post->ID);
   $event_type = get_field('vf_event_event_type',$post->ID);
+
+  $excerpt = apply_filters(
+    'get_the_excerpt',
+    $post->post_content
+  );
 ?>
+<?php if ($event_style === 'alternate') { ?>
 <a href="<?php the_permalink(); ?>"
   class="vf-summary vf-summary--event | vf-summary--is-link vf-summary--easy vf-summary-theme--primary">
+<?php } else { ?>
+  <article class="vf-summary vf-summary--event">
+<?php } ?>
   <p class="vf-summary__date">
     <time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>">
       <?php the_time(get_option('date_format')); ?>
     </time>
   </p>
-  <h3 class="vf-summary__title"><?php the_title() ?>
+  <h3 class="vf-summary__title">
+    <?php if ($event_style !== 'alternate') { ?>
+      <a href="<?php the_permalink(); ?>" class="vf-summary__link">
+    <?php } ?>
+    <?php the_title() ?>
+    <?php if ($event_style !== 'alternate') { ?>
+      </a>
+    <?php } ?>
   </h3>
-  <p class="vf-summary__text"><?php echo $event_type ?></p>
-  <p class="vf-summary__location"><?php echo $location ?></p>
-
+  <?php if ($event_style !== 'alternate' && ! empty($excerpt)) { ?>
+    <p class="vf-summary__text"><?php echo $excerpt; ?></p>
+  <?php } ?>
+  <?php if ( ! empty($event_type)) { ?>
+  <p class="vf-summary__text"><?php echo $event_type; ?></p>
+  <?php } ?>
+  <?php if ( ! empty($location)) { ?>
+  <p class="vf-summary__location"><?php echo $location; ?></p>
+  <?php } ?>
+<?php if ($event_style === 'alternate') { ?>
   <svg class="vf-summary__icon | vf-icon vf-icon-arrow--right" width="24" height="24"
     xmlns="http://www.w3.org/2000/svg">
     <path
       d="M23.6 11.289l-9.793-9.7a2.607 2.607 0 00-3.679.075 2.638 2.638 0 00-.068 3.689l3.871 3.714a.25.25 0 01-.173.43H2.135A2.28 2.28 0 00.1 12c0 .815.448 2.51 2 2.51h11.679a.25.25 0 01.177.427l-3.731 3.733a2.66 2.66 0 003.758 3.754l9.625-9.72a1 1 0 00-.008-1.415z"
-      fill="" fill-rule="nonzero" /></svg>
+      fill="" fill-rule="nonzero" />
+  </svg>
 </a>
+<?php } else { ?>
+</article>
+<?php } ?>
 <?php
   wp_reset_postdata();
   return;
