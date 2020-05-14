@@ -246,7 +246,15 @@ class VF_Gutenberg {
     ob_start();
     // Output head include for preview
     if ($is_preview) {
+      // Append iframe stylesheet for preview fixes
+      $wp_head = function() {
+        $path = get_template_directory_uri();
+        $path = "{$path}/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css";
+        echo '<link rel="stylesheet" href="' . esc_url($path) . '">';
+      };
+      add_action('wp_head', $wp_head, 20);
       get_template_part('partials/head');
+      remove_action('wp_head', $wp_head, 20);
     }
     // Load template
     if (is_callable($template)) {

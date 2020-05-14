@@ -45,3 +45,13 @@
 .vf-divider:last-of-type {
   margin-bottom: 0;
 }
+
+// Fix iframe resize loop
+.vf-summary {
+  height: auto !important;
+}
+
+// Fix iframe resize loop
+.vf-card__image {
+  max-height: 100vw !important;
+}
