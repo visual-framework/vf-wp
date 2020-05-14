@@ -20,7 +20,7 @@
         "post": "Post",
         "event": "Event"
       },
-      "default_value": [],
+      "default_value": ["custom"],
       "allow_null": 0,
       "multiple": 0,
       "ui": 0,
@@ -188,5 +188,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Summary ACF Gutenberg block",
-  "modified": 1589444187
+  "modified": 1589450979
 }

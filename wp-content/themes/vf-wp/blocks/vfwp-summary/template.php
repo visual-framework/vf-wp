@@ -4,6 +4,12 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $type = get_field('select_type');
+if (empty($type)) {
+  $type = 'custom';
+}
+if (is_array($type)) {
+  $type = $type[0];
+}
 
 $title = get_field('title');
 $title = trim($title);
@@ -18,6 +24,7 @@ if ( ! is_array($image)) {
 } else {
   $image = wp_get_attachment_image($image['ID'], 'thumbnail', false, array(
     'class'    => 'vf-summary__image vf-summary__image--thumbnail',
+    'style'    => 'width: 180px;',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
@@ -53,7 +60,7 @@ if ( $type === 'custom' ) {
     return;
   }
 ?>
-<article class="vf-summary vf-summary--news">
+<article class="vf-summary <?php if ($image) { echo ' vf-summary--has-image'; } ?>">
   <?php
   if ($image) {
     echo $image;
@@ -92,6 +99,7 @@ if ( $type === 'post' ) {
   </span>
   <?php
   the_post_thumbnail('thumbnail', array(
+    'style'    => 'width: 180px;',
     'class'    => 'vf-summary__image',
     'loading'  => 'lazy',
     'itemprop' => 'image',
