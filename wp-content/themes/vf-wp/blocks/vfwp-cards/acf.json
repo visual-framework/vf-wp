@@ -1,9 +1,9 @@
 {
-    "key": "group_5ebbdeea188cc",
-    "title": "Cards fields",
+    "key": "group_5ebd3243ea055",
+    "title": "Cards",
     "fields": [
         {
-            "key": "field_5ebbdeea1e33b",
+            "key": "field_5ebd3243ee825",
             "label": "Select type",
             "name": "select_type",
             "type": "select",
@@ -16,10 +16,12 @@
                 "id": ""
             },
             "choices": {
-                "Single card": "Single card",
-                "Card container": "Card container"
+                "single": "Single card",
+                "container": "Card container"
             },
-            "default_value": [],
+            "default_value": [
+                "single"
+            ],
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -28,7 +30,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5ebbdeea1e3ec",
+            "key": "field_5ebd3243ee8ec",
             "label": "Image",
             "name": "image",
             "type": "image",
@@ -37,9 +39,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Single card"
+                        "value": "single"
                     }
                 ]
             ],
@@ -49,7 +51,7 @@
                 "id": ""
             },
             "return_format": "url",
-            "preview_size": "full",
+            "preview_size": "thumbnail",
             "library": "all",
             "min_width": "",
             "min_height": "",
@@ -60,7 +62,7 @@
             "mime_types": ""
         },
         {
-            "key": "field_5ebbdeea1e4db",
+            "key": "field_5ebd3243ee989",
             "label": "Title",
             "name": "title",
             "type": "text",
@@ -69,9 +71,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Single card"
+                        "value": "single"
                     }
                 ]
             ],
@@ -87,7 +89,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5ebbdeea1e591",
+            "key": "field_5ebd3243eea26",
             "label": "Text",
             "name": "text",
             "type": "textarea",
@@ -96,9 +98,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Single card"
+                        "value": "single"
                     }
                 ]
             ],
@@ -114,7 +116,7 @@
             "new_lines": ""
         },
         {
-            "key": "field_5ebbdeea1e673",
+            "key": "field_5ebd3243eeac3",
             "label": "Link",
             "name": "link",
             "type": "url",
@@ -123,9 +125,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Single card"
+                        "value": "single"
                     }
                 ]
             ],
@@ -138,7 +140,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5ebbdeea1e761",
+            "key": "field_5ebd3243eeb60",
             "label": "Section header",
             "name": "section_header",
             "type": "text",
@@ -147,9 +149,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Card container"
+                        "value": "container"
                     }
                 ]
             ],
@@ -165,7 +167,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5ebbdeea1e8dc",
+            "key": "field_5ebd3243eebf9",
             "label": "Is link?",
             "name": "is_link",
             "type": "true_false",
@@ -174,9 +176,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Card container"
+                        "value": "container"
                     }
                 ]
             ],
@@ -192,7 +194,7 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_5ebbdeea1e9e5",
+            "key": "field_5ebd3243eec93",
             "label": "Header link",
             "name": "header_link",
             "type": "url",
@@ -201,7 +203,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e8dc",
+                        "field": "field_5ebd3243eebf9",
                         "operator": "==",
                         "value": "1"
                     }
@@ -216,7 +218,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5ebbdeea1ea9b",
+            "key": "field_5ebd3243eed6a",
             "label": "Section text",
             "name": "section_text",
             "type": "textarea",
@@ -225,9 +227,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Card container"
+                        "value": "container"
                     }
                 ]
             ],
@@ -243,7 +245,7 @@
             "new_lines": "br"
         },
         {
-            "key": "field_5ebbdeea1eb75",
+            "key": "field_5ebd3243eee1a",
             "label": "Add cards",
             "name": "add_cards",
             "type": "repeater",
@@ -252,9 +254,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbdeea1e33b",
+                        "field": "field_5ebd3243ee825",
                         "operator": "==",
-                        "value": "Card container"
+                        "value": "container"
                     }
                 ]
             ],
@@ -270,7 +272,7 @@
             "button_label": "Add card",
             "sub_fields": [
                 {
-                    "key": "field_5ebbdeea2d071",
+                    "key": "field_5ebd324409e22",
                     "label": "Image",
                     "name": "container_image",
                     "type": "image",
@@ -302,7 +304,7 @@
                     "mime_types": ""
                 },
                 {
-                    "key": "field_5ebbdeea2d122",
+                    "key": "field_5ebd324409ebf",
                     "label": "Title",
                     "name": "container_title",
                     "type": "text",
@@ -329,7 +331,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_5ebbdeea2d1bc",
+                    "key": "field_5ebd324409f61",
                     "label": "Text",
                     "name": "container_text",
                     "type": "textarea",
@@ -356,7 +358,7 @@
                     "new_lines": ""
                 },
                 {
-                    "key": "field_5ebbe836a006d",
+                    "key": "field_5ebd324409ffb",
                     "label": "Link",
                     "name": "container_link",
                     "type": "url",
@@ -382,7 +384,7 @@
             ]
         },
         {
-            "key": "field_5ebbdeea3396e",
+            "key": "field_5ebd3244102b1",
             "label": "Select style",
             "name": "select_style",
             "type": "select",
@@ -391,14 +393,8 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ebbb08ec9d50",
-                        "operator": "==",
-                        "value": "Single card"
-                    },
-                    {
-                        "field": "field_5ebbb08ec9d50",
-                        "operator": "==",
-                        "value": "Card container"
+                        "field": "field_5ebd3243ee825",
+                        "operator": "!=empty"
                     }
                 ]
             ],
@@ -408,17 +404,17 @@
                 "id": ""
             },
             "choices": {
-                "Very Easy": "Very Easy",
-                "Easy": "Easy",
-                "Easy (primary)": "Easy (primary)",
-                "Easy (secondary)": "Easy (secondary)",
-                "Easy (tertiary)": "Easy (tertiary)",
-                "Easy (quaternary)": "Easy (quaternary)",
-                "Normal": "Normal",
-                "Normal (primary)": "Normal (primary)",
-                "Normal (secondary)": "Normal (secondary)",
-                "Normal (tertiary)": "Normal (tertiary)",
-                "Normal (quaternary)": "Normal (quaternary)"
+                "very_easy": "Very Easy",
+                "easy": "Easy",
+                "easy_primary": "Easy (primary)",
+                "easy_secondary": "Easy (secondary)",
+                "easy_tertiary": "Easy (tertiary)",
+                "easy_quaternary": "Easy (quaternary)",
+                "normal": "Normal",
+                "normal_primary": "Normal (primary)",
+                "normal_secondary": "Normal (secondary)",
+                "normal_tertiary": "Normal (tertiary)",
+                "normal_quaternary": "Normal (quaternary)"
             },
             "default_value": [],
             "allow_null": 0,
@@ -445,5 +441,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "VF-WP Cards ACF Gutenberg block",
+    "modified": 1589461661
+
 }
