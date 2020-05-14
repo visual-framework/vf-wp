@@ -4,7 +4,10 @@ Block Name: Button
 import React from 'react';
 import {__} from '@wordpress/i18n';
 import template from '@visual-framework/vf-button/vf-button.precompiled';
-import {withTransientStyle} from '../hooks/with-transient';
+import {
+  withTransientAttributeMap,
+  withTransientStyle
+} from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import {fromCore} from './transforms/button';
 
@@ -113,5 +116,9 @@ export default useVFCoreSettings({
   transforms: {
     from: [fromCore()]
   },
-  withHOC: [[withBEMModifiers], [withTransientStyle, {key: 'theme'}]]
+  withHOC: [
+    [withBEMModifiers],
+    [withTransientAttributeMap, [{from: 'href', to: 'button_href'}]],
+    [withTransientStyle, {key: 'theme'}]
+  ]
 });
