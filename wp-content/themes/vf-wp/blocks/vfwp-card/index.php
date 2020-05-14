@@ -2,15 +2,15 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_WP_Cards') ) :
+if ( ! class_exists('VF_WP_Card') ) :
 
-class VFWP_Cards {
+class VFWP_Card {
 
   /**
    * Return the block name
    */
   static public function get_name() {
-    return 'vfwp-cards';
+    return 'vfwp-card';
   }
 
   /**
@@ -24,13 +24,6 @@ class VFWP_Cards {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
-    add_filter(
-      "vf/theme/content/is_block_wrapped/name=acf/{$this->get_name()}",
-      array($this, 'is_block_wrapped')
-    );
-    add_action('admin_head',
-      array($this, 'admin_head')
-    );
   }
 
   /**
@@ -41,7 +34,7 @@ class VFWP_Cards {
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
-      'title'    => 'Cards',
+      'title'    => 'Card',
       'category' => 'vf/wp',
       'supports' => array(
         'align'           => false,
@@ -65,10 +58,6 @@ class VFWP_Cards {
         false, false
       );
     }
-    // Otherwise default to the plugin template
-    // if ( ! file_exists($template)) {
-    //   $template = plugin_dir_path(__FILE__) . 'template.php';
-    // }
     return $template;
   }
 
@@ -104,29 +93,9 @@ class VFWP_Cards {
     return $paths;
   }
 
-  /**
-   * Do not wrap the block in `vf-content`
-   */
-  public function is_block_wrapped($is_wrap) {
-    return false;
-  }
-
-  /**
-   * Add custom CSS for the WordPress Admin area
-   */
-  public function admin_head() {
-?>
-<style>
-.wp-block[data-type="acf/<?php echo $this->get_name(); ?>"] {
-  max-width: none;
-}
-</style>
-<?php
-  }
-
-} // VF_WP_Cards
+} // VF_WP_Card
 
 // Initialize one instance
-$vfwp_cards = new VFWP_Cards();
+$vfwp_card = new VFWP_Card();
 
 endif; ?>
