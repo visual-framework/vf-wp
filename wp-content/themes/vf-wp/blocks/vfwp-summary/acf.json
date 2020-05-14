@@ -16,9 +16,9 @@
         "id": ""
       },
       "choices": {
-        "Custom": "Custom",
-        "Post": "Post",
-        "Event": "Event"
+        "custom": "Custom",
+        "post": "Post",
+        "event": "Event"
       },
       "default_value": [],
       "allow_null": 0,
@@ -126,7 +126,7 @@
           {
             "field": "field_5eba88575b33d",
             "operator": "==",
-            "value": "Post"
+            "value": "post"
           }
         ]
       ],
@@ -137,7 +137,7 @@
       },
       "post_type": ["post"],
       "taxonomy": "",
-      "allow_null": 0,
+      "allow_null": 1,
       "multiple": 0,
       "return_format": "object",
       "ui": 1
@@ -154,7 +154,7 @@
           {
             "field": "field_5eba88575b33d",
             "operator": "==",
-            "value": "Event"
+            "value": "event"
           }
         ]
       ],
@@ -165,7 +165,7 @@
       },
       "post_type": ["vf_event"],
       "taxonomy": "",
-      "allow_null": 0,
+      "allow_null": 1,
       "multiple": 0,
       "return_format": "object",
       "ui": 1
