@@ -65,3 +65,11 @@
 .vf-divider:last-of-type {
   margin-bottom: 0;
 }
+
+.vf-summary {
+  height: auto !important;
+}
+
+.vf-card__image {
+  max-height: 100vw !important;
+}
