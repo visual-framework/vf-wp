@@ -24,13 +24,6 @@ class VFWP_Summary {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
-    add_filter(
-      "vf/theme/content/is_block_wrapped/name=acf/{$this->get_name()}",
-      array($this, 'is_block_wrapped')
-    );
-    add_action('admin_head',
-      array($this, 'admin_head')
-    );
   }
 
   /**
@@ -102,26 +95,6 @@ class VFWP_Summary {
   public function acf_settings_load_json($paths) {
     $paths[] = plugin_dir_path(__FILE__);
     return $paths;
-  }
-
-  /**
-   * Do not wrap the block in `vf-content`
-   */
-  public function is_block_wrapped($is_wrap) {
-    return false;
-  }
-
-  /**
-   * Add custom CSS for the WordPress Admin area
-   */
-  public function admin_head() {
-?>
-<style>
-.wp-block[data-type="acf/<?php echo $this->get_name(); ?>"] {
-  max-width: none;
-}
-</style>
-<?php
   }
 
 } // VF_WP_Summary
