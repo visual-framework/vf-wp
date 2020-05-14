@@ -1,195 +1,192 @@
 {
-        "key": "group_5eb950c23f887",
-        "title": "Summary",
-        "fields": [
-            {
-                "key": "field_5eba88575b33d",
-                "label": "Select type",
-                "name": "select_type",
-                "type": "select",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "choices": {
-                    "Custom": "Custom",
-                    "Post": "Post",
-                    "Event": "Event"
-                },
-                "default_value": [],
-                "allow_null": 0,
-                "multiple": 0,
-                "ui": 0,
-                "return_format": "value",
-                "ajax": 0,
-                "placeholder": ""
-            },
-            {
-                "key": "field_5eb950da30d23",
-                "label": "Image",
-                "name": "image",
-                "type": "image",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_5eba88575b33d",
-                            "operator": "==",
-                            "value": "Custom"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "return_format": "url",
-                "preview_size": "full",
-                "library": "all",
-                "min_width": "",
-                "min_height": "",
-                "min_size": "",
-                "max_width": "",
-                "max_height": "",
-                "max_size": "",
-                "mime_types": ""
-            },
-            {
-                "key": "field_5eb9510330d24",
-                "label": "Title",
-                "name": "title",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_5eba88575b33d",
-                            "operator": "==",
-                            "value": "Custom"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5eb9513430d25",
-                "label": "Text",
-                "name": "text",
-                "type": "wysiwyg",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_5eba88575b33d",
-                            "operator": "==",
-                            "value": "Custom"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "tabs": "all",
-                "toolbar": "basic",
-                "media_upload": 0,
-                "delay": 0
-            },
-            {
-                "key": "field_5eba8a28aa227",
-                "label": "Post",
-                "name": "post",
-                "type": "post_object",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_5eba88575b33d",
-                            "operator": "==",
-                            "value": "Post"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "post_type": [
-                    "post"
-                ],
-                "taxonomy": "",
-                "allow_null": 0,
-                "multiple": 0,
-                "return_format": "object",
-                "ui": 1
-            },
-            {
-                "key": "field_5eba8a5d18b98",
-                "label": "Event",
-                "name": "event",
-                "type": "post_object",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_5eba88575b33d",
-                            "operator": "==",
-                            "value": "Event"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "post_type": [
-                    "vf_event"
-                ],
-                "taxonomy": "",
-                "allow_null": 0,
-                "multiple": 0,
-                "return_format": "object",
-                "ui": 1
-            }
-        ],
-        "location": [
-            [
-                {
-                    "param": "block",
-                    "operator": "==",
-                    "value": "acf\/vfwp-summary"
-                }
-            ]
-        ],
-        "menu_order": 0,
-        "position": "normal",
-        "style": "seamless",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": ""
+  "key": "group_5eb950c23f887",
+  "title": "Summary",
+  "fields": [
+    {
+      "key": "field_5eba88575b33d",
+      "label": "Select type",
+      "name": "select_type",
+      "type": "select",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "choices": {
+        "Custom": "Custom",
+        "Post": "Post",
+        "Event": "Event"
+      },
+      "default_value": [],
+      "allow_null": 0,
+      "multiple": 0,
+      "ui": 0,
+      "return_format": "value",
+      "ajax": 0,
+      "placeholder": ""
+    },
+    {
+      "key": "field_5eb950da30d23",
+      "label": "Image",
+      "name": "image",
+      "type": "image",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5eba88575b33d",
+            "operator": "==",
+            "value": "Custom"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "return_format": "url",
+      "preview_size": "full",
+      "library": "all",
+      "min_width": "",
+      "min_height": "",
+      "min_size": "",
+      "max_width": "",
+      "max_height": "",
+      "max_size": "",
+      "mime_types": ""
+    },
+    {
+      "key": "field_5eb9510330d24",
+      "label": "Title",
+      "name": "title",
+      "type": "text",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5eba88575b33d",
+            "operator": "==",
+            "value": "Custom"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "placeholder": "",
+      "prepend": "",
+      "append": "",
+      "maxlength": ""
+    },
+    {
+      "key": "field_5eb9513430d25",
+      "label": "Text",
+      "name": "text",
+      "type": "wysiwyg",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5eba88575b33d",
+            "operator": "==",
+            "value": "Custom"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "default_value": "",
+      "tabs": "all",
+      "toolbar": "basic",
+      "media_upload": 0,
+      "delay": 0
+    },
+    {
+      "key": "field_5eba8a28aa227",
+      "label": "Post",
+      "name": "post",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5eba88575b33d",
+            "operator": "==",
+            "value": "Post"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": ["post"],
+      "taxonomy": "",
+      "allow_null": 0,
+      "multiple": 0,
+      "return_format": "object",
+      "ui": 1
+    },
+    {
+      "key": "field_5eba8a5d18b98",
+      "label": "Event",
+      "name": "event",
+      "type": "post_object",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_5eba88575b33d",
+            "operator": "==",
+            "value": "Event"
+          }
+        ]
+      ],
+      "wrapper": {
+        "width": "",
+        "class": "",
+        "id": ""
+      },
+      "post_type": ["vf_event"],
+      "taxonomy": "",
+      "allow_null": 0,
+      "multiple": 0,
+      "return_format": "object",
+      "ui": 1
     }
+  ],
+  "location": [
+    [
+      {
+        "param": "block",
+        "operator": "==",
+        "value": "acf/vfwp-summary"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "seamless",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "VF-WP Summary ACF Gutenberg block",
+  "modified": 1589442331
+}
