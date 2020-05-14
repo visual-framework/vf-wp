@@ -4,7 +4,6 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $type = get_field('select_type');
-$image = get_field('image');
 
 $title = get_field('title');
 $title = trim($title);
@@ -12,6 +11,17 @@ $title = trim($title);
 $text = get_field('text', false, false);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-summary__text">', $text);
+
+$image = get_field('image');
+if ( ! is_array($image)) {
+  $image = null;
+} else {
+  $image = wp_get_attachment_image($image['ID'], 'thumbnail', false, array(
+    'class'    => 'vf-summary__image vf-summary__image--thumbnail',
+    'loading'  => 'lazy',
+    'itemprop' => 'image',
+  ));
+}
 
 // Function to output a banner message in the Gutenberg editor only
 $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
@@ -32,24 +42,25 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 
 ?>
 
-<style>
-  .vf-summary__image {
-    width: 180px !important;
-  }
-</style>
-
 <?php
 if ( $type === 'custom' ) {
-  if (vf_html_empty($title) && vf_html_empty($text)) {
+  if (
+    ! $image
+    && vf_html_empty($title)
+    && vf_html_empty($text)
+  ) {
     $admin_banner(__('Please enter custom content for this summary.', 'vfwp'));
     return;
   }
 ?>
-<article class="vf-summary vf-summary--has-image">
-  <img class="vf-summary__image vf-summary__image--thumbnail" src="<?php echo get_field('image'); ?>">
+<article class="vf-summary vf-summary--news">
+  <?php
+  if ($image) {
+    echo $image;
+  }
+  ?>
   <h3 class="vf-summary__title">
     <?php echo esc_html($title); ?>
-    </a>
   </h3>
   <?php echo $text; ?>
 </article>
@@ -67,17 +78,31 @@ if ( $type === 'post' ) {
   global $post;
   $old_post = $post;
   setup_postdata($post = $object_post);
+
+  $excerpt = apply_filters(
+    'get_the_excerpt',
+    $post->post_content
+  );
 ?>
 <article class="vf-summary vf-summary--news">
-  <span class="vf-summary__date"><time title="<?php the_time('c'); ?>"
-      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
-  <?php the_post_thumbnail('thumbnail', array('class' => 'vf-summary__image')); ?>
+  <span class="vf-summary__date">
+    <time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>">
+      <?php the_time(get_option('date_format')); ?>
+    </time>
+  </span>
+  <?php
+  the_post_thumbnail('thumbnail', array(
+    'class'    => 'vf-summary__image',
+    'loading'  => 'lazy',
+    'itemprop' => 'image',
+  ));
+  ?>
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink() ?>" class="vf-summary__link">
       <?php the_title() ?>
     </a>
   </h3>
-  <p class="vf-summary__text"><?php echo get_the_excerpt() ?></p>
+  <p class="vf-summary__text"><?php echo $excerpt; ?></p>
 </article>
 <?php
   wp_reset_postdata();
@@ -86,7 +111,7 @@ if ( $type === 'post' ) {
 
 if ( $type === 'event' ) {
   $object_event = get_field('event');
-  if ($object_post instanceof WP_Post === false) {
+  if ($object_event instanceof WP_Post === false) {
     $admin_banner(__('Please select an event for this summary.', 'vfwp'));
     return;
   }
@@ -99,8 +124,11 @@ if ( $type === 'event' ) {
 ?>
 <a href="<?php the_permalink(); ?>"
   class="vf-summary vf-summary--event | vf-summary--is-link vf-summary--easy vf-summary-theme--primary">
-  <p class="vf-summary__date"><time title="<?php the_time('c'); ?>"
-      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
+  <p class="vf-summary__date">
+    <time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>">
+      <?php the_time(get_option('date_format')); ?>
+    </time>
+  </p>
   <h3 class="vf-summary__title"><?php the_title() ?>
   </h3>
   <p class="vf-summary__text"><?php echo $event_type ?></p>

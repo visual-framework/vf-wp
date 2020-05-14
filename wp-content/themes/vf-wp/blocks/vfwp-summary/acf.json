@@ -40,7 +40,7 @@
           {
             "field": "field_5eba88575b33d",
             "operator": "==",
-            "value": "Custom"
+            "value": "custom"
           }
         ]
       ],
@@ -49,8 +49,8 @@
         "class": "",
         "id": ""
       },
-      "return_format": "url",
-      "preview_size": "full",
+      "return_format": "array",
+      "preview_size": "thumbnail",
       "library": "all",
       "min_width": "",
       "min_height": "",
@@ -72,7 +72,7 @@
           {
             "field": "field_5eba88575b33d",
             "operator": "==",
-            "value": "Custom"
+            "value": "custom"
           }
         ]
       ],
@@ -99,7 +99,7 @@
           {
             "field": "field_5eba88575b33d",
             "operator": "==",
-            "value": "Custom"
+            "value": "custom"
           }
         ]
       ],
@@ -188,5 +188,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Summary ACF Gutenberg block",
-  "modified": 1589442331
+  "modified": 1589444187
 }
