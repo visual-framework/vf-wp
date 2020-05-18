@@ -7,10 +7,11 @@ require_once('functions/walker-comment.php');
 require_once('functions/admin.php');
 require_once('functions/theme.php');
 
-// Require container classes
+// Require Gutenberg block classes
 
 require_once("blocks/vfwp-latest-posts/index.php");
 require_once("blocks/vfwp-summary/index.php");
+require_once("blocks/vfwp-card/index.php");
 
 global $vf_admin;
 if ( ! isset($vf_admin)) {
