@@ -23,6 +23,7 @@ Other blocks are registered with ACF Gutenberg only:
 * [Latest Posts](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md)
 * [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md)
 * [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md)
+* [Links List](/wp-content/themes/vf-wp/blocks/vfwp-links-list/README.md)
 
 They have no defaults block post.
 
