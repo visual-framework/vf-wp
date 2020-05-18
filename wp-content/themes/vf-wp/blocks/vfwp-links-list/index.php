@@ -34,7 +34,7 @@ class VFWP_Lists {
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
-      'title'    => 'Links list',
+      'title'    => 'Links List',
       'category' => 'vf/wp',
       'supports' => array(
         'align'           => false,
