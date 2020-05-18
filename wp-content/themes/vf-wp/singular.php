@@ -44,7 +44,6 @@ add_filter(
   <div>
     <h1 class="vf-intro__heading"><?php the_title(); ?></h1>
   </div>
-  <div></div>
 </section>
 <!--/vf-intro-->
 
