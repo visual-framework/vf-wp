@@ -34,6 +34,11 @@ class VF_Admin {
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
     );
+    add_filter(
+      'update_footer',
+      array($this, 'update_footer'),
+      20, 1
+    );
   }
 
   /**
@@ -74,6 +79,22 @@ class VF_Admin {
       $theme->version,
       'all'
     );
+  }
+
+  /**
+   * Filter: `update_footer`
+   */
+  public function update_footer($content) {
+    $theme = wp_get_theme();
+    if ($theme->parent()) {
+      $theme = $theme->parent();
+    }
+    $version = sprintf(
+      __('%1$s Version %2$s', 'vfwp'),
+      $theme->get('Name'),
+      $theme->get('Version')
+    );
+    return "({$version}) – {$content}";
   }
 
 } // VF_Admin
