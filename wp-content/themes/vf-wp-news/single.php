@@ -183,8 +183,7 @@ else {
 
       $source = get_sub_field('source_link_url');
       $description = get_sub_field('source_description', false, false);?>
-        <p class="vf-box__text"><a class="vf-link vf-link--secondary"
-            href="<?php echo esc_url( $source ); ?>"><?php echo ($description) ?></a></p>
+        <p class="vf-box__text"><a href="<?php echo esc_url( $source ); ?>"><?php echo ($description) ?></a></p>
         <?php endwhile; ?>
       </div>
     </div>
@@ -198,8 +197,7 @@ else {
 
       $source = get_sub_field('link_url');
       $description = get_sub_field('link_description');?>
-        <p class="vf-box__text | vf-u-margin__bottom--sm"><a class="vf-link vf-link--secondary"
-            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
+        <p class="vf-box__text | vf-u-margin__bottom--sm"><a href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
         <?php endwhile; ?>
       </div>
     </div>
