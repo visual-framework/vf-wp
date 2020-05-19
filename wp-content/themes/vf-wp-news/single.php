@@ -177,7 +177,7 @@ else {
 
     <?php if( have_rows('article_sources') ): ?>
     <div class="vf-u-margin__top--xxl | vf-box vf-box--normal vf-box-theme--quinary">
-      <h4 class="vf-box__heading">Source articles:</h4>
+      <h4 class="vf-box__heading">Source articles</h4>
       <div>
         <?php while( have_rows('article_sources') ): the_row();
 
@@ -219,7 +219,7 @@ if ($tags) {
 
     <div class="vf-social-links | vf-u-margin__bottom--xxl">
       <h3 class="vf-social-links__heading">
-        Share the article
+        Share this
       </h3>
       <ul class="vf-social-links__list">
         <li class="vf-social-links__item">
