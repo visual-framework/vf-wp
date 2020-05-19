@@ -70,6 +70,22 @@ class VF_Theme_Content {
   }
 
   /**
+   * Return the ACF block ID prefixed as HTML comment
+   * <!--[block_5ec3c0a7e5b9de]-->
+   */
+  static public function get_acf_block_ID($html) {
+    $open = preg_quote('<!--[');
+    $close = preg_quote(']-->');
+    if (preg_match(
+      "#{$open}(block_[^\]]*){$close}#",
+      $html, $match
+    ) === 1) {
+      return $match[1];
+    }
+    return '';
+  }
+
+  /**
    * Filter: `vf/theme/content/is_block_wrapped`
    * Return true if block should be wrapped
    * e.g. with `<div class="vf-content"> [...] </div>`
@@ -130,6 +146,10 @@ class VF_Theme_Content {
       }
       $prefix = "\n{$open}\n";
       $prefix .= "<!--[{$block['blockName']}]-->\n";
+      if (isset($block['attrs']['id'])) {
+        $id = esc_html($block['attrs']['id']);
+        $prefix .= "<!--[{$id}]-->\n";
+      }
       $suffix = "\n{$close}\n";
       return "{$prefix}{$html}{$suffix}";
     };
@@ -204,7 +224,7 @@ class VF_Theme_Content {
       );
       $is_wrap = (bool) VF_Theme::apply_filters(
         "vf/theme/content/is_block_wrapped/name={$block_name}",
-        $is_wrap, $blocks, $i
+        $is_wrap, $block_name, $blocks, $i
       );
       $before  = '';
       $prefix = '';
