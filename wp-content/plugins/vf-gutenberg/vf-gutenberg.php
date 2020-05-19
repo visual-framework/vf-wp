@@ -242,6 +242,9 @@ class VF_Gutenberg {
   static function acf_render_template($args, $template, $acf_id = false) {
     $block = $args[0];
     $is_preview = $args[2];
+    if ( ! $acf_id) {
+      $acf_id = $block['id'];
+    }
     // Capture the block template
     ob_start();
     // Output head include for preview
@@ -325,7 +328,7 @@ if (ResizeObserver) {
   doc.body.classList.add('ebi-vf1-integration');
 };
 </script>
-<div class="vf-block" data-editing="false" data-loading="false">
+<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
   <div class="vf-block__view">
     <iframe
       class="vf-block__iframe"
@@ -335,6 +338,38 @@ if (ResizeObserver) {
   </div>
 </div>
 <?php
+  // Toggle the Gutenberg editor block style for containers
+  $is_container = get_field('is_container', $acf_id);
+  $is_container = (bool) $is_container;
+  if ($is_container) {
+?>
+<script>
+(function($){
+  // Callback to update the block inline style
+  function updateBlock(isContainer) {
+    var $el = $('.vf-block[data-acf-id="<?php echo $acf_id; ?>"]');
+    var $block = $el.closest('.wp-block');
+    if (!$block.length) {
+      return;
+    }
+    if (isContainer) {
+      $block[0].style.maxWidth = 'none';
+    } else {
+      $block[0].style.removeProperty('max-width');
+    }
+  }
+  // Trigger first update
+  updateBlock(true);
+  // Add event for live field changes
+  acf.addAction('append_field/name=is_container', function(field) {
+    field.on('change', 'input[type="checkbox"]', function(ev) {
+      updateBlock(field.val());
+    });
+  });
+})(window.jQuery);
+</script>
+<?php
+    }
   }
 
   /**

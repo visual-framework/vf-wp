@@ -1,5 +1,12 @@
 <?php
 
+$is_container = get_field('is_container');
+// Fallback for undefined older block fields
+if ($is_container === null) {
+  $is_container = true;
+}
+$is_container = (bool) $is_container;
+
 $heading_singular = get_field('heading_singular');
 $heading_singular = trim($heading_singular);
 
@@ -30,14 +37,19 @@ if (count($latest_posts)) {
     $post->post_content
   );
 ?>
+
+<?php if ($is_container) { ?>
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
     <main class="vf-inlay__content--main">
+<?php } ?>
+
       <?php if ( ! empty($heading_singular)) { ?>
       <div class="vf-section-header">
         <h2 class="vf-section-header__heading"><?php echo esc_html($heading_singular); ?></h2>
       </div>
       <?php } ?>
+
       <article class="vf-summary vf-summary--article">
         <h2 class="vf-summary__title">
           <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
@@ -52,8 +64,11 @@ if (count($latest_posts)) {
         <p class="vf-summary__text"><?php echo $excerpt; ?></p>
       </article>
       <!--/vf-summary-->
+
+<?php if ($is_container) { ?>
     </main>
     <aside class="vf-inlay__content--additional">
+<?php } ?>
 
       <div class="vf-links | vf-box vf-box--inlay">
         <h3 class="vf-links__heading"><?php echo esc_html($heading_plural); ?></h3>
@@ -65,10 +80,14 @@ if (count($latest_posts)) {
           <?php } ?>
         </ul>
       </div>
+      <!--/vf-links-->
 
+<?php if ($is_container) { ?>
     </aside>
   </div>
 </section>
+<?php } ?>
+
 <?php
   // Reset post data back to plugin
   $post = $old_post;
