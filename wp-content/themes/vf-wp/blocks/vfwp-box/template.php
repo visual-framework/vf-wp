@@ -7,8 +7,6 @@ $heading = get_field('heading');
 $text = get_field('text');
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-box__text">', $text);
-$image = get_field('image');
-
 
 $style = get_field('style');
 if (empty($style)) {
@@ -53,7 +51,8 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 };
 
 if (
-  vf_html_empty($text)
+  vf_html_empty($heading)
+  && vf_html_empty($text)
 ) {
   $admin_banner(__('Please enter content for this box.', 'vfwp'));
   return;
@@ -73,13 +72,11 @@ if ($style !== 'normal' && $theme_easy !== 'none') {
   $classes .= " vf-box-theme--{$theme_easy}";
 } }?>
 
-
 <div class="<?php echo esc_attr($classes); ?>">
   <?php if (! empty($heading)) { ?>
     <h3 class="vf-box__heading">
       <?php echo esc_html($heading); ?>
     </h3>
-    <?php } ?>
-      <?php echo ($text); ?>
-  </div>
-
+  <?php } ?>
+  <?php echo ($text); ?>
+</div>

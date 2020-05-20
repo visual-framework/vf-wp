@@ -7,7 +7,7 @@
           "label": "Heading",
           "name": "heading",
           "type": "text",
-          "instructions": "",
+          "instructions": "Optional",
           "required": 0,
           "conditional_logic": 0,
           "wrapper": {
@@ -16,7 +16,7 @@
               "id": ""
           },
           "default_value": "",
-          "placeholder": "Optional",
+          "placeholder": "",
           "prepend": "",
           "append": "",
           "maxlength": ""
