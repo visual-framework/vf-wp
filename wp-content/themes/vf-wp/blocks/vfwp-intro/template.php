@@ -3,14 +3,20 @@
 // Block preview in Gutenberg editor
 $is_preview = isset($is_preview) && $is_preview;
 
+// Block is container style
+$is_container = (bool) get_field('is_container');
+
 $heading = get_field('heading');
 $lede = get_field('lede');
 $lede = str_replace('<p>', '<p class="vf-lede">', $lede);
 $text = get_field('intro_text');
 $text = wpautop($text);
-$text = str_replace('<p>', '<p class="vf-intro__text">', $text);
 $badge_text = get_field('badge_text');
 $badge_style = get_field('badge_style');
+
+if ($is_container) {
+  $text = str_replace('<p>', '<p class="vf-intro__text">', $text);
+}
 
 // Function to output a banner message in the Gutenberg editor only
 $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
@@ -38,21 +44,33 @@ if (
   return;
 } ?>
 
+<?php
+// Open wrappers for container
+if ($is_container) {
+?>
 <section class="vf-intro | embl-grid embl-grid--has-centered-content">
   <div>
     <!-- empty -->
   </div>
   <div>
-    <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+<?php } ?>
+
+    <h1 class="vf-intro__heading<?php if ( ! empty($badge_text)) { ?> vf-intro__heading--has-tag<?php } ?>">
       <?php echo esc_html($heading); ?>
-      <?php if( ! empty($badge_text)) { ?>
-        <a href="JavaScript:Void(0);" class="vf-badge vf-badge--<?php echo esc_attr($badge_style); ?> vf-badge--phases">
+      <?php if ( ! empty($badge_text)) { ?>
+        <span class="vf-badge vf-badge--<?php echo esc_attr($badge_style); ?> vf-badge--phases">
           <?php echo esc_html($badge_text); ?>
-        </a>
+        </span>
       <?php } ?>
     </h1>
     <?php echo ($lede); ?>
     <?php echo ($text); ?>
+
+<?php
+// Close wrappers for container
+if ($is_container) {
+?>
   </div>
 </section>
 <!--/vf-intro-->
+<?php } ?>
