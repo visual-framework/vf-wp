@@ -30,6 +30,27 @@ class VF_Theme_Content {
       array($this, 'close_block_wrap'),
       9, 2
     );
+
+    add_filter(
+      'render_block',
+      array($this, 'render_block'),
+      10, 2
+    );
+  }
+
+  /**
+   * Filter: `render_block`
+   */
+  public function render_block($html, $block) {
+    // Wrapper VF Grid Column inner blocks with `vf-content`
+    if ($block['blockName'] === 'vf/grid-column') {
+      $html = preg_replace(
+        '#^\s*(<div>)(.*?)(</div>)\s*$#s',
+        "$1<!--[vf/content]-->\n<div class=\"vf-content\">\n$2\n</div>\n$3\n",
+        $html
+      );
+    }
+    return $html;
   }
 
   /**
@@ -49,6 +70,22 @@ class VF_Theme_Content {
   }
 
   /**
+   * Return the ACF block ID prefixed as HTML comment
+   * <!--[block_5ec3c0a7e5b9de]-->
+   */
+  static public function get_acf_block_ID($html) {
+    $open = preg_quote('<!--[');
+    $close = preg_quote(']-->');
+    if (preg_match(
+      "#{$open}(block_[^\]]*){$close}#",
+      $html, $match
+    ) === 1) {
+      return $match[1];
+    }
+    return '';
+  }
+
+  /**
    * Filter: `vf/theme/content/is_block_wrapped`
    * Return true if block should be wrapped
    * e.g. with `<div class="vf-content"> [...] </div>`
@@ -58,6 +95,12 @@ class VF_Theme_Content {
       VF_Blocks::name_block_to_post($block_name)
     );
     if ($plugin && $plugin->is_template_standalone()) {
+      return false;
+    }
+    if (in_array($block_name, array(
+      'vf/grid',
+      'vf/embl-grid'
+    ))) {
       return false;
     }
     return true;
@@ -103,6 +146,10 @@ class VF_Theme_Content {
       }
       $prefix = "\n{$open}\n";
       $prefix .= "<!--[{$block['blockName']}]-->\n";
+      if (isset($block['attrs']['id'])) {
+        $id = esc_html($block['attrs']['id']);
+        $prefix .= "<!--[{$id}]-->\n";
+      }
       $suffix = "\n{$close}\n";
       return "{$prefix}{$html}{$suffix}";
     };
@@ -177,7 +224,7 @@ class VF_Theme_Content {
       );
       $is_wrap = (bool) VF_Theme::apply_filters(
         "vf/theme/content/is_block_wrapped/name={$block_name}",
-        $is_wrap, $blocks, $i
+        $is_wrap, $block_name, $blocks, $i
       );
       $before  = '';
       $prefix = '';
