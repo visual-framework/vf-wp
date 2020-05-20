@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_WP_Card') ) :
+if ( ! class_exists('VFWP_Card') ) :
 
 class VFWP_Card extends VFWP_Block {
 

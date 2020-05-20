@@ -15,6 +15,7 @@ require_once('blocks/vfwp-summary/index.php');
 require_once('blocks/vfwp-card/index.php');
 require_once('blocks/vfwp-links-list/index.php');
 require_once('blocks/vfwp-box/index.php');
+require_once('blocks/vfwp-intro/index.php');
 
 global $vf_admin;
 if ( ! isset($vf_admin)) {

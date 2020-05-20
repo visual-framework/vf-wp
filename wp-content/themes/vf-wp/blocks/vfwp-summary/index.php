@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_WP_Summary') ) :
+if ( ! class_exists('VFWP_Summary') ) :
 
 class VFWP_Summary extends VFWP_Block {
 
