@@ -1,6 +1,6 @@
 See [VF-WP Blocks](/docs/blocks.md) general documentation.
 
-# Card (block)
+# Intro (block)
 
 The `vf-intro` Visual Framework pattern.
 

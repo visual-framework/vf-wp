@@ -2,28 +2,19 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_WP_Intro') ) :
+if ( ! class_exists('VFWP_Intro') ) :
 
-class VFWP_Intro {
+class VFWP_Intro extends VFWP_Block {
+
+  public function __construct() {
+    parent::__construct(__FILE__);
+  }
 
   /**
    * Return the block name
    */
   static public function get_name() {
     return 'vfwp-intro';
-  }
-
-  /**
-   * Constructor - add hooks
-   */
-  public function __construct() {
-    add_action('acf/init',
-      array($this, 'acf_init')
-    );
-    add_filter(
-      'acf/settings/load_json',
-      array($this, 'acf_settings_load_json')
-    );
   }
 
   /**
@@ -43,57 +34,7 @@ class VFWP_Intro {
     );
   }
 
-  /**
-   * Return block render template path
-   */
-  public function get_template() {
-    // Allow themes to provide a custom template
-    $template = locate_template(
-      "blocks/{$this->get_name()}.php",
-      false, false
-    );
-    if ( ! file_exists($template)) {
-      $template = locate_template(
-        "blocks/{$this->get_name()}/template.php",
-        false, false
-      );
-    }
-    return $template;
-  }
-
-  /**
-   * Action: `acf/init`
-   */
-  public function acf_init() {
-    // Setup render callback using VF Gutenberg plugin or fallback
-    $callback = function() {
-      $args = func_get_args();
-      $template = $this->get_template();
-      if (class_exists('VF_Gutenberg')) {
-        VF_Gutenberg::acf_render_template($args, $template);
-      } else {
-        $block = $args[0];
-        include($template);
-      }
-    };
-    // Register the Gutenberg block with ACF
-    acf_register_block_type(array_merge(
-      $this->get_config(),
-      array(
-        'render_callback' => $callback
-      )
-    ));
-  }
-
-  /**
-   * Filter: `acf/settings/load_json`
-   */
-  public function acf_settings_load_json($paths) {
-    $paths[] = plugin_dir_path(__FILE__);
-    return $paths;
-  }
-
-} // VF_WP_Intro
+} // VFWP_Intro
 
 // Initialize one instance
 $vfwp_intro = new VFWP_Intro();
