@@ -1,4 +1,4 @@
-See [VF-WP Box](/docs/blocks.md) general documentation.
+See [VF-WP Blocks](/docs/blocks.md) general documentation.
 
 # Box (block)
 
