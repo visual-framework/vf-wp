@@ -24,6 +24,7 @@ Other blocks are registered with ACF Gutenberg only:
 * [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md)
 * [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md)
 * [Links List](/wp-content/themes/vf-wp/blocks/vfwp-links-list/README.md)
+* [Box](/wp-content/themes/vf-wp/blocks/vfwp-box/README.md)
 
 They have no defaults block post.
 

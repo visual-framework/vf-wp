@@ -10,7 +10,7 @@ import vfActivityItem from './vf-core/vf-activity-item';
 import vfActivityList from './vf-core/vf-activity-list';
 import vfBadge from './vf-core/vf-badge';
 import vfBlockquote from './vf-core/vf-blockquote';
-import vfBox from './vf-core/vf-box';
+import vfBox from './vf-core/deprecated/vf-box';
 import vfBreadcrumbsItem from './vf-core/vf-breadcrumbs-item';
 import vfBreadcrumbs from './vf-core/vf-breadcrumbs';
 import vfButton from './vf-core/vf-button';

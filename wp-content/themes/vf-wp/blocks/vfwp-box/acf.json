@@ -1,0 +1,165 @@
+{
+  "key": "group_5ec2748ead19d",
+  "title": "Box",
+  "fields": [
+      {
+          "key": "field_5ec27497617f4",
+          "label": "Heading",
+          "name": "heading",
+          "type": "text",
+          "instructions": "Optional",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
+      },
+      {
+          "key": "field_5ec275249d591",
+          "label": "Text",
+          "name": "text",
+          "type": "wysiwyg",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "tabs": "all",
+          "toolbar": "basic",
+          "media_upload": 0,
+          "delay": 0
+      },
+      {
+          "key": "field_5ec2757ba3096",
+          "label": "Style",
+          "name": "style",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "choices": {
+              "easy": "Easy",
+              "normal": "Normal"
+          },
+          "default_value": [
+              "easy"
+          ],
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 0,
+          "return_format": "value",
+          "ajax": 0,
+          "placeholder": ""
+      },
+      {
+          "key": "field_5ec27588a3097",
+          "label": "Theme",
+          "name": "theme_normal",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5ec2757ba3096",
+                      "operator": "==",
+                      "value": "normal"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "choices": {
+              "none": "None",
+              "primary": "Primary",
+              "secondary": "Secondary",
+              "tertiary": "Tertiary",
+              "quaternary": "Quaternary",
+              "quinary": "Quinary"
+          },
+          "default_value": [
+              "none"
+          ],
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 0,
+          "return_format": "value",
+          "ajax": 0,
+          "placeholder": ""
+      },
+      {
+          "key": "field_5ec276d083462",
+          "label": "Theme",
+          "name": "theme_easy",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5ec2757ba3096",
+                      "operator": "==",
+                      "value": "easy"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "choices": {
+              "none": "None",
+              "primary": "Primary",
+              "secondary": "Secondary",
+              "tertiary": "Tertiary"
+          },
+          "default_value": [
+              "none"
+          ],
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 0,
+          "return_format": "value",
+          "ajax": 0,
+          "placeholder": ""
+      }
+  ],
+  "location": [
+      [
+          {
+              "param": "block",
+              "operator": "==",
+              "value": "acf\/vfwp-box"
+          }
+      ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "seamless",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "VF-WP Box ACF Gutenberg block",
+  "modified": 1589805116
+}
