@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_WP_Latest_Posts') ) :
+if ( ! class_exists('VFWP_Latest_Posts') ) :
 
 class VFWP_Latest_Posts extends VFWP_Block {
 

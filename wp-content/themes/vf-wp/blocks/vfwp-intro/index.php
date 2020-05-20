@@ -2,11 +2,14 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VFWP_Summary') ) :
+if ( ! class_exists('VFWP_Intro') ) :
 
-class VFWP_Summary extends VFWP_Block {
+class VFWP_Intro extends VFWP_Block {
 
   public function __construct() {
+    // Allow block to use full-width container layout
+    $this->setup_containerable();
+
     parent::__construct(__FILE__);
   }
 
@@ -14,7 +17,7 @@ class VFWP_Summary extends VFWP_Block {
    * Return the block name
    */
   static public function get_name() {
-    return 'vfwp-summary';
+    return 'vfwp-intro';
   }
 
   /**
@@ -25,7 +28,7 @@ class VFWP_Summary extends VFWP_Block {
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
-      'title'    => 'Summary',
+      'title'    => 'Intro',
       'category' => 'vf/wp',
       'supports' => array(
         'align'           => false,
@@ -34,9 +37,9 @@ class VFWP_Summary extends VFWP_Block {
     );
   }
 
-} // VFWP_Summary
+} // VFWP_Intro
 
 // Initialize one instance
-$vfwp_summary = new VFWP_Summary();
+$vfwp_intro = new VFWP_Intro();
 
 endif; ?>

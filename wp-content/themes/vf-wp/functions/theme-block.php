@@ -25,12 +25,6 @@ class VFWP_Block {
       array($this, 'is_block_wrapped'),
       10, 4
     );
-    /*
-    add_filter('acf/load_fields',
-      array($this, 'acf_load_fields'),
-      10, 2
-    );
-    */
   }
 
   /**
@@ -91,7 +85,7 @@ class VFWP_Block {
     // Add "Full-width Layout" settings for container blocks
     if ($this->is_containerable()) {
       acf_add_local_field_group(array(
-        'key'    => "group_5ec3be037f084",
+        'key'    => uniqid('group_'),
         'title'  => __('Block Settings', 'vfwp'),
         'fields' => array(
           array(
@@ -147,32 +141,6 @@ class VFWP_Block {
     }
     return $paths;
   }
-
-  /**
-   * Filter: `acf/load_fields`
-   */
-  /*
-  function acf_load_fields($fields, $field_group) {
-    // Setup a fake `$screen` to match the block
-    $screen = acf_get_location_screen();
-    $screen['block'] = "acf/{$this->get_name()}";
-    $is_match = false;
-    // Check if a solo location rule matches the block
-    foreach ($field_group['location'] as $rules) {
-      if (empty($rules) || count($rules) !== 1) {
-        continue;
-      }
-      $is_match = acf_match_location_rule($rules[0], $screen, $field_group);
-      if ($is_match) {
-        break;
-      }
-    }
-    if ( ! $is_match) {
-      return $fields;
-    }
-    return $fields;
-  }
-  */
 
 } // VFWP_Block
 

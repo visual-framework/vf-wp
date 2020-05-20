@@ -349,13 +349,12 @@ if (ResizeObserver) {
   function updateBlock(isContainer) {
     var $el = $('.vf-block[data-acf-id="<?php echo $acf_id; ?>"]');
     var $block = $el.closest('.wp-block');
-    if (!$block.length) {
-      return;
-    }
-    if (isContainer) {
-      $block[0].style.maxWidth = 'none';
-    } else {
-      $block[0].style.removeProperty('max-width');
+    if ($block.length) {
+      if (isContainer) {
+        $block[0].style.maxWidth = 'none';
+      } else {
+        $block[0].style.removeProperty('max-width');
+      }
     }
   }
   // Trigger first update
@@ -363,7 +362,9 @@ if (ResizeObserver) {
   // Add event for live field changes
   acf.addAction('append_field/name=is_container', function(field) {
     field.on('change', 'input[type="checkbox"]', function(ev) {
-      updateBlock(field.val());
+      if (ev.target.id.indexOf('<?php echo $acf_id; ?>')) {
+        updateBlock(field.val());
+      }
     });
   });
 })(window.jQuery);
