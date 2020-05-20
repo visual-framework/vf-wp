@@ -1,8 +1,8 @@
 See [VF-WP Box](/docs/blocks.md) general documentation.
 
-# Links List (block)
+# Box (block)
 
-A list using the `vf-box` Visual Framework pattern.
+Boxed content using the `vf-box` Visual Framework pattern.
 
 ## Configuration
 
