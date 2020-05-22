@@ -70,8 +70,8 @@ $content = preg_replace(
 );
 
 ?>
+<hr class="vf-divider">
 <div class="vf-u-grid--reset vf-body vf-body__additional-content vf-u-background-color-ui--white">
-  <hr class="vf-divider">
   <section class="vf-news-container | embl-grid embl-grid--has-sidebar">
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading"><?php the_title(); ?></h2>
