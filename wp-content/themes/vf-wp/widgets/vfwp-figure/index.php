@@ -21,6 +21,8 @@ class VF_Widget_Figure extends WP_Widget {
     $widget_id = 'widget_' . $args['widget_id'];
     $caption = get_field('caption', $widget_id);
     $image = get_field('image', $widget_id);
+    $link = get_field('link', $widget_id);
+
     
       $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
         'class'    => 'vf-figure__image',
@@ -30,14 +32,23 @@ class VF_Widget_Figure extends WP_Widget {
     
     ?>
     
+    <?php if( ($link) ) { ?>
+    <a href="<?php echo ($link); ?>">
+    <?php } ?>
+
     <figure class="vf-figure">
     
         <?php echo ($image); ?>
-    
+
+        <?php if( ! empty($caption) ) { ?>
         <figcaption class="vf-figure__caption"><?php echo ($caption); ?></figcaption>
-    
+        <?php } ?>
+
     </figure>
-    <?php
+
+    <?php if( ($link) ) { ?>
+    </a>
+    <?php } 
   }
 
   public function form($instance) {

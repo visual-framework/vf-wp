@@ -1,3 +1,4 @@
+
 {
     "key": "group_5ecb945244de3",
     "title": "Figure",
@@ -44,6 +45,22 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5ecbbc00e3068",
+            "label": "Link",
+            "name": "link",
+            "type": "url",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
         }
     ],
     "location": [
@@ -63,5 +80,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1590406648
+    "modified": 1590410396
+
 }
