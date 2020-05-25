@@ -39,17 +39,19 @@ class VF_Widget_Figure extends WP_Widget {
     <?php }
     
     echo ($image); 
-    if( ($link) ) { ?>
-    
-    </a>
 
-        <?php if( ! empty($caption) ) { ?>
-        <figcaption class="vf-figure__caption"><?php echo ($caption); ?></figcaption>
-        <?php } ?>
+    if( ($link) ) { ?>
+
+    </a>
+    <?php }
+        
+    if( ! empty($caption) ) { ?>
+    <figcaption class="vf-figure__caption"><?php echo ($caption); ?></figcaption>
+    <?php } ?>
 
     </figure>
 
-    <?php } 
+    <?php  
   }
 
   public function form($instance) {
