@@ -39,14 +39,6 @@ add_filter(
 
 ?>
 
-<section class="vf-intro | embl-grid embl-grid--has-centered-content">
-  <div></div>
-  <div>
-    <h1 class="vf-intro__heading"><?php the_title(); ?></h1>
-  </div>
-</section>
-<!--/vf-intro-->
-
 <?php
 
 $vf_theme->the_content();
