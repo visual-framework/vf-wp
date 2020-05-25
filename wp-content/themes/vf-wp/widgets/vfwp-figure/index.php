@@ -31,14 +31,17 @@ class VF_Widget_Figure extends WP_Widget {
       ));
     
     ?>
-    
-    <?php if( ($link) ) { ?>
-    <a href="<?php echo ($link); ?>">
-    <?php } ?>
 
     <figure class="vf-figure">
+
+    <?php if( ($link) ) { ?>
+    <a href="<?php echo ($link); ?>">
+    <?php }
     
-        <?php echo ($image); ?>
+    echo ($image); 
+    if( ($link) ) { ?>
+    
+    </a>
 
         <?php if( ! empty($caption) ) { ?>
         <figcaption class="vf-figure__caption"><?php echo ($caption); ?></figcaption>
@@ -46,8 +49,6 @@ class VF_Widget_Figure extends WP_Widget {
 
     </figure>
 
-    <?php if( ($link) ) { ?>
-    </a>
     <?php } 
   }
 
