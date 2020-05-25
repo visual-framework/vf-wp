@@ -87,7 +87,7 @@ if ($style !== 'normal' && $theme_easy !== 'none') {
 endif;
 
 /**
- * Register Links List Widget
+ * Register Box Widget
  */
 function register_box_widget()
 {
