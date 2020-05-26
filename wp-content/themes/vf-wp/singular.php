@@ -7,6 +7,8 @@ setup_postdata($post);
 
 global $vf_theme;
 
+$title = $vf_theme->get_title();
+
 $open_wrap = function($html, $block_name) {
     $html = '
   <div class="embl-grid embl-grid--has-centered-content">
@@ -40,6 +42,27 @@ add_filter(
 ?>
 
 <?php
+if ( has_block( 'acf/vfwp-intro', $post ) ) {  
+
+parse_blocks( 'acf/vfwp-intro' ); } 
+
+else if ( has_block( 'acf/vfwp-page-header', $post ) ) {
+
+parse_blocks( 'acf/vfwp-page-header' ); }
+
+else { ?>
+
+<section class="embl-grid embl-grid--has-centered-content">
+  <div></div>
+  <div>
+  <h1 class="vf-text vf-text-heading--1">
+        <?php echo $title;?>
+      </h1>
+  </div>
+  <div></div>
+</section>
+
+<?php }
 
 $vf_theme->the_content();
 
