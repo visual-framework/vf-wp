@@ -27,28 +27,25 @@ if (is_search()) {
 }
 ?>
 
-<section class="vf-inlay | vf-u-margin__bottom--md ">
-  <div class="vf-grid | vf-u-background-color--green--dark | vf-u-padding__bottom--md | vf-u-margin__bottom--xxl">
-    <div class="vf-u-margin__right--xl vf-u-margin__left--xl">
-      <h3 class="vf-text vf-text-heading--2 | vf-u-margin__top--sm | vf-u-text-color--ui--grey--light"
-        style="font-weight: 200;"><em>About the author</em></h3>
-      <div class="vf-grid | vf-u-padding--0 | author-summary" style="max-width: fit-content;">
-        <div class="author-avatar">
-          <?php echo get_avatar( get_the_author_meta( 'ID' ), 90 ); ?>
-        </div>
-        <div class="vf-content | author-description">
-          <h2 class="vf-u-text-color--ui--white | vf-u-margin__top--0" style="font-weight: 400;"><?php the_author(); ?>
-          </h2>
-          <p class="vf-u-text-color--ui--white | vf-text--body vf-text-body--3">
-            <?php echo nl2br(get_the_author_meta('description')); ?> </p>
-          <i class="fas fa-envelope"></i>
-          <a href="mailto:<?php echo nl2br(get_the_author_meta('email')); ?>" class="vf-link"
-            style="display: inline-block; color: #fff;">
-            <?php echo nl2br(get_the_author_meta('email')); ?></a>
-        </div>
+<div class="vf-grid">
+  <div class="vf-box vf-box--normal vf-box-theme--primary">
+    <p class="vf-text vf-text-heading--2">About the author</p>
+    <div class="vf-grid" style="max-width: fit-content;">
+      <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--sm' ) ); ?>
+      <div>
+        <h3 class="vf-box__heading">
+          <?php the_author(); ?></h3>
+        <p class="vf-box__text"><?php echo nl2br(get_the_author_meta('description')); ?></p>
+        <p class="vf-box__text">
+          <a href="mailto:<?php echo nl2br(get_the_author_meta('email')); ?>"
+            class="vf-summary__link vf-summary__link--secondary"><?php echo nl2br(get_the_author_meta('email')); ?></a>
+        </p>
       </div>
     </div>
   </div>
+</div>
+
+<section class="vf-inlay | vf-u-margin__bottom--md ">
 
   <div class="vf-inlay__content vf-u-background-color-ui--off-white | vf-u-padding__top--md">
     <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
