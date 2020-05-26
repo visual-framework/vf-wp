@@ -6,7 +6,7 @@
       </div>
       <div class="vf-links vf-links--tight vf-links__list--s">
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
-          <?php 
+<?php 
 $month = array(
     'type'            => 'monthly',
 	'limit'           => '6',
@@ -26,7 +26,7 @@ wp_get_archives( $month );
       </div>
       <div class="vf-links vf-links--tight vf-links__list--s | ">
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
-          <?php 
+<?php 
 $year = array(
 	'format' => 'custom',
     'type'            => 'yearly',
@@ -46,15 +46,20 @@ wp_get_archives( $year );
       </div>
       <div class="vf-links vf-links--tight vf-links__list--s">
         <ul class="vf-links__list vf-links__list--secondary | vf-list">
-          <?php 
-			$cat = array(
-	'title_li' => '',
-  'show_count' => true,
-  'before' => '<li class="vf-list__item">',
-  'after'  => '</li>'
-);
-wp_list_categories( $cat );
-?>
+
+  <?php
+
+    $cats= get_categories();
+    if ($cats) {
+    $output = array();
+    
+   foreach($cats as $cat) {
+      $output[] = 
+      '<li class="vf-list__item">
+      <a  href="' . get_term_link($cat->term_id) . '" class="vf-link__list' . '">' . $cat->name . '</a>'. ' ' . '(' . $cat->count . ')' . '</li>';
+   }
+   echo implode('', $output); }
+ ?>
         </ul>
       </div>
     </div>
