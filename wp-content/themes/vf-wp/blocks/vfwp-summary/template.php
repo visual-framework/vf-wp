@@ -22,9 +22,9 @@ $image = get_field('image');
 if ( ! is_array($image)) {
   $image = null;
 } else {
-  $image = wp_get_attachment_image($image['ID'], 'thumbnail', false, array(
-    'class'    => 'vf-summary__image vf-summary__image--thumbnail',
-    'style'    => 'width: 180px;',
+  $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
+    'class'    => 'vf-summary__image',
+    'style'    => 'width: 180px; height: auto; ',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
@@ -60,7 +60,7 @@ if ( $type === 'custom' ) {
     return;
   }
 ?>
-<article class="vf-summary <?php if ($image) { echo ' vf-summary--has-image'; } ?>">
+<article class="vf-summary <?php if ($image) { echo ' vf-summary--news'; } ?>">
   <?php
   if ($image) {
     echo $image;
