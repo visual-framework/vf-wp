@@ -15,6 +15,11 @@ the_post();
       <?php the_content(); ?>
 
     </main>
+    <?php if (is_active_sidebar('sidebar-page')) { ?>
+    <aside class="vf-inlay__content--additional">
+      <?php vf_sidebar('sidebar-page'); ?>
+    </aside>
+    <?php } ?>
   </div>
 </section>
 <?php get_footer(); ?>

@@ -2,12 +2,15 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VFWP_Box') ) :
+if ( ! class_exists('VFWP_Page_Header') ) :
 
-  require_once('widget.php');
-class VFWP_Box extends VFWP_Block {
+class VFWP_Page_Header extends VFWP_Block {
 
   public function __construct() {
+
+    // Allow block to use full-width container layout
+    $this->setup_containerable();
+
     parent::__construct(__FILE__);
   }
 
@@ -15,7 +18,7 @@ class VFWP_Box extends VFWP_Block {
    * Return the block name
    */
   static public function get_name() {
-    return 'vfwp-box';
+    return 'vfwp-page-header';
   }
 
   /**
@@ -26,7 +29,7 @@ class VFWP_Box extends VFWP_Block {
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
-      'title'    => 'Box',
+      'title'    => 'Page Header',
       'category' => 'vf/wp',
       'supports' => array(
         'align'           => false,
@@ -35,9 +38,9 @@ class VFWP_Box extends VFWP_Block {
     );
   }
 
-} // VFWP_Box
+} // VFWP_Page_Header
 
 // Initialize one instance
-$vfwp_box = new VFWP_Box();
+$vfwp_page_header = new VFWP_Page_Header();
 
 endif; ?>

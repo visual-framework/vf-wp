@@ -151,6 +151,13 @@
               "operator": "==",
               "value": "acf\/vfwp-box"
           }
+      ],
+      [
+          {
+              "param": "widget",
+              "operator": "==",
+              "value": "vf_widget_box"
+          }
       ]
   ],
   "menu_order": 0,
@@ -161,5 +168,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Box ACF Gutenberg block",
-  "modified": 1589805116
+  "modified": 1590398582
 }
