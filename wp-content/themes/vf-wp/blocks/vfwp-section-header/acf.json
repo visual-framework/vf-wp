@@ -1,0 +1,203 @@
+{
+  "key": "group_5ecce4d348869",
+  "title": "Section Header",
+  "fields": [
+      {
+          "key": "field_5ecce76f58d09",
+          "label": "Select type",
+          "name": "select_type",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "choices": {
+              "default": "Default",
+              "has_text": "Has text",
+              "has_sub-heading": "Has a subheading",
+              "is_a_link": "Is a link",
+              "has_sub-heading_and_link": "Has a subheading and link",
+              "has_sub-heading_link_text": "Has a subheading, link and text",
+              "has_link_text": "Has a link and text"
+          },
+          "default_value": [
+              "default"
+          ],
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 0,
+          "return_format": "value",
+          "ajax": 0,
+          "placeholder": ""
+      },
+      {
+          "key": "field_5ecce4d990c34",
+          "label": "Heading",
+          "name": "heading",
+          "type": "text",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
+      },
+      {
+          "key": "field_5ecce4fb90c36",
+          "label": "Sub Heading",
+          "name": "sub_heading",
+          "type": "text",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_sub-heading"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_sub-heading_and_link"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_sub-heading_link_text"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
+      },
+      {
+          "key": "field_5ecce4e690c35",
+          "label": "Link",
+          "name": "link",
+          "type": "url",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "is_a_link"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_sub-heading_and_link"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_sub-heading_link_text"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_link_text"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": ""
+      },
+      {
+          "key": "field_5ecce51490c37",
+          "label": "Text",
+          "name": "text",
+          "type": "text",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_text"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_sub-heading_link_text"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5ecce76f58d09",
+                      "operator": "==",
+                      "value": "has_link_text"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
+      }
+  ],
+  "location": [
+      [
+          {
+              "param": "block",
+              "operator": "==",
+              "value": "acf\/vfwp-section-header"
+          }
+      ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "seamless",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "VF-WP Page Header ACF Gutenberg block",
+  "modified": 1590487388
+
+}

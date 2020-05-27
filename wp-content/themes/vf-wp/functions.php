@@ -16,6 +16,8 @@ require_once('blocks/vfwp-card/index.php');
 require_once('blocks/vfwp-links-list/index.php');
 require_once('blocks/vfwp-box/index.php');
 require_once('blocks/vfwp-intro/index.php');
+require_once('blocks/vfwp-page-header/index.php');
+require_once('blocks/vfwp-section-header/index.php');
 require_once('widgets/vfwp-figure/index.php');
 require_once('widgets/vfwp-embed/index.php');
 
