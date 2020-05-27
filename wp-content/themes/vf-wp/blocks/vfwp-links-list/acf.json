@@ -327,6 +327,13 @@
         "operator": "==",
         "value": "acf/vfwp-links-list"
       }
+    ],
+    [
+        {
+            "param": "widget",
+            "operator": "==",
+            "value": "vf_widget_links_list"
+        }
     ]
   ],
   "menu_order": 0,
@@ -337,5 +344,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Links List ACF Gutenberg block",
-  "modified": 1589791426
+  "modified": 1590245532
 }
