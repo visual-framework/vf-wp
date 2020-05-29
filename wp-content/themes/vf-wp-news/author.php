@@ -29,7 +29,7 @@ if (is_search()) {
 
 <div class="vf-grid">
   <div class="vf-box vf-box--normal vf-box-theme--primary">
-    <p class="vf-text vf-text-heading--2">About the author</p>
+    <h2 class="vf-text vf-text-heading--2">About the author</h2>
     <div class="vf-grid" style="max-width: fit-content;">
       <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--sm' ) ); ?>
       <div>
