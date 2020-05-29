@@ -30,8 +30,8 @@ if (is_search()) {
   <div class="vf-inlay__content vf-u-background-color-ui--off-white | vf-u-margin__bottom--sm | vf-u-padding__top--md">
     <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
       <div>
-        <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
-        <?php single_tag_title(); ?></h3>
+        <h1 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
+        <?php single_tag_title(); ?></h1>
       </div>
       <div class="vf-grid vf-grid__col-2">
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post();

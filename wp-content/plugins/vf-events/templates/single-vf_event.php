@@ -102,42 +102,42 @@ $end_time= get_field(
     <div class="vf-content">
 
       <?php if ( ! empty($start_date)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Start Date', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($start_date); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($end_date)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('End Date', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($end_date); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($start_time)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Start Time', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($start_time); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($end_time)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('End Time', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($end_time); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($location)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Location', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($location); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($venue)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Venue', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($venue); ?></p>
@@ -147,84 +147,84 @@ $end_time= get_field(
       <?php the_content(); ?>
 
       <?php if ( ! empty($summary)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Summary', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($summary); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($additional_info)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Additional Information', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($additional_info); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($event_type)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Event Type', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($event_type); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($registration_opening)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Registration Opening', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($registration_opening); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($registration_closing)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Registration Closing', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($registration_closing); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($submission_opening)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Submission Opening', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($submission_opening); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($submission_closing)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Submission Closing', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($submission_closing); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($registration_fee)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Registration Fee', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($registration_fee); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($registration_link)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Registration Link', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($registration_link); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($more_information_link)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('More Information Link', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($more_information_link); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($canceled)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Canceled', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($canceled); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($unique_identifier)) { ?>
-      <h4 class="vf-text vf-text-heading--5">
+      <h4>
         <?php esc_html_e('Unique Identifier', 'vfwp'); ?>
       </h4>
       <p><?php echo esc_html($unique_identifier); ?></p>
