@@ -1921,10 +1921,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.0-alpha.0.tgz#a58a75fd569cceb71d2e63a29621c607a9f8386e"
   integrity sha512-I+n1HuirL8xTXZHAJ7Oy9Sie7a/ja0IrMvwKTTr+ekTgGBGVr038ogtE6W01YYgHT4rI/tFRPga0RDzBpnS35w==
 
-"@visual-framework/vf-content@1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.1.4.tgz#4b54d5ad81075f2aec1ca0ed6059596af7e17fa9"
-  integrity sha512-R8LwwV6q5Ib+xlr0aiwthfIXxUAhFlP5BDlh2Q08h9EeDMjcx6tGdRo7VOQD9G88GU80Jl50df9jwFi391bGFw==
+"@visual-framework/vf-content@1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.1.5.tgz#9a5be4208fe327fd9a72704361ac7d50b5137d57"
+  integrity sha512-MpUgn91TTIDKoSqGa1B9CGC4maV6cAJAXO/SgyDd0wgk7XxhQvVkWSaReTuaxM7E4zHd1lfScfbj8moKqF6vCQ==
   dependencies:
     "@visual-framework/vf-badge" "^1.0.1"
     "@visual-framework/vf-blockquote" "^1.0.2"
