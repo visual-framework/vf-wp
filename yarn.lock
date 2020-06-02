@@ -2095,10 +2095,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__textarea/-/vf-form__textarea-1.0.1.tgz#c56d894fe2458a8183e903dbddc54ce4c6c527d2"
   integrity sha512-ClrdsIWAYfKPryYC4yi56asL8biIzzdOi28WgbFdbo0GSGkg9E+RibTjON0l9MLZFSXFe4yRlb4rNjjeTZCNtg==
 
-"@visual-framework/vf-global-header@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-global-header/-/vf-global-header-1.0.0.tgz#c426e1bc3a8d26ccc96d51af3f56db7d71ddeae7"
-  integrity sha512-9ZqSYI3c8RDzMOGs5PdoQv3Z4fF+AEifOkHJEt2Hfo8FBrLtmqkljnCjKJoisN3GGrXxCqy3lNaBTcDzHQuNQg==
+"@visual-framework/vf-global-header@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-global-header/-/vf-global-header-1.0.1.tgz#91beabf8becdfe25af3ec73c763ec05c4bf2ba10"
+  integrity sha512-I3iMRJdhy23qxT9pF+6l/3qNJw3JkdRuD9qb9cHIDRC8iTrVHkrszKgN2cgRbUOgpPn0LoBV+L8iMYMmXe0c0Q==
 
 "@visual-framework/vf-grid-page@1.0.0":
   version "1.0.0"
