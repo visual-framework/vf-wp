@@ -148,7 +148,7 @@ function vf_wp_documents__init() {
     'supports'            => array('title', 'editor'),
     'has_archive'         => true,
     'rewrite'             => array(
-      'slug'       => '/',
+      'slug'       => 'document',
       'with_front' => false
     ),
     'query_var'           => true,

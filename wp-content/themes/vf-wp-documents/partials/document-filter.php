@@ -34,8 +34,8 @@ $type_labels = vf_wp_document_type_labels();
 $date_options = array();
 
 // Get HTML for monthy archives
-$monthly_archives = wp_get_archives(array(
-  'type'      => 'monthly',
+$yearly_archives = wp_get_archives(array(
+  'type'      => 'yearly', # monthly for month and year archives
   'format'    => 'html',
   'echo'      => 0,
   'post_type' => 'document'
@@ -43,23 +43,25 @@ $monthly_archives = wp_get_archives(array(
 
 // Attempt to get year/month filter
 $year = (string) get_query_var('year');
-$month = str_pad(get_query_var('monthnum'), 2, '0', STR_PAD_LEFT);
+# $month = str_pad(get_query_var('monthnum'), 2, '0', STR_PAD_LEFT);
 
 // Use the `m` query filter (in case `s` search query is set)
 $m = get_query_var('m');
 if (strlen($m) === 6) {
   $year = substr($m, 0, 4);
-  $month = substr($m, 4, 2);
+#  $month = substr($m, 4, 2);
 }
 
 // to check permalinks structure '#m=([0-9]{4})([0-9]{1,2})#',
 
 // Parse all year/month values from URLs to create date filter
 if (preg_match_all(
-  '#/([0-9]{4})/([0-9]{1,2})#',
-  $monthly_archives, $matches, PREG_SET_ORDER
+  '#/([0-9]{4})#', # '#/([0-9]{4})/([0-9]{1,2})#' for month and year archive
+  $yearly_archives, $matches, PREG_SET_ORDER
 )) {
 
+/*
+For month and year archive
 
   foreach ($matches as $match) {
     $value = "{$match[1]}{$match[2]}";
@@ -70,8 +72,18 @@ if (preg_match_all(
       'selected' => $value == "{$year}{$month}"
     );
   }
-}
+  */
 
+  foreach ($matches as $match) {
+    $value = "{$match[1]}";
+    $label = "{$match[1]}";
+    $date_options[] = array(
+      'value'    => $value,
+      'label'    => $label,
+      'selected' => $value == "{$year}"
+    );
+  }
+}
 
 // $archive = get_post_type_archive_link('document');
 $archive = home_url('/?post_type=document');
