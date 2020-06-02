@@ -22,7 +22,7 @@ $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 
   <div class="vf-content">
 
-<h4 class="vf-u-margin__top--0">Recently added:</h4>
+<h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
 
     <div class="vf-grid vf-grid__col-2">
 
@@ -31,7 +31,7 @@ $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
  $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
  $args = array(
   'post_type' => 'document',
-  'posts_per_page' => 10,
+  'posts_per_page' => 16,
   'paged' => $page,);
 query_posts($args);?>
 
