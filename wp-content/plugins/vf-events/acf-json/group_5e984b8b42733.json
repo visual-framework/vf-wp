@@ -182,5 +182,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type"
+    "description": "`vf_event` post type",
+    "modified": 1591168550
 }

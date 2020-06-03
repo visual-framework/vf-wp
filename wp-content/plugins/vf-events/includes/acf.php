@@ -295,7 +295,8 @@ class VF_Events_ACF {
       'vf_event_registration_link',
       'vf_event_start_time',
       'vf_event_end_time',
-      'vf_event_location'
+      'vf_event_location',
+      'vf_event_time_zone'
     );
     foreach ($fields as $key) {
       $callback = function($obj) use ($key) {

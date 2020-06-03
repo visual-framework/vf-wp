@@ -89,6 +89,11 @@ $start_time = get_field(
   $post->ID
 );
 
+$time_zone = get_field(
+  'vf_event_time_zone',
+  $post->ID
+);
+
 $end_time= get_field(
   'vf_event_end_time',
   $post->ID
@@ -129,6 +134,13 @@ $end_time= get_field(
       <p><?php echo esc_html($end_time); ?></p>
       <?php } ?>
 
+      <?php if ( ! empty($time_zone)) { ?>
+      <h4>
+        <?php esc_html_e('Time zone', 'vfwp'); ?>
+      </h4>
+      <p><?php echo esc_html($time_zone); ?></p>
+      <?php } ?>
+
       <?php if ( ! empty($location)) { ?>
       <h4>
         <?php esc_html_e('Location', 'vfwp'); ?>
@@ -150,14 +162,14 @@ $end_time= get_field(
       <h4>
         <?php esc_html_e('Summary', 'vfwp'); ?>
       </h4>
-      <p><?php echo esc_html($summary); ?></p>
+      <p><?php echo ($summary); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($additional_info)) { ?>
       <h4>
         <?php esc_html_e('Additional Information', 'vfwp'); ?>
       </h4>
-      <p><?php echo esc_html($additional_info); ?></p>
+      <p><?php echo ($additional_info); ?></p>
       <?php } ?>
 
       <?php if ( ! empty($event_type)) { ?>

@@ -33,6 +33,34 @@
             },
             "display_format": "g:i a",
             "return_format": "g:i a"
+        },
+        {
+            "key": "field_5ed74d4c8c0cf",
+            "label": "Time zone",
+            "name": "vf_event_time_zone",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "europe\/berlin": "Europe\/Berlin",
+                "europe\/london": "Europe\/London",
+                "america\/new_york": "America\/New York"
+            },
+            "default_value": [
+                "europe\/berlin"
+            ],
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
         }
     ],
     "location": [
@@ -51,5 +79,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type"
+    "description": "`vf_event` post type",
+    "modified": 1591168550
 }
