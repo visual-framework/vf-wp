@@ -8,7 +8,7 @@
       "name": "vf_event_start_date",
       "type": "date_picker",
       "instructions": "",
-      "required": 0,
+      "required": 1,
       "conditional_logic": 0,
       "wrapper": {
         "width": "",

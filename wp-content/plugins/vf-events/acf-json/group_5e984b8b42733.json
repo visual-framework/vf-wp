@@ -5,45 +5,62 @@
         {
             "key": "field_5e9868ea11ada",
             "label": "Event type",
-                "name": "vf_event_event_type",
-                "type": "select",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "choices": {
-                    "EMBO Workshop": "EMBO Workshop"
-                },
-                "default_value": [],
-                "allow_null": 0,
-                "multiple": 0,
-                "ui": 0,
-                "return_format": "value",
-                "ajax": 0,
-                "placeholder": ""
-        },
-        {
-            "key": "field_5e958b24aa2e0",
-            "label": "Location",
-            "name": "vf_event_location",
-            "type": "text",
+            "name": "vf_event_event_type",
+            "type": "select",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "choices": {
+                "course": "Course",
+                "conference": "Conference",
+                "seminar": "Seminar",
+                "public_event": "Public Event",
+                "webinar": "Webinar"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "label",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5e958b24aa2e0",
+            "label": "Location",
+            "name": "vf_event_location",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "68": "EMBL Barcelona",
+                "71": "EMBL Grenoble",
+                "70": "EMBL Hamburg",
+                "67": "EMBL Heidelberg",
+                "69": "EMBL Rome",
+                "66": "EMBL-EBI",
+                "76": "EMBL-EM",
+                "353": "EMBO",
+                "98": "Other"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "label",
+            "placeholder": ""
         },
         {
             "key": "field_5e9850b053db2",
@@ -78,9 +95,9 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "text",
+            "tabs": "all",
             "media_upload": 0,
-            "toolbar": "full",
+            "toolbar": "basic",
             "delay": 0
         },
         {
@@ -97,9 +114,9 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "text",
+            "tabs": "all",
             "media_upload": 0,
-            "toolbar": "full",
+            "toolbar": "basic",
             "delay": 0
         },
         {
@@ -127,7 +144,7 @@
             "name": "vf_event_canceled",
             "type": "radio",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -135,15 +152,15 @@
                 "id": ""
             },
             "choices": {
-                "Yes": "Yes",
-                "No": "No",
-                "Postponed": "Postponed"
+                "yes": "Yes",
+                "no": "No",
+                "postponed": "Postponed"
             },
             "allow_null": 0,
             "other_choice": 0,
-            "default_value": "",
+            "default_value": "no",
             "layout": "vertical",
-            "return_format": "value",
+            "return_format": "label",
             "save_other_choice": 0
         },
         {
@@ -183,5 +200,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1591168550
+    "modified": 1591184252
 }

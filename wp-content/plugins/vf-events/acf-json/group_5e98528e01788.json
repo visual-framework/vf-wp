@@ -36,7 +36,7 @@
         },
         {
             "key": "field_5ed74d4c8c0cf",
-            "label": "Time zone",
+            "label": "Time Zone",
             "name": "vf_event_time_zone",
             "type": "select",
             "instructions": "",
@@ -59,7 +59,7 @@
             "multiple": 0,
             "ui": 1,
             "ajax": 0,
-            "return_format": "value",
+            "return_format": "label",
             "placeholder": ""
         }
     ],
