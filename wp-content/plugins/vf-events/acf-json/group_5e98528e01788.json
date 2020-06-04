@@ -50,7 +50,7 @@
             "choices": {
                 "europe\/berlin": "Europe\/Berlin",
                 "europe\/london": "Europe\/London",
-                "america\/new_york": "America\/New York"
+                "america\/new_york": "America\/New_York"
             },
             "default_value": [
                 "europe\/berlin"
