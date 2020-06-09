@@ -110,7 +110,7 @@
     "@visual-framework/vf-video-container": "1.0.0-beta.1",
     "@visual-framework/vf-video-teaser": "1.0.0-beta.2",
     "babel-loader": "8.1.0",
-    "chalk": "4.0.0",
+    "chalk": "4.1.0",
     "core-js": "3.6.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
