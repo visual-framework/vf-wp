@@ -41,9 +41,7 @@ if (
 ?>
 
 <?php if ($is_container) { ?>
-<section class="vf-inlay">
-  <div class="vf-inlay__content">
-    <main class="vf-inlay__content--full-width">
+  <div class="vf-grid">
 <?php } ?>
 
 <header class="vf-page-header">
@@ -54,7 +52,5 @@ if (
 </header>
 
 <?php if ($is_container) { ?>
-    </main>
   </div>
-</section>
 <?php } ?>
