@@ -22,7 +22,7 @@ class EMBL_Taxonomy {
   const META_DEPRECATED = EMBL_Taxonomy::TAXONOMY_NAME . '_deprecated';
 
   // Register taxonomy for these post types
-  const TAXONOMY_TYPES = array('post', 'page');
+  const TAXONOMY_TYPES = array('post', 'page', 'vf_event');
 
   // Separator used to join term names
   const TAXONOMY_SEPARATOR = ' > ';
