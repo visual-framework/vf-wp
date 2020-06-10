@@ -54,7 +54,7 @@ if ($is_container) { ?>
     <div class="vf-tabs-content" data-vf-js-tabs-content>
       <?php while( have_rows('tabs') ): the_row(); 
       $title = get_sub_field('title');
-      $text = get_sub_field('text'); ?>
+      $text = get_sub_field('text', false, false); ?>
       <section class="vf-tabs__section" id="vf-tabs__section--<?php echo get_row_index();?>">
         <h2><?php echo ($title); ?></h2>
         <?php if (! empty ($text)) { ?>
@@ -80,7 +80,7 @@ if ($is_container) { ?>
         <div class="vf-tabs-content" data-vf-js-tabs-content>
           <?php while( have_rows('nested_tabs') ): the_row(); 
           $nested_title = get_sub_field('nested_title');
-          $nested_text = get_sub_field('nested_text'); ?>
+          $nested_text = get_sub_field('nested_text', false, false); ?>
           <section class="vf-tabs__section" id="vf-tabs__section--<?php echo get_row_index();?>">
             <h2><?php echo ($nested_title); ?></h2>
             <p><?php echo ($nested_text); ?></p>
