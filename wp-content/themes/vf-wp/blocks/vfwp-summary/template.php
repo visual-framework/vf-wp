@@ -186,4 +186,44 @@ if ( $type === 'event' ) {
   wp_reset_postdata();
   return;
 }
+
+if ( $type === 'publication' ) {
+
+  $publication_title = get_field('publication_title');
+  $publication_link = get_field('publication_link');
+  $authors = get_field('authors');
+  $year = get_field('year');
+  $source = get_field('source');
+  $doi = get_field('doi');
+  
+  if (
+    
+    vf_html_empty($title)
+    && vf_html_empty($source)
+    && vf_html_empty($authors)
+  ) {
+    $admin_banner(__('Please enter custom content for this publication.', 'vfwp'));
+    return;
+  }
+?>
+<article class="vf-summary vf-summary--publication">
+    <h3 class="vf-summary__title">
+        <a href="<?php echo $publication_link; ?>" class="vf-summary__link">
+        <?php echo $publication_title; ?>
+    </a>
+    </h3>
+    <p class="vf-summary__author">
+      <?php echo $authors; ?>    </p>
+    <p class="vf-summary__source">
+    <?php echo $source; ?>
+        <span class="vf-summary__date"><?php echo $year; ?></span>
+    </p>
+
+    <p class="vf-summary__text">
+    <?php echo $doi; ?>
+    </p>
+</article>
+<?php
+  return;
+}
 ?>
