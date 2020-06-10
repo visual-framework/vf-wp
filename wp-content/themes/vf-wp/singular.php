@@ -7,7 +7,7 @@ setup_postdata($post);
 
 global $vf_theme;
 
-$title = $vf_theme->get_title();
+$title = get_the_title();
 
 $open_wrap = function($html, $block_name) {
     $html = '
