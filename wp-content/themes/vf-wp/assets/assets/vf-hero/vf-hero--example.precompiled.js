@@ -73,8 +73,22 @@ output += "<a class=\"vf-link\" href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link"), env.opts.autoescape);
 output += "\"> ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link_text"), env.opts.autoescape);
-output += "</a></p>\n  </div>\n</section>\n\n\n\n";
-output += "\n";
+output += "</a></p>\n  </div>\n</section>\n\n\n\n\n<section class=\"vf-hero vf-hero--extreme\">\n  <div class=\"vf-hero__image\">\n    <img src=\"";
+output += runtime.suppressValue(env.getFilter("path").call(context, "../../assets/vf-hero/assets/vf-intro-group.png"), env.opts.autoescape);
+output += "\" alt=\"\">\n  </div>\n\n  <div class=\"vf-hero__content\">\n";
+if(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading")) {
+output += " <h2 class=\"vf-hero__heading\">";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_heading"), env.opts.autoescape);
+output += "</h2>";
+;
+}
+output += "    <p class=\"vf-hero__text\">";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_text"), env.opts.autoescape);
+output += "<a class=\"vf-link\" href=\"";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link"), env.opts.autoescape);
+output += "\"> ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_hero_link_text"), env.opts.autoescape);
+output += "</a></p>\n  </div>\n</section>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
