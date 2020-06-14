@@ -42,7 +42,7 @@
 /*!
  * Component: @visual-framework/vf-grid
  * Version: 1.0.5
- * Location: components/vf-grid
+ * Location: components/vf-core-
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -182,7 +182,7 @@
 /*!
  * Component: @visual-framework/vf-masthead
  * Version: 1.0.3
- * Location: components/vf-masthead
+ * Location: components/vf-core-
  */
 .vf-masthead {
   background-color: #ffffff;
