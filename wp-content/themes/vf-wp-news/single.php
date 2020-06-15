@@ -52,53 +52,13 @@ the_post();
 
     </aside>
     <?php
-if( get_field('press_contact') == 'EMBL-EBI Oana Stroe' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
-      <p class="vf-box__text"><b>Oana Stroe</b></br>Sr. Communications Officer</br></br>EMBL-EBI, Wellcome Genome
-        Campus,
-        Hinxton, Cambridgeshire, CB10 1SD,
-        UK</p>
-      <p class="vf-box__text"><a href="mailto:stroe@ebi.ac.uk">stroe@ebi.ac.uk</a></br>+44 1223 494369</p>
-    </div>
-    <?php }
 
-else if( get_field('press_contact') == 'EMBL Annika Grandison' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
-      <p class="vf-box__text"><b>Annika Grandison</b></br>Engagement Team Lead</br></br>Meyerhofstraße 1, 69117
-        Heidelberg,
-        Germany</p>
-      <p class="vf-box__text"><a href="mailto:annika.grandison@embl.org">Email</a></br>+49 6221 387-8443</p>
-    </div>
-    <?php }
-
- else if( get_field('press_contact') == 'EMBL-EBI Rodica Petrusevschi' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
-      <p class="vf-box__text"><b>Rodica Petrusevschi</b></br>Digital Strategy Officer</br></br>EMBL-EBI, Wellcome Genome
-        Campus, Hinxton, Cambridgeshire, CB10 1SD,
-        UK</p>
-      <p class="vf-box__text"><a>petrusevschi@ebi.ac.uk</a></br>+44 1223 494369</p>
-    </div>
-    <?php }
-
-else if( get_field('press_contact') == 'EMBL Mathias Jaeger' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
-      <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
-      <p class="vf-box__text"><b>Mathias Jäger</b></br>EMBL Press Officer</br></br>Meyerhofstraße 1, 69117 Heidelberg,
-        Germany
-      </p>
-      <p class="vf-box__text"><a href="mailto:mathias.jaeger@embl.de">Email</a></br>+49 6221 387-8726</p>
-    </div>
-    <?php }
-
-else if( get_field('press_contact') == 'EMBL Generic' ) { ?>
+  if( get_field('press_contact') == 'EMBL Generic' ) { ?>
     <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
       <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>EMBL Press Office</b></br></br>Meyerhofstraße 1, 69117 Heidelberg, Germany
       </p>
-      <p class="vf-box__text"><a href="mailto:pressoffice@embl.de">pressoffice@embl.de</a></br>+49 6221 387-8726</p>
+      <p class="vf-box__text"><a href="mailto:pressoffice@embl.de">media@embl.org</a></br>+49 6221 387-8726</p>
     </div>
     <?php }
 
@@ -119,8 +79,8 @@ else {} ?>
     <h1><?php the_title(); ?></h1>
 
     <?php if( have_rows('translations') ):
-                    $all_fields_count = count(get_field('translations'));
-                    $fields_count = 1;
+        $all_fields_count = count(get_field('translations'));
+        $fields_count = 1;
       ?>
     <div class="vf-banner vf-banner--alert vf-banner--info">
       <div class="vf-banner__content">
@@ -256,15 +216,11 @@ if ($tags) {
               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
               <use xlink:href="#vf-social--linkedin"></use>
             </svg>
-
           </a>
-
         </li>
       </ul>
-
     </div>
   </div>
-
 </main>
 
 <section class="vf-inlay">
