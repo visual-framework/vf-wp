@@ -24,4 +24,16 @@ add_action('vf/__experimental__/theme/init', function() {
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'title-tag' );
 
+add_filter('acf/settings/remove_wp_meta_box', '__return_false');
+
+add_filter('acf/settings/show_admin', '__return_true');
+function my_acf_save_post( $post_id ) {
+    // get new value
+    $user = get_field( 'author', $post_id );
+	if( $user ) {
+		wp_update_post( array( 'ID'=>$post_id, 'post_author'=>$user['ID']) ); 
+	}
+}
+add_action('acf/save_post', 'my_acf_save_post', 20);
+
 ?>
