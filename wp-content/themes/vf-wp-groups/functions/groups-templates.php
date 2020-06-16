@@ -33,6 +33,17 @@ class VF_Groups_Templates {
 
 } // VF_Groups_Templates
 
+add_filter(
+  'acf/settings/load_json',
+  'vf_wp_groups__acf_settings_load_json',
+  1
+);
+
+function vf_wp_groups__acf_settings_load_json($paths) {
+$paths[] = get_stylesheet_directory() . '/acf-json';
+return $paths;
+}
+
 endif;
 
 ?>
