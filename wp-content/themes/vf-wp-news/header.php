@@ -1,6 +1,8 @@
 <?php get_template_part('partials/head'); ?>
 <?php vf_header(); ?>
 
-<div class="vf-header vf-header--inlay">
-  <?php get_template_part('partials/vf-masthead'); ?>
-</div>
+<?php 
+if (class_exists('VF_Breadcrumbs')) {
+  VF_Plugin::render(VF_Plugin::get_plugin('vf_breadcrumbs'));
+}
+?>
