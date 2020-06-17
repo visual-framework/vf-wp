@@ -55,7 +55,7 @@ $attr_str = array_map(
   <style>
   .vf-hero {
     --vf-hero-bg-image: url('<?php echo esc_url($image['sizes']['vf-hero']); ?>');
-    background: var(--vf-hero-bg-image);
+    --vf-hero-grid__row--initial: 384px;
   }
 
   </style>
