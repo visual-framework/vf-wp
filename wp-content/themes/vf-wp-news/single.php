@@ -58,7 +58,7 @@ the_post();
       <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>EMBL Press Office</b></br></br>Meyerhofstraße 1, 69117 Heidelberg, Germany
       </p>
-      <p class="vf-box__text"><a href="mailto:pressoffice@embl.de">media@embl.org</a></br>+49 6221 387-8726</p>
+      <p class="vf-box__text"><a href="mailto:media@embl.org">media@embl.org</a></br>+49 6221 387-8726</p>
     </div>
     <?php }
 
