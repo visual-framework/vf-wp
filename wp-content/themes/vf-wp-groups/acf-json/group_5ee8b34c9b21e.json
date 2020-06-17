@@ -1,0 +1,55 @@
+{
+        "key": "group_5ee8b34c9b21e",
+        "title": "Page grid",
+        "fields": [
+            {
+                "key": "field_5ee8b355d7abb",
+                "label": "",
+                "name": "page_layout",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "operator": "",
+                            "value": ""
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "full": "Full width",
+                    "sidebar": "Has sidebar"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "sidebar",
+                "layout": "vertical",
+                "return_format": "value",
+                "save_other_choice": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "=",
+                    "value": "page"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "seamless",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "modified": 1592388126
+    }

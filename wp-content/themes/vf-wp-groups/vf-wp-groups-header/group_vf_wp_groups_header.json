@@ -52,6 +52,44 @@
             "placeholder": ""
         },
         {
+            "key": "field_5ee7920125f2c",
+            "label": "Enable Masthead",
+            "name": "field_vf_masthead_enable",
+            "type": "true_false",
+            "instructions": "Toggle off to disable the masthead.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5ee7924225f2d",
+            "label": "Enable Navigation",
+            "name": "field_vf_navigation_enable",
+            "type": "true_false",
+            "instructions": "Toggle off to disable the navigation bar.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_vf_hero_enable",
             "label": "Enable Hero",
             "name": "vf_hero_enable",
@@ -197,5 +235,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1575474346
+    "modified": 1592388126
 }

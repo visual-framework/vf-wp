@@ -13,6 +13,10 @@ if ( ! $vf_plugin instanceof VF_WP_Groups_Header) {
 $is_hero = get_field('vf_hero_enable', $vf_plugin->post()->ID);
 $is_hero = in_array($is_hero, array(1, '1', true));
 
+$masthead = get_field('field_vf_masthead_enable');
+
+$nav = get_field('field_vf_navigation_enable');
+
 // Plugin is rendered inside Gutenberg block
 $is_render = $vf_plugin->__experimental__is_admin_render();
 
@@ -37,8 +41,15 @@ if ($is_render) {
 
 ?>
 <header class="vf-header vf-header--inlay">
-  <?php get_template_part('vf-wp-groups-header/vf-masthead'); ?>
-  <?php get_template_part('vf-wp-groups-header/vf-navigation'); ?>
+  <?php
+  if ($masthead == 1) {
+    get_template_part('vf-wp-groups-header/vf-masthead');
+  }
+   ?>
+  <?php if ($nav == 1) {
+    get_template_part('vf-wp-groups-header/vf-navigation');
+  }
+    ?>
 </header>
 <?php if ($is_hero) { ?>
 <?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
