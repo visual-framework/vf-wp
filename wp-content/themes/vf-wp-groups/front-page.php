@@ -26,7 +26,6 @@ $open_wrap = function($html, $block_name) {
     $html = '
 <section class="vf-inlay">
   <div class="vf-inlay__content vf-u-background-color-ui--white">
-    <hr class="vf-divider">
     <main class="vf-inlay__content--main">
   ' . $html;
   return $html;

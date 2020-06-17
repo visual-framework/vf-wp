@@ -148,7 +148,7 @@ function vf_wp_documents__init() {
     'supports'            => array('title', 'editor'),
     'has_archive'         => true,
     'rewrite'             => array(
-      'slug'       => 'doc',
+      'slug'       => 'document',
       'with_front' => false
     ),
     'query_var'           => true,
@@ -192,10 +192,9 @@ add_action(
 );
 
 function vf_wp_documents__pre_get_posts($query) {
-  if ( !is_admin() && $query->is_tax() && $query->is_main_query() ) {
-    $query->set( 'posts_per_page', '12' );
-    return;
-}
+  if (  !is_admin() && $query->is_main_query() && !$query->is_tax() && $query->is_home()) {
+  $query->set('post_type', array( 'document' ) );
+  }
   if (is_admin()) {
     return;
   }
