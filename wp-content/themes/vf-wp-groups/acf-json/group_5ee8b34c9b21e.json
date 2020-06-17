@@ -28,7 +28,7 @@
                 },
                 "allow_null": 0,
                 "other_choice": 0,
-                "default_value": "",
+                "default_value": "sidebar",
                 "layout": "vertical",
                 "return_format": "value",
                 "save_other_choice": 0
@@ -37,9 +37,9 @@
         "location": [
             [
                 {
-                    "param": "page_template",
-                    "operator": "!=",
-                    "value": "default"
+                    "param": "post_type",
+                    "operator": "=",
+                    "value": "page"
                 }
             ]
         ],
@@ -50,5 +50,6 @@
         "instruction_placement": "label",
         "hide_on_screen": "",
         "active": true,
-        "description": ""
+        "description": "",
+        "modified": 1592388126
     }

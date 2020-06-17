@@ -52,25 +52,6 @@
             "placeholder": ""
         },
         {
-            "key": "field_vf_hero_enable",
-            "label": "Enable Hero",
-            "name": "vf_hero_enable",
-            "type": "true_false",
-            "instructions": "Toggle on to enable the hero banner and introduction. More content options will appear below.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
             "key": "field_5ee7920125f2c",
             "label": "Enable Masthead",
             "name": "field_vf_masthead_enable",
@@ -79,7 +60,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "33",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -98,12 +79,31 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "33",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
             "message": "",
             "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_vf_hero_enable",
+            "label": "Enable Hero",
+            "name": "vf_hero_enable",
+            "type": "true_false",
+            "instructions": "Toggle on to enable the hero banner and introduction. More content options will appear below.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
@@ -235,5 +235,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1592291353
+    "modified": 1592388126
 }
