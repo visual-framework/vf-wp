@@ -153,11 +153,11 @@ $archive = home_url('/?post_type=document');
 	  </fieldset>
 
 	  <fieldset class="vf-form vf-form__fieldset">
-	  <legend class="vf-form__legend">Publication date</legend>
+	  <legend class="vf-form__legend">Publication year</legend>
 
     <?php if ( ! empty($date_options)) { ?>
     <select class='vf-form__select' id='vf-form__select' name="m">
-      <option value=""><?php echo esc_attr( __( 'Date' ) ); ?></option>
+      <option value=""><?php echo esc_attr( __( 'Year' ) ); ?></option>
       <?php
       foreach ($date_options as $date) {
         $selected = $date['selected'] ? 'selected="selected"' : '';
