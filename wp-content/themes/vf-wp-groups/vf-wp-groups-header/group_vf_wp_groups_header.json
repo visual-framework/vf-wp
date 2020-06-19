@@ -167,7 +167,7 @@
             "label": "Hero Link",
             "name": "vf_hero_link",
             "type": "link",
-            "instructions": "Leave blank to include a \"Read more\" link to the \"About\" page if it exists.",
+            "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
             "required": 0,
             "conditional_logic": [
                 [
@@ -235,5 +235,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1592388126
+    "modified": 1592573365
 }

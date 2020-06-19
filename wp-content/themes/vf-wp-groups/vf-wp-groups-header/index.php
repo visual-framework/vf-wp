@@ -236,7 +236,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
       'vf_wp_groups_header/hero_link',
       $link
     );
-    if ( ! is_array($link)) {
+    if ( ! is_array($link) ) {
       $link = null;
     }
     return $link;
@@ -249,13 +249,14 @@ class VF_WP_Groups_Header extends VF_Plugin {
     if ( ! is_array($link)) {
       $link = null;
       //  Use "Read more" (/about/) as fallback if page exists
+      /* 
       $page = get_page_by_path('/about/');
       if ($page instanceof WP_Post) {
         $link = array(
           'title' => __('Read more', 'vfwp'),
           'url'   => get_the_permalink($page->ID)
         );
-      }
+      } */
     }
     if ($link) {
       $title = $link['title'];
