@@ -1825,7 +1825,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.0.5.tgz#598b7d7cad5ff33c60e9a591a29285f1e26c6281"
   integrity sha512-fGZiGg235pNKkI7BqewPt133KIA4Ze0SrkUMbV9V3xAG1r8a3A2mhh/P43pq/GUZSXZ2vOS+2cb+zkRVMtuikg==
 
-"@visual-framework/vf-table@^1.0.1-1.1.1.0":
+"@visual-framework/vf-table@1.0.1-1.1.1.0":
   version "1.0.1-1.1.1.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-table/-/vf-table-1.0.1-1.1.1.0.tgz#d7b1b81135d8008dbe9eb2583b49c1e814199563"
   integrity sha512-ZUHMa7hXcQxkbrVGLBYE8W/nHuooRRqHvP++jeOYk3/k/2/LCoJ0LvYscIwRU5UolGubnOhTQOter4DRpcHUXg==
