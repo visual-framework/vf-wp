@@ -33,6 +33,8 @@ yarn install
 
 This project makes use of [Visual Framework components](https://visual-framework.github.io/vf-welcome) to build its CSS and JS.
 
+- `yarn run update-components`
+     - interactively update the Visual Framework components (and other npm packages)
 - `gulp build`
      - to build `vf-components/vf-componenet-rollup/index.scss`
           - to make `wp-content/themes/vf-wp/assets/css/styles.css`
