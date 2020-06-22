@@ -12,9 +12,7 @@
 
   <div class="vf-u-padding--md">
     <h3 class="vf-text vf-text-heading--4">For press</h3>
-    <a href="http://www.embl.de/aboutus/communication_outreach/media_relations/index.html?_ga=2.70344536.995063798.1574846519-497306958.1561211067"
-      class="vf-link | vf-u-padding__bottom--sm | press-link">Press release archive</a>
-    <a href="https://www.embl.de/aboutus/communication_outreach/media_relations/index.html"
+    <a href="https://www.embl.org/press/"
       class="vf-link | vf-u-padding__bottom--sm | press-link">Contact the Press Office</a>
   </div>
 
