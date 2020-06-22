@@ -14,7 +14,6 @@
   <!-- Search indexing optimisations -->
   <meta class="swiftype" name="what" data-type="string" content="News" />
 
-  <script async src="https://kit.fontawesome.com/a076d05399.js"></script>
 <?php wp_head(); ?>
 </head>
 <body class="vf-body "<?php body_class(); ?>>
