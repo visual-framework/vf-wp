@@ -11,8 +11,9 @@
   <link rel="mask-icon" href="https://www.embl.org/guidelines/design/assets/embl-favicon/assets/safari-pinned-tab.svg" color="#ffffff">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#ffffff">
+  <!-- Search indexing optimisations -->
+  <meta class="swiftype" name="what" data-type="string" content="News" />
 
-  <script async src="https://kit.fontawesome.com/a076d05399.js"></script>
 <?php wp_head(); ?>
 </head>
 <body class="vf-body "<?php body_class(); ?>>
