@@ -40,10 +40,9 @@ This project makes use of [Visual Framework components](https://visual-framework
           - to make `wp-content/themes/vf-wp/assets/css/styles.css`
      - to build `vf-components/vf-componenet-rollup/scripts.scss`
           - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
+      - note: [the CI](https://github.com/visual-framework/vf-wp/blob/master/.github/workflows/build.js.yml) will run `gulp build` on commit to `master`
 - `gulp default`
      - to launch local developement of the above with a `watch` task
-
-Nb: the `gulp build` command will also invoke the above.
 
 ### EMBL + EMBL-EBI site development
 
