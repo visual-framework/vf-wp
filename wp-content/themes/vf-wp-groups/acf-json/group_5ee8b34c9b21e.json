@@ -28,7 +28,7 @@
                 },
                 "allow_null": 0,
                 "other_choice": 0,
-                "default_value": "sidebar",
+                "default_value": "full",
                 "layout": "vertical",
                 "return_format": "value",
                 "save_other_choice": 0
@@ -51,5 +51,5 @@
         "hide_on_screen": "",
         "active": true,
         "description": "",
-        "modified": 1592388126
+        "modified": 1592829558
     }
