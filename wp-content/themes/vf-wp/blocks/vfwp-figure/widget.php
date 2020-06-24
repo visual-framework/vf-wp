@@ -24,7 +24,7 @@ class VF_Widget_Figure extends WP_Widget {
     $link = get_field('link', $widget_id);
 
     
-      $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
+      $image = wp_get_attachment_image($image['ID'], 'full', false, array(
         'class'    => 'vf-figure__image',
         'loading'  => 'lazy',
         'itemprop' => 'image',
