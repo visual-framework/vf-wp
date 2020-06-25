@@ -33,3 +33,8 @@
     }
   }
 }
+
+  // WordPress is adding a figure around tables and we get default margins
+  figure:not([class*="vf-"]) {
+    margin: 0;
+  }
