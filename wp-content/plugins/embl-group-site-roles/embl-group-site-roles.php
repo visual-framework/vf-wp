@@ -19,7 +19,9 @@ add_action( 'deactivated_plugin', 'egsr_deactivation_redirect' );
 
 register_activation_hook( __FILE__, 'egsr_activation' );    // Register activation
 
-add_action( 'activated_plugin', 'egsr_activation_redirect' );
+add_action( 'admin_init', 'egsr_activation_redirect' );
+
+//add_action( 'activated_plugin', 'egsr_activation_redirect' );
 
 require_once( EGSR_PLUGIN_DIR . './embl-group-site-roles.admin.php' );
 
@@ -77,6 +79,14 @@ function egsr_deactivation(){
 * Behaviour of plugin during activation: check if users with WP default roles exist already
 */
 function egsr_activation(){
+  // Don't do redirects when multiple plugins are bulk activated
+  if (
+    ( isset( $_REQUEST['action'] ) && 'activate-selected' === $_REQUEST['action'] ) &&
+    ( isset( $_POST['checked'] ) && count( $_POST['checked'] ) > 1 ) ) {
+    return;
+  }
+  add_option( 'egsr_activation_redirect', wp_get_current_user()->ID );
+
     $wp_roles = new WP_Roles();
 
     // $wp_site_roles = egsr_custom_site_roles();
@@ -107,12 +117,22 @@ function egsr_activation(){
 }
 
 function egsr_activation_redirect( $plugin ) {
-    if( $plugin == plugin_basename( __FILE__ ) ) {
-        // Redirects to /wp-admin/admin.php?page=embl-group-site-roles&egsr-activation=true.
-        wp_safe_redirect( add_query_arg( array( 'page' => EGSR_CONFIG_PREFIX, EGSR_ACTIVATION => 'true' ), admin_url( 'users.php' ) ) );
 
-        exit;
-    }
+  // Make sure it's the correct user
+  if ( intval( get_option( 'egsr_activation_redirect', false ) ) === wp_get_current_user()->ID ) {
+    // Make sure we don't redirect again after this one
+    delete_option( 'egsr_activation_redirect' );
+    wp_safe_redirect( admin_url( '/options-general.php?page=plugin-admin-page' ) );
+    exit;
+  }
+
+
+//    if( $plugin == plugin_basename( __FILE__ ) ) {
+//        // Redirects to /wp-admin/admin.php?page=embl-group-site-roles&egsr-activation=true.
+//        wp_safe_redirect( add_query_arg( array( 'page' => EGSR_CONFIG_PREFIX, EGSR_ACTIVATION => 'true' ), admin_url( 'users.php' ) ) );
+//
+//        exit;
+//    }
 }
 
 function egsr_deactivation_redirect( $plugin ) {
