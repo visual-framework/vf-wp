@@ -52,9 +52,9 @@
             "placeholder": ""
         },
         {
-            "key": "field_5ee7920125f2c",
+            "key": "field_vf_masthead_enable",
             "label": "Enable Masthead",
-            "name": "field_vf_masthead_enable",
+            "name": "vf_masthead_enable",
             "type": "true_false",
             "instructions": "Toggle off to disable the masthead.",
             "required": 0,
@@ -71,9 +71,9 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_5ee7924225f2d",
+            "key": "field_vf_navigation_enable",
             "label": "Enable Navigation",
-            "name": "field_vf_navigation_enable",
+            "name": "vf_navigation_enable",
             "type": "true_false",
             "instructions": "Toggle off to disable the navigation bar.",
             "required": 0,
@@ -235,5 +235,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1592573365
+    "modified": 1593075036
 }
