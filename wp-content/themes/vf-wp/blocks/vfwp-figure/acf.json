@@ -31,7 +31,7 @@
             "key": "field_5ecb947e4c205",
             "label": "Caption",
             "name": "caption",
-            "type": "text",
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -40,11 +40,10 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
         },
         {
             "key": "field_5ecbbc00e3068",
@@ -87,6 +86,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Figure ACF Gutenberg block",
-    "modified": 1590661215
+    "modified": 1593080968
 
 }
