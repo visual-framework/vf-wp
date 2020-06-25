@@ -106,13 +106,11 @@ class VF_Theme {
     if ($limit > 0 && strlen($excerpt) > $limit) {
       $excerpt = substr($excerpt, 0, $limit);
       $excerpt = substr($excerpt, 0, strripos($excerpt, ' '));
+      $excerpt = "{$excerpt}&hellip;";
     }
     $excerpt = trim(preg_replace('/\s+/', ' ', $excerpt));
     if (empty($excerpt)) {
       return '';
-    }
-    if ($limit > 0) {
-      $excerpt = "{$excerpt}&hellip;";
     }
     return $excerpt;
   }

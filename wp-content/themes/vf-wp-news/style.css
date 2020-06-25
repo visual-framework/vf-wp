@@ -234,3 +234,7 @@ Text Domain:	 vf-wp-news-main
 .embed-padding-hero {
   padding-bottom: 44.25% !important;
 }
+
+.hero-left-column a {
+  color: #fff !important;
+}
