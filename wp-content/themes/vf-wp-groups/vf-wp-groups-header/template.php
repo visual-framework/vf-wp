@@ -13,9 +13,9 @@ if ( ! $vf_plugin instanceof VF_WP_Groups_Header) {
 $is_hero = get_field('vf_hero_enable', $vf_plugin->post()->ID);
 $is_hero = in_array($is_hero, array(1, '1', true));
 
-$masthead = get_field('field_vf_masthead_enable');
+$masthead = get_field('vf_masthead_enable');
 
-$nav = get_field('field_vf_navigation_enable');
+$nav = get_field('vf_navigation_enable');
 
 // Plugin is rendered inside Gutenberg block
 $is_render = $vf_plugin->__experimental__is_admin_render();
