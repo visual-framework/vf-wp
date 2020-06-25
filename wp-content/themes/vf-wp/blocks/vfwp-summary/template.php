@@ -14,6 +14,8 @@ if (is_array($type)) {
 $title = get_field('title');
 $title = trim($title);
 
+$link = get_field('link');
+
 $text = get_field('text', false, false);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-summary__text">', $text);
@@ -67,8 +69,17 @@ if ( $type === 'custom' ) {
   }
   ?>
   <h3 class="vf-summary__title">
+    <?php if ($link) { ?>
+      <a href="<?php echo esc_url($link);?>" class="vf-summary__link">
+    <?php } ?>
+
     <?php echo esc_html($title); ?>
+
   </h3>
+  <?php if ($link) { ?>
+  </a>
+  <?php } ?>
+
   <?php echo $text; ?>
 </article>
 <?php

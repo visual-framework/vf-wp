@@ -64,6 +64,22 @@
           "mime_types": ""
       },
       {
+          "key": "field_5ef4818b837d5",
+          "label": "Link",
+          "name": "link",
+          "type": "url",
+          "instructions": "Optional",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": ""
+      },
+      {
           "key": "field_5eb9510330d24",
           "label": "Title",
           "name": "title",
@@ -391,5 +407,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Summary ACF Gutenberg block",
-  "modified": 1591790679
+  "modified": 1593082378
 }
