@@ -1770,10 +1770,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.0.3.tgz#1e22cce9ada1c43d2341af29fd4b7576d72afa76"
   integrity sha512-ENA0GF9nRh5LN7NHDS5xIch3hA9IHXcDzG/yl0eQvZO+ZK3ASSR/XSbB/5ujLHZ5wWMuGUVG0n00OZlfxQeFLQ==
 
-"@visual-framework/vf-navigation@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-navigation/-/vf-navigation-1.2.2.tgz#09c91a279bcdd24a68b2e6536692bb69e56f339a"
-  integrity sha512-VLmKIZvUF6Wkc3BetU/6uUtVt2xjVxuS6OlWpNFBZBr/8yOSakgCgc874wVcsFMQEcxPHcNm67ljyhdbr95eZQ==
+"@visual-framework/vf-navigation@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-navigation/-/vf-navigation-1.2.3.tgz#af02410907ac2d4d1275abcc1a5896dfda625c3d"
+  integrity sha512-yFxOT15PIaV3GUsStAw2JHMRZKBDPjydiEEjuZsbQLBU4VEd6aB4CfrB2SrtoxAVMJApw/nnuPaDdjmIPMDKbw==
 
 "@visual-framework/vf-news-container@1.0.0-beta.1":
   version "1.0.0-beta.1"
