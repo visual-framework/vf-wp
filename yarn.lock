@@ -1454,10 +1454,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-grid/-/embl-grid-1.0.4.tgz#2119b37799cb45d3c11367adf449389c571ca305"
   integrity sha512-th3E06nvP72xXZ0fAbss7Ys2nciJ6TO+RVgZmfPOtp+aXej7FQp2pdWOniXdtVvPC4GE/pnmAzpAiYsROywqvw==
 
-"@visual-framework/embl-logo@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/embl-logo/-/embl-logo-1.0.3.tgz#c242cd2974e0c2efb812b4c904ac903017b47fd1"
-  integrity sha512-e+z2Cs3g6XB+DVlCOJPtCqqx31e4DMPE1np9HqRXipZHeGMdHfBFc5s1kg8kfA4pMupLqxVh4BLJSbBKoFKuBw==
+"@visual-framework/embl-logo@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-logo/-/embl-logo-1.0.4.tgz#0990efb9ce8974d4376942b9738a7c103320f4e0"
+  integrity sha512-qCOrul30wVgAl9xGCVWJmBJz/E9dKdILAUz+A7PFJwt5bNejJRW58yaAyFeGPIdnmKXn6WAFQAYOKuKHdlcjSg==
 
 "@visual-framework/embl-notifications@1.0.0-beta.0":
   version "1.0.0-beta.0"
