@@ -1671,10 +1671,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-table/-/vf-table-1.0.1-1.1.1.0.tgz#d7b1b81135d8008dbe9eb2583b49c1e814199563"
   integrity sha512-ZUHMa7hXcQxkbrVGLBYE8W/nHuooRRqHvP++jeOYk3/k/2/LCoJ0LvYscIwRU5UolGubnOhTQOter4DRpcHUXg==
 
-"@visual-framework/vf-tabs@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-tabs/-/vf-tabs-1.1.0.tgz#a8a0f4536509e5ecc4af16f354ca52347d7279ac"
-  integrity sha512-+mPtNvqcGelunkj5oE8DTRH8L8zuYRSp1vWkUUGUnikBpzk3ZCy3EKp1cz2QrGsUzu3OTzJyD9EORn9mE/DClw==
+"@visual-framework/vf-tabs@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-tabs/-/vf-tabs-1.1.1.tgz#09818f8d9fb1e9e1f03e19de34a24d27ee975ff0"
+  integrity sha512-fBCvSiIClhx7HdqiQ0YhLt7cMwvWFL5E+ymWrfemAi+VSF9sI9EBlgsItXbj+950LnK9fTKy8wLl9iDiJLvbgg==
 
 "@visual-framework/vf-text@1.0.2", "@visual-framework/vf-text@^1.0.2":
   version "1.0.2"
