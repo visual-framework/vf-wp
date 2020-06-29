@@ -52,7 +52,7 @@
     "@visual-framework/embl-content-hub-loader": "1.0.4",
     "@visual-framework/embl-content-meta-properties": "1.0.1",
     "@visual-framework/embl-grid": "1.0.4",
-    "@visual-framework/embl-logo": "1.0.3",
+    "@visual-framework/embl-logo": "1.0.4",
     "@visual-framework/embl-notifications": "1.0.0-beta.0",
     "@visual-framework/vf-activity-group": "1.0.0-alpha.9",
     "@visual-framework/vf-analytics-google": "1.0.0-alpha.0",
