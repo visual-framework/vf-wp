@@ -43,13 +43,43 @@ class VF_Templates {
 
 <!-- wp:acf/vf-container-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
 
-<!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vvf-container-page-template"} /-->
+<!-- wp:acf/vf-container-breadcrumbs {"id":"' . uniqid('block_') . '","name":"acf/vf-container-breadcrumbs"} /-->
+
+<!-- wp:acf/vf-container-navigation {"id":"' . uniqid('block_') . '","name":"acf/vf-container-navigation"} /-->
+
+<!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vf-container-page-template"} /-->
 
 <!-- wp:acf/vf-container-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
 
 ';
     $post_content = apply_filters(
       'vf/templates/post_content/default',
+      $post_content
+    );
+    return $post_content;
+  }
+
+    /**
+   * Return front page template post content
+   */
+  static public function front_page_template() {
+    $post_content = '
+
+<!-- wp:acf/vf-container-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
+
+<!-- wp:acf/vf-container-breadcrumbs {"id":"' . uniqid('block_') . '","name":"acf/vf-container-breadcrumbs"} /-->
+
+<!-- wp:acf/vf-container-wp-groups-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-wp-groups-header"} /-->
+
+<!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vf-container-page-template"} /-->
+
+<!-- wp:acf/vf-container-embl-news {"id":"' . uniqid('block_') . '","name":"acf/vf-container-embl-news"} /-->
+
+<!-- wp:acf/vf-container-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
+
+';
+    $post_content = apply_filters(
+      'vf/templates/post_content/front_page',
       $post_content
     );
     return $post_content;
@@ -154,6 +184,7 @@ class VF_Templates {
 
   public function activate() {
     $this->setup_default_template();
+    $this->setup_front_page_template();
   }
 
   public function deactivate() {
@@ -179,6 +210,32 @@ class VF_Templates {
         'post_author'  => 1,
         'post_name'    => 'default',
         'post_title'   => __('Default', 'theme'),
+        'post_type'    => VF_Templates::type(),
+        'post_content' => $post_content,
+        'post_status'  => 'publish'
+      ), true)
+    );
+  }
+
+    /**
+   * Setup front page template after plugin activation
+   */
+  public function setup_front_page_template() {
+    $post = $this->get_template_post('front_page');
+    if ($post) {
+      if (has_blocks($post)) {
+        return;
+      }
+      wp_delete_post($post->ID, true);
+    }
+    // Insert new front_page post
+    $post_content = VF_Templates::front_page_template();
+    $post_content = trim($post_content) . "\n";
+    $post = get_post(
+        wp_insert_post(array(
+        'post_author'  => 1,
+        'post_name'    => 'front_page',
+        'post_title'   => __('Front page', 'theme'),
         'post_type'    => VF_Templates::type(),
         'post_content' => $post_content,
         'post_status'  => 'publish'
@@ -249,6 +306,9 @@ class VF_Templates {
       if ($this->is_template_post($post, 'default')) {
         $allcaps[$cap[0]] = false;
       }
+      else if ($this->is_template_post($post, 'front_page')) {
+        $allcaps[$cap[0]] = false;
+      }
     }
     return $allcaps;
   }
@@ -258,7 +318,10 @@ class VF_Templates {
    */
   public function display_post_states($post_states, $post) {
     if ($this->is_template_post($post, 'default')) {
-      $post_states[] = __('Default Template', 'vfwp');
+      $post_states[] = __('Default template', 'vfwp');
+    }
+    if ($this->is_template_post($post, 'front_page')) {
+      $post_states[] = __('Front page template', 'vfwp');
     }
     return $post_states;
   }
