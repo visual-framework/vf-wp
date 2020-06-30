@@ -23,6 +23,7 @@ require_once('blocks/vfwp-figure/index.php');
 require_once('blocks/vfwp-embed/index.php');
 require_once('blocks/vfwp-divider/index.php');
 require_once('blocks/vfwp-tabs/index.php');
+require_once('blocks/vfwp-banner/index.php');
 
 
 global $vf_admin;
