@@ -13,8 +13,7 @@ export default useVFCoreSettings({
   title: __('Lede'),
   attributes: {
     text: {
-      type: 'string',
-      default: __('Lede heading…')
+      type: 'string'
     }
   },
   fields: [
@@ -22,8 +21,7 @@ export default useVFCoreSettings({
       name: 'text',
       control: 'rich',
       label: '',
-      tag: 'h1',
-      placeholder: __('Type lede heading…')
+      tag: 'h1'
     }
   ],
   transforms: {
