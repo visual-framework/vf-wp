@@ -26,23 +26,17 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 <?php
 };
 
-if ($is_container) { ?>
-  <div class="vf-grid">
-<?php } 
-
 if (
   vf_html_empty($text)
 ) {
-  $admin_banner(__('Please add custom text for this banner', 'vfwp'));
+  $admin_banner(__('This is a placeholder for the banner', 'vfwp'));
   return;
 } ?>
-
-<div class="vf-banner vf-banner--alert vf-banner--<?php echo ($variant); ?>">
-    <div class="vf-banner__content">
-        <p class="vf-banner__text"><?php echo ($text); ?></p>
-    </div>
+<div class="vf-grid">
+  <div class="vf-banner vf-banner--alert vf-banner--<?php echo ($variant); ?>">
+      <div class="vf-banner__content">
+          <p class="vf-banner__text"><?php echo ($text); ?></p>
+      </div>
+  </div>
 </div>                                                                                
 
-<?php if ($is_container) { ?>
-  </div>
-<?php } ?>
