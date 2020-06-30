@@ -5,5 +5,9 @@
   "automerge": true,
   "major": {
     "automerge": false
-  }
+  },
+  "schedule": [
+    "after 3:00am and before 5:00am"
+  ],
+  "timezone": "Europe/Berlin"
 }
