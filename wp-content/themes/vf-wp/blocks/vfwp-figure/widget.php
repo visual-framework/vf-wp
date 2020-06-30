@@ -19,7 +19,7 @@ class VF_Widget_Figure extends WP_Widget {
   public function widget($args, $instance) {
     
     $widget_id = 'widget_' . $args['widget_id'];
-    $caption = get_field('caption', $widget_id);
+    $caption = get_field('caption', $widget_id, false, false);
     $image = get_field('image', $widget_id);
     $link = get_field('link', $widget_id);
 
@@ -41,7 +41,6 @@ class VF_Widget_Figure extends WP_Widget {
     echo ($image); 
 
     if( ($link) ) { ?>
-
     </a>
     <?php }
         

@@ -19,7 +19,7 @@ class VF_Widget_Embed extends WP_Widget {
   public function widget($args, $instance) { 
     
     $widget_id = 'widget_' . $args['widget_id'];
-    $caption = get_field('caption', $widget_id);
+    $caption = get_field('caption', $widget_id, false, false);
     $url = get_field('url', $widget_id);
     $ratio = get_field('ratio', $widget_id);
   

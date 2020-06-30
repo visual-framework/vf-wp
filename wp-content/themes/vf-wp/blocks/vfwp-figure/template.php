@@ -3,7 +3,7 @@
 // Block preview in Gutenberg editor
 $is_preview = isset($is_preview) && $is_preview;
 
-$caption = get_field('caption');
+$caption = get_field('caption', false, false);
 $image = get_field('image');
 $link = get_field('link');
 
