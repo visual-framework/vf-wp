@@ -13,6 +13,12 @@
   <meta name="theme-color" content="#ffffff">
   <!-- Search indexing optimisations -->
   <meta class="swiftype" name="what" data-type="string" content="News" />
+  <?php
+    // https://swiftype.com/documentation/site-search/crawler-configuration/meta-tags#thumbnails
+    if (get_the_post_thumbnail_url()) {
+      echo '<meta class="swiftype" name="image" data-type="enum" content="' . get_the_post_thumbnail_url() . '" />';
+    }
+  ?>
 
 <?php wp_head(); ?>
 </head>
