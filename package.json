@@ -1,6 +1,6 @@
 {
   "name": "vf-wp",
-  "version": "1.0.0-beta.11",
+  "version": "1.0.0-beta.13",
   "private": true,
   "description": "Visual Framework WordPress Theme",
   "main": "gulpfile.js",
