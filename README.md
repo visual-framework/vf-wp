@@ -3,6 +3,8 @@
 This theme allows integration with the VF 2.0. It is currently heavily tied to
 the brand-specific "VF 2.0 for the EMBL Design Language".
 
+There are additional external wordpress plugins required to make this repository work, which you can find [here](https://github.com/visual-framework/vfwp-external-plugins).
+
 ## Documentation
 
 * [Work in Progress, Issues, Bugs](https://github.com/visual-framework/vf-wp/issues)
@@ -12,6 +14,7 @@ the brand-specific "VF 2.0 for the EMBL Design Language".
 
 ## Plugin documentation
 
+* [VF-WP External Plugins](https://github.com/visual-framework/vfwp-external-plugins)
 * [EMBL Taxonomy](/wp-content/plugins/embl-taxonomy/README.md)
 * [VF Gutenberg](/wp-content/plugins/vf-gutenberg/README.md)
 * [Events](/wp-content/plugins/vf-events/README.md)
