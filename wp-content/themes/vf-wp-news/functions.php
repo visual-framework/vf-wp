@@ -253,6 +253,9 @@ function my_acf_collor_pallete_css() {
 
 add_action('acf/input/admin_head', 'my_acf_collor_pallete_css');
 
+// Remove Yoast SEO Prev/Next URL from all pages
 
+add_filter( 'wpseo_next_rel_link', '__return_false' );
+add_filter( 'wpseo_prev_rel_link', '__return_false' );
 
 ?>
