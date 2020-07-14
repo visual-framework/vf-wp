@@ -30,6 +30,7 @@ services:
       APACHE_DOCUMENT_ROOT: ${VM_CORE_PATH}/${RELATIVE_DOCUMENT_ROOT}
     volumes:
       - ${LOCAL_CORE_PATH}/:${VM_CORE_PATH}
+      - ./bin/conf.d/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     labels:
       - 'traefik.backend=apache'
       - 'traefik.port=80'
