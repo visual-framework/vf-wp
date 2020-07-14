@@ -209,9 +209,22 @@ class EMBL_Taxonomy_Register {
    * The WordPress Taxonomy is rebuilt with matching ID terms synced
    */
   public function sync_taxonomy() {
+    // Make contenthub taxonomy api call to work on local
+    $whitelist = array(
+      '127.0.0.1',
+      '::1'
+    );
+
+    if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
+      $embl_taxonomy_url = "https://content.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub";
+    }
+    else {
+      // Prod Proxy endpoint.
+      $embl_taxonomy_url = embl_taxonomy_get_url();
+    }
 
     // Attempt to read the EMBL Taxonomy API
-    $data = file_get_contents(embl_taxonomy_get_url());
+    $data = file_get_contents($embl_taxonomy_url);
     if ($data === false) {
       $this->sync_error = sprintf(
         __('The %1$s API endpoint could not be accessed.', 'embl'),
