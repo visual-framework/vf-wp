@@ -38,7 +38,7 @@ jobs:
 
         # Optional glob pattern of files which should be added to the commit
         # file_pattern: ./wp-content/themes/vf-wp/assets/**/*.* tests/*.js
-        file_pattern: ./wp-content/themes/vf-wp/**/*.*
+        file_pattern: ./**/*.*
 
         # Optional local file path to the repository
         # repository: .
