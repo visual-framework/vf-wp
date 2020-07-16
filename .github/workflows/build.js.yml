@@ -26,6 +26,7 @@ jobs:
     - name: Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
+        # https://github.com/stefanzweifel/git-auto-commit-action
         # Required
         commit_message: Apply automatic changes
 
@@ -37,7 +38,7 @@ jobs:
 
         # Optional glob pattern of files which should be added to the commit
         # file_pattern: ./wp-content/themes/vf-wp/assets/**/*.* tests/*.js
-        file_pattern: ./wp-content/themes/vf-wp/assets/**/*.* 
+        file_pattern: ./wp-content/themes/vf-wp/**/*.*
 
         # Optional local file path to the repository
         # repository: .
@@ -47,13 +48,13 @@ jobs:
         commit_user_email: vf-wp-github-actions-bot@EMBL.org
         commit_author: VF-WP GitHub Actions Bot <vf-wp-github-actions-bot@EMBL.org>
 
-        # Optional tag message 
+        # Optional tag message
         # Action will create and push a new tag to the remote repository and the defined branch
         # tagging_message: 'v1.0.0'
 
         # Optional options appended to `git-push`
         # push_options: '--force'
-      
+
 
 #     steps:
 #     - uses: actions/checkout@v2
