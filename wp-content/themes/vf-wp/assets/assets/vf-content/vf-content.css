@@ -43,8 +43,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-heading
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -118,7 +118,7 @@
 /*!
  * Component: @visual-framework/vf-badge
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-badge
  */
 .vf-badge {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -254,7 +254,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-text
  * Version: 1.0.2
- * Location: components/vf-core-
+ * Location: components/vf-text
  */
 .vf-text-body a {
   border-bottom: none;
@@ -335,7 +335,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-link
  * Version: 1.0.3
- * Location: components/vf-core-
+ * Location: components/vf-link
  */
 .vf-link {
   border-bottom: none;
@@ -400,12 +400,12 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__core
  * Version: 1.0.3
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__core
  */
 /*!
  * Component: @visual-framework/vf-form__helper
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__helper
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -424,7 +424,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__input
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__input
  */
 .vf-form__input:not([type='file']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -621,7 +621,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__legend
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__legend
  */
 .vf-form__legend {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -634,7 +634,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__fieldset
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__fieldset
  */
 .vf-form__fieldset {
   border: 0;
@@ -645,7 +645,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__select
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__select
  */
 .vf-form__select {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -693,7 +693,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__checkbox
  * Version: 1.0.2
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__checkbox
  */
 .vf-form__item.vf-form__item--checkbox {
   margin-bottom: 16px;
@@ -758,7 +758,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__radio
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__radio
  */
 .vf-form__radio {
   opacity: 0;
@@ -812,7 +812,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__textarea
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__textarea
  */
 .vf-form__textarea {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -843,7 +843,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__item
  */
 .vf-form__item {
   margin-bottom: 32px;
@@ -856,7 +856,7 @@ a.vf-badge--primary:hover {
 /*!
  * Component: @visual-framework/vf-form__label
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__label
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -881,7 +881,7 @@ a.vf-badge--primary:hover {
 /*!
 * Component: @visual-framework/vf-button
 * Version: 1.0.3
-* Location: components/vf-core-
+* Location: components/vf-button
 */
 .vf-button {
   --vf-button__color__background--default: var(--vf-color--grey);
@@ -1086,7 +1086,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-figure
  * Version: 1.2.0
- * Location: components/vf-core-
+ * Location: components/vf-figure
  */
 .vf-figure {
   margin: 0;
@@ -1141,8 +1141,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.1
+ * Location: components/vf-list
  */
 .vf-list {
   list-style-type: none;
@@ -1228,7 +1228,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-blockquote
  * Version: 1.0.2
- * Location: components/vf-core-
+ * Location: components/vf-blockquote
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -1263,8 +1263,8 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0
- * Location: components/vf-core-
+ * Version: 1.0.0-rc.8
+ * Location: components/vf-divider
  */
 .vf-divider {
   background-color: #d8d8d8;
@@ -1278,7 +1278,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-box
  * Version: 1.0.4
- * Location: components/vf-core-
+ * Location: components/vf-box
  */
 .vf-box {
   --box-text-color: var( --vf-box-theme-color--foreground, var(--vf-theme-color--foreground, #000000));
@@ -1414,7 +1414,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 /*!
  * Component: @visual-framework/vf-content
  * Version: 1.1.6
- * Location: components/vf-core-
+ * Location: components/vf-content
  */
 .vf-content h1:not([class*='vf-']) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
