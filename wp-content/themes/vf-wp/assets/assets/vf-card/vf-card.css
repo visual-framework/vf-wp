@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,10 +40,11 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card
  * Version: 1.0.6
- * Location: components/vf-card
+ * Location: components/vf-core-
  */
 .vf-card {
   --card-text-color: var(--vf-card-theme-color--foreground, #000000);

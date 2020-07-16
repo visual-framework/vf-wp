@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,15 +40,16 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-tabs
- * Version: 1.1.0
- * Location: components/vf-tabs
+ * Version: 1.1.1
+ * Location: components/vf-core-
  */
 .vf-tabs__list {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin: -.5rem 0 0 0;
@@ -112,9 +114,6 @@
 }
 
 .vf-tabs__item {
-  -ms-flex-preferred-size: min-content;
-      flex-basis: min-content;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+  -ms-flex-preferred-size: max-content;
+      flex-basis: max-content;
 }

@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,10 +40,11 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0-rc.1
- * Location: components/vf-list
+ * Version: 1.0.0
+ * Location: components/vf-core-
  */
 .vf-list {
   list-style-type: none;
@@ -127,8 +129,8 @@
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 1.2.2
- * Location: components/vf-navigation
+ * Version: 1.2.3
+ * Location: components/vf-core-
  */
 .vf-navigation__list {
   display: -webkit-box;
@@ -144,15 +146,14 @@
   margin: 0;
 }
 
-.vf-navigation--global .vf-navigation__item:not(:first-child) {
-  margin-left: 24px;
+.vf-navigation--global .vf-navigation__item:not(:last-child) {
+  margin-right: 24px;
 }
 
 .vf-navigation--global .vf-navigation__link {
   border-bottom: none;
   text-decoration: none;
   color: #54585a;
-  text-decoration: none;
 }
 
 .vf-navigation--global .vf-navigation__link:visited {
@@ -169,6 +170,12 @@
   color: #000000;
   border-bottom: none;
   text-decoration: underline;
+}
+
+@media (min-width: 1024px) {
+  .vf-navigation--global {
+    margin-left: auto;
+  }
 }
 
 .vf-navigation--main .vf-navigation__list {
