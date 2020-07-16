@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,10 +40,11 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-box
  * Version: 1.0.4
- * Location: components/vf-box
+ * Location: components/vf-core-
  */
 .vf-box {
   --box-text-color: var( --vf-box-theme-color--foreground, var(--vf-theme-color--foreground, #000000));

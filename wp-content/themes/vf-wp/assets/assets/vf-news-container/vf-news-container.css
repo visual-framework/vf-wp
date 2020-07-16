@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,10 +40,11 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-grid
  * Version: 1.0.5
- * Location: components/vf-grid
+ * Location: components/vf-core-
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -181,8 +183,8 @@
 /* stylelint-enable order/order */
 /*!
  * Component: @visual-framework/vf-summary
- * Version: 1.0.5
- * Location: components/vf-summary
+ * Version: 1.0.6
+ * Location: components/vf-core-
  */
 .vf-summary {
   --vf-text-margin--bottom: 16px;
@@ -348,7 +350,7 @@
   align-self: start;
   grid-column: 1 / span 1;
   grid-row: 1 / span 6;
-  height: 100%;
+  height: auto;
   margin-right: 30px;
   max-height: var(--vf-icon--avatar-width);
   max-width: var(--vf-icon--avatar-width);
@@ -514,8 +516,8 @@
 
 /*!
  * Component: @visual-framework/vf-section-header
- * Version: 1.1.1
- * Location: components/vf-section-header
+ * Version: 1.2.0
+ * Location: components/vf-core-
  */
 .vf-section-header__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -616,6 +618,6 @@
 
 /*!
  * Component: @visual-framework/vf-news-container
- * Version: 1.0.0-beta.0
- * Location: components/vf-news-container
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */

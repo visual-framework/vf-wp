@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,10 +40,11 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/embl-grid
  * Version: 1.0.4
- * Location: components/embl-grid
+ * Location: components/vf-core-
  */
 .embl-grid {
   grid-column: main;
@@ -165,8 +167,8 @@
 
 /*!
  * Component: @visual-framework/vf-section-header
- * Version: 1.1.1
- * Location: components/vf-section-header
+ * Version: 1.2.0
+ * Location: components/vf-core-
  */
 .vf-section-header__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -267,8 +269,8 @@
 
 /*!
  * Component: @visual-framework/vf-video
- * Version: 1.0.0-beta.0
- * Location: components/vf-video
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */
 .vf-video {
   height: 0;
@@ -289,7 +291,7 @@
 /*!
  * Component: @visual-framework/vf-video-teaser
  * Version: 1.0.0-beta.2
- * Location: components/vf-video-teaser
+ * Location: components/vf-core-
  */
 .vf-video-teaser__image {
   display: block;
@@ -311,6 +313,6 @@
 
 /*!
  * Component: @visual-framework/vf-video-container
- * Version: 1.0.0-beta.0
- * Location: components/vf-video-container
+ * Version: 1.0.0-beta.1
+ * Location: components/vf-core-
  */

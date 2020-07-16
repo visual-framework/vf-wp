@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,6 +40,7 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*
  *
  * Here lies a set of corrections that make components from VF1 look like VF2, in terms of colour
@@ -48,7 +50,7 @@
 /*!
  * Component: @visual-framework/ebi-vf1-integration
  * Version: 1.0.2
- * Location: components/ebi-vf1-integration
+ * Location: components/vf-core-
  */
 .ebi-vf1-integration,
 html body.ebi-vf1-integration {
@@ -177,8 +179,8 @@ body.ebi-vf1-integration,
 
 /*!
  * Component: @visual-framework/vf-font-plex-sans
- * Version: 1.0.0-rc.1
- * Location: components/vf-font-plex-sans
+ * Version: 1.1.0
+ * Location: components/vf-core-
  */
 @font-face {
   font-family: 'IBM Plex Sans';
@@ -302,8 +304,8 @@ body.ebi-vf1-integration,
 
 /*!
  * Component: @visual-framework/vf-font-plex-mono
- * Version: 1.0.0-rc.1
- * Location: components/vf-font-plex-mono
+ * Version: 1.1.0
+ * Location: components/vf-core-
  */
 @font-face {
   font-family: 'IBM Plex Mono';

@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -39,10 +40,11 @@
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 1.0.0
- * Location: components/vf-form/vf-form__item
+ * Location: components/vf-core-
  */
 .vf-form__item {
   margin-bottom: 32px;
@@ -55,7 +57,7 @@
 /*!
  * Component: @visual-framework/vf-form__label
  * Version: 1.0.1
- * Location: components/vf-form/vf-form__label
+ * Location: components/vf-core-
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -80,7 +82,7 @@
 /*!
  * Component: @visual-framework/vf-form__checkbox
  * Version: 1.0.2
- * Location: components/vf-form/vf-form__checkbox
+ * Location: components/vf-core-
  */
 .vf-form__item.vf-form__item--checkbox {
   margin-bottom: 16px;
