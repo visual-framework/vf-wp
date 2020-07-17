@@ -50,14 +50,15 @@ $heading = $heading_html();
 $vars = array(
   'source'                    => 'contenthub',
   'filter-content-type'       => 'person',
-  'pattern'                   => 'vf-summary-profile-r',
+  'pattern'                   => 'vf-profile-block',
+  'hide[orcid,mobile,phones]' => 1,
   'limit'                     => 1,
   'sort-field-value[changed]' => 'DESC',
   'filter-field-value[field_person_positions.entity.field_position_membership]' => 'leader'
 );
 
 if ($is_minimal) {
-  $vars['pattern'] = 'vf-summary-profile-l';
+  $vars['pattern'] = 'vf-profile-inline';
 }
 
 if (function_exists('embl_taxonomy_get_term')) {

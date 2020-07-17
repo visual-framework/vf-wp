@@ -36,7 +36,7 @@ global $vf_theme;
       }
 
       // the_content();
-      $vf_theme->the_content();
+      include('wp-content/plugins/vf-members-block/template.php')
 
       ?>
     </main>
