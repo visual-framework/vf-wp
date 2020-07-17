@@ -97,11 +97,13 @@ $columns = get_field('vf_members_columns', $acf_id);
 if (empty($columns)) {
   $columns = 2;
 };
-echo preg_replace(
-  '#\bvf-content-hub-html\b#',
-  'vf-content-hub-html vf-grid vf-grid__col-' . $columns,
-  '<div class="vf-content-hub-html contentDbItem00001" id="contentDbItem00001">'
+
+$content = preg_replace(
+  '#^(\s*<[^>]+?vf-content-hub-html)#',
+  '$1 vf-grid vf-grid__col-' . $columns,
+  $content
 );
+
 
 // Add hash attribute to opening tag
 $content = preg_replace(
