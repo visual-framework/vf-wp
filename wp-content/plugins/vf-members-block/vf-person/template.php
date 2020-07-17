@@ -47,14 +47,25 @@ if ( ! empty($variation)) {
   $suffix = "-{$variation}";
 }
 
+// Hide selected fields
+$hide_fields = get_field('hide_fields');
+$values = array();
+if( $hide_fields ): 
+ foreach( $hide_fields as $hide_field ): 
+  array_push($values, $hide_field);
+ endforeach;
+endif; 
+$hide_fields = implode(',', $values);
+
 // Setup base API URL
 $url = VF_Cache::get_api_url();
 $url .= '/pattern.html';
 $url = add_query_arg(array(
   'source'              => 'contenthub',
-  'pattern'             => "vf-summary-profile{$suffix}",
+  'pattern'             => "vf-profile{$suffix}",
   'filter-content-type' => 'person',
-  'limit'               => 1
+  'limit'               => 1,
+  'hide[' . $hide_fields . ']' => 1,
 ), $url);
 
 // Add search field query var
