@@ -190,12 +190,20 @@
                 "id": ""
             },
             "choices": {
-                "s": "Small",
-                "r": "Regular",
-                "l": "Large"
+                "block": "block",
+                "block-small": "block-small",
+                "block-large": "block-large",
+                "inline": "inline",
+                "inline-small": "inline-small",
+                "inline-large": "inline-large",
+                "inline-primary": "inline-primary",
+                "inline-secondary": "inline-secondary",
+                "inline-easy": "inline-easy",
+                "inline-easy-primary": "inline-easy-primary",
+                "inline-easy-secondary": "inline-easy-secondary"
             },
             "default_value": [
-                "l"
+                "inline"
             ],
             "allow_null": 0,
             "multiple": 0,
@@ -203,6 +211,36 @@
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_5f0c72719058a",
+            "label": "Hide fields",
+            "name": "hide_fields",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "image": "Image",
+                "name": "Name",
+                "position": "Position",
+                "email": "Email",
+                "phones": "Phones",
+                "mobile": "Mobile",
+                "orcid": "ORCID",
+                "link": "Link"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "save_custom": 0
         }
     ],
     "location": [
