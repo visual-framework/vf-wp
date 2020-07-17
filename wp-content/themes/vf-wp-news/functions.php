@@ -258,4 +258,17 @@ add_action('acf/input/admin_head', 'my_acf_collor_pallete_css');
 add_filter( 'wpseo_next_rel_link', '__return_false' );
 add_filter( 'wpseo_prev_rel_link', '__return_false' );
 
+// Prepends WordPress RSS feed content with the featured image
+add_filter('the_content', 'featured_image_in_rss_feed');
+function featured_image_in_rss_feed( $content ) {
+ global $post;
+ if( is_feed() ) {
+ if ( has_post_thumbnail( $post->ID ) ){
+ $prepend = '<div>' . get_the_post_thumbnail( $post->ID, 'medium', array( 'style' => 'margin-bottom: 10px;' ) ) . '</div>';
+ $content = $prepend . $content;
+ }
+ }
+ return $content;
+}
+
 ?>
