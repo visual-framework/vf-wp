@@ -278,13 +278,6 @@
             "operator": "==",
             "value": "acf/vf-members"
           }
-        ],
-        [
-            {
-                "param": "page_template",
-                "operator": "==",
-                "value": "template-members.php"
-            }
         ]
     ],
 
