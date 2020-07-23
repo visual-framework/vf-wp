@@ -7,6 +7,7 @@ $heading = get_field('heading');
 $sub_heading = get_field('sub_heading');
 $link = get_field('link');
 $text = get_field('text');
+$anchor = get_field('anchor');
 
 $type = get_field('select_type');
 
@@ -47,7 +48,18 @@ if (
 
   if ($type === 'default' || $type === 'has_sub-heading' || $type === 'has_text') { ?>
 
-    <h2 class="vf-section-header__heading"><?php echo $heading; ?></h2>
+    <h2 class="vf-section-header__heading"
+    
+    <?php 
+      if ($anchor) { 
+       echo 'id="' . $anchor .'"';
+      }
+
+    ?>
+    >
+    <?php echo $heading; ?>
+    
+    </h2>
 
   <?php }
 

@@ -54,6 +54,25 @@
           "maxlength": ""
       },
       {
+        "key": "field_5f19830868c08",
+        "label": "HTML anchor",
+        "name": "anchor",
+        "type": "text",
+        "instructions": "Enter a word to make a unique web address just for this heading, called an 'anchor'. Then, you’ll be able to link directly to this section of your page.",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+    },
+      {
           "key": "field_5ecce4fb90c36",
           "label": "Sub Heading",
           "name": "sub_heading",
@@ -198,6 +217,6 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Page Header ACF Gutenberg block",
-  "modified": 1590487388
+  "modified": 1595509040
 
 }
