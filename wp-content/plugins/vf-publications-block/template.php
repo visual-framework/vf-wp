@@ -38,13 +38,16 @@ if ($searchType == 'team' || $searchType == 'person_name') {
   $queryKey = 'title';
 } else if ($searchType == 'orcid') {
   $queryKey = 'orcid';
+} else if ($searchType == 'cpid') {
+  $queryKey = 'cpid';
 }
 
 if ($searchType == 'team' ) {
   $vars['pattern'] = 'embl-team-publications';
-} else if ($searchType == 'orcid' || $searchType == 'person_name') {
+} else if ($searchType == 'orcid' || $searchType == 'person_name' || $searchType == 'cpid') {
   $vars['pattern'] = 'embl-person-publications';
 }
+
 
 // if a specific query has been given, use it
 if ( ! empty($searchQuery)) {
