@@ -31,19 +31,22 @@
 .acf-field[data-name="vf_event_registration_opening"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_closing"] .acf-input-wrap,
 .acf-field[data-name="vf_event_submission_opening"] .acf-input-wrap,
+.acf-field[data-name="vf_event_location"] .acf-input-wrap,
+.acf-field[data-name="vf_event_registration_fee"] .acf-input-wrap,
 .acf-field[data-name="vf_event_submission_closing"] .acf-input-wrap {
-  max-width: 100px;
+  max-width: 150px;
 }
 
-.acf-field[data-name="vf_event_registration_fee"] .acf-input-wrap,
 .acf-field[data-name="vf_event_venue"] .acf-input-wrap,
+.acf-field[data-name="vf_event_time_zone"] .acf-input,
 .acf-field[data-name="vf_event_unique_identifier"] .acf-input-wrap,
-.acf-field[data-name="vf_event_event_type"] .acf-input-wrap,
-.acf-field[data-name="vf_event_location"] .acf-input-wrap {
+.acf-field[data-name="vf_event_event_type"] .acf-input,
+.acf-field[data-name="vf_event_location"] .acf-input {
   max-width: 200px;
 }
 
 .acf-field[data-name="vf_event_more_information_link"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_link"] .acf-input-wrap {
-  max-width: 600px;
+  max-width: 500px;
 }
+
