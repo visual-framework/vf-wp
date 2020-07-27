@@ -515,9 +515,9 @@
 }
 
 /*!
- * Component: @visual-framework/vf-section-header
- * Version: 1.2.0
- * Location: components/vf-section-header
+ * Component: @visual-framework/vf-summary
+ * Version: 1.0.6
+ * Location: components/vf-summary
  */
 .vf-section-header__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -617,7 +617,7 @@
 }
 
 /*!
- * Component: @visual-framework/vf-news-container
- * Version: 1.0.0-beta.0
- * Location: components/vf-news-container
+ * Component: @visual-framework/vf-summary
+ * Version: 1.0.6
+ * Location: components/vf-summary
  */
