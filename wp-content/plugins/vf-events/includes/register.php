@@ -30,7 +30,7 @@ class VF_Events_Register {
       'labels'              => $this->get_labels(),
       'description'         => __('Events', 'vfwp'),
       'public'              => true,
-      'hierarchical'        => false,
+      'hierarchical'        => true,
       'exclude_from_search' => false,
       'publicly_queryable'  => true,
       'show_ui'             => true,
@@ -42,7 +42,7 @@ class VF_Events_Register {
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-calendar',
       'capability_type'     => 'page',
-      'supports'            => array('title', 'editor'),
+      'supports'            => array('title', 'editor', 'page-attributes'),
       'has_archive'         => true,
       'rewrite'             => array(
         'slug' => 'events'
