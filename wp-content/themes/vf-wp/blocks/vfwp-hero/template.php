@@ -41,6 +41,12 @@ $attr_str = array_map(
   $attr
 );
 
+$link = get_field('vf_hero_link');
+$link_text = '<a class="vf-link" href="'
+        . esc_url($link['url'])
+        . '">'
+        . $link['title']
+        . '</a>';
 ?>
 
 <section <?php echo implode(' ', $attr_str); ?>>
@@ -67,7 +73,12 @@ $attr_str = array_map(
       <?php echo $heading; ?>
     </h2>
     <p class="vf-hero__text">
-      <?php echo $text; ?>
+      <?php echo $text; 
+      if (is_array($link)) {
+          echo $link_text;
+      };
+      
+      ?>
     </p>
   </div>
 </section>
