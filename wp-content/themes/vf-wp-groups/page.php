@@ -52,6 +52,9 @@ $close_wrap,
   else if ( has_block( 'acf/vfwp-page-header', $post ) ) {
   parse_blocks( 'acf/vfwp-page-header' ); }
 
+  else if ( has_block( 'acf/vfwp-hero', $post ) ) {
+    parse_blocks( 'acf/vfwp-hero' ); }
+
 else { ?>
 
 <section class="embl-grid embl-grid--has-centered-content">
