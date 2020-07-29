@@ -19,9 +19,7 @@ $title = get_the_title();
 
 <?php 
 
-$layout = get_field('page_layout');
 
-if ($layout == 'full') { 
   
 $open_wrap = function($html, $block_name) {
   $html = '
@@ -60,29 +58,8 @@ $close_wrap,
 $vf_theme->the_content();
 
 ?>
-<?php }
 
-else { ?>
-
-  <section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-ui--white">
-    <main class="vf-inlay__content--main">
-      <?php
-
-      // the_content();
-      $vf_theme->the_content();
-
-      ?>
-    </main>
-    <?php if (is_active_sidebar('sidebar-page')) { ?>
-    <aside class="vf-inlay__content--additional">
-      <?php vf_sidebar('sidebar-page'); ?>
-    </aside>
-    <?php } ?>
-  </div>
-</section>
-
-<?php }
+<?php 
 
 get_footer();
 
