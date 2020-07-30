@@ -234,7 +234,7 @@
             "label": "Cover image",
             "name": "image",
             "type": "image",
-            "instructions": "",
+            "instructions": "Min-width: 175px",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
