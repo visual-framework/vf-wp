@@ -2338,10 +2338,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-lede/-/vf-lede-1.0.1.tgz#72cfcb81ed9b60688444bb9824562db937ba97fc"
   integrity sha512-WLBmhzJmXoamaAjQEV3mwvfkwxiaoQCrKS0++imb1HgL8v9tbE/cxJekJ6GioCUpZ+1RgoAS6mTvQ2dqT6bq4A==
 
-"@visual-framework/vf-link-list@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-link-list/-/vf-link-list-1.0.3.tgz#a13bfc16cde09b8cc30e2aa681d61c0a64b53a1d"
-  integrity sha512-4xEmAaxiIvfyZTxXzh8ImCAYN3sr2wzI5zWqu5LFlgAsOOxrqtnZM8WSz6b1hebhhAy2Yqic+R3jvbQ6pUVleg==
+"@visual-framework/vf-link-list@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-link-list/-/vf-link-list-1.1.0.tgz#d6bb4937ec7bf514cf98a48e446eb7467e52663f"
+  integrity sha512-1blEtvoLWqp90sCJELgJgqUrTDXtjm4sa0dcpmjzxYZ76U0kw7CmiwZS8bTAxn7XC6ZPTZKheVoSnQNydnjP6w==
 
 "@visual-framework/vf-link@^1.0.3":
   version "1.0.3"
