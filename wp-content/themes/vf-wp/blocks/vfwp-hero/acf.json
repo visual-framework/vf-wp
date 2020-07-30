@@ -64,7 +64,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "About the %1$s",
+            "default_value": "",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -153,5 +153,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Groups theme global container."
+    "description": "VF-WP Hero block."
 }
