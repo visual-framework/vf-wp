@@ -230,8 +230,8 @@
         },
         {
             "key": "field_5f2288ffb73a8",
-            "label": "Variation",
-            "name": "variation",
+            "label": "Layout",
+            "name": "layout",
             "type": "select",
             "instructions": "Design variation.",
             "required": 0,
@@ -243,19 +243,53 @@
             },
             "choices": {
                 "block": "block",
-                "block-small": "block-small",
-                "block-large": "block-large",
-                "inline": "inline",
-                "inline-small": "inline-small",
-                "inline-large": "inline-large",
-                "inline-primary": "inline-primary",
-                "inline-secondary": "inline-secondary",
-                "inline-easy": "inline-easy",
-                "inline-easy-primary": "inline-easy-primary",
-                "inline-easy-secondary": "inline-easy-secondary"
+                "inline": "inline"
             },
             "default_value": [
                 "block"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f229050bbf3a",
+            "label": "Size",
+            "name": "size",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f2288ffb73a8",
+                        "operator": "==",
+                        "value": "block"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f2288ffb73a8",
+                        "operator": "==",
+                        "value": "inline"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "small",
+                "medium": "medium",
+                "large": "large"
+            },
+            "default_value": [
+                "medium"
             ],
             "allow_null": 0,
             "multiple": 0,
@@ -282,5 +316,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF Profile ACF Gutenberg block",
-    "modified": 1596100220
+    "modified": 1596107797
 }
