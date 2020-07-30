@@ -2383,10 +2383,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-pagination/-/vf-pagination-1.0.0-rc.1.tgz#25c35948abfba1dd11d7a7edf8f75c66c279767b"
   integrity sha512-ucCQC1hvvffXygOE10XbP9zTgu97Qch3dKo7BjNrkw7/Mp2UFAzH3QqffyTTyO9VKDfvdwZVqEqHp/FbpKQPmQ==
 
-"@visual-framework/vf-profile@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-profile/-/vf-profile-1.0.1.tgz#78305da49eeed77fbaf9895b60378f466b997717"
-  integrity sha512-r8NEbepNW3aayWhX9+MgO9RVJAxFTGPoi3vRfWY9E+OnHjpTnseXexrNp54+Qgv4c9f9lrOwzIF1P86qaKMNZA==
+"@visual-framework/vf-profile@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-profile/-/vf-profile-1.0.2.tgz#ebfa3d38b47ca479939933ecc833a0327cf8e74f"
+  integrity sha512-NzPHafnqexrb/JQEL5r28fM707BGDBVIM+BRXlXx/NpVbjHUmpSGT5vbgsXVUbafSZx8SUytlKIWDmAwMt1cQw==
 
 "@visual-framework/vf-sass-config@1.1.3":
   version "1.1.3"
