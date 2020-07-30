@@ -20,29 +20,18 @@ get_template_part('partials/vf-intro');
   </div>
 
   <div class="vf-content">
+    <h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
 
-<h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
-
-    <div class="vf-grid vf-grid__col-2">
-
-<?php
-if ( have_posts() ) {
-  while ( have_posts() ) {
-    the_post();
-    get_template_part('partials/vf-summary--document');
-  }
-} 
-?>
-    </div>
+      <?php
+      if ( have_posts() ) {
+        while ( have_posts() ) {
+          the_post();
+          get_template_part('partials/vf-summary--document');
+        }
+      } 
+      ?>
     <!--/vf-grid-->
-
     <div class="vf-grid"> <?php vf_pagination();?></div>
-
- <?php 
- // Reset main query object
-$wp_query = NULL;
-$wp_query = $temp_query; ?>
-
   </div>
   <!--/vf-content-->
 </div>

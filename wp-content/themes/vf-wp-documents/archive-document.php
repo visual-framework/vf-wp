@@ -7,29 +7,20 @@ get_template_part('partials/vf-intro');
 ?>
 
 <div class="embl-grid">
-
   <div>
     <?php get_template_part('partials/document-filter'); ?>
   </div>
-
   <div class="vf-content">
-    <div class="vf-grid vf-grid__col-2">
-
-    <?php
-
-if ( have_posts() ) {
-  while ( have_posts() ) {
-    the_post();
-    get_template_part('partials/vf-summary--document');
-  }
-} else {
-  echo '<p>', __('No documents found', 'vfwp'), '</p>';
-}
-
-?>
-
-    </div>
-    <div class="vf-grid"> <?php vf_pagination();?></div>
+      <?php
+        if ( have_posts() ) {
+          while ( have_posts() ) {
+            the_post();
+            get_template_part('partials/vf-summary--document');
+          }
+        } else {
+          echo '<p>', __('No documents found', 'vfwp'), '</p>';
+        } ?>
+  <div class="vf-grid"> <?php vf_pagination();?></div>
     <!--/vf-grid-->
   </div>
   <!--/vf-content-->
