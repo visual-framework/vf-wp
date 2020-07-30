@@ -8,46 +8,116 @@ var colno = 0;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<section class=\"vf-intro | embl-grid embl-grid--has-centered-content\">\n  <div><!-- empty --></div>\n  <div>\n    <h1 class=\"vf-intro__heading ";
+if(runtime.contextOrFrameLookup(context, frame, "context")) {
+output += "\n";
+var t_1;
+t_1 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"vf_intro_heading");
+frame.set("vf_intro_heading", t_1, true);
+if(frame.topLevel) {
+context.setVariable("vf_intro_heading", t_1);
+}
+if(frame.topLevel) {
+context.addExport("vf_intro_heading", t_1);
+}
+output += "\n";
+var t_2;
+t_2 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"vf_intro_phase");
+frame.set("vf_intro_phase", t_2, true);
+if(frame.topLevel) {
+context.setVariable("vf_intro_phase", t_2);
+}
+if(frame.topLevel) {
+context.addExport("vf_intro_phase", t_2);
+}
+var t_3;
+t_3 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"vf_intro_heading_href");
+frame.set("vf_intro_heading_href", t_3, true);
+if(frame.topLevel) {
+context.setVariable("vf_intro_heading_href", t_3);
+}
+if(frame.topLevel) {
+context.addExport("vf_intro_heading_href", t_3);
+}
+output += "\n";
+var t_4;
+t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"vf_intro_lede");
+frame.set("vf_intro_lede", t_4, true);
+if(frame.topLevel) {
+context.setVariable("vf_intro_lede", t_4);
+}
+if(frame.topLevel) {
+context.addExport("vf_intro_lede", t_4);
+}
+output += "\n";
+var t_5;
+t_5 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"vf_intro_text");
+frame.set("vf_intro_text", t_5, true);
+if(frame.topLevel) {
+context.setVariable("vf_intro_text", t_5);
+}
+if(frame.topLevel) {
+context.addExport("vf_intro_text", t_5);
+}
+var t_6;
+t_6 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"intro_text");
+frame.set("intro_text", t_6, true);
+if(frame.topLevel) {
+context.setVariable("intro_text", t_6);
+}
+if(frame.topLevel) {
+context.addExport("intro_text", t_6);
+}
+output += "\n";
+;
+}
+output += "\n<section class=\"vf-intro | embl-grid embl-grid--has-centered-content\">\n  <div><!-- empty --></div>\n  <div>\n\n  <h1 class=\"vf-intro__heading ";
 if(runtime.contextOrFrameLookup(context, frame, "vf_intro_phase")) {
 output += "vf-intro__heading--has-tag";
 ;
 }
 output += "\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_intro_heading"), env.opts.autoescape);
-output += " ";
-if(runtime.contextOrFrameLookup(context, frame, "vf_intro_phase")) {
-output += "<a href=\"";
+if((runtime.contextOrFrameLookup(context, frame, "vf_intro_phase"))) {
+if((runtime.contextOrFrameLookup(context, frame, "intro_heading_href"))) {
+output += "      <a href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "intro_heading_href"), env.opts.autoescape);
 output += "\" class=\"vf-badge vf-badge--primary vf-badge--phases\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_intro_phase"), env.opts.autoescape);
 output += "</a>";
 ;
 }
-output += "</h1>\n";
-env.getExtension("render")["run"](context,"@vf-lede",{"vf_lede_text": runtime.contextOrFrameLookup(context, frame, "vf_intro_lede")}, function(t_2,t_1) {
-if(t_2) { cb(t_2); return; }
-output += runtime.suppressValue(t_1, true && env.opts.autoescape);
-frame = frame.push();
-var t_5 = runtime.fromIterator(runtime.contextOrFrameLookup(context, frame, "vf_intro_text"));
-runtime.asyncEach(t_5, 1, function(intro_text, t_3, t_4,next) {
-frame.set("intro_text", intro_text);
-frame.set("loop.index", t_3 + 1);
-frame.set("loop.index0", t_3);
-frame.set("loop.revindex", t_4 - t_3);
-frame.set("loop.revindex0", t_4 - t_3 - 1);
-frame.set("loop.first", t_3 === 0);
-frame.set("loop.last", t_3 === t_4 - 1);
-frame.set("loop.length", t_4);
-output += "<p class=\"vf-intro__text\">";
-output += runtime.suppressValue(intro_text, env.opts.autoescape);
-output += "</p>\n";
-next(t_3);
+else {
+output += "<span class=\"vf-badge vf-badge--primary vf-badge--phases\">";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_intro_phase"), env.opts.autoescape);
+output += "</span>";
 ;
-}, function(t_7,t_6) {
-if(t_7) { cb(t_7); return; }
+}
+;
+}
+output += "</h1>";
+env.getExtension("render")["run"](context,"@vf-lede",{"vf_lede_text": runtime.contextOrFrameLookup(context, frame, "vf_intro_lede")}, function(t_8,t_7) {
+if(t_8) { cb(t_8); return; }
+output += runtime.suppressValue(t_7, true && env.opts.autoescape);
+frame = frame.push();
+var t_11 = runtime.fromIterator(runtime.contextOrFrameLookup(context, frame, "vf_intro_text"));
+runtime.asyncEach(t_11, 1, function(intro_text, t_9, t_10,next) {
+frame.set("intro_text", intro_text);
+frame.set("loop.index", t_9 + 1);
+frame.set("loop.index0", t_9);
+frame.set("loop.revindex", t_10 - t_9);
+frame.set("loop.revindex0", t_10 - t_9 - 1);
+frame.set("loop.first", t_9 === 0);
+frame.set("loop.last", t_9 === t_10 - 1);
+frame.set("loop.length", t_10);
+output += "<p class=\"vf-intro__text\">";
+output += runtime.suppressValue(env.getFilter("safe").call(context, intro_text), env.opts.autoescape);
+output += "</p>";
+next(t_9);
+;
+}, function(t_13,t_12) {
+if(t_13) { cb(t_13); return; }
 frame = frame.pop();
-output += "  </div>\n</section>\n";
+output += "</div>\n</section>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
