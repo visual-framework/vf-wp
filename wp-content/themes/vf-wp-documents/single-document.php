@@ -13,7 +13,7 @@ if ( ! is_array($image)) {
 } else {
   $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
     'class'    => 'vf-summary__image',
-    'style'    => 'width: 175px; height: auto; ',
+    'style'    => 'width: 175px; height: auto; border: 1px solid #d0d0ce',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
