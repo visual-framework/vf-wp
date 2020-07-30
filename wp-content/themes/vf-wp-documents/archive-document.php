@@ -11,7 +11,6 @@ get_template_part('partials/vf-intro');
     <?php get_template_part('partials/document-filter'); ?>
   </div>
   <div class="vf-content">
-    <div class="vf-grid vf-grid__col-1">
       <?php
         if ( have_posts() ) {
           while ( have_posts() ) {
@@ -21,7 +20,6 @@ get_template_part('partials/vf-intro');
         } else {
           echo '<p>', __('No documents found', 'vfwp'), '</p>';
         } ?>
-    </div>
   <div class="vf-grid"> <?php vf_pagination();?></div>
     <!--/vf-grid-->
   </div>

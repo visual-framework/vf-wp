@@ -8,7 +8,7 @@ if ( ! is_array($image)) {
 } else {
   $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
     'class'    => 'vf-summary__image',
-    'style'    => 'width: 175px; height: auto; border: 1px solid #d0d0ce',
+    'style'    => 'width: 150px; height: auto; border: 1px solid #d0d0ce',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
@@ -17,9 +17,16 @@ if ( ! is_array($image)) {
 <article class="vf-summary vf-summary--news">
   <time class="vf-summary__date vf-u-margin__bottom--0" style="margin-left: 0;" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
 
- <?php if ($image) {
-    echo $image; 
-  }  ?>
+  <?php if ($image) { echo $image; } ?>
+      <?php 
+      if (! empty($image)) { 
+        echo $image;
+         } 
+      else { 
+        // awaiting assets
+      };
+      
+      ?>
   <h4 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h4>
