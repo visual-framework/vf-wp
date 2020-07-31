@@ -2328,10 +2328,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-1.4.5.tgz#749346e323306695a46ca8e87d83c4488df8f20d"
   integrity sha512-IgDlLg+mYN53m+rZ7vOjtXgkgtx/v415tlXyHfQoTJhOkhsATG5ZRidMSec4RQ4h4lq4igNYBG9nyTZxGF96VA==
 
-"@visual-framework/vf-intro@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-intro/-/vf-intro-1.1.0.tgz#366f2c945203b26320fcc16dc69e078aed7da3f6"
-  integrity sha512-bcEQ6tS6j4xdvyHWpgfcbEsOy0UoMxJXoYWuWhbUTKNkqSKsiZ+ecStOL5UKBAeDvn5N2ncU4zBVOfAYfPTKVA==
+"@visual-framework/vf-intro@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-intro/-/vf-intro-1.1.1.tgz#9b3cfe671a9afe2d7a540113129fe0326ce8a86a"
+  integrity sha512-T4TSCREOiA6JmgDQkLqA01/MkI9wnFmoX5Daik4l4qLVUTENb4CrMZGn2rFDIIGB8TqdZXFcJKMUS2W0g2YHvQ==
 
 "@visual-framework/vf-lede@1.0.1":
   version "1.0.1"
