@@ -38,22 +38,31 @@ if(frame.topLevel) {
 context.addExport("title", t_3);
 }
 var t_4;
-t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"component_modifier");
-frame.set("component_modifier", t_4, true);
+t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"svg");
+frame.set("svg", t_4, true);
 if(frame.topLevel) {
-context.setVariable("component_modifier", t_4);
+context.setVariable("svg", t_4);
 }
 if(frame.topLevel) {
-context.addExport("component_modifier", t_4);
+context.addExport("svg", t_4);
 }
 var t_5;
-t_5 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"list_modifier");
-frame.set("list_modifier", t_5, true);
+t_5 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"component_modifier");
+frame.set("component_modifier", t_5, true);
 if(frame.topLevel) {
-context.setVariable("list_modifier", t_5);
+context.setVariable("component_modifier", t_5);
 }
 if(frame.topLevel) {
-context.addExport("list_modifier", t_5);
+context.addExport("component_modifier", t_5);
+}
+var t_6;
+t_6 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"list_modifier");
+frame.set("list_modifier", t_6, true);
+if(frame.topLevel) {
+context.setVariable("list_modifier", t_6);
+}
+if(frame.topLevel) {
+context.addExport("list_modifier", t_6);
 }
 output += "\n";
 ;
@@ -74,16 +83,16 @@ output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "li
 }
 output += " | vf-list\">\n";
 frame = frame.push();
-var t_8 = runtime.fromIterator(runtime.contextOrFrameLookup(context, frame, "list"));
-runtime.asyncEach(t_8, 1, function(item, t_6, t_7,next) {
+var t_9 = runtime.fromIterator(runtime.contextOrFrameLookup(context, frame, "list"));
+runtime.asyncEach(t_9, 1, function(item, t_7, t_8,next) {
 frame.set("item", item);
-frame.set("loop.index", t_6 + 1);
-frame.set("loop.index0", t_6);
-frame.set("loop.revindex", t_7 - t_6);
-frame.set("loop.revindex0", t_7 - t_6 - 1);
-frame.set("loop.first", t_6 === 0);
-frame.set("loop.last", t_6 === t_7 - 1);
-frame.set("loop.length", t_7);
+frame.set("loop.index", t_7 + 1);
+frame.set("loop.index0", t_7);
+frame.set("loop.revindex", t_8 - t_7);
+frame.set("loop.revindex0", t_8 - t_7 - 1);
+frame.set("loop.first", t_7 === 0);
+frame.set("loop.last", t_7 === t_8 - 1);
+frame.set("loop.length", t_8);
 output += "    <li class=\"vf-list__item\">\n      <a class=\"vf-list__link\" href=\"";
 output += runtime.suppressValue(runtime.memberLookup((item),"link_list_href"), env.opts.autoescape);
 output += "\">\n";
@@ -109,34 +118,34 @@ output += "        <svg class=\"vf-icon vf-icon__arrow--down | vf-list__icon\" x
 }
 output += "      </a>\n";
 (function(cb) {if(runtime.memberLookup((item),"badge")) {
-var t_9;
-t_9 = "@vf-badge";
-frame.set("badge", t_9, true);
+var t_10;
+t_10 = "@vf-badge";
+frame.set("badge", t_10, true);
 if(frame.topLevel) {
-context.setVariable("badge", t_9);
+context.setVariable("badge", t_10);
 }
 if(frame.topLevel) {
-context.addExport("badge", t_9);
+context.addExport("badge", t_10);
 }
-env.getExtension("render")["run"](context,runtime.contextOrFrameLookup(context, frame, "badge"),{"context": runtime.memberLookup((item),"badge")}, function(t_11,t_10) {
-if(t_11) { cb(t_11); return; }
-output += runtime.suppressValue(t_10, true && env.opts.autoescape);
+env.getExtension("render")["run"](context,runtime.contextOrFrameLookup(context, frame, "badge"),{"context": runtime.memberLookup((item),"badge")}, function(t_12,t_11) {
+if(t_12) { cb(t_12); return; }
+output += runtime.suppressValue(t_11, true && env.opts.autoescape);
 cb()});
 }
 else {
 cb()}
-})(function(t_12) {
-if(t_12) { cb(t_12); return; }if(runtime.memberLookup((item),"meta")) {
+})(function(t_13) {
+if(t_13) { cb(t_13); return; }if(runtime.memberLookup((item),"meta")) {
 output += "        <p class=\"vf-links__meta\">";
 output += runtime.suppressValue(runtime.memberLookup((item),"meta"), env.opts.autoescape);
 output += "</p>\n";
 ;
 }
 output += "\n    </li>\n";
-next(t_6);
+next(t_7);
 });
-}, function(t_14,t_13) {
-if(t_14) { cb(t_14); return; }
+}, function(t_15,t_14) {
+if(t_15) { cb(t_15); return; }
 frame = frame.pop();
 output += "  </ul>\n</div>\n";
 if(parentTemplate) {
