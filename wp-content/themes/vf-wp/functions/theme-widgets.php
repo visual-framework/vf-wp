@@ -145,15 +145,26 @@ class VF_Theme_Widgets {
    * Modify default "Recent Entries" widget code
    * https://visual-framework.github.io/vf-core/components/detail/vf-link-list.html
    */
-  public function render_widget_recent_entries($html) {
-    $html = str_replace('vf-box vf-box--inlay', 'vf-links vf-box vf-box--inlay', $html);
-    $html = str_replace('vf-box__heading', 'vf-links__heading', $html);
-    $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
-    $html = str_replace('<h4>', '<h4 class="vf-links__heading">', $html);
-    $html = str_replace('<li>', '<li class="vf-list__item">', $html);
-    $html = str_replace('<a ', '<a class="vf-list__link" ', $html);
-    return $html;
-  }
+  public function render_widget_recent_entries($html) { ?>
+    <div class="vf-u-margin__top--xxl">
+      <h3 class="vf-links__heading">More posts</h3>
+      <?php
+      $recentloop = new WP_Query(array('posts_per_page' => 3, 'post__not_in'   => array( get_the_ID() ) ));
+      while ($recentloop->have_posts()) : $recentloop->the_post();?>
+      <article class="vf-summary vf-summary--article | vf-u-margin__bottom--md">
+        <h2 class="vf-summary__title">
+          <a href="<?php the_permalink(); ?>" class="vf-summary__link" style="font-size: 19px;"><?php echo esc_html(get_the_title()); ?></a>
+        </h2>
+        <span class="vf-summary__meta">
+          <a class="vf-summary__author vf-summary__link" href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>"><?php the_author(); ?></a>
+          <time class="vf-summary__date" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+        </span>
+      </article>
+      <?php endwhile; ?>
+      <?php wp_reset_postdata(); ?>
+    </div>
+
+  <?php }
 
   /**
    * Modify the "Archives" widget code
