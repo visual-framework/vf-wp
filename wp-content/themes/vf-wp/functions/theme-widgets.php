@@ -114,10 +114,10 @@ class VF_Theme_Widgets {
    */
   public function default_sidebars() {
     $defaults = array(
-      'before_widget' => '<div class="widget %2$s vf-box vf-box--inlay" data-id="%1$s">',
+      'before_widget' => '<div class="widget %2$s vf-content" data-id="%1$s">',
       'after_widget'  => '</div>',
-      'before_title'  => '<h3 class="vf-box__heading">',
-      'after_title'   => '</h3>',
+      'before_title'  => '<h4>',
+      'after_title'   => '</h4>',
     );
     $sidebars = array(
       array_merge($defaults, array(
@@ -149,6 +149,7 @@ class VF_Theme_Widgets {
     $html = str_replace('vf-box vf-box--inlay', 'vf-links vf-box vf-box--inlay', $html);
     $html = str_replace('vf-box__heading', 'vf-links__heading', $html);
     $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+    $html = str_replace('<h4>', '<h4 class="vf-links__heading">', $html);
     $html = str_replace('<li>', '<li class="vf-list__item">', $html);
     $html = str_replace('<a ', '<a class="vf-list__link" ', $html);
     return $html;
