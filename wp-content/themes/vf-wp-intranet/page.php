@@ -11,6 +11,7 @@ $title = get_the_title();
 
 <?php 
 
+  
 $open_wrap = function($html, $block_name) {
   $html = '
 <div class="embl-grid embl-grid--has-centered-content">
@@ -51,6 +52,9 @@ $close_wrap,
   else if ( has_block( 'acf/vfwp-page-header', $post ) ) {
   parse_blocks( 'acf/vfwp-page-header' ); }
 
+  else if ( has_block( 'acf/vfwp-hero', $post ) ) {
+    parse_blocks( 'acf/vfwp-hero' ); }
+
 else { ?>
 
 <section class="embl-grid embl-grid--has-centered-content">
@@ -68,7 +72,6 @@ else { ?>
 $vf_theme->the_content();
 
 ?>
-
 <?php 
 
 get_footer();
