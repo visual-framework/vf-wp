@@ -146,7 +146,7 @@ class VF_Theme_Widgets {
    * https://visual-framework.github.io/vf-core/components/detail/vf-link-list.html
    */
   public function render_widget_recent_entries($html) { ?>
-    <div class="vf-u-margin__top--xxl">
+    <div>
       <h3 class="vf-links__heading">More posts</h3>
       <?php
       $recentloop = new WP_Query(array('posts_per_page' => 3, 'post__not_in'   => array( get_the_ID() ) ));
