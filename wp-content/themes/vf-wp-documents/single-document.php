@@ -88,7 +88,7 @@ get_template_part('partials/vf-intro');
     </li>
 
     <li class="vf-list__item">
-      <p class="vf-links__meta">Languages:</p>
+      <p class="vf-links__meta">Language(s):</p>
       <?php 
         if( have_rows('vf-document_file_upload') ): 
           while( have_rows('vf-document_file_upload') ): the_row();

@@ -8,7 +8,7 @@ if ( ! is_array($image)) {
 } else {
   $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
     'class'    => 'vf-summary__image',
-    'style'    => 'width: 150px; height: auto; border: 1px solid #d0d0ce',
+    'style'    => 'width: 135px; height: auto; border: 1px solid #d0d0ce',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
@@ -17,8 +17,7 @@ if ( ! is_array($image)) {
 <article class="vf-summary vf-summary--news">
   <time class="vf-summary__date vf-u-margin__bottom--0" style="margin-left: 0;" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
 
-  <?php if ($image) { echo $image; } ?>
-      <?php 
+    <?php 
       if (! empty($image)) { 
         echo $image;
          } 
@@ -26,7 +25,7 @@ if ( ! is_array($image)) {
         // awaiting assets
       };
       
-      ?>
+    ?>
   <h4 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h4>
@@ -37,7 +36,7 @@ if ( ! is_array($image)) {
           <a href="<?php echo esc_url( get_term_link( $type->term_id ) ); ?>" title="<?php echo esc_attr( $type->name ); ?>"><?php echo esc_html( $type->name); ?>
           </a>
     <?php } } ?>
-      &nbsp;&nbsp;&nbsp;&nbsp;Topic:
+      &nbsp;&nbsp;&nbsp;Topic:
     <?php
       if (is_array($topics)) {
         foreach ( $topics as $topic ) { ?> 
@@ -45,7 +44,7 @@ if ( ! is_array($image)) {
             title="<?php echo esc_attr( $topic->name ); ?>"><?php echo esc_html( $topic->name); ?>
           </a>
     <?php } } ?>
-      &nbsp;&nbsp;&nbsp;&nbsp;Language(s):&nbsp;
+      &nbsp;&nbsp;&nbsp;Language(s):&nbsp;
     <?php if( have_rows('vf-document_file_upload') ): ?>
       <?php while( have_rows('vf-document_file_upload') ): the_row();
         $language = get_sub_field('language');
