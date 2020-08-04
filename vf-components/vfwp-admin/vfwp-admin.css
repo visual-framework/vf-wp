@@ -47,117 +47,101 @@
  * Location: components/vf-font-plex-sans
  */
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 700;
   src: local("IBM Plex Sans Bold"), local("IBMPlexSans-Bold"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Bold.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 700;
   src: local("IBM Plex Sans Bold Italic"), local("IBMPlexSans-BoldItalic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-BoldItalic.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 200;
   src: local("IBM Plex Sans ExtraLight"), local("IBMPlexSans-ExtraLight"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLight.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 200;
   src: local("IBM Plex Sans ExtraLight Italic"), local("IBMPlexSans-ExtraLightItalic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ExtraLightItalic.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 400;
   src: local("IBM Plex Sans Italic"), local("IBMPlexSans-Italic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Italic.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 300;
   src: local("IBM Plex Sans Light"), local("IBMPlexSans-Light"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Light.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 300;
   src: local("IBM Plex Sans Light Italic"), local("IBMPlexSans-LightItalic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-LightItalic.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 500;
   src: local("IBM Plex Sans Medium"), local("IBMPlexSans-Medium"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Medium.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 500;
   src: local("IBM Plex Sans Medium Italic"), local("IBMPlexSans-MediumItalic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-MediumItalic.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 400;
   src: local("IBM Plex Sans"), local("IBMPlexSans"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Regular.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 600;
   src: local("IBM Plex Sans SemiBold"), local("IBMPlexSans-SemiBold"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBold.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 600;
   src: local("IBM Plex Sans SemiBold Italic"), local("IBMPlexSans-SemiBoldItalic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-SemiBoldItalic.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 450;
   src: local("IBM Plex Sans Text"), local("IBMPlexSans-Text"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Text.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 450;
   src: local("IBM Plex Sans Text Italic"), local("IBMPlexSans-TextItalic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-TextItalic.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: normal;
   font-weight: 100;
   src: local("IBM Plex Sans Thin"), local("IBMPlexSans-Thin"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-Thin.woff") format("woff");
 }
-
 @font-face {
-  font-family: 'IBM Plex Sans';
+  font-family: "IBM Plex Sans";
   font-style: italic;
   font-weight: 100;
   src: local("IBM Plex Sans Thin Italic"), local("IBMPlexSans-ThinItalic"), url("../assets/vf-font-plex-sans/assets/IBM-Plex-Sans/fonts/complete/woff/IBMPlexSans-ThinItalic.woff") format("woff");
 }
-
 .vf-font-plex-sans {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -190,26 +174,22 @@
   -ms-flex-negative: 1;
       flex-shrink: 1;
 }
-
 .post-type-vf_block .editor-block-list__layout,
 .post-type-vf_container .editor-block-list__layout {
   min-height: 10px;
 }
-
 .post-type-vf_block .edit-post-layout__metaboxes,
 .post-type-vf_container .edit-post-layout__metaboxes {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
-
 .post-type-vf_block .edit-post-layout__metaboxes:empty,
 .post-type-vf_container .edit-post-layout__metaboxes:empty {
   -webkit-box-flex: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
 }
-
 .post-type-vf_block .edit-post-layout__metaboxes .acf-hndle-cog,
 .post-type-vf_container .edit-post-layout__metaboxes .acf-hndle-cog {
   display: none !important;
@@ -218,7 +198,6 @@
 .editor-post-title__block {
   --vf-text-margin--bottom: 0;
 }
-
 .editor-post-title__block .editor-post-title__input {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 42px;
@@ -236,7 +215,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper h2 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 30px;
@@ -245,7 +223,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper h3 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
@@ -254,7 +231,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper h4 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
@@ -263,7 +239,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper h5 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
@@ -272,7 +247,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper h6 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
@@ -281,7 +255,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper p {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
@@ -290,7 +263,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper .has-extra-large-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 32px;
@@ -299,7 +271,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper .has-large-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
@@ -308,7 +279,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper .has-regular-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -317,7 +287,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper .has-small-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -326,7 +295,6 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
 .editor-styles-wrapper .has-extra-small-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -339,11 +307,9 @@
 .wp-block {
   max-width: 780px;
 }
-
 .wp-block .block-editor-default-block-appender {
   --vf-text-margin--bottom: 0;
 }
-
 .wp-block .block-editor-default-block-appender .block-editor-default-block-appender__content {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
@@ -353,19 +319,18 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
-.wp-block[data-type='core/heading'] {
+.wp-block[data-type="core/heading"] {
   --vf-text-margin--bottom: 0;
 }
 
-.wp-block[data-type='core/paragraph'] {
+.wp-block[data-type="core/paragraph"] {
   --vf-text-margin--bottom: 0;
 }
 
-.wp-block[data-type='core/list'] {
+.wp-block[data-type="core/list"] {
   --vf-text-margin--bottom: 0;
 }
-
-.wp-block[data-type='core/list'] .editor-rich-text li {
+.wp-block[data-type="core/list"] .editor-rich-text li {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;
@@ -375,11 +340,10 @@
   margin-bottom: 8px;
 }
 
-.wp-block[data-type='core/quote'] {
+.wp-block[data-type="core/quote"] {
   --vf-text-margin--bottom: 16px;
 }
-
-.wp-block[data-type='core/quote'] .editor-rich-text p {
+.wp-block[data-type="core/quote"] .editor-rich-text p {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;
@@ -387,8 +351,7 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
-.wp-block[data-type='core/quote'] .wp-block-quote__citation {
+.wp-block[data-type="core/quote"] .wp-block-quote__citation {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -396,16 +359,14 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
-.wp-block[data-type='core/quote'] .wp-block-quote {
+.wp-block[data-type="core/quote"] .wp-block-quote {
   border-left: 4px solid #d0d0ce;
 }
 
-.wp-block[data-type='core/table'] {
+.wp-block[data-type="core/table"] {
   --vf-text-margin--bottom: 0;
 }
-
-.wp-block[data-type='core/table'] .editor-rich-text {
+.wp-block[data-type="core/table"] .editor-rich-text {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -414,15 +375,14 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
-.wp-block[data-type='core/archives'],
-.wp-block[data-type='core/categories'],
-.wp-block[data-type='core/latest-posts'] {
+.wp-block[data-type="core/archives"],
+.wp-block[data-type="core/categories"],
+.wp-block[data-type="core/latest-posts"] {
   --vf-text-margin--bottom: 0;
 }
-
-.wp-block[data-type='core/archives'] li,
-.wp-block[data-type='core/categories'] li,
-.wp-block[data-type='core/latest-posts'] li {
+.wp-block[data-type="core/archives"] li,
+.wp-block[data-type="core/categories"] li,
+.wp-block[data-type="core/latest-posts"] li {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;

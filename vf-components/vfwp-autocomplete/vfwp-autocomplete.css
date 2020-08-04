@@ -206,20 +206,17 @@
   width: 100%;
   height: unset;
 }
-
 .vfwp-autocomplete__input:focus, .vfwp-autocomplete__input:hover {
   border-color: currentColor;
   color: #000000;
   outline: 0;
 }
-
-.ebi-vf1-integration .vfwp-autocomplete__input:not([type="file"]) {
+.ebi-vf1-integration .vfwp-autocomplete__input:not([type=file]) {
   background: unset;
   height: unset;
   margin: unset;
 }
-
-.ebi-vf1-integration .vfwp-autocomplete__input:not([type="file"]):focus, .ebi-vf1-integration .vfwp-autocomplete__input:not([type="file"]):hover {
+.ebi-vf1-integration .vfwp-autocomplete__input:not([type=file]):focus, .ebi-vf1-integration .vfwp-autocomplete__input:not([type=file]):hover {
   border-width: unset;
   -webkit-box-shadow: unset;
           box-shadow: unset;
