@@ -52,7 +52,7 @@ if (is_search()) {
       <div>
         <h3 class="vf-section-header__heading vf-u-margin__bottom--xl">Articles by <?php the_author(); ?></h3>
       </div>
-      <div class="vf-grid | vf-grid__col-2">
+      <div class="vf-grid | vf-grid__col-3">
         <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 				$args = array(
     			'posts_per_page' => 6,
