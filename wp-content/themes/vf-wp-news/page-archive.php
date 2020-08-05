@@ -14,7 +14,7 @@ the_post();
         <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
           <?php wp_title(''); ?></h3>
       </div>
-      <div class="vf-grid vf-grid__col-2">
+      <div class="vf-grid vf-grid__col-3">
         <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array(
     'posts_per_page' => 10,
