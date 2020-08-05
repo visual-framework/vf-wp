@@ -34,7 +34,7 @@ $category_name = single_cat_title("", false);
         <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
         <?php echo esc_html($category_name) ?></h2>
       </div>
-      <div class="vf-grid vf-grid__col-2">
+      <div class="vf-grid vf-grid__col-3">
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
 if ( $post->ID == $do_not_duplicate ) continue; ?>
         <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
