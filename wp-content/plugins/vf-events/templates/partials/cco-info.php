@@ -1,3 +1,13 @@
+<?php
+
+$info_box = get_field('vf_event_info_box', $post->post_parent);
+
+$box_items = get_field('vf_event_box_items', $post->post_parent);
+
+$accommodation = get_field('accommodation');
+
+?>
+
 <?php if ($info_box == 1) { ?>
       <div class="vf-box vf-box--normal vf-box-theme--quinary" style="display: inline-table;">
         <h3 class="vf-box__heading">Information for participants</h3>

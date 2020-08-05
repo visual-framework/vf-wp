@@ -1,3 +1,9 @@
+<?php
+
+$cpp_container = get_field('vf_event_cpp_container', $post->post_parent);
+
+?>
+
 <?php if ($cpp_container == 1) { ?>
 <section class="vf-content">
   <p>EMBL Courses and Conferences are kindly supported by our <a href="https://www.embl.de/aboutus/support-embl/corporate-partnership-programme/index.html">Corporate Partnership Programme</a></p>
