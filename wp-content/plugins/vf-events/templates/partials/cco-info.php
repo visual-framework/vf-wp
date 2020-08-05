@@ -4,16 +4,16 @@ $info_box = get_field('vf_event_info_box', $post->post_parent);
 
 $cco_box_items = get_field('vf_event_cco_box_items', $post->post_parent);
 
-$accommodation = get_field('accommodation');
-$financial = get_field('financial');
-$childcare = get_field('childcare');
-$faq = get_field('faq');
-$travel = get_field('travel');
-$code = get_field('code');
-$onsite = get_field('onsite');
-$terms = get_field('terms');
-$data = get_field('data');
-$contact = get_field('contact');
+$accommodation = get_field('accommodation', $post->post_parent);
+$financial = get_field('financial', $post->post_parent);
+$childcare = get_field('childcare', $post->post_parent);
+$faq = get_field('faq', $post->post_parent);
+$travel = get_field('travel', $post->post_parent);
+$code = get_field('code', $post->post_parent);
+$onsite = get_field('onsite', $post->post_parent);
+$terms = get_field('terms', $post->post_parent);
+$data = get_field('data', $post->post_parent);
+$contact = get_field('contact', $post->post_parent);
 
 ?>
 
