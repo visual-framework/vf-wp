@@ -42,7 +42,7 @@ class VF_Events_Register {
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-calendar',
       'capability_type'     => 'page',
-      'supports'            => array('title', 'editor', 'page-attributes'),
+      'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
       'has_archive'         => true,
       'rewrite'             => array(
         'slug' => 'events'
@@ -52,7 +52,7 @@ class VF_Events_Register {
       'delete_with_user'    => false,
       'taxonomies'          => array(
         'embl_taxonomy',
-        'event_type'
+        'event_type',
       ),
     ));
 
