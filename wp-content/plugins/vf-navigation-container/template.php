@@ -31,6 +31,7 @@ if (has_nav_menu('primary')) {
     'depth'          => 1,
     'container'      => false,
     'items_wrap'     => '%3$s'
+
   ));
 }
 

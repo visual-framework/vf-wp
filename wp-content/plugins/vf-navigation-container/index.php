@@ -29,6 +29,37 @@ class VF_Navigation extends VF_Plugin {
     if (array_key_exists('init', $params)) {
       parent::initialize();
     }
+    add_filter(
+      'nav_menu_css_class',
+      array($this, 'nav_menu_css_class'),
+      10, 4
+    );
+    add_filter(
+      'nav_menu_link_attributes',
+      array($this, 'nav_menu_link_attributes'),
+      10, 4
+    );
+
+  }
+
+  /**
+   * Add VF class to primary menu items
+   */
+  public function nav_menu_css_class($classes, $item, $args, $depth) {
+    if (in_array($args->theme_location, array('primary', 'secondary'))) {
+      return ['vf-navigation__item'];
+    }
+    return $classes;
+  }
+
+  /**
+   * Add VF class to primary menu items
+   */
+  public function nav_menu_link_attributes($atts, $item, $args, $depth) {
+    if (in_array($args->theme_location, array('primary', 'secondary'))) {
+      $atts['class'] = 'vf-navigation__link';
+    }
+    return $atts;
   }
 
   // public function template_callback($block, $content, $is_preview = false, $acf_id) {
