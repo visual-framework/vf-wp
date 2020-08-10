@@ -46,21 +46,6 @@ $close_wrap,
 );
 
 ?>
-<section class="vf-hero vf-hero--inlay vf-hero--hard  | vf-hero-theme--primary" style="">
-    <style>
-  .vf-hero {
-    --vf-hero-bg-image: url('https://wwwdev.embl.org/internal-information/wp-content/uploads/2020/07/EBI_webbanner_test_V1-1224x348.jpg');
-    --vf-hero-grid__row--initial: 384px;
-  }
-
-  </style>
-        <div class="vf-hero__content">
-    <h2 class="vf-hero__heading">
-      EMBL Intranet    </h2>
-    <p class="vf-hero__text">
-      This portal connects you to information on the public EMBL.org site and contains internal-only information on the day-to-day activities of EMBL staff in four common themes.<a class="vf-link" href="#"></a>    </p>
-  </div>
-</section>
 
 <?php 
 
