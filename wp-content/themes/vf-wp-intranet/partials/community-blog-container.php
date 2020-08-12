@@ -32,7 +32,7 @@
         <div class="vf-grid | vf-grid__col-3">
     <div class="vf-grid__col--span-2 | vf-u-margin__top--xl">
     <?php
-    $mainloop = new WP_Query (array('posts_per_page' => 1 ));
+    $mainloop = new WP_Query (array('post_type' => 'community_blog', 'posts_per_page' => 1 ));
     $ids = array();
     while ($mainloop->have_posts()) : $mainloop->the_post();
     $ids[] = get_the_ID(); ?>
@@ -58,7 +58,7 @@
 <div class="vf-u-margin__top--xl">
   <h3 class="vf-links__heading">More posts</h3>
   <?php
-  $sidebarloop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 2 ));
+  $sidebarloop = new WP_Query(array('post_type' => 'community_blog', 'post__not_in' => $ids, 'posts_per_page' => 2 ));
   while ($sidebarloop->have_posts()) : $sidebarloop->the_post();
 				$ids[] = get_the_ID(); ?>
   <article class="vf-summary vf-summary--article | vf-u-margin__bottom--md">
@@ -76,17 +76,12 @@
 </div>   
 </section>
     <section class="vf-tabs__section" id="vf-tabs__section--7">
-        <h2>Section 3</h2>
-        <p>Phasellus ac tristique orci. Nulla maximus <a class="vf-link" href="#">justo nec dignissim consequat</a>. Sed vehicula diam sit amet mi efficitur vehicula in in nisl. Aliquam erat volutpat. Suspendisse lorem turpis, accumsan consequat consectetur gravida, <a class="vf-link" href="#">pellentesque ac ante</a>. Aliquam in commodo ligula, sit amet mollis neque. Vestibulum at facilisis massa.</p>
     </section>
     <section class="vf-tabs__section" id="vf-tabs__section--8">
-        <h2>Section 4</h2>
     </section>
     <section class="vf-tabs__section" id="vf-tabs__section--9">
-        <h2>Section 4</h2>
     </section>
     <section class="vf-tabs__section" id="vf-tabs__section--10">
-        <h2>Section 4</h2>
     </section>
 
 </div>
