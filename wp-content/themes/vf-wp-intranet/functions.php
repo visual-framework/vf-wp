@@ -61,7 +61,7 @@ function get_blog_labels() {
   
   function vf_wp_intranet_blog__init() {
   
-    register_post_type('community_blog', array(
+    register_post_type('community-blog', array(
       'labels'              => get_blog_labels(),
       'description'         => __('Community blog', 'vfwp'),
       'public'              => true,
@@ -80,7 +80,7 @@ function get_blog_labels() {
       'supports'            => array('title', 'editor', 'revisions', 'trackbacks', 'author', 'excerpt', 'thumbnail'),
       'has_archive'         => true,
       'rewrite'             => array(
-        'slug'       => 'blog',
+        'slug'       => 'community-blog',
         'with_front' => false
       ),
       'query_var'           => true,

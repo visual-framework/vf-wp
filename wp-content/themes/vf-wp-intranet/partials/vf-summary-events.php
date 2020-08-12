@@ -21,11 +21,6 @@ $post_id = get_the_ID();
             <?php the_title(); ?>
           </a>
         </h3>
-        <?php if ( ! empty(get_the_excerpt())) { ?>
-        <p class="vf-summary__text">
-          <?php echo strip_tags(get_the_excerpt()); ?>
-        </p>
-        <?php } ?>
         <p class="vf-summary__text">
           <?php echo esc_html($event_type); ?>
         </p>

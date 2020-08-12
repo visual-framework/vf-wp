@@ -1,15 +1,12 @@
 <?php
 
 $title = esc_html(get_the_title());
-$author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 $tags = get_the_tags($post->ID);
-$social_url = get_the_permalink();
+$intro = get_field('intro');
 
 
 get_header();
-
-the_post();
 
 ?>
 
@@ -18,11 +15,15 @@ the_post();
   </div>
 
   <div class="vf-content | vf-u-padding__bottom--xxl">
-    <p class="vf-summary__date"><time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
-    <h1><?php the_title(); ?></h1>
-    <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
+    <p class="vf-summary__date | vf-u-margin__bottom--0">
+      <time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
+    <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
+    <?php 
+    if ($intro) { ?>
+    <p class="vf-lede | vf-u-padding__bottom--xxl">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
     </p>
+    <?php } ?>
     <figure class="vf-figure | vf-u-float__right--md | vf-u-padding__left--xl">
       <?php the_post_thumbnail('full', array('class' => 'vf-figure__image', 'style' => 'width: 300px;')); ?>
       <figcaption class="vf-figure__caption">

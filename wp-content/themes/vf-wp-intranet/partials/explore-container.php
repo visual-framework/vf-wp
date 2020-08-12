@@ -32,16 +32,6 @@
   <p>Get support on technical equipment, communicating your achievements and report concerns.</p>
   </div>
 
-  <div>
-  <h3 class="vf-text-heading--3"><a href="https://www.embl.org/news/">Heading</a></h3>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  </div>
-
-  <div>
-  <h3 class="vf-text-heading--3"><a href="https://www.embl.de/training/scienceforschools/index.html">Another heading</a></h3>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-  </div>
-
   </section>
 </div>
 </section>
