@@ -1,5 +1,5 @@
 <section class="embl-grid | vf-u-background-color--grey--lightest vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__bottom--xl vf-u-padding__top--xl">
-  <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>">Community blog<svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+  <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="/community-blog">Community blog<svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
     <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
     </svg></a>
     <p class="vf-section-header__text">Text here</p>
@@ -32,7 +32,7 @@
         <div class="vf-grid | vf-grid__col-3">
     <div class="vf-grid__col--span-2 | vf-u-margin__top--xl">
     <?php
-    $mainloop = new WP_Query (array('post_type' => 'community_blog', 'posts_per_page' => 1 ));
+    $mainloop = new WP_Query (array('post_type' => 'community-blog', 'posts_per_page' => 1 ));
     $ids = array();
     while ($mainloop->have_posts()) : $mainloop->the_post();
     $ids[] = get_the_ID(); ?>
@@ -58,7 +58,7 @@
 <div class="vf-u-margin__top--xl">
   <h3 class="vf-links__heading">More posts</h3>
   <?php
-  $sidebarloop = new WP_Query(array('post_type' => 'community_blog', 'post__not_in' => $ids, 'posts_per_page' => 2 ));
+  $sidebarloop = new WP_Query(array('post_type' => 'community-blog', 'post__not_in' => $ids, 'posts_per_page' => 2 ));
   while ($sidebarloop->have_posts()) : $sidebarloop->the_post();
 				$ids[] = get_the_ID(); ?>
   <article class="vf-summary vf-summary--article | vf-u-margin__bottom--md">
