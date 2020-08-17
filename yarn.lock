@@ -1747,10 +1747,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-grid-page/-/vf-grid-page-2.0.0.tgz#d349022b2a714e4b8c64634a31400f2b6814855f"
   integrity sha512-Y3f9DDI7WCIYHaDwDu00jf0TplEXkYMgUge4VTpMre9+1+taQ0tXDYgLi368GNOLbUcumyaUwqNAxM2ZAOMBnQ==
 
-"@visual-framework/vf-grid@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-grid/-/vf-grid-1.0.5.tgz#dadd348c48c8334421107a06839390427eef1cf0"
-  integrity sha512-z/6ll3Kg4xgV6VSwdX6X0DGHysbgy+L54Lp6PQTZO72BXLms6ppyFgZFzXdtTGdoLml66BmGKOpfRYrT/Ijjlg==
+"@visual-framework/vf-grid@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-grid/-/vf-grid-1.2.0.tgz#d6b231dc3aadaf069c46d12ded0a6fdf9dc54d01"
+  integrity sha512-6O9qljZxH9qzjmxQ5/fFtu7QKaZ73sWEerC+lHn9QkgDIXGplKyondIaD1XRIWU8R+GBNODabmAvRwXnKgTBIg==
 
 "@visual-framework/vf-header@1.0.2":
   version "1.0.2"
