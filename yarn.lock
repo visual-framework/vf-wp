@@ -1877,10 +1877,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-u-fullbleed/-/vf-u-fullbleed-1.1.0.tgz#653a78b143a14571cb8c78643e6162f360abea39"
   integrity sha512-1J907nbR7xwBWe1sgT8eHFWXfxdznmMPqOqxA2oaS0OO4aNajcLPSgljk82PbGWo6mP/ovm4i66O3iyr6NfAjA==
 
-"@visual-framework/vf-utility-classes@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-utility-classes/-/vf-utility-classes-1.0.3.tgz#5b3e871f022c1b9bdf7efaecb392e0fb417285d9"
-  integrity sha512-Jm65jsDELyun3lZ+5poJ6AmzoCrWlQZ4Ej5r/T+Ia1NkfpaZoTzud/lxulgoKik0iHWZuBKI2JyIcdfcFlNFzQ==
+"@visual-framework/vf-utility-classes@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-utility-classes/-/vf-utility-classes-1.2.0.tgz#4b0ac2d576072f77e498b5a05fd5cea3f1b82c1f"
+  integrity sha512-aSrJwnntpUTO3MH5UqZ9FH1UqrxgYfUZAgAYlFkz+MKSARMaF1AeKlirYeRbqVm4FTy3zY3I6F88gWrpMaS/iw==
 
 "@visual-framework/vf-video-container@1.0.0-beta.1":
   version "1.0.0-beta.1"
