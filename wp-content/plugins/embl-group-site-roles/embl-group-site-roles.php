@@ -376,6 +376,28 @@ function egsr_group_admin_cap(){
         'publish_vf_blocks'         => true,
         'edit_vf_containers'        => true,
         'publish_vf_containers'     => true,
+        'create_vf_blocks'          => true,
+        'create_vf_caches'          => true,
+        'create_vf_containers'      => true,
+        'delete_vf_blocks'          => true,
+        'delete_vf_cache'           => true,
+        'delete_vf_caches'          => true,
+        'delete_vf_containers'      => true,
+        'edit_others_vf_caches'     => true,
+        'edit_vf_cache'             => true,
+        'edit_vf_caches'            => true,
+        'read_vf_containers'        => true,
+        'read_vf_blocks'            => true,
+        'manage_options'            => true,
+        'level_7' => true,
+        'level_6' => true,
+        'level_5' => true,
+        'level_4' => true,
+        'level_3' => true,
+        'level_2' => true,
+        'level_1' => true,
+        'level_0' => true,
+
     );
 }
 
