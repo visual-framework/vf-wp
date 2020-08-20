@@ -15,6 +15,9 @@ $heading_singular = trim($heading_singular);
 
 $heading_text = get_field('heading_text');
 
+$show_image = get_field('show_image');
+$class = ($show_image == 1) ? 'vf-summary--news' : 'vf-summary--article';
+
 if (empty($heading_singular)) {
   $heading_singular = __('Latest posts', 'vfwp');
 }
@@ -63,14 +66,28 @@ else {
     while ($mainloop->have_posts()) : $mainloop->the_post();
     $ids[] = get_the_ID(); ?>
 
-      <article class="vf-summary vf-summary--article">
+      <article class="vf-summary <?php echo ($class); ?>">
+      <?php if ($show_image == 1) { ?>
+        <span class="vf-summary__meta vf-u-margin__bottom--xs">
+          <a class="vf-summary__author vf-summary__link" href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>"><?php the_author(); ?></a>
+          <time class="vf-summary__date" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+        </span>
+        <?php the_post_thumbnail('full', array('class' => 'vf-summary__image', 'style' => 'height: auto;')); ?>
         <h2 class="vf-summary__title">
           <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
         </h2>
+      <?php } 
+      else { ?>
+        <h2 class="vf-summary__title">
+          <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
+        </h2>
+
         <span class="vf-summary__meta">
           <a class="vf-summary__author vf-summary__link" href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>"><?php the_author(); ?></a>
           <time class="vf-summary__date" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
         </span>
+
+        <?php } ?>
         <p class="vf-summary__text">
         <?php echo get_the_excerpt(); ?></p>
       </article>
