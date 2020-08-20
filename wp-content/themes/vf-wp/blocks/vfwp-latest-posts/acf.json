@@ -1,102 +1,121 @@
 {
-  "key": "group_5e9967ec34eec",
-  "title": "Latest Posts",
-  "fields": [
-      {
-          "key": "field_5e99679631cbd",
-          "label": "Heading",
-          "name": "heading_singular",
-          "type": "text",
-          "instructions": "Leave blank for default heading",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_5efc4b6737d2d",
-          "label": "Heading text",
-          "name": "heading_text",
-          "type": "text",
-          "instructions": "Optional",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_5efc4c2840bc0",
-          "label": "Post limit",
-          "name": "limit",
-          "type": "range",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": 1,
-          "min": 1,
-          "max": 10,
-          "step": "",
-          "prepend": "",
-          "append": ""
-      },
-      {
-          "key": "field_5efc4c7a40bc1",
-          "label": "Sidebar",
-          "name": "sidebar",
-          "type": "true_false",
-          "instructions": "Available in full-width layout only",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "message": "",
-          "default_value": 1,
-          "ui": 1,
-          "ui_on_text": "",
-          "ui_off_text": ""
-      }
-  ],
-  "location": [
-      [
-          {
-              "param": "block",
-              "operator": "==",
-              "value": "acf\/vfwp-latest-posts"
-          }
-      ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "seamless",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": "VF-WP Latest News ACF Gutenberg block",
-  "modified": 1593682409
+    "key": "group_5e9967ec34eec",
+    "title": "Latest Posts",
+    "fields": [
+        {
+            "key": "field_5e99679631cbd",
+            "label": "Heading",
+            "name": "heading_singular",
+            "type": "text",
+            "instructions": "Leave blank for default heading",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5efc4b6737d2d",
+            "label": "Heading text",
+            "name": "heading_text",
+            "type": "text",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5efc4c2840bc0",
+            "label": "Post limit",
+            "name": "limit",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "min": 1,
+            "max": 10,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_5efc4c7a40bc1",
+            "label": "Sidebar",
+            "name": "sidebar",
+            "type": "true_false",
+            "instructions": "Available in full-width layout only",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5f3e15e7a0a54",
+            "label": "Show image",
+            "name": "show_image",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vfwp-latest-posts"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF-WP Latest News ACF Gutenberg block",
+    "modified": 1597904434
 }
 

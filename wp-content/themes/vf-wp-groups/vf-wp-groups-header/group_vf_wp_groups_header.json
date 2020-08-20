@@ -3,55 +3,6 @@
     "title": "Groups Header",
     "fields": [
         {
-            "key": "field_vf_hero_level",
-            "label": "Level",
-            "name": "vf_hero_level",
-            "type": "range",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 0,
-            "min": 0,
-            "max": 5,
-            "step": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_vf_hero_theme",
-            "label": "Theme",
-            "name": "vf_hero_theme",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "default": "Default",
-                "primary": "Primary",
-                "secondary": "Secondary",
-                "tertiary": "Tertiary"
-            },
-            "default_value": [
-                "default"
-            ],
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "value",
-            "placeholder": ""
-        },
-        {
             "key": "field_vf_masthead_enable",
             "label": "Enable Masthead",
             "name": "vf_masthead_enable",
@@ -60,7 +11,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "60",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -79,7 +30,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "40",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -109,11 +60,11 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_vf_hero_heading",
-            "label": "Hero Heading",
-            "name": "vf_hero_heading",
-            "type": "text",
-            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "key": "field_vf_hero_level",
+            "label": "Level",
+            "name": "vf_hero_level",
+            "type": "range",
+            "instructions": "",
             "required": 0,
             "conditional_logic": [
                 [
@@ -125,7 +76,64 @@
                 ]
             ],
             "wrapper": {
-                "width": "50",
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 0,
+            "min": 0,
+            "max": 5,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_vf_hero_theme",
+            "label": "Theme",
+            "name": "vf_hero_theme",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_vf_hero_enable",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary"
+            },
+            "default_value": [
+                "default"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_vf_hero_heading",
+            "label": "Hero Heading",
+            "name": "vf_hero_heading",
+            "type": "text",
+            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
                 "class": "",
                 "id": ""
             },
@@ -142,17 +150,9 @@
             "type": "text",
             "instructions": "Leave blank to use introduction from the Content Hub.",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_vf_hero_enable",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "",
                 "class": "",
                 "id": ""
             },
@@ -169,15 +169,7 @@
             "type": "link",
             "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_vf_hero_enable",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -192,15 +184,7 @@
             "type": "image",
             "instructions": "Recommended size: 1224×348 (larger images are cropped).",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_vf_hero_enable",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -233,7 +217,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1593075036
+    "modified": 1597914828
 }

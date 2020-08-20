@@ -4,8 +4,7 @@ $cpp_container = get_field('vf_event_cpp_container', $post->post_parent);
 
 ?>
 <?php if ($cpp_container == 1) { ?>
-<hr class="vf-divider">
-<section class="vf-content">
+<section class="vf-content | vf-u-margin__top--xxl">
   <p>EMBL Courses and Conferences are kindly supported by our <a href="https://www.embl.de/aboutus/support-embl/corporate-partnership-programme/index.html">Corporate Partnership Programme</a></p>
   <p><b>Founder partners</b></p>
   <div class="vf-grid vf-grid__col-6">

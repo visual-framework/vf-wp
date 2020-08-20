@@ -83,6 +83,8 @@ class VF_Gutenberg {
     include_once('includes/core/core-paragraph.php');
     include_once('includes/core/core-quote.php');
     include_once('includes/core/core-separator.php');
+    include_once('includes/core/core-video.php');
+
   }
 
   /**

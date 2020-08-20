@@ -75,9 +75,9 @@ if ($style !== 'very-easy' && $theme !== 'none') {
 
 if ($is_link) {
 ?>
-<a href="<?php echo esc_url($link); ?>" class="<?php echo esc_attr($classes); ?>">
+<a href="<?php echo esc_url($link); ?>" class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--xxl">
 <?php } else { ?>
-<div class="<?php echo esc_attr($classes); ?>">
+<div class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--xxl">
 <?php
 }
 if ($image) {

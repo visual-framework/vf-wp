@@ -51,4 +51,18 @@ function contact_box_content() {
 echo '<div style="background-color: #fffadc; padding: 3px;"><p>If you have any questions, comments or suggestions please send your feedback to <a href="mailto:digital-comms@embl.org">digital-comms@embl.org</a>.</p></div>';
 }
 
+// adds training box to WP admin dashboard
+add_action('wp_dashboard_setup', 'training_box');
+  
+function training_box() {
+global $wp_meta_boxes;
+ 
+wp_add_dashboard_widget('custom_training_widget', 'WordPress Training Materials', 'training_box_content');
+}
+ 
+function training_box_content() {
+echo '<div style="background-color: #fffadc; padding: 3px;"><p>To learn more about WordPress, blocks, page templates, customization and more, check out our <a href="https://wwwdev.embl.org/guidelines/design/corporate-design/wordpress/">training materials</a>.</p></div>';
+}
+
+
 ?>
