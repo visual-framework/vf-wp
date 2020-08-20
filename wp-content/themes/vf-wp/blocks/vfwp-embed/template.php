@@ -46,9 +46,10 @@ if ($ratio === '16 x 9 max width') {
 }
 ?>
 
-<div class="vf-embed <?php echo ($class); ?>" style="<?php echo ($style); ?>"><iframe src="<?php echo ($url); ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+<div class="vf-embed <?php echo ($class); ?>" style="<?php echo ($style); ?>"><iframe src="<?php echo ($url); ?>" frameborder="0" controls allowfullscreen></iframe></div>
 
 <?php if( ! empty($caption) ) { ?>  
 <figcaption class="vf-figure__caption vf-u-margin__top--sm"><?php echo ($caption); ?></figcaption>
 
 <?php } ?>
+<div class="vf-embed vf-embed--16x9" style=""><iframe src="https://wwwdev.embl.org//guidelines/design/corporate-design/wp-content/uploads/2020/08/nav-menu.mp4" frameborder="0" controls allowfullscreen></iframe></div>
