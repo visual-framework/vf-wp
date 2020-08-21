@@ -16,3 +16,4 @@ $title = esc_html(get_the_title());
   <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
 </article>
 <!--/vf-summary-->
+a
