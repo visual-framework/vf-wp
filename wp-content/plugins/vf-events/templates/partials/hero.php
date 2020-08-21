@@ -15,6 +15,8 @@ $submission_closing = get_field('vf_event_submission_closing', $post->post_paren
 $registration_closing = get_field('vf_event_registration_closing', $post->post_parent);
 
 $event_type = get_field('vf_event_event_type', $post->post_parent);
+$event_topic = get_field('vf_event_event_topic', $post->post_parent);
+
 
 $registration_link = get_field('vf_event_registration_link', $post->post_parent);
 
@@ -51,7 +53,7 @@ $theme = get_field('vf_event_theme', $post->post_parent);
   </style>
         <div class="vf-hero__content">
     <h2 class="vf-hero__heading">
-      EMBL <?php echo esc_html($event_type); ?>   </h2>
+      <?php echo esc_html($event_type->name); ?>   </h2>
     <p class="vf-hero__text" style="font-size: 32px;">
     <?php echo $title; ?>
     </p>

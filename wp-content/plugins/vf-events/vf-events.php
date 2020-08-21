@@ -30,6 +30,10 @@ class VF_Events {
   static public function type() {
     return 'vf_event';
   }
+  static public function topic() {
+    return 'vf_event';
+  }
+
 
   public function initialize() {
     // Initialize sub-class instances
@@ -49,6 +53,7 @@ class VF_Events {
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
     );
+    
   }
 
   public function template() {

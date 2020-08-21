@@ -41,6 +41,7 @@
 .acf-field[data-name="vf_event_time_zone"] .acf-input,
 .acf-field[data-name="vf_event_unique_identifier"] .acf-input-wrap,
 .acf-field[data-name="vf_event_event_type"] .acf-input,
+.acf-field[data-name="vf_event_event_topic"] .acf-input,
 .acf-field[data-name="vf_event_location"] .acf-input {
   max-width: 200px;
 }

@@ -41,7 +41,7 @@ get_header();
         </p>
         <?php } ?>
         <p class="vf-summary__text">
-          <?php echo esc_html($event_type); ?>
+          <?php echo esc_html($event_type->name); ?>
         </p>
         <?php if ( ! empty($location)) { ?>
         <p class="vf-summary__location">
