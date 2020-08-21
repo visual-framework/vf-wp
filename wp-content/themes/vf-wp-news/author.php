@@ -45,39 +45,31 @@ if (is_search()) {
   </div>
 </div>
 
-<section class="vf-inlay | vf-u-margin__bottom--md ">
-
-  <div class="vf-inlay__content vf-u-background-color-ui--off-white | vf-u-padding__top--md">
-    <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
-      <div>
-        <h3 class="vf-section-header__heading vf-u-margin__bottom--xl">Articles by <?php the_author(); ?></h3>
+<section class="vf-u-margin__bottom--md ">
+  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--md">
+    <div>
+      <h3 class="vf-section-header__heading vf-u-margin__bottom--xl">Articles by <?php the_author(); ?></h3>
+    </div>
+    <div class="vf-grid | vf-grid__col-3">
+      <?php 
+      $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+      $author = new WP_Query(array(
+        'paged' => $page, 
+        'author__in' => $user_id));
+					while ($author->have_posts()) : $author->the_post();
+					include(locate_template('partials/vf-card--article.php', false, false));?>
+        <?php endwhile; wp_reset_postdata(); ?>
       </div>
-      <div class="vf-grid | vf-grid__col-3">
-        <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-				$args = array(
-    			'posts_per_page' => 6,
-   				'paged' => $page,
-				'author__in' => $user_id);
-				query_posts($args);?>
-
-        <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-				if ( $post->ID == $do_not_duplicate ) continue; ?>
-        <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
-        <?php endwhile; endif; ?>
-      </div>
-      <div class="vf-grid" style="margin: 4%"> <?php vf_pagination();
-      ?>
-      </div>
-    </main>
+      <div class="vf-grid" style="margin: 4%"> <?php vf_pagination();?></div>
   </div>
 
   <div class="vf-inlay__content vf-u-background-color-ui-white | vf-u-padding__top--md | category-more">
     <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
       <div class="vf-grid | vf-u-margin__top--xl">
-        <h3 class="vf-section-header__heading | vf-u-margin__bottom--xl">Popular</h3>
+        <h3 class="vf-section-header__heading | vf-u-margin__bottom--xl | vf-u-padding__left--md">Popular</h3>
       </div>
       <div class="vf-grid vf-grid__col-3">
-        <?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));
+        <?php $popular = new WP_Query(array('posts_per_page'=> 3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));
 					while ($popular->have_posts()) : $popular->the_post();
 					include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false));?>
         <?php endwhile; wp_reset_postdata(); ?>
