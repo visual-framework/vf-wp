@@ -537,6 +537,69 @@
             "endpoint": 0
         },
         {
+            "key": "field_5f3f7c8169b22",
+            "label": "Navigation bar",
+            "name": "vf_event_navigation_bar",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5f3f7cad69b23",
+            "label": "Navigation",
+            "name": "vf_event_navigation",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f3f7c8169b22",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add Menu Item",
+            "sub_fields": [
+                {
+                    "key": "field_5f3f7ccf69b24",
+                    "label": "Menu item",
+                    "name": "vf_event_menu_item",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array"
+                }
+            ]
+        },
+        {
             "key": "field_5f295f13979f9",
             "label": "Hero image",
             "name": "vf_event_hero",
@@ -1333,5 +1396,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type"
+    "description": "`vf_event` post type",
+    "modified": 1597999595
 }
