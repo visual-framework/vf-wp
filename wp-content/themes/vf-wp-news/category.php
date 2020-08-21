@@ -27,29 +27,24 @@ if (is_search()) {
 
 $category_name = single_cat_title("", false);
 ?>
-<section class="vf-inlay | vf-u-margin__bottom--md ">
-  <div class="vf-inlay__content vf-u-background-color-ui--off-white | vf-u-padding__top--md">
-    <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
-      <div>
-        <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
-        <?php echo esc_html($category_name) ?></h2>
-      </div>
-      <div class="vf-grid vf-grid__col-3">
-        <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-if ( $post->ID == $do_not_duplicate ) continue; ?>
+<section class="vf-u-margin__bottom--md ">
+  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--md">
+    <div>
+      <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
+      <?php echo esc_html($category_name) ?></h2>
+    </div>
+    <div class="vf-grid vf-grid__col-3">
+        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
         <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
         <?php endwhile; endif; ?>
-      </div>
-      <div class="vf-grid" style="margin: 4%">
-
-        <?php vf_pagination(); ?>
-      </div>
-    </main>
+    </div>
+    <div class="vf-grid" style="margin: 4%">
+      <?php vf_pagination(); ?>
+    </div>
   </div>
 
   <div class="vf-inlay__content vf-u-background-color-ui-white | category-more">
     <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
-
       <div class="| vf-u-margin__top--xl">
         <h3 class="vf-section-header__heading | vf-u-margin__bottom--xl">Popular in this category</h3>
       </div>
