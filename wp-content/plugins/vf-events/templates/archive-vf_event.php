@@ -3,24 +3,7 @@
 get_header();
 
 ?>
-<section class="vf-hero vf-hero--inlay vf-hero--hard  | vf-hero-theme--primary | vf-u-margin__bottom--xxl">
-  <style>
-    .vf-hero {
 
-      --vf-hero-bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/vf-hero-intense.png');
-
-      --vf-hero-grid__row--initial: 384px;
-    }
-  </style>
-  <div class="vf-hero__content">
-    <h2 class="vf-hero__heading">
-      EMBL Courses and Conferences</h2>
-    <p class="vf-hero__text">
-      The EMBL Course and Conference Programme welcomes 7000 participants annually and covers practical courses,
-      workshops and conferences across all the six EMBL sites.
-    </p>
-  </div>
-</section>
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
     <h2>

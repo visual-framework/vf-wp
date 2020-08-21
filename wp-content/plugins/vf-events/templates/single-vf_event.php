@@ -10,6 +10,13 @@ $additional_info = get_field('vf_event_additional_info');
 
 ?>
 
+
+<?php 
+if (class_exists('VF_Breadcrumbs')) {
+  VF_Plugin::render(VF_Plugin::get_plugin('vf_breadcrumbs'));
+}
+?>
+
 <?php 
 // vf-hero container
 include( plugin_dir_path( __FILE__ ) . 'partials/hero.php'); 
