@@ -32,12 +32,19 @@ class VF_Templates {
     if ( ! empty($post_name) &&  $post->post_name !== $post_name) {
       return false;
     }
+    if (is_singular( VF_Events::type() )) {
+      return false;
+    }
+
     return true;
   }
 
   /**
    * Return default template post content
    */
+
+ 
+
   static public function default_template() {
     $post_content = '
 
@@ -104,6 +111,8 @@ class VF_Templates {
       ),
     );
   }
+
+  
 
   /**
    * Reference: `get_post_type_labels`
