@@ -8,9 +8,38 @@ $summary = get_field('vf_event_summary');
 
 $additional_info = get_field('vf_event_additional_info');
 
+$navigation_bar = get_field('vf_event_navigation_bar');
+$navigation = get_field('vf_event_navigation');
+?>
+
+
+<?php 
+if (class_exists('VF_Breadcrumbs')) {
+  VF_Plugin::render(VF_Plugin::get_plugin('vf_breadcrumbs'));
+}
 ?>
 
 <?php 
+if ($navigation_bar == 1) { ?>
+  <nav class="vf-navigation vf-navigation--main">
+    <ul class="vf-navigation__list | vf-list--inline">
+      <?php
+  if( have_rows('vf_event_navigation') ):
+    while( have_rows('vf_event_navigation') ) : the_row();
+    $menu_item = get_sub_field('vf_event_menu_item');
+     ?>
+        <li class="vf-navigation__item">
+            <a href="<?php echo esc_url($menu_item['url']); ?>" class="vf-navigation__link"><?php echo esc_html($menu_item['title']); ?></a>
+        </li>
+
+    <?php endwhile; ?>
+    </ul>
+</nav>
+  <?php endif; }
+?>
+
+<?php     
+
 // vf-hero container
 include( plugin_dir_path( __FILE__ ) . 'partials/hero.php'); 
 ?>

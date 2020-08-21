@@ -25,6 +25,7 @@ class VF_Events_Register {
   public function init_register() {
 
     $event_type = VF_Events::type();
+    $event_topic = VF_Events::topic();
 
     register_post_type($event_type, array(
       'labels'              => $this->get_labels(),
@@ -53,6 +54,7 @@ class VF_Events_Register {
       'taxonomies'          => array(
         'embl_taxonomy',
         'event_type',
+        'event_topic'
       ),
     ));
 
@@ -67,6 +69,20 @@ class VF_Events_Register {
       'show_in_nav_menus'  => false,
       'rewrite'             => array(
         'slug' => 'event-types'
+      ),
+    ));
+
+    register_taxonomy("{$event_topic}_topic", array($event_topic), array(
+      'labels'             => $this->get_topic_labels(),
+      'hierarchical'       => true,
+      'show_ui'            => true,
+      'show_admin_column'  => true,
+      'query_var'          => true,
+      'publicly_queryable' => true,
+      'show_in_rest'       => false,
+      'show_in_nav_menus'  => false,
+      'rewrite'             => array(
+        'slug' => 'event-topics'
       ),
     ));
   }
@@ -124,6 +140,23 @@ class VF_Events_Register {
       'menu_name'         => __( 'Type', 'vfwp' ),
     );
   }
+
+  public function get_topic_labels() {
+    return array(
+      'name'              => _x( 'Topic', 'taxonomy general name', 'vfwp' ),
+      'singular_name'     => _x( 'Topic', 'taxonomy singular name', 'vfwp' ),
+      'search_items'      => __( 'Search Topics', 'vfwp' ),
+      'all_items'         => __( 'All Topics', 'vfwp' ),
+      'parent_item'       => __( 'Parent Topic', 'vfwp' ),
+      'parent_item_colon' => __( 'Parent Topic:', 'vfwp' ),
+      'edit_item'         => __( 'Edit Topic', 'vfwp' ),
+      'update_item'       => __( 'Update Topic', 'vfwp' ),
+      'add_new_item'      => __( 'Add New Topic', 'vfwp' ),
+      'new_item_name'     => __( 'New Topic Name', 'vfwp' ),
+      'menu_name'         => __( 'Topic', 'vfwp' ),
+    );
+  }
+
 
 } // VF_Events_Register
 
