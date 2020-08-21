@@ -14,6 +14,12 @@ $navigation = get_field('vf_event_navigation');
 
 
 <?php 
+// Global Header
+if (class_exists('VF_Global_Header')) {
+  VF_Plugin::render(VF_Global_Header::get_plugin('vf_global_header'));
+}
+
+// Breadcrumbs
 if (class_exists('VF_Breadcrumbs')) {
   VF_Plugin::render(VF_Plugin::get_plugin('vf_breadcrumbs'));
 }
@@ -81,6 +87,10 @@ include( plugin_dir_path( __FILE__ ) . 'partials/cco-info.php'); ?>
 include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); ?>
 
 <?php 
+// Global Footer
+if (class_exists('VF_Global_Footer')) {
+  VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));
+}
 
 get_footer();
 

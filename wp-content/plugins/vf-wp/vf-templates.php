@@ -32,7 +32,7 @@ class VF_Templates {
     if ( ! empty($post_name) &&  $post->post_name !== $post_name) {
       return false;
     }
-    if (is_singular( VF_Events::type() )) {
+    if (is_singular( 'vf_event' )) {
       return false;
     }
 
