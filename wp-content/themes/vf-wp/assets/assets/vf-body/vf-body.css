@@ -42,21 +42,28 @@
 
 /* stylelint-enable */
 /*!
- * Component: @visual-framework/vf-font-plex-mono
- * Version: 1.1.0
- * Location: components/vf-font-plex-mono
+ * Component: @visual-framework/vf-grid-page
+ * Version: 3.0.0
+ * Location: components/vf-grid-page
  */
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: local("IBM Plex Mono"), local("IBMPlexMono"), url("../assets/vf-font-plex-mono/assets/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Regular.woff") format("woff");
+/* The Page Grid
+ * -------------- // --------------
+ *
+ * All content except for a few design patterns are tied into a grid with a maximum
+ * width of 1300px. We use CSS grid layout on the `body` element to set a simple
+ * 3 column grid with the central grid set to a maximum of 81.25em (1300px).
+ *
+ * Because we are supporting IE11 we also need to include a similar page layout.
+ * We initially set up the page layout without using CSS grid layout and make use
+ * of `@supports` to invoke CSS grid layout on browsers that support it.
+ *
+ */
+html:not(.vf-disable-deprecated) html {
+  margin: 0;
 }
-
-.vf-font-plex-mono {
-  font-family: "IBM Plex Mono", Monaco, Consolas, "Lucida Console", monospace;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.57;
-  margin: 0 0 0 0;
+html:not(.vf-disable-deprecated) .vf-body {
+  display: block;
+  margin: 0 auto;
+  max-width: 76.5em;
+  padding: 0 1em;
 }

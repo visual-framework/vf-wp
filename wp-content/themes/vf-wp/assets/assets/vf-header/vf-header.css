@@ -43,7 +43,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-global-header
- * Version: 2.0.1
+ * Version: 2.0.2
  * Location: components/vf-global-header
  */
 .vf-global-header {
@@ -65,6 +65,11 @@
   max-width: 78.5rem;
   padding: 0.5rem 0;
   width: 100%;
+}
+.vf-global-header > [class*=logo] {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .vf-global-header__site-name {

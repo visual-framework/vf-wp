@@ -42,21 +42,31 @@
 
 /* stylelint-enable */
 /*!
- * Component: @visual-framework/vf-font-plex-mono
- * Version: 1.1.0
- * Location: components/vf-font-plex-mono
+ * Component: @visual-framework/vf-details
+ * Version: 1.0.0-alpha.1
+ * Location: components/vf-details
  */
-@font-face {
-  font-family: 'IBM Plex Mono';
-  font-style: normal;
-  font-weight: 400;
-  src: local("IBM Plex Mono"), local("IBMPlexMono"), url("../assets/vf-font-plex-mono/assets/IBM-Plex-Mono/fonts/complete/woff/IBMPlexMono-Regular.woff") format("woff");
+.vf-details {
+  padding: 8px 8px 0 8px;
 }
 
-.vf-font-plex-mono {
-  font-family: "IBM Plex Mono", Monaco, Consolas, "Lucida Console", monospace;
-  font-size: 14px;
+.vf-details--summary {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
   font-weight: 400;
-  line-height: 1.57;
-  margin: 0 0 0 0;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: -8px -8px 0 -8px;
+  padding: 8px;
+}
+
+.vf-details[open] {
+  padding: 8px;
+}
+
+.vf-details[open] .vf-details--summary {
+  --vf-details--border: var(--vf-details-theme-color--foreground, #d8d8d8);
+  border-bottom: 1px solid var(--vf-details--border);
+  margin-bottom: 8px;
 }
