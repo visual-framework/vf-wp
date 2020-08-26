@@ -7,7 +7,7 @@ const del = require('del');
 const {componentPath, componentDirectories, buildDestionation} = require('@visual-framework/vf-config');
 
 // Tasks to build/run vf-core component system
-require('../node_modules/@visual-framework/vf-core/tools/gulp-tasks/_gulp_rollup.js')(
+require('../node_modules/@visual-framework/vf-core/gulp-tasks/_gulp_rollup.js')(
   gulp,
   path,
   componentPath,
