@@ -6,7 +6,9 @@ global $vf_theme;
 
 $title = $vf_theme->get_title();
 
+if (function_exists('breadcrumbs')) breadcrumbs();
 ?>
+
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2">
     <h1 class="vf-text vf-text-heading--1">
