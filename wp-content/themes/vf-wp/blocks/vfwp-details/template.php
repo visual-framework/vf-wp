@@ -36,6 +36,6 @@ if (
 <summary class="vf-details--summary">
 <?php echo esc_html($title); ?>
 </summary>
-<?php echo esc_html($summary); ?>
+<?php echo wpautop($summary); ?>
 </details>
 

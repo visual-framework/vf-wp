@@ -30,13 +30,6 @@ if (
   return;
 } ?>
 
-<?php
-// Open wrappers for container
-if ($is_container) { ?>
-<div class="vf-grid">
-  <div>
-    <?php } ?>
-
     <?php if (have_rows('tabs')): ?>
     <div class="vf-tabs">
       <ul class="vf-tabs__list" data-vf-js-tabs>
@@ -58,7 +51,7 @@ if ($is_container) { ?>
       <section class="vf-tabs__section" id="vf-tabs__section--<?php echo get_row_index();?>">
         <h2><?php echo ($title); ?></h2>
         <?php if (! empty ($text)) { ?>
-          <p><?php echo ($text); ?></p>
+          <p><?php echo wpautop($text); ?></p>
         <?php } ?>
 
         <!-- Nested tabs-->
@@ -83,7 +76,7 @@ if ($is_container) { ?>
           $nested_text = get_sub_field('nested_text', false, false); ?>
           <section class="vf-tabs__section" id="vf-tabs__section--<?php echo get_row_index();?>">
             <h2><?php echo ($nested_title); ?></h2>
-            <p><?php echo ($nested_text); ?></p>
+            <p><?php echo wpautop($nested_text); ?></p>
           </section>
           <?php endwhile; ?>
         </div>
@@ -97,8 +90,3 @@ if ($is_container) { ?>
   </div>
   <!--/vf-grid-->
   <?php
-// Close wrappers for container
-if ($is_container) { ?>
-</div>
-</div>
-<?php } ?>

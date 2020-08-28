@@ -8,7 +8,6 @@ class VFWP_Tabs extends VFWP_Block {
 
   public function __construct() {
     // Allow block to use full-width container layout
-    $this->setup_containerable();
 
     parent::__construct(__FILE__);
   }
