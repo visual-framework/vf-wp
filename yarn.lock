@@ -1146,10 +1146,10 @@
   resolved "https://registry.yarnpkg.com/@types/unist/-/unist-2.0.3.tgz#9c088679876f374eb5983f150d4787aa6fb32d7e"
   integrity sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
 
-"@visual-framework/ebi-vf1-integration@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/ebi-vf1-integration/-/ebi-vf1-integration-1.0.2.tgz#470c9e66d302bd6c3ee5d436acb5bc3500506dca"
-  integrity sha512-90x/DSZ+EndF5JozShy0kdje6REcClFNdf9f3zSesO2xkHvrG774QycUnpANBJPq+4SXthpezmkMiET8lhnZxQ==
+"@visual-framework/ebi-vf1-integration@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/ebi-vf1-integration/-/ebi-vf1-integration-1.0.3.tgz#3b168bf6b7aad3368c3143f848868bff2b2ec327"
+  integrity sha512-I1Cs/Ee8d9nTwlWmk+szV4prvLvcZqyj9rMzFERzIsIEb4g55yzNCykbJfeFEHNQi3+At9XvSS2LhZ5l0o7+Eg==
 
 "@visual-framework/embl-breadcrumbs-lookup@1.0.0-rc.0":
   version "1.0.0-rc.0"
