@@ -43,7 +43,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-box
- * Version: 1.0.4
+ * Version: 1.1.0
  * Location: components/vf-box
  */
 .vf-box {
@@ -140,26 +140,26 @@
 
 .vf-box-theme--primary {
   --vf-box-theme-color--foreground: #ffffff;
-  --vf-box-theme-color--background: #18974c;
+  --vf-box-theme-color--background: theme(vf-theme--primary);
 }
 
 .vf-box-theme--secondary {
-  --vf-box-theme-color--foreground: #ffffff;
-  --vf-box-theme-color--background: #3b6fb6;
+  --vf-box-theme-color--foreground: #000000;
+  --vf-box-theme-color--background: theme(vf-theme--secondary);
 }
 
 .vf-box-theme--tertiary {
   --vf-box-theme-color--foreground: #ffffff;
-  --vf-box-theme-color--background: #707372;
+  --vf-box-theme-color--background: theme(vf-theme--tertiary);
 }
 
 .vf-box-theme--quaternary {
   --vf-box-theme-color--foreground: #000000;
-  --vf-box-theme-color--background: #f4c61f;
+  --vf-box-theme-color--background: theme(vf-theme--quaternary);
 }
 
 .vf-box-theme--quinary {
-  --vf-box-theme-color--background: #f3f3f3;
+  --vf-box-theme-color--background: theme(vf-theme--quinary);
   --vf-box-theme-color--foreground: #000000;
 }
 
