@@ -1,0 +1,22 @@
+/*
+Theme Name:		 VF-WP ELMI
+Theme URI:		 https://github.com/visual-framework/vf-wp/tree/master/wp-content/themes/vf-wp-elmi/
+Description:	 Visual Framework WordPress Theme for ELMI
+Author:        Szymon Kasprzyk
+Template:      vf-wp
+Version:       1.0.0-beta.1
+Text Domain:	 vfwp
+*/
+
+.vf-wp-theme a {
+    color: #D41645 !important;
+}
+
+#wpadminbar a {
+    color: #fff !important;
+}
+
+.vf-summary__meta a,
+.vf-meta__details a {
+    text-decoration: none !important;
+}
