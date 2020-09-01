@@ -1454,10 +1454,10 @@
     list-stream "^2.0.0"
     marked "^1.1.1"
 
-"@visual-framework/vf-design-tokens@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-1.1.0.tgz#259fac582e63ebd59f4e7ce50200eb8c27891d5f"
-  integrity sha512-YpPliTtEkEwsmfg1tCRCDhHZXVPINU989R2CB6iL4O+k07jZfN51Yoh950fd0VgMLPkU8iHgC5p7vIWNdaqu+g==
+"@visual-framework/vf-design-tokens@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-1.2.0.tgz#962397473877d6b11ca1fa2fad44e93db8ed00cf"
+  integrity sha512-imyNVDASr0VSsb+MAtWy0TPPcszX5wRRy5OR7OpfDBbbyamB4GGyAQ+VAn6Cmd6NLvUr7Fry9rt/FrrIDAUtCA==
 
 "@visual-framework/vf-details@1.0.0-alpha.1":
   version "1.0.0-alpha.1"
