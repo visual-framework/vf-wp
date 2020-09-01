@@ -1431,10 +1431,10 @@
     "@visual-framework/vf-list" "^1.0.0"
     "@visual-framework/vf-text" "^1.0.2"
 
-"@visual-framework/vf-core@2.2.3":
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.3.tgz#58cd11ea168f648365e8fa7e8ef9a560f79e4177"
-  integrity sha512-wH0n9O+8LUymUGfqpL6vB7umahIe1k3vs/ytWFkFwzBlYkOajcHwq8AyisD47XXbP4y8PP07YuELePu044J6fQ==
+"@visual-framework/vf-core@2.2.4":
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.4.tgz#86d5b0ffa29da80e9dfcdb7860a166dc4004b8ae"
+  integrity sha512-kNBECzjOCXEejP0jajYZ9a12jI/yUenoKCiriLPbFq2pfVg6lQHS16dIdrIZHx8BZ2K/R2UA7yLG9b9AHiLa6w==
   dependencies:
     "@visual-framework/vf-component-generator" "^1.0.2"
     "@visual-framework/vf-component-initialization" "^1.0.0-alpha.2"
