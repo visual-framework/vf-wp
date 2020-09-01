@@ -42,9 +42,9 @@
     "list-stream": "2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "7.11.4",
+    "@babel/core": "7.11.5",
     "@babel/node": "7.10.5",
-    "@babel/preset-env": "7.11.0",
+    "@babel/preset-env": "7.11.5",
     "@babel/preset-react": "7.10.4",
     "@visual-framework/ebi-vf1-integration": "1.0.3",
     "@visual-framework/embl-breadcrumbs-lookup": "1.0.0-rc.0",
