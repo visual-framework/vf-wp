@@ -6,7 +6,7 @@
           "key": "field_5ec285cc765e8",
           "label": "Heading",
           "name": "heading",
-          "type": "text",
+          "type": "wysiwyg",
           "instructions": "",
           "required": 0,
           "conditional_logic": 0,
@@ -16,10 +16,10 @@
               "id": ""
           },
           "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
+          "tabs": "all",
+          "toolbar": "basic",
+          "media_upload": 0,
+          "delay": 0
       },
       {
           "key": "field_5ec285d7765e9",
@@ -159,5 +159,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF-WP Intro ACF Gutenberg block",
-  "modified": 1589808278 
+  "modified": 1599029429 
 }
