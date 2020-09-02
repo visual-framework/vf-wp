@@ -121,7 +121,7 @@
 
 /*!
  * Component: @visual-framework/vf-breadcrumbs
- * Version: 1.0.1
+ * Version: 1.0.2
  * Location: components/vf-breadcrumbs
  */
 .vf-breadcrumbs {
@@ -130,7 +130,7 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 8px;
-  max-width: 76.5em;
+  max-width: 81.25em;
   width: 100%;
 }
 @media (min-width: 1024px) {

@@ -43,7 +43,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-footer
- * Version: 1.0.5
+ * Version: 1.0.6
  * Location: components/vf-footer
  */
 .vf-footer {
@@ -95,7 +95,7 @@
 .vf-footer__inner {
   grid-column: main;
   margin: 0 auto;
-  max-width: 76.5em;
+  max-width: 81.25em;
   padding: 0 1rem;
 }
 
@@ -265,6 +265,6 @@
 
   .vf-footer__inner {
     margin: 0 auto;
-    max-width: 76.5em;
+    max-width: 81.25em;
   }
 }

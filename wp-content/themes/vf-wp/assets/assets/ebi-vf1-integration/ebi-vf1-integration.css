@@ -49,7 +49,7 @@
  */
 /*!
  * Component: @visual-framework/ebi-vf1-integration
- * Version: 1.0.2
+ * Version: 1.0.3
  * Location: components/ebi-vf1-integration
  */
 .ebi-vf1-integration,
@@ -144,7 +144,7 @@ body.ebi-vf1-integration,
   background-color: #373a36 !important;
 }
 .ebi-vf1-integration #data-protection-banner .row {
-  max-width: 76.5em;
+  max-width: 81.25em;
 }
 .ebi-vf1-integration .vf-form__input:not([type=file]) {
   height: unset;

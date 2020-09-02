@@ -43,7 +43,7 @@
 /* stylelint-enable */
 /*!
 * Component: @visual-framework/vf-button
-* Version: 1.0.4
+* Version: 1.1.0
 * Location: components/vf-button
 */
 .vf-button {
@@ -113,6 +113,7 @@ a.vf-button:hover, a.vf-button:focus {
 .vf-button--secondary {
   --vf-button-border-color: var(--vf-color--green);
   --vf-button-background-color: var(--vf-color--green);
+  --vf-button-text-color: var(--vf-ui-color--black);
   --vf-button-shadow-border-color: var(--vf-color--green--dark);
   --vf-button-shadow-background-color: var(--vf-color--green--dark);
   --vf-button-border-color--visited: var(--vf-color--green--light);
