@@ -1,0 +1,243 @@
+{
+    "key": "group_vf_masthead",
+    "title": "VF Masthead",
+    "fields": [
+        {
+            "key": "field_5f4f6fc10faa5",
+            "label": "Heading",
+            "name": "vf_masthead_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f4f6fda0faa6",
+            "label": "Link",
+            "name": "vf_masthead_heading_link",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f4f6ff40faa7",
+            "label": "Heading additional",
+            "name": "vf_masthead_additional",
+            "type": "text",
+            "instructions": "(Optional)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f4f700c0faa8",
+            "label": "Subheading",
+            "name": "vf_masthead_subheading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f4f70580faaa",
+            "label": "Style",
+            "name": "vf_masthead_variant",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary",
+                "has_image": "Has image",
+                "with_title_block": "Title block",
+                "with_title_block_and_image": "Title block with image"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f4f702d0faa9",
+            "label": "Background image",
+            "name": "vf_masthead_image",
+            "type": "image",
+            "instructions": "Masthead dimensions: 2448px by 300px",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f4f70580faaa",
+                        "operator": "==",
+                        "value": "has_image"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f4f70580faaa",
+                        "operator": "==",
+                        "value": "with_title_block_and_image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "large",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5f4f79435e011",
+            "label": "Text color",
+            "name": "vf_masthead_fg_color",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f4f70580faaa",
+                        "operator": "==",
+                        "value": "has_image"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f4f70580faaa",
+                        "operator": "==",
+                        "value": "with_title_block"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f4f70580faaa",
+                        "operator": "==",
+                        "value": "with_title_block_and_image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "#000": "Black",
+                "#fff": "White"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f4f7d29b77ae",
+            "label": "Title block color",
+            "name": "vf_masthead_bg_color",
+            "type": "color_picker",
+            "instructions": "Please use for:\r\nblue : #193F90\r\ngreen : #007B53\r\nred : #A6093D\r\ngrey : #54585A\r\npurple : #563D82\r\norange : #B65417",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f4f70580faaa",
+                        "operator": "==",
+                        "value": "with_title_block"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f4f70580faaa",
+                        "operator": "==",
+                        "value": "with_title_block_and_image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_container",
+                "operator": "==",
+                "value": "vf_masthead"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1599047269
+}
