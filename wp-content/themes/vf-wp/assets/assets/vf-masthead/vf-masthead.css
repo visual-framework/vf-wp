@@ -226,7 +226,7 @@
 /* stylelint-enable order/order */
 /*!
  * Component: @visual-framework/vf-masthead
- * Version: 1.0.3
+ * Version: 1.1.0
  * Location: components/vf-masthead
  */
 .vf-masthead {
@@ -234,8 +234,8 @@
   background-color: var(--vf-masthead__color--background-default, var(--global-theme-bg-color, #ffffff));
   color: #000000;
   color: var(--vf-masthead__color--foreground-default, var(--global-theme-fg-color, #000000));
-  padding-bottom: 36px;
-  padding-top: 24px;
+  padding-bottom: 1.5em;
+  padding-top: 1.5em;
 }
 
 .vf-masthead-theme--primary {
@@ -245,7 +245,7 @@
 
 .vf-masthead-theme--secondary {
   --vf-masthead__color--background-default: #18974c;
-  --vf-masthead__color--foreground-default: #ffffff;
+  --vf-masthead__color--foreground-default: #000000;
 }
 
 .vf-masthead-theme--tertiary {
@@ -263,7 +263,7 @@
   display: -ms-flexbox;
   display: flex;
   margin: 0 auto;
-  max-width: 76.5em;
+  max-width: 81.25em;
   width: 100%;
 }
 
@@ -284,7 +284,7 @@
   font-size: 42px;
   font-weight: 700;
   line-height: 1.547;
-  margin: 0 0 8px 0;
+  margin: 0 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
