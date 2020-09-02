@@ -13,25 +13,25 @@
   <section class="vf-grid vf-grid__col-3 vf-content">
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/research">Life and work at EMBL</a></h3>
-  <p>What it's like to work at EMBL, what new starters need to know and how to advance your career.</p>
+  <h3 class="vf-text-heading--3"><a href="/life-at-embl">Life at EMBL</a></h3>
   </div>
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/services-facilities">Health and safety</a></h3>
-  <p>Important information about staying healthy and safe no matter your EMBL site or work.</p>
+  <h3 class="vf-text-heading--3"><a href="/health-and-safety">Health and safety</a></h3>
   </div>
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/training">Policies and procedures</a></h3>
-  <p>How to file invoices, buy equipment, claim for duty travel and everything inbetween.</p>
+  <h3 class="vf-text-heading--3"><a href="/service-and-support">Service and support</a></h3>
   </div>
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/jobs">Services and support</a></h3>
-  <p>Get support on technical equipment, communicating your achievements and report concerns.</p>
+  <h3 class="vf-text-heading--3"><a href="/staff-policies">Staff policies</a></h3>
   </div>
 
+  <div>
+  <h3 class="vf-text-heading--3"><a href="/organisational-information">Organisational information</a></h3>
+  </div>
+  
   </section>
 </div>
 </section>
