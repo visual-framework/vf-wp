@@ -6,7 +6,7 @@ $is_preview = isset($is_preview) && $is_preview;
 // Block is container style
 $is_container = (bool) get_field('is_container');
 
-$heading = get_field('heading');
+$heading = get_field('heading', false, false);
 $lede = get_field('lede');
 $lede = str_replace('<p>', '<p class="vf-lede">', $lede);
 $text = get_field('intro_text');
@@ -56,7 +56,7 @@ if ($is_container) {
 <?php } ?>
 
     <h1 class="vf-intro__heading<?php if ( ! empty($badge_text)) { ?> vf-intro__heading--has-tag<?php } ?>">
-      <?php echo esc_html($heading); ?>
+      <?php echo ($heading); ?>
       <?php if ( ! empty($badge_text)) { ?>
         <span class="vf-badge vf-badge--<?php echo esc_attr($badge_style); ?> vf-badge--phases">
           <?php echo esc_html($badge_text); ?>
