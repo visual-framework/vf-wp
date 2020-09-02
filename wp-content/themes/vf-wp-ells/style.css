@@ -1,0 +1,21 @@
+/*
+Theme Name:		 VF-WP ELLS
+Theme URI:		 https://github.com/visual-framework/vf-wp/tree/master/wp-content/themes/vf-wp-ells/
+Description:	 Visual Framework WordPress Theme for ELLS
+Author:        Szymon Kasprzyk
+Template:      vf-wp
+Version:       1.0.0-beta.1
+Text Domain:	 vfwp
+*/
+
+.vf-u-fullbleed::before {
+  grid-column: unset !important;
+}
+
+.vf-social-links__link .vf-icon--social {
+  fill: #fff !important;
+}
+
+.vf-social-links--outline .vf-social-links__item {
+  border: 1px solid #fff !important;
+}
