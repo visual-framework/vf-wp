@@ -54,6 +54,9 @@ $close_wrap,
 
   else if ( has_block( 'acf/vfwp-hero', $post ) ) {
     parse_blocks( 'acf/vfwp-hero' ); }
+  
+  else if ( has_block( 'acf/vfwp-masthead', $post ) ) {
+    parse_blocks( 'acf/vfwp-masthead' ); }
 
 else { ?>
 

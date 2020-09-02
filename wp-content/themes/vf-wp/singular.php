@@ -43,12 +43,16 @@ add_filter(
 
 <?php
 if ( has_block( 'acf/vfwp-intro', $post ) ) {  
-
 parse_blocks( 'acf/vfwp-intro' ); } 
 
 else if ( has_block( 'acf/vfwp-page-header', $post ) ) {
-
 parse_blocks( 'acf/vfwp-page-header' ); }
+
+else if ( has_block( 'acf/vfwp-hero', $post ) ) {
+  parse_blocks( 'acf/vfwp-hero' ); }
+
+else if ( has_block( 'acf/vfwp-masthead', $post ) ) {
+  parse_blocks( 'acf/vfwp-masthead' ); }
 
 else { ?>
 
