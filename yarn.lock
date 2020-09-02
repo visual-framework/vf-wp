@@ -1624,10 +1624,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-list/-/vf-list-1.0.0.tgz#b9811e51b9abf7951f02525c9d71b70fe04d3ec3"
   integrity sha512-8JID0VCV4+X5zvX7DjCyzqXJX4is9wehf0fLDJJnBPzwziJ+Rgy9PdzH6AAbcEWUTdlLtSczWE7uMJyMst5tGQ==
 
-"@visual-framework/vf-masthead@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.0.3.tgz#1e22cce9ada1c43d2341af29fd4b7576d72afa76"
-  integrity sha512-ENA0GF9nRh5LN7NHDS5xIch3hA9IHXcDzG/yl0eQvZO+ZK3ASSR/XSbB/5ujLHZ5wWMuGUVG0n00OZlfxQeFLQ==
+"@visual-framework/vf-masthead@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.1.0.tgz#e8ac0cfcdece9484835d3f5a2a148cf8f4caaa8f"
+  integrity sha512-8OJq5UTYLDy0v8oPPhiTJF3Tb6WnZ2sG2qTEXesCV69Pmh3QftLRLwzrbaJF1YUZqvvpqMC3mLEttb6IRZFGEQ==
 
 "@visual-framework/vf-navigation@1.2.3":
   version "1.2.3"
