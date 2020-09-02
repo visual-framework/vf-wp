@@ -26,7 +26,7 @@ $title = get_field('title', $widget_id);
 $summary = get_field('summary', $widget_id, false, false); 
 ?>
 
-<details class="vf-details" open>
+<details class="vf-details">
 <summary class="vf-details--summary">
 <?php echo esc_html($title); ?>
 </summary>

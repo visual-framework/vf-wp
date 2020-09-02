@@ -32,7 +32,7 @@ if (
 }
 ?>
 
-<details class="vf-details" open>
+<details class="vf-details">
 <summary class="vf-details--summary">
 <?php echo esc_html($title); ?>
 </summary>
