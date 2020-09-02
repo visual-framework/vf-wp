@@ -1498,10 +1498,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-font-plex-sans/-/vf-font-plex-sans-1.1.0.tgz#0229cbee0b7460805d2ba5bdc06eb683f83755fa"
   integrity sha512-QlB8S2koZwQyYcdT2YE7YJ3gkMklWqwYbXC3PYxq5j/zvqm3MaQUPody23ZCYWW3sAwFucclN18qL4M+uGrZtA==
 
-"@visual-framework/vf-footer@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.0.5.tgz#d480599d94496e7f53265b06631ec4cf883cecd0"
-  integrity sha512-W1fzcso30yDL3VanAlnkyl8m0xnctTFoYwQouFjDwTQat3QpRqRviZmiEdGDLQYYTb/vuBznlj5X23AF9wXYRw==
+"@visual-framework/vf-footer@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.0.6.tgz#734ed0ce6171f0df24443c435e6c7e9a067e9a33"
+  integrity sha512-5N1ihfg7LD3jFcwTOGX/xQ4l1Mld9474QgLJqjkaYlEeTOsESWNa4lLfSxGvnS0o6mCxt5duRJyKWVkpfdyttQ==
 
 "@visual-framework/vf-form__checkbox@1.0.2", "@visual-framework/vf-form__checkbox@^1.0.2":
   version "1.0.2"
