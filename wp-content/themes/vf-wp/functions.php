@@ -28,6 +28,8 @@ require_once('blocks/vfwp-hero/index.php');
 require_once('blocks/vfwp-profile/index.php');
 require_once('blocks/vfwp-details/index.php');
 require_once('blocks/vfwp-search/index.php');
+require_once('blocks/vfwp-masthead/index.php');
+
 
 
 global $vf_admin;
