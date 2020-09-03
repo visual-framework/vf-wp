@@ -43,7 +43,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-profile
- * Version: 1.0.2
+ * Version: 1.1.0
  * Location: components/vf-profile
  */
 .vf-profile {
@@ -199,15 +199,15 @@
 }
 
 .vf-profile-theme--primary {
-  --vf-profile__border--color: #18974c;
+  --vf-profile__border--color: #3b6fb6;
 }
 .vf-profile-theme--primary .vf-profile__title {
-  color: #18974c;
+  color: #3b6fb6;
 }
 
 .vf-profile-theme--secondary {
-  --vf-profile__border--color: #3b6fb6;
+  --vf-profile__border--color: #18974c;
 }
 .vf-profile-theme--secondary .vf-profile__title {
-  color: #3b6fb6;
+  color: #18974c;
 }
