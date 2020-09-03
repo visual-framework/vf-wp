@@ -53,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-box
- * Version: 1.1.0
+ * Version: 1.1.1
  * Location: components/vf-box
  */
 .vf-box {
@@ -120,8 +120,10 @@
   color: currentColor;
   text-decoration: underline;
 }
-.vf-content .vf-box__text a:hover,
-.vf-box__text a:hover {
+.vf-content .vf-box__text a:visited, .vf-content .vf-box__text a:hover, .vf-content .vf-box__text a:focus,
+.vf-box__text a:visited,
+.vf-box__text a:hover,
+.vf-box__text a:focus {
   color: currentColor;
 }
 
