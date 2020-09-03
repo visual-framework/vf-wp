@@ -10,8 +10,6 @@ $end = DateTime::createFromFormat('j M Y', $end_date);
 get_header();
 
 ?>
-<?php if (function_exists('breadcrumbs')) breadcrumbs(); ?>
-
 
 <section class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
   <div>
