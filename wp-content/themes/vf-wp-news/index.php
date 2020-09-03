@@ -45,8 +45,8 @@ if (is_search()) {
 
 <section class="vf-inlay | vf-u-background-color-ui--grey vf-u-margin__bottom--xxl">
 
-  <section class="vf-inlay__content | vf-u-background-color-ui--grey | vf-u-fullbleed | hero-container">
-    <main class="vf-inlay__content--main | vf-content | vf-u-margin__bottom--md | hero-left-column">
+  <div class="vf-inlay__content | vf-u-background-color-ui--grey | vf-u-fullbleed | hero-container">
+    <div class="vf-inlay__content--main | vf-content | vf-u-margin__bottom--md | hero-left-column">
       <?php
 			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();
@@ -55,9 +55,9 @@ $ids[] = get_the_ID(); ?>
       <?php include(locate_template('partials/vf-summary--article--color.php', false, false)); ?>
       <?php endwhile;?>
       <?php wp_reset_postdata(); ?>
-    </main>
+    </div>
 
-    <main class="vf-inlay__content--additional | hero-right-column">
+    <div class="vf-inlay__content--additional | hero-right-column">
       <?php
 $cardsPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 2, 'meta_key' => 'featured',
 	'meta_value' => '1' ));
@@ -66,8 +66,8 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
       <?php include(locate_template('partials/vf-card--article-no-excerpt.php', false, false)); ?>
       <?php endwhile; ?>
       <?php wp_reset_postdata(); ?>
-    </main>
-  </section>
+    </div>
+  </div>
 
 </section>
 <!-- Latest -->
