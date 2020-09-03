@@ -13,23 +13,23 @@
   <section class="vf-grid vf-grid__col-3 vf-content">
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/life-at-embl">Life at EMBL</a></h3>
+  <h3 class="vf-text-heading--3"><a href="/internal-information/life-at-embl">Life at EMBL</a></h3>
   </div>
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/health-and-safety">Health and safety</a></h3>
+  <h3 class="vf-text-heading--3"><a href="/internal-information/health-and-safety">Health and safety</a></h3>
   </div>
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/service-and-support">Service and support</a></h3>
+  <h3 class="vf-text-heading--3"><a href="/internal-information/service-and-support">Service and support</a></h3>
   </div>
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/staff-policies">Staff policies</a></h3>
+  <h3 class="vf-text-heading--3"><a href="/internal-information/staff-policies">Staff policies</a></h3>
   </div>
 
   <div>
-  <h3 class="vf-text-heading--3"><a href="/organisational-information">Organisational information</a></h3>
+  <h3 class="vf-text-heading--3"><a href="/internal-information/organisational-information">Organisational information</a></h3>
   </div>
   
   </section>
