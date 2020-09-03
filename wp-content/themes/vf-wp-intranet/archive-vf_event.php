@@ -4,7 +4,6 @@
 get_header();
 
 ?>
-<?php if (function_exists('breadcrumbs')) breadcrumbs(); ?>
 
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">

@@ -8,7 +8,6 @@ setup_postdata($post);
 global $vf_theme;
 $title = get_the_title();
 ?>
-<?php if (function_exists('breadcrumbs')) breadcrumbs(); ?>
 <?php 
 
   
