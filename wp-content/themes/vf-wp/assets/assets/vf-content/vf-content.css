@@ -53,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0
+ * Version: 1.0.0-rc.1
  * Location: components/vf-heading
  */
 .vf-text {
@@ -1109,7 +1109,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0
+ * Version: 1.0.0-rc.1
  * Location: components/vf-list
  */
 .vf-list {
@@ -1222,7 +1222,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0
+ * Version: 1.0.0-rc.8
  * Location: components/vf-divider
  */
 .vf-divider {
