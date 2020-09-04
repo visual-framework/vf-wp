@@ -46,23 +46,19 @@ class VF_EMBL_News extends VF_Plugin {
    * Cannot run on `acf/init` because taxonomy is not registered
    */
   function add_taxonomy_fields() {
-    // Add filter based on EMBL Taxonomy terms
-
-    /**
-     * Code Commented based on requirement of https://gitlab.ebi.ac.uk/emblorg/backlog/issues/173
 
     if (function_exists('embl_taxonomy')) {
       acf_add_local_field(
         array(
           'parent' => 'group_vf_embl_news',
           'key' => 'field_vf_embl_news_term',
-          'label' => __('Topic', 'vfwp'),
+          'label' => __('EMBL Taxonomy', 'vfwp'),
           'name' => 'vf_embl_news_term',
           'type' => 'taxonomy',
           'instructions' => __('Filter articles by this term – takes priority over <b>Keyword</b>.', 'vfwp'),
           'required' => 0,
           'wrapper' => array(
-            'width' => '',
+            'width' => '50',
             'class' => '',
             'id' => '',
           ),
@@ -77,36 +73,7 @@ class VF_EMBL_News extends VF_Plugin {
         )
       );
     }
-    */
-
-
-    // Add Factoid clone field
-    if (class_exists('VF_Factoid')) {
-      acf_add_local_field(
-        array(
-          'parent' => 'group_vf_embl_news',
-          'key' => 'field_vf_embl_news_factoid',
-          'label' => 'Factoid',
-          'name' => 'vf_embl_news_factoid',
-          'type' => 'clone',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'clone' => array(
-            0 => 'group_vf_factoid',
-          ),
-          'display' => 'group',
-          'layout' => 'block',
-          'prefix_label' => 0,
-          'prefix_name' => 0,
-        )
-      );
-    }
+    
   }
 
 } // VF_EMBL_News
