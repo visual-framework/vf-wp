@@ -105,7 +105,7 @@ public function ells_breadcrumbs() {
       } elseif ( is_single() && !is_attachment() ) {
         $news_url = get_post_type_archive_link('post');
         $news_name = 'News';
-        echo '<li class="vf-breadcrumbs__item"><a href="' . $news_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
+        echo '<li class="vf-breadcrumbs__item"><a href="' . $news_url . '" class="vf-breadcrumbs__link">' . $news_name . '</a></li>';
         echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
     
       } elseif ( is_attachment() ) {
