@@ -69,24 +69,56 @@ $content = preg_replace(
   $content
 );
 
+$enable_sidebar = get_field('vf_embl_news_enable_sidebar');
+$heading = get_field('vf_embl_news_heading');
+$link = get_field('vf_embl_news_link');
+$additional_text = get_field('vf_embl_news_additional_text');
+$embl_grid = 'embl-grid';
+if ($enable_sidebar == 1) {
+  $embl_grid .= ' embl-grid--has-sidebar';
+}
 ?>
-<hr class="vf-divider">
-<div class="vf-u-grid--reset vf-body vf-body__additional-content vf-u-background-color-ui--white">
-  <section class="vf-news-container | embl-grid embl-grid--has-sidebar">
+  <section class="<?php echo $embl_grid; ?>">
     <div class="vf-section-header">
-      <h2 class="vf-section-header__heading"><?php the_title(); ?></h2>
+      <a class="vf-section-header__heading vf-section-header__heading--is-link" href="
+      <?php 
+      if (! empty($link)){
+        echo esc_url($link); }
+        else {
+          echo 'https://www.embl.org/news';
+        } ?>
+      ">
+
+      <?php 
+      if (! empty($heading)){
+        echo ($heading); }
+        else {
+          echo 'Latest news';
+      } ?>
+        <svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24"
+          height="24" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+            fill="" fill-rule="nonzero">
+          </path>
+        </svg>
+      </a>
+      <?php if ($additional_text) { ?>
+      <p class="vf-section-header__text">
+        <?php echo $additional_text; ?>
+      </p>
+      <?php } ?>
     </div>
-    <?php echo $content; ?>
-    <div class="vf-news-container__sidebar">
-      <?php
-      if (class_exists('VF_Factoid')) {
-        $vf_factoid = VF_Plugin::get_plugin('vf_factoid');
-        $fields = get_field('vf_embl_news_factoid', $acf_id);
-        if (is_array($fields)) {
-          VF_Plugin::render($vf_factoid, $fields, $vf_plugin);
-        }
-      }
-      ?>
+    <div>
+      <?php echo $content; ?>
     </div>
+    
+    <?php 
+    if ($enable_sidebar == 1) {
+    if (is_active_sidebar('vf_wp_embl_news_container')) { ?>
+    <div>
+      <?php vf_sidebar('vf_wp_embl_news_container'); ?>
+    </div>
+    <?php }} ?>
+
   </section>
-</div>
