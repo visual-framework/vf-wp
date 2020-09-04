@@ -4,6 +4,29 @@
 */
 get_header();
 
+$type = get_field('labs_type');
+$start_date = get_field('labs_start_date');
+$start = DateTime::createFromFormat('j F Y', $start_date);
+
+$end_date = get_field('labs_end_date');
+$end = DateTime::createFromFormat('j F Y', $end_date);
+
+$application_deadline = get_field('labs_application_deadline');
+$number_of_spots = get_field('labs_number_of_spots');
+$download = get_field('labs_download');
+$image = get_field('labs_image');
+
+
+if ( ! is_array($image)) {
+    $image = null;
+  } else {
+    $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
+      'class'    => 'vf-card__image',
+      'loading'  => 'lazy',
+      'itemprop' => 'image',
+    ));
+  }
+
 ?>
 
 <style>
@@ -25,12 +48,12 @@ get_header();
     <div class="vf-masthead__title">
       <h1 class="vf-masthead__heading">
         <a href="JavaScript:Void(0);" class="vf-masthead__heading__link">
-          Name of LLAB
+          <?php echo get_the_title(); ?>
         </a>
       </h1>
       <h2 class="vf-masthead__subheading">
         <span class="vf-masthead__location">
-          Type of LLAB
+          <?php echo ($type['label']); ?>
         </span>
       </h2>
     </div>
@@ -44,26 +67,62 @@ get_header();
       ?>
   </div>
   <div>
-    <figure class="vf-figure">
-      <img class="vf-figure__image"
-        src="http://emblebivfwp.docker.localhost:32777/wp-content/uploads/2020/09/LabMatters_1000x600px.jpg"
-        alt="hello alt text">
-    </figure>
+    <article class="vf-card vf-card--normal vf-u-background-color--green--dark | vf-u-margin__bottom--xl">
+      <?php
+        if ($image) {
+        echo $image;
+        }
+       ?>
+      <div class="vf-card__content">
+        <p class="vf-card__text | vf-u-margin__bottom--0" style="text-align: center;">
+          <?php 
+            if ( ! empty($start_date)) {
+                if ($end_date) { 
+                if ($start->format('F') == $end->format('F')) {
+                    echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
+                else {
+                    echo $start->format('j F'); ?> - <?php echo $end->format('j F Y'); }
+                    ?>
+                <?php } 
+                else {
+                echo $start->format('j F Y'); 
+                } }
+            ?>
+
+        </p>
+      </div>
+    </article>
     <div>
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;"> <span class="vf-badge vf-badge--secondary">
-          Application deadline:</span> 29 Sept 2021</p>
-      <hr class="vf-divider">
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Dates:<span class="vf-u-text-color--grey"> 29 -
-          31 Sept 2021</span></p>
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;"> <span class="vf-badge">
+          Application deadline:</span>&nbsp;<span
+          class="vf-u-text-color--grey"><?php echo ($application_deadline); ?></span></p>
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Contact:<span class="vf-u-text-color--grey">
-          jane@doe.com</span></p>
+          <?php
+            if( have_rows('labs_contact') ):
+            while( have_rows('labs_contact') ) : the_row();
+                $emails = get_sub_field('labs_emails');
+                echo ($emails);
+            endwhile;
+            else :
+            endif; ?>
+
+        </span></p>
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Application with / without selection</p>
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Number of spots in the LLAB:<span
-          class="vf-u-text-color--grey"> 29</span></p>
-      <hr class="vf-divider">
+          class="vf-u-text-color--grey">&nbsp;<?php echo ($number_of_spots); ?></span></p>
+      <hr class="vf-divider | vf-u-background-color--green--dark">
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
-          Jane Doe</span></p>
-      <hr class="vf-divider">
+          <?php
+            if( have_rows('labs_organisers') ):
+            while( have_rows('labs_organisers') ) : the_row();
+                $organisers = get_sub_field('labs_person', false, false);
+                echo ($organisers);
+            endwhile;
+        else :
+        endif; ?>
+
+        </span></p>
+      <hr class="vf-divider | vf-u-background-color--green--dark">
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Share:</p>
       <svg aria-hidden="true" display="none" class="vf-icon-collection vf-icon-collection--social">
         <defs>
@@ -131,8 +190,11 @@ get_header();
           </li>
         </ul>
       </div>
-      <hr class="vf-divider">
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Download</p>
+      <hr class="vf-divider | vf-u-background-color--green--dark">
+      <?php
+        if( $download ): ?>
+      <p><a class="vf-link" href="<?php echo $download['url']; ?>">Download</a></p>
+      <?php endif; ?>
 
     </div>
   </div>
