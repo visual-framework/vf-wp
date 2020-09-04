@@ -50,9 +50,6 @@ if ($type === 'easy' || $type === 'very-easy' || $type === 'has-image') {
   $class_div .= " vf-links__list--{$type}";
 }
 
-echo $before_widget;
-
-
 ?>
 <div class="<?php echo esc_attr($class_div); ?>">
   <?php if ( ! empty($heading)) { ?>
@@ -111,7 +108,7 @@ echo $before_widget;
 
     </li>
     <!--/vf-list-item-->
-      <?php 	echo $before_widget;
+      <?php
  } ?>
   </ul>
 </div>
