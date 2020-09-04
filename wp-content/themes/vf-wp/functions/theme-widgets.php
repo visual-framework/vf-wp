@@ -129,8 +129,13 @@ class VF_Theme_Widgets {
         'name'          => __('Page Sidebar', 'vfwp'),
         'id'            => 'sidebar-page',
         'description'   => __( 'Sidebar for standard pages.', 'vfwp')
-      ))
-    );
+      )),
+    array_merge($defaults, array(
+      'name'          => __('EMBL News container', 'vfwp'),
+      'id'            => 'vf_wp_embl_news_container',
+      'description'   => __( 'Sidebar for EMBL News container.', 'vfwp')
+    ))
+  );
     return $sidebars;
   }
 
