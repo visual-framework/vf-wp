@@ -65,7 +65,7 @@
     "@visual-framework/vf-card-container": "1.0.0",
     "@visual-framework/vf-code-example": "1.0.1",
     "@visual-framework/vf-config": "1.0.0-alpha.2",
-    "@visual-framework/vf-content": "1.1.10",
+    "@visual-framework/vf-content": "1.2.0",
     "@visual-framework/vf-core": "2.2.5",
     "@visual-framework/vf-design-tokens": "1.2.2",
     "@visual-framework/vf-details": "1.0.0-alpha.1",
