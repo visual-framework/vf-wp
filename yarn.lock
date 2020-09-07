@@ -1423,17 +1423,17 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.0-alpha.2.tgz#7213302398843219df70c2796ba7af1d8e15b42f"
   integrity sha512-vMW63tA/PazxYESI+HDoWv0bHU7r2u9ZiHfL3uPwfZMnvZXH99zVyZQ8kcZIJC8vEQUE4QilPcL5AC0DYFuAoQ==
 
-"@visual-framework/vf-content@1.1.10":
-  version "1.1.10"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.1.10.tgz#ba7f31ea34ed5dbe6a060d680e2fadbab159fa4d"
-  integrity sha512-haMHR1SCDz31G4Y9Z0psyH78xRPIEBWNRcnIVLbMyZH3pNMptacls56fgc0x7rSeC4l8jm05JhNOn8ZaihcGvg==
+"@visual-framework/vf-content@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.2.0.tgz#54f4e20049984d58b1e004c29e3eff10824d93f3"
+  integrity sha512-GrzZMrhGWUQ/Ip3C+vtl5z6GB20sIr+bt80Rpu/B8yPBygHhVSML8jX5TCvxj+NW7nPkmiuuWQx2avo/+5azOg==
   dependencies:
     "@visual-framework/vf-badge" "^1.2.1"
     "@visual-framework/vf-blockquote" "^1.0.2"
     "@visual-framework/vf-box" "^1.1.1"
     "@visual-framework/vf-button" "^1.1.1"
     "@visual-framework/vf-divider" "^1.0.0"
-    "@visual-framework/vf-figure" "^1.2.0"
+    "@visual-framework/vf-figure" "^1.3.0"
     "@visual-framework/vf-form__core" "^1.0.3"
     "@visual-framework/vf-heading" "^1.0.0"
     "@visual-framework/vf-link" "^1.0.3"
@@ -1492,10 +1492,10 @@
     luxon "^1.22.2"
     touch "^3.1.0"
 
-"@visual-framework/vf-figure@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-figure/-/vf-figure-1.2.0.tgz#a340d6a1ca62f4c8766bc3e079ccbb9f1447c8ce"
-  integrity sha512-jJx7aP3cxI99o2/UeENpu/WF8J+lXafLFJ0e7LA8mc6g061nHBDWiwUtnWaZFJ7g/U7YLTg8EPNhRUQ1H/2i0w==
+"@visual-framework/vf-figure@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-figure/-/vf-figure-1.3.0.tgz#6d60b9ee33e9e681e13752082800fb0450e8945f"
+  integrity sha512-SIS/FOhMn+cPZHqF7dNJPqhE8BNNU5pR8ZZsdWXsRC1zQDGWAaz0HyuD8Xtp8MOp+4JFP2DrrGpURc3V07uYLA==
 
 "@visual-framework/vf-font-plex-mono@1.1.0":
   version "1.1.0"
