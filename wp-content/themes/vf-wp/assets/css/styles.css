@@ -188,7 +188,7 @@
 
 /*!
  * Component: @visual-framework/vf-discussion
- * Version: 1.0.0-beta.1
+ * Version: 1.0.0
  * Location: components/vf-core-
  */.vf-discussion__title{font-family:IBM Plex Sans,Helvetica,Arial,sans-serif;font-size:30px;font-weight:500;line-height:1.333;margin:0 0 16px;margin:0 0 var(--vf-text-margin--bottom,16px)}.vf-discussion__item{border-top:1px solid #d0d0ce;margin-bottom:24px;padding-top:24px}.vf-discussion__meta{display:inline-block;margin-bottom:16px}.vf-discussion__author{font-size:19px;font-weight:500;line-height:1.5;margin:0 0 14px;font-style:normal}.vf-discussion__author,.vf-discussion__date{font-family:IBM Plex Sans,Helvetica,Arial,sans-serif}.vf-discussion__date{font-size:16px;font-weight:400;line-height:1.71;margin:0;color:#d0d0ce}.vf-discussion__author-avatar{border-radius:50%;float:left;margin-right:24px;width:57px}.vf-discussion__item .vf-discussion__list{margin-top:24px}.vf-discussion__item .vf-discussion__list .vf-discussion__item{padding-left:40px}.vf-discussion__comment{margin-bottom:16px}
 
