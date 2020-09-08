@@ -1589,10 +1589,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-pagination/-/vf-pagination-1.0.0-rc.1.tgz#25c35948abfba1dd11d7a7edf8f75c66c279767b"
   integrity sha512-ucCQC1hvvffXygOE10XbP9zTgu97Qch3dKo7BjNrkw7/Mp2UFAzH3QqffyTTyO9VKDfvdwZVqEqHp/FbpKQPmQ==
 
-"@visual-framework/vf-profile@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-profile/-/vf-profile-1.1.1.tgz#4ed6358283737fb688f2ceaf885a6d963136b904"
-  integrity sha512-w/yrrds/iDRmb/pdj+urnOWsaRnA0FbT/p5ejatQdNU7V5jEqKP2jSVFfJfOKVPTyZ7yJoUwZYx9T8Kxc351NA==
+"@visual-framework/vf-profile@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-profile/-/vf-profile-1.2.0.tgz#18b53704be311ebc9f5eb0e39730f1dd01b482cd"
+  integrity sha512-9SDynhMIe+WZfk1nb0i7ELSzrMQ19m0AAe5WQKt6GZuPBvKnzVAQB09+NDFeBd/fKBQufqYhVWN4igwHZggCLg==
 
 "@visual-framework/vf-sass-compilation@^1.0.1":
   version "1.0.1"
