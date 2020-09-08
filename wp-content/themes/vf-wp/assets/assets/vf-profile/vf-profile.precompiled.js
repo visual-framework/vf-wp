@@ -245,7 +245,7 @@ output += "  <img class=\"vf-profile__image\" src=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "profile__image"), env.opts.autoescape);
 output += "\" alt=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "profile__image_alt"), env.opts.autoescape);
-output += "\">\n";
+output += "\" loading=\"lazy\">\n";
 ;
 }
 output += "\n";
