@@ -28,7 +28,7 @@ if ( ! is_array($image)) {
 
 <style>
   .vf-masthead {
-    --vf-masthead__bg-image: url(https://wwwdev.embl.org/internal-information/wp-content/uploads/2020/07/EBI_webbanner_test_V1-1224x348.jpg);
+    --vf-masthead__bg-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg);
     --global-theme-fg-color: #fff;
     --global-theme-bg-color: #3b6fb6;
   }
@@ -39,7 +39,7 @@ if ( ! is_array($image)) {
 
 </style>
 <div class="vf-masthead vf-masthead--with-title-block | vf-u-margin__bottom--xxl
-" style="background-image: url(https://wwwdev.embl.org/internal-information/wp-content/uploads/2020/07/EBI_webbanner_test_V1-1224x348.jpg);
+" style="background-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg);
          --local-theme-fg-color:#FFFFFF;" data-vf-js-masthead>
   <div class="vf-masthead__inner">
     <div class="vf-masthead__title">

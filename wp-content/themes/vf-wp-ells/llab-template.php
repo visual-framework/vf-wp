@@ -31,18 +31,18 @@ if ( ! is_array($image)) {
 
 <style>
   .vf-masthead {
-    --vf-masthead__bg-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/08/Screenshot-2020-08-10-at-13.25.31.png);
+    --vf-masthead__bg-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg);
     --global-theme-fg-color: #fff;
-    --global-theme-bg-color: #007a53;
+    --global-theme-bg-color: #18974C;
   }
 
   .vf-masthead--with-title-block .vf-masthead__title:before {
-    --global-theme-bg-color: #007a53;
+    --global-theme-bg-color: #18974C;
   }
 
 </style>
 <div class="vf-masthead vf-masthead--with-title-block | vf-u-margin__bottom--xxl
-" style="background-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/08/Screenshot-2020-08-10-at-13.25.31.png);
+" style="background-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg);
          --local-theme-fg-color:#FFFFFF;" data-vf-js-masthead>
   <div class="vf-masthead__inner">
     <div class="vf-masthead__title">
@@ -67,7 +67,7 @@ if ( ! is_array($image)) {
       ?>
   </div>
   <div>
-    <article class="vf-card vf-card--normal vf-u-background-color--green--dark | vf-u-margin__bottom--xl">
+    <article class="vf-card vf-card--normal vf-u-background-color--green | vf-u-margin__bottom--xl">
       <?php
         if ($image) {
         echo $image;
