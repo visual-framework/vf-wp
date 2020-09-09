@@ -26,7 +26,7 @@ frame.set("loop.length", t_2);
 output += "    <li class=\"vf-breadcrumbs__item\">\n";
 if(runtime.memberLookup((t_4),"breadcrumb_href")) {
 output += "      <a href=\"";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "breadcrumb_href"), env.opts.autoescape);
+output += runtime.suppressValue(runtime.memberLookup((t_4),"breadcrumb_href"), env.opts.autoescape);
 output += "\" class=\"vf-breadcrumbs__link\">";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"text"), env.opts.autoescape);
 output += "</a>\n";
