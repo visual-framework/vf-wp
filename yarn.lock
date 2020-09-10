@@ -1685,10 +1685,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-video-container/-/vf-video-container-1.0.0-beta.1.tgz#bf1fb8f30724d93b729e179350e909e05731f337"
   integrity sha512-tluWG73dPpZ8f31ReMdQaJ5AXhhu6YSy+82v2mqOooRnAqpyJ5E8zhhRm+yWJcXzHyr7+o6ghZdwRJOvXN3oMw==
 
-"@visual-framework/vf-video-teaser@1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-video-teaser/-/vf-video-teaser-1.0.0-beta.2.tgz#3028e6552b0d3874089223fac3a7f69f54147b25"
-  integrity sha512-qC03XMUuloADYvt8Lx+oyrfqhu0q36lf6yETKpX+BecG4+jYD/Ph5Xefwe8XiFCEzR4dwU+xL9y3Imd98gEjdw==
+"@visual-framework/vf-video-teaser@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-video-teaser/-/vf-video-teaser-1.0.0.tgz#564f14c56553b0b12d31fc40518b9ef2c1c76c78"
+  integrity sha512-nJQ+sOMxBroquOoSwT7K0nZo79ovtD2FznoHsuoUhRUlfnx7/nVlhssFFhLE8URwM4WJYBFmzRyeDrZKv8EJ6g==
 
 "@visual-framework/vf-video@1.0.0-beta.1":
   version "1.0.0-beta.1"
