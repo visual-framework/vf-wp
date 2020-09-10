@@ -62,7 +62,7 @@ if (
     while (have_rows('list_items')) {
       the_row();
       $text = get_sub_field('text');
-      $url = get_sub_field('url');
+      $link = get_sub_field('link');
       $badge_text = get_sub_field('badge_text');
       $badge_style = get_sub_field('badge_style');
       $meta_information = get_sub_field('meta_information');
@@ -79,7 +79,7 @@ if (
     ?>
 
     <li class="vf-list__item">
-      <a class="vf-list__link" href="<?php echo esc_url($url); ?>">
+      <a class="vf-list__link" href="<?php echo esc_url($link['url']); ?>">
 
       <?php
       if ($type === 'has-image') {
