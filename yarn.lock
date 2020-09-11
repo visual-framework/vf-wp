@@ -1240,10 +1240,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-content-meta-properties/-/embl-content-meta-properties-1.0.1.tgz#ab990ae5d4a0cd34b3ce92ea966f7e3b6fb9498f"
   integrity sha512-QiCUy0KVIiUMMNo1RHDDDSjIefGUgKXsTo4IUfh/62Ns4FvtaI+8ywJaYAjLCjpxRR/HxuGG8+4MXjeof9Hu/g==
 
-"@visual-framework/embl-grid@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/embl-grid/-/embl-grid-2.0.2.tgz#ddd4c40de054b700b535bcc694fa4f4153ebc5b4"
-  integrity sha512-aIvB7vNkN1IjftqkynLbwCfUwDlDtBdRun8ewK10GuJ2JRZ64KNo9+NbS6n7yZLTbEQm7YzUEvbV7EAxv7hQpA==
+"@visual-framework/embl-grid@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/embl-grid/-/embl-grid-2.0.3.tgz#a8ef679cc5c19563e89b8f24d43567c483d6547d"
+  integrity sha512-oRlJtszIfpp2F7x0JxNZX6wsNSnxAocnCXAfhk5hnjRTLxlAt1cQsuZgdRKBR+R5TH2w548n57qsvmdjoZlfvg==
 
 "@visual-framework/embl-logo@1.0.4":
   version "1.0.4"
@@ -1625,10 +1625,10 @@
     stylelint-scss "^3.12.0"
     vinyl-source-stream "^2.0.0"
 
-"@visual-framework/vf-sass-config@1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-sass-config/-/vf-sass-config-1.4.1.tgz#11046fd0002d73a1d4bb6edda3a143aa8db37457"
-  integrity sha512-i9R3x4bWs6ZPRTCcCXYevJWAjHLiP0/nD+fGumE+9z5TXZEAZTJP1IsPSQ3p+sa68lZLa56lRdsRC3LOfQ0Xew==
+"@visual-framework/vf-sass-config@1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-sass-config/-/vf-sass-config-1.4.2.tgz#8c219e3e2ecfa0b7c029189b73eb056a4502132d"
+  integrity sha512-GpbnDJw5K1kJSRztSXGxje2d5Q+ZVqeLm5esQpgltPNugrs4slJhZ6jUKdV3mI2eAohPLakgLvz6GyL4PHQgBQ==
 
 "@visual-framework/vf-sass-utilities@1.0.1":
   version "1.0.1"
@@ -1650,10 +1650,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-social-links/-/vf-social-links-0.0.1.tgz#5218c086dd5d0100e86eb547d05adedf9f7a98c3"
   integrity sha512-WUrmX1wObymMWbFnvresqVMmLZMSiSrBtcTe+hIUQibodGYWweKqt7DyXSrW2x7Z+x3Jo9pOf5JClfR2E39/kA==
 
-"@visual-framework/vf-summary@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.3.0.tgz#ac79bcc8fe7bb23088f3d856fbf68f52e8bec299"
-  integrity sha512-JdAWTkV6nGMAzrKSJBIHmXIlQ7QJUjfNKJUNLKh14jW7KNlC9/aZohHsiMYfLrc1fy5besXfIQZH75SnRWH83w==
+"@visual-framework/vf-summary@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.3.1.tgz#ee1eea4286e0ed4df430a7ccb16fa04a26005c4c"
+  integrity sha512-rfcffnVsZPnsRxqUMecKfcqVWj5WvZHvo2FFfWqGt/7kS3S0YEWiHZBS98cvWOm7EQFFirxEsxzcHEB6HPOt8A==
 
 "@visual-framework/vf-table@1.0.1-1.1.1.0":
   version "1.0.1-1.1.1.0"
