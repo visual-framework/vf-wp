@@ -2055,7 +2055,6 @@ function emblBreadcrumbs() {
 })([Element.prototype, Document.prototype, DocumentFragment.prototype]); // Run it on default
 // emblBreadcrumbs();
 
-
 /*
  *
  * scripts.css
@@ -2069,6 +2068,7 @@ vfBanner();
 vfMastheadSetStyle();
 vfGaIndicateLoaded();
 vfTabs();
+vfLocationNearest.vfLocationNearest();
 vfFormFloatLabels();
 emblContentHub();
 emblBreadcrumbs(); // if you use embl-content-hub-loader, it will automatically invoke emblNotifications
