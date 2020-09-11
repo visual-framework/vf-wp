@@ -1,21 +1,19 @@
 <?php
 /**
-* Template Name: LLABs template
+* Template Name: Visit EMBL template
 */
 get_header();
 
-$type = get_field('labs_type');
-$start_date = get_field('labs_start_date');
+$type = get_field('visit_type');
+$start_date = get_field('visit_start_date');
 $start = DateTime::createFromFormat('j F Y', $start_date);
 
-$end_date = get_field('labs_end_date');
+$end_date = get_field('visit_end_date');
 $end = DateTime::createFromFormat('j F Y', $end_date);
 
-$application_deadline = get_field('labs_application_deadline');
-$number_of_spots = get_field('labs_number_of_spots');
-$download = get_field('labs_download');
-$image = get_field('labs_image');
-
+$number_of_spots = get_field('visit_number_of_students');
+$download = get_field('visit_download');
+$image = get_field('visit_image');
 
 if ( ! is_array($image)) {
     $image = null;
@@ -26,23 +24,22 @@ if ( ! is_array($image)) {
       'itemprop' => 'image',
     ));
   }
-
 ?>
 
 <style>
   .vf-masthead {
-    --vf-masthead__bg-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg);
+    --vf-masthead__bg-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg);
     --global-theme-fg-color: #fff;
-    --global-theme-bg-color: #18974C;
+    --global-theme-bg-color: #3b6fb6;
   }
 
   .vf-masthead--with-title-block .vf-masthead__title:before {
-    --global-theme-bg-color: #18974C;
+    --global-theme-bg-color: #3b6fb6;
   }
 
 </style>
 <div class="vf-masthead vf-masthead--with-title-block | vf-u-margin__bottom--xxl
-" style="background-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg);
+" style="background-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg);
          --local-theme-fg-color:#FFFFFF;" data-vf-js-masthead>
   <div class="vf-masthead__inner">
     <div class="vf-masthead__title">
@@ -67,62 +64,57 @@ if ( ! is_array($image)) {
       ?>
   </div>
   <div>
-    <article class="vf-card vf-card--normal vf-u-background-color--green | vf-u-margin__bottom--xl">
+    <article class="vf-card vf-card-theme--secondary vf-card--normal | vf-u-margin__bottom--xl">
       <?php
         if ($image) {
-        echo $image;
+          echo $image;
         }
-       ?>
+      ?>
       <div class="vf-card__content">
         <p class="vf-card__text | vf-u-margin__bottom--0" style="text-align: center;">
           <?php 
-            if ( ! empty($start_date)) {
-                if ($end_date) { 
-                if ($start->format('F') == $end->format('F')) {
-                    echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
-                else {
-                    echo $start->format('j F'); ?> - <?php echo $end->format('j F Y'); }
-                    ?>
-                <?php } 
-                else {
-                echo $start->format('j F Y'); 
-                } }
+      if ( ! empty($start_date)) {
+        if ($end_date) { 
+          if ($start->format('F') == $end->format('F')) {
+            echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
+          else {
+            echo $start->format('j F'); ?> - <?php echo $end->format('j F Y'); }
             ?>
+          <?php } 
+        else {
+          echo $start->format('j F Y'); 
+        } }
+      ?>
 
         </p>
       </div>
     </article>
     <div>
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;"> <span class="vf-badge">
-          Application deadline:</span>&nbsp;<span
-          class="vf-u-text-color--grey"><?php echo ($application_deadline); ?></span></p>
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Contact:<span class="vf-u-text-color--grey">
           <?php
-            if( have_rows('labs_contact') ):
-            while( have_rows('labs_contact') ) : the_row();
-                $emails = get_sub_field('labs_emails');
+          if( have_rows('visit_contact') ):
+            while( have_rows('visit_contact') ) : the_row();
+                $emails = get_sub_field('visit_emails');
                 echo ($emails);
-            endwhile;
-            else :
-            endif; ?>
-
-        </span></p>
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Application with / without selection</p>
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Number of spots in the LLAB:<span
-          class="vf-u-text-color--grey">&nbsp;<?php echo ($number_of_spots); ?></span></p>
-      <hr class="vf-divider | vf-u-background-color--green--dark">
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
-          <?php
-            if( have_rows('labs_organisers') ):
-            while( have_rows('labs_organisers') ) : the_row();
-                $organisers = get_sub_field('labs_person', false, false);
-                echo ($organisers);
             endwhile;
         else :
         endif; ?>
 
         </span></p>
-      <hr class="vf-divider | vf-u-background-color--green--dark">
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Number of students per visit:<span
+          class="vf-u-text-color--grey">&nbsp;<?php echo ($number_of_spots); ?></span></p>
+      <hr class="vf-divider | vf-u-background-color--blue">
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
+          <?php
+            if( have_rows('visit_organisers') ):
+            while( have_rows('visit_organisers') ) : the_row();
+                $organisers = get_sub_field('visit_person', false, false);
+                echo ($organisers);
+            endwhile;
+            else :
+            endif; ?>
+        </span></p>
+      <hr class="vf-divider | vf-u-background-color--blue">
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Share:</p>
       <svg aria-hidden="true" display="none" class="vf-icon-collection vf-icon-collection--social">
         <defs>
@@ -190,7 +182,7 @@ if ( ! is_array($image)) {
           </li>
         </ul>
       </div>
-      <hr class="vf-divider | vf-u-background-color--green--dark">
+      <hr class="vf-divider | vf-u-background-color--blue">
       <?php
         if( $download ): ?>
       <p><a class="vf-link" href="<?php echo $download['url']; ?>">Download</a></p>

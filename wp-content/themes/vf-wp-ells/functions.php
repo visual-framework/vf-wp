@@ -1,5 +1,8 @@
 <?php
 
+require_once('functions/ells-breadcrumbs.php');
+
+
 // Newsletter container
 
 if ( ! defined( 'ABSPATH' ) ) exit;
