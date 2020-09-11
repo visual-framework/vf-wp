@@ -1,164 +1,163 @@
 {
-  "key": "group_5ebd3243ea055",
-  "title": "Card",
-  "fields": [
-    {
-      "key": "field_5ebd3243ee8ec",
-      "label": "Image",
-      "name": "image",
-      "type": "image",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "library": "all",
-      "min_width": "",
-      "min_height": "",
-      "min_size": "",
-      "max_width": "",
-      "max_height": "",
-      "max_size": "",
-      "mime_types": ""
-    },
-    {
-      "key": "field_5ebd3243ee989",
-      "label": "Title",
-      "name": "title",
-      "type": "text",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "default_value": "",
-      "placeholder": "",
-      "prepend": "",
-      "append": "",
-      "maxlength": ""
-    },
-    {
-      "key": "field_5ebd3243eea26",
-      "label": "Text",
-      "name": "text",
-      "type": "textarea",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "default_value": "",
-      "placeholder": "",
-      "maxlength": "",
-      "rows": 5,
-      "new_lines": ""
-    },
-    {
-      "key": "field_5ebd3243eeac3",
-      "label": "Link",
-      "name": "link",
-      "type": "url",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "default_value": "",
-      "placeholder": ""
-    },
-    {
-      "key": "field_5ebd3244102b1",
-      "label": "Style",
-      "name": "style",
-      "type": "select",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "choices": {
-        "very-easy": "Very Easy",
-        "easy": "Easy",
-        "normal": "Normal"
-      },
-      "default_value": ["very-easy"],
-      "allow_null": 0,
-      "multiple": 0,
-      "ui": 0,
-      "return_format": "value",
-      "ajax": 0,
-      "placeholder": ""
-    },
-    {
-      "key": "field_5ebd53344497f",
-      "label": "Theme",
-      "name": "theme",
-      "type": "select",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": [
+    "key": "group_5ebd3243ea055",
+    "title": "Card",
+    "fields": [
+        {
+            "key": "field_5ebd3243ee8ec",
+            "label": "Image",
+            "name": "image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5ebd3243ee989",
+            "label": "Title",
+            "name": "title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ebd3243eea26",
+            "label": "Text",
+            "name": "text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 5,
+            "new_lines": ""
+        },
+        {
+            "key": "field_5ebd3243eeac3",
+            "label": "Link",
+            "name": "link",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5ebd3244102b1",
+            "label": "Style",
+            "name": "style",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "very-easy": "Very Easy",
+                "easy": "Easy",
+                "normal": "Normal"
+            },
+            "default_value": "very-easy",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5ebd53344497f",
+            "label": "Theme",
+            "name": "theme",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ebd3244102b1",
+                        "operator": "!=",
+                        "value": "very-easy"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "None",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary",
+                "quaternary": "Quaternary"
+            },
+            "default_value": "none",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
         [
-          {
-            "field": "field_5ebd3244102b1",
-            "operator": "!=",
-            "value": "very-easy"
-          }
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vfwp-card"
+            }
         ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "choices": {
-        "none": "None",
-        "primary": "Primary",
-        "secondary": "Secondary",
-        "tertiary": "Tertiary",
-        "quaternary": "Quaternary"
-      },
-      "default_value": ["none"],
-      "allow_null": 0,
-      "multiple": 0,
-      "ui": 0,
-      "return_format": "value",
-      "ajax": 0,
-      "placeholder": ""
-    }
-  ],
-  "location": [
-    [
-      {
-        "param": "block",
-        "operator": "==",
-        "value": "acf/vfwp-card"
-      }
-    ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "seamless",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": "VF-WP Card ACF Gutenberg block",
-  "modified": 1589465366
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF-WP Card ACF Gutenberg block",
+    "modified": 1599815303
 }
