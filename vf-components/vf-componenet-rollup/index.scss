@@ -39,6 +39,7 @@ button {
 // @import 'vf-grid-page/vf-grid-page.scss';
 @import 'vf-body/vf-body.scss';
 @import 'vf-grid/vf-grid.scss';
+@import 'vf-stack/vf-stack.scss';
 @import 'vf-inlay/vf-inlay.scss';
 @import 'embl-grid/embl-grid.scss';
 
@@ -65,8 +66,6 @@ button {
 /* All Visual Framework Blocks */
 
 @import 'vf-box/vf-box.scss';
-@import 'vf-box/vf-box--inlay.scss';
-@import 'vf-box/vf-box--factoid.scss';
 
 @import 'vf-breadcrumbs/vf-breadcrumbs.scss';
 @import 'vf-breadcrumbs/vf-breadcrumbs--with-related.scss';
@@ -138,6 +137,8 @@ button {
 @import 'vf-video-container/vf-video-container.scss';
 @import 'vf-footer/vf-footer.scss';
 
+@import 'vf-show-more/vf-show-more.scss';
+
 @import 'vf-tree/vf-tree.scss';
 
 /* All Visual Framework Boilerplates */
@@ -166,7 +167,7 @@ button {
 
 // This is a demonstration of vf-core's ability to warn and proceed on missing
 // sass imports
-@import 'vf-somepattern/vf-i-dont-exist.scss';
+// @import 'vf-somepattern/vf-i-dont-exist.scss';
 
 // If you have any locoal overrides, put them in:
 @import 'vf-local-overrides/vf-local-overrides.scss';
