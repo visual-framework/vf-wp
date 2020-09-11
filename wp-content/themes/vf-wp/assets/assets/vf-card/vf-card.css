@@ -53,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card
- * Version: 1.0.6
+ * Version: 2.1.2
  * Location: components/vf-card
  */
 .vf-card {
@@ -61,41 +61,19 @@
   --card-background-color: var(--vf-card-theme-color--background , #ffffff);
   background-color: var(--card-background-color);
   display: grid;
-  grid-template-rows: 216px 1fr;
-  -webkit-transition-duration: 250ms;
-          transition-duration: 250ms;
-  -webkit-transition-property: -webkit-box-shadow;
-  transition-property: -webkit-box-shadow;
-  transition-property: box-shadow;
-  transition-property: box-shadow, -webkit-box-shadow;
-  -webkit-transition-timing-function: ease-in-out;
-          transition-timing-function: ease-in-out;
-}
-.vf-card:hover {
-  -webkit-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
-  -webkit-transition-duration: 250ms;
-          transition-duration: 250ms;
-  -webkit-transition-property: -webkit-box-shadow;
-  transition-property: -webkit-box-shadow;
-  transition-property: box-shadow;
-  transition-property: box-shadow, -webkit-box-shadow;
-  -webkit-transition-timing-function: ease-in-out;
-          transition-timing-function: ease-in-out;
-}
-
-.vf-card--is-link {
-  cursor: pointer;
-  text-decoration: none;
+  grid-template-rows: 288px 1fr;
+  position: relative;
 }
 
 .vf-card__image {
   grid-column: 1/-1;
-  grid-row: 1/span 3;
+  grid-row: 1;
   height: 100%;
   max-width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
   width: 100%;
 }
 
@@ -116,6 +94,42 @@
   color: var(--card-text-color, #000000);
   text-decoration: none;
 }
+.vf-card__title .vf-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+.vf-card__title .vf-card__link::after {
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition-duration: 300ms;
+          transition-duration: 300ms;
+  -webkit-transition-property: -webkit-box-shadow;
+  transition-property: -webkit-box-shadow;
+  transition-property: box-shadow;
+  transition-property: box-shadow, -webkit-box-shadow;
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
+  z-index: 512;
+}
+.vf-card__title .vf-card__link:hover {
+  color: currentColor;
+  text-decoration: none;
+}
+.vf-card__title .vf-card__link:hover::after {
+  -webkit-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
+  -webkit-transition-duration: 250ms;
+          transition-duration: 250ms;
+}
+.vf-card__title .vf-card__link:hover,
+.vf-card__title .vf-card__link:visited,
+.vf-card__title .vf-card__link:visited:hover {
+  color: currentColor;
+}
 
 .vf-card__text {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -126,6 +140,11 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
   color: #000000;
   color: var(--card-text-color, #000000);
+}
+.vf-card__text a,
+.vf-card__text .vf-card__link {
+  position: relative;
+  z-index: 1984;
 }
 
 .vf-card__link {
@@ -191,27 +210,36 @@
 .vf-card--hard .vf-card__text {
   padding-top: 16px;
 }
+.vf-card--hard .vf-card__text .vf-card__link {
+  position: relative;
+  z-index: 1984;
+}
 
 [class*=ary].vf-card--easy {
   --vf-card-theme-color--background: #ffffff;
 }
 
-.vf-card-theme--primary {
-  --vf-card-theme-color--foreground: #ffffff;
-  --vf-card-theme-color--border: #18974c;
-  --vf-card-theme-color--background: #18974c;
+[class*=ary] .vf-card__text .vf-card__link {
+  color: inherit;
+  text-decoration: underline;
 }
 
-.vf-card-theme--secondary {
+.vf-card-theme--primary {
   --vf-card-theme-color--foreground: #ffffff;
   --vf-card-theme-color--border: #3b6fb6;
   --vf-card-theme-color--background: #3b6fb6;
 }
 
+.vf-card-theme--secondary {
+  --vf-card-theme-color--foreground: #000000;
+  --vf-card-theme-color--border: #18974c;
+  --vf-card-theme-color--background: #18974c;
+}
+
 .vf-card-theme--tertiary {
   --vf-card-theme-color--foreground: #ffffff;
-  --vf-card-theme-color--border: #707372;
-  --vf-card-theme-color--background: #707372;
+  --vf-card-theme-color--border: #54585a;
+  --vf-card-theme-color--background: #54585a;
 }
 
 .vf-card-theme--quaternary {
