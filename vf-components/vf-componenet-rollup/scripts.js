@@ -20,6 +20,7 @@ import { vfTabs } from 'vf-tabs/vf-tabs';
 vfTabs();
 
 import { vfLocationNearest } from 'vf-location-nearest/vf-location-nearest';
+vfLocationNearest();
 
 // import { vfTree } from 'vf-tree/vf-tree';
 // vfTree();
