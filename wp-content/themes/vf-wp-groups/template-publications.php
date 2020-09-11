@@ -35,6 +35,7 @@ global $vf_theme;
 
       ?>
     </main>
+    <?php /*
     <aside class="vf-inlay__content--additional">
       <form id="publications-filter" role="search" method="get" action="<?php the_permalink(); ?>">
         <div class="vf-search vf-search--inline">
@@ -67,6 +68,7 @@ global $vf_theme;
         </div>
       </form>
     </aside>
+    */ ?>
   </div>
 </section>
 <?php
