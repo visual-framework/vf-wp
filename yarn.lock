@@ -1490,6 +1490,11 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-list/-/vf-list-1.0.0.tgz#b9811e51b9abf7951f02525c9d71b70fe04d3ec3"
   integrity sha512-8JID0VCV4+X5zvX7DjCyzqXJX4is9wehf0fLDJJnBPzwziJ+Rgy9PdzH6AAbcEWUTdlLtSczWE7uMJyMst5tGQ==
 
+"@visual-framework/vf-location-nearest@1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-location-nearest/-/vf-location-nearest-1.0.0-alpha.1.tgz#4793e6510d85bc922c9cfd9e688d21167b9d6d3d"
+  integrity sha512-BvDD3gBKzvelBTIbW+p4wjQLpSOCpLT15YCK185xrnxsxenLZ1ox9mKCgvCqYBh29GCK06XiYnhZEvDzxLN0+A==
+
 "@visual-framework/vf-masthead@1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.1.1.tgz#46bea7f49609e543fc52533871f8ae4c68d4ee20"

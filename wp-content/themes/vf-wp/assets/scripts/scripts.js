@@ -2083,7 +2083,6 @@ vfBanner();
 vfMastheadSetStyle();
 vfGaIndicateLoaded();
 vfTabs();
-vfLocationNearest.vfLocationNearest();
 vfFormFloatLabels();
 emblContentHub();
 emblBreadcrumbs(); // if you use embl-content-hub-loader, it will automatically invoke emblNotifications
