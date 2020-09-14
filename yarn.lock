@@ -1576,7 +1576,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-social-links/-/vf-social-links-0.0.1.tgz#5218c086dd5d0100e86eb547d05adedf9f7a98c3"
   integrity sha512-WUrmX1wObymMWbFnvresqVMmLZMSiSrBtcTe+hIUQibodGYWweKqt7DyXSrW2x7Z+x3Jo9pOf5JClfR2E39/kA==
 
-"@visual-framework/vf-stack@^1.1.1":
+"@visual-framework/vf-stack@1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-stack/-/vf-stack-1.1.1.tgz#32228f7b51abf05c5325db91e3e05ea806e73675"
   integrity sha512-lprj8P3Vpt/k1Oe3AXxU/MEa3v+OvxnqaIxrFMRdzgIRpxnNH/UtFs5ldY17SE7MIZBzBHmeTWDuHjjiA/2xtg==
