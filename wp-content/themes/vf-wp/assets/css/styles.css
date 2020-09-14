@@ -319,7 +319,7 @@
 
 /*!
  * Component: @visual-framework/embl-breadcrumbs-lookup
- * Version: 1.0.0-rc.0
+ * Version: 1.0.0
  * Location: components/vf-core-
  */.embl-grid .embl-breadcrumbs-lookup:first-child{grid-column:1/-1;margin-bottom:0}.embl-breadcrumbs-lookup--ghosting{animation:a 4s ease-in-out infinite alternate;background:50% top/15% 60% linear-gradient(90deg,#d8d8d8,#f3f3f3 30%,#f3f3f3 50%,#d8d8d8);display:block;filter:blur(1rem);height:17px;margin-bottom:5px;margin-top:5px;-webkit-mask-box-image:url(../assets/embl-breadcrumbs-lookup/assets/embl-breadcrumbs-lookup-ghost.svg) stretch;mask-border:url(../assets/embl-breadcrumbs-lookup/assets/embl-breadcrumbs-lookup-ghost.svg) stretch;max-width:60rem;width:100%}@keyframes a{to{background-position:100%}}
 /*!
