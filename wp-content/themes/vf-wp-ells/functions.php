@@ -2,6 +2,10 @@
 
 require_once('functions/ells-breadcrumbs.php');
 
+// enable featured image
+add_theme_support( 'post-thumbnails' );
+add_theme_support( 'title-tag' );
+
 
 // Newsletter container
 
