@@ -305,7 +305,9 @@ class VF_Gutenberg {
       */ ?>
   </div>
   <?php if ($is_jsx) { ?>
-  <InnerBlocks />
+  <div class="vf-block__inner-blocks">
+    <InnerBlocks />
+  </div>
   <?php } ?>
 </div>
 <script>

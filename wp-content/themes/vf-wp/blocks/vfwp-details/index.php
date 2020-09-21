@@ -30,7 +30,8 @@ class VFWP_Details extends VFWP_Block {
       'category' => 'vf/wp',
       'supports' => array(
         'align'           => false,
-        'customClassName' => false
+        'customClassName' => false,
+        'jsx'             => true
       )
     );
   }
