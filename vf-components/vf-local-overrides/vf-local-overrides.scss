@@ -7,8 +7,7 @@
 // If you don't have any Sass, you can trim this block down to:
 // "This page was intentionally left blank"
 
-
-@import 'vf-local-overrides.variables.scss';
+@import "vf-local-overrides.variables.scss";
 
 .vf-local-overrides {
   /* your settings here */
@@ -21,7 +20,6 @@
 }
 
 .vf-box__text {
-
   // some times there's a link inside the text in old WP posts.
   // the vf-box might also be inside of `vf-content`
   .vf-content & a,
@@ -34,7 +32,7 @@
   }
 }
 
-  // WordPress is adding a figure around tables and we get default margins
-  figure:not([class*="vf-"]) {
-    margin: 0;
-  }
+// WordPress is adding a figure around tables and we get default margins
+figure:not([class*="vf-"]) {
+  margin: 0;
+}
