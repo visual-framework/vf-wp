@@ -28,9 +28,10 @@ class VFWP_Debug extends VFWP_Block {
       'title'    => 'Debug',
       'category' => 'vf/wp',
       'supports' => array(
+        'vf/renderIFrame' => false,
+        'vf/innerBlocks'  => true,
         'align'           => false,
-        'customClassName' => false,
-        'jsx'             => true
+        'customClassName' => false
       )
     );
   }
