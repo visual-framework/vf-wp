@@ -69,7 +69,7 @@ class VFWP_Block {
       $config['supports']['jsx'] = $config['supports']['vf/innerBlocks'];
     }
     // Setup render callback using VF Gutenberg plugin or fallback
-    $config['render_callback'] = function() {
+    $callback = function() use ($config) {
       $args = func_get_args();
       $template = $this->get_template();
       // Render block in iFrame by default if plugin exists
@@ -90,7 +90,12 @@ class VFWP_Block {
       }
     };
     // Register the Gutenberg block with ACF
-    acf_register_block_type($config);
+    acf_register_block_type(array_merge(
+      $config,
+      array(
+        'render_callback' => $callback
+      )
+    ));
     // Add "Full-width Layout" settings for container blocks
     if ($this->is_containerable()) {
       acf_add_local_field_group(array(

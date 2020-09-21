@@ -31,16 +31,15 @@ if (
 }
 ?>
 
-<details class="vf-details"<?php if ($is_preview) { echo ' open'; } ?>>
+<details class="vf-details"<?php if ($is_preview) { echo ' open="open"'; } ?>>
 <summary class="vf-details--summary">
 <?php echo esc_html($title); ?>
 </summary>
 <?php
+// Keep old WYSIWYG field for backwards compatibility
 if ( ! empty($summary)) {
   echo wpautop($summary);
 }
 ?>
-<?php if ( ! $is_preview) { ?>
 <InnerBlocks />
-<?php } ?>
 </details>

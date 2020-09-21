@@ -29,7 +29,8 @@ class VFWP_Details extends VFWP_Block {
       'title'    => 'Details',
       'category' => 'vf/wp',
       'supports' => array(
-        // 'vf/innerBlocks'  => true,
+        'vf/renderIFrame' => false,
+        'vf/innerBlocks'  => true,
         'align'           => false,
         'customClassName' => false,
       )
