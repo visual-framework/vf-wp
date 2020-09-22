@@ -66,7 +66,7 @@ class VFWP_Block {
   public function acf_init() {
     $config = $this->get_config();
     if (isset($config['supports']['vf/innerBlocks'])) {
-      $config['supports']['jsx'] = $config['supports']['vf/innerBlocks'];
+      $config['supports']['jsx'] = boolval($config['supports']['vf/innerBlocks']);
     }
     // Setup render callback using VF Gutenberg plugin or fallback
     $callback = function() use ($config) {
