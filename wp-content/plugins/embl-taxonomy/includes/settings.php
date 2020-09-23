@@ -42,20 +42,19 @@ class EMBL_Taxonomy_Settings {
     );
     add_action(
       'init',
-      array($this, 'get_field_terms')
+      array($this, 'init')
     );
     add_action(
       'wp_head',
-      array($this,
-      'write_meta_properties')
+      array($this, 'wp_head')
     );
 
-    foreach ($this->props as $prop) {
-      add_filter(
-        "acf/fields/taxonomy/query/name={$prop['acf']}",
-        array($this, 'acf_query_terms'), 10, 3
-      );
-    }
+    // foreach ($this->props as $prop) {
+    //   add_filter(
+    //     "acf/fields/taxonomy/query/name={$prop['acf']}",
+    //     array($this, 'acf_query_terms'), 10, 3
+    //   );
+    // }
   }
 
   /**
@@ -176,7 +175,7 @@ class EMBL_Taxonomy_Settings {
    * Action `init`
    * Retrieve WP_Term objects and meta data
    */
-  public function get_field_terms() {
+  public function init() {
     if (
       ! function_exists('get_field') ||
       ! function_exists('embl_taxonomy_get_term')
@@ -197,8 +196,20 @@ class EMBL_Taxonomy_Settings {
    * Action `wp_head`
    * Output EMBL Taxonomy meta properties in the `<head>`
    */
-  public function write_meta_properties() {
-    foreach ($this->props as $prop) {
+  public function wp_head() {
+    $props = $this->props;
+    // Override global settings for single posts
+    if (is_singular()) {
+      foreach ($props as $i => $prop) {
+        $term = embl_taxonomy_get_term(
+          get_field($prop['acf'])
+        );
+        if ($term) {
+          $props[$i]['term'] = $term;
+        }
+      }
+    }
+    foreach ($props as $prop) {
       if ( ! array_key_exists('term', $prop)) {
         continue;
       }
@@ -213,7 +224,7 @@ class EMBL_Taxonomy_Settings {
       }
       echo ">\n";
     }
-    if (array_key_exists('term', $this->props['what'])) {
+    if (array_key_exists('term', $props['what'])) {
       echo '<meta name="embl:active" content="what">' , "\n";
     }
   }

@@ -4,14 +4,14 @@
   "fields": [
     {
       "key": "field_embl_taxonomy_term_who",
-      "label": "EMBL Taxonomy: Who",
+      "label": "Who",
       "name": "embl_taxonomy_term_who",
       "type": "taxonomy",
       "instructions": "",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
-        "width": "",
+        "width": "33",
         "class": "",
         "id": ""
       },
@@ -26,14 +26,14 @@
     },
     {
       "key": "field_embl_taxonomy_term_what",
-      "label": "EMBL Taxonomy: What",
+      "label": "What",
       "name": "embl_taxonomy_term_what",
       "type": "taxonomy",
       "instructions": "",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
-        "width": "",
+        "width": "33",
         "class": "",
         "id": ""
       },
@@ -48,14 +48,14 @@
     },
     {
       "key": "field_embl_taxonomy_term_where",
-      "label": "EMBL Taxonomy: Where",
+      "label": "Where",
       "name": "embl_taxonomy_term_where",
       "type": "taxonomy",
       "instructions": "",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": {
-        "width": "",
+        "width": "33",
         "class": "",
         "id": ""
       },
@@ -75,6 +75,20 @@
         "param": "options_page",
         "operator": "==",
         "value": "vf-settings"
+      }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "post"
+      }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
       }
     ]
   ],
