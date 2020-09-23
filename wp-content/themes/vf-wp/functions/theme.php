@@ -253,6 +253,11 @@ class VF_Theme {
       }
     }
 
+    // Add Visual Framework editor styles
+    if (in_array('editor-styles', $supports)) {
+      add_editor_style('assets/css/styles.css');
+    }
+
   }
 
   /**

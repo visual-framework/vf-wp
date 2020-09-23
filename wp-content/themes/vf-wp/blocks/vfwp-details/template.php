@@ -25,17 +25,21 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 
 if (
   vf_html_empty($title)
-  && vf_html_empty($summary)
 ) {
-  $admin_banner(__('Please enter content for this block.', 'vfwp'));
+  $admin_banner(__('Please enter a title for this block.', 'vfwp'));
   return;
 }
 ?>
 
-<details class="vf-details">
+<details class="vf-details"<?php if ($is_preview) { echo ' open="open"'; } ?>>
 <summary class="vf-details--summary">
 <?php echo esc_html($title); ?>
 </summary>
-<?php echo wpautop($summary); ?>
+<?php
+// Keep old WYSIWYG field for backwards compatibility
+if ( ! empty($summary)) {
+  echo wpautop($summary);
+}
+?>
+<InnerBlocks />
 </details>
-
