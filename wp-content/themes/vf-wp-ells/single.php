@@ -2,6 +2,7 @@
 
 $title = esc_html(get_the_title());
 $user_id = get_the_author_meta('ID');
+$show_author = get_field('ells_show_author');
 
 get_header();
 
@@ -9,6 +10,7 @@ get_header();
 
 <section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
  <div>
+   <?php if ($show_author == 1) { ?>
     <div class="vf-article-meta-information">
     <div class="vf-author | vf-article-meta-info__author">
     <p class="vf-author__name">
@@ -20,14 +22,67 @@ get_header();
     </div>
         <div class="vf-meta__details">
         <p class="vf-meta__date"><time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
-        <p class="vf-meta__topics"><?php echo get_the_category_list(','); ?></p>
         </div>
     </div>
+   <?php } ?>
  </div>
  <div class="vf-content | vf-u-padding__bottom--xxl">
   <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
+  <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
+      <?php echo get_post_meta($post->ID, 'ells_article_intro', true); ?>
+    </p>
+
     <?php the_content(); ?>
   </div>
+  <div class="social-box">
+
+<?php include(locate_template('partials/social-icons.php', false, false)); ?>
+
+<div class="vf-social-links | vf-u-margin__bottom--xxl">
+  <h3 class="vf-social-links__heading">
+    Share this
+  </h3>
+  <ul class="vf-social-links__list">
+    <li class="vf-social-links__item">
+      <a class="vf-social-links__link"
+        href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
+        <span class="vf-u-sr-only">twitter</span>
+
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--twitter"></use>
+        </svg>
+      </a>
+
+    </li>
+    <li class="vf-social-links__item">
+
+      <a class="vf-social-links__link"
+        href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
+        <span class="vf-u-sr-only">facebook</span>
+
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--facebook" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--facebook"></use>
+        </svg>
+      </a>
+    </li>
+
+    <li class="vf-social-links__item">
+      <a class="vf-social-links__link"
+        href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+        <span class="vf-u-sr-only">linkedin</span>
+
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--linkedin"></use>
+        </svg>
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
 </section>
 <section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--xl | vf-u-padding__bottom--md | vf-u-fullbleed | category-more">
       <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
