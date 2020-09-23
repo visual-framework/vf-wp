@@ -189,6 +189,12 @@
   }
 }
 
+.wp-block {
+  max-width: 780px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
 .wp-block[data-type='vf/plugin'] {
   max-width: none;
 }
@@ -204,19 +210,22 @@
   }
 }
 
-// .wp-block[data-type='vf/grid-column'] {
-//   border: 1px dashed #e2e4e7;
-// }
-
 .wp-block[data-type='vf/grid'],
 .wp-block[data-type='vf/embl-grid'] {
   max-width: none;
 
-  .wp-block {
-    margin-left: 0;
-    margin-right: 0;
+  .wp-block[data-type='vf/grid-column'] {
+    border: 1px dashed var(--vf-color--grey--lightest);
+    margin-left: 0 !important;
+    margin-right: 0 !important;
     max-width: none;
   }
+
+  // .wp-block {
+  //   margin-left: 0;
+  //   margin-right: 0;
+  //   max-width: none;
+  // }
 }
 
 .wp-block[data-type='vf/embl-grid'] {

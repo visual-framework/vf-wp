@@ -389,12 +389,6 @@
   width: 10%;
 }
 
-.wp-block {
-  max-width: 780px;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
 .post-type-vf_block .edit-post-visual-editor,
 .post-type-vf_container .edit-post-visual-editor {
   -ms-flex-preferred-size: auto;
