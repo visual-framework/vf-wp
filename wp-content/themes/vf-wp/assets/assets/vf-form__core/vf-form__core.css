@@ -54,7 +54,7 @@
 /*!
  * Component: @visual-framework/vf-form__helper
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__helper
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -73,7 +73,7 @@
 /*!
  * Component: @visual-framework/vf-form__input
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__input
  */
 .vf-form__input:not([type=file]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -267,7 +267,7 @@
 /*!
  * Component: @visual-framework/vf-form__legend
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__legend
  */
 .vf-form__legend {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -280,7 +280,7 @@
 /*!
  * Component: @visual-framework/vf-form__fieldset
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__fieldset
  */
 .vf-form__fieldset {
   border: 0;
@@ -291,7 +291,7 @@
 /*!
  * Component: @visual-framework/vf-form__select
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__select
  */
 .vf-form__select {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -338,7 +338,7 @@
 /*!
  * Component: @visual-framework/vf-form__checkbox
  * Version: 1.0.2
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__checkbox
  */
 .vf-form__item.vf-form__item--checkbox {
   margin-bottom: 16px;
@@ -396,7 +396,7 @@
 /*!
  * Component: @visual-framework/vf-form__radio
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__radio
  */
 .vf-form__radio {
   opacity: 0;
@@ -443,7 +443,7 @@
 /*!
  * Component: @visual-framework/vf-form__textarea
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__textarea
  */
 .vf-form__textarea {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -473,7 +473,7 @@
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 1.0.0
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__item
  */
 .vf-form__item {
   margin-bottom: 32px;
@@ -486,7 +486,7 @@
 /*!
  * Component: @visual-framework/vf-form__label
  * Version: 1.0.1
- * Location: components/vf-core-
+ * Location: components/vf-form/vf-form__label
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
