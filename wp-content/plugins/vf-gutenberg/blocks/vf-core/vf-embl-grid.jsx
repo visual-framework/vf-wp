@@ -3,6 +3,7 @@ Block Name: Grid
 Based on `vf-grid.jsx`
 */
 import React, {Fragment} from 'react';
+import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {withDispatch} from '@wordpress/data';
@@ -45,7 +46,7 @@ const settings = {
   }
 };
 
-settings.save = props => {
+settings.save = (props) => {
   const {placeholder, sidebar, centered} = props.attributes;
   if (placeholder === 1) {
     return null;
@@ -64,13 +65,13 @@ settings.save = props => {
   );
 };
 
-const withGridDispatch = Edit => {
+const withGridDispatch = (Edit) => {
   return withDispatch((dispatch, ownProps, {select}) => {
     const {getBlocks} = select('core/block-editor');
     const {replaceInnerBlocks} = dispatch('core/block-editor');
 
     // `columns` attribute `onChange` callback
-    const setColumns = newColumns => {
+    const setColumns = (newColumns) => {
       const prevColumns = ownProps.attributes.columns;
       // Merge inner blocks when number of columns is reduced
       if (newColumns < prevColumns) {
@@ -84,6 +85,17 @@ const withGridDispatch = Edit => {
           mergeBlocks,
           false
         );
+      }
+      let innerBlocks = getBlocks(ownProps.clientId);
+      innerBlocks = innerBlocks.slice(0, newColumns);
+      // Append new blocks when number of columns is increased
+      if (newColumns > prevColumns) {
+        while (innerBlocks.length < newColumns) {
+          innerBlocks.push(createBlock('vf/grid-column', {}, []));
+        }
+      }
+      if (newColumns !== prevColumns) {
+        replaceInnerBlocks(ownProps.clientId, innerBlocks, false);
       }
       // Update block attributes
       ownProps.setAttributes({
@@ -115,7 +127,7 @@ const withGridDispatch = Edit => {
   })(Edit);
 };
 
-settings.edit = withGridDispatch(props => {
+settings.edit = withGridDispatch((props) => {
   const {columns, sidebar, centered, placeholder} = props.attributes;
 
   // ensure version is encoded in post content
@@ -178,11 +190,12 @@ settings.edit = withGridDispatch(props => {
         data-ver={ver}
         data-embl={true}
         data-sidebar={sidebar}
-        data-centered={centered}>
+        data-centered={centered}
+      >
         <InnerBlocks
           allowedBlocks={['vf/grid-column']}
           template={Array(columns).fill(['vf/grid-column'])}
-          templateLock="all"
+          templateLock='all'
         />
       </div>
     </Fragment>
