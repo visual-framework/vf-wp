@@ -54,7 +54,7 @@
 /*!
  * Component: @visual-framework/vf-content
  * Version: 1.2.2
- * Location: components/vf-content
+ * Location: components/vf-core-
  */
 .vf-content h1:not([class*=vf-]), .editor-styles-wrapper h1:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -428,6 +428,16 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
+.editor-styles-wrapper .wp-block .acf-table td,
+.editor-styles-wrapper .wp-block .acf-radio-list li,
+.editor-styles-wrapper .wp-block .acf-checkbox-list li {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.editor-styles-wrapper .wp-block .button-primary {
+  color: #fff;
+}
 .editor-styles-wrapper .vf-details[open] .vf-details--summary {
   pointer-events: none;
 }

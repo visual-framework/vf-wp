@@ -64,7 +64,31 @@
 
 // Extend basic typography styles within editor
 .editor-styles-wrapper {
+  // This would be ideal but some conflicts with WP/ACF
   @extend .vf-content;
+
+  // // Too nasty...
+  // // Scope to avoid WP/ACF conflicts
+  // .block-editor-block-list__layout > {
+  // // & .block-editor-block-list__layout > :not([data-type^="acf/"]) {
+  //   @extend .vf-content;
+  // }
+
+  // Fixes for issue #511
+  // https://github.com/visual-framework/vf-wp/issues/511
+  .wp-block {
+    .acf-table td,
+    .acf-radio-list li,
+    .acf-checkbox-list li {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    .button-primary {
+      color: #fff;
+    }
+  }
 
   // Stop user from collapsing the dialog summary
   .vf-details[open] {

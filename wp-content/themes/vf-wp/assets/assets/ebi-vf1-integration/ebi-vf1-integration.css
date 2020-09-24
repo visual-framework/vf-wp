@@ -60,7 +60,7 @@
 /*!
  * Component: @visual-framework/ebi-vf1-integration
  * Version: 1.0.4
- * Location: components/ebi-vf1-integration
+ * Location: components/vf-core-
  */
 .ebi-vf1-integration,
 html body.ebi-vf1-integration {
@@ -172,7 +172,7 @@ body.ebi-vf1-integration,
 /*!
  * Component: @visual-framework/vf-font-plex-sans
  * Version: 1.1.0
- * Location: components/vf-font-plex-sans
+ * Location: components/vf-core-
  */
 @font-face {
   font-family: "IBM Plex Sans";
@@ -281,7 +281,7 @@ body.ebi-vf1-integration,
 /*!
  * Component: @visual-framework/vf-font-plex-mono
  * Version: 1.1.0
- * Location: components/vf-font-plex-mono
+ * Location: components/vf-core-
  */
 @font-face {
   font-family: "IBM Plex Mono";
