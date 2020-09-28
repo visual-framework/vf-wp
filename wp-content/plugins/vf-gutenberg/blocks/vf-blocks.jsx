@@ -20,6 +20,8 @@ import vfGridColumn from './vf-core/vf-grid-column';
 import vfEMBLGrid from './vf-core/vf-embl-grid';
 import vfGrid from './vf-core/vf-grid';
 import vfLede from './vf-core/vf-lede';
+import vfTabsSection from './vf-core/vf-tabs-section';
+import vfTabs from './vf-core/vf-tabs';
 
 // Get "localized" global script settings
 const {coreOptin, deprecatedPlugins} = useVFGutenberg();
@@ -27,6 +29,9 @@ const {coreOptin, deprecatedPlugins} = useVFGutenberg();
 // Register VF Core blocks
 if (parseInt(coreOptin) === 1) {
   const coreBlocks = [
+    //Tabs
+    vfTabsSection,
+    vfTabs,
     // Grid
     vfGridColumn,
     vfEMBLGrid,

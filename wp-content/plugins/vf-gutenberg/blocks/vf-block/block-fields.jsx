@@ -17,6 +17,7 @@ import {
 } from '@wordpress/components';
 import {__} from '@wordpress/i18n';
 import {useHashsum} from '../hooks';
+import ButtonControl from '../components/button-control';
 import CheckboxesControl from '../components/checkboxes-control';
 import ColumnsControl from '../components/columns-control';
 import DateControl from '../components/date-control';
@@ -56,6 +57,17 @@ const VFBlockFields = props => {
       // Fallback to default handler
       onChange = typeof onChange === 'function' ? onChange : handleChange;
 
+      // The ACF "checkbox" field returns an array of one or more checked
+      // values whereas "true_false" (here "toggle") uses a boolean value
+      if (control === 'button') {
+        return (
+          <ButtonControl
+            key={key}
+            field={field}
+            label={label}
+          />
+        );
+      }
       // The ACF "checkbox" field returns an array of one or more checked
       // values whereas "true_false" (here "toggle") uses a boolean value
       if (control === 'checkbox') {

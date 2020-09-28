@@ -228,6 +228,15 @@
   // }
 }
 
+.wp-block[data-type='vf/tabs'] {
+  .wp-block[data-type='vf/tabs-section'] {
+    border: 1px dashed var(--vf-color--grey--lightest);
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    max-width: none;
+  }
+}
+
 .wp-block[data-type='vf/embl-grid'] {
   /* EMBL Grid: align placeholder controls */
   .components-placeholder .components-base-control {
