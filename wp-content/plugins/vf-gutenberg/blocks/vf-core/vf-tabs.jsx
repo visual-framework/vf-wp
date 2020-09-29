@@ -66,7 +66,10 @@ settings.edit = (props) => {
 
   const {getTabs, appendTab, updateTabs} = useSelect(
     (select) => {
-      const {getBlocks} = select('core/block-editor');
+      const {getBlockOrder, getBlocks} = select('core/block-editor');
+      const getTabOrder = () => {
+        return getBlockOrder(clientId);
+      };
       const getTabs = () => {
         return getBlocks(clientId);
       };
@@ -88,6 +91,7 @@ settings.edit = (props) => {
         props.setAttributes({dirty: 0, tabs: newTabs});
       };
       return {
+        getTabOrder,
         getTabs,
         appendTab,
         updateTabs
@@ -97,8 +101,7 @@ settings.edit = (props) => {
   );
 
   useEffect(() => {
-    if (dirty === 1) {
-      console.log(`tabs cleanup ${clientId}`);
+    if (dirty > 0) {
       updateTabs();
     }
   }, [dirty]);
@@ -106,8 +109,7 @@ settings.edit = (props) => {
   useEffect(() => {
     if (dirty === 0) {
       if (Object.keys(tabs).length !== getTabs().length) {
-        console.log(`tabs recount ${clientId}`);
-        props.setAttributes({dirty: 1});
+        props.setAttributes({dirty: Date.now()});
       }
     }
   }, [getTabs().length]);
@@ -137,7 +139,7 @@ settings.edit = (props) => {
           allowedBlocks={['vf/tabs-section']}
           template={Array(1).fill(['vf/tabs-section'])}
         />
-        <Button {...fields[0]}>
+        <Button icon="insert" {...fields[0]}>
           <span>{fields[0].label}</span>
         </Button>
       </div>

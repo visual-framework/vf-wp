@@ -71,32 +71,38 @@ settings.edit = (props) => {
 
   const {updateBlockAttributes} = useDispatch('core/block-editor');
 
-  const {updateTabs, tabOrder} = useSelect((select) => {
-    const {getBlockOrder, getBlockRootClientId} = select(
-      'core/block-editor'
-    );
-    const rootClientId = getBlockRootClientId(clientId);
-    const parentBlockOrder = getBlockOrder(rootClientId);
-    return {
-      tabOrder: parentBlockOrder.indexOf(clientId) + 1,
-      updateTabs: () => {
-        updateBlockAttributes(rootClientId, {
-          dirty: 1
-        });
-      }
-    };
-  }, [clientId]);
+  const {updateTabs, tabOrder} = useSelect(
+    (select) => {
+      const {getBlockOrder, getBlockRootClientId} = select('core/block-editor');
+      const rootClientId = getBlockRootClientId(clientId);
+      const parentBlockOrder = getBlockOrder(rootClientId);
+      return {
+        tabOrder: parentBlockOrder.indexOf(clientId) + 1,
+        updateTabs: () => {
+          updateBlockAttributes(rootClientId, {
+            dirty: Date.now()
+          });
+        }
+      };
+    },
+    [clientId]
+  );
 
   useEffect(() => {
     if (id === '') {
       props.setAttributes({id: clientId});
-      updateTabs();
     }
+  }, [id]);
+
+  useEffect(() => {
     if (label === '') {
       props.setAttributes({label: __(`Tab ${tabOrder}`)});
-      updateTabs();
     }
-  }, [id, label]);
+  }, [label]);
+
+  useEffect(() => {
+    updateTabs();
+  }, [id, label, tabOrder]);
 
   const onChange = (name, value) => {
     if (name === 'id') {
