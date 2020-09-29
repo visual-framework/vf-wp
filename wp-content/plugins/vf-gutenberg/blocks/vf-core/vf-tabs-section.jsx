@@ -1,7 +1,7 @@
 /**
 Block Name: Grid Column
 */
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -26,10 +26,6 @@ const settings = {
   },
   attributes: {
     ...defaults.attributes,
-    order: {
-      type: 'integer',
-      default: 0
-    },
     id: {
       type: 'string',
       default: ''
@@ -46,23 +42,20 @@ const settings = {
 };
 
 settings.save = (props) => {
-  const {id, order, label, unlabelled} = props.attributes;
+  const {id, label, unlabelled} = props.attributes;
   const attr = {
     className: `vf-tabs__section`
   };
   if (id !== '') {
-    attr.id = id;
+    attr.id = `vf-tabs__section-${id}`;
   }
-  // if (order > 0) {
-  // attr.id = `vf-tabs__section--${order}`;
-  // }
-  const h2 = {};
+  const heading = {};
   if (unlabelled === 1) {
-    h2.className = 'vf-u-sr-only';
+    heading.className = 'vf-u-sr-only';
   }
   return (
     <section {...attr}>
-      <h2 {...h2}>{label}</h2>
+      <h2 {...heading}>{label}</h2>
       <InnerBlocks.Content />
     </section>
   );
@@ -74,62 +67,36 @@ settings.edit = (props) => {
   }
 
   const {clientId} = props;
-  let {id, order, label, unlabelled} = props.attributes;
+  let {id, label, unlabelled} = props.attributes;
 
   const {updateBlockAttributes} = useDispatch('core/block-editor');
 
-  const {updateTabs, tabOrder, hasChildBlocks} = useSelect((select) => {
-    const {
-      getBlocks,
-      // getBlockAttributes,
-      getBlockOrder,
-      getBlockRootClientId
-    } = select('core/block-editor');
+  const {updateTabs, tabOrder} = useSelect((select) => {
+    const {getBlockOrder, getBlockRootClientId} = select(
+      'core/block-editor'
+    );
     const rootClientId = getBlockRootClientId(clientId);
     const parentBlockOrder = getBlockOrder(rootClientId);
-    // console.log(getBlockAttributes(rootClientId));
-
-    const updateTabs = () => {
-      // const tabs = {};
-      // const innerTabs = getBlocks(rootClientId);
-      // innerTabs.forEach((tab, i) => {
-      //   const {id, label} = tab.attributes;
-      //   tabs[i] = {
-      //     id,
-      //     label
-      //   };
-      // });
-      // console.log(tabs, rootClientId);
-      updateBlockAttributes(rootClientId, {
-        dirty: 1
-      });
-    };
-
-    // updateTabs();
-
     return {
-      updateTabs,
-      hasChildBlocks: getBlockOrder(clientId).length > 0,
-      tabOrder: parentBlockOrder.indexOf(clientId) + 1
+      tabOrder: parentBlockOrder.indexOf(clientId) + 1,
+      updateTabs: () => {
+        updateBlockAttributes(rootClientId, {
+          dirty: 1
+        });
+      }
     };
-  }, []);
+  }, [clientId]);
 
-  if (id === '') {
-    id = clientId;
-    props.setAttributes({id});
-    // updateTabs();
-  }
-
-  if (label === '' && order === 0) {
-    label = __(`Tab ${tabOrder}`);
-    props.setAttributes({label});
-    // updateTabs();
-  }
-
-  if (order !== tabOrder) {
-    props.setAttributes({order: tabOrder});
-    // updateTabs();
-  }
+  useEffect(() => {
+    if (id === '') {
+      props.setAttributes({id: clientId});
+      updateTabs();
+    }
+    if (label === '') {
+      props.setAttributes({label: __(`Tab ${tabOrder}`)});
+      updateTabs();
+    }
+  }, [id, label]);
 
   const onChange = (name, value) => {
     if (name === 'id') {
@@ -173,13 +140,7 @@ settings.edit = (props) => {
       </InspectorControls>
       <div className='vf-tabs__section'>
         {unlabelled ? false : <h2>{label}</h2>}
-        <InnerBlocks
-          renderAppender={
-            hasChildBlocks
-              ? undefined
-              : () => <InnerBlocks.ButtonBlockAppender />
-          }
-        />
+        <InnerBlocks />
       </div>
     </Fragment>
   );
