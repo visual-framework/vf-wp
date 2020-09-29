@@ -4,7 +4,7 @@ Block Name: Grid Column
 import React, {Fragment} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody} from '@wordpress/components';
-import {useSelect} from '@wordpress/data';
+import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
@@ -30,41 +30,43 @@ const settings = {
       type: 'integer',
       default: 0
     },
+    id: {
+      type: 'string',
+      default: ''
+    },
     label: {
       type: 'string',
       default: ''
     },
     unlabelled: {
-      type: 'boolean',
+      type: 'integer',
       default: 0
     }
   }
 };
 
 settings.save = (props) => {
-  const {order, label, unlabelled} = props.attributes;
+  const {id, order, label, unlabelled} = props.attributes;
   const attr = {
     className: `vf-tabs__section`
   };
-  if (order > 0) {
-    attr.id = `vf-tabs__section--${order}`;
+  if (id !== '') {
+    attr.id = id;
+  }
+  // if (order > 0) {
+  // attr.id = `vf-tabs__section--${order}`;
+  // }
+  const h2 = {};
+  if (unlabelled === 1) {
+    h2.className = 'vf-u-sr-only';
   }
   return (
     <section {...attr}>
-      <h2 className={unlabelled ? 'vf-u-sr-only' : ''}>{label}</h2>
+      <h2 {...h2}>{label}</h2>
       <InnerBlocks.Content />
     </section>
   );
 };
-
-// const withTabsProps = (Edit) => {
-//   return (props) => {
-
-//     // const {getBlockOrder} = select('core/block-editor');
-//     // const hasChildBlocks = getBlockOrder(props.clientId).length > 0;
-//     return Edit({...props, hasChildBlocks, rootClientId});
-//   };
-// };
 
 settings.edit = (props) => {
   if (ver !== props.attributes.ver) {
@@ -72,36 +74,93 @@ settings.edit = (props) => {
   }
 
   const {clientId} = props;
-  const {order, label, unlabelled} = props.attributes;
+  let {id, order, label, unlabelled} = props.attributes;
 
-  const {tabOrder, hasChildBlocks} = useSelect((select) => {
-    const {getBlockOrder, getBlockRootClientId} = select('core/block-editor');
+  const {updateBlockAttributes} = useDispatch('core/block-editor');
+
+  const {updateTabs, tabOrder, hasChildBlocks} = useSelect((select) => {
+    const {
+      getBlocks,
+      // getBlockAttributes,
+      getBlockOrder,
+      getBlockRootClientId
+    } = select('core/block-editor');
     const rootClientId = getBlockRootClientId(clientId);
     const parentBlockOrder = getBlockOrder(rootClientId);
+    // console.log(getBlockAttributes(rootClientId));
+
+    const updateTabs = () => {
+      // const tabs = {};
+      // const innerTabs = getBlocks(rootClientId);
+      // innerTabs.forEach((tab, i) => {
+      //   const {id, label} = tab.attributes;
+      //   tabs[i] = {
+      //     id,
+      //     label
+      //   };
+      // });
+      // console.log(tabs, rootClientId);
+      updateBlockAttributes(rootClientId, {
+        dirty: 1
+      });
+    };
+
+    // updateTabs();
+
     return {
+      updateTabs,
       hasChildBlocks: getBlockOrder(clientId).length > 0,
       tabOrder: parentBlockOrder.indexOf(clientId) + 1
     };
   }, []);
 
+  if (id === '') {
+    id = clientId;
+    props.setAttributes({id});
+    // updateTabs();
+  }
+
   if (label === '' && order === 0) {
-    props.setAttributes({label: __(`Tab ${tabOrder}`)});
+    label = __(`Tab ${tabOrder}`);
+    props.setAttributes({label});
+    // updateTabs();
   }
 
   if (order !== tabOrder) {
     props.setAttributes({order: tabOrder});
+    // updateTabs();
   }
+
+  const onChange = (name, value) => {
+    if (name === 'id') {
+      value = value
+        .replace(/[\s\./]+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .toLowerCase()
+        .trim();
+    }
+    props.setAttributes({[name]: value});
+    updateTabs();
+  };
 
   const fields = [
     {
       name: 'label',
       control: 'text',
-      label: __('Tab Label')
+      label: __('Tab Label'),
+      onChange
     },
     {
       name: 'unlabelled',
       control: 'toggle',
-      label: __('Hide Heading')
+      label: __('Hide Heading'),
+      onChange
+    },
+    {
+      name: 'id',
+      control: 'text',
+      label: __('Anchor ID'),
+      onChange
     }
   ];
 

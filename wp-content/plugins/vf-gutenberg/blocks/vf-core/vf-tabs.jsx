@@ -1,7 +1,7 @@
 /**
 Block Name: Grid
 */
-import React, {Fragment} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {Button, PanelBody} from '@wordpress/components';
@@ -22,13 +22,13 @@ const settings = {
   description: __('Visual Framework (core)'),
   attributes: {
     ...defaults.attributes,
-    // placeholder: {
-    //   type: 'integer',
-    //   default: 0
-    // },
-    tabs: {
+    dirty: {
       type: 'integer',
       default: 0
+    },
+    tabs: {
+      type: 'object',
+      default: {}
     }
   }
 };
@@ -55,11 +55,22 @@ settings.save = (props) => {
   // if (props.attributes.placeholder === 1) {
   //   return null;
   // }
-  // console.log(props);
+  // console.log(props.innerBlocks.length);
   // const {columns} = props.attributes;
   const className = `vf-tabs`; //  | vf-grid__col-${columns}
   return (
     <div className={className}>
+      {/* <ul class='vf-tabs__list' data-vf-js-tabs>
+        {props.innerBlocks.map((block, i) => {
+          return (
+            <li key={block.clientId} class='vf-tabs__item'>
+              <a class='vf-tabs__link' href={`#vf-tabs__section--${i + 1}`}>
+                {block.attributes.label}
+              </a>
+            </li>
+          );
+        })}
+      </ul> */}
       <div class='vf-tabs-content' data-vf-js-tabs-content>
         <InnerBlocks.Content />
       </div>
@@ -73,37 +84,92 @@ settings.edit = (props) => {
   }
 
   const {clientId} = props;
-  const {tabs} = props.attributes;
+  const {dirty, tabs} = props.attributes;
 
-  const {replaceInnerBlocks} = useDispatch('core/block-editor');
+  const {updateBlockAttributes, replaceInnerBlocks} = useDispatch(
+    'core/block-editor'
+  );
 
-  const {innerTabs, setTabs} = useSelect((select) => {
-    const {getBlocks} = select('core/block-editor');
-    let innerTabs = getBlocks(clientId);
-    const setTabs = (newTabs) => {
-      // innerTabs = innerTabs.slice(0, newTabs);
-      if (newTabs > tabs) {
-        while (innerTabs.length < newTabs) {
-          innerTabs.push(createBlock('vf/tabs-section', {}, []));
+  const {getTabs, setTabs, updateTabs} = useSelect(
+    (select) => {
+      const {getBlocks} = select('core/block-editor');
+      const getTabs = () => {
+        return getBlocks(clientId);
+      };
+      const updateTabs = () => {
+        const innerTabs = getTabs();
+        const newTabs = {};
+        innerTabs.forEach((tab, i) => {
+          const {id, label} = tab.attributes;
+          newTabs[i] = {
+            id,
+            label
+          };
+        });
+        props.setAttributes({dirty: 0, tabs: newTabs});
+      };
+      const setTabs = (newTabs) => {
+        let innerTabs = getTabs();
+        if (newTabs > innerTabs.length) {
+          while (innerTabs.length < newTabs) {
+            innerTabs.push(createBlock('vf/tabs-section', {}, []));
+          }
         }
         replaceInnerBlocks(clientId, innerTabs, false);
-        props.setAttributes({tabs: innerTabs.length});
+      };
+      return {
+        getTabs,
+        setTabs,
+        updateTabs
+      };
+    },
+    [clientId]
+  );
+
+  useEffect(() => {
+    if (dirty === 1) {
+      console.log(`tabs cleanup ${clientId}`);
+      updateTabs();
+    }
+  }, [dirty]);
+
+  useEffect(() => {
+    if (dirty === 0) {
+      if (Object.keys(tabs).length !== getTabs().length) {
+        console.log(`tabs recount ${clientId}`);
+        props.setAttributes({dirty: 1});
       }
-    };
-    return {
-      setTabs,
-      innerTabs
-    };
-  }, []);
+    }
+  }, [getTabs().length]);
 
+  // Require at least one tab
+  // if (getTabs().length < 1) {
+  //   setTabs(1);
+  // }
 
-  if (tabs === 0) {
-    setTabs(1);
-  }
+  // props.maybeCleanup(updateTabs);
 
-  if (tabs !== innerTabs.length) {
-    props.setAttributes({tabs: innerTabs.length});
-  }
+  // if (!props.isDirty()) {
+  //   if (Object.keys(tabs).length !== getTabs().length) {
+  //     // props.setAttributes({dirty: Date.now()});
+  //     console.log('add/remove');
+  //     props.setDirty(true);
+  //   }
+  // }
+
+  // if (props.attributes.dirty > 0) {
+  //   props.setAttributes({dirty: 0});
+  //   console.log('trigger');
+  //   // if (!props.isDirty()) {
+  //   props.setDirty(() => {
+  //     updateTabs();
+  //   });
+  //   // }
+  //   // if (Date.now() - props.attributes.dirty < 100) {
+  //   //   console.log(Date.now() - props.attributes.dirty);
+  //   //   // updateTabs();
+  //   // }
+  // }
 
   // Setup placeholder fields
   const fields = [
@@ -112,24 +178,10 @@ settings.edit = (props) => {
       label: __('Add Tab'),
       isSecondary: true,
       onClick: () => {
-        setTabs(tabs + 1);
+        setTabs(getTabs().length + 1);
       }
     }
   ];
-
-  // Return setup placeholder
-  // if (placeholder === 1) {
-  //   return (
-  //     <div className={`vf-block vf-block--placeholder ${props.className}`}>
-  //       <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
-  //         <VFBlockFields fields={fields} />
-  //       </Placeholder>
-  //     </div>
-  //   );
-  // }
-
-  // // Amend fields for inspector
-  // fields[0].help = __('Content may be reorganised when columns are reduced.');
 
   // Return inner blocks and inspector controls
   return (
@@ -139,11 +191,10 @@ settings.edit = (props) => {
           <VFBlockFields fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <div className={'vf-tabs'} data-ver={ver} data-tabs={tabs}>
+      <div className={'vf-tabs'} data-ver={ver}>
         <InnerBlocks
           allowedBlocks={['vf/tabs-section']}
-          // template={Array(tabs).fill(['vf/tabs-section'])}
-          // templateLock='all'
+          template={Array(1).fill(['vf/tabs-section'])}
         />
         <Button {...fields[0]}>
           <span>{fields[0].label}</span>
