@@ -1,7 +1,7 @@
 /**
 Block Name: Grid Column
 */
-import React, {Fragment, useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -69,9 +69,9 @@ settings.edit = (props) => {
   const {clientId} = props;
   let {id, label, unlabelled} = props.attributes;
 
-  const {updateBlockAttributes} = useDispatch('core/block-editor');
+  const {removeBlock, updateBlockAttributes} = useDispatch('core/block-editor');
 
-  const {updateTabs, tabOrder} = useSelect(
+  const {tabOrder, updateTabs} = useSelect(
     (select) => {
       const {getBlockOrder, getBlockRootClientId} = select('core/block-editor');
       const rootClientId = getBlockRootClientId(clientId);
@@ -88,34 +88,42 @@ settings.edit = (props) => {
     [clientId]
   );
 
+  // Default to the `clientId` for the ID attribute
   useEffect(() => {
     if (id === '') {
       props.setAttributes({id: clientId});
     }
   }, [id]);
 
+  // Default to "Tab [N]" for the tab heading
   useEffect(() => {
     if (label === '') {
       props.setAttributes({label: __(`Tab ${tabOrder}`)});
     }
   }, [label]);
 
+  // Flag the parent tabs block as "dirty" if any attributes change
   useEffect(() => {
     updateTabs();
   }, [id, label, tabOrder]);
 
-  const onChange = (name, value) => {
-    if (name === 'id') {
-      value = value
-        .replace(/[\s\./]+/g, '-')
-        .replace(/[^\w-]+/g, '')
-        .toLowerCase()
-        .trim();
-    }
-    props.setAttributes({[name]: value});
-    updateTabs();
-  };
+  // Callback for inspector changes to update attributes
+  // Flags the parent tabs block as "dirty"
+  const onChange = useCallback(
+    (name, value) => {
+      if (name === 'id') {
+        value = value
+          .replace(/[\s\./]+/g, '-')
+          .replace(/[^\w-]+/g, '')
+          .toLowerCase()
+          .trim();
+      }
+      props.setAttributes({[name]: value});
+    },
+    [clientId]
+  );
 
+  // Inspector controls
   const fields = [
     {
       name: 'label',
@@ -134,11 +142,20 @@ settings.edit = (props) => {
       control: 'text',
       label: __('Anchor ID'),
       onChange
+    },
+    {
+      control: 'button',
+      label: __('Delete Tab'),
+      isSecondary: true,
+      isDestructive: true,
+      onClick: () => {
+        removeBlock(clientId, false);
+      }
     }
   ];
 
   return (
-    <Fragment>
+    <>
       <InspectorControls>
         <PanelBody title={__('Settings')} initialOpen>
           <VFBlockFields {...props} fields={fields} />
@@ -148,7 +165,7 @@ settings.edit = (props) => {
         {unlabelled ? false : <h2>{label}</h2>}
         <InnerBlocks />
       </div>
-    </Fragment>
+    </>
   );
 };
 

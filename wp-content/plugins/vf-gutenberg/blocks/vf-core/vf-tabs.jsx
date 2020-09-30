@@ -1,7 +1,7 @@
 /**
 Block Name: Grid
 */
-import React, {useEffect, Fragment} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {Button, PanelBody} from '@wordpress/components';
@@ -36,18 +36,18 @@ const settings = {
 settings.save = (props) => {
   return (
     <div className='vf-tabs'>
-      <ul class='vf-tabs__list' data-vf-js-tabs>
-        {props.attributes.tabs.map((tab) => {
+      <ul className='vf-tabs__list' data-vf-js-tabs>
+        {props.attributes.tabs.map((tab, i) => {
           return (
-            <li key={tab.id} class='vf-tabs__item'>
-              <a class='vf-tabs__link' href={`#vf-tabs__section-${tab.id}`}>
+            <li key={i + tab.id} className='vf-tabs__item'>
+              <a className='vf-tabs__link' href={`#vf-tabs__section-${tab.id}`}>
                 {tab.label}
               </a>
             </li>
           );
         })}
       </ul>
-      <div class='vf-tabs-content' data-vf-js-tabs-content>
+      <div className='vf-tabs-content' data-vf-js-tabs-content>
         <InnerBlocks.Content />
       </div>
     </div>
@@ -62,21 +62,22 @@ settings.edit = (props) => {
   const {clientId} = props;
   const {dirty, tabs} = props.attributes;
 
-  const {replaceInnerBlocks} = useDispatch('core/block-editor');
+  const {replaceInnerBlocks, selectBlock} = useDispatch('core/block-editor');
 
-  const {getTabs, appendTab, updateTabs} = useSelect(
+  const {appendTab, getTabs, getTabsOrder, updateTabs} = useSelect(
     (select) => {
       const {getBlockOrder, getBlocks} = select('core/block-editor');
-      const getTabOrder = () => {
-        return getBlockOrder(clientId);
-      };
       const getTabs = () => {
         return getBlocks(clientId);
+      };
+      const getTabsOrder = () => {
+        return getBlockOrder(clientId);
       };
       const appendTab = () => {
         const innerTabs = getTabs();
         innerTabs.push(createBlock('vf/tabs-section', {}, []));
         replaceInnerBlocks(clientId, innerTabs, false);
+        selectBlock(innerTabs.slice(-1)[0].clientId);
       };
       const updateTabs = () => {
         const innerTabs = getTabs();
@@ -91,21 +92,27 @@ settings.edit = (props) => {
         props.setAttributes({dirty: 0, tabs: newTabs});
       };
       return {
-        getTabOrder,
-        getTabs,
         appendTab,
+        getTabs,
+        getTabsOrder,
         updateTabs
       };
     },
     [clientId]
   );
 
-  useEffect(() => {
-    if (dirty > 0) {
-      updateTabs();
-    }
-  }, [dirty]);
+  const tabsOrder = getTabsOrder();
+  // Callback to switch tabs using the tab list interface
+  const selectTab = useCallback(
+    (index) => {
+      if (index < tabsOrder.length) {
+        selectBlock(tabsOrder[index]);
+      }
+    },
+    [tabsOrder]
+  );
 
+  // Flag as "dirty" if the tabs and inner blocks do not match
   useEffect(() => {
     if (dirty === 0) {
       if (Object.keys(tabs).length !== getTabs().length) {
@@ -114,12 +121,20 @@ settings.edit = (props) => {
     }
   }, [getTabs().length]);
 
-  // Setup placeholder fields
+  // Update attributes if the block is flagged as "dirty"
+  useEffect(() => {
+    if (dirty > 0) {
+      updateTabs();
+    }
+  }, [dirty]);
+
+  // Inspector controls
   const fields = [
     {
       control: 'button',
       label: __('Add Tab'),
       isSecondary: true,
+      icon: 'insert',
       onClick: () => {
         appendTab();
       }
@@ -128,22 +143,35 @@ settings.edit = (props) => {
 
   // Return inner blocks and inspector controls
   return (
-    <Fragment>
+    <>
       <InspectorControls>
         <PanelBody title={__('Settings')} initialOpen>
           <VFBlockFields fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <div className={'vf-tabs'} data-ver={ver}>
+      <div className='vf-tabs' data-ver={ver}>
+        <ul className='vf-tabs__list'>
+          {tabs.map((tab, i) => {
+            return (
+              <li key={i + tab.id} className='vf-tabs__item'>
+                <a className='vf-tabs__link' onClick={() => selectTab(i)}>
+                  {tab.label}
+                </a>
+              </li>
+            );
+          })}
+          <li className='vf-tabs__item'>
+            <Button {...fields[0]} isTertiary isSecondary={false}>
+              <span>{fields[0].label}</span>
+            </Button>
+          </li>
+        </ul>
         <InnerBlocks
           allowedBlocks={['vf/tabs-section']}
           template={Array(1).fill(['vf/tabs-section'])}
         />
-        <Button icon="insert" {...fields[0]}>
-          <span>{fields[0].label}</span>
-        </Button>
       </div>
-    </Fragment>
+    </>
   );
 };
 

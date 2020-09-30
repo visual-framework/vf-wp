@@ -6,10 +6,11 @@ import React from 'react';
 import {BaseControl, Button} from '@wordpress/components';
 
 const ButtonControl = (props) => {
+  const {help, label, ...buttonProps} = props.field;
   return (
-    <BaseControl>
+    <BaseControl help={help}>
       <div className='components-base-control__button'>
-        <Button {...props.field}>{props.label}</Button>
+        <Button {...buttonProps}>{label}</Button>
       </div>
     </BaseControl>
   );
