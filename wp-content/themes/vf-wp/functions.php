@@ -31,7 +31,9 @@ require_once('blocks/vfwp-search/index.php');
 require_once('blocks/vfwp-masthead/index.php');
 require_once('blocks/vfwp-social-icons/index.php');
 
-
+if (vf_debug()) {
+  require_once('blocks/vfwp-debug/index.php');
+}
 
 global $vf_admin;
 if ( ! isset($vf_admin)) {
@@ -45,26 +47,26 @@ if ( ! isset($vf_theme)) {
 
 // adds contact box to WP admin dashboard
 add_action('wp_dashboard_setup', 'contact_box');
-  
+
 function contact_box() {
 global $wp_meta_boxes;
- 
+
 wp_add_dashboard_widget('custom_help_widget', 'Share your feedback', 'contact_box_content');
 }
- 
+
 function contact_box_content() {
 echo '<div style="background-color: #fffadc; padding: 3px;"><p>If you have any questions, comments or suggestions please send your feedback to <a href="mailto:digital-comms@embl.org">digital-comms@embl.org</a>.</p></div>';
 }
 
 // adds training box to WP admin dashboard
 add_action('wp_dashboard_setup', 'training_box');
-  
+
 function training_box() {
 global $wp_meta_boxes;
- 
+
 wp_add_dashboard_widget('custom_training_widget', 'WordPress Training Materials', 'training_box_content');
 }
- 
+
 function training_box_content() {
 echo '<div style="background-color: #fffadc; padding: 3px;"><p>To learn more about WordPress, blocks, page templates, customization and more, check out our <a href="https://wwwdev.embl.org/guidelines/design/page/wordpress/">training materials</a>.</p></div>';
 }

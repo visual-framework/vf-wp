@@ -2,6 +2,7 @@
 Block Name: Grid
 */
 import React, {Fragment} from 'react';
+import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {withDispatch} from '@wordpress/data';
@@ -36,7 +37,7 @@ const settings = {
   }
 };
 
-settings.save = props => {
+settings.save = (props) => {
   if (props.attributes.placeholder === 1) {
     return null;
   }
@@ -49,13 +50,13 @@ settings.save = props => {
   );
 };
 
-const withGridDispatch = Edit => {
+const withGridDispatch = (Edit) => {
   return withDispatch((dispatch, ownProps, {select}) => {
     const {getBlocks} = select('core/block-editor');
     const {replaceInnerBlocks} = dispatch('core/block-editor');
 
     // `columns` attribute `onChange` callback
-    const setColumns = newColumns => {
+    const setColumns = (newColumns) => {
       const prevColumns = ownProps.attributes.columns;
       // Merge inner blocks when number of columns is reduced
       if (newColumns < prevColumns) {
@@ -70,7 +71,17 @@ const withGridDispatch = Edit => {
           false
         );
       }
-
+      let innerBlocks = getBlocks(ownProps.clientId);
+      innerBlocks = innerBlocks.slice(0, newColumns);
+      // Append new blocks when number of columns is increased
+      if (newColumns > prevColumns) {
+        while (innerBlocks.length < newColumns) {
+          innerBlocks.push(createBlock('vf/grid-column', {}, []));
+        }
+      }
+      if (newColumns !== prevColumns) {
+        replaceInnerBlocks(ownProps.clientId, innerBlocks, false);
+      }
       // Update block attributes
       ownProps.setAttributes({columns: newColumns, placeholder: 0});
     };
@@ -80,7 +91,7 @@ const withGridDispatch = Edit => {
   })(Edit);
 };
 
-settings.edit = withGridDispatch(props => {
+settings.edit = withGridDispatch((props) => {
   const {columns, placeholder} = props.attributes;
 
   // Ensure version is encoded in post content
@@ -128,7 +139,7 @@ settings.edit = withGridDispatch(props => {
         <InnerBlocks
           allowedBlocks={['vf/grid-column']}
           template={Array(columns).fill(['vf/grid-column'])}
-          templateLock="all"
+          templateLock='all'
         />
       </div>
     </Fragment>

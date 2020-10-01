@@ -244,6 +244,7 @@ class VF_Gutenberg {
   static function acf_render_template($args, $template, $acf_id = false) {
     $block = $args[0];
     $is_preview = $args[2];
+    $is_jsx = isset($block['supports']['jsx']) && $block['supports']['jsx'];
     if ( ! $acf_id) {
       $acf_id = $block['id'];
     }
@@ -293,7 +294,25 @@ class VF_Gutenberg {
     }
     $id = "vfwp_{$block['id']}";
 ?>
+<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+  <div class="vf-block__view">
+    <?php /*
+    <iframe
+      class="vf-block__iframe"
+      id="<?php echo $id; ?>"
+      onLoad="<?php echo "setTimeout(()=>{{$id}();}, 1);"; ?>"
+      scrolling="no"></iframe>
+      */ ?>
+  </div>
+  <?php if ($is_jsx) { ?>
+  <div class="vf-block__inner-blocks">
+    <InnerBlocks />
+  </div>
+  <?php } ?>
+</div>
 <script>
+(function() {
+
 window.<?php echo $id; ?> = function() {
   const iframe = document.getElementById('<?php echo $id; ?>');
   iframe.vfActive = true;
@@ -329,16 +348,27 @@ if (ResizeObserver) {
   doc.body.appendChild(script);
   doc.body.classList.add('ebi-vf1-integration');
 };
+
+const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
+let iframe = document.getElementById('<?php echo $id; ?>');
+const onLoad = () => {
+  if (typeof window[iframe.id] === 'function') {
+    window[iframe.id]();
+  }
+};
+if (iframe) {
+  onLoad();
+} else {
+  iframe = document.createElement('iframe');
+  iframe.id = '<?php echo $id; ?>';
+  iframe.className = 'vf-block__iframe';
+  iframe.setAttribute('scrolling', 'no');
+  iframe.onload = onLoad;
+  parent.insertBefore(iframe, parent.firstChild);
+}
+
+})();
 </script>
-<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
-  <div class="vf-block__view">
-    <iframe
-      class="vf-block__iframe"
-      id="<?php echo $id; ?>"
-      onload="<?php echo "setTimeout(()=>{{$id}();}, 1);"; ?>"
-      scrolling="no"></iframe>
-  </div>
-</div>
 <?php
   // Toggle the Gutenberg editor block style for containers
   $is_container = get_field('is_container', $acf_id);

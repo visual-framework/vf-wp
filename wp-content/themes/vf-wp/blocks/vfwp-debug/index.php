@@ -2,10 +2,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VFWP_Details') ) :
+if ( ! class_exists('VFWP_Debug') ) :
 
-  require_once('widget.php');
-class VFWP_Details extends VFWP_Block {
+class VFWP_Debug extends VFWP_Block {
 
   public function __construct() {
     parent::__construct(__FILE__);
@@ -15,7 +14,7 @@ class VFWP_Details extends VFWP_Block {
    * Return the block name
    */
   static public function get_name() {
-    return 'vfwp-details';
+    return 'vfwp-debug';
   }
 
   /**
@@ -26,20 +25,22 @@ class VFWP_Details extends VFWP_Block {
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
-      'title'    => 'Details',
+      'title'    => 'Debug',
       'category' => 'vf/wp',
       'supports' => array(
         'vf/renderIFrame' => false,
         'vf/innerBlocks'  => true,
         'align'           => false,
-        'customClassName' => false,
+        'customClassName' => false
       )
     );
   }
 
-} // VFWP_Details
+} // VFWP_Debug
 
 // Initialize one instance
-$vfwp_details = new VFWP_Details();
+$vfwp_example = new VFWP_Debug();
 
-endif; ?>
+endif;
+
+?>
