@@ -1,0 +1,104 @@
+{
+  "key": "group_embl_taxonomy_terms",
+  "title": "EMBL Taxonomy Terms",
+  "fields": [
+    {
+      "key": "field_embl_taxonomy_term_who",
+      "label": "Who",
+      "name": "embl_taxonomy_term_who",
+      "type": "taxonomy",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "33",
+        "class": "",
+        "id": ""
+      },
+      "taxonomy": "embl_taxonomy",
+      "field_type": "select",
+      "allow_null": 1,
+      "add_term": 0,
+      "save_terms": 0,
+      "load_terms": 0,
+      "return_format": "id",
+      "multiple": 0
+    },
+    {
+      "key": "field_embl_taxonomy_term_what",
+      "label": "What",
+      "name": "embl_taxonomy_term_what",
+      "type": "taxonomy",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "33",
+        "class": "",
+        "id": ""
+      },
+      "taxonomy": "embl_taxonomy",
+      "field_type": "select",
+      "allow_null": 1,
+      "add_term": 0,
+      "save_terms": 0,
+      "load_terms": 0,
+      "return_format": "id",
+      "multiple": 0
+    },
+    {
+      "key": "field_embl_taxonomy_term_where",
+      "label": "Where",
+      "name": "embl_taxonomy_term_where",
+      "type": "taxonomy",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": {
+        "width": "33",
+        "class": "",
+        "id": ""
+      },
+      "taxonomy": "embl_taxonomy",
+      "field_type": "select",
+      "allow_null": 1,
+      "add_term": 0,
+      "save_terms": 0,
+      "load_terms": 0,
+      "return_format": "id",
+      "multiple": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "options_page",
+        "operator": "==",
+        "value": "vf-settings"
+      }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "post"
+      }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "page"
+      }
+    ]
+  ],
+  "menu_order": 20,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "",
+  "modified": 1598527351
+}
