@@ -1238,10 +1238,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-1.0.4.tgz#0a47d6ca7631ae375f17a5657fec710b38f6d67b"
   integrity sha512-oqgVtMxnbRvBekR5QWSct6cl5eBy9yJE35nG2gT/uSIi7+N5paHnM+t+lXnHeFeKdDwyAiav/9/CKWDBsac1fQ==
 
-"@visual-framework/vf-button@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-1.1.1.tgz#466e4c4b2d29c577cb702dd101ccb26f1ced2f6e"
-  integrity sha512-FjBdlTs3ypwHYp0p3FDkKT8xZD34n9NKismrlAI2Cnur4BxNUXJYX3IfWy0sNj3VahCUbpEAj2fCyPtnwDL41w==
+"@visual-framework/vf-button@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-1.1.2.tgz#7e5cd9c7729c8cf601e8281cfe88560f4c28f7b2"
+  integrity sha512-Ev9zw+DZnWirrtDq9DP1NHU3P2+SPj1GHcs3IaWQqZ0uwUmzajVS3V483uYWz/3EVPbjQZ8PIXduVSRVlOBNWQ==
 
 "@visual-framework/vf-card-container@1.0.0":
   version "1.0.0"
@@ -1280,18 +1280,18 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.0-alpha.2.tgz#7213302398843219df70c2796ba7af1d8e15b42f"
   integrity sha512-vMW63tA/PazxYESI+HDoWv0bHU7r2u9ZiHfL3uPwfZMnvZXH99zVyZQ8kcZIJC8vEQUE4QilPcL5AC0DYFuAoQ==
 
-"@visual-framework/vf-content@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.2.2.tgz#5f06d99955430d5a595b2f7d4da77d637d94436a"
-  integrity sha512-rY9Dok9kyv37fAuGyxznQ61n6Wj0MPtBmozabFEYOy5j7x+bghfxHXUDPl/J07Dd1Pn5vwcy6gfuXW7ea8yRzw==
+"@visual-framework/vf-content@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.2.3.tgz#31b8ec1896171021a6b4fcd47eb631acd70aebff"
+  integrity sha512-tIOMk/BsJkY33rcCK4yI3Zf+yF2lLJZ1rxID7ypjRQTsiLjpovHlH4tO0m8ERK8UrVsj/luVzQDg5da9Ic6rXQ==
   dependencies:
     "@visual-framework/vf-badge" "^1.2.1"
     "@visual-framework/vf-blockquote" "^1.0.2"
     "@visual-framework/vf-box" "^2.0.2"
-    "@visual-framework/vf-button" "^1.1.1"
+    "@visual-framework/vf-button" "^1.1.2"
     "@visual-framework/vf-divider" "^1.0.0"
     "@visual-framework/vf-figure" "^1.3.0"
-    "@visual-framework/vf-form__core" "^1.0.3"
+    "@visual-framework/vf-form__core" "^1.0.4"
     "@visual-framework/vf-heading" "^1.0.0"
     "@visual-framework/vf-link" "^1.0.3"
     "@visual-framework/vf-list" "^1.0.0"
@@ -1374,7 +1374,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-1.0.2.tgz#8b70d71c2c758a83ff136fcb106b36236cb35ade"
   integrity sha512-+KhXL1bruzlTJItn7BGoOoxpH9iaA+/EQz2cM0jccAxIc2x4IFPzZrcrJJuX16if7UXWpYD1YUb9kfOFLRJDSw==
 
-"@visual-framework/vf-form__core@1.0.3", "@visual-framework/vf-form__core@^1.0.3":
+"@visual-framework/vf-form__core@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__core/-/vf-form__core-1.0.3.tgz#7f8b2e92f458e965774a8f92057d40b9738091ff"
   integrity sha512-XvDYEsTrooIQ9P/srZyMqlH8acy+88z6BRGzSBozf0CXiLVePG9YCyYhivT5tlEeBI12nTVJ1hGIrjxoqMmqUQ==
@@ -1390,6 +1390,22 @@
     "@visual-framework/vf-form__select" "^1.0.0"
     "@visual-framework/vf-form__textarea" "^1.0.1"
 
+"@visual-framework/vf-form__core@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__core/-/vf-form__core-1.0.4.tgz#ea5716267d7642d28c0e7411976c45945de8adfe"
+  integrity sha512-dVIiHfftRNXDmzTIj7jBr9XQHvbsXCBhdo1boVi4k3RdgAQwi2CLHAGIZUBB4G8vECTef+M5V3OWWDDs84cdtw==
+  dependencies:
+    "@visual-framework/vf-form__checkbox" "^1.0.2"
+    "@visual-framework/vf-form__fieldset" "^1.0.1"
+    "@visual-framework/vf-form__helper" "^1.0.0"
+    "@visual-framework/vf-form__input" "^1.1.0"
+    "@visual-framework/vf-form__item" "^1.0.0"
+    "@visual-framework/vf-form__label" "^1.0.1"
+    "@visual-framework/vf-form__legend" "^1.0.1"
+    "@visual-framework/vf-form__radio" "^1.0.1"
+    "@visual-framework/vf-form__select" "^1.0.1"
+    "@visual-framework/vf-form__textarea" "^1.0.2"
+
 "@visual-framework/vf-form__fieldset@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__fieldset/-/vf-form__fieldset-1.0.1.tgz#e871f137e46a9fdf4ebb03eff72124407c0f0a71"
@@ -1404,6 +1420,11 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__input/-/vf-form__input-1.0.1.tgz#b2a232e0b07e82031a1e3550358e8a0ed1a5b8e6"
   integrity sha512-4KiXleEM7J377slRLjFWxlQ7y3FeGEzUqzyLPudjBBeCUEkCPSH9Fc4Jy4FnPCPhYnfRIfLB47PRMDioYEDwoQ==
+
+"@visual-framework/vf-form__input@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__input/-/vf-form__input-1.1.0.tgz#41e9925bcb9eed42b64d08c36bfb2d26ef4e52d0"
+  integrity sha512-t0WAH+e35RvvsxCuL+pKLvvN7A4G9c/4PsSijF1kcK5/iD2gJKTFJ8WYwgWVeo7eYGpZ5BfbzQ3NlV84RxVxDg==
 
 "@visual-framework/vf-form__item@^1.0.0":
   version "1.0.0"
@@ -1430,10 +1451,20 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-1.0.0.tgz#b4b6c2e88f3a790f29bcba5949b6d486dff86053"
   integrity sha512-uxJQ3nOZ0xSjawo1VVQCiyx7GV6oOZKdQRv9aaWgN7Jus8vG/xycThwOS4S135hLOPU+2oh7g3wWpXr7jX/1dQ==
 
+"@visual-framework/vf-form__select@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-1.0.1.tgz#b029c967a23e8479c61607cbacb422641cf83241"
+  integrity sha512-Ton1KirVBZktEF69Xs4vxgZcTSdS/cH2lvL5j23pVv3KyEojs6r/7ZNdGFkw8kH1NJrqpwtFwOg68UvuZh6f0A==
+
 "@visual-framework/vf-form__textarea@1.0.1", "@visual-framework/vf-form__textarea@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__textarea/-/vf-form__textarea-1.0.1.tgz#c56d894fe2458a8183e903dbddc54ce4c6c527d2"
   integrity sha512-ClrdsIWAYfKPryYC4yi56asL8biIzzdOi28WgbFdbo0GSGkg9E+RibTjON0l9MLZFSXFe4yRlb4rNjjeTZCNtg==
+
+"@visual-framework/vf-form__textarea@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__textarea/-/vf-form__textarea-1.0.2.tgz#81724691db46fafc5668704bb0363d3bb41a9592"
+  integrity sha512-eq4szj050Y3xtbsYYdW3PIlFoE1VQIxyNLWCFW+SwyfPV7f7pZkAL6tFYfhYC6aFrWhAf/79FWeGwVepgHdylQ==
 
 "@visual-framework/vf-frctl-extensions@^1.0.0-alpha.2":
   version "1.0.0-alpha.2"
