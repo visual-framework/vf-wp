@@ -53,13 +53,16 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card
- * Version: 2.1.2
+ * Version: 2.2.0
  * Location: components/vf-card
  */
 .vf-card {
   --card-text-color: var(--vf-card-theme-color--foreground, #000000);
   --card-background-color: var(--vf-card-theme-color--background , #ffffff);
   background-color: var(--card-background-color);
+  /* border: 1px solid var(--vf-card-theme-color--border, var(--card-border-color, )); */
+  -webkit-box-shadow: 0 0.125rem 0.25rem rgba(84, 88, 90, 0.5);
+          box-shadow: 0 0.125rem 0.25rem rgba(84, 88, 90, 0.5);
   display: grid;
   grid-template-rows: 288px 1fr;
   position: relative;
@@ -120,10 +123,8 @@
   text-decoration: none;
 }
 .vf-card__title .vf-card__link:hover::after {
-  -webkit-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.2);
-  -webkit-transition-duration: 250ms;
-          transition-duration: 250ms;
+  -webkit-box-shadow: 0 0 0.125rem 0.125rem rgba(112, 115, 114, 0.75);
+          box-shadow: 0 0 0.125rem 0.125rem rgba(112, 115, 114, 0.75);
 }
 .vf-card__title .vf-card__link:hover,
 .vf-card__title .vf-card__link:visited,
