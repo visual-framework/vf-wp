@@ -865,7 +865,7 @@ a.vf-badge--outline[class*=tertiary]:hover {
 
 /*!
 * Component: @visual-framework/vf-button
-* Version: 1.1.1
+* Version: 1.1.2
 * Location: components/vf-button
 */
 .vf-button {
@@ -878,9 +878,11 @@ a.vf-badge--outline[class*=tertiary]:hover {
   line-height: 1;
   -ms-flex-item-align: center;
       align-self: center;
+  /* stylelint-disable */
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  /* stylelint-enable */
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   background-color: #000000;
@@ -1393,7 +1395,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.2.2
+ * Version: 1.2.3
  * Location: components/vf-content
  */
 .vf-content h1:not([class*=vf-]) {
