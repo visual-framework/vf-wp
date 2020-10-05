@@ -44,8 +44,7 @@ if (is_search()) {
 ?>
 
 <section class="vf-grid vf-grid__col-5 | vf-u-background-color-ui--grey | vf-u-padding__bottom--md | vf-u-padding__top--xxl | vf-u-margin__bottom--xxl | vf-u-fullbleed">
-
-    <div class="vf-grid__col--span-3 | vf-u-margin__bottom--md | vf-grid-featured-col-left">
+    <div class="vf-grid__col--span-3 | vf-u-margin__bottom--lg | vf-grid-featured-col-left">
       <?php
 			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();
