@@ -43,21 +43,20 @@ if (is_search()) {
 
 ?>
 
-<section class="vf-inlay | vf-u-background-color-ui--grey vf-u-margin__bottom--xxl">
+<section class="vf-grid vf-grid__col-5 | vf-u-background-color-ui--grey | vf-u-padding__bottom--md | vf-u-padding__top--xxl | vf-u-margin__bottom--xxl | vf-u-fullbleed">
 
-  <div class="vf-inlay__content | vf-u-background-color-ui--grey | vf-u-fullbleed | hero-container">
-    <div class="vf-inlay__content--main | vf-content | vf-u-margin__bottom--md | hero-left-column">
+    <div class="vf-grid__col--span-3 | vf-u-margin__bottom--md | vf-grid-featured-col-left">
       <?php
 			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();
 while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post();
 $ids[] = get_the_ID(); ?>
-      <?php include(locate_template('partials/vf-summary--article--color.php', false, false)); ?>
+      <?php include(locate_template('partials/vf-card--article-excerpt.php', false, false)); ?>
       <?php endwhile;?>
       <?php wp_reset_postdata(); ?>
     </div>
 
-    <div class="vf-inlay__content--additional | hero-right-column">
+    <div class="vf-grid__col--span-2 | vf-grid-featured-col-right">
       <?php
 $cardsPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 2, 'meta_key' => 'featured',
 	'meta_value' => '1' ));
@@ -67,7 +66,6 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
       <?php endwhile; ?>
       <?php wp_reset_postdata(); ?>
     </div>
-  </div>
 
 </section>
 <!-- Latest -->
@@ -198,14 +196,11 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
 </section>
 
-<section class="vf-inlay">
-
 <?php include(locate_template('partials/pow-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
-</section>
 
 <?php get_footer(); ?>
