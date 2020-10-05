@@ -1,25 +1,25 @@
 <footer class="vf-footer">
   <div class="vf-footer__inner">
     <p class="vf-footer__notice">
-      A description of a site or organisation and what its goals are.
+    One line about ELLS’ mission
     </p>
     <div class="vf-footer__links-group | vf-grid">
       <div class="vf-links">
         <h4 class="vf-links__heading">
-          Resources
+        European Learning Laboratory for the Life Sciences
         </h4>
         <ul class="vf-links__list | vf-list">
           <li class="vf-list__item">
             <a class="vf-list__link" href="JavaScript:Void(0);">
-              Training</a>
+              About Us</a>
           </li>
           <li class="vf-list__item">
             <a class="vf-list__link" href="JavaScript:Void(0);">
-              Experience Science</a>
+              Contact</a>
           </li>
           <li class="vf-list__item">
             <a class="vf-list__link" href="JavaScript:Void(0);">
-              Work with us</a>
+              Terms of Use</a>
           </li>
         </ul>
       </div>
@@ -109,31 +109,5 @@
         </div>
       </div>
     </div>
-    <section class="vf-footer__legal | vf-grid vf-grid__col-1">
-      <ul class="vf-footer__list vf-footer__list--legal | vf-list vf-list--inline">
-        <li class="vf-list__item">
-          <a href="JavaScript:Void(0);" class="vf-list__link">
-            embl.org
-          </a>
-        </li>
-        <li class="vf-list__item">
-          <a href="JavaScript:Void(0);" class="vf-list__link">
-            embl.org/news
-          </a>
-        </li>
-      </ul>
-      <p class="vf-footer__legal-text">
-        Copyright © Your Organisation.
-      </p>
-      <p class="vf-footer__legal-text">
-        Maybe an address too, 5555, Somewhere, Earth.
-      </p>
-      <p class="vf-footer__legal-text">
-        Tel: +49 00 000 000.
-      </p>
-      <a class="vf-footer__link" href="JavaScript:Void(0);">
-        Another entry
-      </a>
-    </section>
   </div>
 </footer>
