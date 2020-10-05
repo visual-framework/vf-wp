@@ -5,7 +5,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 
 ?>
-<div class="vf-card vf-card--normal" style="background-color: <?php the_field('color'); ?>;">
+<article class="vf-card vf-card--normal" style="background-color: <?php the_field('color'); ?>;">
 <?php
 
 if( get_field( 'youtube_url' ) ) {
@@ -19,7 +19,7 @@ else if ( get_field( 'mp4_url' ) ) {
 }
 
 else { ?>
-    <a style="display: flex;" href="<?php the_permalink(); ?>">
+    <a href="<?php the_permalink(); ?>">
       <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
     </a>
     <?php
@@ -40,4 +40,4 @@ else { ?>
           class="vf-link"><?php echo get_the_category_list(','); ?></a></p>
     </span>
   </div>
-</div>
+</article>

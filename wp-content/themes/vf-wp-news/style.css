@@ -108,11 +108,11 @@ Text Domain:	 vf-wp-news-main
 }
 
 @media (max-width: 1023px) {
-  .vf-grid-feature-col-right {
+  .vf-grid-featured-col-right {
     grid-column-end: span 3 !important;
     
   }
-  .vf-grid-feature-col-right .vf-card {
+  .vf-grid-featured-col-right .vf-card {
     grid-template-rows: 360px 1fr !important;
   }
 }
@@ -175,7 +175,7 @@ Text Domain:	 vf-wp-news-main
   min-height: 100% !important;
 }
 
-.vf-grid-featured-col-right .vf-card {
+.vf-card {
   grid-template-rows: 216px 1fr !important; 
 }
 
