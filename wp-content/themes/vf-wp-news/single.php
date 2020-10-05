@@ -223,10 +223,7 @@ if ($tags) {
   </div>
 </main>
 
-<section class="vf-inlay">
-  <div
-    class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--md | vf-u-fullbleed | category-more">
-    <main class="vf-inlay__content--full-width">
+  <div class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--md | vf-u-fullbleed">
       <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php
@@ -253,7 +250,6 @@ if ($tags) {
         <?php endforeach; wp_reset_postdata(); ?>
       </div>
 
-    </main>
   </div>
 
   <?php include(locate_template('partials/pow-container.php', false, false)); ?>
@@ -262,6 +258,5 @@ if ($tags) {
 
   <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
-</section>
 
 <?php get_footer(); ?>

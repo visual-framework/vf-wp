@@ -6,8 +6,7 @@ $pow_link = get_category_link(6);
 
 ?>
 
-<div class="vf-inlay__content vf-u-background-color-ui--black | vf-u-padding__top--xl vf-u-padding__bottom--xl | vf-u-fullbleed | pow-container">
-  <main class="vf-inlay__content--full-width | vf-u-margin--0">
+<div class="vf-u-background-color-ui--black | vf-u-padding__top--xl vf-u-padding__bottom--xl | vf-u-fullbleed | pow-container">
     <?php $my_query = new WP_Query( 'category_name=picture-of-the-week&posts_per_page=1' );
 while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
     <div class="vf-grid | vf-grid__col-2 | pow-article">
@@ -40,5 +39,4 @@ while ( $my_query->have_posts() ) : $my_query->the_post(); ?>
       </a>
     </div>
     <?php endwhile; ?>
-  </main>
 </div>

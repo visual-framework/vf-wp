@@ -27,8 +27,8 @@ if (is_search()) {
 
 $category_name = single_cat_title("", false);
 ?>
-<section class="vf-u-margin__bottom--md ">
-  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--md">
+<section class="vf-u-margin__bottom--md">
+  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--md | vf-u-margin__bottom--md">
     <div>
       <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
       <?php echo esc_html($category_name) ?></h2>
@@ -43,18 +43,14 @@ $category_name = single_cat_title("", false);
     </div>
   </div>
 
-  <div class="vf-inlay__content vf-u-background-color-ui-white | category-more">
-    <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
-      <div class="| vf-u-margin__top--xl">
-        <h3 class="vf-section-header__heading | vf-u-margin__bottom--xl">Popular in this category</h3>
-      </div>
+  <div class="vf-u-background-color-ui-white">
+        <h3 class="vf-text vf-text-heading--3">Popular in this category</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'cat' => get_query_var('cat')));
         while ($popular->have_posts()) : $popular->the_post();
         include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
-    </main>
   </div>
 
   <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
