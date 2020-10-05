@@ -31,6 +31,12 @@ get_header();
   <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
       <?php echo get_post_meta($post->ID, 'ells_article_intro', true); ?>
     </p>
+    <figure class="vf-figure">
+      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
+      <figcaption class="vf-figure__caption">
+        <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
+      </figcaption>
+    </figure>
 
     <?php the_content(); ?>
   </div>
