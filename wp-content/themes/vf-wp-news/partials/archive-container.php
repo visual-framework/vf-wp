@@ -1,5 +1,4 @@
-<div class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-padding__top--md | vf-u-padding__bottom--md | vf-u-margin__bottom--sm  | archive-container">
-  <main class="vf-inlay__content--full-width | vf-u-margin--0">
+<div class="vf-u-background-color-ui--off-white | vf-u-padding__top--md | vf-u-padding__bottom--md | vf-u-margin__bottom--sm  | archive-container">
     <div class="vf-grid" style="--page-grid-gap: 0px;">
       <div class="vf-links vf-links--tight vf-links__list--s">
         <h3 class="vf-links__heading">Last 6 months:</h3>
@@ -63,5 +62,4 @@ wp_get_archives( $year );
         </ul>
       </div>
     </div>
-  </main>
 </div>

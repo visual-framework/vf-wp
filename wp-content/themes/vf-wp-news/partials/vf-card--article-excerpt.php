@@ -5,8 +5,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 
 ?>
-
-<article class="vf-card vf-card--easy vf-card-theme--primary | vf-u-margin__bottom--lg">
+<article class="vf-card vf-card--normal" style="background-color: <?php the_field('color'); ?>;">
 <?php
 
 if( get_field( 'youtube_url' ) ) {
@@ -27,10 +26,12 @@ else { ?>
 }
 ?>
   <div class="vf-card__content">
-  <h3 class="vf-card__title">
+    <h3 class="vf-card__title" style="background-color: <?php the_field('color'); ?>;">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>
-    <time class="vf-summary__date | vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+    <p class="vf-card__text">
+    <?php echo get_the_excerpt(); ?></p>
+    <time class="vf-summary__date vf-u-text-color--ui--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
     <span class="vf-summary__meta | vf-u-margin__bottom--xs ">
       <p class="vf-summary__meta vf-u-margin__bottom--xs vf-u-margin__top--xs">By&nbsp;<a
