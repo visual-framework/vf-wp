@@ -15,7 +15,7 @@ the_post();
       <div class="vf-grid vf-grid__col-3">
         <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array(
-    'posts_per_page' => 10,
+    'posts_per_page' => 12,
     'paged' => $page,);
 query_posts($args);?>
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
