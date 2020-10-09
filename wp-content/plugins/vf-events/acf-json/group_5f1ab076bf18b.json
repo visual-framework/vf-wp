@@ -118,9 +118,7 @@
                 "europe\/london": "Europe\/London",
                 "america\/new_york": "America\/New_York"
             },
-            "default_value": [
-                "europe\/berlin"
-            ],
+            "default_value": "europe\/berlin",
             "allow_null": 1,
             "multiple": 0,
             "ui": 1,
@@ -168,7 +166,7 @@
                 "353": "EMBO",
                 "98": "Other"
             },
-            "default_value": [],
+            "default_value": false,
             "allow_null": 0,
             "multiple": 0,
             "ui": 1,
@@ -369,7 +367,7 @@
             "key": "field_5e9868ea11ada",
             "label": "Event type",
             "name": "vf_event_event_type",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -378,14 +376,19 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "vf_event_type",
-            "field_type": "select",
+            "choices": {
+                "conference": "Conference",
+                "course": "Course",
+                "webinar": "Webinar",
+                "public_event": "Public event"
+            },
+            "default_value": false,
             "allow_null": 0,
-            "add_term": 0,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "object",
-            "multiple": 0
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "label",
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_5f3f7042eb5fe",
@@ -521,6 +524,60 @@
             "placeholder": ""
         },
         {
+            "key": "field_5f7473f59e83d",
+            "label": "Registration button text",
+            "name": "vf_event_registration_button_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Register",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f743a6cb08c0",
+            "label": "Abstract submission link",
+            "name": "vf_event_abstract_link",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f74740d9e83e",
+            "label": "Abstract submission button text",
+            "name": "vf_event_abstract_submission_button_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Submit abstract",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5f1fd24325b7c",
             "label": "Template settings",
             "name": "",
@@ -537,74 +594,11 @@
             "endpoint": 0
         },
         {
-            "key": "field_5f3f7c8169b22",
-            "label": "Navigation bar",
-            "name": "vf_event_navigation_bar",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_5f3f7cad69b23",
-            "label": "Navigation",
-            "name": "vf_event_navigation",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f3f7c8169b22",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Add Menu Item",
-            "sub_fields": [
-                {
-                    "key": "field_5f3f7ccf69b24",
-                    "label": "Menu item",
-                    "name": "vf_event_menu_item",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "array"
-                }
-            ]
-        },
-        {
             "key": "field_5f295f13979f9",
             "label": "Hero image",
             "name": "vf_event_hero",
             "type": "image",
-            "instructions": "Recommended size: 1224 x 348 px",
+            "instructions": "Recommended size: 1300 x 275 px",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -613,7 +607,7 @@
                 "id": ""
             },
             "return_format": "array",
-            "preview_size": "vf-hero",
+            "preview_size": "medium",
             "library": "all",
             "min_width": "",
             "min_height": "",
@@ -637,11 +631,12 @@
                 "id": ""
             },
             "choices": {
+                "none": "None",
                 "primary": "Primary",
                 "secondary": "Secondary",
                 "tertiary": "Tertiary"
             },
-            "default_value": [],
+            "default_value": "None",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -693,25 +688,6 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_5f29605f979fc",
-            "label": "Information for participants box",
-            "name": "vf_event_info_box",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
             "key": "field_5f2a9047f4bca",
             "label": "Select event organiser",
             "name": "event_organiser",
@@ -741,7 +717,7 @@
                 "rome": "EMBL Rome",
                 "sands": "Science and Society"
             },
-            "default_value": [],
+            "default_value": false,
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -750,634 +726,85 @@
             "placeholder": ""
         },
         {
-            "key": "field_5f2a507e0e686",
-            "label": "Box items",
-            "name": "vf_event_cco_box_items",
-            "type": "checkbox",
+            "key": "field_5f743c13b08c1",
+            "label": "Contact",
+            "name": "vf_event_contact",
+            "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a9047f4bca",
-                        "operator": "==",
-                        "value": "embl_cco"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "choices": {
-                "financial": "Financial Assistance",
-                "childcare": "Childcare",
-                "accommodation": "Accommodation",
-                "travel_information": "Travel Information",
-                "faqs": "FAQs",
-                "conduct": "Code of Conduct",
-                "onsite_information": "Onsite Information",
-                "terms": "Terms and Conditions",
-                "data_subjects": "Information for Data Subjects",
-                "contact": "Contact"
-            },
-            "allow_custom": 1,
-            "save_custom": 0,
-            "default_value": [],
-            "layout": "vertical",
-            "toggle": 0,
-            "return_format": "value"
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
-            "key": "field_5f2a51eb69237",
-            "label": "Acommodation",
-            "name": "accommodation",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
+            "key": "field_5f743c25b08c2",
+            "label": "Event hashtag",
+            "name": "vf_event_hashtag",
+            "type": "text",
+            "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "accommodation"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a52db69238",
-                    "label": "Link",
-                    "name": "accommodation_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a533a69239",
-                    "label": "Text",
-                    "name": "accommodation_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
-            "key": "field_5f2a8d121f98d",
-            "label": "Financial Assistance",
-            "name": "financial",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
+            "key": "field_5f743c39b08c3",
+            "label": "Event poster",
+            "name": "vf_event_poster",
+            "type": "image",
+            "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "financial"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8d121f98e",
-                    "label": "Link",
-                    "name": "financial_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8d121f98f",
-                    "label": "Text",
-                    "name": "financial_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
         },
         {
-            "key": "field_5f2a8d6ee4c9b",
-            "label": "Childcare",
-            "name": "childcare",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
+            "key": "field_5f743cb1b08c4",
+            "label": "Poster download file",
+            "name": "vf_event_poster_file",
+            "type": "file",
+            "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "childcare"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8d6ee4c9c",
-                    "label": "Link",
-                    "name": "childcare_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8d6ee4c9d",
-                    "label": "Text",
-                    "name": "childcare_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5f2a8da008e6f",
-            "label": "FAQ",
-            "name": "faq",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "faqs"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8da008e70",
-                    "label": "Link",
-                    "name": "faq_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8da008e71",
-                    "label": "Text",
-                    "name": "faq_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5f2a8dce3b91f",
-            "label": "Travel Information",
-            "name": "travel",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "travel_information"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8dce3b920",
-                    "label": "Link",
-                    "name": "travel_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8dce3b921",
-                    "label": "Text",
-                    "name": "travel_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5f2a8e26a0052",
-            "label": "Code of Conduct",
-            "name": "code",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "conduct"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8e26a0053",
-                    "label": "Link",
-                    "name": "code_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8e26a0054",
-                    "label": "Text",
-                    "name": "code_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5f2a8e6cfb16f",
-            "label": "Onsite Information",
-            "name": "onsite",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "onsite_information"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8e6cfb170",
-                    "label": "Link",
-                    "name": "onsite_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8e6cfb171",
-                    "label": "Text",
-                    "name": "onsite_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5f2a8e9ec57da",
-            "label": "Terms and Conditions",
-            "name": "terms",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "terms"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8e9ec57db",
-                    "label": "Link",
-                    "name": "terms_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8e9ec57dc",
-                    "label": "Text",
-                    "name": "terms_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5f2a8ec45d052",
-            "label": "Information for Data Subjects",
-            "name": "data",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "data_subjects"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8ec45d053",
-                    "label": "Link",
-                    "name": "data_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8ec45d054",
-                    "label": "Text",
-                    "name": "data_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
-        },
-        {
-            "key": "field_5f2a8ef5c1e1e",
-            "label": "Contact",
-            "name": "contact",
-            "type": "group",
-            "instructions": "(Optional) Please fill in for custom values",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2a507e0e686",
-                        "operator": "==",
-                        "value": "contact"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "sub_fields": [
-                {
-                    "key": "field_5f2a8ef5c1e1f",
-                    "label": "Link",
-                    "name": "contact_link",
-                    "type": "link",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "return_format": "url"
-                },
-                {
-                    "key": "field_5f2a8ef5c1e20",
-                    "label": "Text",
-                    "name": "contact_text",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": ""
-                }
-            ]
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": ""
         }
     ],
     "location": [
@@ -1397,5 +824,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1597999595
+    "modified": 1601539722
 }
