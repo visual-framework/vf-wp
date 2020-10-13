@@ -1566,10 +1566,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-sass-utilities/-/vf-sass-utilities-1.0.1.tgz#89bcc45d154763e098654d50a597f54a2a47f153"
   integrity sha512-AeZAUep3t6VGlBjLzOEFcuXmUhB5T6iJY1Hk/y/MMBA8fQPtFsC2t5VfLBGzCEyu9XneTrcHaqHFZXaZA42tEQ==
 
-"@visual-framework/vf-search@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-search/-/vf-search-1.1.1.tgz#a66c662cd9ef938f38354e236a50360dff4c45ab"
-  integrity sha512-/s5P8X/H+hw7frJHqs+vFwshzxRsUhWcUj01TWjexJJDe03pjnVHzVkOOdIYJ4LVy2hcT8QTsXlH22PvZiypyA==
+"@visual-framework/vf-search@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-search/-/vf-search-1.1.2.tgz#a6c0789bcb115850de3e9590fe624f12f8a9e27b"
+  integrity sha512-LYqM4GQ5jDZTGWwTmDRHUN4oj8FzHRPJ735iV4rwD5Z8IPFisA6qNoot14hCwKT80XhO0a11U69hiqTCoGezYw==
 
 "@visual-framework/vf-section-header@1.2.2":
   version "1.2.2"
