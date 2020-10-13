@@ -1198,10 +1198,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-list/-/vf-activity-list-1.0.0-alpha.9.tgz#27956846db8628356770d8e2d44a8bef1c1dafd7"
   integrity sha512-NG+MOe9aKKyBtGPhzajKldjfd9wb8zpZg1+b6UJKq6WK5D8y9egJ69mZBzFoaT48NZr4X8jrkzArH8cPMvgYLw==
 
-"@visual-framework/vf-analytics-google@1.0.0-rc.4":
-  version "1.0.0-rc.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-analytics-google/-/vf-analytics-google-1.0.0-rc.4.tgz#67efeda62574208b8f66eda092ca88748ebe0bbc"
-  integrity sha512-yUrBSv/F+J1q929Hd9KTnTgRq/0oh2ayE4aWQ5IeY4OnQhGaq7dseSuawywiefx/2MKo5rfI8jHTK9pCbpWH4w==
+"@visual-framework/vf-analytics-google@1.0.0-rc.5":
+  version "1.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-analytics-google/-/vf-analytics-google-1.0.0-rc.5.tgz#0dcf35d66f53e06888005786ccb00f71a601c5a4"
+  integrity sha512-jpLbHu9pd7hDtujX6tP0bGB2tMvZPJ7VxegMGTnA7Dc1AsRUCQTZtJDIrc0qhlGfmcPkDd9sN01qzS0GwGJ1Hw==
 
 "@visual-framework/vf-article-meta-information@1.1.0":
   version "1.1.0"
