@@ -7,6 +7,8 @@ require_once('functions/walker-comment.php');
 require_once('functions/admin.php');
 require_once('functions/theme.php');
 
+require_once('functions/post-duplicate.php');
+
 // Require Gutenberg block classes
 
 require_once('functions/theme-block.php');
@@ -70,6 +72,10 @@ wp_add_dashboard_widget('custom_training_widget', 'WordPress Training Materials'
 function training_box_content() {
 echo '<div style="background-color: #fffadc; padding: 3px;"><p>To learn more about WordPress, blocks, page templates, customization and more, check out our <a href="https://wwwdev.embl.org/guidelines/design/page/wordpress/">training materials</a>.</p></div>';
 }
+
+
+
+
 
 
 ?>
