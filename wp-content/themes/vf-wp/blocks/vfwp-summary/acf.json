@@ -1,419 +1,413 @@
 {
-  "key": "group_5eb950c23f887",
-  "title": "Summary",
-  "fields": [
-      {
-          "key": "field_5eba88575b33d",
-          "label": "Select type",
-          "name": "select_type",
-          "type": "select",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "custom": "Custom",
-              "post": "Post",
-              "event": "Event",
-              "publication": "Publication"
-          },
-          "default_value": [
-              "custom"
-          ],
-          "allow_null": 0,
-          "multiple": 0,
-          "ui": 0,
-          "return_format": "value",
-          "ajax": 0,
-          "placeholder": ""
-      },
-      {
-          "key": "field_5eb950da30d23",
-          "label": "Image",
-          "name": "image",
-          "type": "image",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "custom"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "return_format": "array",
-          "preview_size": "thumbnail",
-          "library": "all",
-          "min_width": "",
-          "min_height": "",
-          "min_size": "",
-          "max_width": "",
-          "max_height": "",
-          "max_size": "",
-          "mime_types": ""
-      },
-      {
-          "key": "field_5ef4818b837d5",
-          "label": "Link",
-          "name": "link",
-          "type": "url",
-          "instructions": "Optional",
-          "required": 0,
-          "conditional_logic": [
-            [
-                {
-                    "field": "field_5eba88575b33d",
-                    "operator": "==",
-                    "value": "custom"
-                }
-            ]
-        ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": ""
-      },
-      {
-          "key": "field_5eb9510330d24",
-          "label": "Title",
-          "name": "title",
-          "type": "text",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "custom"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_5eb9513430d25",
-          "label": "Text",
-          "name": "text",
-          "type": "wysiwyg",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "custom"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "tabs": "all",
-          "toolbar": "basic",
-          "media_upload": 0,
-          "delay": 0
-      },
-      {
-          "key": "field_5eba8a28aa227",
-          "label": "Post",
-          "name": "post",
-          "type": "post_object",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "post"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "post_type": [
-              "post"
-          ],
-          "taxonomy": "",
-          "allow_null": 1,
-          "multiple": 0,
-          "return_format": "object",
-          "ui": 1
-      },
-      {
-          "key": "field_5eba8a5d18b98",
-          "label": "Event",
-          "name": "event",
-          "type": "post_object",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "event"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "post_type": [
-              "vf_event"
-          ],
-          "taxonomy": "",
-          "allow_null": 1,
-          "multiple": 0,
-          "return_format": "object",
-          "ui": 1
-      },
-      {
-          "key": "field_5ebd374c3e3f0",
-          "label": "Style",
-          "name": "event_style",
-          "type": "select",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "event"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "default": "Default",
-              "alternate": "Alternate"
-          },
-          "default_value": [
-              "default"
-          ],
-          "allow_null": 0,
-          "multiple": 0,
-          "ui": 0,
-          "return_format": "value",
-          "ajax": 0,
-          "placeholder": ""
-      },
-      {
-          "key": "field_5ee0c990c7c7a",
-          "label": "Title",
-          "name": "publication_title",
-          "type": "text",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "publication"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_5ee0c9e2c7c7c",
-          "label": "Link",
-          "name": "publication_link",
-          "type": "url",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "publication"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": ""
-      },
-      {
-          "key": "field_5ee0c9b5c7c7b",
-          "label": "Authors",
-          "name": "authors",
-          "type": "text",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "publication"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_5ee0c9fac7c7d",
-          "label": "Source",
-          "name": "source",
-          "type": "text",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "publication"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_5ee0ca1dc7c7e",
-          "label": "Year",
-          "name": "year",
-          "type": "number",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "publication"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "min": "",
-          "max": "",
-          "step": ""
-      },
-      {
-          "key": "field_5ee0ca55c7c7f",
-          "label": "DOI",
-          "name": "doi",
-          "type": "text",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5eba88575b33d",
-                      "operator": "==",
-                      "value": "publication"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      }
-  ],
-  "location": [
-      [
-          {
-              "param": "block",
-              "operator": "==",
-              "value": "acf\/vfwp-summary"
-          }
-      ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "seamless",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": "VF-WP Summary ACF Gutenberg block",
-  "modified": 1593082804
+    "key": "group_5eb950c23f887",
+    "title": "Summary",
+    "fields": [
+        {
+            "key": "field_5eba88575b33d",
+            "label": "Select type",
+            "name": "select_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "custom": "Custom",
+                "post": "Post",
+                "event": "Event",
+                "publication": "Publication"
+            },
+            "default_value": "custom",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5eb950da30d23",
+            "label": "Image",
+            "name": "image",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5ef4818b837d5",
+            "label": "Link",
+            "name": "link",
+            "type": "link",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5eb9510330d24",
+            "label": "Title",
+            "name": "title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5eb9513430d25",
+            "label": "Text",
+            "name": "text",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5eba8a28aa227",
+            "label": "Post",
+            "name": "post",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "post"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_5eba8a5d18b98",
+            "label": "Event",
+            "name": "event",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "vf_event"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_5ebd374c3e3f0",
+            "label": "Style",
+            "name": "event_style",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "alternate": "Alternate"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5ee0c990c7c7a",
+            "label": "Title",
+            "name": "publication_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "publication"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ee0c9e2c7c7c",
+            "label": "Link",
+            "name": "publication_link",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "publication"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5ee0c9b5c7c7b",
+            "label": "Authors",
+            "name": "authors",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "publication"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ee0c9fac7c7d",
+            "label": "Source",
+            "name": "source",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "publication"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ee0ca1dc7c7e",
+            "label": "Year",
+            "name": "year",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "publication"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ee0ca55c7c7f",
+            "label": "DOI",
+            "name": "doi",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "publication"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vfwp-summary"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF-WP Summary ACF Gutenberg block",
+    "modified": 1603270586
 }

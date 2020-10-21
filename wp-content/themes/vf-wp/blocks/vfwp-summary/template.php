@@ -70,7 +70,7 @@ if ( $type === 'custom' ) {
   ?>
   <h3 class="vf-summary__title">
     <?php if ($link) { ?>
-      <a href="<?php echo esc_url($link);?>" class="vf-summary__link">
+      <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
     <?php } ?>
 
     <?php echo esc_html($title); ?>
@@ -219,7 +219,7 @@ if ( $type === 'publication' ) {
 ?>
 <article class="vf-summary vf-summary--publication">
     <h3 class="vf-summary__title">
-        <a href="<?php echo $publication_link; ?>" class="vf-summary__link">
+        <a href="<?php echo esc_url($publication_link['url']); ?>" class="vf-summary__link">
         <?php echo $publication_title; ?>
     </a>
     </h3>
