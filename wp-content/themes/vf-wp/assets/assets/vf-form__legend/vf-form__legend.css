@@ -53,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-form__legend
- * Version: 1.0.1
+ * Version: 1.1.0
  * Location: components/vf-form/vf-form__legend
  */
 .vf-form__legend {
@@ -61,5 +61,5 @@
   font-size: 19px;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 8px 0;
+  margin: 0 0 0.5rem 0;
 }

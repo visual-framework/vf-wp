@@ -68,7 +68,7 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-list__item {
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .vf-list--l {
@@ -86,7 +86,7 @@
   padding-left: 16px;
 }
 .vf-list--ordered__item {
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .vf-list--unordered {
@@ -95,7 +95,7 @@
   list-style-type: disc;
 }
 .vf-list--unordered__item {
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .vf-list--inline {
@@ -107,7 +107,7 @@
   display: inline;
 }
 .vf-list--inline__item {
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .vf-list__link {

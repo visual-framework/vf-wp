@@ -178,10 +178,14 @@
 }
 
 .vf-banner--blocking.vf-banner--notice {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
   background-color: rgba(0, 0, 0, 0.1);
 }
 
 .vf-banner--blocking.vf-banner--notice .vf-banner__content {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
   background-color: #707372;
 }
 
