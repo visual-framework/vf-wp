@@ -53,11 +53,11 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-form__fieldset
- * Version: 1.0.1
+ * Version: 1.1.0
  * Location: components/vf-form/vf-form__fieldset
  */
 .vf-form__fieldset {
   border: 0;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   padding: 0;
 }

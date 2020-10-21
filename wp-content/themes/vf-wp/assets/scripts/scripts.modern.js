@@ -14,7 +14,15 @@ import { vfMastheadSetStyle } from 'vf-masthead/vf-masthead';
 vfMastheadSetStyle();
 
 import { vfGaIndicateLoaded } from 'vf-analytics-google/vf-analytics-google';
-vfGaIndicateLoaded();
+let vfGaTrackOptions = {
+  vfGaTrackPageLoad: false,
+  vfGaTrackNetwork: {
+    serviceProvider: 'dimension2',
+    networkDomain: 'dimension3',
+    networkType: 'dimension4'
+  }
+};
+vfGaIndicateLoaded(vfGaTrackOptions);
 
 import { vfTabs } from 'vf-tabs/vf-tabs';
 vfTabs();

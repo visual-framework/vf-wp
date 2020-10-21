@@ -53,14 +53,14 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 1.0.0-rc.8
+ * Version: 2.0.0
  * Location: components/vf-divider
  */
 .vf-divider {
+  --context-margin--inline: 1rem;
   background-color: #d8d8d8;
-  margin: 0 8px;
-  height: 1px;
   border: none;
-  grid-column: 1/-1;
-  margin-bottom: 24px;
+  height: 1px;
+  margin-block: 0 var(--vf-divider-margin--block-end, 1.5rem);
+  width: 100%;
 }

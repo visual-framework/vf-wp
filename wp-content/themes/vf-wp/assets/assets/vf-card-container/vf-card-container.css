@@ -53,13 +53,13 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card-container
- * Version: 1.0.0
+ * Version: 3.0.2
  * Location: components/vf-card-container
  */
 .vf-card-container {
   grid-column: 1/-1;
   margin: 0 0 3rem 0;
-  padding: 0;
+  padding: 2rem 0;
 }
 
 .vf-card-container__inner {
@@ -71,18 +71,21 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  max-width: 76.5em;
-  padding: 2rem 0;
+  max-width: 81.25em;
 }
 @supports (display: grid) {
   .vf-card-container__inner {
     --vf-card-container__grid--size: 18rem;
     display: grid;
-    gap: 40px;
-    grid-template-columns: repeat(auto-fit, minmax(var(--vf-card-container__grid--size), 1fr));
+    gap: var(--page-grid-gap);
+    grid-template-columns: repeat(auto-fit, minmax(var(--vf-card-container__grid--size--overide, var(--vf-card-container__grid--size)), 1fr));
     margin: 0 auto;
-    max-width: 76.5em;
-    padding: 0 1rem;
+    max-width: 81.25em;
+  }
+  @media (min-width: 600px) {
+    .vf-card-container__inner {
+      --vf-card-container__grid--size: 20rem;
+    }
   }
 }
 .vf-card-container__inner .vf-section-header {

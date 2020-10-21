@@ -2486,7 +2486,15 @@ function emblBreadcrumbs() {
 
 vfBanner();
 vfMastheadSetStyle();
-vfGaIndicateLoaded();
+var vfGaTrackOptions = {
+  vfGaTrackPageLoad: false,
+  vfGaTrackNetwork: {
+    serviceProvider: 'dimension2',
+    networkDomain: 'dimension3',
+    networkType: 'dimension4'
+  }
+};
+vfGaIndicateLoaded(vfGaTrackOptions);
 vfTabs();
 vfFormFloatLabels();
 emblContentHub();
