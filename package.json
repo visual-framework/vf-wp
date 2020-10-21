@@ -51,7 +51,7 @@
     "@visual-framework/embl-conditional-edit": "1.0.2",
     "@visual-framework/embl-content-hub-loader": "1.0.6",
     "@visual-framework/embl-content-meta-properties": "1.0.1",
-    "@visual-framework/embl-grid": "2.0.4",
+    "@visual-framework/embl-grid": "2.1.0",
     "@visual-framework/embl-logo": "1.0.4",
     "@visual-framework/embl-notifications": "1.0.0",
     "@visual-framework/vf-activity-group": "1.0.0-alpha.9",
