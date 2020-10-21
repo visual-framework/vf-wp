@@ -38,7 +38,8 @@ include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
 
 <?php 
 // CPP container
-include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); ?>
+include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); 
+include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); ?>
 
 <?php 
 // Global Footer
