@@ -17,6 +17,7 @@ $registration_closing = get_field('vf_event_registration_closing', $post->post_p
 $event_type = get_field('vf_event_event_type', $post->post_parent);
 $event_topic = get_field('vf_event_event_topic', $post->post_parent);
 
+$social_media_container = get_field('vf_event_social_media', $post->post_parent);
 
 $registration_link = get_field('vf_event_registration_link', $post->post_parent);
 

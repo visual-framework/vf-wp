@@ -39,9 +39,12 @@ include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
 <?php 
 // CPP container
 include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); 
-include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); ?>
 
-<?php 
+// Social media container
+if ($social_media_container == 1 ) {
+include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); 
+}
+
 // Global Footer
 if (class_exists('VF_Global_Footer')) {
   VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));

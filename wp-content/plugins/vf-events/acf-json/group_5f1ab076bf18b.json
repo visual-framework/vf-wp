@@ -688,6 +688,25 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_5f969dbec23ab",
+            "label": "Social Media container",
+            "name": "vf_event_social_media",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_5f2a9047f4bca",
             "label": "Select event organiser",
             "name": "event_organiser",
@@ -824,5 +843,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1601539722
+    "modified": 1603706471
 }
