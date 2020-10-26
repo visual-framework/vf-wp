@@ -31,7 +31,7 @@ if (is_search()) {
   <div class="vf-box vf-box--normal vf-box-theme--primary">
     <h2 class="vf-text vf-text-heading--2">About the author</h2>
     <div class="vf-grid" style="max-width: fit-content;">
-      <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--sm' ) ); ?>
+      <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--200' ) ); ?>
       <div>
         <h3 class="vf-box__heading">
           <?php the_author(); ?></h3>
@@ -45,9 +45,9 @@ if (is_search()) {
   </div>
 </div>
 
-<section class="vf-u-margin__bottom--md ">
-  <div class="vf-u-background-color-ui--off-white | vf-u-padding--md">
-      <h3 class="vf-section-header__heading vf-u-margin__bottom--xl">Articles by <?php the_author(); ?></h3>
+<section class="vf-u-margin__bottom--400 ">
+  <div class="vf-u-background-color-ui--off-white | vf-u-padding--400">
+      <h3 class="vf-section-header__heading vf-u-margin__bottom--600">Articles by <?php the_author(); ?></h3>
     <div class="vf-grid | vf-grid__col-3">
       <?php 
       $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
@@ -61,7 +61,7 @@ if (is_search()) {
       <div class="vf-grid" style="margin: 4%"> <?php vf_pagination();?></div>
   </div>
 
-  <div class="vf-u-background-color-ui-white | vf-u-padding__top--md | vf-u-margin__top--md">
+  <div class="vf-u-background-color-ui-white | vf-u-padding__top--400 | vf-u-margin__top--400">
         <h3 class="vf-text vf-text-heading--3">Popular</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php $popular = new WP_Query(array('posts_per_page'=> 3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));

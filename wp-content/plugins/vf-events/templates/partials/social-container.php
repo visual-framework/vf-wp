@@ -1,5 +1,5 @@
 <section
-  class="embl-grid vf-u-background-color-ui--off-white vf-u-fullbleed vf-u-padding__top--xxl vf-u-padding__bottom--xxl vf-u-margin__bottom--0">
+  class="embl-grid vf-u-background-color-ui--off-white vf-u-fullbleed vf-u-padding__top--800 vf-u-padding__bottom--800 vf-u-margin__bottom--0">
   <div class="vf-section-header">
 <h2 class="vf-section-header__heading" id="section-sub-heading">
  Stay in touch 
@@ -11,7 +11,7 @@
     <?php
     $eventsloop = new WP_Query(array('posts_per_page' => 3 ));
     while ($eventsloop->have_posts()) : $eventsloop->the_post(); ?>
-    <article class="vf-summary vf-summary--article | vf-u-margin__bottom--md">
+    <article class="vf-summary vf-summary--article | vf-u-margin__bottom--400">
       <h2 class="vf-summary__title">
         <a href="<?php the_permalink(); ?>" class="vf-summary__link"
           style="font-size: 19px;"><?php echo esc_html(get_the_title()); ?></a>

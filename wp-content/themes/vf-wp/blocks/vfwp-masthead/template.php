@@ -51,7 +51,7 @@ else if ($variant == 'with_title_block_and_image') {
     <?php } ?>
 
 </style>
-<div class="vf-masthead <?php echo($class) ?> | vf-u-margin__bottom--xxl" 
+<div class="vf-masthead <?php echo($class) ?> | vf-u-margin__bottom--800" 
 <?php if ($variant == 'has_image' || $variant == 'with_title_block_and_image') {?>
 style="background-image: url(<?php echo esc_url($image['url']) ?>);" data-vf-js-masthead>
          <?php } ?>

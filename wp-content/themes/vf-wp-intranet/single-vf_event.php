@@ -11,11 +11,11 @@ get_header();
 
 ?>
 
-<section class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
+<section class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--800 | vf-u-margin__bottom--0">
   <div>
   </div>
 
-  <div class="vf-content | vf-u-padding__bottom--xxl">
+  <div class="vf-content | vf-u-padding__bottom--800">
     <p class="vf-summary__date | vf-u-margin__bottom--0"> 
     <?php    
     if ( ! empty($start_date)) {
@@ -32,7 +32,7 @@ get_header();
       ?>
     </p>
     <h1><?php the_title(); ?></h1>
-    <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
+    <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
     </p>
 

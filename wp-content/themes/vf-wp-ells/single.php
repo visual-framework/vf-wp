@@ -7,7 +7,7 @@ get_header();
 
 ?>
 
-<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
+<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--800 | vf-u-margin__bottom--0">
  <div>
     <div class="vf-article-meta-information">
     <div class="vf-author | vf-article-meta-info__author">
@@ -24,13 +24,13 @@ get_header();
         </div>
     </div>
  </div>
- <div class="vf-content | vf-u-padding__bottom--xxl">
+ <div class="vf-content | vf-u-padding__bottom--800">
   <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
     <?php the_content(); ?>
   </div>
 </section>
-<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--xl | vf-u-padding__bottom--md | vf-u-fullbleed | category-more">
-      <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
+<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed | category-more">
+      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">More from this category</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php
           $args = array(

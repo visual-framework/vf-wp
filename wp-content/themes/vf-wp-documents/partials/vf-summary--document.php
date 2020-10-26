@@ -29,7 +29,7 @@ if ( ! is_array($image)) {
   <h4 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h4>
-  <p class="vf-summary__meta | vf-u-margin__bottom--sm">Type: 
+  <p class="vf-summary__meta | vf-u-margin__bottom--200">Type: 
     <?php
       if (is_array($types)) {
         foreach ( $types as $type ) { ?> 

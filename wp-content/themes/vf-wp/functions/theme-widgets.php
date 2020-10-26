@@ -156,7 +156,7 @@ class VF_Theme_Widgets {
       <?php
       $recentloop = new WP_Query(array('posts_per_page' => 3, 'post__not_in'   => array( get_the_ID() ) ));
       while ($recentloop->have_posts()) : $recentloop->the_post();?>
-      <article class="vf-summary vf-summary--article | vf-u-margin__bottom--md">
+      <article class="vf-summary vf-summary--article | vf-u-margin__bottom--400">
         <h2 class="vf-summary__title">
           <a href="<?php the_permalink(); ?>" class="vf-summary__link" style="font-size: 19px;"><?php echo esc_html(get_the_title()); ?></a>
         </h2>

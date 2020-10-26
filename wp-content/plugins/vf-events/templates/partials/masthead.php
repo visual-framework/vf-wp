@@ -26,7 +26,7 @@ $theme = get_field('vf_event_theme', $post->post_parent);
 
 </style>
 <div class="vf-masthead  vf-masthead--with-title-block
-  vf-masthead--has-image | vf-u-margin__bottom--xxl
+  vf-masthead--has-image | vf-u-margin__bottom--800
 " style="background-image: var(--vf-masthead__bg-image)" data-vf-js-masthead>
 <div class="vf-masthead__inner">
 <div class="vf-masthead__title">

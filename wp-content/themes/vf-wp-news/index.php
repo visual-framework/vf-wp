@@ -43,8 +43,8 @@ if (is_search()) {
 
 ?>
 
-<section class="vf-grid vf-grid__col-5 | vf-u-background-color-ui--grey | vf-u-padding__bottom--md | vf-u-padding__top--xxl | vf-u-margin__bottom--xxl | vf-u-fullbleed">
-    <div class="vf-grid__col--span-3 | vf-u-margin__bottom--lg | vf-grid-featured-col-left">
+<section class="vf-grid vf-grid__col-5 | vf-u-background-color-ui--grey | vf-u-padding__bottom--400 | vf-u-padding__top--800 | vf-u-margin__bottom--800 | vf-u-fullbleed">
+    <div class="vf-grid__col--span-3 | vf-u-margin__bottom--500 | vf-grid-featured-col-left">
       <?php
 			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();
@@ -70,7 +70,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 <!-- Latest -->
 <section class="vf-summary-container | embl-grid" style="grid-column-gap: 0;">
 
-  <div class="vf-section-header | vf-u-margin__bottom--md">
+  <div class="vf-section-header | vf-u-margin__bottom--400">
     <a href="<?php site_url(); ?>/news/archive" class="vf-section-header__heading vf-section-header__heading--is-link">Latest
       <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
@@ -96,7 +96,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 <!-- Science -->
 <section class="vf-summary-container | embl-grid" style="grid-column-gap: 0;">
 
-  <div class="vf-section-header | vf-u-margin__bottom--md">
+  <div class="vf-section-header | vf-u-margin__bottom--400">
     <a href="<?php echo esc_url( $science_link ); ?>"
       class="vf-section-header__heading vf-section-header__heading--is-link">Science <svg
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
@@ -121,7 +121,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 <!-- Lab Matters -->
 <section class="vf-summary-container | embl-grid" style="grid-column-gap: 0;">
 
-  <div class="vf-section-header | vf-u-margin__bottom--md">
+  <div class="vf-section-header | vf-u-margin__bottom--400">
     <a href="<?php echo esc_url( $lab_link ); ?>"
       class="vf-section-header__heading vf-section-header__heading--is-link">Lab Matters <svg
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
@@ -147,7 +147,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 <!-- Alumni -->
 <section class="vf-summary-container | embl-grid" style="grid-column-gap: 0;">
 
-  <div class="vf-section-header | vf-u-margin__bottom--md">
+  <div class="vf-section-header | vf-u-margin__bottom--400">
     <a href="<?php echo esc_url( $alumni_link ); ?>"
       class="vf-section-header__heading vf-section-header__heading--is-link">Alumni <svg
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
@@ -173,7 +173,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 <!-- Events -->
 <section class="vf-summary-container | embl-grid" style="grid-column-gap: 0;">
 
-  <div class="vf-section-header | vf-u-margin__bottom--md">
+  <div class="vf-section-header | vf-u-margin__bottom--400">
     <a href="<?php echo esc_url( $events_link ); ?>"
       class="vf-section-header__heading vf-section-header__heading--is-link">Events <svg
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"

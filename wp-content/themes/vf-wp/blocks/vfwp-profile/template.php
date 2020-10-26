@@ -16,11 +16,11 @@ $size = get_field('size');
 
 ?>
 <?php if ($layout == 'block') { ?>
-    <article class="vf-profile vf-profile--very-easy vf-profile--<?php echo $size; ?> vf-profile--block | vf-u-margin__bottom--md">
+    <article class="vf-profile vf-profile--very-easy vf-profile--<?php echo $size; ?> vf-profile--block | vf-u-margin__bottom--400">
 <?php } ?>
 
 <?php if ($layout == 'inline') { ?>
-    <article class="vf-profile vf-profile--very-easy vf-profile--<?php echo $size; ?> vf-profile--inline | vf-u-margin__bottom--md">
+    <article class="vf-profile vf-profile--very-easy vf-profile--<?php echo $size; ?> vf-profile--inline | vf-u-margin__bottom--400">
 <?php } ?>
 
     <?php if (! empty($image)) {

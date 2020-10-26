@@ -27,10 +27,10 @@ if (is_search()) {
 
 $category_name = single_cat_title("", false);
 ?>
-<section class="vf-u-margin__bottom--md">
-  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--md | vf-u-margin__bottom--md">
+<section class="vf-u-margin__bottom--400">
+  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--400 | vf-u-margin__bottom--400">
     <div>
-      <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
+      <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--600" style="font-weight: 400;">
       <?php echo esc_html($category_name) ?></h2>
     </div>
     <div class="vf-grid vf-grid__col-3">

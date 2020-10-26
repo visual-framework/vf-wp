@@ -26,11 +26,11 @@ if (is_search()) {
 }
 
 ?>
-<section class="vf-u-margin__bottom--sm">
-  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--md">
+<section class="vf-u-margin__bottom--200">
+  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--400">
     <div>
       <div>
-        <h1 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
+        <h1 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--600" style="font-weight: 400;">
         <?php single_tag_title(); ?></h1>
       </div>
       <div class="vf-grid vf-grid__col-3">
