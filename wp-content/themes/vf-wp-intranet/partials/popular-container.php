@@ -27,7 +27,7 @@
 <div class="vf-tabs-content" data-vf-js-tabs-content>
     <section class="vf-tabs__section" id="vf-tabs__section--1">
         <div class="vf-grid vf-grid__col-3">
-          <div class="vf-links vf-u-margin__top--xl">
+          <div class="vf-links vf-u-margin__top--600">
             <ul class="vf-links__list | vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="JavaScript:Void(0);">
@@ -46,7 +46,7 @@
               </li>
           </ul>
           </div>
-          <div class="vf-links vf-u-margin__top--xl">
+          <div class="vf-links vf-u-margin__top--600">
             <ul class="vf-links__list | vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="JavaScript:Void(0);">
@@ -65,7 +65,7 @@
               </li>
           </ul>
           </div>
-          <div class="vf-links vf-u-margin__top--xl">
+          <div class="vf-links vf-u-margin__top--600">
             <ul class="vf-links__list | vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="JavaScript:Void(0);">

@@ -41,7 +41,7 @@ if ($theme == 'none') {
 }
 ?>
 
-<section class="vf-hero vf-hero--inlay vf-hero--hard <?php echo ($variant); ?> | vf-u-margin__bottom--xxl">
+<section class="vf-hero vf-hero--inlay vf-hero--hard <?php echo ($variant); ?> | vf-u-margin__bottom--800">
     <style>
   .vf-hero {
     <?php 

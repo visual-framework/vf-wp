@@ -118,43 +118,43 @@ get_header();
   </div>
   <div>
     <a href="https://www.embl.de/training/events/whyembl/index.html"
-      class="vf-box vf-box--is-link | vf-u-margin__bottom--sm | vf-u-padding__bottom--md | vf-u-padding__top--md">
+      class="vf-box vf-box--is-link | vf-u-margin__bottom--200 | vf-u-padding__bottom--400 | vf-u-padding__top--400">
       <h3 class="vf-box__heading">Why EMBL Events?</h3>
       <p class="vf-box__text">Reasons to attend an event at EMBL</p>
     </a>
 
     <a href="https://www.embl.de/training/events/about/index.html"
-      class="vf-box vf-box--is-link | vf-u-margin__bottom--sm | vf-u-padding__bottom--md | vf-u-padding__top--md">
+      class="vf-box vf-box--is-link | vf-u-margin__bottom--200 | vf-u-padding__bottom--400 | vf-u-padding__top--400">
       <h3 class="vf-box__heading">About us</h3>
       <p class="vf-box__text">This is some more content that would be in the box.</p>
     </a>
     <a href="https://www.embl.de/training/events/info_participants/index.html"
-      class="vf-box vf-box--is-link | vf-u-margin__bottom--sm | vf-u-padding__bottom--md | vf-u-padding__top--md">
+      class="vf-box vf-box--is-link | vf-u-margin__bottom--200 | vf-u-padding__bottom--400 | vf-u-padding__top--400">
       <h3 class="vf-box__heading">Information for participants</h3>
       <p class="vf-box__text">All you need to know before attending an event</p>
     </a>
     <a href="https://www.embl.de/training/events/sponsorship/index.html"
-      class="vf-box vf-box--is-link | vf-u-margin__bottom--sm | vf-u-padding__bottom--md | vf-u-padding__top--md">
+      class="vf-box vf-box--is-link | vf-u-margin__bottom--200 | vf-u-padding__bottom--400 | vf-u-padding__top--400">
       <h3 class="vf-box__heading">Sponsor an event</h3>
       <p class="vf-box__text">This is some more content that would be in the box.</p>
     </a>
     <a href="https://www.embl.de/training/e-learning/index.html"
-      class="vf-box vf-box--is-link | vf-u-margin__bottom--sm | vf-u-padding__bottom--md | vf-u-padding__top--md">
+      class="vf-box vf-box--is-link | vf-u-margin__bottom--200 | vf-u-padding__bottom--400 | vf-u-padding__top--400">
       <h3 class="vf-box__heading">E-learning</h3>
       <p class="vf-box__text">This is some more content that would be in the box.</p>
     </a>
     <a href="https://www.embl.de/training/events/whyembl/index.html"
-      class="vf-box vf-box--is-link | vf-u-margin__bottom--sm | vf-u-padding__bottom--md | vf-u-padding__top--md">
+      class="vf-box vf-box--is-link | vf-u-margin__bottom--200 | vf-u-padding__bottom--400 | vf-u-padding__top--400">
       <h3 class="vf-box__heading">Newsletter</h3>
       <p class="vf-box__text">This is some more content that would be in the box.</p>
     </a>
 
-    <div class="vf-u-padding--md vf-u-background-color-ui--off-white">
+    <div class="vf-u-padding--400 vf-u-background-color-ui--off-white">
       <h3 class="vf-links__heading">On our blog</h3>
   <?php
   $sidebarloop = new WP_Query(array('posts_per_page' => 3 ));
   while ($sidebarloop->have_posts()) : $sidebarloop->the_post();?>
-    <article class="vf-summary vf-summary--article | vf-u-margin__bottom--sm">
+    <article class="vf-summary vf-summary--article | vf-u-margin__bottom--200">
       <h2 class="vf-summary__title">
         <a href="<?php the_permalink(); ?>" class="vf-summary__link" style="font-size: 19px;"><?php echo esc_html(get_the_title()); ?></a>
       </h2>
@@ -168,7 +168,7 @@ get_header();
   <?php endwhile; ?>
   <?php wp_reset_postdata(); ?>
     </div>
-    <div class="vf-u-padding--md">
+    <div class="vf-u-padding--400">
       <svg aria-hidden="true" display="none" class="vf-icon-collection vf-icon-collection--social">
         <defs>
           <g id="vf-social--linkedin">

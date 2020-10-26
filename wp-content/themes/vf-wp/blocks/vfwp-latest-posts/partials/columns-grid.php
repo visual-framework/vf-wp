@@ -4,7 +4,7 @@ $mainloop = new WP_Query (array('posts_per_page' => 3 ));
     while ($mainloop->have_posts()) : $mainloop->the_post();
     $ids[] = get_the_ID(); ?>
 <article class="vf-summary vf-summary--news" style="display: block; display: unset;">
-  <?php the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image vf-u-margin__bottom--md', 'style' => 'max-width: 100%; height: auto;' ) ); ?>
+  <?php the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image vf-u-margin__bottom--400', 'style' => 'max-width: 100%; height: auto;' ) ); ?>
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h3>

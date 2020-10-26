@@ -43,11 +43,11 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
 ?>
 
 <div>
-  <figure class="vf-figure vf-figure--align vf-figure--align-centered">
+  <figure class="vf-figure vf-figure--align vf-figure--align-centered | vf-u-margin__bottom--400">
     <?php echo($logo_image); ?>
   </figure>
   <div>
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__top--xl"><span style="font-weight: 600;">Date:</span>
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
 
       <?php 
       if ( ! empty($start_date)) {
@@ -65,22 +65,22 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     </p>
 
     <?php if ( ! empty($submission_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap | vf-u-margin__top--xl"><span
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
         style="font-weight: 600;">Abstract submission deadline:</span> <?php echo esc_html($submission_closing); ?></p>
     <?php } ?>
 
     <?php if ( ! empty($registration_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__top--xl"><span style="font-weight: 600;">Registration
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Registration
         deadline:</span> <?php echo esc_html($registration_closing); ?></p>
     <?php } ?>
 
     <?php if ( ! empty($location)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap | vf-u-margin__top--xl"><span
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
         style="font-weight: 600;">Location:</span> <?php echo esc_html($location); ?></p>
     <?php } ?>
 
     <?php if ( ! empty($contact)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap | vf-u-margin__top--xl"><span
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
         style="font-weight: 600;">Contact: </span><a href="#"><?php echo esc_html($contact); ?></a></p>
     <?php } ?>
 
@@ -88,24 +88,24 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
       <?php if ( ! empty($registration_link)) { ?>
       <div style="text-align: center;">
         <a href="<?php echo esc_url($registration_link); ?>"><button
-            class="vf-button vf-button--primary vf-button--sm | vf-u-width__100 | vf-u-margin__top--md"><?php echo($register_button); ?></button></a>
+            class="vf-button vf-button--primary vf-button--sm | vf-u-width__100 | vf-u-margin__top--400"><?php echo($register_button); ?></button></a>
       </div>
       <?php } ?>
       
       <?php if ( ! empty($abstract_link)) { ?>
       <div style="text-align: center;">
         <a href="<?php echo esc_url($abstract_link); ?>"><button
-            class="vf-button vf-button--tertiary vf-button--sm | vf-u-width__100 | vf-u-margin__top--md"><?php echo($abstract_button); ?></button></a>
+            class="vf-button vf-button--tertiary vf-button--sm | vf-u-width__100 | vf-u-margin__top--400"><?php echo($abstract_button); ?></button></a>
       </div>
       <?php } ?>
     </div>
 
-    <div class="vf-grid | vf-u-margin__top--xxl">
+    <div class="vf-grid | vf-u-margin__top--800">
       <?php if ( ! empty($poster_image)) { ?>
       <div>
         <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Download event poster</span></p>
         <a href="<?php echo $poster_file['url']; ?>">
-          <figure class="vf-figure | vf-u-margin__top--md">
+          <figure class="vf-figure | vf-u-margin__top--400">
             <?php echo($poster_image); ?>
           </figure>
         </a>

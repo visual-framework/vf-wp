@@ -5,7 +5,7 @@ $user_id = get_the_author_meta('ID');
 
 ?>
 <article class="vf-summary vf-summary--news" style="display: block; display: unset;">
-  <?php the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image vf-u-margin__bottom--md', 'style' => 'max-width: 100%; height: auto;' ) ); ?>
+  <?php the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image vf-u-margin__bottom--400', 'style' => 'max-width: 100%; height: auto;' ) ); ?>
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo $title; ?></a>
   </h3>

@@ -7,9 +7,9 @@ get_header();
 the_post();
 ?>
 
-  <div class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--sm | vf-u-padding__top--md">
+  <div class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--200 | vf-u-padding__top--400">
       <div>
-        <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
+        <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--600" style="font-weight: 400;">
           <?php wp_title(''); ?></h3>
       </div>
       <div class="vf-grid vf-grid__col-3">

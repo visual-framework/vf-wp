@@ -31,7 +31,7 @@ global $vf_theme;
         $caption = get_the_post_thumbnail_caption();
       ?>
       <figure class="vf-figure">
-          <?php the_post_thumbnail('full', array('class' => 'vf-figure__image | vf-u-margin__bottom--sm')); ?>
+          <?php the_post_thumbnail('full', array('class' => 'vf-figure__image | vf-u-margin__bottom--200')); ?>
           <?php if ( ! vf_html_empty($caption)) { ?>
           <figcaption class="vf-figure__caption">
             <?php echo esc_html($caption); ?>

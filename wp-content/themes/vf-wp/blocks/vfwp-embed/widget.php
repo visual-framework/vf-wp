@@ -41,7 +41,7 @@ class VF_Widget_Embed extends WP_Widget {
     "><iframe src="<?php echo ($url); ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
 
     <?php if( ! empty($caption) ) { ?>  
-    <figcaption class="vf-figure__caption vf-u-margin__top--sm"><?php echo ($caption); ?></figcaption>
+    <figcaption class="vf-figure__caption vf-u-margin__top--200"><?php echo ($caption); ?></figcaption>
 
     <?php }
   }

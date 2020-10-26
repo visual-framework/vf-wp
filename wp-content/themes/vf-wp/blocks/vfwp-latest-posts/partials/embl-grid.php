@@ -6,7 +6,7 @@ $mainloop = new WP_Query (array('posts_per_page' => $limit ));
 
       <article class="vf-summary <?php echo ($class); ?>">
       <?php if ($show_image == 1) { ?>
-        <span class="vf-summary__meta vf-u-margin__bottom--xs">
+        <span class="vf-summary__meta vf-u-margin__bottom--100">
           <a class="vf-summary__author vf-summary__link" href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>"><?php the_author(); ?></a>
           <time class="vf-summary__date" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
         </span>

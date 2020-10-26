@@ -73,7 +73,7 @@ if ($style !== 'very-easy' && $theme !== 'none') {
 ?>
 
 
-<article class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--xxl">
+<article class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--800">
 <?php
 if ($image) {
   echo $image;

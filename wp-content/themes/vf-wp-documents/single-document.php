@@ -33,7 +33,7 @@ get_template_part('partials/vf-intro');
       </time>
             
       <?php if ($image) { echo $image; } ?>
-      <h2 class="vf-text vf-text-heading--2 | vf-u-margin__bottom--md vf-u-padding__top--0"><?php the_title(); ?>
+      <h2 class="vf-text vf-text-heading--2 | vf-u-margin__bottom--400 vf-u-padding__top--0"><?php the_title(); ?>
       </h2>
       <?php the_content(); ?>
       <?php if( have_rows('vf-document_file_upload') ):
