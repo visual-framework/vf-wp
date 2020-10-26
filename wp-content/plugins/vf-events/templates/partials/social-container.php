@@ -1,7 +1,7 @@
 <section
-  class="embl-grid vf-u-background-color-ui--off-white vf-u-fullbleed vf-u-padding__top--xxl vf-u-padding__bottom--xxl">
+  class="embl-grid vf-u-background-color-ui--off-white vf-u-fullbleed vf-u-padding__top--xxl vf-u-padding__bottom--xxl vf-u-margin__bottom--0">
   <div class="vf-section-header">
-<h2 class="vf-section-header__heading" id="section-sub-heading" }>
+<h2 class="vf-section-header__heading" id="section-sub-heading">
  Stay in touch 
 </h2>
 </div>
@@ -59,7 +59,7 @@
         </h3>
         <ul class="vf-social-links__list">
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
+            <a class="vf-social-links__link" href="https://twitter.com/emblevents">
               <span class="vf-u-sr-only">
                 twitter
               </span>
@@ -71,7 +71,7 @@
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
+            <a class="vf-social-links__link" href="https://www.instagram.com/emblevents/">
               <span class="vf-u-sr-only">
                 instagram
               </span>
@@ -83,7 +83,7 @@
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
+            <a class="vf-social-links__link" href="http://en-gb.facebook.com/EMBLEvents">
               <span class="vf-u-sr-only">
                 facebook
               </span>
@@ -95,7 +95,7 @@
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
+            <a class="vf-social-links__link" href="https://www.linkedin.com/showcase/embl-events/">
               <span class="vf-u-sr-only">
                 linkedin
               </span>

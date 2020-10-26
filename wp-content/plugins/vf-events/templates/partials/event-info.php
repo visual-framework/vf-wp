@@ -23,6 +23,8 @@ $poster_file = get_field('vf_event_poster_file', $post->post_parent);
 $abstract_button = get_field('vf_event_abstract_submission_button_text', $post->post_parent);
 $register_button = get_field('vf_event_registration_button_text', $post->post_parent);
 
+$social_url = get_the_permalink();
+
 
 $logo_image = get_field('vf_event_logo', $post->post_parent);
 $logo_image = wp_get_attachment_image($logo_image['ID'], 'medium', false, array(
@@ -134,7 +136,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
         </p>
         <ul class="vf-social-links__list">
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
+            <a class="vf-social-links__link" href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
               <span class="vf-u-sr-only">
                 twitter
               </span>
@@ -146,7 +148,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
+            <a class="vf-social-links__link" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
               <span class="vf-u-sr-only">
                 facebook
               </span>
@@ -158,7 +160,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
+            <a class="vf-social-links__link" href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
               <span class="vf-u-sr-only">
                 linkedin
               </span>
