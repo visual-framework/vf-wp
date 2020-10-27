@@ -53,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-stack
- * Version: 1.2.0
+ * Version: 2.0.0
  * Location: components/vf-stack
  */
 /*
@@ -86,14 +86,14 @@
   /* [3] */
 }
 
-.vf-stack--sm > * + * {
+.vf-stack--400 > * + * {
   --vf-stack-margin: 1rem;
 }
 
-.vf-stack--md > * + * {
+.vf-stack--600 > * + * {
   --vf-stack-margin: 1.5rem;
 }
 
-.vf-stack--lg > * + * {
+.vf-stack--800 > * + * {
   --vf-stack-margin: 2rem;
 }

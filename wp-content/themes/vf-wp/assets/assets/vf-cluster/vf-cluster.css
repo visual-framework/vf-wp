@@ -53,11 +53,11 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-cluster
- * Version: 0.0.1
+ * Version: 1.0.0
  * Location: components/vf-cluster
  */
 .vf-cluster {
-  --vf-cluster-margin: var(--vf-cluster-margin--override, var(--page-grid-gap, 1rem));
+  --vf-cluster-margin: var(--vf-cluster-margin--override, 1rem);
   overflow: hidden;
 }
 
@@ -80,17 +80,18 @@
   -webkit-box-flex: var(--vf-cluster__item--flex);
       -ms-flex: var(--vf-cluster__item--flex);
           flex: var(--vf-cluster__item--flex);
-  margin: calc(var(--vf-cluster-margin) / 2) !important;
+  margin: 1rem;
+  margin: calc( var(--vf-cluster-margin) / 2) !important;
 }
 
-.vf-cluster--sm > * > * {
+.vf-cluster--400 > * > * {
   --vf-cluster-margin: 1rem;
 }
 
-.vf-cluster--md > * > * {
+.vf-cluster--600 > * > * {
   --vf-cluster-margin: 1.5rem;
 }
 
-.vf-cluster--lg > * > * {
+.vf-cluster--800 > * > * {
   --vf-cluster-margin: 2rem;
 }

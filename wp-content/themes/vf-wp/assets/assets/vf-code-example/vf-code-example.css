@@ -53,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-code-example
- * Version: 1.1.0
+ * Version: 1.2.0
  * Location: components/vf-code-example
  */
 .vf-content pre,
@@ -79,10 +79,12 @@
 .vf-content pre,
 .vf-code-example__pre {
   border: 1px;
-  display: grid;
+  display: block;
   min-width: 0;
   overflow: auto;
   white-space: pre-wrap;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 /* github.com style (c) Vasily Polovnyov <vast@whiteants.net> */

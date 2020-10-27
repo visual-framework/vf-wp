@@ -131,15 +131,14 @@
 
 /*!
  * Component: @visual-framework/vf-breadcrumbs
- * Version: 1.0.4
+ * Version: 1.0.5
  * Location: components/vf-breadcrumbs
  */
 .vf-breadcrumbs {
   grid-column: main;
-  margin-bottom: 8px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 8px;
+  margin-top: 1rem;
   max-width: 81.25em;
   width: 100%;
 }
