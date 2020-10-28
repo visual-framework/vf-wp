@@ -18,9 +18,8 @@ $keyword = $vf_publications->get_query_keyword();
 global $vf_theme;
 
 ?>
-<section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-ui--white">
-    <main class="vf-inlay__content--main">
+  <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800">
+    <div class="vf-grid__col--span-2">
       <h1 class="vf-text vf-text-heading--1">
         <?php the_title(); ?>
       </h1>
@@ -34,7 +33,6 @@ global $vf_theme;
       $vf_theme->the_content();
 
       ?>
-    </main>
     <?php /*
     <aside class="vf-inlay__content--additional">
       <form id="publications-filter" role="search" method="get" action="<?php the_permalink(); ?>">
@@ -70,7 +68,7 @@ global $vf_theme;
     </aside>
     */ ?>
   </div>
-</section>
+</div>
 <?php
 
 get_footer();
