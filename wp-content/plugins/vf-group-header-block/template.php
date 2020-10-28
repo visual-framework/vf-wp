@@ -87,14 +87,13 @@ if (vf_cache_empty($content)) {
 
 ?>
 <?php if ( ! $is_minimal) { ?>
-<section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-ui--white">
+<div class="vf-grid vf-grid__col-3 | vf-u-margin__bottom--800">
   <?php if ( ! vf_cache_empty($heading)) { ?>
-    <main class="vf-inlay__content--main">
+    <div class="vf-grid__col--span-2">
       <?php echo $heading; ?>
-    </main>
+    </div>
   <?php } ?>
-    <aside class="vf-inlay__content--additional">
+    <div>
 <?php } // is_minimal ?>
 
     <?php
@@ -109,7 +108,6 @@ if (vf_cache_empty($content)) {
     ?>
 
 <?php if ( ! $is_minimal) { ?>
-    </aside>
   </div>
-</section>
+</div>
 <?php } // is_minimal ?>
