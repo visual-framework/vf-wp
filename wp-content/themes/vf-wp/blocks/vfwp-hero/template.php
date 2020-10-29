@@ -37,6 +37,17 @@ $attr_str = array_map(
 
 $link = get_field('vf_hero_link');
 
+if ($link) {
+  $text = '<a class="vf-link" href="'
+    . esc_url($link['url'])
+    . '">'
+    . $text
+    . '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+  </svg>'
+    . '</a>';
+}
+
 ?>
 
 <section <?php echo implode(' ', $attr_str); ?>>
@@ -59,12 +70,7 @@ $link = get_field('vf_hero_link');
       <?php echo $heading; ?>
     </h2>
     <p class="vf-hero__text">
-      <?php echo $text; 
-      if (! empty($link)) { ?>
-          <a class="vf-link" href="<?php echo esc_url($link['url']) ?>"><?php echo $link['title'];?></a>
-      <?php };
-      
-      ?>
+      <?php echo $text; ?>
     </p>
   </div>
 </section>
