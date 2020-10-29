@@ -16,9 +16,8 @@ get_header();
 global $vf_theme;
 
 ?>
-<section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-ui--white">
-    <main class="vf-inlay__content--full-width">
+<div class="vf-grid">
+  <div>
       <h1 class="vf-text vf-text-heading--1">
         <?php the_title(); ?>
       </h1>
@@ -36,12 +35,12 @@ global $vf_theme;
       }
 
       // the_content();
-      include('wp-content/plugins/vf-members-block/template.php')
-
+      echo '<div>';
+      VF_Plugin::render($vf_members);
+      echo '</div>';
       ?>
-    </main>
   </div>
-</section>
+</div>
 <?php
 
 get_footer();

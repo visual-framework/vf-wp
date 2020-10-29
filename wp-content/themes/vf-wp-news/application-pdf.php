@@ -17,7 +17,7 @@ $attachment_id = wp_get_attachment_url();
   </div>
 </main>
 
-<section class="vf-inlay">
+<section class="vf-grid">
   <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 </section>
 
