@@ -105,14 +105,21 @@ class VF_WP_Groups_Header extends VF_Plugin {
    * Return design level
    */
   public function get_hero_level() {
-    $level = (int) get_field(
+    $field = get_field_object(
+      'field_vf_hero_level',
+      $this->post()->ID
+    );
+    $level = get_field(
       'vf_hero_level',
       $this->post()->ID
     );
-    if ($level === 0 || ! is_numeric($level)) {
-      $level = get_theme_mod(
-        'vf_theme_layout',
-        1
+    if (is_array($level)) {
+      $level = $level[0];
+    }
+    if (empty($level)) {
+      $level = get_level_mod(
+        'vf_level',
+        $field['default_value']
       );
     }
     return $level;

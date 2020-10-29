@@ -58,12 +58,7 @@ $attr_str = array_map(
   }
 
   </style>
-  <?php } 
-/**
- * Awaiting assets from designer
-
-    <path fill="" d="M1,1V199H199V1z"/>
-*/ ?>
+  <?php } ?>
   <?php if (in_array($level, array(5))) { ?>
   <div class="vf-hero__image">
     <?php echo wp_get_attachment_image($image['ID'], 'vf-hero'); ?>

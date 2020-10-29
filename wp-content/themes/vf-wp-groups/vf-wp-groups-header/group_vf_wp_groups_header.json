@@ -1,9 +1,9 @@
 {
-    "key": "group_vf_wp_groups_header",
+    "key": "group_5f9a7e97897a7",
     "title": "Groups Header",
     "fields": [
         {
-            "key": "field_vf_masthead_enable",
+            "key": "field_5f9a7e978d2d7",
             "label": "Enable Masthead",
             "name": "vf_masthead_enable",
             "type": "true_false",
@@ -22,7 +22,7 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_vf_navigation_enable",
+            "key": "field_5f9a7e978d382",
             "label": "Enable Navigation",
             "name": "vf_navigation_enable",
             "type": "true_false",
@@ -41,7 +41,7 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_vf_hero_enable",
+            "key": "field_5f9a7e978d423",
             "label": "Enable Hero",
             "name": "vf_hero_enable",
             "type": "true_false",
@@ -60,35 +60,42 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_vf_hero_level",
+            "key": "field_5f9a7e978d4c2",
             "label": "Level",
             "name": "vf_hero_level",
-            "type": "range",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
                 [
                     {
-                        "field": "field_vf_hero_enable",
+                        "field": "field_5f9a7e978d423",
                         "operator": "==",
                         "value": "1"
                     }
                 ]
             ],
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
-            "default_value": 0,
-            "min": 0,
-            "max": 5,
-            "step": "",
-            "prepend": "",
-            "append": ""
+            "choices": {
+                "very-easy": "Very Easy",
+                "easy": "Easy",
+                "normal": "Normal",
+                "hard": "Hard"
+            },
+            "default_value": "normal",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
         },
         {
-            "key": "field_vf_hero_theme",
+            "key": "field_5f9a7e978d561",
             "label": "Theme",
             "name": "vf_hero_theme",
             "type": "select",
@@ -97,14 +104,14 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_vf_hero_enable",
+                        "field": "field_5f9a7e978d423",
                         "operator": "==",
                         "value": "1"
                     }
                 ]
             ],
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -114,9 +121,7 @@
                 "secondary": "Secondary",
                 "tertiary": "Tertiary"
             },
-            "default_value": [
-                "default"
-            ],
+            "default_value": "default",
             "allow_null": 0,
             "multiple": 0,
             "ui": 1,
@@ -125,7 +130,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_vf_hero_heading",
+            "key": "field_5f9a7e978d600",
             "label": "Hero Heading",
             "name": "vf_hero_heading",
             "type": "text",
@@ -133,7 +138,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -144,7 +149,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_vf_hero_text",
+            "key": "field_5f9a7e978d69f",
             "label": "Hero Introduction",
             "name": "vf_hero_text",
             "type": "text",
@@ -152,7 +157,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -163,13 +168,21 @@
             "maxlength": ""
         },
         {
-            "key": "field_vf_hero_link",
+            "key": "field_5f9a7e978d744",
             "label": "Hero Link",
             "name": "vf_hero_link",
             "type": "link",
             "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9a7e978d423",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -178,13 +191,21 @@
             "return_format": "array"
         },
         {
-            "key": "field_vf_hero_image",
+            "key": "field_5f9a7e978d7eb",
             "label": "Hero Image",
             "name": "vf_hero_image",
             "type": "image",
             "instructions": "Recommended size: 1224×348 (larger images are cropped).",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9a7e978d423",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -218,6 +239,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Groups theme global container.",
-    "modified": 1597914828
+    "description": "VF-WP Groups theme global container."
 }
