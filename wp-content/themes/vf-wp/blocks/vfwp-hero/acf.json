@@ -158,5 +158,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Hero block."
+    "description": "VF-WP Hero block.",
+    "modified": 1603967246
 }
