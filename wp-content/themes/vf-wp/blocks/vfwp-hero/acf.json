@@ -1,12 +1,12 @@
 {
-    "key": "group_5f2026c22f1ed",
+    "key": "group_5f9a78aa3a1c6",
     "title": "VF Hero Block",
     "fields": [
         {
-            "key": "field_5f2026c233697",
+            "key": "field_5f9a78aa3d47f",
             "label": "Level",
             "name": "vf_hero_level",
-            "type": "range",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,15 +15,22 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": 0,
-            "min": 0,
-            "max": 4,
-            "step": "",
-            "prepend": "",
-            "append": ""
+            "choices": {
+                "very-easy": "Very Easy",
+                "easy": "Easy",
+                "normal": "Normal",
+                "hard": "Hard"
+            },
+            "default_value": "normal",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         },
         {
-            "key": "field_5f2026c233739",
+            "key": "field_5f9a78aa3d551",
             "label": "Theme",
             "name": "vf_hero_theme",
             "type": "select",
@@ -41,9 +48,7 @@
                 "secondary": "Secondary",
                 "tertiary": "Tertiary"
             },
-            "default_value": [
-                "default"
-            ],
+            "default_value": "default",
             "allow_null": 0,
             "multiple": 0,
             "ui": 1,
@@ -52,7 +57,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5f2026c2339fd",
+            "key": "field_5f9a78aa3d600",
             "label": "Hero Heading",
             "name": "vf_hero_heading",
             "type": "text",
@@ -71,7 +76,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f2026c233a97",
+            "key": "field_5f9a78aa3d67a",
             "label": "Hero Introduction",
             "name": "vf_hero_text",
             "type": "text",
@@ -90,7 +95,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f2026c233b35",
+            "key": "field_5f9a78aa3d6fb",
             "label": "Hero Link",
             "name": "vf_hero_link",
             "type": "link",
@@ -113,7 +118,7 @@
             "return_format": "array"
         },
         {
-            "key": "field_5f2026c233bd3",
+            "key": "field_5f9a78aa3d77b",
             "label": "Hero Image",
             "name": "vf_hero_image",
             "type": "image",
@@ -153,5 +158,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Hero block."
+    "description": "VF-WP Hero block.",
+    "modified": 1603967246
 }

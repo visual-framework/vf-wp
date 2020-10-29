@@ -2,25 +2,19 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$levels = array(
-  'very-easy',
-  'easy',
-  'normal',
-  'hard',
-  'extreme'
-);
-
 $level = get_field('vf_hero_level');
-if (is_numeric($level)) {
-    $level = $levels[intval($level) - 0];
-}
+
 
 // Setup root HTML classes and attributes
 $theme = get_field('vf_hero_theme');
 $classes = array('vf-hero');
-$classes[] = 'vf-hero--inlay';
 $classes[] = "vf-hero--{$level}";
-$classes[] = " | vf-hero-theme--{$theme}";
+if ($theme === 'default'){
+  $classes[] = "";
+}
+else {
+  $classes[] = "| vf-hero-theme--{$theme}";
+}
 
 $attr = array(
   'class' => implode(' ', $classes),
@@ -43,6 +37,17 @@ $attr_str = array_map(
 
 $link = get_field('vf_hero_link');
 
+if ($link) {
+  $text = '<a class="vf-link" href="'
+    . esc_url($link['url'])
+    . '">'
+    . $text
+    . '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+  </svg>'
+    . '</a>';
+}
+
 ?>
 
 <section <?php echo implode(' ', $attr_str); ?>>
@@ -50,14 +55,10 @@ $link = get_field('vf_hero_link');
   <style>
   .vf-hero {
     --vf-hero-bg-image: url('<?php echo esc_url($image['sizes']['vf-hero']); ?>');
-    --vf-hero-grid__row--initial: 384px;
+    --vf-hero-grid__row--initial: 16em;
   }
 
   </style>
-  <?php } ?>
-  <?php if ( ! $image || $level === 1) { ?>
-  <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="vf-lens | vf-hero__lens">
-  </svg>
   <?php } ?>
   <?php if (in_array($level, array(5))) { ?>
   <div class="vf-hero__image">
@@ -69,12 +70,7 @@ $link = get_field('vf_hero_link');
       <?php echo $heading; ?>
     </h2>
     <p class="vf-hero__text">
-      <?php echo $text; 
-      if (! empty($link)) { ?>
-          <a class="vf-link" href="<?php echo esc_url($link['url']) ?>"><?php echo $link['title'];?></a>
-      <?php };
-      
-      ?>
+      <?php echo $text; ?>
     </p>
   </div>
 </section>
