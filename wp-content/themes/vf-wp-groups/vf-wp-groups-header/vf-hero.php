@@ -24,9 +24,13 @@ if (is_numeric($level)) {
 
 // Setup root HTML classes and attributes
 $classes = array('vf-hero');
-$classes[] = 'vf-hero--inlay';
 $classes[] = "vf-hero--{$level}";
-$classes[] = " | vf-hero-theme--{$theme}";
+if (get_field('vf_hero_theme') === 'default'){
+  $classes[] = "";
+}
+else {
+  $classes[] = "| vf-hero-theme--{$theme}";
+}
 
 $attr = array(
   'class' => implode(' ', $classes),
@@ -55,7 +59,7 @@ $attr_str = array_map(
   <style>
   .vf-hero {
     --vf-hero-bg-image: url('<?php echo esc_url($image['sizes']['vf-hero']); ?>');
-    --vf-hero-grid__row--initial: 384px;
+    --vf-hero-grid__row--initial: 16em;
   }
 
   </style>
