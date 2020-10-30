@@ -41,7 +41,6 @@ class VF_Data_resources extends VF_Plugin {
 
   private function init() {
     parent::initialize();
-    add_action('admin_head', array($this, 'admin_head'), 15);
     // Do no wrap in `vf-content` classes
     add_filter(
       'vf/theme/content/is_block_wrapped/name=acf/vf-data-resources',
