@@ -1569,10 +1569,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-location-nearest/-/vf-location-nearest-1.0.0-alpha.1.tgz#4793e6510d85bc922c9cfd9e688d21167b9d6d3d"
   integrity sha512-BvDD3gBKzvelBTIbW+p4wjQLpSOCpLT15YCK185xrnxsxenLZ1ox9mKCgvCqYBh29GCK06XiYnhZEvDzxLN0+A==
 
-"@visual-framework/vf-masthead@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-1.2.0.tgz#628746e7dbf3014d9cb0fe103c1f14222094c4d0"
-  integrity sha512-l32j3kMreI92OMw71ZoN3HmE/a1F9+HQ2DtBICyhly7U2B1KtF29QHw0zwjzCWXVQfgFByAD3Th/W4zAhwugeQ==
+"@visual-framework/vf-masthead@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-2.0.0.tgz#dd2ee39c550271c6ad852414894b2713cd328ee2"
+  integrity sha512-wbB0Vcq92hBj+pITKdOJxLkkVT4h604ioFSvO5MQ3SLE85/J/ceMC2RJMHRoX1rMlWl/vkrSR2IDKFQ3f+WRCg==
 
 "@visual-framework/vf-navigation@1.2.5":
   version "1.2.5"
