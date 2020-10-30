@@ -45,7 +45,6 @@ class VF_Jobs extends VF_Plugin {
       array($this, 'add_taxonomy_fields'),
       10
     );
-    add_action('admin_head', array($this, 'admin_head'), 15);
     // Do no wrap in `vf-content` classes
     add_filter(
       'vf/theme/content/is_block_wrapped/name=acf/vf-jobs',

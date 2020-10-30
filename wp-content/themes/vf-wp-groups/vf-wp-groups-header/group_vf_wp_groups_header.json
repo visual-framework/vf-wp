@@ -1,9 +1,25 @@
 {
-    "key": "group_5f9a7e97897a7",
+    "key": "group_5f9bf938f2198",
     "title": "Groups Header",
     "fields": [
         {
-            "key": "field_5f9a7e978d2d7",
+            "key": "field_5f9bf93901731",
+            "label": "Masthead",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5f9bf939017d0",
             "label": "Enable Masthead",
             "name": "vf_masthead_enable",
             "type": "true_false",
@@ -11,7 +27,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "",
                 "class": "",
                 "id": ""
             },
@@ -22,7 +38,240 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_5f9a7e978d382",
+            "key": "field_5f9bf9390186d",
+            "label": "Heading",
+            "name": "vf_masthead_heading",
+            "type": "text",
+            "instructions": "This field will override default settings",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf939017d0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f9bf9390190f",
+            "label": "Subheading",
+            "name": "vf_masthead_subheading",
+            "type": "text",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf939017d0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f9bf939019b1",
+            "label": "Heading additional",
+            "name": "vf_masthead_additional",
+            "type": "text",
+            "instructions": "This field will override default settings",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf939017d0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f9bf93901a4f",
+            "label": "Link",
+            "name": "vf_masthead_heading_link",
+            "type": "url",
+            "instructions": "This field will override default settings",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf939017d0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f9bf93901b18",
+            "label": "Style",
+            "name": "vf_masthead_variant",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf939017d0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary",
+                "has_image": "Has image",
+                "with_title_block": "Title block",
+                "with_title_block_and_image": "Title block with image"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f9bf93901b9c",
+            "label": "Title block background color",
+            "name": "vf_masthead_block_bg",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf93901b18",
+                        "operator": "==",
+                        "value": "with_title_block"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f9bf93901c1e",
+            "label": "Background image",
+            "name": "vf_masthead_image",
+            "type": "image",
+            "instructions": "In choosing the image for masthead, the image filename needs to have it's most dominate colour added as a hexadecimal code. ***masthead-background-image--00EF00.png*** To find the dominant colour in the background image you can use a colour picker in graphics software to find the hex code.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf93901b18",
+                        "operator": "==",
+                        "value": "has_image"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5f9bf93901b18",
+                        "operator": "==",
+                        "value": "with_title_block_and_image"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "large",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_5f9bf93901ca1",
+            "label": "Navigation",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5f9bf93901d24",
             "label": "Enable Navigation",
             "name": "vf_navigation_enable",
             "type": "true_false",
@@ -41,7 +290,23 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_5f9a7e978d423",
+            "key": "field_5f9bf93901da7",
+            "label": "Hero",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5f9bf93901e29",
             "label": "Enable Hero",
             "name": "vf_hero_enable",
             "type": "true_false",
@@ -60,7 +325,77 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_5f9a7e978d4c2",
+            "key": "field_5f9bf93901eac",
+            "label": "Hero Image",
+            "name": "vf_hero_image",
+            "type": "image",
+            "instructions": "Recommended size: 1224×348 (larger images are cropped).",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f9bf93901e29",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "vf-hero",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpeg,jpg,png"
+        },
+        {
+            "key": "field_5f9bf93901f0d",
+            "label": "Hero Heading",
+            "name": "vf_hero_heading",
+            "type": "text",
+            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "About the %1$s",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f9bf93901faa",
+            "label": "Hero Introduction",
+            "name": "vf_hero_text",
+            "type": "text",
+            "instructions": "Leave blank to use introduction from the Content Hub.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f9bf93902047",
             "label": "Level",
             "name": "vf_hero_level",
             "type": "select",
@@ -69,7 +404,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5f9a7e978d423",
+                        "field": "field_5f9bf93901e29",
                         "operator": "==",
                         "value": "1"
                     }
@@ -95,7 +430,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5f9a7e978d561",
+            "key": "field_5f9bf939020e5",
             "label": "Theme",
             "name": "vf_hero_theme",
             "type": "select",
@@ -104,7 +439,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5f9a7e978d423",
+                        "field": "field_5f9bf93901e29",
                         "operator": "==",
                         "value": "1"
                     }
@@ -130,45 +465,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5f9a7e978d600",
-            "label": "Hero Heading",
-            "name": "vf_hero_heading",
-            "type": "text",
-            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "About the %1$s",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f9a7e978d69f",
-            "label": "Hero Introduction",
-            "name": "vf_hero_text",
-            "type": "text",
-            "instructions": "Leave blank to use introduction from the Content Hub.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f9a7e978d744",
+            "key": "field_5f9bf93902181",
             "label": "Hero Link",
             "name": "vf_hero_link",
             "type": "link",
@@ -177,7 +474,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5f9a7e978d423",
+                        "field": "field_5f9bf93901e29",
                         "operator": "==",
                         "value": "1"
                     }
@@ -189,38 +486,6 @@
                 "id": ""
             },
             "return_format": "array"
-        },
-        {
-            "key": "field_5f9a7e978d7eb",
-            "label": "Hero Image",
-            "name": "vf_hero_image",
-            "type": "image",
-            "instructions": "Recommended size: 1224×348 (larger images are cropped).",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f9a7e978d423",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "vf-hero",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpeg,jpg,png"
         }
     ],
     "location": [
@@ -240,5 +505,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1603967246
+    "modified": 1604057881
 }
