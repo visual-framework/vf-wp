@@ -18,6 +18,12 @@
 
 @import 'vfwp-gutenberg-iframe.variables.scss';
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
 /* remove extra margins */
 .vf-inlay:last-of-type {
   margin-bottom: 0;
