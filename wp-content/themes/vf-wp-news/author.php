@@ -36,10 +36,10 @@ if (is_search()) {
         <h3 class="vf-box__heading">
           <?php the_author(); ?></h3>
         <p class="vf-box__text"><?php echo nl2br(get_the_author_meta('description')); ?></p>
-        <p class="vf-box__text | vf-u-text-color--ui--grey">
+        <!-- <p class="vf-box__text | vf-u-text-color--ui--grey">
           <a href="mailto:<?php echo nl2br(get_the_author_meta('email')); ?>"
             ><?php echo nl2br(get_the_author_meta('email')); ?></a>
-        </p>
+        </p> -->
       </div>
     </div>
   </div>
