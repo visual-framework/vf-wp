@@ -96,7 +96,7 @@ settings.edit = (props) => {
       options: [
         {label: __('Small'), value: 'small'},
         {label: __('Medium'), value: 'medium'},
-        {label: __('Large'), value: 'medium'}
+        {label: __('Large'), value: 'large'}
       ]
     },
     {

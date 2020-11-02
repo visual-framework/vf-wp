@@ -11595,7 +11595,7 @@
 	      value: 'medium'
 	    }, {
 	      label: i18n.__('Large'),
-	      value: 'medium'
+	      value: 'large'
 	    }]
 	  }, {
 	    name: 'alignment',
