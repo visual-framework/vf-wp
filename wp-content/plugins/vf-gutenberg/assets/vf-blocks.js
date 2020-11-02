@@ -11508,6 +11508,52 @@
 	  }]]
 	});
 
+	function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults = useVFDefaults();
+	var ver = "1.0.0";
+
+	var settings = _objectSpread$a(_objectSpread$a({}, defaults), {}, {
+	  name: "vf/cluster",
+	  title: i18n.__("VF Cluster"),
+	  category: "vf/core",
+	  description: i18n.__("Visual Framework (core)"),
+	  attributes: _objectSpread$a({}, defaults.attributes)
+	});
+
+	settings.save = function (props) {
+	  return wp.element.createElement("div", {
+	    className: "vf-cluster"
+	  }, wp.element.createElement("div", {
+	    className: "vf-cluster__inner"
+	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null)));
+	};
+
+	settings.edit = function (props) {
+	  if (ver !== props.attributes.ver) {
+	    props.setAttributes({
+	      ver: ver
+	    });
+	  }
+
+	  var clientId = props.clientId; // Inspector controls
+
+	  var fields = []; // Return inner blocks and inspector controls
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__("Settings"),
+	    initialOpen: true
+	  }, wp.element.createElement(VFBlockFields, {
+	    fields: fields
+	  }))), wp.element.createElement("div", {
+	    className: "vf-cluster",
+	    "data-ver": ver
+	  }, wp.element.createElement("div", {
+	    className: "vf-cluster__inner"
+	  }, wp.element.createElement(blockEditor.InnerBlocks, null))));
+	};
+
 	/**
 	 * Block transforms for: `vf/divider`
 	 */
@@ -11660,9 +11706,9 @@
 	})();
 	})();
 
-	function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var RATIOS = {
 	  '2:1': {
 	    label: i18n.__('(2:1) Cinema'),
@@ -11692,7 +11738,7 @@
 
 	var withRatioAttributes = function withRatioAttributes(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$a({}, props.transient || {});
+	    var transient = _objectSpread$b({}, props.transient || {});
 
 	    var _props$attributes = props.attributes,
 	        ratio = _props$attributes.ratio,
@@ -11739,7 +11785,7 @@
 	      transient.vf_embedded_content = "<iframe width=\"".concat(width, "\" height=\"").concat(height, "\" src=\"").concat(transient.src, "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
 	    }
 
-	    return Edit(_objectSpread$a(_objectSpread$a({}, props), {}, {
+	    return Edit(_objectSpread$b(_objectSpread$b({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
@@ -11818,24 +11864,24 @@
 	  }]]]
 	});
 
-	function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults = useVFDefaults();
-	var ver = '1.0.0';
+	function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$1 = useVFDefaults();
+	var ver$1 = '1.0.0';
 
-	var settings = _objectSpread$b(_objectSpread$b({}, defaults), {}, {
+	var settings$1 = _objectSpread$c(_objectSpread$c({}, defaults$1), {}, {
 	  name: 'vf/grid-column',
 	  title: i18n.__('Grid Column'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
 	  parent: ['vf/grid', 'vf/embl-grid'],
-	  supports: _objectSpread$b(_objectSpread$b({}, defaults.supports), {}, {
+	  supports: _objectSpread$c(_objectSpread$c({}, defaults$1.supports), {}, {
 	    inserter: false
 	  })
 	});
 
-	settings.save = function (props) {
+	settings$1.save = function (props) {
 	  return wp.element.createElement("div", null, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
 	};
 
@@ -11845,15 +11891,15 @@
 	        getBlockOrder = _select.getBlockOrder;
 
 	    var hasChildBlocks = getBlockOrder(props.clientId).length > 0;
-	    return Edit(_objectSpread$b(_objectSpread$b({}, props), {}, {
+	    return Edit(_objectSpread$c(_objectSpread$c({}, props), {}, {
 	      hasChildBlocks: hasChildBlocks
 	    }));
 	  };
 	};
 
-	settings.edit = withGridProps(function (props) {
+	settings$1.edit = withGridProps(function (props) {
 	  props.setAttributes({
-	    ver: props.ver || ver
+	    ver: props.ver || ver$1
 	  });
 	  return wp.element.createElement("div", {
 	    className: "vf-block-column"
@@ -11865,9 +11911,9 @@
 	  }));
 	});
 
-	function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	// New columns are appended to match minimum
 	// End columns are merged to match maximum
 
@@ -11884,7 +11930,7 @@
 	      // Map column props
 	      var innerProps = innerBlocks.map(function (block) {
 	        return {
-	          attributes: _objectSpread$c({}, block.attributes),
+	          attributes: _objectSpread$d({}, block.attributes),
 	          innerBlocks: toConsumableArray(block.innerBlocks)
 	        };
 	      }); // Fill empty props to match min number of columns
@@ -11912,20 +11958,20 @@
 	  };
 	};
 
-	function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$1 = useVFDefaults();
-	var ver$1 = '1.0.0';
+	function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$2 = useVFDefaults();
+	var ver$2 = '1.0.0';
 	var MIN_COLUMNS = 2;
 	var MAX_COLUMNS = 4;
 
-	var settings$1 = _objectSpread$d(_objectSpread$d({}, defaults$1), {}, {
+	var settings$2 = _objectSpread$e(_objectSpread$e({}, defaults$2), {}, {
 	  name: 'vf/embl-grid',
 	  title: i18n.__('EMBL Grid'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
-	  attributes: _objectSpread$d(_objectSpread$d({}, defaults$1.attributes), {}, {
+	  attributes: _objectSpread$e(_objectSpread$e({}, defaults$2.attributes), {}, {
 	    placeholder: {
 	      type: 'integer',
 	      default: 0
@@ -11945,7 +11991,7 @@
 	  })
 	});
 
-	settings$1.save = function (props) {
+	settings$2.save = function (props) {
 	  var _props$attributes = props.attributes,
 	      placeholder = _props$attributes.placeholder,
 	      sidebar = _props$attributes.sidebar,
@@ -12042,7 +12088,7 @@
 	  })(Edit);
 	};
 
-	settings$1.edit = withGridDispatch(function (props) {
+	settings$2.edit = withGridDispatch(function (props) {
 	  var _props$attributes2 = props.attributes,
 	      columns = _props$attributes2.columns,
 	      sidebar = _props$attributes2.sidebar,
@@ -12050,7 +12096,7 @@
 	      placeholder = _props$attributes2.placeholder; // ensure version is encoded in post content
 
 	  props.setAttributes({
-	    ver: ver$1
+	    ver: ver$2
 	  }); // turn on setup placeholder if no columns are defined
 
 	  if (columns === 0) {
@@ -12101,7 +12147,7 @@
 	    fields: fields
 	  })))), wp.element.createElement("div", {
 	    className: 'vf-block-grid',
-	    "data-ver": ver$1,
+	    "data-ver": ver$2,
 	    "data-embl": true,
 	    "data-sidebar": sidebar,
 	    "data-centered": centered
@@ -12112,24 +12158,24 @@
 	  })));
 	}); // Block transforms
 
-	settings$1.transforms = {
+	settings$2.transforms = {
 	  from: [fromColumns('core/columns', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS), fromColumns('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)]
 	};
 
-	function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$2 = useVFDefaults();
-	var ver$2 = '1.0.0';
+	function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$3 = useVFDefaults();
+	var ver$3 = '1.0.0';
 	var MIN_COLUMNS$1 = 1;
 	var MAX_COLUMNS$1 = 6;
 
-	var settings$2 = _objectSpread$e(_objectSpread$e({}, defaults$2), {}, {
+	var settings$3 = _objectSpread$f(_objectSpread$f({}, defaults$3), {}, {
 	  name: 'vf/grid',
 	  title: i18n.__('VF Grid'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
-	  attributes: _objectSpread$e(_objectSpread$e({}, defaults$2.attributes), {}, {
+	  attributes: _objectSpread$f(_objectSpread$f({}, defaults$3.attributes), {}, {
 	    placeholder: {
 	      type: 'integer',
 	      default: 0
@@ -12141,7 +12187,7 @@
 	  })
 	});
 
-	settings$2.save = function (props) {
+	settings$3.save = function (props) {
 	  if (props.attributes.placeholder === 1) {
 	    return null;
 	  }
@@ -12204,13 +12250,13 @@
 	  })(Edit);
 	};
 
-	settings$2.edit = withGridDispatch$1(function (props) {
+	settings$3.edit = withGridDispatch$1(function (props) {
 	  var _props$attributes = props.attributes,
 	      columns = _props$attributes.columns,
 	      placeholder = _props$attributes.placeholder; // Ensure version is encoded in post content
 
 	  props.setAttributes({
-	    ver: ver$2
+	    ver: ver$3
 	  }); // Turn on setup placeholder if no columns are defined
 
 	  if (columns === 0) {
@@ -12249,7 +12295,7 @@
 	    fields: fields
 	  }))), wp.element.createElement("div", {
 	    className: 'vf-block-grid',
-	    "data-ver": ver$2,
+	    "data-ver": ver$3,
 	    "data-columns": columns
 	  }, wp.element.createElement(blockEditor.InnerBlocks, {
 	    allowedBlocks: ['vf/grid-column'],
@@ -12258,7 +12304,7 @@
 	  })));
 	}); // Block transforms
 
-	settings$2.transforms = {
+	settings$3.transforms = {
 	  from: [fromColumns('core/columns', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1), fromColumns('vf/embl-grid', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1)]
 	};
 
@@ -12333,22 +12379,22 @@
 	  }]]]
 	});
 
-	function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$3 = useVFDefaults();
-	var ver$3 = '1.0.0';
+	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$4 = useVFDefaults();
+	var ver$4 = '1.0.0';
 
-	var settings$3 = _objectSpread$f(_objectSpread$f({}, defaults$3), {}, {
+	var settings$4 = _objectSpread$g(_objectSpread$g({}, defaults$4), {}, {
 	  name: 'vf/tabs-section',
 	  title: i18n.__('VF Tab Section'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
 	  parent: ['vf/tabs'],
-	  supports: _objectSpread$f(_objectSpread$f({}, defaults$3.supports), {}, {
+	  supports: _objectSpread$g(_objectSpread$g({}, defaults$4.supports), {}, {
 	    inserter: false
 	  }),
-	  attributes: _objectSpread$f(_objectSpread$f({}, defaults$3.attributes), {}, {
+	  attributes: _objectSpread$g(_objectSpread$g({}, defaults$4.attributes), {}, {
 	    id: {
 	      type: 'string',
 	      default: ''
@@ -12364,7 +12410,7 @@
 	  })
 	});
 
-	settings$3.save = function (props) {
+	settings$4.save = function (props) {
 	  var _props$attributes = props.attributes,
 	      id = _props$attributes.id,
 	      label = _props$attributes.label,
@@ -12386,10 +12432,10 @@
 	  return wp.element.createElement("section", attr, wp.element.createElement("h2", heading, label), wp.element.createElement(blockEditor.InnerBlocks.Content, null));
 	};
 
-	settings$3.edit = function (props) {
-	  if (ver$3 !== props.attributes.ver) {
+	settings$4.edit = function (props) {
+	  if (ver$4 !== props.attributes.ver) {
 	    props.setAttributes({
-	      ver: ver$3
+	      ver: ver$4
 	    });
 	  }
 
@@ -12486,18 +12532,18 @@
 	  }, unlabelled ? false : wp.element.createElement("h2", null, label), wp.element.createElement(blockEditor.InnerBlocks, null)));
 	};
 
-	function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$4 = useVFDefaults();
-	var ver$4 = '1.0.0';
+	function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$i(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$5 = useVFDefaults();
+	var ver$5 = '1.0.0';
 
-	var settings$4 = _objectSpread$g(_objectSpread$g({}, defaults$4), {}, {
+	var settings$5 = _objectSpread$h(_objectSpread$h({}, defaults$5), {}, {
 	  name: 'vf/tabs',
 	  title: i18n.__('VF Tabs'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
-	  attributes: _objectSpread$g(_objectSpread$g({}, defaults$4.attributes), {}, {
+	  attributes: _objectSpread$h(_objectSpread$h({}, defaults$5.attributes), {}, {
 	    dirty: {
 	      type: 'integer',
 	      default: 0
@@ -12509,7 +12555,7 @@
 	  })
 	});
 
-	settings$4.save = function (props) {
+	settings$5.save = function (props) {
 	  return wp.element.createElement("div", {
 	    className: "vf-tabs"
 	  }, wp.element.createElement("ul", {
@@ -12529,10 +12575,10 @@
 	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null)));
 	};
 
-	settings$4.edit = function (props) {
-	  if (ver$4 !== props.attributes.ver) {
+	settings$5.edit = function (props) {
+	  if (ver$5 !== props.attributes.ver) {
 	    props.setAttributes({
-	      ver: ver$4
+	      ver: ver$5
 	    });
 	  }
 
@@ -12636,7 +12682,7 @@
 	    fields: fields
 	  }))), wp.element.createElement("div", {
 	    className: "vf-tabs",
-	    "data-ver": ver$4
+	    "data-ver": ver$5
 	  }, wp.element.createElement("ul", {
 	    className: "vf-tabs__list"
 	  }, tabs.map(function (tab, i) {
@@ -12667,8 +12713,9 @@
 
 	if (parseInt(coreOptin) === 1) {
 	  var coreBlocks = [//Tabs
-	  settings$3, settings$4, // Grid
-	  settings, settings$1, settings$2, // Elements
+	  settings$4, settings$5, // Grid
+	  settings$1, settings$2, settings$3, // Inner Blocks
+	  settings, // Elements
 	  vfBadge, vfBlockquote, vfButton, vfDivider, // Blocks
 	  vfActivityItem, vfActivityList, vfBox, vfBreadcrumbsItem, vfBreadcrumbs, vfLede, vfEmbed];
 	  coreBlocks.forEach(function (settings) {
@@ -12693,15 +12740,15 @@
 	} // Register experimental preview block
 
 
-	var settings$5 = useVFPluginSettings({
+	var settings$6 = useVFPluginSettings({
 	  name: 'vf/plugin',
 	  title: 'Preview',
 	  category: 'vf/wp'
 	});
-	settings$5.attributes.ref = {
+	settings$6.attributes.ref = {
 	  type: 'string'
 	};
-	blocks.registerBlockType('vf/plugin', settings$5); // Handle iframe preview resizing globally
+	blocks.registerBlockType('vf/plugin', settings$6); // Handle iframe preview resizing globally
 	// TODO: remove necessity from `useVFIFrame`
 
 	window.addEventListener('message', function (_ref) {
