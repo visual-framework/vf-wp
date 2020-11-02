@@ -11512,22 +11512,63 @@
 
 	function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults = useVFDefaults();
-	var ver = "1.0.0";
+	var ver = '1.0.0';
 
 	var settings = _objectSpread$a(_objectSpread$a({}, defaults), {}, {
-	  name: "vf/cluster",
-	  title: i18n.__("VF Cluster"),
-	  category: "vf/core",
-	  description: i18n.__("Visual Framework (core)"),
-	  attributes: _objectSpread$a({}, defaults.attributes)
+	  name: 'vf/cluster',
+	  title: i18n.__('VF Cluster'),
+	  category: 'vf/core',
+	  description: i18n.__('Visual Framework (core)'),
+	  attributes: _objectSpread$a(_objectSpread$a({}, defaults.attributes), {}, {
+	    alignment: {
+	      type: 'string',
+	      default: 'center'
+	    },
+	    spacing: {
+	      type: 'string',
+	      default: 'small'
+	    }
+	  })
 	});
 
-	settings.save = function (props) {
+	var Cluster = function Cluster(props) {
+	  var _props$attributes = props.attributes,
+	      alignment = _props$attributes.alignment,
+	      spacing = _props$attributes.spacing;
+	  var classes = ['vf-cluster'];
+
+	  if (spacing === 'medium') {
+	    classes.push('vf-cluster--600');
+	  } else if (spacing === 'large') {
+	    classes.push('vf-cluster--800');
+	  } else {
+	    classes.push('vf-cluster--400');
+	  }
+
+	  var styles = {};
+	  styles['--vf-cluster__item--flex'] = '25% 1 0';
+
+	  if (alignment === 'start') {
+	    styles['--vf-cluster-alignment'] = 'flex-start';
+	  } else if (alignment === 'end') {
+	    styles['--vf-cluster-alignment'] = 'flex-end';
+	  } else if (alignment === 'stretch') {
+	    styles['--vf-cluster-alignment'] = 'stretch';
+	  } else {
+	    styles['--vf-cluster-alignment'] = 'center';
+	  }
+
 	  return wp.element.createElement("div", {
-	    className: "vf-cluster"
+	    "data-ver": props.isEdit ? ver : null,
+	    className: classes.join(' '),
+	    style: styles
 	  }, wp.element.createElement("div", {
 	    className: "vf-cluster__inner"
-	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null)));
+	  }, props.children));
+	};
+
+	settings.save = function (props) {
+	  return wp.element.createElement(Cluster, props, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
 	};
 
 	settings.edit = function (props) {
@@ -11537,21 +11578,52 @@
 	    });
 	  }
 
-	  var clientId = props.clientId; // Inspector controls
+	  var clientId = props.clientId;
+	  var _props$attributes2 = props.attributes,
+	      alignment = _props$attributes2.alignment,
+	      spacing = _props$attributes2.spacing; // Inspector controls
 
-	  var fields = []; // Return inner blocks and inspector controls
+	  var fields = [{
+	    name: 'spacing',
+	    control: 'select',
+	    label: i18n.__('Spacing'),
+	    options: [{
+	      label: i18n.__('Small'),
+	      value: 'small'
+	    }, {
+	      label: i18n.__('Medium'),
+	      value: 'medium'
+	    }, {
+	      label: i18n.__('Large'),
+	      value: 'medium'
+	    }]
+	  }, {
+	    name: 'alignment',
+	    control: 'select',
+	    label: i18n.__('Alignment'),
+	    options: [{
+	      label: i18n.__('Stretch'),
+	      value: 'stretch'
+	    }, {
+	      label: i18n.__('Start'),
+	      value: 'start'
+	    }, {
+	      label: i18n.__('Center'),
+	      value: 'center'
+	    }, {
+	      label: i18n.__('End'),
+	      value: 'end'
+	    }]
+	  }]; // Return inner blocks and inspector controls
 
 	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__("Settings"),
+	    title: i18n.__('Settings'),
 	    initialOpen: true
-	  }, wp.element.createElement(VFBlockFields, {
+	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
 	    fields: fields
-	  }))), wp.element.createElement("div", {
-	    className: "vf-cluster",
-	    "data-ver": ver
-	  }, wp.element.createElement("div", {
-	    className: "vf-cluster__inner"
-	  }, wp.element.createElement(blockEditor.InnerBlocks, null))));
+	  })))), wp.element.createElement(Cluster, _extends_1({}, props, {
+	    isEdit: true
+	  }), wp.element.createElement(blockEditor.InnerBlocks, null)));
 	};
 
 	/**

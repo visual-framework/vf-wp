@@ -365,3 +365,10 @@
     width: 1px;
   }
 }
+
+.wp-block[data-type='vf/cluster'] {
+  .vf-cluster__inner,
+  .block-editor-inner-blocks {
+    display: contents;
+  }
+}
