@@ -3755,9 +3755,12 @@
 
 
 	    if (control === 'columns') {
-	      var min = parseInt(field.min) || 1;
-	      var max = parseInt(field.max) || 6;
-	      var value = parseInt(field.value) || 0;
+	      // const min = parseInt(field.min) || 1;
+	      // const max = parseInt(field.max) || 6;
+	      // const value = parseInt(field.value) || 0;
+	      var min = isNaN(field.min) ? 1 : parseInt(field.min);
+	      var max = isNaN(field.max) ? 6 : parseInt(field.max);
+	      var value = isNaN(field.value) ? 0 : parseInt(field.value);
 	      return wp.element.createElement(ColumnsControl, {
 	        key: key,
 	        min: min,
@@ -3817,11 +3820,13 @@
 	    }
 
 	    if (control === 'range') {
-	      var _min2 = parseInt(field['min']) || 1;
+	      var allowReset = !!field.allowReset;
 
-	      var _max2 = parseInt(field['max']) || 10;
+	      var _min2 = isNaN(field.min) ? 1 : parseInt(field.min);
 
-	      var step = parseInt(field['step']) || 1;
+	      var _max2 = isNaN(field.max) ? 10 : parseInt(field.max);
+
+	      var step = isNaN(field.step) ? 1 : parseInt(field.step);
 	      return wp.element.createElement(components.RangeControl, {
 	        key: key,
 	        label: label,
@@ -3829,6 +3834,7 @@
 	        onChange: function onChange(value) {
 	          return _onChange(name, value);
 	        },
+	        allowReset: allowReset,
 	        step: step,
 	        min: _min2,
 	        max: _max2
@@ -11527,6 +11533,10 @@
 	    spacing: {
 	      type: 'string',
 	      default: 'small'
+	    },
+	    customSpacing: {
+	      type: 'number',
+	      default: 0
 	    }
 	  })
 	});
@@ -11534,19 +11544,24 @@
 	var Cluster = function Cluster(props) {
 	  var _props$attributes = props.attributes,
 	      alignment = _props$attributes.alignment,
-	      spacing = _props$attributes.spacing;
+	      spacing = _props$attributes.spacing,
+	      customSpacing = _props$attributes.customSpacing;
 	  var classes = ['vf-cluster'];
 
 	  if (spacing === 'medium') {
 	    classes.push('vf-cluster--600');
 	  } else if (spacing === 'large') {
 	    classes.push('vf-cluster--800');
-	  } else {
+	  } else if (spacing !== 'custom') {
 	    classes.push('vf-cluster--400');
 	  }
 
 	  var styles = {};
 	  styles['--vf-cluster__item--flex'] = '25% 1 0';
+
+	  if (spacing === 'custom') {
+	    styles['--vf-cluster-margin'] = "".concat(customSpacing, "px");
+	  }
 
 	  if (alignment === 'start') {
 	    styles['--vf-cluster-alignment'] = 'flex-start';
@@ -11581,26 +11596,21 @@
 	  var clientId = props.clientId;
 	  var _props$attributes2 = props.attributes,
 	      alignment = _props$attributes2.alignment,
-	      spacing = _props$attributes2.spacing; // Inspector controls
+	      spacing = _props$attributes2.spacing;
+	  var onSpacing = React.useCallback(function (name, value) {
+	    props.setAttributes(defineProperty$4({}, name, value));
+
+	    if (value !== 'custom') {
+	      props.setAttributes({
+	        customSpacing: 0
+	      });
+	    }
+	  }, [clientId]); // Inspector controls
 
 	  var fields = [{
-	    name: 'spacing',
-	    control: 'select',
-	    label: i18n.__('Spacing'),
-	    options: [{
-	      label: i18n.__('Small'),
-	      value: 'small'
-	    }, {
-	      label: i18n.__('Medium'),
-	      value: 'medium'
-	    }, {
-	      label: i18n.__('Large'),
-	      value: 'large'
-	    }]
-	  }, {
 	    name: 'alignment',
-	    control: 'select',
 	    label: i18n.__('Alignment'),
+	    control: 'select',
 	    options: [{
 	      label: i18n.__('Stretch'),
 	      value: 'stretch'
@@ -11614,7 +11624,37 @@
 	      label: i18n.__('End'),
 	      value: 'end'
 	    }]
-	  }]; // Return inner blocks and inspector controls
+	  }, {
+	    name: 'spacing',
+	    label: i18n.__('Spacing'),
+	    control: 'select',
+	    options: [{
+	      label: i18n.__('Small'),
+	      value: 'small'
+	    }, {
+	      label: i18n.__('Medium'),
+	      value: 'medium'
+	    }, {
+	      label: i18n.__('Large'),
+	      value: 'large'
+	    }, {
+	      label: i18n.__('Custom'),
+	      value: 'custom'
+	    }],
+	    onChange: onSpacing
+	  }];
+
+	  if (spacing === 'custom') {
+	    fields.push({
+	      name: 'customSpacing',
+	      label: i18n.__('Custom spacing'),
+	      control: 'range',
+	      allowReset: true,
+	      min: 0,
+	      max: 100
+	    });
+	  } // Return inner blocks and inspector controls
+
 
 	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
 	    title: i18n.__('Settings'),
@@ -11623,7 +11663,11 @@
 	    fields: fields
 	  })))), wp.element.createElement(Cluster, _extends_1({}, props, {
 	    isEdit: true
-	  }), wp.element.createElement(blockEditor.InnerBlocks, null)));
+	  }), wp.element.createElement(blockEditor.InnerBlocks, {
+	    renderAppender: function renderAppender() {
+	      return wp.element.createElement(blockEditor.InnerBlocks.ButtonBlockAppender, null);
+	    }
+	  })));
 	};
 
 	/**

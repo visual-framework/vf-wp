@@ -1,11 +1,9 @@
 /**
 Block Name: Cluster
 */
-import React, {useCallback, useEffect} from 'react';
-import {createBlock} from '@wordpress/blocks';
+import React, {useCallback} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {Button, PanelBody} from '@wordpress/components';
-import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
@@ -29,12 +27,16 @@ const settings = {
     spacing: {
       type: 'string',
       default: 'small'
+    },
+    customSpacing: {
+      type: 'number',
+      default: 0
     }
   }
 };
 
 const Cluster = (props) => {
-  const {alignment, spacing} = props.attributes;
+  const {alignment, spacing, customSpacing} = props.attributes;
 
   const classes = ['vf-cluster'];
 
@@ -42,13 +44,17 @@ const Cluster = (props) => {
     classes.push('vf-cluster--600');
   } else if (spacing === 'large') {
     classes.push('vf-cluster--800');
-  } else {
+  } else if (spacing !== 'custom') {
     classes.push('vf-cluster--400');
   }
 
   const styles = {};
 
   styles['--vf-cluster__item--flex'] = '25% 1 0';
+
+  if (spacing === 'custom') {
+    styles['--vf-cluster-margin'] = `${customSpacing}px`;
+  }
 
   if (alignment === 'start') {
     styles['--vf-cluster-alignment'] = 'flex-start';
@@ -87,30 +93,53 @@ settings.edit = (props) => {
   const {clientId} = props;
   const {alignment, spacing} = props.attributes;
 
+  const onSpacing = useCallback(
+    (name, value) => {
+      props.setAttributes({[name]: value});
+      if (value !== 'custom') {
+        props.setAttributes({customSpacing: 0});
+      }
+    },
+    [clientId]
+  );
+
   // Inspector controls
   const fields = [
     {
-      name: 'spacing',
-      control: 'select',
-      label: __('Spacing'),
-      options: [
-        {label: __('Small'), value: 'small'},
-        {label: __('Medium'), value: 'medium'},
-        {label: __('Large'), value: 'large'}
-      ]
-    },
-    {
       name: 'alignment',
-      control: 'select',
       label: __('Alignment'),
+      control: 'select',
       options: [
         {label: __('Stretch'), value: 'stretch'},
         {label: __('Start'), value: 'start'},
         {label: __('Center'), value: 'center'},
         {label: __('End'), value: 'end'}
       ]
+    },
+    {
+      name: 'spacing',
+      label: __('Spacing'),
+      control: 'select',
+      options: [
+        {label: __('Small'), value: 'small'},
+        {label: __('Medium'), value: 'medium'},
+        {label: __('Large'), value: 'large'},
+        {label: __('Custom'), value: 'custom'}
+      ],
+      onChange: onSpacing
     }
   ];
+
+  if (spacing === 'custom') {
+    fields.push({
+      name: 'customSpacing',
+      label: __('Custom spacing'),
+      control: 'range',
+      allowReset: true,
+      min: 0,
+      max: 100
+    });
+  }
 
   // Return inner blocks and inspector controls
   return (
@@ -122,7 +151,9 @@ settings.edit = (props) => {
       </InspectorControls>
 
       <Cluster {...props} isEdit>
-        <InnerBlocks />
+        <InnerBlocks
+          renderAppender={() => <InnerBlocks.ButtonBlockAppender />}
+        />
       </Cluster>
     </>
   );

@@ -367,6 +367,8 @@
 }
 
 .wp-block[data-type="vf/cluster"] {
+  max-width: none;
+
   .vf-cluster {
     border: 1px dashed var(--vf-color--grey--lightest);
   }

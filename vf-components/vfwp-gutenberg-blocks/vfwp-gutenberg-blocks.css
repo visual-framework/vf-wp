@@ -386,6 +386,9 @@
     width: 1px;
   }
 }
+.wp-block[data-type="vf/cluster"] {
+  max-width: none;
+}
 .wp-block[data-type="vf/cluster"] .vf-cluster {
   border: 1px dashed var(--vf-color--grey--lightest);
 }
