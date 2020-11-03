@@ -1,11 +1,11 @@
 /**
 Block Name: Grid
 */
-import React, {Fragment} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
-import {withDispatch} from '@wordpress/data';
+import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import VFBlockFields from '../vf-block/block-fields';
@@ -13,7 +13,7 @@ import {fromColumns} from './transforms/grid';
 
 const defaults = useVFDefaults();
 
-const ver = '1.0.0';
+const ver = '1.1.0';
 
 const MIN_COLUMNS = 1;
 const MAX_COLUMNS = 6;
@@ -50,57 +50,71 @@ settings.save = (props) => {
   );
 };
 
-const withGridDispatch = (Edit) => {
-  return withDispatch((dispatch, ownProps, {select}) => {
-    const {getBlocks} = select('core/block-editor');
-    const {replaceInnerBlocks} = dispatch('core/block-editor');
+settings.edit = (props) => {
+  if (ver !== props.attributes.ver) {
+    props.setAttributes({ver});
+  }
 
-    // `columns` attribute `onChange` callback
-    const setColumns = (newColumns) => {
-      const prevColumns = ownProps.attributes.columns;
-      // Merge inner blocks when number of columns is reduced
-      if (newColumns < prevColumns) {
-        const columnBlocks = getBlocks(ownProps.clientId);
+  const {clientId} = props;
+  const {columns, placeholder} = props.attributes;
+
+  // Turn on setup placeholder if no columns are defined
+  useEffect(() => {
+    if (columns === 0) {
+      props.setAttributes({placeholder: 1});
+    }
+  }, [clientId]);
+
+  const {replaceInnerBlocks} = useDispatch('core/block-editor');
+
+  const {setColumns} = useSelect(
+    (select) => {
+      const {getBlocks} = select('core/block-editor');
+
+      // Remove columns by merging their inner blocks
+      const removeColumns = (newColumns) => {
+        const innerColumns = getBlocks(clientId);
         const mergeBlocks = [];
-        for (let i = newColumns - 1; i < prevColumns; i++) {
-          mergeBlocks.push(...columnBlocks[i].innerBlocks);
+        for (let i = newColumns - 1; i < innerColumns.length; i++) {
+          mergeBlocks.push(...innerColumns[i].innerBlocks);
         }
         replaceInnerBlocks(
-          columnBlocks[newColumns - 1].clientId,
+          innerColumns[newColumns - 1].clientId,
           mergeBlocks,
           false
         );
-      }
-      let innerBlocks = getBlocks(ownProps.clientId);
-      innerBlocks = innerBlocks.slice(0, newColumns);
-      // Append new blocks when number of columns is increased
-      if (newColumns > prevColumns) {
-        while (innerBlocks.length < newColumns) {
-          innerBlocks.push(createBlock('vf/grid-column', {}, []));
+        replaceInnerBlocks(
+          clientId,
+          getBlocks(clientId).slice(0, newColumns),
+          false
+        );
+      };
+
+      // Append new columns
+      const addColumns = (newColumns) => {
+        const innerColumns = getBlocks(clientId);
+        while (innerColumns.length < newColumns) {
+          innerColumns.push(createBlock('vf/grid-column', {}, []));
         }
-      }
-      if (newColumns !== prevColumns) {
-        replaceInnerBlocks(ownProps.clientId, innerBlocks, false);
-      }
-      // Update block attributes
-      ownProps.setAttributes({columns: newColumns, placeholder: 0});
-    };
-    return {
-      setColumns
-    };
-  })(Edit);
-};
+        replaceInnerBlocks(clientId, innerColumns, false);
+      };
 
-settings.edit = withGridDispatch((props) => {
-  const {columns, placeholder} = props.attributes;
-
-  // Ensure version is encoded in post content
-  props.setAttributes({ver});
-
-  // Turn on setup placeholder if no columns are defined
-  if (columns === 0) {
-    props.setAttributes({placeholder: 1});
-  }
+      const setColumns = (newColumns) => {
+        const innerColumns = getBlocks(clientId);
+        if (newColumns < innerColumns.length) {
+          removeColumns(newColumns);
+        }
+        if (newColumns > innerColumns.length) {
+          addColumns(newColumns);
+        }
+        props.setAttributes({columns: newColumns, placeholder: 0});
+      };
+      return {
+        setColumns
+      };
+    },
+    [clientId]
+  );
 
   // Setup placeholder fields
   const fields = [
@@ -109,14 +123,14 @@ settings.edit = withGridDispatch((props) => {
       min: MIN_COLUMNS,
       max: MAX_COLUMNS,
       value: columns,
-      onChange: props.setColumns
+      onChange: setColumns
     }
   ];
 
   // Return setup placeholder
   if (placeholder === 1) {
     return (
-      <div className={`vf-block vf-block--placeholder ${props.className}`}>
+      <div className='vf-block vf-block--placeholder'>
         <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
           <VFBlockFields fields={fields} />
         </Placeholder>
@@ -129,7 +143,7 @@ settings.edit = withGridDispatch((props) => {
 
   // Return inner blocks and inspector controls
   return (
-    <Fragment>
+    <>
       <InspectorControls>
         <PanelBody title={__('Settings')} initialOpen>
           <VFBlockFields fields={fields} />
@@ -142,9 +156,9 @@ settings.edit = withGridDispatch((props) => {
           templateLock='all'
         />
       </div>
-    </Fragment>
+    </>
   );
-});
+};
 
 // Block transforms
 settings.transforms = {

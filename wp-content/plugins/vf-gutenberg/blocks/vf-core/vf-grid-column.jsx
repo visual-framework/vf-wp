@@ -3,13 +3,13 @@ Block Name: Grid Column
 */
 import React from 'react';
 import {InnerBlocks} from '@wordpress/block-editor';
-import {select} from '@wordpress/data';
+import {useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 
 const defaults = useVFDefaults();
 
-const ver = '1.0.0';
+const ver = '1.1.0';
 
 const settings = {
   ...defaults,
@@ -24,7 +24,7 @@ const settings = {
   }
 };
 
-settings.save = props => {
+settings.save = (props) => {
   return (
     <div>
       <InnerBlocks.Content />
@@ -32,28 +32,38 @@ settings.save = props => {
   );
 };
 
-const withGridProps = Edit => {
-  return props => {
-    const {getBlockOrder} = select('core/block-editor');
-    const hasChildBlocks = getBlockOrder(props.clientId).length > 0;
-    return Edit({...props, hasChildBlocks});
-  };
-};
+// const withGridProps = Edit => {
+//   return props => {
+//     const {getBlockOrder} = select('core/block-editor');
+//     const hasChildBlocks = getBlockOrder(props.clientId).length > 0;
+//     return Edit({...props, hasChildBlocks});
+//   };
+// };
 
-settings.edit = withGridProps(props => {
-  props.setAttributes({ver: props.ver || ver});
+settings.edit = (props) => {
+  if (ver !== props.attributes.ver) {
+    props.setAttributes({ver});
+  }
+
+  const {clientId} = props;
+
+  const {hasChildBlocks} = useSelect((select) => {
+    const {getBlockOrder} = select('core/block-editor');
+    return {
+      hasChildBlocks: getBlockOrder(clientId).length > 0
+    };
+  });
+
   return (
-    <div className="vf-block-column">
+    <div className='vf-block-column'>
       <InnerBlocks
         templateLock={false}
         renderAppender={
-          props.hasChildBlocks
-            ? undefined
-            : () => <InnerBlocks.ButtonBlockAppender />
+          hasChildBlocks ? undefined : () => <InnerBlocks.ButtonBlockAppender />
         }
       />
     </div>
   );
-});
+};
 
 export default settings;
