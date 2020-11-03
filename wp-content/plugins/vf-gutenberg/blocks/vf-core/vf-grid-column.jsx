@@ -39,8 +39,12 @@ settings.save = (props) => {
   if (Number.isInteger(span) && span > 1) {
     classes.push(`vf-grid__col--span-${span}`);
   }
+  const rootAttr = {};
+  if (classes.length) {
+    rootAttr.className = classes.join(' ');
+  }
   return (
-    <div className={classes.join(' ')}>
+    <div {...rootAttr}>
       <InnerBlocks.Content />
     </div>
   );
@@ -67,7 +71,7 @@ settings.edit = (props) => {
     };
   });
 
-  const classes = ['vf-block-column'];
+  const classes = [];
 
   const fields = [];
 
@@ -89,16 +93,23 @@ settings.edit = (props) => {
     }
   }
 
+  const hasFields = fields.length > 0;
+
+  const rootAttr = {};
+  if (classes.length) {
+    rootAttr.className = classes.join(' ');
+  }
+
   return (
     <>
-      {fields.length && (
+      {hasFields && (
         <InspectorControls>
           <PanelBody title={__('Settings')} initialOpen>
             <VFBlockFields {...props} fields={fields} />
           </PanelBody>
         </InspectorControls>
       )}
-      <div className={classes.join(' ')}>
+      <div {...rootAttr}>
         <InnerBlocks
           templateLock={false}
           renderAppender={

@@ -53,10 +53,10 @@ settings.save = (props) => {
   }
   let className = 'embl-grid';
   if (!!sidebar) {
-    className += ' embl-grid--has-sidebar';
+    className = `${className} embl-grid--has-sidebar`;
   }
   if (!!centered) {
-    className += ' embl-grid--has-centered-content';
+    className = `${className} embl-grid--has-centered-content`;
   }
   return (
     <div className={className}>
@@ -186,6 +186,14 @@ settings.edit = (props) => {
   fields[1].help = __('3 column only.');
   fields[2].help = fields[1].help;
 
+  let className = 'embl-grid';
+  if (!!sidebar) {
+    className = `${className} embl-grid--has-sidebar`;
+  }
+  if (!!centered) {
+    className = `${className} embl-grid--has-centered-content`;
+  }
+
   // Return inner blocks and inspector controls
   return (
     <>
@@ -195,7 +203,7 @@ settings.edit = (props) => {
         </PanelBody>
       </InspectorControls>
       <div
-        className='vf-block-grid'
+        className={className}
         data-ver={ver}
         data-embl={true}
         data-sidebar={sidebar}

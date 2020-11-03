@@ -141,6 +141,8 @@ settings.edit = (props) => {
   // Amend fields for inspector
   fields[0].help = __('Content may be reorganised when columns are reduced.');
 
+  const className = `vf-grid | vf-grid__col-${columns}`;
+
   // Return inner blocks and inspector controls
   return (
     <>
@@ -149,7 +151,7 @@ settings.edit = (props) => {
           <VFBlockFields fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <div className='vf-block-grid' data-ver={ver} data-columns={columns}>
+      <div className={className} data-ver={ver} data-columns={columns}>
         <InnerBlocks
           allowedBlocks={['vf/grid-column']}
           template={Array(columns).fill(['vf/grid-column'])}
