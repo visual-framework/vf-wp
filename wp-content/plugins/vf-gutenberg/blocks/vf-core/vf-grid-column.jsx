@@ -2,10 +2,12 @@
 Block Name: Grid Column
 */
 import React from 'react';
-import {InnerBlocks} from '@wordpress/block-editor';
+import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
+import {PanelBody} from '@wordpress/components';
 import {useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
+import VFBlockFields from '../vf-block/block-fields';
 
 const defaults = useVFDefaults();
 
@@ -21,24 +23,28 @@ const settings = {
   supports: {
     ...defaults.supports,
     inserter: false
+  },
+  attributes: {
+    ...defaults.attributes,
+    span: {
+      type: 'integer',
+      default: 1
+    }
   }
 };
 
 settings.save = (props) => {
+  const {span} = props.attributes;
+  const classes = [];
+  if (Number.isInteger(span) && span > 1) {
+    classes.push(`vf-grid__col--span-${span}`);
+  }
   return (
-    <div>
+    <div className={classes.join(' ')}>
       <InnerBlocks.Content />
     </div>
   );
 };
-
-// const withGridProps = Edit => {
-//   return props => {
-//     const {getBlockOrder} = select('core/block-editor');
-//     const hasChildBlocks = getBlockOrder(props.clientId).length > 0;
-//     return Edit({...props, hasChildBlocks});
-//   };
-// };
 
 settings.edit = (props) => {
   if (ver !== props.attributes.ver) {
@@ -46,23 +52,63 @@ settings.edit = (props) => {
   }
 
   const {clientId} = props;
+  const {span} = props.attributes;
 
-  const {hasChildBlocks} = useSelect((select) => {
-    const {getBlockOrder} = select('core/block-editor');
+  const {hasSpanSupport, hasChildBlocks} = useSelect((select) => {
+    const {getBlockName, getBlockOrder, getBlockRootClientId} = select(
+      'core/block-editor'
+    );
+    const rootClientId = getBlockRootClientId(clientId);
+    const hasChildBlocks = getBlockOrder(clientId).length > 0;
+    const hasSpanSupport = getBlockName(rootClientId) === 'vf/grid';
     return {
-      hasChildBlocks: getBlockOrder(clientId).length > 0
+      hasChildBlocks,
+      hasSpanSupport
     };
   });
 
+  const classes = ['vf-block-column'];
+
+  const fields = [];
+
+  if (hasSpanSupport) {
+    fields.push({
+      name: 'span',
+      label: __('Column span'),
+      control: 'range',
+      allowReset: true,
+      min: 1,
+      max: 6
+    });
+    if (Number.isInteger(span) && span > 1) {
+      classes.push(`vf-grid__col--span-${span}`);
+    }
+  } else {
+    if (span !== 1) {
+      props.setAttributes({span: 1});
+    }
+  }
+
   return (
-    <div className='vf-block-column'>
-      <InnerBlocks
-        templateLock={false}
-        renderAppender={
-          hasChildBlocks ? undefined : () => <InnerBlocks.ButtonBlockAppender />
-        }
-      />
-    </div>
+    <>
+      {fields.length && (
+        <InspectorControls>
+          <PanelBody title={__('Settings')} initialOpen>
+            <VFBlockFields {...props} fields={fields} />
+          </PanelBody>
+        </InspectorControls>
+      )}
+      <div className={classes.join(' ')}>
+        <InnerBlocks
+          templateLock={false}
+          renderAppender={
+            hasChildBlocks
+              ? undefined
+              : () => <InnerBlocks.ButtonBlockAppender />
+          }
+        />
+      </div>
+    </>
   );
 };
 
