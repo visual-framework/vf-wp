@@ -1,7 +1,7 @@
 /**
 Block Name: Grid
 */
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
@@ -38,10 +38,10 @@ const settings = {
 };
 
 settings.save = (props) => {
-  if (props.attributes.placeholder === 1) {
+  const {columns, placeholder} = props.attributes;
+  if (placeholder === 1) {
     return null;
   }
-  const {columns} = props.attributes;
   const className = `vf-grid | vf-grid__col-${columns}`;
   return (
     <div className={className}>
@@ -149,7 +149,7 @@ settings.edit = (props) => {
           <VFBlockFields fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <div className={'vf-block-grid'} data-ver={ver} data-columns={columns}>
+      <div className='vf-block-grid' data-ver={ver} data-columns={columns}>
         <InnerBlocks
           allowedBlocks={['vf/grid-column']}
           template={Array(columns).fill(['vf/grid-column'])}
