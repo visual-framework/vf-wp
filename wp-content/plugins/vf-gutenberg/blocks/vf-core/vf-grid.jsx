@@ -18,8 +18,6 @@ import {fromColumns} from './transforms/grid';
 
 const defaults = useVFDefaults();
 
-const ver = '1.1.0';
-
 const MIN_COLUMNS = 1;
 const MAX_COLUMNS = 6;
 
@@ -42,6 +40,10 @@ const settings = {
     columns: {
       type: 'integer',
       default: 0
+    },
+    dirty: {
+      type: 'string',
+      default: ''
     }
   }
 };
@@ -60,12 +62,8 @@ settings.save = (props) => {
 };
 
 settings.edit = (props) => {
-  if (ver !== props.attributes.ver) {
-    props.setAttributes({ver});
-  }
-
   const {clientId} = props;
-  const {columns, placeholder} = props.attributes;
+  const {dirty, columns, placeholder} = props.attributes;
 
   // Turn on setup placeholder if no columns are defined
   useEffect(() => {
@@ -76,54 +74,101 @@ settings.edit = (props) => {
 
   const {replaceInnerBlocks} = useDispatch('core/block-editor');
 
-  const {setColumns} = useSelect(
+  const {setColumns, updateColumns} = useSelect(
     (select) => {
       const {getBlocks} = select('core/block-editor');
 
-      // Remove columns by merging their inner blocks
-      const removeColumns = (newColumns) => {
+      // Return total number of columns accounting for spans
+      const countSpans = () => {
+        let spans = 0;
+        getBlocks(clientId).forEach((block) => {
+          const {span} = block.attributes;
+          if (Number.isInteger(span) && span > 0) {
+            spans += span;
+          } else {
+            spans++;
+          }
+        });
+        return spans;
+      };
+
+      const updateColumns = () => {
         const innerColumns = getBlocks(clientId);
-        const mergeBlocks = [];
-        for (let i = newColumns - 1; i < innerColumns.length; i++) {
-          mergeBlocks.push(...innerColumns[i].innerBlocks);
+        console.log(innerColumns, innerColumns.length, countSpans());
+        props.setAttributes({dirty: ''});
+      };
+
+      // Remove columns by merging their inner blocks
+      const removeColumns = (maxSpans) => {
+        let spans = countSpans();
+        while (spans > maxSpans) {
+          let innerColumns = getBlocks(clientId);
+          let count = innerColumns.length;
+          console.log(spans, count);
+          if (count < 2) {
+            break;
+          }
+          replaceInnerBlocks(
+            innerColumns[count - 2].clientId,
+            [
+              ...innerColumns[count - 2].innerBlocks,
+              ...innerColumns[count - 1].innerBlocks
+            ],
+            false
+          );
+          replaceInnerBlocks(clientId, innerColumns.slice(0, count - 1), false);
+          spans = countSpans();
         }
-        replaceInnerBlocks(
-          innerColumns[newColumns - 1].clientId,
-          mergeBlocks,
-          false
-        );
-        replaceInnerBlocks(
-          clientId,
-          getBlocks(clientId).slice(0, newColumns),
-          false
-        );
+
+        // for (let i = newColumns - 1; i < count; i++) {
+        //   mergeBlocks.push(...innerColumns[i].innerBlocks);
+        // }
+        // replaceInnerBlocks(
+        //   innerColumns[newColumns - 1].clientId,
+        //   mergeBlocks,
+        //   false
+        // );
+        // replaceInnerBlocks(
+        //   clientId,
+        //   getBlocks(clientId).slice(0, newColumns),
+        //   false
+        // );
       };
 
       // Append new columns
-      const addColumns = (newColumns) => {
+      const addColumns = (maxSpans) => {
         const innerColumns = getBlocks(clientId);
-        while (innerColumns.length < newColumns) {
+        let count = countSpans();
+        while (count++ < maxSpans) {
           innerColumns.push(createBlock('vf/grid-column', {}, []));
         }
         replaceInnerBlocks(clientId, innerColumns, false);
       };
 
       const setColumns = (newColumns) => {
-        const innerColumns = getBlocks(clientId);
-        if (newColumns < innerColumns.length) {
+        // const innerColumns = getBlocks(clientId);
+        const count = countSpans();
+        if (newColumns < count) {
           removeColumns(newColumns);
         }
-        if (newColumns > innerColumns.length) {
+        if (newColumns > count) {
           addColumns(newColumns);
         }
         props.setAttributes({columns: newColumns, placeholder: 0});
       };
       return {
-        setColumns
+        setColumns,
+        updateColumns
       };
     },
     [clientId]
   );
+
+  useEffect(() => {
+    if (dirty !== '') {
+      updateColumns();
+    }
+  }, [dirty]);
 
   // Setup placeholder fields
   const fields = [
@@ -160,11 +205,7 @@ settings.edit = (props) => {
           <VFBlockFields fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <ExperimentalBlock.div
-        className={className}
-        data-ver={ver}
-        data-columns={columns}
-      >
+      <ExperimentalBlock.div className={className} data-columns={columns}>
         <InnerBlocks
           allowedBlocks={['vf/grid-column']}
           template={Array(columns).fill(['vf/grid-column'])}

@@ -118,11 +118,11 @@ const VFBlockFields = props => {
         return (
           <TextControl
             key={key}
-            type="number"
+            help={help}
             label={label}
+            type="number"
             value={parseInt(attrs[name]) || min}
             onChange={value => onChange(name, parseInt(value))}
-            help={help}
             min={min}
             max={max}
           />
@@ -146,6 +146,7 @@ const VFBlockFields = props => {
         return (
           <RangeControl
             key={key}
+            help={help}
             label={label}
             value={parseInt(attrs[name]) || min}
             onChange={value => onChange(name, value)}
