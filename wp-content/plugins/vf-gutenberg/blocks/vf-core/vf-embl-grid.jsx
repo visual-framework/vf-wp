@@ -4,7 +4,12 @@ Based on `vf-grid.jsx`
 */
 import React, {useCallback, useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
-import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
+import {
+  InnerBlocks,
+  InspectorControls,
+  // TODO: replace with `useBlockProps` hook in WP 5.6
+  __experimentalBlock as ExperimentalBlock
+} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
@@ -25,6 +30,10 @@ const settings = {
   title: __('EMBL Grid'),
   category: 'vf/core',
   description: __('Visual Framework (core)'),
+  supports: {
+    ...defaults.supports,
+    lightBlockWrapper: true
+  },
   attributes: {
     ...defaults.attributes,
     placeholder: {
@@ -202,7 +211,7 @@ settings.edit = (props) => {
           <VFBlockFields {...props} fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <div
+      <ExperimentalBlock.div
         className={className}
         data-ver={ver}
         data-embl={true}
@@ -214,7 +223,7 @@ settings.edit = (props) => {
           template={Array(columns).fill(['vf/grid-column'])}
           templateLock='all'
         />
-      </div>
+      </ExperimentalBlock.div>
     </>
   );
 };

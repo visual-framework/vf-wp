@@ -2,7 +2,12 @@
 Block Name: Grid Column
 */
 import React from 'react';
-import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
+import {
+  InnerBlocks,
+  InspectorControls,
+  // TODO: replace with `useBlockProps` hook in WP 5.6
+  __experimentalBlock as ExperimentalBlock
+} from '@wordpress/block-editor';
 import {PanelBody} from '@wordpress/components';
 import {useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
@@ -22,7 +27,8 @@ const settings = {
   parent: ['vf/grid', 'vf/embl-grid'],
   supports: {
     ...defaults.supports,
-    inserter: false
+    inserter: false,
+    lightBlockWrapper: true
   },
   attributes: {
     ...defaults.attributes,
@@ -109,7 +115,7 @@ settings.edit = (props) => {
           </PanelBody>
         </InspectorControls>
       )}
-      <div {...rootAttr}>
+      <ExperimentalBlock.div {...rootAttr}>
         <InnerBlocks
           templateLock={false}
           renderAppender={
@@ -118,7 +124,7 @@ settings.edit = (props) => {
               : () => <InnerBlocks.ButtonBlockAppender />
           }
         />
-      </div>
+      </ExperimentalBlock.div>
     </>
   );
 };
