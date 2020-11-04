@@ -59,7 +59,7 @@ settings.edit = (props) => {
 
   const {updateBlockAttributes} = useDispatch('core/block-editor');
 
-  const {hasChildBlocks, hasSpanSupport, updateParent} = useSelect(
+  const {hasChildBlocks, hasSpanSupport, rootClientId} = useSelect(
     (select) => {
       const {getBlockName, getBlockOrder, getBlockRootClientId} = select(
         'core/block-editor'
@@ -69,13 +69,9 @@ settings.edit = (props) => {
       const hasSpanSupport = getBlockName(rootClientId) === 'vf/grid';
 
       return {
+        rootClientId,
         hasChildBlocks,
-        hasSpanSupport,
-        updateParent: () => {
-          updateBlockAttributes(rootClientId, {
-            dirty: clientId
-          });
-        }
+        hasSpanSupport
       };
     },
     [clientId]
@@ -87,12 +83,17 @@ settings.edit = (props) => {
     }
   }, [clientId]);
 
-  const onSpanChange = useCallback((value) => {
-    if (span !== value) {
-      props.setAttributes({span: value});
-      updateParent();
-    }
-  });
+  const onSpanChange = useCallback(
+    (value) => {
+      if (span !== value) {
+        props.setAttributes({span: value});
+        updateBlockAttributes(rootClientId, {
+          dirty: Date.now()
+        });
+      }
+    },
+    [span, clientId, rootClientId]
+  );
 
   const rootAttr = {};
   const classes = [];
