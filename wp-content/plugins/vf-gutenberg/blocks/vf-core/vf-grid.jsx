@@ -139,11 +139,11 @@ settings.edit = (props) => {
   // Return setup placeholder
   if (placeholder === 1) {
     return (
-      <div className='vf-block vf-block--placeholder'>
+      <ExperimentalBlock.div className='vf-block vf-block--placeholder'>
         <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
           <VFBlockFields fields={fields} />
         </Placeholder>
-      </div>
+      </ExperimentalBlock.div>
     );
   }
 
