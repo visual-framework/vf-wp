@@ -112,7 +112,7 @@ settings.edit = (props) => {
     <>
       {hasSpanSupport && (
         <InspectorControls>
-          <PanelBody title={__('Settings')} initialOpen>
+          <PanelBody title={__('Advanced Settings')} initialOpen>
             <RangeControl
               label={__('Column span')}
               help={__('Columns may be merged to fit.')}

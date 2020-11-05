@@ -13,7 +13,7 @@ import {PanelBody, Placeholder} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
-import VFBlockFields from '../vf-block/block-fields';
+import ColumnsControl from '../components/columns-control';
 import {fromColumns} from './transforms/grid';
 
 const defaults = useVFDefaults();
@@ -152,30 +152,28 @@ settings.edit = (props) => {
     }
   }, [dirty]);
 
-  // Setup placeholder fields
-  const fields = [
-    {
-      control: 'columns',
-      min: MIN_COLUMNS,
-      max: MAX_COLUMNS,
-      value: columns,
-      onChange: useCallback((value) => setColumns(value))
-    }
-  ];
+  const GridControl = (props) => {
+    return (
+      <ColumnsControl
+        value={columns}
+        min={MIN_COLUMNS}
+        max={MAX_COLUMNS}
+        onChange={useCallback((value) => setColumns(value))}
+        {...props}
+      />
+    );
+  };
 
   // Return setup placeholder
   if (placeholder === 1) {
     return (
       <ExperimentalBlock.div className='vf-block vf-block--placeholder'>
         <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
-          <VFBlockFields fields={fields} />
+          <GridControl />
         </Placeholder>
       </ExperimentalBlock.div>
     );
   }
-
-  // Amend fields for inspector
-  fields[0].help = __('Content may be reorganised when columns are reduced.');
 
   const className = `vf-grid | vf-grid__col-${columns}`;
 
@@ -187,16 +185,14 @@ settings.edit = (props) => {
   return (
     <>
       <InspectorControls>
-        <PanelBody title={__('Settings')} initialOpen>
-          <VFBlockFields fields={fields} />
+        <PanelBody title={__('Advanced Settings')} initialOpen>
+          <GridControl
+            help={__('Content may be reorganised when columns are reduced.')}
+          />
         </PanelBody>
       </InspectorControls>
       <ExperimentalBlock.div className={className} style={styles}>
-        <InnerBlocks
-          allowedBlocks={['vf/grid-column']}
-          // template={Array(columns).fill(['vf/grid-column'])}
-          templateLock='all'
-        />
+        <InnerBlocks allowedBlocks={['vf/grid-column']} templateLock='all' />
       </ExperimentalBlock.div>
     </>
   );

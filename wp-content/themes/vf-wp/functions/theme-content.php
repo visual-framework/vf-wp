@@ -45,7 +45,7 @@ class VF_Theme_Content {
     // Wrapper VF Grid Column inner blocks with `vf-content`
     if ($block['blockName'] === 'vf/grid-column') {
       $html = preg_replace(
-        '#^\s*(<div>)(.*?)(</div>)\s*$#s',
+        '#^\s*(<div[^>]*?>)(.*?)(</div>)\s*$#s',
         "$1<!--[vf/content]-->\n<div class=\"vf-content\">\n$2\n</div>\n$3\n",
         $html
       );
