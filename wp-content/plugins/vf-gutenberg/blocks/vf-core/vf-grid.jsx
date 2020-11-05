@@ -1,7 +1,7 @@
 /**
 Block Name: Grid
 */
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
 import {
   InnerBlocks,
@@ -121,6 +121,7 @@ settings.edit = (props) => {
       };
 
       const setColumns = (newColumns) => {
+        props.setAttributes({columns: newColumns, placeholder: 0});
         const innerColumns = getBlocks(clientId);
         const count = countSpans(innerColumns);
         if (newColumns < count) {
@@ -129,7 +130,6 @@ settings.edit = (props) => {
         if (newColumns > count) {
           addColumns(newColumns);
         }
-        props.setAttributes({columns: newColumns, placeholder: 0});
       };
 
       const updateColumns = () => {
@@ -159,7 +159,7 @@ settings.edit = (props) => {
       min: MIN_COLUMNS,
       max: MAX_COLUMNS,
       value: columns,
-      onChange: setColumns
+      onChange: useCallback((value) => setColumns(value))
     }
   ];
 
@@ -194,7 +194,7 @@ settings.edit = (props) => {
       <ExperimentalBlock.div className={className} style={styles}>
         <InnerBlocks
           allowedBlocks={['vf/grid-column']}
-          template={Array(columns).fill(['vf/grid-column'])}
+          // template={Array(columns).fill(['vf/grid-column'])}
           templateLock='all'
         />
       </ExperimentalBlock.div>
