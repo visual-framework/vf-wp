@@ -180,7 +180,7 @@ settings.edit = (props) => {
   const className = `vf-grid | vf-grid__col-${columns}`;
 
   const styles = {
-    ['--columns']: columns
+    ['--block-columns']: columns
   };
 
   // Return inner blocks and inspector controls

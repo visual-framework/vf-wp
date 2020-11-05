@@ -251,7 +251,7 @@
   margin-top: 10px;
 }
 .wp-block[data-type="vf/tabs"] .wp-block[data-type="vf/tabs-section"] {
-  border: 1px dashed var(--vf-color--grey--lightest);
+  outline: 1px dashed var(--vf-ui-color--grey);
   margin-left: 0 !important;
   margin-right: 0 !important;
   max-width: none;
@@ -259,6 +259,19 @@
 
 .wp-block[data-type="vf/grid"],
 .wp-block[data-type="vf/embl-grid"] {
+  --block-column-outline: var(--vf-ui-color--grey);
+  --block-column-color: var(--vf-ui-color--off-white);
+  --block-gaps: calc(var(--block-columns) - 1);
+  --block-gap-width: var(--page-grid-gap);
+  --block-gap-widths: calc((var(--block-gap-width) * var(--block-gaps)));
+  --block-column-width: calc((100% - var(--block-gap-widths)) / var(--block-columns));
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--block-column-color) 0,
+    var(--block-column-color) var(--block-column-width),
+    transparent var(--block-column-width),
+    transparent calc(var(--block-column-width) + var(--block-gap-width))
+  );
   max-width: none;
 }
 .wp-block[data-type="vf/grid"] .block-editor-inner-blocks,
@@ -271,9 +284,8 @@
 }
 
 .wp-block[data-type="vf/grid-column"] {
-  border: 1px dashed var(--vf-color--grey--lightest);
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+  outline: 1px dashed var(--block-column-outline);
+  margin: 0 !important;
   max-width: none;
 }
 
