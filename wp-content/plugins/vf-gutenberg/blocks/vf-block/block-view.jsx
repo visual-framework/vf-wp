@@ -4,7 +4,7 @@
  * within an iframe (to scope CSS and JavaScript).
  */
 import React, {useEffect, useRef} from 'react';
-import {SandBox} from '@wordpress/components';
+// import {SandBox} from '@wordpress/components';
 import useVFGutenberg from '../hooks/use-vf-gutenberg';
 import useVFIFrame from '../hooks/use-vf-iframe';
 
