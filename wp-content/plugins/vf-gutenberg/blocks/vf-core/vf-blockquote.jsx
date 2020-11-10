@@ -3,9 +3,10 @@ Block Name: Blockquote
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import template from '@visual-framework/vf-blockquote/vf-blockquote.precompiled';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import {fromParagraph, fromQuote} from './transforms/blockquote';
+
+import '@visual-framework/vf-blockquote/vf-blockquote.precompiled';
 
 export default useVFCoreSettings({
   name: 'vf/blockquote',

@@ -9,9 +9,10 @@ Block is hidden from the Gutenberg inserter with `isInsertable` setting.
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import template from '@visual-framework/vf-box/vf-box.precompiled';
 import {withTransientStyle} from '../../hooks/with-transient';
 import useVFCoreSettings from '../../hooks/use-vf-core-settings';
+
+import '@visual-framework/vf-box/vf-box.precompiled';
 
 export default useVFCoreSettings({
   ver: '1.0.2',

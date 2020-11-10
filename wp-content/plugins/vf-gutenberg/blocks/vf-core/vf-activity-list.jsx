@@ -3,13 +3,14 @@ Block Name: Activity List
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import template from '@visual-framework/vf-activity-list/vf-activity-list.precompiled';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import {
   withTransientInnerBlocks,
   withTransientAttributeMap
 } from '../hooks/with-transient';
 import {fromCore} from './transforms/activity-list';
+
+import '@visual-framework/vf-activity-list/vf-activity-list.precompiled';
 
 const withActivityItems = Edit => {
   return props => {
