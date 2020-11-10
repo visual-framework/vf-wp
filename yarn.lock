@@ -1547,10 +1547,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-heading/-/vf-heading-1.0.0.tgz#c3c07b9c5830492dcebc8de8a7085ffce4ccf9b6"
   integrity sha512-x5d26AErY2LoTGvmpfxtlJoupl0TvsF2qf+Bog+UOfcJEdBBKc817W1obI80uVuT70PIpuO/gCAB95yrofVdCg==
 
-"@visual-framework/vf-hero@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-1.7.0.tgz#862f73150b70babe15c1eb0a3574e1f87f060879"
-  integrity sha512-ebPBqj6dMJLzxqXDhEknGZwxVNR24vI9O0r/Wn8xuwsjOTydFLmuDF9KvzLfl5goITxw+i+cj0iRtpMABnlHhA==
+"@visual-framework/vf-hero@1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-1.7.1.tgz#eba86d810e59190bf04d5018036c3fcc49e1e7b0"
+  integrity sha512-iCkqQmFeFeTo1s6tZykqIYA5BXmlFKYAYoUovTfVER70arlw/imRVeNXTsKNcxTqUteZBo/yHCCsHSzFytMWDQ==
 
 "@visual-framework/vf-intro@1.4.1":
   version "1.4.1"
