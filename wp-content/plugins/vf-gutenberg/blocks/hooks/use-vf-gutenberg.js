@@ -8,8 +8,7 @@ const vfGutenberg = {
   renderPrefix: '',
   renderSuffix: '',
   postId: 0,
-  nonce: '',
-  deprecatedPlugins: {}
+  nonce: ''
 };
 
 const useVFGutenberg = () => {

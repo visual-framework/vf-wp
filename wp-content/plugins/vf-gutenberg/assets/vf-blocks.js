@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('@wordpress/blocks'), require('react'), require('@wordpress/block-editor'), require('@wordpress/components'), require('@wordpress/i18n'), require('@wordpress/data'), require('@wordpress/hooks')) :
-	typeof define === 'function' && define.amd ? define(['@wordpress/blocks', 'react', '@wordpress/block-editor', '@wordpress/components', '@wordpress/i18n', '@wordpress/data', '@wordpress/hooks'], factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.wp.blocks, global.React, global.wp.blockEditor, global.wp.components, global.wp.i18n, global.wp.data, global.wp.hooks));
-}(this, (function (blocks, React, blockEditor, components, i18n, data$1, hooks) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('@wordpress/blocks'), require('react'), require('@wordpress/i18n'), require('@wordpress/block-editor'), require('@wordpress/components'), require('@wordpress/data'), require('@wordpress/hooks')) :
+	typeof define === 'function' && define.amd ? define(['@wordpress/blocks', 'react', '@wordpress/i18n', '@wordpress/block-editor', '@wordpress/components', '@wordpress/data', '@wordpress/hooks'], factory) :
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.wp.blocks, global.React, global.wp.i18n, global.wp.blockEditor, global.wp.components, global.wp.data));
+}(this, (function (blocks, React, i18n, blockEditor, components, data$1) { 'use strict';
 
 	function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -756,52 +756,6 @@
 	  });
 	}
 
-	// `Object.keys` method
-	// https://tc39.github.io/ecma262/#sec-object.keys
-	var objectKeys = Object.keys || function keys(O) {
-	  return objectKeysInternal(O, enumBugKeys);
-	};
-
-	var propertyIsEnumerable = objectPropertyIsEnumerable.f;
-
-	// `Object.{ entries, values }` methods implementation
-	var createMethod$2 = function (TO_ENTRIES) {
-	  return function (it) {
-	    var O = toIndexedObject(it);
-	    var keys = objectKeys(O);
-	    var length = keys.length;
-	    var i = 0;
-	    var result = [];
-	    var key;
-	    while (length > i) {
-	      key = keys[i++];
-	      if (!descriptors || propertyIsEnumerable.call(O, key)) {
-	        result.push(TO_ENTRIES ? [key, O[key]] : O[key]);
-	      }
-	    }
-	    return result;
-	  };
-	};
-
-	var objectToArray = {
-	  // `Object.entries` method
-	  // https://tc39.github.io/ecma262/#sec-object.entries
-	  entries: createMethod$2(true),
-	  // `Object.values` method
-	  // https://tc39.github.io/ecma262/#sec-object.values
-	  values: createMethod$2(false)
-	};
-
-	var $entries = objectToArray.entries;
-
-	// `Object.entries` method
-	// https://tc39.github.io/ecma262/#sec-object.entries
-	_export({ target: 'Object', stat: true }, {
-	  entries: function entries(O) {
-	    return $entries(O);
-	  }
-	});
-
 	// iterable DOM collections
 	// flag - `iterable` interface - 'entries', 'keys', 'values', 'forEach' methods
 	var domIterables = {
@@ -848,6 +802,52 @@
 	    CollectionPrototype.forEach = arrayForEach;
 	  }
 	}
+
+	// `Object.keys` method
+	// https://tc39.github.io/ecma262/#sec-object.keys
+	var objectKeys = Object.keys || function keys(O) {
+	  return objectKeysInternal(O, enumBugKeys);
+	};
+
+	var propertyIsEnumerable = objectPropertyIsEnumerable.f;
+
+	// `Object.{ entries, values }` methods implementation
+	var createMethod$2 = function (TO_ENTRIES) {
+	  return function (it) {
+	    var O = toIndexedObject(it);
+	    var keys = objectKeys(O);
+	    var length = keys.length;
+	    var i = 0;
+	    var result = [];
+	    var key;
+	    while (length > i) {
+	      key = keys[i++];
+	      if (!descriptors || propertyIsEnumerable.call(O, key)) {
+	        result.push(TO_ENTRIES ? [key, O[key]] : O[key]);
+	      }
+	    }
+	    return result;
+	  };
+	};
+
+	var objectToArray = {
+	  // `Object.entries` method
+	  // https://tc39.github.io/ecma262/#sec-object.entries
+	  entries: createMethod$2(true),
+	  // `Object.values` method
+	  // https://tc39.github.io/ecma262/#sec-object.values
+	  values: createMethod$2(false)
+	};
+
+	var $entries = objectToArray.entries;
+
+	// `Object.entries` method
+	// https://tc39.github.io/ecma262/#sec-object.entries
+	_export({ target: 'Object', stat: true }, {
+	  entries: function entries(O) {
+	    return $entries(O);
+	  }
+	});
 
 	function _arrayWithHoles(arr) {
 	  if (Array.isArray(arr)) return arr;
@@ -928,8 +928,7 @@
 	  renderPrefix: '',
 	  renderSuffix: '',
 	  postId: 0,
-	  nonce: '',
-	  deprecatedPlugins: {}
+	  nonce: ''
 	};
 
 	var useVFGutenberg = function useVFGutenberg() {
@@ -1362,6 +1361,12 @@
 
 	hiddenKeys[HIDDEN] = true;
 
+	var createProperty = function (object, key, value) {
+	  var propertyKey = toPrimitive(key);
+	  if (propertyKey in object) objectDefineProperty.f(object, propertyKey, createPropertyDescriptor(0, value));
+	  else object[propertyKey] = value;
+	};
+
 	var engineUserAgent = getBuiltIn('navigator', 'userAgent') || '';
 
 	var process$1 = global_1.process;
@@ -1398,6 +1403,54 @@
 	  });
 	};
 
+	var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
+	var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
+	var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded';
+
+	// We can't use this feature detection in V8 since it causes
+	// deoptimization and serious performance degradation
+	// https://github.com/zloirock/core-js/issues/679
+	var IS_CONCAT_SPREADABLE_SUPPORT = engineV8Version >= 51 || !fails(function () {
+	  var array = [];
+	  array[IS_CONCAT_SPREADABLE] = false;
+	  return array.concat()[0] !== array;
+	});
+
+	var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
+
+	var isConcatSpreadable = function (O) {
+	  if (!isObject(O)) return false;
+	  var spreadable = O[IS_CONCAT_SPREADABLE];
+	  return spreadable !== undefined ? !!spreadable : isArray(O);
+	};
+
+	var FORCED = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT;
+
+	// `Array.prototype.concat` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.concat
+	// with adding support of @@isConcatSpreadable and @@species
+	_export({ target: 'Array', proto: true, forced: FORCED }, {
+	  concat: function concat(arg) { // eslint-disable-line no-unused-vars
+	    var O = toObject(this);
+	    var A = arraySpeciesCreate(O, 0);
+	    var n = 0;
+	    var i, k, length, len, E;
+	    for (i = -1, length = arguments.length; i < length; i++) {
+	      E = i === -1 ? O : arguments[i];
+	      if (isConcatSpreadable(E)) {
+	        len = toLength(E.length);
+	        if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+	        for (k = 0; k < len; k++, n++) if (k in E) createProperty(A, n, E[k]);
+	      } else {
+	        if (n >= MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
+	        createProperty(A, n++, E);
+	      }
+	    }
+	    A.length = n;
+	    return A;
+	  }
+	});
+
 	var $filter = arrayIteration.filter;
 
 
@@ -1415,25 +1468,57 @@
 	  }
 	});
 
+	var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport('slice');
+	var USES_TO_LENGTH$2 = arrayMethodUsesToLength('slice', { ACCESSORS: true, 0: 0, 1: 2 });
+
+	var SPECIES$2 = wellKnownSymbol('species');
+	var nativeSlice = [].slice;
+	var max$1 = Math.max;
+
+	// `Array.prototype.slice` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.slice
+	// fallback for not array-like ES3 strings and DOM objects
+	_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 || !USES_TO_LENGTH$2 }, {
+	  slice: function slice(start, end) {
+	    var O = toIndexedObject(this);
+	    var length = toLength(O.length);
+	    var k = toAbsoluteIndex(start, length);
+	    var fin = toAbsoluteIndex(end === undefined ? length : end, length);
+	    // inline `ArraySpeciesCreate` for usage native `Array#slice` where it's possible
+	    var Constructor, result, n;
+	    if (isArray(O)) {
+	      Constructor = O.constructor;
+	      // cross-realm fallback
+	      if (typeof Constructor == 'function' && (Constructor === Array || isArray(Constructor.prototype))) {
+	        Constructor = undefined;
+	      } else if (isObject(Constructor)) {
+	        Constructor = Constructor[SPECIES$2];
+	        if (Constructor === null) Constructor = undefined;
+	      }
+	      if (Constructor === Array || Constructor === undefined) {
+	        return nativeSlice.call(O, k, fin);
+	      }
+	    }
+	    result = new (Constructor === undefined ? Array : Constructor)(max$1(fin - k, 0));
+	    for (n = 0; k < fin; k++, n++) if (k in O) createProperty(result, n, O[k]);
+	    result.length = n;
+	    return result;
+	  }
+	});
+
 	var nativeGetOwnPropertyDescriptor$2 = objectGetOwnPropertyDescriptor.f;
 
 
 	var FAILS_ON_PRIMITIVES = fails(function () { nativeGetOwnPropertyDescriptor$2(1); });
-	var FORCED = !descriptors || FAILS_ON_PRIMITIVES;
+	var FORCED$1 = !descriptors || FAILS_ON_PRIMITIVES;
 
 	// `Object.getOwnPropertyDescriptor` method
 	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptor
-	_export({ target: 'Object', stat: true, forced: FORCED, sham: !descriptors }, {
+	_export({ target: 'Object', stat: true, forced: FORCED$1, sham: !descriptors }, {
 	  getOwnPropertyDescriptor: function getOwnPropertyDescriptor(it, key) {
 	    return nativeGetOwnPropertyDescriptor$2(toIndexedObject(it), key);
 	  }
 	});
-
-	var createProperty = function (object, key, value) {
-	  var propertyKey = toPrimitive(key);
-	  if (propertyKey in object) objectDefineProperty.f(object, propertyKey, createPropertyDescriptor(0, value));
-	  else object[propertyKey] = value;
-	};
 
 	// `Object.getOwnPropertyDescriptors` method
 	// https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors
@@ -1487,6 +1572,12 @@
 
 	var toConsumableArray = _toConsumableArray;
 
+	function _toArray(arr) {
+	  return arrayWithHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableRest();
+	}
+
+	var toArray = _toArray;
+
 	var _extends_1 = createCommonjsModule(function (module) {
 	function _extends() {
 	  module.exports = _extends = Object.assign || function (target) {
@@ -1526,51 +1617,95 @@
 
 	var defineProperty$4 = _defineProperty;
 
-	var IS_CONCAT_SPREADABLE = wellKnownSymbol('isConcatSpreadable');
-	var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
-	var MAXIMUM_ALLOWED_INDEX_EXCEEDED = 'Maximum allowed index exceeded';
+	/**
+	 * Icon (component)
+	 * VF Gutenberg block icon
+	 */
+	var Icon = wp.element.createElement(components.SVG, {
+	  viewBox: "0 0 24 24",
+	  xmlns: "http://www.w3.org/2000/svg"
+	}, wp.element.createElement(components.Path, {
+	  d: "M19 7h-1V5h-4v2h-4V5H6v2H5c-1.1 0-2 .9-2 2v10h18V9c0-1.1-.9-2-2-2zm0 10H5V9h14v8z"
+	}), wp.element.createElement(components.Path, {
+	  d: "M10.943 16c.522-1.854.972-3.726 1.386-5.58h-1.323a126.482 126.482 0 01-.918 4.383h-.081c-.342-1.44-.657-2.988-.936-4.428l-1.35.09c.414 1.854.873 3.681 1.395 5.535h1.827zm5.161-2.169H14.16V16h-1.332v-5.58h3.636v1.098H14.16v1.296h1.944v1.017z"
+	}));
 
-	// We can't use this feature detection in V8 since it causes
-	// deoptimization and serious performance degradation
-	// https://github.com/zloirock/core-js/issues/679
-	var IS_CONCAT_SPREADABLE_SUPPORT = engineV8Version >= 51 || !fails(function () {
-	  var array = [];
-	  array[IS_CONCAT_SPREADABLE] = false;
-	  return array.concat()[0] !== array;
-	});
+	/**
+	 * Return default Gutenberg block settings for a VF block
+	 */
 
-	var SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('concat');
-
-	var isConcatSpreadable = function (O) {
-	  if (!isObject(O)) return false;
-	  var spreadable = O[IS_CONCAT_SPREADABLE];
-	  return spreadable !== undefined ? !!spreadable : isArray(O);
+	var useVFDefaults = function useVFDefaults() {
+	  return {
+	    icon: Icon,
+	    keywords: [i18n.__('VF'), i18n.__('Visual Framework'), i18n.__('EMBL')],
+	    attributes: {
+	      ver: {
+	        type: 'string'
+	      }
+	    },
+	    supports: {
+	      align: false,
+	      className: false,
+	      customClassName: false,
+	      html: false
+	    },
+	    edit: function edit() {
+	      return null;
+	    },
+	    save: function save() {
+	      return null;
+	    }
+	  };
 	};
 
-	var FORCED$1 = !IS_CONCAT_SPREADABLE_SUPPORT || !SPECIES_SUPPORT;
+	var UNSCOPABLES = wellKnownSymbol('unscopables');
+	var ArrayPrototype = Array.prototype;
 
-	// `Array.prototype.concat` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.concat
-	// with adding support of @@isConcatSpreadable and @@species
-	_export({ target: 'Array', proto: true, forced: FORCED$1 }, {
-	  concat: function concat(arg) { // eslint-disable-line no-unused-vars
-	    var O = toObject(this);
-	    var A = arraySpeciesCreate(O, 0);
-	    var n = 0;
-	    var i, k, length, len, E;
-	    for (i = -1, length = arguments.length; i < length; i++) {
-	      E = i === -1 ? O : arguments[i];
-	      if (isConcatSpreadable(E)) {
-	        len = toLength(E.length);
-	        if (n + len > MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
-	        for (k = 0; k < len; k++, n++) if (k in E) createProperty(A, n, E[k]);
-	      } else {
-	        if (n >= MAX_SAFE_INTEGER) throw TypeError(MAXIMUM_ALLOWED_INDEX_EXCEEDED);
-	        createProperty(A, n++, E);
-	      }
-	    }
-	    A.length = n;
-	    return A;
+	// Array.prototype[@@unscopables]
+	// https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	if (ArrayPrototype[UNSCOPABLES] == undefined) {
+	  objectDefineProperty.f(ArrayPrototype, UNSCOPABLES, {
+	    configurable: true,
+	    value: objectCreate(null)
+	  });
+	}
+
+	// add a key to Array.prototype[@@unscopables]
+	var addToUnscopables = function (key) {
+	  ArrayPrototype[UNSCOPABLES][key] = true;
+	};
+
+	var $includes = arrayIncludes.includes;
+
+
+
+	var USES_TO_LENGTH$3 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
+
+	// `Array.prototype.includes` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.includes
+	_export({ target: 'Array', proto: true, forced: !USES_TO_LENGTH$3 }, {
+	  includes: function includes(el /* , fromIndex = 0 */) {
+	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
+	  }
+	});
+
+	// https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
+	addToUnscopables('includes');
+
+	var $map = arrayIteration.map;
+
+
+
+	var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport('map');
+	// FF49- issue
+	var USES_TO_LENGTH$4 = arrayMethodUsesToLength('map');
+
+	// `Array.prototype.map` method
+	// https://tc39.github.io/ecma262/#sec-array.prototype.map
+	// with adding support of @@species
+	_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 || !USES_TO_LENGTH$4 }, {
+	  map: function map(callbackfn /* , thisArg */) {
+	    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
 	  }
 	});
 
@@ -1709,7 +1844,7 @@
 
 
 
-	var SPECIES$2 = wellKnownSymbol('species');
+	var SPECIES$3 = wellKnownSymbol('species');
 
 	var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
 	  // #replace needs built-in support for named groups.
@@ -1772,7 +1907,7 @@
 	      // RegExp[@@split] doesn't call the regex's exec method, but first creates
 	      // a new one. We need to return the patched regex when creating the new one.
 	      re.constructor = {};
-	      re.constructor[SPECIES$2] = function () { return re; };
+	      re.constructor[SPECIES$3] = function () { return re; };
 	      re.flags = '';
 	      re[SYMBOL] = /./[SYMBOL];
 	    }
@@ -1878,132 +2013,6 @@
 	  return regexpExec.call(R, S);
 	};
 
-	var max$1 = Math.max;
-	var min$2 = Math.min;
-	var floor$1 = Math.floor;
-	var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d\d?|<[^>]*>)/g;
-	var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d\d?)/g;
-
-	var maybeToString = function (it) {
-	  return it === undefined ? it : String(it);
-	};
-
-	// @@replace logic
-	fixRegexpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative, reason) {
-	  var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
-	  var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
-	  var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
-
-	  return [
-	    // `String.prototype.replace` method
-	    // https://tc39.github.io/ecma262/#sec-string.prototype.replace
-	    function replace(searchValue, replaceValue) {
-	      var O = requireObjectCoercible(this);
-	      var replacer = searchValue == undefined ? undefined : searchValue[REPLACE];
-	      return replacer !== undefined
-	        ? replacer.call(searchValue, O, replaceValue)
-	        : nativeReplace.call(String(O), searchValue, replaceValue);
-	    },
-	    // `RegExp.prototype[@@replace]` method
-	    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@replace
-	    function (regexp, replaceValue) {
-	      if (
-	        (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE && REPLACE_KEEPS_$0) ||
-	        (typeof replaceValue === 'string' && replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1)
-	      ) {
-	        var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
-	        if (res.done) return res.value;
-	      }
-
-	      var rx = anObject(regexp);
-	      var S = String(this);
-
-	      var functionalReplace = typeof replaceValue === 'function';
-	      if (!functionalReplace) replaceValue = String(replaceValue);
-
-	      var global = rx.global;
-	      if (global) {
-	        var fullUnicode = rx.unicode;
-	        rx.lastIndex = 0;
-	      }
-	      var results = [];
-	      while (true) {
-	        var result = regexpExecAbstract(rx, S);
-	        if (result === null) break;
-
-	        results.push(result);
-	        if (!global) break;
-
-	        var matchStr = String(result[0]);
-	        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
-	      }
-
-	      var accumulatedResult = '';
-	      var nextSourcePosition = 0;
-	      for (var i = 0; i < results.length; i++) {
-	        result = results[i];
-
-	        var matched = String(result[0]);
-	        var position = max$1(min$2(toInteger(result.index), S.length), 0);
-	        var captures = [];
-	        // NOTE: This is equivalent to
-	        //   captures = result.slice(1).map(maybeToString)
-	        // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
-	        // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
-	        // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
-	        for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
-	        var namedCaptures = result.groups;
-	        if (functionalReplace) {
-	          var replacerArgs = [matched].concat(captures, position, S);
-	          if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
-	          var replacement = String(replaceValue.apply(undefined, replacerArgs));
-	        } else {
-	          replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
-	        }
-	        if (position >= nextSourcePosition) {
-	          accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
-	          nextSourcePosition = position + matched.length;
-	        }
-	      }
-	      return accumulatedResult + S.slice(nextSourcePosition);
-	    }
-	  ];
-
-	  // https://tc39.github.io/ecma262/#sec-getsubstitution
-	  function getSubstitution(matched, str, position, captures, namedCaptures, replacement) {
-	    var tailPos = position + matched.length;
-	    var m = captures.length;
-	    var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
-	    if (namedCaptures !== undefined) {
-	      namedCaptures = toObject(namedCaptures);
-	      symbols = SUBSTITUTION_SYMBOLS;
-	    }
-	    return nativeReplace.call(replacement, symbols, function (match, ch) {
-	      var capture;
-	      switch (ch.charAt(0)) {
-	        case '$': return '$';
-	        case '&': return matched;
-	        case '`': return str.slice(0, position);
-	        case "'": return str.slice(tailPos);
-	        case '<':
-	          capture = namedCaptures[ch.slice(1, -1)];
-	          break;
-	        default: // \d\d?
-	          var n = +ch;
-	          if (n === 0) return match;
-	          if (n > m) {
-	            var f = floor$1(n / 10);
-	            if (f === 0) return match;
-	            if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
-	            return match;
-	          }
-	          capture = captures[n - 1];
-	      }
-	      return capture === undefined ? '' : capture;
-	    });
-	  }
-	});
-
 	// @@match logic
 	fixRegexpWellKnownSymbolLogic('match', 1, function (MATCH, nativeMatch, maybeCallNative) {
 	  return [
@@ -2049,11 +2058,11 @@
 
 	var NEGATIVE_ZERO = !!nativeIndexOf && 1 / [1].indexOf(1, -0) < 0;
 	var STRICT_METHOD$1 = arrayMethodIsStrict('indexOf');
-	var USES_TO_LENGTH$2 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
+	var USES_TO_LENGTH$5 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
 
 	// `Array.prototype.indexOf` method
 	// https://tc39.github.io/ecma262/#sec-array.prototype.indexof
-	_export({ target: 'Array', proto: true, forced: NEGATIVE_ZERO || !STRICT_METHOD$1 || !USES_TO_LENGTH$2 }, {
+	_export({ target: 'Array', proto: true, forced: NEGATIVE_ZERO || !STRICT_METHOD$1 || !USES_TO_LENGTH$5 }, {
 	  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
 	    return NEGATIVE_ZERO
 	      // convert -0 to +0
@@ -2103,11 +2112,11 @@
 
 
 	var STRICT_METHOD$2 = arrayMethodIsStrict('reduce');
-	var USES_TO_LENGTH$3 = arrayMethodUsesToLength('reduce', { 1: 0 });
+	var USES_TO_LENGTH$6 = arrayMethodUsesToLength('reduce', { 1: 0 });
 
 	// `Array.prototype.reduce` method
 	// https://tc39.github.io/ecma262/#sec-array.prototype.reduce
-	_export({ target: 'Array', proto: true, forced: !STRICT_METHOD$2 || !USES_TO_LENGTH$3 }, {
+	_export({ target: 'Array', proto: true, forced: !STRICT_METHOD$2 || !USES_TO_LENGTH$6 }, {
 	  reduce: function reduce(callbackfn /* , initialValue */) {
 	    return $reduce(this, callbackfn, arguments.length, arguments.length > 1 ? arguments[1] : undefined);
 	  }
@@ -2314,259 +2323,6 @@
 	  var match = (className || '').match(/is-style-([^\s"]+)/);
 	  return match ? match[1] : '';
 	};
-
-	function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	/**
-	 * Wrap block edit function to add transient property
-	 * assigned to custom attribute.
-	 */
-
-	var withTransientAttribute = function withTransientAttribute(Edit, attr) {
-	  return function (props) {
-	    return Edit(_objectSpread(_objectSpread({}, props), {}, {
-	      transient: _objectSpread(_objectSpread({}, props.transient || {}), {}, defineProperty$4({}, attr.key, attr.value || props.attributes[attr.key]))
-	    }));
-	  };
-	};
-	/**
-	 * Wrap block edit function to add block style as transient property
-	 * Optionally use BEM notation
-	 */
-
-	var withTransientStyle = function withTransientStyle(Edit, opts) {
-	  return function (props) {
-	    var isBEM = ('BEM' in opts);
-	    var style = useStyleName(props.className);
-	    var name = props.name.replace(/^vf\//, 'vf-');
-	    var value = isBEM ? "".concat(name, "--").concat(style) : style;
-
-	    if (isBEM && !style) {
-	      return Edit(props);
-	    }
-
-	    return withTransientAttribute(Edit, {
-	      key: opts.key,
-	      value: value
-	    })(props);
-	  };
-	};
-	/**
-	 * Wrap the Gutenberg block settings `edit` function.
-	 * Map block attributes to transient ones to support potential compatibility
-	 * changes to the Nunjucks template; example:
-
-	  settings.edit = withTransientAttributeMap(settings.edit, [
-	    {from: 'text', to: 'vf_lede_text'}
-	  ]);
-
-	 */
-
-	var withTransientAttributeMap = function withTransientAttributeMap(Edit, map) {
-	  return function (props) {
-	    // props.transient = {
-	    //   ...(props.transient || {})
-	    // };
-	    var transient = _objectSpread({}, props.transient || {});
-
-	    map.forEach(function (item) {
-	      if (props.attributes.hasOwnProperty(item.from)) {
-	        transient[item.to] = props.attributes[item.from];
-	      }
-	    });
-	    return Edit(_objectSpread(_objectSpread({}, props), {}, {
-	      transient: transient
-	    }));
-	  };
-	};
-	/**
-	 * Wrap the Gutenberg block settings `edit` function.
-	 * Add `<InnerBlocks.Content />` content as a transient property.
-	 */
-
-	var withTransientInnerBlocks = function withTransientInnerBlocks(Edit) {
-	  return function (props) {
-	    var innerBlocks = data$1.select('core/block-editor').getBlocks(props.clientId);
-
-	    var transient = _objectSpread(_objectSpread({}, props.transient || {}), {}, {
-	      innerBlocks: []
-	    });
-
-	    innerBlocks.forEach(function (block) {
-	      return transient.innerBlocks.push({
-	        name: block.name,
-	        attributes: _objectSpread({}, block.attributes)
-	      });
-	    });
-	    return Edit(_objectSpread(_objectSpread({}, props), {}, {
-	      transient: transient
-	    }));
-	  };
-	};
-	/**
-	 * Experimental - add transient props from ACF action (external script)
-	 * Allows for "live" block preview (rendered server-side)
-	 */
-
-	var withTransientACF = function withTransientACF(Edit) {
-	  var transient = {};
-	  return function (props) {
-	    if (!hooks.hasAction('vf__experimental__acf_update', 'vf')) {
-	      hooks.addAction('vf__experimental__acf_update', 'vf', function (data) {
-	        transient[data.name] = data.value;
-	        props.setAttributes({
-	          __isACF: Date.now()
-	        });
-	      });
-	    }
-
-	    return Edit(_objectSpread(_objectSpread({}, props), {}, {
-	      transient: _objectSpread(_objectSpread({}, props.transient || {}), transient)
-	    }));
-	  };
-	};
-
-	/**
-	 * Icon (component)
-	 * VF Gutenberg block icon
-	 */
-	var Icon = wp.element.createElement(components.SVG, {
-	  viewBox: "0 0 24 24",
-	  xmlns: "http://www.w3.org/2000/svg"
-	}, wp.element.createElement(components.Path, {
-	  d: "M19 7h-1V5h-4v2h-4V5H6v2H5c-1.1 0-2 .9-2 2v10h18V9c0-1.1-.9-2-2-2zm0 10H5V9h14v8z"
-	}), wp.element.createElement(components.Path, {
-	  d: "M10.943 16c.522-1.854.972-3.726 1.386-5.58h-1.323a126.482 126.482 0 01-.918 4.383h-.081c-.342-1.44-.657-2.988-.936-4.428l-1.35.09c.414 1.854.873 3.681 1.395 5.535h1.827zm5.161-2.169H14.16V16h-1.332v-5.58h3.636v1.098H14.16v1.296h1.944v1.017z"
-	}));
-
-	/**
-	 * Return default Gutenberg block settings for a VF block
-	 */
-
-	var useVFDefaults = function useVFDefaults() {
-	  return {
-	    icon: Icon,
-	    keywords: [i18n.__('VF'), i18n.__('Visual Framework'), i18n.__('EMBL')],
-	    attributes: {
-	      ver: {
-	        type: 'string'
-	      }
-	    },
-	    supports: {
-	      align: false,
-	      className: false,
-	      customClassName: false,
-	      html: false
-	    },
-	    edit: function edit() {
-	      return null;
-	    },
-	    save: function save() {
-	      return null;
-	    }
-	  };
-	};
-
-	function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-	var useVFPlugin = function useVFPlugin(name) {
-	  var _useVFGutenberg = useVFGutenberg(),
-	      deprecatedPlugins = _useVFGutenberg.deprecatedPlugins;
-
-	  var fields = [];
-	  var supports = {};
-	  var attributes = {};
-	  var preview = false;
-
-	  if (Object.keys(deprecatedPlugins).indexOf(name) > -1) {
-	    var config = deprecatedPlugins[name];
-
-	    if (config.hasOwnProperty('attributes')) {
-	      attributes = _objectSpread$1({}, config.attributes);
-	    }
-
-	    if (config.hasOwnProperty('fields')) {
-	      fields = config.fields;
-	      fields.forEach(function (field) {
-	        attributes[field.name] = {
-	          type: field.type,
-	          default: field.default
-	        };
-	      });
-	    }
-
-	    if (config.hasOwnProperty('supports')) {
-	      supports = _objectSpread$1({}, config.supports);
-	    }
-
-	    if (config.hasOwnProperty('preview')) {
-	      if (/^http/.test(config.preview)) {
-	        preview = config.preview;
-	      }
-	    }
-	  }
-
-	  return {
-	    attributes: attributes,
-	    fields: fields,
-	    supports: supports,
-	    preview: preview
-	  };
-	};
-
-	var UNSCOPABLES = wellKnownSymbol('unscopables');
-	var ArrayPrototype = Array.prototype;
-
-	// Array.prototype[@@unscopables]
-	// https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
-	if (ArrayPrototype[UNSCOPABLES] == undefined) {
-	  objectDefineProperty.f(ArrayPrototype, UNSCOPABLES, {
-	    configurable: true,
-	    value: objectCreate(null)
-	  });
-	}
-
-	// add a key to Array.prototype[@@unscopables]
-	var addToUnscopables = function (key) {
-	  ArrayPrototype[UNSCOPABLES][key] = true;
-	};
-
-	var $includes = arrayIncludes.includes;
-
-
-
-	var USES_TO_LENGTH$4 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
-
-	// `Array.prototype.includes` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.includes
-	_export({ target: 'Array', proto: true, forced: !USES_TO_LENGTH$4 }, {
-	  includes: function includes(el /* , fromIndex = 0 */) {
-	    return $includes(this, el, arguments.length > 1 ? arguments[1] : undefined);
-	  }
-	});
-
-	// https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
-	addToUnscopables('includes');
-
-	var $map = arrayIteration.map;
-
-
-
-	var HAS_SPECIES_SUPPORT$1 = arrayMethodHasSpeciesSupport('map');
-	// FF49- issue
-	var USES_TO_LENGTH$5 = arrayMethodUsesToLength('map');
-
-	// `Array.prototype.map` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.map
-	// with adding support of @@species
-	_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$1 || !USES_TO_LENGTH$5 }, {
-	  map: function map(callbackfn /* , thisArg */) {
-	    return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-	  }
-	});
 
 	function _objectWithoutPropertiesLoose(source, excluded) {
 	  if (source == null) return {};
@@ -3692,9 +3448,9 @@
 	  })));
 	};
 
-	function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var DATE_CONTROLS = ['date', 'date_picker'];
 	var RICH_CONTROLS = ['rich', 'wysiwyg'];
@@ -3709,7 +3465,7 @@
 	  var handleChange = function handleChange(name, value) {
 	    var attr = {};
 	    attr[name] = value;
-	    setAttributes(_objectSpread$2({}, attr));
+	    setAttributes(_objectSpread({}, attr));
 	  }; // Add any initial controls from children
 
 
@@ -3936,60 +3692,131 @@
 	  return controls;
 	};
 
-	var useVFRenderPlugin = /*#__PURE__*/function () {
-	  var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee(name, attrs) {
-	    var _useVFGutenberg, postId, nonce, data;
+	var max$2 = Math.max;
+	var min$2 = Math.min;
+	var floor$1 = Math.floor;
+	var SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d\d?|<[^>]*>)/g;
+	var SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d\d?)/g;
 
-	    return regenerator.wrap(function _callee$(_context) {
-	      while (1) {
-	        switch (_context.prev = _context.next) {
-	          case 0:
-	            _context.prev = 0;
+	var maybeToString = function (it) {
+	  return it === undefined ? it : String(it);
+	};
 
-	            if (!(attrs.defaults === 1 && !!attrs.preview)) {
-	              _context.next = 3;
-	              break;
-	            }
+	// @@replace logic
+	fixRegexpWellKnownSymbolLogic('replace', 2, function (REPLACE, nativeReplace, maybeCallNative, reason) {
+	  var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE = reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE;
+	  var REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0;
+	  var UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE ? '$' : '$0';
 
-	            return _context.abrupt("return", {
-	              hash: name,
-	              html: '',
-	              src: attrs.preview
-	            });
+	  return [
+	    // `String.prototype.replace` method
+	    // https://tc39.github.io/ecma262/#sec-string.prototype.replace
+	    function replace(searchValue, replaceValue) {
+	      var O = requireObjectCoercible(this);
+	      var replacer = searchValue == undefined ? undefined : searchValue[REPLACE];
+	      return replacer !== undefined
+	        ? replacer.call(searchValue, O, replaceValue)
+	        : nativeReplace.call(String(O), searchValue, replaceValue);
+	    },
+	    // `RegExp.prototype[@@replace]` method
+	    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@replace
+	    function (regexp, replaceValue) {
+	      if (
+	        (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE && REPLACE_KEEPS_$0) ||
+	        (typeof replaceValue === 'string' && replaceValue.indexOf(UNSAFE_SUBSTITUTE) === -1)
+	      ) {
+	        var res = maybeCallNative(nativeReplace, regexp, this, replaceValue);
+	        if (res.done) return res.value;
+	      }
 
-	          case 3:
-	            // Otherwise fetch block render
-	            _useVFGutenberg = useVFGutenberg(), postId = _useVFGutenberg.postId, nonce = _useVFGutenberg.nonce;
-	            _context.next = 6;
-	            return wp.ajax.post('vf/gutenberg/fetch_block', {
-	              attrs: attrs,
-	              name: name,
-	              postId: postId,
-	              nonce: nonce
-	            });
+	      var rx = anObject(regexp);
+	      var S = String(this);
 
-	          case 6:
-	            data = _context.sent;
-	            return _context.abrupt("return", data);
+	      var functionalReplace = typeof replaceValue === 'function';
+	      if (!functionalReplace) replaceValue = String(replaceValue);
 
-	          case 10:
-	            _context.prev = 10;
-	            _context.t0 = _context["catch"](0);
-	            console.log(_context.t0);
-	            return _context.abrupt("return", null);
+	      var global = rx.global;
+	      if (global) {
+	        var fullUnicode = rx.unicode;
+	        rx.lastIndex = 0;
+	      }
+	      var results = [];
+	      while (true) {
+	        var result = regexpExecAbstract(rx, S);
+	        if (result === null) break;
 
-	          case 14:
-	          case "end":
-	            return _context.stop();
+	        results.push(result);
+	        if (!global) break;
+
+	        var matchStr = String(result[0]);
+	        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
+	      }
+
+	      var accumulatedResult = '';
+	      var nextSourcePosition = 0;
+	      for (var i = 0; i < results.length; i++) {
+	        result = results[i];
+
+	        var matched = String(result[0]);
+	        var position = max$2(min$2(toInteger(result.index), S.length), 0);
+	        var captures = [];
+	        // NOTE: This is equivalent to
+	        //   captures = result.slice(1).map(maybeToString)
+	        // but for some reason `nativeSlice.call(result, 1, result.length)` (called in
+	        // the slice polyfill when slicing native arrays) "doesn't work" in safari 9 and
+	        // causes a crash (https://pastebin.com/N21QzeQA) when trying to debug it.
+	        for (var j = 1; j < result.length; j++) captures.push(maybeToString(result[j]));
+	        var namedCaptures = result.groups;
+	        if (functionalReplace) {
+	          var replacerArgs = [matched].concat(captures, position, S);
+	          if (namedCaptures !== undefined) replacerArgs.push(namedCaptures);
+	          var replacement = String(replaceValue.apply(undefined, replacerArgs));
+	        } else {
+	          replacement = getSubstitution(matched, S, position, captures, namedCaptures, replaceValue);
+	        }
+	        if (position >= nextSourcePosition) {
+	          accumulatedResult += S.slice(nextSourcePosition, position) + replacement;
+	          nextSourcePosition = position + matched.length;
 	        }
 	      }
-	    }, _callee, null, [[0, 10]]);
-	  }));
+	      return accumulatedResult + S.slice(nextSourcePosition);
+	    }
+	  ];
 
-	  return function useVFRenderPlugin(_x, _x2) {
-	    return _ref.apply(this, arguments);
-	  };
-	}();
+	  // https://tc39.github.io/ecma262/#sec-getsubstitution
+	  function getSubstitution(matched, str, position, captures, namedCaptures, replacement) {
+	    var tailPos = position + matched.length;
+	    var m = captures.length;
+	    var symbols = SUBSTITUTION_SYMBOLS_NO_NAMED;
+	    if (namedCaptures !== undefined) {
+	      namedCaptures = toObject(namedCaptures);
+	      symbols = SUBSTITUTION_SYMBOLS;
+	    }
+	    return nativeReplace.call(replacement, symbols, function (match, ch) {
+	      var capture;
+	      switch (ch.charAt(0)) {
+	        case '$': return '$';
+	        case '&': return matched;
+	        case '`': return str.slice(0, position);
+	        case "'": return str.slice(tailPos);
+	        case '<':
+	          capture = namedCaptures[ch.slice(1, -1)];
+	          break;
+	        default: // \d\d?
+	          var n = +ch;
+	          if (n === 0) return match;
+	          if (n > m) {
+	            var f = floor$1(n / 10);
+	            if (f === 0) return match;
+	            if (f <= m) return captures[f - 1] === undefined ? ch.charAt(1) : captures[f - 1] + ch.charAt(1);
+	            return match;
+	          }
+	          capture = captures[n - 1];
+	      }
+	      return capture === undefined ? '' : capture;
+	    });
+	  }
+	});
 
 	var defineProperty$5 = objectDefineProperty.f;
 
@@ -4384,8 +4211,8 @@
 	var NEGATIVE_ZERO$1 = !!nativeLastIndexOf && 1 / [1].lastIndexOf(1, -0) < 0;
 	var STRICT_METHOD$4 = arrayMethodIsStrict('lastIndexOf');
 	// For preventing possible almost infinite loop in non-standard implementations, test the forward version of the method
-	var USES_TO_LENGTH$6 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
-	var FORCED$2 = NEGATIVE_ZERO$1 || !STRICT_METHOD$4 || !USES_TO_LENGTH$6;
+	var USES_TO_LENGTH$7 = arrayMethodUsesToLength('indexOf', { ACCESSORS: true, 1: 0 });
+	var FORCED$2 = NEGATIVE_ZERO$1 || !STRICT_METHOD$4 || !USES_TO_LENGTH$7;
 
 	// `Array.prototype.lastIndexOf` method implementation
 	// https://tc39.github.io/ecma262/#sec-array.prototype.lastindexof
@@ -4405,44 +4232,6 @@
 	// https://tc39.github.io/ecma262/#sec-array.prototype.lastindexof
 	_export({ target: 'Array', proto: true, forced: arrayLastIndexOf !== [].lastIndexOf }, {
 	  lastIndexOf: arrayLastIndexOf
-	});
-
-	var HAS_SPECIES_SUPPORT$2 = arrayMethodHasSpeciesSupport('slice');
-	var USES_TO_LENGTH$7 = arrayMethodUsesToLength('slice', { ACCESSORS: true, 0: 0, 1: 2 });
-
-	var SPECIES$3 = wellKnownSymbol('species');
-	var nativeSlice = [].slice;
-	var max$2 = Math.max;
-
-	// `Array.prototype.slice` method
-	// https://tc39.github.io/ecma262/#sec-array.prototype.slice
-	// fallback for not array-like ES3 strings and DOM objects
-	_export({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT$2 || !USES_TO_LENGTH$7 }, {
-	  slice: function slice(start, end) {
-	    var O = toIndexedObject(this);
-	    var length = toLength(O.length);
-	    var k = toAbsoluteIndex(start, length);
-	    var fin = toAbsoluteIndex(end === undefined ? length : end, length);
-	    // inline `ArraySpeciesCreate` for usage native `Array#slice` where it's possible
-	    var Constructor, result, n;
-	    if (isArray(O)) {
-	      Constructor = O.constructor;
-	      // cross-realm fallback
-	      if (typeof Constructor == 'function' && (Constructor === Array || isArray(Constructor.prototype))) {
-	        Constructor = undefined;
-	      } else if (isObject(Constructor)) {
-	        Constructor = Constructor[SPECIES$3];
-	        if (Constructor === null) Constructor = undefined;
-	      }
-	      if (Constructor === Array || Constructor === undefined) {
-	        return nativeSlice.call(O, k, fin);
-	      }
-	    }
-	    result = new (Constructor === undefined ? Array : Constructor)(max$2(fin - k, 0));
-	    for (n = 0; k < fin; k++, n++) if (k in O) createProperty(result, n, O[k]);
-	    result.length = n;
-	    return result;
-	  }
 	});
 
 	var HAS_SPECIES_SUPPORT$3 = arrayMethodHasSpeciesSupport('splice');
@@ -9703,6 +9492,11 @@
 	  return window.vfNunjucks;
 	};
 
+	function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	// import useVFRenderTemplate from './use-vf-render-template';
+
 	var useVFRenderTemplate = function useVFRenderTemplate(name, attrs) {
 	  try {
 	    var nunjucks = useNunjucks();
@@ -9717,9 +9511,6 @@
 	  }
 	};
 
-	function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var renderStore = {};
 
 	var useVFRender = function useVFRender(props) {
@@ -9739,7 +9530,7 @@
 
 	  var hasTemplate = ('render' in props.attributes); // extract attributes and remove protected
 
-	  var renderAttrs = _objectSpread$3(_objectSpread$3({}, props.attributes), props.transient || {});
+	  var renderAttrs = _objectSpread$1(_objectSpread$1({}, props.attributes), props.transient || {});
 
 	  delete renderAttrs['ver'];
 	  delete renderAttrs['mode'];
@@ -9765,40 +9556,22 @@
 	              newData = null;
 
 	              if (!hasTemplate) {
-	                _context.next = 10;
+	                _context.next = 8;
 	                break;
 	              }
 
-	              _context.next = 7;
-	              return useVFRenderTemplate(props.name, renderAttrs);
-
-	            case 7:
-	              newData = _context.sent;
-	              _context.next = 17;
+	              newData = useVFRenderTemplate(props.name, renderAttrs);
+	              _context.next = 9;
 	              break;
 
-	            case 10:
-	              if (!props.isEditing) {
-	                _context.next = 12;
-	                break;
-	              }
-
+	            case 8:
 	              return _context.abrupt("return");
 
-	            case 12:
-	              setLoading(true);
-	              _context.next = 15;
-	              return useVFRenderPlugin(props.name, renderAttrs);
-
-	            case 15:
-	              newData = _context.sent;
-	              setLoading(false);
-
-	            case 17:
+	            case 9:
 	              renderStore[renderHash] = newData;
 	              setData(newData);
 
-	            case 19:
+	            case 11:
 	            case "end":
 	              return _context.stop();
 	          }
@@ -9870,7 +9643,6 @@
 	  var onClick = _ref.onClick;
 	  return wp.element.createElement(components.Button, {
 	    isSecondary: true,
-	    isLarge: true,
 	    onClick: onClick
 	  }, i18n.__('Preview'));
 	};
@@ -10070,103 +9842,9 @@
 	  }), isLoading && wp.element.createElement(components.Spinner, null)));
 	};
 
-	function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-	var useVFPluginSettings = function useVFPluginSettings(settings) {
-	  var defaults = useVFDefaults(); // get block settings
-
-	  var _useVFPlugin = useVFPlugin(settings.name),
-	      attributes = _useVFPlugin.attributes,
-	      fields = _useVFPlugin.fields,
-	      supports = _useVFPlugin.supports,
-	      preview = _useVFPlugin.preview; // block options
-
-
-	  var hasFields = !!(Array.isArray(fields) && fields.length); // Setup block attributes
-
-	  attributes = _objectSpread$4(_objectSpread$4({}, defaults.attributes), attributes || {}); // Avoid future usage
-
-	  supports = _objectSpread$4(_objectSpread$4({}, supports), {}, {
-	    inserter: false,
-	    reusable: false
-	  }); // Enable `mode` attribute
-
-	  if (hasFields) {
-	    attributes.mode = {
-	      type: 'string',
-	      default: 'view'
-	    };
-	  } // Enable `defaults` attribute to use ACF template defaults
-
-
-	  attributes.defaults = {
-	    type: 'integer',
-	    default: 0
-	  };
-
-	  var Edit = function Edit(props) {
-	    var isDefaults = !!props.attributes.defaults;
-	    var isEditing = props.attributes.mode === 'edit';
-
-	    var DefaultsControl = function DefaultsControl() {
-	      return wp.element.createElement(components.ToggleControl, {
-	        label: i18n.__('Use defaults'),
-	        checked: isDefaults,
-	        onChange: function onChange(value) {
-	          return props.setAttributes({
-	            defaults: value ? 1 : 0
-	          });
-	        },
-	        help: i18n.__('Disable custom settings and use the block defaults.')
-	      });
-	    };
-
-	    return wp.element.createElement(React.Fragment, null, wp.element.createElement(VFBlock, _extends_1({}, props, {
-	      isPlugin: true,
-	      isRenderable: true,
-	      isEditable: hasFields,
-	      isEditing: isEditing
-	    }), hasFields && wp.element.createElement(VFBlockFields, _extends_1({}, props, {
-	      fields: isDefaults ? [] : fields
-	    }), isDefaults && wp.element.createElement(DefaultsControl, null))), hasFields && wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	      title: i18n.__('Block Settings')
-	    }, wp.element.createElement(DefaultsControl, null))));
-	  }; // Wrap higher-order components
-
-
-	  if (settings.name === 'vf/plugin') {
-	    Edit = withTransientACF(Edit);
-	  } // Add transient attribute for iframe preview if set
-
-
-	  Edit = withTransientAttribute(Edit, {
-	    key: 'preview',
-	    value: preview ? preview : false
-	  }); // Return the Gutenberg settings
-
-	  return _objectSpread$4(_objectSpread$4({}, defaults), {}, {
-	    name: settings.name,
-	    title: settings.title,
-	    category: settings.category,
-	    description: '',
-	    keywords: toConsumableArray(defaults.keywords),
-	    attributes: attributes,
-	    supports: supports,
-	    edit: Edit
-	  });
-	};
-
-	function _toArray(arr) {
-	  return arrayWithHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableRest();
-	}
-
-	var toArray = _toArray;
-
-	function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var useVFCoreSettings = function useVFCoreSettings(settings) {
 	  var defaults = useVFDefaults(); // get block settings
@@ -10183,15 +9861,15 @@
 
 	  var isRenderable = settings.isRenderable !== false; // Setup block attributes
 
-	  attributes = _objectSpread$5(_objectSpread$5(_objectSpread$5({}, defaults.attributes), attributes || {}), {}, {
+	  attributes = _objectSpread$2(_objectSpread$2(_objectSpread$2({}, defaults.attributes), attributes || {}), {}, {
 	    __isExample: {
 	      type: 'integer',
 	      default: 0
 	    }
 	  }); // Setup example attributes
 
-	  example = _objectSpread$5({}, example);
-	  example.attributes = _objectSpread$5(_objectSpread$5({}, example.attributes), {}, {
+	  example = _objectSpread$2({}, example);
+	  example.attributes = _objectSpread$2(_objectSpread$2({}, example.attributes), {}, {
 	    mode: 'view',
 	    __isExample: 1
 	  }); // Enable `render` attribute for Nunjucks template
@@ -10262,7 +9940,7 @@
 	  } // Return the Gutenberg settings
 
 
-	  return _objectSpread$5(_objectSpread$5({}, defaults), {}, {
+	  return _objectSpread$2(_objectSpread$2({}, defaults), {}, {
 	    name: settings.name,
 	    title: settings.title,
 	    category: 'vf/core',
@@ -10272,11 +9950,11 @@
 	    attributes: attributes,
 	    example: example,
 	    styles: hasStyles ? styles : [],
-	    supports: _objectSpread$5(_objectSpread$5({}, defaults.supports), {}, {
+	    supports: _objectSpread$2(_objectSpread$2({}, defaults.supports), {}, {
 	      customClassName: hasStyles,
 	      inserter: settings.isInsertable !== false
 	    }),
-	    transforms: _objectSpread$5({}, settings.transforms || null),
+	    transforms: _objectSpread$2({}, settings.transforms || null),
 	    edit: Edit,
 	    save: Save
 	  });
@@ -10304,6 +9982,96 @@
 	    placeholder: i18n.__('Type activity…')
 	  }]
 	});
+
+	function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	/**
+	 * Wrap block edit function to add transient property
+	 * assigned to custom attribute.
+	 */
+
+	var withTransientAttribute = function withTransientAttribute(Edit, attr) {
+	  return function (props) {
+	    return Edit(_objectSpread$3(_objectSpread$3({}, props), {}, {
+	      transient: _objectSpread$3(_objectSpread$3({}, props.transient || {}), {}, defineProperty$4({}, attr.key, attr.value || props.attributes[attr.key]))
+	    }));
+	  };
+	};
+	/**
+	 * Wrap block edit function to add block style as transient property
+	 * Optionally use BEM notation
+	 */
+
+	var withTransientStyle = function withTransientStyle(Edit, opts) {
+	  return function (props) {
+	    var isBEM = ('BEM' in opts);
+	    var style = useStyleName(props.className);
+	    var name = props.name.replace(/^vf\//, 'vf-');
+	    var value = isBEM ? "".concat(name, "--").concat(style) : style;
+
+	    if (isBEM && !style) {
+	      return Edit(props);
+	    }
+
+	    return withTransientAttribute(Edit, {
+	      key: opts.key,
+	      value: value
+	    })(props);
+	  };
+	};
+	/**
+	 * Wrap the Gutenberg block settings `edit` function.
+	 * Map block attributes to transient ones to support potential compatibility
+	 * changes to the Nunjucks template; example:
+
+	  settings.edit = withTransientAttributeMap(settings.edit, [
+	    {from: 'text', to: 'vf_lede_text'}
+	  ]);
+
+	 */
+
+	var withTransientAttributeMap = function withTransientAttributeMap(Edit, map) {
+	  return function (props) {
+	    // props.transient = {
+	    //   ...(props.transient || {})
+	    // };
+	    var transient = _objectSpread$3({}, props.transient || {});
+
+	    map.forEach(function (item) {
+	      if (props.attributes.hasOwnProperty(item.from)) {
+	        transient[item.to] = props.attributes[item.from];
+	      }
+	    });
+	    return Edit(_objectSpread$3(_objectSpread$3({}, props), {}, {
+	      transient: transient
+	    }));
+	  };
+	};
+	/**
+	 * Wrap the Gutenberg block settings `edit` function.
+	 * Add `<InnerBlocks.Content />` content as a transient property.
+	 */
+
+	var withTransientInnerBlocks = function withTransientInnerBlocks(Edit) {
+	  return function (props) {
+	    var innerBlocks = data$1.select('core/block-editor').getBlocks(props.clientId);
+
+	    var transient = _objectSpread$3(_objectSpread$3({}, props.transient || {}), {}, {
+	      innerBlocks: []
+	    });
+
+	    innerBlocks.forEach(function (block) {
+	      return transient.innerBlocks.push({
+	        name: block.name,
+	        attributes: _objectSpread$3({}, block.attributes)
+	      });
+	    });
+	    return Edit(_objectSpread$3(_objectSpread$3({}, props), {}, {
+	      transient: transient
+	    }));
+	  };
+	};
 
 	var fromCore = function fromCore() {
 	  return {
@@ -10382,13 +10150,13 @@
 	})();
 	})();
 
-	function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var withActivityItems = function withActivityItems(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$6({}, props.transient || {});
+	    var transient = _objectSpread$4({}, props.transient || {});
 
 	    transient.list = [];
 
@@ -10400,7 +10168,7 @@
 	      });
 	    }
 
-	    return Edit(_objectSpread$6(_objectSpread$6({}, props), {}, {
+	    return Edit(_objectSpread$4(_objectSpread$4({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
@@ -10609,13 +10377,13 @@
 	})();
 	})();
 
-	function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var withBEMModifiers = function withBEMModifiers(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$7({}, props.transient || {});
+	    var transient = _objectSpread$5({}, props.transient || {});
 
 	    transient.style = [];
 
@@ -10631,7 +10399,7 @@
 	      transient.style.push('pill');
 	    }
 
-	    return Edit(_objectSpread$7(_objectSpread$7({}, props), {}, {
+	    return Edit(_objectSpread$5(_objectSpread$5({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
@@ -11119,13 +10887,13 @@
 	})();
 	})();
 
-	function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var withBreadcrumbsItems = function withBreadcrumbsItems(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$8({}, props.transient || {});
+	    var transient = _objectSpread$6({}, props.transient || {});
 
 	    transient.breadcrumbs = [];
 
@@ -11142,7 +10910,7 @@
 	      });
 	    }
 
-	    return Edit(_objectSpread$8(_objectSpread$8({}, props), {}, {
+	    return Edit(_objectSpread$6(_objectSpread$6({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
@@ -11398,13 +11166,13 @@
 	})();
 	})();
 
-	function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var withBEMModifiers$1 = function withBEMModifiers(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$9({}, props.transient || {});
+	    var transient = _objectSpread$7({}, props.transient || {});
 
 	    transient.style = [];
 
@@ -11420,7 +11188,7 @@
 	      transient.style.push('pill');
 	    }
 
-	    return Edit(_objectSpread$9(_objectSpread$9({}, props), {}, {
+	    return Edit(_objectSpread$7(_objectSpread$7({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
@@ -11514,18 +11282,18 @@
 	  }]]
 	});
 
-	function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults = useVFDefaults();
 	var ver = '1.0.0';
 
-	var settings = _objectSpread$a(_objectSpread$a({}, defaults), {}, {
+	var settings = _objectSpread$8(_objectSpread$8({}, defaults), {}, {
 	  name: 'vf/cluster',
 	  title: i18n.__('VF Cluster'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
-	  attributes: _objectSpread$a(_objectSpread$a({}, defaults.attributes), {}, {
+	  attributes: _objectSpread$8(_objectSpread$8({}, defaults.attributes), {}, {
 	    alignment: {
 	      type: 'string',
 	      default: 'center'
@@ -11822,9 +11590,9 @@
 	})();
 	})();
 
-	function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var RATIOS = {
 	  '2:1': {
 	    label: i18n.__('(2:1) Cinema'),
@@ -11854,7 +11622,7 @@
 
 	var withRatioAttributes = function withRatioAttributes(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$b({}, props.transient || {});
+	    var transient = _objectSpread$9({}, props.transient || {});
 
 	    var _props$attributes = props.attributes,
 	        ratio = _props$attributes.ratio,
@@ -11901,7 +11669,7 @@
 	      transient.vf_embedded_content = "<iframe width=\"".concat(width, "\" height=\"").concat(height, "\" src=\"").concat(transient.src, "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
 	    }
 
-	    return Edit(_objectSpread$b(_objectSpread$b({}, props), {}, {
+	    return Edit(_objectSpread$9(_objectSpread$9({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
@@ -11994,22 +11762,22 @@
 	  isInteger: isInteger
 	});
 
-	function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$1 = useVFDefaults();
 
-	var settings$1 = _objectSpread$c(_objectSpread$c({}, defaults$1), {}, {
+	var settings$1 = _objectSpread$a(_objectSpread$a({}, defaults$1), {}, {
 	  name: 'vf/grid-column',
 	  title: i18n.__('Grid Column'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
 	  parent: ['vf/grid', 'vf/embl-grid'],
-	  supports: _objectSpread$c(_objectSpread$c({}, defaults$1.supports), {}, {
+	  supports: _objectSpread$a(_objectSpread$a({}, defaults$1.supports), {}, {
 	    inserter: false,
 	    lightBlockWrapper: true
 	  }),
-	  attributes: _objectSpread$c(_objectSpread$c({}, defaults$1.attributes), {}, {
+	  attributes: _objectSpread$a(_objectSpread$a({}, defaults$1.attributes), {}, {
 	    span: {
 	      type: 'integer',
 	      default: 1
@@ -12110,9 +11878,9 @@
 	  })));
 	};
 
-	function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	// New columns are appended to match minimum
 	// End columns are merged to match maximum
 
@@ -12129,7 +11897,7 @@
 	      // Map column props
 	      var innerProps = innerBlocks.map(function (block) {
 	        return {
-	          attributes: _objectSpread$d({}, block.attributes),
+	          attributes: _objectSpread$b({}, block.attributes),
 	          innerBlocks: toConsumableArray(block.innerBlocks)
 	        };
 	      }); // Fill empty props to match min number of columns
@@ -12157,23 +11925,23 @@
 	  };
 	};
 
-	function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$2 = useVFDefaults();
 	var ver$1 = '1.1.0';
 	var MIN_COLUMNS = 2;
 	var MAX_COLUMNS = 4;
 
-	var settings$2 = _objectSpread$e(_objectSpread$e({}, defaults$2), {}, {
+	var settings$2 = _objectSpread$c(_objectSpread$c({}, defaults$2), {}, {
 	  name: 'vf/embl-grid',
 	  title: i18n.__('EMBL Grid'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
-	  supports: _objectSpread$e(_objectSpread$e({}, defaults$2.supports), {}, {
+	  supports: _objectSpread$c(_objectSpread$c({}, defaults$2.supports), {}, {
 	    lightBlockWrapper: true
 	  }),
-	  attributes: _objectSpread$e(_objectSpread$e({}, defaults$2.attributes), {}, {
+	  attributes: _objectSpread$c(_objectSpread$c({}, defaults$2.attributes), {}, {
 	    placeholder: {
 	      type: 'integer',
 	      default: 0
@@ -12381,22 +12149,22 @@
 	  from: [fromColumns('core/columns', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS), fromColumns('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)]
 	};
 
-	function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$3 = useVFDefaults();
 	var MIN_COLUMNS$1 = 1;
 	var MAX_COLUMNS$1 = 6;
 
-	var settings$3 = _objectSpread$f(_objectSpread$f({}, defaults$3), {}, {
+	var settings$3 = _objectSpread$d(_objectSpread$d({}, defaults$3), {}, {
 	  name: 'vf/grid',
 	  title: i18n.__('VF Grid'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
-	  supports: _objectSpread$f(_objectSpread$f({}, defaults$3.supports), {}, {
+	  supports: _objectSpread$d(_objectSpread$d({}, defaults$3.supports), {}, {
 	    lightBlockWrapper: true
 	  }),
-	  attributes: _objectSpread$f(_objectSpread$f({}, defaults$3.attributes), {}, {
+	  attributes: _objectSpread$d(_objectSpread$d({}, defaults$3.attributes), {}, {
 	    placeholder: {
 	      type: 'integer',
 	      default: 0
@@ -12646,22 +12414,22 @@
 	  }]]]
 	});
 
-	function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$4 = useVFDefaults();
 	var ver$2 = '1.0.0';
 
-	var settings$4 = _objectSpread$g(_objectSpread$g({}, defaults$4), {}, {
+	var settings$4 = _objectSpread$e(_objectSpread$e({}, defaults$4), {}, {
 	  name: 'vf/tabs-section',
 	  title: i18n.__('VF Tab Section'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
 	  parent: ['vf/tabs'],
-	  supports: _objectSpread$g(_objectSpread$g({}, defaults$4.supports), {}, {
+	  supports: _objectSpread$e(_objectSpread$e({}, defaults$4.supports), {}, {
 	    inserter: false
 	  }),
-	  attributes: _objectSpread$g(_objectSpread$g({}, defaults$4.attributes), {}, {
+	  attributes: _objectSpread$e(_objectSpread$e({}, defaults$4.attributes), {}, {
 	    id: {
 	      type: 'string',
 	      default: ''
@@ -12799,18 +12567,18 @@
 	  }, unlabelled ? false : wp.element.createElement("h2", null, label), wp.element.createElement(blockEditor.InnerBlocks, null)));
 	};
 
-	function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$i(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$5 = useVFDefaults();
 	var ver$3 = '1.0.0';
 
-	var settings$5 = _objectSpread$h(_objectSpread$h({}, defaults$5), {}, {
+	var settings$5 = _objectSpread$f(_objectSpread$f({}, defaults$5), {}, {
 	  name: 'vf/tabs',
 	  title: i18n.__('VF Tabs'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
-	  attributes: _objectSpread$h(_objectSpread$h({}, defaults$5.attributes), {}, {
+	  attributes: _objectSpread$f(_objectSpread$f({}, defaults$5.attributes), {}, {
 	    dirty: {
 	      type: 'integer',
 	      default: 0
@@ -12974,8 +12742,7 @@
 	};
 
 	var _useVFGutenberg = useVFGutenberg(),
-	    coreOptin = _useVFGutenberg.coreOptin,
-	    deprecatedPlugins = _useVFGutenberg.deprecatedPlugins; // Register VF Core blocks
+	    coreOptin = _useVFGutenberg.coreOptin; // Register VF Core blocks
 
 
 	if (parseInt(coreOptin) === 1) {
@@ -12988,35 +12755,19 @@
 	  coreBlocks.forEach(function (settings) {
 	    return blocks.registerBlockType(settings.name, settings);
 	  });
-	} // Register any deprecated VF Plugin blocks for legacy support
-	// These blocks were replaced by full ACF versions
-
-
-	for (var _i = 0, _Object$entries = Object.entries(deprecatedPlugins); _i < _Object$entries.length; _i++) {
-	  var _Object$entries$_i = slicedToArray(_Object$entries[_i], 2),
-	      name = _Object$entries$_i[0],
-	      plugin = _Object$entries$_i[1];
-
-	  var _settings = useVFPluginSettings({
-	    name: name,
-	    title: plugin.title,
-	    category: plugin.category
-	  });
-
-	  blocks.registerBlockType(name, _settings);
 	} // Register experimental preview block
-
-
-	var settings$6 = useVFPluginSettings({
-	  name: 'vf/plugin',
-	  title: 'Preview',
-	  category: 'vf/wp'
-	});
-	settings$6.attributes.ref = {
-	  type: 'string'
-	};
-	blocks.registerBlockType('vf/plugin', settings$6); // Handle iframe preview resizing globally
+	// const settings = useVFPluginSettings({
+	//   name: 'vf/plugin',
+	//   title: 'Preview',
+	//   category: 'vf/wp'
+	// });
+	// settings.attributes.ref = {
+	//   type: 'string'
+	// };
+	// registerBlockType('vf/plugin', settings);
+	// Handle iframe preview resizing globally
 	// TODO: remove necessity from `useVFIFrame`
+
 
 	window.addEventListener('message', function (_ref) {
 	  var data = _ref.data;

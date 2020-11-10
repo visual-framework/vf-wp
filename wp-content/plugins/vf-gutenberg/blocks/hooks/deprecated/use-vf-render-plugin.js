@@ -1,7 +1,7 @@
 /**
  * Return the server-side rendered template for a VF Gutenberg block
  */
-import useVFGutenberg from './use-vf-gutenberg';
+import useVFGutenberg from '../use-vf-gutenberg';
 
 const useVFRenderPlugin = async (name, attrs) => {
   try {

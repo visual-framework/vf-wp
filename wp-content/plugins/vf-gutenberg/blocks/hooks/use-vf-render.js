@@ -3,8 +3,23 @@
  */
 import {useEffect, useState} from 'react';
 import {useHashsum} from './';
-import useVFRenderPlugin from './use-vf-render-plugin';
-import useVFRenderTemplate from './use-vf-render-template';
+import useNunjucks from './use-nunjucks';
+// import useVFRenderPlugin from './deprecated/use-vf-render-plugin';
+// import useVFRenderTemplate from './use-vf-render-template';
+
+const useVFRenderTemplate = (name, attrs) => {
+  try {
+    const nunjucks = useNunjucks();
+    const html = nunjucks.render(name.replace(/^vf\//, 'vf-'), attrs);
+    return {
+      html: html,
+      hash: useHashsum(html)
+    };
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
 
 const renderStore = {};
 
@@ -32,14 +47,16 @@ const useVFRender = props => {
     }
     let newData = null;
     if (hasTemplate) {
-      newData = await useVFRenderTemplate(props.name, renderAttrs);
+      newData = useVFRenderTemplate(props.name, renderAttrs);
     } else {
-      if (props.isEditing) {
-        return;
-      }
-      setLoading(true);
-      newData = await useVFRenderPlugin(props.name, renderAttrs);
-      setLoading(false);
+      // Deprecated
+      return;
+      // if (props.isEditing) {
+      //   return;
+      // }
+      // setLoading(true);
+      // newData = await useVFRenderPlugin(props.name, renderAttrs);
+      // setLoading(false);
     }
     renderStore[renderHash] = newData;
     setData(newData);
