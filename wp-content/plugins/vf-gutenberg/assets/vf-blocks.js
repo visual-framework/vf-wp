@@ -2736,7 +2736,6 @@
 	  }, Array(max - min + 1).fill().map(function (x, i) {
 	    return wp.element.createElement(components.Button, {
 	      key: i,
-	      isLarge: true,
 	      isPrimary: isPressed(i),
 	      "aria-pressed": isPressed(i),
 	      onClick: function onClick() {
@@ -3795,13 +3794,13 @@
 
 	      return wp.element.createElement(components.TextControl, {
 	        key: key,
-	        type: "number",
+	        help: help,
 	        label: label,
+	        type: "number",
 	        value: parseInt(attrs[name]) || _min,
 	        onChange: function onChange(value) {
 	          return _onChange(name, parseInt(value));
 	        },
-	        help: help,
 	        min: _min,
 	        max: _max
 	      });
@@ -3829,6 +3828,7 @@
 	      var step = isNaN(field.step) ? 1 : parseInt(field.step);
 	      return wp.element.createElement(components.RangeControl, {
 	        key: key,
+	        help: help,
 	        label: label,
 	        value: parseInt(attrs[name]) || _min2,
 	        onChange: function onChange(value) {
@@ -11980,11 +11980,24 @@
 	  }]]]
 	});
 
+	var floor$2 = Math.floor;
+
+	// `Number.isInteger` method implementation
+	// https://tc39.github.io/ecma262/#sec-number.isinteger
+	var isInteger = function isInteger(it) {
+	  return !isObject(it) && isFinite(it) && floor$2(it) === it;
+	};
+
+	// `Number.isInteger` method
+	// https://tc39.github.io/ecma262/#sec-number.isinteger
+	_export({ target: 'Number', stat: true }, {
+	  isInteger: isInteger
+	});
+
 	function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 	function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$1 = useVFDefaults();
-	var ver$1 = '1.0.0';
 
 	var settings$1 = _objectSpread$c(_objectSpread$c({}, defaults$1), {}, {
 	  name: 'vf/grid-column',
@@ -11993,39 +12006,109 @@
 	  description: i18n.__('Visual Framework (core)'),
 	  parent: ['vf/grid', 'vf/embl-grid'],
 	  supports: _objectSpread$c(_objectSpread$c({}, defaults$1.supports), {}, {
-	    inserter: false
+	    inserter: false,
+	    lightBlockWrapper: true
+	  }),
+	  attributes: _objectSpread$c(_objectSpread$c({}, defaults$1.attributes), {}, {
+	    span: {
+	      type: 'integer',
+	      default: 1
+	    }
 	  })
 	});
 
 	settings$1.save = function (props) {
-	  return wp.element.createElement("div", null, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+	  var span = props.attributes.span;
+	  var classes = [];
+
+	  if (Number.isInteger(span) && span > 1) {
+	    classes.push("vf-grid__col--span-".concat(span));
+	  }
+
+	  var rootAttr = {};
+
+	  if (classes.length) {
+	    rootAttr.className = classes.join(' ');
+	  }
+
+	  return wp.element.createElement("div", rootAttr, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
 	};
 
-	var withGridProps = function withGridProps(Edit) {
-	  return function (props) {
-	    var _select = data$1.select('core/block-editor'),
-	        getBlockOrder = _select.getBlockOrder;
+	settings$1.edit = function (props) {
+	  var clientId = props.clientId;
+	  var span = props.attributes.span;
 
-	    var hasChildBlocks = getBlockOrder(props.clientId).length > 0;
-	    return Edit(_objectSpread$c(_objectSpread$c({}, props), {}, {
-	      hasChildBlocks: hasChildBlocks
-	    }));
-	  };
-	};
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      updateBlockAttributes = _useDispatch.updateBlockAttributes;
 
-	settings$1.edit = withGridProps(function (props) {
-	  props.setAttributes({
-	    ver: props.ver || ver$1
-	  });
-	  return wp.element.createElement("div", {
-	    className: "vf-block-column"
-	  }, wp.element.createElement(blockEditor.InnerBlocks, {
+	  var _useSelect = data$1.useSelect(function (select) {
+	    var _select = select('core/block-editor'),
+	        getBlockName = _select.getBlockName,
+	        getBlockOrder = _select.getBlockOrder,
+	        getBlockRootClientId = _select.getBlockRootClientId;
+
+	    var rootClientId = getBlockRootClientId(clientId);
+	    var hasChildBlocks = getBlockOrder(clientId).length > 0;
+	    var hasSpanSupport = getBlockName(rootClientId) === 'vf/grid';
+	    return {
+	      rootClientId: rootClientId,
+	      hasChildBlocks: hasChildBlocks,
+	      hasSpanSupport: hasSpanSupport
+	    };
+	  }, [clientId]),
+	      hasChildBlocks = _useSelect.hasChildBlocks,
+	      hasSpanSupport = _useSelect.hasSpanSupport,
+	      rootClientId = _useSelect.rootClientId;
+
+	  React.useEffect(function () {
+	    if (!hasSpanSupport && span !== 1) {
+	      props.setAttributes({
+	        span: 1
+	      });
+	    }
+	  }, [clientId]);
+	  var onSpanChange = React.useCallback(function (value) {
+	    if (span !== value) {
+	      props.setAttributes({
+	        span: value
+	      });
+	      updateBlockAttributes(rootClientId, {
+	        dirty: Date.now()
+	      });
+	    }
+	  }, [span, clientId, rootClientId]);
+	  var rootAttr = {};
+	  var classes = [];
+
+	  if (hasSpanSupport) {
+	    if (Number.isInteger(span) && span > 1) {
+	      classes.push("vf-grid__col--span-".concat(span));
+	    }
+	  }
+
+	  if (classes.length) {
+	    rootAttr.className = classes.join(' ');
+	  }
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, hasSpanSupport && wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Advanced Settings'),
+	    initialOpen: true
+	  }, wp.element.createElement(components.RangeControl, {
+	    label: i18n.__('Column span'),
+	    help: i18n.__('Columns may be merged to fit.'),
+	    value: Number.isInteger(span) ? span : 1,
+	    onChange: onSpanChange,
+	    allowReset: true,
+	    step: 1,
+	    min: 1,
+	    max: 6
+	  }))), wp.element.createElement(blockEditor.__experimentalBlock.div, rootAttr, wp.element.createElement(blockEditor.InnerBlocks, {
 	    templateLock: false,
-	    renderAppender: props.hasChildBlocks ? undefined : function () {
+	    renderAppender: hasChildBlocks ? undefined : function () {
 	      return wp.element.createElement(blockEditor.InnerBlocks.ButtonBlockAppender, null);
 	    }
-	  }));
-	});
+	  })));
+	};
 
 	function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -12078,7 +12161,7 @@
 
 	function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$2 = useVFDefaults();
-	var ver$2 = '1.0.0';
+	var ver$1 = '1.1.0';
 	var MIN_COLUMNS = 2;
 	var MAX_COLUMNS = 4;
 
@@ -12087,6 +12170,9 @@
 	  title: i18n.__('EMBL Grid'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
+	  supports: _objectSpread$e(_objectSpread$e({}, defaults$2.supports), {}, {
+	    lightBlockWrapper: true
+	  }),
 	  attributes: _objectSpread$e(_objectSpread$e({}, defaults$2.attributes), {}, {
 	    placeholder: {
 	      type: 'integer',
@@ -12120,11 +12206,11 @@
 	  var className = 'embl-grid';
 
 	  if (!!sidebar) {
-	    className += ' embl-grid--has-sidebar';
+	    className = "".concat(className, " embl-grid--has-sidebar");
 	  }
 
 	  if (!!centered) {
-	    className += ' embl-grid--has-centered-content';
+	    className = "".concat(className, " embl-grid--has-centered-content");
 	  }
 
 	  return wp.element.createElement("div", {
@@ -12132,117 +12218,123 @@
 	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
 	};
 
-	var withGridDispatch = function withGridDispatch(Edit) {
-	  return data$1.withDispatch(function (dispatch, ownProps, _ref) {
-	    var select = _ref.select;
+	settings$2.edit = function (props) {
+	  if (ver$1 !== props.attributes.ver) {
+	    props.setAttributes({
+	      ver: ver$1
+	    });
+	  }
 
+	  var clientId = props.clientId;
+	  var _props$attributes2 = props.attributes,
+	      columns = _props$attributes2.columns,
+	      centered = _props$attributes2.centered,
+	      sidebar = _props$attributes2.sidebar,
+	      placeholder = _props$attributes2.placeholder; // Turn on setup placeholder if no columns are defined
+
+	  React.useEffect(function () {
+	    if (columns === 0) {
+	      props.setAttributes({
+	        placeholder: 1
+	      });
+	    }
+	  }, [clientId]);
+
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks;
+
+	  var _useSelect = data$1.useSelect(function (select) {
 	    var _select = select('core/block-editor'),
-	        getBlocks = _select.getBlocks;
+	        getBlocks = _select.getBlocks; // Remove columns by merging their inner blocks
 
-	    var _dispatch = dispatch('core/block-editor'),
-	        replaceInnerBlocks = _dispatch.replaceInnerBlocks; // `columns` attribute `onChange` callback
 
+	    var removeColumns = function removeColumns(newColumns) {
+	      var innerColumns = getBlocks(clientId);
+	      var mergeBlocks = [];
+
+	      for (var i = newColumns - 1; i < innerColumns.length; i++) {
+	        mergeBlocks.push.apply(mergeBlocks, toConsumableArray(innerColumns[i].innerBlocks));
+	      }
+
+	      replaceInnerBlocks(innerColumns[newColumns - 1].clientId, mergeBlocks, false);
+	      replaceInnerBlocks(clientId, getBlocks(clientId).slice(0, newColumns), false);
+	    }; // Append new columns
+
+
+	    var addColumns = function addColumns(newColumns) {
+	      var innerColumns = getBlocks(clientId);
+
+	      while (innerColumns.length < newColumns) {
+	        innerColumns.push(blocks.createBlock('vf/grid-column', {}, []));
+	      }
+
+	      replaceInnerBlocks(clientId, innerColumns, false);
+	    };
 
 	    var setColumns = function setColumns(newColumns) {
-	      var prevColumns = ownProps.attributes.columns; // Merge inner blocks when number of columns is reduced
+	      var innerColumns = getBlocks(clientId);
 
-	      if (newColumns < prevColumns) {
-	        var columnBlocks = getBlocks(ownProps.clientId);
-	        var mergeBlocks = [];
-
-	        for (var i = newColumns - 1; i < prevColumns; i++) {
-	          mergeBlocks.push.apply(mergeBlocks, toConsumableArray(columnBlocks[i].innerBlocks));
-	        }
-
-	        replaceInnerBlocks(columnBlocks[newColumns - 1].clientId, mergeBlocks, false);
+	      if (newColumns < innerColumns.length) {
+	        removeColumns(newColumns);
 	      }
 
-	      var innerBlocks = getBlocks(ownProps.clientId);
-	      innerBlocks = innerBlocks.slice(0, newColumns); // Append new blocks when number of columns is increased
-
-	      if (newColumns > prevColumns) {
-	        while (innerBlocks.length < newColumns) {
-	          innerBlocks.push(blocks.createBlock('vf/grid-column', {}, []));
-	        }
+	      if (newColumns > innerColumns.length) {
+	        addColumns(newColumns);
 	      }
 
-	      if (newColumns !== prevColumns) {
-	        replaceInnerBlocks(ownProps.clientId, innerBlocks, false);
-	      } // Update block attributes
-
-
-	      ownProps.setAttributes({
-	        placeholder: 0,
-	        columns: newColumns
+	      props.setAttributes({
+	        columns: newColumns,
+	        placeholder: 0
 	      });
 
 	      if (newColumns !== 3) {
-	        ownProps.setAttributes({
+	        props.setAttributes({
 	          sidebar: 0,
 	          centered: 0
 	        });
 	      }
-	    }; // Toggle attribute `onChange` callback
-
-
-	    var setToggle = function setToggle(name, value) {
-	      value = value ? 1 : 0;
-	      ownProps.setAttributes(defineProperty$4({
-	        sidebar: 0,
-	        centered: 0
-	      }, name, value));
-
-	      if (value) {
-	        setColumns(3);
-	      }
 	    };
 
 	    return {
-	      setColumns: setColumns,
-	      setToggle: setToggle
+	      setColumns: setColumns
 	    };
-	  })(Edit);
-	};
+	  }, [clientId]),
+	      setColumns = _useSelect.setColumns; // Toggle attribute `onChange` callback
 
-	settings$2.edit = withGridDispatch(function (props) {
-	  var _props$attributes2 = props.attributes,
-	      columns = _props$attributes2.columns,
-	      sidebar = _props$attributes2.sidebar,
-	      centered = _props$attributes2.centered,
-	      placeholder = _props$attributes2.placeholder; // ensure version is encoded in post content
 
-	  props.setAttributes({
-	    ver: ver$2
-	  }); // turn on setup placeholder if no columns are defined
+	  var setToggle = React.useCallback(function (name, value) {
+	    value = value ? 1 : 0;
+	    props.setAttributes(defineProperty$4({
+	      sidebar: 0,
+	      centered: 0
+	    }, name, value));
 
-	  if (columns === 0) {
-	    props.setAttributes({
-	      placeholder: 1
-	    });
-	  } // Setup placeholder fields
-
+	    if (value) {
+	      setColumns(3);
+	    }
+	  }); // Setup placeholder fields
 
 	  var fields = [{
 	    control: 'columns',
 	    min: MIN_COLUMNS,
 	    max: MAX_COLUMNS,
 	    value: columns,
-	    onChange: props.setColumns
+	    onChange: setColumns
 	  }, {
 	    label: i18n.__('With Sidebar'),
 	    control: 'toggle',
 	    name: 'sidebar',
-	    onChange: props.setToggle
+	    onChange: setToggle
 	  }, {
 	    label: i18n.__('Centered Content'),
 	    control: 'toggle',
 	    name: 'centered',
-	    onChange: props.setToggle
+	    onChange: setToggle
 	  }]; // Return setup placeholder
 
 	  if (placeholder === 1) {
-	    return wp.element.createElement("div", {
-	      className: "vf-block vf-block--placeholder ".concat(props.className)
+	    return wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	      className: "vf-block vf-block--placeholder"
 	    }, wp.element.createElement(components.Placeholder, {
 	      label: i18n.__('EMBL Grid'),
 	      icon: 'admin-generic'
@@ -12254,16 +12346,26 @@
 
 	  fields[0].help = i18n.__('Content may be reorganised when columns are reduced.');
 	  fields[1].help = i18n.__('3 column only.');
-	  fields[2].help = fields[1].help; // Return inner blocks and inspector controls
+	  fields[2].help = fields[1].help;
+	  var className = 'embl-grid';
 
-	  return wp.element.createElement(React.Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	  if (!!sidebar) {
+	    className = "".concat(className, " embl-grid--has-sidebar");
+	  }
+
+	  if (!!centered) {
+	    className = "".concat(className, " embl-grid--has-centered-content");
+	  } // Return inner blocks and inspector controls
+
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
 	    title: i18n.__('Settings'),
 	    initialOpen: true
 	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
 	    fields: fields
-	  })))), wp.element.createElement("div", {
-	    className: 'vf-block-grid',
-	    "data-ver": ver$2,
+	  })))), wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	    className: className,
+	    "data-ver": ver$1,
 	    "data-embl": true,
 	    "data-sidebar": sidebar,
 	    "data-centered": centered
@@ -12272,7 +12374,8 @@
 	    template: Array(columns).fill(['vf/grid-column']),
 	    templateLock: "all"
 	  })));
-	}); // Block transforms
+	}; // Block transforms
+
 
 	settings$2.transforms = {
 	  from: [fromColumns('core/columns', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS), fromColumns('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)]
@@ -12282,7 +12385,6 @@
 
 	function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$3 = useVFDefaults();
-	var ver$3 = '1.0.0';
 	var MIN_COLUMNS$1 = 1;
 	var MAX_COLUMNS$1 = 6;
 
@@ -12291,6 +12393,9 @@
 	  title: i18n.__('VF Grid'),
 	  category: 'vf/core',
 	  description: i18n.__('Visual Framework (core)'),
+	  supports: _objectSpread$f(_objectSpread$f({}, defaults$3.supports), {}, {
+	    lightBlockWrapper: true
+	  }),
 	  attributes: _objectSpread$f(_objectSpread$f({}, defaults$3.attributes), {}, {
 	    placeholder: {
 	      type: 'integer',
@@ -12299,126 +12404,172 @@
 	    columns: {
 	      type: 'integer',
 	      default: 0
+	    },
+	    dirty: {
+	      type: 'integer',
+	      default: 0
 	    }
 	  })
 	});
 
 	settings$3.save = function (props) {
-	  if (props.attributes.placeholder === 1) {
+	  var _props$attributes = props.attributes,
+	      columns = _props$attributes.columns,
+	      placeholder = _props$attributes.placeholder;
+
+	  if (placeholder === 1) {
 	    return null;
 	  }
 
-	  var columns = props.attributes.columns;
 	  var className = "vf-grid | vf-grid__col-".concat(columns);
 	  return wp.element.createElement("div", {
 	    className: className
 	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
 	};
 
-	var withGridDispatch$1 = function withGridDispatch(Edit) {
-	  return data$1.withDispatch(function (dispatch, ownProps, _ref) {
-	    var select = _ref.select;
+	settings$3.edit = function (props) {
+	  var clientId = props.clientId;
+	  var _props$attributes2 = props.attributes,
+	      dirty = _props$attributes2.dirty,
+	      columns = _props$attributes2.columns,
+	      placeholder = _props$attributes2.placeholder; // Turn on setup placeholder if no columns are defined
 
+	  React.useEffect(function () {
+	    if (columns === 0) {
+	      props.setAttributes({
+	        placeholder: 1
+	      });
+	    }
+	  }, [clientId]);
+
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks;
+
+	  var _useSelect = data$1.useSelect(function (select) {
 	    var _select = select('core/block-editor'),
-	        getBlocks = _select.getBlocks;
+	        getBlocks = _select.getBlocks,
+	        getBlockAttributes = _select.getBlockAttributes; // Return total number of columns accounting for spans
 
-	    var _dispatch = dispatch('core/block-editor'),
-	        replaceInnerBlocks = _dispatch.replaceInnerBlocks; // `columns` attribute `onChange` callback
 
+	    var countSpans = function countSpans(blocks) {
+	      var count = 0;
+	      blocks.forEach(function (block) {
+	        var span = block.attributes.span;
+
+	        if (Number.isInteger(span) && span > 0) {
+	          count += span;
+	        } else {
+	          count++;
+	        }
+	      });
+	      return count;
+	    }; // Append new columns
+
+
+	    var addColumns = function addColumns(maxSpans) {
+	      var innerColumns = getBlocks(clientId);
+
+	      while (countSpans(innerColumns) < maxSpans) {
+	        innerColumns.push(blocks.createBlock('vf/grid-column', {}, []));
+	      }
+
+	      replaceInnerBlocks(clientId, innerColumns, false);
+	    }; // Remove columns by merging their inner blocks
+
+
+	    var removeColumns = function removeColumns(maxSpans) {
+	      var innerColumns = getBlocks(clientId);
+	      var mergeBlocks = [];
+
+	      while (innerColumns.length > 1 && countSpans(innerColumns) > maxSpans) {
+	        mergeBlocks = mergeBlocks.concat(innerColumns.pop().innerBlocks);
+	      }
+
+	      replaceInnerBlocks(innerColumns[innerColumns.length - 1].clientId, mergeBlocks.concat(innerColumns[innerColumns.length - 1].innerBlocks), false);
+	      replaceInnerBlocks(clientId, getBlocks(clientId).slice(0, innerColumns.length), false);
+	    };
 
 	    var setColumns = function setColumns(newColumns) {
-	      var prevColumns = ownProps.attributes.columns; // Merge inner blocks when number of columns is reduced
-
-	      if (newColumns < prevColumns) {
-	        var columnBlocks = getBlocks(ownProps.clientId);
-	        var mergeBlocks = [];
-
-	        for (var i = newColumns - 1; i < prevColumns; i++) {
-	          mergeBlocks.push.apply(mergeBlocks, toConsumableArray(columnBlocks[i].innerBlocks));
-	        }
-
-	        replaceInnerBlocks(columnBlocks[newColumns - 1].clientId, mergeBlocks, false);
-	      }
-
-	      var innerBlocks = getBlocks(ownProps.clientId);
-	      innerBlocks = innerBlocks.slice(0, newColumns); // Append new blocks when number of columns is increased
-
-	      if (newColumns > prevColumns) {
-	        while (innerBlocks.length < newColumns) {
-	          innerBlocks.push(blocks.createBlock('vf/grid-column', {}, []));
-	        }
-	      }
-
-	      if (newColumns !== prevColumns) {
-	        replaceInnerBlocks(ownProps.clientId, innerBlocks, false);
-	      } // Update block attributes
-
-
-	      ownProps.setAttributes({
+	      props.setAttributes({
 	        columns: newColumns,
 	        placeholder: 0
+	      });
+	      var innerColumns = getBlocks(clientId);
+	      var count = countSpans(innerColumns);
+
+	      if (newColumns < count) {
+	        removeColumns(newColumns);
+	      }
+
+	      if (newColumns > count) {
+	        addColumns(newColumns);
+	      }
+	    };
+
+	    var updateColumns = function updateColumns() {
+	      var _getBlockAttributes = getBlockAttributes(clientId),
+	          columns = _getBlockAttributes.columns;
+
+	      setColumns(columns);
+	      props.setAttributes({
+	        dirty: 0
 	      });
 	    };
 
 	    return {
-	      setColumns: setColumns
+	      setColumns: setColumns,
+	      updateColumns: updateColumns
 	    };
-	  })(Edit);
-	};
+	  }, [clientId]),
+	      setColumns = _useSelect.setColumns,
+	      updateColumns = _useSelect.updateColumns;
 
-	settings$3.edit = withGridDispatch$1(function (props) {
-	  var _props$attributes = props.attributes,
-	      columns = _props$attributes.columns,
-	      placeholder = _props$attributes.placeholder; // Ensure version is encoded in post content
+	  React.useEffect(function () {
+	    if (dirty > 0) {
+	      updateColumns();
+	    }
+	  }, [dirty]);
 
-	  props.setAttributes({
-	    ver: ver$3
-	  }); // Turn on setup placeholder if no columns are defined
+	  var GridControl = function GridControl(props) {
+	    return wp.element.createElement(ColumnsControl, _extends_1({
+	      value: columns,
+	      min: MIN_COLUMNS$1,
+	      max: MAX_COLUMNS$1,
+	      onChange: React.useCallback(function (value) {
+	        return setColumns(value);
+	      })
+	    }, props));
+	  }; // Return setup placeholder
 
-	  if (columns === 0) {
-	    props.setAttributes({
-	      placeholder: 1
-	    });
-	  } // Setup placeholder fields
-
-
-	  var fields = [{
-	    control: 'columns',
-	    min: MIN_COLUMNS$1,
-	    max: MAX_COLUMNS$1,
-	    value: columns,
-	    onChange: props.setColumns
-	  }]; // Return setup placeholder
 
 	  if (placeholder === 1) {
-	    return wp.element.createElement("div", {
-	      className: "vf-block vf-block--placeholder ".concat(props.className)
+	    return wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	      className: "vf-block vf-block--placeholder"
 	    }, wp.element.createElement(components.Placeholder, {
 	      label: i18n.__('VF Grid'),
 	      icon: 'admin-generic'
-	    }, wp.element.createElement(VFBlockFields, {
-	      fields: fields
-	    })));
-	  } // Amend fields for inspector
+	    }, wp.element.createElement(GridControl, null)));
+	  }
+
+	  var className = "vf-grid | vf-grid__col-".concat(columns);
+
+	  var styles = defineProperty$4({}, '--block-columns', columns); // Return inner blocks and inspector controls
 
 
-	  fields[0].help = i18n.__('Content may be reorganised when columns are reduced.'); // Return inner blocks and inspector controls
-
-	  return wp.element.createElement(React.Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__('Settings'),
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Advanced Settings'),
 	    initialOpen: true
-	  }, wp.element.createElement(VFBlockFields, {
-	    fields: fields
-	  }))), wp.element.createElement("div", {
-	    className: 'vf-block-grid',
-	    "data-ver": ver$3,
-	    "data-columns": columns
+	  }, wp.element.createElement(GridControl, {
+	    help: i18n.__('Content may be reorganised when columns are reduced.')
+	  }))), wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	    className: className,
+	    style: styles
 	  }, wp.element.createElement(blockEditor.InnerBlocks, {
 	    allowedBlocks: ['vf/grid-column'],
-	    template: Array(columns).fill(['vf/grid-column']),
 	    templateLock: "all"
 	  })));
-	}); // Block transforms
+	}; // Block transforms
+
 
 	settings$3.transforms = {
 	  from: [fromColumns('core/columns', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1), fromColumns('vf/embl-grid', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1)]
@@ -12499,7 +12650,7 @@
 
 	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$4 = useVFDefaults();
-	var ver$4 = '1.0.0';
+	var ver$2 = '1.0.0';
 
 	var settings$4 = _objectSpread$g(_objectSpread$g({}, defaults$4), {}, {
 	  name: 'vf/tabs-section',
@@ -12549,9 +12700,9 @@
 	};
 
 	settings$4.edit = function (props) {
-	  if (ver$4 !== props.attributes.ver) {
+	  if (ver$2 !== props.attributes.ver) {
 	    props.setAttributes({
-	      ver: ver$4
+	      ver: ver$2
 	    });
 	  }
 
@@ -12652,7 +12803,7 @@
 
 	function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$i(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$5 = useVFDefaults();
-	var ver$5 = '1.0.0';
+	var ver$3 = '1.0.0';
 
 	var settings$5 = _objectSpread$h(_objectSpread$h({}, defaults$5), {}, {
 	  name: 'vf/tabs',
@@ -12692,9 +12843,9 @@
 	};
 
 	settings$5.edit = function (props) {
-	  if (ver$5 !== props.attributes.ver) {
+	  if (ver$3 !== props.attributes.ver) {
 	    props.setAttributes({
-	      ver: ver$5
+	      ver: ver$3
 	    });
 	  }
 
@@ -12798,7 +12949,7 @@
 	    fields: fields
 	  }))), wp.element.createElement("div", {
 	    className: "vf-tabs",
-	    "data-ver": ver$5
+	    "data-ver": ver$3
 	  }, wp.element.createElement("ul", {
 	    className: "vf-tabs__list"
 	  }, tabs.map(function (tab, i) {

@@ -24,7 +24,6 @@ const ColumnsControl = props => {
           .map((x, i) => (
             <Button
               key={i}
-              isLarge
               isPrimary={isPressed(i)}
               aria-pressed={isPressed(i)}
               onClick={() => onChange(i + min)}>

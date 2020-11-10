@@ -1,19 +1,22 @@
 /**
 Block Name: Grid
 */
-import React, {Fragment} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
-import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
+import {
+  InnerBlocks,
+  InspectorControls,
+  // TODO: replace with `useBlockProps` hook in WP 5.6
+  __experimentalBlock as ExperimentalBlock
+} from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
-import {withDispatch} from '@wordpress/data';
+import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
-import VFBlockFields from '../vf-block/block-fields';
+import ColumnsControl from '../components/columns-control';
 import {fromColumns} from './transforms/grid';
 
 const defaults = useVFDefaults();
-
-const ver = '1.0.0';
 
 const MIN_COLUMNS = 1;
 const MAX_COLUMNS = 6;
@@ -24,6 +27,10 @@ const settings = {
   title: __('VF Grid'),
   category: 'vf/core',
   description: __('Visual Framework (core)'),
+  supports: {
+    ...defaults.supports,
+    lightBlockWrapper: true
+  },
   attributes: {
     ...defaults.attributes,
     placeholder: {
@@ -33,15 +40,19 @@ const settings = {
     columns: {
       type: 'integer',
       default: 0
+    },
+    dirty: {
+      type: 'integer',
+      default: 0
     }
   }
 };
 
 settings.save = (props) => {
-  if (props.attributes.placeholder === 1) {
+  const {columns, placeholder} = props.attributes;
+  if (placeholder === 1) {
     return null;
   }
-  const {columns} = props.attributes;
   const className = `vf-grid | vf-grid__col-${columns}`;
   return (
     <div className={className}>
@@ -50,101 +61,142 @@ settings.save = (props) => {
   );
 };
 
-const withGridDispatch = (Edit) => {
-  return withDispatch((dispatch, ownProps, {select}) => {
-    const {getBlocks} = select('core/block-editor');
-    const {replaceInnerBlocks} = dispatch('core/block-editor');
-
-    // `columns` attribute `onChange` callback
-    const setColumns = (newColumns) => {
-      const prevColumns = ownProps.attributes.columns;
-      // Merge inner blocks when number of columns is reduced
-      if (newColumns < prevColumns) {
-        const columnBlocks = getBlocks(ownProps.clientId);
-        const mergeBlocks = [];
-        for (let i = newColumns - 1; i < prevColumns; i++) {
-          mergeBlocks.push(...columnBlocks[i].innerBlocks);
-        }
-        replaceInnerBlocks(
-          columnBlocks[newColumns - 1].clientId,
-          mergeBlocks,
-          false
-        );
-      }
-      let innerBlocks = getBlocks(ownProps.clientId);
-      innerBlocks = innerBlocks.slice(0, newColumns);
-      // Append new blocks when number of columns is increased
-      if (newColumns > prevColumns) {
-        while (innerBlocks.length < newColumns) {
-          innerBlocks.push(createBlock('vf/grid-column', {}, []));
-        }
-      }
-      if (newColumns !== prevColumns) {
-        replaceInnerBlocks(ownProps.clientId, innerBlocks, false);
-      }
-      // Update block attributes
-      ownProps.setAttributes({columns: newColumns, placeholder: 0});
-    };
-    return {
-      setColumns
-    };
-  })(Edit);
-};
-
-settings.edit = withGridDispatch((props) => {
-  const {columns, placeholder} = props.attributes;
-
-  // Ensure version is encoded in post content
-  props.setAttributes({ver});
+settings.edit = (props) => {
+  const {clientId} = props;
+  const {dirty, columns, placeholder} = props.attributes;
 
   // Turn on setup placeholder if no columns are defined
-  if (columns === 0) {
-    props.setAttributes({placeholder: 1});
-  }
-
-  // Setup placeholder fields
-  const fields = [
-    {
-      control: 'columns',
-      min: MIN_COLUMNS,
-      max: MAX_COLUMNS,
-      value: columns,
-      onChange: props.setColumns
+  useEffect(() => {
+    if (columns === 0) {
+      props.setAttributes({placeholder: 1});
     }
-  ];
+  }, [clientId]);
+
+  const {replaceInnerBlocks} = useDispatch('core/block-editor');
+
+  const {setColumns, updateColumns} = useSelect(
+    (select) => {
+      const {getBlocks, getBlockAttributes} = select('core/block-editor');
+
+      // Return total number of columns accounting for spans
+      const countSpans = (blocks) => {
+        let count = 0;
+        blocks.forEach((block) => {
+          const {span} = block.attributes;
+          if (Number.isInteger(span) && span > 0) {
+            count += span;
+          } else {
+            count++;
+          }
+        });
+        return count;
+      };
+
+      // Append new columns
+      const addColumns = (maxSpans) => {
+        const innerColumns = getBlocks(clientId);
+        while (countSpans(innerColumns) < maxSpans) {
+          innerColumns.push(createBlock('vf/grid-column', {}, []));
+        }
+        replaceInnerBlocks(clientId, innerColumns, false);
+      };
+
+      // Remove columns by merging their inner blocks
+      const removeColumns = (maxSpans) => {
+        let innerColumns = getBlocks(clientId);
+        let mergeBlocks = [];
+        while (innerColumns.length > 1 && countSpans(innerColumns) > maxSpans) {
+          mergeBlocks = mergeBlocks.concat(innerColumns.pop().innerBlocks);
+        }
+        replaceInnerBlocks(
+          innerColumns[innerColumns.length - 1].clientId,
+          mergeBlocks.concat(innerColumns[innerColumns.length - 1].innerBlocks),
+          false
+        );
+        replaceInnerBlocks(
+          clientId,
+          getBlocks(clientId).slice(0, innerColumns.length),
+          false
+        );
+      };
+
+      const setColumns = (newColumns) => {
+        props.setAttributes({columns: newColumns, placeholder: 0});
+        const innerColumns = getBlocks(clientId);
+        const count = countSpans(innerColumns);
+        if (newColumns < count) {
+          removeColumns(newColumns);
+        }
+        if (newColumns > count) {
+          addColumns(newColumns);
+        }
+      };
+
+      const updateColumns = () => {
+        const {columns} = getBlockAttributes(clientId);
+        setColumns(columns);
+        props.setAttributes({dirty: 0});
+      };
+
+      return {
+        setColumns,
+        updateColumns
+      };
+    },
+    [clientId]
+  );
+
+  useEffect(() => {
+    if (dirty > 0) {
+      updateColumns();
+    }
+  }, [dirty]);
+
+  const GridControl = (props) => {
+    return (
+      <ColumnsControl
+        value={columns}
+        min={MIN_COLUMNS}
+        max={MAX_COLUMNS}
+        onChange={useCallback((value) => setColumns(value))}
+        {...props}
+      />
+    );
+  };
 
   // Return setup placeholder
   if (placeholder === 1) {
     return (
-      <div className={`vf-block vf-block--placeholder ${props.className}`}>
+      <ExperimentalBlock.div className='vf-block vf-block--placeholder'>
         <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
-          <VFBlockFields fields={fields} />
+          <GridControl />
         </Placeholder>
-      </div>
+      </ExperimentalBlock.div>
     );
   }
 
-  // Amend fields for inspector
-  fields[0].help = __('Content may be reorganised when columns are reduced.');
+  const className = `vf-grid | vf-grid__col-${columns}`;
+
+  const styles = {
+    ['--block-columns']: columns
+  };
 
   // Return inner blocks and inspector controls
   return (
-    <Fragment>
+    <>
       <InspectorControls>
-        <PanelBody title={__('Settings')} initialOpen>
-          <VFBlockFields fields={fields} />
+        <PanelBody title={__('Advanced Settings')} initialOpen>
+          <GridControl
+            help={__('Content may be reorganised when columns are reduced.')}
+          />
         </PanelBody>
       </InspectorControls>
-      <div className={'vf-block-grid'} data-ver={ver} data-columns={columns}>
-        <InnerBlocks
-          allowedBlocks={['vf/grid-column']}
-          template={Array(columns).fill(['vf/grid-column'])}
-          templateLock='all'
-        />
-      </div>
-    </Fragment>
+      <ExperimentalBlock.div className={className} style={styles}>
+        <InnerBlocks allowedBlocks={['vf/grid-column']} templateLock='all' />
+      </ExperimentalBlock.div>
+    </>
   );
-});
+};
 
 // Block transforms
 settings.transforms = {
