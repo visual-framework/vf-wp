@@ -32,7 +32,7 @@ const TEXT_CONTROLS = ['text', 'email'];
 const BOOL_CONTROLS = ['bool', 'boolean', 'toggle', 'true_false'];
 
 // Fields component
-const VFBlockFields = props => {
+const VFBlockFields = (props) => {
   const {attributes: attrs, setAttributes, fields} = props;
 
   // Generic event handler to update an attribute
@@ -50,7 +50,7 @@ const VFBlockFields = props => {
 
   // Map fields and add array of controls
   controls.push(
-    fields.map(field => {
+    fields.map((field) => {
       let {control, help, label, name, onChange} = field;
       const key = useHashsum(field);
 
@@ -60,13 +60,7 @@ const VFBlockFields = props => {
       // The ACF "checkbox" field returns an array of one or more checked
       // values whereas "true_false" (here "toggle") uses a boolean value
       if (control === 'button') {
-        return (
-          <ButtonControl
-            key={key}
-            field={field}
-            label={label}
-          />
-        );
+        return <ButtonControl key={key} field={field} label={label} />;
       }
       // The ACF "checkbox" field returns an array of one or more checked
       // values whereas "true_false" (here "toggle") uses a boolean value
@@ -84,9 +78,12 @@ const VFBlockFields = props => {
       }
       // Custom control to manage number of grid columns
       if (control === 'columns') {
-        const min = parseInt(field.min) || 1;
-        const max = parseInt(field.max) || 6;
-        const value = parseInt(field.value) || 0;
+        // const min = parseInt(field.min) || 1;
+        // const max = parseInt(field.max) || 6;
+        // const value = parseInt(field.value) || 0;
+        const min = isNaN(field.min) ? 1 : parseInt(field.min);
+        const max = isNaN(field.max) ? 6 : parseInt(field.max);
+        const value = isNaN(field.value) ? 0 : parseInt(field.value);
         return (
           <ColumnsControl
             key={key}
@@ -108,7 +105,7 @@ const VFBlockFields = props => {
             key={key}
             label={label}
             currentDate={date}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
           />
         );
       }
@@ -134,22 +131,24 @@ const VFBlockFields = props => {
             key={key}
             label={label}
             selected={attrs[name]}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
             options={[...field.options]}
           />
         );
       }
       if (control === 'range') {
-        const min = parseInt(field['min']) || 1;
-        const max = parseInt(field['max']) || 10;
-        const step = parseInt(field['step']) || 1;
+        const allowReset = !!field.allowReset;
+        const min = isNaN(field.min) ? 1 : parseInt(field.min);
+        const max = isNaN(field.max) ? 10 : parseInt(field.max);
+        const step = isNaN(field.step) ? 1 : parseInt(field.step);
         return (
           <RangeControl
             key={key}
             help={help}
             label={label}
             value={parseInt(attrs[name]) || min}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
+            allowReset={allowReset}
             step={step}
             min={min}
             max={max}
@@ -166,7 +165,7 @@ const VFBlockFields = props => {
             value={attrs[name]}
             tag={tag}
             placeholder={placeholder}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
           />
         );
       }
@@ -176,7 +175,7 @@ const VFBlockFields = props => {
             key={key}
             label={label}
             value={attrs[name]}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
             options={[{label: __('Select…'), value: ''}, ...field.options]}
           />
         );
@@ -188,7 +187,7 @@ const VFBlockFields = props => {
             taxonomy={field.taxonomy}
             label={label}
             value={attrs[name]}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
           />
         );
       }
@@ -196,10 +195,10 @@ const VFBlockFields = props => {
         return (
           <TextControl
             key={key}
-            type="text"
+            type='text'
             label={label}
             value={attrs[name]}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
           />
         );
       }
@@ -209,7 +208,7 @@ const VFBlockFields = props => {
             key={key}
             label={label}
             value={attrs[name]}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
           />
         );
       }
@@ -221,7 +220,7 @@ const VFBlockFields = props => {
             help={help}
             label={label}
             checked={attrs[name]}
-            onChange={value => onChange(name, value ? 1 : 0)}
+            onChange={(value) => onChange(name, value ? 1 : 0)}
           />
         );
       }
@@ -232,7 +231,7 @@ const VFBlockFields = props => {
             label={label}
             value={attrs[name]}
             disableSuggestions={field.disableSuggestions === true}
-            onChange={value => onChange(name, value)}
+            onChange={(value) => onChange(name, value)}
           />
         );
       }

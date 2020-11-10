@@ -14,6 +14,7 @@ import vfBox from './vf-core/deprecated/vf-box';
 import vfBreadcrumbsItem from './vf-core/vf-breadcrumbs-item';
 import vfBreadcrumbs from './vf-core/vf-breadcrumbs';
 import vfButton from './vf-core/vf-button';
+import vfCluster from './vf-core/vf-cluster';
 import vfDivider from './vf-core/vf-divider';
 import vfEmbed from './vf-core/vf-embed';
 import vfGridColumn from './vf-core/vf-grid-column';
@@ -36,6 +37,8 @@ if (parseInt(coreOptin) === 1) {
     vfGridColumn,
     vfEMBLGrid,
     vfGrid,
+    // Inner Blocks
+    vfCluster,
     // Elements
     vfBadge,
     vfBlockquote,

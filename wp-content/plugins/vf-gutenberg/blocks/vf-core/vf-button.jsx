@@ -3,13 +3,14 @@ Block Name: Button
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import template from '@visual-framework/vf-button/vf-button.precompiled';
 import {
   withTransientAttributeMap,
   withTransientStyle
 } from '../hooks/with-transient';
 import useVFCoreSettings from '../hooks/use-vf-core-settings';
 import {fromCore} from './transforms/button';
+
+import '@visual-framework/vf-button/vf-button.precompiled';
 
 const withBEMModifiers = Edit => {
   return props => {
