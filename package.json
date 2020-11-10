@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "@visual-framework/vf-cluster": "1.0.0",
+    "@visual-framework/vf-cluster": "1.0.1",
     "list-stream": "2.0.0"
   },
   "devDependencies": {
