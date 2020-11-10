@@ -2,7 +2,6 @@
  * VF Gutenberg plugin JavaScript
  */
 const path = require('path');
-const chalk = require('chalk');
 const rollup = require('rollup');
 
 const {babel} = require('@rollup/plugin-babel');
