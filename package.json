@@ -39,7 +39,6 @@
     ]
   },
   "dependencies": {
-    "@visual-framework/vf-cluster": "1.0.1",
     "list-stream": "2.0.0"
   },
   "devDependencies": {
@@ -69,6 +68,7 @@
     "@visual-framework/vf-breadcrumbs": "1.0.5",
     "@visual-framework/vf-card": "2.2.1",
     "@visual-framework/vf-card-container": "3.0.2",
+    "@visual-framework/vf-cluster": "^1.0.0",
     "@visual-framework/vf-code-example": "1.2.0",
     "@visual-framework/vf-config": "1.0.0-alpha.2",
     "@visual-framework/vf-content": "1.3.1",
