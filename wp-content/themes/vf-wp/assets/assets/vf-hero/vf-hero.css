@@ -53,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-hero
- * Version: 1.7.0
+ * Version: 1.7.1
  * Location: components/vf-hero
  */
 /* stylelint-disable */
@@ -69,7 +69,7 @@
   margin-bottom: 2rem;
   position: relative;
 }
-.vf-hero:not(.vf-hero--very-easy):not(.vf-hero--intense):not(.vf-hero--inlay)::before {
+.vf-hero:not(.vf-hero--very-easy):not(.vf-hero--intense)::before {
   background-image: var(--vf-hero-bg-image);
   content: "";
   grid-column: 1/-1;
@@ -150,22 +150,6 @@
   --vf-hero-heading-text-color: 0;
   --vf-hero-text-bg-color: 0;
   --vf-hero-text-color: 1;
-}
-
-.vf-hero--inlay {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 81.25em;
-}
-.vf-hero--inlay::before {
-  background-image: var(--vf-hero-bg-image);
-  content: "";
-  grid-column: 1/-1;
-  grid-row: 1/span 1;
-  background-position: top center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: var(--vf-hero-grid__row--initial, 320px);
 }
 
 .vf-hero__content {
