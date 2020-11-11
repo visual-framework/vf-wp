@@ -185,7 +185,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/vf-container-masthead"
+                "value": "acf\/vfwp-masthead"
             }
         ]
     ],
