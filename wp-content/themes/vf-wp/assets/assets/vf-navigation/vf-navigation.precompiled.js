@@ -14,7 +14,15 @@ output += " vf-navigation--";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "classModifier"), env.opts.autoescape);
 ;
 }
-output += " | vf-cluster\">\n";
+if(runtime.contextOrFrameLookup(context, frame, "classModifier") == "main") {
+output += " | vf-cluster";
+;
+}
+if(runtime.contextOrFrameLookup(context, frame, "classModifier") == "additional") {
+output += " | vf-u-fullbleed";
+;
+}
+output += "\">\n";
 if(runtime.contextOrFrameLookup(context, frame, "heading")) {
 output += "  <h3 class=\"vf-navigation__heading\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "heading"), env.opts.autoescape);
