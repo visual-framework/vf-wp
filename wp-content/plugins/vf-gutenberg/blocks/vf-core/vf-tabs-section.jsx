@@ -1,5 +1,5 @@
 /**
-Block Name: Grid Column
+Block Name: Tabs Section
 */
 import React, {useCallback, useEffect} from 'react';
 import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';

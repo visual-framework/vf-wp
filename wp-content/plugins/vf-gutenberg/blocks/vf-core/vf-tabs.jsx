@@ -1,5 +1,5 @@
 /**
-Block Name: Grid
+Block Name: Tabs
 */
 import React, {useCallback, useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
