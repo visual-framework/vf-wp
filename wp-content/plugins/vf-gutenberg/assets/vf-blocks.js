@@ -12741,6 +12741,169 @@
 	  })));
 	};
 
+	function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$6 = useVFDefaults();
+
+	var Edit = function Edit(props) {
+	  var _useState = React.useState(acf.uniqid('block_')),
+	      _useState2 = slicedToArray(_useState, 1),
+	      acfId = _useState2[0];
+
+	  var _useState3 = React.useState(true),
+	      _useState4 = slicedToArray(_useState3, 2),
+	      isFetching = _useState4[0],
+	      setFetching = _useState4[1];
+
+	  var _useState5 = React.useState(true),
+	      _useState6 = slicedToArray(_useState5, 2),
+	      isLoading = _useState6[0],
+	      setLoading = _useState6[1];
+
+	  var _useState7 = React.useState(''),
+	      _useState8 = slicedToArray(_useState7, 2),
+	      render = _useState8[0],
+	      setRender = _useState8[1];
+
+	  var _useState9 = React.useState(null),
+	      _useState10 = slicedToArray(_useState9, 2),
+	      script = _useState10[0],
+	      setScript = _useState10[1];
+
+	  var ref = React.useRef(null);
+	  var clientId = props.clientId;
+	  var onMessage = React.useCallback(function (ev) {
+	    var id = ev.data.id;
+
+	    if (id && id.includes(acfId)) {
+	      clearTimeout(window["".concat(id, "_onMessage")]);
+	      window["".concat(id, "_onMessage")] = setTimeout(function () {
+	        window.removeEventListener('message', onMessage);
+	        setLoading(false);
+	      }, 100);
+	    }
+	  }, [clientId]);
+	  React.useEffect(function () {
+	    setLoading(true);
+	    setFetching(true);
+	    window.removeEventListener('message', onMessage);
+	    window.addEventListener('message', onMessage);
+	    var name = props.attributes.ref.replaceAll('_', '-');
+	    name = name.replace('vf-', 'vf-container-');
+
+	    var fetch = /*#__PURE__*/function () {
+	      var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
+	        var response, html, _script;
+
+	        return regenerator.wrap(function _callee$(_context) {
+	          while (1) {
+	            switch (_context.prev = _context.next) {
+	              case 0:
+	                _context.next = 2;
+	                return wp.ajax.post('acf/ajax/fetch-block', {
+	                  query: {
+	                    preview: true
+	                  },
+	                  nonce: acf.get('nonce'),
+	                  post_id: acf.get('post_id'),
+	                  block: JSON.stringify({
+	                    id: acfId,
+	                    name: "acf/".concat(name),
+	                    data: {
+	                      defaults: '1'
+	                    },
+	                    align: '',
+	                    mode: 'preview'
+	                  })
+	                });
+
+	              case 2:
+	                response = _context.sent;
+
+	                if (response && response.preview) {
+	                  html = response.preview.split(/<script[^>]*?>/)[0];
+	                  _script = response.preview.match(/<script(?:(?!>)[\s\S])*?>([\s\S]*)<\/script>/m);
+	                  setScript(Array.isArray(_script) ? _script[1] : null);
+	                  setRender(html);
+	                  setFetching(false);
+	                }
+
+	              case 4:
+	              case "end":
+	                return _context.stop();
+	            }
+	          }
+	        }, _callee);
+	      }));
+
+	      return function fetch() {
+	        return _ref.apply(this, arguments);
+	      };
+	    }();
+
+	    fetch();
+	  }, [clientId]);
+	  React.useEffect(function () {
+	    if (isFetching) {
+	      return;
+	    }
+
+	    ref.current.innerHTML = render;
+
+	    if (script) {
+	      var el = document.createElement('script');
+	      el.type = 'text/javascript';
+	      el.innerHTML = script;
+	      ref.current.appendChild(el);
+	    }
+	  }, [isFetching]); // add DOM attributes for styling
+
+	  var rootAttrs = {
+	    className: "vf-block ".concat(props.className),
+	    'data-name': props.name,
+	    'data-editing': false,
+	    'data-loading': isLoading,
+	    style: {}
+	  };
+
+	  if (isLoading) {
+	    rootAttrs.style.minHeight = '100px';
+	  }
+
+	  var viewStyle = {};
+
+	  if (isLoading) {
+	    viewStyle.visibility = 'hidden';
+	  }
+
+	  return wp.element.createElement("div", rootAttrs, isLoading && wp.element.createElement(components.Spinner, null), wp.element.createElement("div", {
+	    ref: ref,
+	    style: viewStyle,
+	    className: "vf-block__view"
+	  }));
+	};
+
+	var vfPlugin = _objectSpread$g(_objectSpread$g({}, defaults$6), {}, {
+	  name: 'vf/plugin',
+	  title: i18n.__('Preview'),
+	  category: 'vf/wp',
+	  description: '',
+	  attributes: {
+	    ref: {
+	      type: 'string'
+	    }
+	  },
+	  supports: _objectSpread$g(_objectSpread$g({}, defaults$6.supports), {}, {
+	    inserter: false,
+	    reusable: false
+	  }),
+	  edit: Edit,
+	  save: function save() {
+	    return null;
+	  }
+	});
+
 	var _useVFGutenberg = useVFGutenberg(),
 	    coreOptin = _useVFGutenberg.coreOptin; // Register VF Core blocks
 
@@ -12756,18 +12919,8 @@
 	    return blocks.registerBlockType(settings.name, settings);
 	  });
 	} // Register experimental preview block
-	// const settings = useVFPluginSettings({
-	//   name: 'vf/plugin',
-	//   title: 'Preview',
-	//   category: 'vf/wp'
-	// });
-	// settings.attributes.ref = {
-	//   type: 'string'
-	// };
-	// registerBlockType('vf/plugin', settings);
-	// Handle iframe preview resizing globally
+	blocks.registerBlockType('vf/plugin', vfPlugin); // Handle iframe preview resizing globally
 	// TODO: remove necessity from `useVFIFrame`
-
 
 	window.addEventListener('message', function (_ref) {
 	  var data = _ref.data;

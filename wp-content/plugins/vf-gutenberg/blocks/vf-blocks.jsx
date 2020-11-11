@@ -56,15 +56,8 @@ if (parseInt(coreOptin) === 1) {
 }
 
 // Register experimental preview block
-// const settings = useVFPluginSettings({
-//   name: 'vf/plugin',
-//   title: 'Preview',
-//   category: 'vf/wp'
-// });
-// settings.attributes.ref = {
-//   type: 'string'
-// };
-// registerBlockType('vf/plugin', settings);
+import vfPlugin from './vf-core/vf-plugin';
+registerBlockType('vf/plugin', vfPlugin);
 
 // Handle iframe preview resizing globally
 // TODO: remove necessity from `useVFIFrame`

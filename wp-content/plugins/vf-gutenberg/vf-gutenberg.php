@@ -379,6 +379,7 @@ if (iframe) {
       }
     }
   }
+  // TODO: move to component scripts / fix?
   // Trigger first update
   updateBlock(true);
   // Add event for live field changes

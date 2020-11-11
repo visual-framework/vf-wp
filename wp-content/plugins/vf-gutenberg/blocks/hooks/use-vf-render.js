@@ -23,7 +23,7 @@ const useVFRenderTemplate = (name, attrs) => {
 
 const renderStore = {};
 
-const useVFRender = props => {
+const useVFRender = (props) => {
   const [data, setData] = useState(null);
   const [isLoading, setLoading] = useState(false);
   if (props.isRenderable === false) {
