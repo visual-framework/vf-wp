@@ -308,6 +308,8 @@ window.<?php echo $id; ?> = function() {
   iframe.vfActive = true;
   var doc = iframe.contentWindow.document;
   doc.body.innerHTML = <?php echo json_encode($html); ?>;
+  doc.body.style.position = 'absolute';
+  doc.body.style.width = '100%';
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.innerHTML = `
@@ -336,7 +338,7 @@ if (ResizeObserver) {
 }
 `;
   doc.body.appendChild(script);
-  doc.body.classList.add('ebi-vf1-integration');
+  // doc.body.classList.add('ebi-vf1-integration');
 };
 
 const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');

@@ -31,6 +31,10 @@ class VF_Blocks extends VF_Type {
     parent::activate();
   }
 
+  static public function post_type() {
+    return 'vf_block';
+  }
+
   static public function block_category() {
     return 'vf/blocks';
   }
@@ -100,6 +104,16 @@ class VF_Blocks extends VF_Type {
         $block = $args[0];
         if ( ! get_field('defaults', $block['id'])) {
           $acf_id = $block['id'];
+        }
+        if (get_field('is_plugin', $block['id']) === 1) {
+          $plugin = VF_Blocks::name_block_to_post($block['name']);
+          $plugin = VF_Plugin::get_plugin($plugin);
+          if ($plugin) {
+            acf_reset_meta($block['id']);
+            $template = function($args) use ($plugin) {
+              VF_Plugin::render($plugin);
+            };
+          }
         }
         if (class_exists('VF_Gutenberg')) {
           VF_Gutenberg::acf_render_template($args, $template, $acf_id);

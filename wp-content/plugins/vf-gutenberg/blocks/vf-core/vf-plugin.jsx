@@ -1,3 +1,13 @@
+/**
+Block Name: Plugin
+Notes:
+  * This is not actually a VF component
+  * It's named `vf/plugin` to avoid breaking existing usage
+  * VF_Block and VF_Container plugins have default content, e.g.:
+
+  <!-- wp:vf/plugin {"ref":"vf_masthead"} /-->
+
+  */
 import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {Spinner} from '@wordpress/components';
 import {__} from '@wordpress/i18n';
@@ -34,8 +44,7 @@ const Edit = (props) => {
     setFetching(true);
     window.removeEventListener('message', onMessage);
     window.addEventListener('message', onMessage);
-    let name = props.attributes.ref.replaceAll('_', '-');
-    name = name.replace('vf-', 'vf-container-');
+
     const fetch = async () => {
       const response = await wp.ajax.post('acf/ajax/fetch-block', {
         query: {
@@ -45,8 +54,8 @@ const Edit = (props) => {
         post_id: acf.get('post_id'),
         block: JSON.stringify({
           id: acfId,
-          name: `acf/${name}`,
-          data: {defaults: '1'},
+          name: props.attributes.ref,
+          data: {is_plugin: 1},
           align: '',
           mode: 'preview'
         })
@@ -78,6 +87,7 @@ const Edit = (props) => {
   // add DOM attributes for styling
   const rootAttrs = {
     className: `vf-block ${props.className}`,
+    'data-ver': props.attributes.ver,
     'data-name': props.name,
     'data-editing': false,
     'data-loading': isLoading,
@@ -108,6 +118,7 @@ export default {
   category: 'vf/wp',
   description: '',
   attributes: {
+    ...defaults.attributes,
     ref: {
       type: 'string'
     }

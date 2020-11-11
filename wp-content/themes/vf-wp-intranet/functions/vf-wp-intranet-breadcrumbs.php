@@ -22,9 +22,7 @@ class VF_Breadcrumbs_Intranet extends VF_Plugin {
   protected $config = array(
     'post_name'  => 'vf_breadcrumbs_intranet',
     'post_title' => 'Intranet breadcrumbs',
-    'post_type'  => 'vf_container',
-    // Allow block to be previewed in WP admin
-    '__experimental__has_admin_preview' => true
+    'post_type'  => 'vf_container'
   );
 
   public function __construct(array $params = array()) {
@@ -36,13 +34,13 @@ class VF_Breadcrumbs_Intranet extends VF_Plugin {
 
 
 public function intranet_breadcrumbs() {
-  
+
     $delimiter = '&raquo;';
     $name = 'Home'; //text for the 'Home' link
     $currentBefore = '<li class="vf-breadcrumbs__item">';
     $currentAfter = '</li>';
     $home = get_bloginfo('url');
-    
+
     echo '<nav class="vf-breadcrumbs" aria-label="Breadcrumb">';
     echo '<ul class="vf-breadcrumbs__list | vf-list vf-list--inline">';
 
@@ -54,7 +52,7 @@ public function intranet_breadcrumbs() {
       echo '<li class="vf-breadcrumbs__item"><a href="' . $insites_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
        }
 
-    // community blog   
+    // community blog
     if ( is_post_type_archive('community-blog') ) {
       echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
       $community_url = get_post_type_archive_link('community-blog');
@@ -69,7 +67,7 @@ public function intranet_breadcrumbs() {
       $event_name = 'Internal events';
       echo '<li class="vf-breadcrumbs__item"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
         }
-    
+
     if (is_tag()){
       echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
       $insites_url = get_post_type_archive_link('post');
@@ -86,7 +84,7 @@ public function intranet_breadcrumbs() {
       $thisCat = $cat_obj->term_id;
       $thisCat = get_category($thisCat);
       $parentCat = get_category($thisCat->parent);
-      if ($thisCat->parent != 0) 
+      if ($thisCat->parent != 0)
       echo (get_category_parents($parentCat, TRUE, ''));
       echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
       $insites_url = get_post_type_archive_link('post');
@@ -94,13 +92,13 @@ public function intranet_breadcrumbs() {
       echo '<li class="vf-breadcrumbs__item"><a href="' . $insites_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
       echo $currentBefore . 'Category: &#39;';
       single_cat_title();
-      echo '&#39;' . $currentAfter; 
-  
+      echo '&#39;' . $currentAfter;
+
     }
 
 
     if ( !is_home() && !is_archive('community-blog') && !is_archive('vf_event') && !is_front_page() || is_paged() ) {
-    
+
         $post = get_queried_object();
       echo '
       <li class="vf-breadcrumbs__item">
@@ -109,11 +107,11 @@ public function intranet_breadcrumbs() {
         echo '<li class="vf-breadcrumbs__item"><a href="' . get_year_link(get_the_time('Y')) . '"class="vf-breadcrumbs__link">' . get_the_time('Y') . '</a></li>';
         echo '<li class="vf-breadcrumbs__item"><a href="' . get_month_link(get_the_time('Y'),get_the_time('m')) . '"class="vf-breadcrumbs__link">' . get_the_time('F') . '</a></li>';
         echo $currentBefore . get_the_time('d') . $currentAfter;
-    
+
       } elseif ( is_month() ) {
         echo '<li class="vf-breadcrumbs__item"><a href="' . get_year_link(get_the_time('Y')) . '"class="vf-breadcrumbs__link">' . get_the_time('Y') . '</a></li>';
         echo $currentBefore . get_the_time('F') . $currentAfter;
-    
+
       } elseif ( is_year() ) {
         echo $currentBefore . get_the_time('Y') . $currentAfter;
 
@@ -137,7 +135,7 @@ public function intranet_breadcrumbs() {
         $insites_name = 'INsites';
         echo '<li class="vf-breadcrumbs__item"><a href="' . $insites_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
         echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
-    
+
       } elseif ( is_attachment() ) {
         $parent = get_post($post->post_parent);
         $cat = get_the_category($parent->ID); $cat = $cat[0];
@@ -146,12 +144,12 @@ public function intranet_breadcrumbs() {
         echo $currentBefore;
         the_title();
         echo $currentAfter;
-    
+
       } elseif ( is_page() && !$post->post_parent ) {
         echo $currentBefore;
         single_post_title();
         echo $currentAfter;
-    
+
       } elseif ( is_page() && $post->post_parent ) {
         $parent_id  = $post->post_parent;
         $breadcrumbs = array();
@@ -163,30 +161,30 @@ public function intranet_breadcrumbs() {
         $breadcrumbs = array_reverse($breadcrumbs);
         foreach ($breadcrumbs as $crumb) echo $crumb . '';
         echo $currentBefore;
-        single_post_title(); 
+        single_post_title();
         echo $currentAfter;
-    
+
       } elseif ( is_search() ) {
         echo $currentBefore . 'Search results for &#39;' . get_search_query() . '&#39;' . $currentAfter;
-    
+
       } elseif ( is_author() ) {
          global $author;
         $userdata = get_userdata($author);
         echo $currentBefore . 'Articles posted by ' . $userdata->display_name . $currentAfter;
-    
+
       } elseif ( is_404() ) {
         echo $currentBefore . 'Error 404' . $currentAfter;
       }
-    
+
       if ( get_query_var('paged') ) {
         if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) echo ' (';
         echo __('Page') . ' ' . get_query_var('paged');
         if ( is_category() || is_day() || is_month() || is_year() || is_search() || is_tag() || is_author() ) echo ')';
       }
-    
+
       echo '</ul>';
       echo '</nav>';
-    
+
     }
   }
 

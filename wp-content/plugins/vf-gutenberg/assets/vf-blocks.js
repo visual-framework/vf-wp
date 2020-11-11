@@ -12789,8 +12789,6 @@
 	    setFetching(true);
 	    window.removeEventListener('message', onMessage);
 	    window.addEventListener('message', onMessage);
-	    var name = props.attributes.ref.replaceAll('_', '-');
-	    name = name.replace('vf-', 'vf-container-');
 
 	    var fetch = /*#__PURE__*/function () {
 	      var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
@@ -12809,9 +12807,9 @@
 	                  post_id: acf.get('post_id'),
 	                  block: JSON.stringify({
 	                    id: acfId,
-	                    name: "acf/".concat(name),
+	                    name: props.attributes.ref,
 	                    data: {
-	                      defaults: '1'
+	                      is_plugin: 1
 	                    },
 	                    align: '',
 	                    mode: 'preview'
@@ -12861,6 +12859,7 @@
 
 	  var rootAttrs = {
 	    className: "vf-block ".concat(props.className),
+	    'data-ver': props.attributes.ver,
 	    'data-name': props.name,
 	    'data-editing': false,
 	    'data-loading': isLoading,
@@ -12889,11 +12888,11 @@
 	  title: i18n.__('Preview'),
 	  category: 'vf/wp',
 	  description: '',
-	  attributes: {
+	  attributes: _objectSpread$g(_objectSpread$g({}, defaults$6.attributes), {}, {
 	    ref: {
 	      type: 'string'
 	    }
-	  },
+	  }),
 	  supports: _objectSpread$g(_objectSpread$g({}, defaults$6.supports), {}, {
 	    inserter: false,
 	    reusable: false

@@ -10,12 +10,9 @@ if ( ! $vf_plugin instanceof VF_WP_Hero) {
   return;
 }
 
-// Plugin is rendered inside Gutenberg block
-$is_render = $vf_plugin->__experimental__is_admin_render();
-
 ?>
 
-<?php 
+<?php
 
 $theme = get_field('vf_hero_theme');
 

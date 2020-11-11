@@ -36,6 +36,10 @@ class VF_Containers extends VF_Type {
     parent::activate();
   }
 
+  static public function post_type() {
+    return 'vf_container';
+  }
+
   static public function block_category() {
     return 'vf/containers';
   }
@@ -104,16 +108,20 @@ class VF_Containers extends VF_Type {
         $args = func_get_args();
         $acf_id = $plugin->post()->ID;
         $template = $plugin->template();
+        $block = $args[0];
         if (method_exists($plugin, 'template_callback')) {
           $template = array($plugin, 'template_callback');
         }
-        /*
-        // TODO: allow custom settings per-block? (see `VF_Blocks`)
-        $block = $args[0];
-        if ( ! get_field('defaults', $block['id'])) {
-          $acf_id = $block['id'];
+        if (get_field('is_plugin', $block['id']) === 1) {
+          $plugin = VF_Containers::name_block_to_post($block['name']);
+          $plugin = VF_Plugin::get_plugin($plugin);
+          if ($plugin) {
+            acf_reset_meta($block['id']);
+            $template = function($args) use ($plugin) {
+              VF_Plugin::render($plugin);
+            };
+          }
         }
-        */
         if (class_exists('VF_Gutenberg')) {
           VF_Gutenberg::acf_render_template($args, $template, $acf_id);
         } else {

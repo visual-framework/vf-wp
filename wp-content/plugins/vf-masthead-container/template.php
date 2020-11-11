@@ -47,8 +47,8 @@ $theme_class = 'vf-masthead-theme--' . $block_color
     }
 </style>
 <?php } ?>
-    
-<div class="vf-masthead <?php echo($variant_class) ?> <?php echo($theme_class) ?> | vf-u-fullbleed | vf-u-margin__bottom--800" 
+
+<div class="vf-masthead <?php echo($variant_class) ?> <?php echo($theme_class) ?> | vf-u-fullbleed | vf-u-margin__bottom--800"
  data-vf-js-masthead>
     <div class="vf-masthead__title">
       <h1 class="vf-masthead__heading">
@@ -59,7 +59,7 @@ $theme_class = 'vf-masthead-theme--' . $block_color
           }
           else {
             echo home_url();
-          } 
+          }
           ?>" class="vf-masthead__heading__link">
           <?php
           if (!empty ($heading)) {
@@ -67,14 +67,14 @@ $theme_class = 'vf-masthead-theme--' . $block_color
           }
           else {
             echo esc_html(get_bloginfo('name'));
-          } 
+          }
           ?>
         </a>
         <span class="vf-masthead__heading--additional">
        <?php
        if (!empty($heading_additional)) { ?>
           <?php echo ($heading_additional); ?>
-       <?php } 
+       <?php }
        else {
         echo get_bloginfo('description'); }?>
         </span>

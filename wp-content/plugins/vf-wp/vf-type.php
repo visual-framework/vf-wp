@@ -40,6 +40,10 @@ class VF_Type {
       array($this, 'wp_insert_post_data'),
       10, 2
     );
+    add_action('after_setup_theme',
+      array($this, 'after_setup_theme_migrations'),
+      20
+    );
     add_action(
       'template_redirect',
       array($this, 'template_redirect')
@@ -221,6 +225,30 @@ class VF_Type {
     return $caps;
   }
 
+  public function after_setup_theme_migrations() {
+    global $vf_plugins;
+    if ( ! is_array($vf_plugins)) {
+      return;
+    }
+
+    // Iterate over registered block plugins
+    foreach ($vf_plugins as $key => $config) {
+      // Skip unknown or deprecated plugins
+      $plugin = VF_Plugin::get_plugin($key);
+      if ( ! $plugin || $plugin->is_deprecated()) {
+        continue;
+      }
+      $date = strtotime($plugin->post()->post_date_gmt);
+
+      // Force a migration (11/11/2020 @ 11:11am UTC)
+      if ($date < 1605093071) {
+        VF_Plugin::register_update(array(
+          'dates' => true
+        ), $plugin->post());
+      }
+    }
+  }
+
   /**
    * Disallow slug changes for this type
    */
@@ -274,7 +302,7 @@ class VF_Type {
     if ($post->post_type === $this->post_type) {
       // Check if plugin supports editor preview
       $plugin = VF_Plugin::get_plugin($post->post_name);
-      if ($plugin && $plugin->__experimental__is_admin_render()) {
+      if ($plugin) {
         return array(
           'vf/plugin'
         );
