@@ -7,7 +7,7 @@
 // If you don't have any Sass, you can trim this block down to:
 // "This page was intentionally left blank"
 
-@import "package.variables.scss";
+@import 'package.variables.scss';
 // Debug information from component's `package.json`:
 // ---
 /*!
@@ -16,7 +16,7 @@
  * Location: #{map-get($componentInfo, 'location')}
  */
 
-@import "vfwp-gutenberg-blocks.variables.scss";
+@import 'vfwp-gutenberg-blocks.variables.scss';
 
 .vf-block {
   background-color: rgba(139, 139, 150, 0.1);
@@ -31,19 +31,19 @@
     background: transparent;
   }
 
-  &[data-editing="false"] {
+  &[data-editing='false'] {
     padding: 0;
   }
 
-  &[data-editing="true"] {
+  &[data-editing='true'] {
     background-size: 0px 0px;
   }
 
-  &[data-editing="false"][data-loading="true"] {
+  &[data-editing='false'][data-loading='true'] {
     min-height: 100px;
   }
 
-  &[data-editing="false"][data-loading="false"] {
+  &[data-editing='false'][data-loading='false'] {
     background: transparent;
     min-height: 0;
   }
@@ -97,7 +97,7 @@
     }
 
     &:not(.has-suggestions) {
-      input[type="text"] {
+      input[type='text'] {
         max-width: none;
         width: 100%;
       }
@@ -107,7 +107,7 @@
       }
     }
 
-    input[type="text"] {
+    input[type='text'] {
       border-color: transparent;
       box-shadow: none;
     }
@@ -195,12 +195,12 @@
   margin-right: auto !important;
 }
 
-.wp-block[data-type="vf/plugin"] {
+.wp-block[data-type='vf/plugin'] {
   max-width: none;
 }
 
-.wp-block[data-type^="vf/container-"],
-.wp-block[data-type^="acf/vf-container-"] {
+.wp-block[data-type^='vf/container-'],
+.wp-block[data-type^='acf/vf-container-'] {
   border: 1px dashed #8d96a0;
   max-width: none;
 
@@ -236,7 +236,9 @@
   --block-gaps: calc(var(--block-columns) - 1);
   --block-gap-width: var(--page-grid-gap);
   --block-gap-widths: calc((var(--block-gap-width) * var(--block-gaps)));
-  --block-column-width: calc((100% - var(--block-gap-widths)) / var(--block-columns));
+  --block-column-width: calc(
+    (100% - var(--block-gap-widths)) / var(--block-columns)
+  );
   background-image: repeating-linear-gradient(
     to right,
     var(--block-column-color) 0,
@@ -275,5 +277,35 @@
     .components-toggle-control
     .components-base-control__field {
     justify-content: center;
+  }
+}
+
+.wp-block[data-type='vf/cluster'] {
+  max-width: none;
+
+  .vf-cluster {
+    border: 1px dashed var(--vf-color--grey--lightest);
+  }
+
+  .vf-cluster__inner,
+  .block-editor-inner-blocks {
+    display: contents;
+  }
+
+  .block-editor-inner-blocks,
+  .block-editor-block-list__layout {
+    align-items: inherit;
+    flex-wrap: inherit;
+    justify-content: inherit;
+    margin: inherit !important;
+  }
+
+  .block-editor-block-list__layout {
+    display: flex;
+
+    & > * {
+      flex: var(--vf-cluster__item--flex);
+      margin: calc(var(--vf-cluster-margin) / 2) !important;
+    }
   }
 }
