@@ -54,7 +54,7 @@
 /*!
  * Component: @visual-framework/vf-global-header
  * Version: 3.0.1
- * Location: components/vf-global-header
+ * Location: components/vf-core-
  */
 .vf-global-header {
   -webkit-box-align: center;
@@ -114,7 +114,7 @@ html:not(.vf-disable-deprecated) .vf-global-header__inner {
 /*!
  * Component: @visual-framework/vf-masthead
  * Version: 2.0.0
- * Location: components/vf-masthead
+ * Location: components/vf-core-
  */
 .vf-masthead {
   background-color: #d0d0ce;
