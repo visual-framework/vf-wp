@@ -3,7 +3,7 @@
  */
 import useVFGutenberg from '../use-vf-gutenberg';
 
-const useVFRenderPlugin = async (name, attrs) => {
+const useDEPRECATEDVFRenderPlugin = async (name, attrs) => {
   try {
     // Return empty HTML if iframe URL is set as transient property
     if (attrs.defaults === 1 && !!attrs.preview) {
@@ -49,4 +49,4 @@ const useVFRenderPlugin = async (name, attrs) => {
   }
 };
 
-export default useVFRenderPlugin;
+export default useDEPRECATEDVFRenderPlugin;

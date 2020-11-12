@@ -10,10 +10,14 @@ Notes:
   */
 import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {Spinner} from '@wordpress/components';
+import {addAction, hasAction} from '@wordpress/hooks';
 import {__} from '@wordpress/i18n';
+import {useHashsum} from '../hooks';
 import useVFDefaults from '../hooks/use-vf-defaults';
 
 const defaults = useVFDefaults();
+
+const renderStore = {};
 
 const Edit = (props) => {
   const [acfId] = useState(acf.uniqid('block_'));
@@ -46,30 +50,45 @@ const Edit = (props) => {
     window.addEventListener('message', onMessage);
 
     const fetch = async () => {
-      const response = await wp.ajax.post('acf/ajax/fetch-block', {
-        query: {
-          preview: true
-        },
-        nonce: acf.get('nonce'),
-        post_id: acf.get('post_id'),
-        block: JSON.stringify({
-          id: acfId,
-          name: props.attributes.ref,
-          data: {is_plugin: 1},
-          align: '',
-          mode: 'preview'
-        })
-      });
-      if (response && response.preview) {
-        const html = response.preview.split(/<script[^>]*?>/)[0];
-        const script = response.preview.match(/<script[^>]*?>(.*)<\/script>/ms);
+      let render;
+      const fields = {is_plugin: 1, ...props.transient.fields};
+      const renderHash = useHashsum(fields);
+      if (renderStore.hasOwnProperty(renderHash)) {
+        render = await new Promise((resolve) =>
+          setTimeout(() => {
+            resolve(renderStore[renderHash]);
+          }, 1)
+        );
+      } else {
+        const response = await wp.ajax.post('acf/ajax/fetch-block', {
+          query: {
+            preview: true
+          },
+          nonce: acf.get('nonce'),
+          post_id: acf.get('post_id'),
+          block: JSON.stringify({
+            id: acfId,
+            name: props.attributes.ref,
+            data: fields,
+            align: '',
+            mode: 'preview'
+          })
+        });
+        if (response && response.preview) {
+          render = response.preview;
+          renderStore[renderHash] = render;
+        }
+      }
+      if (render) {
+        const html = render.split(/<script[^>]*?>/)[0];
+        const script = render.match(/<script[^>]*?>(.*)<\/script>/ms);
         setScript(Array.isArray(script) ? script[1] : null);
         setRender(html);
         setFetching(false);
       }
     };
     fetch();
-  }, [clientId]);
+  }, [clientId, props.attributes.__acfUpdate]);
 
   useEffect(() => {
     if (isFetching) {
@@ -111,6 +130,29 @@ const Edit = (props) => {
   );
 };
 
+export const withACFUpdates = (Edit) => {
+  const transient = {fields: {}};
+  return (props) => {
+    const {clientId} = props;
+    useEffect(() => {
+      if (hasAction('vf_plugin_acf_update', 'vf_plugin')) {
+        return;
+      }
+      addAction('vf_plugin_acf_update', 'vf_plugin', (data) => {
+        transient.fields[data.name] = data.value;
+        props.setAttributes({__acfUpdate: Date.now()});
+      });
+    }, [clientId]);
+    return Edit({
+      ...props,
+      transient: {
+        ...(props.transient || {}),
+        ...transient
+      }
+    });
+  };
+};
+
 export default {
   ...defaults,
   name: 'vf/plugin',
@@ -128,6 +170,6 @@ export default {
     inserter: false,
     reusable: false
   },
-  edit: Edit,
+  edit: withACFUpdates(Edit),
   save: () => null
 };

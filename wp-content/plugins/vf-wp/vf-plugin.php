@@ -360,10 +360,16 @@ class VF_Plugin {
 
     // Flush the ACF cache and setup post meta
     if (is_array($fields)) {
-      foreach (array_keys($fields) as $field_name) {
+      $is_merge = isset($fields['__merge_fields']);
+      foreach ($fields as $field_name => $field_value) {
         acf_flush_value_cache($acf_id, $field_name);
+        if ($is_merge) {
+          acf_get_store('values')->set("$acf_id:$field_name", $field_value);
+        }
       }
-      acf_setup_meta($fields, $acf_id, true);
+      if ( ! $is_merge) {
+        acf_setup_meta($fields, $acf_id, true);
+      }
     }
 
     // Before actions

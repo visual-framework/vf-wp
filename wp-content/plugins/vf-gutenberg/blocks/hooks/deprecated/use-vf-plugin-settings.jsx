@@ -4,7 +4,7 @@
  * Only new ACF versions are visible to the editor
  *
  * Generate new Gutenberg block settings from defaults.
- * Provide `VFBlockFields` using `useVFPlugin` configuration.
+ * Provide `VFBlockFields` using `useDEPRECATEDVFPlugin` configuration.
  */
 import React, {Fragment} from 'react';
 import {InspectorControls} from '@wordpress/block-editor';
@@ -12,18 +12,18 @@ import {ToggleControl, PanelBody} from '@wordpress/components';
 import {__} from '@wordpress/i18n';
 import {
   withTransientAttribute,
-  withTransientACF
+  withDEPRECATEDTransientACF
 } from '../with-transient';
 import useVFDefaults from '../use-vf-defaults';
-import useVFPlugin from './use-vf-plugin';
+import useDEPRECATEDVFPlugin from './use-vf-plugin';
 import VFBlockFields from '../../vf-block/block-fields';
 import VFBlock from '../../vf-block';
 
-const useVFPluginSettings = settings => {
+const useDEPRECATEDVFPluginSettings = settings => {
   const defaults = useVFDefaults();
 
   // get block settings
-  let {attributes, fields, supports, preview} = useVFPlugin(settings.name);
+  let {attributes, fields, supports, preview} = useDEPRECATEDVFPlugin(settings.name);
 
   // block options
   const hasFields = !!(Array.isArray(fields) && fields.length);
@@ -97,7 +97,7 @@ const useVFPluginSettings = settings => {
 
   // Wrap higher-order components
   if (settings.name === 'vf/plugin') {
-    Edit = withTransientACF(Edit);
+    Edit = withDEPRECATEDTransientACF(Edit);
   }
 
   // Add transient attribute for iframe preview if set
@@ -120,4 +120,4 @@ const useVFPluginSettings = settings => {
   };
 };
 
-export default useVFPluginSettings;
+export default useDEPRECATEDVFPluginSettings;

@@ -110,8 +110,9 @@ class VF_Blocks extends VF_Type {
           $plugin = VF_Plugin::get_plugin($plugin);
           if ($plugin) {
             acf_reset_meta($block['id']);
-            $template = function($args) use ($plugin) {
-              VF_Plugin::render($plugin);
+            $block['data']['__merge_fields'] = true;
+            $template = function($args) use ($block, $plugin) {
+              VF_Plugin::render($plugin, $block['data']);
             };
           }
         }

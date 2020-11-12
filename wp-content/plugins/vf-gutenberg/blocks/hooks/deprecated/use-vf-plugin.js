@@ -4,7 +4,7 @@
  */
 import useVFGutenberg from '../use-vf-gutenberg';
 
-const useVFPlugin = name => {
+const useDEPRECATEDVFPlugin = name => {
   const {deprecatedPlugins} = useVFGutenberg();
   let fields = [];
   let supports = {};
@@ -33,4 +33,4 @@ const useVFPlugin = name => {
   return {attributes, fields, supports, preview};
 };
 
-export default useVFPlugin;
+export default useDEPRECATEDVFPlugin;

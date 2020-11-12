@@ -1,8 +1,8 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('@wordpress/blocks'), require('react'), require('@wordpress/i18n'), require('@wordpress/block-editor'), require('@wordpress/components'), require('@wordpress/data'), require('@wordpress/hooks')) :
 	typeof define === 'function' && define.amd ? define(['@wordpress/blocks', 'react', '@wordpress/i18n', '@wordpress/block-editor', '@wordpress/components', '@wordpress/data', '@wordpress/hooks'], factory) :
-	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.wp.blocks, global.React, global.wp.i18n, global.wp.blockEditor, global.wp.components, global.wp.data));
-}(this, (function (blocks, React, i18n, blockEditor, components, data$1) { 'use strict';
+	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.wp.blocks, global.React, global.wp.i18n, global.wp.blockEditor, global.wp.components, global.wp.data, global.wp.hooks));
+}(this, (function (blocks, React, i18n, blockEditor, components, data$1, hooks) { 'use strict';
 
 	function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -12741,10 +12741,495 @@
 	  })));
 	};
 
+	var nativePromiseConstructor = global_1.Promise;
+
+	var getOwnPropertyDescriptor$3 = objectGetOwnPropertyDescriptor.f;
+
+	var macrotask = task.set;
+
+
+	var MutationObserver = global_1.MutationObserver || global_1.WebKitMutationObserver;
+	var process$3 = global_1.process;
+	var Promise$1 = global_1.Promise;
+	var IS_NODE = classofRaw(process$3) == 'process';
+	// Node.js 11 shows ExperimentalWarning on getting `queueMicrotask`
+	var queueMicrotaskDescriptor = getOwnPropertyDescriptor$3(global_1, 'queueMicrotask');
+	var queueMicrotask = queueMicrotaskDescriptor && queueMicrotaskDescriptor.value;
+
+	var flush, head, last, notify, toggle, node, promise, then;
+
+	// modern engines have queueMicrotask method
+	if (!queueMicrotask) {
+	  flush = function () {
+	    var parent, fn;
+	    if (IS_NODE && (parent = process$3.domain)) parent.exit();
+	    while (head) {
+	      fn = head.fn;
+	      head = head.next;
+	      try {
+	        fn();
+	      } catch (error) {
+	        if (head) notify();
+	        else last = undefined;
+	        throw error;
+	      }
+	    } last = undefined;
+	    if (parent) parent.enter();
+	  };
+
+	  // Node.js
+	  if (IS_NODE) {
+	    notify = function () {
+	      process$3.nextTick(flush);
+	    };
+	  // browsers with MutationObserver, except iOS - https://github.com/zloirock/core-js/issues/339
+	  } else if (MutationObserver && !engineIsIos) {
+	    toggle = true;
+	    node = document.createTextNode('');
+	    new MutationObserver(flush).observe(node, { characterData: true });
+	    notify = function () {
+	      node.data = toggle = !toggle;
+	    };
+	  // environments with maybe non-completely correct, but existent Promise
+	  } else if (Promise$1 && Promise$1.resolve) {
+	    // Promise.resolve without an argument throws an error in LG WebOS 2
+	    promise = Promise$1.resolve(undefined);
+	    then = promise.then;
+	    notify = function () {
+	      then.call(promise, flush);
+	    };
+	  // for other environments - macrotask based on:
+	  // - setImmediate
+	  // - MessageChannel
+	  // - window.postMessag
+	  // - onreadystatechange
+	  // - setTimeout
+	  } else {
+	    notify = function () {
+	      // strange IE + webpack dev server bug - use .call(global)
+	      macrotask.call(global_1, flush);
+	    };
+	  }
+	}
+
+	var microtask = queueMicrotask || function (fn) {
+	  var task = { fn: fn, next: undefined };
+	  if (last) last.next = task;
+	  if (!head) {
+	    head = task;
+	    notify();
+	  } last = task;
+	};
+
+	var PromiseCapability = function (C) {
+	  var resolve, reject;
+	  this.promise = new C(function ($$resolve, $$reject) {
+	    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
+	    resolve = $$resolve;
+	    reject = $$reject;
+	  });
+	  this.resolve = aFunction$1(resolve);
+	  this.reject = aFunction$1(reject);
+	};
+
+	// 25.4.1.5 NewPromiseCapability(C)
+	var f$7 = function (C) {
+	  return new PromiseCapability(C);
+	};
+
+	var newPromiseCapability = {
+		f: f$7
+	};
+
+	var promiseResolve = function (C, x) {
+	  anObject(C);
+	  if (isObject(x) && x.constructor === C) return x;
+	  var promiseCapability = newPromiseCapability.f(C);
+	  var resolve = promiseCapability.resolve;
+	  resolve(x);
+	  return promiseCapability.promise;
+	};
+
+	var hostReportErrors = function (a, b) {
+	  var console = global_1.console;
+	  if (console && console.error) {
+	    arguments.length === 1 ? console.error(a) : console.error(a, b);
+	  }
+	};
+
+	var perform = function (exec) {
+	  try {
+	    return { error: false, value: exec() };
+	  } catch (error) {
+	    return { error: true, value: error };
+	  }
+	};
+
+	var task$1 = task.set;
+
+
+
+
+
+
+
+
+
+
+	var SPECIES$6 = wellKnownSymbol('species');
+	var PROMISE = 'Promise';
+	var getInternalState$3 = internalState.get;
+	var setInternalState$5 = internalState.set;
+	var getInternalPromiseState = internalState.getterFor(PROMISE);
+	var PromiseConstructor = nativePromiseConstructor;
+	var TypeError$1 = global_1.TypeError;
+	var document$2 = global_1.document;
+	var process$4 = global_1.process;
+	var $fetch = getBuiltIn('fetch');
+	var newPromiseCapability$1 = newPromiseCapability.f;
+	var newGenericPromiseCapability = newPromiseCapability$1;
+	var IS_NODE$1 = classofRaw(process$4) == 'process';
+	var DISPATCH_EVENT = !!(document$2 && document$2.createEvent && global_1.dispatchEvent);
+	var UNHANDLED_REJECTION = 'unhandledrejection';
+	var REJECTION_HANDLED = 'rejectionhandled';
+	var PENDING = 0;
+	var FULFILLED = 1;
+	var REJECTED = 2;
+	var HANDLED = 1;
+	var UNHANDLED = 2;
+	var Internal, OwnPromiseCapability, PromiseWrapper, nativeThen;
+
+	var FORCED$5 = isForced_1(PROMISE, function () {
+	  var GLOBAL_CORE_JS_PROMISE = inspectSource(PromiseConstructor) !== String(PromiseConstructor);
+	  if (!GLOBAL_CORE_JS_PROMISE) {
+	    // V8 6.6 (Node 10 and Chrome 66) have a bug with resolving custom thenables
+	    // https://bugs.chromium.org/p/chromium/issues/detail?id=830565
+	    // We can't detect it synchronously, so just check versions
+	    if (engineV8Version === 66) return true;
+	    // Unhandled rejections tracking support, NodeJS Promise without it fails @@species test
+	    if (!IS_NODE$1 && typeof PromiseRejectionEvent != 'function') return true;
+	  }
+	  // We can't use @@species feature detection in V8 since it causes
+	  // deoptimization and performance degradation
+	  // https://github.com/zloirock/core-js/issues/679
+	  if (engineV8Version >= 51 && /native code/.test(PromiseConstructor)) return false;
+	  // Detect correctness of subclassing with @@species support
+	  var promise = PromiseConstructor.resolve(1);
+	  var FakePromise = function (exec) {
+	    exec(function () { /* empty */ }, function () { /* empty */ });
+	  };
+	  var constructor = promise.constructor = {};
+	  constructor[SPECIES$6] = FakePromise;
+	  return !(promise.then(function () { /* empty */ }) instanceof FakePromise);
+	});
+
+	var INCORRECT_ITERATION$1 = FORCED$5 || !checkCorrectnessOfIteration(function (iterable) {
+	  PromiseConstructor.all(iterable)['catch'](function () { /* empty */ });
+	});
+
+	// helpers
+	var isThenable = function (it) {
+	  var then;
+	  return isObject(it) && typeof (then = it.then) == 'function' ? then : false;
+	};
+
+	var notify$1 = function (promise, state, isReject) {
+	  if (state.notified) return;
+	  state.notified = true;
+	  var chain = state.reactions;
+	  microtask(function () {
+	    var value = state.value;
+	    var ok = state.state == FULFILLED;
+	    var index = 0;
+	    // variable length - can't use forEach
+	    while (chain.length > index) {
+	      var reaction = chain[index++];
+	      var handler = ok ? reaction.ok : reaction.fail;
+	      var resolve = reaction.resolve;
+	      var reject = reaction.reject;
+	      var domain = reaction.domain;
+	      var result, then, exited;
+	      try {
+	        if (handler) {
+	          if (!ok) {
+	            if (state.rejection === UNHANDLED) onHandleUnhandled(promise, state);
+	            state.rejection = HANDLED;
+	          }
+	          if (handler === true) result = value;
+	          else {
+	            if (domain) domain.enter();
+	            result = handler(value); // can throw
+	            if (domain) {
+	              domain.exit();
+	              exited = true;
+	            }
+	          }
+	          if (result === reaction.promise) {
+	            reject(TypeError$1('Promise-chain cycle'));
+	          } else if (then = isThenable(result)) {
+	            then.call(result, resolve, reject);
+	          } else resolve(result);
+	        } else reject(value);
+	      } catch (error) {
+	        if (domain && !exited) domain.exit();
+	        reject(error);
+	      }
+	    }
+	    state.reactions = [];
+	    state.notified = false;
+	    if (isReject && !state.rejection) onUnhandled(promise, state);
+	  });
+	};
+
+	var dispatchEvent = function (name, promise, reason) {
+	  var event, handler;
+	  if (DISPATCH_EVENT) {
+	    event = document$2.createEvent('Event');
+	    event.promise = promise;
+	    event.reason = reason;
+	    event.initEvent(name, false, true);
+	    global_1.dispatchEvent(event);
+	  } else event = { promise: promise, reason: reason };
+	  if (handler = global_1['on' + name]) handler(event);
+	  else if (name === UNHANDLED_REJECTION) hostReportErrors('Unhandled promise rejection', reason);
+	};
+
+	var onUnhandled = function (promise, state) {
+	  task$1.call(global_1, function () {
+	    var value = state.value;
+	    var IS_UNHANDLED = isUnhandled(state);
+	    var result;
+	    if (IS_UNHANDLED) {
+	      result = perform(function () {
+	        if (IS_NODE$1) {
+	          process$4.emit('unhandledRejection', value, promise);
+	        } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
+	      });
+	      // Browsers should not trigger `rejectionHandled` event if it was handled here, NodeJS - should
+	      state.rejection = IS_NODE$1 || isUnhandled(state) ? UNHANDLED : HANDLED;
+	      if (result.error) throw result.value;
+	    }
+	  });
+	};
+
+	var isUnhandled = function (state) {
+	  return state.rejection !== HANDLED && !state.parent;
+	};
+
+	var onHandleUnhandled = function (promise, state) {
+	  task$1.call(global_1, function () {
+	    if (IS_NODE$1) {
+	      process$4.emit('rejectionHandled', promise);
+	    } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
+	  });
+	};
+
+	var bind = function (fn, promise, state, unwrap) {
+	  return function (value) {
+	    fn(promise, state, value, unwrap);
+	  };
+	};
+
+	var internalReject = function (promise, state, value, unwrap) {
+	  if (state.done) return;
+	  state.done = true;
+	  if (unwrap) state = unwrap;
+	  state.value = value;
+	  state.state = REJECTED;
+	  notify$1(promise, state, true);
+	};
+
+	var internalResolve = function (promise, state, value, unwrap) {
+	  if (state.done) return;
+	  state.done = true;
+	  if (unwrap) state = unwrap;
+	  try {
+	    if (promise === value) throw TypeError$1("Promise can't be resolved itself");
+	    var then = isThenable(value);
+	    if (then) {
+	      microtask(function () {
+	        var wrapper = { done: false };
+	        try {
+	          then.call(value,
+	            bind(internalResolve, promise, wrapper, state),
+	            bind(internalReject, promise, wrapper, state)
+	          );
+	        } catch (error) {
+	          internalReject(promise, wrapper, error, state);
+	        }
+	      });
+	    } else {
+	      state.value = value;
+	      state.state = FULFILLED;
+	      notify$1(promise, state, false);
+	    }
+	  } catch (error) {
+	    internalReject(promise, { done: false }, error, state);
+	  }
+	};
+
+	// constructor polyfill
+	if (FORCED$5) {
+	  // 25.4.3.1 Promise(executor)
+	  PromiseConstructor = function Promise(executor) {
+	    anInstance(this, PromiseConstructor, PROMISE);
+	    aFunction$1(executor);
+	    Internal.call(this);
+	    var state = getInternalState$3(this);
+	    try {
+	      executor(bind(internalResolve, this, state), bind(internalReject, this, state));
+	    } catch (error) {
+	      internalReject(this, state, error);
+	    }
+	  };
+	  // eslint-disable-next-line no-unused-vars
+	  Internal = function Promise(executor) {
+	    setInternalState$5(this, {
+	      type: PROMISE,
+	      done: false,
+	      notified: false,
+	      parent: false,
+	      reactions: [],
+	      rejection: false,
+	      state: PENDING,
+	      value: undefined
+	    });
+	  };
+	  Internal.prototype = redefineAll(PromiseConstructor.prototype, {
+	    // `Promise.prototype.then` method
+	    // https://tc39.github.io/ecma262/#sec-promise.prototype.then
+	    then: function then(onFulfilled, onRejected) {
+	      var state = getInternalPromiseState(this);
+	      var reaction = newPromiseCapability$1(speciesConstructor(this, PromiseConstructor));
+	      reaction.ok = typeof onFulfilled == 'function' ? onFulfilled : true;
+	      reaction.fail = typeof onRejected == 'function' && onRejected;
+	      reaction.domain = IS_NODE$1 ? process$4.domain : undefined;
+	      state.parent = true;
+	      state.reactions.push(reaction);
+	      if (state.state != PENDING) notify$1(this, state, false);
+	      return reaction.promise;
+	    },
+	    // `Promise.prototype.catch` method
+	    // https://tc39.github.io/ecma262/#sec-promise.prototype.catch
+	    'catch': function (onRejected) {
+	      return this.then(undefined, onRejected);
+	    }
+	  });
+	  OwnPromiseCapability = function () {
+	    var promise = new Internal();
+	    var state = getInternalState$3(promise);
+	    this.promise = promise;
+	    this.resolve = bind(internalResolve, promise, state);
+	    this.reject = bind(internalReject, promise, state);
+	  };
+	  newPromiseCapability.f = newPromiseCapability$1 = function (C) {
+	    return C === PromiseConstructor || C === PromiseWrapper
+	      ? new OwnPromiseCapability(C)
+	      : newGenericPromiseCapability(C);
+	  };
+
+	  if ( typeof nativePromiseConstructor == 'function') {
+	    nativeThen = nativePromiseConstructor.prototype.then;
+
+	    // wrap native Promise#then for native async functions
+	    redefine(nativePromiseConstructor.prototype, 'then', function then(onFulfilled, onRejected) {
+	      var that = this;
+	      return new PromiseConstructor(function (resolve, reject) {
+	        nativeThen.call(that, resolve, reject);
+	      }).then(onFulfilled, onRejected);
+	    // https://github.com/zloirock/core-js/issues/640
+	    }, { unsafe: true });
+
+	    // wrap fetch result
+	    if (typeof $fetch == 'function') _export({ global: true, enumerable: true, forced: true }, {
+	      // eslint-disable-next-line no-unused-vars
+	      fetch: function fetch(input /* , init */) {
+	        return promiseResolve(PromiseConstructor, $fetch.apply(global_1, arguments));
+	      }
+	    });
+	  }
+	}
+
+	_export({ global: true, wrap: true, forced: FORCED$5 }, {
+	  Promise: PromiseConstructor
+	});
+
+	setToStringTag(PromiseConstructor, PROMISE, false);
+	setSpecies(PROMISE);
+
+	PromiseWrapper = getBuiltIn(PROMISE);
+
+	// statics
+	_export({ target: PROMISE, stat: true, forced: FORCED$5 }, {
+	  // `Promise.reject` method
+	  // https://tc39.github.io/ecma262/#sec-promise.reject
+	  reject: function reject(r) {
+	    var capability = newPromiseCapability$1(this);
+	    capability.reject.call(undefined, r);
+	    return capability.promise;
+	  }
+	});
+
+	_export({ target: PROMISE, stat: true, forced:  FORCED$5 }, {
+	  // `Promise.resolve` method
+	  // https://tc39.github.io/ecma262/#sec-promise.resolve
+	  resolve: function resolve(x) {
+	    return promiseResolve( this, x);
+	  }
+	});
+
+	_export({ target: PROMISE, stat: true, forced: INCORRECT_ITERATION$1 }, {
+	  // `Promise.all` method
+	  // https://tc39.github.io/ecma262/#sec-promise.all
+	  all: function all(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapability$1(C);
+	    var resolve = capability.resolve;
+	    var reject = capability.reject;
+	    var result = perform(function () {
+	      var $promiseResolve = aFunction$1(C.resolve);
+	      var values = [];
+	      var counter = 0;
+	      var remaining = 1;
+	      iterate_1(iterable, function (promise) {
+	        var index = counter++;
+	        var alreadyCalled = false;
+	        values.push(undefined);
+	        remaining++;
+	        $promiseResolve.call(C, promise).then(function (value) {
+	          if (alreadyCalled) return;
+	          alreadyCalled = true;
+	          values[index] = value;
+	          --remaining || resolve(values);
+	        }, reject);
+	      });
+	      --remaining || resolve(values);
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  },
+	  // `Promise.race` method
+	  // https://tc39.github.io/ecma262/#sec-promise.race
+	  race: function race(iterable) {
+	    var C = this;
+	    var capability = newPromiseCapability$1(C);
+	    var reject = capability.reject;
+	    var result = perform(function () {
+	      var $promiseResolve = aFunction$1(C.resolve);
+	      iterate_1(iterable, function (promise) {
+	        $promiseResolve.call(C, promise).then(capability.resolve, reject);
+	      });
+	    });
+	    if (result.error) reject(result.value);
+	    return capability.promise;
+	  }
+	});
+
 	function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$6 = useVFDefaults();
+	var renderStore$1 = {};
 
 	var Edit = function Edit(props) {
 	  var _useState = React.useState(acf.uniqid('block_')),
@@ -12792,13 +13277,36 @@
 
 	    var fetch = /*#__PURE__*/function () {
 	      var _ref = asyncToGenerator( /*#__PURE__*/regenerator.mark(function _callee() {
-	        var response, html, _script;
+	        var render, fields, renderHash, response, html, _script;
 
 	        return regenerator.wrap(function _callee$(_context) {
 	          while (1) {
 	            switch (_context.prev = _context.next) {
 	              case 0:
-	                _context.next = 2;
+	                fields = _objectSpread$g({
+	                  is_plugin: 1
+	                }, props.transient.fields);
+	                renderHash = useHashsum(fields);
+
+	                if (!renderStore$1.hasOwnProperty(renderHash)) {
+	                  _context.next = 8;
+	                  break;
+	                }
+
+	                _context.next = 5;
+	                return new Promise(function (resolve) {
+	                  return setTimeout(function () {
+	                    resolve(renderStore$1[renderHash]);
+	                  }, 1);
+	                });
+
+	              case 5:
+	                render = _context.sent;
+	                _context.next = 12;
+	                break;
+
+	              case 8:
+	                _context.next = 10;
 	                return wp.ajax.post('acf/ajax/fetch-block', {
 	                  query: {
 	                    preview: true
@@ -12808,26 +13316,30 @@
 	                  block: JSON.stringify({
 	                    id: acfId,
 	                    name: props.attributes.ref,
-	                    data: {
-	                      is_plugin: 1
-	                    },
+	                    data: fields,
 	                    align: '',
 	                    mode: 'preview'
 	                  })
 	                });
 
-	              case 2:
+	              case 10:
 	                response = _context.sent;
 
 	                if (response && response.preview) {
-	                  html = response.preview.split(/<script[^>]*?>/)[0];
-	                  _script = response.preview.match(/<script(?:(?!>)[\s\S])*?>([\s\S]*)<\/script>/m);
+	                  render = response.preview;
+	                  renderStore$1[renderHash] = render;
+	                }
+
+	              case 12:
+	                if (render) {
+	                  html = render.split(/<script[^>]*?>/)[0];
+	                  _script = render.match(/<script(?:(?!>)[\s\S])*?>([\s\S]*)<\/script>/m);
 	                  setScript(Array.isArray(_script) ? _script[1] : null);
 	                  setRender(html);
 	                  setFetching(false);
 	                }
 
-	              case 4:
+	              case 13:
 	              case "end":
 	                return _context.stop();
 	            }
@@ -12841,7 +13353,7 @@
 	    }();
 
 	    fetch();
-	  }, [clientId]);
+	  }, [clientId, props.attributes.__acfUpdate]);
 	  React.useEffect(function () {
 	    if (isFetching) {
 	      return;
@@ -12883,6 +13395,29 @@
 	  }));
 	};
 
+	var withACFUpdates = function withACFUpdates(Edit) {
+	  var transient = {
+	    fields: {}
+	  };
+	  return function (props) {
+	    var clientId = props.clientId;
+	    React.useEffect(function () {
+	      if (hooks.hasAction('vf_plugin_acf_update', 'vf_plugin')) {
+	        return;
+	      }
+
+	      hooks.addAction('vf_plugin_acf_update', 'vf_plugin', function (data) {
+	        transient.fields[data.name] = data.value;
+	        props.setAttributes({
+	          __acfUpdate: Date.now()
+	        });
+	      });
+	    }, [clientId]);
+	    return Edit(_objectSpread$g(_objectSpread$g({}, props), {}, {
+	      transient: _objectSpread$g(_objectSpread$g({}, props.transient || {}), transient)
+	    }));
+	  };
+	};
 	var vfPlugin = _objectSpread$g(_objectSpread$g({}, defaults$6), {}, {
 	  name: 'vf/plugin',
 	  title: i18n.__('Preview'),
@@ -12897,7 +13432,7 @@
 	    inserter: false,
 	    reusable: false
 	  }),
-	  edit: Edit,
+	  edit: withACFUpdates(Edit),
 	  save: function save() {
 	    return null;
 	  }

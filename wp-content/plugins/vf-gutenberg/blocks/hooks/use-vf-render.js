@@ -4,7 +4,7 @@
 import {useEffect, useState} from 'react';
 import {useHashsum} from './';
 import useNunjucks from './use-nunjucks';
-// import useVFRenderPlugin from './deprecated/use-vf-render-plugin';
+// import useDEPRECATEDVFRenderPlugin from './deprecated/use-vf-render-plugin';
 // import useVFRenderTemplate from './use-vf-render-template';
 
 const useVFRenderTemplate = (name, attrs) => {
@@ -55,7 +55,7 @@ const useVFRender = (props) => {
       //   return;
       // }
       // setLoading(true);
-      // newData = await useVFRenderPlugin(props.name, renderAttrs);
+      // newData = await useDEPRECATEDVFRenderPlugin(props.name, renderAttrs);
       // setLoading(false);
     }
     renderStore[renderHash] = newData;
