@@ -54,7 +54,7 @@
 /*!
  * Component: @visual-framework/vf-card
  * Version: 2.2.1
- * Location: components/vf-card
+ * Location: components/vf-core-
  */
 .vf-card {
   --card-text-color: var(--vf-card-theme-color--foreground, #000000);

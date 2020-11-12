@@ -53,8 +53,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-grid
- * Version: 1.2.0
- * Location: components/vf-grid
+ * Version: 1.3.0
+ * Location: components/vf-core-
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -237,7 +237,7 @@
 /*!
  * Component: @visual-framework/vf-masthead
  * Version: 2.0.0
- * Location: components/vf-masthead
+ * Location: components/vf-core-
  */
 .vf-masthead {
   background-color: #d0d0ce;
