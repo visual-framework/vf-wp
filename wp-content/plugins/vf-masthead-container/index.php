@@ -21,9 +21,7 @@ class VF_Masthead extends VF_Plugin {
   protected $config = array(
     'post_name'  => 'vf_masthead',
     'post_title' => 'Masthead',
-    'post_type'  => 'vf_container',
-    // Allow block to be previewed in WP admin
-    '__experimental__has_admin_preview' => true
+    'post_type'  => 'vf_container'
   );
 
   public function __construct(array $params = array()) {
@@ -32,10 +30,6 @@ class VF_Masthead extends VF_Plugin {
       parent::initialize();
     }
   }
-
-  // public function template_callback($block, $content, $is_preview = false, $acf_id) {
-  //   include(plugin_dir_path(__FILE__) . 'template.php');
-  // }
 
 } // VF_Masthead
 

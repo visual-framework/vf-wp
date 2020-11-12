@@ -3,7 +3,6 @@
  */
 import {registerBlockType} from '@wordpress/blocks';
 import useVFGutenberg from './hooks/use-vf-gutenberg';
-import useVFPluginSettings from './hooks/deprecated/use-vf-plugin-settings';
 
 // Import Visual Framework core component settings
 import vfActivityItem from './vf-core/vf-activity-item';
@@ -25,7 +24,7 @@ import vfTabsSection from './vf-core/vf-tabs-section';
 import vfTabs from './vf-core/vf-tabs';
 
 // Get "localized" global script settings
-const {coreOptin, deprecatedPlugins} = useVFGutenberg();
+const {coreOptin} = useVFGutenberg();
 
 // Register VF Core blocks
 if (parseInt(coreOptin) === 1) {
@@ -56,27 +55,9 @@ if (parseInt(coreOptin) === 1) {
   coreBlocks.forEach(settings => registerBlockType(settings.name, settings));
 }
 
-// Register any deprecated VF Plugin blocks for legacy support
-// These blocks were replaced by full ACF versions
-for (const [name, plugin] of Object.entries(deprecatedPlugins)) {
-  const settings = useVFPluginSettings({
-    name,
-    title: plugin.title,
-    category: plugin.category
-  });
-  registerBlockType(name, settings);
-}
-
 // Register experimental preview block
-const settings = useVFPluginSettings({
-  name: 'vf/plugin',
-  title: 'Preview',
-  category: 'vf/wp'
-});
-settings.attributes.ref = {
-  type: 'string'
-};
-registerBlockType('vf/plugin', settings);
+import vfPlugin from './vf-core/vf-plugin';
+registerBlockType('vf/plugin', vfPlugin);
 
 // Handle iframe preview resizing globally
 // TODO: remove necessity from `useVFIFrame`

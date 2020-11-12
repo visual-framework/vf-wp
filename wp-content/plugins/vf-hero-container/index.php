@@ -24,10 +24,7 @@ class VF_WP_Hero extends VF_Plugin {
   protected $config = array(
     'post_name'  => 'vf_wp_hero',
     'post_title' => 'Hero Header',
-    'post_type'  => 'vf_container',
-
-    // Allow block to be previewed in WP admin
-    '__experimental__has_admin_preview' => true
+    'post_type'  => 'vf_container'
   );
 
   function __construct(array $params = array()) {
@@ -257,7 +254,7 @@ class VF_WP_Hero extends VF_Plugin {
     if ( ! is_array($link)) {
       $link = null;
       //  Use "Read more" (/about/) as fallback if page exists
-      /* 
+      /*
       $page = get_page_by_path('/about/');
       if ($page instanceof WP_Post) {
         $link = array(

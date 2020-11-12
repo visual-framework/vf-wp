@@ -1,36 +1,41 @@
 /**!
  * VF-WP Plugins
  */
-(function ($, wp, acf) {
+(function($, wp, acf) {
   if (typeof $ !== 'function' || typeof wp !== 'object') {
     return;
   }
 
-  const filterRegisterBlockType = (settings, name) => {
-    const isContainer = settings.category === 'vf/containers';
-    const isTemplate = window.vfPlugin.post_type === 'vf_template';
+  const isVFTemplate = window.vfPlugin.post_type === 'vf_template';
+  const isVFBlock = window.vfPlugin.post_type === 'vf_block';
+  const isVFContainer = window.vfPlugin.post_type === 'vf_container';
+  const isVFPlugin = isVFBlock || isVFContainer;
 
+  const filterRegisterBlockType = (settings, name) => {
+    const isVFContainerBlock = settings.category === 'vf/containers';
+
+    // Ensure a supports object
     if (typeof settings.supports !== 'object') {
       settings.supports = {};
     }
 
     // Show container blocks for `vf_template`
-    if (isTemplate && isContainer) {
+    if (isVFTemplate && isVFContainerBlock) {
       settings.supports.inserter = true;
     }
 
     // Hide non-container blocks for `vf_template`
-    if (isTemplate && !isContainer) {
+    if (isVFTemplate && !isVFContainerBlock) {
       settings.supports.inserter = false;
     }
 
     // Hide container blocks from non `vf_template`
-    if (!isTemplate && isContainer) {
+    if (!isVFTemplate && isVFContainerBlock) {
       settings.supports.inserter = false;
     }
 
     // Hide old legacy containers (were replaced by ACF)
-    if (isContainer && /^vf\/container-/.test(name)) {
+    if (isVFContainerBlock && /^vf\/container-/.test(name)) {
       settings.supports.inserter = false;
     }
 
@@ -51,42 +56,40 @@
     return;
   }
 
-  const __experimental__has_admin_preview = () => {
+  const pluginPreviews = () => {
     // Configure ACF fields
-    try {
-      // Get VF Plugin config from localized global var
-      var plugin = window.vfPlugin.plugin;
-      if (
-        typeof plugin !== 'object' ||
-        plugin.__experimental__has_admin_preview !== true
-      ) {
+
+    // Get VF Plugin config from localized global var
+    var plugin = window.vfPlugin.plugin;
+    if (typeof plugin !== 'object') {
+      return;
+    }
+    const fields = acf.getFields();
+    fields.forEach((field) => {
+      const data = field.data;
+      // Get related input field for jQuery
+      const $input = field.$input();
+      if (!$input || !$input.length) {
         return;
       }
-      const fields = acf.getFields();
-      fields.forEach(field => {
-        const data = field.data;
-        // Get related input field for jQuery
-        const $input = field.$input();
-        if (!$input || !$input.length) {
-          return;
-        }
-        // Bind change event to WordPress hook
-        const onChange = ev => {
-          data.value = field.val();
-          wp.hooks.doAction('vf__experimental__acf_update', data);
-        };
-        $input.on('change', onChange);
-        // Update initial preview props
-        onChange(null);
-      });
-    } catch (err) {
-      // console.log(err);
-    }
+      // Bind change event to WordPress hook
+      const onChange = (ev) => {
+        data.value = field.val();
+        wp.hooks.doAction('vf_plugin_acf_update', data);
+      };
+      $input.on('change', onChange);
+      // Update initial preview props
+      // onChange(null);
+    });
   };
 
-  const wpDomReady = () => {
-    __experimental__has_admin_preview();
-  };
-
-  wp.domReady(wpDomReady);
+  if (window.wp) {
+    wp.domReady(function() {
+      try {
+        pluginPreviews();
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
 })(window.jQuery, window.wp, window.acf);

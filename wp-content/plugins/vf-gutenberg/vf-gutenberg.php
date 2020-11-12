@@ -61,15 +61,6 @@ class VF_Gutenberg {
       array($this, 'render_block_compatible'),
       10, 2
     );
-    add_filter(
-      'wp_ajax_vf/gutenberg/fetch_block',
-      array($this, 'deprecated__ajax_fetch_block')
-    );
-    add_filter(
-      'render_block',
-      array($this, 'deprecated__render_block'),
-      10, 2
-    );
 
     // ACF options
     include_once('includes/settings.php');
@@ -186,12 +177,11 @@ class VF_Gutenberg {
     global $post;
 
     $config = array(
-      'renderPrefix'      => $prefix,
-      'renderSuffix'      => $suffix,
-      'coreOptin'         => 1,
-      'postId'            => $post->ID,
-      'nonce'             => wp_create_nonce("vf_nonce_{$post->ID}"),
-      'deprecatedPlugins' => $this->deprecated__get_config_plugins(),
+      'renderPrefix' => $prefix,
+      'renderSuffix' => $suffix,
+      'coreOptin'    => 1,
+      'postId'       => $post->ID,
+      'nonce'        => wp_create_nonce("vf_nonce_{$post->ID}")
     );
 
     wp_localize_script('vf-blocks', 'vfGutenberg', $config);
@@ -318,6 +308,8 @@ window.<?php echo $id; ?> = function() {
   iframe.vfActive = true;
   var doc = iframe.contentWindow.document;
   doc.body.innerHTML = <?php echo json_encode($html); ?>;
+  doc.body.style.position = 'absolute';
+  doc.body.style.width = '100%';
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.innerHTML = `
@@ -346,7 +338,7 @@ if (ResizeObserver) {
 }
 `;
   doc.body.appendChild(script);
-  doc.body.classList.add('ebi-vf1-integration');
+  // doc.body.classList.add('ebi-vf1-integration');
 };
 
 const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
@@ -389,6 +381,7 @@ if (iframe) {
       }
     }
   }
+  // TODO: move to component scripts / fix?
   // Trigger first update
   updateBlock(true);
   // Add event for live field changes
@@ -403,288 +396,6 @@ if (iframe) {
 </script>
 <?php
     }
-  }
-
-  /**
-   * DEPRECATED
-   */
-
-  /**
-   * Handle AJAX request to render block preview
-   */
-  function deprecated__ajax_fetch_block() {
-    $this->ajax_validate_nonce();
-    if (!isset($_POST['name'])) {
-      wp_send_json_error();
-    }
-    $block_name = $_POST['name'];
-    $html = $this->deprecated__render_block('', array(
-      'blockName' => $block_name,
-      'attrs'     => isset($_POST['attrs']) ? $_POST['attrs'] : false
-    ));
-    if ($block_name !== 'vf/plugin') {
-      ob_start();
-?>
-<div class="vf-banner vf-banner--info">
-  <div class="vf-banner__content">
-    <p class="vf-banner__text">
-      <?php echo esc_html_e('There is a new version of this block. Please replace when convenient.', 'vfwp'); ?>
-    </p>
-  </div>
-</div>
-<br>
-<?php
-      $html = ob_get_contents() . $html;
-      ob_end_clean();
-    }
-    wp_send_json_success(
-      array(
-        'hash' => hash('crc32', $html),
-        'html' => $html
-      )
-    );
-  }
-
-  /**
-   * Attributes from the Gutenberg block that should be ignored
-   */
-  private $deprecated__protected_attrs = array(
-    'ver',
-    'mode',
-    'style',
-    'defaults'
-  );
-
-  /**
-   * ACF field types that are supported by Gutenberg blocks
-   */
-  private $deprecated__supported_fields = array(
-    'checkbox',
-    'date_picker',
-    'email',
-    'number',
-    'range',
-    'radio',
-    'select',
-    'taxonomy',
-    'text',
-    'textarea',
-    'true_false',
-    'url',
-    'wysiwyg'
-  );
-
-  /**
-   * Render VF Plugin blocks
-   * Filter `render_block`
-   */
-  function deprecated__render_block($html, $block) {
-    if ( ! class_exists('VF_Plugin')) {
-      return $html;
-    }
-    if ( ! preg_match('/^vf\//', $block['blockName'])) {
-      return $html;
-    }
-    if (
-      ! array_key_exists('attrs', $block) ||
-      ! is_array($block['attrs'])
-    ) {
-      $block['attrs'] = array();
-    }
-    // Escape early for Nunjucks rendered VF blocks
-    if (isset($block['attrs']['render'])) {
-      return $block['attrs']['render'];
-    }
-
-    // setup empty custom fields
-    $fields = array();
-
-    // Get plugin name from block
-    $post_name = VF_Blocks::name_block_to_post($block['blockName']);
-
-    // Get true name from `ref` attribute for generic preview
-    if (
-      $post_name === 'vf_plugin' &&
-      array_key_exists('ref', $block['attrs'])
-    ) {
-      $post_name = $block['attrs']['ref'];
-      $block['attrs']['defaults'] = 0;
-    }
-
-    // check for matching plugin
-    $vf_plugin = VF_Plugin::get_plugin($post_name);
-    if ( ! $vf_plugin) {
-      return $html;
-    }
-
-    // setup fields with block attributes
-    foreach ($block['attrs'] as $key => $value) {
-      // Ignore customization and use ACF settings
-      if ($key === 'defaults' && intval($value) === 1) {
-        $fields = null;
-        break;
-      }
-      if (in_array($key, $this->deprecated__protected_attrs)) {
-        continue;
-      }
-      if ($key === 'className') {
-        if (preg_match('/is-style-([^\s"]+)/', $value, $matches)) {
-          $fields["{$post_name}_style"] = $matches[1];
-        }
-      }
-      // Prefix field key with `post_name` if not already
-      if (strpos($key, 'vf_') !== 0) {
-        $fields["{$post_name}_{$key}"] = $value;
-      } else {
-        $fields[$key] = $value;
-      }
-    }
-
-    ob_start();
-    VF_Plugin::render($vf_plugin, $fields);
-    $html = ob_get_contents();
-    ob_end_clean();
-    return $html;
-  }
-
-  /**
-   * Return enabled plugins and their fields for the Gutenberg editor
-   */
-  private function deprecated__get_config_plugins() {
-    $config = array();
-    if ( ! class_exists('VF_Plugin')) {
-      return $config;
-    }
-    global $vf_plugins;
-    if (empty($vf_plugins)) {
-      return $config;
-    }
-    global $post;
-    // Get array of block names included in this post
-    $blocks = parse_blocks($post->post_content);
-    $allowed_blocks = array();
-    foreach ($blocks as $block) {
-      if (preg_match('/^vf\//', $block['blockName'])) {
-        $allowed_blocks[] = $block['blockName'];
-      }
-    }
-    foreach ($vf_plugins as $post_name => $value) {
-      $plugin = VF_Plugin::get_plugin($post_name);
-      // add prefix for containers to avoid conflicts
-      $block_name = $post_name;
-      if ($plugin->is_container()) {
-        $block_name = preg_replace('/^vf_/', 'vf_container_', $block_name);
-      }
-      $block_name = VF_Blocks::name_post_to_block($block_name, 'vf/');
-      $block_name = str_replace('vf/vf-', 'vf/', $block_name);
-      // Only allow legacy blocks already included in the post
-      if ( ! in_array($block_name, $allowed_blocks)) {
-        continue;
-      }
-      // block settings
-      $data = array(
-        'id'          => $plugin->post()->ID,
-        'title'       => $plugin->post()->post_title,
-        'category'    => VF_Blocks::block_category(),
-        'isBlock'     => $plugin->is_block(),
-        'isContainer' => $plugin->is_container(),
-        'fields'      => array(),
-      );
-      // map ACF fields to supported Gutenberg controls
-      $fields = acf_get_fields("group_{$post_name}");
-      if ( ! is_array($fields)) {
-        $fields = array();
-      }
-      foreach ($fields as $field) {
-        $type = $field['type'];
-        if ( ! in_array($type, $this->deprecated__supported_fields)) {
-          continue;
-        }
-        $name = preg_replace(
-          '#^' . preg_quote($post_name) . '_#',
-          '', $field['name']
-        );
-        if (in_array($name, $this->deprecated__protected_attrs)) {
-          continue;
-        }
-        $data['fields'][] = $this->deprecated__map_acf_field_to_attr($name, $type, $field);
-      }
-      // Set container category
-      // Hide by default and disable custom fields
-      if ($plugin->is_container()) {
-        $data['preview']  = get_permalink($data['id']);
-        $data['category'] = VF_Containers::block_category();
-        $data['fields']   = array();
-        $data['supports'] = array(
-          'customClassName' => false,
-          'reusable'        => false,
-          'inserter'        => false,
-          'multiple'        => false,
-        );
-      }
-      if ($plugin->is_deprecated()) {
-        $data['supports']['inserter'] = false;
-      }
-      $config[$block_name] = $data;
-    }
-    return $config;
-  }
-
-  /**
-   * Map ACF field data to Gutenberg block attributes
-   */
-  private function deprecated__map_acf_field_to_attr($name, $type, $field) {
-    $attr = array(
-      'acf'     => $type,
-      'control' => $type,
-      'name'    => $name,
-      'type'    => 'string',
-      'label'   => html_entity_decode($field['label']),
-      'default' => '',
-    );
-    if (in_array($type, array(
-      'checkbox'
-    ))) {
-      $attr['type'] = 'array';
-      $attr['default'] = array();
-    }
-    if (in_array($type, array(
-      'number'
-    ))) {
-      $attr['type'] = 'number';
-    }
-    if (in_array($type, array(
-      'range',
-      'taxonomy',
-      'true_false'
-    ))) {
-      $attr['type'] = 'integer';
-    }
-    if (in_array($type, array(
-      'number',
-      'range'
-    ))) {
-      $attr['min'] = intval($field['min']);
-      $attr['max'] = intval($field['max']);
-      $attr['step'] = intval($field['step']);
-    }
-    if (in_array($type, array(
-      'checkbox',
-      'radio',
-      'select'
-    ))) {
-      $attr['options'] = array();
-      foreach ($field['choices'] as $k => $v) {
-        $attr['options'][] = array(
-          'label' => html_entity_decode($v),
-          'value' => $k
-        );
-      }
-    }
-    if ($type === 'taxonomy') {
-      $attr['taxonomy'] = $field['taxonomy'];
-    }
-    return $attr;
   }
 
 } // VF_Gutenberg
