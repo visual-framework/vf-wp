@@ -1315,10 +1315,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-2.2.0.tgz#1109d66846e95384ea3ab9f204443521f7ffb1c2"
   integrity sha512-rpdZeeV2yt1uTiJxCMAhtKjf5C9fMsRQ0ZDyMCDDcSK+Hp5BTgWCucl/QzgGNN+sZaQSES7ZuECaLDxOom87iw==
 
-"@visual-framework/vf-breadcrumbs@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-1.0.5.tgz#b09069cfb56049498e5eb1d295ae040e3747374d"
-  integrity sha512-rYHJcX324zzPb+rJrrBtKUBi253fWGUkwchuIx77JzoogrRG/OJ23sRehOusuyDqQ1NOOwB2Xad62xJpkpC8Bg==
+"@visual-framework/vf-breadcrumbs@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.0.tgz#79f5602298703de1f0e5f44a6f0847a2fa79e252"
+  integrity sha512-yMFAYM++cerjJ6ssWtCy/TlOlKWMgHf2KNmGnqeaY4YUnv8LsR22yayLlQck3zqVf8/KBOYzhk9XS2hrdgL3SA==
 
 "@visual-framework/vf-button@^1.2.0":
   version "1.2.0"
@@ -1335,7 +1335,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-card/-/vf-card-2.2.1.tgz#8ecc78ab2450a4ca40eb5cceec9fe688bdbc59b7"
   integrity sha512-8mX6c4yX+F0uB2b268KUrs7QTUtezOCUYg5FnhdfKOsi74U1lzBLbLKqxHJMvxEjrmDowvtovNKThYZZ9K3JUg==
 
-"@visual-framework/vf-cluster@^1.0.0":
+"@visual-framework/vf-cluster@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-cluster/-/vf-cluster-1.0.1.tgz#2d921a21fbaf0ca6e8ed70b3b9e0d4c0afa033e8"
   integrity sha512-q1g+4Fc6TIhSrUktuu5ZToW4OprgiQ6wQZ2C9fmhAsdY1VNbD3nmCJwQvnqCoznuuAyxvyfiQ1tqkSCjUCmbgA==
