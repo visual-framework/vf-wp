@@ -65,6 +65,7 @@ $url = add_query_arg(array(
   'pattern'             => "vf-profile{$suffix}",
   'filter-content-type' => 'person',
   'limit'               => 1,
+  'filter-ref-entity[field_person_positions][title]' => "",
   'hide[' . $hide_fields . ']' => 1,
 ), $url);
 

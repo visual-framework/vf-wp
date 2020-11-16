@@ -46,6 +46,7 @@ $vars = array(
   'limit'                     => $limit,
   'sort-field-value[changed]' => $order,
   'filter-fields-empty'       => 'field_person_visible_internally',
+  'filter-ref-entity[field_person_positions][title]' => "",
   'hide[' . $hide_fields . ']' => 1
 );
 

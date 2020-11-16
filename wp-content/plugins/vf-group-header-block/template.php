@@ -54,6 +54,7 @@ $vars = array(
   'hide[orcid,mobile,phones]' => 1,
   'limit'                     => 1,
   'sort-field-value[changed]' => 'DESC',
+  'filter-ref-entity[field_person_positions][title]' => "",
   'filter-field-value[field_person_positions.entity.field_position_membership]' => 'leader'
 );
 
