@@ -1239,7 +1239,7 @@ function emblContentHubLoaderHtmlImports() {
 
 
 function emblConditionalEdit() {
-  var emblConditionalEditItems = document.querySelectorAll('[data-embl-js-conditional-edit]');
+  var emblConditionalEditItems = document.querySelectorAll("[data-embl-js-conditional-edit]");
 
   if (!emblConditionalEditItems) {
     // exit: lists not found
@@ -1251,7 +1251,7 @@ function emblConditionalEdit() {
     return;
   }
 
-  Array.prototype.forEach.call(emblConditionalEditItems, function (element, i) {
+  Array.prototype.forEach.call(emblConditionalEditItems, function (element) {
     emblConditionalEditDetectParam(location.href, element);
   });
 }
@@ -1267,12 +1267,12 @@ function emblConditionalEdit() {
 function emblConditionalEditDetectParam(url, element, referrer) {
   var captured = /embl-conditional-edit=([^&]+)/.exec(url);
 
-  if (captured == null && referrer != 'iframe') {
+  if (captured == null && referrer != "iframe") {
     // value not found
     // also try against any parent iframe url
     if (window.self !== window.top) {
       console.log(url, parent.window.location.href);
-      emblConditionalEditDetectParam(parent.window.location.href, element, 'iframe');
+      emblConditionalEditDetectParam(parent.window.location.href, element, "iframe");
     }
 
     return;
@@ -1282,8 +1282,8 @@ function emblConditionalEditDetectParam(url, element, referrer) {
 
   captured = captured[1];
 
-  if (captured == '1' || captured == 'enabled' || captured == 'true') {
-    element.className += ' ' + 'embl-coditional-edit__enabled';
+  if (captured == "1" || captured == "enabled" || captured == "true") {
+    element.className += " " + "embl-coditional-edit__enabled";
   }
 } // embl-notifications
 
