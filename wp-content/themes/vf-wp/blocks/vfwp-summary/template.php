@@ -62,7 +62,7 @@ if ( $type === 'custom' ) {
     return;
   }
 ?>
-<article class="vf-summary <?php if ($image) { echo ' vf-summary--news'; } ?>">
+<article class="vf-summary <?php if ($image) { echo 'vf-summary--has-image'; } ?>">
   <?php
   if ($image) {
     echo $image;
@@ -75,10 +75,10 @@ if ( $type === 'custom' ) {
 
     <?php echo esc_html($title); ?>
 
-  </h3>
   <?php if ($link) { ?>
   </a>
   <?php } ?>
+  </h3>
 
   <?php echo $text; ?>
 </article>
