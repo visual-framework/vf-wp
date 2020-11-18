@@ -1298,14 +1298,14 @@ function emblConditionalEditDetectParam(url, element, referrer) {
 
 
 function emblNotificationsInject(message) {
-  var output = document.createElement('div'); // @todo:
+  var output = document.createElement("div"); // @todo:
   // - add support in contentHub for extra button text, link
   // preperation
 
-  message.body = message.body.replace(/<[/]?[p>]+>/g, ' '); // no <p> tags allowed in inline messages, preserve a space to not colide words
+  message.body = message.body.replace(/<[/]?[p>]+>/g, " "); // no <p> tags allowed in inline messages, preserve a space to not colide words
   // add vf-link to link
 
-  message.body = message.body.replace('<a href=', '<a class="vf-banner__link" href='); // we might need a more clever regex, but this should also avoid links that aleady have a class
+  message.body = message.body.replace("<a href=", "<a class=\"vf-banner__link\" href="); // we might need a more clever regex, but this should also avoid links that aleady have a class
   // Learn more link is conditionally shown
 
   if (message.field_notification_link) {
@@ -1313,7 +1313,7 @@ function emblNotificationsInject(message) {
   } // custom button text
 
 
-  message.field_notification_button_text = message.field_notification_button_text || 'Close notice'; // notification memory and cookie options
+  message.field_notification_button_text = message.field_notification_button_text || "Close notice"; // notification memory and cookie options
 
   if (message.field_notification_cookie == "True") {
     output.dataset.vfJsBannerCookieName = message.cookieName;
@@ -1324,8 +1324,8 @@ function emblNotificationsInject(message) {
     }
   }
 
-  if (message.field_notification_position == 'fixed') {
-    output.classList.add('vf-banner', 'vf-banner--fixed', 'vf-banner--bottom', 'vf-banner--notice');
+  if (message.field_notification_position == "fixed") {
+    output.classList.add("vf-banner", "vf-banner--fixed", "vf-banner--bottom", "vf-banner--notice");
     output.dataset.vfJsBanner = true;
     output.dataset.vfJsBannerState = message.field_notification_presentation;
     output.dataset.vfJsBannerButtonText = message.field_notification_button_text; // These features are not yet supported by the notification content type in the EMBL contentHub
@@ -1335,21 +1335,21 @@ function emblNotificationsInject(message) {
     var target = document.body.firstChild;
     target.parentNode.prepend(output);
     vfBanner();
-  } else if (message.field_notification_position == 'inline') {
-    output.classList.add('vf-grid'); // we wrap in vf-grid for layout
+  } else if (message.field_notification_position == "inline") {
+    output.classList.add("vf-grid"); // we wrap in vf-grid for layout
 
     output.innerHTML = "\n      <div class=\"vf-banner vf-banner--phase | vf-content\">\n        <div class=\"vf-banner__content\">\n          <p class=\"vf-banner__text\">".concat(message.body, "</p>\n        </div>\n      </div>"); // insert after `vf-header` or at after `vf-body`
     // @todo: add support for where "inline" message should be shown
     // @todo: don't rely on the presence of vf-header to show inline notification, maybe <div data-notifications-go-here>
 
-    var _target = document.getElementsByClassName('vf-header');
+    var _target = document.getElementsByClassName("vf-header");
 
     if (_target.length > 0) {
       _target[0].parentNode.insertBefore(output, _target[0].nextSibling);
     } else {
       // if no vf-header, show at vf-body
       // @thought: we might instead make this show as "top"
-      var _target2 = document.getElementsByClassName('vf-body');
+      var _target2 = document.getElementsByClassName("vf-body");
 
       if (_target2.length > 0) {
         // output.classList.add('vf-u-grid--reset');
@@ -1357,8 +1357,8 @@ function emblNotificationsInject(message) {
       } // if still no success, we soft fail
 
     }
-  } else if (message.field_notification_position == 'top') {
-    output.classList.add('vf-banner', 'vf-banner--fixed', 'vf-banner--top', 'vf-banner--phase');
+  } else if (message.field_notification_position == "top") {
+    output.classList.add("vf-banner", "vf-banner--fixed", "vf-banner--top", "vf-banner--phase");
     output.dataset.vfJsBanner = true;
     output.dataset.vfJsBannerState = message.field_notification_presentation;
     output.dataset.vfJsBannerButtonText = message.field_notification_button_text; // These features are not yet supported by the notification content type in the EMBL contentHub
@@ -1403,7 +1403,7 @@ function emblNotifications(currentHost, currentPath) {
 
     matchFound = compareUrls(currentHost + currentPath, targetUrl); // Handle wildcard matches like `/about/*`
 
-    if (targetUrl.slice(-1) == '*') {
+    if (targetUrl.slice(-1) == "*") {
       matchFound = compareUrls(currentHost + currentPath, targetUrl, true);
     } // if a match has been made on the current url path, show the message
 
@@ -1423,11 +1423,11 @@ function emblNotifications(currentHost, currentPath) {
     url1 = url1.toLowerCase();
     url2 = url2.toLowerCase(); // don't allow matches to end in `*`
 
-    if (url1.slice(-1) == '*') url1 = url1.substring(0, url1.length - 1);
-    if (url2.slice(-1) == '*') url2 = url2.substring(0, url2.length - 1); // don't allow matches to end in `/`
+    if (url1.slice(-1) == "*") url1 = url1.substring(0, url1.length - 1);
+    if (url2.slice(-1) == "*") url2 = url2.substring(0, url2.length - 1); // don't allow matches to end in `/`
 
-    if (url1.slice(-1) == '/') url1 = url1.substring(0, url1.length - 1);
-    if (url2.slice(-1) == '/') url2 = url2.substring(0, url2.length - 1); // console.log('emblNotifications, comparing:', url1 + "," + url2);
+    if (url1.slice(-1) == "/") url1 = url1.substring(0, url1.length - 1);
+    if (url2.slice(-1) == "/") url2 = url2.substring(0, url2.length - 1); // console.log('emblNotifications, comparing:', url1 + "," + url2);
 
     if (url1 == url2) {
       return true;
@@ -1454,7 +1454,7 @@ function emblNotifications(currentHost, currentPath) {
 
       currentMessage.hasBeenShown = false; // Process the URLs for each path in a message
 
-      var currentUrls = currentMessage.field_notification_urls.split(',');
+      var currentUrls = currentMessage.field_notification_urls.split(",");
 
       for (var indexUrls = 0; indexUrls < currentUrls.length; indexUrls++) {
         var url = currentUrls[indexUrls].trim();
@@ -1472,7 +1472,7 @@ function emblNotifications(currentHost, currentPath) {
 
     xmlhttp.open("GET", file, true);
 
-    xmlhttp.onload = function (e) {
+    xmlhttp.onload = function () {
       if (xmlhttp.readyState === 4) {
         if (xmlhttp.status === 200) {
           // eval(xmlhttp.responseText);
@@ -1484,7 +1484,7 @@ function emblNotifications(currentHost, currentPath) {
       }
     };
 
-    xmlhttp.onerror = function (e) {
+    xmlhttp.onerror = function () {
       console.error(xmlhttp.statusText);
     };
 
@@ -1493,16 +1493,16 @@ function emblNotifications(currentHost, currentPath) {
   // If on dev, reference dev server
 
 
-  if (window.location.hostname.indexOf('wwwdev.') === 0) {
-    loadRemoteNotifications('https://wwwdev.embl.org/api/v1/notifications?_format=json&source=contenthub');
-  } else if (window.location.hostname.indexOf('localhost') === 0) {
-    loadRemoteNotifications('https://wwwdev.embl.org/api/v1/notifications?_format=json&source=contenthub');
+  if (window.location.hostname.indexOf("wwwdev.") === 0) {
+    loadRemoteNotifications("https://wwwdev.embl.org/api/v1/notifications?_format=json&source=contenthub");
+  } else if (window.location.hostname.indexOf("localhost") === 0) {
+    loadRemoteNotifications("https://wwwdev.embl.org/api/v1/notifications?_format=json&source=contenthub");
   } else {
-    loadRemoteNotifications('https://www.embl.org/api/v1/notifications?_format=json&source=contenthub');
+    loadRemoteNotifications("https://www.embl.org/api/v1/notifications?_format=json&source=contenthub");
   } // Check fallback notifications
 
 
-  loadRemoteNotifications('https://embl-communications.github.io/embl-notifcations-fallback/notifications.js');
+  loadRemoteNotifications("https://embl-communications.github.io/embl-notifcations-fallback/notifications.js");
 } // Add this to your ./components/vf-component-rollup/scripts.js
 // import { emblNotifications } from '../components/raw/embl-notifications/embl-notifications.js';
 // And invoke it
