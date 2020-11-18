@@ -23,13 +23,18 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "    <li class=\"vf-breadcrumbs__item\">\n";
+output += "    <li class=\"vf-breadcrumbs__item\"\n";
+if(runtime.memberLookup((t_4),"currentPage")) {
+output += " aria-current=\"location\"";
+;
+}
+output += ">\n";
 if(runtime.memberLookup((t_4),"breadcrumb_href")) {
 output += "      <a href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"breadcrumb_href"), env.opts.autoescape);
 output += "\" class=\"vf-breadcrumbs__link\">";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"text"), env.opts.autoescape);
-output += "</a>\n";
+output += "</a>\n\n";
 ;
 }
 else {
@@ -38,12 +43,12 @@ output += runtime.suppressValue(runtime.memberLookup((t_4),"text"), env.opts.aut
 output += "\n";
 ;
 }
-output += "    </li>\n";
+output += "\n    </li>\n\n";
 ;
 }
 }
 frame = frame.pop();
-output += "  </ul>\n\n";
+output += "\n  </ul>\n\n";
 if(runtime.contextOrFrameLookup(context, frame, "related")) {
 output += "  <span class=\"vf-breadcrumbs__heading\">Related:</span>\n  <ul class=\"vf-breadcrumbs__list vf-breadcrumbs__list--related | vf-list vf-list--inline\">\n";
 frame = frame.push();
@@ -60,7 +65,12 @@ frame.set("loop.revindex0", t_6 - t_5 - 1);
 frame.set("loop.first", t_5 === 0);
 frame.set("loop.last", t_5 === t_6 - 1);
 frame.set("loop.length", t_6);
-output += "    <li class=\"vf-breadcrumbs__item\">\n      <a href=\"";
+output += "    <li class=\"vf-breadcrumbs__item\"";
+if(runtime.memberLookup((t_8),"breadcrumb_last")) {
+output += " aria-current=\"location\"";
+;
+}
+output += ">\n      <a href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_8),"breadcrumb_href"), env.opts.autoescape);
 output += "\" class=\"vf-breadcrumbs__link\">";
 output += runtime.suppressValue(runtime.memberLookup((t_8),"text"), env.opts.autoescape);

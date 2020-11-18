@@ -210,14 +210,7 @@ frame = frame.pop();
 cb()});
 }
 })(function(t_20) {
-if(t_20) { cb(t_20); return; }output += "  </div>\n\n";
-if(runtime.contextOrFrameLookup(context, frame, "modifier_class") === "vf-hero--intense") {
-output += "  ";
-output += "\n  ";
-output += "\n  <script src=\"../../assets/vf-hero/assets/jarallax.js\"></script>\n  <script>\n    document.addEventListener(\"DOMContentLoaded\", function(){\n      jarallax(document.querySelectorAll('.vf-hero--intense'), {\n        speed: 1.25\n      });\n    });\n  </script>\n";
-;
-}
-output += "</section>\n";
+if(t_20) { cb(t_20); return; }output += "  </div>\n\n</section>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

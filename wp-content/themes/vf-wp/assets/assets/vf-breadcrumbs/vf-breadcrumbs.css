@@ -131,7 +131,7 @@
 
 /*!
  * Component: @visual-framework/vf-breadcrumbs
- * Version: 1.0.5
+ * Version: 2.0.0
  * Location: components/vf-breadcrumbs
  */
 .vf-breadcrumbs {
@@ -165,11 +165,14 @@
   margin-right: 3px;
   position: relative;
 }
-.vf-breadcrumbs__item:not(:last-of-type)::after {
+.vf-breadcrumbs__item:not([aria-current])::after {
   color: #707372;
   content: ">";
   display: inline-block;
   margin-left: 3px;
+}
+.vf-breadcrumbs__item[aria-current] {
+  text-shadow: 1px 0 0;
 }
 
 .vf-breadcrumbs__heading {
