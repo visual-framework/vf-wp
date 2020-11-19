@@ -29,5 +29,5 @@ if (
 } ?>
 
 <p class="vf-lede"><?php echo esc_html($lede) ?></p>
-<!--/vf-intro-->
+<!--/vf-lede-->
 
