@@ -22,14 +22,14 @@ $nav = get_field('vf_navigation_enable');
 
 ?>
 <header class="vf-header vf-header--inlay">
+  <?php if ($masthead == 1) {
+    get_template_part('vf-wp-groups-header/vf-masthead');
+  }
+  ?>
   <?php if ($nav == 1) {
     get_template_part('vf-wp-groups-header/vf-navigation');
   }
   ?>
-  <?php if ($masthead == 1) {
-    get_template_part('vf-wp-groups-header/vf-masthead');
-  }
-   ?>
 </header>
 <?php if ($is_hero) { ?>
 <?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
