@@ -34,6 +34,7 @@ require_once('blocks/vfwp-masthead/index.php');
 require_once('blocks/vfwp-social-icons/index.php');
 require_once('blocks/vfwp-lede/index.php');
 require_once('blocks/vfwp-button/index.php');
+require_once('blocks/vfwp-badge/index.php');
 
 if (vf_debug()) {
   require_once('blocks/vfwp-debug/index.php');
