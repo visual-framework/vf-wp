@@ -61,6 +61,11 @@ class VF_Gutenberg {
       array($this, 'render_block_compatible'),
       10, 2
     );
+    add_filter(
+      'render_block',
+      array($this, 'render_block_nunjucks'),
+      10, 2
+    );
 
     // ACF options
     include_once('includes/settings.php');
@@ -93,6 +98,18 @@ class VF_Gutenberg {
         $this->compatible[$key][] = $callback;
       }
     }
+  }
+
+  /**
+   * Render VF Nunjuck template blocks
+   */
+  public function render_block_nunjucks($html, $block) {
+    if (preg_match('/^vf\//', $block['blockName'])) {
+      if (isset($block['attrs']['render'])) {
+        return $block['attrs']['render'];
+      }
+    }
+    return $html;
   }
 
   /**
