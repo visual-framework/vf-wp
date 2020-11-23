@@ -3,12 +3,12 @@ Block Name: Activity List
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import useVFCoreSettings from '../../hooks/use-vf-core-settings';
 import {
   withTransientInnerBlocks,
   withTransientAttributeMap
-} from '../hooks/with-transient';
-import {fromCore} from './transforms/activity-list';
+} from '../../hooks/with-transient';
+import {fromCore} from '../transforms/activity-list';
 
 import '@visual-framework/vf-activity-list/vf-activity-list.precompiled';
 
@@ -27,7 +27,7 @@ const withActivityItems = Edit => {
   };
 };
 
-export default useVFCoreSettings({
+const settings = useVFCoreSettings({
   name: 'vf/activity-list',
   title: __('Activity List'),
   attributes: {
@@ -53,3 +53,11 @@ export default useVFCoreSettings({
     [withTransientInnerBlocks]
   ]
 });
+
+export default {
+  ...settings,
+  supports: {
+    ...settings.supports,
+    inserter: false
+  }
+};

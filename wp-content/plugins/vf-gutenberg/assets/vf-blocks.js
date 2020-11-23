@@ -9994,25 +9994,132 @@
 	};
 
 	/**
-	Block Name: Activity List Item
+	 * Block transforms for: `vf/blockquote`
+	 */
+	var fromParagraph = function fromParagraph() {
+	  return {
+	    type: 'block',
+	    blocks: ['core/paragraph'],
+	    transform: function transform(attributes) {
+	      return blocks.createBlock('vf/blockquote', {
+	        html: attributes.content
+	      });
+	    }
+	  };
+	};
+	var fromQuote = function fromQuote() {
+	  return {
+	    type: 'block',
+	    blocks: ['core/quote'],
+	    transform: function transform(attributes) {
+	      var citation = attributes.citation,
+	          value = attributes.value;
+
+	      if (/^\s*$/.test(citation)) {
+	        citation = '';
+	      }
+
+	      return blocks.createBlock('vf/blockquote', {
+	        html: value + citation
+	      });
+	    }
+	  };
+	};
+
+	/**
+	 * Precompiled Nunjucks template: vf-blockquote.njk
+	 */
+	(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-blockquote"] = (function() {
+	function root(env, context, frame, runtime, cb) {
+	var lineno = 0;
+	var colno = 0;
+	var output = "";
+	try {
+	var parentTemplate = null;
+	output += "<blockquote\n";
+	output += "\n";
+	if(runtime.contextOrFrameLookup(context, frame, "id")) {
+	output += " id=\"";
+	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
+	output += "\"";
+	;
+	}
+	output += "\nclass=\"vf-blockquote";
+	if(runtime.contextOrFrameLookup(context, frame, "override_class")) {
+	output += " | ";
+	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "override_class"), env.opts.autoescape);
+	;
+	}
+	output += "\">";
+	output += runtime.suppressValue((runtime.contextOrFrameLookup(context, frame, "html")?env.getFilter("safe").call(context, runtime.contextOrFrameLookup(context, frame, "html")):runtime.contextOrFrameLookup(context, frame, "text")), env.opts.autoescape);
+	output += "</blockquote>\n";
+	if(parentTemplate) {
+	parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+	} else {
+	cb(null, output);
+	}
+	;
+	} catch (e) {
+	  cb(runtime.handleError(e, lineno, colno));
+	}
+	}
+	return {
+	root: root
+	};
+
+	})();
+	})();
+
+	/**
+	Block Name: Blockquote
 	*/
-	var vfActivityItem = useVFCoreSettings({
-	  name: 'vf/activity-item',
-	  title: i18n.__('Activity Item'),
-	  parent: ['vf/activity-list'],
+	var vfBlockquote = useVFCoreSettings({
+	  name: 'vf/blockquote',
+	  title: i18n.__('Blockquote'),
+	  attributes: {
+	    html: {
+	      type: 'string'
+	    }
+	  },
+	  fields: [{
+	    name: 'html',
+	    control: 'rich',
+	    default: '',
+	    label: '',
+	    tag: 'p',
+	    placeholder: i18n.__('Type blockquote…')
+	  }],
+	  transforms: {
+	    from: [fromParagraph(), fromQuote()]
+	  }
+	});
+
+	/**
+	Block Name: Breadcrumbs Item
+	*/
+	var vfBreadcrumbsItem = useVFCoreSettings({
+	  name: 'vf/breadcrumbs-item',
+	  title: i18n.__('Breadcrumbs Item'),
+	  parent: ['vf/breadcrumbs'],
 	  isRenderable: false,
 	  attributes: {
 	    text: {
 	      type: 'string',
-	      default: '<strong>Author</strong> published <a href="#">\'Article Title\'</a> on <a href="#">Source</a>.'
+	      default: i18n.__('Breadcrumb')
+	    },
+	    url: {
+	      type: 'string',
+	      default: '/'
 	    }
 	  },
 	  fields: [{
 	    name: 'text',
-	    control: 'rich',
-	    label: '',
-	    tag: 'p',
-	    placeholder: i18n.__('Type activity…')
+	    control: 'text',
+	    label: i18n.__('Text')
+	  }, {
+	    name: 'url',
+	    control: 'url',
+	    label: i18n.__('URL')
 	  }]
 	});
 
@@ -10106,6 +10213,1427 @@
 	  };
 	};
 
+	/**
+	 * Precompiled Nunjucks template: vf-breadcrumbs.njk
+	 */
+	(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-breadcrumbs"] = (function() {
+	function root(env, context, frame, runtime, cb) {
+	var lineno = 0;
+	var colno = 0;
+	var output = "";
+	try {
+	var parentTemplate = null;
+	output += "<nav class=\"vf-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ul class=\"vf-breadcrumbs__list | vf-list vf-list--inline\">\n";
+	frame = frame.push();
+	var t_3 = runtime.contextOrFrameLookup(context, frame, "breadcrumbs");
+	if(t_3) {t_3 = runtime.fromIterator(t_3);
+	var t_2 = t_3.length;
+	for(var t_1=0; t_1 < t_3.length; t_1++) {
+	var t_4 = t_3[t_1];
+	frame.set("breadcrumb", t_4);
+	frame.set("loop.index", t_1 + 1);
+	frame.set("loop.index0", t_1);
+	frame.set("loop.revindex", t_2 - t_1);
+	frame.set("loop.revindex0", t_2 - t_1 - 1);
+	frame.set("loop.first", t_1 === 0);
+	frame.set("loop.last", t_1 === t_2 - 1);
+	frame.set("loop.length", t_2);
+	output += "    <li class=\"vf-breadcrumbs__item\">\n";
+	if(runtime.memberLookup((t_4),"breadcrumb_href")) {
+	output += "      <a href=\"";
+	output += runtime.suppressValue(runtime.memberLookup((t_4),"breadcrumb_href"), env.opts.autoescape);
+	output += "\" class=\"vf-breadcrumbs__link\">";
+	output += runtime.suppressValue(runtime.memberLookup((t_4),"text"), env.opts.autoescape);
+	output += "</a>\n";
+	;
+	}
+	else {
+	output += "      ";
+	output += runtime.suppressValue(runtime.memberLookup((t_4),"text"), env.opts.autoescape);
+	output += "\n";
+	;
+	}
+	output += "    </li>\n";
+	;
+	}
+	}
+	frame = frame.pop();
+	output += "  </ul>\n</nav>\n";
+	if(parentTemplate) {
+	parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+	} else {
+	cb(null, output);
+	}
+	;
+	} catch (e) {
+	  cb(runtime.handleError(e, lineno, colno));
+	}
+	}
+	return {
+	root: root
+	};
+
+	})();
+	})();
+
+	function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+	var withBreadcrumbsItems = function withBreadcrumbsItems(Edit) {
+	  return function (props) {
+	    var transient = _objectSpread$4({}, props.transient || {});
+
+	    transient.breadcrumbs = [];
+
+	    if (Array.isArray(transient.innerBlocks)) {
+	      transient.innerBlocks.forEach(function (block) {
+	        if (block.name === 'vf/breadcrumbs-item') {
+	          transient.breadcrumbs.push({
+	            text: block.attributes.text,
+	            url: block.attributes.url,
+	            // Nunjucks template changed from `url`?
+	            breadcrumb_href: block.attributes.url
+	          });
+	        }
+	      });
+	    }
+
+	    return Edit(_objectSpread$4(_objectSpread$4({}, props), {}, {
+	      transient: transient
+	    }));
+	  };
+	};
+
+	var vfBreadcrumbs = useVFCoreSettings({
+	  name: 'vf/breadcrumbs',
+	  title: i18n.__('Breadcrumbs'),
+	  allowedBlocks: ['vf/breadcrumbs-item'],
+	  withHOC: [[withBreadcrumbsItems], [withTransientInnerBlocks]]
+	});
+
+	function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults = useVFDefaults();
+	var ver = '1.0.0';
+
+	var settings = _objectSpread$5(_objectSpread$5({}, defaults), {}, {
+	  name: 'vf/cluster',
+	  title: i18n.__('VF Cluster'),
+	  category: 'vf/core',
+	  description: i18n.__('Visual Framework (core)'),
+	  attributes: _objectSpread$5(_objectSpread$5({}, defaults.attributes), {}, {
+	    alignment: {
+	      type: 'string',
+	      default: 'center'
+	    },
+	    spacing: {
+	      type: 'string',
+	      default: 'small'
+	    },
+	    customSpacing: {
+	      type: 'number',
+	      default: 0
+	    }
+	  })
+	});
+
+	var Cluster = function Cluster(props) {
+	  var _props$attributes = props.attributes,
+	      alignment = _props$attributes.alignment,
+	      spacing = _props$attributes.spacing,
+	      customSpacing = _props$attributes.customSpacing;
+	  var classes = ['vf-cluster'];
+
+	  if (spacing === 'medium') {
+	    classes.push('vf-cluster--600');
+	  } else if (spacing === 'large') {
+	    classes.push('vf-cluster--800');
+	  } else if (spacing !== 'custom') {
+	    classes.push('vf-cluster--400');
+	  }
+
+	  var styles = {};
+	  styles['--vf-cluster__item--flex'] = '25% 1 0';
+
+	  if (spacing === 'custom') {
+	    styles['--vf-cluster-margin'] = "".concat(customSpacing, "px");
+	  }
+
+	  if (alignment === 'start') {
+	    styles['--vf-cluster-alignment'] = 'flex-start';
+	  } else if (alignment === 'end') {
+	    styles['--vf-cluster-alignment'] = 'flex-end';
+	  } else if (alignment === 'stretch') {
+	    styles['--vf-cluster-alignment'] = 'stretch';
+	  } else {
+	    styles['--vf-cluster-alignment'] = 'center';
+	  }
+
+	  return wp.element.createElement("div", {
+	    "data-ver": props.isEdit ? ver : null,
+	    className: classes.join(' '),
+	    style: styles
+	  }, wp.element.createElement("div", {
+	    className: "vf-cluster__inner"
+	  }, props.children));
+	};
+
+	settings.save = function (props) {
+	  return wp.element.createElement(Cluster, props, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+	};
+
+	settings.edit = function (props) {
+	  if (ver !== props.attributes.ver) {
+	    props.setAttributes({
+	      ver: ver
+	    });
+	  }
+
+	  var clientId = props.clientId;
+	  var _props$attributes2 = props.attributes,
+	      alignment = _props$attributes2.alignment,
+	      spacing = _props$attributes2.spacing;
+	  var onSpacing = React.useCallback(function (name, value) {
+	    props.setAttributes(defineProperty$4({}, name, value));
+
+	    if (value !== 'custom') {
+	      props.setAttributes({
+	        customSpacing: 0
+	      });
+	    }
+	  }, [clientId]); // Inspector controls
+
+	  var fields = [{
+	    name: 'alignment',
+	    label: i18n.__('Alignment'),
+	    control: 'select',
+	    options: [{
+	      label: i18n.__('Stretch'),
+	      value: 'stretch'
+	    }, {
+	      label: i18n.__('Start'),
+	      value: 'start'
+	    }, {
+	      label: i18n.__('Center'),
+	      value: 'center'
+	    }, {
+	      label: i18n.__('End'),
+	      value: 'end'
+	    }]
+	  }, {
+	    name: 'spacing',
+	    label: i18n.__('Spacing'),
+	    control: 'select',
+	    options: [{
+	      label: i18n.__('Small'),
+	      value: 'small'
+	    }, {
+	      label: i18n.__('Medium'),
+	      value: 'medium'
+	    }, {
+	      label: i18n.__('Large'),
+	      value: 'large'
+	    }, {
+	      label: i18n.__('Custom'),
+	      value: 'custom'
+	    }],
+	    onChange: onSpacing
+	  }];
+
+	  if (spacing === 'custom') {
+	    fields.push({
+	      name: 'customSpacing',
+	      label: i18n.__('Custom spacing'),
+	      control: 'range',
+	      allowReset: true,
+	      min: 0,
+	      max: 100
+	    });
+	  } // Return inner blocks and inspector controls
+
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Settings'),
+	    initialOpen: true
+	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
+	    fields: fields
+	  })))), wp.element.createElement(Cluster, _extends_1({}, props, {
+	    isEdit: true
+	  }), wp.element.createElement(blockEditor.InnerBlocks, {
+	    renderAppender: function renderAppender() {
+	      return wp.element.createElement(blockEditor.InnerBlocks.ButtonBlockAppender, null);
+	    }
+	  })));
+	};
+
+	/**
+	 * Precompiled Nunjucks template: vf-embed.njk
+	 */
+	(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-embed"] = (function() {
+	function root(env, context, frame, runtime, cb) {
+	var lineno = 0;
+	var colno = 0;
+	var output = "";
+	try {
+	var parentTemplate = null;
+	output += "<div\n  class=\"vf-embed";
+	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_16x9") == true) {
+	output += " vf-embed--16x9";
+	;
+	}
+	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_4x3") == true) {
+	output += " vf-embed--4x3";
+	;
+	}
+	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_custom") == true) {
+	output += " vf-embed--custom-ratio";
+	;
+	}
+	output += "\"\n\n  style=\"";
+	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_max_width")) {
+	output += "--vf-embed-max-width: ";
+	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_max_width"), env.opts.autoescape);
+	output += ";\n";
+	;
+	}
+	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_custom") == true) {
+	output += "    --vf-embed-custom-ratio-x: ";
+	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_custom_ratio_X"), env.opts.autoescape);
+	output += ";\n    --vf-embed-custom-ratio-y: ";
+	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_custom_ratio_Y"), env.opts.autoescape);
+	output += ";";
+	;
+	}
+	output += "\"\n>";
+	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embedded_content"), env.opts.autoescape);
+	output += "</div>\n";
+	if(parentTemplate) {
+	parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
+	} else {
+	cb(null, output);
+	}
+	;
+	} catch (e) {
+	  cb(runtime.handleError(e, lineno, colno));
+	}
+	}
+	return {
+	root: root
+	};
+
+	})();
+	})();
+
+	function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var RATIOS = {
+	  '2:1': {
+	    label: i18n.__('(2:1) Cinema'),
+	    ratio: '2:1',
+	    width: 640,
+	    height: 320
+	  },
+	  '16:9': {
+	    label: i18n.__('(16:9) Widescreen'),
+	    ratio: '16:9',
+	    width: 640,
+	    height: 360
+	  },
+	  '4:3': {
+	    label: i18n.__('(4:3) Standard'),
+	    ratio: '4:3',
+	    width: 640,
+	    height: 480
+	  },
+	  '1:1': {
+	    label: i18n.__('(1:1) Square'),
+	    ratio: '1:1',
+	    width: 640,
+	    height: 640
+	  }
+	};
+
+	var withRatioAttributes = function withRatioAttributes(Edit) {
+	  return function (props) {
+	    var transient = _objectSpread$6({}, props.transient || {});
+
+	    var _props$attributes = props.attributes,
+	        ratio = _props$attributes.ratio,
+	        width = _props$attributes.width,
+	        height = _props$attributes.height,
+	        maxWidth = _props$attributes.maxWidth;
+
+	    if (ratio && ratio in RATIOS) {
+	      width = RATIOS[ratio].width;
+	      height = RATIOS[ratio].height;
+	      props.setAttributes({
+	        width: width,
+	        height: height
+	      });
+	    }
+
+	    if (isNaN(width)) {
+	      width = RATIOS['16:9'].width;
+	      props.setAttributes({
+	        width: width
+	      });
+	    }
+
+	    if (isNaN(height)) {
+	      height = RATIOS['16:9'].height;
+	      props.setAttributes({
+	        height: height
+	      });
+	    }
+
+	    transient.vf_embed_variant_custom = true;
+	    transient.vf_embed_custom_ratio_X = width;
+	    transient.vf_embed_custom_ratio_Y = height;
+
+	    if (maxWidth > 0) {
+	      transient.vf_embed_max_width = "".concat(maxWidth, "px");
+	    } else {
+	      transient.vf_embed_max_width = '100%';
+	    }
+
+	    transient.vf_embedded_content = '';
+
+	    if (transient.src) {
+	      transient.vf_embedded_content = "<iframe width=\"".concat(width, "\" height=\"").concat(height, "\" src=\"").concat(transient.src, "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
+	    }
+
+	    return Edit(_objectSpread$6(_objectSpread$6({}, props), {}, {
+	      transient: transient
+	    }));
+	  };
+	};
+
+	var vfEmbed = useVFCoreSettings({
+	  name: 'vf/embed',
+	  title: i18n.__('Embed'),
+	  attributes: {
+	    url: {
+	      type: 'string'
+	    },
+	    responsive: {
+	      type: 'integer',
+	      default: 1
+	    },
+	    ratio: {
+	      type: 'string',
+	      default: '16:9'
+	    },
+	    width: {
+	      type: 'integer'
+	    },
+	    height: {
+	      type: 'integer'
+	    },
+	    maxWidth: {
+	      type: 'string',
+	      default: 0
+	    }
+	  },
+	  fields: [{
+	    name: 'url',
+	    control: 'url',
+	    label: i18n.__('URL'),
+	    disableSuggestions: true
+	  }, {
+	    name: 'ratio',
+	    control: 'select',
+	    label: i18n.__('Preset Ratio'),
+	    inspector: true,
+	    options: Object.keys(RATIOS).map(function (key) {
+	      return {
+	        label: RATIOS[key].label,
+	        value: key
+	      };
+	    })
+	  }, {
+	    name: 'width',
+	    control: 'number',
+	    label: i18n.__('Width'),
+	    help: i18n.__('Deselect preset to set a custom width.'),
+	    inspector: true,
+	    max: 1920,
+	    min: 320
+	  }, {
+	    name: 'height',
+	    control: 'number',
+	    label: i18n.__('Height'),
+	    help: i18n.__('Deselect preset to set a custom height.'),
+	    inspector: true,
+	    max: 1080,
+	    min: 180
+	  }, {
+	    name: 'maxWidth',
+	    control: 'number',
+	    label: i18n.__('Maximum Width'),
+	    help: i18n.__('Restrict embed resize to this width.'),
+	    inspector: true,
+	    max: 1920,
+	    min: 0
+	  }],
+	  withHOC: [[withRatioAttributes], [withTransientAttributeMap, [{
+	    from: 'url',
+	    to: 'src'
+	  }]]]
+	});
+
+	var floor$2 = Math.floor;
+
+	// `Number.isInteger` method implementation
+	// https://tc39.github.io/ecma262/#sec-number.isinteger
+	var isInteger = function isInteger(it) {
+	  return !isObject(it) && isFinite(it) && floor$2(it) === it;
+	};
+
+	// `Number.isInteger` method
+	// https://tc39.github.io/ecma262/#sec-number.isinteger
+	_export({ target: 'Number', stat: true }, {
+	  isInteger: isInteger
+	});
+
+	function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$1 = useVFDefaults();
+
+	var settings$1 = _objectSpread$7(_objectSpread$7({}, defaults$1), {}, {
+	  name: 'vf/grid-column',
+	  title: i18n.__('Grid Column'),
+	  category: 'vf/core',
+	  description: i18n.__('Visual Framework (core)'),
+	  parent: ['vf/grid', 'vf/embl-grid'],
+	  supports: _objectSpread$7(_objectSpread$7({}, defaults$1.supports), {}, {
+	    inserter: false,
+	    lightBlockWrapper: true
+	  }),
+	  attributes: _objectSpread$7(_objectSpread$7({}, defaults$1.attributes), {}, {
+	    span: {
+	      type: 'integer',
+	      default: 1
+	    }
+	  })
+	});
+
+	settings$1.save = function (props) {
+	  var span = props.attributes.span;
+	  var classes = [];
+
+	  if (Number.isInteger(span) && span > 1) {
+	    classes.push("vf-grid__col--span-".concat(span));
+	  }
+
+	  var rootAttr = {};
+
+	  if (classes.length) {
+	    rootAttr.className = classes.join(' ');
+	  }
+
+	  return wp.element.createElement("div", rootAttr, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+	};
+
+	settings$1.edit = function (props) {
+	  var clientId = props.clientId;
+	  var span = props.attributes.span;
+
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      updateBlockAttributes = _useDispatch.updateBlockAttributes;
+
+	  var _useSelect = data$1.useSelect(function (select) {
+	    var _select = select('core/block-editor'),
+	        getBlockName = _select.getBlockName,
+	        getBlockOrder = _select.getBlockOrder,
+	        getBlockRootClientId = _select.getBlockRootClientId;
+
+	    var rootClientId = getBlockRootClientId(clientId);
+	    var hasChildBlocks = getBlockOrder(clientId).length > 0;
+	    var hasSpanSupport = getBlockName(rootClientId) === 'vf/grid';
+	    return {
+	      rootClientId: rootClientId,
+	      hasChildBlocks: hasChildBlocks,
+	      hasSpanSupport: hasSpanSupport
+	    };
+	  }, [clientId]),
+	      hasChildBlocks = _useSelect.hasChildBlocks,
+	      hasSpanSupport = _useSelect.hasSpanSupport,
+	      rootClientId = _useSelect.rootClientId;
+
+	  React.useEffect(function () {
+	    if (!hasSpanSupport && span !== 1) {
+	      props.setAttributes({
+	        span: 1
+	      });
+	    }
+	  }, [clientId]);
+	  var onSpanChange = React.useCallback(function (value) {
+	    if (span !== value) {
+	      props.setAttributes({
+	        span: value
+	      });
+	      updateBlockAttributes(rootClientId, {
+	        dirty: Date.now()
+	      });
+	    }
+	  }, [span, clientId, rootClientId]);
+	  var rootAttr = {};
+	  var classes = [];
+
+	  if (hasSpanSupport) {
+	    if (Number.isInteger(span) && span > 1) {
+	      classes.push("vf-grid__col--span-".concat(span));
+	    }
+	  }
+
+	  if (classes.length) {
+	    rootAttr.className = classes.join(' ');
+	  }
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, hasSpanSupport && wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Advanced Settings'),
+	    initialOpen: true
+	  }, wp.element.createElement(components.RangeControl, {
+	    label: i18n.__('Column span'),
+	    help: i18n.__('Columns may be merged to fit.'),
+	    value: Number.isInteger(span) ? span : 1,
+	    onChange: onSpanChange,
+	    allowReset: true,
+	    step: 1,
+	    min: 1,
+	    max: 6
+	  }))), wp.element.createElement(blockEditor.__experimentalBlock.div, rootAttr, wp.element.createElement(blockEditor.InnerBlocks, {
+	    templateLock: false,
+	    renderAppender: hasChildBlocks ? undefined : function () {
+	      return wp.element.createElement(blockEditor.InnerBlocks.ButtonBlockAppender, null);
+	    }
+	  })));
+	};
+
+	function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	// New columns are appended to match minimum
+	// End columns are merged to match maximum
+
+	var fromColumns = function fromColumns(fromBlock, toBlock, min, max) {
+	  return {
+	    type: 'block',
+	    blocks: [fromBlock],
+	    // Match function (ignore initial placeholder state)
+	    isMatch: function isMatch(attributes) {
+	      return attributes.placeholder !== 1;
+	    },
+	    // Transform function
+	    transform: function transform(attributes, innerBlocks) {
+	      // Map column props
+	      var innerProps = innerBlocks.map(function (block) {
+	        return {
+	          attributes: _objectSpread$8({}, block.attributes),
+	          innerBlocks: toConsumableArray(block.innerBlocks)
+	        };
+	      }); // Fill empty props to match min number of columns
+
+	      while (innerProps.length < min) {
+	        innerProps.push({});
+	      } // Merge end props to match max number of columns
+
+
+	      while (innerProps.length > max) {
+	        var _innerProps$innerBloc;
+
+	        var mergeProps = innerProps.pop();
+
+	        (_innerProps$innerBloc = innerProps[innerProps.length - 1].innerBlocks).push.apply(_innerProps$innerBloc, toConsumableArray(mergeProps.innerBlocks));
+	      } // Return new grid block with inner columns
+
+
+	      return blocks.createBlock(toBlock, {
+	        columns: innerProps.length
+	      }, innerProps.map(function (props) {
+	        return blocks.createBlock('vf/grid-column', props.attributes || {}, props.innerBlocks || []);
+	      }));
+	    }
+	  };
+	};
+
+	function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$2 = useVFDefaults();
+	var ver$1 = '1.1.0';
+	var MIN_COLUMNS = 2;
+	var MAX_COLUMNS = 4;
+
+	var settings$2 = _objectSpread$9(_objectSpread$9({}, defaults$2), {}, {
+	  name: 'vf/embl-grid',
+	  title: i18n.__('EMBL Grid'),
+	  category: 'vf/core',
+	  description: i18n.__('Visual Framework (core)'),
+	  supports: _objectSpread$9(_objectSpread$9({}, defaults$2.supports), {}, {
+	    lightBlockWrapper: true
+	  }),
+	  attributes: _objectSpread$9(_objectSpread$9({}, defaults$2.attributes), {}, {
+	    placeholder: {
+	      type: 'integer',
+	      default: 0
+	    },
+	    columns: {
+	      type: 'integer',
+	      default: 0
+	    },
+	    sidebar: {
+	      type: 'integer',
+	      default: 0
+	    },
+	    centered: {
+	      type: 'integer',
+	      default: 0
+	    }
+	  })
+	});
+
+	settings$2.save = function (props) {
+	  var _props$attributes = props.attributes,
+	      placeholder = _props$attributes.placeholder,
+	      sidebar = _props$attributes.sidebar,
+	      centered = _props$attributes.centered;
+
+	  if (placeholder === 1) {
+	    return null;
+	  }
+
+	  var className = 'embl-grid';
+
+	  if (!!sidebar) {
+	    className = "".concat(className, " embl-grid--has-sidebar");
+	  }
+
+	  if (!!centered) {
+	    className = "".concat(className, " embl-grid--has-centered-content");
+	  }
+
+	  return wp.element.createElement("div", {
+	    className: className
+	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+	};
+
+	settings$2.edit = function (props) {
+	  if (ver$1 !== props.attributes.ver) {
+	    props.setAttributes({
+	      ver: ver$1
+	    });
+	  }
+
+	  var clientId = props.clientId;
+	  var _props$attributes2 = props.attributes,
+	      columns = _props$attributes2.columns,
+	      centered = _props$attributes2.centered,
+	      sidebar = _props$attributes2.sidebar,
+	      placeholder = _props$attributes2.placeholder; // Turn on setup placeholder if no columns are defined
+
+	  React.useEffect(function () {
+	    if (columns === 0) {
+	      props.setAttributes({
+	        placeholder: 1
+	      });
+	    }
+	  }, [clientId]);
+
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks;
+
+	  var _useSelect = data$1.useSelect(function (select) {
+	    var _select = select('core/block-editor'),
+	        getBlocks = _select.getBlocks; // Remove columns by merging their inner blocks
+
+
+	    var removeColumns = function removeColumns(newColumns) {
+	      var innerColumns = getBlocks(clientId);
+	      var mergeBlocks = [];
+
+	      for (var i = newColumns - 1; i < innerColumns.length; i++) {
+	        mergeBlocks.push.apply(mergeBlocks, toConsumableArray(innerColumns[i].innerBlocks));
+	      }
+
+	      replaceInnerBlocks(innerColumns[newColumns - 1].clientId, mergeBlocks, false);
+	      replaceInnerBlocks(clientId, getBlocks(clientId).slice(0, newColumns), false);
+	    }; // Append new columns
+
+
+	    var addColumns = function addColumns(newColumns) {
+	      var innerColumns = getBlocks(clientId);
+
+	      while (innerColumns.length < newColumns) {
+	        innerColumns.push(blocks.createBlock('vf/grid-column', {}, []));
+	      }
+
+	      replaceInnerBlocks(clientId, innerColumns, false);
+	    };
+
+	    var setColumns = function setColumns(newColumns) {
+	      var innerColumns = getBlocks(clientId);
+
+	      if (newColumns < innerColumns.length) {
+	        removeColumns(newColumns);
+	      }
+
+	      if (newColumns > innerColumns.length) {
+	        addColumns(newColumns);
+	      }
+
+	      props.setAttributes({
+	        columns: newColumns,
+	        placeholder: 0
+	      });
+
+	      if (newColumns !== 3) {
+	        props.setAttributes({
+	          sidebar: 0,
+	          centered: 0
+	        });
+	      }
+	    };
+
+	    return {
+	      setColumns: setColumns
+	    };
+	  }, [clientId]),
+	      setColumns = _useSelect.setColumns; // Toggle attribute `onChange` callback
+
+
+	  var setToggle = React.useCallback(function (name, value) {
+	    value = value ? 1 : 0;
+	    props.setAttributes(defineProperty$4({
+	      sidebar: 0,
+	      centered: 0
+	    }, name, value));
+
+	    if (value) {
+	      setColumns(3);
+	    }
+	  }); // Setup placeholder fields
+
+	  var fields = [{
+	    control: 'columns',
+	    min: MIN_COLUMNS,
+	    max: MAX_COLUMNS,
+	    value: columns,
+	    onChange: setColumns
+	  }, {
+	    label: i18n.__('With Sidebar'),
+	    control: 'toggle',
+	    name: 'sidebar',
+	    onChange: setToggle
+	  }, {
+	    label: i18n.__('Centered Content'),
+	    control: 'toggle',
+	    name: 'centered',
+	    onChange: setToggle
+	  }]; // Return setup placeholder
+
+	  if (placeholder === 1) {
+	    return wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	      className: "vf-block vf-block--placeholder"
+	    }, wp.element.createElement(components.Placeholder, {
+	      label: i18n.__('EMBL Grid'),
+	      icon: 'admin-generic'
+	    }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
+	      fields: fields
+	    }))));
+	  } // Amend fields for inspector
+
+
+	  fields[0].help = i18n.__('Content may be reorganised when columns are reduced.');
+	  fields[1].help = i18n.__('3 column only.');
+	  fields[2].help = fields[1].help;
+	  var className = 'embl-grid';
+
+	  if (!!sidebar) {
+	    className = "".concat(className, " embl-grid--has-sidebar");
+	  }
+
+	  if (!!centered) {
+	    className = "".concat(className, " embl-grid--has-centered-content");
+	  } // Return inner blocks and inspector controls
+
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Settings'),
+	    initialOpen: true
+	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
+	    fields: fields
+	  })))), wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	    className: className,
+	    "data-ver": ver$1,
+	    "data-embl": true,
+	    "data-sidebar": sidebar,
+	    "data-centered": centered
+	  }, wp.element.createElement(blockEditor.InnerBlocks, {
+	    allowedBlocks: ['vf/grid-column'],
+	    template: Array(columns).fill(['vf/grid-column']),
+	    templateLock: "all"
+	  })));
+	}; // Block transforms
+
+
+	settings$2.transforms = {
+	  from: [fromColumns('core/columns', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS), fromColumns('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)]
+	};
+
+	function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$3 = useVFDefaults();
+	var MIN_COLUMNS$1 = 1;
+	var MAX_COLUMNS$1 = 6;
+
+	var settings$3 = _objectSpread$a(_objectSpread$a({}, defaults$3), {}, {
+	  name: 'vf/grid',
+	  title: i18n.__('VF Grid'),
+	  category: 'vf/core',
+	  description: i18n.__('Visual Framework (core)'),
+	  supports: _objectSpread$a(_objectSpread$a({}, defaults$3.supports), {}, {
+	    lightBlockWrapper: true
+	  }),
+	  attributes: _objectSpread$a(_objectSpread$a({}, defaults$3.attributes), {}, {
+	    placeholder: {
+	      type: 'integer',
+	      default: 0
+	    },
+	    columns: {
+	      type: 'integer',
+	      default: 0
+	    },
+	    dirty: {
+	      type: 'integer',
+	      default: 0
+	    }
+	  })
+	});
+
+	settings$3.save = function (props) {
+	  var _props$attributes = props.attributes,
+	      columns = _props$attributes.columns,
+	      placeholder = _props$attributes.placeholder;
+
+	  if (placeholder === 1) {
+	    return null;
+	  }
+
+	  var className = "vf-grid | vf-grid__col-".concat(columns);
+	  return wp.element.createElement("div", {
+	    className: className
+	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+	};
+
+	settings$3.edit = function (props) {
+	  var clientId = props.clientId;
+	  var _props$attributes2 = props.attributes,
+	      dirty = _props$attributes2.dirty,
+	      columns = _props$attributes2.columns,
+	      placeholder = _props$attributes2.placeholder; // Turn on setup placeholder if no columns are defined
+
+	  React.useEffect(function () {
+	    if (columns === 0) {
+	      props.setAttributes({
+	        placeholder: 1
+	      });
+	    }
+	  }, [clientId]);
+
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks;
+
+	  var _useSelect = data$1.useSelect(function (select) {
+	    var _select = select('core/block-editor'),
+	        getBlocks = _select.getBlocks,
+	        getBlockAttributes = _select.getBlockAttributes; // Return total number of columns accounting for spans
+
+
+	    var countSpans = function countSpans(blocks) {
+	      var count = 0;
+	      blocks.forEach(function (block) {
+	        var span = block.attributes.span;
+
+	        if (Number.isInteger(span) && span > 0) {
+	          count += span;
+	        } else {
+	          count++;
+	        }
+	      });
+	      return count;
+	    }; // Append new columns
+
+
+	    var addColumns = function addColumns(maxSpans) {
+	      var innerColumns = getBlocks(clientId);
+
+	      while (countSpans(innerColumns) < maxSpans) {
+	        innerColumns.push(blocks.createBlock('vf/grid-column', {}, []));
+	      }
+
+	      replaceInnerBlocks(clientId, innerColumns, false);
+	    }; // Remove columns by merging their inner blocks
+
+
+	    var removeColumns = function removeColumns(maxSpans) {
+	      var innerColumns = getBlocks(clientId);
+	      var mergeBlocks = [];
+
+	      while (innerColumns.length > 1 && countSpans(innerColumns) > maxSpans) {
+	        mergeBlocks = mergeBlocks.concat(innerColumns.pop().innerBlocks);
+	      }
+
+	      replaceInnerBlocks(innerColumns[innerColumns.length - 1].clientId, mergeBlocks.concat(innerColumns[innerColumns.length - 1].innerBlocks), false);
+	      replaceInnerBlocks(clientId, getBlocks(clientId).slice(0, innerColumns.length), false);
+	    };
+
+	    var setColumns = function setColumns(newColumns) {
+	      props.setAttributes({
+	        columns: newColumns,
+	        placeholder: 0
+	      });
+	      var innerColumns = getBlocks(clientId);
+	      var count = countSpans(innerColumns);
+
+	      if (newColumns < count) {
+	        removeColumns(newColumns);
+	      }
+
+	      if (newColumns > count) {
+	        addColumns(newColumns);
+	      }
+	    };
+
+	    var updateColumns = function updateColumns() {
+	      var _getBlockAttributes = getBlockAttributes(clientId),
+	          columns = _getBlockAttributes.columns;
+
+	      setColumns(columns);
+	      props.setAttributes({
+	        dirty: 0
+	      });
+	    };
+
+	    return {
+	      setColumns: setColumns,
+	      updateColumns: updateColumns
+	    };
+	  }, [clientId]),
+	      setColumns = _useSelect.setColumns,
+	      updateColumns = _useSelect.updateColumns;
+
+	  React.useEffect(function () {
+	    if (dirty > 0) {
+	      updateColumns();
+	    }
+	  }, [dirty]);
+
+	  var GridControl = function GridControl(props) {
+	    return wp.element.createElement(ColumnsControl, _extends_1({
+	      value: columns,
+	      min: MIN_COLUMNS$1,
+	      max: MAX_COLUMNS$1,
+	      onChange: React.useCallback(function (value) {
+	        return setColumns(value);
+	      })
+	    }, props));
+	  }; // Return setup placeholder
+
+
+	  if (placeholder === 1) {
+	    return wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	      className: "vf-block vf-block--placeholder"
+	    }, wp.element.createElement(components.Placeholder, {
+	      label: i18n.__('VF Grid'),
+	      icon: 'admin-generic'
+	    }, wp.element.createElement(GridControl, null)));
+	  }
+
+	  var className = "vf-grid | vf-grid__col-".concat(columns);
+
+	  var styles = defineProperty$4({}, '--block-columns', columns); // Return inner blocks and inspector controls
+
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Advanced Settings'),
+	    initialOpen: true
+	  }, wp.element.createElement(GridControl, {
+	    help: i18n.__('Content may be reorganised when columns are reduced.')
+	  }))), wp.element.createElement(blockEditor.__experimentalBlock.div, {
+	    className: className,
+	    style: styles
+	  }, wp.element.createElement(blockEditor.InnerBlocks, {
+	    allowedBlocks: ['vf/grid-column'],
+	    templateLock: "all"
+	  })));
+	}; // Block transforms
+
+
+	settings$3.transforms = {
+	  from: [fromColumns('core/columns', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1), fromColumns('vf/embl-grid', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1)]
+	};
+
+	function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$4 = useVFDefaults();
+	var ver$2 = '1.0.0';
+
+	var settings$4 = _objectSpread$b(_objectSpread$b({}, defaults$4), {}, {
+	  name: 'vf/tabs-section',
+	  title: i18n.__('VF Tab Section'),
+	  category: 'vf/core',
+	  description: i18n.__('Visual Framework (core)'),
+	  parent: ['vf/tabs'],
+	  supports: _objectSpread$b(_objectSpread$b({}, defaults$4.supports), {}, {
+	    inserter: false
+	  }),
+	  attributes: _objectSpread$b(_objectSpread$b({}, defaults$4.attributes), {}, {
+	    id: {
+	      type: 'string',
+	      default: ''
+	    },
+	    label: {
+	      type: 'string',
+	      default: ''
+	    },
+	    unlabelled: {
+	      type: 'integer',
+	      default: 0
+	    }
+	  })
+	});
+
+	settings$4.save = function (props) {
+	  var _props$attributes = props.attributes,
+	      id = _props$attributes.id,
+	      label = _props$attributes.label,
+	      unlabelled = _props$attributes.unlabelled;
+	  var attr = {
+	    className: "vf-tabs__section"
+	  };
+
+	  if (id !== '') {
+	    attr.id = "vf-tabs__section-".concat(id);
+	  }
+
+	  var heading = {};
+
+	  if (unlabelled === 1) {
+	    heading.className = 'vf-u-sr-only';
+	  }
+
+	  return wp.element.createElement("section", attr, wp.element.createElement("h2", heading, label), wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+	};
+
+	settings$4.edit = function (props) {
+	  if (ver$2 !== props.attributes.ver) {
+	    props.setAttributes({
+	      ver: ver$2
+	    });
+	  }
+
+	  var clientId = props.clientId;
+	  var _props$attributes2 = props.attributes,
+	      id = _props$attributes2.id,
+	      label = _props$attributes2.label,
+	      unlabelled = _props$attributes2.unlabelled;
+
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      removeBlock = _useDispatch.removeBlock,
+	      updateBlockAttributes = _useDispatch.updateBlockAttributes;
+
+	  var _useSelect = data$1.useSelect(function (select) {
+	    var _select = select('core/block-editor'),
+	        getBlockOrder = _select.getBlockOrder,
+	        getBlockRootClientId = _select.getBlockRootClientId;
+
+	    var rootClientId = getBlockRootClientId(clientId);
+	    var parentBlockOrder = getBlockOrder(rootClientId);
+	    return {
+	      tabOrder: parentBlockOrder.indexOf(clientId) + 1,
+	      updateTabs: function updateTabs() {
+	        updateBlockAttributes(rootClientId, {
+	          dirty: Date.now()
+	        });
+	      }
+	    };
+	  }, [clientId]),
+	      tabOrder = _useSelect.tabOrder,
+	      updateTabs = _useSelect.updateTabs; // Default to the `clientId` for the ID attribute
+
+
+	  React.useEffect(function () {
+	    if (id === '') {
+	      props.setAttributes({
+	        id: clientId
+	      });
+	    }
+	  }, [id]); // Default to "Tab [N]" for the tab heading
+
+	  React.useEffect(function () {
+	    if (label === '') {
+	      props.setAttributes({
+	        label: i18n.__("Tab ".concat(tabOrder))
+	      });
+	    }
+	  }, [label]); // Flag the parent tabs block as "dirty" if any attributes change
+
+	  React.useEffect(function () {
+	    updateTabs();
+	  }, [id, label, tabOrder]); // Callback for inspector changes to update attributes
+	  // Flags the parent tabs block as "dirty"
+
+	  var onChange = React.useCallback(function (name, value) {
+	    if (name === 'id') {
+	      value = value.replace(/[\s\./]+/g, '-').replace(/[^\w-]+/g, '').toLowerCase().trim();
+	    }
+
+	    props.setAttributes(defineProperty$4({}, name, value));
+	  }, [clientId]); // Inspector controls
+
+	  var fields = [{
+	    name: 'label',
+	    control: 'text',
+	    label: i18n.__('Tab Label'),
+	    onChange: onChange
+	  }, {
+	    name: 'unlabelled',
+	    control: 'toggle',
+	    label: i18n.__('Hide Heading'),
+	    onChange: onChange
+	  }, {
+	    name: 'id',
+	    control: 'text',
+	    label: i18n.__('Anchor ID'),
+	    onChange: onChange
+	  }, {
+	    control: 'button',
+	    label: i18n.__('Delete Tab'),
+	    isSecondary: true,
+	    isDestructive: true,
+	    onClick: function onClick() {
+	      removeBlock(clientId, false);
+	    }
+	  }];
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Settings'),
+	    initialOpen: true
+	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
+	    fields: fields
+	  })))), wp.element.createElement("div", {
+	    className: "vf-tabs__section"
+	  }, unlabelled ? false : wp.element.createElement("h2", null, label), wp.element.createElement(blockEditor.InnerBlocks, null)));
+	};
+
+	function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var defaults$5 = useVFDefaults();
+	var ver$3 = '1.0.0';
+
+	var settings$5 = _objectSpread$c(_objectSpread$c({}, defaults$5), {}, {
+	  name: 'vf/tabs',
+	  title: i18n.__('VF Tabs'),
+	  category: 'vf/core',
+	  description: i18n.__('Visual Framework (core)'),
+	  attributes: _objectSpread$c(_objectSpread$c({}, defaults$5.attributes), {}, {
+	    dirty: {
+	      type: 'integer',
+	      default: 0
+	    },
+	    tabs: {
+	      type: 'array',
+	      default: []
+	    }
+	  })
+	});
+
+	settings$5.save = function (props) {
+	  return wp.element.createElement("div", {
+	    className: "vf-tabs"
+	  }, wp.element.createElement("ul", {
+	    className: "vf-tabs__list",
+	    "data-vf-js-tabs": true
+	  }, props.attributes.tabs.map(function (tab, i) {
+	    return wp.element.createElement("li", {
+	      key: i + tab.id,
+	      className: "vf-tabs__item"
+	    }, wp.element.createElement("a", {
+	      className: "vf-tabs__link",
+	      href: "#vf-tabs__section-".concat(tab.id)
+	    }, tab.label));
+	  })), wp.element.createElement("div", {
+	    className: "vf-tabs-content",
+	    "data-vf-js-tabs-content": true
+	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null)));
+	};
+
+	settings$5.edit = function (props) {
+	  if (ver$3 !== props.attributes.ver) {
+	    props.setAttributes({
+	      ver: ver$3
+	    });
+	  }
+
+	  var clientId = props.clientId;
+	  var _props$attributes = props.attributes,
+	      dirty = _props$attributes.dirty,
+	      tabs = _props$attributes.tabs;
+
+	  var _useDispatch = data$1.useDispatch('core/block-editor'),
+	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks,
+	      selectBlock = _useDispatch.selectBlock;
+
+	  var _useSelect = data$1.useSelect(function (select) {
+	    var _select = select('core/block-editor'),
+	        getBlockOrder = _select.getBlockOrder,
+	        getBlocks = _select.getBlocks;
+
+	    var getTabs = function getTabs() {
+	      return getBlocks(clientId);
+	    };
+
+	    var getTabsOrder = function getTabsOrder() {
+	      return getBlockOrder(clientId);
+	    };
+
+	    var appendTab = function appendTab() {
+	      var innerTabs = getTabs();
+	      innerTabs.push(blocks.createBlock('vf/tabs-section', {}, []));
+	      replaceInnerBlocks(clientId, innerTabs, false);
+	      selectBlock(innerTabs.slice(-1)[0].clientId);
+	    };
+
+	    var updateTabs = function updateTabs() {
+	      var innerTabs = getTabs();
+	      var newTabs = [];
+	      innerTabs.forEach(function (block) {
+	        var _block$attributes = block.attributes,
+	            id = _block$attributes.id,
+	            label = _block$attributes.label;
+	        newTabs.push({
+	          id: id,
+	          label: label
+	        });
+	      });
+	      props.setAttributes({
+	        dirty: 0,
+	        tabs: newTabs
+	      });
+	    };
+
+	    return {
+	      appendTab: appendTab,
+	      getTabs: getTabs,
+	      getTabsOrder: getTabsOrder,
+	      updateTabs: updateTabs
+	    };
+	  }, [clientId]),
+	      appendTab = _useSelect.appendTab,
+	      getTabs = _useSelect.getTabs,
+	      getTabsOrder = _useSelect.getTabsOrder,
+	      updateTabs = _useSelect.updateTabs;
+
+	  var tabsOrder = getTabsOrder(); // Callback to switch tabs using the tab list interface
+
+	  var selectTab = React.useCallback(function (index) {
+	    if (index < tabsOrder.length) {
+	      selectBlock(tabsOrder[index]);
+	    }
+	  }, [tabsOrder]); // Flag as "dirty" if the tabs and inner blocks do not match
+
+	  React.useEffect(function () {
+	    if (dirty === 0) {
+	      if (Object.keys(tabs).length !== getTabs().length) {
+	        props.setAttributes({
+	          dirty: Date.now()
+	        });
+	      }
+	    }
+	  }, [getTabs().length]); // Update attributes if the block is flagged as "dirty"
+
+	  React.useEffect(function () {
+	    if (dirty > 0) {
+	      updateTabs();
+	    }
+	  }, [dirty]); // Inspector controls
+
+	  var fields = [{
+	    control: 'button',
+	    label: i18n.__('Add Tab'),
+	    isSecondary: true,
+	    icon: 'insert',
+	    onClick: function onClick() {
+	      appendTab();
+	    }
+	  }]; // Return inner blocks and inspector controls
+
+	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
+	    title: i18n.__('Settings'),
+	    initialOpen: true
+	  }, wp.element.createElement(VFBlockFields, {
+	    fields: fields
+	  }))), wp.element.createElement("div", {
+	    className: "vf-tabs",
+	    "data-ver": ver$3
+	  }, wp.element.createElement("ul", {
+	    className: "vf-tabs__list"
+	  }, tabs.map(function (tab, i) {
+	    return wp.element.createElement("li", {
+	      key: i + tab.id,
+	      className: "vf-tabs__item"
+	    }, wp.element.createElement("a", {
+	      className: "vf-tabs__link",
+	      onClick: function onClick() {
+	        return selectTab(i);
+	      }
+	    }, tab.label));
+	  }), wp.element.createElement("li", {
+	    className: "vf-tabs__item"
+	  }, wp.element.createElement(components.Button, _extends_1({}, fields[0], {
+	    isTertiary: true,
+	    isSecondary: false
+	  }), wp.element.createElement("span", null, fields[0].label)))), wp.element.createElement(blockEditor.InnerBlocks, {
+	    allowedBlocks: ['vf/tabs-section'],
+	    template: Array(1).fill(['vf/tabs-section'])
+	  })));
+	};
+
+	function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var settings$6 = useVFCoreSettings({
+	  name: 'vf/activity-item',
+	  title: i18n.__('Activity Item'),
+	  parent: ['vf/activity-list'],
+	  isRenderable: false,
+	  attributes: {
+	    text: {
+	      type: 'string',
+	      default: '<strong>Author</strong> published <a href="#">\'Article Title\'</a> on <a href="#">Source</a>.'
+	    }
+	  },
+	  fields: [{
+	    name: 'text',
+	    control: 'rich',
+	    label: '',
+	    tag: 'p',
+	    placeholder: i18n.__('Type activity…')
+	  }]
+	});
+	var vfActivityItem = _objectSpread$d(_objectSpread$d({}, settings$6), {}, {
+	  supports: _objectSpread$d(_objectSpread$d({}, settings$6.supports), {}, {
+	    inserter: false
+	  })
+	});
+
 	var fromCore = function fromCore() {
 	  return {
 	    type: 'block',
@@ -10183,13 +11711,13 @@
 	})();
 	})();
 
-	function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var withActivityItems = function withActivityItems(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$4({}, props.transient || {});
+	    var transient = _objectSpread$e({}, props.transient || {});
 
 	    transient.list = [];
 
@@ -10201,13 +11729,13 @@
 	      });
 	    }
 
-	    return Edit(_objectSpread$4(_objectSpread$4({}, props), {}, {
+	    return Edit(_objectSpread$e(_objectSpread$e({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
 	};
 
-	var vfActivityList = useVFCoreSettings({
+	var settings$7 = useVFCoreSettings({
 	  name: 'vf/activity-list',
 	  title: i18n.__('Activity List'),
 	  attributes: {
@@ -10229,6 +11757,11 @@
 	    from: 'heading',
 	    to: 'date'
 	  }]], [withActivityItems], [withTransientInnerBlocks]]
+	});
+	var vfActivityList = _objectSpread$e(_objectSpread$e({}, settings$7), {}, {
+	  supports: _objectSpread$e(_objectSpread$e({}, settings$7.supports), {}, {
+	    inserter: false
+	  })
 	});
 
 	/**
@@ -10410,13 +11943,13 @@
 	})();
 	})();
 
-	function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var withBEMModifiers = function withBEMModifiers(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$5({}, props.transient || {});
+	    var transient = _objectSpread$f({}, props.transient || {});
 
 	    transient.style = [];
 
@@ -10432,13 +11965,13 @@
 	      transient.style.push('pill');
 	    }
 
-	    return Edit(_objectSpread$5(_objectSpread$5({}, props), {}, {
+	    return Edit(_objectSpread$f(_objectSpread$f({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
 	};
 
-	var vfBadge = useVFCoreSettings({
+	var settings$8 = useVFCoreSettings({
 	  name: 'vf/badge',
 	  title: i18n.__('Badge'),
 	  attributes: {
@@ -10494,106 +12027,10 @@
 	    key: 'theme_class'
 	  }]]
 	});
-
-	/**
-	 * Block transforms for: `vf/blockquote`
-	 */
-	var fromParagraph = function fromParagraph() {
-	  return {
-	    type: 'block',
-	    blocks: ['core/paragraph'],
-	    transform: function transform(attributes) {
-	      return blocks.createBlock('vf/blockquote', {
-	        html: attributes.content
-	      });
-	    }
-	  };
-	};
-	var fromQuote = function fromQuote() {
-	  return {
-	    type: 'block',
-	    blocks: ['core/quote'],
-	    transform: function transform(attributes) {
-	      var citation = attributes.citation,
-	          value = attributes.value;
-
-	      if (/^\s*$/.test(citation)) {
-	        citation = '';
-	      }
-
-	      return blocks.createBlock('vf/blockquote', {
-	        html: value + citation
-	      });
-	    }
-	  };
-	};
-
-	/**
-	 * Precompiled Nunjucks template: vf-blockquote.njk
-	 */
-	(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-blockquote"] = (function() {
-	function root(env, context, frame, runtime, cb) {
-	var lineno = 0;
-	var colno = 0;
-	var output = "";
-	try {
-	var parentTemplate = null;
-	output += "<blockquote\n";
-	output += "\n";
-	if(runtime.contextOrFrameLookup(context, frame, "id")) {
-	output += " id=\"";
-	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id"), env.opts.autoescape);
-	output += "\"";
-	;
-	}
-	output += "\nclass=\"vf-blockquote";
-	if(runtime.contextOrFrameLookup(context, frame, "override_class")) {
-	output += " | ";
-	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "override_class"), env.opts.autoescape);
-	;
-	}
-	output += "\">";
-	output += runtime.suppressValue((runtime.contextOrFrameLookup(context, frame, "html")?env.getFilter("safe").call(context, runtime.contextOrFrameLookup(context, frame, "html")):runtime.contextOrFrameLookup(context, frame, "text")), env.opts.autoescape);
-	output += "</blockquote>\n";
-	if(parentTemplate) {
-	parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-	} else {
-	cb(null, output);
-	}
-	;
-	} catch (e) {
-	  cb(runtime.handleError(e, lineno, colno));
-	}
-	}
-	return {
-	root: root
-	};
-
-	})();
-	})();
-
-	/**
-	Block Name: Blockquote
-	*/
-	var vfBlockquote = useVFCoreSettings({
-	  name: 'vf/blockquote',
-	  title: i18n.__('Blockquote'),
-	  attributes: {
-	    html: {
-	      type: 'string'
-	    }
-	  },
-	  fields: [{
-	    name: 'html',
-	    control: 'rich',
-	    default: '',
-	    label: '',
-	    tag: 'p',
-	    placeholder: i18n.__('Type blockquote…')
-	  }],
-	  transforms: {
-	    from: [fromParagraph(), fromQuote()]
-	  }
+	var vfBadge = _objectSpread$f(_objectSpread$f({}, settings$8), {}, {
+	  supports: _objectSpread$f(_objectSpread$f({}, settings$8.supports), {}, {
+	    inserter: false
+	  })
 	});
 
 	/**
@@ -10826,134 +12263,6 @@
 	    key: 'box_modifier',
 	    BEM: true
 	  }]]
-	});
-
-	/**
-	Block Name: Breadcrumbs Item
-	*/
-	var vfBreadcrumbsItem = useVFCoreSettings({
-	  name: 'vf/breadcrumbs-item',
-	  title: i18n.__('Breadcrumbs Item'),
-	  parent: ['vf/breadcrumbs'],
-	  isRenderable: false,
-	  attributes: {
-	    text: {
-	      type: 'string',
-	      default: i18n.__('Breadcrumb')
-	    },
-	    url: {
-	      type: 'string',
-	      default: '/'
-	    }
-	  },
-	  fields: [{
-	    name: 'text',
-	    control: 'text',
-	    label: i18n.__('Text')
-	  }, {
-	    name: 'url',
-	    control: 'url',
-	    label: i18n.__('URL')
-	  }]
-	});
-
-	/**
-	 * Precompiled Nunjucks template: vf-breadcrumbs.njk
-	 */
-	(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-breadcrumbs"] = (function() {
-	function root(env, context, frame, runtime, cb) {
-	var lineno = 0;
-	var colno = 0;
-	var output = "";
-	try {
-	var parentTemplate = null;
-	output += "<nav class=\"vf-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ul class=\"vf-breadcrumbs__list | vf-list vf-list--inline\">\n";
-	frame = frame.push();
-	var t_3 = runtime.contextOrFrameLookup(context, frame, "breadcrumbs");
-	if(t_3) {t_3 = runtime.fromIterator(t_3);
-	var t_2 = t_3.length;
-	for(var t_1=0; t_1 < t_3.length; t_1++) {
-	var t_4 = t_3[t_1];
-	frame.set("breadcrumb", t_4);
-	frame.set("loop.index", t_1 + 1);
-	frame.set("loop.index0", t_1);
-	frame.set("loop.revindex", t_2 - t_1);
-	frame.set("loop.revindex0", t_2 - t_1 - 1);
-	frame.set("loop.first", t_1 === 0);
-	frame.set("loop.last", t_1 === t_2 - 1);
-	frame.set("loop.length", t_2);
-	output += "    <li class=\"vf-breadcrumbs__item\">\n";
-	if(runtime.memberLookup((t_4),"breadcrumb_href")) {
-	output += "      <a href=\"";
-	output += runtime.suppressValue(runtime.memberLookup((t_4),"breadcrumb_href"), env.opts.autoescape);
-	output += "\" class=\"vf-breadcrumbs__link\">";
-	output += runtime.suppressValue(runtime.memberLookup((t_4),"text"), env.opts.autoescape);
-	output += "</a>\n";
-	;
-	}
-	else {
-	output += "      ";
-	output += runtime.suppressValue(runtime.memberLookup((t_4),"text"), env.opts.autoescape);
-	output += "\n";
-	;
-	}
-	output += "    </li>\n";
-	;
-	}
-	}
-	frame = frame.pop();
-	output += "  </ul>\n</nav>\n";
-	if(parentTemplate) {
-	parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-	} else {
-	cb(null, output);
-	}
-	;
-	} catch (e) {
-	  cb(runtime.handleError(e, lineno, colno));
-	}
-	}
-	return {
-	root: root
-	};
-
-	})();
-	})();
-
-	function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-	var withBreadcrumbsItems = function withBreadcrumbsItems(Edit) {
-	  return function (props) {
-	    var transient = _objectSpread$6({}, props.transient || {});
-
-	    transient.breadcrumbs = [];
-
-	    if (Array.isArray(transient.innerBlocks)) {
-	      transient.innerBlocks.forEach(function (block) {
-	        if (block.name === 'vf/breadcrumbs-item') {
-	          transient.breadcrumbs.push({
-	            text: block.attributes.text,
-	            url: block.attributes.url,
-	            // Nunjucks template changed from `url`?
-	            breadcrumb_href: block.attributes.url
-	          });
-	        }
-	      });
-	    }
-
-	    return Edit(_objectSpread$6(_objectSpread$6({}, props), {}, {
-	      transient: transient
-	    }));
-	  };
-	};
-
-	var vfBreadcrumbs = useVFCoreSettings({
-	  name: 'vf/breadcrumbs',
-	  title: i18n.__('Breadcrumbs'),
-	  allowedBlocks: ['vf/breadcrumbs-item'],
-	  withHOC: [[withBreadcrumbsItems], [withTransientInnerBlocks]]
 	});
 
 	/**
@@ -11199,13 +12508,13 @@
 	})();
 	})();
 
-	function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 	var withBEMModifiers$1 = function withBEMModifiers(Edit) {
 	  return function (props) {
-	    var transient = _objectSpread$7({}, props.transient || {});
+	    var transient = _objectSpread$g({}, props.transient || {});
 
 	    transient.style = [];
 
@@ -11221,13 +12530,13 @@
 	      transient.style.push('pill');
 	    }
 
-	    return Edit(_objectSpread$7(_objectSpread$7({}, props), {}, {
+	    return Edit(_objectSpread$g(_objectSpread$g({}, props), {}, {
 	      transient: transient
 	    }));
 	  };
 	};
 
-	var vfButton = useVFCoreSettings({
+	var settings$9 = useVFCoreSettings({
 	  name: 'vf/button',
 	  title: i18n.__('Button'),
 	  attributes: {
@@ -11314,162 +12623,11 @@
 	    key: 'theme'
 	  }]]
 	});
-
-	function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults = useVFDefaults();
-	var ver = '1.0.0';
-
-	var settings = _objectSpread$8(_objectSpread$8({}, defaults), {}, {
-	  name: 'vf/cluster',
-	  title: i18n.__('VF Cluster'),
-	  category: 'vf/core',
-	  description: i18n.__('Visual Framework (core)'),
-	  attributes: _objectSpread$8(_objectSpread$8({}, defaults.attributes), {}, {
-	    alignment: {
-	      type: 'string',
-	      default: 'center'
-	    },
-	    spacing: {
-	      type: 'string',
-	      default: 'small'
-	    },
-	    customSpacing: {
-	      type: 'number',
-	      default: 0
-	    }
+	var vfButton = _objectSpread$g(_objectSpread$g({}, settings$9), {}, {
+	  supports: _objectSpread$g(_objectSpread$g({}, settings$9.supports), {}, {
+	    inserter: false
 	  })
 	});
-
-	var Cluster = function Cluster(props) {
-	  var _props$attributes = props.attributes,
-	      alignment = _props$attributes.alignment,
-	      spacing = _props$attributes.spacing,
-	      customSpacing = _props$attributes.customSpacing;
-	  var classes = ['vf-cluster'];
-
-	  if (spacing === 'medium') {
-	    classes.push('vf-cluster--600');
-	  } else if (spacing === 'large') {
-	    classes.push('vf-cluster--800');
-	  } else if (spacing !== 'custom') {
-	    classes.push('vf-cluster--400');
-	  }
-
-	  var styles = {};
-	  styles['--vf-cluster__item--flex'] = '25% 1 0';
-
-	  if (spacing === 'custom') {
-	    styles['--vf-cluster-margin'] = "".concat(customSpacing, "px");
-	  }
-
-	  if (alignment === 'start') {
-	    styles['--vf-cluster-alignment'] = 'flex-start';
-	  } else if (alignment === 'end') {
-	    styles['--vf-cluster-alignment'] = 'flex-end';
-	  } else if (alignment === 'stretch') {
-	    styles['--vf-cluster-alignment'] = 'stretch';
-	  } else {
-	    styles['--vf-cluster-alignment'] = 'center';
-	  }
-
-	  return wp.element.createElement("div", {
-	    "data-ver": props.isEdit ? ver : null,
-	    className: classes.join(' '),
-	    style: styles
-	  }, wp.element.createElement("div", {
-	    className: "vf-cluster__inner"
-	  }, props.children));
-	};
-
-	settings.save = function (props) {
-	  return wp.element.createElement(Cluster, props, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
-	};
-
-	settings.edit = function (props) {
-	  if (ver !== props.attributes.ver) {
-	    props.setAttributes({
-	      ver: ver
-	    });
-	  }
-
-	  var clientId = props.clientId;
-	  var _props$attributes2 = props.attributes,
-	      alignment = _props$attributes2.alignment,
-	      spacing = _props$attributes2.spacing;
-	  var onSpacing = React.useCallback(function (name, value) {
-	    props.setAttributes(defineProperty$4({}, name, value));
-
-	    if (value !== 'custom') {
-	      props.setAttributes({
-	        customSpacing: 0
-	      });
-	    }
-	  }, [clientId]); // Inspector controls
-
-	  var fields = [{
-	    name: 'alignment',
-	    label: i18n.__('Alignment'),
-	    control: 'select',
-	    options: [{
-	      label: i18n.__('Stretch'),
-	      value: 'stretch'
-	    }, {
-	      label: i18n.__('Start'),
-	      value: 'start'
-	    }, {
-	      label: i18n.__('Center'),
-	      value: 'center'
-	    }, {
-	      label: i18n.__('End'),
-	      value: 'end'
-	    }]
-	  }, {
-	    name: 'spacing',
-	    label: i18n.__('Spacing'),
-	    control: 'select',
-	    options: [{
-	      label: i18n.__('Small'),
-	      value: 'small'
-	    }, {
-	      label: i18n.__('Medium'),
-	      value: 'medium'
-	    }, {
-	      label: i18n.__('Large'),
-	      value: 'large'
-	    }, {
-	      label: i18n.__('Custom'),
-	      value: 'custom'
-	    }],
-	    onChange: onSpacing
-	  }];
-
-	  if (spacing === 'custom') {
-	    fields.push({
-	      name: 'customSpacing',
-	      label: i18n.__('Custom spacing'),
-	      control: 'range',
-	      allowReset: true,
-	      min: 0,
-	      max: 100
-	    });
-	  } // Return inner blocks and inspector controls
-
-
-	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__('Settings'),
-	    initialOpen: true
-	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
-	    fields: fields
-	  })))), wp.element.createElement(Cluster, _extends_1({}, props, {
-	    isEdit: true
-	  }), wp.element.createElement(blockEditor.InnerBlocks, {
-	    renderAppender: function renderAppender() {
-	      return wp.element.createElement(blockEditor.InnerBlocks.ButtonBlockAppender, null);
-	    }
-	  })));
-	};
 
 	/**
 	 * Block transforms for: `vf/divider`
@@ -11553,10 +12711,10 @@
 	})();
 	})();
 
-	/**
-	Block Name: Divider
-	*/
-	var vfDivider = useVFCoreSettings({
+	function ownKeys$i(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$h(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$i(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$i(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var settings$a = useVFCoreSettings({
 	  name: 'vf/divider',
 	  title: i18n.__('Divider'),
 	  attributes: {},
@@ -11564,817 +12722,11 @@
 	    from: [fromCore$2()]
 	  }
 	});
-
-	/**
-	 * Precompiled Nunjucks template: vf-embed.njk
-	 */
-	(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["vf-embed"] = (function() {
-	function root(env, context, frame, runtime, cb) {
-	var lineno = 0;
-	var colno = 0;
-	var output = "";
-	try {
-	var parentTemplate = null;
-	output += "<div\n  class=\"vf-embed";
-	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_16x9") == true) {
-	output += " vf-embed--16x9";
-	;
-	}
-	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_4x3") == true) {
-	output += " vf-embed--4x3";
-	;
-	}
-	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_custom") == true) {
-	output += " vf-embed--custom-ratio";
-	;
-	}
-	output += "\"\n\n  style=\"";
-	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_max_width")) {
-	output += "--vf-embed-max-width: ";
-	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_max_width"), env.opts.autoescape);
-	output += ";\n";
-	;
-	}
-	if(runtime.contextOrFrameLookup(context, frame, "vf_embed_variant_custom") == true) {
-	output += "    --vf-embed-custom-ratio-x: ";
-	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_custom_ratio_X"), env.opts.autoescape);
-	output += ";\n    --vf-embed-custom-ratio-y: ";
-	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embed_custom_ratio_Y"), env.opts.autoescape);
-	output += ";";
-	;
-	}
-	output += "\"\n>";
-	output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_embedded_content"), env.opts.autoescape);
-	output += "</div>\n";
-	if(parentTemplate) {
-	parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
-	} else {
-	cb(null, output);
-	}
-	;
-	} catch (e) {
-	  cb(runtime.handleError(e, lineno, colno));
-	}
-	}
-	return {
-	root: root
-	};
-
-	})();
-	})();
-
-	function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var RATIOS = {
-	  '2:1': {
-	    label: i18n.__('(2:1) Cinema'),
-	    ratio: '2:1',
-	    width: 640,
-	    height: 320
-	  },
-	  '16:9': {
-	    label: i18n.__('(16:9) Widescreen'),
-	    ratio: '16:9',
-	    width: 640,
-	    height: 360
-	  },
-	  '4:3': {
-	    label: i18n.__('(4:3) Standard'),
-	    ratio: '4:3',
-	    width: 640,
-	    height: 480
-	  },
-	  '1:1': {
-	    label: i18n.__('(1:1) Square'),
-	    ratio: '1:1',
-	    width: 640,
-	    height: 640
-	  }
-	};
-
-	var withRatioAttributes = function withRatioAttributes(Edit) {
-	  return function (props) {
-	    var transient = _objectSpread$9({}, props.transient || {});
-
-	    var _props$attributes = props.attributes,
-	        ratio = _props$attributes.ratio,
-	        width = _props$attributes.width,
-	        height = _props$attributes.height,
-	        maxWidth = _props$attributes.maxWidth;
-
-	    if (ratio && ratio in RATIOS) {
-	      width = RATIOS[ratio].width;
-	      height = RATIOS[ratio].height;
-	      props.setAttributes({
-	        width: width,
-	        height: height
-	      });
-	    }
-
-	    if (isNaN(width)) {
-	      width = RATIOS['16:9'].width;
-	      props.setAttributes({
-	        width: width
-	      });
-	    }
-
-	    if (isNaN(height)) {
-	      height = RATIOS['16:9'].height;
-	      props.setAttributes({
-	        height: height
-	      });
-	    }
-
-	    transient.vf_embed_variant_custom = true;
-	    transient.vf_embed_custom_ratio_X = width;
-	    transient.vf_embed_custom_ratio_Y = height;
-
-	    if (maxWidth > 0) {
-	      transient.vf_embed_max_width = "".concat(maxWidth, "px");
-	    } else {
-	      transient.vf_embed_max_width = '100%';
-	    }
-
-	    transient.vf_embedded_content = '';
-
-	    if (transient.src) {
-	      transient.vf_embedded_content = "<iframe width=\"".concat(width, "\" height=\"").concat(height, "\" src=\"").concat(transient.src, "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
-	    }
-
-	    return Edit(_objectSpread$9(_objectSpread$9({}, props), {}, {
-	      transient: transient
-	    }));
-	  };
-	};
-
-	var vfEmbed = useVFCoreSettings({
-	  name: 'vf/embed',
-	  title: i18n.__('Embed'),
-	  attributes: {
-	    url: {
-	      type: 'string'
-	    },
-	    responsive: {
-	      type: 'integer',
-	      default: 1
-	    },
-	    ratio: {
-	      type: 'string',
-	      default: '16:9'
-	    },
-	    width: {
-	      type: 'integer'
-	    },
-	    height: {
-	      type: 'integer'
-	    },
-	    maxWidth: {
-	      type: 'string',
-	      default: 0
-	    }
-	  },
-	  fields: [{
-	    name: 'url',
-	    control: 'url',
-	    label: i18n.__('URL'),
-	    disableSuggestions: true
-	  }, {
-	    name: 'ratio',
-	    control: 'select',
-	    label: i18n.__('Preset Ratio'),
-	    inspector: true,
-	    options: Object.keys(RATIOS).map(function (key) {
-	      return {
-	        label: RATIOS[key].label,
-	        value: key
-	      };
-	    })
-	  }, {
-	    name: 'width',
-	    control: 'number',
-	    label: i18n.__('Width'),
-	    help: i18n.__('Deselect preset to set a custom width.'),
-	    inspector: true,
-	    max: 1920,
-	    min: 320
-	  }, {
-	    name: 'height',
-	    control: 'number',
-	    label: i18n.__('Height'),
-	    help: i18n.__('Deselect preset to set a custom height.'),
-	    inspector: true,
-	    max: 1080,
-	    min: 180
-	  }, {
-	    name: 'maxWidth',
-	    control: 'number',
-	    label: i18n.__('Maximum Width'),
-	    help: i18n.__('Restrict embed resize to this width.'),
-	    inspector: true,
-	    max: 1920,
-	    min: 0
-	  }],
-	  withHOC: [[withRatioAttributes], [withTransientAttributeMap, [{
-	    from: 'url',
-	    to: 'src'
-	  }]]]
-	});
-
-	var floor$2 = Math.floor;
-
-	// `Number.isInteger` method implementation
-	// https://tc39.github.io/ecma262/#sec-number.isinteger
-	var isInteger = function isInteger(it) {
-	  return !isObject(it) && isFinite(it) && floor$2(it) === it;
-	};
-
-	// `Number.isInteger` method
-	// https://tc39.github.io/ecma262/#sec-number.isinteger
-	_export({ target: 'Number', stat: true }, {
-	  isInteger: isInteger
-	});
-
-	function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$1 = useVFDefaults();
-
-	var settings$1 = _objectSpread$a(_objectSpread$a({}, defaults$1), {}, {
-	  name: 'vf/grid-column',
-	  title: i18n.__('Grid Column'),
-	  category: 'vf/core',
-	  description: i18n.__('Visual Framework (core)'),
-	  parent: ['vf/grid', 'vf/embl-grid'],
-	  supports: _objectSpread$a(_objectSpread$a({}, defaults$1.supports), {}, {
-	    inserter: false,
-	    lightBlockWrapper: true
-	  }),
-	  attributes: _objectSpread$a(_objectSpread$a({}, defaults$1.attributes), {}, {
-	    span: {
-	      type: 'integer',
-	      default: 1
-	    }
+	var vfDivider = _objectSpread$h(_objectSpread$h({}, settings$a), {}, {
+	  supports: _objectSpread$h(_objectSpread$h({}, settings$a.supports), {}, {
+	    inserter: false
 	  })
 	});
-
-	settings$1.save = function (props) {
-	  var span = props.attributes.span;
-	  var classes = [];
-
-	  if (Number.isInteger(span) && span > 1) {
-	    classes.push("vf-grid__col--span-".concat(span));
-	  }
-
-	  var rootAttr = {};
-
-	  if (classes.length) {
-	    rootAttr.className = classes.join(' ');
-	  }
-
-	  return wp.element.createElement("div", rootAttr, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
-	};
-
-	settings$1.edit = function (props) {
-	  var clientId = props.clientId;
-	  var span = props.attributes.span;
-
-	  var _useDispatch = data$1.useDispatch('core/block-editor'),
-	      updateBlockAttributes = _useDispatch.updateBlockAttributes;
-
-	  var _useSelect = data$1.useSelect(function (select) {
-	    var _select = select('core/block-editor'),
-	        getBlockName = _select.getBlockName,
-	        getBlockOrder = _select.getBlockOrder,
-	        getBlockRootClientId = _select.getBlockRootClientId;
-
-	    var rootClientId = getBlockRootClientId(clientId);
-	    var hasChildBlocks = getBlockOrder(clientId).length > 0;
-	    var hasSpanSupport = getBlockName(rootClientId) === 'vf/grid';
-	    return {
-	      rootClientId: rootClientId,
-	      hasChildBlocks: hasChildBlocks,
-	      hasSpanSupport: hasSpanSupport
-	    };
-	  }, [clientId]),
-	      hasChildBlocks = _useSelect.hasChildBlocks,
-	      hasSpanSupport = _useSelect.hasSpanSupport,
-	      rootClientId = _useSelect.rootClientId;
-
-	  React.useEffect(function () {
-	    if (!hasSpanSupport && span !== 1) {
-	      props.setAttributes({
-	        span: 1
-	      });
-	    }
-	  }, [clientId]);
-	  var onSpanChange = React.useCallback(function (value) {
-	    if (span !== value) {
-	      props.setAttributes({
-	        span: value
-	      });
-	      updateBlockAttributes(rootClientId, {
-	        dirty: Date.now()
-	      });
-	    }
-	  }, [span, clientId, rootClientId]);
-	  var rootAttr = {};
-	  var classes = [];
-
-	  if (hasSpanSupport) {
-	    if (Number.isInteger(span) && span > 1) {
-	      classes.push("vf-grid__col--span-".concat(span));
-	    }
-	  }
-
-	  if (classes.length) {
-	    rootAttr.className = classes.join(' ');
-	  }
-
-	  return wp.element.createElement(React__default['default'].Fragment, null, hasSpanSupport && wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__('Advanced Settings'),
-	    initialOpen: true
-	  }, wp.element.createElement(components.RangeControl, {
-	    label: i18n.__('Column span'),
-	    help: i18n.__('Columns may be merged to fit.'),
-	    value: Number.isInteger(span) ? span : 1,
-	    onChange: onSpanChange,
-	    allowReset: true,
-	    step: 1,
-	    min: 1,
-	    max: 6
-	  }))), wp.element.createElement(blockEditor.__experimentalBlock.div, rootAttr, wp.element.createElement(blockEditor.InnerBlocks, {
-	    templateLock: false,
-	    renderAppender: hasChildBlocks ? undefined : function () {
-	      return wp.element.createElement(blockEditor.InnerBlocks.ButtonBlockAppender, null);
-	    }
-	  })));
-	};
-
-	function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	// New columns are appended to match minimum
-	// End columns are merged to match maximum
-
-	var fromColumns = function fromColumns(fromBlock, toBlock, min, max) {
-	  return {
-	    type: 'block',
-	    blocks: [fromBlock],
-	    // Match function (ignore initial placeholder state)
-	    isMatch: function isMatch(attributes) {
-	      return attributes.placeholder !== 1;
-	    },
-	    // Transform function
-	    transform: function transform(attributes, innerBlocks) {
-	      // Map column props
-	      var innerProps = innerBlocks.map(function (block) {
-	        return {
-	          attributes: _objectSpread$b({}, block.attributes),
-	          innerBlocks: toConsumableArray(block.innerBlocks)
-	        };
-	      }); // Fill empty props to match min number of columns
-
-	      while (innerProps.length < min) {
-	        innerProps.push({});
-	      } // Merge end props to match max number of columns
-
-
-	      while (innerProps.length > max) {
-	        var _innerProps$innerBloc;
-
-	        var mergeProps = innerProps.pop();
-
-	        (_innerProps$innerBloc = innerProps[innerProps.length - 1].innerBlocks).push.apply(_innerProps$innerBloc, toConsumableArray(mergeProps.innerBlocks));
-	      } // Return new grid block with inner columns
-
-
-	      return blocks.createBlock(toBlock, {
-	        columns: innerProps.length
-	      }, innerProps.map(function (props) {
-	        return blocks.createBlock('vf/grid-column', props.attributes || {}, props.innerBlocks || []);
-	      }));
-	    }
-	  };
-	};
-
-	function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$2 = useVFDefaults();
-	var ver$1 = '1.1.0';
-	var MIN_COLUMNS = 2;
-	var MAX_COLUMNS = 4;
-
-	var settings$2 = _objectSpread$c(_objectSpread$c({}, defaults$2), {}, {
-	  name: 'vf/embl-grid',
-	  title: i18n.__('EMBL Grid'),
-	  category: 'vf/core',
-	  description: i18n.__('Visual Framework (core)'),
-	  supports: _objectSpread$c(_objectSpread$c({}, defaults$2.supports), {}, {
-	    lightBlockWrapper: true
-	  }),
-	  attributes: _objectSpread$c(_objectSpread$c({}, defaults$2.attributes), {}, {
-	    placeholder: {
-	      type: 'integer',
-	      default: 0
-	    },
-	    columns: {
-	      type: 'integer',
-	      default: 0
-	    },
-	    sidebar: {
-	      type: 'integer',
-	      default: 0
-	    },
-	    centered: {
-	      type: 'integer',
-	      default: 0
-	    }
-	  })
-	});
-
-	settings$2.save = function (props) {
-	  var _props$attributes = props.attributes,
-	      placeholder = _props$attributes.placeholder,
-	      sidebar = _props$attributes.sidebar,
-	      centered = _props$attributes.centered;
-
-	  if (placeholder === 1) {
-	    return null;
-	  }
-
-	  var className = 'embl-grid';
-
-	  if (!!sidebar) {
-	    className = "".concat(className, " embl-grid--has-sidebar");
-	  }
-
-	  if (!!centered) {
-	    className = "".concat(className, " embl-grid--has-centered-content");
-	  }
-
-	  return wp.element.createElement("div", {
-	    className: className
-	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
-	};
-
-	settings$2.edit = function (props) {
-	  if (ver$1 !== props.attributes.ver) {
-	    props.setAttributes({
-	      ver: ver$1
-	    });
-	  }
-
-	  var clientId = props.clientId;
-	  var _props$attributes2 = props.attributes,
-	      columns = _props$attributes2.columns,
-	      centered = _props$attributes2.centered,
-	      sidebar = _props$attributes2.sidebar,
-	      placeholder = _props$attributes2.placeholder; // Turn on setup placeholder if no columns are defined
-
-	  React.useEffect(function () {
-	    if (columns === 0) {
-	      props.setAttributes({
-	        placeholder: 1
-	      });
-	    }
-	  }, [clientId]);
-
-	  var _useDispatch = data$1.useDispatch('core/block-editor'),
-	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks;
-
-	  var _useSelect = data$1.useSelect(function (select) {
-	    var _select = select('core/block-editor'),
-	        getBlocks = _select.getBlocks; // Remove columns by merging their inner blocks
-
-
-	    var removeColumns = function removeColumns(newColumns) {
-	      var innerColumns = getBlocks(clientId);
-	      var mergeBlocks = [];
-
-	      for (var i = newColumns - 1; i < innerColumns.length; i++) {
-	        mergeBlocks.push.apply(mergeBlocks, toConsumableArray(innerColumns[i].innerBlocks));
-	      }
-
-	      replaceInnerBlocks(innerColumns[newColumns - 1].clientId, mergeBlocks, false);
-	      replaceInnerBlocks(clientId, getBlocks(clientId).slice(0, newColumns), false);
-	    }; // Append new columns
-
-
-	    var addColumns = function addColumns(newColumns) {
-	      var innerColumns = getBlocks(clientId);
-
-	      while (innerColumns.length < newColumns) {
-	        innerColumns.push(blocks.createBlock('vf/grid-column', {}, []));
-	      }
-
-	      replaceInnerBlocks(clientId, innerColumns, false);
-	    };
-
-	    var setColumns = function setColumns(newColumns) {
-	      var innerColumns = getBlocks(clientId);
-
-	      if (newColumns < innerColumns.length) {
-	        removeColumns(newColumns);
-	      }
-
-	      if (newColumns > innerColumns.length) {
-	        addColumns(newColumns);
-	      }
-
-	      props.setAttributes({
-	        columns: newColumns,
-	        placeholder: 0
-	      });
-
-	      if (newColumns !== 3) {
-	        props.setAttributes({
-	          sidebar: 0,
-	          centered: 0
-	        });
-	      }
-	    };
-
-	    return {
-	      setColumns: setColumns
-	    };
-	  }, [clientId]),
-	      setColumns = _useSelect.setColumns; // Toggle attribute `onChange` callback
-
-
-	  var setToggle = React.useCallback(function (name, value) {
-	    value = value ? 1 : 0;
-	    props.setAttributes(defineProperty$4({
-	      sidebar: 0,
-	      centered: 0
-	    }, name, value));
-
-	    if (value) {
-	      setColumns(3);
-	    }
-	  }); // Setup placeholder fields
-
-	  var fields = [{
-	    control: 'columns',
-	    min: MIN_COLUMNS,
-	    max: MAX_COLUMNS,
-	    value: columns,
-	    onChange: setColumns
-	  }, {
-	    label: i18n.__('With Sidebar'),
-	    control: 'toggle',
-	    name: 'sidebar',
-	    onChange: setToggle
-	  }, {
-	    label: i18n.__('Centered Content'),
-	    control: 'toggle',
-	    name: 'centered',
-	    onChange: setToggle
-	  }]; // Return setup placeholder
-
-	  if (placeholder === 1) {
-	    return wp.element.createElement(blockEditor.__experimentalBlock.div, {
-	      className: "vf-block vf-block--placeholder"
-	    }, wp.element.createElement(components.Placeholder, {
-	      label: i18n.__('EMBL Grid'),
-	      icon: 'admin-generic'
-	    }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
-	      fields: fields
-	    }))));
-	  } // Amend fields for inspector
-
-
-	  fields[0].help = i18n.__('Content may be reorganised when columns are reduced.');
-	  fields[1].help = i18n.__('3 column only.');
-	  fields[2].help = fields[1].help;
-	  var className = 'embl-grid';
-
-	  if (!!sidebar) {
-	    className = "".concat(className, " embl-grid--has-sidebar");
-	  }
-
-	  if (!!centered) {
-	    className = "".concat(className, " embl-grid--has-centered-content");
-	  } // Return inner blocks and inspector controls
-
-
-	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__('Settings'),
-	    initialOpen: true
-	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
-	    fields: fields
-	  })))), wp.element.createElement(blockEditor.__experimentalBlock.div, {
-	    className: className,
-	    "data-ver": ver$1,
-	    "data-embl": true,
-	    "data-sidebar": sidebar,
-	    "data-centered": centered
-	  }, wp.element.createElement(blockEditor.InnerBlocks, {
-	    allowedBlocks: ['vf/grid-column'],
-	    template: Array(columns).fill(['vf/grid-column']),
-	    templateLock: "all"
-	  })));
-	}; // Block transforms
-
-
-	settings$2.transforms = {
-	  from: [fromColumns('core/columns', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS), fromColumns('vf/grid', 'vf/embl-grid', MIN_COLUMNS, MAX_COLUMNS)]
-	};
-
-	function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$3 = useVFDefaults();
-	var MIN_COLUMNS$1 = 1;
-	var MAX_COLUMNS$1 = 6;
-
-	var settings$3 = _objectSpread$d(_objectSpread$d({}, defaults$3), {}, {
-	  name: 'vf/grid',
-	  title: i18n.__('VF Grid'),
-	  category: 'vf/core',
-	  description: i18n.__('Visual Framework (core)'),
-	  supports: _objectSpread$d(_objectSpread$d({}, defaults$3.supports), {}, {
-	    lightBlockWrapper: true
-	  }),
-	  attributes: _objectSpread$d(_objectSpread$d({}, defaults$3.attributes), {}, {
-	    placeholder: {
-	      type: 'integer',
-	      default: 0
-	    },
-	    columns: {
-	      type: 'integer',
-	      default: 0
-	    },
-	    dirty: {
-	      type: 'integer',
-	      default: 0
-	    }
-	  })
-	});
-
-	settings$3.save = function (props) {
-	  var _props$attributes = props.attributes,
-	      columns = _props$attributes.columns,
-	      placeholder = _props$attributes.placeholder;
-
-	  if (placeholder === 1) {
-	    return null;
-	  }
-
-	  var className = "vf-grid | vf-grid__col-".concat(columns);
-	  return wp.element.createElement("div", {
-	    className: className
-	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
-	};
-
-	settings$3.edit = function (props) {
-	  var clientId = props.clientId;
-	  var _props$attributes2 = props.attributes,
-	      dirty = _props$attributes2.dirty,
-	      columns = _props$attributes2.columns,
-	      placeholder = _props$attributes2.placeholder; // Turn on setup placeholder if no columns are defined
-
-	  React.useEffect(function () {
-	    if (columns === 0) {
-	      props.setAttributes({
-	        placeholder: 1
-	      });
-	    }
-	  }, [clientId]);
-
-	  var _useDispatch = data$1.useDispatch('core/block-editor'),
-	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks;
-
-	  var _useSelect = data$1.useSelect(function (select) {
-	    var _select = select('core/block-editor'),
-	        getBlocks = _select.getBlocks,
-	        getBlockAttributes = _select.getBlockAttributes; // Return total number of columns accounting for spans
-
-
-	    var countSpans = function countSpans(blocks) {
-	      var count = 0;
-	      blocks.forEach(function (block) {
-	        var span = block.attributes.span;
-
-	        if (Number.isInteger(span) && span > 0) {
-	          count += span;
-	        } else {
-	          count++;
-	        }
-	      });
-	      return count;
-	    }; // Append new columns
-
-
-	    var addColumns = function addColumns(maxSpans) {
-	      var innerColumns = getBlocks(clientId);
-
-	      while (countSpans(innerColumns) < maxSpans) {
-	        innerColumns.push(blocks.createBlock('vf/grid-column', {}, []));
-	      }
-
-	      replaceInnerBlocks(clientId, innerColumns, false);
-	    }; // Remove columns by merging their inner blocks
-
-
-	    var removeColumns = function removeColumns(maxSpans) {
-	      var innerColumns = getBlocks(clientId);
-	      var mergeBlocks = [];
-
-	      while (innerColumns.length > 1 && countSpans(innerColumns) > maxSpans) {
-	        mergeBlocks = mergeBlocks.concat(innerColumns.pop().innerBlocks);
-	      }
-
-	      replaceInnerBlocks(innerColumns[innerColumns.length - 1].clientId, mergeBlocks.concat(innerColumns[innerColumns.length - 1].innerBlocks), false);
-	      replaceInnerBlocks(clientId, getBlocks(clientId).slice(0, innerColumns.length), false);
-	    };
-
-	    var setColumns = function setColumns(newColumns) {
-	      props.setAttributes({
-	        columns: newColumns,
-	        placeholder: 0
-	      });
-	      var innerColumns = getBlocks(clientId);
-	      var count = countSpans(innerColumns);
-
-	      if (newColumns < count) {
-	        removeColumns(newColumns);
-	      }
-
-	      if (newColumns > count) {
-	        addColumns(newColumns);
-	      }
-	    };
-
-	    var updateColumns = function updateColumns() {
-	      var _getBlockAttributes = getBlockAttributes(clientId),
-	          columns = _getBlockAttributes.columns;
-
-	      setColumns(columns);
-	      props.setAttributes({
-	        dirty: 0
-	      });
-	    };
-
-	    return {
-	      setColumns: setColumns,
-	      updateColumns: updateColumns
-	    };
-	  }, [clientId]),
-	      setColumns = _useSelect.setColumns,
-	      updateColumns = _useSelect.updateColumns;
-
-	  React.useEffect(function () {
-	    if (dirty > 0) {
-	      updateColumns();
-	    }
-	  }, [dirty]);
-
-	  var GridControl = function GridControl(props) {
-	    return wp.element.createElement(ColumnsControl, _extends_1({
-	      value: columns,
-	      min: MIN_COLUMNS$1,
-	      max: MAX_COLUMNS$1,
-	      onChange: React.useCallback(function (value) {
-	        return setColumns(value);
-	      })
-	    }, props));
-	  }; // Return setup placeholder
-
-
-	  if (placeholder === 1) {
-	    return wp.element.createElement(blockEditor.__experimentalBlock.div, {
-	      className: "vf-block vf-block--placeholder"
-	    }, wp.element.createElement(components.Placeholder, {
-	      label: i18n.__('VF Grid'),
-	      icon: 'admin-generic'
-	    }, wp.element.createElement(GridControl, null)));
-	  }
-
-	  var className = "vf-grid | vf-grid__col-".concat(columns);
-
-	  var styles = defineProperty$4({}, '--block-columns', columns); // Return inner blocks and inspector controls
-
-
-	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__('Advanced Settings'),
-	    initialOpen: true
-	  }, wp.element.createElement(GridControl, {
-	    help: i18n.__('Content may be reorganised when columns are reduced.')
-	  }))), wp.element.createElement(blockEditor.__experimentalBlock.div, {
-	    className: className,
-	    style: styles
-	  }, wp.element.createElement(blockEditor.InnerBlocks, {
-	    allowedBlocks: ['vf/grid-column'],
-	    templateLock: "all"
-	  })));
-	}; // Block transforms
-
-
-	settings$3.transforms = {
-	  from: [fromColumns('core/columns', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1), fromColumns('vf/embl-grid', 'vf/grid', MIN_COLUMNS$1, MAX_COLUMNS$1)]
-	};
 
 	/**
 	 * Block transforms for: `vf/lede`
@@ -12421,10 +12773,10 @@
 	})();
 	})();
 
-	/**
-	Block Name: Lede
-	*/
-	var vfLede = useVFCoreSettings({
+	function ownKeys$j(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+	function _objectSpread$i(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$j(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$j(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	var settings$b = useVFCoreSettings({
 	  name: 'vf/lede',
 	  title: i18n.__('Lede'),
 	  attributes: {
@@ -12446,333 +12798,11 @@
 	    to: 'vf_lede_text'
 	  }]]]
 	});
-
-	function ownKeys$f(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$f(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$f(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$4 = useVFDefaults();
-	var ver$2 = '1.0.0';
-
-	var settings$4 = _objectSpread$e(_objectSpread$e({}, defaults$4), {}, {
-	  name: 'vf/tabs-section',
-	  title: i18n.__('VF Tab Section'),
-	  category: 'vf/core',
-	  description: i18n.__('Visual Framework (core)'),
-	  parent: ['vf/tabs'],
-	  supports: _objectSpread$e(_objectSpread$e({}, defaults$4.supports), {}, {
+	var vfLede = _objectSpread$i(_objectSpread$i({}, settings$b), {}, {
+	  supports: _objectSpread$i(_objectSpread$i({}, settings$b.supports), {}, {
 	    inserter: false
-	  }),
-	  attributes: _objectSpread$e(_objectSpread$e({}, defaults$4.attributes), {}, {
-	    id: {
-	      type: 'string',
-	      default: ''
-	    },
-	    label: {
-	      type: 'string',
-	      default: ''
-	    },
-	    unlabelled: {
-	      type: 'integer',
-	      default: 0
-	    }
 	  })
 	});
-
-	settings$4.save = function (props) {
-	  var _props$attributes = props.attributes,
-	      id = _props$attributes.id,
-	      label = _props$attributes.label,
-	      unlabelled = _props$attributes.unlabelled;
-	  var attr = {
-	    className: "vf-tabs__section"
-	  };
-
-	  if (id !== '') {
-	    attr.id = "vf-tabs__section-".concat(id);
-	  }
-
-	  var heading = {};
-
-	  if (unlabelled === 1) {
-	    heading.className = 'vf-u-sr-only';
-	  }
-
-	  return wp.element.createElement("section", attr, wp.element.createElement("h2", heading, label), wp.element.createElement(blockEditor.InnerBlocks.Content, null));
-	};
-
-	settings$4.edit = function (props) {
-	  if (ver$2 !== props.attributes.ver) {
-	    props.setAttributes({
-	      ver: ver$2
-	    });
-	  }
-
-	  var clientId = props.clientId;
-	  var _props$attributes2 = props.attributes,
-	      id = _props$attributes2.id,
-	      label = _props$attributes2.label,
-	      unlabelled = _props$attributes2.unlabelled;
-
-	  var _useDispatch = data$1.useDispatch('core/block-editor'),
-	      removeBlock = _useDispatch.removeBlock,
-	      updateBlockAttributes = _useDispatch.updateBlockAttributes;
-
-	  var _useSelect = data$1.useSelect(function (select) {
-	    var _select = select('core/block-editor'),
-	        getBlockOrder = _select.getBlockOrder,
-	        getBlockRootClientId = _select.getBlockRootClientId;
-
-	    var rootClientId = getBlockRootClientId(clientId);
-	    var parentBlockOrder = getBlockOrder(rootClientId);
-	    return {
-	      tabOrder: parentBlockOrder.indexOf(clientId) + 1,
-	      updateTabs: function updateTabs() {
-	        updateBlockAttributes(rootClientId, {
-	          dirty: Date.now()
-	        });
-	      }
-	    };
-	  }, [clientId]),
-	      tabOrder = _useSelect.tabOrder,
-	      updateTabs = _useSelect.updateTabs; // Default to the `clientId` for the ID attribute
-
-
-	  React.useEffect(function () {
-	    if (id === '') {
-	      props.setAttributes({
-	        id: clientId
-	      });
-	    }
-	  }, [id]); // Default to "Tab [N]" for the tab heading
-
-	  React.useEffect(function () {
-	    if (label === '') {
-	      props.setAttributes({
-	        label: i18n.__("Tab ".concat(tabOrder))
-	      });
-	    }
-	  }, [label]); // Flag the parent tabs block as "dirty" if any attributes change
-
-	  React.useEffect(function () {
-	    updateTabs();
-	  }, [id, label, tabOrder]); // Callback for inspector changes to update attributes
-	  // Flags the parent tabs block as "dirty"
-
-	  var onChange = React.useCallback(function (name, value) {
-	    if (name === 'id') {
-	      value = value.replace(/[\s\./]+/g, '-').replace(/[^\w-]+/g, '').toLowerCase().trim();
-	    }
-
-	    props.setAttributes(defineProperty$4({}, name, value));
-	  }, [clientId]); // Inspector controls
-
-	  var fields = [{
-	    name: 'label',
-	    control: 'text',
-	    label: i18n.__('Tab Label'),
-	    onChange: onChange
-	  }, {
-	    name: 'unlabelled',
-	    control: 'toggle',
-	    label: i18n.__('Hide Heading'),
-	    onChange: onChange
-	  }, {
-	    name: 'id',
-	    control: 'text',
-	    label: i18n.__('Anchor ID'),
-	    onChange: onChange
-	  }, {
-	    control: 'button',
-	    label: i18n.__('Delete Tab'),
-	    isSecondary: true,
-	    isDestructive: true,
-	    onClick: function onClick() {
-	      removeBlock(clientId, false);
-	    }
-	  }];
-	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__('Settings'),
-	    initialOpen: true
-	  }, wp.element.createElement(VFBlockFields, _extends_1({}, props, {
-	    fields: fields
-	  })))), wp.element.createElement("div", {
-	    className: "vf-tabs__section"
-	  }, unlabelled ? false : wp.element.createElement("h2", null, label), wp.element.createElement(blockEditor.InnerBlocks, null)));
-	};
-
-	function ownKeys$g(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-	function _objectSpread$f(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$g(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$g(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-	var defaults$5 = useVFDefaults();
-	var ver$3 = '1.0.0';
-
-	var settings$5 = _objectSpread$f(_objectSpread$f({}, defaults$5), {}, {
-	  name: 'vf/tabs',
-	  title: i18n.__('VF Tabs'),
-	  category: 'vf/core',
-	  description: i18n.__('Visual Framework (core)'),
-	  attributes: _objectSpread$f(_objectSpread$f({}, defaults$5.attributes), {}, {
-	    dirty: {
-	      type: 'integer',
-	      default: 0
-	    },
-	    tabs: {
-	      type: 'array',
-	      default: []
-	    }
-	  })
-	});
-
-	settings$5.save = function (props) {
-	  return wp.element.createElement("div", {
-	    className: "vf-tabs"
-	  }, wp.element.createElement("ul", {
-	    className: "vf-tabs__list",
-	    "data-vf-js-tabs": true
-	  }, props.attributes.tabs.map(function (tab, i) {
-	    return wp.element.createElement("li", {
-	      key: i + tab.id,
-	      className: "vf-tabs__item"
-	    }, wp.element.createElement("a", {
-	      className: "vf-tabs__link",
-	      href: "#vf-tabs__section-".concat(tab.id)
-	    }, tab.label));
-	  })), wp.element.createElement("div", {
-	    className: "vf-tabs-content",
-	    "data-vf-js-tabs-content": true
-	  }, wp.element.createElement(blockEditor.InnerBlocks.Content, null)));
-	};
-
-	settings$5.edit = function (props) {
-	  if (ver$3 !== props.attributes.ver) {
-	    props.setAttributes({
-	      ver: ver$3
-	    });
-	  }
-
-	  var clientId = props.clientId;
-	  var _props$attributes = props.attributes,
-	      dirty = _props$attributes.dirty,
-	      tabs = _props$attributes.tabs;
-
-	  var _useDispatch = data$1.useDispatch('core/block-editor'),
-	      replaceInnerBlocks = _useDispatch.replaceInnerBlocks,
-	      selectBlock = _useDispatch.selectBlock;
-
-	  var _useSelect = data$1.useSelect(function (select) {
-	    var _select = select('core/block-editor'),
-	        getBlockOrder = _select.getBlockOrder,
-	        getBlocks = _select.getBlocks;
-
-	    var getTabs = function getTabs() {
-	      return getBlocks(clientId);
-	    };
-
-	    var getTabsOrder = function getTabsOrder() {
-	      return getBlockOrder(clientId);
-	    };
-
-	    var appendTab = function appendTab() {
-	      var innerTabs = getTabs();
-	      innerTabs.push(blocks.createBlock('vf/tabs-section', {}, []));
-	      replaceInnerBlocks(clientId, innerTabs, false);
-	      selectBlock(innerTabs.slice(-1)[0].clientId);
-	    };
-
-	    var updateTabs = function updateTabs() {
-	      var innerTabs = getTabs();
-	      var newTabs = [];
-	      innerTabs.forEach(function (block) {
-	        var _block$attributes = block.attributes,
-	            id = _block$attributes.id,
-	            label = _block$attributes.label;
-	        newTabs.push({
-	          id: id,
-	          label: label
-	        });
-	      });
-	      props.setAttributes({
-	        dirty: 0,
-	        tabs: newTabs
-	      });
-	    };
-
-	    return {
-	      appendTab: appendTab,
-	      getTabs: getTabs,
-	      getTabsOrder: getTabsOrder,
-	      updateTabs: updateTabs
-	    };
-	  }, [clientId]),
-	      appendTab = _useSelect.appendTab,
-	      getTabs = _useSelect.getTabs,
-	      getTabsOrder = _useSelect.getTabsOrder,
-	      updateTabs = _useSelect.updateTabs;
-
-	  var tabsOrder = getTabsOrder(); // Callback to switch tabs using the tab list interface
-
-	  var selectTab = React.useCallback(function (index) {
-	    if (index < tabsOrder.length) {
-	      selectBlock(tabsOrder[index]);
-	    }
-	  }, [tabsOrder]); // Flag as "dirty" if the tabs and inner blocks do not match
-
-	  React.useEffect(function () {
-	    if (dirty === 0) {
-	      if (Object.keys(tabs).length !== getTabs().length) {
-	        props.setAttributes({
-	          dirty: Date.now()
-	        });
-	      }
-	    }
-	  }, [getTabs().length]); // Update attributes if the block is flagged as "dirty"
-
-	  React.useEffect(function () {
-	    if (dirty > 0) {
-	      updateTabs();
-	    }
-	  }, [dirty]); // Inspector controls
-
-	  var fields = [{
-	    control: 'button',
-	    label: i18n.__('Add Tab'),
-	    isSecondary: true,
-	    icon: 'insert',
-	    onClick: function onClick() {
-	      appendTab();
-	    }
-	  }]; // Return inner blocks and inspector controls
-
-	  return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-	    title: i18n.__('Settings'),
-	    initialOpen: true
-	  }, wp.element.createElement(VFBlockFields, {
-	    fields: fields
-	  }))), wp.element.createElement("div", {
-	    className: "vf-tabs",
-	    "data-ver": ver$3
-	  }, wp.element.createElement("ul", {
-	    className: "vf-tabs__list"
-	  }, tabs.map(function (tab, i) {
-	    return wp.element.createElement("li", {
-	      key: i + tab.id,
-	      className: "vf-tabs__item"
-	    }, wp.element.createElement("a", {
-	      className: "vf-tabs__link",
-	      onClick: function onClick() {
-	        return selectTab(i);
-	      }
-	    }, tab.label));
-	  }), wp.element.createElement("li", {
-	    className: "vf-tabs__item"
-	  }, wp.element.createElement(components.Button, _extends_1({}, fields[0], {
-	    isTertiary: true,
-	    isSecondary: false
-	  }), wp.element.createElement("span", null, fields[0].label)))), wp.element.createElement(blockEditor.InnerBlocks, {
-	    allowedBlocks: ['vf/tabs-section'],
-	    template: Array(1).fill(['vf/tabs-section'])
-	  })));
-	};
 
 	var nativePromiseConstructor = global_1.Promise;
 
@@ -13261,9 +13291,9 @@
 	  }
 	});
 
-	function ownKeys$h(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+	function ownKeys$k(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-	function _objectSpread$g(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$h(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$h(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+	function _objectSpread$j(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$k(Object(source), true).forEach(function (key) { defineProperty$4(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$k(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	var defaults$6 = useVFDefaults();
 	var renderStore$1 = {};
 
@@ -13319,7 +13349,7 @@
 	          while (1) {
 	            switch (_context.prev = _context.next) {
 	              case 0:
-	                fields = _objectSpread$g({
+	                fields = _objectSpread$j({
 	                  is_plugin: 1
 	                }, props.transient.fields);
 	                renderHash = useHashsum(fields);
@@ -13449,22 +13479,22 @@
 	        });
 	      });
 	    }, [clientId]);
-	    return Edit(_objectSpread$g(_objectSpread$g({}, props), {}, {
-	      transient: _objectSpread$g(_objectSpread$g({}, props.transient || {}), transient)
+	    return Edit(_objectSpread$j(_objectSpread$j({}, props), {}, {
+	      transient: _objectSpread$j(_objectSpread$j({}, props.transient || {}), transient)
 	    }));
 	  };
 	};
-	var vfPlugin = _objectSpread$g(_objectSpread$g({}, defaults$6), {}, {
+	var vfPlugin = _objectSpread$j(_objectSpread$j({}, defaults$6), {}, {
 	  name: 'vf/plugin',
 	  title: i18n.__('Preview'),
 	  category: 'vf/wp',
 	  description: '',
-	  attributes: _objectSpread$g(_objectSpread$g({}, defaults$6.attributes), {}, {
+	  attributes: _objectSpread$j(_objectSpread$j({}, defaults$6.attributes), {}, {
 	    ref: {
 	      type: 'string'
 	    }
 	  }),
-	  supports: _objectSpread$g(_objectSpread$g({}, defaults$6.supports), {}, {
+	  supports: _objectSpread$j(_objectSpread$j({}, defaults$6.supports), {}, {
 	    inserter: false,
 	    reusable: false
 	  }),
