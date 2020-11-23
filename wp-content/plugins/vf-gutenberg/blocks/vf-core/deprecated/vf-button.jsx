@@ -6,14 +6,14 @@ import {__} from '@wordpress/i18n';
 import {
   withTransientAttributeMap,
   withTransientStyle
-} from '../hooks/with-transient';
-import useVFCoreSettings from '../hooks/use-vf-core-settings';
-import {fromCore} from './transforms/button';
+} from '../../hooks/with-transient';
+import useVFCoreSettings from '../../hooks/use-vf-core-settings';
+import {fromCore} from '../transforms/button';
 
 import '@visual-framework/vf-button/vf-button.precompiled';
 
-const withBEMModifiers = Edit => {
-  return props => {
+const withBEMModifiers = (Edit) => {
+  return (props) => {
     const transient = {...(props.transient || {})};
     transient.style = [];
     if (props.attributes.outline) {
@@ -29,7 +29,7 @@ const withBEMModifiers = Edit => {
   };
 };
 
-export default useVFCoreSettings({
+const settings = useVFCoreSettings({
   name: 'vf/button',
   title: __('Button'),
   attributes: {
@@ -123,3 +123,11 @@ export default useVFCoreSettings({
     [withTransientStyle, {key: 'theme'}]
   ]
 });
+
+export default {
+  ...settings,
+  supports: {
+    ...settings.supports,
+    inserter: false
+  }
+};

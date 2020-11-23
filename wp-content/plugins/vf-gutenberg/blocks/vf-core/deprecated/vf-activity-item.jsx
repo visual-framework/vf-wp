@@ -3,9 +3,9 @@ Block Name: Activity List Item
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import useVFCoreSettings from '../../hooks/use-vf-core-settings';
 
-export default useVFCoreSettings({
+const settings = useVFCoreSettings({
   name: 'vf/activity-item',
   title: __('Activity Item'),
   parent: ['vf/activity-list'],
@@ -27,3 +27,11 @@ export default useVFCoreSettings({
     }
   ]
 });
+
+export default {
+  ...settings,
+  supports: {
+    ...settings.supports,
+    inserter: false
+  }
+};

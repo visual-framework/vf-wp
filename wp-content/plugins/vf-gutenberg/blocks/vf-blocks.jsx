@@ -5,23 +5,26 @@ import {registerBlockType} from '@wordpress/blocks';
 import useVFGutenberg from './hooks/use-vf-gutenberg';
 
 // Import Visual Framework core component settings
-import vfActivityItem from './vf-core/vf-activity-item';
-import vfActivityList from './vf-core/vf-activity-list';
-import vfBadge from './vf-core/vf-badge';
 import vfBlockquote from './vf-core/vf-blockquote';
-import vfBox from './vf-core/deprecated/vf-box';
 import vfBreadcrumbsItem from './vf-core/vf-breadcrumbs-item';
 import vfBreadcrumbs from './vf-core/vf-breadcrumbs';
-import vfButton from './vf-core/vf-button';
+
 import vfCluster from './vf-core/vf-cluster';
-import vfDivider from './vf-core/vf-divider';
 import vfEmbed from './vf-core/vf-embed';
 import vfGridColumn from './vf-core/vf-grid-column';
 import vfEMBLGrid from './vf-core/vf-embl-grid';
 import vfGrid from './vf-core/vf-grid';
-import vfLede from './vf-core/vf-lede';
 import vfTabsSection from './vf-core/vf-tabs-section';
 import vfTabs from './vf-core/vf-tabs';
+
+// Import deprecated blocks replaced by ACF counterparts
+import vfActivityItem from './vf-core/deprecated/vf-activity-item';
+import vfActivityList from './vf-core/deprecated/vf-activity-list';
+import vfBadge from './vf-core/deprecated/vf-badge';
+import vfBox from './vf-core/deprecated/vf-box';
+import vfButton from './vf-core/deprecated/vf-button';
+import vfDivider from './vf-core/deprecated/vf-divider';
+import vfLede from './vf-core/deprecated/vf-lede';
 
 // Get "localized" global script settings
 const {coreOptin} = useVFGutenberg();

@@ -3,13 +3,13 @@ Block Name: Badge
 */
 import React from 'react';
 import {__} from '@wordpress/i18n';
-import {withTransientStyle} from '../hooks/with-transient';
-import useVFCoreSettings from '../hooks/use-vf-core-settings';
+import {withTransientStyle} from '../../hooks/with-transient';
+import useVFCoreSettings from '../../hooks/use-vf-core-settings';
 
 import '@visual-framework/vf-badge/vf-badge.precompiled';
 
-const withBEMModifiers = Edit => {
-  return props => {
+const withBEMModifiers = (Edit) => {
+  return (props) => {
     const transient = {...(props.transient || {})};
     transient.style = [];
     if (props.attributes.outline) {
@@ -25,7 +25,7 @@ const withBEMModifiers = Edit => {
   };
 };
 
-export default useVFCoreSettings({
+const settings = useVFCoreSettings({
   name: 'vf/badge',
   title: __('Badge'),
   attributes: {
@@ -89,3 +89,11 @@ export default useVFCoreSettings({
   ],
   withHOC: [[withBEMModifiers], [withTransientStyle, {key: 'theme_class'}]]
 });
+
+export default {
+  ...settings,
+  supports: {
+    ...settings.supports,
+    inserter: false
+  }
+};
