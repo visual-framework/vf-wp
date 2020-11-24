@@ -43,6 +43,8 @@ ACF blocks are best suited for single instances of local content and easy develo
 
 Available ACF blocks:
 
+| Block |   |
+|---|---|
 | Activity List | Badge |
 | Banner | [Box](/wp-content/themes/vf-wp/blocks/vfwp-box/README.md) |
 | Button | [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md) |
