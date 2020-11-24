@@ -12,6 +12,8 @@ There are three types of blocks:
 
 The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual blocks inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class. Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis.
 
+<img src="/.github/docs/plugin-block.png" alt="Plugin block example" width="801">
+
 Plugin blocks are best suited for retrieving and caching HTML from the Content Hub. They allow for customizable API settings with per-site defaults. They can be enabled or disabled individually via their own WordPress plugin.
 
 Available plugin blocks:
@@ -34,6 +36,8 @@ Available plugin blocks:
 ## ACF Blocks
 
 ACF blocks are registered for use in the Gutenberg editor using the [Advanced Custom Fields plugin](https://www.advancedcustomfields.com/resources/blocks/). Unlike plugin blocks, their default configuration cannot be defined on a per-site basis. They are defined using the `VFWP_Block` class.
+
+<img src="/.github/docs/acf-block.png" alt="ACF block example" width="800">
 
 ACF blocks are best suited for single instances of local content and easy development. They are located in the parent or child themes.
 
@@ -72,6 +76,8 @@ ACF blocks from plugins:
 ## React Blocks
 
 React blocks are registered for use in the [Gutenberg editor](https://developer.wordpress.org/block-editor/developers/) using JavaScript & React. They are provided by the [VF Gutenberg plugin](/wp-content/plugins/vf-gutenberg/README.md).
+
+<img src="/.github/docs/react-block.png" alt="React block example" width="888">
 
 React blocks are best suited for advanced editor requirements that cannot be achieved using ACF blocks alone; block transforms, and managing multiple `<InnerBlocks />`, for example.
 
