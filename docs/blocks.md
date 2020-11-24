@@ -1,18 +1,18 @@
 # VF-WP Blocks
 
-Blocks are small, reusable content patterns based on the Visual Framework. Blocks may appear within the Gutenberg editor, sidebar widgets, or rendered elsewhere in a template. Blocks added in the Gutenberg editor can be individually configured. See the individual README files for a detailed spec.
+Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/). Blocks may appear within the Gutenberg editor, sidebar widgets, or rendered elsewhere in a template. Blocks added in the Gutenberg editor can be configured individually. See the individual README files for a detailed spec.
 
 There are three types of blocks:
 
 1. [Plugin Blocks](#plugin-blocks)
-2. [Advanced Custom Fields Blocks](#advanced-custom-fields-blocks)
+2. [ACF Blocks](#acf-blocks)
 3. [React Blocks](#react-blocks)
 
 ## Plugin Blocks
 
-The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual blocks inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class.
+The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual blocks inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class. Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis.
 
-Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis. This type of block is best suited for retrieving and caching HTML from the Content Hub. They allow for default and customizable API settings. They can be enabled or disabled individually via their own WordPress plugin.
+Plugin blocks are best suited for retrieving and caching HTML from the Content Hub. They allow for customizable API settings with per-site defaults. They can be enabled or disabled individually via their own WordPress plugin.
 
 Available plugin blocks:
 
@@ -27,13 +27,15 @@ Available plugin blocks:
 * [Publications](/wp-content/plugins/vf-publications-block/README.md)
 * [Publications Group EBI](/wp-content/plugins/vf-publications-group-ebi-block/README.md)
 
-<sup>†1</sup> The Example plugin block is used for development testing and should not be activated on live websites.
+<sup>†1 The Example plugin block is used for development testing and should not be activated on live websites.</sup>
 
-<sup>†2</sup> The Latest Posts plugin block was deprecated and replaced with an ACF block better suited for local WordPress content.
+<sup>†2 The Latest Posts plugin block was deprecated and replaced with an ACF block better suited for local WordPress content.</sup>
 
-## Advanced Custom Fields Blocks
+## ACF Blocks
 
-ACF blocks are registered for use in the Gutenberg editor using the [Advanced Custom Fields plugin](https://www.advancedcustomfields.com/resources/blocks/). Unlike plugin blocks, default configuration cannot be defined on a per-site basis. They are best suited for single instances of local content and easy development. They are located in the parent or child themes.
+ACF blocks are registered for use in the Gutenberg editor using the [Advanced Custom Fields plugin](https://www.advancedcustomfields.com/resources/blocks/). Unlike plugin blocks, their default configuration cannot be defined on a per-site basis. They are defined using the `VFWP_Block` class.
+
+ACF blocks are best suited for single instances of local content and easy development. They are located in the parent or child themes.
 
 Available ACF blocks:
 
@@ -61,7 +63,7 @@ Available ACF blocks:
 * [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md)
 * Tabs <sup>†3</sup>
 
-<sup>†3</sup> The Tabs ACF block was deprecated and replaced with a React block listed below.
+<sup>†3 The Tabs ACF block was deprecated and replaced with a React block listed below.</sup>
 
 ACF blocks from plugins:
 
@@ -69,9 +71,9 @@ ACF blocks from plugins:
 
 ## React Blocks
 
-React blocks are registered for use in the [Gutenberg editor](https://developer.wordpress.org/block-editor/developers/) using JavaScript & React. They are provided by the [VF Gutenberg plugin](/wp-content/plugins/vf-gutenberg/README.md). They are best suited for advanced editor requirements that cannot be achieved using ACF blocks alone; block transforms, and managing multiple `<InnerBlocks />`, for example.
+React blocks are registered for use in the [Gutenberg editor](https://developer.wordpress.org/block-editor/developers/) using JavaScript & React. They are provided by the [VF Gutenberg plugin](/wp-content/plugins/vf-gutenberg/README.md).
 
-Before ACF blocks were possible, all those listed above were implemented as React blocks. The old versions have since been deprecated. They used Nunjucks templates from the Visual Framework making them difficult to update.
+React blocks are best suited for advanced editor requirements that cannot be achieved using ACF blocks alone; block transforms, and managing multiple `<InnerBlocks />`, for example.
 
 Available React blocks:
 
@@ -83,7 +85,11 @@ Available React blocks:
 * VF Tabs Section <sup>†4</sup>
 * VF Tabs
 
-<sup>†4</sup> Restricted to their respective parent innner blocks.
+<sup>†4 Restricted to their respective parent innner blocks.</sup>
+
+### Legacy React Blocks
+
+Before ACF blocks were possible, the ACF blocks listed above were implemented as React blocks. Those older versions have since been deprecated but remain in the code to avoid breaking existing usage. They are hidden from the block inserter. They should be removed entirely in future following an audit. They used Nunjucks templates from the Visual Framework making them difficult to update.
 
 ## Blocks in the Gutenberg editor
 
