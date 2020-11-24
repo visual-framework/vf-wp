@@ -84,31 +84,35 @@ Before ACF blocks were possible, the ACF blocks listed above were implemented as
 
 ## Blocks in the Gutenberg editor
 
-Blocks in the Gutenberg editor take the form:
+ACF and plugin blocks in the Gutenberg editor use the `acf/vfwp-` and `acf/vf-` prefixes:
 
 ```html
 <!-- wp:acf/vf-members {"id":"block_5eb936165175f","name":"acf/vf-members"} /-->
 ```
 
-Block `id` must be unique per instance in the post content. Use a random ID, e.g. [`uniqid('block_')`](https://www.php.net/manual/en/function.uniqid.php).
+The block `id` attribute must be unique per instance in the post content. When inserting blocks programmatically, generate a random ID using [`uniqid('block_')`](https://www.php.net/manual/en/function.uniqid.php) in PHP, or `acf.uniqid('block_')` in JavaScript.
 
-If configured they require a `data` and `mode` property with `field_defaults` set to `0`. For example:
+Plugin blocks can be configured individually by adding the `data` and `mode` attributes with `field_defaults` set to `0`.
+
+For example:
 
 ```html
 <!-- wp:acf/vf-members {"id":"block_5eb937ea938af","name":"acf/vf-members","data":{"field_defaults":"0","field_vf_members_limit":"2","field_vf_members_order":"DESC","field_5ea988878eacf":"default","field_5ea983003e756":"0","field_vf_members_variation":"s"},"mode":"preview"} /-->
 ```
 
-Old plugin versions used the format:
+The JSON data format is used by ACF and plugin blocks to allow sever-side PHP templates. Those templates can be re-used outside of the Gutenberg editor. React blocks managed their own HTML and are only usable in the editor.
+
+React blocks can be identified with the `vf/` prefix:
 
 ```html
 <!-- wp:vf/members {"ver":"1.0.0"} /-->
 ```
 
-This format is now deprecated. Existing block used in this way are rendered with the new ACF templates to support backwards compatibility.
+These blocks can only be configured using the Gutenberg front-end editor.
 
-## Page Templates
+## Blocks within page templates
 
-Blocks registered via a plugin can be hard-coded into theme templates:
+Plugin blocks can be hard-coded into theme templates:
 
 ```php
 $vf_members = VF_Plugin::get_plugin('vf_members');
@@ -118,3 +122,31 @@ if ($vf_members) {
 ```
 
 The block defaults assigned to the related post will be used.
+
+It is possible to use ACF blocks in templates:
+
+```php
+acf_render_block(array(
+  'id'   => uniqid('block_'),
+  'name' => 'acf/vfwp-box',
+  'data' => array(
+    /* ... */
+  )
+));
+```
+
+Although this method is not officially documented.
+
+It is also possible to do:
+
+```php
+get_template_part('blocks/vfwp-box/template');
+```
+
+However, the corresponding template would require additional logic to determine whether it is an ACF or template include. For example:
+
+```php
+$is_block = isset($block['id']);
+```
+
+It may be simpler to use two different templates.
