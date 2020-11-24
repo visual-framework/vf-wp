@@ -1,4 +1,4 @@
-# VF-WP Blocks
+# Blocks
 
 Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/). Blocks may appear within the Gutenberg editor, sidebar widgets, or rendered elsewhere in a template. Blocks added in the Gutenberg editor can be configured individually. See the individual README files for a detailed spec.
 

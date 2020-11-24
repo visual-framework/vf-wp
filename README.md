@@ -16,8 +16,18 @@ the brand-specific "VF 2.0 for the EMBL Design Language". There are additional e
 * [EMBL Taxonomy](/wp-content/plugins/embl-taxonomy/README.md)
 * [VF Gutenberg](/wp-content/plugins/vf-gutenberg/README.md)
 * [Events](/wp-content/plugins/vf-events/README.md)
-* [Containers](/docs/containers.md)
-* [Blocks](/docs/blocks.md)
+
+## [Blocks](/docs/blocks.md)
+
+Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
+
+[Blocks documentation →](/docs/blocks.md)
+
+## [Containers](/docs/containers.md)
+
+Containers are large, single use template patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
+
+[Containers documentation →](/docs/blocks.md)
 
 ## Development
 

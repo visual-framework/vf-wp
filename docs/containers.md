@@ -1,4 +1,4 @@
-# VF-WP Container plugins
+# Containers
 
 Containers represent a horizontal slice of the page template.
 
