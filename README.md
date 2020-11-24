@@ -1,6 +1,6 @@
 # VF 2.0 WordPress Themes and Plugins
 
-This collection of themes and plugins integrate with the [Visual Framework](https://stable.visual-framework.dev/). They are currently heavily tied to the brand-specific "VF 2.0 for the EMBL Design Language". Additional WordPress plugin dependencies are kept in an external repository (see below).
+VF-WP: a collection of WordPress themes and plugins that integrate with the [Visual Framework](https://stable.visual-framework.dev/). They are currently heavily tied to the brand-specific "VF 2.0 for the EMBL Design Language". Additional WordPress plugin dependencies are kept in an external repository (see below).
 
 ## Documentation
 
@@ -16,13 +16,13 @@ This collection of themes and plugins integrate with the [Visual Framework](http
 * [VF Gutenberg →](/wp-content/plugins/vf-gutenberg/README.md)
 * [Events →](/wp-content/plugins/vf-events/README.md)
 
-## [Blocks →](/docs/blocks.md)
+## [Blocks](/docs/blocks.md)
 
 Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
 [Blocks documentation →](/docs/blocks.md)
 
-## [Containers →](/docs/containers.md)
+## [Containers](/docs/containers.md)
 
 Containers are large, single use template patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
@@ -30,29 +30,53 @@ Containers are large, single use template patterns based on the [Visual Framewor
 
 ## Development
 
-### Theme and plugin development
+### Theme and Plugin Development
+
+Contributing to this repository requires command line tools:
 
 * Git
 * Node
 * Gulp (optional)
+
+To start:
 
 ```bash
 # Install dev dependencies
 yarn install
 ```
 
-This project makes use of [Visual Framework components](https://visual-framework.github.io/vf-welcome) to build its CSS and JS.
+This project makes use of [Visual Framework components](https://visual-framework.github.io/vf-welcome) to build its CSS and JavaScript.
 
-- `yarn run update-components`
-     - interactively update the Visual Framework components (and other npm packages)
-- `gulp build`
-     - to build `vf-components/vf-componenet-rollup/index.scss`
-          - to make `wp-content/themes/vf-wp/assets/css/styles.css`
-     - to build `vf-components/vf-componenet-rollup/scripts.scss`
-          - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
-      - note: [the CI](https://github.com/visual-framework/vf-wp/blob/master/.github/workflows/build.js.yml) will run `gulp build` on commit to `master`
-- `gulp default`
-     - to launch local developement of the above with a `watch` task
+These scripts and tasks are available:
+
+```sh
+yarn run update-components
+```
+
+To interactively update the Visual Framework components (and other npm packages).
+
+```sh
+gulp build
+```
+
+* to build `vf-components/vf-componenet-rollup/index.scss`
+  - to make `wp-content/themes/vf-wp/assets/css/styles.css`
+* to build `vf-components/vf-componenet-rollup/scripts.scss`
+  - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
+
+Note: [the CI](https://github.com/visual-framework/vf-wp/blob/master/.github/workflows/build.js.yml) will run `gulp build` on commit to `master`).
+
+```sh
+gulp default
+```
+
+To launch local developement of the above with a `watch` task.
+
+```sh
+gulp vf-gutenberg
+```
+
+To compile the Gutenberg React blocks.
 
 ### EMBL + EMBL-EBI site development
 
