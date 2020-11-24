@@ -1,29 +1,29 @@
 # Visual Framework 2.0 WordPress theme
 
 This theme integrates with the VF 2.0. It is currently heavily tied to
-the brand-specific "VF 2.0 for the EMBL Design Language". There are additional external wordpress plugin dependencies <sup>†1</sup>.
+the brand-specific "VF 2.0 for the EMBL Design Language". There are additional external wordpress plugin dependencies (see below).
 
 ## Documentation
 
-* [Work in Progress, Issues, Bugs](https://github.com/visual-framework/vf-wp/issues)
-* [Theme and plugin architecture](/docs/architecture.md)
-* [Theming documentation](/wp-content/themes/vf-wp/README.md)
-* [WordPress setup](/docs/wordpress.md)
+* [Work in Progress, Issues, Bugs →](https://github.com/visual-framework/vf-wp/issues)
+* [Theme and plugin architecture →](/docs/architecture.md)
+* [Theming documentation →](/wp-content/themes/vf-wp/README.md)
+* [WordPress setup →](/docs/wordpress.md)
 
 ## Plugin documentation
 
-* <sup>†1</sup> [VF-WP External Plugins](https://github.com/visual-framework/vfwp-external-plugins)
-* [EMBL Taxonomy](/wp-content/plugins/embl-taxonomy/README.md)
-* [VF Gutenberg](/wp-content/plugins/vf-gutenberg/README.md)
-* [Events](/wp-content/plugins/vf-events/README.md)
+* [External Plugins ↗](https://github.com/visual-framework/vfwp-external-plugins)
+* [EMBL Taxonomy →](/wp-content/plugins/embl-taxonomy/README.md)
+* [VF Gutenberg →](/wp-content/plugins/vf-gutenberg/README.md)
+* [Events →](/wp-content/plugins/vf-events/README.md)
 
-## [Blocks](/docs/blocks.md)
+## [Blocks →](/docs/blocks.md)
 
 Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
 [Blocks documentation →](/docs/blocks.md)
 
-## [Containers](/docs/containers.md)
+## [Containers →](/docs/containers.md)
 
 Containers are large, single use template patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
