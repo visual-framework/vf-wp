@@ -6,39 +6,86 @@ There are three types of blocks:
 
 1. [Plugin Blocks](#plugin-blocks)
 2. [Advanced Custom Fields Blocks](#advanced-custom-fields-blocks)
-3. [Gutenberg Blocks](#gutenberg-blocks)
+3. [React Blocks](#react-blocks)
 
 ## Plugin Blocks
 
-The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual block plugins inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class.
+The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual blocks inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class.
 
-Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis. This type of block is best suited for retrieving and caching HTML from the Content Hub. They allow for default and customizable API settings.
+Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis. This type of block is best suited for retrieving and caching HTML from the Content Hub. They allow for default and customizable API settings. They can be enabled or disabled individually via their own WordPress plugin.
 
 Available plugin blocks:
 
 * [Data Resources](/wp-content/plugins/vf-data-resources-block/README.md)
+* [EMBL News](/wp-content/plugins/vf-embl-news-block/README.md)
+* [Example](/wp-content/plugins/vf-example-block/README.md) <sup>†1</sup>
 * [Factoid](/wp-content/plugins/vf-factoid-block/README.md)
 * [Group Header](/wp-content/plugins/vf-group-header-block/README.md)
 * [Jobs](/wp-content/plugins/vf-jobs-block/README.md)
+* Latest Posts <sup>†2</sup>
 * [Members](/wp-content/plugins/vf-members-block/README.md)
 * [Publications](/wp-content/plugins/vf-publications-block/README.md)
 * [Publications Group EBI](/wp-content/plugins/vf-publications-group-ebi-block/README.md)
 
-## Advanced Custom Fields
+<sup>†1</sup> The Example plugin block is used for development testing and should not be activated on live websites.
 
-ACF blocks are registered for use in the Gutenberg editor. Unlike plugin blocks, default configuration cannot be defined on a per-site basis. They are best suited for single instances of local content.
+<sup>†2</sup> The Latest Posts plugin block was deprecated and replaced with an ACF block better suited for local WordPress content.
+
+## Advanced Custom Fields Blocks
+
+ACF blocks are registered for use in the Gutenberg editor using the [Advanced Custom Fields plugin](https://www.advancedcustomfields.com/resources/blocks/). Unlike plugin blocks, default configuration cannot be defined on a per-site basis. They are best suited for single instances of local content and easy development. They are located in the parent or child themes.
 
 Available ACF blocks:
 
-* [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)
-* [EMBL News](/wp-content/plugins/vf-embl-news-block/README.md)
-* [Latest Posts](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md)
-* [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md)
-* [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md)
-* [Links List](/wp-content/themes/vf-wp/blocks/vfwp-links-list/README.md)
+* Activity List
+* Badge
+* Banner
 * [Box](/wp-content/themes/vf-wp/blocks/vfwp-box/README.md)
+* Button
+* [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md)
+* Details
+* Divider
+* Embed
+* Figure
+* Hero
+* Intro
+* [Latest Posts](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md)
+* Lede
+* [Links List](/wp-content/themes/vf-wp/blocks/vfwp-links-list/README.md)
+* Masthead
+* Page Header
+* Profile
+* Search
+* Section Header
+* Social Icons
+* [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md)
+* Tabs <sup>†3</sup>
 
-## Gutenberg Blocks
+<sup>†3</sup> The Tabs ACF block was deprecated and replaced with a React block listed below.
+
+ACF blocks from plugins:
+
+* [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)
+
+## React Blocks
+
+React blocks are registered for use in the [Gutenberg editor](https://developer.wordpress.org/block-editor/developers/) using JavaScript & React. They are provided by the [VF Gutenberg plugin](/wp-content/plugins/vf-gutenberg/README.md). They are best suited for advanced editor requirements that cannot be achieved using ACF blocks alone; block transforms, and managing multiple `<InnerBlocks />`, for example.
+
+Before ACF blocks were possible, all those listed above were implemented as React blocks. The old versions have since been deprecated. They used Nunjucks templates from the Visual Framework making them difficult to update.
+
+Available React blocks:
+
+* VF Cluster
+* VF Embed
+* VF EMBL Grid
+* VF Grid Column <sup>†4</sup>
+* VF Grid
+* VF Tabs Section <sup>†4</sup>
+* VF Tabs
+
+<sup>†4</sup> Restricted to their respective parent innner blocks.
+
+## Blocks in the Gutenberg editor
 
 Blocks in the Gutenberg editor take the form:
 
