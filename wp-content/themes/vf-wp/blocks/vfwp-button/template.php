@@ -34,9 +34,7 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 <?php
 };
 
-if (
-  vf_html_empty($button_link['title'])
-) {
+if ( ! is_array($button_link)) {
   $admin_banner(__('Please enter content for this block.', 'vfwp'));
   return;
 }
