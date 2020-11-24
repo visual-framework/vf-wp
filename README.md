@@ -1,6 +1,6 @@
-# VF 2.0 WordPress Themes and Plugins
+# VF 2.0 WordPress - Themes & Plugins
 
-VF-WP: a collection of WordPress themes and plugins that integrate with the [Visual Framework](https://stable.visual-framework.dev/). They are currently heavily tied to the brand-specific "VF 2.0 for the EMBL Design Language". Additional WordPress plugin dependencies are kept in an external repository (see below).
+VF-WP is a collection of WordPress themes and plugins that integrate with the [Visual Framework](https://stable.visual-framework.dev/). They are currently heavily tied to the brand-specific "VF 2.0 for the EMBL Design Language". Additional WordPress plugin dependencies are kept in an external repository (see below).
 
 ## Documentation
 
@@ -9,7 +9,7 @@ VF-WP: a collection of WordPress themes and plugins that integrate with the [Vis
 * [Theming documentation →](/wp-content/themes/vf-wp/README.md)
 * [WordPress setup →](/docs/wordpress.md)
 
-## Plugin documentation
+## Plugin Documentation
 
 * [External Plugins Repository](https://github.com/visual-framework/vfwp-external-plugins)
 * [EMBL Taxonomy →](/wp-content/plugins/embl-taxonomy/README.md)
@@ -64,7 +64,7 @@ gulp build
 * to build `vf-components/vf-componenet-rollup/scripts.scss`
   - to make `wp-content/themes/vf-wp/assets/scripts/scripts.js`
 
-Note: [the CI](https://github.com/visual-framework/vf-wp/blob/master/.github/workflows/build.js.yml) will run `gulp build` on commit to `master`).
+Note: [the CI](https://github.com/visual-framework/vf-wp/blob/master/.github/workflows/build.js.yml) will run `gulp build` on commit to `master`.
 
 ```sh
 gulp default
