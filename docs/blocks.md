@@ -1,6 +1,20 @@
 # VF-WP Blocks
 
-Blocks are small, reusable content patterns. Blocks may appear within the Gutenberg editor, sidebar widgets, or rendered elsewhere in a template.
+Blocks are small, reusable content patterns based on the Visual Framework. Blocks may appear within the Gutenberg editor, sidebar widgets, or rendered elsewhere in a template. Blocks added in the Gutenberg editor can be individually configured. See the individual README files for a detailed spec.
+
+There are three types of blocks:
+
+1. [Plugin Blocks](#plugin-blocks)
+2. [Advanced Custom Fields Blocks](#advanced-custom-fields-blocks)
+3. [Gutenberg Blocks](#gutenberg-blocks)
+
+## Plugin Blocks
+
+The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual block plugins inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class.
+
+Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis. This type of block is best suited for retrieving and caching HTML from the Content Hub. They allow for default and customizable API settings.
+
+Available plugin blocks:
 
 * [Data Resources](/wp-content/plugins/vf-data-resources-block/README.md)
 * [Factoid](/wp-content/plugins/vf-factoid-block/README.md)
@@ -10,13 +24,11 @@ Blocks are small, reusable content patterns. Blocks may appear within the Gutenb
 * [Publications](/wp-content/plugins/vf-publications-block/README.md)
 * [Publications Group EBI](/wp-content/plugins/vf-publications-group-ebi-block/README.md)
 
-Some blocks registered via a plugin have a related "post" with assigned defaults. Default block settings are configured under **Content Hub > Blocks** in the Admin area. Block defaults have the custom post type: `vf_block`.
-
-Blocks added in the Gutenberg editor can be individually configured. See the individual plugin README files for a detailed spec.
-
 ## Advanced Custom Fields
 
-Other blocks are registered with ACF Gutenberg only:
+ACF blocks are registered for use in the Gutenberg editor. Unlike plugin blocks, default configuration cannot be defined on a per-site basis. They are best suited for single instances of local content.
+
+Available ACF blocks:
 
 * [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)
 * [EMBL News](/wp-content/plugins/vf-embl-news-block/README.md)
@@ -25,8 +37,6 @@ Other blocks are registered with ACF Gutenberg only:
 * [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md)
 * [Links List](/wp-content/themes/vf-wp/blocks/vfwp-links-list/README.md)
 * [Box](/wp-content/themes/vf-wp/blocks/vfwp-box/README.md)
-
-They have no defaults block post.
 
 ## Gutenberg Blocks
 
