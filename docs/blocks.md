@@ -8,6 +8,11 @@ There are three types of blocks:
 2. [ACF Blocks](#acf-blocks)
 3. [React Blocks](#react-blocks)
 
+Additional topics on this page:
+
+* [Blocks in the Gutenberg Editor](#blocks-in-the-gutenberg-editor)
+* [Blocks within Page Templates](#blocks-within-page-templates)
+
 ## Plugin Blocks
 
 The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual blocks inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class. Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis.
@@ -82,7 +87,7 @@ Available React blocks:
 
 Before ACF blocks were possible, the ACF blocks listed above were implemented as React blocks. Those older versions have since been deprecated but remain in the code to avoid breaking existing usage. They are hidden from the block inserter. They should be removed entirely in future following an audit. They used Nunjucks templates from the Visual Framework making them difficult to update.
 
-## Blocks in the Gutenberg editor
+## Blocks in the Gutenberg Editor
 
 ACF and plugin blocks in the Gutenberg editor use the `acf/vfwp-` and `acf/vf-` prefixes:
 
@@ -108,9 +113,9 @@ React blocks can be identified with the `vf/` prefix:
 <!-- wp:vf/members {"ver":"1.0.0"} /-->
 ```
 
-These blocks can only be configured using the Gutenberg front-end editor.
+These blocks are best configured using the Gutenberg front-end editor.
 
-## Blocks within page templates
+## Blocks within Page Templates
 
 Plugin blocks can be hard-coded into theme templates:
 
@@ -121,7 +126,7 @@ if ($vf_members) {
 }
 ```
 
-The block defaults assigned to the related post will be used.
+The block defaults from the related post metadata are be used.
 
 It is possible to use ACF blocks in templates:
 
@@ -143,7 +148,9 @@ It is also possible to do:
 get_template_part('blocks/vfwp-box/template');
 ```
 
-However, the corresponding template would require additional logic to determine whether it is an ACF or template include. For example:
+However, the corresponding template would require additional logic to determine whether it is an ACF or template include.
+
+For example:
 
 ```php
 $is_block = isset($block['id']);
