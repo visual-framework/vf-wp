@@ -43,29 +43,18 @@ ACF blocks are best suited for single instances of local content and easy develo
 
 Available ACF blocks:
 
-* Activity List
-* Badge
-* Banner
-* [Box](/wp-content/themes/vf-wp/blocks/vfwp-box/README.md)
-* Button
-* [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md)
-* Details
-* Divider
-* Embed
-* Figure
-* Hero
-* Intro
-* [Latest Posts](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md)
-* Lede
-* [Links List](/wp-content/themes/vf-wp/blocks/vfwp-links-list/README.md)
-* Masthead
-* Page Header
-* Profile
-* Search
-* Section Header
-* Social Icons
-* [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md)
-* Tabs <sup>†3</sup>
+| Activity List | Badge |
+| Banner | [Box](/wp-content/themes/vf-wp/blocks/vfwp-box/README.md) |
+| Button | [Card](/wp-content/themes/vf-wp/blocks/vfwp-card/README.md) |
+| Details | Divider |
+| Embed | Figure |
+| Hero | Intro |
+| [Latest Posts](/wp-content/themes/vf-wp/blocks/vfwp-latest-posts/README.md) | Lede |
+| [Links List](/wp-content/themes/vf-wp/blocks/vfwp-links-list/README.md) | Masthead |
+| Page Header | Profile |
+| Search | Section Header |
+| Social Icons | [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md) |
+| Tabs <sup>†3</sup> |   |
 
 <sup>†3 The Tabs ACF block was deprecated and replaced with a React block listed below.</sup>
 
