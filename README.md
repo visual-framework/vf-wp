@@ -28,6 +28,8 @@ Containers are large, single use template patterns based on the [Visual Framewor
 
 [Containers documentation →](/docs/blocks.md)
 
+* * *
+
 ## Development
 
 ### Theme and Plugin Development

@@ -87,6 +87,8 @@ Available React blocks:
 
 Before ACF blocks were possible, the ACF blocks listed above were implemented as React blocks. Those older versions have since been deprecated but remain in the code to avoid breaking existing usage. They are hidden from the block inserter. They should be removed entirely in future following an audit. They used Nunjucks templates from the Visual Framework making them difficult to update.
 
+* * *
+
 ## Blocks in the Gutenberg Editor
 
 ACF and plugin blocks in the Gutenberg editor use the `acf/vfwp-` and `acf/vf-` prefixes:
@@ -114,6 +116,8 @@ React blocks can be identified with the `vf/` prefix:
 ```
 
 These blocks are best configured using the Gutenberg front-end editor.
+
+* * *
 
 ## Blocks within Page Templates
 
