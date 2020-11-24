@@ -1,9 +1,7 @@
 # Visual Framework 2.0 WordPress theme
 
-This theme allows integration with the VF 2.0. It is currently heavily tied to
-the brand-specific "VF 2.0 for the EMBL Design Language".
-
-There are additional external wordpress plugins required to make this repository work, which you can find [here](https://github.com/visual-framework/vfwp-external-plugins).
+This theme integrates with the VF 2.0. It is currently heavily tied to
+the brand-specific "VF 2.0 for the EMBL Design Language". There are additional external wordpress plugin dependencies <sup>†</sup>.
 
 ## Documentation
 
@@ -14,7 +12,7 @@ There are additional external wordpress plugins required to make this repository
 
 ## Plugin documentation
 
-* [VF-WP External Plugins](https://github.com/visual-framework/vfwp-external-plugins)
+* [VF-WP External Plugins](https://github.com/visual-framework/vfwp-external-plugins) <sup>†</sup>
 * [EMBL Taxonomy](/wp-content/plugins/embl-taxonomy/README.md)
 * [VF Gutenberg](/wp-content/plugins/vf-gutenberg/README.md)
 * [Events](/wp-content/plugins/vf-events/README.md)
