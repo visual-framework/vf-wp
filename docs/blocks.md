@@ -15,7 +15,7 @@ Additional topics on this page:
 
 ## Plugin Blocks
 
-The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual blocks inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class. Blocks registered this way have default metadata values assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis.
+The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_block` and a set of PHP classes. Individual blocks inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class. Blocks registered this way have default metadata assigned to their respective posts. Block defaults can be configured under **WP Admin > Content Hub > Blocks** on a per-site basis.
 
 <img src="/.github/docs/plugin-block.png" alt="Plugin block example" width="801">
 
@@ -56,11 +56,11 @@ Available ACF blocks:
 | Page Header | Profile| Search | Section Header |
 | Social Icons | [Summary](/wp-content/themes/vf-wp/blocks/vfwp-summary/README.md) | Tabs <sup>†3</sup> |   |
 
-<sup>†3 The Tabs ACF block was deprecated and replaced with a React block listed below.</sup>
-
 ACF blocks from plugins:
 
 * [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)
+
+<sup>†3 The Tabs ACF block was deprecated and replaced with a React block listed below.</sup>
 
 ## React Blocks
 
@@ -80,11 +80,11 @@ Available React blocks:
 * VF Tabs Section <sup>†4</sup>
 * VF Tabs
 
-<sup>†4 Restricted to their respective parent innner blocks.</sup>
-
 ### Legacy React Blocks
 
 Before ACF blocks were possible, the ACF blocks listed above were implemented as React blocks. Those older versions have since been deprecated but remain in the code to avoid breaking existing usage. They are hidden from the block inserter. They should be removed entirely in future following an audit. They used Nunjucks templates from the Visual Framework making them difficult to update.
+
+<sup>†4 Restricted to their respective parent innner blocks.</sup>
 
 * * *
 

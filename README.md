@@ -26,7 +26,7 @@ Blocks are small, reusable content patterns based on the [Visual Framework](http
 
 Containers are large, single use template patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
-[Containers documentation →](/docs/blocks.md)
+[Containers documentation →](/docs/containers.md)
 
 * * *
 
