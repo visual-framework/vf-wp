@@ -2,15 +2,17 @@
 
 Templates are configuration container stacks that can be used to define preset theme templates. The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_template`.
 
-The post content for templates is restricted to container blocks, for example:
+The post content for templates is restricted to container blocks. For example, the default structure for a new template is:
 
 ```html
-<!-- wp:acf/vf-container-global-header {"id":"block_5f5f3490ce209","name":"acf/vf-container-global-header"} /-->
+<!-- wp:acf/vf-container-global-header /-->
 
-<!-- wp:acf/vf-container-page-template {"id":"block_5ebb9edff871d","name":"acf/vf-container-page-template"} /-->
+<!-- wp:acf/vf-container-page-template /-->
 
-<!-- wp:acf/vf-container-global-footer {"id":"block_5f5f349ace20a","name":"acf/vf-container-global-footer"} /-->
+<!-- wp:acf/vf-container-global-footer /-->
 ```
+
+The `acf/vf-container-page-template` block is a unique placeholder that is replaced by the actual [WordPress template](https://developer.wordpress.org/themes/basics/template-hierarchy/).
 
 The theme exposes two actions: `vf_header` and `vf_footer`. They are triggered by their respective template partials (i.e. `partials/header.php`). All containers set above the **"Page Template"** are outputted in the header. All containers below are outputted in the footer.
 
