@@ -12,37 +12,26 @@ The post content for templates is restricted to container blocks. For example, t
 <!-- wp:acf/vf-container-global-footer /-->
 ```
 
-Themes must have at least one template with the `post_name` as `default`.
+Themes must have at least one template with a `post_name` of `default`.
 
-The `acf/vf-container-page-template` block is a unique placeholder that is replaced by the actual [WordPress template](https://developer.wordpress.org/themes/basics/template-hierarchy/).
+The `acf/vf-container-page-template` block is a unique placeholder that is replaced by the actual [WordPress template](https://developer.wordpress.org/themes/basics/template-hierarchy/). The theme exposes two actions: `vf_header` and `vf_footer`. They are triggered by their respective template partials (i.e. `partials/header.php`). All containers set above the placeholder are outputted in the header. All containers below are outputted in the footer.
 
-The theme exposes two actions: `vf_header` and `vf_footer`. They are triggered by their respective template partials (i.e. `partials/header.php`). All containers set above the placeholder are outputted in the header. All containers below are outputted in the footer.
-
-## Selecting the Page Templates
+## Selecting the Page Template
 
 The `default` template is used unless another is selected. Dynamic templates will appear above theme templates in the "Page Attributes" panel of the Gutenberg editor.
 
 <img src="/.github/docs/template-panel.png" alt="Page attribute template panel" width="278">
 
-Templates with the "(theme)" suffix mark those with a PHP template using the standard WordPress `Template Name: Full-width` comment metadata.
+Templates with the "(theme)" suffix mark those with a PHP template using the standard WordPress `Template Name: Full-width` comment metadata. Those are based on the `default` dynamic template, unless they specifically opt out of using the `vf_header` and `vf_footer` actions.
 
-<!--
+## Assigning the Page Template
 
-The **Settings > VF Settings** option page in the Admin area defines the order.
+Dynamic page templates can be assigned programmatically the same way as standard theme templates are set. Update the `_wp_page_template` post metadata using the format:
 
-For example:
+```
+vf_template_[post_name].php
+```
 
-1. Global Header
-2. Breadcrumbs
-3. Page Template †
-4. EMBL News
+Replacing `[post_name]` with the `vf_template` name.
 
-† The *"Page Template"* container is registered by the `vf-wp` core plugin. It is a placeholder for the current page template found in the theme directory (as defined by the [WordPress Template Hierarchy](https://developer.wordpress.org/themes/basics/template-hierarchy/)).
-
-The theme exposes two actions: `vf_header` and `vf_footer`. They are triggered by their respective template partials (i.e. `partials/header.php`). All containers set above the *"Page Template"* are outputted in the header. All containers below are outputted in the footer.
-
-Containers can be configured under **VF Containers** in the Admin area. See the individual plugin README files for a detailed spec.
-
-Containers have the custom post type: `vf_container`.
-
--->
+The page will then follow the standard [WordPress template hierarchy](https://developer.wordpress.org/themes/basics/template-hierarchy/) whilst including the dynamic header and footer containers.
