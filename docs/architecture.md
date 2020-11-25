@@ -12,19 +12,19 @@ Each *block* or *container* plugin directory contains:
 
 And any additional includes or assets needed.
 
-## [Blocks](/docs/blocks.md)
+## Blocks
 
 Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
 [Blocks documentation →](/docs/blocks.md)
 
-## [Containers](/docs/containers.md)
+## Containers
 
 Containers are large, single use template patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
 [Containers documentation →](/docs/containers.md)
 
-## [Templates](/docs/templates.md)
+## Templates
 
 Templates are configurable container stacks that can be used to define preset dynamic theme templates.
 
