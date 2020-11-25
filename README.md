@@ -5,7 +5,6 @@ VF-WP is a collection of WordPress themes and plugins that integrate with the [V
 ## Documentation
 
 * [Work in Progress, Issues, Bugs →](https://github.com/visual-framework/vf-wp/issues)
-* [Theme and Plugin Architecture →](/docs/architecture.md)
 * [Theming Documentation →](/wp-content/themes/vf-wp/README.md)
 * [WordPress Setup →](/docs/wordpress.md)
 
@@ -15,6 +14,12 @@ VF-WP is a collection of WordPress themes and plugins that integrate with the [V
 * [EMBL Taxonomy →](/wp-content/plugins/embl-taxonomy/README.md)
 * [VF Gutenberg →](/wp-content/plugins/vf-gutenberg/README.md)
 * [Events →](/wp-content/plugins/vf-events/README.md)
+
+## Theme and Plugin Architecture
+
+The Visual Framework WordPress theme uses a plugin-based architecture.
+
+[Architecture documentation →](/docs/architecture.md)
 
 ## Blocks
 

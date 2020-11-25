@@ -12,6 +12,11 @@ Each *block* or *container* plugin directory contains:
 
 And any additional includes or assets needed.
 
+## VF-WP Plugin
+
+[VF-WP plugin documentation →](/wp-content/plugins/vf-wp/README.md)
+
+
 ## Blocks
 
 Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
@@ -29,7 +34,3 @@ Containers are large, single use template patterns based on the [Visual Framewor
 Templates are configurable container stacks that can be used to define preset dynamic theme templates.
 
 [Templates documentation →](/docs/templates.md)
-
-## VF-WP Plugin
-
-[VF-WP plugin documentation →](/wp-content/plugins/vf-wp/README.md)
