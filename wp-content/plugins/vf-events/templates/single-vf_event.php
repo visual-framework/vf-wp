@@ -8,19 +8,36 @@ get_header();
 
 global $post;
 
-$summary = get_field('vf_event_summary');
+$event_organiser = get_field('vf_event_organiser');
+$cpp_container = get_field('vf_event_cpp_container', $post->post_parent);
+$cancelled = get_field('vf_event_canceled');
 
-$additional_info = get_field('vf_event_additional_info');
 ?>
+<?php 
+// info banner
+if ($cancelled == 'postponed') { ?>
+<div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--200 vf-u-margin__top--200">
+  <div class="vf-banner__content">
+    <p class="vf-banner__text">This event has been postponed</a></p>
+  </div>
+</div>
+<?php }
+
+if ($cancelled == 'yes') { ?>
+<div class="vf-banner vf-banner--alert vf-banner--danger | vf-u-margin__bottom--200 vf-u-margin__top--200">
+  <div class="vf-banner__content">
+    <p class="vf-banner__text">This event has been cancelled</a></p>
+  </div>
+</div>
+<?php } ?>
 
 <style>
-.vf-details--summary {
-  background-color: #f3f3f3 !important;
-}
+  .vf-details--summary {
+    background-color: #f3f3f3 !important;
+  }
 </style>
 
 <?php     
-
 // vf-hero container
 include( plugin_dir_path( __FILE__ ) . 'partials/hero.php'); 
 ?>
@@ -29,19 +46,19 @@ include( plugin_dir_path( __FILE__ ) . 'partials/hero.php');
   <div class="vf-grid__col--span-3 | vf-content">
     <?php the_content(); ?>
   </div>
-
 <?php 
-// info box for EMBL CCO
+// info box
 include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
-  
 </section>
 
 <?php 
 // CPP container
+if ($cpp_container == 1 && $event_organiser == "cco_hd") {
 include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); 
+}
 
 // Social media container
-if ($social_media_container == 1 ) {
+if ($social_media_container == 1 && $event_organiser == "cco_hd") {
 include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); 
 }
 
