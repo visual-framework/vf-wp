@@ -1,4 +1,4 @@
-# VF 2.0 WordPress - Themes & Plugins
+# VF 2.0 WordPress - Themes and Plugins
 
 VF-WP is a collection of WordPress themes and plugins that integrate with the [Visual Framework](https://stable.visual-framework.dev/). They are currently heavily tied to the brand-specific "VF 2.0 for the EMBL Design Language". Additional WordPress plugin dependencies are kept in an external repository (see below).
 

@@ -19,7 +19,7 @@ The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post ty
 
 <img src="/.github/docs/plugin-block.png" alt="Plugin block example" width="801">
 
-Plugin blocks are best suited for retrieving and caching HTML from the Content Hub. They allow for customizable API settings with per-site defaults. They can be enabled or disabled individually via their own WordPress plugin.
+Plugin blocks are best suited for retrieving and caching HTML from the **Content Hub**. They allow for customizable API settings with per-site defaults. They can be enabled or disabled individually via their own WordPress plugin.
 
 Available plugin blocks:
 
@@ -35,7 +35,6 @@ Available plugin blocks:
 * [Publications Group EBI](/wp-content/plugins/vf-publications-group-ebi-block/README.md)
 
 <sup>†1 The Example plugin block is used for development testing and should not be activated on live websites.</sup>
-
 <sup>†2 The Latest Posts plugin block was deprecated and replaced with an ACF block better suited for local WordPress content.</sup>
 
 ## ACF Blocks
