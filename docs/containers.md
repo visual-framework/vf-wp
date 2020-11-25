@@ -5,8 +5,8 @@ Containers are large, single use template patterns based on the [Visual Framewor
 Topics on this page:
 
 * [Plugin Containers](#plugin-containers)
-* [Template Architecture](#template-architecture)
-* [Blocks within Page Templates](#blocks-within-page-templates)
+* [Containers in Templates](#containers-in-templates)
+* [Containers in Theme Templates](#containers-in-page-templates)
 
 ## Plugin Containers
 
@@ -32,11 +32,23 @@ Child theme containers:
 
 * * *
 
-## Template Architecture
+## Containers in Templates
+
+Templates are configuration container stacks that can be used to define preset  theme templates.
+
+[Templates documentation →](/docs/templates.md)
+
+```html
+<!-- wp:acf/vf-container-global-header {"id":"block_5f5f3490ce209","name":"acf/vf-container-global-header","align":"","mode":"preview"} /-->
+
+<!-- wp:acf/vf-container-page-template {"id":"block_5ebb9edff871d","name":"acf/vf-container-page-template","data":{},"mode":"preview"} /-->
+
+<!-- wp:acf/vf-container-global-footer {"id":"block_5f5f349ace20a","name":"acf/vf-container-global-footer","data":{},"align":"","mode":"preview"} /-->
+```
 
 * * *
 
-## Containers within Page Templates
+## Containers in Theme Templates
 
 It is possible to hard-code containers into theme templates:
 

@@ -11,7 +11,7 @@ There are three types of blocks:
 Additional topics on this page:
 
 * [Blocks in the Gutenberg Editor](#blocks-in-the-gutenberg-editor)
-* [Blocks within Page Templates](#blocks-within-page-templates)
+* [Blocks in Theme Templates](#blocks-in-page-templates)
 
 ## Plugin Blocks
 
@@ -118,7 +118,7 @@ These blocks are best configured using the Gutenberg front-end editor.
 
 * * *
 
-## Blocks within Page Templates
+## Blocks in Theme Templates
 
 Plugin blocks can be hard-coded into theme templates:
 
