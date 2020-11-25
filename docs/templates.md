@@ -2,6 +2,8 @@
 
 Templates are configurable [container](/docs/containers.md) stacks that can be used to define preset dynamic theme templates. The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_template`. They can be configured under **WP Admin > Templates** on a per-site basis.
 
+<img src="/.github/docs/template-post.png" alt="Template post example" width="921">
+
 The post content for templates is restricted to container blocks. For example, the default structure for a new template is:
 
 ```html
