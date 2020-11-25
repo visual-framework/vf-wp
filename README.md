@@ -30,7 +30,7 @@ Containers are large, single use template patterns based on the [Visual Framewor
 
 ## [Templates](/docs/templates.md)
 
-Templates are configuration container stacks that can be used to define preset  theme templates.
+Templates are configurable container stacks that can be used to define preset dynamic theme templates.
 
 [Templates documentation →](/docs/templates.md)
 

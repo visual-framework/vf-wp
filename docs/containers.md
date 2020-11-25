@@ -5,7 +5,7 @@ Containers are large, single use template patterns based on the [Visual Framewor
 Topics on this page:
 
 * [Plugin Containers](#plugin-containers)
-* [Containers in Templates](#containers-in-templates)
+* [Containers in Dynamic Templates](#containers-in-dynamic-templates)
 * [Containers in Theme Templates](#containers-in-theme-templates)
 
 ## Plugin Containers
@@ -32,9 +32,9 @@ Child theme containers:
 
 * * *
 
-## Containers in Templates
+## Containers in Dynamic Templates
 
-Templates are configuration container stacks that can be used to define preset  theme templates.
+Templates are configurable container stacks that can be used to define preset dynamic theme templates.
 
 [Templates documentation →](/docs/templates.md)
 
