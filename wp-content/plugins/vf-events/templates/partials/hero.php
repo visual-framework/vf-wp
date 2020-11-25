@@ -15,6 +15,7 @@ $submission_closing = get_field('vf_event_submission_closing', $post->post_paren
 $registration_closing = get_field('vf_event_registration_closing', $post->post_parent);
 
 $event_type = get_field('vf_event_event_type', $post->post_parent);
+$event_type_custom = get_field('vf_event_event_type_custom', $post->post_parent);
 $event_topic = get_field('vf_event_event_topic', $post->post_parent);
 
 $social_media_container = get_field('vf_event_social_media', $post->post_parent);
@@ -50,11 +51,17 @@ if ($theme == 'none') {
    <?php }; ?>
     --vf-hero-grid__row--initial: 275px;
   }
-
   </style>
         <div class="vf-hero__content">
-    <h2 class="vf-hero__heading"> EMBL 
-      <?php echo esc_html($event_type); ?>   </h2>
+    <h2 class="vf-hero__heading"> 
+      <?php
+      if ($event_type['value'] === 'custom') {
+        echo esc_html($event_type_custom);
+      }
+      else {
+      echo esc_html($event_type['label']); 
+      }
+      ?>   </h2>
     <p class="vf-hero__text" style="font-size: 32px;">
     <?php echo $title; ?>
     </p>
