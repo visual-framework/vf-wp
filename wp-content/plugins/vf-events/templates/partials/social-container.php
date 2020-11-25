@@ -1,11 +1,11 @@
 <section
-  class="embl-grid vf-u-background-color-ui--off-white vf-u-fullbleed vf-u-padding__top--800 vf-u-padding__bottom--800 vf-u-margin__bottom--0">
+  class="embl-grid vf-u-background-color-ui--off-white vf-u-fullbleed vf-u-padding__top--600 vf-u-padding__bottom--800 vf-u-margin__bottom--0">
   <div class="vf-section-header">
 <h2 class="vf-section-header__heading" id="section-sub-heading">
  Stay in touch 
 </h2>
 </div>
-<div class="vf-grid vf-grid__col-4">
+<div class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2">
     <h4 class="vf-text vf-text-heading--4">What's new on our blog</h4>
     <?php
@@ -109,10 +109,5 @@
         </ul>
       </div>
       </div>
-<div>
-    <a class="twitter-timeline" data-height="280" data-chrome="nofooter"
-      href="https://twitter.com/EMBLEvents?ref_src=twsrc%5Etfw">Tweets by EMBLEvents</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  </div>
   </div>
 </section>
