@@ -22,11 +22,11 @@ The `default` template is used unless another is selected. Dynamic templates wil
 
 <img src="/.github/docs/template-panel.png" alt="Page attribute template panel" width="278">
 
-Templates with the "(theme)" suffix mark those with a PHP template using the standard WordPress `Template Name: Full-width` comment metadata. Those are based on the `default` dynamic template, unless they specifically opt out of using the `vf_header` and `vf_footer` actions.
+Templates with the "(theme)" suffix mark those with a PHP template using the standard WordPress `/* Template Name: Full-width */` comment. Those are based on the `default` dynamic template unless they specifically opt-out of the `vf_header` and `vf_footer` actions.
 
 ## Assigning the Page Template
 
-Dynamic page templates can be assigned programmatically the same way as standard theme templates are set. Update the `_wp_page_template` post metadata using the format:
+Dynamic page templates can be assigned programmatically the same way that  standard theme templates are set. Update the `_wp_page_template` post metadata using the format:
 
 ```
 vf_template_[post_name].php
