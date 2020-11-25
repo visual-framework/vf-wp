@@ -16,7 +16,7 @@ Themes must have at least one template with a `post_name` of `default`.
 
 The `acf/vf-container-page-template` block is a unique placeholder that is replaced by the actual [WordPress template](https://developer.wordpress.org/themes/basics/template-hierarchy/). The theme exposes two actions: `vf_header` and `vf_footer`. They are triggered by their respective template partials (i.e. `partials/header.php`). All containers set above the placeholder are outputted in the header. All containers below are outputted in the footer.
 
-## Selecting a Template
+## Selecting the Template
 
 The `default` template is used unless another is selected. Dynamic templates will appear above theme templates in the "Page Attributes" panel of the Gutenberg editor.
 

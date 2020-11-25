@@ -5,9 +5,9 @@ VF-WP is a collection of WordPress themes and plugins that integrate with the [V
 ## Documentation
 
 * [Work in Progress, Issues, Bugs →](https://github.com/visual-framework/vf-wp/issues)
-* [Theme and plugin architecture →](/docs/architecture.md)
-* [Theming documentation →](/wp-content/themes/vf-wp/README.md)
-* [WordPress setup →](/docs/wordpress.md)
+* [Theme and Plugin Architecture →](/docs/architecture.md)
+* [Theming Documentation →](/wp-content/themes/vf-wp/README.md)
+* [WordPress Setup →](/docs/wordpress.md)
 
 ## Plugin Documentation
 
