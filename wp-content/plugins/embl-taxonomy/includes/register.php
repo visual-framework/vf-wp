@@ -246,19 +246,12 @@ class EMBL_Taxonomy_Register {
       return $this->sync_error;
     }
 
-    // print("<pre>" . print_r($json_terms, true) . "</pre>");
-    // die();
-
     // Generate the new taxonomy terms from the API terms provided
     $new_terms = array();
 
     self::generate_terms($json_terms, $new_terms);
 
     self::sort_terms($new_terms);
-
-    // var_dump(count($new_terms));
-    // print("<pre>" . print_r($new_terms, true) . "</pre>");
-    // die();
 
     // Get the existing WordPress taxonomy
     $wp_taxonomy = self::get_wp_taxonomy();
@@ -444,16 +437,6 @@ class EMBL_Taxonomy_Register {
           }
           self::generate_terms($api_terms, $terms, $new_parent, $term);
         }
-        // foreach ($api_terms as $new_parent) {
-        //   // Match parent based on ID (old) or UUID (new)
-        //   // if (in_array($parent_id, array(
-        //   //   $new_parent[EMBL_Taxonomy::META_IDS][0]
-        //   // ))) {
-        //   if ($parent_id ===  $new_parent[EMBL_Taxonomy::META_IDS][0]) {
-        //     self::generate_terms($api_terms, $terms, $new_parent, $term);
-        //     break;
-        //   }
-        // }
       }
     // Otherwise add new term
     } else {
