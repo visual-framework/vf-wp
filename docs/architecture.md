@@ -2,9 +2,9 @@
 
 The Visual Framework WordPress theme uses a plugin-based architecture.
 
-With the VF-WP theme, pages are built up from *Block* and *Container* plugins. Both are represented as [custom post types](https://codex.wordpress.org/Post_Types) that are registered by the `vf-wp` core plugin.
+Pages in the VF-WP parent and child themes are built up using *block* and *container* plugins. Both types of plugin are represented as [custom post types](https://codex.wordpress.org/Post_Types). These are registered by the core [VF-WP plugin](/wp-content/plugins/vf-wp/README.md).
 
-Each Block or Container plugin directory contains:
+Each *block* or *container* plugin directory contains:
 
 * `index.php`
 * `template.php`
@@ -12,16 +12,25 @@ Each Block or Container plugin directory contains:
 
 And any additional includes or assets needed.
 
-Below I'll start with a high-level overview of containers and blocks before getting technical.
+## VF-WP Plugin
 
-## Container plugins
+[VF-WP plugin documentation →](/wp-content/plugins/vf-wp/README.md)
 
-[See container plugin documentation.](/docs/containers.md)
 
-## Block plugins
+## Blocks
 
-[See block plugin documentation.](/docs/blocks.md)
+Blocks are small, reusable content patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
 
-## VF-WP plugin
+[Blocks documentation →](/docs/blocks.md)
 
-[See vf-wp plugin documentation.](/wp-content/plugins/vf-wp/README.md)
+## Containers
+
+Containers are large, single use template patterns based on the [Visual Framework](https://stable.visual-framework.dev/).
+
+[Containers documentation →](/docs/containers.md)
+
+## Templates
+
+Templates are configurable container stacks that can be used to define preset dynamic theme templates.
+
+[Templates documentation →](/docs/templates.md)

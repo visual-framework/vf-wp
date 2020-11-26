@@ -1,32 +1,53 @@
-# VF-WP Container plugins
+# Containers
 
-Containers represent a horizontal slice of the page template.
+Containers are large, single use template patterns based on the [Visual Framework](https://stable.visual-framework.dev/). They usually represent a horizontal slice of a page template like the header. Therefore, a page template can be defined as a stack of containers. They are registered similarly to [plugin blocks](docs/blocks.md#plugin-blocks) but are not available in Gutenberg editor for normal pages.
 
-* [Beta](/wp-content/plugins/vf-beta-container/README.md)
+Topics on this page:
+
+* [Plugin Containers](#plugin-containers)
+* [Containers in Dynamic Templates](#containers-in-dynamic-templates)
+* [Containers in Theme Templates](#containers-in-theme-templates)
+
+## Plugin Containers
+
+The [VF-WP plugin](/wp-content/plugins/vf-wp/README.md) defines a custom post type `vf_container` and a set of PHP classes. Individual containers inherit the [`VF_Plugin`](/wp-content/plugins/vf-wp/README.md#vf_plugin) class. Containers have metadata assigned to their respective posts. They can be configured under **WP Admin > Content Hub > Containers** on a per-site basis.
+
+* [Banner](/wp-content/plugins/vf-banner-container/README.md)
+* [Beta](/wp-content/plugins/vf-beta-container/README.md) <sup>†1</sup>
 * [Breadcrumbs](/wp-content/plugins/vf-breadcrumbs-container/README.md)
+* [EBI Global Footer](/wp-content/plugins/vf-ebi-global-footer-container/README.md)
+* [EBI Global Header](/wp-content/plugins/vf-ebi-global-header-container/README.md)
 * [EMBL News](/wp-content/plugins/vf-embl-news-container/README.md)
 * [Global Footer](/wp-content/plugins/vf-global-footer-container/README.md)
 * [Global Header](/wp-content/plugins/vf-global-header-container/README.md)
+* [Hero](/wp-content/plugins/vf-hero-container/README.md)
+* [Masthead](/wp-content/plugins/vf-masthead-container/README.md)
+* [Navigation](/wp-content/plugins/vf-navigation-container/README.md)
 
 Child theme containers:
 
 * [Groups Header](/wp-content/themes/vf-wp-groups/vf-wp-groups-header/README.md)
 
-## Architecture
+<sup>†1 Container has been deprecated.</sup>
 
-The **Settings > VF Settings** option page in the Admin area defines the order.
+* * *
 
-For example:
+## Containers in Dynamic Templates
 
-1. Global Header
-2. Breadcrumbs
-3. Page Template †
-4. EMBL News
+Templates are configurable container stacks that can be used to define preset dynamic theme templates.
 
-† The *"Page Template"* container is registered by the `vf-wp` core plugin. It is a placeholder for the current page template found in the theme directory (as defined by the [WordPress Template Hierarchy](https://developer.wordpress.org/themes/basics/template-hierarchy/)).
+[Templates documentation →](/docs/templates.md)
 
-The theme exposes two actions: `vf_header` and `vf_footer`. They are triggered by their respective template partials (i.e. `partials/header.php`). All containers set above the *"Page Template"* are outputted in the header. All containers below are outputted in the footer.
+* * *
 
-Containers can be configured under **VF Containers** in the Admin area. See the individual plugin README files for a detailed spec.
+## Containers in Theme Templates
 
-Containers have the custom post type: `vf_container`.
+It is possible to hard-code containers into theme templates:
+
+```php
+if (class_exists('VF_Breadcrumbs')) {
+  VF_Plugin::render(VF_Plugin::get_plugin('vf_breadcrumbs'));
+}
+```
+
+However it is preferable to use the template architecture described above.

@@ -1,4 +1,4 @@
-# VF-WP plugin
+# VF-WP Plugin
 
 [See Architecture documentation.](/docs/architecture.md)
 
@@ -23,12 +23,16 @@ The `VF_Containers` class extends to:
 * Insert the placeholder *"Page Template"* container
 * Register action hooks for `vf_header` and `vf_footer` template functions
 
+[Containers documentation →](/docs/containers.md)
+
 ## VF_Blocks
 
 The `VF_Blocks` class extends to:
 
 * Register the `vf_block` post type
 * Add `vf/wp` Gutenberg block category
+
+[Blocks documentation →](/docs/blocks.md)
 
 ## VF_Plugin
 
