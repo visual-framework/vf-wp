@@ -28,6 +28,6 @@ if (
   return;
 } ?>
 
-<p class="vf-lede"><?php echo esc_html($lede) ?></p>
+<p class="vf-lede"><?php echo ($lede) ?></p>
 <!--/vf-lede-->
 
