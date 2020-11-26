@@ -441,9 +441,9 @@ class EMBL_Taxonomy_Register {
     // Otherwise add new term
     } else {
       // Ignore base level terms "Who", "What", "Where", etc
-      if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
+      // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
         $terms[] = $term;
-      }
+      // }
     }
   }
 
