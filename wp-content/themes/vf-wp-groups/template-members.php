@@ -1,6 +1,6 @@
 <?php
 /**
-* Template Name: Members
+* Template Name: Members - automated
 */
 
 // The plugin is missing so use the default page template
