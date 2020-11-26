@@ -256,9 +256,9 @@ class EMBL_Taxonomy_Register {
 
     self::sort_terms($new_terms);
 
-    var_dump(count($new_terms));
-    print("<pre>" . print_r($new_terms, true) . "</pre>");
-    die();
+    // var_dump(count($new_terms));
+    // print("<pre>" . print_r($new_terms, true) . "</pre>");
+    // die();
 
     // Get the existing WordPress taxonomy
     $wp_taxonomy = self::get_wp_taxonomy();
@@ -438,9 +438,11 @@ class EMBL_Taxonomy_Register {
 
         if (array_key_exists($parent_id, $api_terms)) {
           $new_parent = $api_terms[$parent_id];
-          error_log(1);
+          // Cannot generate terms that are a parent of itself
+          if ($term['uuid'] === $new_parent['uuid']) {
+            continue;
+          }
           self::generate_terms($api_terms, $terms, $new_parent, $term);
-          // break;
         }
         // foreach ($api_terms as $new_parent) {
         //   // Match parent based on ID (old) or UUID (new)
