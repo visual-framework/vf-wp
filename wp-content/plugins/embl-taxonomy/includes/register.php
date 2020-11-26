@@ -9,6 +9,9 @@ class EMBL_Taxonomy_Register {
   // Options table keys
   const OPTION_MODIFIED = EMBL_Taxonomy::TAXONOMY_NAME . '_modified';
 
+  // https://api.drupal.org/api/drupal/core!lib!Drupal!Component!Uuid!Uuid.php/constant/Uuid%3A%3AVALID_PATTERN/
+  const UUID_PATTERN = '#^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$#';
+
   protected $labels;
 
   private $sync_error = false;
@@ -235,7 +238,7 @@ class EMBL_Taxonomy_Register {
 
     // Attempt to parse API results
     $json_terms = self::decode_terms($data);
-    if ($json_terms === false) {
+    if (empty($json_terms)) {
       $this->sync_error = sprintf(
         __('The %1$s API result could not be parsed.', 'embl'),
         $this->labels['name']
@@ -245,7 +248,9 @@ class EMBL_Taxonomy_Register {
 
     // Generate the new taxonomy terms from the API terms provided
     $new_terms = array();
+
     self::generate_terms($json_terms, $new_terms);
+
     self::sort_terms($new_terms);
 
     // Get the existing WordPress taxonomy
@@ -346,7 +351,7 @@ class EMBL_Taxonomy_Register {
       return false;
     }
     $new_terms = array();
-    $term_keys = array('id', 'uuid', 'name', 'parents');
+    $term_keys = array('uuid', 'name', 'parents');
     // Format term objects as arrays and add meta keys
     foreach($json->terms as $key => $json_term) {
       $json_term = (array) $json_term;
@@ -361,16 +366,27 @@ class EMBL_Taxonomy_Register {
         // and drop the object keys
         $parents_as_array = array();
         foreach($json_term['parents'] as $key => $parent) {
-          array_push($parents_as_array,$parent);
+          // Validate parent term UUID
+          if (preg_match(self::UUID_PATTERN, $parent)) {
+            array_push($parents_as_array, $parent);
+          }
         }
         $json_term['parents'] = $parents_as_array;
       }
       foreach ($term_keys as $key) {
         $new_term[$key] = array_key_exists($key, $json_term) ? $json_term[$key] : null;
       }
-      $new_term[EMBL_Taxonomy::META_NAME] = $new_term['name'];
-      $new_term[EMBL_Taxonomy::META_IDS] = array($new_term['uuid']);
-      $new_terms[] = $new_term;
+      // Validate term UUID
+      if (preg_match(self::UUID_PATTERN, $new_term['uuid'])) {
+        $new_term[EMBL_Taxonomy::META_NAME] = $new_term['name'];
+        $new_term[EMBL_Taxonomy::META_IDS] = array($new_term['uuid']);
+        // Is this possible? Not an issue to date...
+        if (array_key_exists($new_term['uuid'], $new_terms)) {
+          error_log("Duplicate EMBL taxonomy UUID: {$new_term['uuid']}");
+        }
+        // Use associative array index for faster lookup
+        $new_terms[$new_term['uuid']] = $new_term;
+      }
     }
     return $new_terms;
   }
@@ -384,7 +400,7 @@ class EMBL_Taxonomy_Register {
     // If no term is specified start the recursion
     if ( ! $term) {
       // Iterate over each base term
-      foreach ($api_terms as $term) {
+      foreach ($api_terms as $uuid => $term) {
         self::generate_terms($api_terms, $terms, $term);
       }
       // Set the WordPress taxonomy slug
@@ -404,6 +420,7 @@ class EMBL_Taxonomy_Register {
         $parent[EMBL_Taxonomy::META_IDS]
       );
     }
+
     // If this new term has multiple parents generate a unique term for
     // the final hierarchy level, for example:
     // Parent-1 > Term
@@ -411,15 +428,14 @@ class EMBL_Taxonomy_Register {
     if (is_array($term['parents']) && count($term['parents'])) {
       // Iterate over parent term IDs and then all terms to find the parent
       foreach ($term['parents'] as $parent_id) {
-        foreach ($api_terms as $new_parent) {
-          // Match parent based on ID (old) or UUID (new)
-          if (in_array($parent_id, array(
-            $new_parent['id'],
-            $new_parent[EMBL_Taxonomy::META_IDS][0]
-          ))) {
-            self::generate_terms($api_terms, $terms, $new_parent, $term);
-            break;
+
+        if (array_key_exists($parent_id, $api_terms)) {
+          $new_parent = $api_terms[$parent_id];
+          // Cannot generate terms that are a parent of itself
+          if ($term['uuid'] === $new_parent['uuid']) {
+            continue;
           }
+          self::generate_terms($api_terms, $terms, $new_parent, $term);
         }
       }
     // Otherwise add new term
