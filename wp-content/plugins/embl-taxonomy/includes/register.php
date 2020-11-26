@@ -9,6 +9,9 @@ class EMBL_Taxonomy_Register {
   // Options table keys
   const OPTION_MODIFIED = EMBL_Taxonomy::TAXONOMY_NAME . '_modified';
 
+  // https://api.drupal.org/api/drupal/core!lib!Drupal!Component!Uuid!Uuid.php/constant/Uuid%3A%3AVALID_PATTERN/
+  const UUID_PATTERN = '#^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$#';
+
   protected $labels;
 
   private $sync_error = false;
@@ -361,16 +364,22 @@ class EMBL_Taxonomy_Register {
         // and drop the object keys
         $parents_as_array = array();
         foreach($json_term['parents'] as $key => $parent) {
-          array_push($parents_as_array,$parent);
+          // Validate parent term UUID
+          if (preg_match(self::UUID_PATTERN, $parent)) {
+            array_push($parents_as_array, $parent);
+          }
         }
         $json_term['parents'] = $parents_as_array;
       }
       foreach ($term_keys as $key) {
         $new_term[$key] = array_key_exists($key, $json_term) ? $json_term[$key] : null;
       }
-      $new_term[EMBL_Taxonomy::META_NAME] = $new_term['name'];
-      $new_term[EMBL_Taxonomy::META_IDS] = array($new_term['uuid']);
-      $new_terms[] = $new_term;
+      // Validate term UUID
+      if (preg_match(self::UUID_PATTERN, $new_term['uuid'])) {
+        $new_term[EMBL_Taxonomy::META_NAME] = $new_term['name'];
+        $new_term[EMBL_Taxonomy::META_IDS] = array($new_term['uuid']);
+        $new_terms[] = $new_term;
+      }
     }
     return $new_terms;
   }
