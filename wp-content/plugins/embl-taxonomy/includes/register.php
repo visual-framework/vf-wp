@@ -238,7 +238,7 @@ class EMBL_Taxonomy_Register {
 
     // Attempt to parse API results
     $json_terms = self::decode_terms($data);
-    if ($json_terms === false) {
+    if (empty($json_terms)) {
       $this->sync_error = sprintf(
         __('The %1$s API result could not be parsed.', 'embl'),
         $this->labels['name']
@@ -246,10 +246,19 @@ class EMBL_Taxonomy_Register {
       return $this->sync_error;
     }
 
+    // print("<pre>" . print_r($json_terms, true) . "</pre>");
+    // die();
+
     // Generate the new taxonomy terms from the API terms provided
     $new_terms = array();
+
     self::generate_terms($json_terms, $new_terms);
+
     self::sort_terms($new_terms);
+
+    var_dump(count($new_terms));
+    print("<pre>" . print_r($new_terms, true) . "</pre>");
+    die();
 
     // Get the existing WordPress taxonomy
     $wp_taxonomy = self::get_wp_taxonomy();
@@ -349,7 +358,7 @@ class EMBL_Taxonomy_Register {
       return false;
     }
     $new_terms = array();
-    $term_keys = array('id', 'uuid', 'name', 'parents');
+    $term_keys = array('uuid', 'name', 'parents');
     // Format term objects as arrays and add meta keys
     foreach($json->terms as $key => $json_term) {
       $json_term = (array) $json_term;
@@ -378,7 +387,12 @@ class EMBL_Taxonomy_Register {
       if (preg_match(self::UUID_PATTERN, $new_term['uuid'])) {
         $new_term[EMBL_Taxonomy::META_NAME] = $new_term['name'];
         $new_term[EMBL_Taxonomy::META_IDS] = array($new_term['uuid']);
-        $new_terms[] = $new_term;
+        // Is this possible? Not an issue to date...
+        if (array_key_exists($new_term['uuid'], $new_terms)) {
+          error_log("Duplicate EMBL taxonomy UUID: {$new_term['uuid']}");
+        }
+        // Use associative array index for faster lookup
+        $new_terms[$new_term['uuid']] = $new_term;
       }
     }
     return $new_terms;
@@ -393,7 +407,7 @@ class EMBL_Taxonomy_Register {
     // If no term is specified start the recursion
     if ( ! $term) {
       // Iterate over each base term
-      foreach ($api_terms as $term) {
+      foreach ($api_terms as $uuid => $term) {
         self::generate_terms($api_terms, $terms, $term);
       }
       // Set the WordPress taxonomy slug
@@ -413,6 +427,7 @@ class EMBL_Taxonomy_Register {
         $parent[EMBL_Taxonomy::META_IDS]
       );
     }
+
     // If this new term has multiple parents generate a unique term for
     // the final hierarchy level, for example:
     // Parent-1 > Term
@@ -420,23 +435,30 @@ class EMBL_Taxonomy_Register {
     if (is_array($term['parents']) && count($term['parents'])) {
       // Iterate over parent term IDs and then all terms to find the parent
       foreach ($term['parents'] as $parent_id) {
-        foreach ($api_terms as $new_parent) {
-          // Match parent based on ID (old) or UUID (new)
-          if (in_array($parent_id, array(
-            $new_parent['id'],
-            $new_parent[EMBL_Taxonomy::META_IDS][0]
-          ))) {
-            self::generate_terms($api_terms, $terms, $new_parent, $term);
-            break;
-          }
+
+        if (array_key_exists($parent_id, $api_terms)) {
+          $new_parent = $api_terms[$parent_id];
+          error_log(1);
+          self::generate_terms($api_terms, $terms, $new_parent, $term);
+          // break;
         }
+        // foreach ($api_terms as $new_parent) {
+        //   // Match parent based on ID (old) or UUID (new)
+        //   // if (in_array($parent_id, array(
+        //   //   $new_parent[EMBL_Taxonomy::META_IDS][0]
+        //   // ))) {
+        //   if ($parent_id ===  $new_parent[EMBL_Taxonomy::META_IDS][0]) {
+        //     self::generate_terms($api_terms, $terms, $new_parent, $term);
+        //     break;
+        //   }
+        // }
       }
     // Otherwise add new term
     } else {
       // Ignore base level terms "Who", "What", "Where", etc
-      // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
+      if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
         $terms[] = $term;
-      // }
+      }
     }
   }
 
