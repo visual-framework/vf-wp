@@ -55,6 +55,9 @@ class VF_Events_Template {
     $post_type = VF_Events::type();
     if (VF_Events::is_query_events()) {
       // Choose archive template
+      if (is_tax("{$post_type}_type", 'embo-embl-symposia')) {
+        return $this->get_template("taxonomy-{$post_type}-symposia.php");
+      }
       if (is_archive() || is_tax()) {
         return $this->get_template("archive-{$post_type}.php");
       }
