@@ -1483,10 +1483,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-2.3.0.tgz#03921d3223b808a63cfc843129ed98fe2624d452"
   integrity sha512-uh5+JFl0fodJfnUuEAI2/Jiy8MBL8UNsm6CGQFcFd116YT1unFFwY51UVWjHCZH+edb9yctbrXMGiiwZzW5EDw==
 
-"@visual-framework/vf-breadcrumbs@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.0.tgz#79f5602298703de1f0e5f44a6f0847a2fa79e252"
-  integrity sha512-yMFAYM++cerjJ6ssWtCy/TlOlKWMgHf2KNmGnqeaY4YUnv8LsR22yayLlQck3zqVf8/KBOYzhk9XS2hrdgL3SA==
+"@visual-framework/vf-breadcrumbs@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.1.tgz#3237369ffa86f567b42fa399b0c61bfb68495e8c"
+  integrity sha512-evYLJSpc+KaT9uVg83U7kIoiuFW8+lOrccY1cWBMFty2oKwj0qlt3TG7sw1NODYvKQZnEMhdcRwzE8tR+V7wAQ==
 
 "@visual-framework/vf-button@^1.2.0":
   version "1.2.0"
