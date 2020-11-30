@@ -55,13 +55,11 @@ if ($theme == 'none') {
         <div class="vf-hero__content">
     <h2 class="vf-hero__heading"> 
       <?php
-      if ($event_type['value'] === 'custom') {
-        echo esc_html($event_type_custom);
+      if (!empty ($event_type)) {
+        echo esc_html($event_type->name);
       }
-      else {
-      echo esc_html($event_type['label']); 
-      }
-      ?>   </h2>
+      ?>   
+    </h2>
     <p class="vf-hero__text" style="font-size: 32px;">
     <?php echo $title; ?>
     </p>

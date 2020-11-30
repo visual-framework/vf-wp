@@ -42,7 +42,6 @@
 .acf-field[data-name="vf_event_venue"] .acf-input-wrap,
 .acf-field[data-name="vf_event_time_zone"] .acf-input,
 .acf-field[data-name="vf_event_unique_identifier"] .acf-input-wrap,
-.acf-field[data-name="vf_event_event_topic"] .acf-input,
 .acf-field[data-name="vf_event_theme"] .acf-input,
 .acf-field[data-name="vf_event_contact"] .acf-input-wrap,
 .acf-field[data-name="vf_event_hashtag"] .acf-input-wrap,
@@ -58,6 +57,7 @@
 }
 
 .acf-field[data-name="vf_event_event_type"] .acf-input,
+.acf-field[data-name="vf_event_event_topic"] .acf-input,
 .acf-field[data-name="vf_event_event_type_custom"] .acf-input {
   max-width: 300px;
 }

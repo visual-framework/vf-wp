@@ -7,7 +7,7 @@ require_once('functions/walker-comment.php');
 require_once('functions/admin.php');
 require_once('functions/theme.php');
 
-require_once('functions/post-duplicate.php');
+// require_once('functions/post-duplicate.php');
 
 // Require Gutenberg block classes
 
