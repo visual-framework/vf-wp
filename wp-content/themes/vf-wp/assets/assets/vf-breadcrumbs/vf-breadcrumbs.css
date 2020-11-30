@@ -131,8 +131,8 @@
 
 /*!
  * Component: @visual-framework/vf-breadcrumbs
- * Version: 2.0.0
- * Location: components/vf-breadcrumbs
+ * Version: 2.0.1
+ * Location: components/undefined
  */
 .vf-breadcrumbs {
   grid-column: main;
@@ -198,7 +198,7 @@
   margin-left: 8px;
   position: relative;
 }
-.vf-breadcrumbs__list--related .vf-breadcrumbs__item:not(:last-of-type)::after {
+.vf-breadcrumbs__list--related .vf-breadcrumbs__item::after {
   content: "";
 }
 .vf-breadcrumbs__list--related .vf-breadcrumbs__link {
