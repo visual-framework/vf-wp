@@ -53,7 +53,7 @@
 /* stylelint-enable */
 :root {
   --vf-body-width: 81.25em;
-  --page-grid-gap: map-get($vf-spacing-map, vf-spacing--400);
+  --page-grid-gap: 1rem;
   --embl-grid-module--prime: 16rem;
   --embl-grid-spacing-normaliser: 0px;
 }
