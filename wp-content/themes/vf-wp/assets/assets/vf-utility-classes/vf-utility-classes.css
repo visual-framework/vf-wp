@@ -2185,6 +2185,9 @@
 .vf-u-margin--1200 {
   margin: 3rem;
 }
+.vf-u-margin--1600 {
+  margin: 4rem;
+}
 .vf-u-margin__bottom--0 {
   margin-bottom: 0;
 }
@@ -2211,6 +2214,9 @@
 }
 .vf-u-margin__bottom--1200 {
   margin-bottom: 3rem;
+}
+.vf-u-margin__bottom--1600 {
+  margin-bottom: 4rem;
 }
 .vf-u-margin__top--0 {
   margin-top: 0;
@@ -2239,6 +2245,9 @@
 .vf-u-margin__top--1200 {
   margin-top: 3rem;
 }
+.vf-u-margin__top--1600 {
+  margin-top: 4rem;
+}
 .vf-u-margin__left--0 {
   margin-left: 0;
 }
@@ -2266,6 +2275,9 @@
 .vf-u-margin__left--1200 {
   margin-left: 3rem;
 }
+.vf-u-margin__left--1600 {
+  margin-left: 4rem;
+}
 .vf-u-margin__right--0 {
   margin-right: 0;
 }
@@ -2292,6 +2304,9 @@
 }
 .vf-u-margin__right--1200 {
   margin-right: 3rem;
+}
+.vf-u-margin__right--1600 {
+  margin-right: 4rem;
 }
 
 .vf-u-padding--0 {
@@ -2321,6 +2336,9 @@
 .vf-u-padding--1200 {
   padding: 3rem;
 }
+.vf-u-padding--1600 {
+  padding: 4rem;
+}
 .vf-u-padding__bottom--0 {
   padding-bottom: 0;
 }
@@ -2347,6 +2365,9 @@
 }
 .vf-u-padding__bottom--1200 {
   padding-bottom: 3rem;
+}
+.vf-u-padding__bottom--1600 {
+  padding-bottom: 4rem;
 }
 .vf-u-padding__top--0 {
   padding-top: 0;
@@ -2375,6 +2396,9 @@
 .vf-u-padding__top--1200 {
   padding-top: 3rem;
 }
+.vf-u-padding__top--1600 {
+  padding-top: 4rem;
+}
 .vf-u-padding__left--0 {
   padding-left: 0;
 }
@@ -2402,6 +2426,9 @@
 .vf-u-padding__left--1200 {
   padding-left: 3rem;
 }
+.vf-u-padding__left--1600 {
+  padding-left: 4rem;
+}
 .vf-u-padding__right--0 {
   padding-right: 0;
 }
@@ -2428,6 +2455,9 @@
 }
 .vf-u-padding__right--1200 {
   padding-right: 3rem;
+}
+.vf-u-padding__right--1600 {
+  padding-right: 4rem;
 }
 
 .vf-u-text-color--green {
@@ -2638,6 +2668,9 @@
 .vf-u-grid-gap--1200 {
   grid-gap: 3rem;
 }
+.vf-u-grid-gap--1600 {
+  grid-gap: 4rem;
+}
 .vf-u-grid-column-gap--0 {
   grid-column-gap: 0;
 }
@@ -2665,6 +2698,9 @@
 .vf-u-grid-column-gap--1200 {
   grid-column-gap: 3rem;
 }
+.vf-u-grid-column-gap--1600 {
+  grid-column-gap: 4rem;
+}
 .vf-u-grid-row-gap--0 {
   grid-row-gap: 0;
 }
@@ -2691,4 +2727,7 @@
 }
 .vf-u-grid-row-gap--1200 {
   grid-row-gap: 3rem;
+}
+.vf-u-grid-row-gap--1600 {
+  grid-row-gap: 4rem;
 }
