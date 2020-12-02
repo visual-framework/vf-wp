@@ -1843,10 +1843,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-stack/-/vf-stack-2.0.0.tgz#d6148578e1cd26b2cdaf7243e226081d9593f54b"
   integrity sha512-uXCPjz1wG6bdk6lHvWxRTlQ/6K1K7997GMYvRXPMAG/1sO31iIFCYKO2O7R29ExkuK0lKKAbJfBiHTnLSP2nfw==
 
-"@visual-framework/vf-summary@1.3.1":
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.3.1.tgz#ee1eea4286e0ed4df430a7ccb16fa04a26005c4c"
-  integrity sha512-rfcffnVsZPnsRxqUMecKfcqVWj5WvZHvo2FFfWqGt/7kS3S0YEWiHZBS98cvWOm7EQFFirxEsxzcHEB6HPOt8A==
+"@visual-framework/vf-summary@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.4.0.tgz#6a90e8f3ea8df0f006c3d9683bd3cca7314e0dbe"
+  integrity sha512-hvwkfUIbySrlyrhGqRcDRlVBmaogmGiTVa5AHjOWsS50j/SPxUcLj5LQXotX5MRBNa2430/jUivg1L05ITuF2Q==
 
 "@visual-framework/vf-table@1.1.2":
   version "1.1.2"
