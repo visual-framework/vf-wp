@@ -751,7 +751,7 @@
             "label": "Hero image",
             "name": "vf_event_hero",
             "type": "image",
-            "instructions": "Recommended size: 1300 x 275 px",
+            "instructions": "Recommended size: 1200 x 400 px",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -769,33 +769,6 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
-        },
-        {
-            "key": "field_5f295f37979fa",
-            "label": "Theme",
-            "name": "vf_event_theme",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "none": "None",
-                "primary": "Primary",
-                "secondary": "Secondary",
-                "tertiary": "Tertiary"
-            },
-            "default_value": "None",
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "ajax": 0,
-            "placeholder": ""
         },
         {
             "key": "field_5f1fd25c25b7d",
@@ -1006,5 +979,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1606482217
+    "modified": 1606946124
 }

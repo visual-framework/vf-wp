@@ -40,13 +40,13 @@
 }
 
 .acf-field[data-name="vf_event_venue"] .acf-input-wrap,
-.acf-field[data-name="vf_event_time_zone"] .acf-input,
+.acf-field[data-name="vf_event_time_zone"] .acf-input-wrap,
 .acf-field[data-name="vf_event_unique_identifier"] .acf-input-wrap,
-.acf-field[data-name="vf_event_theme"] .acf-input,
+.acf-field[data-name="vf_event_theme"] .acf-input-wrap,
 .acf-field[data-name="vf_event_contact"] .acf-input-wrap,
 .acf-field[data-name="vf_event_hashtag"] .acf-input-wrap,
-.acf-field[data-name="vf_event_organiser"] .acf-input,
-.acf-field[data-name="vf_event_location"] .acf-input {
+.acf-field[data-name="vf_event_organiser"] .acf-input-wrap,
+.acf-field[data-name="vf_event_location"] .acf-input-wrap {
   max-width: 200px !important;
 }
 
@@ -56,9 +56,9 @@
   max-width: 500px;
 }
 
-.acf-field[data-name="vf_event_event_type"] .acf-input,
-.acf-field[data-name="vf_event_event_topic"] .acf-input,
-.acf-field[data-name="vf_event_event_type_custom"] .acf-input {
+.acf-field[data-name="vf_event_event_type"] .acf-input-wrap,
+.acf-field[data-name="vf_event_event_topic"] .acf-input-wrap,
+.acf-field[data-name="vf_event_event_type_custom"] .acf-input-wrap {
   max-width: 300px;
 }
 
