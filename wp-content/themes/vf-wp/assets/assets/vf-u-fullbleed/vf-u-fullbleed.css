@@ -53,8 +53,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-u-fullbleed
- * Version: 1.2.1
- * Location: components/vf-u-fullbleed
+ * Version: 1.2.2
+ * Location: components/undefined
  */
 /*
  *  1. we set the  variable for the @at-root directive here.
@@ -94,11 +94,13 @@
   /* 4 */
   height: 100%;
   /* 5 */
+  margin-left: calc(50% - 50vw);
   margin-left: calc(50% - calc(50vw - var(--context-margin--inline, 0px)));
   /* 6 */
   position: absolute;
   top: 0;
   /* 7 */
+  width: 100vw;
   width: calc(100vw - (var(--context-margin--inline, 0px) * 2));
   /* 8 */
   z-index: -1;
