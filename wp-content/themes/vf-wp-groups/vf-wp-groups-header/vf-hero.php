@@ -44,7 +44,7 @@ $add_heading_2 = get_field('vf_hero_additional_heading_2');
     </a>
 
   <?php if (!empty ($add_heading_2)) { ?>
-  | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2       ['title']); ?>
+  | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?>
     </a>
   </span>
   <?php } }?>
