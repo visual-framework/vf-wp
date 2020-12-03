@@ -93,47 +93,11 @@
                 "id": ""
             },
             "choices": {
-                "very-easy": "Very Easy",
-                "easy": "Easy",
-                "normal": "Normal"
+                "default": "Default",
+                "bordered": "Bordered",
+                "striped": "Striped"
             },
-            "default_value": "very-easy",
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_5ebd53344497f",
-            "label": "Theme",
-            "name": "theme",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5ebd3244102b1",
-                        "operator": "!=",
-                        "value": "very-easy"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "none": "None",
-                "primary": "Primary",
-                "secondary": "Secondary",
-                "tertiary": "Tertiary",
-                "quaternary": "Quaternary"
-            },
-            "default_value": "none",
+            "default_value": "default",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -159,5 +123,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Card ACF Gutenberg block",
-    "modified": 1599815303
+    "modified": 1606982837
 }

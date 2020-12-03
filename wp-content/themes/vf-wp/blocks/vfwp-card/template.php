@@ -12,18 +12,10 @@ $is_link = ! empty($link);
 
 $style = get_field('style');
 if (empty($style)) {
-  $style = 'very-easy';
+  $style = 'default';
 }
 if (is_array($style)) {
   $style = $style[0];
-}
-
-$theme = get_field('theme');
-if (empty($theme)) {
-  $theme = 'none';
-}
-if (is_array($theme)) {
-  $theme = $theme[0];
 }
 
 if ( ! is_array($image)) {
@@ -64,10 +56,8 @@ if (
 
 $classes = "vf-card";
 
-
-$classes .= " vf-card--{$style}";
-if ($style !== 'very-easy' && $theme !== 'none') {
-  $classes .= " vf-card-theme--{$theme}";
+if ($style !== 'default') {
+  $classes .= " vf-card--primary vf-card--{$style}";
 }
 
 ?>
