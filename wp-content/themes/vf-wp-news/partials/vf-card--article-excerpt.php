@@ -25,7 +25,7 @@ else { ?>
     <?php
 }
 ?>
-  <div class="vf-card__content">
+  <div class="vf-card__content | vf-stack vf-stack--400">
     <h3 class="vf-card__title" style="background-color: <?php the_field('color'); ?>;">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>

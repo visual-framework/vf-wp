@@ -69,7 +69,7 @@ if ($image) {
   echo $image;
 }
 ?>
-  <div class="vf-card__content">
+  <div class="vf-card__content | vf-stack vf-stack--400">
     <h3 class="vf-card__title">
       <?php if ($link) { ?>
         <a class="vf-card__link" href="<?php echo esc_url($link['url']); ?>">

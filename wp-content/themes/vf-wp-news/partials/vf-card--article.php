@@ -14,7 +14,7 @@ $excerpt = "{$excerpt}&hellip;";
   <a style="display: flex;" href="<?php the_permalink(); ?>">
     <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
   </a>
-  <div class="vf-card__content">
+  <div class="vf-card__content | vf-stack vf-stack--400">
     <h3 class="vf-card__title">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>
