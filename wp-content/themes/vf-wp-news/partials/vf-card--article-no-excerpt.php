@@ -6,7 +6,7 @@ $user_id = get_the_author_meta('ID');
 
 ?>
 
-<article class="vf-card vf-card--easy vf-card-theme--primary | vf-u-margin__bottom--500">
+<article class="vf-card vf-card--primary vf-card--bordered | vf-u-margin__bottom--500">
 <?php
 
 if( get_field( 'youtube_url' ) ) {
@@ -26,7 +26,7 @@ else { ?>
     <?php
 }
 ?>
-  <div class="vf-card__content">
+  <div class="vf-card__content | vf-stack vf-stack--400">
   <h3 class="vf-card__title">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>

@@ -5,7 +5,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 
 ?>
-<article class="vf-card vf-card--normal" style="background-color: <?php the_field('color'); ?>;">
+<article class="vf-card" style="background-color: <?php the_field('color'); ?>;">
 <?php
 
 if( get_field( 'youtube_url' ) ) {
@@ -25,7 +25,7 @@ else { ?>
     <?php
 }
 ?>
-  <div class="vf-card__content">
+  <div class="vf-card__content | vf-stack vf-stack--400">
     <h3 class="vf-card__title" style="background-color: <?php the_field('color'); ?>;">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>

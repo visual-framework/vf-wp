@@ -10,11 +10,11 @@ $excerpt = "{$excerpt}&hellip;";
 
 
 ?>
-<div class="vf-card vf-card--very-easy | vf-u-margin__bottom--400">
+<div class="vf-card | vf-u-margin__bottom--400">
   <a style="display: flex;" href="<?php the_permalink(); ?>">
     <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
   </a>
-  <div class="vf-card__content">
+  <div class="vf-card__content | vf-stack vf-stack--400">
     <h3 class="vf-card__title">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>
