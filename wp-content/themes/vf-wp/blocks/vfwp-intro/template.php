@@ -7,11 +7,12 @@ $is_preview = isset($is_preview) && $is_preview;
 $is_container = (bool) get_field('is_container');
 
 $heading = get_field('heading', false, false);
+$subheading = get_field('subheading', false, false);
 $lede = get_field('lede');
 $lede = str_replace('<p>', '<p class="vf-lede">', $lede);
 $text = get_field('intro_text');
 $text = wpautop($text);
-$badge_text = get_field('badge_text');
+$badge_link = get_field('badge_link');
 $badge_style = get_field('badge_style');
 
 if ($is_container) {
@@ -48,21 +49,24 @@ if (
 // Open wrappers for container
 if ($is_container) {
 ?>
-<section class="vf-intro | embl-grid embl-grid--has-centered-content">
+<section class="vf-intro">
   <div>
     <!-- empty -->
   </div>
-  <div>
+  <div class="vf-stack">
 <?php } ?>
 
-    <h1 class="vf-intro__heading<?php if ( ! empty($badge_text)) { ?> vf-intro__heading--has-tag<?php } ?>">
+    <h1 class="vf-intro__heading<?php if ( ! empty($badge_link)) { ?> vf-intro__heading--has-tag<?php } ?>">
       <?php echo ($heading); ?>
-      <?php if ( ! empty($badge_text)) { ?>
-        <span class="vf-badge vf-badge--<?php echo esc_attr($badge_style); ?> vf-badge--phases">
-          <?php echo esc_html($badge_text); ?>
-        </span>
+      <?php if ( ! empty($badge_link)) { ?>
+        <a href="<?php echo esc_url($badge_link['url']); ?>" class="vf-badge vf-badge--<?php echo esc_attr($badge_style); ?> vf-badge--phases">
+          <?php echo esc_html($badge_link['title']); ?>
+        </a>
       <?php } ?>
     </h1>
+    <?php if ($subheading) { ?>
+    <h2 class="vf-intro__subheading"><?php echo ($subheading); ?></h2>
+    <?php } ?>
     <?php echo ($lede); ?>
     <?php echo ($text); ?>
 

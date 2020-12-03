@@ -31,6 +31,16 @@
 }
 
 :root {
+  --vf-theme--primary: #3b6fb6;
+  --vf-theme--primary--dark: #193f90;
+  --vf-theme--secondary: #18974c;
+  --vf-theme--secondary--dark: #007b53;
+  --vf-theme--tertiary: #54585a;
+  --vf-theme--quaternary: #f4c61f;
+  --vf-theme--quinary: #d0d0ce;
+}
+
+:root {
   --vf-ui-color--black: #000000;
   --vf-ui-color--grey: #d8d8d8;
   --vf-ui-color--grey--light: #f3f3f3;
@@ -43,7 +53,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-logo
- * Version: 1.1.0
+ * Version: 1.4.0
  * Location: components/vf-logo
  */
 .vf-logo {
@@ -69,7 +79,7 @@
 }
 
 .vf-logo__text {
-  --vf-logo-margin-right: 8px;
+  --vf-logo-margin-right: 0.5rem;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -84,18 +94,18 @@
 }
 @media (min-width: 500px) {
   .vf-logo--has-text .vf-logo__text {
-    --vf-logo-margin-right: 16px;
+    --vf-logo-margin-right: 1rem;
   }
 }
 @media (min-width: 999px) {
   .vf-logo--has-text .vf-logo__text {
-    --vf-logo-margin-right: 16px;
+    --vf-logo-margin-right: 1rem;
   }
 }
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 1.2.3
+ * Version: 1.2.5
  * Location: components/vf-navigation
  */
 .vf-navigation__list {
@@ -114,7 +124,7 @@
 
 /*!
  * Component: @visual-framework/vf-global-header
- * Version: 2.0.2
+ * Version: 3.0.1
  * Location: components/vf-global-header
  */
 .vf-global-header {
@@ -132,9 +142,8 @@
   gap: 0.5rem;
   grid-column: 1/-1;
   height: auto;
-  margin: 0 auto;
-  max-width: 78.5rem;
-  padding: 0.5rem 0;
+  margin: 0.5rem auto 0 auto;
+  max-width: 81.25em;
   width: 100%;
 }
 .vf-global-header > [class*=logo] {

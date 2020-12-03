@@ -72,7 +72,7 @@
 
 /*!
  * Component: @visual-framework/vf-form__input
- * Version: 1.0.1
+ * Version: 1.1.0
  * Location: components/vf-form/vf-form__input
  */
 .vf-form__input:not([type=file]) {
@@ -81,9 +81,11 @@
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 4px 0;
+  /* stylelint-disable */
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  /* stylelint-enable */
   border-color: #f3f3f3;
   border-radius: 0;
   border-style: solid;
@@ -93,6 +95,7 @@
   color: #54585a;
   display: block;
   padding: 8px 12px;
+  position: relative;
   width: 100%;
 }
 .vf-form__input:not([type=file]):focus, .vf-form__input:not([type=file]):hover {
@@ -181,9 +184,12 @@
 }
 
 .vf-form__input .vf-form__select {
+  /* stylelint-disable */
+  ---webkit-appearance: none;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+  /* stylelint-enable */
   color: #a8a99e;
   cursor: pointer;
   position: relative;
@@ -264,9 +270,25 @@
   border-color: #d32f2f;
 }
 
+/* stylelint-disable */
+input[type=search]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  /* stylelint-enable */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cdefs%3E%3Cstyle%3E.a%7Bfill:none;stroke:%23000;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px%7D%3C/style%3E%3C/defs%3E%3Cpath class='a' d='M.75 23.249l22.5-22.5M23.25 23.249L.75.749'/%3E%3C/svg%3E");
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  content: "";
+  display: block;
+  height: 1em;
+  position: relative;
+  width: 1em;
+}
+
 /*!
  * Component: @visual-framework/vf-form__legend
- * Version: 1.0.1
+ * Version: 1.1.0
  * Location: components/vf-form/vf-form__legend
  */
 .vf-form__legend {
@@ -274,23 +296,23 @@
   font-size: 19px;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 8px 0;
+  margin: 0 0 0.5rem 0;
 }
 
 /*!
  * Component: @visual-framework/vf-form__fieldset
- * Version: 1.0.1
+ * Version: 1.1.0
  * Location: components/vf-form/vf-form__fieldset
  */
 .vf-form__fieldset {
   border: 0;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   padding: 0;
 }
 
 /*!
  * Component: @visual-framework/vf-form__select
- * Version: 1.0.0
+ * Version: 1.0.1
  * Location: components/vf-form/vf-form__select
  */
 .vf-form__select {
@@ -300,9 +322,12 @@
   line-height: 1.71;
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  /* stylelint-disable */
+  --webkit-appearance: none;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+  /* stylelint-enable */
   background-color: #ffffff;
   background-image: url("data:image/svg+xml,%3Csvg width='12' height='18' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23707372' fill-rule='evenodd'%3E%3Cpath d='M6 0l6 8H0zM6 18l6-8H0z'/%3E%3C/g%3E%3C/svg%3E");
   background-position: right 0.7em top 50%, 0 0;
@@ -442,7 +467,7 @@
 
 /*!
  * Component: @visual-framework/vf-form__textarea
- * Version: 1.0.1
+ * Version: 1.0.2
  * Location: components/vf-form/vf-form__textarea
  */
 .vf-form__textarea {
@@ -452,9 +477,11 @@
   line-height: 1.71;
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  /* stylelint-disable */
   -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  /* stylelint-enable */
   border: 3px solid #f3f3f3;
   border-radius: 0;
   -webkit-box-sizing: border-box;
@@ -485,7 +512,7 @@
 
 /*!
  * Component: @visual-framework/vf-form__label
- * Version: 1.0.1
+ * Version: 1.2.0
  * Location: components/vf-form/vf-form__label
  */
 .vf-form__label {
@@ -493,7 +520,7 @@
   font-size: 19px;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 8px 0;
+  margin: 0 0 0.5rem 0;
   display: block;
 }
 

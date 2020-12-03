@@ -253,6 +253,11 @@ class VF_Theme {
       }
     }
 
+    // Add Visual Framework editor styles
+    if (in_array('editor-styles', $supports)) {
+      add_editor_style('assets/css/styles.css');
+    }
+
   }
 
   /**
@@ -387,15 +392,17 @@ class VF_Theme {
     $dir = untrailingslashit(get_template_directory_uri());
 
     // Use jQuery supplied by theme and enqueue in footer
-    wp_deregister_script('jquery');
-    wp_register_script(
-      'jquery',
-      $dir . '/assets/scripts/jquery-3.4.1.min.js',
-      false,
-      '3.4.1',
-      true
-    );
-    wp_enqueue_script('jquery');
+    if ( ! is_admin()) {
+      wp_deregister_script('jquery');
+      wp_register_script(
+        'jquery',
+        $dir . '/assets/scripts/jquery-3.4.1.min.js',
+        false,
+        '3.4.1',
+        true
+      );
+      wp_enqueue_script('jquery');
+    }
 
     // remove all default gutenberg styling
     // this file: wp-includes/css/dist/block-library/style.min.css

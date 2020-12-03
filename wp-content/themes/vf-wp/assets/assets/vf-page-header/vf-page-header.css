@@ -1,3 +1,4 @@
+/* stylelint-disable */
 :root {
   --vf-color--green: #18974c;
   --vf-color--green--darkest: #0a5032;
@@ -31,17 +32,18 @@
 
 :root {
   --vf-ui-color--black: #000000;
-  --vf-ui-color--grey: #f3f3f3;
-  --vf-ui-color--grey--light: #d8d8d8;
+  --vf-ui-color--grey: #d8d8d8;
+  --vf-ui-color--grey--light: #f3f3f3;
   --vf-ui-color--yellow: #fffadc;
   --vf-ui-color--red: #d32f2f;
   --vf-ui-color--white: #ffffff;
   --vf-ui-color--off-white: #fafafa;
 }
 
+/* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
+ * Version: 1.0.0
  * Location: components/vf-heading
  */
 .vf-text {
@@ -101,7 +103,6 @@
   display: -ms-flexbox;
   display: flex;
 }
-
 .vf-text--has-tag .vf-badge {
   margin-left: 8px;
 }
@@ -115,7 +116,7 @@
 
 /*!
  * Component: @visual-framework/vf-page-header
- * Version: 1.0.0-rc.1
+ * Version: 1.0.0
  * Location: components/vf-page-header
  */
 .vf-page-header {

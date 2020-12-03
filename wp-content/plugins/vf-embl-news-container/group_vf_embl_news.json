@@ -3,6 +3,60 @@
     "title": "VF EMBL News (container)",
     "fields": [
         {
+            "key": "field_5f52159c34be5",
+            "label": "Heading",
+            "name": "vf_embl_news_heading",
+            "type": "text",
+            "instructions": "By default the heading reads 'Latest news'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f5215b334be6",
+            "label": "Link",
+            "name": "vf_embl_news_link",
+            "type": "url",
+            "instructions": "By default the heading is linked to the embl.org/news",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f5215d534be7",
+            "label": "Additional text",
+            "name": "vf_embl_news_additional_text",
+            "type": "text",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_vf_embl_news_limit",
             "label": "Display",
             "name": "vf_embl_news_limit",
@@ -11,16 +65,35 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
-            "default_value": "3",
+            "default_value": 3,
             "min": 1,
             "max": 10,
             "step": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_5f52164f0c3d1",
+            "label": "Enable sidebar",
+            "name": "vf_embl_news_enable_sidebar",
+            "type": "true_false",
+            "instructions": "To add content to the sidebar go to Appearance > Widgets, and drag and drop available widgets under 'EMBL News container'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_vf_embl_news_keyword",
@@ -31,7 +104,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -57,7 +130,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1544084692
+    "modified": 1599215396
 }

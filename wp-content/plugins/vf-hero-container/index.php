@@ -24,10 +24,7 @@ class VF_WP_Hero extends VF_Plugin {
   protected $config = array(
     'post_name'  => 'vf_wp_hero',
     'post_title' => 'Hero Header',
-    'post_type'  => 'vf_container',
-
-    // Allow block to be previewed in WP admin
-    '__experimental__has_admin_preview' => true
+    'post_type'  => 'vf_container'
   );
 
   function __construct(array $params = array()) {
@@ -212,19 +209,27 @@ class VF_WP_Hero extends VF_Plugin {
    * Default filter for hero text
    */
   public function filter_hero_text_link($text) {
-    if ( ! apply_filters('vf_wp_hero/hero_text_link', true)) {
+    if ( ! apply_filters('vf_wp_groups_header/hero_text_link', true)) {
       return $text;
     }
-    // Append "Read more" link
+    // Adds link to the hero introduction
     $link = $this->get_hero_link();
+
     if (is_array($link)) {
-      $text .= '<a class="vf-link" href="'
+      $link_text = '<a class="vf-link" href="'
         . esc_url($link['url'])
         . '">'
-        . $link['title']
+        . $text
+        . '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+      </svg>'
         . '</a>';
+      return $link_text;
     }
-    return $text;
+
+    else {
+      return $text;
+    }
   }
 
   /**
@@ -249,7 +254,7 @@ class VF_WP_Hero extends VF_Plugin {
     if ( ! is_array($link)) {
       $link = null;
       //  Use "Read more" (/about/) as fallback if page exists
-      /* 
+      /*
       $page = get_page_by_path('/about/');
       if ($page instanceof WP_Post) {
         $link = array(

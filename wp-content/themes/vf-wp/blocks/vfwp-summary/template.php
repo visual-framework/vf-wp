@@ -26,7 +26,7 @@ if ( ! is_array($image)) {
 } else {
   $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
     'class'    => 'vf-summary__image',
-    'style'    => 'width: 180px; height: auto; ',
+    'style'    => 'width: 180px; height: auto; border: 1px solid #d0d0ce',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
@@ -62,7 +62,7 @@ if ( $type === 'custom' ) {
     return;
   }
 ?>
-<article class="vf-summary <?php if ($image) { echo ' vf-summary--news'; } ?>">
+<article class="vf-summary <?php if ($image) { echo 'vf-summary--has-image'; } ?>">
   <?php
   if ($image) {
     echo $image;
@@ -70,15 +70,15 @@ if ( $type === 'custom' ) {
   ?>
   <h3 class="vf-summary__title">
     <?php if ($link) { ?>
-      <a href="<?php echo esc_url($link);?>" class="vf-summary__link">
+      <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
     <?php } ?>
 
     <?php echo esc_html($title); ?>
 
-  </h3>
   <?php if ($link) { ?>
   </a>
   <?php } ?>
+  </h3>
 
   <?php echo $text; ?>
 </article>
@@ -219,7 +219,7 @@ if ( $type === 'publication' ) {
 ?>
 <article class="vf-summary vf-summary--publication">
     <h3 class="vf-summary__title">
-        <a href="<?php echo $publication_link; ?>" class="vf-summary__link">
+        <a href="<?php echo esc_url($publication_link['url']); ?>" class="vf-summary__link">
         <?php echo $publication_title; ?>
     </a>
     </h3>

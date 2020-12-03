@@ -3,15 +3,13 @@
 get_header();
 
 ?>
-<section class="vf-inlay">
-  <div class="vf-inlay__content vf-u-background-color-ui--white">
-    <main class="vf-inlay__content--main">
+<div class="vf-grid">
+  <div>
       <h1 class="vf-text vf-text-heading--1">
         <?php _e('404 page not found.'); ?>
       </h1>
-    </main>
   </div>
-</section>
+</div>
 <?php
 
 get_footer();

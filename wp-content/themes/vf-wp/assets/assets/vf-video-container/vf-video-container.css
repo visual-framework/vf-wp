@@ -52,17 +52,15 @@
 
 /* stylelint-enable */
 /*!
- * Component: @visual-framework/embl-grid
- * Version: 1.0.4
- * Location: components/embl-grid
- */
+* Component: @visual-framework/embl-grid
+* Version: 2.1.0
+* Location: components/embl-grid
+*/
 .embl-grid {
-  grid-column: main;
   margin-bottom: 48px;
 }
 .embl-grid > :first-child {
   grid-column: 1/-1;
-  margin-right: var(--embl-grid-spacing-normaliser);
 }
 @media (min-width: 846px) {
   .embl-grid > :first-child {
@@ -76,47 +74,66 @@
 }
 @media (min-width: 600px) {
   .embl-grid {
-    -webkit-column-gap: var(--page-grid-gap);
-       -moz-column-gap: var(--page-grid-gap);
-            column-gap: var(--page-grid-gap);
-    display: grid;
     /* stylelint-disable declaration-colon-space-after */
-    grid-template-columns: calc(var(--embl-grid-module--prime) + var(--embl-grid-spacing-normaliser)) [main-start] repeat(auto-fit, minmax(288px, 1fr)) [main-end];
-    /* stylelint-enable */
+    --embl-grid:
+      var(--embl-grid-module--prime)
+      [main-start]
+      repeat(auto-fit, minmax(200px, 1fr))
+      [main-end];
+    display: grid;
+    gap: var(--page-grid-gap);
+    grid-template-columns: var(--vf-custom-grid-layout, var(--embl-grid));
   }
 }
 
-.embl-grid--has-centered-content {
-  --embl-grid-spacing-normaliser: 0;
-  --page-grid-gap: 0;
+.embl-grid--has-centered-content > *:last-child {
+  grid-column-start: 2;
 }
 @media (min-width: 1024px) {
   .embl-grid--has-centered-content {
-    --page-grid-gap: 36px;
-    /* stylelint-disable declaration-colon-space-after */
-    grid-template-columns: var(--embl-grid-module--prime) auto var(--embl-grid-module--prime);
-    /* stylelint-enable */
+    --embl-grid:
+      var(--embl-grid-module--prime)
+      auto
+      var(--embl-grid-module--prime);
+  }
+  .embl-grid--has-centered-content > *:last-child {
+    grid-column-start: unset;
   }
 }
 
-.embl-grid--has-sidebar > *:nth-child(3n+2) {
-  grid-column: span 2;
+.embl-grid--has-sidebar {
+  --embl-grid:
+    var(--embl-grid-module--prime)
+    [main-start]
+    1fr
+    [main-end]
+    21em;
+  /* stylelint-enable */
 }
-@media (max-width: 845px) {
-  .embl-grid--has-sidebar > *:last-child {
-    grid-column: 1/-1;
+@media (min-width: 846px) and (max-width: 1023px) {
+  .embl-grid--has-sidebar > *:first-child {
+    grid-column: 1/2;
   }
-}
-@media (min-width: 846px) and (max-width: 1219px) {
-  .embl-grid--has-sidebar > *:last-child {
+  .embl-grid--has-sidebar > * {
     grid-column: 2/-1;
   }
 }
-@media (min-width: 1220px) {
-  .embl-grid--has-sidebar > *:last-child {
+@media (min-width: 1024px) and (max-width: 1299px) {
+  .embl-grid--has-sidebar {
+    --embl-grid:
+      var(--embl-grid-module--prime)
+      [main-start]
+      1fr
+      [main-end]
+      18em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .embl-grid-has-sidebar--hairline > *:last-child {
     position: relative;
   }
-  .embl-grid--has-sidebar > *:last-child::before {
+  .embl-grid-has-sidebar--hairline > *:last-child::before {
     background-color: #d8d8d8;
     content: "";
     height: 100%;
@@ -126,46 +143,9 @@
   }
 }
 
-.embl-grid--alt {
-  --page-grid-gap: 0;
-  background-color: #000000;
-  color: #ffffff;
-  grid-column: 1/-1;
-  /* stylelint-disable declaration-colon-space-after */
-  grid-template-columns: minmax(1em, auto) calc(var(--embl-grid-module--prime) + var(--embl-grid-spacing-normaliser)) minmax(288px, calc(76.5em - 206px)) minmax(1em, auto);
-  /* stylelint-enable */
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  position: relative;
-  /* stylelint-disable order/properties-alphabetical-order, order/order  */
-  padding-top: 1.5rem;
-  /* stylelint-enable */
-}
-.embl-grid--alt > :first-child {
-  grid-column: 2/-2;
-}
-.embl-grid--alt > :last-child {
-  grid-column: 2/-2;
-}
-@media (min-width: 768px) {
-  .embl-grid--alt > :first-child {
-    grid-column: 2/span 1;
-  }
-  .embl-grid--alt > :last-child {
-    grid-column: 3;
-    margin-left: 16px;
-  }
-}
-@media (min-width: 1200px) {
-  .embl-grid--alt > :last-child {
-    margin-left: 30px;
-  }
-}
-
 /*!
  * Component: @visual-framework/vf-section-header
- * Version: 1.2.1
+ * Version: 1.3.0
  * Location: components/vf-section-header
  */
 .vf-section-header__heading {
@@ -176,7 +156,7 @@
   margin: 0 0 0 0;
 }
 .vf-section-header__heading + .vf-section-header__subheading, .vf-section-header__heading + .vf-section-header__content {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
 .vf-section-header__heading--is-link {
@@ -185,7 +165,7 @@
   color: #3b6fb6;
   cursor: pointer;
   display: grid;
-  grid-column-gap: 8px;
+  grid-column-gap: 0.5rem;
   grid-template-columns: auto 1fr;
 }
 .vf-section-header__heading--is-link:visited {
@@ -203,8 +183,8 @@
 }
 .vf-section-header__heading--is-link .vf-section-header__icon {
   fill: currentColor;
-  -webkit-transform: translateY(4px);
-          transform: translateY(4px);
+  -webkit-transform: translateY(0.25rem);
+          transform: translateY(0.25rem);
   -webkit-transition-duration: 125ms;
           transition-duration: 125ms;
   -webkit-transition-property: -webkit-transform;
@@ -215,8 +195,8 @@
           transition-timing-function: cubic-bezier(0.45, 0.05, 0.55, 0.95);
 }
 .vf-section-header__heading--is-link:hover .vf-section-header__icon, .vf-section-header__heading--is-link:focus .vf-section-header__icon {
-  -webkit-transform: translateX(4px) translateY(4px);
-          transform: translateX(4px) translateY(4px);
+  -webkit-transform: translateX(0.25rem) translateY(0.25rem);
+          transform: translateX(0.25rem) translateY(0.25rem);
 }
 .vf-section-header__heading--is-link:hover:visited, .vf-section-header__heading--is-link:focus:visited {
   color: #193f90;
@@ -247,10 +227,10 @@
   margin-top: 16px;
 }
 .vf-section-header__heading + .vf-section-header__text {
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 .vf-section-header__subheading + .vf-section-header__text {
-  margin-top: 16px;
+  margin-top: 1rem;
 }
 
 /*!
@@ -275,7 +255,7 @@
 
 /*!
  * Component: @visual-framework/vf-video-teaser
- * Version: 1.0.0-beta.2
+ * Version: 1.0.0
  * Location: components/vf-video-teaser
  */
 .vf-video-teaser__image {

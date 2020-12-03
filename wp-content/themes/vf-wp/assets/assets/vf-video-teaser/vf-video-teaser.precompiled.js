@@ -14,7 +14,7 @@ output += "</h3>\n  <a href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "video_href"), env.opts.autoescape);
 output += "\"><img class=\"vf-video-teaser__image\" src=\"";
 output += runtime.suppressValue(env.getFilter("path").call(context, "../../assets/vf-video-teaser/assets/video-teaser.png"), env.opts.autoescape);
-output += "\" alt=\"\"></a>\n  <a href=\"";
+output += "\" alt=\"\" loading=\"lazy\"></a>\n  <a href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "video_href"), env.opts.autoescape);
 output += "\" class=\"vf-video-teaser__link vf-link\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "vf_video_teaser__link"), env.opts.autoescape);

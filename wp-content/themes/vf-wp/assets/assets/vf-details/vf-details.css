@@ -53,11 +53,11 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-details
- * Version: 1.0.0-alpha.1
+ * Version: 1.1.0
  * Location: components/vf-details
  */
 .vf-details {
-  padding: 8px 8px 0 8px;
+  padding: 0.5rem 0.5rem 0 0.5rem;
 }
 
 .vf-details--summary {
@@ -67,16 +67,16 @@
   line-height: 1.421;
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  margin: -8px -8px 0 -8px;
-  padding: 8px;
+  margin: -0.5rem -0.5rem 0 -0.5rem;
+  padding: 0.5rem;
 }
 
 .vf-details[open] {
-  padding: 8px;
+  padding: 0.5rem;
 }
 
 .vf-details[open] .vf-details--summary {
   --vf-details--border: var(--vf-details-theme-color--foreground, #d8d8d8);
   border-bottom: 1px solid var(--vf-details--border);
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }

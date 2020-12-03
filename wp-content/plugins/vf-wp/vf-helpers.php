@@ -16,6 +16,23 @@ function vf_debug() {
 }
 
 /**
+ * Print variable to debug log
+ */
+function vf_log($log)  {
+  if ( ! vf_debug()) {
+    return;
+  }
+  $args = func_get_args();
+  foreach($args as $log) {
+    if (is_array($log) || is_object($log)) {
+      error_log(print_r($log, true));
+    } else {
+      error_log($log);
+    }
+  }
+}
+
+/**
  * Return true if a string is empty (including empty HTML)
  */
 function vf_html_empty($str) {

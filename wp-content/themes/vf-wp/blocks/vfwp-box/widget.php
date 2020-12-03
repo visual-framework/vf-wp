@@ -26,6 +26,8 @@ $heading = get_field('heading', $widget_id);
 $text = get_field('text', $widget_id);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-box__text">', $text);
+$link = get_field('link', $widget_id);
+
 
 $style = get_field('style', $widget_id);
 
@@ -52,26 +54,49 @@ if (is_array($theme_normal)) {
   $theme_normal = $theme_normal[0];
 }
 
+$theme_none = get_field('theme_none', $widget_id);
+if (empty($theme_none)) {
+  $theme_none = 'very-easy';
+}
+if (is_array($theme_none)) {
+  $theme_none = $theme_none[0];
+}
+
 $classes = "vf-box";
 
+if ($link) {
+  $classes .= " vf-box--is-link";
+}
+
+if ($style === 'none') {
+  $classes .= " vf-box--{$theme_none}";
+}
+  
 if ($style === 'normal') {
 $classes .= " vf-box--{$style}";
-if ($style !== 'easy' && $theme_normal !== 'none') {
+if ($style !== 'easy') {
   $classes .= " vf-box-theme--{$theme_normal}";
 } }
 
 if ($style === 'easy') {
 $classes .= " vf-box--{$style}";
-if ($style !== 'normal' && $theme_easy !== 'none') {
+if ($style !== 'normal') {
   $classes .= " vf-box-theme--{$theme_easy}";
 } }?>
 
 <div class="<?php echo esc_attr($classes); ?>">
   <?php if (! empty($heading)) { ?>
     <h3 class="vf-box__heading">
-      <?php echo esc_html($heading); ?>
-    </h3>
-  <?php } ?>
+      <?php } if ($link) { ?>
+        <a class="vf-box__link" href="<?php echo esc_url($link['url']); ?>">
+          <?php } ?>
+          <?php echo esc_html($heading); ?>
+        <?php if ($link) { ?>
+        </a>
+        <?php }  ?>
+      <?php if (! empty($heading)) { ?>
+    </h3> 
+      <?php } ?>
   <?php echo ($text); ?>
 </div>
 

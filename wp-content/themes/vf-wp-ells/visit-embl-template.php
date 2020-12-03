@@ -37,7 +37,7 @@ if ( ! is_array($image)) {
   }
 
 </style>
-<div class="vf-masthead vf-masthead--with-title-block | vf-u-margin__bottom--xxl
+<div class="vf-masthead vf-masthead--with-title-block | vf-u-margin__bottom--800
 " style="background-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg);
          --local-theme-fg-color:#FFFFFF;" data-vf-js-masthead>
   <div class="vf-masthead__inner">
@@ -63,7 +63,7 @@ if ( ! is_array($image)) {
       ?>
   </div>
   <div>
-    <article class="vf-card vf-u-background-color--blue vf-card--normal | vf-u-margin__bottom--xl">
+    <article class="vf-card vf-card-theme--secondary vf-card--normal | vf-u-margin__bottom--600">
       <?php
         if ($image) {
           echo $image;

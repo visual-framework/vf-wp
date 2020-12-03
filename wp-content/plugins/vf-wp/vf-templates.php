@@ -52,7 +52,7 @@ class VF_Templates {
 
 <!-- wp:acf/vf-container-breadcrumbs {"id":"' . uniqid('block_') . '","name":"acf/vf-container-breadcrumbs"} /-->
 
-<!-- wp:acf/vf-container-navigation {"id":"' . uniqid('block_') . '","name":"acf/vf-container-navigation"} /-->
+<!-- wp:acf/vf-container-wp-groups-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-wp-groups-header"} /-->
 
 <!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vf-container-page-template"} /-->
 

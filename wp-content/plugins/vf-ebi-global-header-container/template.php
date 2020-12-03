@@ -46,13 +46,6 @@ if (vf_cache_empty($content)) {
   return;
 }
 
-// Replace wrapping element class with grid class
-$content = preg_replace(
-  '#^((\s*<[^>]+?)vf-content-hub-html)#',
-  '$2 vf-u-grid--reset',
-  $content
-);
-
 // Add hash attribute to opening tag
 $content = preg_replace(
   '#^\s*<([^>]+?)>#',

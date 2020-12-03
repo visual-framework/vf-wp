@@ -37,7 +37,5 @@ $content = preg_replace(
 
 if ( ! empty($content)) {
 ?>
-<header class="vf-header">
-  <?php echo $content; ?>
-</header>
+<?php echo $content; ?>
 <?php } ?>

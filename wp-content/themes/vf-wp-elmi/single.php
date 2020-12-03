@@ -7,7 +7,7 @@ get_header();
 
 ?>
 
-<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
+<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--800 | vf-u-margin__bottom--0">
  <div>
     <div class="vf-article-meta-information">
     <div class="vf-author | vf-article-meta-info__author">
@@ -24,7 +24,7 @@ get_header();
         </div>
     </div>
  </div>
- <div class="vf-content | vf-u-padding__bottom--xxl">
+ <div class="vf-content | vf-u-padding__bottom--800">
   <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
     <?php the_content(); ?>
   </div>

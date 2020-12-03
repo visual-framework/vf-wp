@@ -32,17 +32,37 @@ class EMBL_Taxonomy_Settings {
   );
 
   function __construct() {
-    add_action('acf/init', array($this, 'acf_init'));
+    add_action(
+      'acf/init',
+      array($this, 'acf_init')
+    );
+    add_filter(
+      'acf/settings/load_json',
+      array($this, 'acf_settings_load_json')
+    );
+    add_action(
+      'init',
+      array($this, 'init')
+    );
+    add_action(
+      'wp_head',
+      array($this, 'wp_head')
+    );
 
-    add_action('init', array($this, 'get_field_terms'));
-    add_action('wp_head', array($this, 'write_meta_properties'));
+    // foreach ($this->props as $prop) {
+    //   add_filter(
+    //     "acf/fields/taxonomy/query/name={$prop['acf']}",
+    //     array($this, 'acf_query_terms'), 10, 3
+    //   );
+    // }
+  }
 
-    foreach ($this->props as $prop) {
-      add_filter(
-        "acf/fields/taxonomy/query/name={$prop['acf']}",
-        array($this, 'acf_query_terms'), 10, 3
-      );
-    }
+  /**
+   * Filter: `acf/settings/load_json`
+   */
+  public function acf_settings_load_json($paths) {
+    $paths[] = trailingslashit(dirname(__FILE__, 2)) . 'acf-json';
+    return $paths;
   }
 
   /**
@@ -53,117 +73,53 @@ class EMBL_Taxonomy_Settings {
       return;
     }
 
-    // Register field group
     acf_add_local_field_group(array(
-      'key' => 'group_embl_setting',
-      'title' => 'EMBL Taxonomy',
-      'fields' => array(
-        array(
-          'key' => 'field_embl_taxonomy',
-          'label' => 'EMBL Taxonomy URL',
-          'name' => 'embl_taxonomy',
-          'type' => 'url',
-          'instructions' => 'Where to load the EMBL Taxonomy from; recommended:<br><code>' . $this->defaults['embl_taxonomy'] . '</code>',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'default_value' => $this->defaults['embl_taxonomy'],
-          'placeholder' => '',
-        ),
-        array(
-          'key' => 'field_embl_taxonomy_term_who',
-          'label' => 'EMBL Taxonomy: Who',
-          'name' => 'embl_taxonomy_term_who',
-          'type' => 'taxonomy',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'taxonomy' => 'embl_taxonomy',
-          'field_type' => 'select',
-          'allow_null' => 1,
-          'add_term' => 0,
-          'save_terms' => 0,
-          'load_terms' => 0,
-          'return_format' => 'id',
-          'multiple' => 0,
-        ),
-        array(
-          'key' => 'field_embl_taxonomy_term_what',
-          'label' => 'EMBL Taxonomy: What',
-          'name' => 'embl_taxonomy_term_what',
-          'type' => 'taxonomy',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'taxonomy' => 'embl_taxonomy',
-          'field_type' => 'select',
-          'allow_null' => 1,
-          'add_term' => 0,
-          'save_terms' => 0,
-          'load_terms' => 0,
-          'return_format' => 'id',
-          'multiple' => 0,
-        ),
-        array(
-          'key' => 'field_embl_taxonomy_term_where',
-          'label' => 'EMBL Taxonomy: Where',
-          'name' => 'embl_taxonomy_term_where',
-          'type' => 'taxonomy',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '',
-            'class' => '',
-            'id' => '',
-          ),
-          'taxonomy' => 'embl_taxonomy',
-          'field_type' => 'select',
-          'allow_null' => 1,
-          'add_term' => 0,
-          'save_terms' => 0,
-          'load_terms' => 0,
-          'return_format' => 'id',
-          'multiple' => 0,
-        ),
-      ),
-      'location' => array(
-        array(
-          array(
+      'key' => 'group_embl_taxonomy_setings',
+      'title' => 'EMBL Taxonomy Settings',
+      'fields' => array (),
+      'location' => array (
+        array (
+          array (
             'param' => 'options_page',
             'operator' => '==',
             'value' => 'vf-settings',
           ),
         ),
       ),
-      'menu_order' => 20,
+      'menu_order' => 10,
       'position' => 'normal',
       'style' => 'default',
       'label_placement' => 'top',
       'instruction_placement' => 'label',
       'hide_on_screen' => '',
-      'active' => 1,
+      'active' => true,
       'description' => '',
-      'modified' => 1549620301,
+      'modified' => 1598527351
     ));
 
     acf_add_local_field(
       array(
-        'parent' => 'group_embl_setting',
+        'parent' => 'group_embl_taxonomy_setings',
+        'key' => 'field_embl_taxonomy',
+        'label' => 'EMBL Taxonomy URL',
+        'name' => 'embl_taxonomy',
+        'type' => 'url',
+        'instructions' => 'Where to load the EMBL Taxonomy from; recommended:<br><code>' . $this->defaults['embl_taxonomy'] . '</code>',
+        'required' => 0,
+        'conditional_logic' => 0,
+        'wrapper' => array(
+          'width' => '',
+          'class' => '',
+          'id' => '',
+        ),
+        'default_value' => $this->defaults['embl_taxonomy'],
+        'placeholder' => '',
+      )
+    );
+
+    acf_add_local_field(
+      array(
+        'parent' => 'group_embl_taxonomy_setings',
         'key' => 'field_embl_taxonomy_autocomplete',
         'label' => 'Search Autocomplete',
         'name' => 'embl_taxonomy_autocomplete',
@@ -219,7 +175,7 @@ class EMBL_Taxonomy_Settings {
    * Action `init`
    * Retrieve WP_Term objects and meta data
    */
-  public function get_field_terms() {
+  public function init() {
     if (
       ! function_exists('get_field') ||
       ! function_exists('embl_taxonomy_get_term')
@@ -240,8 +196,20 @@ class EMBL_Taxonomy_Settings {
    * Action `wp_head`
    * Output EMBL Taxonomy meta properties in the `<head>`
    */
-  public function write_meta_properties() {
-    foreach ($this->props as $prop) {
+  public function wp_head() {
+    $props = $this->props;
+    // Override global settings for single posts
+    if (is_singular()) {
+      foreach ($props as $i => $prop) {
+        $term = embl_taxonomy_get_term(
+          get_field($prop['acf'])
+        );
+        if ($term) {
+          $props[$i]['term'] = $term;
+        }
+      }
+    }
+    foreach ($props as $prop) {
       if ( ! array_key_exists('term', $prop)) {
         continue;
       }
@@ -256,7 +224,7 @@ class EMBL_Taxonomy_Settings {
       }
       echo ">\n";
     }
-    if (array_key_exists('term', $this->props['what'])) {
+    if (array_key_exists('term', $props['what'])) {
       echo '<meta name="embl:active" content="what">' , "\n";
     }
   }

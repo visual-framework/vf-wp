@@ -1,163 +1,178 @@
 {
-  "key": "group_5ec285634ac9b",
-  "title": "Intro",
-  "fields": [
-      {
-          "key": "field_5ec285cc765e8",
-          "label": "Heading",
-          "name": "heading",
-          "type": "wysiwyg",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "tabs": "all",
-          "toolbar": "basic",
-          "media_upload": 0,
-          "delay": 0
-      },
-      {
-          "key": "field_5ec285d7765e9",
-          "label": "Lede",
-          "name": "lede",
-          "type": "wysiwyg",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "tabs": "all",
-          "toolbar": "basic",
-          "media_upload": 0,
-          "delay": 0
-      },
-      {
-          "key": "field_5ec285fb765ea",
-          "label": "Text",
-          "name": "intro_text",
-          "type": "wysiwyg",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "tabs": "all",
-          "toolbar": "basic",
-          "media_upload": 0,
-          "delay": 0
-      },
-      {
-          "key": "field_5ec2870e25942",
-          "label": "Badge",
-          "name": "badge",
-          "type": "true_false",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "message": "",
-          "default_value": 0,
-          "ui": 1,
-          "ui_on_text": "",
-          "ui_off_text": ""
-      },
-      {
-          "key": "field_5ec2871425943",
-          "label": "Badge text",
-          "name": "badge_text",
-          "type": "text",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5ec2870e25942",
-                      "operator": "==",
-                      "value": "1"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_5ec2871725944",
-          "label": "Badge style",
-          "name": "badge_style",
-          "type": "select",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_5ec2870e25942",
-                      "operator": "==",
-                      "value": "1"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "default": "Default",
-              "primary": "Primary",
-              "secondary": "Secondary",
-              "tertiary": "Tertiary",
-              "outline": "Outline"
-          },
-          "default_value": [],
-          "allow_null": 0,
-          "multiple": 0,
-          "ui": 0,
-          "return_format": "value",
-          "ajax": 0,
-          "placeholder": ""
-      }
-  ],
-  "location": [
-      [
-          {
-              "param": "block",
-              "operator": "==",
-              "value": "acf\/vfwp-intro"
-          }
-      ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "seamless",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": "VF-WP Intro ACF Gutenberg block",
-  "modified": 1599029429 
+    "key": "group_5ec285634ac9b",
+    "title": "Intro",
+    "fields": [
+        {
+            "key": "field_5ec285cc765e8",
+            "label": "Heading",
+            "name": "heading",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5f9aa1e123a48",
+            "label": "Subheading",
+            "name": "subheading",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5ec285d7765e9",
+            "label": "Lede",
+            "name": "lede",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5ec285fb765ea",
+            "label": "Text",
+            "name": "intro_text",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5ec2870e25942",
+            "label": "Badge",
+            "name": "badge",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5f9aa21278d44",
+            "label": "Badge link",
+            "name": "badge_link",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ec2870e25942",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5ec2871725944",
+            "label": "Badge style",
+            "name": "badge_style",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ec2870e25942",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "primary": "Primary",
+                "secondary": "Secondary",
+                "tertiary": "Tertiary",
+                "outline": "Outline"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vfwp-intro"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF-WP Intro ACF Gutenberg block",
+    "modified": 1603970172
 }

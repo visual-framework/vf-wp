@@ -38,27 +38,74 @@ class VF_EBI_Global_Footer extends VF_Plugin {
 
   private function init() {
     parent::initialize();
+
     add_action(
       'wp_enqueue_scripts',
-      array($this, 'enqueue_assets'),
+      array($this, 'wp_enqueue_scripts'),
       10
     );
 
     // Ideally this should go in some sort of "EBI CSS+JS plugin" along with
     // the v1.3 CSS+JS
-    add_filter('body_class', 'vf_ebi_global_footer__body_class');
+    add_filter('body_class',
+      array($this, 'body_class')
+    );
+  }
 
-    function vf_ebi_global_footer__body_class($classes) {
-      $classes[] = 'ebi-vf1-integration'; // enable the VF 1.x workarounds
-      return $classes;
+  /**
+   * Return true if the current page uses the EBI Header or Footer
+   */
+  private function is_ebi_template() {
+    global $post;
+    $post = get_post($post);
+    // Return true if admin is previewing single container
+    if ($post && $post->post_type === 'vf_container') {
+      if (in_array($post->post_name, array(
+        'vf_ebi_global_header',
+        'vf_ebi_global_footer'
+      ))) {
+        return true;
+      }
     }
+    global $vf_templates;
+    if ( ! $vf_templates instanceof VF_Templates) {
+      return false;
+    }
+    if ($post && $post->post_type === 'vf_template') {
+      // Get containers if admin is previewing single template
+      $containers = $vf_templates->get_template_plugins($post);
+    } else {
+      // Get containers for normal pages
+      $containers = $vf_templates->get_template_containers();
+    }
+    if ( ! is_array($containers) || empty($containers)) {
+      return false;
+    }
+    return (
+      in_array('vf_ebi_global_header', $containers) ||
+      in_array('vf_ebi_global_footer', $containers)
+    );
+  }
+
+  /**
+   * Filter: `body_class`
+   */
+  public function body_class($classes) {
+    // enable the VF 1.x workarounds
+    if ($this->is_ebi_template()) {
+      $classes[] = 'ebi-vf1-integration';
+    }
+    return $classes;
   }
 
   // We load these scripts here as a short term solution to not over-architect
   // something that shouldn't be permananent.
   // This also means that for the EBI Header to function, the EBI Footer must
   // also be used.
-  function enqueue_assets() {
+  public function wp_enqueue_scripts() {
+    if ( ! $this->is_ebi_template()) {
+      return;
+    }
     wp_enqueue_script(
       'ebi-framework--defer',
       'https://dev.ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/script.js',

@@ -95,6 +95,8 @@ $vf_theme->the_content();
 
 ?>
 
+<?php include(locate_template('partials/vf-nearest-location.php', false, false)); ?>
+
 <?php 
 
 get_footer();

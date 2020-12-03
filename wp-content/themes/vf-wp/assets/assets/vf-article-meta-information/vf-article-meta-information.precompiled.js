@@ -16,7 +16,7 @@ output += "</a>\n    </p>\n   <a class=\"vf-author--avatar__link | vf-link\" hre
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "meta__url"), env.opts.autoescape);
 output += "\">\n     <!-- wrapping the avatar in a link is optional -->\n     <img class=\"vf-author--avatar\" src=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "author__avatar"), env.opts.autoescape);
-output += "\" alt=\"FirstName Surname\" />\n   </a>\n  </div>\n  <div class=\"vf-meta__details\">\n    <p class=\"vf-meta__date\">";
+output += "\" alt=\"FirstName Surname\" loading=\"lazy\"/>\n   </a>\n  </div>\n  <div class=\"vf-meta__details\">\n    <p class=\"vf-meta__date\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "meta__date"), env.opts.autoescape);
 output += "</p>\n\n    <p class=\"vf-meta__topics\">Topics:\n";
 frame = frame.push();

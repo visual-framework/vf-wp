@@ -68,7 +68,7 @@ class VF_Events_Register {
       'show_in_rest'       => false,
       'show_in_nav_menus'  => false,
       'rewrite'             => array(
-        'slug' => 'event-types'
+        'slug' => 'type'
       ),
     ));
 
@@ -82,7 +82,7 @@ class VF_Events_Register {
       'show_in_rest'       => false,
       'show_in_nav_menus'  => false,
       'rewrite'             => array(
-        'slug' => 'event-topics'
+        'slug' => 'topic'
       ),
     ));
   }

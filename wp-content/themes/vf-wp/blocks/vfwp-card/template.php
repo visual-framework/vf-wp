@@ -64,34 +64,34 @@ if (
 
 $classes = "vf-card";
 
-if ($is_link) {
-  $classes .= ' vf-card--is-link';
-}
 
 $classes .= " vf-card--{$style}";
 if ($style !== 'very-easy' && $theme !== 'none') {
   $classes .= " vf-card-theme--{$theme}";
 }
 
-if ($is_link) {
 ?>
-<a href="<?php echo esc_url($link); ?>" class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--xxl">
-<?php } else { ?>
-<div class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--xxl">
+
+
+<article class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--800">
 <?php
-}
 if ($image) {
   echo $image;
 }
 ?>
   <div class="vf-card__content">
     <h3 class="vf-card__title">
-      <?php echo esc_html($title); ?>
+      <?php if ($link) { ?>
+        <a class="vf-card__link" href="<?php echo esc_url($link['url']); ?>">
+      <?php } 
+       echo esc_html($title); 
+       if ($link) { ?>
+        </a>
+      <?php }  ?>
     </h3>
     <p class="vf-card__text">
       <?php echo esc_html($text); ?>
     </p>
   </div>
-<?php
-echo $is_link ? '</a>' : '</div>';
-?>
+</article>
+

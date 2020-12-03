@@ -30,10 +30,7 @@ class VF_Example extends VF_Plugin {
 
   protected $config = array(
     'post_name'  => 'vf_example',
-    'post_title' => 'Example',
-
-    // Allow block to be previewed in WP admin
-    '__experimental__has_admin_preview' => true
+    'post_title' => 'Example'
   );
 
   public function __construct(array $params = array()) {

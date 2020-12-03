@@ -6,12 +6,12 @@ $attachment_id = wp_get_attachment_url();
 
 ?>
 <main
-  class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
+  class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--800 | vf-u-margin__bottom--0">
   <div>
 
   </div>
 
-  <div class="vf-content | vf-u-margin__bottom--xxl">
+  <div class="vf-content | vf-u-margin__bottom--800">
     <h2><?php the_title(); ?></h2>
 
     <?php echo wp_get_attachment_image( get_the_ID(), 'medium_large' ); ?>
@@ -35,7 +35,7 @@ $attachment_id = wp_get_attachment_url();
 </div>
 
 </main>
-<section class="vf-inlay">
+<section class="vf-grid">
 
 <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 </section>

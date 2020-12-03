@@ -18,20 +18,10 @@
 
 @import 'vfwp-gutenberg-iframe.variables.scss';
 
-/* remove extra margins */
-.vf-inlay:last-of-type {
-  margin-bottom: 0;
-}
-
-/* remove gutters */
-.vf-inlay__content {
-  grid-template-columns:
-    0
-    [main-start]
-    minmax(auto, 100%)
-    minmax(auto, 22.125em)
-    [main-end]
-    0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 .vf-activity:last-of-type {

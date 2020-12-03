@@ -87,6 +87,5 @@ if (
     </div>
     <!--/vf-tabs-content-->
     <?php endif; ?>
-  </div>
   <!--/vf-grid-->
   <?php

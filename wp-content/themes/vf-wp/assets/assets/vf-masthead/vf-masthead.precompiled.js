@@ -8,34 +8,73 @@ var colno = 0;
 var output = "";
 try {
 var parentTemplate = null;
-output += "<style>\n    .vf-masthead {\n      --vf-masthead__bg-image: url(";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "mastheadImage"), env.opts.autoescape);
-output += ");\n    }\n</style>\n<div\n  class=\"vf-masthead";
-if(runtime.contextOrFrameLookup(context, frame, "mastheadThemeVariant")) {
-output += "  ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "mastheadThemeVariant"), env.opts.autoescape);
+output += runtime.suppressValue(env.getExtension("spaceless")["run"](context,function(cb) {
+if(!cb) { cb = function(err) { if(err) { throw err; }}}
+var t_1 = "";t_1 += "<div\n  class=\"vf-masthead";
+if(runtime.contextOrFrameLookup(context, frame, "mastheadTheme")) {
+t_1 += " vf-masthead-theme--";
+t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "mastheadTheme"), env.opts.autoescape);
 ;
 }
 if(runtime.contextOrFrameLookup(context, frame, "hasTitleBlock")) {
-output += "  ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "hasTitleBlock"), env.opts.autoescape);
-output += "\n";
+t_1 += " vf-masthead--with-title-block";
 ;
 }
-if(runtime.contextOrFrameLookup(context, frame, "mastheadImageClass")) {
-output += "  ";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "mastheadImageClass"), env.opts.autoescape);
-output += "\n";
-;
-}
-output += "\"\n";
 if(runtime.contextOrFrameLookup(context, frame, "mastheadImage")) {
-output += "  style=\"background-image: var(--vf-masthead__bg-image)\"\n  data-vf-js-masthead\n";
+t_1 += " vf-masthead--has-image";
 ;
 }
-output += ">\n  <div class=\"vf-masthead__inner\">\n    <div class=\"vf-masthead__title\">\n      <h1 class=\"vf-masthead__heading\">\n        <a href=\"";
-output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "masthead_href"), env.opts.autoescape);
-output += "\" class=\"vf-masthead__heading__link\">Strategy &amp; Communications</a>\n        <span class=\"vf-masthead__heading--additional\">Chromosome structure and dynamics</span>\n      </h1>\n      <h2 class=\"vf-masthead__subheading\">\n        <span class=\"vf-masthead__location\">VF Hamburg</span>\n        <span class=\"vf-masthead__group\">Structural Biology</span>\n      </h2>\n    </div>\n  </div>\n</div>\n";
+t_1 += "  | vf-u-fullbleed\"\n";
+if(runtime.contextOrFrameLookup(context, frame, "mastheadImage")) {
+t_1 += "style=\"\n    --vf-masthead__bg-image: url(";
+t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "mastheadImage"), env.opts.autoescape);
+t_1 += ");\n    background-image: var(--vf-masthead__bg-image)\" data-vf-js-masthead";
+;
+}
+t_1 += ">\n    <div class=\"vf-masthead__title\">\n      <h1 class=\"vf-masthead__heading\">\n        <a href=\"";
+t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "masthead_href"), env.opts.autoescape);
+t_1 += "\" class=\"vf-masthead__heading__link\">";
+t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "masthead_heading"), env.opts.autoescape);
+t_1 += "</a>";
+if(runtime.contextOrFrameLookup(context, frame, "masthead_heading_additional")) {
+t_1 += "<span class=\"vf-masthead__heading--additional\">";
+t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "masthead_heading_additional"), env.opts.autoescape);
+t_1 += "</span>";
+;
+}
+t_1 += "</h1>";
+if(runtime.contextOrFrameLookup(context, frame, "masthead_subheading")) {
+t_1 += "<h2 class=\"vf-masthead__subheading\">\n";
+frame = frame.push();
+var t_4 = runtime.contextOrFrameLookup(context, frame, "masthead_subheading");
+if(t_4) {t_4 = runtime.fromIterator(t_4);
+var t_3 = t_4.length;
+for(var t_2=0; t_2 < t_4.length; t_2++) {
+var t_5 = t_4[t_2];
+frame.set("item", t_5);
+frame.set("loop.index", t_2 + 1);
+frame.set("loop.index0", t_2);
+frame.set("loop.revindex", t_3 - t_2);
+frame.set("loop.revindex0", t_3 - t_2 - 1);
+frame.set("loop.first", t_2 === 0);
+frame.set("loop.last", t_2 === t_3 - 1);
+frame.set("loop.length", t_3);
+t_1 += "        <span class=\"vf-masthead__subheading__text\">";
+t_1 += runtime.suppressValue(runtime.memberLookup((t_5),"masthead_subheading_text"), env.opts.autoescape);
+t_1 += "</span>\n";
+;
+}
+}
+frame = frame.pop();
+t_1 += "      </h2>";
+;
+}
+t_1 += "</div>\n</div>\n";
+cb(null, t_1);
+;
+return t_1;
+}
+,null), true && env.opts.autoescape);
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

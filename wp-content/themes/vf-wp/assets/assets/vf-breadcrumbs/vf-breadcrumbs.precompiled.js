@@ -23,7 +23,12 @@ frame.set("loop.revindex0", t_2 - t_1 - 1);
 frame.set("loop.first", t_1 === 0);
 frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
-output += "    <li class=\"vf-breadcrumbs__item\">\n";
+output += "    <li class=\"vf-breadcrumbs__item\"\n";
+if(runtime.memberLookup((t_4),"currentPage")) {
+output += " aria-current=\"location\"";
+;
+}
+output += ">\n";
 if(runtime.memberLookup((t_4),"breadcrumb_href")) {
 output += "      <a href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"breadcrumb_href"), env.opts.autoescape);

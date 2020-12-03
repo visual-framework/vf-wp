@@ -33,6 +33,10 @@ class VF_Jobs extends VF_Plugin {
     if (array_key_exists('init', $params)) {
       $this->init();
     }
+    if (array_key_exists('init', $params)) {
+      $this->init();
+    }
+
   }
 
   private function init() {
@@ -41,6 +45,12 @@ class VF_Jobs extends VF_Plugin {
       array($this, 'add_taxonomy_fields'),
       10
     );
+    // Do no wrap in `vf-content` classes
+    add_filter(
+      'vf/theme/content/is_block_wrapped/name=acf/vf-jobs',
+      '__return_false'
+    );
+
   }
 
   /**

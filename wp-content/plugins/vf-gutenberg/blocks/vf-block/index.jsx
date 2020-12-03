@@ -2,7 +2,6 @@
  * VFBlock (component)
  * Base component for VF Gutenberg blocks.
  * The component supports "edit" and "view" modes.
- * See `useVFPluginSettings` and `useVFCoreSettings` for usage.
  */
 import React, {Fragment, useState} from 'react';
 import {Spinner} from '@wordpress/components';

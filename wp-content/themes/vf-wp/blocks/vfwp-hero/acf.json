@@ -1,123 +1,13 @@
 {
-    "key": "group_5f2026c22f1ed",
-    "title": "VF Hero Block",
+    "key": "group_5fc8000379c8a",
+    "title": "VF Hero",
     "fields": [
         {
-            "key": "field_5f2026c233697",
-            "label": "Level",
-            "name": "vf_hero_level",
-            "type": "range",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 0,
-            "min": 0,
-            "max": 4,
-            "step": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_5f2026c233739",
-            "label": "Theme",
-            "name": "vf_hero_theme",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "default": "Default",
-                "primary": "Primary",
-                "secondary": "Secondary",
-                "tertiary": "Tertiary"
-            },
-            "default_value": [
-                "default"
-            ],
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "value",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f2026c2339fd",
-            "label": "Hero Heading",
-            "name": "vf_hero_heading",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f2026c233a97",
-            "label": "Hero Introduction",
-            "name": "vf_hero_text",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f2026c233b35",
-            "label": "Hero Link",
-            "name": "vf_hero_link",
-            "type": "link",
-            "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f2026c23395b",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array"
-        },
-        {
-            "key": "field_5f2026c233bd3",
-            "label": "Hero Image",
+            "key": "field_5fc800037c527",
+            "label": "Background image",
             "name": "vf_hero_image",
             "type": "image",
-            "instructions": "Recommended size: 1224×348 (larger images are cropped).",
+            "instructions": "Recommended size: 1200×400",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -135,6 +25,89 @@
             "max_height": "",
             "max_size": "",
             "mime_types": "jpeg,jpg,png"
+        },
+        {
+            "key": "field_5fc800037c593",
+            "label": "Heading",
+            "name": "vf_hero_heading",
+            "type": "text",
+            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5fc800037c600",
+            "label": "Introduction",
+            "name": "vf_hero_text",
+            "type": "text",
+            "instructions": "Leave blank to use introduction from the Content Hub.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5fc800037c66d",
+            "label": "Additional heading 1",
+            "name": "vf_hero_additional_heading_1",
+            "type": "link",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5fc800037c6c2",
+            "label": "Additional heading 2",
+            "name": "vf_hero_additional_heading_2",
+            "type": "link",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5fc800037c72f",
+            "label": "Link",
+            "name": "vf_hero_link",
+            "type": "link",
+            "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -153,5 +126,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Hero block."
+    "description": "VF-WP Hero global container.",
+    "modified": 1606942896
+
 }

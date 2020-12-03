@@ -64,20 +64,34 @@ class VFWP_Block {
    * Action: `acf/init`
    */
   public function acf_init() {
+    $config = $this->get_config();
+    if (isset($config['supports']['vf/innerBlocks'])) {
+      $config['supports']['jsx'] = boolval($config['supports']['vf/innerBlocks']);
+    }
     // Setup render callback using VF Gutenberg plugin or fallback
-    $callback = function() {
+    $callback = function() use ($config) {
       $args = func_get_args();
       $template = $this->get_template();
-      if (class_exists('VF_Gutenberg')) {
+      // Render block in iFrame by default if plugin exists
+      $is_iframe = class_exists('VF_Gutenberg');
+      // Disable iFrame render if support is disabled
+      if (
+        isset($config['supports']['vf/renderIFrame']) &&
+        $config['supports']['vf/renderIFrame'] === false
+      ) {
+        $is_iframe = false;
+      }
+      if ($is_iframe) {
         VF_Gutenberg::acf_render_template($args, $template);
       } else {
         $block = $args[0];
+        $is_preview = $args[2];
         include($template);
       }
     };
     // Register the Gutenberg block with ACF
     acf_register_block_type(array_merge(
-      $this->get_config(),
+      $config,
       array(
         'render_callback' => $callback
       )

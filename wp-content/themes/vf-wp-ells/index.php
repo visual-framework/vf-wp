@@ -10,7 +10,7 @@ the_post();
 <section class="vf-grid vf-grid__col-1">
     <div>
       <div>
-        <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
+        <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--600" style="font-weight: 400;">
           Latest updates</h3>
       </div>
       <div class="vf-grid vf-grid__col-4">

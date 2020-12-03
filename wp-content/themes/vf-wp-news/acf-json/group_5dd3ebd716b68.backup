@@ -1,32 +1,12 @@
-
-    {
+   {
         "key": "group_5dd3ebd716b68",
         "title": "Additional article information",
         "fields": [
             {
-                "key": "field_5dd52ed0509fe",
-                "label": "Featured post",
-                "name": "featured",
-                "type": "true_false",
-                "instructions": "When selecting this post as featured this post will be highlighted on the front page.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "",
-                "default_value": 0,
-                "ui": 0,
-                "ui_on_text": "",
-                "ui_off_text": ""
-            },
-            {
-                "key": "field_5dd3ed2dc4d20",
-                "label": "Source article",
-                "name": "article_sources",
-                "type": "repeater",
+                "key": "field_5f1ac929aa00d",
+                "label": "General",
+                "name": "",
+                "type": "tab",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -35,48 +15,127 @@
                     "class": "",
                     "id": ""
                 },
-                "collapsed": "",
-                "min": 0,
-                "max": 10,
-                "layout": "table",
-                "button_label": "Add source",
-                "sub_fields": [
-                    {
-                        "key": "field_5dde52bfdd77b",
-                        "label": "Description",
-                        "name": "source_description",
-                        "type": "wysiwyg",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "tabs": "text",
-                        "media_upload": 0,
-                        "toolbar": "full",
-                        "delay": 0
-                    },
-                    {
-                        "key": "field_5dde52e2dd77c",
-                        "label": "Link",
-                        "name": "source_link_url",
-                        "type": "url",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "placeholder": ""
-                    }
-                ]
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_5dd52ed0509fe",
+                "label": "Featured post",
+                "name": "featured",
+                "type": "true_false",
+                "instructions": "Toggle off to not highlight the article on the front page.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 1,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_5ea15d527ecd1",
+                "label": "Hide featured image in the article",
+                "name": "show_featured_image",
+                "type": "true_false",
+                "instructions": "Toggle on to not display the featured image in the article",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_5dd3f49650204",
+                "label": "Background colour",
+                "name": "color",
+                "type": "color_picker",
+                "instructions": "Please pick a colour from the 6 available swatches.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "#007B53"
+            },
+            {
+                "key": "field_5ef4666ac0283",
+                "label": "Link colour",
+                "name": "link_color",
+                "type": "color_picker",
+                "instructions": "Please leave the white colour",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "#fff"
+            },
+            {
+                "key": "field_5f1ac94baa00e",
+                "label": "Article Intro",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_5dd3ec01c4d1e",
+                "label": "Article intro",
+                "name": "article_intro",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "basic",
+                "media_upload": 0,
+                "delay": 0
+            },
+            {
+                "key": "field_5f1ac96aaa00f",
+                "label": "Related links",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
             },
             {
                 "key": "field_5e564b536cea0",
@@ -113,7 +172,7 @@
                         "default_value": "",
                         "placeholder": "",
                         "maxlength": "",
-                        "rows": 3,
+                        "rows": 2,
                         "new_lines": ""
                     },
                     {
@@ -135,9 +194,25 @@
                 ]
             },
             {
-                "key": "field_5e830f2e976d4",
-                "label": "In this article",
-                "name": "in_this_article",
+                "key": "field_5f1ac97baa010",
+                "label": "Source article",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_5dd3ed2dc4d20",
+                "label": "Source article",
+                "name": "article_sources",
                 "type": "repeater",
                 "instructions": "",
                 "required": 0,
@@ -151,10 +226,82 @@
                 "min": 0,
                 "max": 10,
                 "layout": "table",
-                "button_label": "Add link",
+                "button_label": "Add source",
                 "sub_fields": [
                     {
-                        "key": "field_5e830f2e976d5",
+                        "key": "field_5dde52bfdd77b",
+                        "label": "Description",
+                        "name": "source_description",
+                        "type": "wysiwyg",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "tabs": "visual",
+                        "toolbar": "basic",
+                        "media_upload": 0,
+                        "delay": 0
+                    },
+                    {
+                        "key": "field_5dde52e2dd77c",
+                        "label": "Link",
+                        "name": "source_link_url",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_5f1ac99caa011",
+                "label": "In this article",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_5ea2e84b0c9f6",
+                "label": "In this article (optional)",
+                "name": "in_this_article",
+                "type": "repeater",
+                "instructions": "Allows to create a list of anchor headings that will be displayed in the left column",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "Add anchor",
+                "sub_fields": [
+                    {
+                        "key": "field_5ea2e8690c9f7",
                         "label": "Heading",
                         "name": "heading_description",
                         "type": "textarea",
@@ -173,10 +320,10 @@
                         "new_lines": ""
                     },
                     {
-                        "key": "field_5e830f2e976d6",
+                        "key": "field_5ea2e8a70c9f8",
                         "label": "Anchor",
                         "name": "anchor",
-                        "type": "url",
+                        "type": "text",
                         "instructions": "",
                         "required": 0,
                         "conditional_logic": 0,
@@ -186,69 +333,58 @@
                             "id": ""
                         },
                         "default_value": "",
-                        "placeholder": ""
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
                     }
                 ]
             },
             {
-                "key": "field_5dd3f49650204",
-                "label": "Background colour",
-                "name": "color",
-                "type": "color_picker",
-                "instructions": "Please pick a colour from the 6 available swatches.",
-                "required": 1,
+                "key": "field_5f1ac9a9aa012",
+                "label": "Featured video",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
                     "class": "",
                     "id": ""
                 },
-                "default_value": "#007B53"
+                "placement": "top",
+                "endpoint": 0
             },
             {
-                "key": "field_5dd6a28961d25",
-                "label": "Links colour",
-                "name": "link_color",
-                "type": "color_picker",
-                "instructions": "Please leave the white colour",
-                "required": 1,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "#fff"
-            },
-            {
-                "key": "field_5e81f875c0480",
+                "key": "field_5ea15c4c7ecce",
                 "label": "Featured video (Youtube)",
                 "name": "youtube_url",
                 "type": "text",
-                "instructions": "",
+                "instructions": "A youtube video will be displayed in place of the featured image",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "30",
                     "class": "",
                     "id": ""
                 },
                 "default_value": "",
-                "placeholder": "",
+                "placeholder": "Example URL: https:\/\/www.youtube.com\/embed\/GnPB26LDLEY",
                 "prepend": "",
                 "append": "",
                 "maxlength": ""
             },
             {
-                "key": "field_5e845ed14ca2f",
+                "key": "field_5ea15ce77eccf",
                 "label": "Featured video (.mp4)",
                 "name": "mp4_url",
                 "type": "text",
-                "instructions": "",
+                "instructions": "A video will be displayed in place of the featured image.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "30",
                     "class": "",
                     "id": ""
                 },
@@ -259,15 +395,15 @@
                 "maxlength": ""
             },
             {
-                "key": "field_5e85de1bf04da",
+                "key": "field_5ea15d4b7ecd0",
                 "label": "Video caption",
                 "name": "video_caption",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Please add a video caption",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "40",
                     "class": "",
                     "id": ""
                 },
@@ -278,10 +414,10 @@
                 "maxlength": ""
             },
             {
-                "key": "field_5e959e804fb3b",
-                "label": "show_featured_image",
-                "name": "show_featured_image",
-                "type": "true_false",
+                "key": "field_5f1aca41aa013",
+                "label": "Press release",
+                "name": "",
+                "type": "tab",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -290,11 +426,104 @@
                     "class": "",
                     "id": ""
                 },
-                "message": "",
-                "default_value": 0,
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_5ea6e0f4cc547",
+                "label": "Press contact",
+                "name": "press_contact",
+                "type": "select",
+                "instructions": "For press releases only",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "30",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "None": "None",
+                    "EMBL Generic": "EMBL Generic",
+                    "EMBL-EBI Generic": "EMBL-EBI Generic"
+                },
+                "default_value": [
+                    "None"
+                ],
+                "allow_null": 0,
+                "multiple": 0,
                 "ui": 0,
-                "ui_on_text": "",
-                "ui_off_text": ""
+                "return_format": "value",
+                "ajax": 0,
+                "placeholder": ""
+            },
+            {
+                "key": "field_5ea6df25ad189",
+                "label": "Translations",
+                "name": "translations",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "70",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "",
+                "sub_fields": [
+                    {
+                        "key": "field_5ea6e002ad18a",
+                        "label": "Language",
+                        "name": "translation_language",
+                        "type": "select",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "Catalan": "Catalan",
+                            "French": "French",
+                            "German": "German",
+                            "Italian": "Italian",
+                            "Spanish": "Spanish"
+                        },
+                        "default_value": [],
+                        "allow_null": 0,
+                        "multiple": 0,
+                        "ui": 0,
+                        "return_format": "value",
+                        "ajax": 0,
+                        "placeholder": ""
+                    },
+                    {
+                        "key": "field_5ea6e040ad18b",
+                        "label": "Anchor",
+                        "name": "translation_anchor",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    }
+                ]
             }
         ],
         "location": [
@@ -306,15 +535,12 @@
                 }
             ]
         ],
-        "menu_order": 0,
+        "menu_order": 1,
         "position": "normal",
-        "style": "default",
-        "label_placement": "left",
+        "style": "seamless",
+        "label_placement": "top",
         "instruction_placement": "label",
-        "hide_on_screen": [
-            "discussion",
-            "comments"
-        ],
+        "hide_on_screen": "",
         "active": true,
         "description": ""
     }

@@ -18,9 +18,7 @@ class VF_ELLS_Newsletter extends VF_Plugin{
   protected $config = array(
     'post_name'  => 'vf_ells_newsletter',
     'post_title' => 'ELLS_Newsletter',
-    'post_type'  => 'vf_container',
-    // Allow block to be previewed in WP admin
-    '__experimental__has_admin_preview' => true
+    'post_type'  => 'vf_container'
   );
 
   public function __construct(array $params = array()) {
@@ -31,7 +29,7 @@ class VF_ELLS_Newsletter extends VF_Plugin{
   }
 
   public function template_callback($block, $content, $is_preview = false, $acf_id) {
-    ?><h3>to jest newslettter</h3><?php  
+    ?><h3>to jest newslettter</h3><?php
    }
 
 } // VF_ELLS_Newsletter
@@ -44,9 +42,9 @@ $plugin = new VF_ELLS_Newsletter(array('init' => true));
 
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
 function my_theme_enqueue_styles() {
-	
-	$parent_style = 'parent-style'; 
-	
+
+	$parent_style = 'parent-style';
+
     wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'child-style',
 	get_stylesheet_directory_uri() . '/style.css',

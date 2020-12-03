@@ -24,10 +24,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
   protected $config = array(
     'post_name'  => 'vf_wp_groups_header',
     'post_title' => 'Groups Header',
-    'post_type'  => 'vf_container',
-
-    // Allow block to be previewed in WP admin
-    '__experimental__has_admin_preview' => true
+    'post_type'  => 'vf_container'
   );
 
   function __construct(array $params = array()) {
@@ -53,6 +50,8 @@ class VF_WP_Groups_Header extends VF_Plugin {
       array($this, 'filter_hero_text_cleanup'),
       8, 1
     );
+    /**
+     * @deprecated
     add_filter(
       'vf_wp_groups_header/hero_text',
       array($this, 'filter_hero_text_link'),
@@ -63,6 +62,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
       array($this, 'filter_hero_link'),
       9, 1
     );
+    */
   }
 
   /**
@@ -78,46 +78,53 @@ class VF_WP_Groups_Header extends VF_Plugin {
   }
 
   /**
-   * Return design level
-   */
-  public function get_hero_theme() {
-    $field = get_field_object(
-      'field_vf_hero_theme',
-      $this->post()->ID
-    );
-    $theme = get_field(
-      'vf_hero_theme',
-      $this->post()->ID
-    );
-    if (is_array($theme)) {
-      $theme = $theme[0];
-    }
-    if (empty($theme) || $theme === 'default') {
-      $theme = get_theme_mod(
-        'vf_theme',
-        $field['default_value']
+   * @deprecated Return design level
+   public function get_hero_theme() {
+     $field = get_field_object(
+       'field_vf_hero_theme',
+       $this->post()->ID
       );
+      $theme = get_field(
+        'vf_hero_theme',
+        $this->post()->ID
+      );
+      if (is_array($theme)) {
+        $theme = $theme[0];
+      }
+      if (empty($theme) || $theme === 'default') {
+        $theme = get_theme_mod(
+          'vf_theme',
+          $field['default_value']
+        );
+      }
+      return $theme;
     }
-    return $theme;
-  }
+    */
 
   /**
-   * Return design level
-   */
-  public function get_hero_level() {
-    $level = (int) get_field(
-      'vf_hero_level',
-      $this->post()->ID
-    );
-    if ($level === 0 || ! is_numeric($level)) {
-      $level = get_theme_mod(
-        'vf_theme_layout',
-        1
+   * @deprecated Return hero level
+   public function get_hero_level() {
+     $field = get_field_object(
+       'field_vf_hero_level',
+       $this->post()->ID
       );
+      $level = get_field(
+        'vf_hero_level',
+        $this->post()->ID
+      );
+      if (is_array($level)) {
+        $level = $level[0];
+      }
+      if (empty($level)) {
+        $level = get_level_mod(
+          'vf_level',
+          $field['default_value']
+        );
+      }
+      return $level;
     }
-    return $level;
-  }
-
+    */
+    
   /**
    * Return `vf-hero` "heading" from custom fields or Content Hub
    */
@@ -209,67 +216,76 @@ class VF_WP_Groups_Header extends VF_Plugin {
   }
 
   /**
-   * Default filter for hero text
-   */
+   * @deprecated  Default filter for hero text
+   
   public function filter_hero_text_link($text) {
     if ( ! apply_filters('vf_wp_groups_header/hero_text_link', true)) {
       return $text;
     }
-    // Append "Read more" link
+    /** 
+     * Adds link to the hero introduction
     $link = $this->get_hero_link();
+
     if (is_array($link)) {
-      $text .= '<a class="vf-link" href="'
+      $link_text = '<a class="vf-link" href="'
         . esc_url($link['url'])
         . '">'
-        . $link['title']
+        . $text
+        . '<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+      </svg>'
         . '</a>';
+      return $link_text;
     }
-    return $text;
-  }
 
-  /**
-   * Return `vf-hero` "link" from custom fields
-   */
-  public function get_hero_link() {
-    $link = get_field('vf_hero_link', $this->post()->ID);
-    $link = apply_filters(
-      'vf_wp_groups_header/hero_link',
-      $link
-    );
-    if ( ! is_array($link) ) {
-      $link = null;
+    else {
+      return $text;
     }
-    return $link;
   }
-
+  */
   /**
-   * Default filter for hero link
-   */
-  public function filter_hero_link($link) {
-    if ( ! is_array($link)) {
-      $link = null;
-      //  Use "Read more" (/about/) as fallback if page exists
-      /* 
-      $page = get_page_by_path('/about/');
-      if ($page instanceof WP_Post) {
-        $link = array(
-          'title' => __('Read more', 'vfwp'),
-          'url'   => get_the_permalink($page->ID)
-        );
-      } */
-    }
-    if ($link) {
-      $title = $link['title'];
-      $title = trim($title);
-      $title = esc_html($title);
-      // Replace single whitespace with non-breaking to avoid widows
-      if (preg_match('#^[^\s]+?\s[^\s]+?$#', $title)) {
-        $title = preg_replace('#\s+?#', '&nbsp;', $title);
+   * @deprecated Return `vf-hero` "link" from custom fields
+   public function get_hero_link() {
+     $link = get_field('vf_hero_link', $this->post()->ID);
+     $link = apply_filters(
+       'vf_wp_groups_header/hero_link',
+       $link
+      );
+      if ( ! is_array($link) ) {
+        $link = null;
       }
-      $link['title'] = $title;
+      return $link;
     }
-    return $link;
-  }
+    */
+
+  /**
+   * @deprecated Default filter for hero link
+   public function filter_hero_link($link) {
+     if ( ! is_array($link)) {
+       $link = null;
+       //  Use "Read more" (/about/) as fallback if page exists
+       /*
+       $page = get_page_by_path('/about/');
+       if ($page instanceof WP_Post) {
+         $link = array(
+           'title' => __('Read more', 'vfwp'),
+           'url'   => get_the_permalink($page->ID)
+          );
+        } 
+      }
+      if ($link) {
+        $title = $link['title'];
+        $title = trim($title);
+        $title = esc_html($title);
+        // Replace single whitespace with non-breaking to avoid widows
+        if (preg_match('#^[^\s]+?\s[^\s]+?$#', $title)) {
+          $title = preg_replace('#\s+?#', '&nbsp;', $title);
+        }
+        $link['title'] = $title;
+      }
+      return $link;
+    }
+    */
 
   /**
    * Return `vf-hero` image

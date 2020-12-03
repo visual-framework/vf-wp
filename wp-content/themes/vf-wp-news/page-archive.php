@@ -7,17 +7,15 @@ get_header();
 the_post();
 ?>
 
-<section class="vf-inlay | vf-u-margin__bottom--sm ">
-  <div class="vf-inlay__content vf-u-background-color-ui--off-white | vf-u-margin__bottom--sm | vf-u-padding__top--md">
-    <main class="vf-inlay__content--full-width | vf-u-margin__bottom--0">
+  <div class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--200 | vf-u-padding__top--400">
       <div>
-        <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--xl" style="font-weight: 400;">
+        <h3 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--600" style="font-weight: 400;">
           <?php wp_title(''); ?></h3>
       </div>
       <div class="vf-grid vf-grid__col-3">
         <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array(
-    'posts_per_page' => 10,
+    'posts_per_page' => 12,
     'paged' => $page,);
 query_posts($args);?>
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
@@ -36,6 +34,5 @@ query_posts($args);?>
 
   <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
-</section>
 
 <?php get_footer(); ?>

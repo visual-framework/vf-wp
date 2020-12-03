@@ -50,9 +50,6 @@ if ($type === 'easy' || $type === 'very-easy' || $type === 'has-image') {
   $class_div .= " vf-links__list--{$type}";
 }
 
-echo $before_widget;
-
-
 ?>
 <div class="<?php echo esc_attr($class_div); ?>">
   <?php if ( ! empty($heading)) { ?>
@@ -65,7 +62,7 @@ echo $before_widget;
     while (have_rows('list_items', $widget_id)) {
       the_row();
       $text = get_sub_field('text', $widget_id);
-      $url = get_sub_field('url', $widget_id);
+      $link = get_sub_field('link', $widget_id);
       $badge_text = get_sub_field('badge_text', $widget_id);
       $badge_style = get_sub_field('badge_style', $widget_id);
       $meta_information = get_sub_field('meta_information', $widget_id);
@@ -82,7 +79,7 @@ echo $before_widget;
     ?>
 
     <li class="vf-list__item">
-      <a class="vf-list__link" href="<?php echo esc_url($url); ?>">
+      <a class="vf-list__link" href="<?php echo esc_url($link['url']); ?>">
 
       <?php
       if ($type === 'has-image') {
@@ -111,7 +108,7 @@ echo $before_widget;
 
     </li>
     <!--/vf-list-item-->
-      <?php 	echo $before_widget;
+      <?php
  } ?>
   </ul>
 </div>

@@ -21,8 +21,8 @@ if ($is_preview) {
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
-<nav class="vf-grid | vf-navigation vf-navigation--main">
-  <ul class="vf-navigation__list | vf-list--inline">
+<nav class="vf-navigation vf-navigation--main | vf-cluster">
+  <ul class="vf-navigation__list | vf-list--inline | vf-cluster__inner">
 <?php
 
 if (has_nav_menu('primary')) {

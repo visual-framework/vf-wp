@@ -14,7 +14,7 @@ the_post();
 ?>
 
 <main
-  class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--xxl | vf-u-margin__bottom--0">
+  class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--800 | vf-u-margin__bottom--0">
   <div class="article-left-col">
 
     <aside class="vf-article-meta-information">
@@ -54,7 +54,7 @@ the_post();
     <?php
 
   if( get_field('press_contact') == 'EMBL Generic' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--800">
       <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>EMBL Press Office</b></br></br>Meyerhofstraße 1, 69117 Heidelberg, Germany
       </p>
@@ -63,7 +63,7 @@ the_post();
     <?php }
 
 else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
-    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--xxl">
+    <div class="vf-box vf-box--normal vf-box-theme--quinary | vf-u-margin__top--800">
       <p class="vf-badge vf-badge--tertiary | vf-u-margin__top--0">Press contact</p>
       <p class="vf-box__text"><b>EMBL-EBI</br>Press Office</b></br></br>EMBL-EBI, Wellcome Genome Campus, Hinxton,
         Cambridgeshire, CB10 1SD,
@@ -75,7 +75,7 @@ else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
 else {} ?>
 
   </div>
-  <div class="vf-content | vf-u-padding__bottom--xxl">
+  <div class="vf-content | vf-u-padding__bottom--800">
     <h1><?php the_title(); ?></h1>
 
     <?php if( have_rows('translations') ):
@@ -101,7 +101,7 @@ else {} ?>
     </div>
     <?php endif; ?>
 
-    <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
+    <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
     </p>
     <?php
@@ -109,7 +109,7 @@ else {} ?>
 if( get_field( 'youtube_url' ) ) {
     $videoid = get_field( 'youtube_url' );
     $caption = get_field('video_caption');
-    echo '<div class="vf-u-margin__bottom--xs embed-container embed-padding-main"><iframe src="' . $videoid . '" frameborder="0" allowfullscreen class="vf-card__image"></iframe></div><figcaption class="vf-figure__caption">' . $caption . '</figcaption>';
+    echo '<div class="vf-u-margin__bottom--100 embed-container embed-padding-main"><iframe src="' . $videoid . '" frameborder="0" allowfullscreen class="vf-card__image"></iframe></div><figcaption class="vf-figure__caption">' . $caption . '</figcaption>';
 }
 
 else if ( get_field( 'mp4_url' ) ) {
@@ -136,7 +136,7 @@ else {
     <?php the_content(); ?>
 
     <?php if( have_rows('article_sources') ): ?>
-    <div class="vf-u-margin__top--xxl | vf-box vf-box--normal vf-box-theme--quinary">
+    <div class="vf-u-margin__top--800 | vf-box vf-box--normal vf-box-theme--quinary">
       <h4 class="vf-box__heading">Source articles</h4>
       <div>
         <?php while( have_rows('article_sources') ): the_row();
@@ -149,7 +149,7 @@ else {
     </div>
     <?php endif; ?>
     <?php if( have_rows('related_links') ): ?>
-    <div class="vf-u-margin__top--xxl vf-u-margin__bottom--xxl | vf-box vf-box--normal vf-box-theme--quinary">
+    <div class="vf-u-margin__top--800 vf-u-margin__bottom--800 | vf-box vf-box--normal vf-box-theme--quinary">
       <h4 class="vf-box__heading">Related links</h4>
 
       <div>
@@ -157,7 +157,7 @@ else {
 
       $source = get_sub_field('link_url');
       $description = get_sub_field('link_description');?>
-        <p class="vf-box__text | vf-u-margin__bottom--sm"><a href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
+        <p class="vf-box__text | vf-u-margin__bottom--200"><a href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
         <?php endwhile; ?>
       </div>
     </div>
@@ -177,7 +177,7 @@ if ($tags) {
 
     <?php include(locate_template('partials/social-icons.php', false, false)); ?>
 
-    <div class="vf-social-links | vf-u-margin__bottom--xxl">
+    <div class="vf-social-links | vf-u-margin__bottom--800">
       <h3 class="vf-social-links__heading">
         Share this
       </h3>
@@ -223,11 +223,8 @@ if ($tags) {
   </div>
 </main>
 
-<section class="vf-inlay">
-  <div
-    class="vf-inlay__content | vf-u-background-color-ui--off-white | vf-u-margin__bottom--xs | vf-u-padding__top--md | vf-u-fullbleed | category-more">
-    <main class="vf-inlay__content--full-width">
-      <h3 class="vf-section-header__heading | vf-u-margin__bottom--md">More from this category</h3>
+  <div class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">More from this category</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php
           $args = array(
@@ -253,7 +250,6 @@ if ($tags) {
         <?php endforeach; wp_reset_postdata(); ?>
       </div>
 
-    </main>
   </div>
 
   <?php include(locate_template('partials/pow-container.php', false, false)); ?>
@@ -262,6 +258,5 @@ if ($tags) {
 
   <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
-</section>
 
 <?php get_footer(); ?>

@@ -169,24 +169,6 @@ class VF_Plugin {
   }
 
   /**
-   * Return true if plugin is rendered in `vf/plugin` Gutenberg block
-   */
-  public function __experimental__is_admin_render() {
-    $ref = get_field("{$this->post()->post_name}_ref", $this->post()->ID);
-    return $ref === $this->post()->post_name;
-  }
-
-  /**
-   * Return true if plugin can be previewed in the WP Admin post editor
-   */
-  public function __experimental__has_admin_preview() {
-    return array_key_exists(
-      '__experimental__has_admin_preview',
-      $this->config
-    );
-  }
-
-  /**
    * Return full plugin directory path (with trailing slash)
    */
   public function dir() {
@@ -261,14 +243,6 @@ class VF_Plugin {
       $config['post_type']
     );
 
-    // Add generic plugin preview block to post content
-    $post_content = '';
-    if (array_key_exists('__experimental__has_admin_preview', $config)) {
-      $post_content = '<!-- wp:vf/plugin {"ver":"1.0.0","ref":"'
-        . $config['post_name']
-        . '","defaults":1} /-->';
-    }
-
     // Insert if newly activated
     if ( ! $plugin instanceof WP_Post) {
       $plugin = get_post(
@@ -282,15 +256,57 @@ class VF_Plugin {
         ), true)
       );
     }
-    // Ensure plugin post is published and update title
     if ($plugin instanceof WP_Post) {
-      wp_update_post(array(
-        'ID'           => $plugin->ID,
-        'post_title'   => $config['post_title'],
-        'post_content' => $post_content,
-        'post_status'  => 'publish'
-      ));
+      VF_Plugin::register_update($config, $plugin);
     }
+  }
+
+  /**
+   * Ensure plugin post is published with correct content
+   */
+  static public function register_update($config, $plugin = null) {
+    if ( ! $plugin) {
+      $plugin = get_page_by_path(
+        $config['post_name'],
+        OBJECT,
+        $config['post_type']
+      );
+    }
+    if ( ! $plugin instanceof WP_Post) {
+      return;
+    }
+
+    // Add generic plugin preview block to post content
+    if ($plugin->post_type === VF_Blocks::post_type()) {
+      $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
+        . VF_Blocks::name_post_to_block($plugin->post_name)
+        . '"} /-->';
+    }
+
+    // Add generic plugin preview block to post content
+    if ($plugin->post_type === VF_Containers::post_type()) {
+      $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
+        . VF_Containers::name_post_to_block($plugin->post_name)
+        . '"} /-->';
+    }
+
+    $data = array(
+      'ID'           => $plugin->ID,
+      'post_content' => $post_content,
+      'post_status'  => 'publish'
+    );
+
+    if (isset($config['post_title'])) {
+      $data['post_title'] = $config['post_title'];
+    }
+
+    if (isset($config['dates'])) {
+      $time = current_time('mysql');
+      $data['post_date'] = $time;
+      $data['post_date_gmt'] = get_gmt_from_date($time);
+    }
+
+    wp_update_post($data);
   }
 
   /**
@@ -344,10 +360,16 @@ class VF_Plugin {
 
     // Flush the ACF cache and setup post meta
     if (is_array($fields)) {
-      foreach (array_keys($fields) as $field_name) {
+      $is_merge = isset($fields['__merge_fields']);
+      foreach ($fields as $field_name => $field_value) {
         acf_flush_value_cache($acf_id, $field_name);
+        if ($is_merge) {
+          acf_get_store('values')->set("$acf_id:$field_name", $field_value);
+        }
       }
-      acf_setup_meta($fields, $acf_id, true);
+      if ( ! $is_merge) {
+        acf_setup_meta($fields, $acf_id, true);
+      }
     }
 
     // Before actions
