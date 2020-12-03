@@ -25,36 +25,18 @@ if ( ! is_array($image)) {
   }
 ?>
 
-<style>
-  .vf-masthead {
-    --vf-masthead__bg-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg);
-    --global-theme-fg-color: #fff;
-    --global-theme-bg-color: #3b6fb6;
-  }
+<section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed" style="
+--vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg');  ">
 
-  .vf-masthead--with-title-block .vf-masthead__title:before {
-    --global-theme-bg-color: #3b6fb6;
-  }
-
-</style>
-<div class="vf-masthead vf-masthead--with-title-block | vf-u-margin__bottom--800
-" style="background-image: url(https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg);
-         --local-theme-fg-color:#FFFFFF;" data-vf-js-masthead>
-  <div class="vf-masthead__inner">
-    <div class="vf-masthead__title">
-      <h1 class="vf-masthead__heading">
-        <a href="JavaScript:Void(0);" class="vf-masthead__heading__link">
-          <?php echo get_the_title(); ?>
-        </a>
-      </h1>
-      <h2 class="vf-masthead__subheading">
-        <span class="vf-masthead__location">
-          <?php echo ($type['label']); ?>
-        </span>
-      </h2>
-    </div>
+  <div class="vf-hero__content | vf-stack vf-stack--400 ">
+    <h2 class="vf-hero__heading" style="font-size: 24px;">
+      <?php echo get_the_title(); ?>
+      <span class="vf-hero__heading--additional">
+      <?php echo ($type['label']); ?>
+      </span>
+    </h2>
   </div>
-</div>
+</section>
 
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">

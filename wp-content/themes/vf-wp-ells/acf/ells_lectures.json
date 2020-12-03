@@ -1,54 +1,11 @@
 {
-    "key": "group_5f50f61701601",
-    "title": "ELLS EMBL Visits",
+    "key": "group_5f6b099e8a50a",
+    "title": "ELLS Insight Lectures",
     "fields": [
         {
-            "key": "field_5f50f61705c82",
-            "label": "Visit type",
-            "name": "visit_type",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "visit_onsite": "On-Site",
-                "visit_virtual": "Virtual"
-            },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "array",
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f50f61705d19",
+            "key": "field_5f6b099e8ce36",
             "label": "Start date",
-            "name": "visit_start_date",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format ": "j M Y",
-            "first_day": 1,
-            "return_format": "d\/m\/Y"
-        },
-        {
-            "key": "field_5f50f61705dbf",
-            "label": "End date",
-            "name": "visit_end_date",
+            "name": "il_start_date",
             "type": "date_picker",
             "instructions": "",
             "required": 0,
@@ -63,9 +20,81 @@
             "first_day": 1
         },
         {
-            "key": "field_5f50f61705f98",
+            "key": "field_5f6b099e8ce9a",
+            "label": "End date",
+            "name": "il_end_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_5f6b099e8cefc",
+            "label": "Application deadline",
+            "name": "il_application_deadline",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_5f6b099e8cf6d",
+            "label": "Topic area",
+            "name": "il_topic_area",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f6b09bdb6eda",
+            "label": "Age group",
+            "name": "il_age_group",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f6b099e8cfdc",
             "label": "Contact",
-            "name": "visit_contact",
+            "name": "il_contact",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -82,9 +111,9 @@
             "button_label": "Add contact email",
             "sub_fields": [
                 {
-                    "key": "field_5f50f6170d413",
+                    "key": "field_5f6b099e928f9",
                     "label": "Emails",
-                    "name": "visit_emails",
+                    "name": "il_emails",
                     "type": "email",
                     "instructions": "",
                     "required": 0,
@@ -102,9 +131,9 @@
             ]
         },
         {
-            "key": "field_5f50f6170602e",
+            "key": "field_5f6b099e8d047",
             "label": "Organisers",
-            "name": "visit_organisers",
+            "name": "il_organisers",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -121,9 +150,9 @@
             "button_label": "Add organiser",
             "sub_fields": [
                 {
-                    "key": "field_5f50f61710cd7",
+                    "key": "field_5f6b099e94ef1",
                     "label": "Organiser",
-                    "name": "visit_person",
+                    "name": "il_person",
                     "type": "wysiwyg",
                     "instructions": "",
                     "required": 0,
@@ -142,9 +171,9 @@
             ]
         },
         {
-            "key": "field_5f50f617060c0",
+            "key": "field_5f6b099e8d0af",
             "label": "Download",
-            "name": "visit_download",
+            "name": "il_download",
             "type": "file",
             "instructions": "",
             "required": 0,
@@ -159,30 +188,6 @@
             "min_size": "",
             "max_size": "",
             "mime_types": ""
-        },
-        {
-            "key": "field_5f50fa55c76bc",
-            "label": "Image",
-            "name": "visit_image",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "large",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
         }
     ],
     "location": [
@@ -190,7 +195,7 @@
             {
                 "param": "post_template",
                 "operator": "==",
-                "value": "visit-embl-template.php"
+                "value": "insight-lectures-template.php"
             }
         ]
     ],
