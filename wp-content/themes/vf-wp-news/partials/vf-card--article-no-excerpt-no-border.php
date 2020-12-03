@@ -5,7 +5,7 @@ $user_id = get_the_author_meta('ID');
 
 ?>
 
-<div class="vf-card vf-card--very-easy  vf-u-margin__bottom--400">
+<div class="vf-card | vf-u-margin__bottom--400">
 <?php
 
 if( get_field( 'youtube_url' ) ) {
