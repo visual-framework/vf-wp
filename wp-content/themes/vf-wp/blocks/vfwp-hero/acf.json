@@ -1,133 +1,132 @@
-[
-    {
-        "key": "group_5fc7a91c423bb",
-        "title": "VF Hero",
-        "fields": [
-            {
-                "key": "field_5fc7a91c46c71",
-                "label": "Background image",
-                "name": "vf_hero_image",
-                "type": "image",
-                "instructions": "Recommended size: 1200×400",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "return_format": "array",
-                "preview_size": "vf-hero",
-                "library": "all",
-                "min_width": "",
-                "min_height": "",
-                "min_size": "",
-                "max_width": "",
-                "max_height": "",
-                "max_size": "",
-                "mime_types": "jpeg,jpg,png"
+{
+    "key": "group_5fc8000379c8a",
+    "title": "VF Hero",
+    "fields": [
+        {
+            "key": "field_5fc800037c527",
+            "label": "Background image",
+            "name": "vf_hero_image",
+            "type": "image",
+            "instructions": "Recommended size: 1200×400",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
             },
-            {
-                "key": "field_5fc7a91c46d2d",
-                "label": "Heading",
-                "name": "vf_hero_heading",
-                "type": "text",
-                "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "About the %1$s",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
+            "return_format": "array",
+            "preview_size": "vf-hero",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpeg,jpg,png"
+        },
+        {
+            "key": "field_5fc800037c593",
+            "label": "Heading",
+            "name": "vf_hero_heading",
+            "type": "text",
+            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
             },
-            {
-                "key": "field_5fc7a91c46de0",
-                "label": "Introduction",
-                "name": "vf_hero_text",
-                "type": "text",
-                "instructions": "Leave blank to use introduction from the Content Hub.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5fc800037c600",
+            "label": "Introduction",
+            "name": "vf_hero_text",
+            "type": "text",
+            "instructions": "Leave blank to use introduction from the Content Hub.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
             },
-            {
-                "key": "field_5fc7a91c46e98",
-                "label": "Additional heading 1",
-                "name": "vf_hero_additional_heading_1",
-                "type": "link",
-                "instructions": "Optional",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "return_format": "array"
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5fc800037c66d",
+            "label": "Additional heading 1",
+            "name": "vf_hero_additional_heading_1",
+            "type": "link",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
             },
-            {
-                "key": "field_5fc7a91c46f4f",
-                "label": "Additional heading 2",
-                "name": "vf_hero_additional_heading_2",
-                "type": "link",
-                "instructions": "Optional",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "return_format": "array"
+            "return_format": "array"
+        },
+        {
+            "key": "field_5fc800037c6c2",
+            "label": "Additional heading 2",
+            "name": "vf_hero_additional_heading_2",
+            "type": "link",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
             },
+            "return_format": "array"
+        },
+        {
+            "key": "field_5fc800037c72f",
+            "label": "Link",
+            "name": "vf_hero_link",
+            "type": "link",
+            "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        }
+    ],
+    "location": [
+        [
             {
-                "key": "field_5fc7a91c46feb",
-                "label": "Link",
-                "name": "vf_hero_link",
-                "type": "link",
-                "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "return_format": "array"
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vfwp-hero"
             }
-        ],
-        "location": [
-            [
-                {
-                    "param": "block",
-                    "operator": "==",
-                    "value": "acf\/vfwp-hero"
-                }
-            ]
-        ],
-        "menu_order": 0,
-        "position": "normal",
-        "style": "seamless",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": "VF-WP Hero global container.",
-        "modified": 1606920552
-    }
-]
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF-WP Hero global container.",
+    "modified": 1606942896
+
+}
