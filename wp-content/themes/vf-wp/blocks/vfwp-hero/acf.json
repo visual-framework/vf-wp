@@ -1,6 +1,6 @@
 {
     "key": "group_5fc8000379c8a",
-    "title": "VF Hero",
+    "title": "VF Hero (block)",
     "fields": [
         {
             "key": "field_5fc800037c527",
@@ -127,6 +127,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Hero global container.",
-    "modified": 1606942896
+    "modified": 1606985783
 
 }
