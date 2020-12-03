@@ -1,5 +1,6 @@
 <?php
-
+/**
+  * @deprecated Return design level
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $heading = get_field('vf_masthead_heading');
@@ -90,3 +91,4 @@ $theme_class = 'vf-masthead-theme--' . $block_color
     </div>
 </div>
 <!--/vf-masthead-->
+ */ ?>
