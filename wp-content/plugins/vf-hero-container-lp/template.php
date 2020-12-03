@@ -3,17 +3,15 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $image = get_field('vf_hero_image');
-$hero_heading = get_field('vf_hero_heading');
-$hero_text = get_field('vf_hero_text');
 $hero_link = get_field('vf_hero_link');
+$hero_heading = get_field('vf_hero_heading');
+$hero_subheading = get_field('vf_hero_subheading');
+$hero_text = get_field('vf_hero_text', false, false);
 $add_heading_1 = get_field('vf_hero_additional_heading_1');
 $add_heading_2 = get_field('vf_hero_additional_heading_2');
-
-
 ?>
 
-
-<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed">
+<section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed">
   <style>
     .vf-hero {
       <?php 
@@ -30,6 +28,7 @@ $add_heading_2 = get_field('vf_hero_additional_heading_2');
 <h2 class="vf-hero__heading">
   <a href="<?php echo get_home_url(); ?>">
   <?php echo $hero_heading; ?>
+  
   </a>
 
   <?php
@@ -46,8 +45,13 @@ $add_heading_2 = get_field('vf_hero_additional_heading_2');
   <?php } }?>
 
 </h2>
+<?php if (!empty ($hero_subheading)) { ?>
+<p class="vf-hero__subheading"><?php echo ($hero_subheading); ?></p>
+<?php } ?>
 
-<p class="vf-hero__subheading"><?php echo $hero_text; ?></p>
+<?php if ($hero_text) {?>
+<p class="vf-hero__text"><?php echo ($hero_text); ?></p>
+<?php } ?>
 
 <?php
 // Hero link

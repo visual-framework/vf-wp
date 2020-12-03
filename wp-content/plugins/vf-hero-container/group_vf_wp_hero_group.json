@@ -1,9 +1,9 @@
 {
-    "key": "group_5fc8000379c8a",
-    "title": "VF Hero (block)",
+    "key": "group_5fc8caa83688a",
+    "title": "VF Hero Group (container)",
     "fields": [
         {
-            "key": "field_5fc800037c527",
+            "key": "field_5fc8caa839f06",
             "label": "Background image",
             "name": "vf_hero_image",
             "type": "image",
@@ -27,11 +27,11 @@
             "mime_types": "jpeg,jpg,png"
         },
         {
-            "key": "field_5fc800037c593",
+            "key": "field_5fc8caa839f41",
             "label": "Heading",
             "name": "vf_hero_heading",
             "type": "text",
-            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -46,11 +46,11 @@
             "maxlength": ""
         },
         {
-            "key": "field_5fc800037c600",
+            "key": "field_5fc8caa83a01a",
             "label": "Introduction",
             "name": "vf_hero_text",
             "type": "text",
-            "instructions": "Leave blank to use introduction from the Content Hub.",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -65,7 +65,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5fc800037c66d",
+            "key": "field_5fc8caa83a0b1",
             "label": "Additional heading 1",
             "name": "vf_hero_additional_heading_1",
             "type": "link",
@@ -80,7 +80,7 @@
             "return_format": "array"
         },
         {
-            "key": "field_5fc800037c6c2",
+            "key": "field_5fc8caa83a146",
             "label": "Additional heading 2",
             "name": "vf_hero_additional_heading_2",
             "type": "link",
@@ -95,7 +95,7 @@
             "return_format": "array"
         },
         {
-            "key": "field_5fc800037c72f",
+            "key": "field_5fc8caa83a1dd",
             "label": "Link",
             "name": "vf_hero_link",
             "type": "link",
@@ -113,9 +113,9 @@
     "location": [
         [
             {
-                "param": "block",
+                "param": "vf_container",
                 "operator": "==",
-                "value": "acf\/vfwp-hero"
+                "value": "vf_wp_hero_group"
             }
         ]
     ],
@@ -126,7 +126,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Hero global container.",
-    "modified": 1606985783
+    "description": "VF-WP Hero Groups container.",
+    "modified": 1606992666
 
 }

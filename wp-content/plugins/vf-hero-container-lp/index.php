@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: VF-WP Hero Group
-Description: VF-WP Hero Group container.
+Plugin Name: VF-WP Hero Landing Page
+Description: VF-WP Hero Landing Page container.
 Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
@@ -14,7 +14,7 @@ $path = WP_PLUGIN_DIR . '/vf-wp/vf-plugin.php';
 if ( ! file_exists($path)) return;
 require_once($path);
 
-class VF_WP_Hero extends VF_Plugin {
+class VF_WP_Hero_LP extends VF_Plugin {
 
   const MAX_WIDTH = 1224;
   const MAX_HEIGHT = 348;
@@ -22,13 +22,13 @@ class VF_WP_Hero extends VF_Plugin {
   protected $file = __FILE__;
 
   protected $config = array(
-    'post_name'  => 'vf_wp_hero_group',
-    'post_title' => 'VF Hero (group)',
+    'post_name'  => 'vf_wp_hero_lp',
+    'post_title' => 'VF Hero (landing-page)',
     'post_type'  => 'vf_container'
   );
 
   public function __construct(array $params = array()) {
-    parent::__construct('vf_wp_hero_group');
+    parent::__construct('vf_wp_hero_lp');
     if (array_key_exists('init', $params)) {
       parent::initialize();
     };
@@ -36,6 +36,7 @@ class VF_WP_Hero extends VF_Plugin {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
+
   }
 
   // public function template_callback($block, $content, $is_preview = false, $acf_id) {
@@ -50,9 +51,10 @@ class VF_WP_Hero extends VF_Plugin {
     return $paths;
   }
 
-} // VF_WP_Hero_Group
+} // VF_WP_Hero_LP
 
-$plugin = new VF_WP_Hero(
+
+$plugin = new VF_WP_Hero_LP(
   array('init' => true)
 );
 

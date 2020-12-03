@@ -1,9 +1,9 @@
 {
-    "key": "group_5fc8000379c8a",
-    "title": "VF Hero (block)",
+    "key": "group_5fc8b06b01618",
+    "title": "VF Hero LP (container)",
     "fields": [
         {
-            "key": "field_5fc800037c527",
+            "key": "field_5fc8b06b0523b",
             "label": "Background image",
             "name": "vf_hero_image",
             "type": "image",
@@ -27,11 +27,11 @@
             "mime_types": "jpeg,jpg,png"
         },
         {
-            "key": "field_5fc800037c593",
+            "key": "field_5fc8b06b052cb",
             "label": "Heading",
             "name": "vf_hero_heading",
             "type": "text",
-            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -46,11 +46,11 @@
             "maxlength": ""
         },
         {
-            "key": "field_5fc800037c600",
-            "label": "Introduction",
-            "name": "vf_hero_text",
+            "key": "field_5fc8c1246eb93",
+            "label": "Subheading",
+            "name": "vf_hero_subheading",
             "type": "text",
-            "instructions": "Leave blank to use introduction from the Content Hub.",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -65,7 +65,26 @@
             "maxlength": ""
         },
         {
-            "key": "field_5fc800037c66d",
+            "key": "field_5fc8b06b0535a",
+            "label": "Text",
+            "name": "vf_hero_text",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_5fc8b06b053eb",
             "label": "Additional heading 1",
             "name": "vf_hero_additional_heading_1",
             "type": "link",
@@ -80,7 +99,7 @@
             "return_format": "array"
         },
         {
-            "key": "field_5fc800037c6c2",
+            "key": "field_5fc8b06b0547c",
             "label": "Additional heading 2",
             "name": "vf_hero_additional_heading_2",
             "type": "link",
@@ -95,7 +114,7 @@
             "return_format": "array"
         },
         {
-            "key": "field_5fc800037c72f",
+            "key": "field_5fc8b06b0550c",
             "label": "Link",
             "name": "vf_hero_link",
             "type": "link",
@@ -113,9 +132,9 @@
     "location": [
         [
             {
-                "param": "block",
+                "param": "vf_container",
                 "operator": "==",
-                "value": "acf\/vfwp-hero"
+                "value": "vf_wp_hero_lp"
             }
         ]
     ],
@@ -126,7 +145,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Hero global container.",
-    "modified": 1606985783
-
+    "description": "VF-WP Hero Landing Page container.",
+    "modified": 1606992666
 }
