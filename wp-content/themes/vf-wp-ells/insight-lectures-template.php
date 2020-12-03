@@ -1,18 +1,22 @@
 <?php
 /**
-* Template Name: Visit EMBL template
+* Template Name: Insight Lectures template
 */
 get_header();
 
-$type = get_field('visit_type');
-$start_date = get_field('visit_start_date');
+$type = get_field('il_type');
+$start_date = get_field('il_start_date');
 $start = DateTime::createFromFormat('j F Y', $start_date);
 
-$end_date = get_field('visit_end_date');
+$end_date = get_field('il_end_date');
 $end = DateTime::createFromFormat('j F Y', $end_date);
 
-$download = get_field('visit_download');
-$image = get_field('visit_image');
+$application_deadline = get_field('il_application_deadline');
+$age_group = get_field('il_age_group');
+$topic_area = get_field('il_topic_area');
+$download = get_field('il_download');
+$image = get_field('il_image');
+
 
 if ( ! is_array($image)) {
     $image = null;
@@ -23,10 +27,12 @@ if ( ! is_array($image)) {
       'itemprop' => 'image',
     ));
   }
+
 ?>
 
+
 <section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed" style="
---vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg');  ">
+--vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg');  ">
 
   <div class="vf-hero__content | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading" style="font-size: 24px;">
@@ -38,6 +44,7 @@ if ( ! is_array($image)) {
   </div>
 </section>
 
+
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
     <?php 
@@ -45,53 +52,67 @@ if ( ! is_array($image)) {
       ?>
   </div>
   <div>
-    <article class="vf-card vf-card-theme--secondary vf-card--normal | vf-u-margin__bottom--600">
+    <article class="vf-card vf-card--normal vf-card-theme--tertiary | vf-u-margin__bottom--xl">
       <?php
         if ($image) {
-          echo $image;
+        echo $image;
         }
-      ?>
+       ?>
       <div class="vf-card__content">
         <p class="vf-card__text | vf-u-margin__bottom--0" style="text-align: center;">
           <?php 
-      if ( ! empty($start_date)) {
-        if ($end_date) { 
-          if ($start->format('F') == $end->format('F')) {
-            echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
-          else {
-            echo $start->format('j F'); ?> - <?php echo $end->format('j F Y'); }
+            if ( ! empty($start_date)) {
+                if ($end_date) { 
+                if ($start->format('F') == $end->format('F')) {
+                    echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
+                else {
+                    echo $start->format('j F'); ?> - <?php echo $end->format('j F Y'); }
+                    ?>
+                <?php } 
+                else {
+                echo $start->format('j F Y'); 
+                } }
             ?>
-          <?php } 
-        else {
-          echo $start->format('j F Y'); 
-        } }
-      ?>
 
         </p>
       </div>
     </article>
     <div>
+      <?php if ($application_deadline) { ?>  
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;"> <span class="vf-badge">
+            Application deadline:</span>&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($application_deadline); ?></span></p>
+      <?php } ?>    
+      <?php if ($topic_area) { ?>    
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Topic area:&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($topic_area); ?></span></p>
+      <?php } ?>          
+      <?php if ($age_group) { ?>    
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Age group:&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($age_group); ?></span></p>
+      <?php } ?>          
       <?php
-          if( have_rows('visit_contact') ): ?>
-            <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Contact:<span class="vf-u-text-color--grey">
-            <?php while( have_rows('visit_contact') ) : the_row();
-                $emails = get_sub_field('visit_emails');
+            if( have_rows('il_contact') ):?>
+                <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Contact:<span class="vf-u-text-color--grey">
+            <?php while( have_rows('il_contact') ) : the_row();
+                $emails = get_sub_field('il_emails');
                 echo ($emails);
-            endwhile;
-        else : ?>
-        </span></p>
-        <?php endif; ?>
-
-      <?php
-            if( have_rows('visit_organisers') ): ?>
-              <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
-            <?php while( have_rows('visit_organisers') ) : the_row();
-                $organisers = get_sub_field('visit_person', false, false);
-                echo ($organisers);
             endwhile;
             else : ?>
             </span></p>
             <?php endif; ?>
+
+            <?php
+            if( have_rows('il_organisers') ): ?>
+                <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
+            <?php while( have_rows('il_organisers') ) : the_row();
+                $organisers = get_sub_field('il_person', false, false);
+                echo ($organisers);
+            endwhile;
+        else : ?>
+        </span></p>
+       <?php endif; ?>
+
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
       <div class="vf-social-links">

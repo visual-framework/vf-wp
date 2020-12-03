@@ -1,18 +1,22 @@
 <?php
 /**
-* Template Name: Visit EMBL template
+* Template Name: TeachingBase template
 */
 get_header();
 
-$type = get_field('visit_type');
-$start_date = get_field('visit_start_date');
+$type = get_field('tb_type');
+$start_date = get_field('tb_start_date');
 $start = DateTime::createFromFormat('j F Y', $start_date);
 
-$end_date = get_field('visit_end_date');
+$end_date = get_field('tb_end_date');
 $end = DateTime::createFromFormat('j F Y', $end_date);
 
-$download = get_field('visit_download');
-$image = get_field('visit_image');
+$type_of_resource = get_field('tb_type_of_resource');
+$age_group = get_field('tb_age_group');
+$topic_area = get_field('tb_topic_area');
+$download = get_field('tb_download');
+$image = get_field('tb_image');
+
 
 if ( ! is_array($image)) {
     $image = null;
@@ -23,10 +27,11 @@ if ( ! is_array($image)) {
       'itemprop' => 'image',
     ));
   }
+
 ?>
 
 <section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed" style="
---vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg');  ">
+--vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg');  ">
 
   <div class="vf-hero__content | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading" style="font-size: 24px;">
@@ -45,53 +50,67 @@ if ( ! is_array($image)) {
       ?>
   </div>
   <div>
-    <article class="vf-card vf-card-theme--secondary vf-card--normal | vf-u-margin__bottom--600">
+    <article class="vf-card vf-card--normal vf-card-theme--tertiary | vf-u-margin__bottom--xl">
       <?php
         if ($image) {
-          echo $image;
+        echo $image;
         }
-      ?>
+       ?>
       <div class="vf-card__content">
         <p class="vf-card__text | vf-u-margin__bottom--0" style="text-align: center;">
           <?php 
-      if ( ! empty($start_date)) {
-        if ($end_date) { 
-          if ($start->format('F') == $end->format('F')) {
-            echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
-          else {
-            echo $start->format('j F'); ?> - <?php echo $end->format('j F Y'); }
+            if ( ! empty($start_date)) {
+                if ($end_date) { 
+                if ($start->format('F') == $end->format('F')) {
+                    echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
+                else {
+                    echo $start->format('j F'); ?> - <?php echo $end->format('j F Y'); }
+                    ?>
+                <?php } 
+                else {
+                echo $start->format('j F Y'); 
+                } }
             ?>
-          <?php } 
-        else {
-          echo $start->format('j F Y'); 
-        } }
-      ?>
 
         </p>
       </div>
     </article>
     <div>
+      <?php if ($type_of_resource) { ?>  
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;"> <span class="vf-badge">
+            Application deadline:</span>&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($type_of_resource); ?></span></p>
+      <?php } ?>    
+      <?php if ($topic_area) { ?>    
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Topic area:&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($topic_area); ?></span></p>
+      <?php } ?>          
+      <?php if ($age_group) { ?>    
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Age group:&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($age_group); ?></span></p>
+      <?php } ?>          
       <?php
-          if( have_rows('visit_contact') ): ?>
-            <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Contact:<span class="vf-u-text-color--grey">
-            <?php while( have_rows('visit_contact') ) : the_row();
-                $emails = get_sub_field('visit_emails');
+            if( have_rows('tb_contact') ):?>
+                <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Contact:<span class="vf-u-text-color--grey">
+            <?php while( have_rows('tb_contact') ) : the_row();
+                $emails = get_sub_field('tb_emails');
                 echo ($emails);
-            endwhile;
-        else : ?>
-        </span></p>
-        <?php endif; ?>
-
-      <?php
-            if( have_rows('visit_organisers') ): ?>
-              <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
-            <?php while( have_rows('visit_organisers') ) : the_row();
-                $organisers = get_sub_field('visit_person', false, false);
-                echo ($organisers);
             endwhile;
             else : ?>
             </span></p>
             <?php endif; ?>
+
+            <?php
+            if( have_rows('tb_organisers') ): ?>
+                <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
+            <?php while( have_rows('tb_organisers') ) : the_row();
+                $organisers = get_sub_field('tb_person', false, false);
+                echo ($organisers);
+            endwhile;
+        else : ?>
+        </span></p>
+       <?php endif; ?>
+
       <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
       <div class="vf-social-links">
