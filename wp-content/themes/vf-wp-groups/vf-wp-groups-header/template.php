@@ -18,9 +18,9 @@ $nav = get_field('vf_navigation_enable');
 
 ?>
 <header class="vf-header">
+<?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
   <?php if ($nav == 1) {
     get_template_part('vf-wp-groups-header/vf-navigation');
   }
   ?>
 </header>
-<?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
