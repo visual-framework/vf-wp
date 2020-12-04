@@ -55,7 +55,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "About the %1$s",
+            "default_value": "%1$s",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -178,5 +178,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1606917931
+    "modified": 1607071908
 }
