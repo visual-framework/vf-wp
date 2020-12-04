@@ -37,11 +37,13 @@ $heading_html = function() use ($acf_id) {
     '<h1 class="vf-lede">',
     $heading
   );
+  /*
   $heading = preg_replace(
     '#</p>#',
     ' <a class="vf-link" href="'.home_url('/about/').'">' . __('Read more', 'vfwp') . '</a>.</h1>',
     $heading
   );
+  */
   return $heading;
 };
 
