@@ -82,10 +82,10 @@
         },
         {
             "key": "field_5fc792165a8f1",
-            "label": "Additional heading 1",
+            "label": "Additional link 1",
             "name": "vf_hero_additional_heading_1",
             "type": "link",
-            "instructions": "Optional",
+            "instructions": "(Optional) The link will appear above the title",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -97,10 +97,10 @@
         },
         {
             "key": "field_5fc792565a8f2",
-            "label": "Additional heading 2",
+            "label": "Additional link 2",
             "name": "vf_hero_additional_heading_2",
             "type": "link",
-            "instructions": "Optional",
+            "instructions": "(Optional) The link will appear above the title",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -112,7 +112,7 @@
         },
         {
             "key": "field_5f9bf93902181",
-            "label": "Link",
+            "label": "Inline link",
             "name": "vf_hero_link",
             "type": "link",
             "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
@@ -178,5 +178,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1606917931
+    "modified": 1607076057
 }

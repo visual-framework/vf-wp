@@ -85,10 +85,10 @@
         },
         {
             "key": "field_5fc8b06b053eb",
-            "label": "Additional heading 1",
+            "label": "Additional link 1",
             "name": "vf_hero_additional_heading_1",
             "type": "link",
-            "instructions": "Optional",
+            "instructions": "(Optional) The link will appear above the title",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -100,10 +100,10 @@
         },
         {
             "key": "field_5fc8b06b0547c",
-            "label": "Additional heading 2",
+            "label": "Additional link 2",
             "name": "vf_hero_additional_heading_2",
             "type": "link",
-            "instructions": "Optional",
+            "instructions": "(Optional) The link will appear above the title",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -115,7 +115,7 @@
         },
         {
             "key": "field_5fc8b06b0550c",
-            "label": "Link",
+            "label": "Inline link",
             "name": "vf_hero_link",
             "type": "link",
             "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
@@ -146,5 +146,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Hero Landing Page container.",
-    "modified": 1606992666
+    "modified": 1607076057
 }
