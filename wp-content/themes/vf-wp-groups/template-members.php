@@ -31,7 +31,7 @@ global $vf_theme;
 
         VF_Plugin::render($vf_group_header);
 
-        echo '<hr class="vf-divider">';
+        echo '<hr class="vf-divider | vf-u-margin__top--600">';
       }
 
       // the_content();
