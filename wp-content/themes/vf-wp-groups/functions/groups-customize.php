@@ -170,6 +170,7 @@ class VF_Groups_Customize {
     );
     $classes[] = "vf-global-theme--{$theme}";
     $classes[] = "vf-global-layout--{$layout}";
+    $classes[] = "vf-stack vf-stack--400";
     return $classes;
   }
 
