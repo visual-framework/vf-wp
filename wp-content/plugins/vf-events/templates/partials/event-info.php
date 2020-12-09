@@ -13,6 +13,7 @@ $time = get_field('vf_event_start_time', $post->post_parent);
 $venue = get_field('vf_event_venue', $post->post_parent);
 
 $submission_closing = get_field('vf_event_submission_closing', $post->post_parent);
+$application_closing = get_field('vf_event_application_deadline', $post->post_parent);
 $registration_closing = get_field('vf_event_registration_closing', $post->post_parent);
 
 $event_topic = get_field('vf_event_event_topic', $post->post_parent);
@@ -72,6 +73,11 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     <?php if ( ! empty($submission_closing)) { ?>
     <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
         style="font-weight: 600;">Abstract submission deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($submission_closing); ?></span></p>
+    <?php } ?>
+
+    <?php if ( ! empty($application_closing)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+        style="font-weight: 600;">Application deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_closing); ?></span></p>
     <?php } ?>
 
     <?php if ( ! empty($registration_closing)) { ?>

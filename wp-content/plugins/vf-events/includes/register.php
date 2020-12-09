@@ -57,7 +57,7 @@ class VF_Events_Register {
         'event_topic'
       ),
     ));
-
+/*
     register_taxonomy("{$event_type}_type", array($event_type), array(
       'labels'             => $this->get_type_labels(),
       'hierarchical'       => true,
@@ -85,8 +85,8 @@ class VF_Events_Register {
         'slug' => 'topic'
       ),
     ));
+    */
   }
-
   /**
    * Reference: `get_post_type_labels`
    * https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/post.php

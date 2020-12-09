@@ -330,8 +330,8 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "j F Y",
-            "return_format": "j F Y",
+            "display_format": "j M Y",
+            "return_format": "j M Y",
             "first_day": 1
         },
         {
@@ -352,8 +352,8 @@
             "first_day": 1
         },
         {
-            "key": "field_5f3f6f8d37cd3",
-            "label": "Summary",
+            "key": "field_5fd0b5244b833",
+            "label": "Application deadline",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -363,10 +363,43 @@
                     {
                         "field": "field_5fbcab958038b",
                         "operator": "==",
-                        "value": "embl_ebi_training"
+                        "value": "cco_hd"
                     }
                 ]
             ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5fd0b4897af8f",
+            "label": "Application deadline",
+            "name": "vf_event_application_deadline",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_5f3f6f8d37cd3",
+            "label": "Summary",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -401,7 +434,15 @@
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "embl_ebi_training"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -409,8 +450,8 @@
             },
             "default_value": "",
             "tabs": "all",
-            "media_upload": 0,
             "toolbar": "basic",
+            "media_upload": 0,
             "delay": 0
         },
         {
@@ -441,29 +482,65 @@
             "key": "field_5e9868ea11ada",
             "label": "Event type",
             "name": "vf_event_event_type",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "vf_event_type",
-            "field_type": "select",
+            "choices": {
+                "embl_conference": "EMBL Conference",
+                "embl_course": "EMBL Course",
+                "embl_webinar": "EMBL Webinar",
+                "embo_workshop": "EMBO Workshop",
+                "embo_course": "EMBO Practical Course",
+                "conference": "EMBL-EBI Conference",
+                "course": "EMBL-EBI  Course",
+                "webinar": "EMBL-EBI  Webinar",
+                "public_event": "EMBL-EBI Public event",
+                "embo_embl_symposium": "EMBO | EMBL Symposium",
+                "ss_conference": "Science and Society Conference",
+                "ss_seminar": "Science and Society Seminar",
+                "ss_symposia": "Science and Society Symposium",
+                "ss_hd_forum": "Science and Society Heidelberg Forum",
+                "internal_event": "Internal event",
+                "other": "Other"
+            },
+            "default_value": false,
             "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "multiple": 0
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5fd0aa67af779",
+            "label": "Displayed as",
+            "name": "vf_event_displayed",
+            "type": "text",
+            "instructions": "If empty the event type will be displayed",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_5f3f7042eb5fe",
             "label": "Event topic",
             "name": "vf_event_event_topic",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -487,14 +564,25 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "vf_event_topic",
-            "field_type": "select",
-            "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "multiple": 0
+            "choices": {
+                "cbb": "Cell Biology and Biophysics",
+                "daab": "Data Analysis and Bioinformatics",
+                "dbae": "Developmental Biology and Evolution",
+                "gbtt": "Genome Biology, Transcription, Translation",
+                "mai": "Microbiology and immunology",
+                "mmac": "Molecular Medicine and Cancer",
+                "neur": "Neurobiology",
+                "sb": "Structural Biology",
+                "tim": "Technology, Imaging, Methods",
+                "sas": "Science and Society, Education and Policy"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
         },
         {
             "key": "field_5e98502253db0",
@@ -979,5 +1067,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1606946124
+    "modified": 1607515245
 }
