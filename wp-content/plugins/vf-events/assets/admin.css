@@ -28,10 +28,11 @@
 .acf-field[data-name="vf_event_start_time"] .acf-input-wrap,
 .acf-field[data-name="vf_event_end_date"] .acf-input-wrap,
 .acf-field[data-name="vf_event_end_time"] .acf-input-wrap,
+.acf-field[data-name="vf_event_application_deadline"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_opening"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_closing"] .acf-input-wrap,
 .acf-field[data-name="vf_event_submission_opening"] .acf-input-wrap,
-.acf-field[data-name="vf_event_location"] .acf-input-wrap,
+.acf-field[data-name="vf_event_location"] .acf-input,
 .acf-field[data-name="vf_event_registration_fee"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_button_text"] .acf-input-wrap,
 .acf-field[data-name="vf_event_abstract_submission_button_text"] .acf-input-wrap,
@@ -40,12 +41,12 @@
 }
 
 .acf-field[data-name="vf_event_venue"] .acf-input-wrap,
-.acf-field[data-name="vf_event_time_zone"] .acf-input-wrap,
+.acf-field[data-name="vf_event_time_zone"] .acf-input,
 .acf-field[data-name="vf_event_unique_identifier"] .acf-input-wrap,
 .acf-field[data-name="vf_event_theme"] .acf-input-wrap,
 .acf-field[data-name="vf_event_contact"] .acf-input-wrap,
 .acf-field[data-name="vf_event_hashtag"] .acf-input-wrap,
-.acf-field[data-name="vf_event_organiser"] .acf-input-wrap,
+.acf-field[data-name="vf_event_organiser"] .acf-input,
 .acf-field[data-name="vf_event_location"] .acf-input-wrap {
   max-width: 200px !important;
 }
@@ -56,9 +57,12 @@
   max-width: 500px;
 }
 
-.acf-field[data-name="vf_event_event_type"] .acf-input-wrap,
-.acf-field[data-name="vf_event_event_topic"] .acf-input-wrap,
-.acf-field[data-name="vf_event_event_type_custom"] .acf-input-wrap {
-  max-width: 300px;
+.acf-field[data-name="vf_event_event_type"] .acf-input,
+.acf-field[data-name="vf_event_event_topic"] .acf-input {
+  max-width: 400px;
+}
+
+.acf-field[data-name="vf_event_displayed"] .acf-input-wrap {
+  max-width: 500px;
 }
 
