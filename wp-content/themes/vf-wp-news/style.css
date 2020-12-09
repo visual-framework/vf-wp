@@ -180,9 +180,13 @@ Text Domain:	 vf-wp-news-main
 }
 
 .vf-grid-featured-col-left a,
-.vf-grid-featured-col-left .vf-summary__meta p
- {
+.vf-grid-featured-col-left .vf-summary__meta p {
 color: #fff !important;
+}
+
+.vf-grid-featured-col-left .vf-card__text {
+color: #fff !important;
+margin-bottom: 1rem !important;
 }
 
 .newsletter-container .vf-icon {
