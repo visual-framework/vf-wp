@@ -178,7 +178,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
         $url = add_query_arg(array(
           'filter-uuid'         => $term_uuid,
           'filter-content-type' => 'profiles',
-          'pattern'             => 'node-teaser',
+          'pattern'             => 'node-strapline',
           'source'              => 'contenthub',
         ), $url);
         $text = VF_Cache::fetch($url);
