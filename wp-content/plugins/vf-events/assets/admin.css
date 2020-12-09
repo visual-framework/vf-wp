@@ -32,7 +32,6 @@
 .acf-field[data-name="vf_event_registration_opening"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_closing"] .acf-input-wrap,
 .acf-field[data-name="vf_event_submission_opening"] .acf-input-wrap,
-.acf-field[data-name="vf_event_location"] .acf-input,
 .acf-field[data-name="vf_event_registration_fee"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_button_text"] .acf-input-wrap,
 .acf-field[data-name="vf_event_abstract_submission_button_text"] .acf-input-wrap,
@@ -47,7 +46,7 @@
 .acf-field[data-name="vf_event_contact"] .acf-input-wrap,
 .acf-field[data-name="vf_event_hashtag"] .acf-input-wrap,
 .acf-field[data-name="vf_event_organiser"] .acf-input,
-.acf-field[data-name="vf_event_location"] .acf-input-wrap {
+.acf-field[data-name="vf_event_location"] .acf-input {
   max-width: 200px !important;
 }
 
