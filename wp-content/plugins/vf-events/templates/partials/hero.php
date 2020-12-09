@@ -31,7 +31,7 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
       <span class="vf-hero__heading--additional">
         <?php
       if (!empty ($event_type)) {
-        echo esc_html($event_type->name);
+        echo esc_html($event_type['label']);
       }
       ?>
       </span>
