@@ -454,7 +454,7 @@ class VF_Theme {
    */
   public function body_class($classes) {
     $classes[] = 'vf-wp-theme';
-    $classes[] = 'vf-body';
+    $classes[] = 'vf-body vf-stack vf-stack--400';
     return $classes;
   }
 
