@@ -212,7 +212,8 @@ function vfBannerInsert(banner, bannerId, scope) {
     } else if (banner.vfJsBannerButtonTheme == "tertiary") {
       generatedBannerHtml += "<button class=\"vf-button vf-button--tertary\" data-vf-js-banner-close>" + banner.vfJsBannerButtonText + "</button>";
     } else {
-      generatedBannerHtml += "<button class=\"vf-button vf-button--secondary\" data-vf-js-banner-close>" + banner.vfJsBannerButtonText + "</button>";
+      // default
+      generatedBannerHtml += "<button class=\"vf-button vf-button--primary\" data-vf-js-banner-close>" + banner.vfJsBannerButtonText + "</button>";
     }
   }
 
