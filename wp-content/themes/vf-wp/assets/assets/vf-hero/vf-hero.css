@@ -170,6 +170,9 @@
 }
 .vf-hero__link svg {
   fill: currentColor;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
   margin-left: 0.5rem;
 }
 .vf-hero__link:focus, .vf-hero__link:hover, .vf-hero__link:visited {
