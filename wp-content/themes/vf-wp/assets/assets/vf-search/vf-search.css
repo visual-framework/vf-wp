@@ -54,19 +54,33 @@
 /*!
  * Component: @visual-framework/vf-search
  * Version: 1.1.2
- * Location: components/vf-search
+ * Location: components/undefined
  */
 .vf-search--inline {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 .vf-search--inline .vf-search__item {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  max-width: 600px;
 }
 .vf-search--inline .vf-search__button {
+  margin-bottom: 0;
   margin-left: 16px;
   top: -12px;
+}
+.vf-search--inline .vf-search__description {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.71;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
 }
