@@ -59,7 +59,7 @@
         </h3>
         <ul class="vf-social-links__list">
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="https://twitter.com/emblevents">
+            <a class="vf-social-links__link" href="https://twitter.com/emblevents" target=”_blank”>
               <span class="vf-u-sr-only">
                 twitter
               </span>
@@ -71,7 +71,7 @@
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="https://www.instagram.com/emblevents/">
+            <a class="vf-social-links__link" href="https://www.instagram.com/emblevents/" target=”_blank”>
               <span class="vf-u-sr-only">
                 instagram
               </span>
@@ -83,7 +83,7 @@
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="http://en-gb.facebook.com/EMBLEvents">
+            <a class="vf-social-links__link" href="http://en-gb.facebook.com/EMBLEvents" target=”_blank”>
               <span class="vf-u-sr-only">
                 facebook
               </span>
@@ -95,7 +95,7 @@
             </a>
           </li>
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="https://www.linkedin.com/showcase/embl-events/">
+            <a class="vf-social-links__link" href="https://www.linkedin.com/showcase/embl-events/" target=”_blank”>
               <span class="vf-u-sr-only">
                 linkedin
               </span>

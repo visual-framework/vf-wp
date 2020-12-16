@@ -485,29 +485,65 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "science_society"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
             "choices": {
-                "embl_conference": "EMBL Conference",
-                "embl_course": "EMBL Course",
-                "embl_webinar": "EMBL Webinar",
+                "conference": "Conference",
+                "course": "Course",
+                "webinar": "Webinar",
+                "public_event": "Public event",
                 "embo_workshop": "EMBO Workshop",
                 "embo_course": "EMBO Practical Course",
-                "conference": "EMBL-EBI Conference",
-                "course": "EMBL-EBI  Course",
-                "webinar": "EMBL-EBI  Webinar",
-                "public_event": "EMBL-EBI Public event",
                 "embo_embl_symposium": "EMBO | EMBL Symposium",
+                "internal_event": "Internal event",
+                "other": "Other"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5fd9c1f1dda86",
+            "label": "S&S event name",
+            "name": "vf_event_ss_event_name",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "science_society"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
                 "ss_conference": "Science and Society Conference",
                 "ss_seminar": "Science and Society Seminar",
                 "ss_symposia": "Science and Society Symposium",
-                "ss_hd_forum": "Science and Society Heidelberg Forum",
-                "internal_event": "Internal event",
-                "other": "Other"
+                "ss_hd_forum": "Science and Society Heidelberg Forum"
             },
             "default_value": false,
             "allow_null": 0,
@@ -1067,5 +1103,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1607515245
+    "modified": 1608108591
 }
