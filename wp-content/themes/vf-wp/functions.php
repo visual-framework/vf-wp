@@ -79,9 +79,19 @@ function training_box_content() {
 echo '<div style="background-color: #fffadc; padding: 3px;"><p>To learn more about WordPress, blocks, page templates, customization and more, check out our <a href="https://wwwdev.embl.org/guidelines/design/page/wordpress/">training materials</a>.</p></div>';
 }
 
+add_filter(
+  'acf/settings/load_json',
+  'vf_wp_theme__acf_settings_load_json',
+  1
+);
 
-
-
+/**
+ * Load ACF JSON from theme
+ */
+function vf_wp_theme__acf_settings_load_json($paths) {
+  $paths[] = get_stylesheet_directory() . '/acf-json';
+  return $paths;
+}
 
 
 ?>

@@ -38,4 +38,19 @@ function my_acf_save_post( $post_id ) {
 }
 add_action('acf/save_post', 'my_acf_save_post', 20);
 
+add_filter(
+  'acf/settings/load_json',
+  'vf_wp_groups_theme__acf_settings_load_json',
+  1
+);
+
+/**
+ * Load ACF JSON from theme
+ */
+function vf_wp_groups_theme__acf_settings_load_json($paths) {
+  $paths[] = get_stylesheet_directory() . '/acf-json';
+  return $paths;
+}
+
+
 ?>
