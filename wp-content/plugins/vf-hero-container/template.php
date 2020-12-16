@@ -13,7 +13,7 @@ $add_heading_2 = get_field('vf_hero_additional_heading_2');
 ?>
 
 
-<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed">
+<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0">
   <style>
     .vf-hero {
       <?php 

@@ -21,7 +21,7 @@ if ($is_preview) {
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
-<nav class="vf-navigation vf-navigation--main | vf-cluster">
+<nav class="vf-navigation vf-navigation--main | vf-cluster | vf-u-padding__top--0">
   <ul class="vf-navigation__list | vf-list--inline | vf-cluster__inner">
 <?php
 
