@@ -47,9 +47,9 @@ class VF_EBI_Global_Footer extends VF_Plugin {
 
     // Ideally this should go in some sort of "EBI CSS+JS plugin" along with
     // the v1.3 CSS+JS
-    add_filter('body_class',
-      array($this, 'body_class')
-    );
+    // add_filter('body_class',
+    //   array($this, 'body_class')
+    // );
   }
 
   /**
@@ -87,16 +87,16 @@ class VF_EBI_Global_Footer extends VF_Plugin {
     );
   }
 
-  /**
-   * Filter: `body_class`
-   */
-  public function body_class($classes) {
-    // enable the VF 1.x workarounds
-    if ($this->is_ebi_template()) {
-      $classes[] = 'ebi-vf1-integration';
-    }
-    return $classes;
-  }
+  // /**
+  //  * Filter: `body_class`
+  //  */
+  // public function body_class($classes) {
+  //   // enable the VF 1.x workarounds
+  //   if ($this->is_ebi_template()) {
+  //     $classes[] = 'ebi-vf1-integration';
+  //   }
+  //   return $classes;
+  // }
 
   // We load these scripts here as a short term solution to not over-architect
   // something that shouldn't be permananent.
