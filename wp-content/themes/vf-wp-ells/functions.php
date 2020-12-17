@@ -1,6 +1,10 @@
 <?php
 
 require_once('functions/ells-breadcrumbs.php');
+require_once('functions/learning-labs-post.php');
+require_once('functions/teachingbase-post.php');
+require_once('functions/embl-visit-post.php');
+require_once('functions/insight-lecture-post.php');
 
 // enable featured image
 add_theme_support( 'post-thumbnails' );
