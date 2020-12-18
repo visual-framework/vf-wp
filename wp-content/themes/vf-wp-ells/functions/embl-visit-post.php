@@ -32,7 +32,7 @@ add_action(
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
       'has_archive'         => true,
       'rewrite'             => array(
-        'slug' => 'visit'
+        'slug' => 'embl-visit'
       ),
       'query_var'           => true,
       'can_export'          => true,

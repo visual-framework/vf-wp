@@ -13,7 +13,7 @@ add_action(
 
   function llabs_init_register() {
 
-    register_post_type('llabs_event', array(
+    register_post_type('llabs-event', array(
       'labels'              => llabs_get_labels(),
       'description'         => __('LLabs Events', 'vfwp'),
       'public'              => true,
@@ -25,14 +25,14 @@ add_action(
       'show_in_nav_menus'   => true,
       'show_in_admin_bar'   => true,
       'show_in_rest'        => true,
-      'rest_base'           => "llabs_event",
+      'rest_base'           => "llabs-event",
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-edit-page',
       'capability_type'     => 'page',
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
       'has_archive'         => true,
       'rewrite'             => array(
-        'slug' => 'llabs'
+        'slug' => 'llabs-event'
       ),
       'query_var'           => true,
       'can_export'          => true,
