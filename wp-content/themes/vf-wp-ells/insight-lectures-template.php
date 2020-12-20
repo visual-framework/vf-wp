@@ -164,8 +164,4 @@ if ( ! is_array($image)) {
   </div>
 </section>
 
-<?php
-
-get_footer();
-
-?>
+<?php include(locate_template('partials/ells-footer.php', false, false)); ?>
