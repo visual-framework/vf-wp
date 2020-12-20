@@ -193,9 +193,9 @@
     "location": [
         [
             {
-                "param": "post_template",
+                "param": "post_type",
                 "operator": "==",
-                "value": "insight-lectures-template.php"
+                "value": "insight-lecture"
             }
         ]
     ],

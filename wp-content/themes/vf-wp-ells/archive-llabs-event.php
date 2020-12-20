@@ -24,9 +24,8 @@ if (class_exists('VF_Navigation')) {
 }
 
 ?>
-<div class="embl-grid embl-grid--has-centered-content | vf-content">
-  <div></div>
-  <div>
+<div class="vf-grid vf-grid__col-3 | vf-content">
+  <div class="vf-grid__col--span-2">
     <p>The 1-3 day courses provide a mix of scientific seminars, hands-on activities, lab experiments and new teaching resources, covering cutting-edge research and technologies and illustrate how these topics can be transferred to the classroom. 
       As of 2017, ELLS also offers virtual teacher training opportunities.</p>
     <p>Any upcoming ELLS LearningLABs will be advertised via this website and listed below.</p>
@@ -36,11 +35,12 @@ if (class_exists('VF_Navigation')) {
 <section class="vf-card-container | vf-u-background-color-ui--grey--light | vf-u-fullbleed vf-u-margin__bottom--0">
   <div class="vf-card-container__inner">
 
-  <div class="vf-section-header">
-  <h2 class="vf-section-header__heading" id="section-text"> Upcoming Learning Labs </h2>
-  <p class="vf-section-header__text">Ut congue, sapien ut placerat hendrerit, lectus ex convallis erat, eu volutpat dui quam non lectus.</p>
-</div>
-<?php
+  <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link" href="JavaScript:Void(0);" > Upcoming LearningLabs <svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+        </svg></a>
+      <p class="vf-section-header__text">To promote molecular biology across Europe</p>
+    </div>
+    <?php
         if ( have_posts() ) {
           while ( have_posts() ) {
             the_post();

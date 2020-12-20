@@ -80,27 +80,6 @@
             "first_day": 1
         },
         {
-            "key": "field_5f50e647b3a58",
-            "label": "Number of spots",
-            "name": "labs_number_of_spots",
-            "type": "number",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "min": "",
-            "max": "",
-            "step": ""
-        },
-        {
             "key": "field_5f50e682b3a59",
             "label": "Contact",
             "name": "labs_contact",
@@ -202,9 +181,9 @@
     "location": [
         [
             {
-                "param": "post_template",
+                "param": "post_type",
                 "operator": "==",
-                "value": "llab-template.php"
+                "value": "llabs-event"
             }
         ]
     ],
