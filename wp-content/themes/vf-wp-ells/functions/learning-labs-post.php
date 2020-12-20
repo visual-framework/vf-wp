@@ -38,8 +38,7 @@ add_action(
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(
-        'category',
-        'post_tag'
+        'topic-area'
       ),
     ));
 

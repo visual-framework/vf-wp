@@ -1,5 +1,6 @@
 <?php
 
+require_once('functions/custom-taxonomies.php');
 require_once('functions/ells-breadcrumbs.php');
 require_once('functions/learning-labs-post.php');
 require_once('functions/teachingbase-post.php');
