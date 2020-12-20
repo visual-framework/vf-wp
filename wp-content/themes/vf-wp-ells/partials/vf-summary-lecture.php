@@ -1,4 +1,6 @@
-
+<?php
+$start_date = get_field('il_start_date');
+?>
 <article class="vf-summary vf-summary--news">
 <time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php echo ($start_date); ?></time>
@@ -9,7 +11,7 @@
       'itemprop' => 'image' ) ); ?>
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link">
-    <?php echo $title; ?>
+    <?php echo get_the_title(); ?>
     </a>
   </h3>
   <p class="vf-summary__text">
