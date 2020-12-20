@@ -29,7 +29,7 @@ add_action(
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-welcome-learn-more',
       'capability_type'     => 'page',
-      'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
+      'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
       'has_archive'         => true,
       'rewrite'             => array(
         'slug' => 'teachingbase'
