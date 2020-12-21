@@ -1,7 +1,7 @@
 <?php
 get_header();
 $start_date = get_field('il_start_date');
-
+$registration_link = get_field('il_registration_link');
 $application_deadline = get_field('il_application_deadline');
 
 ?>
@@ -54,11 +54,11 @@ $ids[] = get_the_ID(); ?>
         <hr class="vf-divider">
         <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
         style="font-weight: 600;">Registration deadline</span> <span class="vf-u-text-color--grey"><br><?php echo esc_html($application_deadline); ?></span></p>
-        <a href="JavaScript:Void(0);" class="vf-button vf-button--primary vf-button--sm">Register</a>
+        <a href="<?php echo esc_url($registration_link); ?>" class="vf-button vf-button--primary vf-button--sm">Register</a>
         </div>
 </section>
 </div>
-<section class="embl-grid">
+<section class="embl-grid | vf-u-margin__top--600">
 
 <div class="vf-section-header">
   <h2 class="vf-section-header__heading"> Past lectures </h2>
