@@ -41,7 +41,7 @@ if (class_exists('VF_Navigation')) {
 </div>
     <div>
     <?php
- $current_year = get_the_time('Ymd');
+ $current_year = get_the_time('Y') . '0101';
  $args = array(
   'post_type' => 'llabs-event',
   'meta_query' => array( array(
@@ -71,7 +71,6 @@ wp_reset_postdata();
 </div>
 </div>
 </section>
-
 
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
