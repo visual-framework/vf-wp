@@ -119,5 +119,5 @@ get_header();
   </section>
 
 
-  <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
+<?php include(locate_template('partials/ells-footer.php', false, false)); ?>
 
