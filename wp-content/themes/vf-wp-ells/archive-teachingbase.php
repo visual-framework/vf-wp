@@ -25,9 +25,8 @@ if (class_exists('VF_Navigation')) {
 
 ?>
 
-<section class="vf-grid vf-grid__col-3">
-  <div class="vf-grid__col--span-2 | vf-content">
-   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent cursus lectus vel velit commodo, at accumsan elit lacinia. Nullam tincidunt, nulla ut vehicula euismod, est nibh consectetur velit, sed faucibus diam lectus in ex. Phasellus auctor velit et velit maximus suscipit. Maecenas id egestas nulla.</p>
+<section class="vf-grid vf-grid__col-4">
+  <div class="vf-grid__col--span-3 | vf-content">
 <?php
         if ( have_posts() ) {
           while ( have_posts() ) {
@@ -40,7 +39,8 @@ if (class_exists('VF_Navigation')) {
   <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>
   <div>
-        Filters here
+  <?php include(locate_template('partials/teachingbase-filter.php', false, false)); ?>
+
   </div>
 </section>
 

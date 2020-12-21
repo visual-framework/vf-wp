@@ -3,40 +3,6 @@
     "title": "ELLS TeachingBase",
     "fields": [
         {
-            "key": "field_5f6b0a2b3fe1f",
-            "label": "Start date",
-            "name": "tb_start_date",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5f6b0a2b3fe9a",
-            "label": "End date",
-            "name": "tb_end_date",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
             "key": "field_5f6b0a2b3ff09",
             "label": "Type of resource",
             "name": "il_type_of_resource",
@@ -45,7 +11,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -59,31 +25,56 @@
             "key": "field_5f6b0a2b3ff76",
             "label": "Topic area",
             "name": "tb_topic_area",
-            "type": "text",
+            "type": "taxonomy",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "taxonomy": "topic-area",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
         },
         {
             "key": "field_5f6b0a2b3ffe6",
             "label": "Age group",
             "name": "tb_age_group",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "age-group",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_5f6b0a2b40055",
+            "label": "Contact",
+            "name": "tb_contact",
             "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -94,83 +85,23 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f6b0a2b40055",
-            "label": "Contact",
-            "name": "tb_contact",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Add contact email",
-            "sub_fields": [
-                {
-                    "key": "field_5f6b0a2b459b1",
-                    "label": "Emails",
-                    "name": "tb_emails",
-                    "type": "email",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                }
-            ]
-        },
-        {
             "key": "field_5f6b0a2b400c4",
             "label": "Organisers",
             "name": "tb_organisers",
-            "type": "repeater",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Add organiser",
-            "sub_fields": [
-                {
-                    "key": "field_5f6b0a2b48385",
-                    "label": "Organiser",
-                    "name": "tb_person",
-                    "type": "wysiwyg",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "tabs": "all",
-                    "toolbar": "basic",
-                    "media_upload": 0,
-                    "delay": 0
-                }
-            ]
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_5f6b0a2b40141",
