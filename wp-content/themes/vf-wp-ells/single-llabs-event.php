@@ -30,14 +30,7 @@ if ( ! is_array($image)) {
 
 ?>
 
-<section class="vf-hero
-   vf-hero--primary
-
-
- vf-hero--block
-
- vf-hero--800   | vf-u-fullbleed | vf-u-margin__bottom--0" style="
---vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg');  ">
+<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg');  ">
   <div class="vf-hero__content | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading" style="font-size: 34px;">
     <?php echo esc_html($title); ?>
@@ -123,7 +116,7 @@ if (class_exists('VF_Navigation')) {
 
       <p class="vf-text-body vf-text-body--3" style="font-weight: 600;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
-      <div class="vf-social-links">
+      <div class="vf-social-links social-media-block">
         <ul class="vf-social-links__list">
           <li class="vf-social-links__item">
             <a class="vf-social-links__link" href="JavaScript:Void(0);">

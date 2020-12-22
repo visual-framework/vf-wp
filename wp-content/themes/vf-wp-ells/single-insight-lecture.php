@@ -110,7 +110,7 @@ if (class_exists('VF_Navigation')) {
 
       <p class="vf-text-body vf-text-body--3" style="font-weight: 600;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
-      <div class="vf-social-links">
+      <div class="vf-social-links social-media-block">
         <ul class="vf-social-links__list">
           <li class="vf-social-links__item">
             <a class="vf-social-links__link" href="JavaScript:Void(0);">

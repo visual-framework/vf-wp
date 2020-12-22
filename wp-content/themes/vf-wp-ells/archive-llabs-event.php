@@ -1,5 +1,6 @@
 <?php
 get_header();
+
 $year = get_the_time('Y');
 
 ?>

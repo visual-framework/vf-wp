@@ -7,10 +7,24 @@ $show_author = get_field('ells_show_author');
 get_header();
 
 ?>
+<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/Ells_Masthead_1000x600.png');  ">
+  <div class="vf-hero__content | vf-stack vf-stack--400 ">
+    <h2 class="vf-hero__heading">
+      ELLS
+    </h2>
+    <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
+  </div>
+</section>
+<?php
 
-<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--800 | vf-u-margin__bottom--0">
+if (class_exists('VF_Navigation')) {
+  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
+}
+
+?>
+
+<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--200 | vf-u-margin__bottom--0">
  <div>
-   <?php if ($show_author == 1) { ?>
     <div class="vf-article-meta-information">
     <div class="vf-author | vf-article-meta-info__author">
     <p class="vf-author__name">
@@ -24,7 +38,7 @@ get_header();
         <p class="vf-meta__date"><time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
         </div>
     </div>
-   <?php } ?>
+
  </div>
  <div class="vf-content | vf-u-padding__bottom--800">
   <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
@@ -40,13 +54,15 @@ get_header();
 
     <?php the_content(); ?>
   </div>
-  <div class="social-box">
+  <div class="social-media-block">
+<div class='red'>
 
+</div>
 <?php include(locate_template('partials/social-icons.php', false, false)); ?>
 
 <div class="vf-social-links | vf-u-margin__bottom--xxl">
   <h3 class="vf-social-links__heading">
-    Share this
+    Share
   </h3>
   <ul class="vf-social-links__list">
     <li class="vf-social-links__item">
@@ -91,7 +107,7 @@ get_header();
 
 </section>
 <section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed | category-more">
-      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">More from this category</h3>
+      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Recent posts</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php
           $args = array(
@@ -113,7 +129,7 @@ get_header();
 
           foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
 
-        <?php include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
+        <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
         <?php endforeach; wp_reset_postdata(); ?>
       </div>
   </section>
