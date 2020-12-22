@@ -26,14 +26,22 @@ if (class_exists('VF_Navigation')) {
 }
 
 ?>
-<div class="vf-grid vf-grid__col-3 | vf-content">
-  <div class="vf-grid__col--span-2">
-    <p>The 1-3 day courses provide a mix of scientific seminars, hands-on activities, lab experiments and new teaching resources, covering cutting-edge research and technologies and illustrate how these topics can be transferred to the classroom. 
+<section class="vf-intro">
+
+<div><!-- empty --></div>
+
+<div class="vf-stack">
+
+  <h2 class="vf-intro__subheading">Any upcoming ELLS LearningLABs will be advertised via this website and listed below.</h2>
+
+
+
+
+<p class="vf-intro__text">The 1-3 day courses provide a mix of scientific seminars, hands-on activities, lab experiments and new teaching resources, covering cutting-edge research and technologies and illustrate how these topics can be transferred to the classroom. 
       As of 2017, ELLS also offers virtual teacher training opportunities.</p>
-    <p>Any upcoming ELLS LearningLABs will be advertised via this website and listed below.</p>
-  </div>
-  <div></div>
 </div>
+</section>
+
 <div class="vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--100 vf-u-padding__top--600">
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
 
@@ -45,6 +53,7 @@ if (class_exists('VF_Navigation')) {
  $current_year = get_the_time('Y') . '0101';
  $args = array(
   'post_type' => 'llabs-event',
+  'order' => 'ASC',
   'meta_query' => array( array(
     'key' => 'labs_start_date',
     'value' => $current_year,

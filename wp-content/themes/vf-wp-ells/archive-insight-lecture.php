@@ -26,14 +26,22 @@ if (class_exists('VF_Navigation')) {
 }
 
 ?>
-<div class="vf-grid vf-grid__col-3 | vf-content">
-  <div class="vf-grid__col--span-2">
-    <p>The lectures are live streamed to school across the globe and made available online after the event.
-</p>
-    <p>There are currently ten lectures available, with topics ranging from genomics and neuroscience to ocean diversity, advances in light microscopy and the study of macromolecules.</p>
-  </div>
-  <div></div>
+
+<section class="vf-intro">
+
+<div><!-- empty --></div>
+
+<div class="vf-stack">
+
+  <h2 class="vf-intro__subheading">The lectures are live streamed to school across the globe and made available online after the event.</h2>
+
+
+
+
+<p class="vf-intro__text">There are currently ten lectures available, with topics ranging from genomics and neuroscience to ocean diversity, advances in light microscopy and the study of macromolecules.</p>
 </div>
+</section>
+
 <div class="vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--100 vf-u-padding__top--600">
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
 

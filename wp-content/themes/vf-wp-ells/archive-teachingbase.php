@@ -24,9 +24,19 @@ if (class_exists('VF_Navigation')) {
 }
 
 ?>
+<section class="vf-intro">
 
-<section class="vf-grid vf-grid__col-4">
-  <div class="vf-grid__col--span-3 | vf-content">
+<div><!-- empty --></div>
+
+<div class="vf-stack">
+
+  <h2 class="vf-intro__subheading">Filter teachingbase articles by age, topic area, and language</h2>
+
+</div>
+</section>
+
+  <section class="vf-grid vf-grid__col-4 | vf-content">
+  <div class="vf-grid__col--span-3">
 <?php
         if ( have_posts() ) {
           while ( have_posts() ) {

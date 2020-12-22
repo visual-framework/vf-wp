@@ -12,18 +12,8 @@ $type_of_resource = get_field('tb_type_of_resource');
 $age_group = get_field('tb_age_group');
 $topic_area = get_field('tb_topic_area');
 $download = get_field('tb_download');
-$image = get_field('tb_image');
-
-
-if ( ! is_array($image)) {
-    $image = null;
-  } else {
-    $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
-      'class'    => 'vf-card__image',
-      'loading'  => 'lazy',
-      'itemprop' => 'image',
-    ));
-  }
+$contact = get_field('tb_contact');
+$organisers = get_field('tb_organisers');
 
 ?>
 <section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg');">
@@ -31,7 +21,7 @@ if ( ! is_array($image)) {
     <h2 class="vf-hero__heading" style="font-size: 34px;">
     ELLS TeachingBase 
     </h2>
-    <p class="vf-hero__subheading">Chromosome structure and dynamics</p>
+    <p class="vf-hero__subheading">Ut congue, sapien ut placerat hendrerit, lectus erat</p>
   </div>
 </section>
               
@@ -45,27 +35,30 @@ if (class_exists('VF_Navigation')) {
 }
 
 ?>
-<div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
-  <div class="vf-grid__col--span-2">
-    <h1>
-      <?php the_title(); ?>
-    </h1>
-    <div class="vf-meta__details">
-      <p class="vf-author__name"><span class="vf-meta__date"><time title="<?php the_time('c'); ?>"
-            datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>, by <a
-          class="vf-link"
-          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a> in
-        <?php echo get_the_category_list(','); ?>
-      </p>
-    </div>
-  </div>
 
+<div class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--200 | vf-u-margin__bottom--0 | vf-content">
   <div></div>
+<h1><?php the_title(); ?></h1>
 </div>
+<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--200 | vf-u-margin__bottom--0">
+ <div>
+    <div class="vf-article-meta-information">
+    <div class="vf-author | vf-article-meta-info__author">
+    <p class="vf-author__name">
+        <a class="vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
+    </p>
+        <a class="vf-author--avatar__link | vf-link" href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+        <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array('class' => 'vf-author--avatar')); ?>
+        </a>
+    </div>
+        <div class="vf-meta__details">
+        <p class="vf-meta__date"><time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
+        </div>
+    </div>
 
+ </div>
+ <div>
 
-<section class="vf-grid vf-grid__col-3">
-  <div class="vf-grid__col--span-2 | vf-content">
   <?php
       if (has_post_thumbnail()) {
         $caption = get_the_post_thumbnail_caption();
@@ -87,44 +80,33 @@ if (class_exists('VF_Navigation')) {
 
       ?>
   </div>
+
   <div>
-    <div>
-      <?php if ($type_of_resource) { ?>  
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;"> <span class="vf-badge">
-            Application deadline:</span>&nbsp;<span
-            class="vf-u-text-color--grey"><?php echo ($type_of_resource); ?></span></p>
-      <?php } ?>    
-      <?php if ($topic_area) { ?>    
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Topic area:&nbsp;<span
-            class="vf-u-text-color--grey"><?php echo ($topic_area); ?></span></p>
+    <?php if ( ! empty($type_of_resource)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+        style="font-weight: 600;">Type of resource:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($type_of_resource); ?></span></p>
+    <?php } ?>     
+     <?php if ($topic_area) { ?>    
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
       <?php } ?>          
       <?php if ($age_group) { ?>    
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Age group:&nbsp;<span
-            class="vf-u-text-color--grey"><?php echo ($age_group); ?></span></p>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Age group:</span>&nbsp;<span
+            class="vf-u-text-color--grey"><?php echo ($age_group->name); ?></span></p>
       <?php } ?>          
-      <?php
-            if( have_rows('tb_contact') ):?>
-                <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Contact:<span class="vf-u-text-color--grey">
-            <?php while( have_rows('tb_contact') ) : the_row();
-                $emails = get_sub_field('tb_emails');
-                echo ($emails);
-            endwhile;
-            else : ?>
-            </span></p>
-            <?php endif; ?>
 
-            <?php
-            if( have_rows('tb_organisers') ): ?>
-                <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Organisers:<span class="vf-u-text-color--grey">
-            <?php while( have_rows('tb_organisers') ) : the_row();
-                $organisers = get_sub_field('tb_person', false, false);
-                echo ($organisers);
-            endwhile;
-        else : ?>
-        </span></p>
-       <?php endif; ?>
 
-      <p class="vf-text-body vf-text-body--3" style="font-weight: 400;">Share:</p>
+            <?php if ( ! empty($contact)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+        style="font-weight: 600;">Contact: </span><a href="mailto:<?php echo esc_html($contact); ?>"><?php echo esc_html($contact); ?></a></p>
+    <?php } ?>
+
+    <?php if ( ! empty($organisers)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+        style="font-weight: 600;">Organiser:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($organisers); ?></span></p>
+    <?php } ?>  
+
+      <p class="vf-text-body vf-text-body--3" style="font-weight: 600;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
       <div class="vf-social-links social-media-block">
         <ul class="vf-social-links__list">
@@ -172,7 +154,23 @@ if (class_exists('VF_Navigation')) {
       <?php endif; ?>
 
     </div>
-  </div>
+
 </section>
+<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
+      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">See also</h3>
+      <div class="vf-grid vf-grid__col-3">
+        <?php
+    $teachingbaseMore = new WP_Query (array(
+      'posts_per_page' => 3, 
+      'post_type' => 'teachingbase', 
+      'post__not_in'   => array( get_the_ID() ),  ));
+
+while ($teachingbaseMore->have_posts()) : $teachingbaseMore->the_post(); ?>
+
+        <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
+        <?php endwhile;?>
+      <?php wp_reset_postdata(); ?>
+      </div>
+  </section>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

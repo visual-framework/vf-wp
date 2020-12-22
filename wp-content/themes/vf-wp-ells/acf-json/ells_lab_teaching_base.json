@@ -5,7 +5,7 @@
         {
             "key": "field_5f6b0a2b3ff09",
             "label": "Type of resource",
-            "name": "il_type_of_resource",
+            "name": "tb_type_of_resource",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -139,5 +139,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "modified": 1608629864
 }

@@ -162,10 +162,23 @@ if (class_exists('VF_Navigation')) {
       <?php endif; ?>
 
     </div>
-  </div></section>
+  </div>
+</section>
+<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
+      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Past Insight Lectures</h3>
+      <div class="vf-grid vf-grid__col-3">
+        <?php
+    $llabsMore = new WP_Query (array(
+      'posts_per_page' => 3, 
+      'post_type' => 'llabs-event',
+      'post__not_in'   => array( get_the_ID() ), ));
+      
+while ($llabsMore->have_posts()) : $llabsMore->the_post(); ?>
 
-<?php
+        <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
+        <?php endwhile;?>
+      <?php wp_reset_postdata(); ?>
+      </div>
+  </section>
+  <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
 
-get_footer();
-
-?>
