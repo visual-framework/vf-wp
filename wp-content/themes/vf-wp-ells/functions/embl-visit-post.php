@@ -26,7 +26,6 @@ add_action(
       'show_in_admin_bar'   => true,
       'show_in_rest'        => true,
       'rest_base'           => "embl-visit",
-      'menu_position'       => 20,
       'menu_icon'           => 'dashicons-location-alt',
       'capability_type'     => 'page',
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
