@@ -15,18 +15,7 @@ $download = get_field('labs_download');
 $contact = get_field('labs_contact');
 $organisers = get_field('labs_organisers');
 $registration_link = get_field('labs_application_form_link');
-$image = get_field('labs_image');
-
-
-if ( ! is_array($image)) {
-    $image = null;
-  } else {
-    $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
-      'class'    => 'vf-card__image',
-      'loading'  => 'lazy',
-      'itemprop' => 'image',
-    ));
-  }
+$current_year = get_the_time('Y') . '0101';
 
 ?>
 
@@ -165,13 +154,20 @@ if (class_exists('VF_Navigation')) {
   </div>
 </section>
 <section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
-      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Past Insight Lectures</h3>
+      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Upcoming LearningLabs</h3>
       <div class="vf-grid vf-grid__col-3">
         <?php
     $llabsMore = new WP_Query (array(
       'posts_per_page' => 3, 
       'post_type' => 'llabs-event',
-      'post__not_in'   => array( get_the_ID() ), ));
+      'post__not_in'   => array( get_the_ID() ),
+      'meta_query' => array( array(
+        'key' => 'labs_start_date',
+        'value' => $current_year,
+        'compare' => '>=',
+        'type' => 'date'
+    ) )
+     ));
       
 while ($llabsMore->have_posts()) : $llabsMore->the_post(); ?>
 

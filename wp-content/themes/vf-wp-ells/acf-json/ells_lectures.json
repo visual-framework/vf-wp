@@ -114,6 +114,25 @@
             "multiple": 0
         },
         {
+            "key": "field_5fe2f3b84aa0e",
+            "label": "Summary",
+            "name": "il_summary",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
             "key": "field_5f6b099e8cfdc",
             "label": "Contact",
             "name": "il_contact",

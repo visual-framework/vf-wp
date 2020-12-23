@@ -3,6 +3,7 @@ get_header();
 $start_date = get_field('il_start_date');
 $registration_link = get_field('il_registration_link');
 $application_deadline = get_field('il_application_deadline');
+$summary = get_field('il_summary');
 
 ?>
 
@@ -58,7 +59,7 @@ $ids[] = get_the_ID(); ?>
       <?php wp_reset_postdata(); ?>
 
         <div>
-        <p class="vf-text-body vf-text-body--3">The EMBL Insight Lecture 2020 will be presented by Professor Matthias W. Hentze, EMBL Senior Scientist and Director</p>
+        <p class="vf-text-body vf-text-body--3"><?php echo ($summary); ?></p>
         <hr class="vf-divider">
         <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
         style="font-weight: 600;">Registration deadline</span> <span class="vf-u-text-color--grey"><br><?php echo esc_html($application_deadline); ?></span></p>

@@ -174,7 +174,7 @@ $archive = home_url('/?post_type=teachingbase');
       <?php esc_html_e('Apply filter', 'theme'); ?>
     </button>
 	 
-	<a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url(); ?>">
+	<a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/teachingbase'; ?>">
   <?php esc_html_e('Reset filters', 'theme'); ?>
 </a>
   </div>
