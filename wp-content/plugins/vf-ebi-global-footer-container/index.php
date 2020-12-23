@@ -47,9 +47,9 @@ class VF_EBI_Global_Footer extends VF_Plugin {
 
     // Ideally this should go in some sort of "EBI CSS+JS plugin" along with
     // the v1.3 CSS+JS
-    add_filter('body_class',
-      array($this, 'body_class')
-    );
+    // add_filter('body_class',
+    //   array($this, 'body_class')
+    // );
   }
 
   /**
@@ -87,16 +87,16 @@ class VF_EBI_Global_Footer extends VF_Plugin {
     );
   }
 
-  /**
-   * Filter: `body_class`
-   */
-  public function body_class($classes) {
-    // enable the VF 1.x workarounds
-    if ($this->is_ebi_template()) {
-      $classes[] = 'ebi-vf1-integration';
-    }
-    return $classes;
-  }
+  // /**
+  //  * Filter: `body_class`
+  //  */
+  // public function body_class($classes) {
+  //   // enable the VF 1.x workarounds
+  //   if ($this->is_ebi_template()) {
+  //     $classes[] = 'ebi-vf1-integration';
+  //   }
+  //   return $classes;
+  // }
 
   // We load these scripts here as a short term solution to not over-architect
   // something that shouldn't be permananent.
@@ -113,11 +113,21 @@ class VF_EBI_Global_Footer extends VF_Plugin {
       'v1.3',
       true
     );
+    // wp_enqueue_style(
+    //   'ebi-global',
+    //   'https://dev.ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css',
+    //   array(),
+    //   'v1.3',
+    //   'all'
+    // );
+    // The ebi-header footer is actually passed by the contentHub in
+    // https://content.embl.org/node/6682/edit
+    // However it fails to cache; see https://github.com/visual-framework/vf-wp/issues/606
     wp_enqueue_style(
-      'ebi-global',
-      'https://dev.ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/css/ebi-global.css',
+      'ebi-header',
+      'https://assets.emblstatic.net/vf/v2.4.0/assets/ebi-header-footer/ebi-header-footer.css',
       array(),
-      'v1.3',
+      'v2.4',
       'all'
     );
     wp_enqueue_style(
