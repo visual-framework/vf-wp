@@ -2,7 +2,7 @@
 
 get_header();
 
-
+$title=get_the_title();
 $type = get_field('il_type');
 $start_date = get_field('il_start_date');
 $start = DateTime::createFromFormat('j F Y', $start_date);
@@ -26,9 +26,9 @@ $registration_link = get_field('il_registration_link');
 --vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/vf-hero-intense.png');  ">
   <div class="vf-hero__content | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading">
-      EMBL Insight Lecture 2020
+      <?php echo esc_html($title); ?>
     </h2>
-    <p class="vf-hero__subheading">Discover RNA – the language of genomes</p>
+    <p class="vf-hero__subheading"><?php echo get_the_excerpt(); ?></p>
   </div>
 </section>
 
