@@ -57,6 +57,7 @@
 }
 
 .acf-field[data-name="vf_event_event_type"] .acf-input,
+.acf-field[data-name="vf_event_embo_event_name"] .acf-input,
 .acf-field[data-name="vf_event_ss_event_name"] .acf-input,
 .acf-field[data-name="vf_event_event_topic"] .acf-input {
   max-width: 400px;
