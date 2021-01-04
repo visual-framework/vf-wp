@@ -35,7 +35,6 @@ class VF_ELLS_Breadcrumbs extends VF_Plugin {
 
 public function ells_breadcrumbs() {
 
-    $delimiter = '&raquo;';
     $name = 'Home'; //text for the 'Home' link
     $currentBefore = '<li class="vf-breadcrumbs__item">';
     $currentAfter = '</li>';
@@ -49,8 +48,37 @@ public function ells_breadcrumbs() {
       echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
       $news_url = get_post_type_archive_link('post');
       $news_name = 'News';
-      echo '<li class="vf-breadcrumbs__item"><a href="' . $news_url . '" class="vf-breadcrumbs__link">' . $news_name . '</a></li>';
+      echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $news_url . '" class="vf-breadcrumbs__link">' . $news_name . '</a></li>';
        }
+
+   // teachingbase
+    if ( is_post_type_archive('teachingbase') ) {
+      echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
+      $teachingbase_url = get_post_type_archive_link('teachingbase');
+      $teachingbase_name = 'TeachingBASE';
+      echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $teachingbase_url . '" class="vf-breadcrumbs__link">' . $teachingbase_name . '</a></li>';
+        }
+    // llabs
+    if ( is_post_type_archive('llabs-event') ) {
+      echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
+      $labs_url = get_post_type_archive_link('llabs-event');
+      $labs_name = 'LearningLabs';
+      echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $labs_url . '" class="vf-breadcrumbs__link">' . $labs_name . '</a></li>';
+        }
+    // lecture
+    if ( is_post_type_archive('insight-lecture') ) {
+      echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
+      $lecture_url = get_post_type_archive_link('insight-lecture');
+      $lecture_name = 'Insight Lecture';
+      echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $lecture_url . '" class="vf-breadcrumbs__link">' . $lecture_name . '</a></li>';
+        }
+   // visit
+    if ( is_post_type_archive('embl-visit') ) {
+      echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
+      $visit_url = get_post_type_archive_link('embl-visit');
+      $visit_name = 'EMBL Visit';
+      echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $visit_url . '" class="vf-breadcrumbs__link">' . $visit_name . '</a></li>';
+        }
 
     if (is_tag()){
       echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
@@ -73,17 +101,18 @@ public function ells_breadcrumbs() {
       echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
       $news_url = get_post_type_archive_link('post');
       $news_name = 'News';
-      echo '<li class="vf-breadcrumbs__item"><a href="' . $news_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
+      echo '<li class="vf-breadcrumbs__item"><a href="' . $news_url . '" class="vf-breadcrumbs__link">' . $news_name . '</a></li>';
       echo $currentBefore . 'Category: &#39;';
       single_cat_title();
       echo '&#39;' . $currentAfter;
+      
 
     }
 
 
-    if ( !is_home() && !is_front_page() || is_paged() ) {
+    if ( !is_home() && !is_archive('teachingbase') && !is_archive('llabs-event') && !is_archive('insight-lecture') && !is_archive('embl-visit') && !is_front_page() || is_paged() ) {
 
-        $post = get_queried_object();
+      $post = get_queried_object();
       echo '
       <li class="vf-breadcrumbs__item">
       <a href="' . $home . '" class="vf-breadcrumbs__link" >' . $name . '</a></li>';
@@ -93,7 +122,7 @@ public function ells_breadcrumbs() {
         echo $currentBefore . get_the_time('d') . $currentAfter;
 
       } elseif ( is_month() ) {
-        echo '<li class="vf-breadcrumbs__item"><a href="' . get_year_link(get_the_time('Y')) . '"class="vf-breadcrumbs__link">' . get_the_time('Y') . '</a></li>';
+        echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . get_year_link(get_the_time('Y')) . '"class="vf-breadcrumbs__link">' . get_the_time('Y') . '</a></li>';
         echo $currentBefore . get_the_time('F') . $currentAfter;
 
       } elseif ( is_year() ) {
@@ -104,9 +133,38 @@ public function ells_breadcrumbs() {
         $news_url = get_post_type_archive_link('post');
         $news_name = 'News';
         echo '<li class="vf-breadcrumbs__item"><a href="' . $news_url . '" class="vf-breadcrumbs__link">' . $news_name . '</a></li>';
-        echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
+        echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+        // teachingbase
+      } elseif ( is_singular('teachingbase') && !is_attachment() ) {
+        $teachingbase_url = get_post_type_archive_link('teachingbase');
+        $teachingbase_name = 'TeachingBASE';
+        echo '<li class="vf-breadcrumbs__item"><a href="' . $teachingbase_url . '" class="vf-breadcrumbs__link">' . $teachingbase_name . '</a></li>';
+        echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
 
-      } elseif ( is_attachment() ) {
+        // llabs
+      } elseif ( is_singular('llabs-event') ) {
+          $labs_url = get_post_type_archive_link('llabs-event');
+          $labs_name = 'LearningLabs';
+          echo '<li class="vf-breadcrumbs__item"><a href="' . $labs_url . '" class="vf-breadcrumbs__link">' . $labs_name . '</a></li>';
+          echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+
+        // lecture
+      } elseif ( is_singular('insight-lecture') ) {
+          $lecture_url = get_post_type_archive_link('insight-lecture');
+          $lecture_name = 'Insight Lecture';
+          echo '<li class="vf-breadcrumbs__item"><a href="' . $lecture_url . '" class="vf-breadcrumbs__link">' . $lecture_name . '</a></li>';
+          echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+
+        // visit
+      } elseif ( is_singular('embl-visit') ) {
+          $visit_url = get_post_type_archive_link('embl-visit');
+          $visit_name = 'EMBL Visit';
+          echo '<li class="vf-breadcrumbs__item"><a href="' . $visit_url . '" class="vf-breadcrumbs__link">' . $visit_name . '</a></li>';
+          echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+
+        }
+
+      elseif ( is_attachment() ) {
         $parent = get_post($post->post_parent);
         $cat = get_the_category($parent->ID); $cat = $cat[0];
         echo get_category_parents($cat, TRUE, '');
@@ -125,7 +183,7 @@ public function ells_breadcrumbs() {
         $breadcrumbs = array();
         while ($parent_id) {
           $page = get_page($parent_id);
-          $breadcrumbs[] = '<li class="vf-breadcrumbs__item"><a href="' . get_permalink($page->ID) . '" class="vf-breadcrumbs__link">' . get_the_title($page->ID) . '</a></li>';
+          $breadcrumbs[] = '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . get_permalink($page->ID) . '" class="vf-breadcrumbs__link">' . get_the_title($page->ID) . '</a></li>';
           $parent_id  = $page->post_parent;
         }
         $breadcrumbs = array_reverse($breadcrumbs);

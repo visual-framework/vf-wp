@@ -3,5 +3,5 @@
     <label class="vf-form__label vf-sr-only | vf-search__label" for="s"><?php esc_html_e('Search for:', 'vfwp'); ?></label>
     <input type="search" class="vf-form__input | vf-search__input" value="<?php echo esc_attr(get_search_query()); ?>" name="s">
   </div>
-  <input type="submit" class="vf-search__button | vf-button vf-button--primary" value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+  <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="<?php esc_attr_e('Search', 'vfwp'); ?>">
 </form>

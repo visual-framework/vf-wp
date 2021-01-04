@@ -19,3 +19,10 @@ Text Domain:	 vfwp
 .vf-social-links--outline .vf-social-links__item {
   border: 1px solid #fff !important;
 }
+.social-media-block .vf-icon {
+  fill: #000 !important;
+}
+
+.social-media-block .vf-social-links__item {
+  background: #fff;
+}
