@@ -1429,10 +1429,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-notifications/-/embl-notifications-1.0.1.tgz#140f96c4a29b53d94ecb86277581d7ba9556518f"
   integrity sha512-KYaCeAPv7eDv5bu7Fmem8v6PAbyJDSSbvTe8shjBHesP0n/EmYQikp5VFo+raxfws9tkRtz0Y5U/2is9/6xnvw==
 
-"@visual-framework/vf-activity-group@1.0.0-alpha.9":
-  version "1.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-group/-/vf-activity-group-1.0.0-alpha.9.tgz#99b2c9ee46cf7145072d5a75781be7a3c36fc724"
-  integrity sha512-QZJEsVG+lCgYVmUIPsrfpSlOZ/xxy4BDaxgHuwD5AyB+AFKJGwLoEC+6xqU4jq2Em2zVk7tbx12Ng3qQwtp/qQ==
+"@visual-framework/vf-activity-group@1.0.0-alpha.10":
+  version "1.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-group/-/vf-activity-group-1.0.0-alpha.10.tgz#27873d285c7c6b2097de246368922abe8d6ad34c"
+  integrity sha512-sOYM8z7SB2S8BVcnWUvj3Nlm4EjkguKbmhPETojO7MwBIH59AgKVbn0exR2HvSfwSCdsGoBgh2HbspEFra4qYw==
   dependencies:
     "@visual-framework/vf-activity-list" "^1.0.0-alpha.9"
 
