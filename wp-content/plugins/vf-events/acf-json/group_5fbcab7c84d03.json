@@ -277,7 +277,7 @@
                     {
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
-                        "value": "77"
+                        "value": "364"
                     }
                 ]
             ],
@@ -416,7 +416,7 @@
         },
         {
             "key": "field_5e9851f4f52eb",
-            "label": "Registration link",
+            "label": "Registration\/Application link",
             "name": "vf_event_registration_link",
             "type": "url",
             "instructions": "",
@@ -432,7 +432,7 @@
         },
         {
             "key": "field_5f7473f59e83d",
-            "label": "Registration button text",
+            "label": "Registration\/Application button text",
             "name": "vf_event_registration_button_text",
             "type": "text",
             "instructions": "",
@@ -878,9 +878,9 @@
             "mime_types": ""
         },
         {
-            "key": "field_5f743c13b08c1",
-            "label": "Contact",
-            "name": "vf_event_contact",
+            "key": "field_5ff84c2d7239b",
+            "label": "Contact name",
+            "name": "vf_event_contact_name",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -895,6 +895,24 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5f743c13b08c1",
+            "label": "Contact email",
+            "name": "vf_event_contact",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_5f743c25b08c2",
@@ -1053,6 +1071,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type",
-    "modified": 1609234770
+    "description": "`vf_event` post type"
 }
