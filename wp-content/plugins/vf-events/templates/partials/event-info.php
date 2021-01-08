@@ -20,6 +20,7 @@ $event_topic = get_field('vf_event_event_topic', $post->post_parent);
 
 $registration_link = get_field('vf_event_registration_link', $post->post_parent);
 $contact = get_field('vf_event_contact', $post->post_parent);
+$contact_name = get_field('vf_event_contact_name', $post->post_parent);
 $hashtag = get_field('vf_event_hashtag', $post->post_parent);
 $abstract_link = get_field('vf_event_abstract_link', $post->post_parent);
 $poster_file = get_field('vf_event_poster_file', $post->post_parent);
@@ -154,7 +155,7 @@ $abstract_date = new DateTime($abstract_closing);
               <hr class="vf-divider | vf-u-margin__bottom--400">
               <?php if ( ! empty($contact)) { ?>
                 <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-                style="font-weight: 600;">Contact: </span><a href="#"><?php echo esc_html($contact); ?></a></p>
+                style="font-weight: 600;">Contact: </span><a href="mailto:<?php echo esc_attr($contact); ?>"><?php echo esc_html($contact_name); ?></a></p>
                 <?php } ?>
               <div class="vf-grid">
                 <?php if ( ! empty($poster_image) && $event_organiser != "science_society") { ?>
