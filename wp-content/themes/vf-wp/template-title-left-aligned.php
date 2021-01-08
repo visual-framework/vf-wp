@@ -1,4 +1,7 @@
 <?php
+/**
+* Template Name: Title left aligned
+*/
 
 get_header();
 
@@ -6,7 +9,9 @@ global $post;
 setup_postdata($post);
 
 global $vf_theme;
+
 $title = get_the_title();
+
 ?>
 
 <?php 
@@ -59,15 +64,11 @@ $close_wrap,
     parse_blocks( 'acf/vfwp-masthead' ); }
 
   else {  ?>
-    <section class="embl-grid embl-grid--has-centered-content">
-      <div></div>
      <div>
        <h1 class="vf-text vf-text-heading--1">
          <?php echo $title;?>
        </h1>
      </div>
-     <div></div>
-   </section>  
    <?php } 
 
 $vf_theme->the_content();
