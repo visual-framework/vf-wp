@@ -79,6 +79,16 @@ $abstract_date = new DateTime($abstract_closing);
         style="font-weight: 600;">Location:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($location); ?></span></p>
     <?php } ?>
     
+    <?php if ( ! empty($time)) { ?>
+      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+      style="font-weight: 600;">Time:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($time); ?></span></p>
+      <?php } ?>
+      
+      <?php if ( ! empty($venue)) { ?>
+        <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+        style="font-weight: 600;">Venue:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
+        <?php } ?>
+        
     <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing))) { ?>
       <hr class="vf-divider | vf-u-margin__bottom--400">
     <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
@@ -120,26 +130,13 @@ $abstract_date = new DateTime($abstract_closing);
     </span></p>
     <?php } ?>
     
-    <?php if ( ! empty($time)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-      style="font-weight: 600;">Time:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($time); ?></span></p>
-      <?php } ?>
-      
-      <?php if ( ! empty($venue)) { ?>
-        <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Venue:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
-        <?php } ?>
         
-        <?php if ( ! empty($contact)) { ?>
-          <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-          style="font-weight: 600;">Contact: </span><a href="#"><?php echo esc_html($contact); ?></a></p>
-          <?php } ?>
-          <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
-            <?php if ( !empty($registration_link)) { 
-              if (
-                (($registration_closing) && ($registration_date > $now)) 
-                || 
-                (($application_closing) && ($application_date > $now))) { ?>
+        <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
+          <?php if ( !empty($registration_link)) { 
+            if (
+              (($registration_closing) && ($registration_date > $now)) 
+              || 
+              (($application_closing) && ($application_date > $now))) { ?>
               <div style="display: inline-block;">
                 <a href="<?php echo esc_url($registration_link); ?>"><button
                 class="vf-button vf-button--primary vf-button--sm"><?php echo($register_button); ?></button></a>
@@ -155,6 +152,10 @@ $abstract_date = new DateTime($abstract_closing);
                 <?php }} ?>
               </div>
               <hr class="vf-divider | vf-u-margin__bottom--400">
+              <?php if ( ! empty($contact)) { ?>
+                <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+                style="font-weight: 600;">Contact: </span><a href="#"><?php echo esc_html($contact); ?></a></p>
+                <?php } ?>
               <div class="vf-grid">
                 <?php if ( ! empty($poster_image) && $event_organiser != "science_society") { ?>
                   <div>
