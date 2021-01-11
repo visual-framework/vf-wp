@@ -1,7 +1,7 @@
-<section class="embl-grid | vf-content">
+<section class="embl-grid | vf-content | vf-u-margin__bottom--600">
   <div class="vf-section-header">
-    <p class="vf-section-header__heading">Popular </p>
-    <p class="vf-section-header__text"></p>
+    <p class="vf-section-header__heading">Quick links </p>
+    <p class="vf-section-header__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
   </div>
   <div>
   <div class="vf-tabs">
