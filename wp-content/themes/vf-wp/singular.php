@@ -55,19 +55,17 @@ else if ( has_block( 'acf/vfwp-masthead', $post ) ) {
   parse_blocks( 'acf/vfwp-masthead' ); }
 
 else { 
-  if ($title_position == 1) { ?>
+   ?>
     <section class="embl-grid embl-grid--has-centered-content">
       <div></div>
-  <?php } ?>
      <div>
        <h1 class="vf-text vf-text-heading--1">
          <?php echo $title;?>
        </h1>
      </div>
-  <?php if ($title_position == 1) { ?>
      <div></div>
    </section>
-    <?php } }
+    <?php } 
 
 $vf_theme->the_content();
 

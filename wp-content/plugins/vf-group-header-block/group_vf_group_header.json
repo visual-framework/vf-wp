@@ -1,50 +1,68 @@
 {
-    "key": "group_vf_group_header",
-    "title": "VF Group Header (block)",
-    "fields": [
+"key": "group_vf_group_header",
+"title": "VF Group Header (block)",
+"fields": [
+    {
+        "key": "field_vf_group_header_heading",
+        "label": "Heading",
+        "name": "vf_group_header_heading",
+        "type": "textarea",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "maxlength": "",
+        "rows": 4,
+        "new_lines": ""
+    },
+    {
+        "key": "field_5ff82a3459eb2",
+        "label": "Profile",
+        "name": "vf_group_header_profile",
+        "type": "text",
+        "instructions": "Find a person by name, e.g. \"John Doe\"",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+    }
+],
+"location": [
+    [
         {
-            "key": "field_vf_group_header_heading",
-            "label": "Heading",
-            "name": "vf_group_header_heading",
-            "type": "textarea",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "maxlength": "",
-            "rows": 4,
-            "new_lines": ""
+            "param": "vf_block",
+            "operator": "==",
+            "value": "vf_group_header"
         }
     ],
-    "location": [
-        [
-            {
-                "param": "vf_block",
-                "operator": "==",
-                "value": "vf_group_header"
-            }
-        ],
-        [
-          {
+    [
+        {
             "param": "block",
             "operator": "==",
-            "value": "acf/vf-group-header"
-          }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "seamless",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": 1,
-    "description": "",
-    "modified": 1589179883
+            "value": "acf\/vf-group-header"
+        }
+    ]
+],
+"menu_order": 0,
+"position": "normal",
+"style": "seamless",
+"label_placement": "top",
+"instruction_placement": "label",
+"hide_on_screen": "",
+"active": true,
+"description": ""
 }

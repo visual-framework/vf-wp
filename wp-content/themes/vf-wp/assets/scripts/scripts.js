@@ -1069,8 +1069,15 @@ function vfTabs(scope) {
       oldTab.removeAttribute("aria-selected");
       oldTab.setAttribute("tabindex", "-1");
       oldTab.classList.remove("is-active");
-      var oldIndex = Array.prototype.indexOf.call(tabs, oldTab);
-      panels[oldIndex].hidden = true;
+
+      for (var item = 0; item < panels.length; item++) {
+        var panel = panels[item];
+
+        if (panel.id === oldTab.id) {
+          panel.hidden = true;
+          break;
+        }
+      }
     }
 
     newTab.focus(); // Make the active tab focusable by the user (Tab key)
@@ -1081,15 +1088,23 @@ function vfTabs(scope) {
     newTab.classList.add("is-active"); // Get the indices of the new tab to find the correct
     // tab panel to show
 
-    var index = Array.prototype.indexOf.call(tabs, newTab);
-    panels[index].hidden = false;
+    for (var _item = 0; _item < panels.length; _item++) {
+      var _panel = panels[_item];
+
+      if (_panel.id === newTab.id) {
+        _panel.hidden = false;
+        break;
+      }
+    }
   }; // Add semantics are remove user focusability for each tab
 
 
   Array.prototype.forEach.call(tabs, function (tab, i) {
+    var tabId = tab.href.split("#")[1]; // calculate an ID based off the tab href (todo: add support for a data-vf-js-tab-id, and if set use that)
+
     tab.setAttribute("role", "tab");
-    tab.setAttribute("id", "tab" + (i + 1));
-    tab.setAttribute("data-tabs__item", "tab" + (i + 1));
+    tab.setAttribute("id", tabId);
+    tab.setAttribute("data-tabs__item", tabId);
     tab.setAttribute("tabindex", "-1");
     tab.parentNode.setAttribute("role", "presentation"); // Reset any active tabs from a previous JS call
 
@@ -1118,11 +1133,11 @@ function vfTabs(scope) {
     });
   }); // Add tab panel semantics and hide them all
 
-  Array.prototype.forEach.call(panels, function (panel, i) {
+  Array.prototype.forEach.call(panels, function (panel) {
     panel.setAttribute("role", "tabpanel");
     panel.setAttribute("tabindex", "-1"); // let id = panel.getAttribute("id");
 
-    panel.setAttribute("aria-labelledby", tabs[i].id);
+    panel.setAttribute("aria-labelledby", panel.id);
     panel.hidden = true;
   }); // Add the tablist role to the first <ul> in the .tabbed container
 
