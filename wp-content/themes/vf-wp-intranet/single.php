@@ -33,17 +33,17 @@ get_header();
 
     <?php the_content(); ?>
 
-    <p class="vf-text-body vf-text-body--3 | tags-inline">Tags:
-     <?php
+    <?php
      $tags = get_the_tags($post->ID);
-     if ($tags) {
-     $tagslist = array();
+     if ($tags) { ?>
+      <p class="vf-text-body vf-text-body--3 | tags-inline">Tags:
+     <?php $tagslist = array();
      foreach($tags as $tag) {
       $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-link vf-link--secondary' . $tag->term_id . '">' . $tag->name . '</a>';
      }
-     echo implode(', ', $tagslist);
-     } ?>
+     echo implode(', ', $tagslist); ?>
     </p>
+    <?php } ?>
   </div>
 </section>
 
