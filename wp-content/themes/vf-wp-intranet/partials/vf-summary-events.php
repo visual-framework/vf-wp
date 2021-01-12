@@ -8,9 +8,11 @@ $post_id = get_the_ID();
         'vf_event_location',
         $post_id
       );
-      $event_type = get_field('vf_event_event_type'); ?>
+      $event_type = get_field('vf_event_event_type'); 
+      $venue = get_field('vf_event_venue'); 
+?>
 
-      <article class="vf-summary vf-summary--event">
+<article class="vf-summary vf-summary--event">
         <?php if ( ! empty($start_date)) { ?>
         <p class="vf-summary__date">
           <?php echo esc_html($start_date); ?>
@@ -21,13 +23,23 @@ $post_id = get_the_ID();
             <?php the_title(); ?>
           </a>
         </h3>
+        <?php if ( ! empty(get_the_excerpt())) { ?>
         <p class="vf-summary__text">
-          <?php echo esc_html($event_type); ?>
+          <?php echo strip_tags(get_the_excerpt()); ?>
+        </p>
+        <?php } ?>
+        <p class="vf-summary__text">
+          <?php echo esc_html($event_type['label']); ?>
         </p>
         <?php if ( ! empty($location)) { ?>
         <p class="vf-summary__location">
-          <?php echo esc_html($location); ?>
+          <?php if ( ! empty($venue)) { 
+
+           echo esc_html($venue) . ', '; }
+           echo esc_html($location); 
+           ?>
         </p>
         <?php } ?>
       </article>
+
       <!--/vf-summary-->
