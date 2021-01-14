@@ -19,6 +19,10 @@ $heading_text = get_field('heading_text');
 
 $columns = get_field('columns');
 
+$category = get_field('category');
+$tag = get_field('tag');
+$keyword = get_field('keyword');
+
 $show_image = get_field('show_image');
 $class = ($show_image == 1) ? 'vf-summary--news' : 'vf-summary--article';
 

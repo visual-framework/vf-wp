@@ -1,5 +1,11 @@
 <?php
-$mainloop = new WP_Query (array('posts_per_page' => $limit ));
+$mainloop = new WP_Query (array(
+  'posts_per_page' => $limit,
+  'post_type' => 'post',
+  'cat' => $category,
+  'tag__in' => $tag,
+  's' => $keyword
+ ));
     $ids = array();
     while ($mainloop->have_posts()) : $mainloop->the_post();
     $ids[] = get_the_ID(); ?>

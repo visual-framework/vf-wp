@@ -1,12 +1,10 @@
 <?php
-$category = get_field('category');
-$tagg = get_field('vf_tag');
-
-
 $mainloop = new WP_Query (array(
   'posts_per_page' => 3,
-   'cat' => $category,
-   'tag__in' => $tagg
+  'post_type' => 'post',
+  'cat' => $category,
+  'tag__in' => $tag,
+  's' => $keyword
  ));
     $ids = array();
     while ($mainloop->have_posts()) : $mainloop->the_post();
@@ -20,8 +18,7 @@ $mainloop = new WP_Query (array(
     <?php echo get_the_excerpt(); ?>
     <?php the_category();
     the_tags();
-    print_r($tagg);
-    print_r($category) ?>
+?>
   </p>
   <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
