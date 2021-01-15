@@ -7,7 +7,6 @@ setup_postdata($post);
 
 global $vf_theme;
 $title = get_the_title();
-$title_position = get_field('title_position');
 ?>
 
 <?php 
@@ -59,20 +58,17 @@ $close_wrap,
   else if ( has_block( 'acf/vfwp-masthead', $post ) ) {
     parse_blocks( 'acf/vfwp-masthead' ); }
 
-  else { 
-  if ($title_position == 1) { ?>
+  else {  ?>
     <section class="embl-grid embl-grid--has-centered-content">
       <div></div>
-  <?php } ?>
-      <div>
-        <h1 class="vf-text vf-text-heading--1">
-          <?php echo $title;?>
-        </h1>
-      </div>
-  <?php if ($title_position == 1) { ?>
-      <div></div>
-    </section>
-  <?php } }
+     <div>
+       <h1 class="vf-text vf-text-heading--1">
+         <?php echo $title;?>
+       </h1>
+     </div>
+     <div></div>
+   </section>  
+   <?php } 
 
 $vf_theme->the_content();
 

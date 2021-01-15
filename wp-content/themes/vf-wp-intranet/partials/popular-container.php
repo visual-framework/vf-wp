@@ -1,7 +1,7 @@
-<section class="embl-grid | vf-content">
+<section class="embl-grid | vf-content | vf-u-margin__bottom--600">
   <div class="vf-section-header">
-    <p class="vf-section-header__heading">Popular </p>
-    <p class="vf-section-header__text"></p>
+    <p class="vf-section-header__heading">Quick links </p>
+    <p class="vf-section-header__text">Most visited and featured pages</p>
   </div>
   <div>
   <div class="vf-tabs">
@@ -41,7 +41,7 @@
               </li>
               <li class="vf-list__item">
                 <a class="vf-list__link" href="JavaScript:Void(0);">
-                Accommodation
+                  Brexit information
                 </a>
               </li>
           </ul>
@@ -75,6 +75,11 @@
               <li class="vf-list__item">
                 <a class="vf-list__link" href="JavaScript:Void(0);">
                   Seminars
+                </a>
+              </li>
+              <li class="vf-list__item">
+                <a class="vf-list__link" href="JavaScript:Void(0);">
+                  Coronavirus updates
                 </a>
               </li>
           </ul>

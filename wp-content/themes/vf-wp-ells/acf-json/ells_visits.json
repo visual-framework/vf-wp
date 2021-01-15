@@ -1,11 +1,36 @@
 {
-    "key": "group_5f6b0a2b3ca4c",
-    "title": "ELLS TeachingBase",
+    "key": "group_5f50f61701601",
+    "title": "ELLS EMBL Visits",
     "fields": [
         {
-            "key": "field_5f6b0a2b3fe1f",
+            "key": "field_5f50f61705c82",
+            "label": "Visit type",
+            "name": "visit_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "visit_onsite": "On-Site",
+                "visit_virtual": "Virtual"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "array",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f50f61705d19",
             "label": "Start date",
-            "name": "tb_start_date",
+            "name": "visit_start_date",
             "type": "date_picker",
             "instructions": "",
             "required": 0,
@@ -16,13 +41,14 @@
                 "id": ""
             },
             "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
+            "return_format ": "j M Y",
+            "first_day": 1,
+            "return_format": "d\/m\/Y"
         },
         {
-            "key": "field_5f6b0a2b3fe9a",
+            "key": "field_5f50f61705dbf",
             "label": "End date",
-            "name": "tb_end_date",
+            "name": "visit_end_date",
             "type": "date_picker",
             "instructions": "",
             "required": 0,
@@ -37,66 +63,9 @@
             "first_day": 1
         },
         {
-            "key": "field_5f6b0a2b3ff09",
-            "label": "Type of resource",
-            "name": "il_type_of_resource",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f6b0a2b3ff76",
-            "label": "Topic area",
-            "name": "tb_topic_area",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f6b0a2b3ffe6",
-            "label": "Age group",
-            "name": "tb_age_group",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f6b0a2b40055",
+            "key": "field_5f50f61705f98",
             "label": "Contact",
-            "name": "tb_contact",
+            "name": "visit_contact",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -113,9 +82,9 @@
             "button_label": "Add contact email",
             "sub_fields": [
                 {
-                    "key": "field_5f6b0a2b459b1",
+                    "key": "field_5f50f6170d413",
                     "label": "Emails",
-                    "name": "tb_emails",
+                    "name": "visit_emails",
                     "type": "email",
                     "instructions": "",
                     "required": 0,
@@ -133,9 +102,9 @@
             ]
         },
         {
-            "key": "field_5f6b0a2b400c4",
+            "key": "field_5f50f6170602e",
             "label": "Organisers",
-            "name": "tb_organisers",
+            "name": "visit_organisers",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -152,9 +121,9 @@
             "button_label": "Add organiser",
             "sub_fields": [
                 {
-                    "key": "field_5f6b0a2b48385",
+                    "key": "field_5f50f61710cd7",
                     "label": "Organiser",
-                    "name": "tb_person",
+                    "name": "visit_person",
                     "type": "wysiwyg",
                     "instructions": "",
                     "required": 0,
@@ -173,9 +142,9 @@
             ]
         },
         {
-            "key": "field_5f6b0a2b40141",
+            "key": "field_5f50f617060c0",
             "label": "Download",
-            "name": "tb_download",
+            "name": "visit_download",
             "type": "file",
             "instructions": "",
             "required": 0,
@@ -195,9 +164,9 @@
     "location": [
         [
             {
-                "param": "post_template",
+                "param": "post_type",
                 "operator": "==",
-                "value": "teachingbase-template.php"
+                "value": "embl-visit"
             }
         ]
     ],

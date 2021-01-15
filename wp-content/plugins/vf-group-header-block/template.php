@@ -88,6 +88,36 @@ if (vf_cache_empty($content)) {
   return;
 }
 
+// Query to override the profile:
+// Get search value
+$value = get_field('vf_group_header_profile', $acf_id);
+
+$value = trim($value);
+// Setup base API URL
+$url_profile = VF_Cache::get_api_url();
+$url_profile .= '/pattern.html';
+$url_profile = add_query_arg(array(
+  'source'              => 'contenthub',
+  'pattern'             => "vf-profile-inline",
+  'filter-content-type' => 'person',
+  'limit'               => 1,
+  'hide[orcid,mobile,phones,email]' => 1,
+  'filter-ref-entity[field_person_positions][title]' => "",
+  
+), $url_profile);
+
+// Add search field query var
+$url_profile = add_query_arg(array(
+  'filter-field-contains[field_person_full_name]' => $value
+), $url_profile);
+
+// Request HTML from the Content Hub API
+$content_profile = VF_Cache::fetch($url_profile);
+$hash_profile = VF_Cache::hash(
+  esc_url_raw($url_profile)
+);
+
+
 ?>
 <?php if ( ! $is_minimal) { ?>
 <div class="vf-grid vf-grid__col-3 | vf-u-margin__bottom--800">
@@ -100,7 +130,16 @@ if (vf_cache_empty($content)) {
 <?php } // is_minimal ?>
 
     <?php
-    if ( ! vf_cache_empty($content)) {
+    if (!empty($value)) {
+      $content_profile = preg_replace(
+        '#^\s*<([^>]+?)>#',
+        '<$1 data-cache="' . esc_attr($hash_profile) . '">',
+        $content_profile
+      );
+      echo $content_profile;
+    }
+    
+    else if ( ! vf_cache_empty($content)) {
       $content = preg_replace(
         '#^\s*<([^>]+?)>#',
         '<$1 data-cache="' . esc_attr($hash) . '">',

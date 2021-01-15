@@ -31,7 +31,7 @@
         },
         {
             "key": "field_5f1ab0871a640",
-            "label": "Event Date",
+            "label": "Date & Time",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -78,22 +78,6 @@
             "display_format": "j M Y",
             "return_format": "j M Y",
             "first_day": 1
-        },
-        {
-            "key": "field_5f1ab254220c6",
-            "label": "Event Time",
-            "name": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0
         },
         {
             "key": "field_5e9852baec0f0",
@@ -155,7 +139,7 @@
         },
         {
             "key": "field_5f1ab70d800dc",
-            "label": "Event Location",
+            "label": "Type & Location",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -191,7 +175,7 @@
                 "66": "EMBL-EBI",
                 "76": "EMBL-EM",
                 "353": "EMBO",
-                "77": "Virtual",
+                "364": "Virtual",
                 "98": "Other"
             },
             "default_value": false,
@@ -201,6 +185,138 @@
             "ajax": 0,
             "return_format": "label",
             "placeholder": ""
+        },
+        {
+            "key": "field_5e9868ea11ada",
+            "label": "Event type",
+            "name": "vf_event_event_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "science_society"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "conference": "Conference",
+                "course": "Course",
+                "webinar": "Webinar",
+                "public_event": "Public event",
+                "internal_event": "Internal event",
+                "other": "Other"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5fd9c1f1dda86",
+            "label": "S&S event name",
+            "name": "vf_event_ss_event_name",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "science_society"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "ss_conference": "Science and Society Conference",
+                "ss_seminar": "Science and Society Seminar",
+                "ss_symposia": "Science and Society Symposium",
+                "ss_hd_forum": "Science and Society Heidelberg Forum"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5feaf203f0f18",
+            "label": "EMBO event name",
+            "name": "vf_event_embo_event_name",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "353"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "364"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "embo_workshop": "EMBO Workshop",
+                "embo_course": "EMBO Practical Course",
+                "embo_embl_symposium": "EMBO | EMBL Symposium"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5fd0aa67af779",
+            "label": "Displayed as",
+            "name": "vf_event_displayed",
+            "type": "text",
+            "instructions": "If empty the event type will be displayed",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_5e9850b053db2",
@@ -222,28 +338,13 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f1ab3dfc7e6c",
-            "label": "Event registration dates",
+            "key": "field_5feaecc9e922d",
+            "label": "Registration",
             "name": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -287,8 +388,87 @@
             "first_day": 1
         },
         {
+            "key": "field_5e98502253db0",
+            "label": "Registration fee",
+            "name": "vf_event_registration_fee",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "embl_ebi_training"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5e9851f4f52eb",
+            "label": "Registration\/Application link",
+            "name": "vf_event_registration_link",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f7473f59e83d",
+            "label": "Registration\/Application button text",
+            "name": "vf_event_registration_button_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Register",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5fd0b4897af8f",
+            "label": "Application deadline",
+            "name": "vf_event_application_deadline",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
             "key": "field_5f1ab40dc7e6d",
-            "label": "Abstract submission dates",
+            "label": "Abstract",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -352,10 +532,10 @@
             "first_day": 1
         },
         {
-            "key": "field_5fd0b5244b833",
-            "label": "Application deadline",
-            "name": "",
-            "type": "tab",
+            "key": "field_5f743a6cb08c0",
+            "label": "Abstract submission link",
+            "name": "vf_event_abstract_link",
+            "type": "url",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -365,76 +545,7 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0
-        },
-        {
-            "key": "field_5fd0b4897af8f",
-            "label": "Application deadline",
-            "name": "vf_event_application_deadline",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5f3f6f8d37cd3",
-            "label": "Summary",
-            "name": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0
-        },
-        {
-            "key": "field_5e984617574e1",
-            "label": "Summary",
-            "name": "vf_event_summary",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "media_upload": 0,
-            "toolbar": "basic",
-            "delay": 0
-        },
-        {
-            "key": "field_5e984a8536343",
-            "label": "Additional Information",
-            "name": "vf_event_additional_info",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
+                ],
                 [
                     {
                         "field": "field_5fbcab958038b",
@@ -449,10 +560,41 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f74740d9e83e",
+            "label": "Abstract submission button text",
+            "name": "vf_event_abstract_submission_button_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "embl_ebi_training"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Submit abstract",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_5f1ab4f9a6a57",
@@ -477,100 +619,6 @@
             },
             "placement": "top",
             "endpoint": 0
-        },
-        {
-            "key": "field_5e9868ea11ada",
-            "label": "Event type",
-            "name": "vf_event_event_type",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "science_society"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "conference": "Conference",
-                "course": "Course",
-                "webinar": "Webinar",
-                "public_event": "Public event",
-                "embo_workshop": "EMBO Workshop",
-                "embo_course": "EMBO Practical Course",
-                "embo_embl_symposium": "EMBO | EMBL Symposium",
-                "internal_event": "Internal event",
-                "other": "Other"
-            },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "array",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5fd9c1f1dda86",
-            "label": "S&S event name",
-            "name": "vf_event_ss_event_name",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "science_society"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "ss_conference": "Science and Society Conference",
-                "ss_seminar": "Science and Society Seminar",
-                "ss_symposia": "Science and Society Symposium",
-                "ss_hd_forum": "Science and Society Heidelberg Forum"
-            },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "array",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5fd0aa67af779",
-            "label": "Displayed as",
-            "name": "vf_event_displayed",
-            "type": "text",
-            "instructions": "If empty the event type will be displayed",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         },
         {
             "key": "field_5f3f7042eb5fe",
@@ -621,10 +669,29 @@
             "placeholder": ""
         },
         {
-            "key": "field_5e98502253db0",
-            "label": "Registration fee",
-            "name": "vf_event_registration_fee",
-            "type": "text",
+            "key": "field_5e984617574e1",
+            "label": "Summary",
+            "name": "vf_event_summary",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "media_upload": 0,
+            "toolbar": "basic",
+            "delay": 0
+        },
+        {
+            "key": "field_5e984a8536343",
+            "label": "Additional Information",
+            "name": "vf_event_additional_info",
+            "type": "wysiwyg",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -642,10 +709,10 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
         },
         {
             "key": "field_5e98505453db1",
@@ -715,22 +782,6 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f1ab69419d64",
-            "label": "External links",
-            "name": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0
-        },
-        {
             "key": "field_5e9851a5a1afe",
             "label": "More information link",
             "name": "vf_event_more_information_link",
@@ -755,108 +806,8 @@
             "placeholder": ""
         },
         {
-            "key": "field_5e9851f4f52eb",
-            "label": "Registration link",
-            "name": "vf_event_registration_link",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f7473f59e83d",
-            "label": "Registration button text",
-            "name": "vf_event_registration_button_text",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Register",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f743a6cb08c0",
-            "label": "Abstract submission link",
-            "name": "vf_event_abstract_link",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f74740d9e83e",
-            "label": "Abstract submission button text",
-            "name": "vf_event_abstract_submission_button_text",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Submit abstract",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_5f1fd24325b7c",
-            "label": "Template settings",
+            "label": "Template",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -927,9 +878,9 @@
             "mime_types": ""
         },
         {
-            "key": "field_5f743c13b08c1",
-            "label": "Contact",
-            "name": "vf_event_contact",
+            "key": "field_5ff84c2d7239b",
+            "label": "Contact name",
+            "name": "vf_event_contact_name",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -944,6 +895,24 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5f743c13b08c1",
+            "label": "Contact email",
+            "name": "vf_event_contact",
+            "type": "email",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_5f743c25b08c2",
@@ -1102,6 +1071,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type",
-    "modified": 1608108591
+    "description": "`vf_event` post type"
 }

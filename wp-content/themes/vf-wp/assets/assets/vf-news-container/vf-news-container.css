@@ -236,7 +236,7 @@
 /* stylelint-enable order/order */
 /*!
  * Component: @visual-framework/vf-summary
- * Version: 1.4.0
+ * Version: 1.4.1
  * Location: components/undefined
  */
 .vf-summary {
@@ -531,8 +531,8 @@ html:not(.vf-disable-deprecated) .vf-summary--profile-s .vf-summary__title {
 
 /*!
  * Component: @visual-framework/vf-section-header
- * Version: 1.3.0
- * Location: components/vf-section-header
+ * Version: 1.3.1
+ * Location: components/undefined
  */
 .vf-section-header__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -621,6 +621,21 @@ html:not(.vf-disable-deprecated) .vf-summary--profile-s .vf-summary__title {
 
 /*!
  * Component: @visual-framework/vf-news-container
- * Version: 1.0.0-beta.0
- * Location: components/vf-news-container
+ * Version: 1.0.0-rc.1
+ * Location: components/undefined
  */
+.vf-news-container--featured .vf-summary {
+  grid-template-columns: none;
+}
+.vf-news-container--featured .vf-summary > .vf-summary__date {
+  grid-row: 7;
+}
+.vf-news-container--featured .vf-summary > .vf-summary__image {
+  max-width: 100%;
+  margin-bottom: 16px;
+}
+@media (max-width: 600px) {
+  .vf-news-container--featured .vf-summary {
+    grid-row-gap: 0;
+  }
+}

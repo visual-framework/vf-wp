@@ -22,7 +22,7 @@ $acf_id = isset($acf_id) ? $acf_id : false;
 
 $id = get_field('vf_ebi_global_footer_node_id', $acf_id);
 $id = intval($id);
-$id = $id ? $id : 6683;
+$id = $id ? $id : 106902;
 
 $vars = array(
   'source'              => 'contenthub',
