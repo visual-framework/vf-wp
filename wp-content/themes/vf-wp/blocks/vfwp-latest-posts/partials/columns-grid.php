@@ -1,6 +1,6 @@
 <?php
 $mainloop = new WP_Query (array(
-  'posts_per_page' => 3,
+  'posts_per_page' => $limit,
   'post_type' => 'post',
   'cat' => $category,
   'tag__in' => $tag,
@@ -16,12 +16,14 @@ $mainloop = new WP_Query (array(
   </h3>
   <p class="vf-summary__text">
     <?php echo get_the_excerpt(); ?>
-    <?php the_category();
-    the_tags();
-?>
   </p>
   <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
+      <?php if ($show_categories == 1) { ?>
+            <span class="vf-summary__category">
+              <?php echo get_the_category_list(', '); ?>
+            </span>
+            <?php } ?>
 </article>
 
 <!--/vf-summary-->

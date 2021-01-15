@@ -4,9 +4,9 @@
     "fields": [
         {
             "key": "field_5f3fb86736d90",
-            "label": "Display in columns",
-            "name": "columns",
-            "type": "true_false",
+            "label": "Layout",
+            "name": "layout",
+            "type": "radio",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -15,11 +15,48 @@
                 "class": "",
                 "id": ""
             },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "choices": {
+                "list": "List",
+                "columns": "Columns"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_600170840895d",
+            "label": "Grid",
+            "name": "grid",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f3fb86736d90",
+                        "operator": "==",
+                        "value": "columns"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "embl-grid": "EMBL Grid",
+                "vf-grid": "VF Grid"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
         },
         {
             "key": "field_5e99679631cbd",
@@ -28,7 +65,14 @@
             "type": "text",
             "instructions": "Leave blank for default heading",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f3fb86736d90",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -60,61 +104,6 @@
             "maxlength": ""
         },
         {
-            "key": "field_5efc4c2840bc0",
-            "label": "Post limit",
-            "name": "limit",
-            "type": "range",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f3fb86736d90",
-                        "operator": "!=",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 1,
-            "min": 1,
-            "max": 10,
-            "step": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_5efc4c7a40bc1",
-            "label": "Sidebar",
-            "name": "sidebar",
-            "type": "true_false",
-            "instructions": "Available in full-width layout only",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f3fb86736d90",
-                        "operator": "!=",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
             "key": "field_5f3e15e7a0a54",
             "label": "Show image",
             "name": "show_image",
@@ -125,8 +114,8 @@
                 [
                     {
                         "field": "field_5f3fb86736d90",
-                        "operator": "!=",
-                        "value": "1"
+                        "operator": "==",
+                        "value": "list"
                     }
                 ]
             ],
@@ -142,11 +131,50 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_6001416a72980",
+            "label": "Show categories",
+            "name": "show_categories",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5efc4c2840bc0",
+            "label": "Post limit",
+            "name": "limit",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 3,
+            "min": 1,
+            "max": 10,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_6000036a8f15a",
             "label": "Category",
             "name": "category",
             "type": "taxonomy",
-            "instructions": "",
+            "instructions": "Display the posts by a category",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -161,14 +189,14 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
-            "multiple": 1
+            "multiple": 0
         },
         {
             "key": "field_600003968f15b",
             "label": "Tag",
             "name": "tag",
             "type": "taxonomy",
-            "instructions": "",
+            "instructions": "Display the posts by a tag",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -183,14 +211,14 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
-            "multiple": 1
+            "multiple": 0
         },
         {
             "key": "field_6000705ce4a78",
             "label": "Keyword",
             "name": "keyword",
             "type": "text",
-            "instructions": "",
+            "instructions": "Display the posts by a keyword",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -221,5 +249,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Latest News ACF Gutenberg block"
+    "description": "VF-WP Latest News ACF Gutenberg block",
+    "modified": 1610707866
 }
