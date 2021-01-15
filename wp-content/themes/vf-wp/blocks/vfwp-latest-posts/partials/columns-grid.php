@@ -17,15 +17,16 @@ $mainloop = new WP_Query (array(
   <p class="vf-summary__text">
     <?php echo get_the_excerpt(); ?>
   </p>
-  <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+  <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
+      title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
-      <?php if ($show_categories == 1) { ?>
-            <span class="vf-summary__category">
-              <?php echo get_the_category_list(', '); ?>
-            </span>
-            <?php } ?>
+  <?php if ($show_categories == 1) { ?>
+  <span class="vf-summary__category">
+    <?php echo get_the_category_list(', '); ?>
+  </span>
+  <?php } ?>
 </article>
 
 <!--/vf-summary-->
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>
+<?php endwhile;?>
+<?php wp_reset_postdata(); ?>
