@@ -10,21 +10,21 @@ $is_container = (bool) $is_container;
 $title = get_the_title();
 
 $limit = get_field('limit');
-$sidebar = get_field('sidebar');
 
 $heading_singular = get_field('heading_singular');
 $heading_singular = trim($heading_singular);
 
 $heading_text = get_field('heading_text');
 
-$columns = get_field('columns');
+$layout = get_field('layout');
+$grid = get_field('grid');
 
 $category = get_field('category');
 $tag = get_field('tag');
 $keyword = get_field('keyword');
 
 $show_image = get_field('show_image');
-$class = ($show_image == 1) ? 'vf-summary--news' : 'vf-summary--article';
+$show_categories = get_field('show_categories');
 
 if (empty($heading_singular)) {
   $heading_singular = __('Latest posts', 'vfwp');
@@ -49,12 +49,9 @@ if (count($latest_posts)) {
 $vf_grid = '';
 $embl_grid = '';
 
-if ($sidebar) {
-  $embl_grid = 'embl-grid--has-sidebar';
-}
-else if ($columns == 1) {
+if (get_field('layout') == 'columns') {
   $embl_grid = null;
-  $vf_grid = 'class="vf-grid vf-grid__col-3"';
+  $vf_grid = 'class="vf-grid vf-grid__col-' . $limit . '"';
 }
 else {
   $embl_grid = 'embl-grid--has-centered-content';
@@ -62,7 +59,8 @@ else {
 
 ?>
 
-<?php if ($is_container) { ?>
+<?php if ($is_container) {
+        if ((get_field('layout') == 'list') || (get_field('grid') == 'embl-grid')) { ?>
 
 <div class="embl-grid <?php echo ($embl_grid); ?> ">
   <?php if ( ! empty($heading_singular)) { ?>
@@ -72,45 +70,23 @@ else {
     <p class="vf-section-header__text"><?php echo ($heading_text); ?></p>
   </div>      
   <?php } ?>
-<?php } ?>
+<?php } }?>
 
   <div <?php echo ($vf_grid); ?>>
 
-    <?php if ($columns == 0) { ?>
+    <?php if (get_field('layout') == 'list') { ?>
       <?php include(locate_template('blocks/vfwp-latest-posts/partials/embl-grid.php', false, false)); ?>
     <?php } ?>
 
-    <?php if ($columns == 1) { ?>
+    <?php if (get_field('layout') == 'columns') { ?>
       <?php include(locate_template('blocks/vfwp-latest-posts/partials/columns-grid.php', false, false)); ?>
     <?php } ?>
 
   </div>
+  <?php if ($is_container) { ?>
+    </div>
+  <?php } ?>
 
-<?php if ($is_container) { 
-  if ($columns == 0) { ?>
-  <div>
-  <?php if ($sidebar) { ?>
-    <h3 class="vf-links__heading">More posts</h3>
-  <?php
-  $sidebarloop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 2 ));
-  while ($sidebarloop->have_posts()) : $sidebarloop->the_post();
-				$ids[] = get_the_ID(); ?>
-  <article class="vf-summary vf-summary--article | vf-u-margin__bottom--400">
-    <h2 class="vf-summary__title">
-      <a href="<?php the_permalink(); ?>" class="vf-summary__link" style="font-size: 19px;"><?php echo esc_html(get_the_title()); ?></a>
-    </h2>
-    <span class="vf-summary__meta">
-      <a class="vf-summary__author vf-summary__link" href="<?php echo get_author_posts_url(get_the_author_meta('ID')); ?>"><?php the_author(); ?></a>
-      <time class="vf-summary__date" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
-    </span>
-  </article>
-  <?php endwhile; ?>
-  <?php wp_reset_postdata(); ?>
-<?php } ?>
-  </div>
-<?php } ?>
-</div>
-<?php } ?>
 
 <?php
   // Reset post data back to plugin
