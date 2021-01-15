@@ -7,7 +7,8 @@ $text = get_field('text');
 $anchor = get_field('anchor');
 $background_color = get_field('background_color');
 $background_image = get_field('background_image');
-$text_color = get_field('text_color');
+$header_color = get_field('header_color');
+$container_content = get_field('container_content');
 
 $type = get_field('select_type');
 
@@ -43,11 +44,11 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 
 ?>
 <style>
-  <?php if ($text_color['label'] == 'White') { ?>
+  <?php if ($header_color['label'] == 'White') { ?>
  .vf-section-header,
  .vf-section-header__heading--is-link,
  .vf-section-header__heading--is-link:visited {
-   color: <?php echo ($text_color['value']) ?> !important;
+   color: <?php echo ($header_color['value']) ?> !important;
  }
 <?php }
 else { echo '';} ?>
@@ -65,6 +66,9 @@ else { echo '';} ?>
 
 
 ">
+<?php if (get_field('container_content') == 'card') { ?>
+<div class="vf-card-container__inner">
+<?php } ?>
 <?php if (!empty ($heading)) { ?>
 <div class="vf-section-header | vf-u-margin__bottom--600">
 
@@ -108,4 +112,7 @@ else { echo '';} ?>
 </div>
 
     <InnerBlocks />
+    <?php if (get_field('container_content') == 'card') { ?>
+    </div>
+<?php } ?>
 </section>

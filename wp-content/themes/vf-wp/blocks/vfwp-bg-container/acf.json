@@ -3,8 +3,32 @@
     "title": "Background container",
     "fields": [
         {
+            "key": "field_6001851e5efa7",
+            "label": "Content",
+            "name": "container_content",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "card": "Cards \/ Boxes",
+                "other": "Other"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5fda15153097c",
-            "label": "Select type",
+            "label": "Section header",
             "name": "select_type",
             "type": "select",
             "instructions": "",
@@ -248,9 +272,9 @@
             "placeholder": ""
         },
         {
-            "key": "field_5fda1d5bf5dd3",
-            "label": "Text color",
-            "name": "text_color",
+            "key": "field_600185f2ec066",
+            "label": "Section header color",
+            "name": "header_color",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -289,5 +313,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "modified": 1610713526
 }
