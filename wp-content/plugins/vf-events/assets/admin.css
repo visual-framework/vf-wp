@@ -53,6 +53,7 @@
 
 .acf-field[data-name="vf_event_more_information_link"] .acf-input-wrap,
 .acf-field[data-name="vf_event_abstract_link"] .acf-input-wrap,
+.acf-field[data-name="vf_event_info_text"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_link"] .acf-input-wrap {
   max-width: 500px;
 }

@@ -39,6 +39,7 @@ if ($cancelled == 'yes') { ?>
   .vf-details--summary {
     background-color: #f3f3f3 !important;
   }
+
 </style>
 
 <?php     
@@ -50,7 +51,7 @@ include( plugin_dir_path( __FILE__ ) . 'partials/hero.php');
   <div class="vf-grid__col--span-3 | vf-content">
     <?php the_content(); ?>
   </div>
-<?php 
+  <?php 
 // info box
 include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
 </section>

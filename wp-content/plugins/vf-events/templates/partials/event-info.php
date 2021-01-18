@@ -26,6 +26,7 @@ $abstract_link = get_field('vf_event_abstract_link', $post->post_parent);
 $poster_file = get_field('vf_event_poster_file', $post->post_parent);
 $abstract_button = get_field('vf_event_abstract_submission_button_text', $post->post_parent);
 $register_button = get_field('vf_event_registration_button_text', $post->post_parent);
+$info_text = get_field('vf_event_info_text', $post->post_parent);
 
 $social_url = get_the_permalink();
 
@@ -54,13 +55,17 @@ $abstract_date = new DateTime($abstract_closing);
 <div>
   <?php if ($event_organiser == "cco_hd") { ?>
   <figure class="vf-figure vf-figure--align vf-figure--align-centered | vf-u-margin__bottom--400">
-    <?php echo($logo_image); ?>
+    <?php 
+    // Event logo
+    echo($logo_image); ?>
   </figure>
   <?php } ?>
   <div>
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
-    <span class="vf-u-text-color--grey">
-      <?php 
+      <span class="vf-u-text-color--grey">
+        <?php 
+
+      // Event dates
       if ( ! empty($start_date)) {
         if ($end_date) { 
           if ($start->format('M') == $end->format('M')) {
@@ -68,105 +73,126 @@ $abstract_date = new DateTime($abstract_closing);
           else {
             echo $start->format('j M'); ?> - <?php echo $end->format('j M Y'); }
               ?>
-      <?php } 
+        <?php } 
         else {
           echo $start->format('j M Y'); 
         } }
         ?>
-     </span>   
+      </span>
     </p>
     <?php if ( ! empty($location)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Location:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($location); ?></span></p>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Location:</span> <span
+        class="vf-u-text-color--grey"><?php echo esc_html($location); ?></span></p>
     <?php } ?>
-    
+
     <?php if ( ! empty($time)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-      style="font-weight: 600;">Time:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($time); ?></span></p>
-      <?php } ?>
-      
-      <?php if ( ! empty($venue)) { ?>
-        <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Venue:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
-        <?php } ?>
-        
-    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing))) { ?>
-      <hr class="vf-divider | vf-u-margin__bottom--400">
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Deadline(s):</span></p>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Time:</span> <span
+        class="vf-u-text-color--grey"><?php echo esc_html($time); ?></span></p>
+    <?php } ?>
+
+    <?php if ( ! empty($venue)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Venue:</span> <span
+        class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
+    <?php } ?>
+
+    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
+    <hr class="vf-divider | vf-u-margin__bottom--400">
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Deadline(s):</span></p>
     <?php } ?>
 
     <?php if ( ! empty($abstract_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        >Abstract submission:</span> <span class="vf-u-text-color--grey">        <?php if ($abstract_date < $now) {
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Abstract submission:</span> <span
+        class="vf-u-text-color--grey"> <?php if ($abstract_date < $now) {
           echo 'Closed';
         }  
         else {
           echo esc_html($abstract_closing);
         }
       ?></span></p>
-    <?php } ?>
+    <?php } 
+    
+    ?>
 
-    <?php if ( ! empty($application_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        >Application:</span> <span class="vf-u-text-color--grey">
+    <?php 
+    // Application date
+    if ( ! empty($application_closing)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Application:</span> <span
+        class="vf-u-text-color--grey">
         <?php if ($application_date < $now) {
           echo 'Closed';
         }  
-        else {
+        else if ($application_closing) {
           echo esc_html($application_closing);
         }
-      ?></span></p>
-    <?php } ?>
 
-    <?php if ( ! empty($registration_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span >Registration:</span> <span class="vf-u-text-color--grey">
-    <?php if ($registration_date < $now) {
+      ?></span></p>
+    <?php } 
+    // Show info text
+            else if (!empty($info_text)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Application:</span> <span
+        class="vf-u-text-color--grey">
+        <?php echo esc_html($info_text); ?>
+      </span></p>
+    <?php  }
+    ?>
+
+    <?php 
+    // Registration dates
+    if ( ! empty($registration_closing)) { ?>
+    <p class="vf-text-body vf-text-body--3"><span>Registration:</span> <span class="vf-u-text-color--grey">
+        <?php if ($registration_date < $now) {
           echo 'Closed';
         }  
         else {
           echo esc_html($registration_closing);
         }
       ?>
-    </span></p>
+      </span></p>
     <?php } ?>
-    
-        
-        <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
-          <?php if ( !empty($registration_link)) { 
+
+
+    <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
+      <?php 
+      // Buttons
+      if ( !empty($registration_link)) { 
             if (
-              (($registration_closing) && ($registration_date > $now)) 
+              (($registration_date > $now)) 
               || 
               (($application_closing) && ($application_date > $now))) { ?>
-              <div style="display: inline-block;">
-                <a href="<?php echo esc_url($registration_link); ?>"><button
-                class="vf-button vf-button--primary vf-button--sm"><?php echo($register_button); ?></button></a>
-              </div>
-              <?php }} ?>
-              
-              <?php if ( ! empty($abstract_link)) { 
-                if (($abstract_closing) && ($abstract_date > $now)) {?>
-                <div style="display: inline-block;">
-                  <a href="<?php echo esc_url($abstract_link); ?>"><button
-                  class="vf-button vf-button--tertiary vf-button--sm"><?php echo($abstract_button); ?></button></a>
-                </div>
-                <?php }} ?>
-              </div>
-              <hr class="vf-divider | vf-u-margin__bottom--400">
-              <?php if ( ! empty($contact)) { ?>
-                <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-                style="font-weight: 600;">Contact: </span><a href="mailto:<?php echo esc_attr($contact); ?>"><?php echo esc_html($contact_name); ?></a></p>
-                <?php } ?>
-              <div class="vf-grid">
-                <?php if ( ! empty($poster_image) && $event_organiser != "science_society") { ?>
-                  <div>
-                    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Download event poster</span></p>
-                    <a href="<?php echo $poster_file['url']; ?>">
-                      <figure class="vf-figure | vf-u-margin__top--400">
-                        <?php echo($poster_image); ?>
-                      </figure>
-                    </a>
-                  </div>
+      <div style="display: inline-block;">
+        <a href="<?php echo esc_url($registration_link); ?>"><button
+            class="vf-button vf-button--primary vf-button--sm"><?php echo($register_button); ?></button></a>
+      </div>
+      <?php }} ?>
+
+      <?php if ( ! empty($abstract_link)) { 
+                if (($abstract_date > $now)) {?>
+      <div style="display: inline-block;">
+        <a href="<?php echo esc_url($abstract_link); ?>"><button
+            class="vf-button vf-button--tertiary vf-button--sm"><?php echo($abstract_button); ?></button></a>
+      </div>
+      <?php }} ?>
+    </div>
+    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
+    <hr class="vf-divider | vf-u-margin__bottom--400">
+    <?php }
+    // Contact
+    if ( ! empty($contact)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
+        href="mailto:<?php echo esc_attr($contact); ?>"><?php echo esc_html($contact_name); ?></a></p>
+    <?php } ?>
+    <div class="vf-grid">
+      <?php 
+      // Poster image
+      if ( ! empty($poster_image) && $event_organiser != "science_society") { ?>
+      <div>
+        <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Download event poster</span></p>
+        <a href="<?php echo $poster_file['url']; ?>">
+          <figure class="vf-figure | vf-u-margin__top--400">
+            <?php echo($poster_image); ?>
+          </figure>
+        </a>
+      </div>
       <?php }
 
       include( plugin_dir_path( __FILE__ ) . './social-media-icons.php'); 
