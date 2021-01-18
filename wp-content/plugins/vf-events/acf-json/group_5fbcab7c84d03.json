@@ -467,6 +467,25 @@
             "first_day": 1
         },
         {
+            "key": "field_6005734043e1e",
+            "label": "Application info text",
+            "name": "vf_event_info_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5f1ab40dc7e6d",
             "label": "Abstract",
             "name": "",
@@ -1071,5 +1090,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type"
-}
+    "description": "`vf_event` post type",
+    "modified": 1610972449
