@@ -122,4 +122,15 @@ function search_filter($query) {
 
 add_filter('pre_get_posts', 'search_filter');
 
+// removes the margin added by vf-stack to the body element
+function remove_margin_wp_toolbar() {
+  echo '
+  <style type="text/css">
+  #wpadminbar {
+  margin-top: 0px !important;
+  }
+  </style>';
+}
+add_action( 'admin_head', 'remove_margin_wp_toolbar' );
+add_action( 'wp_head', 'remove_margin_wp_toolbar' );
 ?>
