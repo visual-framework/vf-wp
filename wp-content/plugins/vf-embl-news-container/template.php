@@ -11,7 +11,7 @@ $vars = array(
   'pattern'              => 'vf-news-item-default',
   'filter-content-type'  => 'article',
   'limit'                => $limit,
-  'filter-field-value[field_article_type]' => 'article_timely',
+  'filter-field-value[field_display_publication]' => 'EMBL News',
   'sort-field-value[created]'              => 'DESC',
 );
 
