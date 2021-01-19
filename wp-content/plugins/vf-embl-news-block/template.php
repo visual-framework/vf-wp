@@ -46,7 +46,7 @@ $url = add_query_arg(array(
   'source'                    => 'contenthub',
   'pattern'                   => 'vf-news-item-default',
   'filter-content-type'       => 'article',
-  'filter-fields-exists'      => 'field_display_publication',
+  'filter-field-value[field_display_publication]' => 'EMBL News',
   'sort-field-value[created]' => 'DESC',
 ), $url);
 
