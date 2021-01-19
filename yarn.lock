@@ -1511,7 +1511,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.1.0.tgz#426113c81b4b43f96266aebef2f18daaf53db6f1"
   integrity sha512-Yk2eCgcH+6icvo7GYJUnEQpSkFfnHi1lzi3r7iYPgf9O/FrE7os7o5z6g5hztUzHUdozDxK0dtMuav6F2azukQ==
 
-"@visual-framework/vf-form__checkbox@1.0.2", "@visual-framework/vf-form__checkbox@^1.0.2":
+"@visual-framework/vf-form__checkbox@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-1.0.2.tgz#8b70d71c2c758a83ff136fcb106b36236cb35ade"
   integrity sha512-+KhXL1bruzlTJItn7BGoOoxpH9iaA+/EQz2cM0jccAxIc2x4IFPzZrcrJJuX16if7UXWpYD1YUb9kfOFLRJDSw==
@@ -1521,23 +1521,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-2.0.0.tgz#ae4f803bdb27a642314127bee30de62aa4fef1b1"
   integrity sha512-UJJRlFHjUlRAwCmFNIhTdwugNy+czYCfl1wdQPxjOjbkGSTLEQc3hopDvp9uJmY/jQ/PuPC8QEMmQROkxQdwiA==
 
-"@visual-framework/vf-form__core@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__core/-/vf-form__core-1.0.5.tgz#148c298ba42013690b25831b1298def98888f985"
-  integrity sha512-0F79ATdnu6mTGQYGYIi5Pd0rGFfFDa9x+X+Y/hcBc0qxbuO5b/tKrAJRqIkHply7c4w5ptVv45bjnaDnR8u8zQ==
-  dependencies:
-    "@visual-framework/vf-form__checkbox" "^1.0.2"
-    "@visual-framework/vf-form__fieldset" "^1.1.0"
-    "@visual-framework/vf-form__helper" "^1.0.0"
-    "@visual-framework/vf-form__input" "^1.1.0"
-    "@visual-framework/vf-form__item" "^1.0.0"
-    "@visual-framework/vf-form__label" "^1.2.0"
-    "@visual-framework/vf-form__legend" "^1.1.0"
-    "@visual-framework/vf-form__radio" "^1.0.1"
-    "@visual-framework/vf-form__select" "^1.0.1"
-    "@visual-framework/vf-form__textarea" "^1.0.2"
-
-"@visual-framework/vf-form__core@^1.1.0":
+"@visual-framework/vf-form__core@1.1.0", "@visual-framework/vf-form__core@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__core/-/vf-form__core-1.1.0.tgz#de815470e7235d300569ac2328bdee2557afe5e6"
   integrity sha512-702VN2GUNsGiJbkg1BfALL2xNedUZxSUzxaHdXHl/IgRZmRlfGqU3dFxIl1369MNlJpGZdpaSxPiNMmZ+zAMPA==
@@ -1558,7 +1542,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__fieldset/-/vf-form__fieldset-1.1.0.tgz#48f0cf2d595c9f990c14676513fb1c0370386282"
   integrity sha512-/QiYSjSZRVDk06v/9HM6fuEyNyaWjHxeDbB4R8y/NfB0FdtnYzFJ+iJB4Djvts5h6tvR3BtfZ+dk4iUV2v8RRA==
 
-"@visual-framework/vf-form__helper@1.0.0", "@visual-framework/vf-form__helper@^1.0.0":
+"@visual-framework/vf-form__helper@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__helper/-/vf-form__helper-1.0.0.tgz#84f0ff4efa64edfde145422d11ef9965243b5f05"
   integrity sha512-siyvDtDmB1EKIqD4AZ2K757u0tvo+HF7gQSe76xe3lti2PxQbAn+lYh/kRREEUw3bSGmIj7ZebQXOEW1zB5RJA==
@@ -1568,7 +1552,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__helper/-/vf-form__helper-2.0.0.tgz#b0f7c0df35a67a792bf0603d03997c5fc5bdc076"
   integrity sha512-QIt0xPjFVAF7IrPH5p6diUHg5q24cHElDvS3v1irGPyJRurRV1FuU4msWyOMOwutkW/TBOEOvjZBLcYBlFchmA==
 
-"@visual-framework/vf-form__input@1.1.0", "@visual-framework/vf-form__input@^1.1.0":
+"@visual-framework/vf-form__input@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__input/-/vf-form__input-1.1.0.tgz#41e9925bcb9eed42b64d08c36bfb2d26ef4e52d0"
   integrity sha512-t0WAH+e35RvvsxCuL+pKLvvN7A4G9c/4PsSijF1kcK5/iD2gJKTFJ8WYwgWVeo7eYGpZ5BfbzQ3NlV84RxVxDg==
@@ -1578,20 +1562,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__input/-/vf-form__input-2.0.0.tgz#0875a1e0b2f88221031791e3565b392df4422677"
   integrity sha512-Oya2mbQDmvN9hJUKpxFvtwBCLohPIXcd9SiEaRAPUfsn/uKpka0qV9+/MQ9O5dRDja9X5NRuHiWxAVRgso9G7A==
 
-"@visual-framework/vf-form__item@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__item/-/vf-form__item-1.0.0.tgz#5787e5e56d34f5d9a1081a475d0e8536d48a6c45"
-  integrity sha512-Z3+Dp+j+wi/BO1jGS3gHkaMUhSbxBXTP5VUfCa7X4J81pgUGlw6sohA9ARt8whuunPufLtVTRqpp1P7di7fPww==
-
 "@visual-framework/vf-form__item@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__item/-/vf-form__item-2.0.0.tgz#7fbfef56b0dc7f674981d3007d1e449db37e93d5"
   integrity sha512-atWQqX7mkZweSGPYO/DOUTe0dfr3jMNmr5ufNXnfuJEugE+U09NwrWbZA1m48v2b1ZgFZEdOCXG4+gWGgkLYpA==
-
-"@visual-framework/vf-form__label@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__label/-/vf-form__label-1.2.0.tgz#c7c7851f6920b5d58164d0c8dfcab316030fdeb1"
-  integrity sha512-OB1/Ux9sn9BfLKrqRQ5ZaIMWVLdqYfEEaaWCl71OL163XpgjkPowEk+e9K1sn9QSYgS95KHQerIA7KbCpE+z8w==
 
 "@visual-framework/vf-form__label@^2.0.0":
   version "2.0.0"
@@ -1603,7 +1577,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__legend/-/vf-form__legend-1.1.0.tgz#e735fb34ebec7bc504f47ccb337e319c53c6e16f"
   integrity sha512-i0rXuYMy6eyTndeKBPQGOhDCrU5op3D346gBOEdUUh1lVP6WmiV8wUCrMnTtOd6KfjQmfDUv+OX47PvyqtXU4Q==
 
-"@visual-framework/vf-form__radio@1.0.1", "@visual-framework/vf-form__radio@^1.0.1":
+"@visual-framework/vf-form__radio@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__radio/-/vf-form__radio-1.0.1.tgz#8b9e524cf7cf74b550e0a5165ec73d9f8ffd839c"
   integrity sha512-IIJYt0fl+8Q+W80W+QMLZuRi58zML4BHbzdfr6X4pFJyYCgWC0GT6FpuROkSdn1PZTp6wKgvdhR0/D2j6kH9sg==
@@ -1613,7 +1587,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__radio/-/vf-form__radio-2.0.0.tgz#a532b93fa55dc4a6c493c6c396861af3ffb1a79b"
   integrity sha512-gELanY4h7wERzCjo7a4u9REl6Mfrhzm+ylSaUYLG2tGMFurcEAZmf56EhV7cRJwVNUW9TA5PNMGGIUHR0UmdgQ==
 
-"@visual-framework/vf-form__select@1.0.1", "@visual-framework/vf-form__select@^1.0.1":
+"@visual-framework/vf-form__select@1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-1.0.1.tgz#b029c967a23e8479c61607cbacb422641cf83241"
   integrity sha512-Ton1KirVBZktEF69Xs4vxgZcTSdS/cH2lvL5j23pVv3KyEojs6r/7ZNdGFkw8kH1NJrqpwtFwOg68UvuZh6f0A==
@@ -1623,7 +1597,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-2.0.0.tgz#bde46675fbabc4918b4449ea6e90d834d3b063ec"
   integrity sha512-Zlm7TsS8GiHk4GRLDRtdTZQRWl2hECnC0CpuIuKb9i6Bgv31hPgnHUBN4jbmyGfd1ud5VtUqf1bWVUX7GlJALQ==
 
-"@visual-framework/vf-form__textarea@1.0.2", "@visual-framework/vf-form__textarea@^1.0.2":
+"@visual-framework/vf-form__textarea@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__textarea/-/vf-form__textarea-1.0.2.tgz#81724691db46fafc5668704bb0363d3bb41a9592"
   integrity sha512-eq4szj050Y3xtbsYYdW3PIlFoE1VQIxyNLWCFW+SwyfPV7f7pZkAL6tFYfhYC6aFrWhAf/79FWeGwVepgHdylQ==
