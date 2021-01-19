@@ -53,13 +53,15 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-form__item
- * Version: 1.0.0
- * Location: components/vf-form/vf-form__item
+ * Version: 2.0.0
+ * Location: components/undefined
  */
-.vf-form__item {
-  margin-bottom: 32px;
+.vf-form__item > * {
+  --vf-stack-margin--custom: 0.25rem;
 }
 
 .vf-form__item--inline .vf-form__label {
-  display: inline-block;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
 }

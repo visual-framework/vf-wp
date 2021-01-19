@@ -53,8 +53,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-form__core
- * Version: 1.0.5
- * Location: components/vf-form/vf-form__core
+ * Version: 1.1.0
+ * Location: components/undefined
  */
 /*!
  * Component: @visual-framework/vf-form__helper
@@ -504,39 +504,40 @@ input[type=search]::-webkit-search-cancel-button {
 
 /*!
  * Component: @visual-framework/vf-form__item
- * Version: 1.0.0
- * Location: components/vf-form/vf-form__item
+ * Version: 2.0.0
+ * Location: components/undefined
  */
-.vf-form__item {
-  margin-bottom: 32px;
+.vf-form__item > * {
+  --vf-stack-margin--custom: 0.25rem;
 }
 
 .vf-form__item--inline .vf-form__label {
-  display: inline-block;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
 }
 
 /*!
  * Component: @visual-framework/vf-form__label
- * Version: 1.2.0
- * Location: components/vf-form/vf-form__label
+ * Version: 2.0.0
+ * Location: components/undefined
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0.5rem 0;
-  display: block;
+  margin: 0 0 0 0;
 }
 
 .vf-form__label--required {
-  float: right;
-  margin-bottom: 0;
+  position: relative;
+  top: -0.5rem;
 }
 .vf-form__label--required .vf-icon svg {
-  fill: #3b6fb6;
-  height: 12px;
-  width: 16px;
+  fill: #d41645;
+  height: 0.5em;
+  width: 0.5em;
 }
 
 /*!

@@ -1164,7 +1164,7 @@ function vfTabs(scope) {
 
 
 function vfFormFloatLabels() {
-  console.log('vfFormFloatLabels is no longer required as of 1.0.0-beta.4, you can remove it from your scripts.js');
+  console.log("vfFormFloatLabels is no longer required as of 1.0.0-beta.4, you can remove it from your scripts.js");
 } // embl-content-hub-loader__html-imports
 // A trimmed down version of
 // https://github.com/AshleyScirra/html-imports-polyfill/blob/master/htmlimports.js
