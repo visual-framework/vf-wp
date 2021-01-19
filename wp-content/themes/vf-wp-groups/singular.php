@@ -18,7 +18,7 @@ global $vf_theme;
             datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>, by <a
           class="vf-link"
           href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a> in
-        <?php echo get_the_category_list(','); ?>
+        <?php echo get_the_category_list(', '); ?>
       </p>
     </div>
   </div>
