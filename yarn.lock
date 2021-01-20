@@ -1577,12 +1577,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__legend/-/vf-form__legend-1.1.0.tgz#e735fb34ebec7bc504f47ccb337e319c53c6e16f"
   integrity sha512-i0rXuYMy6eyTndeKBPQGOhDCrU5op3D346gBOEdUUh1lVP6WmiV8wUCrMnTtOd6KfjQmfDUv+OX47PvyqtXU4Q==
 
-"@visual-framework/vf-form__radio@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__radio/-/vf-form__radio-1.0.1.tgz#8b9e524cf7cf74b550e0a5165ec73d9f8ffd839c"
-  integrity sha512-IIJYt0fl+8Q+W80W+QMLZuRi58zML4BHbzdfr6X4pFJyYCgWC0GT6FpuROkSdn1PZTp6wKgvdhR0/D2j6kH9sg==
-
-"@visual-framework/vf-form__radio@^2.0.0":
+"@visual-framework/vf-form__radio@2.0.0", "@visual-framework/vf-form__radio@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__radio/-/vf-form__radio-2.0.0.tgz#a532b93fa55dc4a6c493c6c396861af3ffb1a79b"
   integrity sha512-gELanY4h7wERzCjo7a4u9REl6Mfrhzm+ylSaUYLG2tGMFurcEAZmf56EhV7cRJwVNUW9TA5PNMGGIUHR0UmdgQ==
