@@ -133,4 +133,33 @@ function remove_margin_wp_toolbar() {
 }
 add_action( 'admin_head', 'remove_margin_wp_toolbar' );
 add_action( 'wp_head', 'remove_margin_wp_toolbar' );
+
+// custom language switcher for the WPML plugin
+function languages_links_switcher(){
+$languages = icl_get_languages('skip_missing=1');
+if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-banner--info">
+  <div class="vf-banner__content">
+    <style>
+      .vf-banner__content p {
+        font-size: 16px !important;
+        margin: 0px !important;
+      }
+    </style>
+    <p class="vf-banner__text">This article is also available in ');
+
+      foreach($languages as $l){
+      if(!$l['active']) $langs[] = '<a href="'.$l['url'].'">'.$l['translated_name'].'</a>';
+      }
+      echo join(' and ', array_filter(array_merge(array(join(', ', array_slice($langs, 0, -1))), array_slice($langs,
+      -1)), 'strlen'));
+
+      echo __('
+    </p>
+  </div>
+  </div>' );
+
+
+
+  }
+  }
 ?>

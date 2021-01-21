@@ -77,8 +77,9 @@ else {} ?>
   </div>
   <div class="vf-content | vf-u-padding__bottom--800">
     <h1><?php the_title(); ?></h1>
+    <?php languages_links_switcher(); ?>
 
-    <?php if( have_rows('translations') ):
+    <?php /*  if( have_rows('translations') ):
         $all_fields_count = count(get_field('translations'));
         $fields_count = 1;
       ?>
@@ -99,7 +100,7 @@ else {} ?>
           <?php endwhile; ?></p>
       </div>
     </div>
-    <?php endif; ?>
+    <?php endif; */ ?>
 
     <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
