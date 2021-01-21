@@ -89,7 +89,7 @@ For month and year archive
 $archive = home_url('/?post_type=teachingbase');
 
 ?>
-<form action="<?php echo esc_url($archive); ?>" method="get">
+<form class="vf-form vf-stack vf-stack--800" action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
     <input type="hidden" name="post_type" value="teachingbase">
@@ -101,81 +101,85 @@ $archive = home_url('/?post_type=teachingbase');
     <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
     <?php } ?>
 
-	  <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form vf-form__fieldset">
 
-	  <legend class="vf-form__legend">Age group</legend>
-	  <div class="vf-form__item vf-form__item--checkbox">
-    <?php 
+      <legend class="vf-form__legend">Age group</legend>
+      <div class="vf-form__item vf-form__item--checkbox">
+        <?php 
       $selected = empty($age_selected) || empty($age_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-age_group-1" class="vf-form__checkbox" name="teachingbase_age_group" <?php echo $selected ?>>
+        <input type="checkbox" value="" id="checkbox-age_group-1" class="vf-form__checkbox"
+          name="teachingbase_age_group" <?php echo $selected ?>>
         <label for="checkbox-age_group-1" class="vf-form__label">All</label>
-		  </div>
-		        <?php
+      </div>
+      <?php
 	  		  $count = 2;
       foreach ($age_group_terms as $term) {
         $selected = in_array($term->slug, $age_selected) ? 'checked="checked"' : '';
       ?>
-	  <div class="vf-form__item vf-form__item--checkbox">
-        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-topic-<?php echo $count; ?>" name="age-group[]" class="vf-form__checkbox" <?php echo $selected ?>>		       
-		  <label for="checkbox-topic-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
-      </label>
-		</div>
+      <div class="vf-form__item vf-form__item--checkbox">
+        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-topic-<?php echo $count; ?>"
+          name="age-group[]" class="vf-form__checkbox" <?php echo $selected ?>>
+        <label for="checkbox-topic-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
+        </label>
+      </div>
       <?php 
 	    $count++;
 	  } ?>
-	  </fieldset>
+    </fieldset>
 
-	  <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form vf-form__fieldset">
 
-	  <legend class="vf-form__legend">Topic area</legend>
-	  <div class="vf-form__item vf-form__item--checkbox">
-    <?php 
+      <legend class="vf-form__legend">Topic area</legend>
+      <div class="vf-form__item vf-form__item--checkbox">
+        <?php 
       $selected = empty($topic_selected) || empty($topic_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-type-1" class="vf-form__checkbox" name="topic-area" <?php echo $selected ?>>
+        <input type="checkbox" value="" id="checkbox-type-1" class="vf-form__checkbox" name="topic-area"
+          <?php echo $selected ?>>
         <label for="checkbox-type-1" class="vf-form__label">All</label>
-		</div>
-		        <?php
+      </div>
+      <?php
 	  		  $count = 2;
       foreach ($topic_area_terms as $term) {
 
         $selected = in_array($term->slug, $topic_selected) ? 'checked="checked"' : '';
       ?>
-	  <div class="vf-form__item vf-form__item--checkbox">
-        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-type-<?php echo $count; ?>" name="topic-area[]" class="vf-form__checkbox" <?php echo $selected ?>>		       
-		  <label for="checkbox-type-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
-      </label>
-		</div>
+      <div class="vf-form__item vf-form__item--checkbox">
+        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-type-<?php echo $count; ?>"
+          name="topic-area[]" class="vf-form__checkbox" <?php echo $selected ?>>
+        <label for="checkbox-type-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
+        </label>
+      </div>
       <?php 
 	    $count++;
 	  } ?>
-	  </fieldset>
+    </fieldset>
 
-	  <fieldset class="vf-form vf-form__fieldset">
-	  <legend class="vf-form__legend">Publication year</legend>
+    <fieldset class="vf-form vf-form__fieldset">
+      <legend class="vf-form__legend">Publication year</legend>
 
-    <?php if ( ! empty($date_options)) { ?>
-    <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px;">
-      <option value=""><?php echo esc_attr( __( 'Year' ) ); ?></option>
-      <?php
+      <?php if ( ! empty($date_options)) { ?>
+      <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px;">
+        <option value=""><?php echo esc_attr( __( 'Year' ) ); ?></option>
+        <?php
       foreach ($date_options as $date) {
         $selected = $date['selected'] ? 'selected="selected"' : '';
       ?>
-      <option value="<?php echo esc_attr($date['value']); ?>" <?php echo $selected ?>>
-        <?php echo esc_html($date['label']); ?>
-      </option>
+        <option value="<?php echo esc_attr($date['value']); ?>" <?php echo $selected ?>>
+          <?php echo esc_html($date['label']); ?>
+        </option>
+        <?php } ?>
+      </select>
       <?php } ?>
-    </select>
-    <?php } ?>
-	  </fieldset>
+    </fieldset>
 
     <button class="vf-button vf-button--primary vf-button--sm" type="submit">
       <?php esc_html_e('Apply filter', 'theme'); ?>
     </button>
-	 
-	<a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/teachingbase'; ?>">
-  <?php esc_html_e('Reset filters', 'theme'); ?>
-</a>
+
+    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/teachingbase'; ?>">
+      <?php esc_html_e('Reset filters', 'theme'); ?>
+    </a>
   </div>
 </form>
