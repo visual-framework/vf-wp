@@ -24,8 +24,7 @@ $current_year = get_the_time('Y') . '0101';
   <div class="vf-hero__content | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading">
       Educators' Training</h2>
-    <p class="vf-hero__text">ELLS LearningLABs are Continuing Professional Development courses for European secondary
-      science teachers organised by the European Learning Laboratory for the Life Sciences (ELLS).</p>
+    <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
   </div>
 </section>
 

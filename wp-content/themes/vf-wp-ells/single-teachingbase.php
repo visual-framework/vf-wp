@@ -24,9 +24,7 @@ $organisers = get_field('tb_organisers');
     <h2 class="vf-hero__heading">
       ELLS TeachingBase </h2>
 
-    <p class="vf-hero__text">ELLS TeachingBASE is a collection of molecular biology teaching modules designed for
-      teachers and students, developed by ELLS staff members and EMBL scientists. The materials are freely available but
-      each module carries a creative commons copyright.</p>
+    <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
 
   </div>
 
