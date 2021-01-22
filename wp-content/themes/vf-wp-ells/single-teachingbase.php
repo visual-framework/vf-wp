@@ -42,17 +42,17 @@ if (class_exists('VF_Navigation')) {
 }
 
 ?>
-<div class="vf-content">
 
-  <h1><?php the_title(); ?></h1>
-  
-</div>
 
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
-    <?php 
+   <div>
+      <h1><?php the_title(); ?></h1>
+      <?php 
         the_content();
       ?>
+    </div>
+
   </div>
   <div>
 

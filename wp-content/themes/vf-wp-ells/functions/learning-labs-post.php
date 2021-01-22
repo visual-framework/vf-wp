@@ -37,7 +37,10 @@ add_action(
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(
-        'topic-area'
+        'topic-area',
+        'llabs-type',
+        'llabs-format',
+        'llabs-location'
       ),
     ));
 
