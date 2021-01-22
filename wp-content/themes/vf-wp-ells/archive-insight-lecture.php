@@ -14,7 +14,7 @@ $summary = get_field('il_summary');
     <h2 class="vf-hero__heading">
     EMBL Insight Lectures    </h2>
 
-    <p class="vf-hero__text">The EMBL Insight Lecture series takes a look at current trends in life science research and shows how research is influencing our everyday lives. Each year, a senior scientist from the European Molecular Biology Laboratory gives a lecture specially designed for a secondary school student audience.</p>
+    <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
 
   </div>
 
@@ -28,27 +28,26 @@ if (class_exists('VF_Navigation')) {
 
 ?>
 
-<section class="vf-intro">
-
-<div><!-- empty --></div>
-
-<div class="vf-stack">
-
-  <h2 class="vf-intro__subheading">The lectures are live streamed to school across the globe and made available online after the event.</h2>
-
-
-
-
-<p class="vf-intro__text">There are currently ten lectures available, with topics ranging from genomics and neuroscience to ocean diversity, advances in light microscopy and the study of macromolecules.</p>
+<div class="vf-grid vf-grid__col-4 | vf-content | vf-u-margin__bottom--800">
+  <div class="vf-grid__col--span-3">
+    <h3>The lectures are live streamed to school across the globe and made available online after the event.
+    </h3>
+    <p>There are currently ten lectures available, with topics ranging from genomics and neuroscience to ocean diversity, advances in light microscopy and the study of macromolecules.
+    </p>
+  </div>
 </div>
-</section>
 
-<div class="vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--100 vf-u-padding__top--600">
-<section class="embl-grid embl-grid--has-centered-content | vf-content">
-
-<div class="vf-section-header">
-  <h2 class="vf-section-header__heading"> Upcoming lecture </h2>
-</div>
+<section class="vf-content | vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--800 vf-u-padding__top--800 vf-u-margin__bottom--100">
+  <div class="vf-grid vf-grid__col-4">
+    <div class="vf-grid__col--span-2">
+    <h3> Upcoming lecture </h3>
+  <p><?php echo ($summary); ?></p>
+  <hr class="vf-divider">
+  <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
+  style="font-weight: 600;">Registration deadline</span> <span class="vf-u-text-color--grey"><br><?php echo esc_html($application_deadline); ?></span></p>
+  <a href="<?php echo esc_url($registration_link); ?>" class="vf-button vf-button--primary vf-button--sm">Register</a>
+  </div>
+<div class="vf-grid__col--span-2">
     <?php
 			$upcomingLecture = new WP_Query (array('posts_per_page' => 1, 'post_type' => 'insight-lecture'  ));
 $ids = array();
@@ -57,36 +56,31 @@ $ids[] = get_the_ID(); ?>
       <?php include(locate_template('partials/vf-card--article-lecture.php', false, false)); ?>
       <?php endwhile;?>
       <?php wp_reset_postdata(); ?>
+    </div>
 
-        <div>
-        <p class="vf-text-body vf-text-body--3"><?php echo ($summary); ?></p>
-        <hr class="vf-divider">
-        <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Registration deadline</span> <span class="vf-u-text-color--grey"><br><?php echo esc_html($application_deadline); ?></span></p>
-        <a href="<?php echo esc_url($registration_link); ?>" class="vf-button vf-button--primary vf-button--sm">Register</a>
-        </div>
+
+</div>
 </section>
-</div>
-<section class="embl-grid | vf-u-margin__top--600">
+<section class="vf-content">
+  <h3>Browse or filter all Insight Lectures</h3>
 
-<div class="vf-section-header">
-  <h2 class="vf-section-header__heading"> Past lectures </h2>
-</div>
-<div>
-
-  <?php
-		$pastLectures = new WP_Query(array('post__not_in' => $ids, 'post_type' => 'insight-lecture'));
-		while ($pastLectures->have_posts()) : $pastLectures->the_post(); ?>
-    <?php	$ids[] = get_the_ID(); ?>
-    <?php include(locate_template('partials/vf-summary-lecture.php', false, false));  
-                if ( ! $vf_theme->is_last_post()) {
-                  echo '<hr class="vf-divider">';
-                }
-       ?>
-    <?php endwhile; ?>
-    <?php wp_reset_postdata(); ?>
+  <div class="vf-grid vf-grid__col-4 | vf-content">
+    <div class="vf-grid__col--span-3">
+      <?php
+        if ( have_posts() ) {
+          while ( have_posts() ) {
+            the_post();
+            include(locate_template('partials/vf-summary-lecture.php', false, false)); 
+          }
+        } else {
+          echo '<p>', __('No posts found', 'vfwp'), '</p>';
+        } ?>
+      <div class="vf-grid"> <?php vf_pagination();?></div>
+    </div>
+    <div class="vf-content">
+      <?php include(locate_template('partials/lecture-filter.php', false, false)); ?>
+    </div>
   </div>
-
 </section>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
