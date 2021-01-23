@@ -6,14 +6,24 @@ $end = DateTime::createFromFormat('j M Y', $end_date);
 $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
+$type = get_field('labs_type');
+
 
 ?>
 <article class="vf-card vf-card--primary vf-card--bordered">
 
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
 
-  <div class="vf-card__content | vf-stack vf-stack--400">
-    <h3 class="vf-card__title">
+  <div class="vf-card__content">
+  <?php if ($type) { ?>
+  <p class="vf-summary__meta | vf-u-margin__bottom--100">
+    <?php if ($type) { ?>
+    <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
+    <?php } }
+      if ($type) { ?>
+  </p>
+  <?php }?>
+    <h3 class="vf-card__title | vf-u-margin__top--100">
       <a href="<?php the_permalink(); ?>" class="vf-card__link"><?php echo $title; ?></a>
     </h3>
     <p class="vf-card__text">

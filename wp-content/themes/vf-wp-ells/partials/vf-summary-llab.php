@@ -3,6 +3,8 @@ $start_date = get_field('labs_start_date');
 $end_date = get_field('labs_end_date');
 $start = DateTime::createFromFormat('j M Y', $start_date);
 $end = DateTime::createFromFormat('j M Y', $end_date);
+$type = get_field('labs_type');
+
 ?>
 <article class="vf-summary vf-summary--news">
 <time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>"
@@ -29,10 +31,19 @@ $end = DateTime::createFromFormat('j M Y', $end_date);
       'itemprop' => 'image' ) ); ?>
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link">
-    <?php echo get_the_title(); ?>
+      <?php echo get_the_title(); ?>
     </a>
   </h3>
   <p class="vf-summary__text">
-  <?php echo get_the_excerpt(); ?>
+    <?php echo get_the_excerpt(); ?>
   </p>
-</article>
+  <?php if ($type) { ?>
+  <p class="vf-summary__meta">
+    <?php if ($type) { ?>
+    <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
+    <?php } }
+      if ($type) { ?>
+  </p>
+  <?php }?>
+
+  </article>

@@ -5,7 +5,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 
 ?>
-<article class="vf-card">
+<article class="vf-card vf-card--primary vf-card--bordered">
 
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
 

@@ -36,11 +36,16 @@ if (class_exists('VF_Navigation')) {
         if ( have_posts() ) {
           while ( have_posts() ) {
             the_post();
-            include(locate_template('partials/vf-summary--news.php', false, false)); 
+            include(locate_template('partials/vf-summary--teachingbase.php', false, false)); 
+            if (($wp_query->current_post + 1) < ($wp_query->post_count)) {
+              echo '<hr class="vf-divider">';
+           }
           }
         } else {
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
-        } ?>
+        } 
+        
+       ?>
     <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>
   <div class="vf-content">

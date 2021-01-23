@@ -75,6 +75,10 @@ wp_reset_postdata();
           while ( have_posts() ) {
             the_post();
             include(locate_template('partials/vf-summary-llab.php', false, false)); 
+            if (($wp_query->current_post + 1) < ($wp_query->post_count)) {
+              echo '<hr class="vf-divider">';
+           }
+
           }
         } else {
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
