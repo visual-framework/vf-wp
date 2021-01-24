@@ -15,7 +15,7 @@ $download = get_field('labs_download');
 $contact = get_field('labs_contact');
 $organisers = get_field('labs_organisers');
 $registration_link = get_field('labs_application_form_link');
-$current_year = get_the_time('Y') . '0101';
+$current_year = the_date('Y') . '0101';
 
 ?>
 
@@ -39,6 +39,11 @@ if (class_exists('VF_Navigation')) {
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
     <div>
+    <?php if ($type) { ?>
+    <p class="vf-summary__meta | vf-u-margin__bottom--0">
+    <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
+    </p>
+    <?php } ?>
       <h1><?php the_title(); ?></h1>
       <?php 
         the_content();
@@ -94,7 +99,7 @@ if (class_exists('VF_Navigation')) {
         <?php if ( ! empty($registration_link)) { ?>
         <div style="display: inline-block;">
           <a href="<?php echo esc_url($registration_link); ?>"><button
-              class="vf-button vf-button--primary vf-button--sm">Application form</button></a>
+              class="vf-button vf-button--primary vf-button--sm">Apply</button></a>
         </div>
         <?php } ?>
       </div>
@@ -139,25 +144,27 @@ if (class_exists('VF_Navigation')) {
   </div>
 </section>
 <section
-  class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
+  class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed | training-container">
   <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Upcoming LearningLabs</h3>
   <div class="vf-grid vf-grid__col-3">
     <?php
+    $current_year = date('Y') . '0101';
     $llabsMore = new WP_Query (array(
-      'posts_per_page' => 3, 
       'post_type' => 'llabs-event',
-      'post__not_in'   => array( get_the_ID() ),
+      'posts_per_page' => 3,
+      'orderby' => 'labs_start_date',
+      'order' => 'ASC',
       'meta_query' => array( array(
         'key' => 'labs_start_date',
         'value' => $current_year,
         'compare' => '>=',
-        'type' => 'date'
+        'type' => 'numeric'
     ) )
      ));
       
 while ($llabsMore->have_posts()) : $llabsMore->the_post(); ?>
 
-    <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
+    <?php include(locate_template('partials/vf-card--article-llabs.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>

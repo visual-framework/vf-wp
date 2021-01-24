@@ -39,10 +39,7 @@ $type = get_field('labs_type');
   </p>
   <?php if ($type) { ?>
   <p class="vf-summary__meta">
-    <?php if ($type) { ?>
     <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
-    <?php } }
-      if ($type) { ?>
   </p>
   <?php }?>
 

@@ -77,7 +77,7 @@ if (class_exists('VF_Navigation')) {
     </p>
     <?php if ( ! empty($application_deadline)) { ?>
     <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Application deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_deadline); ?></span></p>
+        style="font-weight: 600;">Registration deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_deadline); ?></span></p>
     <?php } ?>     
      <?php if ($topic_area) { ?>    
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;<span
@@ -170,7 +170,7 @@ if (class_exists('VF_Navigation')) {
       
 while ($insightMore->have_posts()) : $insightMore->the_post(); ?>
 
-        <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
+        <?php include(locate_template('partials/vf-card--article-lecture-more.php', false, false)); ?>
         <?php endwhile;?>
       <?php wp_reset_postdata(); ?>
       </div>

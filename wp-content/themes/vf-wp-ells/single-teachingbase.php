@@ -45,6 +45,8 @@ if (class_exists('VF_Navigation')) {
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
    <div>
+      <time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
       <h1><?php the_title(); ?></h1>
       <?php 
         the_content();
