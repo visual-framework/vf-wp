@@ -37,18 +37,18 @@ if (class_exists('VF_Navigation')) {
  $current_year = date('Y') . '0101';
  $args = array(
   'post_type' => 'llabs-event',
+  'posts_per_page' => 3,
+  'orderby' => 'labs_start_date',
   'order' => 'ASC',
   'meta_query' => array( array(
     'key' => 'labs_start_date',
     'value' => $current_year,
     'compare' => '>=',
-    'type' => 'date'
+    'type' => 'numeric'
 ) )
 );
 // The Query
 $the_query = new WP_Query( $args );
- $year = date('Y');
-
 // The Loop
 if ( $the_query->have_posts() ) {
     while ( $the_query->have_posts() ) {
