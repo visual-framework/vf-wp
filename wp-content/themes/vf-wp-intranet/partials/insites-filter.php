@@ -30,7 +30,7 @@ $topic_terms = get_terms(
 
 // Get taxonomy labels
 $location_labels = vf_wp_intranet_location_labels();
-$ltopic_labels = vf_wp_intranet_topic_labels();
+$topic_labels = vf_wp_intranet_topic_labels();
 
 // Default empty date filter
 $date_options = array();
