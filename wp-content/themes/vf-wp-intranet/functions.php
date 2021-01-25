@@ -41,5 +41,26 @@ function vf_wp_documents__acf_settings_load_json($paths) {
     return $paths;
   }
  
+// Search filter
+function intranet_search_filter($query) {
+	if(!is_admin()) {
+		if($query->is_main_query() && $query->is_search()) {
+			// Check if $_GET['post_type'] is set
+			if(isset($_GET['post_type']) && $_GET['post_type'] != 'all') {
+				// Filter it just to be safe
+				$post_type = sanitize_text_field($_GET['post_type']);
+				// Set the post type
+				$query->set('post_type', $post_type);
+      }
+      else {
+        $query->set('post_type', array('post', 'page', 'document', 'insites'));
+      }
+		}
+	}
+	return $query;
+}
+
+add_filter('pre_get_posts', 'intranet_search_filter');
+
 
 ?>
