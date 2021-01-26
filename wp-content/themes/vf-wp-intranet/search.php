@@ -58,7 +58,7 @@ $total_results = $wp_query->found_posts;
         if ( have_posts() ) {
           while ( have_posts() ) {
             the_post();
-            include(locate_template('partials/vf-summary--article.php', false, false)); 
+            include(locate_template('partials/search-results.php', false, false)); 
           }
         } else {
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
