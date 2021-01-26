@@ -25,13 +25,13 @@ add_action(
       'show_in_nav_menus'   => true,
       'show_in_admin_bar'   => true,
       'show_in_rest'        => true,
-      'rest_base'           => "document",
-      'menu_icon'           => 'dashicons-text-page',
+      'rest_base'           => "documents",
+      'menu_icon'           => 'dashicons-open-folder',
       'capability_type'     => 'page',
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
       'has_archive'         => true,
       'rewrite'             => array(
-        'slug' => 'document'
+        'slug' => 'documents'
       ),
       'query_var'           => true,
       'can_export'          => true,

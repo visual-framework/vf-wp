@@ -1,12 +1,8 @@
 <?php
 $title = esc_html(get_the_title());
-$author_url = get_author_posts_url(get_the_author_meta('ID'));
-$user_id = get_the_author_meta('ID');
+$topic_terms = get_field('topic');
 
-$excerpt = get_the_excerpt();
-$excerpt = substr($excerpt, 0, 150);
-$excerpt = substr($excerpt, 0, strripos($excerpt, ' '));
-$excerpt = "{$excerpt}&hellip;";
+
 
 
 ?>
@@ -18,10 +14,19 @@ $excerpt = "{$excerpt}&hellip;";
     <h3 class="vf-card__title">
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>
-    <p class="vf-card__text">
-    <?php echo $excerpt; ?>
+    <p class="vf-card__text | vf-u-margin__bottom--100">
+    <?php echo get_the_excerpt(); ?>
     </p>
     <time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0; margin-top: 10px;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+      <p class="vf-summary__meta | vf-u-margin__top--100">
+      <?php 
+      if( $topic_terms ) {
+        $topics_list = array(); 
+      foreach( $topic_terms as $term ) {
+        $topics_list[] = '<a class="vf-link"  href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . esc_html( $term->name ) . '</a>'; }
+      echo implode(', ', $topics_list); }?>
+      </p>
+
   </div>
 </div>

@@ -3,6 +3,25 @@
     "title": "Insites",
     "fields": [
         {
+            "key": "field_5dd3ec01c4d1e",
+            "label": "Article intro",
+            "name": "article_intro",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "metaboxes",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "text",
+            "media_upload": 0,
+            "toolbar": "full",
+            "delay": 0
+        },
+        {
             "key": "field_600e791cff812",
             "label": "EMBL location",
             "name": "embl_location",
