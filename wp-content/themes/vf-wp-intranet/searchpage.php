@@ -29,7 +29,7 @@ $total_results = $wp_query->found_posts;
       padding-left: 10px;
     }
     .vf-search--inline .vf-search__button {
-      top: -22px;
+      top: -3px;
     }
 
     </style>
@@ -41,11 +41,12 @@ $total_results = $wp_query->found_posts;
   <div class="vf-form__item | vf-search__item">
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
           <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
-          <option value="all" selected="" >Everything</option>
+          <option value="any" selected="" >Everything</option>
             <option value="page" name="post_type[]">Pages</option>
-            <option value="insights" name="post_type[]">INsights</option>
-            <option value="vf_eevent" name="post_type[]">Events</option>
+            <option value="insites" name="post_type[]">INsites</option>
+            <option value="vf_event" name="post_type[]">Events</option>
             <option value="people" name="post_type[]">People</option>
+            <option value="documents" name="post_type[]">Document</option>
           </select>
         </div>
   <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="<?php esc_attr_e('Search', 'vfwp'); ?>">

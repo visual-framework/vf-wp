@@ -62,6 +62,7 @@ $close_wrap,
     <section class="embl-grid embl-grid--has-centered-content">
       <div></div>
      <div>
+     
        <h1 class="vf-text vf-text-heading--1">
          <?php echo $title;?>
        </h1>
