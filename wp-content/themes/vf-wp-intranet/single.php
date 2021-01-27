@@ -33,17 +33,6 @@ get_header();
 
     <?php the_content(); ?>
 
-    <?php
-     $tags = get_the_tags($post->ID);
-     if ($tags) { ?>
-      <p class="vf-text-body vf-text-body--3 | tags-inline">Tags:
-     <?php $tagslist = array();
-     foreach($tags as $tag) {
-      $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-link vf-link--secondary' . $tag->term_id . '">' . $tag->name . '</a>';
-     }
-     echo implode(', ', $tagslist); ?>
-    </p>
-    <?php } ?>
   </div>
 </section>
 

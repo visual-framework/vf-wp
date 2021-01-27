@@ -37,7 +37,8 @@ add_action(
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(
-        'embl-location'
+        'embl-location',
+        'post_tag'
   
       ),
     ));
