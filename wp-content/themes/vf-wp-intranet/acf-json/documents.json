@@ -43,6 +43,36 @@
             "min_size": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_5e9ff067ca90b",
+            "label": "File type",
+            "name": "file_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "PDF": "PDF",
+                "DOC": "DOC",
+                "PPT": "PPT",
+                "XLS": "XLS",
+                "JPG": "JPG"
+            },
+            "default_value": [
+                "PDF"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
