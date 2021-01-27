@@ -53,7 +53,7 @@ function intranet_search_filter($query) {
 				$query->set('post_type', $post_type);
       }
       else {
-        $query->set('post_type', array('post', 'page', 'document', 'insites'));
+        $query->set('post_type', array('post', 'page', 'documents', 'insites'));
       }
 		}
 	}
