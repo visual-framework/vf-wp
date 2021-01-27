@@ -13,16 +13,6 @@ get_header();
 <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
   <div class="vf-grid__col--span-2">
     <div class="vf-content">
-    <?php
-    $tags = get_the_tags($post->ID);
-    if ($tags) {
-    $tagslist = array();
-    foreach($tags as $tag) {
-      $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-badge | vf-u-margin__bottom--200">' . $tag->name . '</a>';
-    }
-    echo implode('  ', $tagslist);
-    } 
-    ?>
       <p class="vf-summary__date | vf-u-margin__bottom--0">
         <time title="<?php the_time('c'); ?>"
           datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
