@@ -1457,10 +1457,10 @@
     highlight.js "^10.1.2"
     marked "^1.1.1"
 
-"@visual-framework/vf-design-tokens@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-3.1.0.tgz#0438da9dc796adb6bf9d794f334c6ca0cdbd417a"
-  integrity sha512-NmK9oQjHWU98iBdGlVmxz+O9bJnE30ta/FqfDlKigeySK+MqpynyQTCCjQ5NAVPNW4cpkqV2y1RwOTuopph18g==
+"@visual-framework/vf-design-tokens@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-3.2.0.tgz#aa598fc21c6c7e1886fb7e0ef09899d4805d025a"
+  integrity sha512-s87DeBw+cA/bm3fmOyGx6790j0vHdr4XWpNJNsLFl6j2azIC00vxZHkx5Rta56+4LFO6kTN6dTWkJROYMLxnEg==
 
 "@visual-framework/vf-details@1.1.0":
   version "1.1.0"
