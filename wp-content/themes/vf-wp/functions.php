@@ -35,6 +35,7 @@ require_once('blocks/vfwp-lede/index.php');
 require_once('blocks/vfwp-button/index.php');
 require_once('blocks/vfwp-badge/index.php');
 require_once('blocks/vfwp-bg-container/index.php');
+require_once('blocks/vfwp-embl-events/index.php');
 
 /*deprecated
 require_once('blocks/vfwp-masthead/index.php');
