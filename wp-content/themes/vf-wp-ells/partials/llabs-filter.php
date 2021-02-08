@@ -51,7 +51,7 @@ $yearly_archives = wp_get_archives(array(
   'type'      => 'yearly', # monthly for month and year archives
   'format'    => 'html',
   'echo'      => 0,
-  'post_type' => 'llabs-event'
+  'post_type' => 'learninglab'
 ));
 
 // Attempt to get year/month filter
@@ -85,13 +85,13 @@ if (preg_match_all(
 }
 
 // $archive = get_post_type_archive_link('document');
-$archive = home_url('/?post_type=llabs-event');
+$archive = home_url('/?post_type=learninglab');
 
 ?>
 <form class="vf-form vf-stack vf-stack--800" action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
-    <input type="hidden" name="post_type" value="llabs-event">
+    <input type="hidden" name="post_type" value="learninglab">
 
     <?php
     $search = trim(get_search_query());
@@ -108,7 +108,7 @@ $archive = home_url('/?post_type=llabs-event');
       $selected = empty($type_selected) || empty($type_selected[0]) ? 'checked="checked"' : '';
     ?>
         <input type="checkbox" value="" id="checkbox-llabs_type-1" class="vf-form__checkbox"
-          name="llabs-event_llabs_type" <?php echo $selected ?>>
+          name="learninglab_llabs_type" <?php echo $selected ?>>
         <label for="checkbox-llabs_type-1" class="vf-form__label">All</label>
       </div>
       <?php
@@ -187,7 +187,7 @@ $archive = home_url('/?post_type=llabs-event');
       <?php esc_html_e('Apply filter', 'theme'); ?>
     </button>
 
-    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/llabs-event'; ?>">
+    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/learninglab'; ?>">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
   </div>

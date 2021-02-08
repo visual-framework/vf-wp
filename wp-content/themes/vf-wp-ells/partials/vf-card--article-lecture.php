@@ -21,7 +21,7 @@ $summary = get_field('il_summary');
   <a href="<?php echo esc_url($registration_link); ?>" class="vf-button vf-button--primary vf-button--sm">Register</a>
   </div>
 <div class="vf-grid__col--span-2">
-<article class="vf-card vf-card--primary vf-card--bordered">
+<article class="vf-card vf-card--primary">
 
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
 

@@ -10,7 +10,7 @@ $type = get_field('labs_type');
 
 
 ?>
-<article class="vf-card vf-card--primary vf-card--bordered">
+<article class="vf-card vf-card--primary">
 
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
 

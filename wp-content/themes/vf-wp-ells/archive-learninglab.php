@@ -36,7 +36,7 @@ if (class_exists('VF_Navigation')) {
     <?php
  $current_year = date('Y') . '0101';
  $args = array(
-  'post_type' => 'llabs-event',
+  'post_type' => 'learninglab',
   'posts_per_page' => 3,
   'orderby' => 'labs_start_date',
   'order' => 'ASC',

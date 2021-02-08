@@ -5,7 +5,7 @@ $start_date = get_field('il_start_date');
 
 ?>
 
-<article class="vf-card vf-card--primary vf-card--bordered">
+<article class="vf-card vf-card--primary">
 
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
 

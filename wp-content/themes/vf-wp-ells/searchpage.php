@@ -55,7 +55,7 @@ if (class_exists('VF_Navigation')) {
             <option value="all" selected="" >Everything</option>
             <option value="teachingbase" name="post_type[]">TeachingBASE</option>
             <option value="insight-lecture" name="post_type[]">Insight Lecture</option>
-            <option value="llabs-event" name="post_type[]">LearningLabs</option>
+            <option value="learninglab" name="post_type[]">LearningLabs</option>
           </select>
         </div>
   <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="<?php esc_attr_e('Search', 'vfwp'); ?>">

@@ -36,8 +36,8 @@
             <option value="all" selected="" >Everything</option>
             <option value="teachingbase" name="post_type[]">Pages</option>
             <option value="insight-lecture" name="post_type[]">INsights</option>
-            <option value="llabs-event" name="post_type[]">Events</option>
-            <option value="llabs-event" name="post_type[]">People</option>
+            <option value="learninglab" name="post_type[]">Events</option>
+            <option value="learninglab" name="post_type[]">People</option>
           </select>
         </div>
   <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="<?php esc_attr_e('Search', 'vfwp'); ?>">

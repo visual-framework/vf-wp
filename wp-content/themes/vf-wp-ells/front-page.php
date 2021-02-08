@@ -45,7 +45,7 @@ global $vf_theme;
             <option value="all" selected="">Everything</option>
             <option value="teachingbase" name="post_type[]">TeachingBASE</option>
             <option value="insight-lecture" name="post_type[]">Insight Lecture</option>
-            <option value="llabs-event" name="post_type[]">LearningLabs</option>
+            <option value="learninglab" name="post_type[]">LearningLabs</option>
           </select>
         </div>
         <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm"
@@ -99,7 +99,7 @@ global $vf_theme;
       <h2 class="vf-section-header__heading">Resources</h2>
     </div>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -113,7 +113,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -127,7 +127,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -153,7 +153,7 @@ global $vf_theme;
       <h2 class="vf-section-header__heading">Training</h2>
     </div>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -167,7 +167,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -181,7 +181,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -207,7 +207,7 @@ global $vf_theme;
       <h2 class="vf-section-header__heading">Experience Science</h2>
     </div>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -221,7 +221,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -235,7 +235,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--primary vf-card--bordered">
+    <article class="vf-card vf-card--primary">
 
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"

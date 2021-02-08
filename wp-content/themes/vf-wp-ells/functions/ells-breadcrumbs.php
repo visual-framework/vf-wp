@@ -59,9 +59,9 @@ public function ells_breadcrumbs() {
       echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $teachingbase_url . '" class="vf-breadcrumbs__link">' . $teachingbase_name . '</a></li>';
         }
     // llabs
-    if ( is_post_type_archive('llabs-event') ) {
+    if ( is_post_type_archive('learninglab') ) {
       echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
-      $labs_url = get_post_type_archive_link('llabs-event');
+      $labs_url = get_post_type_archive_link('learninglab');
       $labs_name = 'LearningLabs';
       echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $labs_url . '" class="vf-breadcrumbs__link">' . $labs_name . '</a></li>';
         }
@@ -110,7 +110,7 @@ public function ells_breadcrumbs() {
     }
 
 
-    if ( !is_home() && !is_archive('teachingbase') && !is_archive('llabs-event') && !is_archive('insight-lecture') && !is_archive('embl-visit') && !is_front_page() || is_paged() ) {
+    if ( !is_home() && !is_archive('teachingbase') && !is_archive('learninglab') && !is_archive('insight-lecture') && !is_archive('embl-visit') && !is_front_page() || is_paged() ) {
 
       $post = get_queried_object();
       echo '
@@ -142,8 +142,8 @@ public function ells_breadcrumbs() {
         echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
 
         // llabs
-      } elseif ( is_singular('llabs-event') ) {
-          $labs_url = get_post_type_archive_link('llabs-event');
+      } elseif ( is_singular('learninglab') ) {
+          $labs_url = get_post_type_archive_link('learninglab');
           $labs_name = 'LearningLabs';
           echo '<li class="vf-breadcrumbs__item"><a href="' . $labs_url . '" class="vf-breadcrumbs__link">' . $labs_name . '</a></li>';
           echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';

@@ -220,7 +220,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "llabs-event"
+                "value": "learninglab"
             }
         ]
     ],
