@@ -73,20 +73,6 @@ if (preg_match_all(
   $yearly_archives, $matches, PREG_SET_ORDER
 )) {
 
-/*
-For month and year archive
-
-  foreach ($matches as $match) {
-    $value = "{$match[1]}{$match[2]}";
-    $label = date('F Y', strtotime("{$match[1]}-{$match[2]}-01"));
-    $date_options[] = array(
-      'value'    => $value,
-      'label'    => $label,
-      'selected' => $value == "{$year}{$month}"
-    );
-  }
-  */
-
   foreach ($matches as $match) {
     $value = "{$match[1]}";
     $label = "{$match[1]}";

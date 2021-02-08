@@ -19,8 +19,8 @@ if (class_exists('VF_Navigation')) {
 
 ?>
 
-<section class="vf-grid vf-grid__col-3 | vf-content">
-    <div class="vf-grid__col--span-2">
+<section class="vf-grid vf-grid__col-4 | vf-content">
+    <div class="vf-grid__col--span-3">
         <h2>
           Latest news</h2>
       <div>

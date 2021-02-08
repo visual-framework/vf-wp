@@ -48,8 +48,10 @@ if (class_exists('VF_Navigation')) {
 
 <section class="vf-content">
   <h3>Browse or filter all Insight Lectures</h3>
-
-  <div class="vf-grid vf-grid__col-4 | vf-content">
+  <div class="vf-grid vf-grid__col-4 | vf-u-padding__top--400">
+    <div class="vf-content">
+      <?php include(locate_template('partials/lecture-filter.php', false, false)); ?>
+    </div>
     <div class="vf-grid__col--span-3">
       <?php
         if ( have_posts() ) {
@@ -65,9 +67,6 @@ if (class_exists('VF_Navigation')) {
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
         } ?>
       <div class="vf-grid"> <?php vf_pagination();?></div>
-    </div>
-    <div class="vf-content">
-      <?php include(locate_template('partials/lecture-filter.php', false, false)); ?>
     </div>
   </div>
 </section>

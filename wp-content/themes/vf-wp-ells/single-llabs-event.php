@@ -144,7 +144,7 @@ if (class_exists('VF_Navigation')) {
   </div>
 </section>
 <section
-  class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed | training-container">
+  class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
   <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Upcoming LearningLabs</h3>
   <div class="vf-grid vf-grid__col-3">
     <?php

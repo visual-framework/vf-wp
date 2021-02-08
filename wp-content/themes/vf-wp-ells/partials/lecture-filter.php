@@ -48,20 +48,6 @@ if (preg_match_all(
   $yearly_archives, $matches, PREG_SET_ORDER
 )) {
 
-/*
-For month and year archive
-
-  foreach ($matches as $match) {
-    $value = "{$match[1]}{$match[2]}";
-    $label = date('F Y', strtotime("{$match[1]}-{$match[2]}-01"));
-    $date_options[] = array(
-      'value'    => $value,
-      'label'    => $label,
-      'selected' => $value == "{$year}{$month}"
-    );
-  }
-  */
-
   foreach ($matches as $match) {
     $value = "{$match[1]}";
     $label = "{$match[1]}";
@@ -122,7 +108,7 @@ $archive = home_url('/?post_type=insight-lecture');
       <legend class="vf-form__legend">Year</legend>
 
       <?php if ( ! empty($date_options)) { ?>
-      <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px;">
+      <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">
         <option value=""><?php echo esc_attr( __( 'Select year' ) ); ?></option>
         <?php
       foreach ($date_options as $date) {

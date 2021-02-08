@@ -30,7 +30,7 @@ if (class_exists('VF_Navigation')) {
   </div>
 </div>
 <section
-  class="vf-content | vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--800 vf-u-padding__top--100 vf-u-margin__bottom--100 | training-container">
+  class="vf-content | vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--800 vf-u-padding__top--100 vf-u-margin__bottom--100">
   <h3> Upcoming LearningLabs</h3>
   <div class="vf-grid vf-grid__col-3">
     <?php
@@ -67,8 +67,10 @@ wp_reset_postdata();
 </section>
 <section class="vf-content">
   <h3>Browse or filter all LearningLabs</h3>
-
-  <div class="vf-grid vf-grid__col-4 | vf-content">
+  <div class="vf-grid vf-grid__col-4 | vf-u-padding__top--400">
+    <div>
+      <?php include(locate_template('partials/llabs-filter.php', false, false)); ?>
+    </div>
     <div class="vf-grid__col--span-3">
       <?php
         if ( have_posts() ) {
@@ -84,9 +86,6 @@ wp_reset_postdata();
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
         } ?>
       <div class="vf-grid"> <?php vf_pagination();?></div>
-    </div>
-    <div class="vf-content">
-      <?php include(locate_template('partials/llabs-filter.php', false, false)); ?>
     </div>
   </div>
 </section>

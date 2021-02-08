@@ -30,7 +30,12 @@ if (class_exists('VF_Navigation')) {
   </div>
 </div>
 
-<section class="vf-grid vf-grid__col-4 | vf-content">
+<section class="vf-content">
+  <h3>Browse or filter all LearningLabs</h3>
+<div class="vf-grid vf-grid__col-4 | vf-u-padding__top--400">
+  <div>
+    <?php include(locate_template('partials/teachingbase-filter.php', false, false)); ?>
+  </div>
   <div class="vf-grid__col--span-3">
     <?php
         if ( have_posts() ) {
@@ -48,9 +53,7 @@ if (class_exists('VF_Navigation')) {
        ?>
     <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>
-  <div class="vf-content">
-    <?php include(locate_template('partials/teachingbase-filter.php', false, false)); ?>
-  </div>
+</div>
 </section>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

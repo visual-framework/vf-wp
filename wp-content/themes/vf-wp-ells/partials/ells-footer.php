@@ -34,8 +34,8 @@
           Subscribe to our newsletter</h4>
         <div class="vf-form__item vf-stack">
 
-          <input type="text" id="text" class="vf-form__input" placeholder="Email">
-
+          <input type="text" id="text" class="vf-form__input" placeholder="Email" style="padding: 3px 12px; width: 260px; display: inline-block;">
+          <a href="JavaScript:Void(0);" class="vf-button vf-button--secondary vf-button--sm | vf-u-margin__left--200" style="display: inline-block;">Subscribe</a>
         </div>
       </div>
       <div class="vf-links">
@@ -60,7 +60,7 @@
           </defs>
         </svg>
         <div class="vf-social-links vf-social-links--outline">
-          <ul class="vf-social-links__list">
+          <ul class="vf-social-links__list | vf-u-margin__top--0">
             <li class="vf-social-links__item">
               <a class="vf-social-links__link" href="JavaScript:Void(0);">
                 <span class="vf-u-sr-only">

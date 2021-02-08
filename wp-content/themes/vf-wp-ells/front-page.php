@@ -146,7 +146,7 @@ global $vf_theme;
 
 <!-- Training -->
 
-<section class="vf-card-container | vf-u-fullbleed | vf-u-margin__bottom--0 | training-container">
+<section class="vf-card-container | vf-u-fullbleed | vf-u-margin__bottom--0 | ">
   <div class="vf-card-container__inner">
 
     <div class="vf-section-header">
@@ -200,7 +200,7 @@ global $vf_theme;
 <!-- EXPERIENCE SCIENCE -->
 
 <section
-  class="vf-card-container | vf-u-fullbleed vf-u-background-color-ui--off-white | vf-u-margin__bottom--0 | experience-container">
+  class="vf-card-container | vf-u-fullbleed vf-u-background-color-ui--off-white | vf-u-margin__bottom--0">
   <div class="vf-card-container__inner">
 
     <div class="vf-section-header">
@@ -264,7 +264,7 @@ global $vf_theme;
   <section>
     <h3 class="vf-text-heading--3">Team up with us</h3>
   </section>
-  <section class="vf-grid vf-grid__col-3 | vf-u-margin__top--600 | team-container">
+  <section class="vf-grid vf-grid__col-3 | vf-u-margin__top--600">
 
     <div class="vf-box vf-box--easy vf-box-theme--primary vf-box--is-link">
 

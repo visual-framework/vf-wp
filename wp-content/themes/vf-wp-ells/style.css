@@ -27,18 +27,6 @@ Text Domain:	 vfwp
   background: #fff;
 }
 
-.training-container .vf-card--bordered {
-  border-bottom: 8px solid #193F90 !important;
-}
-
-.experience-container .vf-card--bordered {
-  border-bottom: 8px solid #F49E17 !important; 
-}
-
-.team-container .vf-box {
-  --vf-box-theme-color--background: #563D82 !important;
-}
-
 .vf-card {
   grid-template-rows: 228px 1fr !important;
 }
