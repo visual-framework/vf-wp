@@ -56,115 +56,124 @@ context.setVariable("vf_hero_text", t_5);
 if(frame.topLevel) {
 context.addExport("vf_hero_text", t_5);
 }
-output += "\n";
 var t_6;
-t_6 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"striped");
-frame.set("striped", t_6, true);
+t_6 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"vf_hero_href");
+frame.set("vf_hero_href", t_6, true);
 if(frame.topLevel) {
-context.setVariable("striped", t_6);
+context.setVariable("vf_hero_href", t_6);
 }
 if(frame.topLevel) {
-context.addExport("striped", t_6);
+context.addExport("vf_hero_href", t_6);
 }
+output += "\n";
 var t_7;
-t_7 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"inverted");
-frame.set("inverted", t_7, true);
+t_7 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"striped");
+frame.set("striped", t_7, true);
 if(frame.topLevel) {
-context.setVariable("inverted", t_7);
+context.setVariable("striped", t_7);
 }
 if(frame.topLevel) {
-context.addExport("inverted", t_7);
+context.addExport("striped", t_7);
 }
 var t_8;
-t_8 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"theme");
-frame.set("theme", t_8, true);
+t_8 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"inverted");
+frame.set("inverted", t_8, true);
 if(frame.topLevel) {
-context.setVariable("theme", t_8);
+context.setVariable("inverted", t_8);
 }
 if(frame.topLevel) {
-context.addExport("theme", t_8);
+context.addExport("inverted", t_8);
 }
 var t_9;
-t_9 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"newTheme");
-frame.set("newTheme", t_9, true);
+t_9 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"theme");
+frame.set("theme", t_9, true);
 if(frame.topLevel) {
-context.setVariable("newTheme", t_9);
+context.setVariable("theme", t_9);
 }
 if(frame.topLevel) {
-context.addExport("newTheme", t_9);
+context.addExport("theme", t_9);
 }
 var t_10;
-t_10 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"flush");
-frame.set("flush", t_10, true);
+t_10 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"newTheme");
+frame.set("newTheme", t_10, true);
 if(frame.topLevel) {
-context.setVariable("flush", t_10);
+context.setVariable("newTheme", t_10);
 }
 if(frame.topLevel) {
-context.addExport("flush", t_10);
+context.addExport("newTheme", t_10);
 }
 var t_11;
-t_11 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"offset");
-frame.set("offset", t_11, true);
+t_11 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"flush");
+frame.set("flush", t_11, true);
 if(frame.topLevel) {
-context.setVariable("offset", t_11);
+context.setVariable("flush", t_11);
 }
 if(frame.topLevel) {
-context.addExport("offset", t_11);
+context.addExport("flush", t_11);
 }
 var t_12;
-t_12 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"block");
-frame.set("block", t_12, true);
+t_12 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"offset");
+frame.set("offset", t_12, true);
 if(frame.topLevel) {
-context.setVariable("block", t_12);
+context.setVariable("offset", t_12);
 }
 if(frame.topLevel) {
-context.addExport("block", t_12);
+context.addExport("offset", t_12);
 }
 var t_13;
-t_13 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"centered");
-frame.set("centered", t_13, true);
+t_13 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"block");
+frame.set("block", t_13, true);
 if(frame.topLevel) {
-context.setVariable("centered", t_13);
+context.setVariable("block", t_13);
 }
 if(frame.topLevel) {
-context.addExport("centered", t_13);
+context.addExport("block", t_13);
 }
 var t_14;
-t_14 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"spacing");
-frame.set("spacing", t_14, true);
+t_14 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"centered");
+frame.set("centered", t_14, true);
 if(frame.topLevel) {
-context.setVariable("spacing", t_14);
+context.setVariable("centered", t_14);
 }
 if(frame.topLevel) {
-context.addExport("spacing", t_14);
+context.addExport("centered", t_14);
+}
+var t_15;
+t_15 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"spacing");
+frame.set("spacing", t_15, true);
+if(frame.topLevel) {
+context.setVariable("spacing", t_15);
+}
+if(frame.topLevel) {
+context.addExport("spacing", t_15);
 }
 output += "\n";
-var t_15;
-t_15 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"id");
-frame.set("id", t_15, true);
-if(frame.topLevel) {
-context.setVariable("id", t_15);
-}
-if(frame.topLevel) {
-context.addExport("id", t_15);
-}
 var t_16;
-t_16 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"modifier_class");
-frame.set("modifier_class", t_16, true);
+t_16 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"id");
+frame.set("id", t_16, true);
 if(frame.topLevel) {
-context.setVariable("modifier_class", t_16);
+context.setVariable("id", t_16);
 }
 if(frame.topLevel) {
-context.addExport("modifier_class", t_16);
+context.addExport("id", t_16);
 }
 var t_17;
-t_17 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"override_class");
-frame.set("override_class", t_17, true);
+t_17 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"modifier_class");
+frame.set("modifier_class", t_17, true);
 if(frame.topLevel) {
-context.setVariable("override_class", t_17);
+context.setVariable("modifier_class", t_17);
 }
 if(frame.topLevel) {
-context.addExport("override_class", t_17);
+context.addExport("modifier_class", t_17);
+}
+var t_18;
+t_18 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"override_class");
+frame.set("override_class", t_18, true);
+if(frame.topLevel) {
+context.setVariable("override_class", t_18);
+}
+if(frame.topLevel) {
+context.addExport("override_class", t_18);
 }
 ;
 }
@@ -275,33 +284,33 @@ cb();
 }
 else {
 frame = frame.push();
-var t_20 = runtime.fromIterator(runtime.contextOrFrameLookup(context, frame, "vf_hero_text"));
-runtime.asyncEach(t_20, 1, function(hero_text, t_18, t_19,next) {
+var t_21 = runtime.fromIterator(runtime.contextOrFrameLookup(context, frame, "vf_hero_text"));
+runtime.asyncEach(t_21, 1, function(hero_text, t_19, t_20,next) {
 frame.set("hero_text", hero_text);
-frame.set("loop.index", t_18 + 1);
-frame.set("loop.index0", t_18);
-frame.set("loop.revindex", t_19 - t_18);
-frame.set("loop.revindex0", t_19 - t_18 - 1);
-frame.set("loop.first", t_18 === 0);
-frame.set("loop.last", t_18 === t_19 - 1);
-frame.set("loop.length", t_19);
+frame.set("loop.index", t_19 + 1);
+frame.set("loop.index0", t_19);
+frame.set("loop.revindex", t_20 - t_19);
+frame.set("loop.revindex0", t_20 - t_19 - 1);
+frame.set("loop.first", t_19 === 0);
+frame.set("loop.last", t_19 === t_20 - 1);
+frame.set("loop.length", t_20);
 output += runtime.suppressValue(env.getFilter("safe").call(context, hero_text), env.opts.autoescape);
 output += "\n";
-next(t_18);
+next(t_19);
 ;
-}, function(t_22,t_21) {
-if(t_22) { cb(t_22); return; }
+}, function(t_23,t_22) {
+if(t_23) { cb(t_23); return; }
 frame = frame.pop();
 cb()});
 }
-})(function(t_23) {
-if(t_23) { cb(t_23); return; }output += "    </p>\n";
+})(function(t_24) {
+if(t_24) { cb(t_24); return; }output += "    </p>\n";
 cb()});
 }
 else {
 cb()}
-})(function(t_24) {
-if(t_24) { cb(t_24); return; }output += "  </div>\n</section>\n";
+})(function(t_25) {
+if(t_25) { cb(t_25); return; }output += "  </div>\n</section>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

@@ -105,7 +105,7 @@
 .vf-footer__inner {
   grid-column: main;
   margin: 0 auto;
-  max-width: 81.25em;
+  max-width: 80em;
   padding: 0;
 }
 
@@ -275,6 +275,6 @@
 
   .vf-footer__inner {
     margin: 0 auto;
-    max-width: 81.25em;
+    max-width: 80em;
   }
 }

@@ -1,6 +1,8 @@
 <?php
 
 $title = esc_html(get_the_title());
+$topic_terms = get_field('topic');
+
 
 ?>
 <article class="vf-summary vf-summary--news">
@@ -14,5 +16,14 @@ $title = esc_html(get_the_title());
     'class' => 'vf-summary__image', 
     'style' => 'width: 180px; height: auto; border: 1px solid #d0d0ce')); ?>
   <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
+  <p class="vf-summary__meta">
+      <?php 
+      if( $topic_terms ) {
+        $topics_list = array(); 
+      foreach( $topic_terms as $term ) {
+        $topics_list[] = '<a class="vf-link"  href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . esc_html( $term->name ) . '</a>'; }
+      echo implode(', ', $topics_list); }?>
+      </p>
+
 </article>
 <!--/vf-summary-->

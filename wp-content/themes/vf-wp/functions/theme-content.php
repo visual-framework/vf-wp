@@ -42,11 +42,23 @@ class VF_Theme_Content {
    * Filter: `render_block`
    */
   public function render_block($html, $block) {
-    // Wrapper VF Grid Column inner blocks with `vf-content`
+    /* Wrapper VF Grid Column inner blocks with `vf-content`
+    https://github.com/visual-framework/vf-wp/issues/647
+    
     if ($block['blockName'] === 'vf/grid-column') {
       $html = preg_replace(
         '#^\s*(<div[^>]*?>)(.*?)(</div>)\s*$#s',
         "$1<!--[vf/content]-->\n<div class=\"vf-content\">\n$2\n</div>\n$3\n",
+        $html
+      );
+    } */
+
+    // wp-embed should use vf-embed for responsiveness
+    // https://github.com/visual-framework/vf-wp/issues/693
+    if ($block['blockName'] === 'core/embed') {
+      $html = preg_replace(
+        "wp-block-embed__wrapper",
+        "wp-block-embed__wrapper | vf-embed vf-embed--16x9",
         $html
       );
     }

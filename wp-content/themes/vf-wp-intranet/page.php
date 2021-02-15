@@ -59,6 +59,16 @@ else { ?>
 <section class="embl-grid embl-grid--has-centered-content">
   <div></div>
   <div>
+    <?php
+    $tags = get_the_tags($post->ID);
+    if ($tags) {
+    $tagslist = array();
+    foreach($tags as $tag) {
+      $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-badge">' . $tag->name . '</a>';
+    }
+    echo implode('  ', $tagslist);
+    } 
+    ?>
     <h1 class="vf-text vf-text-heading--1">
       <?php echo $title;?>
     </h1>

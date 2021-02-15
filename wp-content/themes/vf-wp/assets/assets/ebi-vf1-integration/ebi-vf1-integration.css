@@ -154,7 +154,7 @@ body.ebi-vf1-integration,
   background-color: #373a36 !important;
 }
 .ebi-vf1-integration #data-protection-banner .row {
-  max-width: 81.25em;
+  max-width: 80em;
 }
 .ebi-vf1-integration .vf-form__input:not([type=file]) {
   height: unset;
