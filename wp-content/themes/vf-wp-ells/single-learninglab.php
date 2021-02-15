@@ -15,7 +15,6 @@ $download = get_field('labs_download');
 $contact = get_field('labs_contact');
 $organisers = get_field('labs_organisers');
 $registration_link = get_field('labs_application_form_link');
-$current_year = the_date('Y') . '0101';
 
 ?>
 

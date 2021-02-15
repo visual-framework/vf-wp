@@ -67,6 +67,7 @@ $total_results = $wp_query->found_posts;
     <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>
   <div></div>
+</section>
 
 
   <?php get_footer(); ?>
