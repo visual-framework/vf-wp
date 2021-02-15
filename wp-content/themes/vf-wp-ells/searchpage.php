@@ -53,9 +53,11 @@ if (class_exists('VF_Navigation')) {
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
           <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
             <option value="all" selected="" >Everything</option>
+            <option value="page" name="post_type[]">Pages</option>
+            <option value="post" name="post_type[]">News</option>
             <option value="teachingbase" name="post_type[]">TeachingBASE</option>
             <option value="insight-lecture" name="post_type[]">Insight Lecture</option>
-            <option value="llabs-event" name="post_type[]">LearningLabs</option>
+            <option value="learninglab" name="post_type[]">LearningLabs</option>
           </select>
         </div>
   <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="<?php esc_attr_e('Search', 'vfwp'); ?>">
@@ -65,11 +67,5 @@ if (class_exists('VF_Navigation')) {
 
   </div>
 </section>
-
-
-
-
-
-
 
 <?php get_footer(); ?>

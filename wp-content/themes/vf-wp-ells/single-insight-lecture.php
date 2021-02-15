@@ -22,16 +22,13 @@ $registration_link = get_field('il_registration_link');
 
 
 
-<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0" style="
---vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/vf-hero-intense.png');  ">
-  <div class="vf-hero__content | vf-stack vf-stack--400 ">
-    <h2 class="vf-hero__heading">
-      <?php echo esc_html($title); ?>
-    </h2>
-    <p class="vf-hero__subheading"><?php echo get_the_excerpt(); ?></p>
-  </div>
+<section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
+<div class="vf-hero__content | vf-stack vf-stack--400 ">
+  <h2 class="vf-hero__heading">
+  EMBL Insight Lectures    </h2>
+  <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
+</div>
 </section>
-
 
 <?php
 
@@ -43,16 +40,18 @@ if (class_exists('VF_Navigation')) {
 
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
-    <?php 
+  <div>
+      <h1><?php the_title(); ?></h1>
+      <h3><?php echo get_the_excerpt(); ?></h3>
+      <?php 
         the_content();
       ?>
+    </div>
   </div>
   <div>
-
   <figure class="vf-figure">
 
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-figure__image' ) ); ?>
-
 
 </figure>
 
@@ -76,7 +75,7 @@ if (class_exists('VF_Navigation')) {
     </p>
     <?php if ( ! empty($application_deadline)) { ?>
     <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Application deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_deadline); ?></span></p>
+        style="font-weight: 600;">Registration deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_deadline); ?></span></p>
     <?php } ?>     
      <?php if ($topic_area) { ?>    
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;<span
@@ -106,7 +105,6 @@ if (class_exists('VF_Navigation')) {
         </div>
         <?php } ?>
             </div>
-
 
       <p class="vf-text-body vf-text-body--3" style="font-weight: 600;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
@@ -169,7 +167,7 @@ if (class_exists('VF_Navigation')) {
       
 while ($insightMore->have_posts()) : $insightMore->the_post(); ?>
 
-        <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
+        <?php include(locate_template('partials/vf-card--article-lecture-more.php', false, false)); ?>
         <?php endwhile;?>
       <?php wp_reset_postdata(); ?>
       </div>

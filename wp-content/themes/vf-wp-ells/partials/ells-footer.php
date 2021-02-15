@@ -1,12 +1,13 @@
 <footer class="vf-footer">
   <div class="vf-footer__inner">
     <p class="vf-footer__notice">
-    One line about ELLS’ mission
+      Our inspiring educational experiences share the scientific discoveries of EMBL with young people aged 10-19 years
+      and teachers in Europe and beyond.
     </p>
     <div class="vf-footer__links-group | vf-grid">
       <div class="vf-links">
         <h4 class="vf-links__heading">
-        European Learning Laboratory for the Life Sciences
+          European Learning Laboratory for the Life Sciences
         </h4>
         <ul class="vf-links__list | vf-list">
           <li class="vf-list__item">
@@ -19,24 +20,23 @@
           </li>
           <li class="vf-list__item">
             <a class="vf-list__link" href="JavaScript:Void(0);">
+              Coverage
+            </a>
+          </li>
+          <li class="vf-list__item">
+            <a class="vf-list__link" href="JavaScript:Void(0);">
               Terms of Use</a>
           </li>
         </ul>
       </div>
       <div class="vf-links">
         <h4 class="vf-links__heading">
-          About ELLS</h4>
-        <ul class="vf-links__list | vf-list">
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
-              Coverage
-            </a>
-          </li>
-          <li class="vf-list__item">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
-              Contact</a>
-          </li>
-        </ul>
+          Subscribe to our newsletter</h4>
+        <div class="vf-form__item vf-stack">
+
+          <input type="text" id="text" class="vf-form__input" placeholder="Email" style="padding: 3px 12px; width: 260px; display: inline-block;">
+          <a href="JavaScript:Void(0);" class="vf-button vf-button--secondary vf-button--sm | vf-u-margin__left--200" style="display: inline-block;">Subscribe</a>
+        </div>
       </div>
       <div class="vf-links">
         <h4 class="vf-links__heading">
@@ -57,18 +57,10 @@
               <path xmlns="http://www.w3.org/2000/svg"
                 d="M23.32,6.44a.5.5,0,0,0-.2-.87l-.79-.2A.5.5,0,0,1,22,4.67l.44-.89a.5.5,0,0,0-.58-.7l-2,.56a.5.5,0,0,1-.44-.08,5,5,0,0,0-3-1,5,5,0,0,0-5,5v.36a.25.25,0,0,1-.22.25c-2.81.33-5.5-1.1-8.4-4.44a.51.51,0,0,0-.51-.15A.5.5,0,0,0,2,4a7.58,7.58,0,0,0,.46,4.92.25.25,0,0,1-.26.36L1.08,9.06a.5.5,0,0,0-.57.59,5.15,5.15,0,0,0,2.37,3.78.25.25,0,0,1,0,.45l-.53.21a.5.5,0,0,0-.26.69,4.36,4.36,0,0,0,3.2,2.48.25.25,0,0,1,0,.47A10.94,10.94,0,0,1,1,18.56a.5.5,0,0,0-.2,1,20.06,20.06,0,0,0,8.14,1.93,12.58,12.58,0,0,0,7-2A12.5,12.5,0,0,0,21.5,9.06V8.19a.5.5,0,0,1,.18-.38Z" />
             </g>
-            <g id="vf-social--youtube">
-              <path xmlns="http://www.w3.org/2000/svg"
-                d="M20.06,3.5H3.94A3.94,3.94,0,0,0,0,7.44v9.12A3.94,3.94,0,0,0,3.94,20.5H20.06A3.94,3.94,0,0,0,24,16.56V7.44A3.94,3.94,0,0,0,20.06,3.5ZM16.54,12,9.77,16.36A.5.5,0,0,1,9,15.94V7.28a.5.5,0,0,1,.77-.42l6.77,4.33a.5.5,0,0,1,0,.84Z" />
-            </g>
-            <g id="vf-social--instagram">
-              <path xmlns="http://www.w3.org/2000/svg"
-                d="M17.5,0H6.5A6.51,6.51,0,0,0,0,6.5v11A6.51,6.51,0,0,0,6.5,24h11A6.51,6.51,0,0,0,24,17.5V6.5A6.51,6.51,0,0,0,17.5,0ZM12,17.5A5.5,5.5,0,1,1,17.5,12,5.5,5.5,0,0,1,12,17.5Zm6.5-11A1.5,1.5,0,1,1,20,5,1.5,1.5,0,0,1,18.5,6.5Z" />
-            </g>
           </defs>
         </svg>
         <div class="vf-social-links vf-social-links--outline">
-          <ul class="vf-social-links__list">
+          <ul class="vf-social-links__list | vf-u-margin__top--0">
             <li class="vf-social-links__item">
               <a class="vf-social-links__link" href="JavaScript:Void(0);">
                 <span class="vf-u-sr-only">
@@ -93,21 +85,29 @@
                 </svg>
               </a>
             </li>
-            <li class="vf-social-links__item">
-              <a class="vf-social-links__link" href="JavaScript:Void(0);">
-                <span class="vf-u-sr-only">
-                  instagram
-                </span>
-                <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--instagram" width="24" height="24"
-                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-                  <use xlink:href="#vf-social--instagram">
-                  </use>
-                </svg>
-              </a>
-            </li>
           </ul>
         </div>
       </div>
     </div>
+    <p class="vf-footer__legal">
+      <span class="vf-footer__legal-text">
+        <a class="vf-footer__link" href="https://goo.gl/maps/nbxNg2HGXL1MTtzt9">Meyerhofstraße 1, 69117 Heidelberg,
+          Germany</a>
+      </span>
+      <span class="vf-footer__legal-text">
+        <a class="vf-footer__link" href="tel:004962213870">Tel: +49 6221 387-0</a>
+      </span>
+    </p>
+    <p class="vf-footer__legal">
+      <span class="vf-footer__legal-text">
+        © EMBL 2021
+      </span>
+      <span class="vf-footer__legal-text">
+        <a class="vf-footer__link" href="/info/privacy-policy/">Privacy policy</a>
+      </span>
+      <span class="vf-footer__legal-text">
+        <a class="vf-footer__link" href="/info/dora/">DORA</a>
+      </span>
+    </p>
   </div>
 </footer>

@@ -36,7 +36,7 @@
             },
             "taxonomy": "topic-area",
             "field_type": "select",
-            "allow_null": 0,
+            "allow_null": 1,
             "add_term": 1,
             "save_terms": 1,
             "load_terms": 1,
@@ -58,7 +58,7 @@
             },
             "taxonomy": "age-group",
             "field_type": "select",
-            "allow_null": 0,
+            "allow_null": 1,
             "add_term": 1,
             "save_terms": 1,
             "load_terms": 1,
@@ -86,7 +86,7 @@
         },
         {
             "key": "field_5f6b0a2b400c4",
-            "label": "Organisers",
+            "label": "Author",
             "name": "tb_organisers",
             "type": "text",
             "instructions": "",
@@ -140,5 +140,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1608629864
+    "modified": 1611324079
 }

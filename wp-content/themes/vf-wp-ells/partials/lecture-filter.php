@@ -1,14 +1,6 @@
 <?php
 
 // Get all "Topic" terms
-$age_group_terms = get_terms(
-  array(
-    'taxonomy'   => 'age-group',
-    'hide_empty' => false,
-  )
-);
-
-// Get all "Type" terms
 $topic_area_terms = get_terms(
   array(
     'taxonomy'   => 'topic-area',
@@ -17,17 +9,13 @@ $topic_area_terms = get_terms(
 );
 
 // Get active taxonomy filters
-$age_selected = get_query_var('age-group');
-if ( ! is_array($age_selected)) {
-  $age_selected = array($age_selected);
-}
+
 $topic_selected = get_query_var('topic-area');
 if ( ! is_array($topic_selected)) {
   $topic_selected = array($topic_selected);
 }
 
 // Get taxonomy labels
-$age_group_labels = vf_wp_ells_age_group_labels();
 $topic_area_labels = vf_wp_ells_topic_area_labels();
 
 // Default empty date filter
@@ -38,7 +26,7 @@ $yearly_archives = wp_get_archives(array(
   'type'      => 'yearly', # monthly for month and year archives
   'format'    => 'html',
   'echo'      => 0,
-  'post_type' => 'teachingbase'
+  'post_type' => 'insight-lecture'
 ));
 
 // Attempt to get year/month filter
@@ -72,13 +60,13 @@ if (preg_match_all(
 }
 
 // $archive = get_post_type_archive_link('document');
-$archive = home_url('/?post_type=teachingbase');
+$archive = home_url('/?post_type=insight-lecture');
 
 ?>
 <form class="vf-form vf-stack vf-stack--800" action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
-    <input type="hidden" name="post_type" value="teachingbase">
+    <input type="hidden" name="post_type" value="insight-lecture">
 
     <?php
     $search = trim(get_search_query());
@@ -87,32 +75,6 @@ $archive = home_url('/?post_type=teachingbase');
     <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
     <?php } ?>
 
-    <fieldset class="vf-form vf-form__fieldset">
-
-      <legend class="vf-form__legend">Age group</legend>
-      <div class="vf-form__item vf-form__item--checkbox">
-        <?php 
-      $selected = empty($age_selected) || empty($age_selected[0]) ? 'checked="checked"' : '';
-    ?>
-        <input type="checkbox" value="" id="checkbox-age_group-1" class="vf-form__checkbox"
-          name="teachingbase_age_group" <?php echo $selected ?>>
-        <label for="checkbox-age_group-1" class="vf-form__label">All</label>
-      </div>
-      <?php
-	  		  $count = 2;
-      foreach ($age_group_terms as $term) {
-        $selected = in_array($term->slug, $age_selected) ? 'checked="checked"' : '';
-      ?>
-      <div class="vf-form__item vf-form__item--checkbox">
-        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-topic-<?php echo $count; ?>"
-          name="age-group[]" class="vf-form__checkbox" <?php echo $selected ?>>
-        <label for="checkbox-topic-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
-        </label>
-      </div>
-      <?php 
-	    $count++;
-	  } ?>
-    </fieldset>
 
     <fieldset class="vf-form vf-form__fieldset">
 
@@ -143,11 +105,11 @@ $archive = home_url('/?post_type=teachingbase');
     </fieldset>
 
     <fieldset class="vf-form vf-form__fieldset">
-      <legend class="vf-form__legend">Publication year</legend>
+      <legend class="vf-form__legend">Year</legend>
 
       <?php if ( ! empty($date_options)) { ?>
       <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">
-        <option value=""><?php echo esc_attr( __( 'Year' ) ); ?></option>
+        <option value=""><?php echo esc_attr( __( 'Select year' ) ); ?></option>
         <?php
       foreach ($date_options as $date) {
         $selected = $date['selected'] ? 'selected="selected"' : '';
@@ -164,7 +126,7 @@ $archive = home_url('/?post_type=teachingbase');
       <?php esc_html_e('Apply filter', 'theme'); ?>
     </button>
 
-    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/teachingbase'; ?>">
+    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/insight-lecture'; ?>">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
   </div>
