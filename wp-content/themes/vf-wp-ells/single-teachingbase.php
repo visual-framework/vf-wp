@@ -29,7 +29,7 @@ $organisers = get_field('tb_organisers');
   </div>
 
 </section>
-              
+
 
 
 
@@ -44,9 +44,9 @@ if (class_exists('VF_Navigation')) {
 
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
-   <div>
+    <div>
       <time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>"
-      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+        datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
       <h1><?php the_title(); ?></h1>
       <?php 
         the_content();
@@ -56,37 +56,37 @@ if (class_exists('VF_Navigation')) {
   </div>
   <div>
 
-  <figure class="vf-figure">
+    <figure class="vf-figure">
 
-  <?php the_post_thumbnail( 'full', array( 'class' => 'vf-figure__image' ) ); ?>
+      <?php the_post_thumbnail( 'full', array( 'class' => 'vf-figure__image' ) ); ?>
 
 
-</figure>
+    </figure>
 
-<div>
-  <?php if ($topic_area) { ?>    
-   <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;<span
-         class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
-   <?php } ?>          
-    <?php if ( ! empty($type_of_resource)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Type of resource:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($type_of_resource); ?></span></p>
-    <?php } ?>     
-      <?php if ($age_group) { ?>    
+    <div>
+      <?php if ($topic_area) { ?>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;<span
+          class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
+      <?php } ?>
+      <?php if ( ! empty($type_of_resource)) { ?>
+      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Type of
+          resource:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($type_of_resource); ?></span></p>
+      <?php } ?>
+      <?php if ($age_group) { ?>
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Age group:</span>&nbsp;<span
-            class="vf-u-text-color--grey"><?php echo ($age_group->name); ?></span></p>
-      <?php } ?>          
+          class="vf-u-text-color--grey"><?php echo ($age_group->name); ?></span></p>
+      <?php } ?>
 
 
-            <?php if ( ! empty($contact)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Contact: </span><a href="mailto:<?php echo esc_html($contact); ?>"><?php echo esc_html($contact); ?></a></p>
-    <?php } ?>
+      <?php if ( ! empty($contact)) { ?>
+      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
+          href="mailto:<?php echo esc_html($contact); ?>"><?php echo esc_html($contact); ?></a></p>
+      <?php } ?>
 
-    <?php if ( ! empty($organisers)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span
-        style="font-weight: 600;">Author:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($organisers); ?></span></p>
-    <?php } ?>  
+      <?php if ( ! empty($organisers)) { ?>
+      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Author:</span> <span
+          class="vf-u-text-color--grey"><?php echo esc_html($organisers); ?></span></p>
+      <?php } ?>
 
       <p class="vf-text-body vf-text-body--3" style="font-weight: 600;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
@@ -128,10 +128,11 @@ if (class_exists('VF_Navigation')) {
 </section>
 
 
-<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
-      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">See also</h3>
-      <div class="vf-grid vf-grid__col-3">
-        <?php
+<section
+  class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
+  <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">See also</h3>
+  <div class="vf-grid vf-grid__col-3">
+    <?php
     $teachingbaseMore = new WP_Query (array(
       'posts_per_page' => 3, 
       'post_type' => 'teachingbase', 
@@ -139,10 +140,10 @@ if (class_exists('VF_Navigation')) {
 
 while ($teachingbaseMore->have_posts()) : $teachingbaseMore->the_post(); ?>
 
-        <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
-        <?php endwhile;?>
-      <?php wp_reset_postdata(); ?>
-      </div>
-  </section>
+    <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
+    <?php endwhile;?>
+    <?php wp_reset_postdata(); ?>
+  </div>
+</section>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

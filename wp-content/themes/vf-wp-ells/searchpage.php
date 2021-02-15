@@ -68,10 +68,4 @@ if (class_exists('VF_Navigation')) {
   </div>
 </section>
 
-
-
-
-
-
-
 <?php get_footer(); ?>

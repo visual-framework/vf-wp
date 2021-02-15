@@ -15,14 +15,14 @@ $type = get_field('labs_type');
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
 
   <div class="vf-card__content">
-  <?php if ($type) { ?>
-  <p class="vf-summary__meta | vf-u-margin__bottom--100">
     <?php if ($type) { ?>
-    <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
-    <?php } }
+    <p class="vf-summary__meta | vf-u-margin__bottom--100">
+      <?php if ($type) { ?>
+      <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
+      <?php } }
       if ($type) { ?>
-  </p>
-  <?php }?>
+    </p>
+    <?php }?>
     <h3 class="vf-card__title | vf-u-margin__top--100">
       <a href="<?php the_permalink(); ?>" class="vf-card__link"><?php echo $title; ?></a>
     </h3>

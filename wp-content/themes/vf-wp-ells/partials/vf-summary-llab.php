@@ -7,10 +7,10 @@ $type = get_field('labs_type');
 
 ?>
 <article class="vf-summary vf-summary--news">
-<time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>"
-      datetime="<?php the_time('c'); ?>">
-    
-      <?php 
+  <time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+    datetime="<?php the_time('c'); ?>">
+
+    <?php 
             if ( ! empty($start_date)) {
               if ($end_date) { 
                 if ($start->format('M') == $end->format('M')) {
@@ -18,12 +18,12 @@ $type = get_field('labs_type');
                 else {
                   echo $start->format('j M'); ?> - <?php echo $end->format('j M Y'); }
                     ?>
-            <?php } 
+    <?php } 
               else {
                 echo $start->format('j M Y'); 
               } }
               ?>
-    </time>
+  </time>
   <?php the_post_thumbnail( 'full', array( 
       'class' => 'vf-summary__image', 
       'style' => 'width: 180px; height: auto; border: 1px solid #d0d0ce',
@@ -43,4 +43,4 @@ $type = get_field('labs_type');
   </p>
   <?php }?>
 
-  </article>
+</article>

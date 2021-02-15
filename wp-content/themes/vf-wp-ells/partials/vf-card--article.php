@@ -19,9 +19,10 @@ $excerpt = "{$excerpt}&hellip;";
       <a href="<?php the_permalink(); ?>" class="vf-link"><?php echo $title; ?></a>
     </h3>
     <p class="vf-card__text">
-    <?php echo $excerpt; ?>
+      <?php echo $excerpt; ?>
     </p>
-    <time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0; margin-top: 10px;" title="<?php the_time('c'); ?>"
+    <time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0; margin-top: 10px;"
+      title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
   </div>
 </div>

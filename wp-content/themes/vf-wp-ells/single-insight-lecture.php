@@ -49,11 +49,9 @@ if (class_exists('VF_Navigation')) {
     </div>
   </div>
   <div>
-
   <figure class="vf-figure">
 
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-figure__image' ) ); ?>
-
 
 </figure>
 
@@ -107,7 +105,6 @@ if (class_exists('VF_Navigation')) {
         </div>
         <?php } ?>
             </div>
-
 
       <p class="vf-text-body vf-text-body--3" style="font-weight: 600;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
