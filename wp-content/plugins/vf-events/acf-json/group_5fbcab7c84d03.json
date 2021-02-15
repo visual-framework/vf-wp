@@ -225,8 +225,8 @@
         },
         {
             "key": "field_5fd9c1f1dda86",
-            "label": "S&S event name",
-            "name": "vf_event_ss_event_name",
+            "label": "S&S event subtype",
+            "name": "vf_event_ss_subtype",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -260,8 +260,8 @@
         },
         {
             "key": "field_5feaf203f0f18",
-            "label": "EMBO event name",
-            "name": "vf_event_embo_event_name",
+            "label": "EMBO event subtype",
+            "name": "vf_event_embo_subtype",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -278,6 +278,11 @@
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
                         "value": "364"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
                     }
                 ]
             ],
@@ -640,6 +645,33 @@
             "endpoint": 0
         },
         {
+            "key": "field_602a73339f0df",
+            "label": "Featured event",
+            "name": "vf_event_featured",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_5f3f7042eb5fe",
             "label": "Event topic",
             "name": "vf_event_event_topic",
@@ -813,6 +845,30 @@
                         "field": "field_5fbcab958038b",
                         "operator": "==",
                         "value": "embl_ebi_training"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_602a7529bee2b",
+            "label": "External URL",
+            "name": "vf_event_external_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
                     }
                 ]
             ],
@@ -1091,5 +1147,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1610972449
+    "modified": 1613395087
 }
