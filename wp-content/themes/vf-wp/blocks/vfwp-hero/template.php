@@ -11,7 +11,7 @@ $text = get_field('vf_hero_text');
 
 ?>
 
-<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed">
+<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0">
   <style>
     .vf-hero {
       <?php if ($image) {
@@ -39,7 +39,7 @@ $text = get_field('vf_hero_text');
         </a>
         <?php if (!empty ($add_heading_2)) { ?>
         | <a
-          href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2       ['title']); ?>
+          href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?>
         </a>
       </span>
       <?php } }?>
@@ -60,4 +60,9 @@ if (!empty ($hero_link)) { ?>
     <?php } ?>
   </div>
 </section>
+<?php
+if (class_exists('VF_Navigation')) {
+  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
+}
+?>
 <!--/vf-hero-->
