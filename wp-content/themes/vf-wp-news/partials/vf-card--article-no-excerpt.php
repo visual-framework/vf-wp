@@ -21,7 +21,7 @@ else if ( get_field( 'mp4_url' ) ) {
 
 else { ?>
     <a href="<?php the_permalink(); ?>">
-      <?php the_post_thumbnail( 'full', array( 'class' => 'vf-card__image' ) ); ?>
+      <?php the_post_thumbnail( 'medium', array( 'class' => 'vf-card__image' ) ); ?>
     </a>
     <?php
 }
