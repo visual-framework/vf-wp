@@ -3,13 +3,45 @@
     "title": "Card",
     "fields": [
         {
+            "key": "field_602ba83883d48",
+            "label": "Image source",
+            "name": "image_source",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "media_library": "Media Library",
+                "url": "URL"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "media_library",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5ebd3243ee8ec",
             "label": "Image",
             "name": "image",
             "type": "image",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_602ba83883d48",
+                        "operator": "==",
+                        "value": "media_library"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -25,6 +57,30 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_602ba87b83d49",
+            "label": "Image URL",
+            "name": "image_url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_602ba83883d48",
+                        "operator": "==",
+                        "value": "url"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
         },
         {
             "key": "field_5ebd3243ee989",
@@ -123,5 +179,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Card ACF Gutenberg block",
-    "modified": 1606982837
+    "modified": 1613474323
 }

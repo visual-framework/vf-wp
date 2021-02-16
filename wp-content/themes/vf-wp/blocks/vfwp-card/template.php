@@ -7,6 +7,7 @@ $title = get_field('title');
 $link = get_field('link');
 $text = get_field('text');
 $image = get_field('image');
+$image_url = get_field('image_url');
 
 $is_link = ! empty($link);
 
@@ -21,7 +22,7 @@ if (is_array($style)) {
 if ( ! is_array($image)) {
   $image = null;
 } else {
-  $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
+  $image = wp_get_attachment_image($image['ID'], 'large', false, array(
     'class'    => 'vf-card__image',
     'loading'  => 'lazy',
     'itemprop' => 'image',
@@ -65,8 +66,12 @@ if ($style !== 'default') {
 
 <article class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--800">
 <?php
-if ($image) {
-  echo $image;
+if (!empty($image_url)) { ?>
+<img src="<?php echo esc_url($image_url); ?>" class="vf-card__image" alt="" loading="lazy" itemprop="image">
+<?php 
+}
+else {
+  echo ($image);
 }
 ?>
   <div class="vf-card__content | vf-stack vf-stack--400">
