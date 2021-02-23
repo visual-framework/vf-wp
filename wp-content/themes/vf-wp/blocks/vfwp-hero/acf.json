@@ -7,7 +7,7 @@
             "label": "Background image",
             "name": "vf_hero_image",
             "type": "image",
-            "instructions": "Recommended size: 1200×400",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {

@@ -122,7 +122,7 @@ if (
 <div class="vf-banner vf-banner--alert vf-banner--danger">
   <div class="vf-banner__content">
     <p class="vf-banner__text">
-      <?php esc_html_e('No articles were found.', 'vfwp'); ?>
+      <?php esc_html_e('No events were found.', 'vfwp'); ?>
     </p>
   </div>
 </div>

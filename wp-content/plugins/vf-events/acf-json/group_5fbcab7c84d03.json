@@ -174,9 +174,9 @@
                 "69": "EMBL Rome",
                 "66": "EMBL-EBI",
                 "76": "EMBL-EM",
-                "353": "EMBO",
-                "364": "Virtual",
-                "98": "Other"
+                "225": "EMBO",
+                "235": "Virtual",
+                "97": "Other"
             },
             "default_value": false,
             "allow_null": 0,
@@ -1150,5 +1150,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1613462806
+    "modified": 1613990502
 }

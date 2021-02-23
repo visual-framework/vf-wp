@@ -9,6 +9,7 @@ $background_color = get_field('background_color');
 $background_image = get_field('background_image');
 $header_color = get_field('header_color');
 $container_content = get_field('container_content');
+$block_id = get_field('block_id');
 
 $type = get_field('select_type');
 
@@ -45,22 +46,23 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 ?>
 <style>
   <?php if ($header_color['label'] == 'White') { ?>
- .vf-section-header,
- .vf-section-header__heading--is-link,
- .vf-section-header__heading--is-link:visited {
+    <?php echo '#' . ($block_id); ?> .vf-section-header,
+    <?php echo '#' . ($block_id); ?> .vf-section-header__heading--is-link,
+    <?php echo '#' . ($block_id); ?> .vf-section-header__heading--is-link:visited {
    color: <?php echo ($header_color['value']) ?> !important;
  }
 <?php }
 else { echo '';} ?>
   <?php if ($background_color == 'image') { ?>
- .vf-card-container::before {
+  <?php echo '#' . ($block_id); ?> .vf-card-container::before {
   background:url(<?php echo esc_url($background_image); ?>);
   background-position: 50%;
   background-size: cover; }
  <?php } ?>
 </style>
 
-<section class="vf-card-container | vf-u-fullbleed
+<section id="<?php echo esc_attr($block_id); ?>">
+<div class="vf-card-container | vf-u-fullbleed  
 <?php if (($background_color == "-ui--grey--light") || ($background_color == "--grey--lightest") || ($background_color == "-ui--white")) { ?>
   | vf-u-background-color<?php echo esc_attr($background_color); ?> <?php } ?>
 
@@ -115,4 +117,5 @@ else { echo '';} ?>
     <?php if (get_field('container_content') == 'card') { ?>
     </div>
 <?php } ?>
+</div>
 </section>
