@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Mirror + trigger CI
-      uses: SvanBoxel/gitlab-mirror-and-ci-action@master
+      uses: sandykadam/gitlab-mirror-and-ci-action@master
       with:
         args: "https://gitlab.ebi.ac.uk/ebiwd/test-vf-wp-mirror"
       env:
