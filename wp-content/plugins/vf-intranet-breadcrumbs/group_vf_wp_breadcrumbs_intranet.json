@@ -1,10 +1,10 @@
 {
-    "key": "group_6036129f77e5c",
-    "title": "VF-WP-Intranet-Breadcrumbs",
+    "key": "group_vf_wp_breadcrumbs_intranet",
+    "title": "Related",
     "fields": [
         {
             "key": "field_6036132931f9f",
-            "label": "Related",
+            "label": "",
             "name": "vf-wp-intranet-related",
             "type": "repeater",
             "instructions": "",
@@ -37,25 +37,6 @@
                     "return_format": "array"
                 }
             ]
-        },
-        {
-            "key": "field_60361b53aee44",
-            "label": "test",
-            "name": "test",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         }
     ],
     "location": [
@@ -74,5 +55,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "modified": 1614168398
 }
