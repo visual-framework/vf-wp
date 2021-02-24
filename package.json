@@ -83,7 +83,7 @@
     "@visual-framework/vf-footer": "1.1.0",
     "@visual-framework/vf-form__checkbox": "2.0.0",
     "@visual-framework/vf-form__core": "1.1.0",
-    "@visual-framework/vf-form__helper": "1.0.0",
+    "@visual-framework/vf-form__helper": "2.0.0",
     "@visual-framework/vf-form__input": "1.1.0",
     "@visual-framework/vf-form__radio": "1.0.1",
     "@visual-framework/vf-form__select": "1.0.1",
