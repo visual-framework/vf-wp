@@ -1,6 +1,6 @@
 <?php 
 
-require_once('functions/vf-wp-intranet-breadcrumbs.php');
+require_once('vf-wp-intranet-breadcrumbs/index.php');
 require_once('functions/custom-taxonomies.php');
 require_once('functions/cpt-register.php');
 
