@@ -43,6 +43,10 @@ get_header();
 
 </div>
 <section class="vf-grid vf-grid__col-4">
+  <div>
+    <?php include(locate_template('partials/document-filter.php', false, false)); ?>
+
+  </div>
   <div class="vf-grid__col--span-3">
     <?php
         if ( have_posts() ) {
@@ -61,10 +65,6 @@ get_header();
 
   </div>
 
-  <div>
-    <?php include(locate_template('partials/document-filter.php', false, false)); ?>
-
-  </div>
 </section>
 <?php
 
