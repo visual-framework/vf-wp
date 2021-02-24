@@ -1,0 +1,19 @@
+name: Mirror and run GitLab CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Mirror + trigger CI
+      uses: SvanBoxel/gitlab-mirror-and-ci-action@master
+      with:
+        args: "https://gitlab.ebi.ac.uk/ebiwd/test-vf-wp-mirror"
+      env:
+        GITLAB_HOSTNAME: "gitlab.ebi.ac.uk"
+        GITLAB_USERNAME: "sandeep"
+        GITLAB_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
+        GITLAB_PROJECT_ID: "2973"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
