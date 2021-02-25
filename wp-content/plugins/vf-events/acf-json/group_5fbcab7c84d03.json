@@ -270,14 +270,14 @@
                     {
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
-                        "value": "353"
+                        "value": "225"
                     }
                 ],
                 [
                     {
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
-                        "value": "364"
+                        "value": "235"
                     },
                     {
                         "field": "field_5fbcab958038b",
@@ -860,30 +860,6 @@
             "placeholder": ""
         },
         {
-            "key": "field_602a7529bee2b",
-            "label": "External URL",
-            "name": "vf_event_external_url",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
             "key": "field_5f1fd24325b7c",
             "label": "Template",
             "name": "",
@@ -1150,5 +1126,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1613990502
+    "modified": 1614263000
 }
