@@ -10,7 +10,7 @@ jobs:
     - name: Mirror + trigger CI
       uses: sandykadam/gitlab-mirror-and-ci-action@master
       with:
-        args: "https://gitlab.ebi.ac.uk/ebiwd/test-mirror-repo"
+        args: "https://sandeep:7WBUDzA5ZdMbWogtczeK@gitlab.ebi.ac.uk/ebiwd/test-mirror-repo"
       env:
         GITLAB_HOSTNAME: "gitlab.ebi.ac.uk"
         GITLAB_USERNAME: "sandeep"
