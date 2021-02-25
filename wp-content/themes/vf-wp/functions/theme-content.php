@@ -42,8 +42,7 @@ class VF_Theme_Content {
    * Filter: `render_block`
    */
   public function render_block($html, $block) {
-    /* Wrapper VF Grid Column inner blocks with `vf-content`
-    https://github.com/visual-framework/vf-wp/issues/647
+    // Wrapper VF Grid Column inner blocks with `vf-content`
     
     if ($block['blockName'] === 'vf/grid-column') {
       $html = preg_replace(
@@ -51,8 +50,8 @@ class VF_Theme_Content {
         "$1<!--[vf/content]-->\n<div class=\"vf-content\">\n$2\n</div>\n$3\n",
         $html
       );
-    } */
-
+    } 
+    
     // wp-embed should use vf-embed for responsiveness
     // https://github.com/visual-framework/vf-wp/issues/693
     if ($block['blockName'] === 'core/embed') {
