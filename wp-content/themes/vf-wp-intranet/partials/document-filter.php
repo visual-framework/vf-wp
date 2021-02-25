@@ -42,9 +42,9 @@ $archive = home_url('/?post_type=documents');
         <?php 
       $selected = empty($embl_location_selected) || empty($embl_location_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-embl_location-1" class="vf-form__checkbox"
-          name="documents_embl_location" <?php echo $selected ?>>
-        <label for="checkbox-age_group-1" class="vf-form__label">All</label>
+        <input type="checkbox" value="" id="checkbox-embl-location-1" class="vf-form__checkbox"
+          name="embl_location" <?php echo $selected ?>>
+        <label for="checkbox-embl-location-1" class="vf-form__label">All</label>
       </div>
       <?php
 	  		  $count = 2;
@@ -52,7 +52,7 @@ $archive = home_url('/?post_type=documents');
         $selected = in_array($term->slug, $embl_location_selected) ? 'checked="checked"' : '';
       ?>
       <div class="vf-form__item vf-form__item--checkbox">
-        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-topic-<?php echo $count; ?>"
+        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-embl-location-<?php echo $count; ?>"
           name="embl-location[]" class="vf-form__checkbox" <?php echo $selected ?>>
         <label for="checkbox-embl-location-<?php echo $count; ?>"
           class="vf-form__label"><?php echo esc_html($term->name); ?>
@@ -62,6 +62,7 @@ $archive = home_url('/?post_type=documents');
 	    $count++;
 	  } ?>
     </fieldset>
+
 
 
       <button class="vf-button vf-button--primary vf-button--sm" type="submit">

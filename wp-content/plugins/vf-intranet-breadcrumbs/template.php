@@ -70,6 +70,7 @@ if (is_tag()){
   echo '</nav>';
 
 }
+/*
 // topic taxonomy
 if (is_tax('topic')){
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
@@ -80,6 +81,7 @@ if (is_tax('topic')){
   echo '</nav>';
 
 }
+
 // embl location taxonomy
 if (is_tax('embl-location')){
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
@@ -90,7 +92,7 @@ if (is_tax('embl-location')){
   echo '</nav>';
 
 }
-
+*/
 if ( is_category() ) {
   global $wp_query;
   $cat_obj = $wp_query->get_queried_object();
