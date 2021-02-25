@@ -97,9 +97,9 @@ $archive = home_url('/?post_type=insites');
         <?php 
       $selected = empty($embl_location_selected) || empty($embl_location_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-embl_location-1" class="vf-form__checkbox"
-          name="insites_embl_location" <?php echo $selected ?>>
-        <label for="checkbox-age_group-1" class="vf-form__label">All</label>
+        <input type="checkbox" value="" id="checkbox-embl-location-1" class="vf-form__checkbox"
+          name="embl_location" <?php echo $selected ?>>
+        <label for="checkbox-embl-location-1" class="vf-form__label">All</label>
       </div>
       <?php
 	  		  $count = 2;
@@ -107,7 +107,7 @@ $archive = home_url('/?post_type=insites');
         $selected = in_array($term->slug, $embl_location_selected) ? 'checked="checked"' : '';
       ?>
       <div class="vf-form__item vf-form__item--checkbox">
-        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-topic-<?php echo $count; ?>"
+        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-embl-location-<?php echo $count; ?>"
           name="embl-location[]" class="vf-form__checkbox" <?php echo $selected ?>>
         <label for="checkbox-embl-location-<?php echo $count; ?>"
           class="vf-form__label"><?php echo esc_html($term->name); ?>
@@ -125,9 +125,9 @@ $archive = home_url('/?post_type=insites');
         <?php 
       $selected = empty($topic_selected) || empty($topic_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-type-1" class="vf-form__checkbox" name="topic"
+        <input type="checkbox" value="" id="checkbox-topic-1" class="vf-form__checkbox" name="topic"
           <?php echo $selected ?>>
-        <label for="checkbox-type-1" class="vf-form__label">All</label>
+        <label for="checkbox-topic-1" class="vf-form__label">All</label>
       </div>
       <?php
 	  		  $count = 2;
@@ -136,14 +136,15 @@ $archive = home_url('/?post_type=insites');
         $selected = in_array($term->slug, $topic_selected) ? 'checked="checked"' : '';
       ?>
       <div class="vf-form__item vf-form__item--checkbox">
-        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-type-<?php echo $count; ?>"
+        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-topic-<?php echo $count; ?>"
           name="topic[]" class="vf-form__checkbox" <?php echo $selected ?>>
-        <label for="checkbox-type-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
+        <label for="checkbox-topic-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
         </label>
       </div>
       <?php 
 	    $count++;
-	  } ?>
+    } ?>
+    </fieldset>
 
 
       <fieldset class="vf-form vf-form__fieldset">

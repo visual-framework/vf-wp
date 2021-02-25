@@ -1,6 +1,5 @@
 <?php 
 
-require_once('functions/vf-wp-intranet-breadcrumbs.php');
 require_once('functions/custom-taxonomies.php');
 require_once('functions/cpt-register.php');
 
@@ -76,5 +75,13 @@ function tags_support_query($wp_query) {
 // tag hooks
 add_action('init', 'tags_support_all');
 add_action('pre_get_posts', 'tags_support_query');
+
+// count all the publishes documents
+function get_all_documents_posts() {
+	$count_posts = wp_count_posts('documents');
+	$published_posts = $count_posts->publish;
+	return $published_posts;
+  }
+  
 
 ?>
