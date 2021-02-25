@@ -16,7 +16,7 @@ VF-WP is a collection of WordPress themes and plugins that integrate with the [V
 * [VF Gutenberg →](/wp-content/plugins/vf-gutenberg/README.md)
 * [Events →](/wp-content/plugins/vf-events/README.md)
 
-## Architecture 
+## Architecture
 
 The Visual Framework WordPress theme uses a plugin-based architecture.
 
@@ -84,7 +84,7 @@ Note: [the CI](https://github.com/visual-framework/vf-wp/blob/master/.github/wor
 gulp default
 ```
 
-To launch local developement of the above with a `watch` task.
+To launch local development of the above with a `watch` task.
 
 ```sh
 gulp vf-gutenberg
