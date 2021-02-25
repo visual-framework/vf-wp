@@ -53,9 +53,14 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-search
- * Version: 1.1.2
+ * Version: 1.2.1
  * Location: components/undefined
  */
+/*!
+* Component: @visual-framework/vf-search
+* Version: 1.2.1
+* Location: components/undefined
+*/
 .vf-search--inline {
   display: -webkit-box;
   display: -ms-flexbox;

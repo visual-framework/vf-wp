@@ -46,78 +46,87 @@ if(frame.topLevel) {
 context.addExport("search_autofocus", t_4);
 }
 var t_5;
-t_5 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"search_action");
-frame.set("search_action", t_5, true);
+t_5 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"search_description");
+frame.set("search_description", t_5, true);
 if(frame.topLevel) {
-context.setVariable("search_action", t_5);
+context.setVariable("search_description", t_5);
 }
 if(frame.topLevel) {
-context.addExport("search_action", t_5);
+context.addExport("search_description", t_5);
 }
 var t_6;
-t_6 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"search_id");
-frame.set("search_id", t_6, true);
+t_6 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"search_action");
+frame.set("search_action", t_6, true);
 if(frame.topLevel) {
-context.setVariable("search_id", t_6);
+context.setVariable("search_action", t_6);
 }
 if(frame.topLevel) {
-context.addExport("search_id", t_6);
+context.addExport("search_action", t_6);
 }
 var t_7;
-t_7 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"search_value_default");
-frame.set("search_value_default", t_7, true);
+t_7 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"search_id");
+frame.set("search_id", t_7, true);
 if(frame.topLevel) {
-context.setVariable("search_value_default", t_7);
+context.setVariable("search_id", t_7);
 }
 if(frame.topLevel) {
-context.addExport("search_value_default", t_7);
+context.addExport("search_id", t_7);
 }
-output += "\n";
 var t_8;
-t_8 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"theme");
-frame.set("theme", t_8, true);
+t_8 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"search_value_default");
+frame.set("search_value_default", t_8, true);
 if(frame.topLevel) {
-context.setVariable("theme", t_8);
+context.setVariable("search_value_default", t_8);
 }
 if(frame.topLevel) {
-context.addExport("theme", t_8);
-}
-var t_9;
-t_9 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"variant");
-frame.set("variant", t_9, true);
-if(frame.topLevel) {
-context.setVariable("variant", t_9);
-}
-if(frame.topLevel) {
-context.addExport("variant", t_9);
+context.addExport("search_value_default", t_8);
 }
 output += "\n";
+var t_9;
+t_9 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"theme");
+frame.set("theme", t_9, true);
+if(frame.topLevel) {
+context.setVariable("theme", t_9);
+}
+if(frame.topLevel) {
+context.addExport("theme", t_9);
+}
 var t_10;
-t_10 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"id");
-frame.set("id", t_10, true);
+t_10 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"variant");
+frame.set("variant", t_10, true);
 if(frame.topLevel) {
-context.setVariable("id", t_10);
+context.setVariable("variant", t_10);
 }
 if(frame.topLevel) {
-context.addExport("id", t_10);
+context.addExport("variant", t_10);
 }
+output += "\n";
 var t_11;
-t_11 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"modifiers");
-frame.set("modifiers", t_11, true);
+t_11 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"id");
+frame.set("id", t_11, true);
 if(frame.topLevel) {
-context.setVariable("modifiers", t_11);
+context.setVariable("id", t_11);
 }
 if(frame.topLevel) {
-context.addExport("modifiers", t_11);
+context.addExport("id", t_11);
 }
 var t_12;
-t_12 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"override_class");
-frame.set("override_class", t_12, true);
+t_12 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"modifiers");
+frame.set("modifiers", t_12, true);
 if(frame.topLevel) {
-context.setVariable("override_class", t_12);
+context.setVariable("modifiers", t_12);
 }
 if(frame.topLevel) {
-context.addExport("override_class", t_12);
+context.addExport("modifiers", t_12);
+}
+var t_13;
+t_13 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"override_class");
+frame.set("override_class", t_13, true);
+if(frame.topLevel) {
+context.setVariable("override_class", t_13);
+}
+if(frame.topLevel) {
+context.addExport("override_class", t_13);
 }
 ;
 }
@@ -162,7 +171,14 @@ output += " autofocus";
 }
 output += ">\n  </div>\n  <button type=\"submit\" class=\"vf-search__button | vf-button vf-button--primary\"> ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_button"), env.opts.autoescape);
-output += "</button>\n</form>\n";
+output += "</button>\n";
+if(runtime.contextOrFrameLookup(context, frame, "search_description")) {
+output += "<p class=\"vf-search__description\">";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_description"), env.opts.autoescape);
+output += "</p>";
+;
+}
+output += "</form>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

@@ -53,8 +53,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.0-rc.1
- * Location: components/vf-heading
+ * Version: 1.0.1
+ * Location: components/undefined
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -126,7 +126,7 @@
 
 /*!
  * Component: @visual-framework/vf-page-header
- * Version: 1.1.1
+ * Version: 1.1.2
  * Location: components/undefined
  */
 .vf-page-header {

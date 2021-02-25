@@ -53,27 +53,25 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-pagination
- * Version: 1.0.0-rc.0
- * Location: components/vf-pagination
+ * Version: 1.0.1-rc.3
+ * Location: components/undefined
  */
 .vf-pagination__list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   list-style-type: none;
-  padding-left: 0;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
 .vf-pagination__item {
-  -ms-flex-item-align: end;
-      align-self: flex-end;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 0px;
-          flex: 1 1 0;
+  -ms-flex-item-align: baseline;
+      align-self: baseline;
   text-align: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .vf-pagination__item--is-active {
@@ -109,12 +107,6 @@
   border-left: 1px solid #d0d0ce;
 }
 
-.vf-pagination__item--pages-per {
-  -webkit-box-flex: 2;
-      -ms-flex: 2 1 0px;
-          flex: 2 1 0;
-  margin-left: 16px;
-}
 .vf-pagination__item--pages-per:hover {
   background: unset;
 }

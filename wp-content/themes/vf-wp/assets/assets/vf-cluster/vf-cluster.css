@@ -53,8 +53,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-cluster
- * Version: 1.0.1
- * Location: components/vf-cluster
+ * Version: 1.0.2
+ * Location: components/undefined
  */
 .vf-cluster {
   --vf-cluster-margin: var(--vf-cluster-margin--override, 1rem);

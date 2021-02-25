@@ -53,8 +53,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-embed
- * Version: 1.1.0
- * Location: components/vf-embed
+ * Version: 1.1.1
+ * Location: components/undefined
  */
 .vf-embed {
   max-width: var(--vf-embed-max-width, 100%);
