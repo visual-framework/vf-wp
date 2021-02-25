@@ -118,7 +118,7 @@
     "@visual-framework/vf-utility-classes": "2.0.0",
     "@visual-framework/vf-video": "1.0.0-beta.1",
     "@visual-framework/vf-video-container": "1.0.0-beta.1",
-    "@visual-framework/vf-video-teaser": "1.0.0",
+    "@visual-framework/vf-video-teaser": "2.0.0",
     "chalk": "4.1.0",
     "core-js": "3.9.0",
     "rollup": "2.36.1",
