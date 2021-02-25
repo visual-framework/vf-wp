@@ -2283,10 +2283,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__radio/-/vf-form__radio-2.0.0.tgz#a532b93fa55dc4a6c493c6c396861af3ffb1a79b"
   integrity sha512-gELanY4h7wERzCjo7a4u9REl6Mfrhzm+ylSaUYLG2tGMFurcEAZmf56EhV7cRJwVNUW9TA5PNMGGIUHR0UmdgQ==
 
-"@visual-framework/vf-form__select@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-1.0.1.tgz#b029c967a23e8479c61607cbacb422641cf83241"
-  integrity sha512-Ton1KirVBZktEF69Xs4vxgZcTSdS/cH2lvL5j23pVv3KyEojs6r/7ZNdGFkw8kH1NJrqpwtFwOg68UvuZh6f0A==
+"@visual-framework/vf-form__select@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-2.0.1.tgz#a5af2e40337af5d2ebdd9f373127cf41ff0fca9f"
+  integrity sha512-E564kfc+54zlheYlSMSYJr0ahnvCy8vZfp4RayzxsR+eFZ62Eb8XcCZ2pseJ2aiJtJfDJ9f3L44zH7xsqdR9Kg==
 
 "@visual-framework/vf-form__select@^2.0.0":
   version "2.0.0"
