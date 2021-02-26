@@ -13,7 +13,7 @@ get_header();
     <h1 class="vf-intro__heading">
       <?php wp_title(''); ?>
     </h1>
-    <p class="vf-lede">The Documents repository holds the digital copies of internal EMBL documents, reports, brochures
+    <p class="vf-lede">The repository holds the digital copies of internal EMBL documents, reports, brochures
       and various other publications.</p>
     <p class="vf-intro__text"><?php
       printf(
@@ -61,11 +61,11 @@ get_header();
   </form>
 </div>
 
-<section class="vf-grid vf-grid__col-4">
+<section class="embl-grid embl-grid--has-centered-content">
   <div>
     <?php include(locate_template('partials/document-filter.php', false, false)); ?>
   </div>
-  <div class="vf-grid__col--span-3">
+  <div>
     <h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
     <?php
         if ( have_posts() ) {

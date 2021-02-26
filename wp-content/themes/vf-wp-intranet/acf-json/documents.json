@@ -3,29 +3,6 @@
     "title": "VF-WP-Documents",
     "fields": [
         {
-            "key": "field_600e791cff812",
-            "label": "EMBL location",
-            "name": "embl_location",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "taxonomy": "embl-location",
-            "field_type": "checkbox",
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "multiple": 0,
-            "allow_null": 0
-        },
-
-        {
             "key": "field_600ea596cd371",
             "label": "Upload file",
             "name": "upload_file",
@@ -45,6 +22,28 @@
             "mime_types": ""
         },
         {
+            "key": "field_600e791cff812",
+            "label": "EMBL Location",
+            "name": "embl_location",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl-location",
+            "field_type": "checkbox",
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 0
+        },
+        {
             "key": "field_5e9ff067ca90b",
             "label": "File type",
             "name": "file_type",
@@ -53,7 +52,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "33",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -64,15 +63,35 @@
                 "XLS": "XLS",
                 "JPG": "JPG"
             },
-            "default_value": [
-                "PDF"
-            ],
+            "default_value": "PDF",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_6038f6df39524",
+            "label": "Related documents",
+            "name": "related_documents",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "documents"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
         }
     ],
     "location": [

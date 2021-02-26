@@ -35,7 +35,7 @@
             <option value="insites" name="post_type[]">INsites</option>
             <option value="vf_event" name="post_type[]">Events</option>
             <option value="people" name="post_type[]">People</option>
-            <option value="documents" name="post_type[]">Document</option>
+            <option value="documents" name="post_type[]">Documents</option>
           </select>
         </div>
   <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="<?php esc_attr_e('Search', 'vfwp'); ?>">
