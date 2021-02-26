@@ -1,5 +1,3 @@
-
-
 <?php
 $topic_terms = get_field('topic');
 ?>
@@ -13,12 +11,12 @@ $topic_terms = get_field('topic');
   </p>
   <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
-      <p class="vf-summary__meta | vf-u-margin__top--100">
+      <p class="vf-summary__category">
       <?php 
       if( $topic_terms ) {
         $topics_list = array(); 
       foreach( $topic_terms as $term ) {
-        $topics_list[] = '<a class="vf-link"  href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . esc_html( $term->name ) . '</a>'; }
+        $topics_list[] = '<a class="vf-link" style="color: #707372;"  href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . esc_html( $term->name ) . '</a>'; }
       echo implode(', ', $topics_list); }?>
       </p>
 </article>
