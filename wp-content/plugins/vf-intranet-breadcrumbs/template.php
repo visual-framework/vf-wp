@@ -2,7 +2,7 @@
 
 $delimiter = '&raquo;';
 $name = 'Home'; //text for the 'Home' link
-$currentBefore = '<li class="vf-breadcrumbs__item">';
+$currentBefore = '<li class="vf-breadcrumbs__item" aria-current="location">';
 $currentAfter = '</li>';
 $home = get_bloginfo('url');
 $post = get_queried_object();
@@ -23,7 +23,7 @@ if ( is_post_type_archive('community-blog') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $community_url = get_post_type_archive_link('community-blog');
   $community_name = 'Community blog';
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $community_url . '" class="vf-breadcrumbs__link">' . $community_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $community_url . '" class="vf-breadcrumbs__link">' . $community_name . '</a></li>';
   echo '</ul>';
   echo '</nav>';
     }
@@ -33,7 +33,7 @@ if ( is_post_type_archive('vf_event') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $event_url = get_post_type_archive_link('vf_event');
   $event_name = 'Internal events';
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
   echo '</ul>';
   echo '</nav>';
 
@@ -44,7 +44,7 @@ if ( is_post_type_archive('insites') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $event_url = get_post_type_archive_link('insites');
   $event_name = 'INsites';
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
   echo '</ul>';
   echo '</nav>';
 
@@ -55,14 +55,14 @@ if ( is_post_type_archive('documents') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $event_url = get_post_type_archive_link('documents');
   $event_name = 'Documents';
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
   echo '</ul>';
   echo '</nav>';
 
     }
 
 if (is_tag()){
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
   echo $currentBefore . 'Tag: ';
   single_tag_title();
   echo $currentAfter;
@@ -104,7 +104,7 @@ if ( is_category() ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
   $blog_url = get_post_type_archive_link('blog');
   $blog_name = 'Blog';
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $blog_url . '" class="vf-breadcrumbs__link">' . $blog_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $blog_url . '" class="vf-breadcrumbs__link">' . $blog_name . '</a></li>';
   echo $currentBefore . 'Category: ';
   single_cat_title();
   echo $currentAfter;
@@ -186,7 +186,7 @@ if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !i
     $community_url = get_post_type_archive_link('community-blog');
     $community_name = 'Community blog';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $community_url . '" class="vf-breadcrumbs__link">' . $community_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
+    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
 
     // event single post
   } elseif ( is_singular('vf_event') ) {
@@ -199,28 +199,28 @@ if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !i
   } elseif ( is_singular('insites') ) {
     $insites_url = get_post_type_archive_link('insites');
     $insites_name = 'INsites';
-    echo '<li class="vf-breadcrumbs__item"><a href="' . $insites_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
+    echo '<li class="vf-breadcrumbs__item" false><a href="' . $insites_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
+    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
 
     // documents single post
   } elseif ( is_singular('documents') ) {
     $documents_url = get_post_type_archive_link('documents');
     $documents_name = 'Documents';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $documents_url . '" class="vf-breadcrumbs__link">' . $documents_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
+    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
 
     // blog single post
   } elseif ( is_single() && !is_attachment() ) {
     $blog_url = get_post_type_archive_link('post');
     $blog_name = 'Blog';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $blog_url . '" class="vf-breadcrumbs__link">' . $blog_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
+    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
 
   } elseif ( is_attachment() ) {
     $parent = get_post($post->post_parent);
     $cat = get_the_category($parent->ID); $cat = $cat[0];
     echo get_category_parents($cat, TRUE, '');
-    echo '<li class="vf-breadcrumbs__item"><a href="' . get_permalink($parent) . '"class="vf-breadcrumbs__link">' . $parent->post_title . '</a></li>';
+    echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . get_permalink($parent) . '"class="vf-breadcrumbs__link">' . $parent->post_title . '</a></li>';
     echo $currentBefore;
     the_title();
     echo $currentAfter;
