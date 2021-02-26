@@ -55,8 +55,8 @@ get_header();
       } //not displaying
       else { ?>
    
-    <figure class="vf-figure | vf-u-float__right--md | vf-u-padding__left--600">
-      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image', 'style' => 'width: 300px;')); ?>
+    <figure class="vf-figure">
+      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
       <figcaption class="vf-figure__caption">
         <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
       </figcaption>

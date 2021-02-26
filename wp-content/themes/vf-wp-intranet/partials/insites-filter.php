@@ -151,7 +151,7 @@ $archive = home_url('/?post_type=insites');
         <legend class="vf-form__legend">Publication year</legend>
 
         <?php if ( ! empty($date_options)) { ?>
-        <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px;">
+        <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">
           <option value=""><?php echo esc_attr( __( 'Year' ) ); ?></option>
           <?php
       foreach ($date_options as $date) {

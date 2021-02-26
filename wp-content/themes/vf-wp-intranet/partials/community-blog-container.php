@@ -37,16 +37,7 @@
     while ($mainloop->have_posts()) : $mainloop->the_post();
     $ids[] = get_the_ID(); ?>
 
-      <article class="vf-summary vf-summary--article">
-        <h2 class="vf-summary__title">
-          <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
-        </h2>
-        <span class="vf-summary__meta">
-          <time class="vf-summary__date" style="margin-left: 0;" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
-        </span>
-        <p class="vf-summary__text">
-        <?php echo get_the_excerpt(); ?></p>
-      </article>
+<?php include(locate_template('partials/vf-summary-insites-latest.php', false, false)); ?>
       <?php
 if (($mainloop->current_post + 1) < ($mainloop->post_count)) {
    echo '<hr class="vf-divider">';
