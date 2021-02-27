@@ -62,7 +62,7 @@ if ( is_post_type_archive('documents') ) {
     }
 
 if (is_tag()){
-  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
+  echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
   echo $currentBefore . 'Tag: ';
   single_tag_title();
   echo $currentAfter;
