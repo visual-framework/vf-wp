@@ -19,30 +19,6 @@
             "endpoint": 0
         },
         {
-            "key": "field_5f9bf93901eac",
-            "label": "Background image",
-            "name": "vf_hero_image",
-            "type": "image",
-            "instructions": "Recommended size: 1200×400",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "vf-hero",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpeg,jpg,png"
-        },
-        {
             "key": "field_5f9bf93901f0d",
             "label": "Heading",
             "name": "vf_hero_heading",
@@ -62,11 +38,11 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f9bf93901faa",
-            "label": "Introduction",
-            "name": "vf_hero_text",
+            "key": "field_5fc8c1246eb93",
+            "label": "Subheading",
+            "name": "vf_hero_subheading",
             "type": "text",
-            "instructions": "Leave blank to use introduction from the Content Hub.",
+            "instructions": "Leave blank for an introduction from the contentHub",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -79,6 +55,25 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5fc8b06b0535a",
+            "label": "Text",
+            "name": "vf_hero_text",
+            "type": "wysiwyg",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
         },
         {
             "key": "field_5fc792165a8f1",
@@ -115,7 +110,7 @@
             "label": "Inline link",
             "name": "vf_hero_link",
             "type": "link",
-            "instructions": "(Optional) The link will appear after the Hero Introduction text. Example: 'Read more'",
+            "instructions": "(Optional) The link will appear after the introduction text. Example: 'Read more'",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -124,6 +119,57 @@
                 "id": ""
             },
             "return_format": "array"
+        },
+        {
+            "key": "field_5f9bf93901eac",
+            "label": "Background image",
+            "name": "vf_hero_image",
+            "type": "image",
+            "instructions": "Recommended size: 2000×400",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium_large",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpeg,jpg,png"
+        },
+        {
+            "key": "field_603abf5a22523",
+            "label": "Spacing",
+            "name": "vf_hero_spacing",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "800": "800",
+                "1200": "1200",
+                "1600": "1600"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_5f9bf93901ca1",
@@ -177,6 +223,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Groups theme global container.",
-    "modified": 1607076057
+    "description": "VF-WP Groups theme global container."
 }
