@@ -1,6 +1,6 @@
 {
     "key": "group_600e7912c9cba",
-    "title": "Insites",
+    "title": "INsites",
     "fields": [
         {
             "key": "field_5dd3ec01c4d1e",
@@ -12,25 +12,25 @@
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
-                "class": "metaboxes",
+                "class": "",
                 "id": ""
             },
             "default_value": "",
-            "tabs": "text",
+            "tabs": "all",
+            "toolbar": "basic",
             "media_upload": 0,
-            "toolbar": "full",
             "delay": 0
         },
         {
-            "key": "field_600e791cff812",
-            "label": "EMBL location",
+            "key": "field_6038be645d08e",
+            "label": "EMBL Location",
             "name": "embl_location",
             "type": "taxonomy",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -52,18 +52,18 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
             "taxonomy": "topic",
-            "field_type": "checkbox",
+            "field_type": "multi_select",
+            "allow_null": 1,
             "add_term": 1,
             "save_terms": 1,
             "load_terms": 1,
             "return_format": "object",
-            "multiple": 0,
-            "allow_null": 0
+            "multiple": 0
         },
         {
             "key": "field_5dd52ed0509fe",
@@ -71,6 +71,25 @@
             "name": "featured",
             "type": "true_false",
             "instructions": "Toggle off to not highlight the article on the front page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5ea15d527ecd1",
+            "label": "Hide featured image in the article",
+            "name": "show_featured_image",
+            "type": "true_false",
+            "instructions": "Toggle on to not display the featured image in the article",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {

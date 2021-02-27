@@ -1,9 +1,9 @@
 <?php
 
 /*
-Plugin Name: VF-WP Intranet Breadcrumbs
-Description: VF-WP Intranet theme global container.
-Version: 1.0.0-beta.1
+Plugin Name: VF-WP Breadcrumbs (Intranet)
+Description: VF-WP Intranet theme container for breadcrumbs.
+Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp

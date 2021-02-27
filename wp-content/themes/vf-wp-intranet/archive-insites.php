@@ -20,7 +20,7 @@ $title = $vf_theme->get_title();
       $ids = array();
     while ($featured->have_posts()) : $featured->the_post();
       $ids[] = get_the_ID(); ?>
-    <?php include(locate_template('partials/vf-card--featured-article.php', false, false)); ?>
+    <?php include(locate_template('partials/vf-summary-insites.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>
@@ -32,13 +32,11 @@ $title = $vf_theme->get_title();
     <?php include(locate_template('partials/insites-filter.php', false, false)); ?>
   </div>
   <div class="vf-grid__col--span-3">
-    <h1 class="vf-text vf-text-heading--1">
-    </h1>
     <?php
         if ( have_posts() ) {
           while ( have_posts() ) {
             the_post();
-            include(locate_template('partials/vf-summary--article.php', false, false)); 
+            include(locate_template('partials/vf-summary-insites-latest.php', false, false)); 
             if ( ! $vf_theme->is_last_post()) {
                 echo '<hr class="vf-divider">';
               }
