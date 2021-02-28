@@ -7,7 +7,6 @@ if ( ! $vf_plugin instanceof VF_WP_Groups_Header) {
   return;
 }
 
-// Add background image for levels...
 $image = $vf_plugin->get_hero_image();
 $hero_link = get_field('vf_hero_link');
 $add_heading_1 = get_field('vf_hero_additional_heading_1');
