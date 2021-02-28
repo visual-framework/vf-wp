@@ -6,6 +6,7 @@ $is_preview = isset($is_preview) && $is_preview;
 $title = get_field('title');
 $link = get_field('link');
 $text = get_field('text');
+$subheading = get_field('subheading');
 $image = get_field('image');
 $image_url = get_field('image_url');
 
@@ -13,7 +14,7 @@ $is_link = ! empty($link);
 
 $style = get_field('style');
 if (empty($style)) {
-  $style = 'default';
+  $style = 'bordered';
 }
 if (is_array($style)) {
   $style = $style[0];
@@ -55,14 +56,13 @@ if (
   return;
 }
 
-$classes = "vf-card";
+$classes = "vf-card vf-card--brand";
 
-if ($style !== 'default') {
-  $classes .= " vf-card--primary vf-card--{$style}";
+if ($style) {
+  $classes .= " vf-card--{$style}";
 }
 
 ?>
-
 
 <article class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--800">
 <?php
@@ -70,23 +70,34 @@ if (!empty($image_url)) { ?>
 <img src="<?php echo esc_url($image_url); ?>" class="vf-card__image" alt="" loading="lazy" itemprop="image">
 <?php 
 }
-else {
+elseif (!empty($image)) {
   echo ($image);
+}
+else {
+  echo '';
 }
 ?>
   <div class="vf-card__content | vf-stack vf-stack--400">
-    <h3 class="vf-card__title">
+  <?php if (!empty($title)) { ?>
+    <h3 class="vf-card__heading">
       <?php if ($link) { ?>
         <a class="vf-card__link" href="<?php echo esc_url($link['url']); ?>">
       <?php } 
        echo esc_html($title); 
        if ($link) { ?>
+       <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
+       </svg>
         </a>
       <?php }  ?>
     </h3>
-    <p class="vf-card__text">
-      <?php echo esc_html($text); ?>
-    </p>
+    <?php } ?>
+    <?php if (!empty($subheading)) { ?>
+    <p class="vf-card__subheading"><?php echo esc_html($subheading); ?></p>
+    <?php } ?>
+    <?php if (!empty($text)) { ?>
+    <p class="vf-card__text"><?php echo esc_html($text); ?></p>
+    <?php } ?>
   </div>
 </article>
 
