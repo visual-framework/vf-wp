@@ -172,5 +172,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-Hero container"
+    "description": "VF-Hero block",
+    "modified": 1614496208
 }
