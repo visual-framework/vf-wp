@@ -16,6 +16,10 @@ $style = get_field('style');
 if (empty($style)) {
   $style = 'bordered';
 }
+if ($style === 'default') {
+  $style = 'bordered';
+}
+
 if (is_array($style)) {
   $style = $style[0];
 }
