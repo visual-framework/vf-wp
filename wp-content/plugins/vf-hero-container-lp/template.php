@@ -1,4 +1,5 @@
 <?php
+/* DEPRECATED 
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -65,3 +66,6 @@ if (!empty ($hero_link)) { ?>
 </div>
 </section>
 <!--/vf-hero-->
+
+*/
+?>

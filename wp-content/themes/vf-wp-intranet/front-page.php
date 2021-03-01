@@ -93,14 +93,13 @@ $vf_theme->the_content();
 
 ?>
 
-<section class="vf-hero vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-04-scaled.jpg');">
-  <div class="vf-hero__content">
+<section class="vf-hero | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-04-scaled.jpg');">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
   <h2 class="vf-hero__heading">
     <a class="vf-hero__heading_link" href="https://www.embl.org/topics/coronavirus/">COVID-19 updates</a>
   </h2>
-
     <p class="vf-hero__text">
-      <a class="vf-hero__link | vf-link" href="https://www.embl.org/internal-information/coronavirus/">Latest updates on Coronavirus for EMBL staff
+      <a class="vf-hero__link" href="https://www.embl.org/internal-information/coronavirus/">Latest updates on Coronavirus for EMBL staff
       <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
         </svg>

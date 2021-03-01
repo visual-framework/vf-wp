@@ -14,7 +14,7 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
   ));
 ?>
 
-<section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed">
+<section class="vf-hero | vf-u-fullbleed">
   <style>
     .vf-hero {
       <?php if ($hero_image) {
@@ -29,10 +29,8 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
     }
   </style>
 
-  <div class="vf-hero__content | vf-stack vf-stack--400 ">
-    <h2 class="vf-hero__heading" style="font-size: 30px;">
-      <?php echo $title; ?>
-      <span class="vf-hero__heading--additional">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
+      <p class="vf-hero__kicker">
         <?php
         if (!empty ($displayed)) {
           echo esc_html($displayed);
@@ -46,13 +44,13 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
         elseif (!empty ($ss_event_name) && $event_organiser == "science_society") {
           echo esc_html($ss_event_name['label']);
         }
-
         else {
            echo esc_html($event_type['label']);
         }
-
       ?>
-      </span>
+      </p>
+    <h2 class="vf-hero__heading" style="font-size: 30px;">
+      <?php echo $title; ?>
     </h2>
   </div>
 </section>

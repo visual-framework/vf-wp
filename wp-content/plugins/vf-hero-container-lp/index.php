@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: VF-WP Hero Landing Page
-Description: VF-WP Hero Landing Page container.
+Plugin Name: VF-WP Hero Landing Page (deprecated)
+Description: This plugin is deprecated and can be uninstalled.
 Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
@@ -27,8 +27,12 @@ class VF_WP_Hero_LP extends VF_Plugin {
     'post_type'  => 'vf_container'
   );
 
+  /**
+   * DEPRECATED - do not call constructor
+   */
   public function __construct(array $params = array()) {
-    parent::__construct('vf_wp_hero_lp');
+   /* 
+   parent::__construct('vf_wp_hero_lp');
     if (array_key_exists('init', $params)) {
       parent::initialize();
     };
@@ -36,12 +40,9 @@ class VF_WP_Hero_LP extends VF_Plugin {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
-
+    */
   }
 
-  // public function template_callback($block, $content, $is_preview = false, $acf_id) {
-  //   include(plugin_dir_path(__FILE__) . 'template.php');
-  // }
 
   /**
    * Filter: `acf/settings/load_json`

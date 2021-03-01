@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: VF-WP Hero Group
-Description: VF-WP Hero Group container.
+Plugin Name: VF-WP Hero
+Description: VF-WP Hero container.
 Version: 1.0.0-beta.2
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
@@ -23,7 +23,7 @@ class VF_WP_Hero extends VF_Plugin {
 
   protected $config = array(
     'post_name'  => 'vf_wp_hero_group',
-    'post_title' => 'VF Hero (group)',
+    'post_title' => 'VF Hero',
     'post_type'  => 'vf_container'
   );
 
@@ -50,7 +50,7 @@ class VF_WP_Hero extends VF_Plugin {
     return $paths;
   }
 
-} // VF_WP_Hero_Group
+} // VF_WP_Hero
 
 $plugin = new VF_WP_Hero(
   array('init' => true)
