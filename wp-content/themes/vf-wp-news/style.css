@@ -136,7 +136,7 @@ Text Domain:	 vf-wp-news-main
 
 .embed-container {
   position: relative;
-  padding-bottom: 56.25%;
+  padding-bottom: 56.25% !important;
   height: auto !important;
   overflow: hidden;
   max-width: 100%;

@@ -77,9 +77,9 @@ else {} ?>
   </div>
   <div class="vf-content | vf-u-padding__bottom--800">
     <h1><?php the_title(); ?></h1>
-    <?php languages_links_switcher(); ?>
+    <?php /*  languages_links_switcher(); */?>
 
-    <?php /*  if( have_rows('translations') ):
+    <?php  if( have_rows('translations') ):
         $all_fields_count = count(get_field('translations'));
         $fields_count = 1;
       ?>
@@ -100,7 +100,7 @@ else {} ?>
           <?php endwhile; ?></p>
       </div>
     </div>
-    <?php endif; */ ?>
+    <?php endif;  ?>
 
     <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
@@ -158,7 +158,8 @@ else {
 
       $source = get_sub_field('link_url');
       $description = get_sub_field('link_description');?>
-        <p class="vf-box__text | vf-u-margin__bottom--200"><a href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
+        <p class="vf-box__text | vf-u-margin__bottom--200"><a
+            href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
         <?php endwhile; ?>
       </div>
     </div>
@@ -224,12 +225,12 @@ if ($tags) {
   </div>
 </main>
 
-  <div class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
-      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">More from this category</h3>
-      <div class="vf-grid vf-grid__col-3">
-        <?php
+<div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+    <h2 class="vf-section-header__heading vf-u-margin__bottom--400">More from this category</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
+    <?php
           $args = array(
-            'posts_per_page' => 3,
+            'posts_per_page' => 4,
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
           );
@@ -247,17 +248,17 @@ if ($tags) {
 
           foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
 
-        <?php include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
-        <?php endforeach; wp_reset_postdata(); ?>
-      </div>
-
+    <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
+    <?php endforeach; wp_reset_postdata(); ?>
   </div>
 
-  <?php include(locate_template('partials/pow-container.php', false, false)); ?>
+</div>
 
-  <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
+<?php include(locate_template('partials/pow-container.php', false, false)); ?>
 
-  <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
+<?php include(locate_template('partials/embletc-container.php', false, false)); ?>
+
+<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
 
 <?php get_footer(); ?>

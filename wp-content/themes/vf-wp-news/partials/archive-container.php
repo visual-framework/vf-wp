@@ -1,4 +1,4 @@
-<div class="vf-u-background-color-ui--off-white | vf-u-padding__top--400 | vf-u-padding__bottom--400 | vf-u-margin__bottom--200  | archive-container">
+<div class="vf-u-margin__bottom--200  | archive-container">
     <div class="vf-grid" style="--page-grid-gap: 0px;">
       <div class="vf-links vf-links--tight vf-links__list--s">
         <h3 class="vf-links__heading">Last 6 months:</h3>

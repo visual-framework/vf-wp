@@ -7,7 +7,7 @@ $user_id = get_the_author_meta('ID');
 ?>
 
 <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__bottom--500">
-  <?php
+  <?php /*
 
 if( get_field( 'youtube_url' ) ) {
     $videoid = get_field( 'youtube_url' );
@@ -19,11 +19,12 @@ else if ( get_field( 'mp4_url' ) ) {
   echo '<div><video muted="muted" class="vf-card__image" autoplay loop><source src="' . $mp4url . '" type="video/mp4"></video></div>';
 }
 
-else { ?>
-  <?php the_post_thumbnail( 'large', array( 'class' => 'vf-card__image' ) ); ?>
+else { ≈?>
   <?php
 }
-?>
+*/?>
+
+<?php the_post_thumbnail( 'large', array( 'class' => 'vf-card__image' ) ); ?>
   <div class="vf-card__content | vf-stack vf-stack--400">
     <h3 class="vf-card__heading">
       <a href="<?php the_permalink(); ?>" class="vf-card__link"><?php echo $title; ?>
@@ -39,9 +40,7 @@ else { ?>
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
     <span class="vf-card__text vf-summary__meta | vf-u-margin__bottom--100">
       <p class="vf-summary__meta vf-u-margin__bottom--100 vf-u-margin__top--100">By&nbsp;<a class="vf-card__link"
-          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a></p>
-      <p class="vf-summary__meta vf-u-margin__bottom--100"><a
-          class="vf-link"><?php echo get_the_category_list(','); ?></a>
+          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a> in <?php echo get_the_category_list(','); ?></p>
     </span>
   </div>
 </article>

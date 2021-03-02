@@ -27,28 +27,25 @@ if (is_search()) {
 
 ?>
 <section class="vf-u-margin__bottom--200">
-  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--400">
-    <div>
       <div>
         <h1 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--600" style="font-weight: 400;">
-        <?php single_tag_title(); ?></h1>
+          <?php single_tag_title(); ?></h1>
       </div>
-      <div class="vf-grid vf-grid__col-3">
-        <?php if ( have_posts() ) : while ( have_posts() ) : the_post();?>
-        <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
-        <?php endwhile; endif; ?>
-      </div>
-      <div class="vf-grid" style="margin: 4%"> <?php vf_pagination();
+      <div class="vf-news-container vf-news-container--featured">
+        <div class="vf-news-container__content vf-grid vf-grid__col-4">
+          <?php if ( have_posts() ) : while ( have_posts() ) : the_post();?>
+          <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
+          <?php endwhile; endif; ?>
+        </div>
+        <div class="vf-grid" style="margin: 4%"> <?php vf_pagination();
       ?>
-      </div>
-  </div>
+        </div>
+    </div>
 </section>
 
-  <?php include(locate_template('partials/archive-container.php', false, false)); ?>
+<?php include(locate_template('partials/embletc-container.php', false, false)); ?>
 
-  <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
-
-  <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
+<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
 
 <?php get_footer(); ?>
