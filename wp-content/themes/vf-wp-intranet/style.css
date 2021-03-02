@@ -7,6 +7,3 @@ Template:      vf-wp
 Version:       1.0.0-beta.1
 Text Domain:	 vfwp
 */
-.vf-card {
-    grid-template-rows: 216px 1fr !important; 
-  }

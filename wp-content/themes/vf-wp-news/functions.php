@@ -107,12 +107,12 @@ add_action('wp_head', 'track_posts');
 
 //ADDING CLASS TO A LINK IN CATEGORY
 //
-function add_class_to_category( $thelist, $separator, $parents){
+function replace_category_class( $thelist, $separator, $parents){
     $class_to_add = 'vf-link';
     return str_replace('<a href="',  '<a class="'. $class_to_add. '" href="', $thelist);
 }
 
-add_filter('the_category', __NAMESPACE__ . '\\add_class_to_category',10,3);
+add_filter('the_category', __NAMESPACE__ . '\\replace_category_class',10,3);
 
 
  // MAGAZINE COVER WIDGET 1

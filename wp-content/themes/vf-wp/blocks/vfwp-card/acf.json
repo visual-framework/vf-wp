@@ -7,7 +7,7 @@
             "label": "Image source",
             "name": "image_source",
             "type": "radio",
-            "instructions": "",
+            "instructions": "The card image is optional. Leave the fields empty to not show an image.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -102,11 +102,30 @@
             "maxlength": ""
         },
         {
+            "key": "field_603b4403d386e",
+            "label": "Subheading",
+            "name": "subheading",
+            "type": "text",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5ebd3243eea26",
             "label": "Text",
             "name": "text",
             "type": "textarea",
-            "instructions": "",
+            "instructions": "Optional",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -149,11 +168,10 @@
                 "id": ""
             },
             "choices": {
-                "default": "Default",
                 "bordered": "Bordered",
                 "striped": "Striped"
             },
-            "default_value": "default",
+            "default_value": "bordered",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -178,6 +196,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Card ACF Gutenberg block",
-    "modified": 1613474323
+    "description": "VF-WP Card ACF Gutenberg block"
 }
