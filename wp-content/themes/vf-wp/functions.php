@@ -135,7 +135,7 @@ function remove_margin_wp_toolbar() {
 add_action( 'admin_head', 'remove_margin_wp_toolbar' );
 add_action( 'wp_head', 'remove_margin_wp_toolbar' );
 
-// custom language switcher for the WPML plugin
+/* custom language switcher for the WPML plugin
 function languages_links_switcher(){
 $languages = icl_get_languages('skip_missing=1');
 if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-banner--info">
@@ -163,4 +163,5 @@ if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-b
 
   }
   }
+  */
 ?>

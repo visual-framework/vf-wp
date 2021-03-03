@@ -27,8 +27,8 @@ if (is_search()) {
 }
 ?>
 
-<div class="vf-grid">
-  <div class="vf-box vf-box--normal vf-box-theme--primary">
+<div class="vf-grid vf-u-margin__bottom--400">
+  <div class="vf-box vf-box--normal vf-box-theme--quinary">
     <h2 class="vf-text vf-text-heading--2">About the author</h2>
     <div class="vf-grid" style="max-width: fit-content;">
       <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--200' ) ); ?>
@@ -45,28 +45,28 @@ if (is_search()) {
   </div>
 </div>
 
-<section class="vf-u-margin__bottom--400 ">
-  <div class="vf-u-background-color-ui--off-white | vf-u-padding--400">
-      <h3 class="vf-section-header__heading vf-u-margin__bottom--600">Articles by <?php the_author(); ?></h3>
-    <div class="vf-grid | vf-grid__col-3">
+<section class="vf-u-margin__bottom--400">
+  <div class="vf-news-container vf-news-container--featured">
+      <h3 class="vf-section-header__heading vf-u-margin__bottom--400">Articles by <?php the_author(); ?></h3>
+    <div class="vf-news-container__content vf-grid vf-grid__col-4">
       <?php 
       $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
       $author = new WP_Query(array(
         'paged' => $page, 
         'author__in' => $user_id));
 					while ($author->have_posts()) : $author->the_post();
-					include(locate_template('partials/vf-card--article.php', false, false));?>
+					include(locate_template('partials/vf-summary--news.php', false, false));?>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
       <div class="vf-grid" style="margin: 4%"> <?php vf_pagination();?></div>
   </div>
 
-  <div class="vf-u-background-color-ui-white | vf-u-padding__top--400 | vf-u-margin__top--400">
-        <h3 class="vf-text vf-text-heading--3">Popular</h3>
-      <div class="vf-grid vf-grid__col-3">
-        <?php $popular = new WP_Query(array('posts_per_page'=> 3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));
+  <div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+    <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Popular</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
+        <?php $popular = new WP_Query(array('posts_per_page'=> 4, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'author__in' => $user_id));
 					while ($popular->have_posts()) : $popular->the_post();
-					include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false));?>
+					include(locate_template('partials/vf-summary--news.php', false, false));?>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
   </div>

@@ -28,14 +28,14 @@ if (is_search()) {
 $category_name = single_cat_title("", false);
 ?>
 <section class="vf-u-margin__bottom--400">
-  <div class=" vf-u-background-color-ui--off-white | vf-u-padding--400 | vf-u-margin__bottom--400">
+  <div class="vf-news-container vf-news-container--featured | vf-u-margin__bottom--400">
     <div>
       <h2 class="vf-text vf-text-heading--1 | vf-u-margin__bottom--600" style="font-weight: 400;">
       <?php echo esc_html($category_name) ?></h2>
     </div>
-    <div class="vf-grid vf-grid__col-3">
+    <div class="vf-news-container__content vf-grid vf-grid__col-4">
         <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-        <?php include(locate_template('partials/vf-card--article.php', false, false)); ?>
+        <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
         <?php endwhile; endif; ?>
     </div>
     <div class="vf-grid" style="margin: 4%">
@@ -43,12 +43,12 @@ $category_name = single_cat_title("", false);
     </div>
   </div>
 
-  <div class="vf-u-background-color-ui-white">
-        <h3 class="vf-text vf-text-heading--3">Popular in this category</h3>
-      <div class="vf-grid vf-grid__col-3">
+  <div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+    <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Popular</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
         <?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'cat' => get_query_var('cat')));
         while ($popular->have_posts()) : $popular->the_post();
-        include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
+        include(locate_template('partials/vf-summary--news.php', false, false)); ?>
         <?php endwhile; wp_reset_postdata(); ?>
       </div>
   </div>

@@ -77,9 +77,9 @@ else {} ?>
   </div>
   <div class="vf-content | vf-u-padding__bottom--800">
     <h1><?php the_title(); ?></h1>
-    <?php languages_links_switcher(); ?>
+    <?php /*  languages_links_switcher(); */?>
 
-    <?php /*  if( have_rows('translations') ):
+    <?php  if( have_rows('translations') ):
         $all_fields_count = count(get_field('translations'));
         $fields_count = 1;
       ?>
@@ -100,7 +100,7 @@ else {} ?>
           <?php endwhile; ?></p>
       </div>
     </div>
-    <?php endif; */ ?>
+    <?php endif;  ?>
 
     <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
@@ -136,12 +136,44 @@ else {
 
     <?php the_content(); ?>
 
-    <?php if( have_rows('article_sources') ): ?>
-    <div class="vf-u-margin__top--800 | vf-box vf-box--normal vf-box-theme--quinary">
+    <?php
+    // article source
+    if( have_rows('source_article') ): ?>
+    <hr class="vf-divider">
+    <h4>Source article(s)</h4>
+    <?php while( have_rows('source_article') ): the_row();
+      $publication_title = get_sub_field('publication_title');
+      $publication_link = get_sub_field('publication_link');
+      $publication_authors = get_sub_field('publication_authors');
+      $publication_source = get_sub_field('publication_source');
+      $publication_date = get_sub_field('publication_date');
+      $publication_doi = get_sub_field('publication_doi');
+      ?>
+    <article class="vf-summary vf-summary--publication">
+      <h3 class="vf-summary__title">
+        <a href="<?php echo esc_url( $publication_link); ?>" class="vf-summary__link">
+          <?php echo esc_html( $publication_title); ?>
+        </a>
+      </h3>
+      <p class="vf-summary__author">
+        <?php echo esc_html( $publication_authors); ?> </p>
+      <p class="vf-summary__source">
+        <?php echo esc_html( $publication_source); ?>
+        <span class="vf-summary__date"><?php echo esc_html( $publication_date); ?></span>
+      </p>
+      <p class="vf-summary__text">
+        <?php echo esc_html( $publication_doi); ?> </p>
+    </article>
+    <?php endwhile; ?>
+    <?php endif; ?>
+
+    <?php
+    // article source (deprecated)
+    if( have_rows('article_sources') ): ?>
+    <div class="vf-u-margin__top--800 vf-u-margin__bottom--800 | vf-box vf-box--normal vf-box-theme--quinary">
       <h4 class="vf-box__heading">Source articles</h4>
       <div>
         <?php while( have_rows('article_sources') ): the_row();
-
       $source = get_sub_field('source_link_url');
       $description = get_sub_field('source_description', false, false);?>
         <p class="vf-box__text"><a href="<?php echo esc_url( $source ); ?>"><?php echo ($description) ?></a></p>
@@ -149,20 +181,28 @@ else {
       </div>
     </div>
     <?php endif; ?>
-    <?php if( have_rows('related_links') ): ?>
-    <div class="vf-u-margin__top--800 vf-u-margin__bottom--800 | vf-box vf-box--normal vf-box-theme--quinary">
-      <h4 class="vf-box__heading">Related links</h4>
 
-      <div>
+    <?php 
+    // related links
+    if( ! have_rows('source_article') ): ?>
+      <hr class="vf-divider">
+    <?php endif; 
+
+    if( have_rows('related_links') ): ?>
+    <div class="vf-links">
+      <h3 class="vf-links__heading">Related links</h3>
+      <ul class="vf-links__list | vf-list">
         <?php while( have_rows('related_links') ): the_row();
-
       $source = get_sub_field('link_url');
       $description = get_sub_field('link_description');?>
-        <p class="vf-box__text | vf-u-margin__bottom--200"><a href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a></p>
+        <li class="vf-list__item">
+          <a class="vf-list__link" href="<?php echo esc_url( $source ); ?>"><?php echo esc_html($description) ?></a>
+        </li>
         <?php endwhile; ?>
-      </div>
+      </ul>
     </div>
     <?php endif; ?>
+
     <p class="vf-text-body vf-text-body--3 | tags-inline">Tags:
       <?php
     $tags = get_the_tags($post->ID);
@@ -224,12 +264,13 @@ if ($tags) {
   </div>
 </main>
 
-  <div class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
-      <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">More from this category</h3>
-      <div class="vf-grid vf-grid__col-3">
-        <?php
+<div
+  class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">More from this category</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
+    <?php
           $args = array(
-            'posts_per_page' => 3,
+            'posts_per_page' => 4,
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
           );
@@ -247,17 +288,17 @@ if ($tags) {
 
           foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
 
-        <?php include(locate_template('partials/vf-card--article-no-excerpt-no-border.php', false, false)); ?>
-        <?php endforeach; wp_reset_postdata(); ?>
-      </div>
-
+    <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
+    <?php endforeach; wp_reset_postdata(); ?>
   </div>
 
-  <?php include(locate_template('partials/pow-container.php', false, false)); ?>
+</div>
 
-  <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
+<?php include(locate_template('partials/pow-container.php', false, false)); ?>
 
-  <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
+<?php include(locate_template('partials/embletc-container.php', false, false)); ?>
+
+<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 
 
 <?php get_footer(); ?>

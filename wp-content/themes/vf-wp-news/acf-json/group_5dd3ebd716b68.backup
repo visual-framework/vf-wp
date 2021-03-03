@@ -1,4 +1,5 @@
-   {
+[
+    {
         "key": "group_5dd3ebd716b68",
         "title": "Additional article information",
         "fields": [
@@ -55,36 +56,6 @@
                 "ui": 1,
                 "ui_on_text": "",
                 "ui_off_text": ""
-            },
-            {
-                "key": "field_5dd3f49650204",
-                "label": "Background colour",
-                "name": "color",
-                "type": "color_picker",
-                "instructions": "Please pick a colour from the 6 available swatches.",
-                "required": 1,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "#007B53"
-            },
-            {
-                "key": "field_5ef4666ac0283",
-                "label": "Link colour",
-                "name": "link_color",
-                "type": "color_picker",
-                "instructions": "Please leave the white colour",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "#fff"
             },
             {
                 "key": "field_5f1ac94baa00e",
@@ -210,9 +181,9 @@
                 "endpoint": 0
             },
             {
-                "key": "field_5dd3ed2dc4d20",
+                "key": "field_603f6435b4fd5",
                 "label": "Source article",
-                "name": "article_sources",
+                "name": "source_article",
                 "type": "repeater",
                 "instructions": "",
                 "required": 0,
@@ -224,15 +195,15 @@
                 },
                 "collapsed": "",
                 "min": 0,
-                "max": 10,
+                "max": 12,
                 "layout": "table",
                 "button_label": "Add source",
                 "sub_fields": [
                     {
-                        "key": "field_5dde52bfdd77b",
-                        "label": "Description",
-                        "name": "source_description",
-                        "type": "wysiwyg",
+                        "key": "field_603f6530771de",
+                        "label": "Publication title",
+                        "name": "publication_title",
+                        "type": "text",
                         "instructions": "",
                         "required": 0,
                         "conditional_logic": 0,
@@ -242,16 +213,31 @@
                             "id": ""
                         },
                         "default_value": "",
-                        "tabs": "visual",
-                        "toolbar": "basic",
-                        "media_upload": 0,
-                        "delay": 0
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
                     },
                     {
-                        "key": "field_5dde52e2dd77c",
-                        "label": "Link",
-                        "name": "source_link_url",
-                        "type": "url",
+                        "key": "field_603f6543771df",
+                        "label": "Publication link",
+                        "name": "publication_link",
+                        "type": "link",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "array"
+                    },
+                    {
+                        "key": "field_603f655a771e0",
+                        "label": "Authors",
+                        "name": "publication_authors",
+                        "type": "text",
                         "instructions": "",
                         "required": 0,
                         "conditional_logic": 0,
@@ -261,7 +247,67 @@
                             "id": ""
                         },
                         "default_value": "",
-                        "placeholder": ""
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_603f6570771e1",
+                        "label": "Source",
+                        "name": "publication_source",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_603f657e771e2",
+                        "label": "Publication date\/year",
+                        "name": "publication_date",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_603f6592771e3",
+                        "label": "DOI",
+                        "name": "publication_doi",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
                     }
                 ]
             },
@@ -341,79 +387,6 @@
                 ]
             },
             {
-                "key": "field_5f1ac9a9aa012",
-                "label": "Featured video",
-                "name": "",
-                "type": "tab",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "placement": "top",
-                "endpoint": 0
-            },
-            {
-                "key": "field_5ea15c4c7ecce",
-                "label": "Featured video (Youtube)",
-                "name": "youtube_url",
-                "type": "text",
-                "instructions": "A youtube video will be displayed in place of the featured image",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "30",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "Example URL: https:\/\/www.youtube.com\/embed\/GnPB26LDLEY",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5ea15ce77eccf",
-                "label": "Featured video (.mp4)",
-                "name": "mp4_url",
-                "type": "text",
-                "instructions": "A video will be displayed in place of the featured image.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "30",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_5ea15d4b7ecd0",
-                "label": "Video caption",
-                "name": "video_caption",
-                "type": "text",
-                "instructions": "Please add a video caption",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "40",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
                 "key": "field_5f1aca41aa013",
                 "label": "Press release",
                 "name": "",
@@ -447,9 +420,7 @@
                     "EMBL Generic": "EMBL Generic",
                     "EMBL-EBI Generic": "EMBL-EBI Generic"
                 },
-                "default_value": [
-                    "None"
-                ],
+                "default_value": "None",
                 "allow_null": 0,
                 "multiple": 0,
                 "ui": 0,
@@ -491,12 +462,12 @@
                         },
                         "choices": {
                             "Catalan": "Catalan",
-                            "French": "French",
-                            "German": "German",
-                            "Italian": "Italian",
-                            "Spanish": "Spanish"
+                            "Français": "Français",
+                            "Deutsch": "Deutsch",
+                            "Italiano": "Italiano",
+                            "Español": "Español"
                         },
-                        "default_value": [],
+                        "default_value": false,
                         "allow_null": 0,
                         "multiple": 0,
                         "ui": 0,
@@ -544,3 +515,4 @@
         "active": true,
         "description": ""
     }
+]
