@@ -26,7 +26,7 @@ else { ≈?>
 <?php the_post_thumbnail( 'large', array( 'class' => 'vf-card__image' ) ); ?>  
 <div class="vf-card__content | vf-stack vf-stack--400" style="padding-top: 6px;">
     <h3 class="vf-card__heading">
-      <a href="<?php the_permalink(); ?>" class="vf-card__link"><?php echo $title; ?>
+      <a href="<?php the_permalink(); ?>" style="color: #fff;" class="vf-card__link"><?php echo $title; ?>
         <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
           height="1em" xmlns="http://www.w3.org/2000/svg">
           <path
