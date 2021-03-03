@@ -38,9 +38,5 @@ else { ≈?>
     </h3>
     <time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
-    <span class="vf-card__text vf-summary__meta | vf-u-margin__bottom--100">
-      <p class="vf-summary__meta vf-u-margin__bottom--100 vf-u-margin__top--100">By&nbsp;<a class="vf-card__link"
-          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a> in <?php echo get_the_category_list(','); ?></p>
-    </span>
   </div>
 </article>

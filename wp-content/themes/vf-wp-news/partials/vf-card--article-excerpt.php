@@ -5,7 +5,7 @@ $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 
 ?>
-<article class="vf-card vf-card--brand" style="background-color: <?php the_field('color'); ?>;">
+<article class="vf-card vf-card--brand vf-card--striped">
 <?php /*
 
 if( get_field( 'youtube_url' ) ) {
@@ -23,8 +23,9 @@ else { ≈?>
 }
 */?>
 
-<?php the_post_thumbnail( 'large', array( 'class' => 'vf-card__image' ) ); ?>  <div class="vf-card__content | vf-stack vf-stack--400">
-    <h3 class="vf-card__heading" style="background-color: <?php the_field('color'); ?>;">
+<?php the_post_thumbnail( 'large', array( 'class' => 'vf-card__image' ) ); ?>  
+<div class="vf-card__content | vf-stack vf-stack--400" style="padding-top: 6px;">
+    <h3 class="vf-card__heading">
       <a href="<?php the_permalink(); ?>" class="vf-card__link"><?php echo $title; ?>
         <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
           height="1em" xmlns="http://www.w3.org/2000/svg">
@@ -36,11 +37,13 @@ else { ≈?>
     </h3>
     <p class="vf-card__text">
       <?php echo get_the_excerpt(); ?></p>
-    <time class="vf-summary__date vf-u-text-color--ui--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
-      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+      <?php /*
       <span class="vf-card__text vf-summary__meta | vf-u-margin__bottom--100">
       <p class="vf-summary__meta vf-u-margin__bottom--100 vf-u-margin__top--100">By&nbsp;<a class="vf-card__link"
           href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a> in <?php echo get_the_category_list(','); ?></p>
-    </span>
+      </span>
+      */ ?>
+    <time class="vf-summary__date vf-u-text-color--ui--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
   </div>
 </article>

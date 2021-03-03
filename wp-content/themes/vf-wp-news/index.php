@@ -43,8 +43,8 @@ if (is_search()) {
 
 ?>
 
-<section class="vf-grid vf-grid__col-5 | vf-u-background-color-ui--grey | vf-u-padding__bottom--400 | vf-u-padding__top--800 | vf-u-margin__bottom--800 | vf-u-fullbleed">
-    <div class="vf-grid__col--span-3 | vf-u-margin__bottom--500 | vf-grid-featured-col-left">
+<section class="vf-grid vf-grid__col-6 | vf-u-background-color-ui--grey | vf-u-padding__bottom--400 | vf-u-padding__top--800 | vf-u-margin__bottom--800 | vf-u-fullbleed">
+    <div class="vf-grid__col--span-4 | vf-u-margin__bottom--500 | vf-grid-featured-col-left">
       <?php
 			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
 $ids = array();
