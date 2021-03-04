@@ -16,6 +16,10 @@ $topic_area_terms = get_terms(
   )
 );
 
+if ( function_exists('icl_object_id') ) { 
+$languages= icl_get_languages('skip_missing=1');
+}
+
 // Get active taxonomy filters
 $age_selected = get_query_var('age-group');
 if ( ! is_array($age_selected)) {
@@ -95,7 +99,7 @@ $archive = home_url('/?post_type=teachingbase');
       $selected = empty($age_selected) || empty($age_selected[0]) ? 'checked="checked"' : '';
     ?>
         <input type="checkbox" value="" id="checkbox-age_group-1" class="vf-form__checkbox"
-          name="teachingbase_age_group" <?php echo $selected ?>>
+          name="age_group" <?php echo $selected ?>>
         <label for="checkbox-age_group-1" class="vf-form__label">All</label>
       </div>
       <?php
@@ -141,8 +145,24 @@ $archive = home_url('/?post_type=teachingbase');
 	    $count++;
 	  } ?>
     </fieldset>
-
+<?php if ( function_exists('icl_object_id') ) { ?>
     <fieldset class="vf-form vf-form__fieldset">
+      <legend class="vf-form__legend">Languages</legend>
+      <select class='vf-form__select' id='vf-form__select' name="lang" style="padding: 3px 4px; width: 243px;">
+        <option value=""><?php echo esc_attr( __( 'Language' ) ); ?></option>
+        <?php
+          foreach($languages as $l){ 
+            $selected = $l['selected'] ? 'selected="selected"' : '';
+            ?>
+        <option value="<?php echo esc_attr($l[['language_code']]); ?>" <?php echo $selected ?>>
+        <?php echo esc_html($l['native_name']); ?>
+      </option>
+      <?php } ?>
+    </select>
+  </fieldset>
+  <?php } ?>
+  
+  <fieldset class="vf-form vf-form__fieldset">
       <legend class="vf-form__legend">Publication year</legend>
 
       <?php if ( ! empty($date_options)) { ?>
