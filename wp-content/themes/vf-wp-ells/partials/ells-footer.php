@@ -1,10 +1,6 @@
 <footer class="vf-footer">
   <div class="vf-footer__inner">
-    <p class="vf-footer__notice">
-      Our inspiring educational experiences share the scientific discoveries of EMBL with young people aged 10-19 years
-      and teachers in Europe and beyond.
-    </p>
-    <div class="vf-footer__links-group | vf-grid">
+    <div class="vf-footer__links-group | vf-grid | vf-u-padding__bottom--0" style="border: none;">
       <div class="vf-links">
         <h4 class="vf-links__heading">
           European Learning Laboratory for the Life Sciences
@@ -89,25 +85,7 @@
         </div>
       </div>
     </div>
-    <p class="vf-footer__legal">
-      <span class="vf-footer__legal-text">
-        <a class="vf-footer__link" href="https://goo.gl/maps/nbxNg2HGXL1MTtzt9">Meyerhofstraße 1, 69117 Heidelberg,
-          Germany</a>
-      </span>
-      <span class="vf-footer__legal-text">
-        <a class="vf-footer__link" href="tel:004962213870">Tel: +49 6221 387-0</a>
-      </span>
-    </p>
-    <p class="vf-footer__legal">
-      <span class="vf-footer__legal-text">
-        © EMBL 2021
-      </span>
-      <span class="vf-footer__legal-text">
-        <a class="vf-footer__link" href="/info/privacy-policy/">Privacy policy</a>
-      </span>
-      <span class="vf-footer__legal-text">
-        <a class="vf-footer__link" href="/info/dora/">DORA</a>
-      </span>
-    </p>
   </div>
 </footer>
+
+<?php get_footer(); ?>
