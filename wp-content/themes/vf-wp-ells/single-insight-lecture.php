@@ -146,16 +146,16 @@ if (class_exists('VF_Navigation')) {
   </div>
 </section>
 
-<section class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-fullbleed | vf-u-margin__bottom--100 | vf-u-padding__top--600">
+<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
   <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Past Insight Lectures</h3>
-  <div class="vf-news-container__content vf-grid vf-grid__col-4">
+  <div class="vf-grid vf-grid__col-3">
     <?php
     $insightMore = new WP_Query (array(
       'posts_per_page' => 4, 
       'post_type' => 'insight-lecture',
       'post__not_in'   => array( get_the_ID() ), ));
       while ($insightMore->have_posts()) : $insightMore->the_post(); ?>
-    <?php include(locate_template('partials/vf-summary-lecture-more.php', false, false)); ?>
+    <?php include(locate_template('partials/vf-card-lecture.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>

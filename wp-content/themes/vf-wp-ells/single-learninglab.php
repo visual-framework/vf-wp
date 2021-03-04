@@ -18,9 +18,8 @@ $registration_link = get_field('labs_application_form_link');
 
 ?>
 
-<section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed | vf-u-margin__bottom--0" style="
---vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS_2.jpg');  ">
-  <div class="vf-hero__content | vf-stack vf-stack--400 ">
+<section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <h2 class="vf-hero__heading">
       Educators' Training</h2>
     <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
@@ -142,8 +141,8 @@ if (class_exists('VF_Navigation')) {
     </div>
   </div>
 </section>
-<section
-  class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
+
+<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
   <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Upcoming LearningLabs</h3>
   <div class="vf-grid vf-grid__col-3">
     <?php
@@ -158,14 +157,13 @@ if (class_exists('VF_Navigation')) {
         'value' => $current_year,
         'compare' => '>=',
         'type' => 'numeric'
-    ) )
+        ))
      ));
-      
-while ($llabsMore->have_posts()) : $llabsMore->the_post(); ?>
-
-    <?php include(locate_template('partials/vf-card--article-llabs.php', false, false)); ?>
+    while ($llabsMore->have_posts()) : $llabsMore->the_post(); ?>
+    <?php include(locate_template('partials/vf-card-llabs.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>
 </section>
+
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
