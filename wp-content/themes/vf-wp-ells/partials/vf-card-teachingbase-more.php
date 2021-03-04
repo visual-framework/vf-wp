@@ -12,6 +12,8 @@ $title = esc_html(get_the_title());
         </svg>
       </a>
     </h3>
+    <p class="vf-card__text">
+      <?php echo get_the_excerpt(); ?></p>
     <time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
   </div>

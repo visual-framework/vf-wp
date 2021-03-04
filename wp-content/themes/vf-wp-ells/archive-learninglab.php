@@ -28,9 +28,11 @@ if (class_exists('VF_Navigation')) {
   </div>
 </div>
 
-<section class="vf-content | vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--600 vf-u-padding__top--600 vf-u-margin__bottom--600">
-  <h3>Upcoming LearningLabs</h3>
-  <div class="vf-grid vf-grid__col-3 vf-u-margin__top--400">
+<section class="vf-card-container | vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--600 vf-u-padding__top--600 vf-u-margin__bottom--600">
+<div class="vf-card-container__inner">  
+    <div class="vf-section-header">
+     <h2 class="vf-section-header__heading">Upcoming LearningLabs</h2>
+    </div>  
     <?php
  $current_year = date('Y') . '0101';
  $args = array(
