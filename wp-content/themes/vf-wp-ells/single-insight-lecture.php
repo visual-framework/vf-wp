@@ -146,9 +146,11 @@ if (class_exists('VF_Navigation')) {
   </div>
 </section>
 
-<section class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
-  <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Past Insight Lectures</h3>
-  <div class="vf-grid vf-grid__col-3">
+<section class="vf-card-container | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
+  <div class="vf-card-container__inner">  
+    <div class="vf-section-header">
+     <h2 class="vf-section-header__heading">Past Insight Lectures</h2>
+    </div>  
     <?php
     $insightMore = new WP_Query (array(
       'posts_per_page' => 4, 
