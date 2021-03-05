@@ -60,7 +60,7 @@ function my_theme_enqueue_styles() {
  // custom language switcher for the WPML plugin
 function languages_links_switcher(){
 $languages = icl_get_languages('skip_missing=1');
-if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-banner--info">
+if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--200">
   <div class="vf-banner__content">
     <style>
       .vf-banner__content p {

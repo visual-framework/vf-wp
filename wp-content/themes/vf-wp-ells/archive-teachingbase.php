@@ -29,7 +29,7 @@ if (class_exists('VF_Navigation')) {
 </div>
 
 <section class="vf-content">
-  <h3>Browse or filter all LearningLabs</h3>
+  <h3>Browse or filter all TeachingBASEs</h3>
 <div class="vf-grid vf-grid__col-4 | vf-u-padding__top--400">
   <div>
     <?php include(locate_template('partials/teachingbase-filter.php', false, false)); ?>
