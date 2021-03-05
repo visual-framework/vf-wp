@@ -3,10 +3,8 @@ get_header();
 
 ?>
 
-<section class="vf-hero vf-hero--primary vf-hero--1200 | vf-u-fullbleed | vf-u-margin__bottom--0" style="
---vf-hero--bg-image: url('https://wwwdev.embl.org/ells/wp-content/uploads/2020/09/20200909_Masthead_ELLS.jpg');  ">
-
-  <div class="vf-hero__content | vf-stack vf-stack--400 ">
+<section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <h2 class="vf-hero__heading">
       ELLS TeachingBase </h2>
     <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
@@ -31,7 +29,7 @@ if (class_exists('VF_Navigation')) {
 </div>
 
 <section class="vf-content">
-  <h3>Browse or filter all LearningLabs</h3>
+  <h3>Browse or filter all TeachingBASEs</h3>
 <div class="vf-grid vf-grid__col-4 | vf-u-padding__top--400">
   <div>
     <?php include(locate_template('partials/teachingbase-filter.php', false, false)); ?>
@@ -49,7 +47,6 @@ if (class_exists('VF_Navigation')) {
         } else {
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
         } 
-        
        ?>
     <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>

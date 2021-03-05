@@ -27,7 +27,27 @@ Text Domain:	 vfwp
   background: #fff;
 }
 
-.vf-card {
-  grid-template-rows: 228px 1fr !important;
+.resources-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-01.png);
+  background-position: 50%;
+  background-size: cover;
+}
+.training-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-02.png);
+  background-position: 50%;
+  background-size: cover;
+}
+.experience-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-03.png);
+  background-position: 50%;
+  background-size: cover;
+}
+.resources-container .vf-section-header__heading--is-link,
+.resources-container .vf-section-header__heading--is-link:visited,
+.resources-container .vf-section-header__subheading {
+  color: #fff;
 }
 
+#contentDbItem00001 {
+  margin-top: 0 !important;
+}

@@ -2,7 +2,7 @@
 $title = esc_html(get_the_title());
 $topic_area = get_field('tb_topic_area');
 $age_group = get_field('tb_age_group');
-
+$post_id = get_the_ID();
 ?>
 
 <article class="vf-summary vf-summary--news">
@@ -24,7 +24,7 @@ $age_group = get_field('tb_age_group');
   <?php if (($topic_area) || ($age_group)) { ?>
   <p class="vf-summary__meta">
     <?php if ($topic_area) { ?>
-    <span class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span>&nbsp;&nbsp;
+      <span>Topic area:</span>&nbsp;<span class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span>&nbsp;&nbsp;
     <?php } ?>
 
     <?php if ($age_group) { ?>
@@ -33,4 +33,5 @@ $age_group = get_field('tb_age_group');
       if (($topic_area) || ($age_group)) {?>
   </p>
   <?php }?>
+
 </article>

@@ -4,7 +4,6 @@ require_once('functions/custom-taxonomies.php');
 require_once('functions/ells-breadcrumbs.php');
 require_once('functions/learning-labs-post.php');
 require_once('functions/teachingbase-post.php');
-require_once('functions/embl-visit-post.php');
 require_once('functions/insight-lecture-post.php');
 
 // enable featured image
@@ -57,5 +56,35 @@ function my_theme_enqueue_styles() {
 	wp_get_theme()->get('Version')
 );
 }
+
+ // custom language switcher for the WPML plugin
+function languages_links_switcher(){
+$languages = icl_get_languages('skip_missing=1');
+if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--200">
+  <div class="vf-banner__content">
+    <style>
+      .vf-banner__content p {
+        font-size: 16px !important;
+        margin: 0px !important;
+      }
+    </style>
+    <p class="vf-banner__text">This article is also available in ');
+
+      foreach($languages as $l){
+      if(!$l['active']) $langs[] = '<a href="'.$l['url'].'">'.$l['translated_name'].'</a>';
+      }
+      echo join(' and ', array_filter(array_merge(array(join(', ', array_slice($langs, 0, -1))), array_slice($langs,
+      -1)), 'strlen'));
+
+      echo __('
+    </p>
+  </div>
+  </div>' );
+
+
+
+  }
+  }
+  
 
 ?>
