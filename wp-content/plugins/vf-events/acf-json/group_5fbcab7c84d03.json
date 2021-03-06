@@ -174,9 +174,9 @@
                 "69": "EMBL Rome",
                 "66": "EMBL-EBI",
                 "76": "EMBL-EM",
-                "225": "EMBO",
-                "235": "Virtual",
-                "97": "Other"
+                "353": "EMBO",
+                "364": "Virtual",
+                "98": "Other"
             },
             "default_value": false,
             "allow_null": 0,
@@ -270,14 +270,14 @@
                     {
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
-                        "value": "225"
+                        "value": "353"
                     }
                 ],
                 [
                     {
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
-                        "value": "235"
+                        "value": "364"
                     },
                     {
                         "field": "field_5fbcab958038b",
