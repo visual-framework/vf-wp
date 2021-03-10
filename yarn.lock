@@ -1548,10 +1548,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-divider/-/vf-divider-2.0.0.tgz#1a23ebc5475be7f7e927c09ed2b6ce6e75e88fc0"
   integrity sha512-TVRB3Jg6wcKZi7TlQvWjAX7nzGdS9kJTMtvOMWfyM8+rFnM8A+VZ32vkT+UXHGa/8Lxl5ccTsCCnHgsRZu2mgA==
 
-"@visual-framework/vf-embed@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-embed/-/vf-embed-1.1.1.tgz#7904e9b9bec4f58aefc75d8ddbba780b113703b6"
-  integrity sha512-DjCJRS6xXivxkcTqPT38lZ+00DOPwnLKrZEsHqOXBGpuNjffKAqEQnDY88i9Qv5nixTb2/g27dVmNzJPAL389g==
+"@visual-framework/vf-embed@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-embed/-/vf-embed-1.1.2.tgz#b4d24768bcf49ec31f15f34b37b427beb7098e1b"
+  integrity sha512-/ZRb6os6BivwRg7Ukao6DxFIns5pOW83DRL+A2sGblhJtZRMGs8SS5WfeX/BGH/TWX+8DfMaXrhBrAvCBi6Zhw==
 
 "@visual-framework/vf-extensions@1.0.0-rc.0":
   version "1.0.0-rc.0"
