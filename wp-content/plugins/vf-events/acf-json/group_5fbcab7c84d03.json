@@ -432,7 +432,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Register",
+            "default_value": "",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -1126,5 +1126,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1614263000
+    "modified": 1615376015
 }
