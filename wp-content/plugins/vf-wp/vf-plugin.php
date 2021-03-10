@@ -221,47 +221,6 @@ class VF_Plugin {
   }
 
   /**
-   * Save plugin data to a global option key/value array
-   * This option helps keep track of which VF-WP plugins are active
-   */
-  static public function register($config) {
-    // required
-    if ( ! is_array($config)) {
-      return;
-    }
-    // required keys
-    if (array_diff(
-      array('post_name', 'post_title', 'post_type'),
-      array_keys($config)
-    )) {
-      return;
-    }
-    // Add plugin post if it does not exist
-    $plugin = get_page_by_path(
-      $config['post_name'],
-      OBJECT,
-      $config['post_type']
-    );
-
-    // Insert if newly activated
-    if ( ! $plugin instanceof WP_Post) {
-      $plugin = get_post(
-          wp_insert_post(array(
-          'post_author'  => 1,
-          'post_name'    => $config['post_name'],
-          'post_title'   => $config['post_title'],
-          'post_type'    => $config['post_type'],
-          'post_content' => $post_content,
-          'post_status'  => 'publish'
-        ), true)
-      );
-    }
-    if ($plugin instanceof WP_Post) {
-      VF_Plugin::register_update($config, $plugin);
-    }
-  }
-
-  /**
    * Ensure plugin post is published with correct content
    */
   static public function register_update($config, $plugin = null) {
@@ -307,6 +266,47 @@ class VF_Plugin {
     }
 
     wp_update_post($data);
+  }
+
+    /**
+   * Save plugin data to a global option key/value array
+   * This option helps keep track of which VF-WP plugins are active
+   */
+  static public function register($config) {
+    // required
+    if ( ! is_array($config)) {
+      return;
+    }
+    // required keys
+    if (array_diff(
+      array('post_name', 'post_title', 'post_type'),
+      array_keys($config)
+    )) {
+      return;
+    }
+    // Add plugin post if it does not exist
+    $plugin = get_page_by_path(
+      $config['post_name'],
+      OBJECT,
+      $config['post_type']
+    );
+
+    // Insert if newly activated
+    if ( ! $plugin instanceof WP_Post) {
+      $plugin = get_post(
+          wp_insert_post(array(
+          'post_author'  => 1,
+          'post_name'    => $config['post_name'],
+          'post_title'   => $config['post_title'],
+          'post_type'    => $config['post_type'],
+          'post_content' => $post_content,
+          'post_status'  => 'publish'
+        ), true)
+      );
+    }
+    if ($plugin instanceof WP_Post) {
+      VF_Plugin::register_update($config, $plugin);
+    }
   }
 
   /**
