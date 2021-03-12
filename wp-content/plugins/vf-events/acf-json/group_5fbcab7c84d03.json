@@ -648,6 +648,22 @@
             "endpoint": 0
         },
         {
+            "key": "field_5e9851a5a1afe",
+            "label": "Event URL",
+            "name": "vf_event_more_information_link",
+            "type": "url",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
             "key": "field_602a73339f0df",
             "label": "Featured event",
             "name": "vf_event_featured",
@@ -834,30 +850,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_5e9851a5a1afe",
-            "label": "More information link",
-            "name": "vf_event_more_information_link",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
         },
         {
             "key": "field_5f1fd24325b7c",
@@ -1126,5 +1118,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1615376015
+    "modified": 1615535507
 }
