@@ -97,7 +97,7 @@
 
 /*!
  * Component: @visual-framework/vf-masthead
- * Version: 2.0.1
+ * Version: 2.0.2
  * Location: components/undefined
  */
 .vf-masthead {
@@ -226,7 +226,7 @@
 }
 
 [class*=with-title-block][class*=theme] .vf-masthead__title {
-  --vf-masthead__color--background-default: black;
+  --vf-masthead__color--background-default: set-ui-color(vf-ui-color--black);
 }
 
 /*!
