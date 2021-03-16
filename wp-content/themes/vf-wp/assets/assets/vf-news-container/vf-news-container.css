@@ -642,7 +642,7 @@ html:not(.vf-disable-deprecated) .vf-summary--profile-s .vf-summary__title {
 
 /*!
  * Component: @visual-framework/vf-news-container
- * Version: 1.0.0-rc.1
+ * Version: 1.0.0
  * Location: components/undefined
  */
 .vf-news-container--featured .vf-summary {
@@ -652,8 +652,8 @@ html:not(.vf-disable-deprecated) .vf-summary--profile-s .vf-summary__title {
   grid-row: 7;
 }
 .vf-news-container--featured .vf-summary > .vf-summary__image {
-  max-width: 100%;
   margin-bottom: 16px;
+  max-width: 100%;
 }
 @media (max-width: 600px) {
   .vf-news-container--featured .vf-summary {
