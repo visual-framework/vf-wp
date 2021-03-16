@@ -53,17 +53,17 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-pagination
- * Version: 1.0.1-rc.3
+ * Version: 1.0.1
  * Location: components/undefined
  */
 .vf-pagination__list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  list-style-type: none;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  list-style-type: none;
 }
 
 .vf-pagination__item {
