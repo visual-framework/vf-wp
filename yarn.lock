@@ -1718,10 +1718,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-navigation/-/vf-navigation-2.2.2.tgz#9da4d05aef93f345e8b34d80b851347f326775b8"
   integrity sha512-J6FUiZGGftZi52ToJStjrNWgoOLssIlyxyTlgrxhUGvquSzW052s3rnBKz0e2pgaj9rU44owTUlAV2nvaG6NsA==
 
-"@visual-framework/vf-news-container@1.0.0-rc.1":
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-news-container/-/vf-news-container-1.0.0-rc.1.tgz#ee51e5b7bdcd578a9df114a401c08e3bef48ef70"
-  integrity sha512-6dXpmxWFi8qpcfdotE7EPgIoiPWJnqjnLpWpkw5cXmTUGh2ABFD7LtNkca4VDGOAAmibmvJfMXONqjcdV7pcLA==
+"@visual-framework/vf-news-container@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-news-container/-/vf-news-container-1.0.0.tgz#72c9493d8ef375993c68adb3163d9ed03c404fe8"
+  integrity sha512-w7vtJSQh42+j5RKwllTA9m/ht8pJgLRx55k+p4oZSG4rXJDZkZ40UdfGiceDJCDZ59/cnJneDkNLhY3lXO3QgA==
 
 "@visual-framework/vf-no-js@1.0.1":
   version "1.0.1"
