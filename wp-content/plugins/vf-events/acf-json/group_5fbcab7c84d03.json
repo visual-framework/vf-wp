@@ -129,7 +129,7 @@
                 "europe\/london": "Europe\/London",
                 "america\/new_york": "America\/New York"
             },
-            "default_value": "europe\/berlin",
+            "default_value": "europe\/london",
             "allow_null": 1,
             "multiple": 0,
             "ui": 1,
@@ -359,6 +359,39 @@
             "endpoint": 0
         },
         {
+            "key": "field_5fd0b4897af8f",
+            "label": "Registration type",
+            "name": "vf_event_registration_type",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "registration": "Registration",
+                "application": "Application",
+                "register_interest": "Register interest"
+            },
+            "allow_null": 1,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5e984858010ed",
             "label": "Opening date",
             "name": "vf_event_registration_opening",
@@ -456,23 +489,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_5fd0b4897af8f",
-            "label": "Application deadline",
-            "name": "vf_event_application_deadline",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
         },
         {
             "key": "field_6005734043e1e",
@@ -1118,5 +1134,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1615535507
+    "modified": 1616586570
 }
