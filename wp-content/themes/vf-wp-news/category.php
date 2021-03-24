@@ -46,7 +46,7 @@ $category_name = single_cat_title("", false);
   <div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
     <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Popular</h2>
   <div class="vf-news-container__content vf-grid vf-grid__col-4">
-        <?php $popular = new WP_Query(array('posts_per_page'=>3, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'cat' => get_query_var('cat')));
+        <?php $popular = new WP_Query(array('posts_per_page'=>4, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'cat' => get_query_var('cat')));
         while ($popular->have_posts()) : $popular->the_post();
         include(locate_template('partials/vf-summary--news.php', false, false)); ?>
         <?php endwhile; wp_reset_postdata(); ?>
