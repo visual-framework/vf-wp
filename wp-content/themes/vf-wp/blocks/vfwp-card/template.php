@@ -5,7 +5,8 @@ $is_preview = isset($is_preview) && $is_preview;
 
 $title = get_field('title');
 $link = get_field('link');
-$text = get_field('text');
+$text = get_field('text', false, false);
+$text = str_replace('<a', '<a class="vf-card_link"', $text);
 $subheading = get_field('subheading');
 $image = get_field('image');
 $image_url = get_field('image_url');
@@ -100,7 +101,7 @@ else {
     <p class="vf-card__subheading"><?php echo esc_html($subheading); ?></p>
     <?php } ?>
     <?php if (!empty($text)) { ?>
-    <p class="vf-card__text"><?php echo esc_html($text); ?></p>
+    <p class="vf-card__text"><?php echo ($text); ?></p>
     <?php } ?>
   </div>
 </article>
