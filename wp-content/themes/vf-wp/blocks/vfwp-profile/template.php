@@ -47,7 +47,12 @@ $size = get_field('size');
     if (have_rows('text')): 
      while( have_rows('text') ): the_row(); 
       $profile_text = get_sub_field('profile_text', false, false); ?>
-      <p class="vf-profile__text"><?php echo $profile_text; ?></p>
+      <p class="vf-profile__text"
+      <?php if ($layout == 'block') { ?>
+       style="text-align: center;"
+       <?php } ?>
+       >
+       <?php echo $profile_text; ?></p>
     <?php endwhile; endif; ?>
     
     <?php if (! empty($email)) { ?>
