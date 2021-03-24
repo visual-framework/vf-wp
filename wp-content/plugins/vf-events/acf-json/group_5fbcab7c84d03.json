@@ -492,7 +492,7 @@
         },
         {
             "key": "field_6005734043e1e",
-            "label": "Application info text",
+            "label": "Registration\/Application info text",
             "name": "vf_event_info_text",
             "type": "text",
             "instructions": "",
@@ -1134,5 +1134,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1616586570
+    "modified": 1616587013
 }

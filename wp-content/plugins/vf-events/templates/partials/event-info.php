@@ -25,7 +25,7 @@ $hashtag = get_field('vf_event_hashtag', $post->post_parent);
 $abstract_link = get_field('vf_event_abstract_link', $post->post_parent);
 $poster_file = get_field('vf_event_poster_file', $post->post_parent);
 $abstract_button = get_field('vf_event_abstract_submission_button_text', $post->post_parent);
-$abstract_button = ucfirst(strtolower($register_button));
+$abstract_button = ucfirst(strtolower($abstract_button));
 $register_button = get_field('vf_event_registration_button_text', $post->post_parent);
 $register_button = ucfirst(strtolower($register_button));
 $info_text = get_field('vf_event_info_text', $post->post_parent);
@@ -143,31 +143,32 @@ $abstract_date = new DateTime($abstract_closing);
     if ( ! empty($registration_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>
     <?php if ($registration_type == 'registration') { ?>
-    Registration:
-    <?php
-    } else { ?>
-    Application:
-    <?php  
-    } ?>
+     Registration:
+    <?php } else if ($registration_type == 'application'){ ?>
+     Application:
+    <?php  } ?>
     </span> <span class="vf-u-text-color--grey">
         <?php if ($registration_date < $now) {
           echo 'Closed';
         }  
         else if ($registration_closing) {
           echo esc_html($registration_closing);
-        }
-      ?>
+        } ?>
       </span></p>
       <?php } 
     // Show info text
-            else if (!empty($info_text)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Application:</span> <span
-        class="vf-u-text-color--grey">
+    else if (!empty($info_text)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>
+    <?php if ($registration_type == 'registration') { ?>
+     Registration:
+    <?php } else if ($registration_type == 'application'){ ?>
+     Application:
+    <?php  } ?>
+     <span class="vf-u-text-color--grey">
         <?php echo esc_html($info_text); ?>
       </span></p>
     <?php  }
     ?>
-
 
     <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
       <?php 
