@@ -66,7 +66,7 @@
     "@visual-framework/vf-box": "2.3.1",
     "@visual-framework/vf-breadcrumbs": "2.0.3",
     "@visual-framework/vf-card": "2.5.4",
-    "@visual-framework/vf-card-container": "3.1.1",
+    "@visual-framework/vf-card-container": "3.1.2",
     "@visual-framework/vf-cluster": "1.0.2",
     "@visual-framework/vf-code-example": "1.2.1",
     "@visual-framework/vf-config": "1.0.1-alpha.0",
