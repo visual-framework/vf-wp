@@ -383,8 +383,8 @@ a.vf-badge--outline[class*=tertiary]:hover {
 }
 
 /*!
- * Component: @visual-framework/vf-form__core
- * Version: 1.1.2
+ * Component: @visual-framework/vf-form
+ * Version: 2.0.0-alpha.1
  * Location: components/undefined
  */
 /*!
@@ -1472,7 +1472,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.4.2
+ * Version: 1.5.1
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {
