@@ -6,6 +6,8 @@ $is_preview = isset($is_preview) && $is_preview;
 // Get search values
 $limit = get_field('limit');
 $type = get_field('type');
+$subtype_embo = get_field('subtype_embo');
+$subtype_ss = get_field('subtype_ss');
 $embl_terms = get_field('embl_terms');
 $location = get_field('location');
 $time_from = get_field('time_from');
@@ -13,7 +15,7 @@ $time_to = get_field('time_to');
 $ids = get_field('ids');
 $sort_by = get_field('sort_by');
 $custom_date = get_field('custom_date');
-
+$show_summary = get_field('show_summary');
 $variation = get_field('design_variant');
 $suffix = '';
 if ( $variation == 'easy') {
@@ -41,17 +43,36 @@ $url = add_query_arg(array(
 ), $url);
 
 // Add event type filter query var
+
 if (! empty($type)) {
   $url = add_query_arg(array(
-    'filter-field-value[field_event_type]' => $type
+    'filter-field-value[field_event_type]' => implode(',', $type)
   ), $url);
 }
+// Add EMBO event subtype filter query var
+
+if (! empty($subtype_embo)) {
+  $url = add_query_arg(array(
+    'filter-field-value[field_event_embo_subtype]' => implode(',', $subtype_embo)
+  ), $url);
+}
+
+// Add Science and Society event subtype filter query var
+
+if (! empty($subtype_ss)) {
+  $url = add_query_arg(array(
+    'filter-field-value[field_event_ss_subtype]' => implode(',', $subtype_ss)
+  ), $url);
+}
+
 // Add event location filter query var
+
 if (! empty($location)) {
   $url = add_query_arg(array(
-    'filter-field-value[field_event_location]' => $location
+    'filter-field-value[field_event_location.entity.name]' => implode(',', $location)
   ), $url);
 }
+
 
 // Add event 'from' filter query var
 if (! empty($time_from)) {
@@ -103,6 +124,13 @@ if (! empty($embl_terms)
 if (! empty($ids)) {
   $url = add_query_arg(array(
     'filter-id' => implode(',', $ids)
+  ), $url);
+}
+
+// Add show//hide summary query var
+if ($show_summary == 0) {
+  $url = add_query_arg(array(
+    'hide[summary]' => 1
   ), $url);
 }
 
