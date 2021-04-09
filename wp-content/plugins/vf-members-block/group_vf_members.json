@@ -36,7 +36,7 @@
                 "id": ""
             },
             "choices": {
-                "DESC": "Descending",
+                "DSC": "Descending",
                 "ASC": "Ascending"
             },
             "default_value": [],

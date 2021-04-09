@@ -14,7 +14,7 @@ $limit = intval($limit);
 $limit = $limit < 1 || $limit > 50 ? 50 : $limit;
 
 if (empty($order)) {
-  $order = 'DESC';
+  $order = 'DSC';
 }
 
 if (empty($variation)) {
@@ -44,7 +44,7 @@ $vars = array(
   'filter-content-type'       => 'person',
   'pattern'                   => "vf-profile-{$variation}",
   'limit'                     => $limit,
-  'sort-field-value[changed]' => $order,
+  'sort-field-value[field_person_name_last]' => $order,
   'filter-fields-empty'       => 'field_person_visible_internally',
   'filter-ref-entity[field_person_positions][title]' => "",
   'hide[' . $hide_fields . ']' => 1
