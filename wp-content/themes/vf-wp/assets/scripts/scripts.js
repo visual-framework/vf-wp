@@ -1790,7 +1790,7 @@ function emblContentHubFetch() {
 
 
 function emblContentHub() {
-  // 1. make sure we have imports or a pollyfill
+  // 1. make sure we have imports or a polyfill
   emblContentHubLoaderHtmlImports(); // 2. import the content
 
   emblContentHubFetch();
