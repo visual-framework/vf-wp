@@ -1339,12 +1339,12 @@ function emblConditionalEditDetectParam(url, element, referrer) {
 function emblNotificationsInject(message) {
   var output = document.createElement("div"); // @todo:
   // - add support in contentHub for extra button text, link
-  // preperation
+  // preparation
 
-  message.body = message.body.replace(/<[/]?[p>]+>/g, " "); // no <p> tags allowed in inline messages, preserve a space to not colide words
+  message.body = message.body.replace(/<[/]?[p>]+>/g, " "); // no <p> tags allowed in inline messages, preserve a space to not collide words
   // add vf-link to link
 
-  message.body = message.body.replace("<a href=", "<a class=\"vf-banner__link\" href="); // we might need a more clever regex, but this should also avoid links that aleady have a class
+  message.body = message.body.replace("<a href=", "<a class=\"vf-banner__link\" href="); // we might need a more clever regex, but this should also avoid links that already have a class
   // Learn more link is conditionally shown
 
   if (message.field_notification_link) {
