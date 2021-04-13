@@ -27,7 +27,7 @@ Text Domain:	 vfwp
   background: #fff;
 }
 
-.resources-container {
+/* .resources-container {
   background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-01.png);
   background-position: 50%;
   background-size: cover;
@@ -41,7 +41,7 @@ Text Domain:	 vfwp
   background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-03.png);
   background-position: 50%;
   background-size: cover;
-}
+} */
 .resources-container .vf-section-header__heading--is-link,
 .resources-container .vf-section-header__heading--is-link:visited,
 .resources-container .vf-section-header__subheading {
