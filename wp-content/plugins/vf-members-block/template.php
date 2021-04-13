@@ -3,7 +3,6 @@
 $acf_id = isset($acf_id) ? $acf_id : false;
 
 $limit = get_field('vf_members_limit', $acf_id);
-$order = get_field('vf_members_order', $acf_id);
 $variation = get_field('vf_members_variation', $acf_id);
 $leader = get_field('vf_members_leader', $acf_id);
 $team = get_field('vf_members_team', $acf_id);
@@ -13,9 +12,6 @@ $keyword = get_field('vf_members_keyword', $acf_id);
 $limit = intval($limit);
 $limit = $limit < 1 || $limit > 50 ? 50 : $limit;
 
-if (empty($order)) {
-  $order = 'DSC';
-}
 
 if (empty($variation)) {
   $variation = 'inline';
@@ -44,10 +40,10 @@ $vars = array(
   'filter-content-type'       => 'person',
   'pattern'                   => "vf-profile-{$variation}",
   'limit'                     => $limit,
-  'sort-field-value[field_person_name_last]' => $order,
+  'sort-field-value[field_person_name_last]' => 'DSC',
   'filter-fields-empty'       => 'field_person_visible_internally',
   'filter-ref-entity[field_person_positions][title]' => "",
-  'hide[' . $hide_fields . ']' => 1
+  'hide[team,' . $hide_fields . ']' => 1
 );
 
 if ($leader !== true) {
