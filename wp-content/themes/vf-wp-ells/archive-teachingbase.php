@@ -6,8 +6,9 @@ get_header();
 <section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <h2 class="vf-hero__heading">
-      ELLS TeachingBase </h2>
-    <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
+    ELLS</h2>
+    <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
+    <p class="vf-hero__text">Our inspiring educational experiences share the scientific discoveries of EMBL with young learners aged 10-19 years and teachers in Europe and beyond.</p>
   </div>
 </section>
 
@@ -19,12 +20,11 @@ if (class_exists('VF_Navigation')) {
 
 ?>
 
-<div class="vf-grid vf-grid__col-4 | vf-content | vf-u-margin__bottom--800">
+<div class="vf-grid vf-grid__col-4 | vf-content">
   <div class="vf-grid__col--span-3">
-    <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dapibus, diam quis pharetra euismod, leo tortor
-      eleifend eros, sit amet suscipit erat lectus eu mi. </h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam dapibus, diam quis pharetra euismod, leo tortor
-      eleifend eros, sit amet suscipit erat lectus eu mi.</p>
+    <h1 class="vf-text vf-text-heading--1">TeachingBASE</h1>
+    <p>ELLS TeachingBASE is a collection of molecular biology teaching modules designed for teachers and students, developed by ELLS staff members and EMBL scientists.</p> 
+    <p>The materials are freely available but each module carries a creative commons copyright.</p>
   </div>
 </div>
 

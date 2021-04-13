@@ -7,13 +7,12 @@ $show_author = get_field('ells_show_author');
 get_header();
 
 ?>
-<section class="vf-hero vf-hero--primary vf-hero--block vf-hero--800 | vf-u-fullbleed | vf-u-margin__bottom--0"
-  style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/Ells_Masthead_1000x600.png');  ">
-  <div class="vf-hero__content | vf-stack vf-stack--400 ">
+<section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <h2 class="vf-hero__heading">
-      ELLS
-    </h2>
+    ELLS</h2>
     <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
+    <p class="vf-hero__text">Our inspiring educational experiences share the scientific discoveries of EMBL with young learners aged 10-19 years and teachers in Europe and beyond.</p>
   </div>
 </section>
 <?php

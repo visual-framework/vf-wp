@@ -92,7 +92,7 @@ global $vf_theme;
 <section class="vf-card-container | vf-u-fullbleed  | vf-u-margin__bottom--600 | resources-container">
   <div class="vf-card-container__inner">
     <div class="vf-section-header">
-      <h2 class="vf-section-header__heading">Resources</h2>
+      <h2 class="vf-section-header__heading">Educational resources</h2>
     </div>
 
     <article class="vf-card vf-card--brand vf-card--bordered">
@@ -104,8 +104,10 @@ global $vf_theme;
         <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">TeachingBASE<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">
+Educational material supporting biology and life sciences teaching in the classroom
+
+</p>
       </div>
     </article>
 
@@ -117,8 +119,9 @@ global $vf_theme;
         <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">EMBL Insight Lectures<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">Collection of scientific lectures for high-school
+students on cutting-edge life sciences topics
+</p>
       </div>
     </article>
 
@@ -130,8 +133,10 @@ global $vf_theme;
         <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Microscope in Action<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">
+Hands-on educational resource for teaching fluorescence microscopy and beyond
+
+</p>
       </div>
     </article>
   </div>
@@ -143,7 +148,7 @@ global $vf_theme;
 <section class="vf-card-container | vf-u-fullbleed | vf-u-margin__bottom--600 | training-container">
   <div class="vf-card-container__inner">
     <div class="vf-section-header">
-      <h2 class="vf-section-header__heading">Training</h2>
+      <h2 class="vf-section-header__heading">Teacher training</h2>
     </div>
     
     <article class="vf-card vf-card--brand vf-card--bordered">
@@ -151,11 +156,13 @@ global $vf_theme;
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Learning Labs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">On-site Learning LABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">
+Face-to-face professional development courses for European school science teachers
+
+</p>
       </div>
     </article>
 
@@ -164,11 +171,13 @@ global $vf_theme;
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Connect Learning Labs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Virtual Learning LABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">
+Virtual professional development courses for international school science teachers
+
+</p>
       </div>
     </article>
 
@@ -177,11 +186,10 @@ global $vf_theme;
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Virtual Learning Labs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Connect Learning LABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">Local professional development courses for school science teachers run by European partners in their language</p>
       </div>
     </article>
   </div>
@@ -193,21 +201,8 @@ global $vf_theme;
   class="vf-card-container | vf-u-fullbleed | vf-u-margin__bottom--600 | experience-container">
   <div class="vf-card-container__inner">
     <div class="vf-section-header">
-      <h2 class="vf-section-header__heading">Experience Science</h2>
+      <h2 class="vf-section-header__heading">Activities for young learners</h2>
     </div>
-    <article class="vf-card vf-card--brand vf-card--bordered">
-      <img
-        src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
-        alt="Image alt text" class="vf-card__image" loading="lazy">
-      <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Events<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
-        </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
-      </div>
-    </article>
-
     <article class="vf-card vf-card--brand vf-card--bordered">
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
@@ -216,21 +211,34 @@ global $vf_theme;
         <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">EMBL Visits<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">Guided virtual visits to EMBL and face-to-face tours to the Heidelberg campus </p>
       </div>
     </article>
+    <article class="vf-card vf-card--brand vf-card--bordered">
+      <img
+        src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
+        alt="Image alt text" class="vf-card__image" loading="lazy">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Events<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
+        </svg></a></h3>
+        <p class="vf-card__text">
+Latest science education events
+
+</p>
+      </div>
+    </article>
+
 
     <article class="vf-card vf-card--brand vf-card--bordered">
       <img
         src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/2020/04/SCHOOLS_1011_ells-learninglab_hd_01_Cool_500px.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Projects<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Educational projects<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam sequi fugit incidunt reiciendis,
-          mollitia quos?</p>
+        <p class="vf-card__text">Current and past science education projects</p>
       </div>
     </article>
   </div>
@@ -251,28 +259,28 @@ global $vf_theme;
 
     <article class="vf-card vf-card--brand vf-card--striped">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Volunteer wit us<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Collaborate with us<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam</p>
+        <p class="vf-card__text">Join forces to promote science education in Europe</p>
       </div>
     </article>
 
     <article class="vf-card vf-card--brand vf-card--striped">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Support Us<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Support us<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam</p>
+        <p class="vf-card__text">Strengthen the ELLS mission with a philanthropic contribution</p>
       </div>
     </article>
 
     <article class="vf-card vf-card--brand vf-card--striped">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Join Us<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Join us<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
-        <p class="vf-card__text">Sapiente harum, omnis provident saepe aut eius aliquam</p>
+        <p class="vf-card__text">Find open job opportunities with ELLS</p>
       </div>
     </article>
   </div>

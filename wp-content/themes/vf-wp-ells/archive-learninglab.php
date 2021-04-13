@@ -6,8 +6,9 @@ get_header();
 <section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <h2 class="vf-hero__heading">
-      Educators' Training</h2>
-    <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
+    ELLS</h2>
+    <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
+    <p class="vf-hero__text">Our inspiring educational experiences share the scientific discoveries of EMBL with young learners aged 10-19 years and teachers in Europe and beyond.</p>
   </div>
 </section>
 
@@ -17,14 +18,15 @@ if (class_exists('VF_Navigation')) {
 }
 ?>
 
-<div class="vf-grid vf-grid__col-4 | vf-content | vf-u-margin__bottom--800">
+<div class="vf-grid vf-grid__col-4 | vf-content">
   <div class="vf-grid__col--span-3">
-    <h3>Any upcoming ELLS LearningLABs will be advertised via this website and listed below.
-    </h3>
+    <h1 class="vf-text vf-text-heading--1">Learning LABs
+    </h1>
     <p>The 1-3 day courses provide a mix of scientific seminars, hands-on activities, lab experiments and new teaching
       resources, covering cutting-edge research and technologies and illustrate how these topics can be transferred to
       the classroom. As of 2017, ELLS also offers virtual teacher training opportunities.
     </p>
+    <p>Any upcoming ELLS LearningLABs will be advertised via this website and listed below.</p>
   </div>
 </div>
 
