@@ -1,41 +1,56 @@
-<footer class="vf-footer">
-  <div class="vf-footer__inner">
-    <div class="vf-footer__links-group | vf-grid | vf-u-padding__bottom--0" style="border: none;">
-      <div class="vf-links">
-        <h4 class="vf-links__heading">
-          European Learning Laboratory for the Life Sciences
-        </h4>
+<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue--dark | vf-u-fullbleed"
+  id="footer-ells" style="grid-column-gap: 0">
+  <div class="vf-u-background-color--blue--dark | vf-u-margin__right--0">
+    <figure class="vf-figure" style="text-align: center">
+      <img class="vf-figure__image | vf-u-margin__top--400"
+        src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/04/20200527_ELLS_VisualTag_RGB_COLOR.png"
+        alt="ELLS visual tag" loading="lazy" style="width: 238px;">
+    </figure>
+  </div>
+
+  <div class="vf-u-background-color--blue | vf-u-text-color--ui--white | vf-u-padding--400">
+    <p class="vf-text vf-text-heading--4 | vf-u-text-color--ui--white">European Learning Laboratory for the Life Sciences</p>
+    <div class="vf-grid | vf-grid__col-3">
+      <div class="vf-grid__col--span-2">
+    <p class="vf-text-body vf-text-body--3">Our inspiring educational experiences share the scientific discoveries of EMBL with young people aged 10-19 years and teachers in Europe and beyond.
+    </p>
+    </div>
+    </div>
+    <div class="vf-grid | vf-grid__col-4">
+      <div class="vf-links ells-links">
         <ul class="vf-links__list | vf-list">
-          <li class="vf-list__item">
+          <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
             <a class="vf-list__link" href="JavaScript:Void(0);">
               About Us</a>
           </li>
-          <li class="vf-list__item">
+          <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
             <a class="vf-list__link" href="JavaScript:Void(0);">
               Contact</a>
           </li>
-          <li class="vf-list__item">
+          <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
             <a class="vf-list__link" href="JavaScript:Void(0);">
               Coverage
             </a>
           </li>
-          <li class="vf-list__item">
+          <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
             <a class="vf-list__link" href="JavaScript:Void(0);">
               Terms of Use</a>
           </li>
         </ul>
       </div>
-      <div class="vf-links">
-        <h4 class="vf-links__heading">
+      <div class="vf-links | vf-grid__col--span-2">
+        <h4 class="vf-text vf-text-heading--5">
           Subscribe to our newsletter</h4>
         <div class="vf-form__item vf-stack">
 
-          <input type="text" id="text" class="vf-form__input" placeholder="Email" style="padding: 3px 12px; width: 260px; display: inline-block;">
-          <a href="JavaScript:Void(0);" class="vf-button vf-button--secondary vf-button--sm | vf-u-margin__left--200" style="display: inline-block;">Subscribe</a>
+          <input type="text" id="text" class="vf-form__input" placeholder="Email"
+            style="padding: 3px 12px; width: 260px; display: inline-block;">
+          <a href="JavaScript:Void(0);" class="vf-button vf-button--tertiary vf-button--sm | vf-u-margin__left--200"
+            style="display: inline-block;">Subscribe</a>
         </div>
       </div>
       <div class="vf-links">
-        <h4 class="vf-links__heading">
+        <h4 class="vf-text vf-text-heading--5">
           Follow us</h4>
         <svg aria-hidden="true" display="none" class="vf-icon-collection vf-icon-collection--social">
           <defs>
@@ -84,8 +99,10 @@
           </ul>
         </div>
       </div>
+
     </div>
   </div>
-</footer>
+</div>
+
 
 <?php get_footer(); ?>

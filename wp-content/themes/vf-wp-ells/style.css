@@ -48,6 +48,13 @@ Text Domain:	 vfwp
   color: #fff;
 }
 
-#contentDbItem00001 {
-  margin-top: 0 !important;
+#footer-ells {
+    margin-bottom: -1rem !important;
+  }
+
+#footer-ells .ells-links a {
+  color: #fff !important;
 }
+
+
+  
