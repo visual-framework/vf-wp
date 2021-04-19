@@ -268,21 +268,26 @@
             "conditional_logic": [
                 [
                     {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
-                        "value": "353"
+                        "value": "67"
                     }
                 ],
                 [
                     {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "364"
-                    },
-                    {
                         "field": "field_5fbcab958038b",
                         "operator": "==",
                         "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "364"
                     }
                 ]
             ],
@@ -940,6 +945,84 @@
             "mime_types": ""
         },
         {
+            "key": "field_607d26ef78df4",
+            "label": "Organisers (events listing)",
+            "name": "vf_event_organisers_listing",
+            "type": "text",
+            "instructions": "Free text for events listing on embl.org\/events. Example: John Doe, Michael Smith, Britney Spears",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_607d288178df5",
+            "label": "Organisers (event template)",
+            "name": "vf_event_organisers_event_template",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add organiser",
+            "sub_fields": [
+                {
+                    "key": "field_607d28c278df6",
+                    "label": "Name",
+                    "name": "vf_event_organisers_name",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_607d293878df7",
+                    "label": "Affiliation",
+                    "name": "vf_event_organisers_affiliation",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        },
+        {
             "key": "field_5ff84c2d7239b",
             "label": "Contact name",
             "name": "vf_event_contact_name",
@@ -1134,5 +1217,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1616587013
+    "modified": 1618817224
 }

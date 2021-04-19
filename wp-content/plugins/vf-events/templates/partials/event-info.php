@@ -195,6 +195,29 @@ $abstract_date = new DateTime($abstract_closing);
     <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <?php }
+
+    // Organisers
+    if( have_rows('vf_event_organisers_event_template') ): ?>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organisers: </span></p>
+      <?php
+      while( have_rows('vf_event_organisers_event_template') ) : the_row();
+        $organiser_name = get_sub_field('vf_event_organisers_name');
+        $organiser_affiliation = get_sub_field('vf_event_organisers_affiliation'); ?>
+        <ul class="vf-list vf-u-margin__bottom--sm">
+					<li class="vf-list__item vf-u-margin--0 vf-u-margin__top--md">
+            <?php echo esc_html($organiser_name); ?>
+						<br>
+						<span class="vf-text-body vf-text-body--5 vf-u-text-color--grey" style="text-transform: uppercase;"><?php echo esc_html($organiser_affiliation); ?>
+						</span>
+					</li>
+      <?php
+      endwhile; ?>
+      </ul>
+      <hr class="vf-divider | vf-u-margin__bottom--400">
+      <?php
+  else :
+  endif;
+
     // Contact
     if ( ! empty($contact)) { ?>
     <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
@@ -202,6 +225,7 @@ $abstract_date = new DateTime($abstract_closing);
     <?php } ?>
     <div class="vf-grid">
       <?php 
+      
       // Poster image
       if ( ! empty($poster_image) && $event_organiser != "science_society") { ?>
       <div>
