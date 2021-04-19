@@ -25,8 +25,11 @@ $hashtag = get_field('vf_event_hashtag', $post->post_parent);
 $abstract_link = get_field('vf_event_abstract_link', $post->post_parent);
 $poster_file = get_field('vf_event_poster_file', $post->post_parent);
 $abstract_button = get_field('vf_event_abstract_submission_button_text', $post->post_parent);
+$abstract_button = ucfirst(strtolower($abstract_button));
 $register_button = get_field('vf_event_registration_button_text', $post->post_parent);
+$register_button = ucfirst(strtolower($register_button));
 $info_text = get_field('vf_event_info_text', $post->post_parent);
+$registration_type = get_field('vf_event_registration_type', $post->post_parent);
 
 $social_url = get_the_permalink();
 
@@ -114,7 +117,7 @@ $abstract_date = new DateTime($abstract_closing);
     ?>
 
     <?php 
-    // Application date
+    /* Application date
     if ( ! empty($application_closing)) { ?>
     <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Application:</span> <span
         class="vf-u-text-color--grey">
@@ -134,22 +137,38 @@ $abstract_date = new DateTime($abstract_closing);
         <?php echo esc_html($info_text); ?>
       </span></p>
     <?php  }
-    ?>
+    ?> */
 
-    <?php 
     // Registration dates
     if ( ! empty($registration_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>Registration:</span> <span class="vf-u-text-color--grey">
+    <p class="vf-text-body vf-text-body--3"><span>
+    <?php if ($registration_type == 'registration') { ?>
+     Registration:
+    <?php } else if ($registration_type == 'application'){ ?>
+     Application:
+    <?php  } ?>
+    </span> <span class="vf-u-text-color--grey">
         <?php if ($registration_date < $now) {
           echo 'Closed';
         }  
-        else {
+        else if ($registration_closing) {
           echo esc_html($registration_closing);
-        }
-      ?>
+        } ?>
       </span></p>
-    <?php } ?>
-
+      <?php } 
+    // Show info text
+    else if (!empty($info_text)) { ?>
+    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>
+    <?php if ($registration_type == 'registration') { ?>
+     Registration:
+    <?php } else if ($registration_type == 'application'){ ?>
+     Application:
+    <?php  } ?>
+     <span class="vf-u-text-color--grey">
+        <?php echo esc_html($info_text); ?>
+      </span></p>
+    <?php  }
+    ?>
 
     <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
       <?php 
@@ -176,6 +195,29 @@ $abstract_date = new DateTime($abstract_closing);
     <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <?php }
+
+    // Organisers
+    if( have_rows('vf_event_organisers_event_template') ): ?>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organisers: </span></p>
+      <?php
+      while( have_rows('vf_event_organisers_event_template') ) : the_row();
+        $organiser_name = get_sub_field('vf_event_organisers_name');
+        $organiser_affiliation = get_sub_field('vf_event_organisers_affiliation'); ?>
+        <ul class="vf-list vf-u-margin__bottom--sm">
+					<li class="vf-list__item vf-u-margin--0 vf-u-margin__top--md">
+            <?php echo esc_html($organiser_name); ?>
+						<br>
+						<span class="vf-text-body vf-text-body--5 vf-u-text-color--grey" style="text-transform: uppercase;"><?php echo esc_html($organiser_affiliation); ?>
+						</span>
+					</li>
+      <?php
+      endwhile; ?>
+      </ul>
+      <hr class="vf-divider | vf-u-margin__bottom--400">
+      <?php
+  else :
+  endif;
+
     // Contact
     if ( ! empty($contact)) { ?>
     <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
@@ -183,6 +225,7 @@ $abstract_date = new DateTime($abstract_closing);
     <?php } ?>
     <div class="vf-grid">
       <?php 
+      
       // Poster image
       if ( ! empty($poster_image) && $event_organiser != "science_society") { ?>
       <div>

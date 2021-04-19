@@ -1,360 +1,456 @@
 {
-  "key": "group_6019059124f54",
-  "title": "VF EMBL Events",
-  "fields": [
-      {
-          "key": "field_601905912aefa",
-          "label": "Limit",
-          "name": "limit",
-          "type": "range",
-          "instructions": "Maximum number of articles to display.",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": 3,
-          "min": 1,
-          "max": 20,
-          "step": "",
-          "prepend": "",
-          "append": ""
-      },
-      {
-          "key": "field_601a5063506e1",
-          "label": "Filter by",
-          "name": "filter_by",
-          "type": "checkbox",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "type": "Type",
-              "location": "Location",
-              "event_id": "Event ID",
-              "taxonomy": "EMBL Taxonomy",
-              "date_range": "Date range"
-          },
-          "allow_custom": 0,
-          "default_value": [],
-          "layout": "vertical",
-          "toggle": 0,
-          "return_format": "value",
-          "save_custom": 0
-      },
-      {
-          "key": "field_6019063c8cb11",
-          "label": "Type",
-          "name": "type",
-          "type": "select",
-          "instructions": "Leave empty to show all types of events",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_601a5063506e1",
-                      "operator": "==",
-                      "value": "type"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "conference": "Conference",
-              "course": "Course",
-              "webinar": "Webinar",
-              "public_event": "Public event",
-              "seminar": "Seminar",
-              "internal_event": "Internal event",
-              "other": "Other"
-          },
-          "default_value": false,
-          "allow_null": 1,
-          "multiple": 0,
-          "ui": 0,
-          "return_format": "value",
-          "ajax": 0,
-          "placeholder": ""
-      },
-      {
-          "key": "field_6019066b8cb12",
-          "label": "Location",
-          "name": "location",
-          "type": "select",
-          "instructions": "Leave empty to show events from all locations",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_601a5063506e1",
-                      "operator": "==",
-                      "value": "location"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "68": "EMBL Barcelona",
-              "71": "EMBL Grenoble",
-              "70": "EMBL Hamburg",
-              "67": "EMBL Heidelberg",
-              "69": "EMBL Rome",
-              "66": "EMBL-EBI",
-              "76": "EMBL-EM",
-              "353": "EMBO",
-              "364": "Virtual",
-              "98": "Other"
-          },
-          "default_value": false,
-          "allow_null": 1,
-          "multiple": 0,
-          "ui": 0,
-          "return_format": "value",
-          "ajax": 0,
-          "placeholder": ""
-      },
-      {
-          "key": "field_601905912b1da",
-          "label": "Event ID(s)",
-          "name": "ids",
-          "type": "text",
-          "instructions": "Display individual events by IDs (comma separated, e.g. \"9996, 12060\").",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_601a5063506e1",
-                      "operator": "==",
-                      "value": "event_id"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "placeholder": "",
-          "prepend": "",
-          "append": "",
-          "maxlength": ""
-      },
-      {
-          "key": "field_601905912b0b2",
-          "label": "EMBL Taxonomy",
-          "name": "embl_terms",
-          "type": "taxonomy",
-          "instructions": "Display events by EMBL taxonomy term.",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_601a5063506e1",
-                      "operator": "==",
-                      "value": "taxonomy"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "taxonomy": "embl_taxonomy",
-          "field_type": "select",
-          "allow_null": 1,
-          "add_term": 0,
-          "save_terms": 0,
-          "load_terms": 0,
-          "return_format": "id",
-          "multiple": 0
-      },
-      {
-          "key": "field_601a43a78cee4",
-          "label": "From",
-          "name": "time_from",
-          "type": "date_picker",
-          "instructions": "By default shows events from 'today'",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_601a5063506e1",
-                      "operator": "==",
-                      "value": "date_range"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "display_format": "F j, Y",
-          "return_format": "Y-m-d",
-          "first_day": 1
-      },
-      {
-          "key": "field_601a47148cee5",
-          "label": "To",
-          "name": "time_to",
-          "type": "select",
-          "instructions": "By default shows all the upcoming events",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_601a5063506e1",
-                      "operator": "==",
-                      "value": "date_range"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "next week": "Next week",
-              "next month": "Next month",
-              "next year": "Next year",
-              "custom_date": "Select custom date"
-          },
-          "default_value": false,
-          "allow_null": 1,
-          "multiple": 0,
-          "ui": 0,
-          "return_format": "value",
-          "ajax": 0,
-          "placeholder": ""
-      },
-      {
-          "key": "field_601a872a8d765",
-          "label": "Select custom date",
-          "name": "custom_date",
-          "type": "date_picker",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": [
-              [
-                  {
-                      "field": "field_601a47148cee5",
-                      "operator": "==",
-                      "value": "custom_date"
-                  }
-              ]
-          ],
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "display_format": "F j, Y",
-          "return_format": "Y-m-d",
-          "first_day": 1
-      },
-      {
-          "key": "field_601a4c05203e9",
-          "label": "Sort",
-          "name": "sort_by",
-          "type": "radio",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "ASC": "Ascending",
-              "DESC": "Descending"
-          },
-          "allow_null": 0,
-          "other_choice": 0,
-          "default_value": "",
-          "layout": "horizontal",
-          "return_format": "value",
-          "save_other_choice": 0
-      },
-      {
-          "key": "field_601a75c76ae57",
-          "label": "Display in columns",
-          "name": "columns",
-          "type": "range",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "default_value": "",
-          "min": 1,
-          "max": 4,
-          "step": "",
-          "prepend": "",
-          "append": ""
-      },
-      {
-          "key": "field_601baa610a672",
-          "label": "Design variant",
-          "name": "design_variant",
-          "type": "select",
-          "instructions": "",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": {
-              "width": "",
-              "class": "",
-              "id": ""
-          },
-          "choices": {
-              "default": "Default",
-              "easy": "Easy"
-          },
-          "default_value": false,
-          "allow_null": 0,
-          "multiple": 0,
-          "ui": 0,
-          "return_format": "value",
-          "ajax": 0,
-          "placeholder": ""
-      }
-  ],
-  "location": [
-      [
-          {
-              "param": "block",
-              "operator": "==",
-              "value": "acf\/vfwp-embl-events"
-          }
-      ]
-  ],
-  "menu_order": 0,
-  "position": "normal",
-  "style": "seamless",
-  "label_placement": "top",
-  "instruction_placement": "label",
-  "hide_on_screen": "",
-  "active": true,
-  "description": "VF EMBL Events ACF Gutenberg block"
+    "key": "group_6019059124f54",
+    "title": "VF EMBL Events",
+    "fields": [
+        {
+            "key": "field_606edea17750d",
+            "label": "Settings",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_601905912aefa",
+            "label": "Limit",
+            "name": "limit",
+            "type": "range",
+            "instructions": "Maximum number of articles to display.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 3,
+            "min": 1,
+            "max": 20,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_601a4c05203e9",
+            "label": "Sort",
+            "name": "sort_by",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "ASC": "Ascending",
+                "DESC": "Descending"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_601a75c76ae57",
+            "label": "Display in columns",
+            "name": "columns",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 1,
+            "max": 4,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_606ee477fe884",
+            "label": "Show summary",
+            "name": "show_summary",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_601baa610a672",
+            "label": "Design variant",
+            "name": "design_variant",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "easy": "Easy"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_606ed5203139c",
+            "label": "Event type",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_6019063c8cb11",
+            "label": "Type",
+            "name": "type",
+            "type": "checkbox",
+            "instructions": "Leave empty to show all types of events",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "conference": "Conference",
+                "course": "Course",
+                "webinar": "Webinar",
+                "public_event": "Public event",
+                "seminar": "Seminar",
+                "internal_event": "Internal event",
+                "other": "Other"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "label",
+            "save_custom": 0
+        },
+        {
+            "key": "field_607007686ce23",
+            "label": "Subtype",
+            "name": "subtype_embo",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "embo_workshop": "EMBO Workshop",
+                "embo_course": "EMBO Practical Course",
+                "embo_embl_symposium": "EMBO | EMBL Symposium"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "save_custom": 0
+        },
+        {
+            "key": "field_6070292807525",
+            "label": "",
+            "name": "subtype_ss",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "ss_conference": "Science and Society Conference",
+                "ss_seminar": "Science and Society Seminar",
+                "ss_symposia": "Science and Society Symposium",
+                "ss_hd_forum": "Science and Society Heidelberg Forum"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "save_custom": 0
+        },
+        {
+            "key": "field_606ed5813139d",
+            "label": "Event location",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_6019066b8cb12",
+            "label": "Location",
+            "name": "location",
+            "type": "checkbox",
+            "instructions": "Leave empty to show events from all locations",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "68": "EMBL Barcelona",
+                "71": "EMBL Grenoble",
+                "70": "EMBL Hamburg",
+                "67": "EMBL Heidelberg",
+                "69": "EMBL Rome",
+                "66": "EMBL-EBI",
+                "76": "EMBL-EM",
+                "353": "EMBO",
+                "364": "Virtual",
+                "98": "Other"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "label",
+            "save_custom": 0
+        },
+        {
+            "key": "field_606ed5c1313a0",
+            "label": "Time range",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_601a43a78cee4",
+            "label": "From",
+            "name": "time_from",
+            "type": "date_picker",
+            "instructions": "By default shows events from 'today'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "F j, Y",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
+            "key": "field_601a47148cee5",
+            "label": "To",
+            "name": "time_to",
+            "type": "select",
+            "instructions": "By default shows all the upcoming events",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "next week": "Next week",
+                "next month": "Next month",
+                "next year": "Next year",
+                "custom_date": "Select custom date"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_601a872a8d765",
+            "label": "Select custom date",
+            "name": "custom_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_601a47148cee5",
+                        "operator": "==",
+                        "value": "custom_date"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "F j, Y",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
+            "key": "field_606ed58c3139e",
+            "label": "Event ID",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_601905912b1da",
+            "label": "Event ID(s)",
+            "name": "ids",
+            "type": "text",
+            "instructions": "Display individual events by IDs (comma separated, e.g. \"9996, 12060\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_606edf007750e",
+            "label": "EMBL Taxonomy",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_601905912b0b2",
+            "label": "EMBL Taxonomy",
+            "name": "embl_terms",
+            "type": "taxonomy",
+            "instructions": "Display events by EMBL taxonomy term.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl_taxonomy",
+            "field_type": "select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vfwp-embl-events"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF EMBL Events ACF Gutenberg block",
+    "modified": 1617966824
 }

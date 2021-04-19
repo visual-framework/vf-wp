@@ -129,7 +129,7 @@
                 "europe\/london": "Europe\/London",
                 "america\/new_york": "America\/New York"
             },
-            "default_value": "europe\/berlin",
+            "default_value": "europe\/london",
             "allow_null": 1,
             "multiple": 0,
             "ui": 1,
@@ -268,21 +268,26 @@
             "conditional_logic": [
                 [
                     {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
-                        "value": "353"
+                        "value": "67"
                     }
                 ],
                 [
                     {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "364"
-                    },
-                    {
                         "field": "field_5fbcab958038b",
                         "operator": "==",
                         "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "364"
                     }
                 ]
             ],
@@ -357,6 +362,39 @@
             },
             "placement": "top",
             "endpoint": 0
+        },
+        {
+            "key": "field_5fd0b4897af8f",
+            "label": "Registration type",
+            "name": "vf_event_registration_type",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "registration": "Registration",
+                "application": "Application",
+                "register_interest": "Register interest"
+            },
+            "allow_null": 1,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
         },
         {
             "key": "field_5e984858010ed",
@@ -458,25 +496,8 @@
             "maxlength": ""
         },
         {
-            "key": "field_5fd0b4897af8f",
-            "label": "Application deadline",
-            "name": "vf_event_application_deadline",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
             "key": "field_6005734043e1e",
-            "label": "Application info text",
+            "label": "Registration\/Application info text",
             "name": "vf_event_info_text",
             "type": "text",
             "instructions": "",
@@ -924,6 +945,84 @@
             "mime_types": ""
         },
         {
+            "key": "field_607d26ef78df4",
+            "label": "Organisers (events listing)",
+            "name": "vf_event_organisers_listing",
+            "type": "text",
+            "instructions": "Free text for events listing on embl.org\/events. Example: John Doe, Michael Smith, Britney Spears",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_607d288178df5",
+            "label": "Organisers (event template)",
+            "name": "vf_event_organisers_event_template",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add organiser",
+            "sub_fields": [
+                {
+                    "key": "field_607d28c278df6",
+                    "label": "Name",
+                    "name": "vf_event_organisers_name",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_607d293878df7",
+                    "label": "Affiliation",
+                    "name": "vf_event_organisers_affiliation",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        },
+        {
             "key": "field_5ff84c2d7239b",
             "label": "Contact name",
             "name": "vf_event_contact_name",
@@ -1118,5 +1217,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1615535507
+    "modified": 1618817224
 }

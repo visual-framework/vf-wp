@@ -2,9 +2,9 @@
 
 $title = get_the_title($post->post_parent);
 $event_type = get_field('vf_event_event_type', $post->post_parent);
-$ss_event_name = get_field('vf_event_ss_event_name', $post->post_parent);
+$ss_event_name = get_field('vf_event_ss_subtype', $post->post_parent);
 $displayed = get_field('vf_event_displayed', $post->post_parent);
-$embo_event_name = get_field('vf_event_embo_event_name');
+$embo_event_name = get_field('vf_event_embo_subtype');
 $location = get_field('vf_event_location');
 
 $hero_image = get_field('vf_event_hero', $post->post_parent);
@@ -35,7 +35,7 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
         if (!empty ($displayed)) {
           echo esc_html($displayed);
         }
-        elseif (!empty ($embo_event_name) && (($location == "EMBO") || ($location == "Virtual"))) {
+        elseif (!empty ($embo_event_name)) {
           echo esc_html($embo_event_name['label']);
         }
         elseif (($event_organiser == 'cco_hd') && (($event_type['label'] == 'Conference') || ($event_type['label'] == 'Course') || ($event_type['label'] == 'Webinar'))) {

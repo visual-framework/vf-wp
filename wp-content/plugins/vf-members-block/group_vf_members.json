@@ -23,31 +23,6 @@
             "append": ""
         },
         {
-            "key": "field_vf_members_order",
-            "label": "Order",
-            "name": "vf_members_order",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "DESC": "Descending",
-                "ASC": "Ascending"
-            },
-            "default_value": [],
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
             "key": "field_5ea988878eacf",
             "label": "Search by",
             "name": "vf_members_team",
@@ -65,9 +40,7 @@
                 "taxonomy": "EMBL Taxonomy",
                 "keyword": "Keyword"
             },
-            "default_value": [
-                "default"
-            ],
+            "default_value": "default",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -202,9 +175,7 @@
                 "inline-easy-primary": "inline-easy-primary",
                 "inline-easy-secondary": "inline-easy-secondary"
             },
-            "default_value": [
-                "inline"
-            ],
+            "default_value": "inline",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -262,7 +233,6 @@
             "prepend": "",
             "append": ""
         }
-
     ],
     "location": [
         [
@@ -273,21 +243,21 @@
             }
         ],
         [
-          {
-            "param": "block",
-            "operator": "==",
-            "value": "acf/vf-members"
-          }
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-members"
+            }
         ]
     ],
-
     "menu_order": 0,
     "position": "normal",
     "style": "seamless",
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "VF Members Gutenberg block",
-    "modified": 1594966419
+    "modified": 1618305951
+
 }
