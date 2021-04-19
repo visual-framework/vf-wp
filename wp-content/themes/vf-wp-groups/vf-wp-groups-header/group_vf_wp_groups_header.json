@@ -27,7 +27,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "",
                 "class": "",
                 "id": ""
             },
@@ -41,7 +41,7 @@
             "key": "field_5fc8c1246eb93",
             "label": "Subheading",
             "name": "vf_hero_subheading",
-            "type": "text",
+            "type": "wysiwyg",
             "instructions": "Leave blank for an introduction from the contentHub",
             "required": 0,
             "conditional_logic": 0,
@@ -51,10 +51,10 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
         },
         {
             "key": "field_5fc8b06b0535a",
@@ -65,7 +65,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -223,5 +223,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Groups theme global container."
+    "description": "VF-WP Groups theme global container.",
+    "modified": 1618817224
 }
