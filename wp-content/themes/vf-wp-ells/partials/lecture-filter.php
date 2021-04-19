@@ -63,7 +63,7 @@ if (preg_match_all(
 $archive = home_url('/?post_type=insight-lecture');
 
 ?>
-<form class="vf-form vf-stack vf-stack--800" action="<?php echo esc_url($archive); ?>" method="get">
+<form class="vf-stack vf-stack-400" action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
     <input type="hidden" name="post_type" value="insight-lecture">
@@ -76,7 +76,7 @@ $archive = home_url('/?post_type=insight-lecture');
     <?php } ?>
 
 
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
       <legend class="vf-form__legend">Topic area</legend>
       <div class="vf-form__item vf-form__item--checkbox">
@@ -104,7 +104,7 @@ $archive = home_url('/?post_type=insight-lecture');
 	  } ?>
     </fieldset>
 
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
       <legend class="vf-form__legend">Year</legend>
 
       <?php if ( ! empty($date_options)) { ?>

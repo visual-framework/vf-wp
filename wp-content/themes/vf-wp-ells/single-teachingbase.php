@@ -19,8 +19,9 @@ $organisers = get_field('tb_organisers');
 <section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <h2 class="vf-hero__heading">
-      ELLS TeachingBase </h2>
-    <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
+    ELLS</h2>
+    <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
+    <p class="vf-hero__text">Our inspiring educational experiences share the scientific discoveries of EMBL with young learners aged 10-19 years and teachers in Europe and beyond.</p>
   </div>
 </section>
 

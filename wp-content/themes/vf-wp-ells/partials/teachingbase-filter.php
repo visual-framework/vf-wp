@@ -79,7 +79,7 @@ if (preg_match_all(
 $archive = home_url('/?post_type=teachingbase');
 
 ?>
-<form class="vf-form vf-stack vf-stack--800" action="<?php echo esc_url($archive); ?>" method="get">
+<form class="vf-stack vf-stack-400" action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
     <input type="hidden" name="post_type" value="teachingbase">
@@ -91,7 +91,7 @@ $archive = home_url('/?post_type=teachingbase');
     <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
     <?php } ?>
 
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
       <legend class="vf-form__legend">Age group</legend>
       <div class="vf-form__item vf-form__item--checkbox">
@@ -118,7 +118,7 @@ $archive = home_url('/?post_type=teachingbase');
 	  } ?>
     </fieldset>
 
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
       <legend class="vf-form__legend">Topic area</legend>
       <div class="vf-form__item vf-form__item--checkbox">
@@ -146,7 +146,7 @@ $archive = home_url('/?post_type=teachingbase');
 	  } ?>
     </fieldset>
 <?php if ( function_exists('icl_object_id') ) { ?>
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
       <legend class="vf-form__legend">Languages</legend>
       <select class='vf-form__select' id='vf-form__select' name="lang" style="padding: 3px 4px; width: 243px;">
         <option value=""><?php echo esc_attr( __( 'Language' ) ); ?></option>
@@ -162,7 +162,7 @@ $archive = home_url('/?post_type=teachingbase');
   </fieldset>
   <?php } ?>
   
-  <fieldset class="vf-form vf-form__fieldset">
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
       <legend class="vf-form__legend">Publication year</legend>
 
       <?php if ( ! empty($date_options)) { ?>

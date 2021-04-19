@@ -88,7 +88,7 @@ if (preg_match_all(
 $archive = home_url('/?post_type=learninglab');
 
 ?>
-<form class="vf-form vf-stack vf-stack--800" action="<?php echo esc_url($archive); ?>" method="get">
+<form class="vf-stack vf-stack-400" action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
     <input type="hidden" name="post_type" value="learninglab">
@@ -100,7 +100,7 @@ $archive = home_url('/?post_type=learninglab');
     <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
     <?php } ?>
 
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
       <legend class="vf-form__legend">Type</legend>
       <div class="vf-form__item vf-form__item--checkbox">
@@ -127,7 +127,7 @@ $archive = home_url('/?post_type=learninglab');
 	  } ?>
     </fieldset>
 
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
       <legend class="vf-form__legend">Format</legend>
       <div class="vf-form__item vf-form__item--checkbox">
@@ -155,7 +155,7 @@ $archive = home_url('/?post_type=learninglab');
 	  } ?>
     </fieldset>
 
-    <fieldset class="vf-form vf-form__fieldset">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
       <legend class="vf-form__legend">Location</legend>
       <div class="vf-form__item vf-form__item--checkbox">

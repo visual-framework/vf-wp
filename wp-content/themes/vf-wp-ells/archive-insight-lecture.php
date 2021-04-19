@@ -10,8 +10,9 @@ $summary = get_field('il_summary');
 <section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <h2 class="vf-hero__heading">
-    EMBL Insight Lectures    </h2>
-    <p class="vf-hero__text">Morbi dictum purus sit amet purus blandit, quis facilisis mauris semper</p>
+    ELLS</h2>
+    <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
+    <p class="vf-hero__text">Our inspiring educational experiences share the scientific discoveries of EMBL with young learners aged 10-19 years and teachers in Europe and beyond.</p>
   </div>
 </section>
 
@@ -21,10 +22,11 @@ if (class_exists('VF_Navigation')) {
 }
 ?>
 
-<div class="vf-grid vf-grid__col-4 | vf-content | vf-u-margin__bottom--600">
+<div class="vf-grid vf-grid__col-4 | vf-content">
   <div class="vf-grid__col--span-3">
-    <h3>The lectures are live streamed to school across the globe and made available online after the event.
-    </h3>
+    <h1 class="vf-text vf-text-heading--1">Insight Lectures
+    </h1>
+    <p>The lectures are live streamed to school across the globe and made available online after the event.</p>
     <p>There are currently ten lectures available, with topics ranging from genomics and neuroscience to ocean diversity, advances in light microscopy and the study of macromolecules.
     </p>
   </div>
