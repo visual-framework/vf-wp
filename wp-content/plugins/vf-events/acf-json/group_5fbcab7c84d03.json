@@ -713,8 +713,8 @@
         },
         {
             "key": "field_5f3f7042eb5fe",
-            "label": "Event topic",
-            "name": "vf_event_event_topic",
+            "label": "Event subject",
+            "name": "vf_event_subjects_training",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -741,19 +741,19 @@
             },
             "choices": {
                 "cbb": "Cell Biology and Biophysics",
-                "daab": "Data Analysis and Bioinformatics",
-                "dbae": "Developmental Biology and Evolution",
-                "gbtt": "Genome Biology, Transcription, Translation",
-                "mai": "Microbiology and immunology",
-                "mmac": "Molecular Medicine and Cancer",
+                "dab": "Data Analysis and Bioinformatics",
+                "dbe": "Developmental Biology and Evolution",
+                "gbtt": "Genome Biology, Transcription and Translation",
+                "mi": "Microbiology and Immunology",
+                "mmc": "Molecular Medicine and Cancer",
                 "neur": "Neurobiology",
                 "sb": "Structural Biology",
-                "tim": "Technology, Imaging, Methods",
-                "sas": "Science and Society, Education and Policy"
+                "tim": "Technology, Imaging and Methods",
+                "sispd": "Science in Society and Professional Development"
             },
-            "default_value": false,
+            "default_value": [],
             "allow_null": 1,
-            "multiple": 0,
+            "multiple": 1,
             "ui": 1,
             "ajax": 0,
             "return_format": "array",
@@ -1217,5 +1217,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1618817224
+    "modified": 1618909436
 }
