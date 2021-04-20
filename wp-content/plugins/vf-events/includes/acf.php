@@ -301,8 +301,8 @@ class VF_Events_ACF {
       'vf_event_embo_subtype',
       'vf_event_featured',
       'vf_event_organisers_listing',
-      'vf_event_displayed'
-
+      'vf_event_displayed',
+      'vf_event_subjects_training'
 
 
     );
