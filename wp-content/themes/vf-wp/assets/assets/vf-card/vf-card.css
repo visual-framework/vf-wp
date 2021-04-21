@@ -66,7 +66,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card
- * Version: 2.5.4
+ * Version: 2.5.5
  * Location: components/undefined
  */
 .vf-card {
@@ -282,6 +282,10 @@
 }
 .vf-card--striped .vf-card__title .vf-card__link,
 .vf-card--striped .vf-card__heading .vf-card__link {
+  color: currentColor;
+}
+.vf-card--striped .vf-card__title .vf-card__link:hover,
+.vf-card--striped .vf-card__heading .vf-card__link:hover {
   color: currentColor;
 }
 .vf-card--striped .vf-card__subheading {
