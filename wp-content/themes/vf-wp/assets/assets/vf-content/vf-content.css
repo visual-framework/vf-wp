@@ -959,7 +959,7 @@ input[type=search]::-webkit-search-cancel-button {
 
 /*!
 * Component: @visual-framework/vf-button
-* Version: 1.4.1
+* Version: 1.4.2
 * Location: components/undefined
 */
 .vf-button {
@@ -1485,7 +1485,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.5.1
+ * Version: 1.5.2
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {
