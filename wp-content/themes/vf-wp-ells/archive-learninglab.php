@@ -3,21 +3,6 @@ get_header();
 
 ?>
 
-<section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
-  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
-    <h2 class="vf-hero__heading">
-    ELLS</h2>
-    <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
-    <p class="vf-hero__text">Our inspiring educational experiences share the scientific discoveries of EMBL with young learners aged 10-19 years and teachers in Europe and beyond.</p>
-  </div>
-</section>
-
-<?php
-if (class_exists('VF_Navigation')) {
-  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
-}
-?>
-
 <div class="vf-grid vf-grid__col-4 | vf-content">
   <div class="vf-grid__col--span-3">
     <h1 class="vf-text vf-text-heading--1">Learning LABs
