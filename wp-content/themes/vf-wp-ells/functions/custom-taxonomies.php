@@ -80,6 +80,22 @@ function vf_wp_ells_llabs_location_labels() {
     );
   }
 
+function vf_wp_ells_country_labels() {
+    return array(
+      'name'              => _x( 'Countrys', 'taxonomy general name', 'vfwp' ),
+      'singular_name'     => _x( 'Country', 'taxonomy singular name', 'vfwp' ),
+      'search_items'      => __( 'Search Countrys', 'vfwp' ),
+      'all_items'         => __( 'All Countrys', 'vfwp' ),
+      'parent_item'       => __( 'Parent Country', 'vfwp' ),
+      'parent_item_colon' => __( 'Parent Country:', 'vfwp' ),
+      'edit_item'         => __( 'Edit Country', 'vfwp' ),
+      'update_item'       => __( 'Update Country', 'vfwp' ),
+      'add_new_item'      => __( 'Add New Country', 'vfwp' ),
+      'new_item_name'     => __( 'New Country Name', 'vfwp' ),
+      'menu_name'         => __( 'Countrys', 'vfwp' ),
+    );
+  }
+
   /**
  * Action: `init`
  */
@@ -140,6 +156,18 @@ add_action(
   
     register_taxonomy('topic-area', array('topic-area'), array(
       'labels'             => vf_wp_ells_topic_area_labels(),
+      'hierarchical'       => true,
+      'show_ui'            => true,
+      'show_admin_column'  => true,
+      'query_var'          => true,
+      'publicly_queryable' => true,
+      'show_in_nav_menus'  => false,
+      'rewrite'            => false,
+      'show_in_rest'       => false,
+    ));
+  
+    register_taxonomy('country', array('country'), array(
+      'labels'             => vf_wp_ells_country_labels(),
       'hierarchical'       => true,
       'show_ui'            => true,
       'show_admin_column'  => true,
