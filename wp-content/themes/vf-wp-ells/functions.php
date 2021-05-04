@@ -44,7 +44,7 @@ if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-b
     <p class="vf-banner__text">This article is also available in ');
 
       foreach($languages as $l){
-      if(!$l['active']) $langs[] = '<a href="'.$l['url'].'"><img class="wpml-ls-flag iclflag" src="' . $l['country_flag_url'].'" />&nbsp;' .$l['translated_name'].'</a>';
+      if(!$l['active']) $langs[] = '<a href="'.$l['url'].'"><img class="wpml-ls-flag iclflag" src="' . $l['country_flag_url'].'" />&nbsp;' .$l['native_name'].'</a>';
       }
       echo join(' and ', array_filter(array_merge(array(join(', ', array_slice($langs, 0, -1))), array_slice($langs,
       -1)), 'strlen'));
