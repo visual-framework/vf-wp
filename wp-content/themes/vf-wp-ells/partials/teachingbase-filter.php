@@ -149,12 +149,12 @@ $archive = home_url('/?post_type=teachingbase');
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
       <legend class="vf-form__legend">Languages</legend>
       <select class='vf-form__select' id='vf-form__select' name="lang" style="padding: 3px 4px; width: 243px;">
-        <option value=""><?php echo esc_attr( __( 'Language' ) ); ?></option>
+        <option value=""><?php echo esc_attr( __( 'Select' ) ); ?></option>
         <?php
           foreach($languages as $l){ 
             $selected = $l['selected'] ? 'selected="selected"' : '';
             ?>
-        <option value="<?php echo esc_attr($l[['language_code']]); ?>" <?php echo $selected ?>>
+        <option value="<?php echo $l['language_code']; ?>" <?php echo $selected ?>>
         <?php echo esc_html($l['native_name']); ?>
       </option>
       <?php } ?>
@@ -167,7 +167,7 @@ $archive = home_url('/?post_type=teachingbase');
 
       <?php if ( ! empty($date_options)) { ?>
       <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">
-        <option value=""><?php echo esc_attr( __( 'Year' ) ); ?></option>
+        <option value=""><?php echo esc_attr( __( 'Select' ) ); ?></option>
         <?php
       foreach ($date_options as $date) {
         $selected = $date['selected'] ? 'selected="selected"' : '';
@@ -184,7 +184,7 @@ $archive = home_url('/?post_type=teachingbase');
       <?php esc_html_e('Apply filter', 'theme'); ?>
     </button>
 
-    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/teachingbase'; ?>">
+    <a class="vf-button vf-button--sm vf-button--tertiary" href="/teachingbase">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
   </div>
