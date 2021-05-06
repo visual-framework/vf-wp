@@ -20,23 +20,6 @@ $registration_link = get_field('il_registration_link');
 
 ?>
 
-
-
-<section class="vf-hero vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image-size: auto 28.5rem">
-  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
-    <h2 class="vf-hero__heading">
-    ELLS</h2>
-    <p class="vf-hero__subheading">European Learning Laboratory for the Life Sciences</p>
-    <p class="vf-hero__text">Our inspiring educational experiences share the scientific discoveries of EMBL with young learners aged 10-19 years and teachers in Europe and beyond.</p>
-  </div>
-</section>
-
-<?php
-if (class_exists('VF_Navigation')) {
-  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
-}
-?>
-
 <section class="vf-grid vf-grid__col-3">
   <div class="vf-grid__col--span-2 | vf-content">
     <div>
@@ -154,11 +137,11 @@ if (class_exists('VF_Navigation')) {
     </div>  
     <?php
     $insightMore = new WP_Query (array(
-      'posts_per_page' => 4, 
+      'posts_per_page' => 3, 
       'post_type' => 'insight-lecture',
       'post__not_in'   => array( get_the_ID() ), ));
       while ($insightMore->have_posts()) : $insightMore->the_post(); ?>
-    <?php include(locate_template('partials/vf-card-lecture.php', false, false)); ?>
+    <?php include(locate_template('partials/vf-summary-lecture-more.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>

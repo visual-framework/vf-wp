@@ -21,17 +21,23 @@ $post_id = get_the_ID();
   <p class="vf-summary__text">
     <?php echo get_the_excerpt(); ?>
   </p>
-  <?php if (($topic_area) || ($age_group)) { ?>
-  <p class="vf-summary__meta">
-    <?php if ($topic_area) { ?>
-      <span>Topic area:</span>&nbsp;<span class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span>&nbsp;&nbsp;
+  <div>
+    <?php if (($topic_area) || ($age_group)) { ?>
+    <p class="vf-summary__meta | vf-u-margin__bottom--200">
+      <?php if ($topic_area) { ?>
+      <span>Topic area:</span>&nbsp;<span
+        class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span>&nbsp;&nbsp;
+      <?php } ?>
+      <?php if ($age_group) { ?>
+      <span>Age group:</span>&nbsp;<span class="vf-u-text-color--grey"><?php echo ($age_group->name); ?></span>
+      <?php } }
+      if (($topic_area) || ($age_group)) { ?>
+    </p>
+    <?php }
+    if ( function_exists('icl_object_id') ) { ?>
+    <p class="vf-summary__meta">
+      Other language(s): &nbsp&nbsp<?php wpml_post_languages_in_loop(); ?>
+    </p>
     <?php } ?>
-
-    <?php if ($age_group) { ?>
-    <span>Age group:</span>&nbsp;<span class="vf-u-text-color--grey"><?php echo ($age_group->name); ?></span>
-    <?php } }
-      if (($topic_area) || ($age_group)) {?>
-  </p>
-  <?php }?>
-
+  </div>
 </article>

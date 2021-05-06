@@ -7,7 +7,7 @@ Version: 1.0.0-beta.1
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
 Text Domain: vfwp
-*/
+
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -239,4 +239,4 @@ public function ells_breadcrumbs() {
 
 $plugin = new VF_ELLS_Breadcrumbs(array('init' => true));
 
-?>
+ */ ?>

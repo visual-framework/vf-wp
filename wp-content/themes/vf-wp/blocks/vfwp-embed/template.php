@@ -46,7 +46,12 @@ if ($ratio === '16 x 9 max width') {
 }
 ?>
 
-<div class="vf-embed <?php echo ($class); ?>" style="<?php echo ($style); ?>"><iframe src="<?php echo ($url); ?>" frameborder="0" controls allowfullscreen></iframe></div>
+<div class="vf-embed <?php echo ($class); ?>"
+<?php
+if ($ratio === '16 x 9 max width') {
+  echo 'style="--vf-embed-max-width: 400px"';
+} ?>>
+<iframe src="<?php echo ($url); ?>" frameborder="0" controls allowfullscreen></iframe></div>
 
 <?php if( ! empty($caption) ) { ?>  
 <figcaption class="vf-figure__caption vf-u-margin__top--200"><?php echo ($caption); ?></figcaption>

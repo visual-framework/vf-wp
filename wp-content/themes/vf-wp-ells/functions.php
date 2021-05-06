@@ -1,10 +1,10 @@
 <?php
 
 require_once('functions/custom-taxonomies.php');
-require_once('functions/ells-breadcrumbs.php');
 require_once('functions/learning-labs-post.php');
 require_once('functions/teachingbase-post.php');
 require_once('functions/insight-lecture-post.php');
+require_once('functions/ambassadors-post.php');
 
 // enable featured image
 add_theme_support( 'post-thumbnails' );
@@ -15,33 +15,6 @@ add_theme_support( 'title-tag' );
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class VF_ELLS_Newsletter extends VF_Plugin{
-
-  protected $file = __FILE__;
-
-  protected $config = array(
-    'post_name'  => 'vf_ells_newsletter',
-    'post_title' => 'ELLS_Newsletter',
-    'post_type'  => 'vf_container'
-  );
-
-  public function __construct(array $params = array()) {
-    parent::__construct('vf_ells_newsletter');
-    if (array_key_exists('init', $params)) {
-      parent::initialize();
-    }
-  }
-
-  public function template_callback($block, $content, $is_preview = false, $acf_id) {
-    ?><h3>to jest newslettter</h3><?php
-   }
-
-} // VF_ELLS_Newsletter
-
-$plugin = new VF_ELLS_Newsletter(array('init' => true));
-
-?>
-<?php
 // CHILD THEME CSS FILE
 
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
@@ -71,7 +44,7 @@ if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-b
     <p class="vf-banner__text">This article is also available in ');
 
       foreach($languages as $l){
-      if(!$l['active']) $langs[] = '<a href="'.$l['url'].'">'.$l['translated_name'].'</a>';
+      if(!$l['active']) $langs[] = '<a href="'.$l['url'].'"><img class="wpml-ls-flag iclflag" src="' . $l['country_flag_url'].'" />&nbsp;' .$l['native_name'].'</a>';
       }
       echo join(' and ', array_filter(array_merge(array(join(', ', array_slice($langs, 0, -1))), array_slice($langs,
       -1)), 'strlen'));
@@ -81,10 +54,26 @@ if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-b
   </div>
   </div>' );
 
-
-
   }
   }
   
+
+  // Show linked WPML posts in a loop
+function wpml_post_languages_in_loop() {
+  $thispostid = get_the_ID();
+  $post_trid = apply_filters('wpml_element_trid', NULL, get_the_ID(), 'post_' . get_post_type());
+  $languages = apply_filters( 'wpml_active_languages', NULL, 'skip_missing=0&orderby=code' );
+  if (empty($post_trid))
+      return;
+  $translation = apply_filters('wpml_get_element_translations', NULL, $post_trid, 'post_' . get_post_type());
+  if (1 < count($translation)) {
+      foreach ($translation as $l) {
+          if ($l->element_id != $thispostid) {
+              $langs[] = '<a href="' . apply_filters('wpml_permalink', ( get_permalink($l->element_id)), $l->language_code) . '"><img class="wpml-ls-flag iclflag" src="'.$languages[$l->language_code]['country_flag_url'].'" />' . '</a>';
+              }
+      }
+      echo join(' &nbsp; ', $langs);
+  }
+}
 
 ?>
