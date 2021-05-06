@@ -251,7 +251,7 @@
   line-height: 1.421;
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  margin: 0 0 0 0;
+  margin: 0 0 1rem 0;
   border: 0;
   padding: 10px 8px 10px 32px;
   position: relative;
