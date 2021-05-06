@@ -114,7 +114,7 @@ get_header();
 
           foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
 
-    <?php include(locate_template('partials/vf-card--article-more.php', false, false)); ?>
+    <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
     <?php endforeach; wp_reset_postdata(); ?>
   </div>
 </section>

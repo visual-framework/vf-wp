@@ -137,11 +137,11 @@ $registration_link = get_field('il_registration_link');
     </div>  
     <?php
     $insightMore = new WP_Query (array(
-      'posts_per_page' => 4, 
+      'posts_per_page' => 3, 
       'post_type' => 'insight-lecture',
       'post__not_in'   => array( get_the_ID() ), ));
       while ($insightMore->have_posts()) : $insightMore->the_post(); ?>
-    <?php include(locate_template('partials/vf-card-lecture.php', false, false)); ?>
+    <?php include(locate_template('partials/vf-summary-lecture-more.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>

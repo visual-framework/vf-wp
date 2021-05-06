@@ -10,10 +10,10 @@ get_header();
       Latest news</h2>
     <div>
       <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-$args = array(
-    'posts_per_page' => 6,
+    $args = array(
+    'posts_per_page' => 10,
     'paged' => $page,);
-query_posts($args);?>
+    query_posts($args);?>
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
       <?php endwhile; endif; ?>
@@ -23,8 +23,10 @@ query_posts($args);?>
     </div>
   </div>
   <div>
+    <div style="border: 1px solid #d0d0ce;"><a class="twitter-timeline" href="https://twitter.com/ells_heidelberg?lang=en" data-tweet-limit="1">Tweets by embl</a>
+     <script src="https://platform.twitter.com/widgets.js" async="" charset="utf-8"></script>
+    </div>
   </div>
 </section>
-
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
