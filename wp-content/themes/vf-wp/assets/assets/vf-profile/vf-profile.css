@@ -196,6 +196,13 @@
   line-height: 1.5;
   margin: 0 0 0 0;
 }
+.vf-profile--small .vf-profile__job-title {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0 0 0.25rem 0;
+}
 .vf-profile--small .vf-profile__email.vf-u-last-item {
   margin-bottom: 0;
 }
@@ -211,26 +218,31 @@
   line-height: 1.29;
   margin: 0 0 0 0;
 }
+.vf-profile--medium .vf-profile__job-title {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.29;
+  margin: 0 0 0.25rem 0;
+}
 
 .vf-profile--large {
   --vf-profile-avatar--size: 160px;
 }
 
-.vf-profile--easy {
+html:not(.vf-disable-deprecated) .vf-profile--easy {
   border-bottom: 8px solid var(--vf-profile__border--color);
   padding-bottom: 8px;
 }
-
-.vf-profile-theme--primary {
+html:not(.vf-disable-deprecated) .vf-profile-theme--primary {
   --vf-profile__border--color: #3b6fb6;
 }
-.vf-profile-theme--primary .vf-profile__title {
+html:not(.vf-disable-deprecated) .vf-profile-theme--primary .vf-profile__title {
   color: #3b6fb6;
 }
-
-.vf-profile-theme--secondary {
+html:not(.vf-disable-deprecated) .vf-profile-theme--secondary {
   --vf-profile__border--color: #18974c;
 }
-.vf-profile-theme--secondary .vf-profile__title {
+html:not(.vf-disable-deprecated) .vf-profile-theme--secondary .vf-profile__title {
   color: #18974c;
 }
