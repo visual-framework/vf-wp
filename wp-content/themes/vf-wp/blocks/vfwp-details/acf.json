@@ -20,6 +20,25 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_609a2ea1a84dc",
+            "label": "",
+            "name": "display_content",
+            "type": "true_false",
+            "instructions": "Toggle to change the default state",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Open",
+            "ui_off_text": "Close"
         }
     ],
     "location": [
@@ -46,5 +65,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1598527351
+    "modified": 1620719138
 }
