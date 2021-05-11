@@ -43,7 +43,6 @@ else { ≈?>
           href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a> in <?php echo get_the_category_list(','); ?></p>
       </span>
       */ ?>
-    <time class="vf-summary__date vf-u-text-color--ui--grey" style="margin-left: 0;" title="<?php the_time('c'); ?>"
-      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+    <p class="vf-summary__date vf-u-text-color--ui--grey"><?php the_time(get_option('date_format')); ?></p>
   </div>
 </article>

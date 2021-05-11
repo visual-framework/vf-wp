@@ -54,14 +54,15 @@ class VF_Theme_Content {
     
     // wp-embed should use vf-embed for responsiveness
     // https://github.com/visual-framework/vf-wp/issues/693
-    if ($block['blockName'] === 'core/embed') {
+    if (($block['blockName'] === 'core/embed') && ($block['attrs']['type'] === 'video')) {
       $html = preg_replace(
-        "wp-block-embed__wrapper",
-        "wp-block-embed__wrapper | vf-embed vf-embed--16x9",
+        '/wp-block-embed__wrapper/',
+        'vf-embed vf-embed--16x9',
         $html
       );
-    }
+    } 
     return $html;
+  
   }
 
   /**
