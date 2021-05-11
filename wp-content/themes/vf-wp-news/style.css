@@ -171,14 +171,6 @@ Text Domain:	 vf-wp-news-main
   min-height: 100% !important;
 }
 
-.vf-grid-featured-col-left .vf-card img {
-aspect-ratio: auto;
-}
-.vf-grid-featured-col-right .vf-card img {
-aspect-ratio: var(--vf-card__image--aspect-ratio, 8/5);
-}
-
-
 .vf-grid-featured-col-left .vf-card__text {
 margin-bottom: 1rem !important;
 }
