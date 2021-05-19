@@ -20,15 +20,15 @@
       <div class="vf-links ells-links">
         <ul class="vf-links__list | vf-list">
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
+            <a class="vf-list__link" href="/about-us">
               About Us</a>
           </li>
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
+            <a class="vf-list__link" href="/contact">
               Contact</a>
           </li>
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
+            <a class="vf-list__link" href="/terms-of-use">
               Terms of Use</a>
           </li>
         </ul>
@@ -68,7 +68,7 @@
         <div class="vf-social-links vf-social-links--outline">
           <ul class="vf-social-links__list | vf-u-margin__top--0">
             <li class="vf-social-links__item">
-              <a class="vf-social-links__link" href="JavaScript:Void(0);">
+              <a class="vf-social-links__link" href="http://www.twitter.com/ELLS_Heidelberg">
                 <span class="vf-u-sr-only">
                   twitter
                 </span>
@@ -80,7 +80,7 @@
               </a>
             </li>
             <li class="vf-social-links__item">
-              <a class="vf-social-links__link" href="JavaScript:Void(0);">
+              <a class="vf-social-links__link" href="https://www.facebook.com/EMBL-ELLS-151861361512186">
                 <span class="vf-u-sr-only">
                   facebook
                 </span>

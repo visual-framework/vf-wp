@@ -11,6 +11,7 @@ $end = DateTime::createFromFormat('j F Y', $end_date);
 
 $application_deadline = get_field('labs_application_deadline');
 $topic_area = get_field('labs_topic_area');
+$format = get_field('labs_format');
 $download = get_field('labs_download');
 $contact = get_field('labs_contact');
 $organisers = get_field('labs_organisers');
@@ -66,6 +67,10 @@ $registration_link = get_field('labs_application_form_link');
           class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
       <?php } ?>
 
+      <?php if ($format) { ?>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Format:</span>&nbsp;<span
+          class="vf-u-text-color--grey"><?php echo ($format->name); ?></span></p>
+      <?php } ?>
 
       <?php if ( ! empty($contact)) { ?>
       <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
