@@ -149,11 +149,11 @@ output += " | ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "override_class"), env.opts.autoescape);
 ;
 }
-output += "\">\n  <div class=\"vf-form__item | vf-search__item\">\n    <label class=\"vf-form__label vf-u-sr-only | vf-search__label\" for=\"";
+output += "\">\n\n  <div class=\"vf-container__inner\">\n\n    <div class=\"vf-form__item | vf-search__item\">\n\n      <label class=\"vf-form__label vf-u-sr-only | vf-search__label\" for=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_id"), env.opts.autoescape);
 output += "\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_label"), env.opts.autoescape);
-output += "</label>\n    <input type=\"search\" placeholder=\"";
+output += "</label>\n      <input type=\"search\" placeholder=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_placeholder"), env.opts.autoescape);
 output += "\" id=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_id"), env.opts.autoescape);
@@ -169,16 +169,16 @@ if(runtime.contextOrFrameLookup(context, frame, "search_autofocus")) {
 output += " autofocus";
 ;
 }
-output += ">\n  </div>\n  <button type=\"submit\" class=\"vf-search__button | vf-button vf-button--primary\"> ";
+output += ">\n    </div>\n\n    <button type=\"submit\" class=\"vf-search__button | vf-button vf-button--primary\"> ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_button"), env.opts.autoescape);
-output += "</button>\n";
+output += "</button>\n\n";
 if(runtime.contextOrFrameLookup(context, frame, "search_description")) {
-output += "<p class=\"vf-search__description\">";
+output += "<p class=\"vf-form__helper\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "search_description"), env.opts.autoescape);
 output += "</p>";
 ;
 }
-output += "</form>\n";
+output += "  </div>\n\n</form>\n\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

@@ -66,39 +66,50 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-search
- * Version: 1.2.1
+ * Version: 2.0.0
  * Location: components/undefined
  */
 /*!
 * Component: @visual-framework/vf-search
-* Version: 1.2.1
+* Version: 2.0.0
 * Location: components/undefined
 */
 .vf-search--inline {
+  --vf-sidebar-spacing: 1rem;
+  --vf-sidebar--width: 60%;
+}
+.vf-search--inline .vf-form__helper {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.vf-search--inline > * {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  margin: -0.5rem;
+  margin: calc(var(--vf-sidebar-spacing) / 2 * -1);
 }
-.vf-search--inline .vf-search__item {
+
+.vf-search--inline > * > * {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
-  max-width: 600px;
+  margin: 0.5rem;
+  margin: calc(var(--vf-sidebar-spacing) / 2);
 }
-.vf-search--inline .vf-search__button {
-  margin-bottom: 0;
-  margin-left: 16px;
-  top: -12px;
-}
-.vf-search--inline .vf-search__description {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.71;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
+
+.vf-search--inline > * > :first-child {
+  -ms-flex-preferred-size: 0;
+      flex-basis: 0;
+  -webkit-box-flex: 999;
+      -ms-flex-positive: 999;
+          flex-grow: 999;
+  min-width: calc(60% - 1rem);
+  min-width: calc(var(--vf-sidebar--width) - var(--vf-sidebar-spacing));
 }
