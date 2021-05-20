@@ -67,12 +67,14 @@ function wpml_post_languages_in_loop() {
       return;
   $translation = apply_filters('wpml_get_element_translations', NULL, $post_trid, 'post_' . get_post_type());
   if (1 < count($translation)) {
+    echo '<p class="vf-summary__meta">Other language(s): &nbsp;&nbsp;';
       foreach ($translation as $l) {
           if ($l->element_id != $thispostid) {
               $langs[] = '<a href="' . apply_filters('wpml_permalink', ( get_permalink($l->element_id)), $l->language_code) . '"><img class="wpml-ls-flag iclflag" src="'.$languages[$l->language_code]['country_flag_url'].'" />' . '</a>';
               }
       }
       echo join(' &nbsp; ', $langs);
+      echo '</p>';
   }
 }
 
