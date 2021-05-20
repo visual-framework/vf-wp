@@ -65,35 +65,73 @@
 
 /* stylelint-enable */
 /*!
- * Component: @visual-framework/vf-form__textarea
- * Version: 3.0.0-alpha.0
+ * Component: @visual-framework/vf-flag
+ * Version: 1.0.0-alpha.1
  * Location: components/undefined
+ * Build time: Wed, 24 Mar 2021 13:35:51 GMT
  */
-.vf-form__textarea {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 1.421;
-  margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  /* stylelint-disable */
-  -webkit-appearance: none;
-  -moz-appearance: none;
-       appearance: none;
-  /* stylelint-enable */
-  border: 2px solid #707372;
-  border-radius: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+.vf-flag {
+  display: table;
+  width: auto;
+}
+
+.vf-flag__media {
+  display: table-cell;
+  padding-right: 1rem;
+  padding-right: var(--vf-flag--spacing, 1rem);
+}
+.vf-flag__media > * {
   display: block;
-  padding: 0.5rem;
-  position: relative;
+}
+
+.vf-flag__body {
+  display: table-cell;
   width: 100%;
 }
-.vf-form__textarea:hover, .vf-form__textarea:focus {
-  border-color: #54585a;
-  -webkit-box-shadow: 0 0 0 0.0625rem #54585a;
-          box-shadow: 0 0 0 0.0625rem #54585a;
-  color: #000000;
-  outline: 0;
+
+.vf-flag--top .vf-flag__body,
+.vf-flag--top .vf-flag__media {
+  vertical-align: top;
+}
+.vf-flag--middle .vf-flag__body,
+.vf-flag--middle .vf-flag__media {
+  vertical-align: middle;
+}
+.vf-flag--bottom .vf-flag__body,
+.vf-flag--bottom .vf-flag__media {
+  vertical-align: bottom;
+}
+.vf-flag--reversed .vf-flag__body,
+.vf-flag--reversed .vf-flag__media {
+  padding-left: 1rem;
+  padding-left: var(--vf-flag--spacing, 1rem);
+  padding-right: 0 !important;
+}
+
+.vf-flag--200 {
+  --vf-flag--spacing: 0.5rem;
+}
+
+.vf-flag--400 {
+  --vf-flag--spacing: 1rem;
+}
+
+.vf-flag--500 {
+  --vf-flag--spacing: 1.25rem;
+}
+
+.vf-flag--600 {
+  --vf-flag--spacing: 1.5rem;
+}
+
+.vf-flag--800 {
+  --vf-flag--spacing: 2rem;
+}
+
+.vf-flag--1200 {
+  --vf-flag--spacing: 3rem;
+}
+
+.vf-flag--1600 {
+  --vf-flag--spacing: 4rem;
 }

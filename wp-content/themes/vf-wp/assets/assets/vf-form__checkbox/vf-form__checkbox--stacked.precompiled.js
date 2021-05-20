@@ -10,211 +10,232 @@ try {
 var parentTemplate = null;
 if(runtime.contextOrFrameLookup(context, frame, "context")) {
 var t_1;
-t_1 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"dave");
-frame.set("dave", t_1, true);
+t_1 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"checkbox_label");
+frame.set("checkbox_label", t_1, true);
 if(frame.topLevel) {
-context.setVariable("dave", t_1);
+context.setVariable("checkbox_label", t_1);
 }
 if(frame.topLevel) {
-context.addExport("dave", t_1);
+context.addExport("checkbox_label", t_1);
 }
-;
-}
-output += "\n<fieldset class=\"vf-form__fieldset";
-if(runtime.contextOrFrameLookup(context, frame, "inline")) {
-output += " | vf-cluster vf-cluster--400";
-;
-}
-else {
-output += " | vf-stack vf-stack--400";
-;
-}
-output += "\">\n\n";
-if(runtime.contextOrFrameLookup(context, frame, "inline")) {
-output += "<div class=\"vf-cluster__inner\">";
-;
-}
-output += "\n";
 var t_2;
-t_2 = runtime.contextOrFrameLookup(context, frame, "item_01");
-frame.set("context", t_2, true);
+t_2 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"checkbox_group");
+frame.set("checkbox_group", t_2, true);
 if(frame.topLevel) {
-context.setVariable("context", t_2);
+context.setVariable("checkbox_group", t_2);
 }
 if(frame.topLevel) {
-context.addExport("context", t_2);
+context.addExport("checkbox_group", t_2);
 }
-var tasks = [];
-tasks.push(
-function(callback) {
-env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_4,t_3) {
-if(t_4) { cb(t_4); return; }
-callback(null,t_3);});
-});
-tasks.push(
-function(template, callback){
-template.render(context.getVariables(), frame, function(t_6,t_5) {
-if(t_6) { cb(t_6); return; }
-callback(null,t_5);});
-});
-tasks.push(
-function(result, callback){
-output += result;
-callback(null);
-});
-env.waterfall(tasks, function(){
-var t_7;
-t_7 = runtime.contextOrFrameLookup(context, frame, "item_02");
-frame.set("context", t_7, true);
+var t_3;
+t_3 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"checkbox_value");
+frame.set("checkbox_value", t_3, true);
 if(frame.topLevel) {
-context.setVariable("context", t_7);
+context.setVariable("checkbox_value", t_3);
 }
 if(frame.topLevel) {
-context.addExport("context", t_7);
+context.addExport("checkbox_value", t_3);
 }
-var tasks = [];
-tasks.push(
-function(callback) {
-env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_9,t_8) {
-if(t_9) { cb(t_9); return; }
-callback(null,t_8);});
-});
-tasks.push(
-function(template, callback){
-template.render(context.getVariables(), frame, function(t_11,t_10) {
-if(t_11) { cb(t_11); return; }
-callback(null,t_10);});
-});
-tasks.push(
-function(result, callback){
-output += result;
-callback(null);
-});
-env.waterfall(tasks, function(){
-var t_12;
-t_12 = runtime.contextOrFrameLookup(context, frame, "item_03");
-frame.set("context", t_12, true);
-if(frame.topLevel) {
-context.setVariable("context", t_12);
-}
-if(frame.topLevel) {
-context.addExport("context", t_12);
-}
-var tasks = [];
-tasks.push(
-function(callback) {
-env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_14,t_13) {
-if(t_14) { cb(t_14); return; }
-callback(null,t_13);});
-});
-tasks.push(
-function(template, callback){
-template.render(context.getVariables(), frame, function(t_16,t_15) {
-if(t_16) { cb(t_16); return; }
-callback(null,t_15);});
-});
-tasks.push(
-function(result, callback){
-output += result;
-callback(null);
-});
-env.waterfall(tasks, function(){
-var t_17;
-t_17 = runtime.contextOrFrameLookup(context, frame, "item_04");
-frame.set("context", t_17, true);
-if(frame.topLevel) {
-context.setVariable("context", t_17);
-}
-if(frame.topLevel) {
-context.addExport("context", t_17);
-}
-var tasks = [];
-tasks.push(
-function(callback) {
-env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_19,t_18) {
-if(t_19) { cb(t_19); return; }
-callback(null,t_18);});
-});
-tasks.push(
-function(template, callback){
-template.render(context.getVariables(), frame, function(t_21,t_20) {
-if(t_21) { cb(t_21); return; }
-callback(null,t_20);});
-});
-tasks.push(
-function(result, callback){
-output += result;
-callback(null);
-});
-env.waterfall(tasks, function(){
-var t_22;
-t_22 = runtime.contextOrFrameLookup(context, frame, "item_05");
-frame.set("context", t_22, true);
-if(frame.topLevel) {
-context.setVariable("context", t_22);
-}
-if(frame.topLevel) {
-context.addExport("context", t_22);
-}
-var tasks = [];
-tasks.push(
-function(callback) {
-env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_24,t_23) {
-if(t_24) { cb(t_24); return; }
-callback(null,t_23);});
-});
-tasks.push(
-function(template, callback){
-template.render(context.getVariables(), frame, function(t_26,t_25) {
-if(t_26) { cb(t_26); return; }
-callback(null,t_25);});
-});
-tasks.push(
-function(result, callback){
-output += result;
-callback(null);
-});
-env.waterfall(tasks, function(){
-var t_27;
-t_27 = runtime.contextOrFrameLookup(context, frame, "item_06");
-frame.set("context", t_27, true);
-if(frame.topLevel) {
-context.setVariable("context", t_27);
-}
-if(frame.topLevel) {
-context.addExport("context", t_27);
-}
-var tasks = [];
-tasks.push(
-function(callback) {
-env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_29,t_28) {
-if(t_29) { cb(t_29); return; }
-callback(null,t_28);});
-});
-tasks.push(
-function(template, callback){
-template.render(context.getVariables(), frame, function(t_31,t_30) {
-if(t_31) { cb(t_31); return; }
-callback(null,t_30);});
-});
-tasks.push(
-function(result, callback){
-output += result;
-callback(null);
-});
-env.waterfall(tasks, function(){
 output += "\n";
-if(runtime.contextOrFrameLookup(context, frame, "inline")) {
-output += "</div>";
+var t_4;
+t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"disabled");
+frame.set("disabled", t_4, true);
+if(frame.topLevel) {
+context.setVariable("disabled", t_4);
+}
+if(frame.topLevel) {
+context.addExport("disabled", t_4);
+}
+var t_5;
+t_5 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"invalid");
+frame.set("invalid", t_5, true);
+if(frame.topLevel) {
+context.setVariable("invalid", t_5);
+}
+if(frame.topLevel) {
+context.addExport("invalid", t_5);
+}
 ;
 }
-output += "</fieldset>\n";
+output += "\n<fieldset class=\"vf-form__fieldset vf-stack vf-stack--400\">";
+env.getExtension("render")["run"](context,"@vf-form__legend",{"context": runtime.contextOrFrameLookup(context, frame, "checkbox_legend")}, function(t_7,t_6) {
+if(t_7) { cb(t_7); return; }
+output += runtime.suppressValue(t_6, true && env.opts.autoescape);
+var t_8;
+t_8 = runtime.contextOrFrameLookup(context, frame, "item_01");
+frame.set("context", t_8, true);
+if(frame.topLevel) {
+context.setVariable("context", t_8);
+}
+if(frame.topLevel) {
+context.addExport("context", t_8);
+}
+var tasks = [];
+tasks.push(
+function(callback) {
+env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_10,t_9) {
+if(t_10) { cb(t_10); return; }
+callback(null,t_9);});
+});
+tasks.push(
+function(template, callback){
+template.render(context.getVariables(), frame, function(t_12,t_11) {
+if(t_12) { cb(t_12); return; }
+callback(null,t_11);});
+});
+tasks.push(
+function(result, callback){
+output += result;
+callback(null);
+});
+env.waterfall(tasks, function(){
+var t_13;
+t_13 = runtime.contextOrFrameLookup(context, frame, "item_02");
+frame.set("context", t_13, true);
+if(frame.topLevel) {
+context.setVariable("context", t_13);
+}
+if(frame.topLevel) {
+context.addExport("context", t_13);
+}
+var tasks = [];
+tasks.push(
+function(callback) {
+env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_15,t_14) {
+if(t_15) { cb(t_15); return; }
+callback(null,t_14);});
+});
+tasks.push(
+function(template, callback){
+template.render(context.getVariables(), frame, function(t_17,t_16) {
+if(t_17) { cb(t_17); return; }
+callback(null,t_16);});
+});
+tasks.push(
+function(result, callback){
+output += result;
+callback(null);
+});
+env.waterfall(tasks, function(){
+var t_18;
+t_18 = runtime.contextOrFrameLookup(context, frame, "item_03");
+frame.set("context", t_18, true);
+if(frame.topLevel) {
+context.setVariable("context", t_18);
+}
+if(frame.topLevel) {
+context.addExport("context", t_18);
+}
+var tasks = [];
+tasks.push(
+function(callback) {
+env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_20,t_19) {
+if(t_20) { cb(t_20); return; }
+callback(null,t_19);});
+});
+tasks.push(
+function(template, callback){
+template.render(context.getVariables(), frame, function(t_22,t_21) {
+if(t_22) { cb(t_22); return; }
+callback(null,t_21);});
+});
+tasks.push(
+function(result, callback){
+output += result;
+callback(null);
+});
+env.waterfall(tasks, function(){
+var t_23;
+t_23 = runtime.contextOrFrameLookup(context, frame, "item_04");
+frame.set("context", t_23, true);
+if(frame.topLevel) {
+context.setVariable("context", t_23);
+}
+if(frame.topLevel) {
+context.addExport("context", t_23);
+}
+var tasks = [];
+tasks.push(
+function(callback) {
+env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_25,t_24) {
+if(t_25) { cb(t_25); return; }
+callback(null,t_24);});
+});
+tasks.push(
+function(template, callback){
+template.render(context.getVariables(), frame, function(t_27,t_26) {
+if(t_27) { cb(t_27); return; }
+callback(null,t_26);});
+});
+tasks.push(
+function(result, callback){
+output += result;
+callback(null);
+});
+env.waterfall(tasks, function(){
+var t_28;
+t_28 = runtime.contextOrFrameLookup(context, frame, "item_05");
+frame.set("context", t_28, true);
+if(frame.topLevel) {
+context.setVariable("context", t_28);
+}
+if(frame.topLevel) {
+context.addExport("context", t_28);
+}
+var tasks = [];
+tasks.push(
+function(callback) {
+env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_30,t_29) {
+if(t_30) { cb(t_30); return; }
+callback(null,t_29);});
+});
+tasks.push(
+function(template, callback){
+template.render(context.getVariables(), frame, function(t_32,t_31) {
+if(t_32) { cb(t_32); return; }
+callback(null,t_31);});
+});
+tasks.push(
+function(result, callback){
+output += result;
+callback(null);
+});
+env.waterfall(tasks, function(){
+var t_33;
+t_33 = runtime.contextOrFrameLookup(context, frame, "item_06");
+frame.set("context", t_33, true);
+if(frame.topLevel) {
+context.setVariable("context", t_33);
+}
+if(frame.topLevel) {
+context.addExport("context", t_33);
+}
+var tasks = [];
+tasks.push(
+function(callback) {
+env.getTemplate("@vf-form__checkbox", false, "vf-form__checkbox--stacked", false, function(t_35,t_34) {
+if(t_35) { cb(t_35); return; }
+callback(null,t_34);});
+});
+tasks.push(
+function(template, callback){
+template.render(context.getVariables(), frame, function(t_37,t_36) {
+if(t_37) { cb(t_37); return; }
+callback(null,t_36);});
+});
+tasks.push(
+function(result, callback){
+output += result;
+callback(null);
+});
+env.waterfall(tasks, function(){
+output += "\n</fieldset>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
 cb(null, output);
 }
-})})})})})});
+})})})})})})});
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }
