@@ -82,17 +82,17 @@ function vf_wp_ells_llabs_location_labels() {
 
 function vf_wp_ells_country_labels() {
     return array(
-      'name'              => _x( 'Countrys', 'taxonomy general name', 'vfwp' ),
+      'name'              => _x( 'Country', 'taxonomy general name', 'vfwp' ),
       'singular_name'     => _x( 'Country', 'taxonomy singular name', 'vfwp' ),
-      'search_items'      => __( 'Search Countrys', 'vfwp' ),
-      'all_items'         => __( 'All Countrys', 'vfwp' ),
+      'search_items'      => __( 'Search Countries', 'vfwp' ),
+      'all_items'         => __( 'All Countries', 'vfwp' ),
       'parent_item'       => __( 'Parent Country', 'vfwp' ),
       'parent_item_colon' => __( 'Parent Country:', 'vfwp' ),
       'edit_item'         => __( 'Edit Country', 'vfwp' ),
       'update_item'       => __( 'Update Country', 'vfwp' ),
       'add_new_item'      => __( 'Add New Country', 'vfwp' ),
       'new_item_name'     => __( 'New Country Name', 'vfwp' ),
-      'menu_name'         => __( 'Countrys', 'vfwp' ),
+      'menu_name'         => __( 'Countries', 'vfwp' ),
     );
   }
 

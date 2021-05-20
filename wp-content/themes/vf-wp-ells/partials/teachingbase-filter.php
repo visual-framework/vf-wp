@@ -147,7 +147,7 @@ $archive = home_url('/?post_type=teachingbase');
     </fieldset>
 <?php if ( function_exists('icl_object_id') ) { ?>
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-      <legend class="vf-form__legend">Languages</legend>
+      <legend class="vf-form__legend">Language</legend>
       <select class='vf-form__select' id='vf-form__select' name="lang" style="padding: 3px 4px; width: 243px;">
         <option value=""><?php echo esc_attr( __( 'Select' ) ); ?></option>
         <?php
