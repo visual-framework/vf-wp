@@ -1776,10 +1776,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-article-meta-information/-/vf-article-meta-information-1.1.1.tgz#2fe4e5c9529903ae23401e3b0eedb9b894857d19"
   integrity sha512-i0zETSGlHZWXz7fwOtG9RBDaoBibl6JaCYgBKwD6CPkRHBLlR0blXSqTSECfEz+M18p400aqQkcyCdNxpkL+MA==
 
-"@visual-framework/vf-badge@^1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-badge/-/vf-badge-1.2.3.tgz#546d3bd30062ce27cf0050d671071ce7ac331d73"
-  integrity sha512-Da/tdGG9f3Wz84nzXHzWfPkpmQdYyszBDPHDyZQEK4oJlvKh06CylIg326xnZa3Szh/0jAzzMjPCxES1r4XnZw==
+"@visual-framework/vf-badge@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-badge/-/vf-badge-1.3.0.tgz#0b176156a172fe4db4b5273adb8f8e094477032d"
+  integrity sha512-kBDUEWFsfi5opfx/UsP1FI6tAnYxwG7cZBNsd6ktnXmblrxkdl+mUufiOzM3tH7iB/WTs9WhXjzqYOwqFwhCjg==
 
 "@visual-framework/vf-banner@1.7.2":
   version "1.7.2"
@@ -1853,12 +1853,12 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1-alpha.0.tgz#2dda99f7d2766c32cb46b321560ec15c8a3d55fe"
   integrity sha512-T5XSohedN4OKxqA0n44V8xvpDMAz1zAW0TGa+2a1B3lMpAWAt5WVpG2tdOQknHDQQpq/K/YRxFySSXk+G7f8Ew==
 
-"@visual-framework/vf-content@1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.5.3.tgz#7d86c4561fc915a00cc36433f2db9bd131247d90"
-  integrity sha512-2v9KtAKFKRGm6/kheaMUuFwvNhxl0GRfSBi2lYAtq8qnHrVvFTGyh35cNcMWgHI89eBRqZ5xMENGS7WB4zQcSQ==
+"@visual-framework/vf-content@1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.5.4.tgz#2dbc218ba6b8545bf38a036080a7def1ecee3c49"
+  integrity sha512-GDzj2n/X344FYQFfd1GJDinSAj0ehDZvdg/8tUL4i09mmfBWqyjbOyfKUE1EILDn7u+EB8XBYS2t1ti5TN+43A==
   dependencies:
-    "@visual-framework/vf-badge" "^1.2.3"
+    "@visual-framework/vf-badge" "^1.3.0"
     "@visual-framework/vf-blockquote" "^1.1.1"
     "@visual-framework/vf-box" "^2.3.1"
     "@visual-framework/vf-button" "^1.4.3"
