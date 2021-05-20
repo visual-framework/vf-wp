@@ -38,6 +38,7 @@
     ]
   },
   "dependencies": {
+    "@visual-framework/vf-sidebar": "^1.0.0-alpha.2",
     "gulp-better-rollup": "4.0.1",
     "list-stream": "2.0.0"
   },
