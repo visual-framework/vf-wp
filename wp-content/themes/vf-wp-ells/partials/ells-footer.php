@@ -1,6 +1,6 @@
-<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue--dark | vf-u-fullbleed"
+<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue | vf-u-fullbleed"
   id="footer-ells" style="grid-column-gap: 0">
-  <div class="vf-u-background-color--blue--dark | vf-u-margin__right--0">
+  <div class="vf-u-background-color--blue | vf-u-margin__right--0">
     <figure class="vf-figure" style="text-align: center">
       <img class="vf-figure__image | vf-u-margin__top--400"
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/04/20200527_ELLS_VisualTag_RGB_COLOR.png"
