@@ -130,11 +130,10 @@ $registration_link = get_field('labs_application_form_link');
   </div>
 </section>
 
-<section class="vf-card-container | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
- <div class="vf-card-container__inner">  
-  <div class="vf-section-header">
-   <h2 class="vf-section-header__heading">Upcoming LearningLabs</h2>
-  </div>  
+<?php /*
+<div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Upcoming LearningLabs</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
     $current_year = date('Y') . '0101';
     $llabsMore = new WP_Query (array(
@@ -150,10 +149,12 @@ $registration_link = get_field('labs_application_form_link');
         ))
      ));
     while ($llabsMore->have_posts()) : $llabsMore->the_post(); ?>
-    <?php include(locate_template('partials/vf-card-llabs.php', false, false)); ?>
+    <?php include(locate_template('partials/learninglab-more.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>
-</section>
+</div>
+
+*/ ?>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

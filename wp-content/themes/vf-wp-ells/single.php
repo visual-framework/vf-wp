@@ -90,10 +90,9 @@ get_header();
     </div>
   </div>
 </section>
-<section
-  class="vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed | category-more">
-  <h3 class="vf-section-header__heading | vf-u-margin__bottom--400">Recent posts</h3>
-  <div class="vf-grid vf-grid__col-3">
+<div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Recent updates</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
           $args = array(
             'posts_per_page' => 3,
@@ -117,7 +116,7 @@ get_header();
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
     <?php endforeach; wp_reset_postdata(); ?>
   </div>
-</section>
+        </div>
 
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

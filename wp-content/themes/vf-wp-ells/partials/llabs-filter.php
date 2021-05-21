@@ -89,8 +89,6 @@ $archive = home_url('/?post_type=learninglab');
 
 ?>
 <form class="vf-stack vf-stack-400" action="<?php echo esc_url($archive); ?>" method="get">
-  <div>
-
     <input type="hidden" name="post_type" value="learninglab">
 
     <?php
@@ -102,7 +100,7 @@ $archive = home_url('/?post_type=learninglab');
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
-      <legend class="vf-form__legend">Type</legend>
+      <label class="vf-form__label">Type</label>
       <div class="vf-form__item vf-form__item--checkbox">
         <?php 
       $selected = empty($type_selected) || empty($type_selected[0]) ? 'checked="checked"' : '';
@@ -129,7 +127,7 @@ $archive = home_url('/?post_type=learninglab');
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
-      <legend class="vf-form__legend">Format</legend>
+      <label class="vf-form__label">Format</label>
       <div class="vf-form__item vf-form__item--checkbox">
         <?php 
       $selected = empty($format_selected) || empty($format_selected[0]) ? 'checked="checked"' : '';
@@ -157,7 +155,7 @@ $archive = home_url('/?post_type=learninglab');
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
-      <legend class="vf-form__legend">Location</legend>
+      <label class="vf-form__label">Location</label>
       <div class="vf-form__item vf-form__item--checkbox">
         <?php 
       $selected = empty($location_selected) || empty($location_selected[0]) ? 'checked="checked"' : '';
@@ -190,5 +188,4 @@ $archive = home_url('/?post_type=learninglab');
     <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/learninglab'; ?>">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
-  </div>
 </form>

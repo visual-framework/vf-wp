@@ -80,8 +80,6 @@ $archive = home_url('/?post_type=teachingbase');
 
 ?>
 <form class="vf-stack vf-stack-400" action="<?php echo esc_url($archive); ?>" method="get">
-  <div>
-
     <input type="hidden" name="post_type" value="teachingbase">
 
     <?php
@@ -93,7 +91,7 @@ $archive = home_url('/?post_type=teachingbase');
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
-      <legend class="vf-form__legend">Age group</legend>
+      <label class="vf-form__label">Age group</label>
       <div class="vf-form__item vf-form__item--checkbox">
         <?php 
       $selected = empty($age_selected) || empty($age_selected[0]) ? 'checked="checked"' : '';
@@ -120,7 +118,7 @@ $archive = home_url('/?post_type=teachingbase');
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
-      <legend class="vf-form__legend">Topic area</legend>
+      <label class="vf-form__label">Topic area</label>
       <div class="vf-form__item vf-form__item--checkbox">
         <?php 
       $selected = empty($topic_selected) || empty($topic_selected[0]) ? 'checked="checked"' : '';
@@ -147,7 +145,7 @@ $archive = home_url('/?post_type=teachingbase');
     </fieldset>
 <?php if ( function_exists('icl_object_id') ) { ?>
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-      <legend class="vf-form__legend">Language</legend>
+      <label class="vf-form__label">Language</label>
       <select class='vf-form__select' id='vf-form__select' name="lang" style="padding: 3px 4px; width: 243px;">
         <option value=""><?php echo esc_attr( __( 'Select' ) ); ?></option>
         <?php
@@ -163,7 +161,7 @@ $archive = home_url('/?post_type=teachingbase');
   <?php } ?>
   
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-      <legend class="vf-form__legend">Publication year</legend>
+      <label class="vf-form__label">Publication year</label>
 
       <?php if ( ! empty($date_options)) { ?>
       <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">
@@ -187,5 +185,4 @@ $archive = home_url('/?post_type=teachingbase');
     <a class="vf-button vf-button--sm vf-button--tertiary" href="/teachingbase">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
-  </div>
 </form>
