@@ -2572,7 +2572,6 @@ var vfGaTrackOptions = {
 };
 vfGaIndicateLoaded(vfGaTrackOptions);
 vfTabs();
-vfForm__floatLabels_js.vfFormFloatLabels();
 emblContentHub();
 emblBreadcrumbs(); // if you use embl-content-hub-loader, it will automatically invoke emblNotifications
 // emblNotifications();
