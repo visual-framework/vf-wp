@@ -7,19 +7,70 @@ global $vf_theme;
 ?>
 
 <!-- SEARCH -->
+<?php /*
 <section
-  class="vf-summary-container | vf-grid vf-grid__col-4 | vf-u-fullbleed vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500">
+  class="vf-grid vf-grid__col-4 | vf-u-fullbleed vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500 | vf-content">
+  <div style="text-align: center">
+    <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/04/20200527_ELLS_VisualTag_RGB_COLOR.png"
+      style="max-width: 50%;"> </div>
+
+  <div class="vf-grid__col--span-2">
+
+    <h3 class="vf-text vf-text-heading--3 vf-u-margin__top--0">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sapien sem, tincidunt sed felis non, faucibus
+      aliquam ipsum. Aliquam convallis vitae nisl ac hendrerit.
+    </h3>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec <a>sapien</a> sem, tincidunt sed felis non,
+      <a>convallis</a> faucibus aliquam ipsum. Aliquam <a>consectetur adipiscing</a> convallis vitae nisl ac hendrerit.
+    </p>
+  </div>
   <div>
+    <form role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>"
+      class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end | vf-u-margin__bottom--600">
+      <div class="vf-sidebar__inner">
+
+        <div class="vf-form__item">
+
+          <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem">Search</label>
+          <input type="search" placeholder="Search ELLS" id="searchitem" class="vf-form__input"
+            value="<?php echo esc_attr(get_search_query()); ?>" name="s">
+        </div>
+
+        <button type="submit" class="vf-search__button | vf-button vf-button--primary"
+          value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+          <span class="vf-button__text | vf-u-sr-only">Search</span>
+
+          <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:svgjs="http://svgjs.com/svgjs" viewBox="0 0 140 140" width="140" height="140">
+            <g transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)">
+              <path
+                d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
+                fill="#FFFFFF" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"></path>
+            </g>
+          </svg>
+
+        </button>
+      </div>
+
+    </form>
+    <p><a href="#">Subscribe to our newsletter</a></p>
+
+  </div>
+</section>
+
+*/ ?>
+<section class="vf-summary-container | vf-grid vf-grid__col-4 | vf-u-fullbleed vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500">
+<div>
         <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/03/ELLS-logo.png" style="max-width: 50%;"> </div>
 
   <div class="vf-section-content | vf-grid__col--span-2">
-    
     <div>
-      <!-- <form role="search" method="get" class="vf-form  | vf-search vf-search--inline"
-        action="<?php echo esc_url(home_url('/')); ?>">
+      <form role="search" method="get" class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar" action="https://wwwdev.embl.org/ells/">
+        <div class="vf-form__item">
         <div class="vf-form__item | vf-search__item">
-          <input type="search" class="vf-form__input | vf-search__input"
-            value="<?php echo esc_attr(get_search_query()); ?>" name="s" placeholder="Search ELLS">
+          <input type="search" class="vf-form__input | vf-search__input" value="" name="s" placeholder="Search ELLS">
         </div>
         <div class="vf-form__item | vf-search__item">
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
@@ -32,33 +83,11 @@ global $vf_theme;
             <option value="learninglab" name="post_type[]">LearningLabs</option>
           </select>
         </div>
-        <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm"
-          value="<?php esc_attr_e('Search', 'vfwp'); ?>">
-      </form> -->
-      <form action="#" class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end">
-  <div class="vf-sidebar__inner">
-
-    <div class="vf-form__item">
-
-      <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem">Search</label>
-      <input type="search" placeholder="Enter your search terms" id="searchitem" class="vf-form__input">
+        <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="Search">
+      </div>
+      </form>
     </div>
-
-    <button type="submit" class="vf-search__button | vf-button vf-button--primary">
-      <span class="vf-button__text | vf-u-sr-only">Search</span>
-
-      <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" viewBox="0 0 140 140" width="140" height="140">
-        <g transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)">
-          <path d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z" fill="#FFFFFF" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"></path>
-        </g>
-      </svg>
-
-    </button>
-  </div>
-
-</form>
-    </div>
-  </div>
+      </div>
 </section>
 
 <!-- NEWS -->
@@ -149,7 +178,7 @@ Hands-on educational resource for teaching fluorescence microscopy and beyond
 
 <!-- Training -->
 
-<section class="vf-card-container | vf-u-fullbleed | vf-u-margin__bottom--600 | training-container">
+<section class="vf-card-container | vf-u-fullbleed | vf-u-margin__bottom--600 | training-container | vf-u-background-color-ui--off-white">
   <div class="vf-card-container__inner">
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading">Teacher training</h2>
