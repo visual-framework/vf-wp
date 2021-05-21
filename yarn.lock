@@ -1720,7 +1720,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-figure/-/vf-figure-1.3.0.tgz#6d60b9ee33e9e681e13752082800fb0450e8945f"
   integrity sha512-SIS/FOhMn+cPZHqF7dNJPqhE8BNNU5pR8ZZsdWXsRC1zQDGWAaz0HyuD8Xtp8MOp+4JFP2DrrGpURc3V07uYLA==
 
-"@visual-framework/vf-flag@^1.0.0-alpha.1":
+"@visual-framework/vf-flag@1.0.0-alpha.1":
   version "1.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-flag/-/vf-flag-1.0.0-alpha.1.tgz#756717f25f601d315b7bae5608c6498d15759db0"
   integrity sha512-un33ckqulSbnrfBe+vgVMDigvhVKUDhOzDb/Y+HzO+NG0nNVdnH4OHsIe+CL7kCR0iAHFgZRGx8KWaHkLbswEA==
@@ -1761,7 +1761,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-3.0.0-alpha.0.tgz#9a4153573ad369d9a616ae3596ea0809f01912be"
   integrity sha512-ZOqwzXCUfHSw3U+2bIba2+NsTXFC99+5VcFmIlvZiKLlwTJnykJ/rGuIp2NMk3C2a6ratBs3vrqnGO0QzQcoXQ==
 
-"@visual-framework/vf-form__fieldset@^2.0.0-alpha.0":
+"@visual-framework/vf-form__fieldset@2.0.0-alpha.0", "@visual-framework/vf-form__fieldset@^2.0.0-alpha.0":
   version "2.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__fieldset/-/vf-form__fieldset-2.0.0-alpha.0.tgz#41d54e6ab96c6f222d346c943167937a5b2b516f"
   integrity sha512-97pI8J9XpklCkmrNRCYoQR5nA/H2xj1Pr9r3ixfggupZT6PMhCkZh1gNazT9B9YwM8EYAwG5U+Dd/KDgaLRSFA==
