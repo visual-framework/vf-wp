@@ -11,6 +11,7 @@ $end = DateTime::createFromFormat('j F Y', $end_date);
 
 $application_deadline = get_field('labs_application_deadline');
 $topic_area = get_field('labs_topic_area');
+$format = get_field('labs_format');
 $download = get_field('labs_download');
 $contact = get_field('labs_contact');
 $organisers = get_field('labs_organisers');
@@ -66,6 +67,10 @@ $registration_link = get_field('labs_application_form_link');
           class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
       <?php } ?>
 
+      <?php if ($format) { ?>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Format:</span>&nbsp;<span
+          class="vf-u-text-color--grey"><?php echo ($format->name); ?></span></p>
+      <?php } ?>
 
       <?php if ( ! empty($contact)) { ?>
       <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
@@ -125,11 +130,10 @@ $registration_link = get_field('labs_application_form_link');
   </div>
 </section>
 
-<section class="vf-card-container | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
- <div class="vf-card-container__inner">  
-  <div class="vf-section-header">
-   <h2 class="vf-section-header__heading">Upcoming LearningLabs</h2>
-  </div>  
+<?php /*
+<div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Upcoming LearningLabs</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
     $current_year = date('Y') . '0101';
     $llabsMore = new WP_Query (array(
@@ -145,10 +149,12 @@ $registration_link = get_field('labs_application_form_link');
         ))
      ));
     while ($llabsMore->have_posts()) : $llabsMore->the_post(); ?>
-    <?php include(locate_template('partials/vf-card-llabs.php', false, false)); ?>
+    <?php include(locate_template('partials/learninglab-more.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>
-</section>
+</div>
+
+*/ ?>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

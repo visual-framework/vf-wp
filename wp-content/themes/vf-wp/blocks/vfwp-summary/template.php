@@ -31,6 +31,8 @@ if ( ! is_array($image)) {
     'itemprop' => 'image',
   ));
 }
+$date = get_field('date');
+
 
 // Function to output a banner message in the Gutenberg editor only
 $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
@@ -87,53 +89,28 @@ if ( $type === 'custom' ) {
 }
 
 if ( $type === 'post' ) {
-  $object_post = get_field('post');
-  if ($object_post instanceof WP_Post === false) {
-    $admin_banner(__('Please select a post for this summary.', 'vfwp'));
-    return;
-  }
-  // Setup first post data so template tags work
-  global $post;
-  $old_post = $post;
-  setup_postdata($post = $object_post);
-
-  $excerpt = apply_filters(
-    'get_the_excerpt',
-    $post->post_content
-  );
 ?>
 <article class="vf-summary vf-summary--news">
   <span class="vf-summary__date">
-    <time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>">
-      <?php the_time(get_option('date_format')); ?>
-    </time>
+      <?php echo $date; ?>
   </span>
   <?php
-  the_post_thumbnail('thumbnail', array(
-    'style'    => 'width: 180px;',
-    'class'    => 'vf-summary__image',
-    'loading'  => 'lazy',
-    'itemprop' => 'image',
-  ));
+    if ($image) {
+      echo $image;
+    }
+  
   ?>
   <h3 class="vf-summary__title">
-    <a href="<?php the_permalink() ?>" class="vf-summary__link">
-      <?php the_title() ?>
+  <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
+  <?php echo esc_html($title); ?>
     </a>
   </h3>
-  <p class="vf-summary__text"><?php echo $excerpt; ?></p>
+  <?php echo $text; ?>
 </article>
 <?php
-  wp_reset_postdata();
-  return;
 }
 
 if ( $type === 'event' ) {
-  $object_event = get_field('event');
-  if ($object_event instanceof WP_Post === false) {
-    $admin_banner(__('Please select an event for this summary.', 'vfwp'));
-    return;
-  }
   $event_style = get_field('event_style');
   if (empty($event_style)) {
     $event_style = 'default';
@@ -141,40 +118,30 @@ if ( $type === 'event' ) {
   if (is_array($event_style)) {
     $event_style = $event_style[0];
   }
-  // Setup first post data so template tags work
-  global $post;
-  $old_post = $post;
-  setup_postdata($post = $object_event);
-  $location = get_field('vf_event_location',$post->ID);
-  $event_type = get_field('vf_event_event_type',$post->ID);
+  $location = get_field('event_location');
+  $event_type = get_field('event_type');
 
-  $excerpt = apply_filters(
-    'get_the_excerpt',
-    $post->post_content
-  );
 ?>
 <?php if ($event_style === 'alternate') { ?>
-<a href="<?php the_permalink(); ?>"
+<a href="<?php echo esc_url($link['url']); ?>"
   class="vf-summary vf-summary--event | vf-summary--is-link vf-summary--easy vf-summary-theme--primary">
 <?php } else { ?>
   <article class="vf-summary vf-summary--event">
 <?php } ?>
   <p class="vf-summary__date">
-    <time title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>">
-      <?php the_time(get_option('date_format')); ?>
-    </time>
+  <?php echo $date; ?>
   </p>
   <h3 class="vf-summary__title">
     <?php if ($event_style !== 'alternate') { ?>
-      <a href="<?php the_permalink(); ?>" class="vf-summary__link">
+      <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
     <?php } ?>
-    <?php the_title() ?>
+    <?php echo esc_html($title); ?>
     <?php if ($event_style !== 'alternate') { ?>
       </a>
     <?php } ?>
   </h3>
-  <?php if ($event_style !== 'alternate' && ! empty($excerpt)) { ?>
-    <p class="vf-summary__text"><?php echo $excerpt; ?></p>
+  <?php if (! empty($text)) { ?>
+    <?php echo $text; ?>
   <?php } ?>
   <?php if ( ! empty($event_type)) { ?>
   <p class="vf-summary__text"><?php echo $event_type; ?></p>
@@ -194,8 +161,6 @@ if ( $type === 'event' ) {
 </article>
 <?php } ?>
 <?php
-  wp_reset_postdata();
-  return;
 }
 
 if ( $type === 'publication' ) {

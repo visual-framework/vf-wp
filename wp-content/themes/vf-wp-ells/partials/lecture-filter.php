@@ -64,7 +64,6 @@ $archive = home_url('/?post_type=insight-lecture');
 
 ?>
 <form class="vf-stack vf-stack-400" action="<?php echo esc_url($archive); ?>" method="get">
-  <div>
 
     <input type="hidden" name="post_type" value="insight-lecture">
 
@@ -78,7 +77,7 @@ $archive = home_url('/?post_type=insight-lecture');
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
 
-      <legend class="vf-form__legend">Topic area</legend>
+      <label class="vf-form__label">Topic area</label>
       <div class="vf-form__item vf-form__item--checkbox">
         <?php 
       $selected = empty($topic_selected) || empty($topic_selected[0]) ? 'checked="checked"' : '';
@@ -105,7 +104,7 @@ $archive = home_url('/?post_type=insight-lecture');
     </fieldset>
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-      <legend class="vf-form__legend">Year</legend>
+      <label class="vf-form__label">Year</label>
 
       <?php if ( ! empty($date_options)) { ?>
       <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">
@@ -129,5 +128,4 @@ $archive = home_url('/?post_type=insight-lecture');
     <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/insight-lecture'; ?>">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
-  </div>
 </form>

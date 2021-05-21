@@ -33,11 +33,7 @@ $post_id = get_the_ID();
       <?php } }
       if (($topic_area) || ($age_group)) { ?>
     </p>
-    <?php }
-    if ( function_exists('icl_object_id') ) { ?>
-    <p class="vf-summary__meta">
-      Other language(s): &nbsp&nbsp<?php wpml_post_languages_in_loop(); ?>
-    </p>
-    <?php } ?>
+    <?php }?>
+      <?php wpml_post_languages_in_loop(); ?>
   </div>
 </article>

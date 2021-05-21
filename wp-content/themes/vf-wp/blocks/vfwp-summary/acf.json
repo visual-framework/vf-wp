@@ -17,7 +17,7 @@
             },
             "choices": {
                 "custom": "Custom",
-                "post": "Post",
+                "post": "News",
                 "event": "Event",
                 "publication": "Publication"
             },
@@ -42,6 +42,13 @@
                         "field": "field_5eba88575b33d",
                         "operator": "==",
                         "value": "custom"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "post"
                     }
                 ]
             ],
@@ -75,6 +82,20 @@
                         "operator": "==",
                         "value": "custom"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "post"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
                 ]
             ],
             "wrapper": {
@@ -97,6 +118,20 @@
                         "field": "field_5eba88575b33d",
                         "operator": "==",
                         "value": "custom"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "post"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
                     }
                 ]
             ],
@@ -123,6 +158,20 @@
                     {
                         "field": "field_5eba88575b33d",
                         "operator": "==",
+                        "value": "post"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
                         "value": "custom"
                     }
                 ]
@@ -137,99 +186,6 @@
             "toolbar": "basic",
             "media_upload": 0,
             "delay": 0
-        },
-        {
-            "key": "field_5eba8a28aa227",
-            "label": "Post",
-            "name": "post",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5eba88575b33d",
-                        "operator": "==",
-                        "value": "post"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "post_type": [
-                "post"
-            ],
-            "taxonomy": "",
-            "allow_null": 1,
-            "multiple": 0,
-            "return_format": "object",
-            "ui": 1
-        },
-        {
-            "key": "field_5eba8a5d18b98",
-            "label": "Event",
-            "name": "event",
-            "type": "post_object",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5eba88575b33d",
-                        "operator": "==",
-                        "value": "event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "post_type": [
-                "vf_event"
-            ],
-            "taxonomy": "",
-            "allow_null": 1,
-            "multiple": 0,
-            "return_format": "object",
-            "ui": 1
-        },
-        {
-            "key": "field_5ebd374c3e3f0",
-            "label": "Style",
-            "name": "event_style",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5eba88575b33d",
-                        "operator": "==",
-                        "value": "event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "default": "Default",
-                "alternate": "Alternate"
-            },
-            "default_value": "default",
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "ajax": 0,
-            "placeholder": ""
         },
         {
             "key": "field_5ee0c990c7c7a",
@@ -390,6 +346,125 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_60a4f4ec2b13d",
+            "label": "Date",
+            "name": "date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "post"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j F Y",
+            "return_format": "j F Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_60a4f5272b13f",
+            "label": "Type",
+            "name": "event_type",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_60a4f5472b140",
+            "label": "Location",
+            "name": "event_location",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ebd374c3e3f0",
+            "label": "Style",
+            "name": "event_style",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5eba88575b33d",
+                        "operator": "==",
+                        "value": "event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "alternate": "Alternate"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -409,5 +484,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Summary ACF Gutenberg block",
-    "modified": 1603270586
+    "modified": 1621424934
 }

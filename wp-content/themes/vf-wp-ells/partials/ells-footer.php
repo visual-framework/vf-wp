@@ -1,6 +1,6 @@
-<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue--dark | vf-u-fullbleed"
+<div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue | vf-u-fullbleed"
   id="footer-ells" style="grid-column-gap: 0">
-  <div class="vf-u-background-color--blue--dark | vf-u-margin__right--0">
+  <div class="vf-u-background-color--blue | vf-u-margin__right--0">
     <figure class="vf-figure" style="text-align: center">
       <img class="vf-figure__image | vf-u-margin__top--400"
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/04/20200527_ELLS_VisualTag_RGB_COLOR.png"
@@ -20,15 +20,15 @@
       <div class="vf-links ells-links">
         <ul class="vf-links__list | vf-list">
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
+            <a class="vf-list__link" href="/about-us">
               About Us</a>
           </li>
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
+            <a class="vf-list__link" href="/contact">
               Contact</a>
           </li>
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="JavaScript:Void(0);">
+            <a class="vf-list__link" href="/terms-of-use">
               Terms of Use</a>
           </li>
         </ul>
@@ -37,11 +37,12 @@
         <h4 class="vf-text vf-text-heading--5">
           Subscribe to our newsletter</h4>
         <div class="vf-form__item vf-stack">
-
-          <input type="text" id="text" class="vf-form__input" placeholder="Email"
+        <form action="https://embl.us20.list-manage.com/subscribe/post?u=6407e1524014635f8879568bd&amp;id=2b6803aee1" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+          <input  type="email" value="" name="EMAIL" class="vf-form__input" placeholder="Email"
             style="padding: 3px 12px; width: 260px; display: inline-block;">
-          <a href="JavaScript:Void(0);" class="vf-button vf-button--tertiary vf-button--sm | vf-u-margin__left--200"
-            style="display: inline-block;">Subscribe</a>
+          <input  type="submit" value="Subscribe" name="subscribe" class="vf-button vf-button--tertiary vf-button--sm | vf-u-margin__left--200"
+            style="display: inline-block;">
+        </form>
         </div>
       </div>
       <div class="vf-links">
@@ -68,7 +69,7 @@
         <div class="vf-social-links vf-social-links--outline">
           <ul class="vf-social-links__list | vf-u-margin__top--0">
             <li class="vf-social-links__item">
-              <a class="vf-social-links__link" href="JavaScript:Void(0);">
+              <a class="vf-social-links__link" href="http://www.twitter.com/ELLS_Heidelberg">
                 <span class="vf-u-sr-only">
                   twitter
                 </span>
@@ -80,7 +81,7 @@
               </a>
             </li>
             <li class="vf-social-links__item">
-              <a class="vf-social-links__link" href="JavaScript:Void(0);">
+              <a class="vf-social-links__link" href="https://www.facebook.com/EMBL-ELLS-151861361512186">
                 <span class="vf-u-sr-only">
                   facebook
                 </span>

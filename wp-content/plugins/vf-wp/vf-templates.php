@@ -48,7 +48,9 @@ class VF_Templates {
   static public function default_template() {
     $post_content = '
 
-<!-- wp:acf/vf-container-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
+<!-- wp:acf/vf-container-ebi-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
+
+<!-- wp:acf/vf-container-ebi-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-ebi-global-header"} /-->
 
 <!-- wp:acf/vf-container-breadcrumbs {"id":"' . uniqid('block_') . '","name":"acf/vf-container-breadcrumbs"} /-->
 
@@ -56,7 +58,9 @@ class VF_Templates {
 
 <!-- wp:acf/vf-container-page-template {"id":"' . uniqid('block_') . '","name":"acf/vf-container-page-template"} /-->
 
-<!-- wp:acf/vf-container-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
+<!-- wp:acf/vf-container-ebi-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
+
+<!-- wp:acf/vf-container-ebi-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-ebi-global-footer"} /-->
 
 ';
     $post_content = apply_filters(
@@ -74,6 +78,8 @@ class VF_Templates {
 
 <!-- wp:acf/vf-container-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-header"} /-->
 
+<!-- wp:acf/vf-container-ebi-global-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-ebi-global-header"} /-->
+
 <!-- wp:acf/vf-container-breadcrumbs {"id":"' . uniqid('block_') . '","name":"acf/vf-container-breadcrumbs"} /-->
 
 <!-- wp:acf/vf-container-wp-groups-header {"id":"' . uniqid('block_') . '","name":"acf/vf-container-wp-groups-header"} /-->
@@ -83,6 +89,8 @@ class VF_Templates {
 <!-- wp:acf/vf-container-embl-news {"id":"' . uniqid('block_') . '","name":"acf/vf-container-embl-news"} /-->
 
 <!-- wp:acf/vf-container-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-global-footer"} /-->
+
+<!-- wp:acf/vf-container-ebi-global-footer {"id":"' . uniqid('block_') . '","name":"acf/vf-container-ebi-global-footer"} /-->
 
 ';
     $post_content = apply_filters(
@@ -102,11 +110,23 @@ class VF_Templates {
         array()
       ),
       array(
+        'acf/vf-container-ebi-global-header',
+        array()
+      ),
+      array(
+        'acf/vf-container-breadcrumbs',
+        array()
+      ),
+      array(
         'acf/vf-container-page-template',
         array()
       ),
       array(
         'acf/vf-container-global-footer',
+        array()
+      ),
+      array(
+        'acf/vf-container-ebi-global-footer',
         array()
       ),
     );

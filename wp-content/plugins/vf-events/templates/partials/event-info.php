@@ -179,7 +179,7 @@ $abstract_date = new DateTime($abstract_closing);
               || 
               (($application_closing) && ($application_date > $now))) { ?>
       <div style="display: inline-block;">
-        <a href="<?php echo esc_url($registration_link); ?>"><button
+        <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
             class="vf-button vf-button--primary vf-button--sm"><?php echo($register_button); ?></button></a>
       </div>
       <?php }} ?>
@@ -187,7 +187,7 @@ $abstract_date = new DateTime($abstract_closing);
       <?php if ( ! empty($abstract_link)) { 
                 if (($abstract_date > $now)) {?>
       <div style="display: inline-block;">
-        <a href="<?php echo esc_url($abstract_link); ?>"><button
+        <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
             class="vf-button vf-button--tertiary vf-button--sm"><?php echo($abstract_button); ?></button></a>
       </div>
       <?php }} ?>

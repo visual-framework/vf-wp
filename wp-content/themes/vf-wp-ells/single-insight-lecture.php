@@ -130,21 +130,19 @@ $registration_link = get_field('il_registration_link');
   </div>
 </section>
 
-<section class="vf-card-container | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--600 | vf-u-padding__bottom--400 | vf-u-fullbleed">
-  <div class="vf-card-container__inner">  
-    <div class="vf-section-header">
-     <h2 class="vf-section-header__heading">Past Insight Lectures</h2>
-    </div>  
+<div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Past Insight Lectures</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
     $insightMore = new WP_Query (array(
       'posts_per_page' => 3, 
       'post_type' => 'insight-lecture',
       'post__not_in'   => array( get_the_ID() ), ));
       while ($insightMore->have_posts()) : $insightMore->the_post(); ?>
-    <?php include(locate_template('partials/vf-summary-lecture-more.php', false, false)); ?>
+    <?php include(locate_template('partials/lecture-more.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
   </div>
-</section>
+</div>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

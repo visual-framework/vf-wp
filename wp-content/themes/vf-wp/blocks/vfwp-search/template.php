@@ -1,45 +1,36 @@
-<style>
-  .vf-search--inline .vf-search__input {
-    min-width: 300px;
-  }
+<?php
+$type = get_field('search_type');
 
-  .vf-search--inline .vf-form__select {
-    padding: 8px 12px;
-  }
+if (empty($type)) {
+  $type == 'default';
+}
+?>
 
-  .vf-search--inline .vf-search__item:not(:first-child) {
-    padding-left: 10px;
-  }
-
-  .vf-search--inline .vf-search__button {
-    top: -5px;
-  }
-
-</style>
 <div>
-  <form role="search" method="get" class="vf-form | vf-search vf-search--inline"
+  <form role="search" method="get"
+    class="vf-form vf-form--search vf-form--search--<?php echo esc_html($type); ?> | vf-sidebar vf-sidebar--end"
     action="<?php echo esc_url(home_url('/')); ?>">
-    <div class="vf-form__item | vf-search__item">
-      <?php if (get_field('search_type') == 'default') { ?>
-      <input type="search" class="vf-form__input | vf-search__input" value="<?php echo esc_attr(get_search_query()); ?>"
-        name="s" placeholder="Enter your search term">
+    <div class="vf-sidebar__inner">
+      <div class="vf-form__item | vf-search__item">
+        <input type="search" class="vf-form__input | vf-search__input"
+          value="<?php echo esc_attr(get_search_query()); ?>" name="s" placeholder="Search term">
+      </div>
+      <button type="submit" class="vf-search__button | vf-button vf-button--primary"
+        value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+        <span class="vf-button__text 
+        <?php if ($type == 'mini') { echo '| vf-u-sr-only'; } ?>">Search</span>
+        <?php if ($type == 'mini') { ?>
+        <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"
+          viewBox="0 0 140 140" width="140" height="140">
+          <g transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)">
+            <path
+              d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
+              fill="#FFFFFF" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"></path>
+          </g>
+        </svg>
+        <?php } ?>
+      </button>
     </div>
-    <?php }
-    else if (get_field('search_type') == 'filter') { ?>
-    <input type="search" class="vf-form__input | vf-search__input" value="<?php echo esc_attr(get_search_query()); ?>"
-      name="s" placeholder="Enter your search term">
-</div>
-<div class="vf-form__item | vf-search__item">
-  <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
-  <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
-    <option value="all" selected="">Everything</option>
-    <option value="page" name="post_type[]">Pages</option>
-    <option value="post" name="post_type[]">Posts</option>
-  </select>
-</div>
-
-<?php }?>
-<input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm"
-  value="<?php esc_attr_e('Search', 'vfwp'); ?>">
-</form>
+  </form>
 </div>
