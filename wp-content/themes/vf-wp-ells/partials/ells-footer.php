@@ -37,11 +37,12 @@
         <h4 class="vf-text vf-text-heading--5">
           Subscribe to our newsletter</h4>
         <div class="vf-form__item vf-stack">
-
-          <input type="text" id="text" class="vf-form__input" placeholder="Email"
+        <form action="https://embl.us20.list-manage.com/subscribe/post?u=6407e1524014635f8879568bd&amp;id=2b6803aee1" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+          <input  type="email" value="" name="EMAIL" class="vf-form__input" placeholder="Email"
             style="padding: 3px 12px; width: 260px; display: inline-block;">
-          <a href="JavaScript:Void(0);" class="vf-button vf-button--tertiary vf-button--sm | vf-u-margin__left--200"
-            style="display: inline-block;">Subscribe</a>
+          <input  type="submit" value="Subscribe" name="subscribe" class="vf-button vf-button--tertiary vf-button--sm | vf-u-margin__left--200"
+            style="display: inline-block;">
+        </form>
         </div>
       </div>
       <div class="vf-links">
