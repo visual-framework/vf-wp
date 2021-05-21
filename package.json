@@ -39,9 +39,9 @@
   },
   "dependencies": {
     "@visual-framework/vf-button": "1.4.3",
-    "@visual-framework/vf-flag": "^1.0.0-alpha.1",
+    "@visual-framework/vf-flag": "1.0.0-alpha.1",
     "@visual-framework/vf-form": "2.0.0-alpha.1",
-    "@visual-framework/vf-form__fieldset": "^2.0.0-alpha.0",
+    "@visual-framework/vf-form__fieldset": "2.0.0-alpha.0",
     "@visual-framework/vf-sidebar": "1.0.0-alpha.2",
     "gulp-better-rollup": "4.0.1",
     "list-stream": "2.0.0"
