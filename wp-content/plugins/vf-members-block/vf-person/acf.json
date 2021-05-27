@@ -136,6 +136,7 @@
                 "image": "Image",
                 "name": "Name",
                 "position": "Position",
+                "team": "Team",
                 "email": "Email",
                 "phones": "Phones",
                 "mobile": "Mobile",
@@ -167,6 +168,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF Person ACF Gutenberg block",
-    "modified": 1594966419
+    "modified": 1622098556
   }
   
