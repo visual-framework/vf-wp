@@ -35,10 +35,15 @@ class VF_Groups_Customize {
       9, 1
     );
     */
+    /**
+     * @deprecated 
+     *
+
     add_filter(
       'body_class',
       array($this, 'body_class')
     );
+    */
     /**
      * @deprecated https://github.com/visual-framework/vf-wp/issues/141
      *
@@ -155,11 +160,12 @@ class VF_Groups_Customize {
     ));
     */
   }
+  
 
   /**
-   * Add global theme to body class attribute
-   */
-  public function body_class($classes) {
+   * @deprecated Add global theme to body class attribute
+   *
+   public function body_class($classes) {
     $theme = get_theme_mod(
       'vf_theme',
       array_keys($this->themes)[0]
@@ -172,7 +178,7 @@ class VF_Groups_Customize {
     $classes[] = "vf-global-layout--{$layout}";
     return $classes;
   }
-
+  */
   /**
    * Output custom inline <head> stuff
    * @deprecated https://github.com/visual-framework/vf-wp/issues/141
