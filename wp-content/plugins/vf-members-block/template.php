@@ -41,6 +41,7 @@ $vars = array(
   'pattern'                   => "vf-profile-{$variation}",
   'limit'                     => $limit,
   'sort-field-value[field_person_name_last]' => 'DSC',
+  'filter-fields-empty'       => 'field_person_visible_internally',
   'filter-ref-entity[field_person_positions][title]' => "",
   'hide[team,' . $hide_fields . ']' => 1
 );
