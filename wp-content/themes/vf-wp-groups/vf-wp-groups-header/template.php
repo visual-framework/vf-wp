@@ -21,10 +21,8 @@ if (empty($nav)) {
 // wp_reset_postdata();
 
 ?>
-<header class="vf-header">
 <?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
   <?php if ($nav == 1) {
     get_template_part('vf-wp-groups-header/vf-navigation');
   }
   ?>
-</header>
