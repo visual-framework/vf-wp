@@ -575,7 +575,7 @@ function vfGaInit(vfGaTrackOptions) {
     };
 
     var riskCheck = function riskCheck(e) {
-      input = e.srcElement.value;
+      var input = e.srcElement.value;
 
       if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input)) {
         var domain = input.replace(/.*@/, "");
