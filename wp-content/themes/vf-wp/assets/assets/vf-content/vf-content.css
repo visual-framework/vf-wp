@@ -139,7 +139,7 @@
 
 /*!
  * Component: @visual-framework/vf-badge
- * Version: 1.3.0
+ * Version: 2.0.1
  * Location: components/undefined
  */
 .vf-badge {
@@ -147,7 +147,8 @@
   font-size: 16px;
   font-weight: 700;
   line-height: 1;
-  border: 1px solid;
+  border: 2px solid;
+  color: inherit;
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
@@ -155,20 +156,6 @@
   padding: 4px 8px;
   text-decoration: none;
   text-transform: uppercase;
-  color: #ffffff;
-  color: #ffffff;
-  background-color: #54585a;
-  border-color: #54585a;
-}
-.vf-badge:visited {
-  color: #ffffff;
-}
-.vf-badge:visited:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
-.vf-badge:hover {
-  color: #ffffff;
 }
 
 .vf-badge--primary {
@@ -177,17 +164,17 @@
   color: #ffffff;
 }
 a.vf-badge .vf-badge--primary {
-  color: #000000;
+  color: #ffffff;
 }
 a.vf-badge .vf-badge--primary:visited {
-  color: #000000;
+  color: #ffffff;
 }
 a.vf-badge .vf-badge--primary:visited:hover {
-  color: #000000;
+  color: #ffffff;
   text-decoration: underline;
 }
 a.vf-badge .vf-badge--primary:hover {
-  color: #000000;
+  color: #ffffff;
 }
 
 a.vf-badge--primary:hover {
@@ -195,105 +182,31 @@ a.vf-badge--primary:hover {
   border-color: #193f90;
 }
 
-.vf-badge--outline {
-  background-color: transparent;
-  border-color: #54585a;
-  color: #54585a;
-}
-a.vf-badge--outline:hover {
-  background-color: transparent;
-}
-
-.vf-badge--outline[class*=primary] {
+.vf-badge--secondary {
   background-color: transparent;
   border-color: #3b6fb6;
   color: #3b6fb6;
 }
-a.vf-badge--outline[class*=primary]:hover {
+a.vf-badge--secondary:hover {
   background-color: transparent;
   border-color: #193f90;
   color: #193f90;
 }
 
-html:not(.vf-disable-deprecated) .vf-badge--pill {
-  border-radius: 500px;
-}
-html:not(.vf-disable-deprecated) .vf-badge--rounded {
-  border-radius: 4px;
-}
-html:not(.vf-disable-deprecated) .vf-badge--square {
-  border: 0;
-  height: 12px;
-  margin: 0;
-  padding: 0;
-  position: relative;
-  width: 12px;
-}
-html:not(.vf-disable-deprecated) .vf-badge--phases {
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  margin: 0 12px 0 0;
-  min-width: 52px;
-}
-html:not(.vf-disable-deprecated) .vf-badge--secondary {
-  background-color: #18974c;
-  border-color: #18974c;
-  color: #000000;
-}
-a.vf-badge html:not(.vf-disable-deprecated) .vf-badge--secondary {
-  color: #000000;
-}
-a.vf-badge html:not(.vf-disable-deprecated) .vf-badge--secondary:visited {
-  color: #000000;
-}
-a.vf-badge html:not(.vf-disable-deprecated) .vf-badge--secondary:visited:hover {
-  color: #000000;
-  text-decoration: underline;
-}
-a.vf-badge html:not(.vf-disable-deprecated) .vf-badge--secondary:hover {
-  color: #000000;
-}
-html:not(.vf-disable-deprecated) .vf-badge--tertiary {
-  color: #ffffff;
+.vf-badge--tertiary {
   color: #ffffff;
   background-color: #54585a;
   border-color: #54585a;
 }
-html:not(.vf-disable-deprecated) .vf-badge--tertiary:visited {
+.vf-badge--tertiary:visited {
   color: #ffffff;
 }
-html:not(.vf-disable-deprecated) .vf-badge--tertiary:visited:hover {
+.vf-badge--tertiary:visited:hover {
   color: #ffffff;
   text-decoration: underline;
 }
-html:not(.vf-disable-deprecated) .vf-badge--tertiary:hover {
+.vf-badge--tertiary:hover {
   color: #ffffff;
-}
-html:not(.vf-disable-deprecated) .vf-badge--outline[class*=secondary] {
-  background-color: transparent;
-  border-color: #18974c;
-  color: #18974c;
-}
-ahtml:not(.vf-disable-deprecated) .vf-badge--outline[class*=secondary]:hover {
-  background-color: transparent;
-  border-color: #007b53;
-  color: #007b53;
-}
-
-html:not(.vf-disable-deprecated) .vf-badge--outline[class*=tertiary] {
-  background-color: transparent;
-  border-color: #54585a;
-  color: #54585a;
-}
-ahtml:not(.vf-disable-deprecated) .vf-badge--outline[class*=tertiary]:hover {
-  background-color: transparent;
 }
 
 /*!
@@ -1281,7 +1194,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-blockquote
- * Version: 1.1.1
+ * Version: 1.2.0
  * Location: components/undefined
  */
 .vf-blockquote {
@@ -1484,7 +1397,7 @@ html:not(.vf-disable-deprecated) .vf-text-button--1 {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.5.4
+ * Version: 1.5.5
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {
