@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 ?>
 <nav class="vf-navigation vf-navigation--main | vf-cluster | vf-u-padding__top--0" style="margin-bottom: 1rem !important;">
-  <ul class="vf-navigation__list | vf-list--inline | vf-cluster__inner">
+  <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
 <?php
 
 if (has_nav_menu('primary')) {
