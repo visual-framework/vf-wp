@@ -10,19 +10,11 @@ if ( ! $vf_plugin instanceof VF_WP_Groups_Header) {
   return;
 }
 
-
-$nav = get_field('vf_navigation_enable');
-
-if (empty($nav)) {
-  $nav == 1;
-}
-
 // Reset query to main template (not `$vf_plugin->post()`)
 // wp_reset_postdata();
 
 ?>
-<?php get_template_part('vf-wp-groups-header/vf-hero'); ?>
-  <?php if ($nav == 1) {
-    get_template_part('vf-wp-groups-header/vf-navigation');
-  }
-  ?>
+<?php 
+get_template_part('vf-wp-groups-header/vf-hero'); 
+get_template_part('vf-wp-groups-header/vf-navigation');
+?>
