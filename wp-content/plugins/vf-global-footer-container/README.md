@@ -1,6 +1,6 @@
 # Global Footer (container)
 
-Display the Beta notification from the Content Hub.
+Display the EMBL global footer from the Content Hub.
 
 ## Configuration
 
@@ -20,6 +20,6 @@ Post meta:
 ### Node ID
 
 **Key**: `vf_global_footer_node_id`
-**Value**: integer (optional, default: 569)
+**Value**: integer (optional, default: 108436)
 
 The Content Hub node ID of the Global Footer to request.
