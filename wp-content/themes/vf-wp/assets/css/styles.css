@@ -2,7 +2,7 @@
  * Version: 1.0.0-beta.4
  * Location: components/vf-componenet-rollup
  * VF Core version in use: 2.2.25
- * Build time: Tue, 08 Jun 2021 05:08:27 GMT
+ * Build time: Tue, 08 Jun 2021 05:19:21 GMT
  */:root{--vf-color--green: #18974c;--vf-color--green--darkest: #0a5032;--vf-color--green--dark: #007b53;--vf-color--green--light: #6cc24a;--vf-color--green--lightest: #d0debb;--vf-color--grey: #707372;--vf-color--grey--darkest: #373a36;--vf-color--grey--dark: #54585a;--vf-color--grey--light: #a8a99e;--vf-color--grey--lightest: #d0d0ce;--vf-color--red: #d41645;--vf-color--red--dark: #a6093d;--vf-color--red--light: #e58f9e;--vf-color--blue: #3b6fb6;--vf-color--blue--dark: #193f90;--vf-color--blue--light: #8bb8e8;--vf-color--purple: #734595;--vf-color--purple--dark: #563d82;--vf-color--purple--light: #cba3d8;--vf-color--orange: #f49e17;--vf-color--orange--dark: #b65417;--vf-color--orange--light: #efc06e;--vf-color--yellow: #f4c61f;--vf-color--yellow--dark: #ffb81c;--vf-color--yellow--light: #fdd757;--vf-color--bright-green: #a1be1f;--vf-color--bright-green--dark: #7fb428;--vf-color--bright-green--light: #e2e868}:root{--vf-theme--primary: #3b6fb6;--vf-theme--primary--dark: #193f90;--vf-theme--secondary: #18974c;--vf-theme--secondary--dark: #007b53;--vf-theme--tertiary: #54585a;--vf-theme--quaternary: #f4c61f;--vf-theme--quinary: #d0d0ce}:root{--vf-ui-color--black: #000000;--vf-ui-color--grey: #d8d8d8;--vf-ui-color--grey--light: #f3f3f3;--vf-ui-color--yellow: #fffadc;--vf-ui-color--red: #d32f2f;--vf-ui-color--white: #ffffff;--vf-ui-color--off-white: #fafafa}:root{--vf-color--neutral--0: #ffffff;--vf-color--neutral--100: #f3f3f3;--vf-color--neutral--200: #e4e4e4;--vf-color--neutral--300: #d0d0ce;--vf-color--neutral--400: #a9abaa;--vf-color--neutral--500: #8d8f8e;--vf-color--neutral--600: #707372;--vf-color--neutral--700: #54585a;--vf-color--neutral--800: #373a36;--vf-color--neutral--900: #000000}:root{--vf-body-width: 80em;--page-grid-gap: 1rem;--embl-grid-module--prime: 16rem;--embl-grid-spacing-normaliser: 0px}@media(min-width: 75em){:root{--page-grid-gap: 2rem}}/*!
  * Component: @visual-framework/vf-font-plex-mono
  * Version: 1.1.1
@@ -35,12 +35,12 @@
  * Component: @visual-framework/vf-flag
  * Version: 1.0.0-alpha.1
  * Location: components/vf-core-components/vf-flag
- * Build time: Tue, 08 Jun 2021 05:08:27 GMT
+ * Build time: Tue, 08 Jun 2021 05:19:21 GMT
  */.vf-flag{display:table;width:auto}.vf-flag__media{display:table-cell;padding-right:1rem;padding-right:var(--vf-flag--spacing, 1rem)}.vf-flag__media>*{display:block}.vf-flag__body{display:table-cell;width:100%}.vf-flag--top .vf-flag__body,.vf-flag--top .vf-flag__media{vertical-align:top}.vf-flag--middle .vf-flag__body,.vf-flag--middle .vf-flag__media{vertical-align:middle}.vf-flag--bottom .vf-flag__body,.vf-flag--bottom .vf-flag__media{vertical-align:bottom}.vf-flag--reversed .vf-flag__body,.vf-flag--reversed .vf-flag__media{padding-left:1rem;padding-left:var(--vf-flag--spacing, 1rem);padding-right:0 !important}.vf-flag--200{--vf-flag--spacing: 0.5rem}.vf-flag--400{--vf-flag--spacing: 1rem}.vf-flag--500{--vf-flag--spacing: 1.25rem}.vf-flag--600{--vf-flag--spacing: 1.5rem}.vf-flag--800{--vf-flag--spacing: 2rem}.vf-flag--1200{--vf-flag--spacing: 3rem}.vf-flag--1600{--vf-flag--spacing: 4rem}/*!
  * Component: @visual-framework/vf-sidebar
  * Version: 1.0.0-alpha.2
  * Location: components/vf-core-components/vf-sidebar
- * Build time: Tue, 08 Jun 2021 05:08:27 GMT
+ * Build time: Tue, 08 Jun 2021 05:19:21 GMT
  */.vf-sidebar{overflow:hidden}.vf-sidebar>*{display:-webkit-box;display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin:calc(var(--vf-sidebar-spacing, 1rem) / 2 * -1)}.vf-sidebar>*>*{margin:calc(var(--vf-sidebar-spacing, 1rem) / 2);-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.vf-sidebar--end>*>:first-child{-ms-flex-preferred-size:0;flex-basis:0;-webkit-box-flex:999;-ms-flex-positive:999;flex-grow:999;min-width:calc(var(--vf-sidebar-main-width, 50%) - var(--vf-sidebar-spacing, 1rem) )}.vf-sidebar--start>*>:last-child{-ms-flex-preferred-size:0;flex-basis:0;-webkit-box-flex:999;-ms-flex-positive:999;flex-grow:999;min-width:calc(var(--vf-sidebar-main-width, 50%) - var(--vf-sidebar-spacing, 1rem) )}.vf-sidebar--400{--vf-sidebar-spacing: 1rem}.vf-sidebar--600{--vf-sidebar-spacing: 1.5rem}.vf-sidebar--800{--vf-sidebar-spacing: 2rem}/*!
 * Component: @visual-framework/embl-grid
 * Version: 2.1.2
