@@ -20,7 +20,7 @@ class VF_Publications extends VF_Plugin {
 
   protected $config = array(
     'post_name'  => 'vf_publications',
-    'post_title' => 'Team publications',
+    'post_title' => 'Publications',
   );
 
   // Plugin uses Content Hub API
