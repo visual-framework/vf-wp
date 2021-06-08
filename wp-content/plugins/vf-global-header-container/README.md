@@ -1,6 +1,6 @@
 # Global Header (container)
 
-Display the Beta notification from the Content Hub.
+Display the EMBL global header from the Content Hub.
 
 ## Configuration
 
@@ -20,6 +20,6 @@ Post meta:
 ### Node ID
 
 **Key**: `vf_global_header_node_id`
-**Value**: integer (optional, default: 574)
+**Value**: integer (optional, default: 108434)
 
 The Content Hub node ID of the Global Header to request.

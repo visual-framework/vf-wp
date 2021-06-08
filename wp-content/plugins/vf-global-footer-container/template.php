@@ -4,7 +4,7 @@ $acf_id = isset($acf_id) ? $acf_id : false;
 
 $id = get_field('vf_global_footer_node_id', $acf_id);
 $id = intval($id);
-$id = $id ? $id : 569;
+$id = $id ? $id : 108436;
 
 $vars = array(
   'source'              => 'contenthub',
