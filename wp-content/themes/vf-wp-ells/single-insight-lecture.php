@@ -32,11 +32,12 @@ $registration_link = get_field('il_registration_link');
       <?php the_post_thumbnail( 'full', array( 'class' => 'vf-figure__image' ) ); ?>
     </figure>
     <div>
-      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
-        <span class="vf-u-text-color--grey">
-          <?php 
-            if ( ! empty($start_date)) {
-              if ($end_date) { 
+      <?php 
+            if ( ! empty($start_date)) { ?>
+              <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
+                <span class="vf-u-text-color--grey">
+            <?php  
+            if ($end_date) { 
               if ($start->format('F') == $end->format('F')) {
                   echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
               else {
