@@ -25,6 +25,10 @@ $embl_terms = get_field('embl_terms');
 $keyword = get_field('keyword');
 $ids = get_field('ids');
 $tags = get_field('tags');
+$display = get_field('display_publication');
+if (empty($display)) {
+  $display = 'EMBL News';
+}
 
 // Validate values
 $limit = intval($limit);
@@ -46,7 +50,7 @@ $url = add_query_arg(array(
   'source'                    => 'contenthub',
   'pattern'                   => 'vf-news-item-default',
   'filter-content-type'       => 'article',
-  'filter-field-value[field_display_publication]' => 'EMBL News',
+  'filter-field-value[field_display_publication]' => $display,
   'sort-field-value[created]' => 'DESC',
 ), $url);
 

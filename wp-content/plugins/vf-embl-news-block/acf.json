@@ -2,205 +2,230 @@
   "key": "group_5eb007dcb2ba2",
   "title": "VF EMBL News",
   "fields": [
-    {
-      "key": "field_5eb014ed283d9",
-      "label": "Limit",
-      "name": "limit",
-      "type": "range",
-      "instructions": "Maximum number of articles to display.",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
+      {
+          "key": "field_60bf5b1d10f6d",
+          "label": "Display publications",
+          "name": "display_publication",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "choices": {
+              "embl": "EMBL News",
+              "embl-ebi": "EMBL-EBI News"
+          },
+          "default_value": "embl",
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 0,
+          "return_format": "label",
+          "ajax": 0,
+          "placeholder": ""
       },
-      "default_value": 3,
-      "min": 1,
-      "max": 20,
-      "step": "",
-      "prepend": "",
-      "append": ""
-    },
-    {
-      "key": "field_5eb01560283da",
-      "label": "Search by",
-      "name": "type",
-      "type": "select",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
+      {
+          "key": "field_5eb014ed283d9",
+          "label": "Limit",
+          "name": "limit",
+          "type": "range",
+          "instructions": "Maximum number of articles to display.",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": 3,
+          "min": 1,
+          "max": 20,
+          "step": "",
+          "prepend": "",
+          "append": ""
       },
-      "choices": {
-        "latest": "Latest",
-        "taxonomy": "EMBL Taxonomy",
-        "keyword": "Keyword",
-        "ids": "Specific ID(s)",
-        "tags": "Free Tag(s)"
+      {
+          "key": "field_5eb01560283da",
+          "label": "Search by",
+          "name": "type",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "choices": {
+              "latest": "Latest",
+              "taxonomy": "EMBL Taxonomy",
+              "keyword": "Keyword",
+              "ids": "Specific ID(s)",
+              "tags": "Free Tag(s)"
+          },
+          "default_value": "latest",
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 0,
+          "return_format": "value",
+          "ajax": 0,
+          "placeholder": ""
       },
-      "default_value": ["latest"],
-      "allow_null": 0,
-      "multiple": 0,
-      "ui": 0,
-      "return_format": "value",
-      "ajax": 0,
-      "placeholder": ""
-    },
-    {
-      "key": "field_5eb029fdc00fb",
-      "label": "Latest",
-      "name": "",
-      "type": "message",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_5eb01560283da",
-            "operator": "==",
-            "value": "latest"
-          }
-        ],
-        [
-          {
-            "field": "field_5eb01560283da",
-            "operator": "==empty"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
+      {
+          "key": "field_5eb029fdc00fb",
+          "label": "Latest",
+          "name": "",
+          "type": "message",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5eb01560283da",
+                      "operator": "==",
+                      "value": "latest"
+                  }
+              ],
+              [
+                  {
+                      "field": "field_5eb01560283da",
+                      "operator": "==empty"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "message": "Show the latest news with no filter.",
+          "new_lines": "wpautop",
+          "esc_html": 0
       },
-      "message": "Show the latest news with no filter.",
-      "new_lines": "wpautop",
-      "esc_html": 0
-    },
-    {
-      "key": "field_5eb01627283db",
-      "label": "EMBL Taxonomy",
-      "name": "embl_terms",
-      "type": "taxonomy",
-      "instructions": "Filter news by EMBL taxonomy term.",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_5eb01560283da",
-            "operator": "==",
-            "value": "taxonomy"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
+      {
+          "key": "field_5eb01627283db",
+          "label": "EMBL Taxonomy",
+          "name": "embl_terms",
+          "type": "taxonomy",
+          "instructions": "Filter news by EMBL taxonomy term.",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5eb01560283da",
+                      "operator": "==",
+                      "value": "taxonomy"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "taxonomy": "embl_taxonomy",
+          "field_type": "select",
+          "allow_null": 1,
+          "add_term": 0,
+          "save_terms": 0,
+          "load_terms": 0,
+          "return_format": "id",
+          "multiple": 0
       },
-      "taxonomy": "embl_taxonomy",
-      "field_type": "select",
-      "allow_null": 1,
-      "add_term": 0,
-      "save_terms": 0,
-      "load_terms": 0,
-      "return_format": "id",
-      "multiple": 0
-    },
-    {
-      "key": "field_5eb01691283dc",
-      "label": "Keyword",
-      "name": "keyword",
-      "type": "text",
-      "instructions": "Filter news by a keyword search.",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_5eb01560283da",
-            "operator": "==",
-            "value": "keyword"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
+      {
+          "key": "field_5eb01691283dc",
+          "label": "Keyword",
+          "name": "keyword",
+          "type": "text",
+          "instructions": "Filter news by a keyword search.",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5eb01560283da",
+                      "operator": "==",
+                      "value": "keyword"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
       },
-      "default_value": "",
-      "placeholder": "",
-      "prepend": "",
-      "append": "",
-      "maxlength": ""
-    },
-    {
-      "key": "field_5eb016ca283dd",
-      "label": "Article ID(s)",
-      "name": "ids",
-      "type": "text",
-      "instructions": "Filter news by article IDs (comma separated, e.g. \"9996, 12060\").",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_5eb01560283da",
-            "operator": "==",
-            "value": "ids"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
+      {
+          "key": "field_5eb016ca283dd",
+          "label": "Article ID(s)",
+          "name": "ids",
+          "type": "text",
+          "instructions": "Filter news by article IDs (comma separated, e.g. \"9996, 12060\").",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5eb01560283da",
+                      "operator": "==",
+                      "value": "ids"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
       },
-      "default_value": "",
-      "placeholder": "",
-      "prepend": "",
-      "append": "",
-      "maxlength": ""
-    },
-    {
-      "key": "field_5eb01805283df",
-      "label": "Free Tag(s)",
-      "name": "tags",
-      "type": "text",
-      "instructions": "Filter news by tags (comma separated, e.g. \"bioinformatics, chemistry\").\r\n<br>\r\n<b>Please note: free tag search has yet to be implemented.</b>",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_5eb01560283da",
-            "operator": "==",
-            "value": "tags"
-          }
-        ]
-      ],
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "default_value": "",
-      "placeholder": "",
-      "prepend": "",
-      "append": "",
-      "maxlength": ""
-    }
+      {
+          "key": "field_5eb01805283df",
+          "label": "Free Tag(s)",
+          "name": "tags",
+          "type": "text",
+          "instructions": "Filter news by tags (comma separated, e.g. \"bioinformatics, chemistry\").\r\n<br>\r\n<b>Please note: free tag search has yet to be implemented.<\/b>",
+          "required": 0,
+          "conditional_logic": [
+              [
+                  {
+                      "field": "field_5eb01560283da",
+                      "operator": "==",
+                      "value": "tags"
+                  }
+              ]
+          ],
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
+      }
   ],
   "location": [
-    [
-      {
-        "param": "block",
-        "operator": "==",
-        "value": "acf/vf-embl-news"
-      }
-    ]
+      [
+          {
+              "param": "block",
+              "operator": "==",
+              "value": "acf\/vf-embl-news"
+          }
+      ]
   ],
   "menu_order": 0,
   "position": "normal",
@@ -210,5 +235,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "VF EMBL News ACF Gutenberg block",
-  "modified": 1588603591
+  "modified": 1623217591
 }
