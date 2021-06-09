@@ -3,6 +3,7 @@
 $title = esc_html(get_the_title());
 $user_id = get_the_author_meta('ID');
 $show_author = get_field('ells_show_author');
+$social_url = get_the_permalink();
 
 get_header();
 
@@ -52,7 +53,7 @@ get_header();
       <ul class="vf-social-links__list">
         <li class="vf-social-links__item">
           <a class="vf-social-links__link"
-            href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
+            href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=ELLS_Heidelberg">
             <span class="vf-u-sr-only">twitter</span>
 
             <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
@@ -63,7 +64,6 @@ get_header();
 
         </li>
         <li class="vf-social-links__item">
-
           <a class="vf-social-links__link"
             href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
             <span class="vf-u-sr-only">facebook</span>
@@ -79,7 +79,6 @@ get_header();
           <a class="vf-social-links__link"
             href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
             <span class="vf-u-sr-only">linkedin</span>
-
             <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
               viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
               <use xlink:href="#vf-social--linkedin"></use>

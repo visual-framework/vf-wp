@@ -7,11 +7,11 @@ get_header();
   <div class="vf-grid__col--span-3">
     <h1 class="vf-text vf-text-heading--1">Learning LABs
     </h1>
-    <p>The 1-3 day courses provide a mix of scientific seminars, hands-on activities, lab experiments and new teaching
-      resources, covering cutting-edge research and technologies and illustrate how these topics can be transferred to
-      the classroom. As of 2017, ELLS also offers virtual teacher training opportunities.
+    <p>Our professional development opportunities for teachers aim to empower educators to share the latest developments in life sciences with their students. Our courses are open to science educators teaching at secondary schools in Europe and beyond.
+
     </p>
-    <p>Any upcoming ELLS LearningLABs will be advertised via this website and listed below.</p>
+    <p>The ELLS LearningLABs take either place face-to-face over 2–3 days or virtually across several weeks. All courses provide an update on current research and offer teaching and learning materials that bring real-life science into the classroom. Face-to-face courses include training in laboratory or bioinformatics practices. All of our training is free of charge for participants.
+</p>
   </div>
 </div>
 
@@ -71,6 +71,7 @@ wp_reset_postdata();
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
         } ?>
       <div class="vf-grid"> <?php vf_pagination();?></div>
+      <p><a href="past-ells-learninglabs">See the list of past LearningLABs</a></p>
     </div>
   </div>
 </section>

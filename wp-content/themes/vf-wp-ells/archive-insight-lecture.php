@@ -11,8 +11,10 @@ $summary = get_field('il_summary');
   <div class="vf-grid__col--span-3">
     <h1 class="vf-text vf-text-heading--1">Insight Lectures
     </h1>
-    <p>The lectures are live streamed to school across the globe and made available online after the event.</p>
-    <p>There are currently ten lectures available, with topics ranging from genomics and neuroscience to ocean diversity, advances in light microscopy and the study of macromolecules.
+    <p>Since its start in 2003, the EMBL Insight Lecture series has been inspiring thousands of young learners from across the world. Each year, a senior EMBL scientist presents their research on a cutting-edge topic in the life sciences in a lecture specifically designed for a secondary school student audience. </p>
+    <p>We invite young learners aged 16 to 19 to attend the virtual event with their school classes or as individuals. 
+    </p>
+    <p>Recordings of the lectures are available on our website. The lectures cover a wide range of life sciences topics, from genomics and neuroscience, to ocean diversity, advances in light microscopy and the study of macromolecules. 
     </p>
   </div>
 </div>
