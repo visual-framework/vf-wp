@@ -71,6 +71,7 @@ wp_reset_postdata();
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
         } ?>
       <div class="vf-grid"> <?php vf_pagination();?></div>
+      <p><a href="past-ells-learninglabs">See the list of past LearningLABs</a></p>
     </div>
   </div>
 </section>

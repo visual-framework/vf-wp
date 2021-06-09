@@ -113,12 +113,12 @@ $title = esc_html(get_the_title());
   <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
     $teachingbaseMore = new WP_Query (array(
-      'posts_per_page' => 3, 
+      'posts_per_page' => 4, 
       'post_type' => 'teachingbase', 
       'suppress_filters' => 0,
       'post__not_in'   => array( get_the_ID() ),  ));
       while ($teachingbaseMore->have_posts()) : $teachingbaseMore->the_post(); ?>
-    <?php include(locate_template('partials/learninglab-more.php', false, false)); ?>
+    <?php include(locate_template('partials/teachingbase-more.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
     </div>

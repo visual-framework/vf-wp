@@ -38,16 +38,15 @@ $title = esc_html(get_the_title());
   </div>
   <div>
     <figure class="vf-figure">
-
       <?php the_post_thumbnail( 'full', array( 'class' => 'vf-figure__image' ) ); ?>
-
     </figure>
 
     <div>
-      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
-        <span class="vf-u-text-color--grey">
-          <?php 
-            if ( ! empty($start_date)) {
+      <?php 
+            if ( ! empty($start_date)) { ?>
+            <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
+              <span class="vf-u-text-color--grey">
+            <?php
               if ($end_date) { 
               if ($start->format('F') == $end->format('F')) {
                   echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
