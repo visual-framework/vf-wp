@@ -14,6 +14,8 @@ $topic_area = get_field('tb_topic_area');
 $download = get_field('tb_download');
 $contact = get_field('tb_contact');
 $organisers = get_field('tb_organisers');
+$social_url = get_the_permalink();
+$title = esc_html(get_the_title());
 
 ?>
 
@@ -61,32 +63,42 @@ $organisers = get_field('tb_organisers');
       <p class="vf-text-body vf-text-body--3" style="font-weight: 600;">Share:</p>
       <?php include(locate_template('partials/social-icons.php', false, false)); ?>
       <div class="vf-social-links social-media-block">
-        <ul class="vf-social-links__list">
-          <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
-              <span class="vf-u-sr-only">
-                twitter
-              </span>
-              <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-                <use xlink:href="#vf-social--twitter">
-                </use>
-              </svg>
-            </a>
-          </li>
-          <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="JavaScript:Void(0);">
-              <span class="vf-u-sr-only">
-                facebook
-              </span>
-              <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--facebook" width="24" height="24"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-                <use xlink:href="#vf-social--facebook">
-                </use>
-              </svg>
-            </a>
-          </li>
-        </ul>
+      <ul class="vf-social-links__list">
+        <li class="vf-social-links__item">
+          <a class="vf-social-links__link"
+            href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=ELLS_Heidelberg">
+            <span class="vf-u-sr-only">twitter</span>
+
+            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+              <use xlink:href="#vf-social--twitter"></use>
+            </svg>
+          </a>
+
+        </li>
+        <li class="vf-social-links__item">
+          <a class="vf-social-links__link"
+            href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
+            <span class="vf-u-sr-only">facebook</span>
+
+            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--facebook" width="24" height="24"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+              <use xlink:href="#vf-social--facebook"></use>
+            </svg>
+          </a>
+        </li>
+
+        <li class="vf-social-links__item">
+          <a class="vf-social-links__link"
+            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+            <span class="vf-u-sr-only">linkedin</span>
+            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+              <use xlink:href="#vf-social--linkedin"></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
       </div>
       <?php
         if( $download ): ?>
