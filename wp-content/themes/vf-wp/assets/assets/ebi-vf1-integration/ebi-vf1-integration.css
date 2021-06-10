@@ -72,7 +72,7 @@
  */
 /*!
  * Component: @visual-framework/ebi-vf1-integration
- * Version: 1.0.6
+ * Version: 1.0.7
  * Location: components/undefined
  */
 .ebi-vf1-integration,
@@ -110,7 +110,7 @@ body.ebi-vf1-integration,
 }
 .ebi-vf1-integration #masthead-black-bar .row,
 .ebi-vf1-integration #global-footer .row {
-  max-width: 76.5rem;
+  max-width: 80em;
 }
 .ebi-vf1-integration #global-nav,
 .ebi-vf1-integration #global-footer {
@@ -187,6 +187,11 @@ body.ebi-vf1-integration,
 }
 .ebi-vf1-integration hr.vf-divider {
   max-width: unset;
+}
+.ebi-vf1-integration .vf-hero__heading_link:visited,
+.ebi-vf1-integration .vf-hero__heading_link:hover,
+.ebi-vf1-integration .vf-hero__heading_link:focus {
+  border-bottom-style: none;
 }
 
 /*!
