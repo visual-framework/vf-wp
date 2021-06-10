@@ -89,7 +89,7 @@ else {} ?>
           <?php while( have_rows('translations') ): the_row();
         $anchor = get_sub_field('translation_anchor');
         $language = get_sub_field('translation_language', false, false);?>
-          <a href="<?php echo esc_url( $anchor ); ?>"><?php echo ($language) ?></a><?php
+          <a class="vf-banner__link" href="<?php echo esc_url( $anchor ); ?>"><?php echo ($language) ?></a><?php
        if ($fields_count == $all_fields_count - 1) {
           echo " and"; }
          else if ($fields_count == $all_fields_count) {
