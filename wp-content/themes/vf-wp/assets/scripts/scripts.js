@@ -210,7 +210,7 @@ function vfBannerInsert(banner, bannerId, scope) {
     } else if (banner.vfJsBannerButtonTheme == "secondary") {
       generatedBannerHtml += "<button class=\"vf-button vf-button--secondary\" data-vf-js-banner-close>" + banner.vfJsBannerButtonText + "</button>";
     } else if (banner.vfJsBannerButtonTheme == "tertiary") {
-      generatedBannerHtml += "<button class=\"vf-button vf-button--tertary\" data-vf-js-banner-close>" + banner.vfJsBannerButtonText + "</button>";
+      generatedBannerHtml += "<button class=\"vf-button vf-button--tertiary\" data-vf-js-banner-close>" + banner.vfJsBannerButtonText + "</button>";
     } else {
       // default
       generatedBannerHtml += "<button class=\"vf-button vf-button--primary\" data-vf-js-banner-close>" + banner.vfJsBannerButtonText + "</button>";
@@ -1333,7 +1333,7 @@ function emblNotificationsInject(message) {
   message.body = message.body.replace(/<[/]?[p>]+>/g, " "); // no <p> tags allowed in inline messages, preserve a space to not collide words
   // add vf-link to link
 
-  message.body = message.body.replace("<a href=", "<a class=\"vf-banner__link\" href="); // we might need a more clever regex, but this should also avoid links that already have a class
+  message.body = message.body.replaceAll("<a href=", "<a class=\"vf-banner__link\" href="); // we might need a more clever regex, but this should also avoid links that already have a class
   // Learn more link is conditionally shown
 
   if (message.field_notification_link) {
@@ -1414,7 +1414,7 @@ function emblNotifications(currentHost, currentPath) {
   currentHost = currentHost || window.location.hostname;
   currentPath = currentPath || window.location.pathname; // don't treat `wwwdev` as distinct from `www`
 
-  currentHost = currentHost.replace(/wwwdev/g, "www"); // console.log('emblNotifications','Checking for notifcaitons.');
+  currentHost = currentHost.replace(/wwwdev/g, "www"); // console.log('emblNotifications','Checking for notifications.');
   // console.log('emblNotifications, Current url info:', currentHost + "," + currentPath);
   // Process each message against a URLs
 
@@ -1470,7 +1470,7 @@ function emblNotifications(currentHost, currentPath) {
     }
 
     return false;
-  } // Process each message, and its URL fragmenets
+  } // Process each message, and its URL fragments
 
 
   function processNotifications(messages) {
