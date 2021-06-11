@@ -1348,7 +1348,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.5.5
+ * Version: 1.5.6
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {
@@ -1503,6 +1503,10 @@ a.vf-button:hover, a.vf-button:focus {
 .vf-content li:not([class*=vf-]):last-of-type {
   margin-bottom: 1rem;
 }
+.vf-content img:not([class*=vf-]) {
+  height: auto;
+  max-width: 100%;
+}
 .vf-content hr:not([class*=vf-]) {
   --context-margin--inline: 1rem;
   background-color: #d8d8d8;
@@ -1596,6 +1600,9 @@ a.vf-button:hover, a.vf-button:focus {
 }
 .vf-content .vf-video {
   margin-bottom: 32px;
+}
+.vf-content figure:not([class*=vf-]) {
+  margin: 0;
 }
 .vf-content .vf-figure--align-inline-start {
   margin-bottom: 32px;
