@@ -2237,10 +2237,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-figure/-/vf-figure-1.3.0.tgz#6d60b9ee33e9e681e13752082800fb0450e8945f"
   integrity sha512-SIS/FOhMn+cPZHqF7dNJPqhE8BNNU5pR8ZZsdWXsRC1zQDGWAaz0HyuD8Xtp8MOp+4JFP2DrrGpURc3V07uYLA==
 
-"@visual-framework/vf-flag@1.0.0-alpha.1":
-  version "1.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-flag/-/vf-flag-1.0.0-alpha.1.tgz#756717f25f601d315b7bae5608c6498d15759db0"
-  integrity sha512-un33ckqulSbnrfBe+vgVMDigvhVKUDhOzDb/Y+HzO+NG0nNVdnH4OHsIe+CL7kCR0iAHFgZRGx8KWaHkLbswEA==
+"@visual-framework/vf-flag@1.0.0-alpha.2":
+  version "1.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-flag/-/vf-flag-1.0.0-alpha.2.tgz#d13f2f87dc8e243456f9ea2140b37c137629117d"
+  integrity sha512-VRXAW5rz6J4d7CvDoJWSrCFMjyzFkwtXhjSpTe2MTbu4ONVsV6xwDJQtKHVIbBESVGTvwI6W5xBnHZwHaQ5x1A==
 
 "@visual-framework/vf-font-plex-mono@1.1.1":
   version "1.1.1"
