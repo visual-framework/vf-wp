@@ -99,7 +99,7 @@ class VF_EBI_Global_Footer extends VF_Plugin {
   // }
 
   // We load these scripts here as a short term solution to not over-architect
-  // something that shouldn't be permananent.
+  // something that shouldn't be permanent.
   // This also means that for the EBI Header to function, the EBI Footer must
   // also be used.
   public function wp_enqueue_scripts() {
@@ -125,7 +125,7 @@ class VF_EBI_Global_Footer extends VF_Plugin {
     // However it fails to cache; see https://github.com/visual-framework/vf-wp/issues/606
     wp_enqueue_style(
       'ebi-header',
-      'https://assets.emblstatic.net/vf/v2.4.0/assets/ebi-header-footer/ebi-header-footer.css',
+      'https://assets.emblstatic.net/vf/v2.5.0-beta.2/assets/ebi-header-footer/ebi-header-footer.css',
       array(),
       'v2.4',
       'all'
