@@ -62,7 +62,7 @@ $title = esc_html(get_the_title());
         </span>
       </p>
       <?php if ( ! empty($application_deadline)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Application
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Application
           deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_deadline); ?></span></p>
       <?php } ?>
       <?php if ($topic_area) { ?>
@@ -81,7 +81,7 @@ $title = esc_html(get_the_title());
       <?php } ?>
 
       <?php if ( ! empty($contact)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Contact: </span><a
           href="mailto:<?php echo esc_html($contact); ?>">
           <?php 
           if (!empty($contact_disp)) {
@@ -93,7 +93,7 @@ $title = esc_html(get_the_title());
       <?php } ?>
 
       <?php if ( ! empty($organisers)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Organiser:</span>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organiser:</span>
         <span class="vf-u-text-color--grey"><?php echo esc_html($organisers); ?></span></p>
       <?php } ?>
 

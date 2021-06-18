@@ -43,7 +43,7 @@ $title = esc_html(get_the_title());
           class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
       <?php } ?>
       <?php if ( ! empty($type_of_resource)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Type of
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Type of
           resource:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($type_of_resource); ?></span></p>
       <?php } ?>
       <?php if ($age_group) { ?>
@@ -52,7 +52,7 @@ $title = esc_html(get_the_title());
       <?php } ?>
 
       <?php if ( ! empty($contact)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Contact: </span><a
           href="mailto:<?php echo esc_html($contact); ?>">
           <?php 
           if (!empty($contact_disp)) {
@@ -64,7 +64,7 @@ $title = esc_html(get_the_title());
       <?php } ?>
 
       <?php if ( ! empty($organisers)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Author:</span> <span
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Author:</span> <span
           class="vf-u-text-color--grey"><?php echo esc_html($organisers); ?></span></p>
       <?php } ?>
 
