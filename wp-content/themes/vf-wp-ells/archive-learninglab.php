@@ -10,7 +10,8 @@ get_header();
     <p>Our professional development opportunities for teachers aim to empower educators to share the latest developments in life sciences with their students. Our courses are open to science educators teaching at secondary schools in Europe and beyond.
 
     </p>
-    <p>The ELLS LearningLABs take either place face-to-face over 2–3 days or virtually across several weeks. All courses provide an update on current research and offer teaching and learning materials that bring real-life science into the classroom. Face-to-face courses include training in laboratory or bioinformatics practices. All of our training is free of charge for participants.
+    <p>The ELLS teacher training courses (LearningLABs) take place either face-to-face over 2–3 days or virtually across several weeks. All courses provide an update on current research and offer teaching and learning materials that bring real-life science into the classroom. Face-to-face courses include training in laboratory or bioinformatics practices. All of our training is free of charge for participants.
+
 </p>
   </div>
 </div>
@@ -18,7 +19,7 @@ get_header();
 <section class="vf-card-container | vf-u-background-color-ui--grey--light | vf-u-fullbleed | vf-u-padding__bottom--600 vf-u-padding__top--600 vf-u-margin__bottom--600">
 <div class="vf-card-container__inner">  
     <div class="vf-section-header">
-     <h2 class="vf-section-header__heading">Upcoming LearningLabs</h2>
+     <h2 class="vf-section-header__heading">Upcoming LearningLAB</h2>
     </div>  
     <?php
  $current_year = date('Y') . '0101';
@@ -52,7 +53,7 @@ wp_reset_postdata();
 </section>
 
 <section class="vf-content">
-  <h3>Browse or filter all LearningLabs</h3>
+  <h3>Browse or filter all courses</h3>
   <div class="vf-grid vf-grid__col-4 | vf-u-padding__top--400">
     <div>
       <?php include(locate_template('partials/llabs-filter.php', false, false)); ?>
@@ -71,7 +72,7 @@ wp_reset_postdata();
           echo '<p>', __('No posts found', 'vfwp'), '</p>';
         } ?>
       <div class="vf-grid"> <?php vf_pagination();?></div>
-      <p><a href="past-ells-learninglabs">See the list of past LearningLABs</a></p>
+      <p><a href="https://www.embl.org/ells/past-ells-learninglabs/">See the list of past LearningLABs</a></p>
     </div>
   </div>
 </section>

@@ -61,9 +61,9 @@ global $vf_theme;
 </section>
 
 */ ?>
-<section class="vf-summary-container | vf-grid vf-grid__col-4 | vf-u-fullbleed vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500">
+<section class="vf-summary-container | vf-grid vf-grid__col-4 | vf-u-fullbleed | vf-u-background-color-ui--off-white | vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500">
 <div>
-        <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/03/ELLS-logo.png" style="max-width: 50%;"> </div>
+</div>
 
   <div class="vf-section-content | vf-grid__col--span-2">
     <div>
@@ -189,7 +189,7 @@ Hands-on educational resource for teaching fluorescence microscopy and beyond
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/ON-SITE-LEARNING-LABS-©-EMBL-ELLS.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="?post_type=learninglab&llabs-format&llabs-location&llabs-type=ells-learninglab">On-site Learning LABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="?post_type=learninglab&llabs-format&llabs-location&llabs-type=ells-learninglab">On-site LearningLABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
         <p class="vf-card__text">
@@ -204,7 +204,7 @@ Face-to-face professional development courses for European school science teache
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/VIRTUAL-LEARNING-LABS-©-ELLS.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="?post_type=learninglab&llabs-format&llabs-location&llabs-type=ells-virtual-learninglab">Virtual Learning LABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="?post_type=learninglab&llabs-format&llabs-location&llabs-type=ells-virtual-learninglab">Virtual LearningLABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
         <p class="vf-card__text">
@@ -219,7 +219,7 @@ Virtual professional development courses for international school science teache
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/CONNECT-LEARNING-LABS-©-ELLS-1.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="?post_type=learninglab&llabs-format&llabs-location&llabs-type=ellsconnect-learninglab">Connect Learning LABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="?post_type=learninglab&llabs-format&llabs-location&llabs-type=ellsconnect-learninglab">Connect LearningLABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
         <p class="vf-card__text">Local professional development courses for school science teachers run by European partners in their language</p>
@@ -241,7 +241,7 @@ Virtual professional development courses for international school science teache
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/EMBL-VISITS-©-EMBL-ELLS-1.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="school-visits">EMBL Visits<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="school-visits">School visits<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
           <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
         </svg></a></h3>
         <p class="vf-card__text">Guided virtual visits to EMBL and face-to-face tours to the Heidelberg campus </p>
@@ -287,7 +287,7 @@ Latest science education events
 <section class="vf-card-container">
   <div class="vf-card-container__inner">
     <div class="vf-section-header">
-      <h2 class="vf-section-header__heading">Team up with Us</h2>
+      <h2 class="vf-section-header__heading">Team up with us</h2>
     </div>
 
     <article class="vf-card vf-card--brand vf-card--striped">
