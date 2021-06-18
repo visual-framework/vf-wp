@@ -105,9 +105,9 @@ $archive = home_url('/?post_type=learninglab');
         <?php 
       $selected = empty($type_selected) || empty($type_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-llabs_type-1" class="vf-form__checkbox"
+        <input type="checkbox" value="" id="checkbox-type" class="vf-form__checkbox"
           name="learninglab_llabs_type" <?php echo $selected ?>>
-        <label for="checkbox-llabs_type-1" class="vf-form__label">All</label>
+        <label for="checkbox-type" class="vf-form__label">All</label>
       </div>
       <?php
 	  		  $count = 2;
@@ -132,9 +132,9 @@ $archive = home_url('/?post_type=learninglab');
         <?php 
       $selected = empty($format_selected) || empty($format_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-type-1" class="vf-form__checkbox" name="llabs-format"
+        <input type="checkbox" value="" id="checkbox-format" class="vf-form__checkbox" name="llabs-format"
           <?php echo $selected ?>>
-        <label for="checkbox-type-1" class="vf-form__label">All</label>
+        <label for="checkbox-format" class="vf-form__label">All</label>
       </div>
       <?php
 	  		  $count = 2;
@@ -145,7 +145,7 @@ $archive = home_url('/?post_type=learninglab');
       <div class="vf-form__item vf-form__item--checkbox">
         <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-format-<?php echo $count; ?>"
           name="llabs-format[]" class="vf-form__checkbox" <?php echo $selected ?>>
-        <label for="checkbox-type-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
+        <label for="checkbox-format-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
         </label>
       </div>
       <?php 
@@ -160,9 +160,9 @@ $archive = home_url('/?post_type=learninglab');
         <?php 
       $selected = empty($location_selected) || empty($location_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-type-1" class="vf-form__checkbox" name="llabs-location"
+        <input type="checkbox" value="" id="checkbox-location" class="vf-form__checkbox" name="llabs-location"
           <?php echo $selected ?>>
-        <label for="checkbox-type-1" class="vf-form__label">All</label>
+        <label for="checkbox-location" class="vf-form__label">All</label>
       </div>
       <?php
 	  		  $count = 2;
@@ -173,7 +173,7 @@ $archive = home_url('/?post_type=learninglab');
       <div class="vf-form__item vf-form__item--checkbox">
         <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-location-<?php echo $count; ?>"
           name="llabs-location[]" class="vf-form__checkbox" <?php echo $selected ?>>
-        <label for="checkbox-type-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
+        <label for="checkbox-location-<?php echo $count; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
         </label>
       </div>
       <?php 
