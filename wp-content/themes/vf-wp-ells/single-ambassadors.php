@@ -5,8 +5,8 @@ $country = get_field('amb_country');
 
 ?>
 
-<section class="vf-grid vf-grid__col-3">
-  <div class="vf-grid__col--span-2 | vf-content">
+<section class="vf-grid vf-grid__col-4">
+  <div class="vf-grid__col--span-3 | vf-content">
     <div>
         <h1><?php the_title(); ?></h1>
         <div>

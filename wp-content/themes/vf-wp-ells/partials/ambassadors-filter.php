@@ -34,7 +34,7 @@ $archive = home_url('/?post_type=ambassadors');
     <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
     <?php } ?>
 
-    <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400 vf-u-margin__bottom--400">
 
       <legend class="vf-form__legend">Country</legend>
       <div class="vf-form__item vf-form__item--checkbox">

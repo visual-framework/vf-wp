@@ -15,6 +15,7 @@ $format = get_field('labs_format');
 $location = get_field('labs_location');
 $download = get_field('labs_download');
 $contact = get_field('labs_contact');
+$contact_disp = get_field('labs_contact_displayed');
 $organisers = get_field('labs_organisers');
 $registration_link = get_field('labs_application_form_link');
 $social_url = get_the_permalink();
@@ -61,13 +62,18 @@ $title = esc_html(get_the_title());
         </span>
       </p>
       <?php if ( ! empty($application_deadline)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Application
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Application
           deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_deadline); ?></span></p>
       <?php } ?>
       <?php if ($topic_area) { ?>
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;<span
-          class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
-      <?php } ?>
+          class="vf-u-text-color--grey">          
+          <?php 
+          $topic_list = [];
+          foreach( $topic_area as $topic ) { 
+           $topic_list[] = $topic->name; }
+           echo implode(', ', $topic_list); ?></span></p>
+          <?php } ?>
 
       <?php if ($format) { ?>
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Format:</span>&nbsp;<span
@@ -80,12 +86,19 @@ $title = esc_html(get_the_title());
       <?php } ?>
 
       <?php if ( ! empty($contact)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
-          href="mailto:<?php echo esc_html($contact); ?>"><?php echo esc_html($contact); ?></a></p>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Contact: </span><a
+          href="mailto:<?php echo esc_html($contact); ?>">
+          <?php 
+          if (!empty($contact_disp)) {
+            echo esc_html($contact_disp); }
+          else {
+            echo esc_html($contact);
+          }
+          ?></a></p>
       <?php } ?>
 
       <?php if ( ! empty($organisers)) { ?>
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Organiser:</span>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organiser:</span>
         <span class="vf-u-text-color--grey"><?php echo esc_html($organisers); ?></span></p>
       <?php } ?>
 

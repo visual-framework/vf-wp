@@ -25,7 +25,7 @@ $summary = get_field('il_summary');
       <h3> Upcoming lecture </h3>
       <p><?php echo ($summary); ?></p>
       <hr class="vf-divider">
-      <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Registration
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Registration
           deadline</span> <span class="vf-u-text-color--grey"><br><?php echo esc_html($application_deadline); ?></span>
       </p>
       <a href="<?php echo esc_url($registration_link); ?>"

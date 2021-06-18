@@ -149,7 +149,7 @@
                 "id": ""
             },
             "taxonomy": "topic-area",
-            "field_type": "select",
+            "field_type": "multi_select",
             "allow_null": 0,
             "add_term": 1,
             "save_terms": 1,
@@ -159,8 +159,27 @@
         },
         {
             "key": "field_5f50e682b3a59",
-            "label": "Contact",
+            "label": "Contact email",
             "name": "labs_contact",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_60cc4f2606c51",
+            "label": "Contact name",
+            "name": "labs_contact_displayed",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -232,5 +251,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1611324079
+    "modified": 1624003049
 }

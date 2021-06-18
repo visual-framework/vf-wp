@@ -179,7 +179,7 @@ $archive = home_url('/?post_type=teachingbase');
     </fieldset>
 
     <button class="vf-button vf-button--primary vf-button--sm" type="submit">
-      <?php esc_html_e('Apply filter', 'theme'); ?>
+      <?php esc_html_e('Apply filters', 'theme'); ?>
     </button>
 
     <a class="vf-button vf-button--sm vf-button--tertiary" href="/teachingbase">

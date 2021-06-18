@@ -21,10 +21,12 @@ $topic_area = get_field('il_topic_area');
   </p>
   <?php if ($topic_area) { ?>
   <p class="vf-summary__meta">
-    <?php if ($topic_area) { ?>
-    <span class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span>&nbsp;&nbsp;
-    <?php } }
-      if ($topic_area) { ?>
+    <span class="vf-u-text-color--grey">          
+      <?php
+      $topic_list = [];
+      foreach( $topic_area as $topic ) { 
+        $topic_list[] = $topic->name; }
+        echo implode(', ', $topic_list); ?></span>&nbsp;&nbsp;
+    <?php  } ?>
   </p>
-  <?php }?>
 </article>
