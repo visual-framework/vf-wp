@@ -17,9 +17,6 @@ $post_id = get_the_ID();
       <?php echo $title; ?>
     </a>
   </h3>
-  <p class="vf-summary__text">
-    <?php echo get_the_excerpt(); ?>
-  </p>
   <?php if ($country) { ?>
   <p class="vf-summary__meta">
       <span>Country:</span>&nbsp;<span class="vf-u-text-color--grey"><?php echo ($country->name); ?></span>
