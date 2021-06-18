@@ -13,6 +13,7 @@ $age_group = get_field('tb_age_group');
 $topic_area = get_field('tb_topic_area');
 $download = get_field('tb_download');
 $contact = get_field('tb_contact');
+$contact_disp = get_field('tb_contact_displayed');
 $organisers = get_field('tb_organisers');
 $social_url = get_the_permalink();
 $title = esc_html(get_the_title());
@@ -52,7 +53,14 @@ $title = esc_html(get_the_title());
 
       <?php if ( ! empty($contact)) { ?>
       <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
-          href="mailto:<?php echo esc_html($contact); ?>"><?php echo esc_html($contact); ?></a></p>
+          href="mailto:<?php echo esc_html($contact); ?>">
+          <?php 
+          if (!empty($contact_disp)) {
+            echo esc_html($contact_disp); }
+          else {
+            echo esc_html($contact);
+          }
+          ?></a></p>
       <?php } ?>
 
       <?php if ( ! empty($organisers)) { ?>

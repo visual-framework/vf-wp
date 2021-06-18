@@ -15,6 +15,7 @@ $format = get_field('labs_format');
 $location = get_field('labs_location');
 $download = get_field('labs_download');
 $contact = get_field('labs_contact');
+$contact_disp = get_field('labs_contact_displayed');
 $organisers = get_field('labs_organisers');
 $registration_link = get_field('labs_application_form_link');
 $social_url = get_the_permalink();
@@ -81,7 +82,14 @@ $title = esc_html(get_the_title());
 
       <?php if ( ! empty($contact)) { ?>
       <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
-          href="mailto:<?php echo esc_html($contact); ?>"><?php echo esc_html($contact); ?></a></p>
+          href="mailto:<?php echo esc_html($contact); ?>">
+          <?php 
+          if (!empty($contact_disp)) {
+            echo esc_html($contact_disp); }
+          else {
+            echo esc_html($contact);
+          }
+          ?></a></p>
       <?php } ?>
 
       <?php if ( ! empty($organisers)) { ?>
