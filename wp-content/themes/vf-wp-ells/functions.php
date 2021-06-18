@@ -78,4 +78,27 @@ function wpml_post_languages_in_loop() {
   }
 }
 
+// modifies the teachingbase loop to not show child posts
+function vf_wp_ells__pre_get_posts($query) {
+  if (  !is_admin() && $query->is_main_query() && !$query->is_tax() && $query->is_home()) {
+  $query->set('post_type', array( 'teachingbase' ) );
+  }
+  if (is_admin()) {
+    return;
+  }
+  if ( ! $query->is_main_query()) {
+    return;
+  }
+  $post_type = get_query_var('post_type');
+  if ($post_type !== 'teachingbase') {
+    return;
+  }
+  if (is_singular()) {
+    return;
+  }
+  $query->set('post_parent', 0);
+}
+add_filter( 'pre_get_posts', 'vf_wp_ells__pre_get_posts' );
+
+
 ?>
