@@ -25,15 +25,23 @@ $post_id = get_the_ID();
     <?php if (($topic_area) || ($age_group)) { ?>
     <p class="vf-summary__meta | vf-u-margin__bottom--200">
       <?php if ($topic_area) { ?>
-      <span>Topic area:</span>&nbsp;<span
-        class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span>&nbsp;&nbsp;
+      <span>Topic area:</span>&nbsp;
+       <span class="vf-u-text-color--grey"> <?php $topic_list = [];
+        foreach( $topic_area as $topic ) { 
+          $topic_list[] = $topic->name; }
+          echo implode(', ', $topic_list); ?></span>&nbsp;&nbsp;
       <?php } ?>
       <?php if ($age_group) { ?>
-      <span>Age group:</span>&nbsp;<span class="vf-u-text-color--grey"><?php echo ($age_group->name); ?></span>
+      <span>Age group:</span>&nbsp;
+       <span class="vf-u-text-color--grey"> <?php $age_list = [];
+        foreach( $age_group as $age ) { 
+         $age_list[] = $age->name; }
+         echo implode(', ', $age_list); ?>
+      </span>
       <?php } }
       if (($topic_area) || ($age_group)) { ?>
     </p>
     <?php }?>
-      <?php wpml_post_languages_in_loop(); ?>
+    <?php wpml_post_languages_in_loop(); ?>
   </div>
 </article>

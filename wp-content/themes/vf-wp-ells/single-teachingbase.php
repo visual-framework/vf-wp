@@ -39,16 +39,28 @@ $title = esc_html(get_the_title());
     </figure>
     <div>
       <?php if ($topic_area) { ?>
-      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;<span
-          class="vf-u-text-color--grey"><?php echo ($topic_area->name); ?></span></p>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Topic area:</span>&nbsp;
+      <span class="vf-u-text-color--grey">
+          <?php 
+          $topic_list = [];
+          foreach( $topic_area as $topic ) { 
+           $topic_list[] = $topic->name; }
+            echo implode(', ', $topic_list); ?>
+        </span></p>
       <?php } ?>
       <?php if ( ! empty($type_of_resource)) { ?>
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Type of
           resource:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($type_of_resource); ?></span></p>
       <?php } ?>
       <?php if ($age_group) { ?>
-      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Age group:</span>&nbsp;<span
-          class="vf-u-text-color--grey"><?php echo ($age_group->name); ?></span></p>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Age group:</span>&nbsp;
+        <span class="vf-u-text-color--grey">
+          <?php 
+          $age_list = [];
+          foreach( $age_group as $age ) { 
+            $age_list[] = $age->name; }
+            echo implode(', ', $age_list); ?>
+        </span></p>
       <?php } ?>
 
       <?php if ( ! empty($contact)) { ?>
