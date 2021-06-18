@@ -151,7 +151,7 @@ else {
       ?>
     <article class="vf-summary vf-summary--publication">
       <h3 class="vf-summary__title">
-        <a href="<?php echo esc_url( $publication_link); ?>" class="vf-summary__link">
+        <a href="<?php echo esc_url( $publication_link['url']); ?>" class="vf-summary__link">
           <?php echo esc_html( $publication_title); ?>
         </a>
       </h3>
