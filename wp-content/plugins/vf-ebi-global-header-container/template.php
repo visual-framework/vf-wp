@@ -53,6 +53,10 @@ $content = preg_replace(
   $content
 );
 
+// If EBI 1.x JS runs, disable the legacy cookie banner (2.0 will deliver the banner instead)
+// https://stable.visual-framework.dev/components/ebi-header-footer/
+$content .= '<div data-protection-message-disable="true" class="vf-u-display-none"></div>';
+
 echo $content;
 
 ?>
