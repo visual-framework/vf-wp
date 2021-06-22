@@ -6,8 +6,7 @@ import {createBlock} from '@wordpress/blocks';
 import {
   InnerBlocks,
   InspectorControls,
-  // TODO: replace with `useBlockProps` hook in WP 5.6
-  __experimentalBlock as ExperimentalBlock
+  useBlockProps
 } from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -164,23 +163,27 @@ settings.edit = (props) => {
     );
   };
 
+  const blockProps = useBlockProps();
+
   // Return setup placeholder
+  // props.setAttributes({className: `vf-block vf-block--placeholder`})
   if (placeholder === 1) {
     return (
-      <ExperimentalBlock.div className='vf-block vf-block--placeholder'>
-        <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
-          <GridControl />
-        </Placeholder>
-      </ExperimentalBlock.div>
+      <div { ...blockProps }>
+        <div className='vf-block vf-block--placeholder'>
+          <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
+            <GridControl />
+          </Placeholder>
+        </div>
+      </div>
     );
   }
-
-  const className = `vf-grid | vf-grid__col-${columns}`;
 
   const styles = {
     ['--block-columns']: columns
   };
-
+  props.setAttributes({className: `vf-grid | vf-grid__col-${columns}`})
+  props.setAttributes({style: styles})
   // Return inner blocks and inspector controls
   return (
     <>
@@ -191,9 +194,11 @@ settings.edit = (props) => {
           />
         </PanelBody>
       </InspectorControls>
-      <ExperimentalBlock.div className={className} style={styles}>
-        <InnerBlocks allowedBlocks={['vf/grid-column']} templateLock='all' />
-      </ExperimentalBlock.div>
+      {/* <div> without this wrapping div the editor blows up when certain elements are selected */}
+        <div { ...blockProps }>
+          <InnerBlocks allowedBlocks={['vf/grid-column']} orientation='horizontal' templateLock='all' />
+        </div>
+      {/* </div> */}
     </>
   );
 };
