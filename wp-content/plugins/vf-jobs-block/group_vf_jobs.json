@@ -1,70 +1,93 @@
 {
-    "key": "group_vf_jobs",
-    "title": "VF Jobs (block)",
-    "fields": [
-        {
-            "key": "field_vf_jobs_heading",
-            "label": "Heading",
-            "name": "vf_jobs_heading",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+"key": "group_vf_jobs",
+"title": "VF Jobs (block)",
+"fields": [
+    {
+        "key": "field_vf_jobs_heading",
+        "label": "Heading",
+        "name": "vf_jobs_heading",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
         },
+        "default_value": "Latest jobs",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+    },
+    {
+        "key": "field_vf_jobs_limit",
+        "label": "Display",
+        "name": "vf_jobs_limit",
+        "type": "range",
+        "instructions": "How many jobs?",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+        },
+        "default_value": 3,
+        "min": 1,
+        "max": 50,
+        "step": "",
+        "prepend": "",
+        "append": ""
+    },
+    {
+        "key": "field_60d300ba3349b",
+        "label": "",
+        "name": "vf_jobs_site",
+        "type": "radio",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+        },
+        "choices": {
+            "embl": "EMBL",
+            "embl-ebi": "EMBL-EBI"
+        },
+        "allow_null": 0,
+        "other_choice": 0,
+        "default_value": "embl",
+        "layout": "vertical",
+        "return_format": "value",
+        "save_other_choice": 0
+    }
+],
+"location": [
+    [
         {
-            "key": "field_vf_jobs_limit",
-            "label": "Display",
-            "name": "vf_jobs_limit",
-            "type": "range",
-            "instructions": "How many jobs?",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 50,
-            "min": 1,
-            "max": 50,
-            "step": "",
-            "prepend": "",
-            "append": ""
+            "param": "vf_block",
+            "operator": "==",
+            "value": "vf_jobs"
         }
     ],
-    "location": [
-        [
-            {
-                "param": "vf_block",
-                "operator": "==",
-                "value": "vf_jobs"
-            }
-        ],
-        [
-          {
+    [
+        {
             "param": "block",
             "operator": "==",
-            "value": "acf/vf-jobs"
-          }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "seamless",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": 1,
-    "description": "",
-    "modified": 1589185169
+            "value": "acf\/vf-jobs"
+        }
+    ]
+],
+"menu_order": 0,
+"position": "normal",
+"style": "seamless",
+"label_placement": "top",
+"instruction_placement": "label",
+"hide_on_screen": "",
+"active": true,
+"description": ""
 }
