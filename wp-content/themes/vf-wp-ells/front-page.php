@@ -5,13 +5,6 @@ get_header();
 global $vf_theme;
 
 ?>
-<div class="vf-banner vf-banner--alert vf-banner--info">
-  <div class="vf-banner__content">
-    <p class="vf-banner__text">We have a new website! <a class="vf-banner__link"
-        href="https://www.surveymonkey.de/r/new_ELLS_web">Give us feedback </a> and get exclusive preview access to a
-      resource collection on ocean diversity.</p>
-  </div>
-</div>
 
 <!-- SEARCH -->
 
