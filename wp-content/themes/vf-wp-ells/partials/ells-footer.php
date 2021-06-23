@@ -28,7 +28,7 @@
               Contact</a>
           </li>
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="terms-of-use">
+            <a class="vf-list__link" href="terms-and-conditions">
               Terms of Use</a>
           </li>
         </ul>
