@@ -115,7 +115,8 @@ get_header();
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
     <?php endforeach; wp_reset_postdata(); ?>
   </div>
-        </div>
+</div>
 
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
+
