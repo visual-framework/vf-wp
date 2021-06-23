@@ -63,6 +63,7 @@ settings.save = (props) => {
 settings.edit = (props) => {
   const {clientId} = props;
   const {dirty, columns, placeholder} = props.attributes;
+  console.log('vf-grid edit')
 
   // Turn on setup placeholder if no columns are defined
   useEffect(() => {
@@ -79,6 +80,7 @@ settings.edit = (props) => {
 
       // Return total number of columns accounting for spans
       const countSpans = (blocks) => {
+        // console.log('countSpans')
         let count = 0;
         blocks.forEach((block) => {
           const {span} = block.attributes;
@@ -120,6 +122,7 @@ settings.edit = (props) => {
       };
 
       const setColumns = (newColumns) => {
+        console.log('setColumns')
         props.setAttributes({columns: newColumns, placeholder: 0});
         const innerColumns = getBlocks(clientId);
         const count = countSpans(innerColumns);
@@ -132,6 +135,7 @@ settings.edit = (props) => {
       };
 
       const updateColumns = () => {
+        console.log('updateColumns')
         const {columns} = getBlockAttributes(clientId);
         setColumns(columns);
         props.setAttributes({dirty: 0});
@@ -152,6 +156,7 @@ settings.edit = (props) => {
   }, [dirty]);
 
   const GridControl = (props) => {
+    console.log('GridControl')
     return (
       <ColumnsControl
         value={columns}
@@ -179,11 +184,12 @@ settings.edit = (props) => {
     );
   }
 
+  const className = `vf-grid | vf-grid__col-${columns}`;
   const styles = {
     ['--block-columns']: columns
   };
-  props.setAttributes({className: `vf-grid | vf-grid__col-${columns}`})
-  props.setAttributes({style: styles})
+  // props.setAttributes({className: className})
+  // props.setAttributes({style: styles})
   // Return inner blocks and inspector controls
   return (
     <>
@@ -194,11 +200,12 @@ settings.edit = (props) => {
           />
         </PanelBody>
       </InspectorControls>
-      {/* <div> without this wrapping div the editor blows up when certain elements are selected */}
+      <div> {/* without this wrapping div the editor blows up when certain elements are selected */}
         <div { ...blockProps }>
-          <InnerBlocks allowedBlocks={['vf/grid-column']} orientation='horizontal' templateLock='all' />
+          {/* <InnerBlocks allowedBlocks={['vf/grid-column']} orientation='horizontal' templateLock='all' /> */}
+          <InnerBlocks  />
         </div>
-      {/* </div> */}
+      </div>
     </>
   );
 };

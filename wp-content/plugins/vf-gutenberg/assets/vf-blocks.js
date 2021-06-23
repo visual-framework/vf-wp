@@ -7253,7 +7253,8 @@ if (ResizeObserver) {
       dirty,
       columns,
       placeholder
-    } = props.attributes; // Turn on setup placeholder if no columns are defined
+    } = props.attributes;
+    console.log('vf-grid edit'); // Turn on setup placeholder if no columns are defined
 
     React.useEffect(() => {
       if (columns === 0) {
@@ -7275,6 +7276,7 @@ if (ResizeObserver) {
       } = select('core/block-editor'); // Return total number of columns accounting for spans
 
       const countSpans = blocks => {
+        // console.log('countSpans')
         let count = 0;
         blocks.forEach(block => {
           const {
@@ -7315,6 +7317,7 @@ if (ResizeObserver) {
       };
 
       const setColumns = newColumns => {
+        console.log('setColumns');
         props.setAttributes({
           columns: newColumns,
           placeholder: 0
@@ -7332,6 +7335,7 @@ if (ResizeObserver) {
       };
 
       const updateColumns = () => {
+        console.log('updateColumns');
         const {
           columns
         } = getBlockAttributes(clientId);
@@ -7353,6 +7357,7 @@ if (ResizeObserver) {
     }, [dirty]);
 
     const GridControl = props => {
+      console.log('GridControl');
       return wp.element.createElement(ColumnsControl, _extends({
         value: columns,
         min: MIN_COLUMNS,
@@ -7372,27 +7377,15 @@ if (ResizeObserver) {
         icon: 'admin-generic'
       }, wp.element.createElement(GridControl, null))));
     }
-
-    const styles = {
-      ['--block-columns']: columns
-    };
-    props.setAttributes({
-      className: `vf-grid | vf-grid__col-${columns}`
-    });
-    props.setAttributes({
-      style: styles
-    }); // Return inner blocks and inspector controls
+    // props.setAttributes({style: styles})
+    // Return inner blocks and inspector controls
 
     return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
       title: i18n.__('Advanced Settings'),
       initialOpen: true
     }, wp.element.createElement(GridControl, {
       help: i18n.__('Content may be reorganised when columns are reduced.')
-    }))), wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks, {
-      allowedBlocks: ['vf/grid-column'],
-      orientation: "horizontal",
-      templateLock: "all"
-    })));
+    }))), wp.element.createElement("div", null, " ", wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks, null))));
   }; // Block transforms
 
 
