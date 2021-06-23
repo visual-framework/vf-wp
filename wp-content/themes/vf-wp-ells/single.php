@@ -94,7 +94,7 @@ get_header();
   <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
           $args = array(
-            'posts_per_page' => 3,
+            'posts_per_page' => 4,
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
           );

@@ -2,7 +2,7 @@
   id="footer-ells" style="grid-column-gap: 0">
   <div class="vf-u-background-color--blue | vf-u-margin__right--0">
     <figure class="vf-figure" style="text-align: center">
-      <img class="vf-figure__image | vf-u-margin__top--400"
+      <img class="vf-figure__image | vf-u-margin__top--200"
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/04/20200527_ELLS_VisualTag_RGB_COLOR.png"
         alt="ELLS visual tag" loading="lazy" style="width: 238px;">
     </figure>
