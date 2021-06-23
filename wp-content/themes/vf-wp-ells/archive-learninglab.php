@@ -5,7 +5,7 @@ get_header();
 
 <div class="vf-grid vf-grid__col-3 | vf-content">
   <div class="vf-grid__col--span-2">
-    <h1 class="vf-text vf-text-heading--1">Learning LABs
+    <h1 class="vf-text vf-text-heading--1">LearningLABs
     </h1>
     <p>Our professional development opportunities for teachers aim to empower educators to share the latest developments in life sciences with their students. Our courses are open to science educators teaching at secondary schools in Europe and beyond.
 

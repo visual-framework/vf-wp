@@ -94,7 +94,7 @@ get_header();
   <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
           $args = array(
-            'posts_per_page' => 3,
+            'posts_per_page' => 4,
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
           );
@@ -115,7 +115,8 @@ get_header();
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
     <?php endforeach; wp_reset_postdata(); ?>
   </div>
-        </div>
+</div>
 
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
+
