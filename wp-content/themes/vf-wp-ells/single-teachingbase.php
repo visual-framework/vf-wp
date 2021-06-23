@@ -136,6 +136,7 @@ $title = esc_html(get_the_title());
       'posts_per_page' => 4, 
       'post_type' => 'teachingbase', 
       'suppress_filters' => 0,
+      'post_parent' => 0,      
       'post__not_in'   => array( get_the_ID() ),  ));
       while ($teachingbaseMore->have_posts()) : $teachingbaseMore->the_post(); ?>
     <?php include(locate_template('partials/teachingbase-more.php', false, false)); ?>
