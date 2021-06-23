@@ -132,9 +132,10 @@ if ( $type === 'event' ) {
   <?php echo $date; ?>
   </p>
   <h3 class="vf-summary__title">
-    <?php if ($event_style !== 'alternate') { ?>
+    <?php if ($event_style !== 'alternate') { 
+      if (!empty($link)) { ?>
       <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
-    <?php } ?>
+    <?php } else {echo '';} } ?>
     <?php echo esc_html($title); ?>
     <?php if ($event_style !== 'alternate') { ?>
       </a>
