@@ -35,13 +35,6 @@ if ($cancelled == 'yes') { ?>
 </div>
 <?php } ?>
 
-<style>
-  .vf-details--summary {
-    background-color: #f3f3f3 !important;
-  }
-
-</style>
-
 <?php     
 // vf-hero container
 include( plugin_dir_path( __FILE__ ) . 'partials/hero.php'); 

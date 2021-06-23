@@ -289,6 +289,66 @@
                         "operator": "==",
                         "value": "364"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "71"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "70"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "68"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "69"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5e958b24aa2e0",
+                        "operator": "==",
+                        "value": "98"
+                    }
                 ]
             ],
             "wrapper": {
@@ -1217,5 +1277,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1618909436
+    "modified": 1624443098
 }

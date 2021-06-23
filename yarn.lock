@@ -2488,20 +2488,20 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-stack/-/vf-stack-2.1.1.tgz#aed13dfc015b64675f32749b950a111f03c3eccf"
   integrity sha512-KueOLVZd3occ3Hj+dCWYSq/T5aV4ZwtV4ytRmB2UqzuCxAWhO29amHoTcZhpDcMaVWBObEbMT4tbNIzCpniNfA==
 
-"@visual-framework/vf-summary@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.5.0.tgz#693ed20ea5f976b4ff197de941d024d6a9779dc7"
-  integrity sha512-LtTYyzbjSC7fayM22B1Rs2Ou1nNLFuow36zIIHV5dG6uuG+LLY9EItfjkUZHgUoUQt3OIjiinVRjgrS4tgSvKg==
+"@visual-framework/vf-summary@1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.5.1.tgz#cbf8c2a31693278c03fd0b62ed2721a16110d8f4"
+  integrity sha512-b6rv+1wqnfiSO/b/yvR1gCsglE2V+wTYT1lvY3rXaOv6u1bkG0ClkN5Gxg5NCgqvJHLTtLHpvbwlsk4dzoi19Q==
 
 "@visual-framework/vf-table@1.2.0-rc.2":
   version "1.2.0-rc.2"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-table/-/vf-table-1.2.0-rc.2.tgz#be203b587569f447a5d7faf5e2441256b89fbadb"
   integrity sha512-M/mbo8FGsAAsRisJvTp1q9oIPDo8xOo3Pd8EC+wiXz+r6EW5LKuKj3lG0atkVXbQzZxM2Fnruud7LqzrWiJQdg==
 
-"@visual-framework/vf-tabs@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-tabs/-/vf-tabs-2.0.0.tgz#d7081fa2b7c9f891508be02615db523dcde8e5ab"
-  integrity sha512-xgp3WxVyh7jzlZ6Pleafs8UqzS05c+iBiydS75utSnIz7qydKpl+LBBLMGTiG0e97yV23kMPnEigLGE23wZEvw==
+"@visual-framework/vf-tabs@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-tabs/-/vf-tabs-2.0.1.tgz#8f9a70ac1829c8de42632595d7fa0c37cac0a1d2"
+  integrity sha512-Xs40aiIi3auek+EVLNHEBewLOsN28XCpETYlNngeLseTInu3oGH5synvQwmNVTx8NYkt8L6vllEG/PNMdGpdew==
 
 "@visual-framework/vf-text@1.0.2", "@visual-framework/vf-text@^1.0.2":
   version "1.0.2"
@@ -4071,10 +4071,10 @@ core-js-compat@^3.9.0, core-js-compat@^3.9.1:
     browserslist "^4.16.6"
     semver "7.0.0"
 
-core-js@3.15.0:
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.0.tgz#db9554ebce0b6fd90dc9b1f2465c841d2d055044"
-  integrity sha512-GUbtPllXMYRzIgHNZ4dTYTcUemls2cni83Q4Q/TrFONHfhcg9oEGOtaGHfb0cpzec60P96UKPvMkjX1jET8rUw==
+core-js@3.15.1:
+  version "3.15.1"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.1.tgz#6c08ab88abdf56545045ccf5fd81f47f407e7f1a"
+  integrity sha512-h8VbZYnc9pDzueiS2610IULDkpFFPunHwIpl8yRwFahAEEdSpHlTy3h3z3rKq5h11CaUdBEeRViu9AYvbxiMeg==
 
 core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.12"
@@ -10146,10 +10146,10 @@ rollup-plugin-terser@7.0.2:
     serialize-javascript "^4.0.0"
     terser "^5.0.0"
 
-rollup@2.52.1:
-  version "2.52.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.52.1.tgz#dd1cc178d70cf35c48d943fc06fdc32d546e6876"
-  integrity sha512-/SPqz8UGnp4P1hq6wc9gdTqA2bXQXGx13TtoL03GBm6qGRI6Hm3p4Io7GeiHNLl0BsQAne1JNYY+q/apcY933w==
+rollup@2.52.2:
+  version "2.52.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.52.2.tgz#a7e90d10ddae3e8472c2857bd9f44b09ef34a47a"
+  integrity sha512-4RlFC3k2BIHlUsJ9mGd8OO+9Lm2eDF5P7+6DNQOp5sx+7N/1tFM01kELfbxlMX3MxT6owvLB1ln4S3QvvQlbUA==
   optionalDependencies:
     fsevents "~2.3.2"
 
