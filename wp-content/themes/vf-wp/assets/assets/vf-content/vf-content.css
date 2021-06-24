@@ -1347,7 +1347,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.5.6
+ * Version: 1.6.0
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {
@@ -1370,8 +1370,8 @@ a.vf-button:hover, a.vf-button:focus {
   font-size: 30px;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 39px 0;
-  margin-top: 13px;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h2:not([class*=vf-]) b,
 .vf-content h2:not([class*=vf-]) strong {
@@ -1382,8 +1382,8 @@ a.vf-button:hover, a.vf-button:focus {
   font-size: 24px;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 13px 0;
-  margin-top: 24px;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h3:not([class*=vf-]) b,
 .vf-content h3:not([class*=vf-]) strong {
@@ -1394,8 +1394,8 @@ a.vf-button:hover, a.vf-button:focus {
   font-size: 21px;
   font-weight: 500;
   line-height: 1.29;
-  margin: 0 0 13px 0;
-  margin-top: 24px;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h4:not([class*=vf-]) b,
 .vf-content h4:not([class*=vf-]) strong {
@@ -1406,8 +1406,8 @@ a.vf-button:hover, a.vf-button:focus {
   font-size: 19px;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 13px 0;
-  margin-top: 24px;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h5:not([class*=vf-]) b,
 .vf-content h5:not([class*=vf-]) strong {
@@ -1418,8 +1418,8 @@ a.vf-button:hover, a.vf-button:focus {
   font-size: 19px;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 13px 0;
-  margin-top: 24px;
+  margin: 0 0 16px 0;
+  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h6:not([class*=vf-]) b,
 .vf-content h6:not([class*=vf-]) strong {
@@ -1433,7 +1433,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-size: 19px;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 24px 0;
+  margin: 0 0 1rem 0;
 }
 .vf-content .vf-link,
 .vf-content a:not([class*=vf-]) {
@@ -1589,19 +1589,28 @@ a.vf-button:hover, a.vf-button:focus {
 .vf-content figcaption:not([class*=vf-]),
 .vf-content cite:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.57;
+  line-height: 1.71;
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
-  color: #707372;
-  font-style: italic;
+  color: #54585a;
 }
 .vf-content .vf-video {
   margin-bottom: 32px;
 }
 .vf-content figure:not([class*=vf-]) {
-  margin: 0;
+  display: table;
+  margin: auto;
+}
+.vf-content figure:not([class*=vf-]) img:not([class*=vf-]) {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+.vf-content figure:not([class*=vf-]) figcaption:not([class*=vf-]) {
+  caption-side: bottom;
+  display: table-caption;
 }
 .vf-content .vf-figure--align-inline-start {
   margin-bottom: 32px;
@@ -1619,7 +1628,7 @@ a.vf-button:hover, a.vf-button:focus {
   margin-top: 0;
 }
 .vf-content__standfirst + .vf-content__standfirst {
-  margin-bottom: 24px;
+  margin-bottom: 1rem;
 }
 .vf-content__standfirst + small {
   margin-bottom: 42px;
