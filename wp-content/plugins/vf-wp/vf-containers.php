@@ -2,7 +2,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists('VF_Containers') ) :
+if ( ! class_exists('VF_Containers') && function_exists( 'acf_register_block_type' ) ) :
 
 /**
  * Represent a custom post type for Visual Framework containers
