@@ -144,7 +144,7 @@
 
 /*!
  * Component: @visual-framework/vf-breadcrumbs
- * Version: 2.0.3
+ * Version: 2.0.4
  * Location: components/undefined
  */
 .vf-breadcrumbs {
@@ -183,6 +183,9 @@
   content: ">";
   display: inline-block;
   margin-left: 3px;
+}
+.vf-breadcrumbs__item:last-of-type::after {
+  content: "";
 }
 .vf-breadcrumbs__item[aria-current] {
   text-shadow: 1px 0 0;
