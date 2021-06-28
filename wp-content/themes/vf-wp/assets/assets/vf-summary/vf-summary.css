@@ -31,13 +31,32 @@
 }
 
 :root {
-  --vf-theme--primary: #3b6fb6;
-  --vf-theme--primary--dark: #193f90;
-  --vf-theme--secondary: #18974c;
-  --vf-theme--secondary--dark: #007b53;
-  --vf-theme--tertiary: #54585a;
-  --vf-theme--quaternary: #f4c61f;
-  --vf-theme--quinary: #d0d0ce;
+  --vf-color__text--primary: #000000;
+  --vf-color__text--secondary: #373a36;
+  --vf-color__link: #3b6fb6;
+  --vf-color__link--hover: #193f90;
+  --vf-color__link--focus: #193f90;
+  --vf-color__link--visited: #563d82;
+}
+
+:root {
+  --vf-color__button__text--primary: #ffffff;
+  --vf-color__button__border--primary: #3b6fb6;
+  --vf-color__button__background--primary: #3b6fb6;
+  --vf-color__button__shadow--primary: #193f90;
+  --vf-color__button__text--secondary: #3b6fb6;
+  --vf-color__button__border--secondary: #3b6fb6;
+  --vf-color__button__background--secondary: #ffffff;
+  --vf-color__button__shadow--secondary: #193f90;
+  --vf-color__button__text--tertiary: #ffffff;
+  --vf-color__button__border--tertiary: #373a36;
+  --vf-color__button__background--tertiary: #373a36;
+  --vf-color__button__shadow--tertiary: #000000;
+}
+
+:root {
+  --vf-color__brand: #18974c;
+  --vf-color__brand--dark: #0a5032;
 }
 
 :root {
@@ -61,6 +80,16 @@
   --vf-color--neutral--700: #54585a;
   --vf-color--neutral--800: #373a36;
   --vf-color--neutral--900: #000000;
+}
+
+:root {
+  --vf-theme--primary: #3b6fb6;
+  --vf-theme--primary--dark: #193f90;
+  --vf-theme--secondary: #18974c;
+  --vf-theme--secondary--dark: #007b53;
+  --vf-theme--tertiary: #54585a;
+  --vf-theme--quaternary: #f4c61f;
+  --vf-theme--quinary: #d0d0ce;
 }
 
 /* stylelint-enable */
@@ -121,6 +150,7 @@
 
 .vf-summary__category {
   --vf-text-margin--bottom: 0;
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -132,6 +162,7 @@
 }
 
 .vf-summary__date {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -142,6 +173,7 @@
 }
 
 .vf-summary__source {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -180,6 +212,7 @@
 }
 
 .vf-summary__meta {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -189,6 +222,7 @@
 }
 
 .vf-summary__text {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;
@@ -198,6 +232,7 @@
 }
 
 .vf-summary__title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
   font-weight: 500;
@@ -208,6 +243,7 @@
 }
 
 .vf-summary__author {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -375,6 +411,7 @@ html:not(.vf-disable-deprecated) .vf-summary__image--avatar {
 }
 html:not(.vf-disable-deprecated) .vf-summary__email {
   --vf-text-margin--bottom: 24px;
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;
@@ -385,6 +422,7 @@ html:not(.vf-disable-deprecated) .vf-summary__email {
 }
 html:not(.vf-disable-deprecated) .vf-summary__phone {
   --vf-text-margin--bottom: 0;
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;
@@ -404,6 +442,7 @@ html:not(.vf-disable-deprecated) .vf-summary--mobile::after {
   position: absolute;
 }
 html:not(.vf-disable-deprecated) .vf-summary__uuid {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -424,6 +463,7 @@ html:not(.vf-disable-deprecated) .vf-summary--profile-r .vf-summary__title {
   --vf-text-margin--bottom: 8px;
 }
 html:not(.vf-disable-deprecated) .vf-summary--profile-r .vf-summary__text {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -432,6 +472,7 @@ html:not(.vf-disable-deprecated) .vf-summary--profile-r .vf-summary__text {
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 html:not(.vf-disable-deprecated) .vf-summary--profile-r .vf-summary__email {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -448,6 +489,7 @@ html:not(.vf-disable-deprecated) .vf-summary--profile-s .vf-summary__image {
   margin-right: 8px;
 }
 html:not(.vf-disable-deprecated) .vf-summary--profile-s .vf-summary__title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;

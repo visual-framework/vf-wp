@@ -31,13 +31,32 @@
 }
 
 :root {
-  --vf-theme--primary: #3b6fb6;
-  --vf-theme--primary--dark: #193f90;
-  --vf-theme--secondary: #18974c;
-  --vf-theme--secondary--dark: #007b53;
-  --vf-theme--tertiary: #54585a;
-  --vf-theme--quaternary: #f4c61f;
-  --vf-theme--quinary: #d0d0ce;
+  --vf-color__text--primary: #000000;
+  --vf-color__text--secondary: #373a36;
+  --vf-color__link: #3b6fb6;
+  --vf-color__link--hover: #193f90;
+  --vf-color__link--focus: #193f90;
+  --vf-color__link--visited: #563d82;
+}
+
+:root {
+  --vf-color__button__text--primary: #ffffff;
+  --vf-color__button__border--primary: #3b6fb6;
+  --vf-color__button__background--primary: #3b6fb6;
+  --vf-color__button__shadow--primary: #193f90;
+  --vf-color__button__text--secondary: #3b6fb6;
+  --vf-color__button__border--secondary: #3b6fb6;
+  --vf-color__button__background--secondary: #ffffff;
+  --vf-color__button__shadow--secondary: #193f90;
+  --vf-color__button__text--tertiary: #ffffff;
+  --vf-color__button__border--tertiary: #373a36;
+  --vf-color__button__background--tertiary: #373a36;
+  --vf-color__button__shadow--tertiary: #000000;
+}
+
+:root {
+  --vf-color__brand: #18974c;
+  --vf-color__brand--dark: #0a5032;
 }
 
 :root {
@@ -61,6 +80,16 @@
   --vf-color--neutral--700: #54585a;
   --vf-color--neutral--800: #373a36;
   --vf-color--neutral--900: #000000;
+}
+
+:root {
+  --vf-theme--primary: #3b6fb6;
+  --vf-theme--primary--dark: #193f90;
+  --vf-theme--secondary: #18974c;
+  --vf-theme--secondary--dark: #007b53;
+  --vf-theme--tertiary: #54585a;
+  --vf-theme--quaternary: #f4c61f;
+  --vf-theme--quinary: #d0d0ce;
 }
 
 /* stylelint-enable */
@@ -97,6 +126,7 @@
 }
 
 .vf-profile__title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
   font-weight: 500;
@@ -106,6 +136,7 @@
 }
 
 .vf-profile__job-title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
   font-weight: 500;
@@ -122,6 +153,7 @@
 }
 
 .vf-profile__text {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 400;
@@ -134,6 +166,7 @@
 }
 
 .vf-profile__email {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -147,6 +180,7 @@
 }
 
 .vf-profile__phone {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -160,6 +194,7 @@
 }
 
 .vf-profile__uuid {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
@@ -190,6 +225,7 @@
   grid-column-gap: 0.5rem;
 }
 .vf-profile--small .vf-profile__title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 500;
@@ -197,6 +233,7 @@
   margin: 0 0 0 0;
 }
 .vf-profile--small .vf-profile__job-title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 500;
@@ -212,6 +249,7 @@
   grid-column-gap: 1rem;
 }
 .vf-profile--medium .vf-profile__title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
   font-weight: 500;
@@ -219,6 +257,7 @@
   margin: 0 0 0 0;
 }
 .vf-profile--medium .vf-profile__job-title {
+  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
   font-weight: 500;
