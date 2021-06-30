@@ -913,7 +913,7 @@
   (shared$2.exports = function (key, value) {
     return store$1[key] || (store$1[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.15.0',
+    version: '3.15.2',
     mode: 'global',
     copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
   });
@@ -7263,6 +7263,21 @@ if (ResizeObserver) {
         });
       }
     }, [clientId]);
+    /* setAttribute() method must be used inside a useEffect Hook or a method. */
+
+    React.useEffect(() => {
+      const className = `vf-grid | vf-grid__col-${columns}`;
+      const styles = {
+        ["--block-columns"]: columns
+      };
+      console.log("setting attrs");
+      props.setAttributes({
+        className: className
+      });
+      props.setAttributes({
+        style: styles
+      });
+    }, [columns]);
     const {
       replaceInnerBlocks
     } = data$1.useDispatch('core/block-editor');
@@ -7376,9 +7391,8 @@ if (ResizeObserver) {
         label: i18n.__('VF Grid'),
         icon: 'admin-generic'
       }, wp.element.createElement(GridControl, null))));
-    }
-    // props.setAttributes({style: styles})
-    // Return inner blocks and inspector controls
+    } // Return inner blocks and inspector controls
+
 
     return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
       title: i18n.__('Advanced Settings'),
