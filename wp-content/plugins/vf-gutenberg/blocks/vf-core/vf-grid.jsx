@@ -72,6 +72,17 @@ settings.edit = (props) => {
     }
   }, [clientId]);
 
+  /* setAttribute() method must be used inside a useEffect Hook or a method. */
+  useEffect(() => {
+    const className = `vf-grid | vf-grid__col-${columns}`;
+    const styles = {
+      ["--block-columns"]: columns
+    };
+    console.log("setting attrs");
+    props.setAttributes({ className: className });
+    props.setAttributes({ style: styles });
+  }, [columns]);
+
   const {replaceInnerBlocks} = useDispatch('core/block-editor');
 
   const {setColumns, updateColumns} = useSelect(
@@ -184,12 +195,6 @@ settings.edit = (props) => {
     );
   }
 
-  const className = `vf-grid | vf-grid__col-${columns}`;
-  const styles = {
-    ['--block-columns']: columns
-  };
-  // props.setAttributes({className: className})
-  // props.setAttributes({style: styles})
   // Return inner blocks and inspector controls
   return (
     <>
