@@ -913,7 +913,7 @@
   (shared$2.exports = function (key, value) {
     return store$1[key] || (store$1[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.15.2',
+    version: '3.15.1',
     mode: 'global',
     copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
   });
@@ -7253,8 +7253,7 @@ if (ResizeObserver) {
       dirty,
       columns,
       placeholder
-    } = props.attributes;
-    console.log('vf-grid edit'); // Turn on setup placeholder if no columns are defined
+    } = props.attributes; // Turn on setup placeholder if no columns are defined
 
     React.useEffect(() => {
       if (columns === 0) {
@@ -7270,7 +7269,6 @@ if (ResizeObserver) {
       const styles = {
         ["--block-columns"]: columns
       };
-      console.log("setting attrs");
       props.setAttributes({
         className: className
       });
@@ -7291,7 +7289,6 @@ if (ResizeObserver) {
       } = select('core/block-editor'); // Return total number of columns accounting for spans
 
       const countSpans = blocks => {
-        // console.log('countSpans')
         let count = 0;
         blocks.forEach(block => {
           const {
@@ -7332,7 +7329,6 @@ if (ResizeObserver) {
       };
 
       const setColumns = newColumns => {
-        console.log('setColumns');
         props.setAttributes({
           columns: newColumns,
           placeholder: 0
@@ -7350,7 +7346,6 @@ if (ResizeObserver) {
       };
 
       const updateColumns = () => {
-        console.log('updateColumns');
         const {
           columns
         } = getBlockAttributes(clientId);
@@ -7372,7 +7367,6 @@ if (ResizeObserver) {
     }, [dirty]);
 
     const GridControl = props => {
-      console.log('GridControl');
       return wp.element.createElement(ColumnsControl, _extends({
         value: columns,
         min: MIN_COLUMNS,
