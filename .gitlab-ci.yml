@@ -26,6 +26,10 @@ build:
   script:
     - apk update && apk add zip && apk add unzip
     - mkdir -pv data_sync
+    # Copy external plugins into actual VF plugins folder for single tag zip file
+    - rm -rf vfwp-external-plugins || true;
+    - git clone --branch ${VF_EXTERNAL_PLUGINS_REPO_TAG} --depth 1 https://github.com/visual-framework/vfwp-external-plugins.git
+    - cp -R ./vfwp-external-plugins/ wp-content/plugins/
     - cd wp-content/plugins/
     - zip -r $CI_PROJECT_DIR/data_sync/plugins.zip .
     - cd $CI_PROJECT_DIR/wp-content/themes/

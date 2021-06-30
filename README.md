@@ -11,7 +11,7 @@ VF-WP is a collection of WordPress themes and plugins that integrate with the [V
 
 ## Plugin Documentation
 
-* [External Plugins Repository](https://github.com/visual-framework/vfwp-external-plugins)
+* [External Plugins Repository](https://github.com/visual-framework/vfwp-external-plugins) - Please create tag whenever it is locally tested & ready to deploy on all sites and update the tagname in `VF_EXTERNAL_PLUGINS_REPO_TAG` variable in [`.env`](.env) file.
 * [EMBL Taxonomy →](/wp-content/plugins/embl-taxonomy/README.md)
 * [VF Gutenberg →](/wp-content/plugins/vf-gutenberg/README.md)
 * [Events →](/wp-content/plugins/vf-events/README.md)
@@ -92,11 +92,10 @@ gulp vf-gutenberg
 
 To compile the Gutenberg React blocks.
 
-### EMBL + EMBL-EBI site development
+### EMBL + EMBL-EBI site local development for WordPress
 
-n.b. To develop locally you'll need to make sure your project's git submodules are up to date: `git submodule update --init --recursive`
 
-1. `git clone --recursive https://github.com/visual-framework/vf-wp.git`
+1. Clone repo by running - `git clone --recursive https://github.com/visual-framework/vf-wp.git`
 1. Use any of the below variation of command to build the site
 
     ##### Run command
@@ -110,6 +109,10 @@ n.b. To develop locally you'll need to make sure your project's git submodules a
 
     - `bin/dev logs`    - tail logs from containers
     - `bin/dev pma`     - launch phpMyAdmin to view database
+    - `bin/dev up`   - to spin up docker containers
     - `bin/dev down`   - to spin down docker containers
+    - `bin/dev mailhog`   - to launch mailhog to view e-mail sent my containers
 
-1. Default variables including CSS/JS version, site title, admin password are configured in `.env`
+n.b. To develop locally you'll need to make sure your project's git submodules are up to date: `git submodule update --init --recursive`
+
+1. Default variables including CSS/JS version, site title, admin password are configured in `.env` file.
