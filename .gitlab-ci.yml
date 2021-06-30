@@ -21,10 +21,11 @@ stages:
 
 build:
   stage: build
+  image: ebiwd/docker-drush:3.6
   tags:
     - docker
   script:
-    - apk update && apk add zip && apk add unzip
+#    - apk update && apk add zip && apk add unzip
     - mkdir -pv data_sync
     # Copy external plugins into actual VF plugins folder for single tag zip file
     - rm -rf vfwp-external-plugins || true;
