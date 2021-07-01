@@ -32,7 +32,7 @@ build:
     - rm -rf vfwp-external-plugins || true;
     - echo ${VF_EXTERNAL_PLUGINS_REPO_TAG}
     - git clone https://github.com/visual-framework/vfwp-external-plugins.git --branch ${VF_EXTERNAL_PLUGINS_REPO_TAG} --depth 1
-    - cp -R ./vfwp-external-plugins wp-content/plugins/
+    - rsync -acv --exclude=.git ./vfwp-external-plugins/. wp-content/plugins/
     - cd wp-content/plugins/
     - zip -r $CI_PROJECT_DIR/data_sync/plugins.zip .
     - cd $CI_PROJECT_DIR/wp-content/themes/
