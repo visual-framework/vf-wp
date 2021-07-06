@@ -918,14 +918,13 @@ input[type=search]::-webkit-search-cancel-button {
 
 /*!
 * Component: @visual-framework/vf-button
-* Version: 2.0.0-alpha.0
+* Version: 2.0.0-alpha.1
 * Location: components/undefined
 */
 .vf-button {
   --vf-button__color__background--default: var(--vf-color--grey);
   --vf-button__color__background--default-dark: var(--vf-color--grey--darkest);
   --vf-button__color__border--default-visited: var(--vf-color--grey--lightest);
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
   font-weight: 700;
@@ -1007,32 +1006,30 @@ a.vf-button:hover, a.vf-button:focus {
 }
 
 .vf-button--link {
-  color: #000000;
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  line-height: 1;
-  padding: 8px;
   --vf-button-border-color: transparent;
   --vf-button-background-color: transparent;
   --vf-button-shadow-border-color: transparent;
   --vf-button-shadow-background-color: transparent;
   --vf-button-border-color--visited: transparent;
   --vf-button-text-color: var(--vf-color--blue);
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
   -webkit-box-shadow: none;
           box-shadow: none;
+  padding: 8px;
 }
 .vf-button--link:hover, .vf-button--link:focus, .vf-button--link:active {
+  -webkit-box-shadow: none;
+          box-shadow: none;
   -webkit-transform: none;
           transform: none;
   -webkit-transition: none;
   transition: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
 }
 
 .vf-button--sm {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
