@@ -143,9 +143,9 @@
 }
 
 .vf-box__heading {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -175,9 +175,9 @@
 }
 
 .vf-box__text {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;

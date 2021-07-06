@@ -99,9 +99,9 @@
  * Location: components/undefined
  */
 .vf-form__helper {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 0 0;
@@ -118,9 +118,9 @@
  * Location: components/undefined
  */
 .vf-form__input:not([type=file]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;
@@ -349,9 +349,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__legend {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 0 0;
@@ -392,9 +392,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__select {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -567,9 +567,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__textarea {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -622,9 +622,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__label {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;

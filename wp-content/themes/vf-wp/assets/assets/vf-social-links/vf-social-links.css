@@ -99,9 +99,9 @@
  * Location: components/undefined
  */
 .vf-social-links__heading {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;

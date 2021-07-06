@@ -170,9 +170,9 @@
 
 .vf-card__title,
 .vf-card__heading {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 0 0;
@@ -240,9 +240,9 @@
 
 .vf-card__subheading {
   --vf-stack-margin--custom: 0.25rem;
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 0 0;
@@ -250,9 +250,9 @@
 }
 
 .vf-card__text {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;
@@ -406,9 +406,9 @@ html:not(.vf-disable-deprecated) .vf-card--hard .vf-card__content {
 }
 html:not(.vf-disable-deprecated) .vf-card--hard .vf-card__title,
 html:not(.vf-disable-deprecated) .vf-card--hard .vf-card__heading {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;

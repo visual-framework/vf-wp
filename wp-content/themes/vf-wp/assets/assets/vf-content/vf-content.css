@@ -103,9 +103,9 @@
 }
 
 .vf-text-heading--5 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
@@ -113,9 +113,9 @@
 }
 
 .vf-text-heading--4 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
@@ -123,9 +123,9 @@
 }
 
 .vf-text-heading--3 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -133,9 +133,9 @@
 }
 
 .vf-text-heading--2 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 30px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -143,9 +143,9 @@
 }
 
 .vf-text-heading--1 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 42px;
+  color: #000000;
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 16px 0;
@@ -177,7 +177,6 @@
  * Location: components/undefined
  */
 .vf-badge {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 700;
@@ -255,11 +254,11 @@ a.vf-badge--secondary:hover {
   color: #3b6fb6;
 }
 .vf-text-body a:visited {
-  color: #734595;
+  color: #563d82;
   border-bottom: none;
 }
 .vf-text-body a:visited:hover {
-  color: #734595;
+  color: #563d82;
   text-decoration: underline;
 }
 .vf-text-body a:hover {
@@ -269,7 +268,6 @@ a.vf-badge--secondary:hover {
 }
 
 .vf-text-body--6 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 11px;
   font-weight: 600;
@@ -279,9 +277,9 @@ a.vf-badge--secondary:hover {
 }
 
 .vf-text-body--5 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
@@ -289,9 +287,9 @@ a.vf-badge--secondary:hover {
 }
 
 .vf-text-body--4 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
+  color: #373a36;
   font-weight: 500;
   line-height: 1.57;
   margin: 0 0 16px 0;
@@ -299,9 +297,9 @@ a.vf-badge--secondary:hover {
 }
 
 .vf-text-body--3 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
@@ -309,9 +307,9 @@ a.vf-badge--secondary:hover {
 }
 
 .vf-text-body--2 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -319,9 +317,9 @@ a.vf-badge--secondary:hover {
 }
 
 .vf-text-body--1 {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 32px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.3125;
   margin: 0 0 16px 0;
@@ -339,11 +337,11 @@ a.vf-badge--secondary:hover {
   color: #3b6fb6;
 }
 .vf-link:visited {
-  color: #734595;
+  color: #563d82;
   border-bottom: none;
 }
 .vf-link:visited:hover {
-  color: #734595;
+  color: #563d82;
   text-decoration: underline;
 }
 .vf-link:hover {
@@ -376,9 +374,9 @@ a.vf-badge--secondary:hover {
  * Location: components/undefined
  */
 .vf-form__helper {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 0 0;
@@ -395,9 +393,9 @@ a.vf-badge--secondary:hover {
  * Location: components/undefined
  */
 .vf-form__input:not([type=file]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;
@@ -626,9 +624,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__legend {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 0 0;
@@ -669,9 +667,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__select {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -844,9 +842,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__textarea {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -899,9 +897,9 @@ input[type=search]::-webkit-search-cancel-button {
  * Location: components/undefined
  */
 .vf-form__label {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;
@@ -1072,9 +1070,9 @@ a.vf-button:hover, a.vf-button:focus {
   margin: 0 0 0.5rem 0;
 }
 .vf-figure__caption {
-  color: #373a36;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
@@ -1120,9 +1118,9 @@ a.vf-button:hover, a.vf-button:focus {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
@@ -1133,9 +1131,9 @@ a.vf-button:hover, a.vf-button:focus {
 }
 
 .vf-list--l {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -1178,11 +1176,11 @@ a.vf-button:hover, a.vf-button:focus {
   color: #3b6fb6;
 }
 .vf-list__link:visited {
-  color: #734595;
+  color: #563d82;
   border-bottom: none;
 }
 .vf-list__link:visited:hover {
-  color: #734595;
+  color: #563d82;
   text-decoration: underline;
 }
 .vf-list__link:hover {
@@ -1197,9 +1195,9 @@ a.vf-button:hover, a.vf-button:focus {
  * Location: components/undefined
  */
 .vf-blockquote {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -1282,9 +1280,9 @@ a.vf-button:hover, a.vf-button:focus {
 }
 
 .vf-box__heading {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -1314,9 +1312,9 @@ a.vf-button:hover, a.vf-button:focus {
 }
 
 .vf-box__text {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
@@ -1403,9 +1401,9 @@ a.vf-button:hover, a.vf-button:focus {
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 42px;
+  color: #000000;
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 0 0;
@@ -1419,9 +1417,9 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: inherit;
 }
 .vf-content h2:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 30px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -1432,9 +1430,9 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: inherit;
 }
 .vf-content h3:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -1445,9 +1443,9 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: inherit;
 }
 .vf-content h4:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
@@ -1458,9 +1456,9 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: inherit;
 }
 .vf-content h5:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
@@ -1471,9 +1469,9 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: inherit;
 }
 .vf-content h6:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
@@ -1487,9 +1485,9 @@ a.vf-button:hover, a.vf-button:focus {
   margin-top: 0 !important;
 }
 .vf-content p:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 1rem 0;
@@ -1517,9 +1515,9 @@ a.vf-button:hover, a.vf-button:focus {
   text-decoration: underline;
 }
 .vf-content small:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
@@ -1547,9 +1545,9 @@ a.vf-button:hover, a.vf-button:focus {
 }
 
 .vf-content li:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -1580,9 +1578,9 @@ a.vf-button:hover, a.vf-button:focus {
   padding-right: 3px;
 }
 .vf-content blockquote:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -1608,9 +1606,9 @@ a.vf-button:hover, a.vf-button:focus {
   border-collapse: collapse;
 }
 .vf-content table:not([class*=vf-]) caption {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
@@ -1621,9 +1619,9 @@ a.vf-button:hover, a.vf-button:focus {
   background-color: #d0d0ce;
 }
 .vf-content table:not([class*=vf-]) thead th {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 0 0;
@@ -1631,9 +1629,9 @@ a.vf-button:hover, a.vf-button:focus {
   text-align: left;
 }
 .vf-content table:not([class*=vf-]) td {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;
@@ -1653,9 +1651,9 @@ a.vf-button:hover, a.vf-button:focus {
 }
 .vf-content figcaption:not([class*=vf-]),
 .vf-content cite:not([class*=vf-]) {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;

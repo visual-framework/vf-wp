@@ -99,9 +99,9 @@
  * Location: components/vf-lede
  */
 .vf-lede {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 32px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.3125;
   margin: 0 0 0 0;
@@ -112,11 +112,11 @@
   color: #3b6fb6;
 }
 .vf-lede > a:visited {
-  color: #734595;
+  color: #563d82;
   border-bottom: none;
 }
 .vf-lede > a:visited:hover {
-  color: #734595;
+  color: #563d82;
   text-decoration: underline;
 }
 .vf-lede > a:hover {

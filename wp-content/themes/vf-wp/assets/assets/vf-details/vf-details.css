@@ -103,9 +103,9 @@
 }
 
 .vf-details--summary {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;

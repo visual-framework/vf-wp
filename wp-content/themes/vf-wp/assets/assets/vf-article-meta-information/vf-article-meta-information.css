@@ -118,9 +118,9 @@
   display: inline-flex;
 }
 .vf-article-meta-info__author .vf-author__name {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 0 0;
@@ -169,9 +169,9 @@
   content: "" !important;
 }
 .vf-meta__details .vf-meta__date {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 4px 0;
@@ -182,9 +182,9 @@
   padding: 0;
 }
 .vf-article-meta-info__links .vf-text {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 8px 0;
@@ -196,9 +196,9 @@
 }
 
 .vf-meta__text {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 0 0;

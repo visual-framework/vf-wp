@@ -126,9 +126,9 @@
 }
 
 .vf-profile__title {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 0 0;
@@ -136,9 +136,9 @@
 }
 
 .vf-profile__job-title {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 0.25rem 0;
@@ -153,9 +153,9 @@
 }
 
 .vf-profile__text {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;
@@ -166,9 +166,9 @@
 }
 
 .vf-profile__email {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 0 0;
@@ -180,9 +180,9 @@
 }
 
 .vf-profile__phone {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
+  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 0 0;
@@ -194,9 +194,9 @@
 }
 
 .vf-profile__uuid {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
+  color: #373a36;
   font-weight: 500;
   line-height: 1.57;
   margin: 0 0 0 0;
@@ -225,17 +225,17 @@
   grid-column-gap: 0.5rem;
 }
 .vf-profile--small .vf-profile__title {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 0 0;
 }
 .vf-profile--small .vf-profile__job-title {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 0.25rem 0;
@@ -249,17 +249,17 @@
   grid-column-gap: 1rem;
 }
 .vf-profile--medium .vf-profile__title {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 0 0;
 }
 .vf-profile--medium .vf-profile__job-title {
-  color: #000000;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
+  color: #000000;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 0.25rem 0;

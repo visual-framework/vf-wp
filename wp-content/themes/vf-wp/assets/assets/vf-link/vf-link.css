@@ -104,11 +104,11 @@
   color: #3b6fb6;
 }
 .vf-link:visited {
-  color: #734595;
+  color: #563d82;
   border-bottom: none;
 }
 .vf-link:visited:hover {
-  color: #734595;
+  color: #563d82;
   text-decoration: underline;
 }
 .vf-link:hover {
