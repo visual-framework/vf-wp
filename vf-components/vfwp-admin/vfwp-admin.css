@@ -31,7 +31,7 @@
 }
 
 :root {
-  --vf-color__text--primary: #000000;
+  --vf-color__text--primary: #1a1c1a;
   --vf-color__text--secondary: #373a36;
   --vf-color__link: #3b6fb6;
   --vf-color__link--hover: #193f90;
@@ -101,7 +101,7 @@
 .vf-content h1:not([class*=vf-]), .editor-styles-wrapper h1:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 42px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 0 0;
@@ -118,7 +118,7 @@
 .vf-content h2:not([class*=vf-]), .editor-styles-wrapper h2:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 30px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -132,7 +132,7 @@
 .vf-content h3:not([class*=vf-]), .editor-styles-wrapper h3:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -146,7 +146,7 @@
 .vf-content h4:not([class*=vf-]), .editor-styles-wrapper h4:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
@@ -160,7 +160,7 @@
 .vf-content h5:not([class*=vf-]), .editor-styles-wrapper h5:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
@@ -174,7 +174,7 @@
 .vf-content h6:not([class*=vf-]), .editor-styles-wrapper h6:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
@@ -191,7 +191,7 @@
 .vf-content p:not([class*=vf-]), .editor-styles-wrapper p:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 1rem 0;
@@ -255,7 +255,7 @@
 .vf-content li:not([class*=vf-]), .editor-styles-wrapper li:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -289,7 +289,7 @@
 .vf-content blockquote:not([class*=vf-]), .editor-styles-wrapper blockquote:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
@@ -317,7 +317,7 @@
 .vf-content table:not([class*=vf-]) caption, .editor-styles-wrapper table:not([class*=vf-]) caption {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
@@ -330,7 +330,7 @@
 .vf-content table:not([class*=vf-]) thead th, .editor-styles-wrapper table:not([class*=vf-]) thead th {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 0 0;
@@ -340,7 +340,7 @@
 .vf-content table:not([class*=vf-]) td, .editor-styles-wrapper table:not([class*=vf-]) td {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 0 0;
@@ -455,7 +455,7 @@
 .editor-post-title__block .editor-post-title__input {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 42px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 16px 0;
@@ -478,8 +478,8 @@
 
 .block-editor .editor-styles-wrapper .has-extra-large-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 32px;
-  color: #000000;
+  font-size: 28px;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.3125;
   margin: 0 0 16px 0;
@@ -488,7 +488,7 @@
 .block-editor .editor-styles-wrapper .has-large-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;

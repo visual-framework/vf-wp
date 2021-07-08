@@ -31,7 +31,7 @@
 }
 
 :root {
-  --vf-color__text--primary: #000000;
+  --vf-color__text--primary: #1a1c1a;
   --vf-color__text--secondary: #373a36;
   --vf-color__link: #3b6fb6;
   --vf-color__link--hover: #193f90;
@@ -99,7 +99,7 @@
  * Location: components/undefined
  */
 .vf-card {
-  --card-text-color: var(--vf-card-theme-color--foreground, #000000);
+  --card-text-color: var(--vf-card-theme-color--foreground, #1a1c1a);
   --card-background-color: var(--vf-card-theme-color--background , #ffffff);
   -ms-flex-line-pack: start;
       align-content: start;
@@ -176,8 +176,8 @@
   line-height: 1.333;
   margin: 0 0 0 0;
   background-color: var(--card-background-color);
-  color: #000000;
-  color: var(--card-text-color, #000000);
+  color: #1a1c1a;
+  color: var(--card-text-color, #1a1c1a);
   line-height: 1.333;
   text-decoration: none;
   word-break: break-word;

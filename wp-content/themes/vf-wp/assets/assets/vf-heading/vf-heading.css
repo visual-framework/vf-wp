@@ -31,7 +31,7 @@
 }
 
 :root {
-  --vf-color__text--primary: #000000;
+  --vf-color__text--primary: #1a1c1a;
   --vf-color__text--secondary: #373a36;
   --vf-color__link: #3b6fb6;
   --vf-color__link--hover: #193f90;
@@ -105,7 +105,7 @@
 .vf-text-heading--5 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
@@ -115,7 +115,7 @@
 .vf-text-heading--4 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
@@ -125,7 +125,7 @@
 .vf-text-heading--3 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -135,7 +135,7 @@
 .vf-text-heading--2 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 30px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -145,7 +145,7 @@
 .vf-text-heading--1 {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 42px;
-  color: #000000;
+  color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 16px 0;

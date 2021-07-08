@@ -31,7 +31,7 @@
 }
 
 :root {
-  --vf-color__text--primary: #000000;
+  --vf-color__text--primary: #1a1c1a;
   --vf-color__text--secondary: #373a36;
   --vf-color__link: #3b6fb6;
   --vf-color__link--hover: #193f90;
@@ -2610,7 +2610,7 @@
 }
 
 .vf-u-type__text-body--1 {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 500;
   line-height: 1.3125;
 }
