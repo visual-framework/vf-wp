@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-footer
- * Version: 1.1.1
+ * Version: 1.2.0
  * Location: components/undefined
  */
 .vf-footer {
@@ -254,6 +254,7 @@
   margin-bottom: 0;
 }
 .vf-footer__links-group .vf-list__item {
+  color: #d0d0ce;
   margin-bottom: 0;
 }
 .vf-footer__links-group .vf-list__link {
