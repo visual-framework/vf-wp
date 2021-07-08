@@ -139,7 +139,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
     );
     $heading = trim($heading);
     if (empty($heading)) {
-      $heading = $field['default_value'];
+      $heading = get_bloginfo('name');
     }
     $heading = sprintf(
       $heading,
