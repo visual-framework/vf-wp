@@ -1718,10 +1718,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-font-plex-sans/-/vf-font-plex-sans-1.1.1.tgz#25a4e7aa0dcffa83be278df42d6b77423e3e0a21"
   integrity sha512-3DM5UZskVMfu4Zr8A6xLbqu5gkfrIfAw1egK64UrNh5pvsCalqirP5L2mmGPfOSrota386LfaZrz1HxESXFLSw==
 
-"@visual-framework/vf-footer@1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.1.1.tgz#b2e1eaf9c26295593fbed82d5b86e7bb0684027d"
-  integrity sha512-DGKe4Sj14OgWaD4XP2x4a7VE93I9dzYxIdPqFyCnadn7xkigXBzo27A13k9yvFL1lvhaM5Od9lt+3njqLVNWmQ==
+"@visual-framework/vf-footer@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.2.0.tgz#42a0a1e30ebe3012edfeb55e906a7bbb3e5a856c"
+  integrity sha512-Ssr5jmuf2NFiJt35aIeMQeJsKwXv6Yq/d1p4rK6/8ZCUZuXMcVTBU+VJwZj1he4714ec4l2ZbWXOZ8swt2sFDA==
 
 "@visual-framework/vf-form@2.0.0-alpha.1", "@visual-framework/vf-form@^2.0.0-alpha.1":
   version "2.0.0-alpha.1"
