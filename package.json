@@ -86,7 +86,7 @@
     "@visual-framework/vf-extensions": "1.0.0",
     "@visual-framework/vf-font-plex-mono": "1.1.1",
     "@visual-framework/vf-font-plex-sans": "1.1.1",
-    "@visual-framework/vf-footer": "1.1.1",
+    "@visual-framework/vf-footer": "1.2.0",
     "@visual-framework/vf-form__checkbox": "3.0.0-alpha.0",
     "@visual-framework/vf-form__helper": "3.0.0-alpha.0",
     "@visual-framework/vf-form__input": "3.0.0-alpha.1",
