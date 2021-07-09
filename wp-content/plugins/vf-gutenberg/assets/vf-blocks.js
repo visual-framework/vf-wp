@@ -7400,7 +7400,7 @@ if (ResizeObserver) {
     }, wp.element.createElement(GridControl, {
       help: i18n.__("Content may be reorganised when columns are reduced.")
     }))), wp.element.createElement("div", blockProps, " ", wp.element.createElement(blockEditor.InnerBlocks, {
-      allowedBlocks: ["vf/grid-column"],
+      allowedBlocks: false,
       orientation: "horizontal",
       templateLock: false
     })));

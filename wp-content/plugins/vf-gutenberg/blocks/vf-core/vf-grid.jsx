@@ -209,7 +209,7 @@ settings.edit = props => {
         {" "}
         {/* without this wrapping div the editor blows up when certain elements are selected */}
         <InnerBlocks
-          allowedBlocks={["vf/grid-column"]}
+          allowedBlocks={false}
           orientation="horizontal"
           templateLock={false}
         />
