@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-profile
- * Version: 1.2.1
+ * Version: 1.4.0
  * Location: components/undefined
  */
 .vf-profile {
@@ -132,7 +132,6 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 0 0;
-  color: #3b6fb6;
 }
 
 .vf-profile__job-title {
@@ -142,14 +141,6 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 0.25rem 0;
-}
-
-.vf-profile__link {
-  color: inherit;
-  text-decoration: none;
-}
-.vf-profile__link:hover, .vf-profile__link:focus {
-  text-decoration: underline;
 }
 
 .vf-profile__text {
@@ -173,10 +164,8 @@
   line-height: 1.71;
   margin: 0 0 0 0;
   line-height: 1.2;
+  margin-bottom: 0.5rem;
   word-break: break-all;
-}
-.vf-profile__email.vf-u-last-item {
-  margin-bottom: 0.75rem;
 }
 
 .vf-profile__phone {
@@ -189,9 +178,6 @@
   line-height: 1.2;
   word-break: break-all;
 }
-.vf-profile__phone.vf-u-last-item {
-  margin-bottom: 0.5rem;
-}
 
 .vf-profile__uuid {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -201,7 +187,27 @@
   line-height: 1.57;
   margin: 0 0 0 0;
   line-height: 1;
+  margin-top: 0.5rem;
   word-break: break-all;
+}
+
+.vf-profile__link {
+  border-bottom: none;
+  text-decoration: none;
+  color: #3b6fb6;
+}
+.vf-profile__link:visited {
+  color: #563d82;
+  border-bottom: none;
+}
+.vf-profile__link:visited:hover {
+  color: #563d82;
+  text-decoration: underline;
+}
+.vf-profile__link:hover {
+  color: #193f90;
+  border-bottom: none;
+  text-decoration: underline;
 }
 
 @media (min-width: 360px) {

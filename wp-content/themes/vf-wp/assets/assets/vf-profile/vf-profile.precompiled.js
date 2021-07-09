@@ -205,10 +205,6 @@ output += " vf-profile--";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "variant"), env.opts.autoescape);
 ;
 }
-else {
-output += " vf-profile--very-easy";
-;
-}
 if(runtime.contextOrFrameLookup(context, frame, "size")) {
 output += " vf-profile--";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "size"), env.opts.autoescape);
@@ -315,12 +311,7 @@ frame.set("loop.revindex0", t_21 - t_20 - 1);
 frame.set("loop.first", t_20 === 0);
 frame.set("loop.last", t_20 === t_21 - 1);
 frame.set("loop.length", t_21);
-output += "        <p class=\"vf-profile__email ";
-if(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "loop")),"last")) {
-output += "| vf-u-last-item ";
-;
-}
-output += "\">\n          <a href=\"mailto:";
+output += "        <p class=\"vf-profile__email\">\n          <a href=\"mailto:";
 output += runtime.suppressValue(runtime.memberLookup((t_23),"profile__email_address"), env.opts.autoescape);
 output += "\" class=\"vf-profile__link vf-profile__link--secondary\">";
 output += runtime.suppressValue(runtime.memberLookup((t_23),"profile__email_address"), env.opts.autoescape);
