@@ -13,15 +13,15 @@ get_header();
 get_template_part('partials/vf-intro');
 
 ?>
-<div class="embl-grid">
+<div class="vf-grid vf-grid__col-4">
 
   <div>
     <?php get_template_part('partials/document-filter'); ?>
   </div>
 
-  <div class="vf-content">
+  <div class="vf-grid__col--span-3 | vf-content">
     <h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
-    <div class="vf-grid vf-grid__col-2">
+    <div>
       <?php
       if ( have_posts() ) {
         while ( have_posts() ) {
@@ -31,12 +31,11 @@ get_template_part('partials/vf-intro');
       } 
       ?>
     </div>
-    <!--/vf-grid-->
     <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>
   <!--/vf-content-->
 </div>
-<!--/embl-grid-->
+<!--/vf-grid-->
 
 <?php
 
