@@ -13,13 +13,13 @@ get_header();
 get_template_part('partials/vf-intro');
 
 ?>
-<div class="vf-grid vf-grid__col-4">
+<div class="embl-grid embl-grid--has-centered-content">
 
   <div>
     <?php get_template_part('partials/document-filter'); ?>
   </div>
 
-  <div class="vf-grid__col--span-3 | vf-content">
+  <div class="vf-content">
     <h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
     <div>
       <?php
