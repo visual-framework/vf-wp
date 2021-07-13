@@ -5,6 +5,7 @@ $event_type = get_field('vf_event_event_type', $post->post_parent);
 $ss_event_name = get_field('vf_event_ss_subtype', $post->post_parent);
 $displayed = get_field('vf_event_displayed', $post->post_parent);
 $embo_event_name = get_field('vf_event_embo_subtype');
+$industry_event_type = get_field('vf_event_industry_type');
 $location = get_field('vf_event_location');
 
 $hero_image = get_field('vf_event_hero', $post->post_parent);
@@ -34,6 +35,9 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
         <?php
         if (!empty ($displayed)) {
           echo esc_html($displayed);
+        }
+        elseif (!empty ($industry_event_type)) {
+          echo esc_html($industry_event_type['label']);
         }
         elseif (!empty ($embo_event_name)) {
           echo esc_html($embo_event_name['label']);

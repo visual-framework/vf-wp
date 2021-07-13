@@ -19,6 +19,7 @@
                 "default": "Default",
                 "cco_hd": "CCO Heidelberg",
                 "embl_ebi_training": "EMBL-EBI Training",
+                "embl_ebi_industry": "EMBL-EBI Industry",
                 "science_society": "Science and Society"
             },
             "default_value": false,
@@ -199,6 +200,11 @@
                         "field": "field_5fbcab958038b",
                         "operator": "!=",
                         "value": "science_society"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "embl_ebi_industry"
                     }
                 ]
             ],
@@ -249,6 +255,39 @@
                 "ss_seminar": "Science and Society Seminar",
                 "ss_symposia": "Science and Society Symposium",
                 "ss_hd_forum": "Science and Society Heidelberg Forum"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "array",
+            "placeholder": ""
+        },
+        {
+            "key": "field_60ed87bc2d806",
+            "label": "EMBL-EBI Industry event type",
+            "name": "vf_event_industry_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "embl_ebi_industry"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "industry_quarterly_meeting": "Quarterly meeting",
+                "industry_workshop": "Workshop"
             },
             "default_value": false,
             "allow_null": 1,
@@ -735,7 +774,20 @@
             "type": "url",
             "instructions": "",
             "required": 1,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "embl_ebi_training"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1011,7 +1063,15 @@
             "type": "text",
             "instructions": "Free text for events listing on embl.org\/events. Example: John Doe, Michael Smith, Britney Spears",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1277,5 +1337,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1624443098
+    "modified": 1626185015
 }

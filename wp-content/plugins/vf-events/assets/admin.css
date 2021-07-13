@@ -61,6 +61,7 @@
 .acf-field[data-name="vf_event_event_type"] .acf-input,
 .acf-field[data-name="vf_event_embo_subtype"] .acf-input,
 .acf-field[data-name="vf_event_ss_subtype"] .acf-input,
+.acf-field[data-name="vf_event_industry_type"] .acf-input,
 .acf-field[data-name="vf_event_event_topic"] .acf-input {
   max-width: 400px;
 }
