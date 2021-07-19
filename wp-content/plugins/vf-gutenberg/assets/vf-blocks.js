@@ -913,7 +913,7 @@
   (shared$2.exports = function (key, value) {
     return store$1[key] || (store$1[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.15.0',
+    version: '3.15.1',
     mode: 'global',
     copyright: '© 2021 Denis Pushkarev (zloirock.ru)'
   });
@@ -7206,24 +7206,24 @@ if (ResizeObserver) {
   const MIN_COLUMNS = 1;
   const MAX_COLUMNS = 6;
   const settings$8 = { ...defaults$3,
-    name: 'vf/grid',
-    title: i18n.__('VF Grid'),
-    category: 'vf/core',
-    description: i18n.__('Visual Framework (core)'),
+    name: "vf/grid",
+    title: i18n.__("VF Grid"),
+    category: "vf/core",
+    description: i18n.__("Visual Framework (core)"),
     supports: { ...defaults$3.supports,
       lightBlockWrapper: true
     },
     attributes: { ...defaults$3.attributes,
       placeholder: {
-        type: 'integer',
+        type: "integer",
         default: 0
       },
       columns: {
-        type: 'integer',
+        type: "integer",
         default: 0
       },
       dirty: {
-        type: 'integer',
+        type: "integer",
         default: 0
       }
     }
@@ -7254,7 +7254,7 @@ if (ResizeObserver) {
       columns,
       placeholder
     } = props.attributes;
-    console.log('vf-grid edit'); // Turn on setup placeholder if no columns are defined
+    console.log("vf-grid edit"); // Turn on setup placeholder if no columns are defined
 
     React.useEffect(() => {
       if (columns === 0) {
@@ -7263,9 +7263,24 @@ if (ResizeObserver) {
         });
       }
     }, [clientId]);
+    /* setAttribute() method must be used inside a useEffect Hook or a method. */
+
+    React.useEffect(() => {
+      const className = `vf-grid | vf-grid__col-${columns}`;
+      const styles = {
+        ["--block-columns"]: columns
+      };
+      console.log("setting attrs");
+      props.setAttributes({
+        className: className
+      });
+      props.setAttributes({
+        style: styles
+      });
+    }, [columns]);
     const {
       replaceInnerBlocks
-    } = data$1.useDispatch('core/block-editor');
+    } = data$1.useDispatch("core/block-editor");
     const {
       setColumns,
       updateColumns
@@ -7273,7 +7288,7 @@ if (ResizeObserver) {
       const {
         getBlocks,
         getBlockAttributes
-      } = select('core/block-editor'); // Return total number of columns accounting for spans
+      } = select("core/block-editor"); // Return total number of columns accounting for spans
 
       const countSpans = blocks => {
         // console.log('countSpans')
@@ -7297,7 +7312,7 @@ if (ResizeObserver) {
         const innerColumns = getBlocks(clientId);
 
         while (countSpans(innerColumns) < maxSpans) {
-          innerColumns.push(blocks.createBlock('vf/grid-column', {}, []));
+          innerColumns.push(blocks.createBlock("vf/grid-column", {}, []));
         }
 
         replaceInnerBlocks(clientId, innerColumns, false);
@@ -7317,7 +7332,7 @@ if (ResizeObserver) {
       };
 
       const setColumns = newColumns => {
-        console.log('setColumns');
+        console.log("setColumns");
         props.setAttributes({
           columns: newColumns,
           placeholder: 0
@@ -7335,7 +7350,7 @@ if (ResizeObserver) {
       };
 
       const updateColumns = () => {
-        console.log('updateColumns');
+        console.log("updateColumns");
         const {
           columns
         } = getBlockAttributes(clientId);
@@ -7357,7 +7372,7 @@ if (ResizeObserver) {
     }, [dirty]);
 
     const GridControl = props => {
-      console.log('GridControl');
+      console.log("GridControl");
       return wp.element.createElement(ColumnsControl, _extends({
         value: columns,
         min: MIN_COLUMNS,
@@ -7373,24 +7388,27 @@ if (ResizeObserver) {
       return wp.element.createElement("div", blockProps, wp.element.createElement("div", {
         className: "vf-block vf-block--placeholder"
       }, wp.element.createElement(components.Placeholder, {
-        label: i18n.__('VF Grid'),
-        icon: 'admin-generic'
+        label: i18n.__("VF Grid"),
+        icon: "admin-generic"
       }, wp.element.createElement(GridControl, null))));
-    }
-    // props.setAttributes({style: styles})
-    // Return inner blocks and inspector controls
+    } // Return inner blocks and inspector controls
+
 
     return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
-      title: i18n.__('Advanced Settings'),
+      title: i18n.__("Advanced Settings"),
       initialOpen: true
     }, wp.element.createElement(GridControl, {
-      help: i18n.__('Content may be reorganised when columns are reduced.')
-    }))), wp.element.createElement("div", null, " ", wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks, null))));
+      help: i18n.__("Content may be reorganised when columns are reduced.")
+    }))), wp.element.createElement("div", blockProps, " ", wp.element.createElement(blockEditor.InnerBlocks, {
+      allowedBlocks: false,
+      orientation: "horizontal",
+      templateLock: false
+    })));
   }; // Block transforms
 
 
   settings$8.transforms = {
-    from: [fromColumns('core/columns', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS), fromColumns('vf/embl-grid', 'vf/grid', MIN_COLUMNS, MAX_COLUMNS)]
+    from: [fromColumns("core/columns", "vf/grid", MIN_COLUMNS, MAX_COLUMNS), fromColumns("vf/embl-grid", "vf/grid", MIN_COLUMNS, MAX_COLUMNS)]
   };
 
   const defaults$2 = useVFDefaults();
