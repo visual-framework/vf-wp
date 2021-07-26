@@ -6,7 +6,8 @@ import {createBlock} from '@wordpress/blocks';
 import {
   InnerBlocks,
   InspectorControls,
-  useBlockProps
+  // TODO: replace with `useBlockProps` hook in WP 5.6
+  __experimentalBlock as ExperimentalBlock
 } from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -63,7 +64,6 @@ settings.save = (props) => {
 settings.edit = (props) => {
   const {clientId} = props;
   const {dirty, columns, placeholder} = props.attributes;
-  console.log('vf-grid edit')
 
   // Turn on setup placeholder if no columns are defined
   useEffect(() => {
@@ -80,7 +80,6 @@ settings.edit = (props) => {
 
       // Return total number of columns accounting for spans
       const countSpans = (blocks) => {
-        // console.log('countSpans')
         let count = 0;
         blocks.forEach((block) => {
           const {span} = block.attributes;
@@ -122,7 +121,6 @@ settings.edit = (props) => {
       };
 
       const setColumns = (newColumns) => {
-        console.log('setColumns')
         props.setAttributes({columns: newColumns, placeholder: 0});
         const innerColumns = getBlocks(clientId);
         const count = countSpans(innerColumns);
@@ -135,7 +133,6 @@ settings.edit = (props) => {
       };
 
       const updateColumns = () => {
-        console.log('updateColumns')
         const {columns} = getBlockAttributes(clientId);
         setColumns(columns);
         props.setAttributes({dirty: 0});
@@ -156,7 +153,6 @@ settings.edit = (props) => {
   }, [dirty]);
 
   const GridControl = (props) => {
-    console.log('GridControl')
     return (
       <ColumnsControl
         value={columns}
@@ -168,28 +164,23 @@ settings.edit = (props) => {
     );
   };
 
-  const blockProps = useBlockProps();
-
   // Return setup placeholder
-  // props.setAttributes({className: `vf-block vf-block--placeholder`})
   if (placeholder === 1) {
     return (
-      <div { ...blockProps }>
-        <div className='vf-block vf-block--placeholder'>
-          <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
-            <GridControl />
-          </Placeholder>
-        </div>
-      </div>
+      <ExperimentalBlock.div className='vf-block vf-block--placeholder'>
+        <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
+          <GridControl />
+        </Placeholder>
+      </ExperimentalBlock.div>
     );
   }
 
   const className = `vf-grid | vf-grid__col-${columns}`;
+
   const styles = {
     ['--block-columns']: columns
   };
-  // props.setAttributes({className: className})
-  // props.setAttributes({style: styles})
+
   // Return inner blocks and inspector controls
   return (
     <>
@@ -200,12 +191,9 @@ settings.edit = (props) => {
           />
         </PanelBody>
       </InspectorControls>
-      <div> {/* without this wrapping div the editor blows up when certain elements are selected */}
-        <div { ...blockProps }>
-          {/* <InnerBlocks allowedBlocks={['vf/grid-column']} orientation='horizontal' templateLock='all' /> */}
-          <InnerBlocks  />
-        </div>
-      </div>
+      <ExperimentalBlock.div className={className} style={styles}>
+        <InnerBlocks allowedBlocks={['vf/grid-column']} templateLock='all' />
+      </ExperimentalBlock.div>
     </>
   );
 };

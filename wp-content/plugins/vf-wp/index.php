@@ -311,7 +311,7 @@ class VF_WP {
 
 global $vf_wp;
 
-if ( ! isset($vf_wp) && function_exists( 'acf_register_block_type' ) ) {
+if ( ! isset($vf_wp)) {
   $vf_wp = new VF_WP();
 }
 

@@ -42,7 +42,7 @@ require_once('blocks/vfwp-post-fetch/index.php');
 require_once('blocks/vfwp-masthead/index.php');
 */
 
-if (function_exists('vf_debug')) {
+if (vf_debug()) {
   require_once('blocks/vfwp-debug/index.php');
 }
 
@@ -89,7 +89,7 @@ add_filter(
 );
 
 // Load ACF JSON from theme
-
+ 
 function vf_wp_theme__acf_settings_load_json($paths) {
   $paths[] = get_stylesheet_directory() . '/acf-json';
   return $paths;
