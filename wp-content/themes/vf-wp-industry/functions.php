@@ -1,4 +1,5 @@
 <?php
+require_once('functions/custom-taxonomies.php');
 
 // Register Events post type
 
@@ -37,8 +38,11 @@ add_action(
         ),
         'query_var'           => true,
         'can_export'          => true,
-        'delete_with_user'    => false
-    ));
+        'delete_with_user'    => false,
+        'taxonomies'          => array(
+            'type',
+          ),    
+        ));
 
   }
   /**
@@ -79,6 +83,23 @@ add_action(
       );
   }
 
+  // enable featured image
+add_theme_support( 'post-thumbnails' );
+add_theme_support( 'title-tag' );
 
+// CHILD THEME CSS FILE
+
+add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
+function my_theme_enqueue_styles() {
+
+	$parent_style = 'parent-style';
+
+    wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
+    wp_enqueue_style( 'child-style',
+	get_stylesheet_directory_uri() . '/style.css',
+	array( $parent_style ),
+	wp_get_theme()->get('Version')
+);
+}
 
 ?>
