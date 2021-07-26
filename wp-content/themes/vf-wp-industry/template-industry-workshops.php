@@ -83,17 +83,19 @@ $vf_theme->the_content(); ?>
     <?php
 
 $forthcomingLoop = new WP_Query (array('post_type' => 'industry_event', 'order' => 'ASC', 'posts_per_page' => 10, 'meta_key' => 'vf_event_industry_event_type', 'meta_query' => array(
-    array(
-        'key' => 'vf_event_industry_event_type',
-        'value' => 'Workshop',
-        'compare' => '=',
-    ),
+
     array(
         'key' => 'vf_event_industry_start_date',
         'value' => $current_date,
         'compare' => '>=',
         'type' => 'numeric'
-    )
+    ),    'tax_query' => array(
+        array (
+            'taxonomy' => 'type',
+            'field' => 'slug',
+            'terms' => 'workshop',
+        )
+    ),
 ) ));
 $ids = array();
 while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
@@ -114,16 +116,18 @@ include(locate_template('partials/vf-summary-event.php', false, false)); ?>
     <?php
 $pastLoop = new WP_Query (array('post_type' => 'industry_event', 'order' => 'ASC' ,'posts_per_page' => 4, 'meta_key' => 'vf_event_industry_event_type',    'meta_query' => array(
     array(
-        'key' => 'vf_event_industry_event_type',
-        'value' => 'Workshop',
-        'compare' => '=',
-    ),
-    array(
         'key' => 'vf_event_industry_start_date',
         'value' => $current_date,
         'compare' => '<=',
         'type' => 'numeric'
-    )
+    ),
+    'tax_query' => array(
+        array (
+            'taxonomy' => 'type',
+            'field' => 'slug',
+            'terms' => 'workshop',
+        )
+    ),
 ) ));
 $ids = array();
 while ($pastLoop->have_posts()) : $pastLoop->the_post();
