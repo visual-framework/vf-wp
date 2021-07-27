@@ -140,7 +140,7 @@
                 "id": ""
             },
             "taxonomy": "type",
-            "field_type": "multi_select",
+            "field_type": "select",
             "allow_null": 1,
             "add_term": 1,
             "save_terms": 1,
@@ -446,5 +446,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_industry_event` post type"
+    "description": "`vf_industry_event` post type",
+    "modified": 1627376709
 }

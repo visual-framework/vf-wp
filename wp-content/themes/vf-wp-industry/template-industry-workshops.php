@@ -78,24 +78,30 @@ $vf_theme->the_content(); ?>
 
 
 <div class="vf-grid vf-grid__col-3 | vf-content">
-  <div class="vf-grid__col--span-2">
-    <h3>Forthcoming workshops</h3>
+    <div class="vf-grid__col--span-2" >
+  <div class="vf-grid vf-grid__col-2">
+      <div>
+    <h2>Forthcoming workshops</h2>
     <?php
 
-$forthcomingLoop = new WP_Query (array('post_type' => 'industry_event', 'order' => 'ASC', 'posts_per_page' => 10, 'meta_key' => 'vf_event_industry_event_type', 'meta_query' => array(
-
-    array(
-        'key' => 'vf_event_industry_start_date',
-        'value' => $current_date,
-        'compare' => '>=',
-        'type' => 'numeric'
-    ),    'tax_query' => array(
+$forthcomingLoop = new WP_Query (array(
+    'tax_query' => array(
         array (
             'taxonomy' => 'type',
             'field' => 'slug',
             'terms' => 'workshop',
         )
     ),
+    'post_type' => 'industry_event', 
+    'order' => 'ASC', 'posts_per_page' => 10, 
+    'meta_key' => 'vf_event_industry_event_type', 
+    'meta_query' => array(
+    array(
+        'key' => 'vf_event_industry_start_date',
+        'value' => $current_date,
+        'compare' => '>=',
+        'type' => 'numeric'
+    ),    
 ) ));
 $ids = array();
 while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
@@ -109,24 +115,29 @@ $end = DateTime::createFromFormat('j M Y', $end_date);
 include(locate_template('partials/vf-summary-event.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
-
-    <hr class="vf-divider">
-    <h3>Archived workshops</h3>
+    </div>
+    <div>
+    <h2>Past workshops</h2>
 
     <?php
-$pastLoop = new WP_Query (array('post_type' => 'industry_event', 'order' => 'ASC' ,'posts_per_page' => 4, 'meta_key' => 'vf_event_industry_event_type',    'meta_query' => array(
-    array(
-        'key' => 'vf_event_industry_start_date',
-        'value' => $current_date,
-        'compare' => '<=',
-        'type' => 'numeric'
-    ),
+$pastLoop = new WP_Query (array(
     'tax_query' => array(
         array (
             'taxonomy' => 'type',
             'field' => 'slug',
             'terms' => 'workshop',
         )
+    ),
+    'post_type' => 'industry_event', 
+    'order' => 'ASC' ,
+    'posts_per_page' => 4, 
+    'meta_key' => 'vf_event_industry_event_type',    
+    'meta_query' => array(
+    array(
+        'key' => 'vf_event_industry_start_date',
+        'value' => $current_date,
+        'compare' => '<=',
+        'type' => 'numeric'
     ),
 ) ));
 $ids = array();
@@ -142,7 +153,9 @@ include(locate_template('partials/vf-summary-event.php', false, false)); ?>
 
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
-<p><a href="./archive">See the full archive</a></p>
+<p><a href="./archive">View all past workshops</a></p>
+</div>
+</div>
   </div>
   <div></div>
 </div>

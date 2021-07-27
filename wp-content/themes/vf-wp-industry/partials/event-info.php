@@ -12,47 +12,15 @@ $location = get_field('vf_event_industry_location', $post->post_parent);
 $time = get_field('vf_event_industry_start_time', $post->post_parent);
 $venue = get_field('vf_event_industry_venue', $post->post_parent);
 
-$abstract_closing = get_field('vf_event_industry_submission_closing', $post->post_parent);
-$application_closing = get_field('vf_event_industry_application_deadline', $post->post_parent);
 $registration_closing = get_field('vf_event_industry_registration_closing', $post->post_parent);
 $registration_open = get_field('vf_event_industry_registration_opening', $post->post_parent);
-
-$event_topic = get_field('vf_event_industry_event_topic', $post->post_parent);
-
 $registration_link = get_field('vf_event_industry_registration_link', $post->post_parent);
-$contact = get_field('vf_event_industry_contact', $post->post_parent);
-$contact_name = get_field('vf_event_industry_contact_name', $post->post_parent);
-$hashtag = get_field('vf_event_industry_hashtag', $post->post_parent);
-$abstract_link = get_field('vf_event_industry_abstract_link', $post->post_parent);
-$poster_file = get_field('vf_event_industry_poster_file', $post->post_parent);
-$abstract_button = get_field('vf_event_industry_abstract_submission_button_text', $post->post_parent);
-$abstract_button = ucfirst(strtolower($abstract_button));
 $register_button = get_field('vf_event_industry_registration_button_text', $post->post_parent);
 $register_button = ucfirst(strtolower($register_button));
-$info_text = get_field('vf_event_industry_info_text', $post->post_parent);
 $registration_type = get_field('vf_event_industry_registration_type', $post->post_parent);
 
-$social_url = get_the_permalink();
-
-
-$logo_image = get_field('vf_event_industry_logo', $post->post_parent);
-$logo_image = wp_get_attachment_image($logo_image['ID'], 'medium', false, array(
-    'style'    => 'max-height: 95px; width: auto;',
-    'loading'  => 'lazy',
-    'itemprop' => 'image',
-  ));
-
-$poster_image = get_field('vf_event_industry_poster', $post->post_parent);
-$poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, array(
-    'style'    => 'max-width: 175px; height: auto; border: 1px solid #d0d0ce',
-    'loading'  => 'lazy',
-    'itemprop' => 'image',
-  ));
-
 $now = new DateTime();
-$application_date = new DateTime($application_closing);
 $registration_date = new DateTime($registration_closing);
-$abstract_date = new DateTime($abstract_closing);
 
 ?>
 

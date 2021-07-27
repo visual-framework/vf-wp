@@ -31,8 +31,8 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
         if (!empty ($displayed)) {
           echo esc_html($displayed);
         }
-        else {
-           echo esc_html($event_type['label']);
+        elseif ($event_type) {
+           echo esc_html($event_type->name);
         }
       ?>
       </p>
