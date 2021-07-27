@@ -78,18 +78,27 @@ $vf_theme->the_content(); ?>
 
 
 <div class="vf-grid vf-grid__col-3 | vf-content">
-    <div class="vf-grid__col--span-2" >
-  <div class="vf-grid vf-grid__col-2">
-      <div>
-    <h2>Forthcoming workshops</h2>
-    <?php
+  <div class="vf-grid__col--span-2">
+    <div class="vf-tabs">
+      <ul class="vf-tabs__list" data-vf-js-tabs>
+        <li class="vf-tabs__item">
+          <a class="vf-tabs__link" href="#vf-tabs__section--1">Forthcoming workshops</a>
+        </li>
+        <li class="vf-tabs__item">
+          <a class="vf-tabs__link" href="#vf-tabs__section--2">Past workshops</a>
+        </li>
+      </ul>
+    </div>
+    <div class="vf-tabs-content" data-vf-js-tabs-content>
+      <section class="vf-tabs__section" id="vf-tabs__section--1">
+        <?php
 
 $forthcomingLoop = new WP_Query (array(
     'tax_query' => array(
         array (
             'taxonomy' => 'type',
             'field' => 'slug',
-            'terms' => 'workshop',
+            'terms' => 'industry-workshop',
         )
     ),
     'post_type' => 'industry_event', 
@@ -113,23 +122,24 @@ $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
 $end = DateTime::createFromFormat('j M Y', $end_date);
 
 include(locate_template('partials/vf-summary-event.php', false, false)); ?>
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>
-    </div>
-    <div>
-    <h2>Past workshops</h2>
+        <?php endwhile;?>
+        <?php wp_reset_postdata(); ?>
 
-    <?php
+    </section>
+
+    <section class="vf-tabs__section" id="vf-tabs__section--2">
+
+      <?php
 $pastLoop = new WP_Query (array(
     'tax_query' => array(
         array (
             'taxonomy' => 'type',
             'field' => 'slug',
-            'terms' => 'workshop',
+            'terms' => 'industry-workshop',
         )
     ),
     'post_type' => 'industry_event', 
-    'order' => 'ASC' ,
+    'order' => 'DSC' ,
     'posts_per_page' => 4, 
     'meta_key' => 'vf_event_industry_event_type',    
     'meta_query' => array(
@@ -151,11 +161,12 @@ $end = DateTime::createFromFormat('j M Y', $end_date);
 
 include(locate_template('partials/vf-summary-event.php', false, false)); ?>
 
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>
-<p><a href="./archive">View all past workshops</a></p>
-</div>
+      <?php endwhile;?>
+      <?php wp_reset_postdata(); ?>
+      <p><a href="./archive">View all past workshops</a></p>
+    </section>
 </div>
   </div>
-  <div></div>
 </div>
+
+<?php get_footer(); ?>
