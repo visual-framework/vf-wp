@@ -1,4 +1,5 @@
 <?php
+
 require_once('functions/custom-taxonomies.php');
 
 // Register Events post type
@@ -33,9 +34,7 @@ add_action(
         'capability_type'     => 'page',
         'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
         'has_archive'         => true,
-        'rewrite'             => array(
-          'slug' => '/private/events'
-        ),
+        'rewrite' => array('slug' => 'private/%type%/%year%/%monthnum%', 'with_front' => false), 
         'query_var'           => true,
         'can_export'          => true,
         'delete_with_user'    => false,
@@ -101,5 +100,44 @@ function my_theme_enqueue_styles() {
 	wp_get_theme()->get('Version')
 );
 }
+
+
+// Event date url rewrite rules
+
+add_filter('post_type_link', 'event_permalink_structure', 10, 4);
+function event_permalink_structure($post_link, $post, $leavename, $sample) {
+    if (false !== strpos($post_link, '%type%')) {
+        $type_term = get_the_terms($post->ID, 'type');
+        if (!empty($type_term))
+            $post_link = str_replace('%type%', array_pop($type_term)->
+            slug, $post_link);
+        else
+            $post_link = str_replace('%type%', 'uncategorized', $post_link);
+    }
+    return $post_link;
+}
+
+function events_permalink_year( $url, $post ) {
+$year_start_date = get_field('vf_event_industry_start_date', $post->ID);
+$year_start = DateTime::createFromFormat('j M Y', $year_start_date);
+$YearDate = $year_start->format('Y');
+  if ( 'industry_event' == get_post_type( $post ) ) {
+      $url = str_replace( "%year%", $YearDate, $url );
+  }
+  return $url;
+}
+function events_permalink_month( $url, $post ) {
+$month_start_date = get_field('vf_event_industry_start_date', $post->ID);
+$month_start = DateTime::createFromFormat('j M Y', $month_start_date);
+$MonthDate = $month_start->format('m');
+
+  if ( 'industry_event' == get_post_type( $post ) ) {
+      $url = str_replace( "%monthnum%", $MonthDate, $url );
+  }
+  return $url;
+}
+add_filter( 'post_type_link', 'events_permalink_year', 10, 2 );
+add_filter( 'post_type_link', 'events_permalink_month', 10, 2 );
+
 
 ?>
