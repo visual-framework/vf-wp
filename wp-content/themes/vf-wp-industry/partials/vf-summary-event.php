@@ -1,5 +1,4 @@
 <article class="vf-summary vf-summary--event">
-     <h3><?php echo $start->format('F Y'); ?></h3>
      <h3 class="vf-summary__title">
        <a href="<?php echo get_permalink(); ?>" class="vf-summary__link">
          <?php the_title(); ?>

@@ -89,22 +89,36 @@ $forthcomingLoop = new WP_Query (array(
       array (
           'taxonomy' => 'type',
           'field' => 'slug',
-          'terms' => 'quarterly-meeting',
+          'terms' => 'industry-quarterly-meeting',
       )
     ), 
     'post_type' => 'industry_event', 
+    'orderby' => 'meta_value_num',
+
     'order' => 'ASC', 
     'posts_per_page' => 6, 
-    'meta_key' => 'vf_event_industry_event_type', 
+    'meta_key' => 'vf_event_industry_start_date', 
     'meta_query' => array(
         array(
             'key' => 'vf_event_industry_start_date',
             'value' => $current_date,
             'compare' => '>=',
             'type' => 'numeric'
-        ),  
+        ),
+        array(
+          'key' => 'vf_event_industry_start_date',
+          'value' => date('Ymd', strtotime('now')),
+          'type' => 'numeric',
+          'compare' => '>=',
+          ),
+        array(
+          'key' => 'vf_event_industry_end_date',
+          'value' => date('Ymd', strtotime('now')),
+          'type' => 'numeric',
+          'compare' => '>=',
+          ),  
     ) ));
-$ids = array();
+$ids = array(); $current_month = "";
 while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
 $ids[] = get_the_ID();
 $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
@@ -112,7 +126,18 @@ $start = DateTime::createFromFormat('j M Y', $start_date);
 
 $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
 $end = DateTime::createFromFormat('j M Y', $end_date);
-
+?>
+<h3>
+<?php
+  $dateformatstring = "F Y";
+  $unixtimestamp = strtotime(get_field('vf_event_industry_start_date'));
+  $pretty_month = date_i18n($dateformatstring, $unixtimestamp);
+  if ($current_month != $pretty_month){
+    echo $pretty_month;
+    $current_month = $pretty_month;
+  }
+  ?>
+</h3> <?php
 include(locate_template('partials/vf-summary-event.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
@@ -126,7 +151,7 @@ $forthcomingWorkshopsLoop = new WP_Query (array(
         array (
             'taxonomy' => 'type',
             'field' => 'slug',
-            'terms' => 'workshop',
+            'terms' => 'industry-workshop',
         )
     ),
     'post_type' => 'industry_event', 
@@ -157,3 +182,5 @@ include(locate_template('partials/vf-summary-event.php', false, false)); ?>
   </div>
   <div></div>
 </div>
+
+<?php get_footer(); ?>
