@@ -18,7 +18,6 @@ $title = get_the_title();
 ?>
 
 <?php 
-
   
 $open_wrap = function($html, $block_name) {
   $html = '
@@ -76,9 +75,8 @@ $close_wrap,
 
 $vf_theme->the_content(); ?>
 
-
 <div class="vf-grid vf-grid__col-3 | vf-content">
-    <div class="vf-grid__col--span-2" >
+  <div class="vf-grid__col--span-2">
     <div class="vf-tabs">
       <ul class="vf-tabs__list" data-vf-js-tabs>
         <li class="vf-tabs__item">
@@ -90,9 +88,11 @@ $vf_theme->the_content(); ?>
       </ul>
     </div>
     <div class="vf-tabs-content" data-vf-js-tabs-content>
-      <section class="vf-tabs__section" id="vf-tabs__section--1">    <?php
 
-$forthcomingLoop = new WP_Query (array( 
+<!-- Upcoming -->
+
+      <section class="vf-tabs__section" id="vf-tabs__section--1"> <?php
+    $forthcomingLoop = new WP_Query (array( 
     'tax_query' => array(
       array (
           'taxonomy' => 'type',
@@ -125,35 +125,35 @@ $forthcomingLoop = new WP_Query (array(
           ),  
   
     ) ));
-$ids = array();
-$current_month = "";
-while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
-$ids[] = get_the_ID();
-$start_date = get_field('vf_event_industry_start_date', $post->post_parent);
-$start = DateTime::createFromFormat('j M Y', $start_date);
-
-$end_date = get_field('vf_event_industry_end_date', $post->post_parent);
-$end = DateTime::createFromFormat('j M Y', $end_date);
-?>
-<h3>
-<?php
-  $dateformatstring = "F Y";
-  $unixtimestamp = strtotime(get_field('vf_event_industry_start_date'));
-  $pretty_month = date_i18n($dateformatstring, $unixtimestamp);
-  if ($current_month != $pretty_month){
-    echo $pretty_month;
-    $current_month = $pretty_month;
-  }
-  ?>
-</h3> <?php
-include(locate_template('partials/vf-summary-event.php', false, false)); ?>
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>
-    </section>
-
-    <section class="vf-tabs__section" id="vf-tabs__section--2">
+    $ids = array();
+    $current_month = "";
+    while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
+    $ids[] = get_the_ID();
+    $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
+    $start = DateTime::createFromFormat('j M Y', $start_date);
+    $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
+    $end = DateTime::createFromFormat('j M Y', $end_date); ?>
+        <h3>
+        <?php
+        $dateformatstring = "F Y";
+        $unixtimestamp = strtotime(get_field('vf_event_industry_start_date'));
+        $pretty_month = date_i18n($dateformatstring, $unixtimestamp);
+        if ($current_month != $pretty_month){
+          echo $pretty_month;
+          $current_month = $pretty_month;
+        } ?>
+        </h3> 
     <?php
-$pastLoop = new WP_Query (array(
+      include(locate_template('partials/vf-summary-event.php', false, false)); ?>
+        <?php endwhile;?>
+        <?php wp_reset_postdata(); ?>
+      </section>
+
+<!-- Past -->
+
+      <section class="vf-tabs__section" id="vf-tabs__section--2">
+        <?php
+    $pastLoop = new WP_Query (array(
     'tax_query' => array(
       array (
           'taxonomy' => 'type',
@@ -186,34 +186,31 @@ $pastLoop = new WP_Query (array(
           ),  
   
     ) ));
-$ids = array();
-$current_month = "";
-while ($pastLoop->have_posts()) : $pastLoop->the_post();
-$ids[] = get_the_ID();
-$start_date = get_field('vf_event_industry_start_date', $post->post_parent);
-$start = DateTime::createFromFormat('j M Y', $start_date);
-
-$end_date = get_field('vf_event_industry_end_date', $post->post_parent);
-$end = DateTime::createFromFormat('j M Y', $end_date);
-?>
-<h3>
-<?php
-  $dateformatstring = "F Y";
-  $unixtimestamp = strtotime(get_field('vf_event_industry_start_date'));
-  $pretty_month = date_i18n($dateformatstring, $unixtimestamp);
-  if ($current_month != $pretty_month){
-    echo $pretty_month;
-    $current_month = $pretty_month;
-  }
-  ?>
-</h3> <?php
-include(locate_template('partials/vf-summary-event.php', false, false)); ?>
-
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>
-<p><a href="./archive">View all past quarterly meetings</a></p>
-</section>
-</div>
+    $ids = array();
+    $current_month = "";
+    while ($pastLoop->have_posts()) : $pastLoop->the_post();
+    $ids[] = get_the_ID();
+    $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
+    $start = DateTime::createFromFormat('j M Y', $start_date);
+    $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
+    $end = DateTime::createFromFormat('j M Y', $end_date); ?>
+        <h3>
+        <?php
+        $dateformatstring = "F Y";
+        $unixtimestamp = strtotime(get_field('vf_event_industry_start_date'));
+        $pretty_month = date_i18n($dateformatstring, $unixtimestamp);
+        if ($current_month != $pretty_month){
+          echo $pretty_month;
+          $current_month = $pretty_month;
+        } ?>
+        </h3> 
+    <?php
+    include(locate_template('partials/vf-summary-event.php', false, false)); ?>
+        <?php endwhile;?>
+        <?php wp_reset_postdata(); ?>
+        <p><a href="./archive">View all past quarterly meetings</a></p>
+      </section>
+    </div>
   </div>
 </div>
 

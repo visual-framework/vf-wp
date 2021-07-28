@@ -51,59 +51,59 @@ $registration_date = new DateTime($registration_closing);
         class="vf-u-text-color--grey"><?php echo esc_html($time); ?></span></p>
     <?php } ?>
 
-    
-    
+
+
     <?php 
 
 // Registration dates
 if ( ! empty($registration_open)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Registration opens date:</span> <span class="vf-u-text-color--grey">
-<?php
-        echo esc_html($registration_open);
-      ?>
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Registration opens date:</span> <span
+        class="vf-u-text-color--grey">
+        <?php echo esc_html($registration_open); ?>
       </span></p>
-      <?php } 
+    <?php } 
 if ( ! empty($registration_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Registration deadline:</span> <span class="vf-u-text-color--grey">
-      <?php if ($registration_date < $now) {
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Registration deadline:</span> <span
+        class="vf-u-text-color--grey">
+        <?php if ($registration_date < $now) {
         echo 'Closed';
       }  
       else if ($registration_closing) {
         echo esc_html($registration_closing);
       } ?>
       </span></p>
-      <?php } ?>
-      
-      <?php if ( ! empty($venue)) { ?>
-      <p class="vf-text-body vf-text-body--3 vf-u-margin__bottom--100"><span style="font-weight: 600;">Venue:</span></p> <p class="vf-text-body vf-text-body--3"><span
-          class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
-      <?php } ?>
+    <?php } ?>
+
+    <?php if ( ! empty($venue)) { ?>
+    <p class="vf-text-body vf-text-body--3 vf-u-margin__bottom--100"><span style="font-weight: 600;">Venue:</span></p>
+    <p class="vf-text-body vf-text-body--3"><span class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span>
+    </p>
+    <?php } ?>
 
     <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
 
-    <?php 
+      <?php 
 
     // Organisers
     if( have_rows('vf_event_industry_organisers_event_template') ): ?>
-      <p class="vf-text-body vf-text-body--3 vf-u-margin__bottom--100"><span style="font-weight: 600;">Organisers: </span></p>
+      <p class="vf-text-body vf-text-body--3 vf-u-margin__bottom--100"><span style="font-weight: 600;">Organisers:
+        </span></p>
       <?php
       while( have_rows('vf_event_industry_organisers_event_template') ) : the_row();
         $organiser_name = get_sub_field('vf_event_industry_organisers_name');
         $organiser_affiliation = get_sub_field('vf_event_industry_organisers_affiliation'); ?>
-        <ul class="vf-list vf-u-margin__bottom--sm">
-					<li class="vf-list__item vf-u-margin--0 vf-u-margin__top--md">
-            <?php echo esc_html($organiser_name); ?>
-						<br>
-						<span class="vf-text-body vf-text-body--5 vf-u-text-color--grey" style="text-transform: uppercase;"><?php echo esc_html($organiser_affiliation); ?>
-						</span>
-					</li>
-      <?php
+      <ul class="vf-list vf-u-margin__bottom--sm">
+        <li class="vf-list__item vf-u-margin--0 vf-u-margin__top--md">
+          <?php echo esc_html($organiser_name); ?>
+          <br>
+          <span class="vf-text-body vf-text-body--5 vf-u-text-color--grey"
+            style="text-transform: uppercase;"><?php echo esc_html($organiser_affiliation); ?>
+          </span>
+        </li>
+        <?php
       endwhile; ?>
       </ul>
-      <?php
-  else :
-  endif; ?>
-
+      <?php else : endif; ?>
     </div>
   </div>
 
