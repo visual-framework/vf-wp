@@ -15,7 +15,8 @@ add_action(
 );
 
   function industry_event_init_register() {
-
+    add_rewrite_tag('%event_year%','(\d+)');
+    add_rewrite_tag('%event_month%','(.+)');
     register_post_type('industry_event', array(
         'labels'              => industry_event_get_labels(),
         'description'         => __('Events', 'vfwp'),
@@ -33,8 +34,8 @@ add_action(
         'menu_icon'           => 'dashicons-calendar',
         'capability_type'     => 'page',
         'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
-        'has_archive'         => true,
-        'rewrite' => array('slug' => 'private/%type%/%year%/%monthnum%', 'with_front' => false), 
+        'has_archive'         => 'private/events',
+        'rewrite' => array('slug' => 'private/%type%/%event_year%/%event_month%', 'with_front' => false), 
         'query_var'           => true,
         'can_export'          => true,
         'delete_with_user'    => false,
@@ -82,7 +83,7 @@ add_action(
       );
   }
 
-  // enable featured image
+// enable featured image and tags
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'title-tag' );
 
@@ -101,8 +102,7 @@ function my_theme_enqueue_styles() {
 );
 }
 
-
-// Event date url rewrite rules
+// Adds taxonomy to the permalink
 
 add_filter('post_type_link', 'event_permalink_structure', 10, 4);
 function event_permalink_structure($post_link, $post, $leavename, $sample) {
@@ -117,27 +117,38 @@ function event_permalink_structure($post_link, $post, $leavename, $sample) {
     return $post_link;
 }
 
-function events_permalink_year( $url, $post ) {
-$year_start_date = get_field('vf_event_industry_start_date', $post->ID);
-$year_start = DateTime::createFromFormat('j M Y', $year_start_date);
-$YearDate = $year_start->format('Y');
-  if ( 'industry_event' == get_post_type( $post ) ) {
-      $url = str_replace( "%year%", $YearDate, $url );
-  }
-  return $url;
-}
-function events_permalink_month( $url, $post ) {
-$month_start_date = get_field('vf_event_industry_start_date', $post->ID);
-$month_start = DateTime::createFromFormat('j M Y', $month_start_date);
-$MonthDate = $month_start->format('m');
+// Adds year and month to the permalink
 
-  if ( 'industry_event' == get_post_type( $post ) ) {
-      $url = str_replace( "%monthnum%", $MonthDate, $url );
-  }
-  return $url;
+function event_custom_acf_field_link( $permalink, $post, $leavename ) {
+    if ( stripos( $permalink, '%event_year%' ) == false )
+        return $permalink;
+
+    if ( is_object( $post ) && 'industry_event' == $post->post_type ) {
+
+        $default_year = get_the_date('Y');
+        $default_month = get_the_date('m');
+        // Year
+        if( $event_year = get_post_meta( $post->ID, 'vf_event_industry_start_date', true ) ){
+            $year_start = strtotime($event_year);
+            $YearDate = date('Y', $year_start);
+            $permalink = str_replace( '%event_year%', $YearDate, $permalink );
+        } else {
+            $permalink = str_replace( '%event_year%', $default_year, $permalink );
+        }
+        // Month
+        if( $event_month = get_post_meta( $post->ID, 'vf_event_industry_start_date', true ) ){
+            $month_start = strtotime($event_month);
+            $MonthDate = date('m', $month_start); 
+            $permalink = str_replace( '%event_month%', $MonthDate, $permalink );
+        } else {
+            $permalink = str_replace( '%event_month%', $default_month, $permalink );
+        }
+    }
+
+    return $permalink;
 }
-add_filter( 'post_type_link', 'events_permalink_year', 10, 2 );
-add_filter( 'post_type_link', 'events_permalink_month', 10, 2 );
+
+add_filter( 'post_type_link', 'event_custom_acf_field_link', 10, 3 );
 
 
 ?>
