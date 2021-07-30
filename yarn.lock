@@ -1710,15 +1710,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-body/-/vf-body-1.2.0.tgz#91a97bfd09314b8836475812383c174c2cb3bd6e"
   integrity sha512-de48RKf3V72wL+lpbIapctrN9gg9ccvRsxiYPkzbkVvo0kfm0pa0Xre31/iAT0/+N4SKeTUApYP0ZQzzg+XBRw==
 
-"@visual-framework/vf-box@2.3.3":
+"@visual-framework/vf-box@2.3.3", "@visual-framework/vf-box@^2.3.3":
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-2.3.3.tgz#dbda032b60c007f3bd55c414bdde66a82ffc2f30"
   integrity sha512-AFbRw71aNie9FpQ6sivKW8W77VKQWMAgY7PLgaJg697ReRmmN9eiANYzgVVTcl8zfwdlLONBbDCVHdvfhQhuvg==
-
-"@visual-framework/vf-box@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-2.3.1.tgz#30acd0f46dd292482e87c6e66469c919ce192701"
-  integrity sha512-e0Yn8Id3pId7IXrc90jWMyzIGfTaPu9iJ5rJQvzUTBqdTIiAj2+yg2eRumxPZwvYND7+rte39Rj14W/JVt7ulw==
 
 "@visual-framework/vf-breadcrumbs@2.0.4":
   version "2.0.4"
@@ -1772,14 +1767,14 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1-alpha.0.tgz#2dda99f7d2766c32cb46b321560ec15c8a3d55fe"
   integrity sha512-T5XSohedN4OKxqA0n44V8xvpDMAz1zAW0TGa+2a1B3lMpAWAt5WVpG2tdOQknHDQQpq/K/YRxFySSXk+G7f8Ew==
 
-"@visual-framework/vf-content@1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.1.tgz#0b682bfb1a7c666a3fc5d7c2d177c1131d87b031"
-  integrity sha512-DbphsyUDrOQaVCMBhluQ8X64DmxoWolXD9k+RZ0l5cWzMfB9I7lpOo+u0+9yijx/YFxgMklkiR0Wg8gYy+ICOw==
+"@visual-framework/vf-content@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.2.tgz#0c537416cf712ec70160dd91e8cce35f1f608da4"
+  integrity sha512-zTgvh5uK1hcsf5q7rXI8XcHcFuCy75BJlpsfs6EK5BnUsMAiOm4EfuU1B3vyLTEHrsIqkga3W+HhBGkqaJ63ig==
   dependencies:
     "@visual-framework/vf-badge" "^2.0.0"
     "@visual-framework/vf-blockquote" "^1.2.0"
-    "@visual-framework/vf-box" "^2.3.1"
+    "@visual-framework/vf-box" "^2.3.3"
     "@visual-framework/vf-button" "^2.0.0-alpha.1"
     "@visual-framework/vf-divider" "^2.0.0"
     "@visual-framework/vf-figure" "^1.3.0"
