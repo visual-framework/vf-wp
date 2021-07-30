@@ -1710,10 +1710,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-body/-/vf-body-1.2.0.tgz#91a97bfd09314b8836475812383c174c2cb3bd6e"
   integrity sha512-de48RKf3V72wL+lpbIapctrN9gg9ccvRsxiYPkzbkVvo0kfm0pa0Xre31/iAT0/+N4SKeTUApYP0ZQzzg+XBRw==
 
-"@visual-framework/vf-box@2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-2.3.2.tgz#36ff6616d96542721415680ec01dea30713c722e"
-  integrity sha512-nxl5hHfeGjwSZo8LH8ZR/e9YMXSaDmLXR8gDcf/7s7vXs52cjOaNHy+zHm7VGQeyV79gSLyGKTe2myNYOO6OGg==
+"@visual-framework/vf-box@2.3.3":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-box/-/vf-box-2.3.3.tgz#dbda032b60c007f3bd55c414bdde66a82ffc2f30"
+  integrity sha512-AFbRw71aNie9FpQ6sivKW8W77VKQWMAgY7PLgaJg697ReRmmN9eiANYzgVVTcl8zfwdlLONBbDCVHdvfhQhuvg==
 
 "@visual-framework/vf-box@^2.3.1":
   version "2.3.1"
