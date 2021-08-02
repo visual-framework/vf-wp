@@ -53,6 +53,33 @@
             "first_day": 1
         },
         {
+            "key": "field_61039f7766163",
+            "label": "Event year",
+            "name": "event_year",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "2022": "2022",
+                "2021": "2021",
+                "2020": "2020",
+                "2019": "2019"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_60fe744fab802",
             "label": "Start Time",
             "name": "vf_event_industry_start_time",
@@ -146,7 +173,8 @@
             "save_terms": 1,
             "load_terms": 1,
             "return_format": "object",
-            "multiple": 0        },
+            "multiple": 0
+        },
         {
             "key": "field_60fe744fabd65",
             "label": "Venue",
@@ -446,6 +474,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_industry_event` post type",
-    "modified": 1627376709
+    "description": "`vf_industry_event` post type"
 }
