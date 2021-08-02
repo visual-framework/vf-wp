@@ -94,7 +94,7 @@ $vf_theme->the_content(); ?>
     'post_type' => 'industry_event', 
     'orderby' => 'meta_value_num',
     'order' => 'ASC', 
-    'posts_per_page' => 6, 
+    'posts_per_page' => 4, 
     'meta_key' => 'vf_event_industry_start_date', 
     'meta_query' => array(
         array(
@@ -158,7 +158,7 @@ $vf_theme->the_content(); ?>
     'post_type' => 'industry_event', 
     'order' => 'ASC', 
     'orderby' => 'meta_value_num',
-    'posts_per_page' => 6, 
+    'posts_per_page' => 4, 
     'meta_key' => 'vf_event_industry_event_type', 
     'meta_query' => array(
     array(
