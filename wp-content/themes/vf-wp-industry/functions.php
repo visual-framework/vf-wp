@@ -34,7 +34,7 @@ add_action(
         'menu_icon'           => 'dashicons-calendar',
         'capability_type'     => 'page',
         'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
-        'has_archive'         => 'private/events',
+        'has_archive'         => false,
         'rewrite' => array('slug' => 'private/%type%/%event_year%/%event_month%', 'with_front' => false), 
         'query_var'           => true,
         'can_export'          => true,
@@ -173,7 +173,6 @@ function my_pre_get_posts( $query ) {
 	// bail early if is in admin
 	if( is_admin() ) return;
 	
-	
 	// bail early if not main query
 	// - allows custom code / plugins to continue working
 	if( !$query->is_main_query() ) return;
@@ -187,16 +186,10 @@ function my_pre_get_posts( $query ) {
 		if( empty($_GET[ $name ]) ) {
 			
 			continue;
-			
 		}
-		
-		
 		// get the value for this filter
 		// eg: http://www.website.com/events?city=melbourne,sydney
 		$value = explode(',', $_GET[ $name ]);
-
-
-
 
         $meta_query =array();
 		// append meta query
@@ -208,10 +201,9 @@ function my_pre_get_posts( $query ) {
         
 	} 
 	
-	
 	// update meta query
 	$query->set('meta_query', $meta_query);
-
+return;
 } 
 
 
