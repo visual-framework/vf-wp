@@ -35,7 +35,10 @@ class VF_Templates {
     if (is_singular( 'vf_event' )) {
       return false;
     }
-
+    if (is_singular( 'industry_event' )) {
+      return false;
+    }
+    
     return true;
   }
 
