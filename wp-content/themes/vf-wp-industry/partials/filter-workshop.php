@@ -68,7 +68,7 @@ $archive = home_url('/?post_type=industry_event');
     $search = trim(get_search_query());
     if ( ! empty($search)) {
     ?>
-  <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
+  <input type="" name="s" value="<?php echo esc_attr($search); ?>">
   <?php } ?>
 
 <!-- Event type -->
@@ -98,23 +98,46 @@ $archive = home_url('/?post_type=industry_event');
 	  } ?>
   </fieldset>
 
-<!-- Year -->
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-    <label class="vf-form__label">Year</label>
-    <?php if ( ! empty($date_options)) { ?>
-    <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">
-      <option value=""><?php echo esc_attr( __( 'Select year' ) ); ?></option>
-      <?php
-      foreach ($date_options as $date) {
-        $selected = $date['selected'] ? 'selected="selected"' : '';
-      ?>
-      <option value="<?php echo esc_attr($date['value']); ?>" <?php echo $selected ?>>
-        <?php echo esc_html($date['label']); ?>
-      </option>
-      <?php } ?>
-    </select>
-    <?php } ?>
+
+<!-- Year -->  <?php 
+
+$GLOBALS['my_query_filters'] = array( 
+	'field_61039f7766163'	=> 'event_year', 
+);
+
+	
+	// get the field's settings without attempting to load a value
+	$field = get_field_object('field_61039f7766163');
+	
+	
+	// set value if available
+	if( isset($_GET[ 'event_year' ]) ) {
+		
+		$field['choices'] = explode(',', $_GET[ 'event_year' ]); }
+		
+
+?>
+<fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+    <label class="vf-form__label">Event year</label>
+    <?php 
+    $count = 2;
+
+    foreach($field['choices'] as $choice_value => $choice_label ): ?>
+
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input type="checkbox" value="<?php echo $choice_value;?>" id="event_year<?php echo $count; ?>"
+        name="event_year" class="vf-form__checkbox"    <?php if(in_array($choice_value, $field['choices'])): ?>checked="checked"<?php endif; ?> > 
+      <label for="event_year<?php echo $count; ?>" class="vf-form__label"><?php echo $choice_label; ?>
+      </label>
+    </div>
+    <?php 
+	    $count++;
+	   ?>
+    <?php endforeach; ?>
   </fieldset>
+
+
+
   <button class="vf-button vf-button--primary vf-button--sm" type="submit">
     <?php esc_html_e('Apply filters', 'theme'); ?>
   </button>
@@ -122,3 +145,5 @@ $archive = home_url('/?post_type=industry_event');
     <?php esc_html_e('Reset filters', 'theme'); ?>
   </a>
 </form>
+
+
