@@ -1,3 +1,10 @@
+<?php
+  $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
+  $start = DateTime::createFromFormat('j M Y', $start_date);
+  $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
+  $end = DateTime::createFromFormat('j M Y', $end_date);
+  $event_type = get_field('vf_event_industry_event_type', $post->post_parent);
+?>
 <article class="vf-summary vf-summary--event">
   <?php if ( ! empty($start_date)) { ?>
   <p class="vf-summary__date">
