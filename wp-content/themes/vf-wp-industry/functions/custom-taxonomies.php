@@ -28,7 +28,7 @@ function industry_taxonomies__init() {
     'query_var'          => true,
     'publicly_queryable' => true,
     'show_in_nav_menus'  => false,
-    'rewrite' => array('slug' => 'private'), 
+    'rewrite' => array('slug' => ''), 
     'show_in_rest'       => false,
   ));
 }

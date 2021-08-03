@@ -35,7 +35,7 @@ add_action(
         'capability_type'     => 'page',
         'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
         'has_archive'         => false,
-        'rewrite' => array('slug' => 'private/%type%/%event_year%/%event_month%', 'with_front' => false), 
+        'rewrite' => array('slug' => '/%type%/%event_year%/%event_month%', 'with_front' => false), 
         'query_var'           => true,
         'can_export'          => true,
         'delete_with_user'    => false,
