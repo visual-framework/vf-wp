@@ -103,7 +103,7 @@ $vf_theme->the_content(); ?>
     'post_type' => 'industry_event', 
     'order' => 'ASC', 
     'orderby' => 'meta_value_num',
-    'posts_per_page' => 10, 
+    'posts_per_page' => 4, 
     'meta_key' => 'vf_event_industry_start_date', 
     'meta_query' => array(
         array(
@@ -160,7 +160,7 @@ $vf_theme->the_content(); ?>
     'post_type' => 'industry_event', 
     'order' => 'DESC', 
     'orderby' => 'meta_value_num',
-    'posts_per_page' => 10, 
+    'posts_per_page' => 4, 
     'meta_key' => 'vf_event_industry_start_date', 
     'meta_query' => array(
         array(
@@ -188,6 +188,7 @@ $vf_theme->the_content(); ?>
     $ids[] = get_the_ID();
     $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
     $start = DateTime::createFromFormat('j M Y', $start_date);
+    $decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
     $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
     $end = DateTime::createFromFormat('j M Y', $end_date); ?>
         <h3>
@@ -201,10 +202,10 @@ $vf_theme->the_content(); ?>
         } ?>
         </h3> 
     <?php
-    include(locate_template('partials/vf-summary-event-list.php', false, false)); ?>
+    include(locate_template('partials/vf-summary-event.php', false, false)); ?>
         <?php endwhile;?>
         <?php wp_reset_postdata(); ?>
-        <p><a href="<?php echo get_home_url() . '/private/industry-quarterly-meeting/?post_type=industry_event&m'; ?>">View all quarterly meetings</a></p>
+        <p><a href="<?php echo get_home_url() . '/private/industry-quarterly-meeting/'; ?>">View all quarterly meetings</a></p>
       </section>
     </div>
   </div>

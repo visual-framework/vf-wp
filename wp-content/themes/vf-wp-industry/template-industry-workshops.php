@@ -103,7 +103,7 @@ $vf_theme->the_content(); ?>
     'post_type' => 'industry_event', 
     'order' => 'ASC',
     'orderby' => 'meta_value_num', 
-    'posts_per_page' => 10, 
+    'posts_per_page' => 4, 
     'meta_key' => 'vf_event_industry_start_date', 
     'meta_query' => array(
     array(
@@ -118,12 +118,7 @@ $vf_theme->the_content(); ?>
           'type' => 'numeric',
           'compare' => '>=',
           ),
-        array(
-          'key' => 'vf_event_industry_end_date',
-          'value' => date('Ymd', strtotime('now')),
-          'type' => 'numeric',
-          'compare' => '>=',
-          ),  
+ 
 
     
     ) ));
@@ -168,7 +163,7 @@ $vf_theme->the_content(); ?>
     'post_type' => 'industry_event', 
     'order' => 'DESC' ,
     'orderby' => 'meta_value_num',
-    'posts_per_page' => 10, 
+    'posts_per_page' => 4, 
     'meta_key' => 'vf_event_industry_start_date',    
     'meta_query' => array(
     array(

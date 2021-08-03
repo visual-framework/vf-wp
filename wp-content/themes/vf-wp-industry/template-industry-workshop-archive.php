@@ -115,7 +115,7 @@ $forthcomingLoop = new WP_Query (array(
       </h3> 
 <?php
 
-    include(locate_template('partials/vf-summary-event-list.php', false, false)); ?>
+    include(locate_template('partials/vf-summary-event.php', false, false)); ?>
       
       <?php endwhile;?>
       <?php wp_reset_postdata();   ?>
