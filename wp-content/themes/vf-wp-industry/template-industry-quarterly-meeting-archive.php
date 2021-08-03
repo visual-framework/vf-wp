@@ -72,16 +72,13 @@ $close_wrap,
 
 $vf_theme->the_content(); ?>
 
-
 <section class="vf-content">
-  <div class="vf-grid vf-grid__col-4 | vf-u-padding__top--400">
-    <div>
-
-      <?php include(locate_template('partials/filter-workshop.php', false, false)); ?>
-    </div>
+  <div class="vf-grid vf-grid__col-3 | vf-u-padding__top--400">
     <div class="vf-grid__col--span-3">
-      <?php
+    <?php
+     $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 $forthcomingLoop = new WP_Query (array( 
+  'paged' => $paged,
   'tax_query' => array(
     array (
         'taxonomy' => 'type',
@@ -89,21 +86,48 @@ $forthcomingLoop = new WP_Query (array(
         'terms' => 'industry-quarterly-meeting',
     )
   ), 
+  'posts_per_page' => 12, 
   'post_type' => 'industry_event', 
   'order' => 'DESC', 
   'orderby' => 'meta_value_num',
-  'posts_per_page' => 10, 
   'meta_key' => 'vf_event_industry_start_date', 
 ));
   $ids = array();
-  
+  $temp_query = $wp_query;
+  $wp_query   = NULL;
+  $wp_query   = $forthcomingLoop;
+  $current_month = "";
   while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
+  $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
+  $start = DateTime::createFromFormat('j M Y', $start_date);
+  $decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
+  $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
+  $end = DateTime::createFromFormat('j M Y', $end_date); ?>
+      <h3>
+      <?php
+      $dateformatstring = "Y";
+      $unixtimestamp = strtotime(get_field('vf_event_industry_start_date'));
+      $pretty_month = date_i18n($dateformatstring, $unixtimestamp);
+      if ($current_month != $pretty_month){
+        echo $pretty_month;
+        $current_month = $pretty_month;
+      } ?>
+      </h3> 
+<?php
+
     include(locate_template('partials/vf-summary-event-list.php', false, false)); ?>
+      
       <?php endwhile;?>
       <?php wp_reset_postdata();   ?>
       <div class="vf-grid"> 
-        <?php vf_pagination();?></div>
+        <?php 
+        vf_pagination();
+        $wp_query = NULL;
+        $wp_query = $temp_query;
+        ?>
+        </div>
     </div>
+    <div></div>
   </div>
 </section>
 
