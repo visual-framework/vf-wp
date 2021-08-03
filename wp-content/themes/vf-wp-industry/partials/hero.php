@@ -10,7 +10,7 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
   ));
 ?>
 
-<section class="vf-hero | vf-u-fullbleed">
+<section class="vf-hero | vf-u-fullbleed | vf-u-margin__bottom--0">
   <style>
     .vf-hero {
       <?php if ($hero_image) {
@@ -41,3 +41,7 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
     </h2>
   </div>
 </section>
+<?php
+if (class_exists('VF_Navigation')) {
+  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
+} ?>
