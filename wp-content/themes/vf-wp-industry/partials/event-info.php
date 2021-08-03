@@ -4,6 +4,7 @@ $title = get_the_title($post->post_parent);
 
 $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
 $start = DateTime::createFromFormat('j M Y', $start_date);
+$decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
 
 $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
 $end = DateTime::createFromFormat('j M Y', $end_date);
@@ -26,12 +27,16 @@ $registration_date = new DateTime($registration_closing);
 
 <div>
   <div>
+  <?php 
+  // Event dates
+    if ( ! empty($start_date)) { ?>
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
       <span class="vf-u-text-color--grey">
-        <?php 
-
-      // Event dates
-      if ( ! empty($start_date)) {
+      <?php
+      if ( $decide == '1') {
+        echo $start->format('F Y'); 
+      }
+      else {
         if ($end_date) { 
           if ($start->format('M') == $end->format('M')) {
             echo $start->format('j'); ?> - <?php echo $end->format('j M Y'); }
@@ -41,7 +46,7 @@ $registration_date = new DateTime($registration_closing);
         <?php } 
         else {
           echo $start->format('j M Y'); 
-        } }
+        } } }
         ?>
       </span>
     </p>

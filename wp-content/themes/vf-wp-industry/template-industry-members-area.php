@@ -122,6 +122,7 @@ $vf_theme->the_content(); ?>
     $ids[] = get_the_ID();
     $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
     $start = DateTime::createFromFormat('j M Y', $start_date);
+    $decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
     $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
     $end = DateTime::createFromFormat('j M Y', $end_date);
     ?>
@@ -173,12 +174,7 @@ $vf_theme->the_content(); ?>
       'type' => 'numeric',
       'compare' => '>=',
       ),
-    array(
-      'key' => 'vf_event_industry_end_date',
-      'value' => date('Ymd', strtotime('now')),
-      'type' => 'numeric',
-      'compare' => '>=',
-      ),  
+
 
     ) ));
     $ids = array();
@@ -187,7 +183,6 @@ $vf_theme->the_content(); ?>
     $ids[] = get_the_ID();
     $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
     $start = DateTime::createFromFormat('j M Y', $start_date);
-
     $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
     $end = DateTime::createFromFormat('j M Y', $end_date); ?>
         <h3>

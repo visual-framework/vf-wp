@@ -2,6 +2,7 @@
     "key": "group_60fe744fa2e92",
     "title": "Event Information (Industry)",
     "fields": [
+
         {
             "key": "field_60fe744fab666",
             "label": "Date & Time",
@@ -17,6 +18,25 @@
             },
             "placement": "top",
             "endpoint": 0
+        },
+        {
+            "key": "field_6109177b68a8c",
+            "label": "Date to be decided",
+            "name": "vf_event_industry_date_to_be_decided",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "Set to 'Yes' if you do not know the exact date for this event. Please set a provisional day/month/year. In the event summary, only the month and year will be displayed. If set to 'No' the actual date of the event will be displayed instead.",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_60fe744fab6e3",
@@ -51,33 +71,6 @@
             "display_format": "j M Y",
             "return_format": "j M Y",
             "first_day": 1
-        },
-        {
-            "key": "field_61039f7766163",
-            "label": "Event year",
-            "name": "event_year",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "2022": "2022",
-                "2021": "2021",
-                "2020": "2020",
-                "2019": "2019"
-            },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "ajax": 0,
-            "placeholder": ""
         },
         {
             "key": "field_60fe744fab802",
