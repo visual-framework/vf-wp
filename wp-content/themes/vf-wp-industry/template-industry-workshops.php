@@ -207,7 +207,7 @@ $vf_theme->the_content(); ?>
         include(locate_template('partials/vf-summary-event.php', false, false)); ?>
         <?php endwhile;?>
         <?php wp_reset_postdata(); ?>
-        <p><a href="<?php echo get_home_url() . '/private/industry-workshop/?post_type=industry_event&m'; ?>">View all workshops</a></p>
+        <p><a href="<?php echo get_home_url() . '/private/industry-workshop/'; ?>">View all workshops</a></p>
       </section>
     </div>
   </div>

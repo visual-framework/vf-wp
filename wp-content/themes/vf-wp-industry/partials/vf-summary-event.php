@@ -1,5 +1,5 @@
-<article class="vf-summary vf-summary--event">
-  <h3 class="vf-summary__title | vf-u-margin__bottom--100">
+<article class="vf-summary vf-summary--event" data-jplist-item>
+  <h3 class="vf-summary__title | vf-u-margin__bottom--100 | name ">
     <a href="<?php echo get_permalink(); ?>" class="vf-summary__link">
       <?php the_title(); ?>
     </a>
