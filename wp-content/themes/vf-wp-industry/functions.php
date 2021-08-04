@@ -1,5 +1,9 @@
 <?php
-
+/* Adds scripts */
+add_action( 'wp_enqueue_scripts', 'add_scripts' );
+function add_scripts() {
+    wp_enqueue_script('jplist', get_theme_file_uri( '/scripts/jplist.min.js'));
+}
 require_once('functions/custom-taxonomies.php');
 
 // Register Events post type
@@ -17,6 +21,8 @@ add_action(
   function industry_event_init_register() {
     add_rewrite_tag('%event_year%','(\d+)');
     add_rewrite_tag('%event_month%','(.+)');
+    add_rewrite_tag('%type%', '([^&]+)');
+    
     register_post_type('industry_event', array(
         'labels'              => industry_event_get_labels(),
         'description'         => __('Events', 'vfwp'),
@@ -35,7 +41,8 @@ add_action(
         'capability_type'     => 'page',
         'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
         'has_archive'         => false,
-        'rewrite' => array('slug' => '/%type%/%event_year%/%event_month%', 'with_front' => false), 
+        "cptp_permalink_structure" => "/%type%/%event_year%/%event_month%/%postname%/",
+        'rewrite' => array('slug' => 'private', 'with_front' => false), 
         'query_var'           => true,
         'can_export'          => true,
         'delete_with_user'    => false,
@@ -104,8 +111,8 @@ function my_theme_enqueue_styles() {
 
 // Adds taxonomy to the permalink
 
-add_filter('post_type_link', 'event_permalink_structure', 10, 4);
-function event_permalink_structure($post_link, $post, $leavename, $sample) {
+add_filter('post_type_link', 'event_permalink_structure', 10, 3);
+function event_permalink_structure($post_link, $post, $leavename) {
     if (false !== strpos($post_link, '%type%')) {
         $type_term = get_the_terms($post->ID, 'type');
         if (!empty($type_term))
@@ -113,9 +120,10 @@ function event_permalink_structure($post_link, $post, $leavename, $sample) {
             slug, $post_link);
         else
             $post_link = str_replace('%type%', 'uncategorized', $post_link);
-    }
+    } 
     return $post_link;
 }
+
 
 // Adds year and month to the permalink
 
@@ -148,7 +156,7 @@ function event_custom_acf_field_link( $permalink, $post, $leavename ) {
     return $permalink;
 }
 
-add_filter( 'post_type_link', 'event_custom_acf_field_link', 10, 3 );
+add_filter( 'post_type_link', 'event_custom_acf_field_link', 10, 4 );
 
 
 
