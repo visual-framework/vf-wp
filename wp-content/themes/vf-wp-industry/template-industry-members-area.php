@@ -18,38 +18,35 @@ $title = get_the_title();
 ?>
 
 <?php 
-
-$open_wrap = function($html, $block_name) {
-  $html = '
-<div class="embl-grid embl-grid--has-centered-content">
-  <div></div>
-  <div>
-' . $html;
-return $html;
-};
-
-$close_wrap = function($html, $block_name) {
-  $html .= '
-  </div>
-  <div></div>
-</div>
-<!--/embl-grid-->';
-return $html;
-};
-
-add_filter(
-'vf/__experimental__/theme/content/open_block_wrap',
-$open_wrap,
-10, 2
-);
-
-add_filter(
-'vf/__experimental__/theme/content/close_block_wrap',
-$close_wrap,
-10, 2
-);
-
-?>
+  
+  $open_wrap = function($html, $block_name) {
+    $html = '
+  <div class="vf-grid vf-grid__col-1">
+    <div>
+  ' . $html;
+  return $html;
+  };
+  
+  $close_wrap = function($html, $block_name) {
+    $html .= '
+    </div>
+    </div>';
+  return $html;
+  };
+  
+  add_filter(
+  'vf/__experimental__/theme/content/open_block_wrap',
+  $open_wrap,
+  10, 2
+  );
+  
+  add_filter(
+  'vf/__experimental__/theme/content/close_block_wrap',
+  $close_wrap,
+  10, 2
+  );
+  
+  ?>
 
 <?php
 
@@ -71,12 +68,10 @@ $close_wrap,
     <?php echo $title;?>
   </h1>
 </div>
-<?php } 
-
-$vf_theme->the_content(); ?>
-
+<?php } ?>
 <div class="vf-grid vf-grid__col-3 | vf-content">
-  <div class="vf-grid__col--span-2">
+    <div class="vf-grid__col--span-2">
+    <?php $vf_theme->the_content(); ?>
     <div class="vf-grid vf-grid__col-2">
       <div>
 <!-- Upcoming QM -->
@@ -177,15 +172,8 @@ $vf_theme->the_content(); ?>
 
 
     ) ));
-    $ids = array();
     $current_month = "";
-    while ($forthcomingWorkshopsLoop->have_posts()) : $forthcomingWorkshopsLoop->the_post();
-    $ids[] = get_the_ID();
-    $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
-    $start = DateTime::createFromFormat('j M Y', $start_date);
-    $decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
-    $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
-    $end = DateTime::createFromFormat('j M Y', $end_date); ?>
+    while ($forthcomingWorkshopsLoop->have_posts()) : $forthcomingWorkshopsLoop->the_post(); ?>
         <h3>
         <?php
         $dateformatstring = "F Y";
@@ -203,7 +191,12 @@ $vf_theme->the_content(); ?>
       </div>
     </div>
   </div>
-  <div></div>
-</div>
+  <div>
+  <?php if ( is_active_sidebar( 'members-area' ) ) : ?>
+        <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+          <?php dynamic_sidebar( 'members-area' ); ?>
+        </div>
+        <?php endif; ?>
+</div></div>
 
 <?php get_footer(); ?>

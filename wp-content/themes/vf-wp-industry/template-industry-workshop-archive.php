@@ -78,11 +78,12 @@ $close_wrap,
 </section>
 <?php } ?>
 
-<section id="eventsSearch" class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-sidebar | vf-content">
   <div>
-    <!-- empty -->
+    <?php include(locate_template('partials/filter-year.php', false, false)); ?>
   </div>
   <div>
+  <div class="vf-u-margin__bottom--800">
     <form action="#eventsFilter" onsubmit="return false;"
       class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
       <div class="vf-sidebar__inner">
@@ -90,7 +91,7 @@ $close_wrap,
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
           <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
             data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-            placeholder="Filter by quarterly meeting title" data-clear-btn-id="name-clear-btn"
+            placeholder="Filter by workshop title" data-clear-btn-id="name-clear-btn"
             class="vf-form__input | vf-search__input" />
         </div>
         <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
@@ -99,17 +100,7 @@ $close_wrap,
       </div>
     </form>
   </div>
-  <div>
-    <!-- empty -->
-  </div>
-</section>
 
-<section class="embl-grid embl-grid--has-centered-content | vf-content">
-  <div>
-    <?php include(locate_template('partials/filter-year.php', false, false)); ?>
-
-  </div>
-  <div>
     <div data-jplist-group="data-group-1">
       <?php
      $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
@@ -128,35 +119,25 @@ $forthcomingLoop = new WP_Query (array(
   'orderby' => 'meta_value_num',
   'meta_key' => 'vf_event_industry_start_date', 
 ));
-  $ids = array();
   $temp_query = $wp_query;
   $wp_query   = NULL;
   $wp_query   = $forthcomingLoop;
   $current_month = ""; ?>
-      <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
-  $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
-  $start = DateTime::createFromFormat('j M Y', $start_date);
-  $decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
-  $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
-  $end = DateTime::createFromFormat('j M Y', $end_date); ?>
+      <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
       <?php
-
     include(locate_template('partials/vf-summary-event.php', false, false)); ?>
-
       <?php endwhile;?>
       <!-- no results control -->
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
         <p class="vf-summary__text">
-          No matching events found;
+          No matching workshops found
         </p>
       </article>
 
     </div>
-    <?php wp_reset_postdata();   ?>
-    <div class="vf-grid">
+    <div>
       <?php 
-        vf_pagination();
         $wp_query = NULL;
         $wp_query = $temp_query;
         ?>
@@ -164,17 +145,16 @@ $forthcomingLoop = new WP_Query (array(
         .jplist-selected {
           background-color: #707372;
         }
+
         .jplist-selected a {
           color: #fff;
         }
-      </style>
 
+      </style>
       <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
         data-items-per-page="10" data-current-page="0" data-name="pagination1">
 
         <ul class="vf-pagination__list">
-          <li class="vf-pagination__item"><a class="vf-pagination__link vf-pagination__label" href="#"
-              aria-label="Go to first page" data-type="first">«</a></li>
           <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
             <a class="vf-pagination__link">
               Previous<span class="vf-u-sr-only"> page</span>
@@ -192,14 +172,22 @@ $forthcomingLoop = new WP_Query (array(
               Next<span class="vf-u-sr-only"> page</span>
             </a>
           </li>
-          <li class="vf-pagination__item"><a class="vf-pagination__link vf-pagination__label" href="#"
-              aria-label="Go to first page" data-type="last">»</a></li>
         </ul>
-      </nav>
-    </div>
-    <div></div>
+    </nav>
+  </div>
+  </div>
+  <div>
+  <?php if ( is_active_sidebar( 'members-area' ) ) : ?>
+        <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+          <?php dynamic_sidebar( 'members-area' ); ?>
+        </div>
+        <?php endif; ?>
+</div>
 </section>
 
-<script type="text/javascript">jplist.init();</script>
+<script type="text/javascript">
+  jplist.init();
+
+</script>
 
 <?php get_footer(); ?>

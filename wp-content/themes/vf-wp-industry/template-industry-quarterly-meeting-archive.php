@@ -63,7 +63,7 @@ $close_wrap,
     parse_blocks( 'acf/vfwp-masthead' ); }
 
   else {  ?>
-<section class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-sidebar">
   <div>
     <!-- empty -->
   </div>
@@ -78,11 +78,12 @@ $close_wrap,
 </section>
 <?php } ?>
 
-<section id="eventsSearch" class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-sidebar | vf-content">
   <div>
-    <!-- empty -->
+    <?php include(locate_template('partials/filter-year.php', false, false)); ?>
   </div>
   <div>
+  <div class="vf-u-margin__bottom--800">
     <form action="#eventsFilter" onsubmit="return false;"
       class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
       <div class="vf-sidebar__inner">
@@ -99,19 +100,9 @@ $close_wrap,
       </div>
     </form>
   </div>
-  <div>
-    <!-- empty -->
-  </div>
-</section>
 
-<section class="embl-grid embl-grid--has-centered-content | vf-content">
-  <div>
-    <?php include(locate_template('partials/filter-year.php', false, false)); ?>
-
-  </div>
-  <div>
-  <div data-jplist-group="data-group-1">
-    <?php
+    <div data-jplist-group="data-group-1">
+      <?php
      $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 $forthcomingLoop = new WP_Query (array( 
   'paged' => $paged,
@@ -128,19 +119,12 @@ $forthcomingLoop = new WP_Query (array(
   'orderby' => 'meta_value_num',
   'meta_key' => 'vf_event_industry_start_date', 
 ));
-  $ids = array();
   $temp_query = $wp_query;
   $wp_query   = NULL;
   $wp_query   = $forthcomingLoop;
   $current_month = ""; ?>
       <?php
-  while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();
-  $start_date = get_field('vf_event_industry_start_date', $post->post_parent);
-  $start = DateTime::createFromFormat('j M Y', $start_date);
-  $decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
-  $end_date = get_field('vf_event_industry_end_date', $post->post_parent);
-  $end = DateTime::createFromFormat('j M Y', $end_date); ?>
-
+  while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post(); ?>
       <?php include(locate_template('partials/vf-summary-event.php', false, false)); ?>
       <?php endwhile;?>
       <!-- no results control -->
@@ -155,7 +139,7 @@ $forthcomingLoop = new WP_Query (array(
         $wp_query = NULL;
         $wp_query = $temp_query;
         ?>
-</div>
+    </div>
     <style>
       .jplist-selected {
         background-color: #707372;
@@ -164,12 +148,13 @@ $forthcomingLoop = new WP_Query (array(
       .jplist-selected a {
         color: #fff;
       }
+
     </style>
 
-    <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1" data-items-per-page="10" data-current-page="0" data-name="pagination1">
+    <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
+      data-items-per-page="10" data-current-page="0" data-name="pagination1">
 
       <ul class="vf-pagination__list">
-        <li class="vf-pagination__item"><a class="vf-pagination__link vf-pagination__label" href="#" aria-label="Go to first page" data-type="first">«</a></li>
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">
             Previous<span class="vf-u-sr-only"> page</span>
@@ -187,13 +172,21 @@ $forthcomingLoop = new WP_Query (array(
             Next<span class="vf-u-sr-only"> page</span>
           </a>
         </li>
-        <li class="vf-pagination__item"><a class="vf-pagination__link vf-pagination__label" href="#" aria-label="Go to first page" data-type="last">»</a></li>
       </ul>
     </nav>
-    </div>
-    <div></div>
+  </div>
+  <div>
+  <?php if ( is_active_sidebar( 'members-area' ) ) : ?>
+        <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
+          <?php dynamic_sidebar( 'members-area' ); ?>
+        </div>
+        <?php endif; ?>
+</div>
 </section>
 
-<script type="text/javascript">jplist.init(); </script>
+<script type="text/javascript">
+  jplist.init();
+
+</script>
 
 <?php get_footer(); ?>
