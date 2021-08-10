@@ -5,6 +5,37 @@
 
 get_header();
 
+// Global Header
+if (class_exists('VF_EBI_Global_Header')) {
+  VF_Plugin::render(VF_EBI_Global_Header::get_plugin('vf_ebi_global_header'));
+}
+if (class_exists('VF_Breadcrumbs')) {
+  VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
+}
+if (class_exists('VF_WP_Hero')) {
+  VF_Plugin::render(VF_WP_Hero::get_plugin('vf_wp_hero_group'));
+}
+?>
+<nav class="vf-navigation vf-navigation--main | vf-cluster">
+  <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
+    <li id="menu-item-63" class="vf-navigation__item"><a href="<?php echo get_home_url() ?>"
+        class="vf-navigation__link">Home</a></li>
+    <li id="menu-item-409" class="vf-navigation__item"><a
+        href="<?php echo get_home_url() . '/private/members-area/'; ?>" class="vf-navigation__link"
+        >Members area</a></li>
+    <li id="menu-item-472" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/private/workshops/'; ?>"
+        class="vf-navigation__link" aria-current="page">Workshops</a></li>
+    <li id="menu-item-410" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/smes/'; ?>"
+        class="vf-navigation__link">SMEs</a></li>
+    <li id="menu-item-51" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/our-approach/'; ?>"
+        class="vf-navigation__link">Our approach</a></li>
+    <li id="menu-item-50" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/contact-us'; ?>"
+        class="vf-navigation__link">Contact us</a></li>
+  </ul>
+</nav>
+
+<?php
+
 global $post;
 setup_postdata($post);
 
@@ -190,4 +221,10 @@ $forthcomingLoop = new WP_Query (array(
 
 </script>
 
-<?php get_footer(); ?>
+<?php 
+// Global Footer
+if (class_exists('VF_EBI_Global_Footer')) {
+  VF_Plugin::render(VF_EBI_Global_Footer::get_plugin('vf_ebi_global_footer'));
+}
+
+get_footer(); ?>

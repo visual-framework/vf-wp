@@ -17,17 +17,20 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
         ?>--vf-hero--bg-image: url('<?php echo esc_url($hero_image); ?>');
         <?php
       }
+
       else {
         ?>--vf-hero--bg-image-size: auto 28.5rem;
         <?php
       }
+
       ?>
     }
+
   </style>
 
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
-      <p class="vf-hero__kicker">
-        <?php
+    <p class="vf-hero__kicker">
+      <?php
         if (!empty ($displayed)) {
           echo esc_html($displayed);
         }
@@ -35,13 +38,27 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
            echo esc_html($event_type->name);
         }
       ?>
-      </p>
+    </p>
     <h2 class="vf-hero__heading" style="font-size: 30px;">
       <?php echo $title; ?>
     </h2>
   </div>
 </section>
-<?php
-if (class_exists('VF_Navigation')) {
-  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
-} ?>
+
+<nav class="vf-navigation vf-navigation--main | vf-cluster">
+  <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
+    <li id="menu-item-63" class="vf-navigation__item"><a href="<?php echo get_home_url() ?>"
+        class="vf-navigation__link">Home</a></li>
+    <li id="menu-item-409" class="vf-navigation__item"><a
+        href="<?php echo get_home_url() . '/private/members-area/'; ?>" class="vf-navigation__link"
+        aria-current="page">Members area</a></li>
+    <li id="menu-item-472" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/private/workshops/'; ?>"
+        class="vf-navigation__link">Workshops</a></li>
+    <li id="menu-item-410" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/smes/'; ?>"
+        class="vf-navigation__link">SMEs</a></li>
+    <li id="menu-item-51" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/our-approach/'; ?>"
+        class="vf-navigation__link">Our approach</a></li>
+    <li id="menu-item-50" class="vf-navigation__item"><a href="<?php echo get_home_url() . '/contact-us'; ?>"
+        class="vf-navigation__link">Contact us</a></li>
+  </ul>
+</nav>
