@@ -1,3 +1,11 @@
+<?php
+$start_date = get_field('vf_event_industry_start_date', $post->post_parent);
+$start = DateTime::createFromFormat('j M Y', $start_date);
+$decide = get_field('vf_event_industry_date_to_be_decided', $post->post_parent);
+$end_date = get_field('vf_event_industry_end_date', $post->post_parent);
+$end = DateTime::createFromFormat('j M Y', $end_date);
+?>
+
 <article class="vf-summary vf-summary--event" data-jplist-item>
   <h3 class="vf-summary__title | vf-u-margin__bottom--100 | name ">
     <a href="<?php echo get_permalink(); ?>" class="vf-summary__link">
