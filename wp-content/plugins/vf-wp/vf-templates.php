@@ -38,6 +38,9 @@ class VF_Templates {
     if (is_singular( 'industry_event' )) {
       return false;
     }
+    if (is_page_template( 'template-industry-workshop-archive.php' ) || is_page_template( 'template-industry-quarterly-meeting-archive.php' )) {
+      return false;
+    }
     
     return true;
   }
