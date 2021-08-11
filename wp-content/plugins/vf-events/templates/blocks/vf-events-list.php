@@ -2,6 +2,7 @@
 
 $archive = get_field('vf_event_archive');
 $count = get_field('vf_event_count');
+$heading = get_field('vf_event_heading');
 
 $is_past = $archive === 'past';
 
@@ -12,7 +13,8 @@ $query = VF_Events::get_events(array(
 
 ?>
 <h3 class="vf-text vf-text-heading--3">
-  <?php echo esc_html(VF_Events::get_archive_title($is_past)); ?>
+<?php if (!empty($heading)) { echo esc_html($heading); }
+      else { echo esc_html(VF_Events::get_archive_title($is_past)); }?>
 </h3>
 <?php
 while ($query->have_posts()) {
