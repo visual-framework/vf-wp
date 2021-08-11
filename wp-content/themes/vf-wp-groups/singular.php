@@ -13,18 +13,10 @@ global $vf_theme;
     <h1>
       <?php the_title(); ?>
     </h1>
-    <div class="vf-meta__details">
-      <p class="vf-author__name"><span class="vf-meta__date"><time title="<?php the_time('c'); ?>"
-            datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>, by <a
-          class="vf-link"
-          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a> in
-        <?php echo get_the_category_list(', '); ?>
-      </p>
-    </div>
   </div>
-
   <div></div>
 </div>
+
 <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
   <div class="vf-grid__col--span-2">
 
@@ -69,19 +61,48 @@ global $vf_theme;
     ?>
     </p>
     <?php } ?>
-    <?php
-      if (comments_open() || get_comments_number()) {
-        comments_template();
-      }
-      ?>
-  </div>
-  <?php if (is_active_sidebar('sidebar-blog')) { ?>
 
+  </div>
   <div>
-    <?php vf_sidebar('sidebar-blog'); ?>
-  </div>
+    <div class="vf-article-meta-information | vf-u-margin__bottom--400">
+      <div class="vf-author | vf-article-meta-info__author">
+        <p class="vf-author__name">
+          <a class="vf-link"
+            href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
+        </p>
+        <a class="vf-author--avatar__link | vf-link"
+          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+          <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array('class' => 'vf-author--avatar')); ?>
+        </a>
+      </div>
+      <div class="vf-meta__details">
+        <p class="vf-meta__date"><time title="<?php the_time('c'); ?>"
+            datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
+        <p class="vf-meta__topics"><?php echo get_the_category_list(' '); ?></p>
+      </div>
+      <?php if( have_rows('in_this_article') ): ?>
+      <div class="vf-links vf-links--tight vf-links__list--s">
+        <p class="vf-links__heading">In this article</p>
+        <ul class="vf-links__list vf-links__list--secondary | vf-list">
 
-  <?php } ?>
+          <?php while( have_rows('in_this_article') ): the_row();
+        $anchor = get_sub_field('anchor');
+        $heading = get_sub_field('heading_description');?>
+
+          <li class="vf-list__item">
+            <a href="<?php echo esc_url( $anchor ); ?>" class="vf-list__link"><?php echo esc_html($heading) ?></a>
+          </li>
+          <?php endwhile; ?>
+        </ul>
+      </div>
+      <?php endif; ?>
+    </div>
+    <?php if (is_active_sidebar('sidebar-blog')) { ?>
+    <div>
+      <?php vf_sidebar('sidebar-blog'); ?>
+    </div>
+    <?php } ?>
+  </div>
 </div>
 <?php
 

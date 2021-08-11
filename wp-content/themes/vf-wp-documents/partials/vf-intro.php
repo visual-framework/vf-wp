@@ -1,11 +1,10 @@
-<section class="vf-intro | embl-grid embl-grid--has-centered-content">
+<section class="vf-intro">
   <div>
     <!-- empty -->
   </div>
-  <div>
-    <h1 class="vf-intro__heading vf-intro__heading--has-tag">
+  <div class="vf-stack">
+    <h1 class="vf-intro__heading">
       <span>Documents</span>
-      <span class="vf-badge vf-badge--primary vf-badge--phases">beta</span>
     </h1>
     <p class="vf-lede">The EMBL Documents repository holds the digital copies of official EMBL documents, reports, brochures and various other publications.</p>
     <p class="vf-intro__text"><?php

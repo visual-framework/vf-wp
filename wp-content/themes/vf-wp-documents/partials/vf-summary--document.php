@@ -15,9 +15,10 @@ if ( ! is_array($image)) {
 }
 ?>
 <article class="vf-summary vf-summary--news">
-  <time class="vf-summary__date vf-u-margin__bottom--0" style="margin-left: 0;" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+  <time class="vf-summary__date vf-u-margin__bottom--0" style="margin-left: 0;" title="<?php the_time('c'); ?>"
+    datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
 
-    <?php 
+  <?php 
       if (! empty($image)) { 
         echo $image;
          } 
@@ -29,29 +30,33 @@ if ( ! is_array($image)) {
   <h4 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h4>
-  <p class="vf-summary__meta | vf-u-margin__bottom--200">Type: 
-    <?php
+  <div>
+    <p class="vf-summary__meta | vf-u-margin__bottom--200">Type:
+      <?php
       if (is_array($types)) {
-        foreach ( $types as $type ) { ?> 
-          <a href="<?php echo esc_url( get_term_link( $type->term_id ) ); ?>" title="<?php echo esc_attr( $type->name ); ?>"><?php echo esc_html( $type->name); ?>
-          </a>
-    <?php } } ?>
+        foreach ( $types as $type ) { ?>
+      <a href="<?php echo esc_url( get_term_link( $type->term_id ) ); ?>"
+        title="<?php echo esc_attr( $type->name ); ?>"><?php echo esc_html( $type->name); ?>
+      </a>
+      <?php } } ?>
       &nbsp;&nbsp;&nbsp;Topic:
-    <?php
+      <?php
       if (is_array($topics)) {
-        foreach ( $topics as $topic ) { ?> 
-          <a href="<?php echo esc_url( get_term_link( $topic->term_id ) ); ?>"
-            title="<?php echo esc_attr( $topic->name ); ?>"><?php echo esc_html( $topic->name); ?>
-          </a>
-    <?php } } ?>
-      &nbsp;&nbsp;&nbsp;Language(s):&nbsp;
-    <?php if( have_rows('vf-document_file_upload') ): ?>
+        foreach ( $topics as $topic ) { ?>
+      <a href="<?php echo esc_url( get_term_link( $topic->term_id ) ); ?>"
+        title="<?php echo esc_attr( $topic->name ); ?>"><?php echo esc_html( $topic->name); ?>
+      </a>
+      <?php } } ?></p>
+    <p class="vf-summary__meta | vf-u-margin__bottom--200">
+      Language(s):&nbsp;
+      <?php if( have_rows('vf-document_file_upload') ): ?>
       <?php while( have_rows('vf-document_file_upload') ): the_row();
         $language = get_sub_field('language');
         $file = get_sub_field('file');?>
-        <a href="<?php echo $file['url']; ?>"><?php echo esc_html($language) ?></a>&nbsp;
+      <a href="<?php echo $file['url']; ?>"><?php echo esc_html($language) ?></a>&nbsp;
       <?php endwhile; ?>
-    <?php endif; ?>
-  </p>
+      <?php endif; ?>
+    </p>
+  </div>
 </article>
 <!--/vf-summary-->

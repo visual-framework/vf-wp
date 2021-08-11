@@ -5,7 +5,10 @@ $event_type = get_field('vf_event_event_type', $post->post_parent);
 $ss_event_name = get_field('vf_event_ss_subtype', $post->post_parent);
 $displayed = get_field('vf_event_displayed', $post->post_parent);
 $embo_event_name = get_field('vf_event_embo_subtype');
+$industry_event_type = get_field('vf_event_industry_type');
 $location = get_field('vf_event_location');
+$banner_text = get_field('vf_event_banner_text');
+$canceled = get_field('vf_event_canceled');
 
 $hero_image = get_field('vf_event_hero', $post->post_parent);
 $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
@@ -13,6 +16,13 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
     'itemprop' => 'image',
   ));
 ?>
+<?php if (($canceled == 'yes') || ($canceled == 'postponed') ) { ?>
+<div class="vf-banner vf-banner--alert vf-banner--<?php if ($canceled == 'yes') { echo 'danger'; } else if ($canceled == 'postponed') { echo 'info'; } ?>">
+    <div class="vf-banner__content">
+        <p class="vf-banner__text"><?php echo ($banner_text); ?></p>
+    </div>
+</div>   
+<?php } ?>
 
 <section class="vf-hero | vf-u-fullbleed">
   <style>

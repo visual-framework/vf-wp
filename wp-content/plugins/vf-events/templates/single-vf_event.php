@@ -17,23 +17,7 @@ $cpp_container = get_field('vf_event_cpp_container', $post->post_parent);
 $cancelled = get_field('vf_event_canceled');
 
 ?>
-<?php 
-// info banner
-if ($cancelled == 'postponed') { ?>
-<div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--200 vf-u-margin__top--200">
-  <div class="vf-banner__content">
-    <p class="vf-banner__text">This event has been postponed</a></p>
-  </div>
-</div>
-<?php }
 
-if ($cancelled == 'yes') { ?>
-<div class="vf-banner vf-banner--alert vf-banner--danger | vf-u-margin__bottom--200 vf-u-margin__top--200">
-  <div class="vf-banner__content">
-    <p class="vf-banner__text">This event has been cancelled</a></p>
-  </div>
-</div>
-<?php } ?>
 
 <?php     
 // vf-hero container

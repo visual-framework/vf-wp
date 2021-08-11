@@ -25,7 +25,6 @@ get_template_part('partials/vf-intro');
 
 <div class="embl-grid embl-grid--has-centered-content">
   <div>
-    <?php get_template_part('partials/document-filter'); ?>
   </div>
   <div class="vf-content">
     <article class="vf-summary vf-summary--news">

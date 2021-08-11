@@ -89,7 +89,7 @@ For month and year archive
 $archive = home_url('/?post_type=document');
 
 ?>
-<form action="<?php echo esc_url($archive); ?>" method="get">
+<form class="vf-stack vf-stack-400" action="<?php echo esc_url($archive); ?>" method="get">
   <div>
 
     <input type="hidden" name="post_type" value="document">
@@ -101,9 +101,9 @@ $archive = home_url('/?post_type=document');
     <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
     <?php } ?>
 
-	  <fieldset class="vf-form vf-form__fieldset">
+	  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" style="margin-top: 1rem;">
 
-	  <legend class="vf-form__legend">Document topic</legend>
+	  <label class="vf-form__label">Document topic</label>
 	  <div class="vf-form__item vf-form__item--checkbox">
     <?php 
       $selected = empty($topic_selected) || empty($topic_selected[0]) ? 'checked="checked"' : '';
@@ -126,9 +126,9 @@ $archive = home_url('/?post_type=document');
 	  } ?>
 	  </fieldset>
 
-	  <fieldset class="vf-form vf-form__fieldset">
+	  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" style="margin-top: 1rem;">
 
-	  <legend class="vf-form__legend">Document type</legend>
+	  <label class="vf-form__label">Document type</label>
 	  <div class="vf-form__item vf-form__item--checkbox">
     <?php 
       $selected = empty($type_selected) || empty($type_selected[0]) ? 'checked="checked"' : '';
@@ -152,8 +152,8 @@ $archive = home_url('/?post_type=document');
 	  } ?>
 	  </fieldset>
 
-	  <fieldset class="vf-form vf-form__fieldset">
-	  <legend class="vf-form__legend">Publication year</legend>
+	  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" style="margin-top: 1rem; margin-bottom: 1rem;">
+	  <label class="vf-form__label">Publication year</label>
 
     <?php if ( ! empty($date_options)) { ?>
     <select class='vf-form__select' id='vf-form__select' name="m">

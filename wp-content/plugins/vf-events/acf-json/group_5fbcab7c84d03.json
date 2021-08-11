@@ -199,6 +199,11 @@
                         "field": "field_5fbcab958038b",
                         "operator": "!=",
                         "value": "science_society"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "embl_ebi_industry"
                     }
                 ]
             ],
@@ -735,7 +740,20 @@
             "type": "url",
             "instructions": "",
             "required": 1,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "embl_ebi_training"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -872,15 +890,7 @@
             "type": "radio",
             "instructions": "",
             "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "default"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -897,6 +907,33 @@
             "layout": "vertical",
             "return_format": "value",
             "save_other_choice": 0
+        },
+        {
+            "key": "field_61139af02668a",
+            "label": "Banner text",
+            "name": "vf_event_banner_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5e98505453db1",
+                        "operator": "!=",
+                        "value": "no"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_5e9850ee53db3",
@@ -1011,7 +1048,15 @@
             "type": "text",
             "instructions": "Free text for events listing on embl.org\/events. Example: John Doe, Michael Smith, Britney Spears",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1277,5 +1322,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1624443098
+    "modified": 1628676299
 }

@@ -2,60 +2,79 @@
   "key": "group_5e9702ea62473",
   "title": "Events List",
   "fields": [
-    {
-      "key": "field_5e97030863a0e",
-      "label": "Event Archive",
-      "name": "vf_event_archive",
-      "type": "select",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
+      {
+          "key": "field_5e97030863a0e",
+          "label": "Event Archive",
+          "name": "vf_event_archive",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "choices": {
+              "upcoming": "Upcoming Events",
+              "past": "Past Events"
+          },
+          "default_value": "upcoming",
+          "allow_null": 0,
+          "multiple": 0,
+          "ui": 0,
+          "return_format": "value",
+          "ajax": 0,
+          "placeholder": ""
       },
-      "choices": {
-        "upcoming": "Upcoming Events",
-        "past": "Past Events"
+      {
+          "key": "field_6113a53df50b7",
+          "label": "Event Heading",
+          "name": "vf_event_heading",
+          "type": "text",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": "",
+          "placeholder": "",
+          "prepend": "",
+          "append": "",
+          "maxlength": ""
       },
-      "default_value": ["upcoming"],
-      "allow_null": 0,
-      "multiple": 0,
-      "ui": 0,
-      "return_format": "value",
-      "ajax": 0,
-      "placeholder": ""
-    },
-    {
-      "key": "field_5e97033e63a0f",
-      "label": "Event Count",
-      "name": "vf_event_count",
-      "type": "range",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": {
-        "width": "",
-        "class": "",
-        "id": ""
-      },
-      "default_value": 3,
-      "min": 1,
-      "max": 10,
-      "step": "",
-      "prepend": "",
-      "append": ""
-    }
+      {
+          "key": "field_5e97033e63a0f",
+          "label": "Event Count",
+          "name": "vf_event_count",
+          "type": "range",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": {
+              "width": "",
+              "class": "",
+              "id": ""
+          },
+          "default_value": 3,
+          "min": 1,
+          "max": 10,
+          "step": "",
+          "prepend": "",
+          "append": ""
+      }
   ],
   "location": [
-    [
-      {
-        "param": "block",
-        "operator": "==",
-        "value": "acf/vf-events-list"
-      }
-    ]
+      [
+          {
+              "param": "block",
+              "operator": "==",
+              "value": "acf\/vf-events-list"
+          }
+      ]
   ],
   "menu_order": 0,
   "position": "normal",
@@ -65,5 +84,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "`vf-events-archive` gutenberg block",
-  "modified": 1591168550
+  "modified": 1628677948
 }

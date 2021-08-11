@@ -294,8 +294,6 @@ if ($tags) {
 
 </div>
 
-<?php include(locate_template('partials/pow-container.php', false, false)); ?>
-
 <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
