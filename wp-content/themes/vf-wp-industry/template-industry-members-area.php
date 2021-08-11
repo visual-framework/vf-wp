@@ -192,9 +192,9 @@ $title = get_the_title();
     </div>
   </div>
   <div>
-  <?php if ( is_active_sidebar( 'members-area' ) ) : ?>
+  <?php if ( is_active_sidebar( 'sidebar-blog' ) ) : ?>
         <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
-          <?php dynamic_sidebar( 'members-area' ); ?>
+          <?php dynamic_sidebar( 'sidebar-blog' ); ?>
         </div>
         <?php endif; ?>
 </div></div>

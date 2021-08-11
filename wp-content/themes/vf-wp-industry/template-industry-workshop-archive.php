@@ -49,8 +49,7 @@ $title = get_the_title();
 
 $open_wrap = function($html, $block_name) {
   $html = '
-<div class="embl-grid embl-grid--has-centered-content">
-  <div></div>
+<div class="vf-grid vf-grid__col-1">
   <div>
 ' . $html;
 return $html;
@@ -59,9 +58,7 @@ return $html;
 $close_wrap = function($html, $block_name) {
   $html .= '
   </div>
-  <div></div>
-</div>
-<!--/embl-grid-->';
+  </div>';
 return $html;
 };
 
@@ -102,6 +99,9 @@ $close_wrap,
     <h1 class="vf-text vf-text-heading--1">
       <?php echo $title;?>
     </h1>
+    <div>
+    <?php $vf_theme->the_content(); ?>
+    </div>
   </div>
   <div>
     <!-- empty -->
@@ -208,9 +208,9 @@ $forthcomingLoop = new WP_Query (array(
   </div>
   </div>
   <div>
-  <?php if ( is_active_sidebar( 'members-area' ) ) : ?>
+  <?php if ( is_active_sidebar( 'sidebar-blog' ) ) : ?>
         <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
-          <?php dynamic_sidebar( 'members-area' ); ?>
+          <?php dynamic_sidebar( 'sidebar-blog' ); ?>
         </div>
         <?php endif; ?>
 </div>

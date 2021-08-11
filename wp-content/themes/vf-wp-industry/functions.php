@@ -214,22 +214,5 @@ function my_pre_get_posts( $query ) {
 return;
 } 
 
-//Register members area sidebar
-function memb_widgets_init() {
-
-	register_sidebar( array(
-		'name'          => 'Members area submenu',
-		'id'            => 'members-area',
-		'before_widget' => '<div>',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h2>',
-		'after_title'   => '</h2>',
-	) );
-
-}
-add_action( 'widgets_init', 'memb_widgets_init' );
-
-
-
 
 ?>
