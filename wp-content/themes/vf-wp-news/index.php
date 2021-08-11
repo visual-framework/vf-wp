@@ -195,8 +195,6 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
 </section>
 
-<?php include(locate_template('partials/pow-container.php', false, false)); ?>
-
 <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
