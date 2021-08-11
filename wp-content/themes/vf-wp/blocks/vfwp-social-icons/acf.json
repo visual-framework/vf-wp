@@ -22,10 +22,10 @@
             "maxlength": ""
         },
         {
-            "key": "field_5f522a82f4c73",
-            "label": "Select icons",
-            "name": "vf_social_select",
-            "type": "checkbox",
+            "key": "field_61137d6d0a1dd",
+            "label": "",
+            "name": "vf_social_choose",
+            "type": "radio",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -35,10 +35,160 @@
                 "id": ""
             },
             "choices": {
+                "follow": "Follow",
+                "share": "Share"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "follow",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5f522bcea7360",
+            "label": "Twitter",
+            "name": "vf_social_twitter",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "follow"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f522bf7a7362",
+            "label": "Facebook",
+            "name": "vf_social_facebook",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "follow"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f522c2ba7363",
+            "label": "Instagram",
+            "name": "vf_social_instagram",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "follow"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f522c43a7364",
+            "label": "Youtube",
+            "name": "vf_social_youtube",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "follow"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f522c59a7365",
+            "label": "LinkedIn",
+            "name": "vf_social_linkedin",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "follow"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_611384e04dc48",
+            "label": "Select",
+            "name": "vf_social_select",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "share"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
                 "twitter": "Twitter",
                 "facebook": "Facebook",
-                "instagram": "Instagram",
-                "youtube": "Youtube",
                 "linkedin": "LinkedIn"
             },
             "allow_custom": 0,
@@ -91,126 +241,6 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
-        },
-        {
-            "key": "field_5f522bcea7360",
-            "label": "Twitter link",
-            "name": "vf_social_twitter",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f522a82f4c73",
-                        "operator": "==",
-                        "value": "twitter"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f522bf7a7362",
-            "label": "Facebook link",
-            "name": "vf_social_facebook",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f522a82f4c73",
-                        "operator": "==",
-                        "value": "facebook"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f522c2ba7363",
-            "label": "Instagram link",
-            "name": "vf_social_instagram",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f522a82f4c73",
-                        "operator": "==",
-                        "value": "instagram"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f522c43a7364",
-            "label": "Youtube link",
-            "name": "vf_social_youtube",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f522a82f4c73",
-                        "operator": "==",
-                        "value": "youtube"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f522c59a7365",
-            "label": "LinkedIn link",
-            "name": "vf_social_linkedin",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f522a82f4c73",
-                        "operator": "==",
-                        "value": "linkedin"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
         }
     ],
     "location": [
@@ -236,6 +266,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
-    "modified": 1599223795
+    "description": ""
 }
