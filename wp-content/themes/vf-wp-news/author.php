@@ -27,24 +27,19 @@ if (is_search()) {
 }
 ?>
 
-<div class="vf-grid vf-u-margin__bottom--400">
-  <div class="vf-box vf-box--normal vf-box-theme--quinary">
-    <h2 class="vf-text vf-text-heading--2">About the author</h2>
-    <div class="vf-grid" style="max-width: fit-content;">
-      <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--200' ) ); ?>
-      <div>
-        <h3 class="vf-box__heading">
-          <?php the_author(); ?></h3>
-        <p class="vf-box__text"><?php echo nl2br(get_the_author_meta('description')); ?></p>
+<h2 class="vf-text vf-text-heading--2">About the author</h2>
+<div class="vf-grid vf-content vf-u-margin__bottom--400" style="max-width: fit-content;">
+    <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--200' ) ); ?>
+    <div>
+      <h3><?php the_author(); ?></h3>
+        <p><?php echo nl2br(get_the_author_meta('description')); ?></p>
         <!-- <p class="vf-box__text | vf-u-text-color--ui--grey">
           <a href="mailto:<?php echo nl2br(get_the_author_meta('email')); ?>"
             ><?php echo nl2br(get_the_author_meta('email')); ?></a>
         </p> -->
-      </div>
     </div>
-  </div>
 </div>
-
+<hr class="vf-divider">
 <section class="vf-u-margin__bottom--400">
   <div class="vf-news-container vf-news-container--featured">
       <h3 class="vf-section-header__heading vf-u-margin__bottom--400">Articles by <?php the_author(); ?></h3>
