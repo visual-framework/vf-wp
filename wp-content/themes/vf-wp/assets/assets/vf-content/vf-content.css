@@ -1232,7 +1232,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-box
- * Version: 2.3.1
+ * Version: 2.3.3
  * Location: components/undefined
  */
 .vf-box {
@@ -1282,7 +1282,6 @@ a.vf-button:hover, a.vf-button:focus {
 .vf-box__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 24px;
-  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
@@ -1314,7 +1313,6 @@ a.vf-button:hover, a.vf-button:focus {
 .vf-box__text {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  color: #373a36;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
@@ -1397,7 +1395,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.1
+ * Version: 1.6.2
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {
