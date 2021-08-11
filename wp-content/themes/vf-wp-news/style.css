@@ -36,11 +36,22 @@ Text Domain:	 vfwp
   color: #fff;
 }
 
+.newsletter-container .vf-text-heading--4 {
+  color: #fff !important;
+}
+
 /* ------ EMBL ETC ------ */
 
 .magazine {
   padding: 10px 0;
 }
+
+.embl-etc-right-col .embl-etc,
+.embl-etc-right-col .vf-list__item,
+.embl-etc-right-col .vf-text-heading--4 {
+  color: #fff !important;
+}
+
 
 .embl-etc-right-col .magazine-download {
   display: block;
