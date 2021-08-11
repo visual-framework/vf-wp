@@ -19,7 +19,6 @@
                 "default": "Default",
                 "cco_hd": "CCO Heidelberg",
                 "embl_ebi_training": "EMBL-EBI Training",
-                "embl_ebi_industry": "EMBL-EBI Industry",
                 "science_society": "Science and Society"
             },
             "default_value": false,
@@ -255,39 +254,6 @@
                 "ss_seminar": "Science and Society Seminar",
                 "ss_symposia": "Science and Society Symposium",
                 "ss_hd_forum": "Science and Society Heidelberg Forum"
-            },
-            "default_value": false,
-            "allow_null": 1,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "array",
-            "placeholder": ""
-        },
-        {
-            "key": "field_60ed87bc2d806",
-            "label": "EMBL-EBI Industry event type",
-            "name": "vf_event_industry_type",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_industry"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "industry_quarterly_meeting": "Quarterly meeting",
-                "industry_workshop": "Workshop"
             },
             "default_value": false,
             "allow_null": 1,
@@ -924,15 +890,7 @@
             "type": "radio",
             "instructions": "",
             "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "default"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -949,6 +907,33 @@
             "layout": "vertical",
             "return_format": "value",
             "save_other_choice": 0
+        },
+        {
+            "key": "field_61139af02668a",
+            "label": "Banner text",
+            "name": "vf_event_banner_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5e98505453db1",
+                        "operator": "!=",
+                        "value": "no"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         },
         {
             "key": "field_5e9850ee53db3",
@@ -1337,5 +1322,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1626185015
+    "modified": 1628676299
 }
