@@ -1,52 +1,19 @@
 <?php
 
-$title = esc_html(get_the_title());
 $tags = get_the_tags($post->ID);
-$file = get_field('upload_file');
 $related_documents = get_field('related_documents');
+$title = esc_html(get_the_title());
 $file_type = get_field('file_type');
-
+$file = get_field('upload_file');
+$locations = get_field('embl_location');
+$update = get_field('latest_update');
+$annexes = get_field('annexes');
 
 get_header();
 
 ?>
 
-<style>
-  .vf-search--inline .vf-search__input {
-    min-width: 300px;
-  }
 
-  .vf-search--inline .vf-form__select {
-    padding: 8px 12px;
-  }
-
-  .vf-search--inline .vf-search__item:not(:first-child) {
-    padding-left: 10px;
-  }
-
-  .vf-search--inline .vf-search__button {
-    top: -3px;
-  }
-
-</style>
-<div
-  class="embl-grid embl-grid--has-centered-content | vf-u-background-color--grey--lightest vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
-  <div></div>
-  <form role="search" method="get" class="vf-form  | vf-search vf-search--inline"
-    action="<?php echo esc_url(home_url('/')); ?>">
-    <div class="vf-form__item | vf-search__item">
-      <input type="search" class="vf-form__input | vf-search__input" placeholder="Search for a document"
-        value="<?php echo esc_attr(get_search_query()); ?>" name="s">
-    </div>
-    <div class="vf-form__item | vf-search__item" style="display: none;">
-      <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
-        <option value="documents" name="post_type[]">Document</option>
-      </select>
-    </div>
-    <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm"
-      value="<?php esc_attr_e('Search', 'vfwp'); ?>">
-  </form>
-</div>
 
 <div class="embl-grid embl-grid--has-centered-content | vf-content">
   <div></div>
@@ -61,22 +28,55 @@ get_header();
     echo implode('  ', $tagslist);
     } 
     ?>
+
     <p class="vf-summary__date | vf-u-margin__bottom--0">
       <time title="<?php the_time('c'); ?>"
         datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
     </p>
     <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
+
     <?php the_content(); ?>
-    <p class="vf-text-body vf-text-body--5 | vf-u-text-color--grey
-">File type: <?php echo ($file_type); ?></p>
-    <?php
-if( $file ): ?>
-    <a href="<?php echo $file['url']; ?>" class="vf-button vf-button--primary vf-button--outline vf-button--sm">Download</a>
+
+    <?php if( have_rows('annexes') ): ?>
+    <p class="vf-summary__meta">
+      Available in language(s):&nbsp;
+      <?php while( have_rows('annexes') ): the_row();
+        $language = get_sub_field('language');
+        $file = get_sub_field('file');?>
+      <a class="vf-link" href="<?php echo $file['url']; ?>"><?php echo esc_html($language) ?></a>&nbsp;
+      <?php endwhile; ?>
+    </p>
     <?php endif; ?>
-    <hr class="vf-divider vf-u-margin__top--600">
+
+    <?php if (($locations)) { ?>
+    <p class="vf-summary__meta">
+      <span>EMBL site:</span>&nbsp;
+      <span class="vf-u-text-color--grey | location">
+        <?php $location_list = [];
+        foreach( $locations as $location ) { 
+          $location_list[] = $location->name; }
+          echo implode(', ', $location_list); ?></span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <?php } ?>
+    </p>
+
+    <?php if ($file_type) { ?>
+    <p class="vf-summary__meta">File type:
+      <span class="vf-u-text-color--grey"><?php echo esc_html($file_type); ?></span></p>
+    <?php }  ?>
+
+    <?php if ($update) { ?>
+    <p class="vf-summary__meta"><strong>Updated: </strong>
+      <span class="vf-u-text-color--grey"><?php echo esc_html($update); ?></span></p>
+    <?php }  
+
+    if( $file ): ?>
+    <a href="<?php echo $file['url']; ?>"
+      class="vf-button vf-button--primary vf-button--outline vf-button--sm">Download</a>
+    <?php endif; ?>
 
     <?php
-if( $related_documents ): ?>
+    if( $related_documents ): ?>
+    <hr class="vf-divider vf-u-margin__top--600">
     <div class="vf-links">
       <h3 class="vf-links__heading">Related documents:</h3>
       <ul class="vf-links__list | vf-list">
@@ -94,7 +94,6 @@ if( $related_documents ): ?>
   </div>
   <div></div>
 </div>
-
 
 <?php 
 

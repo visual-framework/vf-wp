@@ -24,40 +24,23 @@ get_header();
   </div>
 </section>
 
-<style>
-  .vf-search--inline .vf-search__input {
-    min-width: 300px;
-  }
-
-  .vf-search--inline .vf-form__select {
-    padding: 8px 12px;
-  }
-
-  .vf-search--inline .vf-search__item:not(:first-child) {
-    padding-left: 10px;
-  }
-
-  .vf-search--inline .vf-search__button {
-    top: -3px;
-  }
-
-</style>
 <div
-  class="embl-grid embl-grid--has-centered-content | vf-u-background-color--grey--lightest vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
+  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
   <div></div>
-  <form role="search" method="get" class="vf-form  | vf-search vf-search--inline"
-    action="<?php echo esc_url(home_url('/')); ?>">
-    <div class="vf-form__item | vf-search__item">
-      <input type="search" class="vf-form__input | vf-search__input" placeholder="Search for a document"
-        value="<?php echo esc_attr(get_search_query()); ?>" name="s">
+  <form action="#eventsFilter" onsubmit="return false;"
+    class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
+    <div class="vf-sidebar__inner">
+      <div class="vf-form__item">
+        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
+        <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
+          data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
+          placeholder="Filter by document title" data-clear-btn-id="name-clear-btn"
+          class="vf-form__input | vf-search__input" />
+      </div>
+      <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
+        <span class="vf-button__text">Filter</span>
+      </button>
     </div>
-    <div class="vf-form__item | vf-search__item" style="display: none;">
-      <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
-        <option value="documents" name="post_type[]">Document</option>
-      </select>
-    </div>
-    <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm"
-      value="<?php esc_attr_e('Search', 'vfwp'); ?>">
   </form>
 </div>
 
@@ -67,21 +50,64 @@ get_header();
   </div>
   <div>
     <h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
-    <?php
+    <div data-jplist-group="data-group-1">
+      <?php
         if ( have_posts() ) {
           while ( have_posts() ) {
             the_post();
             include(locate_template('partials/vf-summary--document.php', false, false)); 
-            if ( ! $vf_theme->is_last_post()) {
-                echo '<hr class="vf-divider">';
-              }
           }
-        } else {
-          echo '<p>', __('No posts found', 'vfwp'), '</p>';
         } ?>
-    <div class="vf-grid"> <?php vf_pagination();?></div>
+      <!-- no results control -->
+      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+        data-name="no-results">
+        <p class="vf-summary__text">
+          No matching documents found
+        </p>
+      </article>
+    </div>
+
+    <style>
+      .jplist-selected {
+        background-color: #707372;
+      }
+
+      .jplist-selected a {
+        color: #fff;
+      }
+
+    </style>
+
+    <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
+      data-items-per-page="50" data-current-page="0" data-name="pagination1">
+      <ul class="vf-pagination__list">
+        <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
+          <a class="vf-pagination__link">
+            Previous<span class="vf-u-sr-only"> page</span>
+          </a>
+        </li>
+        <div data-type="pages" style="display: flex;">
+          <li class="vf-pagination__item" data-type="page">
+            <a href="#" class="vf-pagination__link">
+              {pageNumber}<span class="vf-u-sr-only">page</span>
+            </a>
+          </li>
+        </div>
+        <li class="vf-pagination__item vf-pagination__item--next-page" data-type="next">
+          <a href="#" class="vf-pagination__link">
+            Next<span class="vf-u-sr-only"> page</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
   </div>
+  <div></div>
 </section>
+
+<script type="text/javascript">
+  jplist.init();
+</script>
 
 <?php
 
