@@ -42,8 +42,8 @@ get_header();
       Available in language(s):&nbsp;
       <?php while( have_rows('annexes') ): the_row();
         $language = get_sub_field('language');
-        $file = get_sub_field('file');?>
-      <a class="vf-link" href="<?php echo $file['url']; ?>"><?php echo esc_html($language) ?></a>&nbsp;
+        $language_file = get_sub_field('file');?>
+      <a class="vf-link" href="<?php echo $language_file['url']; ?>"><?php echo esc_html($language) ?></a>&nbsp;
       <?php endwhile; ?>
     </p>
     <?php endif; ?>
