@@ -12,8 +12,16 @@ $embl_location_terms = get_terms(
 ?>
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
+  <div class="vf-form__item vf-stack">
+    <label class="vf-form__label" for="vf-form__select">Sort by:</label>
+    <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-sort" data-group="data-group-1"
+      data-name="name1">
+      <option value="1" data-path=".added" data-order="desc" data-type="datetime" selected>Recently added</option>
+      <option value="2" data-path=".update" data-order="desc" data-type="datetime">Recently updated</option>
+    </select>
+  </div>
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-    <label class="vf-form__label">Relevant EMBL site</label>
+    <label class="vf-form__label">EMBL site</label>
     <?php
     foreach($embl_location_terms as $term) {
       ?>

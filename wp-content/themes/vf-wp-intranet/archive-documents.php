@@ -49,7 +49,6 @@ get_header();
     <?php include(locate_template('partials/document-filter.php', false, false)); ?>
   </div>
   <div>
-    <h4 class="vf-text vf-text-heading--4 vf-u-margin__top--0">Recently added:</h4>
     <div data-jplist-group="data-group-1">
       <?php
         if ( have_posts() ) {

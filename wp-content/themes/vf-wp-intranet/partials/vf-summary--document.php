@@ -10,13 +10,13 @@ $annexes = get_field('annexes');
 ?>
 <article class="vf-summary" data-jplist-item>
   <span class="vf-summary__date | vf-u-margin__bottom--100">
-    <time title="<?php the_time('c'); ?>"
+    <time class="added" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
   </span>
   <h2 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo $title; ?></a>
   </h2>
-  
+
   <?php if( have_rows('annexes') ): ?>
   <p class="vf-summary__meta | vf-u-margin__bottom--200">
     Available in language(s):&nbsp;
@@ -44,11 +44,18 @@ $annexes = get_field('annexes');
     <span class="vf-u-text-color--grey"><?php echo esc_html($update); ?></span></p>
   <?php }   ?>
 
+  <!--/only for sorting-->
+  <p class="update" style="display: none;">
+  <?php 
+  if (empty($update)) {
+    $update = the_time(get_option('date_format'));
+  }
+  else {
+  echo esc_html($update); }?> </p>
+
   <p class="vf-summary__meta">
     <a href="<?php echo $file['url']; ?>"
       class="vf-button vf-button--primary vf-button--outline vf-button--sm">Download</a>
-
-
   </p>
 </article>
 <!--/vf-summary-->
