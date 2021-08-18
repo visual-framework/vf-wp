@@ -23,10 +23,10 @@
         },
         {
             "key": "field_600e791cff812",
-            "label": "EMBL Location",
+            "label": "EMBL site",
             "name": "embl_location",
             "type": "taxonomy",
-            "instructions": "",
+            "instructions": "Tick a relevant box if the document applies only to a specific EMBL site. For general documents please use 'All EMBL sites'",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -45,10 +45,10 @@
         },
         {
             "key": "field_611ccbf5dfda0",
-            "label": "Annexes",
+            "label": "Other languages",
             "name": "annexes",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "Use this field to upload files if the document is also available in other languages",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -144,7 +144,7 @@
             "label": "Latest update",
             "name": "latest_update",
             "type": "date_picker",
-            "instructions": "",
+            "instructions": "Fill in this field if a new version of the document has been uploaded",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -161,7 +161,7 @@
             "label": "Related documents",
             "name": "related_documents",
             "type": "post_object",
-            "instructions": "",
+            "instructions": "Optional",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -196,5 +196,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1629280932
+    "modified": 1629298562
 }
