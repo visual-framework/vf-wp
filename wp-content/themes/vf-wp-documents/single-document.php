@@ -19,14 +19,10 @@ if ( ! is_array($image)) {
   ));
 }
 
-get_template_part('partials/vf-intro');
-
 ?>
 
-<div class="embl-grid embl-grid--has-centered-content">
-  <div>
-  </div>
-  <div class="vf-content">
+<div class="vf-grid vf-grid__col-3" style="margin-top: 2.5rem !important;">
+  <div class="vf-grid__col--span-2 | vf-content">
     <article class="vf-summary vf-summary--news">
       <time class="vf-summary__date vf-u-margin__bottom--0 vf-u-margin__left--0" title="<?php the_time('c'); ?>" datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?>
       </time>
@@ -35,6 +31,12 @@ get_template_part('partials/vf-intro');
       <h2 class="vf-text vf-text-heading--2 | vf-u-margin__bottom--400 vf-u-padding__top--0"><?php the_title(); ?>
       </h2>
       <?php the_content(); ?>
+      <div>
+      <?php if ($update) { ?>
+  <p class="vf-summary__meta"><strong>Updated: </strong>
+    <span class="vf-u-text-color--grey"><?php echo esc_html($update); ?></span></p>
+  <?php }   ?>
+
       <?php if( have_rows('vf-document_file_upload') ):
         $start = 1; $end = 1; 
         while( have_rows('vf-document_file_upload') ): the_row();
@@ -46,6 +48,7 @@ get_template_part('partials/vf-intro');
        $start++; 
        endwhile; 
        endif; ?>
+       </div>
     </article>
   </div>
   
@@ -54,31 +57,19 @@ get_template_part('partials/vf-intro');
     <ul class="vf-links__list vf-links__list--secondary | vf-list">
       <li class="vf-list__item">
         <p class="vf-links__meta">Type:</p>
-          <?php
-            if (is_array($types)) {
-		        foreach ( $types as $type ) {
-          ?> 
-          <a href="<?php echo esc_url( get_term_link( $type->term_id ) ); ?>" class="vf-list__link"
-            title="<?php echo esc_attr( $type->name ); ?>"><?php echo esc_html( $type->name); ?></a>
-          <?php } } ?>
+        <?php $type_list = [];
+        foreach( $types as $type ) { 
+          $type_list[] = $type->name; }
+          echo implode(', ', $type_list); ?>
     </li>
 
     <li class="vf-list__item">
       <p class="vf-links__meta">Topic:</p>
-      <?php
-        if (is_array($topics)) {
-          foreach ( $topics as $topic ) {
-      ?> 
-    <a href="<?php echo esc_url( get_term_link( $topic->term_id ) ); ?>" class="vf-list__link"
-            title="<?php echo esc_attr( $topic->name ); ?>"><?php echo esc_html( $topic->name); ?></a>
-      <?php } } ?>
-    </li>
-
-    <?php if ($update) { ?>
-    <li class="vf-list__item">
-      <p class="vf-links__meta">Updated: <?php echo $update; ?></p>
-    </li>
-    <?php } ?>
+  <?php $topic_list = [];
+  foreach( $topics as $topic ) { 
+    $topic_list[] = $topic->name; }
+    echo implode(', ', $topic_list); ?>
+</li>
 
     <li class="vf-list__item">
       <p class="vf-links__meta">File type:
@@ -93,7 +84,7 @@ get_template_part('partials/vf-intro');
           while( have_rows('vf-document_file_upload') ): the_row();
             $language = get_sub_field('language');
             $file = get_sub_field('file');?>
-          <a href="<?php echo $file['url']; ?>" class="vf-list__link"><?php echo esc_html($language) ?></a>
+          <a href="<?php echo $file['url']; ?>" class="vf-link"><?php echo esc_html($language) ?></a>
           <?php endwhile; ?> </p>
         <?php endif; ?>
     </li>
@@ -103,7 +94,7 @@ get_template_part('partials/vf-intro');
         <?php while( have_rows('vf-document_annexes') ): the_row();
           $language = get_sub_field('language');
           $file = get_sub_field('file');?>
-          <a href="<?php echo $file['url']; ?>" class="vf-list__link"><?php echo esc_html($language) ?></a>&nbsp;
+          <a href="<?php echo $file['url']; ?>" class="vf-link"><?php echo esc_html($language) ?></a>&nbsp;
         <?php endwhile; ?></p>
       <?php endif; ?>
     </ul>
