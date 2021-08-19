@@ -174,57 +174,6 @@
             "save_custom": 0
         },
         {
-            "key": "field_607007686ce23",
-            "label": "Subtype",
-            "name": "subtype_embo",
-            "type": "checkbox",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "embo_workshop": "EMBO Workshop",
-                "embo_course": "EMBO Practical Course",
-                "embo_embl_symposium": "EMBO | EMBL Symposium"
-            },
-            "allow_custom": 0,
-            "default_value": [],
-            "layout": "vertical",
-            "toggle": 0,
-            "return_format": "value",
-            "save_custom": 0
-        },
-        {
-            "key": "field_6070292807525",
-            "label": "",
-            "name": "subtype_ss",
-            "type": "checkbox",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "ss_conference": "Science and Society Conference",
-                "ss_seminar": "Science and Society Seminar",
-                "ss_symposia": "Science and Society Symposium",
-                "ss_hd_forum": "Science and Society Heidelberg Forum"
-            },
-            "allow_custom": 0,
-            "default_value": [],
-            "layout": "vertical",
-            "toggle": 0,
-            "return_format": "value",
-            "save_custom": 0
-        },
-        {
             "key": "field_606ed5813139d",
             "label": "Event location",
             "name": "",

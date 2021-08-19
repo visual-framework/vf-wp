@@ -110,7 +110,7 @@
                 "inline-easy-secondary": "inline-easy-secondary"
             },
             "default_value": [
-                "block"
+                "inline"
             ],
             "allow_null": 0,
             "multiple": 0,

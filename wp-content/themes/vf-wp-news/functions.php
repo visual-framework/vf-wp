@@ -33,6 +33,21 @@ function my_theme_enqueue_styles() {
 );
 }
 
+/**
+ * Load ACF JSON from theme
+ */
+add_filter(
+	'acf/settings/load_json',
+	'vf_wp_news__acf_settings_load_json',
+	1
+  );
+
+function vf_wp_news__acf_settings_load_json($paths) {
+    $paths[] = get_stylesheet_directory() . '/acf-json';
+    return $paths;
+  }
+
+
 
 // POST THUMBNAILS
 // 
@@ -269,6 +284,27 @@ function featured_image_in_rss_feed( $content ) {
  }
  }
  return $content;
+}
+
+  /**
+   * Add metadata to REST API
+   */
+
+  function register_display_api_field()
+{
+    register_rest_field('post', 'field_target_display',
+        array(
+            'get_callback' => 'get_display_api_field',
+            'schema' => null,
+        )
+    );
+}
+
+add_action('rest_api_init', 'register_display_api_field');
+
+function get_display_api_field($post)
+{
+    return get_field('field_target_display', $post['id']);
 }
 
 ?>

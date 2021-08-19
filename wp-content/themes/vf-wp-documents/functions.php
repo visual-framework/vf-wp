@@ -4,6 +4,12 @@
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
+/* Adds scripts */
+add_action( 'wp_enqueue_scripts', 'add_scripts' );
+function add_scripts() {
+    wp_enqueue_script('jplist', get_theme_file_uri( '/scripts/jplist.min.js'));
+}
+
 function get_all_them_posts() {
   $count_posts = wp_count_posts('document');
   $published_posts = $count_posts->publish;
@@ -146,7 +152,7 @@ function vf_wp_documents__init() {
     'menu_icon'           => 'dashicons-media-document',
     'capability_type'     => 'page',
     'supports'            => array('title', 'editor'),
-    'has_archive'         => true,
+    'has_archive'         => false,
     'rewrite'             => array(
       'slug'       => 'document',
       'with_front' => false
@@ -170,6 +176,7 @@ function vf_wp_documents__init() {
     'show_in_nav_menus'  => false,
     'rewrite'            => false,
     'show_in_rest'       => false,
+    'public'             => false,
   ));
 
   register_taxonomy('document_type', array('document'), array(
@@ -182,6 +189,7 @@ function vf_wp_documents__init() {
     'show_in_nav_menus'  => false,
     'rewrite'            => false,
     'show_in_rest'       => false,
+    'public'             => false,
   ));
 
 }
@@ -210,5 +218,7 @@ function vf_wp_documents__pre_get_posts($query) {
   }
   $query->set('posts_per_page', -1);
 }
+
+
 
 ?>

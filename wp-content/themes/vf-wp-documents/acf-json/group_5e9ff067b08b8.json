@@ -8,7 +8,7 @@
             "name": "vf-document_file_upload",
             "type": "repeater",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -76,7 +76,7 @@
             "name": "vf-document_topic",
             "type": "taxonomy",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
@@ -98,7 +98,7 @@
             "name": "vf-document_type",
             "type": "taxonomy",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
@@ -115,11 +115,82 @@
             "multiple": 0
         },
         {
+            "key": "field_5e9ff067c791f",
+            "label": "Latest update",
+            "name": "vf-document_last_update",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j F Y",
+            "return_format": "j F Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_5e9ff067ca90b",
+            "label": "File type",
+            "name": "vf-document_file_type",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "PDF": "PDF",
+                "DOC": "DOC",
+                "PPT": "PPT",
+                "XLS": "XLS",
+                "JPG": "JPG"
+            },
+            "default_value": [
+                "PDF"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f21629f45c56",
+            "label": "Cover image",
+            "name": "image",
+            "type": "image",
+            "instructions": "Min-width: 175px",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
             "key": "field_5eb129aabf2c9",
             "label": "Annexes",
             "name": "vf-document_annexes",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "Optional",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -131,7 +202,7 @@
             "min": 0,
             "max": 0,
             "layout": "table",
-            "button_label": "Add language",
+            "button_label": "Add item",
             "sub_fields": [
                 {
                     "key": "field_5eb129aabf2ca",
@@ -181,77 +252,6 @@
                     "mime_types": ""
                 }
             ]
-        },
-        {
-            "key": "field_5e9ff067c791f",
-            "label": "Last update",
-            "name": "vf-document_last_update",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j F Y",
-            "return_format": "j F Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5e9ff067ca90b",
-            "label": "File type",
-            "name": "vf-document_file_type",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "PDF": "PDF",
-                "DOC": "DOC",
-                "PPT": "PPT",
-                "XLS": "XLS",
-                "JPG": "JPG"
-            },
-            "default_value": [
-                "PDF"
-            ],
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
-            "return_format": "value",
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f21629f45c56",
-            "label": "Cover image",
-            "name": "image",
-            "type": "image",
-            "instructions": "Min-width: 175px",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
         }
     ],
     "location": [
@@ -265,11 +265,11 @@
     ],
     "menu_order": 0,
     "position": "normal",
-    "style": "default",
-    "label_placement": "left",
+    "style": "seamless",
+    "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
     "description": "VF-Documents theme custom fields",
-    "modified": 1596024290
+    "modified": 1629365547
 }
