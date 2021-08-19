@@ -1,6 +1,6 @@
 {
     "key": "group_600ea57f1985c",
-    "title": "VF-WP-Documents",
+    "title": "Internal documents repository",
     "fields": [
         {
             "key": "field_600ea596cd371",
@@ -11,7 +11,7 @@
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -23,11 +23,11 @@
         },
         {
             "key": "field_600e791cff812",
-            "label": "EMBL Location",
+            "label": "EMBL site",
             "name": "embl_location",
             "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
+            "instructions": "Tick a relevant box if the document applies only to a specific EMBL site. For general documents please use 'All EMBL sites'",
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
@@ -42,6 +42,74 @@
             "return_format": "object",
             "multiple": 0,
             "allow_null": 0
+        },
+        {
+            "key": "field_611ccbf5dfda0",
+            "label": "Other languages",
+            "name": "annexes",
+            "type": "repeater",
+            "instructions": "Use this field to upload files if the document is also available in other languages",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add language",
+            "sub_fields": [
+                {
+                    "key": "field_611ccbf5dfda1",
+                    "label": "Language",
+                    "name": "language",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "English": "EN",
+                        "Deutsch": "DE",
+                        "French": "FR",
+                        "Italian": "IT",
+                        "Spanish": "ES"
+                    },
+                    "default_value": false,
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "return_format": "label",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_611ccbf5dfda2",
+                    "label": "File",
+                    "name": "file",
+                    "type": "file",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "library": "all",
+                    "min_size": "",
+                    "max_size": "",
+                    "mime_types": ""
+                }
+            ]
         },
         {
             "key": "field_5e9ff067ca90b",
@@ -72,11 +140,28 @@
             "placeholder": ""
         },
         {
+            "key": "field_611ccc01dfda3",
+            "label": "Latest update",
+            "name": "latest_update",
+            "type": "date_picker",
+            "instructions": "Fill in this field if a new version of the document has been uploaded",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j F Y",
+            "return_format": "j F Y",
+            "first_day": 1
+        },
+        {
             "key": "field_6038f6df39524",
             "label": "Related documents",
             "name": "related_documents",
             "type": "post_object",
-            "instructions": "",
+            "instructions": "Optional",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -111,5 +196,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1614350841
+    "modified": 1629298562
 }

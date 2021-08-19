@@ -1,6 +1,7 @@
 <?php
+$counter = 1;
 
-// Get all "Topic" terms
+// Get all "location" terms
 $embl_location_terms = get_terms(
   array(
     'taxonomy'   => 'embl-location',
@@ -8,69 +9,32 @@ $embl_location_terms = get_terms(
   )
 );
   
-  // Get active taxonomy filters
-  $embl_location_selected = get_query_var('embl-location');
-  if ( ! is_array($embl_location_selected)) {
-      $embl_location_selected = array($embl_location_selected);
-    }
-    
-
-// Get taxonomy labels
-$location_labels = vf_wp_intranet_location_labels();
-
-
-// $archive = get_post_type_archive_link('document');
-$archive = home_url('/?post_type=documents');
-
 ?>
-<form action="<?php echo esc_url($archive); ?>" method="get">
-  <div>
 
-    <input type="hidden" name="post_type" value="documents">
-
-    <?php
-    $search = trim(get_search_query());
-    if ( ! empty($search)) {
-    ?>
-    <input type="hidden" name="s" value="<?php echo esc_attr($search); ?>">
-    <?php } ?>
-
-    <fieldset class="vf-form vf-form__fieldset">
-
-      <legend class="vf-form__legend">EMBL Location</legend>
-      <div class="vf-form__item vf-form__item--checkbox">
-        <?php 
-      $selected = empty($embl_location_selected) || empty($embl_location_selected[0]) ? 'checked="checked"' : '';
-    ?>
-        <input type="checkbox" value="" id="checkbox-embl-location-1" class="vf-form__checkbox"
-          name="embl_location" <?php echo $selected ?>>
-        <label for="checkbox-embl-location-1" class="vf-form__label">All</label>
-      </div>
-      <?php
-	  		  $count = 2;
-      foreach ($embl_location_terms as $term) {
-        $selected = in_array($term->slug, $embl_location_selected) ? 'checked="checked"' : '';
-      ?>
-      <div class="vf-form__item vf-form__item--checkbox">
-        <input type="checkbox" value="<?php echo esc_attr($term->slug); ?>" id="checkbox-embl-location-<?php echo $count; ?>"
-          name="embl-location[]" class="vf-form__checkbox" <?php echo $selected ?>>
-        <label for="checkbox-embl-location-<?php echo $count; ?>"
-          class="vf-form__label"><?php echo esc_html($term->name); ?>
-        </label>
-      </div>
-      <?php 
-	    $count++;
-	  } ?>
-    </fieldset>
-
-
-
-      <button class="vf-button vf-button--primary vf-button--sm" type="submit">
-        <?php esc_html_e('Apply filter', 'theme'); ?>
-      </button>
-
-      <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/insites'; ?>">
-        <?php esc_html_e('Reset filters', 'theme'); ?>
-      </a>
+<form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
+  <div class="vf-form__item vf-stack">
+    <label class="vf-form__label" for="vf-form__select">Sort by:</label>
+    <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-sort" data-group="data-group-1"
+      data-name="name1">
+      <option value="1" data-path=".added" data-order="desc" data-type="datetime" selected>Recently added</option>
+      <option value="2" data-path=".update" data-order="desc" data-type="datetime">Recently updated</option>
+    </select>
   </div>
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+    <label class="vf-form__label">EMBL site</label>
+    <?php
+    foreach($embl_location_terms as $term) {
+      ?>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="location-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".location" data-group="data-group-1" data-name="name" data-or="name"
+        value="<?php echo esc_attr($term->slug); ?>"
+        data-id="name<?php echo $counter; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
+      <label for="location-<?php echo $counter; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?></label>
+    </div>
+    <?php
+      $counter++;
+    }
+    ?>
+  </fieldset>
 </form>

@@ -1,4 +1,10 @@
 <?php 
+/* Adds scripts */
+add_action( 'wp_enqueue_scripts', 'add_scripts' );
+function add_scripts() {
+    wp_enqueue_script('jplist', get_theme_file_uri( '/scripts/jplist.min.js'));
+}
+
 
 require_once('functions/custom-taxonomies.php');
 require_once('functions/cpt-register.php');
