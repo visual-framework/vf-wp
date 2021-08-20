@@ -1,2 +1,2 @@
 # vf-wp-intranet
-EMBL Intranet Theme
+EMBL Intranet
