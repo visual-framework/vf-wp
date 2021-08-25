@@ -27,7 +27,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -46,7 +46,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -60,27 +60,25 @@
             "key": "field_611e28a7822e8",
             "label": "Display",
             "name": "field_target_display",
-            "type": "radio",
+            "type": "checkbox",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
             "choices": {
                 "embl": "embl.org",
-                "embl-ebi": "ebi.ac.uk",
-                "null": "both"
+                "embl-ebi": "ebi.ac.uk"
             },
-            "allow_null": 1,
-            "other_choice": 0,
-            "default_value": "",
+            "allow_custom": 0,
+            "default_value": [],
             "layout": "vertical",
+            "toggle": 0,
             "return_format": "value",
-            "save_other_choice": 0
-        },
+            "save_custom": 0        },
         {
             "key": "field_5f1ac94baa00e",
             "label": "Article Intro",
@@ -537,5 +535,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "modified": 1629873877
 }
