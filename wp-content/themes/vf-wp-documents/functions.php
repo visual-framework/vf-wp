@@ -175,7 +175,7 @@ function vf_wp_documents__init() {
     'publicly_queryable' => true,
     'show_in_nav_menus'  => false,
     'rewrite'            => false,
-    'show_in_rest'       => false,
+    'show_in_rest'       => true,
     'public'             => false,
   ));
 
@@ -188,7 +188,7 @@ function vf_wp_documents__init() {
     'publicly_queryable' => true,
     'show_in_nav_menus'  => false,
     'rewrite'            => false,
-    'show_in_rest'       => false,
+    'show_in_rest'       => true,
     'public'             => false,
   ));
 
