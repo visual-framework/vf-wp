@@ -30,10 +30,10 @@ add_filter('acf/settings/remove_wp_meta_box', '__return_false');
 
 add_filter('acf/settings/show_admin', '__return_true');
 function my_acf_save_post( $post_id ) {
-    
+
     $user = get_field( 'author', $post_id );
 	if( $user ) {
-		wp_update_post( array( 'ID'=>$post_id, 'post_author'=>$user['ID']) ); 
+		wp_update_post( array( 'ID'=>$post_id, 'post_author'=>$user['ID']) );
 	}
 }
 add_action('acf/save_post', 'my_acf_save_post', 20);
@@ -52,5 +52,15 @@ function vf_wp_groups_theme__acf_settings_load_json($paths) {
   return $paths;
 }
 
+# Fix for https://github.com/visual-framework/vf-wp/issues/944
+add_filter( 'nav_menu_link_attributes', 'vf_wp_groups_update_menu_atts', 10, 3 );
+function vf_wp_groups_update_menu_atts( $atts, $item, $args )
+{
+  // Check if current page is blog & not a page.
+  if ( !is_page() && $item->title == 'Blog' && !in_array( 'aria-current', $atts ) ) {
+    $atts['aria-current'] = 'page';
+  }
+  return $atts;
+}
 
 ?>
