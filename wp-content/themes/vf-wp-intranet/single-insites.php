@@ -6,55 +6,57 @@ $tags = get_the_tags($post->ID);
 $intro = get_field('article_intro');
 $topic_terms = get_field('topic');
 $show = get_field('show_featured_image');
-
+$locations = get_field('embl_location');
 
 get_header();
 
 ?>
 
-<div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
-  <div class="vf-grid__col--span-2">
-    <div class="vf-content">
-    <?php
-    $tags = get_the_tags($post->ID);
-    if ($tags) {
-    $tagslist = array();
-    foreach($tags as $tag) {
-      $tagslist[] = '<a  href="' . get_tag_link($tag->term_id) . '" class="vf-badge | vf-u-margin__bottom--200">' . $tag->name . '</a>';
-    }
-    echo implode('  ', $tagslist);
-    } 
-    ?>
-      <p class="vf-summary__date | vf-u-margin__bottom--0">
-        <time title="<?php the_time('c'); ?>"
-          datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time> in
-        <?php 
-      if( $topic_terms ) {
-        $topics_list = array(); 
-      foreach( $topic_terms as $term ) {
-        $topics_list[] = '<a class="vf-link"  href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . esc_html( $term->name ) . '</a>'; }
-      echo implode(', ', $topics_list); }?>
-      </p>
-      <h1><?php the_title(); ?></h1>
-      <?php 
-    if ($intro) { ?>
-      <p class="vf-lede">
-        <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
-      </p>
-      <?php } ?>
+<section class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--200 | vf-u-margin__bottom--0">
+  <div>
+    <div class="vf-article-meta-information">
+      <div class="vf-author | vf-article-meta-info__author">
+        <p class="vf-author__name">
+          <a class="vf-link"
+            href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php the_author(); ?></a>
+        </p>
+        <a class="vf-author--avatar__link | vf-link"
+          href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+          <?php echo get_avatar( get_the_author_meta( 'ID' ), 48, '', '', array('class' => 'vf-author--avatar')); ?>
+        </a>
+      </div>
+      <div class="vf-meta__details | vf-stack vf-stack--400">
+        <p class="vf-meta__date"><time title="<?php the_time('c'); ?>"
+            datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
+        <?php if (($topic_terms)) { ?>
+        <p class="vf-meta__topics | vf-u-margin__top--600"><span style="color: #000;">Topic:</span>
+          <?php 
+        if( $topic_terms ) {
+          $topics_list = array(); 
+          foreach( $topic_terms as $term ) {
+            $topics_list[] = '<a class="vf-link" style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . strtoupper(esc_html( $term->name )) . '</a>'; }
+            echo implode(', ', $topics_list); } ?>
+        </p>
+        <?php }
+        if (($locations)) { ?>
+        <p class="vf-meta__topics"><span style="color: #000;">EMBL site:</span>
+          <?php $location_list = [];
+        foreach( $locations as $location ) { 
+          $location_list[] = $location->name; }
+          echo implode(', ', $location_list); ?>
+        </p>
+        <?php } ?>
+      </div>
     </div>
   </div>
-  <div></div>
-</div>
 
-<div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
-  <div class="vf-grid__col--span-2">
-    <?php
-      if ( $show == '1' ) {
-
-      } //not displaying
+  <div class="vf-content | vf-u-padding__bottom--800">
+    <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
+    <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
+      <?php echo get_post_meta($post->ID, 'ells_article_intro', true); ?>
+    </p>
+    <?php if ( $show == '1' ) {} //not displaying
       else { ?>
-   
     <figure class="vf-figure">
       <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
       <figcaption class="vf-figure__caption">
@@ -63,13 +65,24 @@ get_header();
     </figure>
     <?php } ?>
     <?php the_content(); ?>
-    <hr class="vf-divider">
-    <div class="vf-content">
-  <h3>Latest stories</h3>
+  </div>
+  <div>
+    <?php if (is_active_sidebar('sidebar-blog')) { ?>
+    <?php vf_sidebar('sidebar-blog'); ?>
+    <?php } ?>
+  </div>
+</section>
+
+<hr class="vf-divider">
+
+<div
+  class="vf-news-container vf-news-container--featured | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Latest stories</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
     <?php
           $args = array(
             'post_type' => 'insites',
-            'posts_per_page' => 3,
+            'posts_per_page' => 4,
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
           );
@@ -78,13 +91,7 @@ get_header();
             include(locate_template('partials/vf-summary-insites-latest.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
-</div>
   </div>
-  <?php if (is_active_sidebar('sidebar-blog')) { ?>
-
-    <?php vf_sidebar('sidebar-blog'); ?>
-
-  <?php } ?>
 </div>
 
 <?php 
