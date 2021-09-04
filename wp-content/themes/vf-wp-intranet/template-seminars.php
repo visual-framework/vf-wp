@@ -30,7 +30,7 @@ get_header();
         <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
         <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
           data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-          placeholder="Filter by document title" data-clear-btn-id="name-clear-btn"
+          placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn"
           class="vf-form__input | vf-search__input" />
       </div>
       <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
@@ -45,32 +45,32 @@ get_header();
     <?php include(locate_template('partials/seminars-filter.php', false, false)); ?>
   </div>
   <div>
-    <div class="vf-content" >
+    <div class="vf-content">
     <div class="embl-content-hub-loader | vf-grid vf-grid__col-1" data-jplist-group="data-group-1">
         <?php
-$request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&filter-field-value[field_event_type]=Seminar&sort-field-value[field_event_start_date_time.value]=ASC&filter-field-date-after[field_event_start_date_time]=today
-' );
+        $request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today
+        ' );
+        if( is_wp_error( $request ) ) {
+            return false; // Bail early
+        }
+        $body = wp_remote_retrieve_body( $request );
+        $data = json_decode( $body );
+        function sortByStartDate($param1, $param2) {
+            return strcmp($param1->field_event_start_date_time, $param2->field_event_start_date_time);
+        }
+        usort($data, "sortByStartDate");
 
-if( is_wp_error( $request ) ) {
-	return false; // Bail early
-}
-
-$body = wp_remote_retrieve_body( $request );
-
-$data = json_decode( $body );
-
-if( ! empty( $data ) ) {
-	
-	echo '<ul>';
-	foreach( $data as $product ) {
-		echo '<article data-jplist-item>';
-			echo '<p class="vf-summary__title">' . $product->title . '</p>';
-			echo '<p class="vf-summary__location | location">' . $product->field_event_location . '</p>';
-		echo '</article>';
-	}
-	echo '</ul>';
-}
-
+        if( ! empty( $data ) ) {
+            foreach( $data as $event ) {
+            $newDate = date("j F Y", strtotime($event->field_event_start_date_time));  
+                echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
+                echo '<p class="vf-summary__date">' . $newDate . '</p>';
+                echo '<h3 class="vf-summary__title">' . $event->title . '</h3>';
+                echo '<p class="vf-summary__text">' . $event->field_event_additional_info . '</p>';
+                echo '<p class="vf-summary__location | location">' . $event->field_event_location . '</p>';
+                echo '</article>';
+            }
+        }
         ?>
   </div>
 
@@ -95,7 +95,7 @@ if( ! empty( $data ) ) {
     </style>
 
     <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-      data-items-per-page="10" data-current-page="0" data-name="pagination1">
+      data-items-per-page="20" data-current-page="0" data-name="pagination1">
       <ul class="vf-pagination__list">
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">
