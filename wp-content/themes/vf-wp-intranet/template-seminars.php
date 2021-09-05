@@ -64,9 +64,21 @@ get_header();
             foreach( $data as $event ) {
             $newDate = date("j F Y", strtotime($event->field_event_start_date_time));  
                 echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
+                //Date
                 echo '<p class="vf-summary__date">' . $newDate . '</p>';
-                echo '<h3 class="vf-summary__title">' . $event->title . '</h3>';
-                echo '<p class="vf-summary__text">' . $event->field_event_additional_info . '</p>';
+                //Title
+                echo '<h3 class="vf-summary__title">';
+                //Link
+                if (!empty($event->field_event_more_information)) {
+                    echo '<a href="'. $event->field_event_more_information . '" class="vf-summary__link">' . $event->title . '</a></h3>' ;
+                }
+                else {
+                     echo ($event->title . '</h3>'); }
+                // Removes Seminar type from the string
+                echo '<p class="vf-summary__text">' . substr($event->field_event_additional_info, strpos($event->field_event_additional_info, ">") + 1) . '</p>';
+                // Seminar type
+                echo '<p class="vf-summary__text | vf-text-heading--5 | type">' . strstr($event->field_event_additional_info, '<', true) . '</p>';
+                // Location
                 echo '<p class="vf-summary__location | location">' . $event->field_event_location . '</p>';
                 echo '</article>';
             }
