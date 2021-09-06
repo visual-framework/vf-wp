@@ -38,7 +38,7 @@ $has_page = get_field('vf_event_internal_has_page');
   </h3>
   <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
   <?php if ( ! empty($locations)) { ?>
-  <p class="vf-summary__location | location">
+  <p class="vf-summary__location | location">EMBL 
     <?php $location_list = [];
         foreach( $locations as $location ) { 
           $location_list[] = $location->name; }
