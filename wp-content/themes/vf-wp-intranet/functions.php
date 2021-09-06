@@ -88,6 +88,27 @@ function get_all_documents_posts() {
 	$published_posts = $count_posts->publish;
 	return $published_posts;
   }
-  
+ 
+  $json_feed = "https://www.embl.org/api/v1/people?page=0&items_per_page=100&source=contenthub";
+  $json = file_get_contents($json_feed);
+  $obj = json_decode($json, true);
+	
+  foreach($obj as $article_array){
+	$title2 = $article_array['full_name'];
+	$url = $article_array['url'];
+		  // Check if already exists
+			  // Insert post
+			  if (!get_page_by_title($title2, 'OBJECT', 'community-blog') ){
+			  $new_post = array(
+				  'post_title' => $title2,
+				  'post_content' => 'content here',
+				  'post_status' => 'publish',
+				  'post_author' => 1,
+				  'post_type' => 'community-blog',
+			  );
+			  // Insert post
+			  $post_id = wp_insert_post( $new_post );
+			  add_post_meta($post_id, 'url', $url);
+			}
 
-?>
+  }
