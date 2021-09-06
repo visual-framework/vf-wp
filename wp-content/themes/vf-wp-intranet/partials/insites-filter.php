@@ -26,7 +26,7 @@ $topic_terms = get_terms(
       ?>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="location-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".location" data-group="data-group-1" data-name="name" data-or="name"
+        data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="<?php echo esc_attr($term->slug); ?>"
         data-id="name<?php echo $counter; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
       <label for="location-<?php echo $counter; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?></label>
@@ -43,7 +43,7 @@ $topic_terms = get_terms(
       ?>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="topic-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".topic" data-group="data-group-1" data-name="name" data-or="name"
+        data-path=".topic" data-group="data-group-1" data-name="name2" data-or="name2"
         value="<?php echo esc_attr($term->slug); ?>"
         data-id="name<?php echo $counter; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
       <label for="topic-<?php echo $counter; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?></label>

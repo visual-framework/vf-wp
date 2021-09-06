@@ -62,24 +62,53 @@ get_header();
 
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
-            $newDate = date("j F Y", strtotime($event->field_event_start_date_time));  
+            $newDate = date("l, j F Y, g:i a", strtotime($event->field_event_start_date_time));
+            $info = $event->field_event_additional_info;  
+            
                 echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
+
                 //Date
-                echo '<p class="vf-summary__date">' . $newDate . '</p>';
+                echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
+                echo '<span style="text-transform: none;"><a href="https://seminarlist.embl.de/rest/calendar?seminarID=' . substr($event->field_event_unique_identifier, strpos($event->field_event_unique_identifier, "-") + 1) . '&origin=intranet.embl.de">Add to calendar</a></span></p>';
+
                 //Title
                 echo '<h3 class="vf-summary__title">';
+
                 //Link
                 if (!empty($event->field_event_more_information)) {
                     echo '<a href="'. $event->field_event_more_information . '" class="vf-summary__link">' . $event->title . '</a></h3>' ;
                 }
                 else {
                      echo ($event->title . '</h3>'); }
-                // Removes Seminar type from the string
-                echo '<p class="vf-summary__text">' . substr($event->field_event_additional_info, strpos($event->field_event_additional_info, ">") + 1) . '</p>';
+
+                // additional info field break down
+                echo '<p class="vf-summary__text" style="font-size: 16px;">'; 
+                 // show only speaker    
+                $speaker = substr($info, strpos($info, 'Speaker'));
+                $venue = $event->field_event_venue;
+                $venue = str_replace('<br />', '', $venue );
+                $venue = str_replace('\n', ', ', $venue );
+                echo '<span>' . strstr($speaker, '<br />', true) . ', ' . $venue . '</span><br>';
+                 // show only host
+                if (strpos($info, 'Host') !== false) {     
+                $host = substr($info, strpos($info, 'Host'));
+                echo '<span>' . strstr($host, 'Location', true);'</span><br>'; }
+                 // show location
+                $newinfo = str_replace('Location', 'Place', $info); 
+                echo '<span>' . substr($newinfo, strpos($newinfo, 'Place'));'</span></p>';
+
                 // Seminar type
-                echo '<p class="vf-summary__text | vf-text-heading--5 | type">' . strstr($event->field_event_additional_info, '<', true) . '</p>';
+                echo '<p class="vf-summary__text | vf-text-heading--5 | type">' . strstr($info, '<', true) . '</p>';
+
                 // Location
                 echo '<p class="vf-summary__location | location">' . $event->field_event_location . '</p>';
+
+                // Abstract
+                if (!empty($event->field_event_summary)) {
+                echo '<details class="vf-details | vf-u-padding__left--0" close>
+                <summary class="vf-details--summary" style="font-size: 16px;">Show abstract</summary>
+                ' . $event->field_event_summary . '</details>';
+                }
                 echo '</article>';
             }
         }
@@ -90,7 +119,7 @@ get_header();
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
         <p class="vf-summary__text">
-          No matching documents found
+          No matching seminars found
         </p>
       </article>
     </div>
@@ -107,7 +136,7 @@ get_header();
     </style>
 
     <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-      data-items-per-page="20" data-current-page="0" data-name="pagination1">
+      data-items-per-page="25" data-current-page="0" data-name="pagination1">
       <ul class="vf-pagination__list">
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">
