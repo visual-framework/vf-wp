@@ -82,6 +82,85 @@ add_action(
     );
   }
 
+
+  /**
+   * Action: `init`
+   * Register the custom post type
+   */
+
+add_action(
+  'init',
+  'peopleinit_register'
+);
+
+  function peopleinit_register() {
+
+    register_post_type('people', array(
+      'labels'              => people_get_labels(),
+      'description'         => __('People', 'vfwp'),
+      'public'              => true,
+      'hierarchical'        => true,
+      'exclude_from_search' => false,
+      'publicly_queryable'  => true,
+      'show_ui'             => true,
+      'show_in_menu'        => true,
+      'show_in_nav_menus'   => true,
+      'show_in_admin_bar'   => true,
+      'show_in_rest'        => true,
+      'rest_base'           => "people",
+      'menu_icon'           => 'dashicons-id-alt',
+      'capability_type'     => 'page',
+      'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
+      'has_archive'         => true,
+      'rewrite'             => array(
+        'slug' => 'people'
+      ),
+      'query_var'           => true,
+      'can_export'          => true,
+      'delete_with_user'    => false,
+      'taxonomies'          => array(  
+      ),
+    ));
+
+  }
+  /**
+   * Reference: `get_post_type_labels`
+   * https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/post.php
+   */
+  function people_get_labels() {
+    return array(
+      'name'                     => _x( 'People', 'Person type general name', 'vfwp' ),
+      'singular_name'            => _x( 'Person', 'Person type singular name', 'vfwp' ),
+      'add_new'                  => _x( 'Add New', 'Person', 'vfwp' ),
+      'add_new_item'             => __( 'Add New Person', 'vfwp' ),
+      'edit_item'                => __( 'Edit Person', 'vfwp' ),
+      'new_item'                 => __( 'New Person', 'vfwp' ),
+      'view_item'                => __( 'View Person', 'vfwp' ),
+      'view_items'               => __( 'View People', 'vfwp' ),
+      'search_items'             => __( 'Search People', 'vfwp' ),
+      'not_found'                => __( 'No People found.', 'vfwp' ),
+      'not_found_in_trash'       => __( 'No People found in Trash.', 'vfwp' ),
+      'parent_item_colon'        => __( 'Parent Page:', 'vfwp' ),
+      'all_items'                => __( 'All People', 'vfwp' ),
+      'archives'                 => __( 'Person Archives', 'vfwp' ),
+      'attributes'               => __( 'Person Attributes', 'vfwp' ),
+      'insert_into_item'         => __( 'Insert into Person', 'vfwp' ),
+      'uploaded_to_this_item'    => __( 'Uploaded to this Person', 'vfwp' ),
+      'featured_image'           => _x( 'Featured image', 'Person', 'vfwp' ),
+      'set_featured_image'       => _x( 'Set featured image', 'Person', 'vfwp' ),
+      'remove_featured_image'    => _x( 'Remove featured image', 'Person', 'vfwp' ),
+      'use_featured_image'       => _x( 'Use as featured image', 'Person', 'vfwp' ),
+      'filter_items_list'        => __( 'Filter People list', 'vfwp' ),
+      'items_list_navigation'    => __( 'People list navigation', 'vfwp' ),
+      'items_list'               => __( 'People list', 'vfwp' ),
+      'item_published'           => __( 'Person published.', 'vfwp' ),
+      'item_published_privately' => __( 'Person published privately.', 'vfwp' ),
+      'item_reverted_to_draft'   => __( 'Person reverted to draft.', 'vfwp' ),
+      'item_scheduled'           => __( 'Person scheduled.', 'vfwp' ),
+      'item_updated'             => __( 'Person updated.', 'vfwp' ),
+    );
+  }
+
   /**
    * Action: `init`
    * Register the custom post type
