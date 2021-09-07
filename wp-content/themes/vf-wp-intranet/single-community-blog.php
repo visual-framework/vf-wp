@@ -2,7 +2,6 @@
 
 $title = esc_html(get_the_title());
 $user_id = get_the_author_meta('ID');
-global $post;
 
 get_header();
 
@@ -33,12 +32,6 @@ get_header();
 
 <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
   <div class="vf-grid__col--span-2">   
-    <?php
-$key_1_value = get_post_meta( $post->ID, 'url', true);
-
-// Check if the custom field has a value.
-    echo ($key_1_value);
-    ?>
     <?php the_content(); ?>
     <hr class="vf-divider">
     <div class="vf-content">

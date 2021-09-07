@@ -88,27 +88,92 @@ function get_all_documents_posts() {
 	$published_posts = $count_posts->publish;
 	return $published_posts;
   }
- 
-  $json_feed = "https://www.embl.org/api/v1/people?page=0&items_per_page=100&source=contenthub";
+
+
+
+  function insert_people_posts_from_json(){
+
+  $json_feed = "https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=25";
   $json = file_get_contents($json_feed);
-  $obj = json_decode($json, true);
+  $people = json_decode($json, true);
 	
-  foreach($obj as $article_array){
-	$title2 = $article_array['full_name'];
-	$url = $article_array['url'];
+  foreach($people as $person){
+	$title = $person['full_name'];
+	$cpid = $person['cpid'];
+	$orcid = $person['orcid'];
+	$photo = $person['photo'];
+	$email = $person['email'];
+	$outstation = $person['outstation'];
+	$a = $person['telephones'];
+	$b = $person['positions'];
+	// var_dump($a[0]);
+	// echo count(array_keys($a[0]['name'], 'of'));
+	if (!empty($a[0])) {
+		$telephone = $person['telephones'][0]['telephone'];
+	}
+	if (!empty($b[0])) {
+	$positions_name_1  = $person['positions'][0]['name'];
+	$team_name_1  = $person['positions'][0]['team_name'];
+	$is_primary_1 = $person['positions'][0]['is_primary'];
+	}
+	if (!empty($b[1])) {
+	$positions_name_2  = $person['positions'][1]['name'];
+	$team_name_2  = $person['positions'][1]['team_name'];
+	$is_primary_2 = $person['positions'][1]['is_primary'];
+	}
+
+	if (!empty($b[2])) {
+	$positions_name_3  = $person['positions'][2]['name'];
+	$team_name_3  = $person['positions'][2]['team_name'];
+	$is_primary_3 = $person['positions'][2]['is_primary'];
+	}
+
+ 	if (!empty($b[3])) {
+	$positions_name_4  = $person['positions'][3]['name'];
+	$team_name_4  = $person['positions'][3]['team_name'];
+	$is_primary_4  = $person['positions'][3]['is_primary'];
+}
 		  // Check if already exists
 			  // Insert post
-			  if (!get_page_by_title($title2, 'OBJECT', 'community-blog') ){
+			  if (!get_page_by_title($title, 'OBJECT', 'people') ){
 			  $new_post = array(
-				  'post_title' => $title2,
-				  'post_content' => 'content here',
+				  'post_title' => $title,
+				  'post_name' => $cpid,
+				  'post_content' => '',
 				  'post_status' => 'publish',
 				  'post_author' => 1,
-				  'post_type' => 'community-blog',
+				  'post_type' => 'people',
 			  );
 			  // Insert post
 			  $post_id = wp_insert_post( $new_post );
-			  add_post_meta($post_id, 'url', $url);
-			}
+			  add_post_meta($post_id, 'cpid', $cpid);
+			  add_post_meta($post_id, 'orcid', $orcid);
+			  add_post_meta($post_id, 'photo', $photo);
+			  add_post_meta($post_id, 'email', $email);
+			  add_post_meta($post_id, 'outstation', $outstation);
+			  if (!empty($b[0])) {
+				add_post_meta($post_id, 'positions_name_1', $positions_name_1);
+			  add_post_meta($post_id, 'team_name_1', $team_name_1);
+			  add_post_meta($post_id, 'is_primary_1', $is_primary_1);
+			  }
+			  if (!empty($b[1])) {
+				add_post_meta($post_id, 'positions_name_2', $positions_name_2);
+			  add_post_meta($post_id, 'team_name_2', $team_name_2);
+			  add_post_meta($post_id, 'is_primary_2', $is_primary_2);
+			  }
+			  if (!empty($b[2])) {
+				add_post_meta($post_id, 'positions_name_3', $positions_name_3);
+			  add_post_meta($post_id, 'team_name_3', $team_name_3);
+			  add_post_meta($post_id, 'is_primary_3', $is_primary_3);
+			  }
+			  if (!empty($b[3])) {
+				add_post_meta($post_id, 'positions_name_4', $positions_name_4);
+			  add_post_meta($post_id, 'team_name_4', $team_name_4);
+			  add_post_meta($post_id, 'is_primary_4', $is_primary_4);
+			  }
+			  if (!empty($a[0])) {
 
-  }
+			  add_post_meta($post_id, 'telephone', $telephone);	}
+
+  } } }
+add_action('admin_head', 'insert_people_posts_from_json');
