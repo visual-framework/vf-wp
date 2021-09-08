@@ -89,9 +89,10 @@ function get_all_documents_posts() {
 	return $published_posts;
   }
 
-
-
+// create people directory from the API  
   function insert_people_posts_from_json(){
+	  // https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=25
+	  // https://dev.content.embl.org/api/v1/people-all-info?full_name=Szymon%20Kasprzyk
 
   $json_feed = "https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=25";
   $json = file_get_contents($json_feed);
@@ -106,16 +107,18 @@ function get_all_documents_posts() {
 	$outstation = $person['outstation'];
 	$a = $person['telephones'];
 	$b = $person['positions'];
+
 	// var_dump($a[0]);
-	// echo count(array_keys($a[0]['name'], 'of'));
 	if (!empty($a[0])) {
-		$telephone = $person['telephones'][0]['telephone'];
+	$telephone = $person['telephones'][0]['telephone'];
 	}
+
 	if (!empty($b[0])) {
 	$positions_name_1  = $person['positions'][0]['name'];
 	$team_name_1  = $person['positions'][0]['team_name'];
 	$is_primary_1 = $person['positions'][0]['is_primary'];
 	}
+
 	if (!empty($b[1])) {
 	$positions_name_2  = $person['positions'][1]['name'];
 	$team_name_2  = $person['positions'][1]['team_name'];
