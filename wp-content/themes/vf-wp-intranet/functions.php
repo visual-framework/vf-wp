@@ -94,9 +94,16 @@ function get_all_documents_posts() {
 	  // https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=25
 	  // https://dev.content.embl.org/api/v1/people-all-info?full_name=Szymon%20Kasprzyk
 
-  $json_feed = "https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=25";
-  $json = file_get_contents($json_feed);
-  $people = json_decode($json, true);
+  $json_feed_1 = "https://dev.content.embl.org/api/v1/people-all-info?full_name=Szymon%20Kasprzyk";
+  $json_feed_2 = "https://dev.content.embl.org/api/v1/people-all-info?full_name=Rainer%20Pepperkok";
+  $json_feed_3 = "https://dev.content.embl.org/api/v1/people-all-info?full_name=Ken%20Hawkins";
+  $json_content_1 = file_get_contents($json_feed_1);
+  $json_content_2 = file_get_contents($json_feed_2);
+  $json_content_3 = file_get_contents($json_feed_3);
+  $data_1 = json_decode($json_content_1, true);
+  $data_2 = json_decode($json_content_2, true);
+  $data_3 = json_decode($json_content_3, true);
+  $people = array_merge_recursive( $data_1, $data_2, $data_3 );
 	
   foreach($people as $person){
 	$title = $person['full_name'];
