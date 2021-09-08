@@ -51,14 +51,14 @@ function intranet_search_filter($query) {
 	if(!is_admin()) {
 		if($query->is_main_query() && $query->is_search()) {
 			// Check if $_GET['post_type'] is set
-			if(isset($_GET['post_type']) && $_GET['post_type'] != 'all') {
+			if(isset($_GET['post_type']) && $_GET['post_type'] != 'any') {
 				// Filter it just to be safe
 				$post_type = sanitize_text_field($_GET['post_type']);
 				// Set the post type
 				$query->set('post_type', $post_type);
       }
       else {
-        $query->set('post_type', array('post', 'page', 'documents', 'insites'));
+        $query->set('post_type', array('post', 'page', 'documents', 'insites', 'people', 'events'));
       }
 		}
 	}
