@@ -56,6 +56,7 @@ get_header();
       <div class="vf-grid vf-grid__col-2">
         <?php
             if (!empty($team_1)) { ?>
+           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -63,9 +64,11 @@ get_header();
                     </h3>
                 </div>
             </article>
+           </div> 
          <?php }?>
         <?php
             if (!empty($team_2)) { ?>
+           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -73,9 +76,11 @@ get_header();
                     </h3>
                 </div>
             </article>
+           </div> 
          <?php }?>
         <?php
             if (!empty($team_3)) { ?>
+           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -83,9 +88,11 @@ get_header();
                     </h3>
                 </div>
             </article>
+           </div> 
          <?php }?>
         <?php
             if (!empty($team_4)) { ?>
+           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -93,6 +100,7 @@ get_header();
                     </h3>
                 </div>
             </article>
+           </div> 
          <?php }?>
      </div>
   </div>

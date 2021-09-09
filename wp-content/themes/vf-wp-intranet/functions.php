@@ -89,101 +89,129 @@ function get_all_documents_posts() {
 	return $published_posts;
   }
 
+
+add_action('admin_head', 'insert_people_posts_from_json');
+
 // create people directory from the API  
-  function insert_people_posts_from_json(){
-	  // https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=25
-	  // https://dev.content.embl.org/api/v1/people-all-info?full_name=Szymon%20Kasprzyk
+function insert_people_posts_from_json(){
+	// https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=25
+	// https://dev.content.embl.org/api/v1/people-all-info?full_name=Szymon%20Kasprzyk
 
-  $json_feed_1 = "https://dev.content.embl.org/api/v1/people-all-info?full_name=Szymon%20Kasprzyk";
-  $json_feed_2 = "https://dev.content.embl.org/api/v1/people-all-info?full_name=Rainer%20Pepperkok";
-  $json_feed_3 = "https://dev.content.embl.org/api/v1/people-all-info?full_name=Ken%20Hawkins";
-  $json_content_1 = file_get_contents($json_feed_1);
-  $json_content_2 = file_get_contents($json_feed_2);
-  $json_content_3 = file_get_contents($json_feed_3);
-  $data_1 = json_decode($json_content_1, true);
-  $data_2 = json_decode($json_content_2, true);
-  $data_3 = json_decode($json_content_3, true);
-  $people = array_merge_recursive( $data_1, $data_2, $data_3 );
-	
-  foreach($people as $person){
-	$title = $person['full_name'];
-	$cpid = $person['cpid'];
-	$orcid = $person['orcid'];
-	$photo = $person['photo'];
-	$email = $person['email'];
-	$outstation = $person['outstation'];
-	$a = $person['telephones'];
-	$b = $person['positions'];
+$json_feed_1 = "https://dev.content.embl.org/api/v1/people-all-info?page=0&items_per_page=5";
+$json_content_1 = file_get_contents($json_feed_1);
+$data_1 = json_decode($json_content_1, true);
+$people = array_merge_recursive( $data_1);
+  
+foreach($people as $person){
+  $title = $person['full_name'];
+  $cpid = $person['cpid'];
+  $orcid = $person['orcid'];
+  $photo = $person['photo'];
+  $email = $person['email'];
+  $outstation = $person['outstation'];
+  $a = $person['telephones'];
+  $b = $person['positions'];
 
-	// var_dump($a[0]);
-	if (!empty($a[0])) {
-	$telephone = $person['telephones'][0]['telephone'];
-	}
+  // var_dump($a[0]);
+  if (!empty($a[0])) {
+  $telephone = $person['telephones'][0]['telephone'];
+  }
 
-	if (!empty($b[0])) {
-	$positions_name_1  = $person['positions'][0]['name'];
-	$team_name_1  = $person['positions'][0]['team_name'];
-	$is_primary_1 = $person['positions'][0]['is_primary'];
-	}
+  if (!empty($b[0])) {
+  $positions_name_1  = $person['positions'][0]['name'];
+  $team_name_1  = $person['positions'][0]['team_name'];
+  $is_primary_1 = $person['positions'][0]['is_primary'];
+  }
 
-	if (!empty($b[1])) {
-	$positions_name_2  = $person['positions'][1]['name'];
-	$team_name_2  = $person['positions'][1]['team_name'];
-	$is_primary_2 = $person['positions'][1]['is_primary'];
-	}
+  if (!empty($b[1])) {
+  $positions_name_2  = $person['positions'][1]['name'];
+  $team_name_2  = $person['positions'][1]['team_name'];
+  $is_primary_2 = $person['positions'][1]['is_primary'];
+  }
 
-	if (!empty($b[2])) {
-	$positions_name_3  = $person['positions'][2]['name'];
-	$team_name_3  = $person['positions'][2]['team_name'];
-	$is_primary_3 = $person['positions'][2]['is_primary'];
-	}
+  if (!empty($b[2])) {
+  $positions_name_3  = $person['positions'][2]['name'];
+  $team_name_3  = $person['positions'][2]['team_name'];
+  $is_primary_3 = $person['positions'][2]['is_primary'];
+  }
 
- 	if (!empty($b[3])) {
-	$positions_name_4  = $person['positions'][3]['name'];
-	$team_name_4  = $person['positions'][3]['team_name'];
-	$is_primary_4  = $person['positions'][3]['is_primary'];
+   if (!empty($b[3])) {
+  $positions_name_4  = $person['positions'][3]['name'];
+  $team_name_4  = $person['positions'][3]['team_name'];
+  $is_primary_4  = $person['positions'][3]['is_primary'];
 }
-		  // Check if already exists
-			  // Insert post
-			  if (!get_page_by_title($title, 'OBJECT', 'people') ){
-			  $new_post = array(
-				  'post_title' => $title,
-				  'post_name' => $cpid,
-				  'post_content' => '',
-				  'post_status' => 'publish',
-				  'post_author' => 1,
-				  'post_type' => 'people',
-			  );
-			  // Insert post
-			  $post_id = wp_insert_post( $new_post );
-			  add_post_meta($post_id, 'cpid', $cpid);
-			  add_post_meta($post_id, 'orcid', $orcid);
-			  add_post_meta($post_id, 'photo', $photo);
-			  add_post_meta($post_id, 'email', $email);
-			  add_post_meta($post_id, 'outstation', $outstation);
+	  $new_post = array(
+		  'post_title' => $title,
+		  'post_name' => $cpid,
+		  'post_content' => '',
+		  'post_status' => 'publish',
+		  'post_author' => 1,
+		  'post_type' => 'people',
+	  );
+		// Check if already exists
+			// Insert post
+			if (!get_page_by_title($title, 'OBJECT', 'people') ){
+			// Insert post
+			$post_id = wp_insert_post( $new_post );
+			add_post_meta($post_id, 'cpid', $cpid);
+			add_post_meta($post_id, 'orcid', $orcid);
+			add_post_meta($post_id, 'photo', $photo);
+			add_post_meta($post_id, 'email', $email);
+			add_post_meta($post_id, 'outstation', $outstation);
+			if (!empty($b[0])) {
+			add_post_meta($post_id, 'positions_name_1', $positions_name_1);
+			add_post_meta($post_id, 'team_name_1', $team_name_1);
+			add_post_meta($post_id, 'is_primary_1', $is_primary_1);
+			}
+			if (!empty($b[1])) {
+			add_post_meta($post_id, 'positions_name_2', $positions_name_2);
+			add_post_meta($post_id, 'team_name_2', $team_name_2);
+			add_post_meta($post_id, 'is_primary_2', $is_primary_2);
+			}
+			if (!empty($b[2])) {
+			add_post_meta($post_id, 'positions_name_3', $positions_name_3);
+			add_post_meta($post_id, 'team_name_3', $team_name_3);
+			add_post_meta($post_id, 'is_primary_3', $is_primary_3);
+			}
+			if (!empty($b[3])) {
+			add_post_meta($post_id, 'positions_name_4', $positions_name_4);
+			add_post_meta($post_id, 'team_name_4', $team_name_4);
+			add_post_meta($post_id, 'is_primary_4', $is_primary_4);
+			}
+			if (!empty($a[0])) {
+			add_post_meta($post_id, 'telephone', $telephone);	}
+}
+		  else {			  
+			  $post_id = wp_update_post( $new_post );
+			  update_post_meta($post_id, 'cpid', $cpid);
+			  update_post_meta($post_id, 'orcid', $orcid);
+			  update_post_meta($post_id, 'photo', $photo);
+			  update_post_meta($post_id, 'email', $email);
+			  update_post_meta($post_id, 'outstation', $outstation);
 			  if (!empty($b[0])) {
-				add_post_meta($post_id, 'positions_name_1', $positions_name_1);
-			  add_post_meta($post_id, 'team_name_1', $team_name_1);
-			  add_post_meta($post_id, 'is_primary_1', $is_primary_1);
+			  update_post_meta($post_id, 'positions_name_1', $positions_name_1);
+			  update_post_meta($post_id, 'team_name_1', $team_name_1);
+			  update_post_meta($post_id, 'is_primary_1', $is_primary_1);
 			  }
 			  if (!empty($b[1])) {
-				add_post_meta($post_id, 'positions_name_2', $positions_name_2);
-			  add_post_meta($post_id, 'team_name_2', $team_name_2);
-			  add_post_meta($post_id, 'is_primary_2', $is_primary_2);
+			  update_post_meta($post_id, 'positions_name_2', $positions_name_2);
+			  update_post_meta($post_id, 'team_name_2', $team_name_2);
+			  update_post_meta($post_id, 'is_primary_2', $is_primary_2);
 			  }
 			  if (!empty($b[2])) {
-				add_post_meta($post_id, 'positions_name_3', $positions_name_3);
-			  add_post_meta($post_id, 'team_name_3', $team_name_3);
-			  add_post_meta($post_id, 'is_primary_3', $is_primary_3);
+			  update_post_meta($post_id, 'positions_name_3', $positions_name_3);
+			  update_post_meta($post_id, 'team_name_3', $team_name_3);
+			  update_post_meta($post_id, 'is_primary_3', $is_primary_3);
 			  }
 			  if (!empty($b[3])) {
-				add_post_meta($post_id, 'positions_name_4', $positions_name_4);
-			  add_post_meta($post_id, 'team_name_4', $team_name_4);
-			  add_post_meta($post_id, 'is_primary_4', $is_primary_4);
+			  update_post_meta($post_id, 'positions_name_4', $positions_name_4);
+			  update_post_meta($post_id, 'team_name_4', $team_name_4);
+			  update_post_meta($post_id, 'is_primary_4', $is_primary_4);
 			  }
 			  if (!empty($a[0])) {
+			  update_post_meta($post_id, 'telephone', $telephone);	}
 
-			  add_post_meta($post_id, 'telephone', $telephone);	}
+}
+} }
 
-  } } }
-add_action('admin_head', 'insert_people_posts_from_json');
+?>
