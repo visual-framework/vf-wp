@@ -181,8 +181,8 @@ foreach($people as $person){
 			if (!empty($a[0])) {
 			add_post_meta($post_id, 'telephone', $telephone);	}
 }
-		  else {			  
-			  $post_id = wp_update_post( $new_post );
+		  else 
+			  $post_id = get_the_ID();			  
 			  update_post_meta($post_id, 'cpid', $cpid);
 			  update_post_meta($post_id, 'orcid', $orcid);
 			  update_post_meta($post_id, 'photo', $photo);
@@ -211,7 +211,7 @@ foreach($people as $person){
 			  if (!empty($a[0])) {
 			  update_post_meta($post_id, 'telephone', $telephone);	}
 
-}
+
 } }
 
 ?>
