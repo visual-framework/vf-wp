@@ -137,7 +137,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
   $raw_content_decoded = json_decode($raw_content, true);
   $people_data = $raw_content_decoded['rows'];
   $names_array = array_column($people_data, 'full_name');
-
+echo var_dump($names_array);
   if (!empty($people_data) && is_array($people_data)) {
   foreach ($people_data as $key => $person) {
   $title = $person['full_name'];
@@ -145,6 +145,8 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
   $orcid = $person['orcid'];
   $photo = $person['photo'];
   $email = $person['email'];
+  $biography = $person['biography'];
+  $room = $person['room'];
   $bdr_id = $person['bdr_public_id'];
   $outstation = $person['outstation'];
   $telephones = $person['telephones'];
@@ -189,6 +191,8 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     add_post_meta($post_id, 'orcid', $orcid);
     add_post_meta($post_id, 'photo', $photo);
     add_post_meta($post_id, 'email', $email);
+    add_post_meta($post_id, 'biography', $biography);
+    add_post_meta($post_id, 'room', $room);
     add_post_meta($post_id, 'outstation', $outstation);
     if (!empty($positions[0])) {
     add_post_meta($post_id, 'positions_name_1', $positions_name_1);
@@ -223,6 +227,8 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     update_post_meta($existing_post_id, 'orcid', $orcid);
     update_post_meta($existing_post_id, 'photo', $photo);
     update_post_meta($existing_post_id, 'email', $email);
+    update_post_meta($existing_post_id, 'room', $room);
+    update_post_meta($existing_post_id, 'biography', $biography);
     update_post_meta($existing_post_id, 'outstation', $outstation);
     if (!empty($positions[0])) {
     update_post_meta($existing_post_id, 'positions_name_1', $positions_name_1);
@@ -247,19 +253,19 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     if (!empty($telephones[0])) {
     update_post_meta($existing_post_id, 'telephone', $telephone);
     }     
+    // compare two arrays and trash post if the title doesn't exists in the API
+    // $people_array = array();
+    // $people_posts = get_posts( array( 'post_type' => 'people', 'nopaging' => true) ); 
+    //   foreach ($people_posts as $people_post):
+    //     $people_array[] = $people_post->post_title;
+    //     $result = array_diff($people_array, $names_array);   
+    //       if (in_array($people_post->post_title, $result)) {
+    //         wp_trash_post( $people_post->ID );
+    //       }
+    //   endforeach; 
   }
 }
 
-// compare two arrays and trash post if the title doesn't exists in the API
-$people_array = array();
-$people_posts = get_posts( array( 'post_type' => 'people', 'nopaging' => true) ); 
-  foreach ($people_posts as $people_post):
-    $people_array[] = $people_post->post_title;
-    $result = array_diff($people_array, $names_array);   
-      if (in_array($people_post->post_title, $result)) {
-        wp_trash_post( $people_post->ID );
-      }
-  endforeach; 
  }
 }
 
