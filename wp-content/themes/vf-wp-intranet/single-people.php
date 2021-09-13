@@ -6,13 +6,15 @@ $orcid = get_field('orcid');
 $photo = get_field('photo');
 $email = get_field('email');
 $position = get_field('positions_name_1');
+$outstation = get_field('outstation');
+$room = get_field('room');
+$biography = get_field('biography');
 $team_1 = get_field('team_name_1');
 $team_2 = get_field('team_name_2');
 $team_3 = get_field('team_name_3');
 $team_4 = get_field('team_name_4');
 $telephone = get_field('telephone');
 $title = get_post_meta( $post->ID, 'full_name', true);
-
 get_header();
 
 ?>
@@ -33,13 +35,21 @@ get_header();
           class="vf-profile__link vf-profile__link--secondary"><?php echo esc_attr($email); ?></a>
       </p>
       <p class="vf-profile__phone">
-        <a href="tel:+49 6221 387-8443"
+        <a href="<?php echo esc_attr($telephone); ?>"
           class="vf-profile__link vf-profile__link--secondary"><?php echo esc_attr($telephone); ?></a>
-      </p>
+        </p>
+        <?php if (!empty($room)) { ?>
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0">
+        <span>Room:</span> <?php echo esc_html($room); ?>
+        </p>
+        <?php } ?>
+      <p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200"><?php echo esc_html($outstation); ?></p>
+      <?php if (!empty($orcid)) { ?>
       <p class="vf-profile__uuid">
       <span>ORCID:</span>
       <a class="vf-profile__link vf-profile__link--secondary" href="https://europepmc.org/authors/<?php echo $orcid; ?>"><?php echo esc_html($orcid); ?></a>
     </p>
+    <?php } ?>
     </article>
   </div>
   <div>
@@ -108,6 +118,22 @@ get_header();
     <!-- empty -->
   </div>
 </section>
+
+<?php if (!empty($biography)) { ?>
+<!-- Biography -->
+<section class="embl-grid embl-grid--has-centered-content">
+<div class="vf-section-header">
+  <h2 class="vf-section-header__heading">Biography</h2>
+</div>
+  <div class="vf-content">
+    <p><?php echo esc_html($biography); ?></p>
+  </div>
+  <div>
+    <!-- empty -->
+  </div>
+</section>
+<?php } ?>
+
 
 <!-- PUBLICATIONS -->
 <section class="embl-grid embl-grid--has-centered-content">
