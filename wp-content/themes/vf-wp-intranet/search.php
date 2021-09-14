@@ -51,7 +51,7 @@ $total_results = $wp_query->found_posts;
   </div>
   <div>
   <div class="vf-content">
-  <p><?php echo $total_results; ?> result(s) found for "<?php echo esc_html(get_search_query()); ?>""</p>
+  <p><?php echo $total_results; ?> result(s) found for "<?php echo esc_html(get_search_query()); ?>"</p>
 
     <?php
         if ( have_posts() ) {

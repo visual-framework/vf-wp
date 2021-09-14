@@ -56,7 +56,7 @@ $close_wrap,
 
 else { ?>
 
-<section class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--0">
   <div></div>
   <div>
     <?php
