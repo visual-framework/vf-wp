@@ -52,63 +52,17 @@ $close_wrap,
 
 <?php include(locate_template('partials/popular-container.php', false, false)); ?>
 
+<?php include(locate_template('partials/insites-container.php', false, false)); ?>
 
-<section class="vf-summary-container" data-vf-google-analytics-region="news">
-<div class="vf-section-header">
-  <a href="/internal-information/insites" class="vf-section-header__heading vf-section-header__heading--is-link">INsites<svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path></svg></a>
-    <p class="vf-section-header__text">EMBL's internal news</p>
-</div>
+<hr class="vf-divider">
 
-<div class="vf-section-content | vf-u-margin__top--400">
-  <div class="vf-grid vf-grid__col-4">
-  <?php $mainloop = new WP_Query (array('post_type' => 'insites', 'posts_per_page' => 4)); 
-    while ($mainloop->have_posts()) : $mainloop->the_post(); ?>
-<?php include(locate_template('partials/vf-summary-insites.php', false, false)); ?>
+<?php include(locate_template('partials/seminars-container.php', false, false)); ?>
 
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>
-</div>
-</section>
+<hr class="vf-divider">
 
+<?php include(locate_template('partials/events-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/community-blog-container.php', false, false)); ?>
-
-<section class="vf-summary-container | embl-grid">
-  <div class="vf-section-header">
-    <a href="/internal-information/events" class="vf-section-header__heading vf-section-header__heading--is-link">Events <svg class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path></svg></a>
-      <p class="vf-section-header__text">EMBL's internal events</p>
-  </div>
-  <div class="vf-grid vf-grid__col-3">
-    <?php
-          $eventsLoop = new WP_Query (array( 
-            'post_type' => 'events',
-            'post_per_page' => 3,
-            'order' => 'ASC', 
-            'orderby' => 'meta_value_num',
-            'meta_key' => 'vf_event_internal_start_date',
-            'meta_query' => array(
-              array(
-                  'key' => 'vf_event_internal_start_date',
-                  'value' => $current_date,
-                  'compare' => '>=',
-                  'type' => 'numeric'
-              ),
-              array(
-                'key' => 'vf_event_internal_start_date',
-                'value' => date('Ymd', strtotime('now')),
-                'type' => 'numeric',
-                'compare' => '>=',
-                ) 
-              ) ));
-            $temp_query = $wp_query;
-            $wp_query   = NULL;
-            $wp_query   = $eventsLoop;
-            $current_month = ""; ?>
-            <?php while ($eventsLoop->have_posts()) : $eventsLoop->the_post();?>
-            <?php
-           include(locate_template('partials/vf-summary-events.php', false, false)); ?>
-            <?php endwhile;?>  </div>
-</section> 
 
 <?php 
 
@@ -119,7 +73,7 @@ $vf_theme->the_content();
 <section class="vf-hero | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-04-scaled.jpg');">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
   <h2 class="vf-hero__heading">
-    <a class="vf-hero__heading_link" href="https://www.embl.org/topics/coronavirus/">COVID-19 updates</a>
+    <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information/coronavirus/">COVID-19 updates</a>
   </h2>
     <p class="vf-hero__text">
       <a class="vf-hero__link" href="https://www.embl.org/internal-information/coronavirus/">Latest updates on Coronavirus for EMBL staff
