@@ -137,7 +137,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
   $raw_content_decoded = json_decode($raw_content, true);
   $people_data = $raw_content_decoded['rows'];
   $names_array = array_column($people_data, 'full_name');
-echo var_dump($names_array);
+  
   if (!empty($people_data) && is_array($people_data)) {
   foreach ($people_data as $key => $person) {
   $title = $person['full_name'];

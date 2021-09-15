@@ -18,12 +18,12 @@
         }
         $body = wp_remote_retrieve_body( $request );
         $content = json_decode( $body );
-        $data = array_slice($content, 0, 3);
-
+        
         function sortByStartDate($param1, $param2) {
             return strcmp($param1->field_event_start_date_time, $param2->field_event_start_date_time);
         }
-        usort($data, "sortByStartDate");
+        usort($content, "sortByStartDate");
+        $data = array_slice($content, 0, 3);
 
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
