@@ -30,7 +30,7 @@
             $newDate = date("l, j F Y, g:i a", strtotime($event->field_event_start_date_time));
             $info = $event->field_event_additional_info;  
             
-                echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
+                echo '<article class="vf-summary vf-summary--event">';
 
                 //Date
                 echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
