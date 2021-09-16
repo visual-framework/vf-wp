@@ -170,6 +170,7 @@ function allowed_block_types( $allowed_blocks ) {
     'acf/vf-container-ebi-global-footer',
     'acf/vf-container-global-footer',
     'acf/vf-container-wp-hero-group',
+    'acf/vf-container-wp-hero-secondary',
     'acf/vf-container-banner',
     'acf/vf-container-embl-news',
     'acf/vf-container-wp-breadcrumbs-intranet ',
