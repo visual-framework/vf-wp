@@ -5,7 +5,7 @@
   </div>
   <div>
   <div class="vf-tabs">
-    <ul class="vf-tabs__list" data-vf-js-tabs>
+    <ul class="vf-tabs__list | vf-u-margin__top--0" data-vf-js-tabs>
         <li class="vf-tabs__item">
             <a class="vf-tabs__link" href="#vf-tabs__section--1" data-vf-js-location-nearest-activation-target="barcelona">EMBL Barcelona</a>
         </li>

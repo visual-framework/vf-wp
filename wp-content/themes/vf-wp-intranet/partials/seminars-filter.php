@@ -2,7 +2,7 @@
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-    <label class="vf-form__label">Location</label>
+  <legend class="vf-form__legend">Location</legend>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="location-5" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
@@ -47,7 +47,7 @@
     </div>
   </fieldset>
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-    <label class="vf-form__label">Type</label>
+  <legend class="vf-form__legend">Type</legend>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-5" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
@@ -102,7 +102,7 @@
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="One-EMBL Faculty Seminar"
         data-id="name-faculty-seminar" class="vf-form__checkbox">
-      <label for="type-7" class="vf-form__label">Faculty Seminar</label>
+      <label for="type-7" class="vf-form__label">One-EMBL Faculty Seminar</label>
     </div>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-17" type="checkbox" data-jplist-control="checkbox-text-filter"

@@ -43,7 +43,7 @@ class VF_Events_Register {
       'menu_position'       => 20,
       'menu_icon'           => 'dashicons-calendar',
       'capability_type'     => 'page',
-      'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
+      'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'revisions'),
       'has_archive'         => true,
       'rewrite'             => array(
         'slug' => 'events'

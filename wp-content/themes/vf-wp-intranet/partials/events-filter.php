@@ -20,7 +20,7 @@ $topic_terms = get_terms(
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-    <label class="vf-form__label">EMBL site</label>
+  <legend class="vf-form__legend">EMBL site</legend>
     <?php
     foreach($embl_location_terms as $term) {
       ?>
