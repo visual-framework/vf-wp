@@ -35,10 +35,11 @@ class VF_Templates {
     if (is_singular( 'vf_event' )) {
       return false;
     }
+    // industry theme templates
     if (is_singular( 'industry_event' )) {
       return false;
     }
-    if (is_page_template( 'template-industry-workshop-archive.php' ) || is_page_template( 'template-industry-quarterly-meeting-archive.php' )) {
+    if (is_page_template(array( 'template-industry-workshop-archive.php', 'template-industry-quarterly-meeting-archive.php', 'template-industry-members-area.php', 'template-industry-quarterly-meeting.php', 'template-industry-workshops.php', 'template-hero-secondary.php'  ))) {
       return false;
     }
     
