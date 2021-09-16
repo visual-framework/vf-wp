@@ -219,6 +219,26 @@ function vf_wp_documents__pre_get_posts($query) {
   $query->set('posts_per_page', -1);
 }
 
+  /**
+   * Add metadata to REST API
+   */
+
+  function register_display_api_field()
+{
+    register_rest_field('document', 'field_target_display',
+        array(
+            'get_callback' => 'get_display_api_field',
+            'schema' => null,
+        )
+    );
+}
+
+add_action('rest_api_init', 'register_display_api_field');
+
+function get_display_api_field($post)
+{
+    return get_field('field_target_display', $post['id']);
+}
 
 
 ?>
