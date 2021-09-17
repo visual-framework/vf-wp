@@ -1,47 +1,48 @@
 <?php
 
-$title = get_the_title($post->post_parent);
+$title = get_the_title();
 
-$start_date = get_field('vf_event_start_date', $post->post_parent);
+$start_date = get_field('vf_event_start_date');
 $start = DateTime::createFromFormat('j M Y', $start_date);
 
-$end_date = get_field('vf_event_end_date', $post->post_parent);
+$end_date = get_field('vf_event_end_date');
 $end = DateTime::createFromFormat('j M Y', $end_date);
 
-$location = get_field('vf_event_location', $post->post_parent);
-$time = get_field('vf_event_start_time', $post->post_parent);
-$venue = get_field('vf_event_venue', $post->post_parent);
+$location = get_field('vf_event_location');
+$other_location = get_field('vf_event_other_location');
+$time = get_field('vf_event_start_time');
+$venue = get_field('vf_event_venue');
 
-$abstract_closing = get_field('vf_event_submission_closing', $post->post_parent);
-$application_closing = get_field('vf_event_application_deadline', $post->post_parent);
-$registration_closing = get_field('vf_event_registration_closing', $post->post_parent);
+$abstract_closing = get_field('vf_event_submission_closing');
+$application_closing = get_field('vf_event_application_deadline');
+$registration_closing = get_field('vf_event_registration_closing');
 
-$event_topic = get_field('vf_event_event_topic', $post->post_parent);
+$event_topic = get_field('vf_event_event_topic');
 
-$registration_link = get_field('vf_event_registration_link', $post->post_parent);
-$contact = get_field('vf_event_contact', $post->post_parent);
-$contact_name = get_field('vf_event_contact_name', $post->post_parent);
-$hashtag = get_field('vf_event_hashtag', $post->post_parent);
-$abstract_link = get_field('vf_event_abstract_link', $post->post_parent);
-$poster_file = get_field('vf_event_poster_file', $post->post_parent);
-$abstract_button = get_field('vf_event_abstract_submission_button_text', $post->post_parent);
+$registration_link = get_field('vf_event_registration_link');
+$contact = get_field('vf_event_contact');
+$contact_name = get_field('vf_event_contact_name');
+$hashtag = get_field('vf_event_hashtag');
+$abstract_link = get_field('vf_event_abstract_link');
+$poster_file = get_field('vf_event_poster_file');
+$abstract_button = get_field('vf_event_abstract_submission_button_text');
 $abstract_button = ucfirst(strtolower($abstract_button));
-$register_button = get_field('vf_event_registration_button_text', $post->post_parent);
+$register_button = get_field('vf_event_registration_button_text');
 $register_button = ucfirst(strtolower($register_button));
-$info_text = get_field('vf_event_info_text', $post->post_parent);
-$registration_type = get_field('vf_event_registration_type', $post->post_parent);
+$info_text = get_field('vf_event_info_text');
+$registration_type = get_field('vf_event_registration_type');
 
 $social_url = get_the_permalink();
 
 
-$logo_image = get_field('vf_event_logo', $post->post_parent);
+$logo_image = get_field('vf_event_logo');
 $logo_image = wp_get_attachment_image($logo_image['ID'], 'medium', false, array(
     'style'    => 'max-height: 95px; width: auto;',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
 
-$poster_image = get_field('vf_event_poster', $post->post_parent);
+$poster_image = get_field('vf_event_poster');
 $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, array(
     'style'    => 'max-width: 175px; height: auto; border: 1px solid #d0d0ce',
     'loading'  => 'lazy',
@@ -52,7 +53,6 @@ $now = new DateTime();
 $application_date = new DateTime($application_closing);
 $registration_date = new DateTime($registration_closing);
 $abstract_date = new DateTime($abstract_closing);
-
 ?>
 
 <div>
@@ -67,7 +67,6 @@ $abstract_date = new DateTime($abstract_closing);
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
       <span class="vf-u-text-color--grey">
         <?php 
-
       // Event dates
       if ( ! empty($start_date)) {
         if ($end_date) { 
@@ -83,9 +82,18 @@ $abstract_date = new DateTime($abstract_closing);
         ?>
       </span>
     </p>
-    <?php if ( ! empty($location)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span
-        class="vf-u-text-color--grey"><?php echo esc_html($location); ?></span></p>
+    <?php 
+    if (!empty($location)) { ?>
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span class="vf-u-text-color--grey">
+        <?php
+        if (!empty($other_location)) {
+        echo esc_html($other_location); 
+        }
+        else {
+          echo esc_html($location);
+        } ?>
+    </span>
+    </p>
     <?php } ?>
 
     <?php if ( ! empty($time)) { ?>
@@ -104,8 +112,7 @@ $abstract_date = new DateTime($abstract_closing);
     <?php } ?>
 
     <?php if ( ! empty($abstract_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span
-        class="vf-u-text-color--grey"> <?php if ($abstract_date < $now) {
+    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if ($abstract_date < $now) {
           echo 'Closed';
         }  
         else {
@@ -114,13 +121,9 @@ $abstract_date = new DateTime($abstract_closing);
       ?></span></p>
     <?php } 
     
-    ?>
-
-    <?php 
     /* Application date
     if ( ! empty($application_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span
-        class="vf-u-text-color--grey">
+    <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span class="vf-u-text-color--grey">
         <?php if ($application_date < $now) {
           echo 'Closed';
         }  
@@ -132,8 +135,7 @@ $abstract_date = new DateTime($abstract_closing);
     <?php } 
     // Show info text
             else if (!empty($info_text)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span
-        class="vf-u-text-color--grey">
+    <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span class="vf-u-text-color--grey">
         <?php echo esc_html($info_text); ?>
       </span></p>
     <?php  }
@@ -142,12 +144,12 @@ $abstract_date = new DateTime($abstract_closing);
     // Registration dates
     if ( ! empty($registration_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>
-    <?php if ($registration_type == 'registration') { ?>
-     Registration:
-    <?php } else if ($registration_type == 'application'){ ?>
-     Application:
-    <?php  } ?>
-    </span> <span class="vf-u-text-color--grey">
+        <?php if ($registration_type == 'registration') { ?>
+        Registration:
+        <?php } else if ($registration_type == 'application'){ ?>
+        Application:
+        <?php  } ?>
+      </span> <span class="vf-u-text-color--grey">
         <?php if ($registration_date < $now) {
           echo 'Closed';
         }  
@@ -155,18 +157,18 @@ $abstract_date = new DateTime($abstract_closing);
           echo esc_html($registration_closing);
         } ?>
       </span></p>
-      <?php } 
+    <?php } 
     // Show info text
     else if (!empty($info_text)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>
-    <?php if ($registration_type == 'registration') { ?>
-     Registration:
-    <?php } else if ($registration_type == 'application'){ ?>
-     Application:
-    <?php  } ?>
-     <span class="vf-u-text-color--grey">
-        <?php echo esc_html($info_text); ?>
-      </span></p>
+        <?php if ($registration_type == 'registration') { ?>
+        Registration:
+        <?php } else if ($registration_type == 'application'){ ?>
+        Application:
+        <?php  } ?>
+        <span class="vf-u-text-color--grey">
+          <?php echo esc_html($info_text); ?>
+        </span></p>
     <?php  }
     ?>
 
@@ -198,25 +200,26 @@ $abstract_date = new DateTime($abstract_closing);
 
     // Organisers
     if( have_rows('vf_event_organisers_event_template') ): ?>
-      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organisers: </span></p>
-      <?php
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organisers: </span></p>
+    <?php
       while( have_rows('vf_event_organisers_event_template') ) : the_row();
         $organiser_name = get_sub_field('vf_event_organisers_name');
         $organiser_affiliation = get_sub_field('vf_event_organisers_affiliation'); ?>
-        <ul class="vf-list vf-u-margin__bottom--sm">
-					<li class="vf-list__item vf-u-margin--0 vf-u-margin__top--md">
-            <?php echo esc_html($organiser_name); ?>
-						<br>
-						<span class="vf-text-body vf-text-body--5 vf-u-text-color--grey" style="text-transform: uppercase;"><?php echo esc_html($organiser_affiliation); ?>
-						</span>
-					</li>
+    <ul class="vf-list vf-u-margin__bottom--sm">
+      <li class="vf-list__item vf-u-margin--0 vf-u-margin__top--md">
+        <?php echo esc_html($organiser_name); ?>
+        <br>
+        <span class="vf-text-body vf-text-body--5 vf-u-text-color--grey"
+          style="text-transform: uppercase;"><?php echo esc_html($organiser_affiliation); ?>
+        </span>
+      </li>
       <?php
       endwhile; ?>
-      </ul>
-      <hr class="vf-divider | vf-u-margin__bottom--400">
-      <?php
-  else :
-  endif;
+    </ul>
+    <hr class="vf-divider | vf-u-margin__bottom--400">
+    <?php
+    else :
+    endif;
 
     // Contact
     if ( ! empty($contact)) { ?>
@@ -237,12 +240,8 @@ $abstract_date = new DateTime($abstract_closing);
         </a>
       </div>
       <?php }
-
       include( plugin_dir_path( __FILE__ ) . './social-media-icons.php'); 
-
       ?>
-
     </div>
   </div>
-
 </div>
