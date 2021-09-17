@@ -83,8 +83,8 @@ get_header();
 
                 // additional info field break down
                 echo '<p class="vf-summary__text" style="font-size: 16px;">'; 
-                 // show only speaker    
-                $speaker = substr($info, strpos($info, 'Speaker'));
+                 // show only speaker
+                $speaker = substr($info, strpos($info, 'Speaker:'));
                 $venue = $event->field_event_venue;
                 $venue = str_replace('<br />', '', $venue );
                 $venue = str_replace('\n', ', ', $venue );

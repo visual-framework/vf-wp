@@ -38,7 +38,10 @@ $size = get_field('size');
     <?php }
 
     else { ?>
-    <h3 class="vf-profile__title">
+    <h3 class="vf-profile__title"
+    <?php if ($layout == 'block') { ?>
+       style="text-align: center;"
+       <?php } ?>>
         <?php echo $name; ?>
     </h3>
     <?php } ?>

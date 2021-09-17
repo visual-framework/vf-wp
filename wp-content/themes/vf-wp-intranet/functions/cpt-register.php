@@ -310,7 +310,7 @@ function vf_wp_intranet_blog__init() {
     'menu_position'       => 20,
     'menu_icon'           => 'dashicons-groups',
     'capability_type'     => 'page',
-    'supports'            => array('title', 'editor', 'revisions', 'trackbacks', 'author', 'excerpt', 'thumbnail'),
+    'supports'            => array('title', 'editor', 'revisions', 'author', 'excerpt', 'thumbnail'),
     'has_archive'         => true,
     'rewrite'             => array(
       'slug'       => 'community-blog',
@@ -393,7 +393,7 @@ function vf_wp_intranet_events__init() {
     'menu_position'       => 20,
     'menu_icon'           => 'dashicons-calendar',
     'capability_type'     => 'page',
-    'supports'            => array('title', 'editor', 'page-attributes', 'excerpt'),
+    'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'revisions', 'thumbnail'),
     'has_archive'         => true,
     'rewrite'             => array(
       'slug' => 'events'
