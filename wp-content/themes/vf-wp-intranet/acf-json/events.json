@@ -149,6 +149,25 @@
             "allow_null": 0
         },
         {
+            "key": "field_614440f6688ca",
+            "label": "Other location",
+            "name": "vf_event_internal_other_location",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_613209352a15b",
             "label": "Venue",
             "name": "vf_event_internal_venue",
@@ -406,30 +425,6 @@
             "endpoint": 0
         },
         {
-            "key": "field_613209352a6f7",
-            "label": "Hero image",
-            "name": "vf_event_internal_hero",
-            "type": "image",
-            "instructions": "Recommended size: 1200 x 400 px",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
             "key": "field_61321361fbf8e",
             "label": "Has a page",
             "name": "vf_event_internal_has_page",
@@ -465,5 +460,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Internal information event post type"
+    "description": "Internal information event post type",
+    "modified": 1631863759
 }

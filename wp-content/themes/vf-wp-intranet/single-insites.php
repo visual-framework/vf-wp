@@ -51,9 +51,9 @@ get_header();
   </div>
 
   <div class="vf-content | vf-u-padding__bottom--800">
-    <h1 class="vf-text vf-text-heading--1"><?php the_title(); ?></h1>
-    <p class="vf-lede | vf-u-padding__top--md | vf-u-padding__bottom--xxl">
-      <?php echo get_post_meta($post->ID, 'ells_article_intro', true); ?>
+    <h1><?php the_title(); ?></h1>
+    <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800">
+      <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
     </p>
     <?php if ( $show == '1' ) {} //not displaying
       else { ?>
