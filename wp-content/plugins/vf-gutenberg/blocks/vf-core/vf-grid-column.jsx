@@ -5,8 +5,7 @@ import React, {useEffect, useCallback} from 'react';
 import {
   InnerBlocks,
   InspectorControls,
-  // TODO: replace with `useBlockProps` hook in WP 5.6
-  __experimentalBlock as ExperimentalBlock
+  useBlockProps
 } from '@wordpress/block-editor';
 import {PanelBody, RangeControl} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -42,12 +41,9 @@ settings.save = (props) => {
   if (Number.isInteger(span) && span > 1) {
     classes.push(`vf-grid__col--span-${span}`);
   }
-  const rootAttr = {};
-  if (classes.length) {
-    rootAttr.className = classes.join(' ');
-  }
+  const blockProps = useBlockProps.save({ className: classes.join(' ') });
   return (
-    <div {...rootAttr}>
+    <div {...blockProps}>
       <InnerBlocks.Content />
     </div>
   );
@@ -95,7 +91,6 @@ settings.edit = (props) => {
     [span, clientId, rootClientId]
   );
 
-  const rootAttr = {};
   const classes = [];
 
   if (hasSpanSupport) {
@@ -104,9 +99,7 @@ settings.edit = (props) => {
     }
   }
 
-  if (classes.length) {
-    rootAttr.className = classes.join(' ');
-  }
+  const blockProps = useBlockProps.save({ className: classes.join(' ') });
 
   return (
     <>
@@ -126,7 +119,7 @@ settings.edit = (props) => {
           </PanelBody>
         </InspectorControls>
       )}
-      <ExperimentalBlock.div {...rootAttr}>
+      <div {...blockProps}>
         <InnerBlocks
           templateLock={false}
           renderAppender={
@@ -135,7 +128,7 @@ settings.edit = (props) => {
               : () => <InnerBlocks.ButtonBlockAppender />
           }
         />
-      </ExperimentalBlock.div>
+      </div>
     </>
   );
 };
