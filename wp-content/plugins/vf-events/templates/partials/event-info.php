@@ -84,27 +84,27 @@ $abstract_date = new DateTime($abstract_closing);
       </span>
     </p>
     <?php if ( ! empty($location)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Location:</span> <span
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span
         class="vf-u-text-color--grey"><?php echo esc_html($location); ?></span></p>
     <?php } ?>
 
     <?php if ( ! empty($time)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Time:</span> <span
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Time:</span> <span
         class="vf-u-text-color--grey"><?php echo esc_html($time); ?></span></p>
     <?php } ?>
 
     <?php if ( ! empty($venue)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Venue:</span> <span
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Venue:</span> <span
         class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
     <?php } ?>
 
     <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Deadline(s):</span></p>
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Deadline(s):</span></p>
     <?php } ?>
 
     <?php if ( ! empty($abstract_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Abstract submission:</span> <span
+    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span
         class="vf-u-text-color--grey"> <?php if ($abstract_date < $now) {
           echo 'Closed';
         }  
@@ -119,7 +119,7 @@ $abstract_date = new DateTime($abstract_closing);
     <?php 
     /* Application date
     if ( ! empty($application_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Application:</span> <span
+    <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span
         class="vf-u-text-color--grey">
         <?php if ($application_date < $now) {
           echo 'Closed';
@@ -132,7 +132,7 @@ $abstract_date = new DateTime($abstract_closing);
     <?php } 
     // Show info text
             else if (!empty($info_text)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>Application:</span> <span
+    <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span
         class="vf-u-text-color--grey">
         <?php echo esc_html($info_text); ?>
       </span></p>
@@ -158,7 +158,7 @@ $abstract_date = new DateTime($abstract_closing);
       <?php } 
     // Show info text
     else if (!empty($info_text)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span>
+    <p class="vf-text-body vf-text-body--3"><span>
     <?php if ($registration_type == 'registration') { ?>
      Registration:
     <?php } else if ($registration_type == 'application'){ ?>
@@ -220,7 +220,7 @@ $abstract_date = new DateTime($abstract_closing);
 
     // Contact
     if ( ! empty($contact)) { ?>
-    <p class="vf-text-body vf-text-body--3 | vf-u-text--nowrap"><span style="font-weight: 600;">Contact: </span><a
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Contact: </span><a
         href="mailto:<?php echo esc_attr($contact); ?>"><?php echo esc_html($contact_name); ?></a></p>
     <?php } ?>
     <div class="vf-grid">
