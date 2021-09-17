@@ -6,8 +6,7 @@ import {createBlock} from '@wordpress/blocks';
 import {
   InnerBlocks,
   InspectorControls,
-  // TODO: replace with `useBlockProps` hook in WP 5.6
-  __experimentalBlock as ExperimentalBlock
+  useBlockProps,
 } from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -20,6 +19,12 @@ const defaults = useVFDefaults();
 
 const MIN_COLUMNS = 1;
 const MAX_COLUMNS = 6;
+
+const GridControl = props => {
+  return (
+    <ColumnsControl {...props} />
+  );
+};
 
 const settings = {
   ...defaults,
@@ -54,8 +59,9 @@ settings.save = (props) => {
     return null;
   }
   const className = `vf-grid | vf-grid__col-${columns}`;
+  const blockProps = useBlockProps.save({ className });
   return (
-    <div className={className}>
+    <div {...blockProps}>
       <InnerBlocks.Content />
     </div>
   );
@@ -152,26 +158,24 @@ settings.edit = (props) => {
     }
   }, [dirty]);
 
-  const GridControl = (props) => {
-    return (
-      <ColumnsControl
-        value={columns}
-        min={MIN_COLUMNS}
-        max={MAX_COLUMNS}
-        onChange={useCallback((value) => setColumns(value))}
-        {...props}
-      />
-    );
-  };
-
   // Return setup placeholder
   if (placeholder === 1) {
+    const blockProps = useBlockProps({
+      className: 'vf-block vf-block--placeholder'
+    });
     return (
-      <ExperimentalBlock.div className='vf-block vf-block--placeholder'>
-        <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
-          <GridControl />
-        </Placeholder>
-      </ExperimentalBlock.div>
+      <>
+        <div {...blockProps}>
+          <Placeholder label={__('VF Grid')} icon={'admin-generic'}>
+            <GridControl
+              value={columns}
+              min={MIN_COLUMNS}
+              max={MAX_COLUMNS}
+              onChange={value => setColumns(value)}
+            />
+          </Placeholder>
+        </div>
+      </>
     );
   }
 
@@ -180,20 +184,27 @@ settings.edit = (props) => {
   const styles = {
     ['--block-columns']: columns
   };
-
+  const blockProps = useBlockProps({
+    className,
+    style: styles
+  });
   // Return inner blocks and inspector controls
   return (
     <>
       <InspectorControls>
         <PanelBody title={__('Advanced Settings')} initialOpen>
           <GridControl
+            value={columns}
+            min={MIN_COLUMNS}
+            max={MAX_COLUMNS}
+            onChange={value => setColumns(value)}
             help={__('Content may be reorganised when columns are reduced.')}
           />
         </PanelBody>
       </InspectorControls>
-      <ExperimentalBlock.div className={className} style={styles}>
+      <div {...blockProps}>
         <InnerBlocks allowedBlocks={['vf/grid-column']} templateLock='all' />
-      </ExperimentalBlock.div>
+      </div>
     </>
   );
 };
