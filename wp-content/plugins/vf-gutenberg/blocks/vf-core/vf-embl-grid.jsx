@@ -8,7 +8,7 @@ import {
   InnerBlocks,
   InspectorControls,
   // TODO: replace with `useBlockProps` hook in WP 5.6
-  __experimentalBlock as ExperimentalBlock
+  useBlockProps
 } from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -67,8 +67,9 @@ settings.save = (props) => {
   if (!!centered) {
     className = `${className} embl-grid--has-centered-content`;
   }
+  const blockProps = useBlockProps.save({ className });
   return (
-    <div className={className}>
+    <div {...blockProps}>
       <InnerBlocks.Content />
     </div>
   );
@@ -181,12 +182,13 @@ settings.edit = (props) => {
 
   // Return setup placeholder
   if (placeholder === 1) {
+    const blockProps = useBlockProps({ className: 'vf-block vf-block--placeholder' });
     return (
-      <ExperimentalBlock.div className='vf-block vf-block--placeholder'>
+      <div {...blockProps}>
         <Placeholder label={__('EMBL Grid')} icon={'admin-generic'}>
           <VFBlockFields {...props} fields={fields} />
         </Placeholder>
-      </ExperimentalBlock.div>
+      </div>
     );
   }
 
@@ -202,6 +204,7 @@ settings.edit = (props) => {
   if (!!centered) {
     className = `${className} embl-grid--has-centered-content`;
   }
+  const blockProps = useBlockProps({ className });
 
   // Return inner blocks and inspector controls
   return (
@@ -211,8 +214,8 @@ settings.edit = (props) => {
           <VFBlockFields {...props} fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <ExperimentalBlock.div
-        className={className}
+      <div
+        {...blockProps}
         data-ver={ver}
         data-embl={true}
         data-sidebar={sidebar}
@@ -223,7 +226,7 @@ settings.edit = (props) => {
           template={Array(columns).fill(['vf/grid-column'])}
           templateLock='all'
         />
-      </ExperimentalBlock.div>
+      </div>
     </>
   );
 };
