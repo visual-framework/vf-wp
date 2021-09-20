@@ -108,9 +108,9 @@ class VF_EBI_Global_Footer extends VF_Plugin {
     }
     wp_enqueue_script(
       'ebi-framework--defer',
-      'https://dev.ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/script.js',
+      'https://dev.ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js',
       false,
-      'v1.3',
+      'v1.4',
       true
     );
     // wp_enqueue_style(
