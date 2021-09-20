@@ -3,7 +3,7 @@ Block Name: Tabs
 */
 import React, {useCallback, useEffect} from 'react';
 import {createBlock} from '@wordpress/blocks';
-import {InnerBlocks, InspectorControls} from '@wordpress/block-editor';
+import {InnerBlocks, InspectorControls, useBlockProps} from '@wordpress/block-editor';
 import {Button, PanelBody} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
@@ -34,8 +34,9 @@ const settings = {
 };
 
 settings.save = (props) => {
+  const blockProps = useBlockProps.save({className: 'vf-tabs'});
   return (
-    <div className='vf-tabs'>
+    <div {...blockProps}>
       <ul className='vf-tabs__list' data-vf-js-tabs>
         {props.attributes.tabs.map((tab, i) => {
           return (
@@ -142,6 +143,7 @@ settings.edit = (props) => {
   ];
 
   // Return inner blocks and inspector controls
+  const blockProps = useBlockProps({className: 'vf-tabs'});
   return (
     <>
       <InspectorControls>
@@ -149,7 +151,7 @@ settings.edit = (props) => {
           <VFBlockFields fields={fields} />
         </PanelBody>
       </InspectorControls>
-      <div className='vf-tabs' data-ver={ver}>
+      <div {...blockProps} data-ver={ver}>
         <ul className='vf-tabs__list'>
           {tabs.map((tab, i) => {
             return (
