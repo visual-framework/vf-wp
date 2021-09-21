@@ -7138,9 +7138,10 @@ if (ResizeObserver) {
       className = `${className} embl-grid--has-centered-content`;
     }
 
-    return wp.element.createElement("div", {
-      className: className
-    }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+    const blockProps = blockEditor.useBlockProps.save({
+      className
+    });
+    return wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
   };
 
   settings$9.edit = props => {
@@ -7261,9 +7262,10 @@ if (ResizeObserver) {
     }]; // Return setup placeholder
 
     if (placeholder === 1) {
-      return wp.element.createElement(blockEditor.__experimentalBlock.div, {
-        className: "vf-block vf-block--placeholder"
-      }, wp.element.createElement(components.Placeholder, {
+      const blockProps = blockEditor.useBlockProps({
+        className: 'vf-block vf-block--placeholder'
+      });
+      return wp.element.createElement("div", blockProps, wp.element.createElement(components.Placeholder, {
         label: i18n.__('EMBL Grid'),
         icon: 'admin-generic'
       }, wp.element.createElement(VFBlockFields, _extends({}, props, {
@@ -7283,21 +7285,23 @@ if (ResizeObserver) {
 
     if (!!centered) {
       className = `${className} embl-grid--has-centered-content`;
-    } // Return inner blocks and inspector controls
+    }
 
+    const blockProps = blockEditor.useBlockProps({
+      className
+    }); // Return inner blocks and inspector controls
 
     return wp.element.createElement(React__default['default'].Fragment, null, wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
       title: i18n.__('Settings'),
       initialOpen: true
     }, wp.element.createElement(VFBlockFields, _extends({}, props, {
       fields: fields
-    })))), wp.element.createElement(blockEditor.__experimentalBlock.div, {
-      className: className,
+    })))), wp.element.createElement("div", _extends({}, blockProps, {
       "data-ver": ver$2,
       "data-embl": true,
       "data-sidebar": sidebar,
       "data-centered": centered
-    }, wp.element.createElement(blockEditor.InnerBlocks, {
+    }), wp.element.createElement(blockEditor.InnerBlocks, {
       allowedBlocks: ['vf/grid-column'],
       template: Array(columns).fill(['vf/grid-column']),
       templateLock: "all"
@@ -7479,7 +7483,7 @@ if (ResizeObserver) {
         value: columns,
         min: MIN_COLUMNS,
         max: MAX_COLUMNS,
-        onChange: value => setColumns(value)
+        onChange: React.useCallback(value => setColumns(value), [])
       }))));
     }
 
@@ -7499,11 +7503,12 @@ if (ResizeObserver) {
       value: columns,
       min: MIN_COLUMNS,
       max: MAX_COLUMNS,
-      onChange: value => setColumns(value),
+      onChange: React.useCallback(value => setColumns(value), []),
       help: i18n.__('Content may be reorganised when columns are reduced.')
     }))), wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks, {
       allowedBlocks: ['vf/grid-column'],
-      templateLock: "all"
+      templateLock: "all",
+      templateInsertUpdatesSelection: true
     })));
   }; // Block transforms
 
