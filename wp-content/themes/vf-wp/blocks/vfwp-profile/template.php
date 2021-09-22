@@ -13,6 +13,10 @@ $phone = get_field('profile_phone');
 $layout = get_field('layout');
 $size = get_field('size');
 
+if (empty($layout)) {
+    $layout == 'inline';
+}
+
 
 ?>
 <?php if ($layout == 'block') { ?>
@@ -32,7 +36,10 @@ $size = get_field('size');
     <?php }?>
 
     <?php if (! empty($link)) { ?>
-    <h3 class="vf-profile__title">
+    <h3 class="vf-profile__title"
+    <?php if ($layout == 'block') { ?>
+       style="text-align: center;"
+    <?php } ?>>
         <a href="<?php echo esc_url($link); ?>" class="vf-profile__link"><?php echo $name; ?></a>
     </h3>
     <?php }
@@ -41,7 +48,7 @@ $size = get_field('size');
     <h3 class="vf-profile__title"
     <?php if ($layout == 'block') { ?>
        style="text-align: center;"
-       <?php } ?>>
+    <?php } ?>>
         <?php echo $name; ?>
     </h3>
     <?php } ?>
