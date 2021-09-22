@@ -83,6 +83,13 @@
         "operator": "==",
         "value": "page"
       }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "industry_event"
+      }
     ]
   ],
   "menu_order": 20,
