@@ -111,7 +111,7 @@ function vfwp_intranet_cron_process_people_data() {
 
   $current_page = 0;
   $items_per_page = 100;
-  $people_json_feed_api_endpoint = "https://dev.content.embl.org/api/v1/people-all-info?items_per_page=$items_per_page";
+  $people_json_feed_api_endpoint = "https://content.embl.org/api/v1/people-all-info?items_per_page=$items_per_page";
   // Fetch API to get paging details.
   $people_feed_content = file_get_contents($people_json_feed_api_endpoint);
   $raw_data = json_decode($people_feed_content, true);
