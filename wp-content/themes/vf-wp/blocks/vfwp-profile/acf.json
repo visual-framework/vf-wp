@@ -246,7 +246,7 @@
                 "inline": "inline"
             },
             "default_value": [
-                "block"
+                "inline"
             ],
             "allow_null": 0,
             "multiple": 0,
@@ -316,5 +316,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF Profile ACF Gutenberg block",
-    "modified": 1596107797
+    "modified": 1632316042
 }

@@ -83,6 +83,13 @@
         "operator": "==",
         "value": "page"
       }
+    ],
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "industry_event"
+      }
     ]
   ],
   "menu_order": 20,
@@ -93,5 +100,5 @@
   "hide_on_screen": "",
   "active": true,
   "description": "",
-  "modified": 1598527351
+  "modified": 1632316042
 }

@@ -49,10 +49,8 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     'itemprop' => 'image',
   ));
 
-$now = new DateTime();
-$application_date = new DateTime($application_closing);
-$registration_date = new DateTime($registration_closing);
-$abstract_date = new DateTime($abstract_closing);
+$current_date = new DateTime();
+$now = $current_date->format('j M Y');
 ?>
 
 <div>
@@ -112,7 +110,7 @@ $abstract_date = new DateTime($abstract_closing);
     <?php } ?>
 
     <?php if ( ! empty($abstract_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if ($abstract_date < $now) {
+    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if ($abstract_closing < $now) {
           echo 'Closed';
         }  
         else {
@@ -124,7 +122,7 @@ $abstract_date = new DateTime($abstract_closing);
     /* Application date
     if ( ! empty($application_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span class="vf-u-text-color--grey">
-        <?php if ($application_date < $now) {
+        <?php if ($application_closing < $now) {
           echo 'Closed';
         }  
         else if ($application_closing) {
@@ -150,7 +148,7 @@ $abstract_date = new DateTime($abstract_closing);
         Application:
         <?php  } ?>
       </span> <span class="vf-u-text-color--grey">
-        <?php if ($registration_date < $now) {
+        <?php if ($registration_closing < $now) {
           echo 'Closed';
         }  
         else if ($registration_closing) {
@@ -179,7 +177,7 @@ $abstract_date = new DateTime($abstract_closing);
             if (
               (($registration_date > $now)) 
               || 
-              (($application_closing) && ($application_date > $now))) { ?>
+              (($application_closing) && ($application_closing > $now))) { ?>
       <div style="display: inline-block;">
         <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
             class="vf-button vf-button--primary vf-button--sm"><?php echo($register_button); ?></button></a>
@@ -187,7 +185,7 @@ $abstract_date = new DateTime($abstract_closing);
       <?php }} ?>
 
       <?php if ( ! empty($abstract_link)) { 
-                if (($abstract_date > $now)) {?>
+                if (($abstract_closing > $now)) {?>
       <div style="display: inline-block;">
         <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
             class="vf-button vf-button--tertiary vf-button--sm"><?php echo($abstract_button); ?></button></a>
