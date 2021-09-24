@@ -18,6 +18,13 @@
         }
         $body = wp_remote_retrieve_body( $request );
         $content = json_decode( $body );
+
+        // excludes Other - EBI seminars
+        foreach ($content as $key => $item) {
+            if($item->field_event_location == 'Other') {
+                unset($content[$key]);
+            }
+        }
         
         function sortByStartDate($param1, $param2) {
             return strcmp($param1->field_event_start_date_time, $param2->field_event_start_date_time);
