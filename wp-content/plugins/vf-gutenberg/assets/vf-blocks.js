@@ -7025,7 +7025,7 @@ if (ResizeObserver) {
       }
     }
 
-    const blockProps = blockEditor.useBlockProps.save({
+    const blockProps = blockEditor.useBlockProps({
       className: classes.join(' ')
     });
     return wp.element.createElement(React__default['default'].Fragment, null, hasSpanSupport && wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
@@ -7507,8 +7507,7 @@ if (ResizeObserver) {
       help: i18n.__('Content may be reorganised when columns are reduced.')
     }))), wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks, {
       allowedBlocks: ['vf/grid-column'],
-      templateLock: "all",
-      templateInsertUpdatesSelection: true
+      templateLock: "all"
     })));
   }; // Block transforms
 

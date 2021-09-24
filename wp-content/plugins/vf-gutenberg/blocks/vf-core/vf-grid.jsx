@@ -171,7 +171,7 @@ settings.edit = (props) => {
               value={columns}
               min={MIN_COLUMNS}
               max={MAX_COLUMNS}
-              onChange={value => setColumns(value)}
+              onChange={useCallback(value => setColumns(value), [])}
             />
           </Placeholder>
         </div>
@@ -197,7 +197,7 @@ settings.edit = (props) => {
             value={columns}
             min={MIN_COLUMNS}
             max={MAX_COLUMNS}
-            onChange={value => setColumns(value)}
+            onChange={useCallback(value => setColumns(value), [])}
             help={__('Content may be reorganised when columns are reduced.')}
           />
         </PanelBody>

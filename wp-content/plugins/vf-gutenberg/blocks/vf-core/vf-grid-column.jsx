@@ -99,7 +99,7 @@ settings.edit = (props) => {
     }
   }
 
-  const blockProps = useBlockProps.save({ className: classes.join(' ') });
+  const blockProps = useBlockProps({ className: classes.join(' ')});
 
   return (
     <>

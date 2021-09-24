@@ -7,7 +7,6 @@ import {createBlock} from '@wordpress/blocks';
 import {
   InnerBlocks,
   InspectorControls,
-  // TODO: replace with `useBlockProps` hook in WP 5.6
   useBlockProps
 } from '@wordpress/block-editor';
 import {PanelBody, Placeholder} from '@wordpress/components';
