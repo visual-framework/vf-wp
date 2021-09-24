@@ -3,7 +3,7 @@
     "title": "Additional article information",
     "fields": [
         {
-            "key": "field_5f1ac929aa00d",
+            "key": "field_60a376e9a4e2c",
             "label": "General",
             "name": "",
             "type": "tab",
@@ -19,7 +19,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_5dd52ed0509fe",
+            "key": "field_60a376e9a4ec9",
             "label": "Featured post",
             "name": "featured",
             "type": "true_false",
@@ -38,7 +38,7 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_5ea15d527ecd1",
+            "key": "field_60a376e9a4f71",
             "label": "Hide featured image in the article",
             "name": "show_featured_image",
             "type": "true_false",
@@ -80,7 +80,7 @@
             "return_format": "value",
             "save_custom": 0        },
         {
-            "key": "field_5f1ac94baa00e",
+            "key": "field_60a376e9a501a",
             "label": "Article Intro",
             "name": "",
             "type": "tab",
@@ -96,7 +96,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_5dd3ec01c4d1e",
+            "key": "field_60a376e9a50c3",
             "label": "Article intro",
             "name": "article_intro",
             "type": "wysiwyg",
@@ -115,7 +115,7 @@
             "delay": 0
         },
         {
-            "key": "field_5f1ac96aaa00f",
+            "key": "field_60a376e9a516c",
             "label": "Related links",
             "name": "",
             "type": "tab",
@@ -131,7 +131,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_5e564b536cea0",
+            "key": "field_60a376e9a5215",
             "label": "Related links",
             "name": "related_links",
             "type": "repeater",
@@ -150,7 +150,7 @@
             "button_label": "Add link",
             "sub_fields": [
                 {
-                    "key": "field_5e564b536cea1",
+                    "key": "field_60a376e9ae776",
                     "label": "Description",
                     "name": "link_description",
                     "type": "textarea",
@@ -169,7 +169,7 @@
                     "new_lines": ""
                 },
                 {
-                    "key": "field_5e564b536cea2",
+                    "key": "field_60a376e9ae840",
                     "label": "Link",
                     "name": "link_url",
                     "type": "url",
@@ -187,7 +187,7 @@
             ]
         },
         {
-            "key": "field_5f1ac97baa010",
+            "key": "field_60a376e9a52b3",
             "label": "Source article",
             "name": "",
             "type": "tab",
@@ -203,7 +203,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_603f6435b4fd5",
+            "key": "field_60a376e9a5340",
             "label": "Source article",
             "name": "source_article",
             "type": "repeater",
@@ -222,7 +222,7 @@
             "button_label": "Add source",
             "sub_fields": [
                 {
-                    "key": "field_603f6530771de",
+                    "key": "field_60a376e9b5298",
                     "label": "Publication title",
                     "name": "publication_title",
                     "type": "text",
@@ -241,7 +241,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_603f6543771df",
+                    "key": "field_60a376e9b5336",
                     "label": "Publication link",
                     "name": "publication_link",
                     "type": "link",
@@ -256,7 +256,7 @@
                     "return_format": "array"
                 },
                 {
-                    "key": "field_603f655a771e0",
+                    "key": "field_60a376e9b53d4",
                     "label": "Authors",
                     "name": "publication_authors",
                     "type": "text",
@@ -275,7 +275,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_603f6570771e1",
+                    "key": "field_60a376e9b5477",
                     "label": "Source",
                     "name": "publication_source",
                     "type": "text",
@@ -294,7 +294,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_603f657e771e2",
+                    "key": "field_60a376e9b5515",
                     "label": "Publication date\/year",
                     "name": "publication_date",
                     "type": "text",
@@ -313,7 +313,7 @@
                     "maxlength": ""
                 },
                 {
-                    "key": "field_603f6592771e3",
+                    "key": "field_60a376e9b55b2",
                     "label": "DOI",
                     "name": "publication_doi",
                     "type": "text",
@@ -334,7 +334,7 @@
             ]
         },
         {
-            "key": "field_5f1ac99caa011",
+            "key": "field_60a376e9a53e6",
             "label": "In this article",
             "name": "",
             "type": "tab",
@@ -350,7 +350,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_5ea2e84b0c9f6",
+            "key": "field_60a376e9a548a",
             "label": "In this article (optional)",
             "name": "in_this_article",
             "type": "repeater",
@@ -369,7 +369,7 @@
             "button_label": "Add anchor",
             "sub_fields": [
                 {
-                    "key": "field_5ea2e8690c9f7",
+                    "key": "field_60a376e9c0435",
                     "label": "Heading",
                     "name": "heading_description",
                     "type": "textarea",
@@ -388,7 +388,7 @@
                     "new_lines": ""
                 },
                 {
-                    "key": "field_5ea2e8a70c9f8",
+                    "key": "field_60a376e9c04df",
                     "label": "Anchor",
                     "name": "anchor",
                     "type": "text",
@@ -409,7 +409,7 @@
             ]
         },
         {
-            "key": "field_5f1aca41aa013",
+            "key": "field_60a376e9a5523",
             "label": "Press release",
             "name": "",
             "type": "tab",
@@ -425,7 +425,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_5ea6e0f4cc547",
+            "key": "field_60a376e9a55c1",
             "label": "Press contact",
             "name": "press_contact",
             "type": "select",
@@ -451,7 +451,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5ea6df25ad189",
+            "key": "field_60a376e9a566e",
             "label": "Translations",
             "name": "translations",
             "type": "repeater",
@@ -470,7 +470,7 @@
             "button_label": "",
             "sub_fields": [
                 {
-                    "key": "field_5ea6e002ad18a",
+                    "key": "field_60a376e9c77e0",
                     "label": "Language",
                     "name": "translation_language",
                     "type": "select",
@@ -498,7 +498,7 @@
                     "placeholder": ""
                 },
                 {
-                    "key": "field_5ea6e040ad18b",
+                    "key": "field_60a376e9c788b",
                     "label": "Anchor",
                     "name": "translation_anchor",
                     "type": "text",
@@ -536,5 +536,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1629873877
+    "modified": 1632477115
 }
