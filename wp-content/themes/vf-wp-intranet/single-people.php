@@ -141,15 +141,16 @@ get_header();
   <h2 class="vf-section-header__heading">Publications</h2>
 </div>
   <div class="embl-content-hub-loader">
-  <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&orcid=<?php echo $orcid; ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader>
-
-
+  <?php if (!empty($orcid)) { ?>
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&orcid=<?php echo $orcid; ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader>
+  <?php } else { ?>
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&title=<?php echo get_the_title(); ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader>
+    <?php } ?>
   </div>
   <div>
     <!-- empty -->
   </div>
 </section>
-
 
 <?php 
 
