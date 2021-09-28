@@ -6933,6 +6933,20 @@ if (ResizeObserver) {
     }]]]
   });
 
+  const BlockWrapper = ({
+    blockProps,
+    children
+  }) => {
+    if (blockEditor.__experimentalBlock && blockEditor.__experimentalBlock.div) {
+      return wp.element.createElement(blockEditor.__experimentalBlock.div, blockProps, children);
+    }
+
+    if (blockEditor.useBlockProps) {
+      const allProps = blockEditor.useBlockProps(blockProps);
+      return wp.element.createElement("div", allProps, children);
+    }
+  };
+
   /**
   Block Name: Grid Column
   */
@@ -6965,10 +6979,12 @@ if (ResizeObserver) {
       classes.push(`vf-grid__col--span-${span}`);
     }
 
-    const blockProps = blockEditor.useBlockProps.save({
+    const blockProps = {
       className: classes.join(' ')
-    });
-    return wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
+    };
+    return wp.element.createElement(BlockWrapper, {
+      blockProps: blockProps
+    }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
   };
 
   settings$a.edit = props => {
@@ -7025,9 +7041,11 @@ if (ResizeObserver) {
       }
     }
 
-    const blockProps = blockEditor.useBlockProps({
+    const blockProps = {
       className: classes.join(' ')
-    });
+    };
+    console.log('HOOK: ', blockEditor.useBlockProps);
+    console.log('EXP BLOCK: ', blockEditor.__experimentalBlock.div);
     return wp.element.createElement(React__default['default'].Fragment, null, hasSpanSupport && wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
       title: i18n.__('Advanced Settings'),
       initialOpen: true
@@ -7040,7 +7058,9 @@ if (ResizeObserver) {
       step: 1,
       min: 1,
       max: 6
-    }))), wp.element.createElement("div", blockProps, wp.element.createElement(blockEditor.InnerBlocks, {
+    }))), wp.element.createElement(BlockWrapper, {
+      blockProps: blockProps
+    }, wp.element.createElement(blockEditor.InnerBlocks, {
       templateLock: false,
       renderAppender: hasChildBlocks ? undefined : () => wp.element.createElement(blockEditor.InnerBlocks.ButtonBlockAppender, null)
     })));

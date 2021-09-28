@@ -5,12 +5,14 @@ import React, {useEffect, useCallback} from 'react';
 import {
   InnerBlocks,
   InspectorControls,
-  useBlockProps
+  useBlockProps,
+  __experimentalBlock as ExperimentalBlock
 } from '@wordpress/block-editor';
 import {PanelBody, RangeControl} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
 import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
+import BlockWrapper from '../components/block-wrapper';
 
 const defaults = useVFDefaults();
 
@@ -41,11 +43,11 @@ settings.save = (props) => {
   if (Number.isInteger(span) && span > 1) {
     classes.push(`vf-grid__col--span-${span}`);
   }
-  const blockProps = useBlockProps.save({ className: classes.join(' ') });
+  const blockProps = { className: classes.join(' ') };
   return (
-    <div {...blockProps}>
+    <BlockWrapper blockProps={blockProps}>
       <InnerBlocks.Content />
-    </div>
+    </BlockWrapper>
   );
 };
 
@@ -99,7 +101,10 @@ settings.edit = (props) => {
     }
   }
 
-  const blockProps = useBlockProps({ className: classes.join(' ')});
+  const blockProps = { className: classes.join(' ')};
+
+  console.log('HOOK: ', useBlockProps);
+  console.log('EXP BLOCK: ', ExperimentalBlock.div);
 
   return (
     <>
@@ -119,7 +124,7 @@ settings.edit = (props) => {
           </PanelBody>
         </InspectorControls>
       )}
-      <div {...blockProps}>
+      <BlockWrapper blockProps={blockProps}>
         <InnerBlocks
           templateLock={false}
           renderAppender={
@@ -128,7 +133,7 @@ settings.edit = (props) => {
               : () => <InnerBlocks.ButtonBlockAppender />
           }
         />
-      </div>
+      </BlockWrapper>
     </>
   );
 };
