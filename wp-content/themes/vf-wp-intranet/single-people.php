@@ -126,7 +126,9 @@ get_header();
   <h2 class="vf-section-header__heading">Biography</h2>
 </div>
   <div class="vf-content">
-    <p><?php echo esc_html($biography); ?></p>
+  <?php
+  $bio = htmlspecialchars_decode($biography);
+  echo ($bio); ?>
   </div>
   <div>
     <!-- empty -->
