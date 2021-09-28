@@ -5,8 +5,6 @@ import React, {useEffect, useCallback} from 'react';
 import {
   InnerBlocks,
   InspectorControls,
-  useBlockProps,
-  __experimentalBlock as ExperimentalBlock
 } from '@wordpress/block-editor';
 import {PanelBody, RangeControl} from '@wordpress/components';
 import {useDispatch, useSelect} from '@wordpress/data';
@@ -102,9 +100,6 @@ settings.edit = (props) => {
   }
 
   const blockProps = { className: classes.join(' ')};
-
-  console.log('HOOK: ', useBlockProps);
-  console.log('EXP BLOCK: ', ExperimentalBlock.div);
 
   return (
     <>

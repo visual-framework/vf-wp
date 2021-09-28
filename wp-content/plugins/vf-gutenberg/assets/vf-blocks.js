@@ -7044,8 +7044,6 @@ if (ResizeObserver) {
     const blockProps = {
       className: classes.join(' ')
     };
-    console.log('HOOK: ', blockEditor.useBlockProps);
-    console.log('EXP BLOCK: ', blockEditor.__experimentalBlock.div);
     return wp.element.createElement(React__default['default'].Fragment, null, hasSpanSupport && wp.element.createElement(blockEditor.InspectorControls, null, wp.element.createElement(components.PanelBody, {
       title: i18n.__('Advanced Settings'),
       initialOpen: true
