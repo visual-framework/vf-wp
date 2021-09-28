@@ -6939,6 +6939,10 @@ if (ResizeObserver) {
     children
   }) => {
     if (blockEditor.__experimentalBlock && blockEditor.__experimentalBlock.div) {
+      if (forSave) {
+        return wp.element.createElement("div", blockProps, children);
+      }
+
       return wp.element.createElement(blockEditor.__experimentalBlock.div, blockProps, children);
     }
 

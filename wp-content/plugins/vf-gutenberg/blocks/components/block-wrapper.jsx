@@ -6,6 +6,9 @@ import {
 
 const BlockWrapper = ({ blockProps, forSave, children }) => {
   if (ExperimentalBlock && ExperimentalBlock.div) {
+   if (forSave) {
+     return <div {...blockProps}>{children}</div>
+   }
     return <ExperimentalBlock.div {...blockProps}>{children}</ExperimentalBlock.div>
   }
   if (useBlockProps) {
