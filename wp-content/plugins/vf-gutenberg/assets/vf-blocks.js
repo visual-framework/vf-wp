@@ -6935,6 +6935,7 @@ if (ResizeObserver) {
 
   const BlockWrapper = ({
     blockProps,
+    forSave,
     children
   }) => {
     if (blockEditor.__experimentalBlock && blockEditor.__experimentalBlock.div) {
@@ -6942,7 +6943,7 @@ if (ResizeObserver) {
     }
 
     if (blockEditor.useBlockProps) {
-      const allProps = blockEditor.useBlockProps(blockProps);
+      const allProps = forSave ? blockEditor.useBlockProps.save(blockProps) : blockEditor.useBlockProps(blockProps);
       return wp.element.createElement("div", allProps, children);
     }
   };
@@ -6983,7 +6984,8 @@ if (ResizeObserver) {
       className: classes.join(' ')
     };
     return wp.element.createElement(BlockWrapper, {
-      blockProps: blockProps
+      blockProps: blockProps,
+      forSave: true
     }, wp.element.createElement(blockEditor.InnerBlocks.Content, null));
   };
 

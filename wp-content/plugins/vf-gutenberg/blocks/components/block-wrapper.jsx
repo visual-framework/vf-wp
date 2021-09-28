@@ -4,12 +4,12 @@ import {
   __experimentalBlock as ExperimentalBlock
 } from '@wordpress/block-editor';
 
-const BlockWrapper = ({ blockProps, children }) => {
+const BlockWrapper = ({ blockProps, forSave, children }) => {
   if (ExperimentalBlock && ExperimentalBlock.div) {
     return <ExperimentalBlock.div {...blockProps}>{children}</ExperimentalBlock.div>
   }
   if (useBlockProps) {
-    const allProps = useBlockProps(blockProps);
+    const allProps = forSave ? useBlockProps.save(blockProps) : useBlockProps(blockProps);
     return <div {...allProps}>{children}</div>
   }
 

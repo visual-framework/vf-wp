@@ -43,7 +43,7 @@ settings.save = (props) => {
   }
   const blockProps = { className: classes.join(' ') };
   return (
-    <BlockWrapper blockProps={blockProps}>
+    <BlockWrapper blockProps={blockProps} forSave>
       <InnerBlocks.Content />
     </BlockWrapper>
   );
