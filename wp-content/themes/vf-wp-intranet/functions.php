@@ -302,8 +302,8 @@ function sync_people_admin_page() {
 }
 
 // Removes comments from admin menu
-add_action( 'admin_menu', 'my_remove_admin_menus' );
-function my_remove_admin_menus() {
-    remove_menu_page( 'edit-comments.php' );
+add_action( 'admin_menu', 'remove_comments_menu_page' );
+function remove_comments_menu_page() {
+    remove_menu_page('edit-comments.php' );
 }
 ?>
