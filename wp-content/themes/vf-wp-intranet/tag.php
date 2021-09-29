@@ -61,7 +61,7 @@ get_header();
   ?>
   <?php
     $insitesLoop = new WP_Query( array( 
-        'post_type' => 'insites', 
+        'post_type' => 'internal-news', 
         'tag_id' => $tag_id,
         'orderby' => 'title',
         'order'   => 'ASC',  

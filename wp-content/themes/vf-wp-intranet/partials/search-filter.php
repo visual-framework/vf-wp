@@ -13,9 +13,9 @@
       <label for="5" class="vf-form__label">Events</label>
     </div>
     <div class="vf-form__item vf-form__item--radio">
-      <input type="radio" value="insites" name="post_type" id="3" class="vf-form__radio"
-        <?php if($post_type == 'insites') {echo 'checked';} ?>>
-      <label for="3" class="vf-form__label">INsites</label>
+      <input type="radio" value="internal-news" name="post_type" id="3" class="vf-form__radio"
+        <?php if($post_type == 'internal-news') {echo 'checked';} ?>>
+      <label for="3" class="vf-form__label">Internal news</label>
     </div>
     <div class="vf-form__item vf-form__item--radio">
       <input type="radio" value="page" name="post_type" id="2" class="vf-form__radio"
