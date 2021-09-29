@@ -137,9 +137,9 @@ add_action( 'admin_head', 'remove_margin_wp_toolbar' );
 add_action( 'wp_head', 'remove_margin_wp_toolbar' );
 
 // allow only certain WP Gutenberg blocks
-add_filter( 'allowed_block_types', 'allowed_block_types' );
+add_filter( 'allowed_block_types_all', 'allowed_block_types' );
  
-function allowed_block_types( $allowed_blocks ) {
+function allowed_block_types($allowed_blocks) {
  
 	return array(
 		'core/image',
