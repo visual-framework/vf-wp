@@ -18,6 +18,20 @@ function remove_empty_p($content){
     return preg_replace('#<p>\s*+(<br\s*/*>)?\s*</p>#i', '', $content);
 }
 
+// Expose user email id in user api
+// https://gitlab.ebi.ac.uk/emblorg/backlog/-/issues/585
+register_rest_field( 'user', 'user_email',
+    array(
+        'get_callback'    => function ( $user ) {
+            //return $user['email'];
+         return get_userdata($user['id'])->user_email;
+        },
+        'update_callback' => null,
+        'schema'          => null,
+    )
+);
+
+
 // CHILD THEME CSS FILE
 
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
