@@ -8,21 +8,21 @@
 
 <div>
   <div class="vf-tabs">
-    <ul class="vf-tabs__list | vf-u-margin__top--0" data-vf-js-tabs>
+  <ul class="vf-tabs__list | vf-u-margin__top--0" data-vf-js-tabs>
         <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--6">EMBL Barcelona</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--6" data-vf-js-location-nearest-activation-target="barcelona">EMBL Barcelona</a>
         </li>
         <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--7">EMBL Grenoble</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--7" data-vf-js-location-nearest-activation-target="grenoble">EMBL Grenoble</a>
         </li>
         <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--8">EMBL Hamburg</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--8" data-vf-js-location-nearest-activation-target="hamburg">EMBL Hamburg</a>
         </li>
         <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--9">EMBL Heidelberg</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--9" data-vf-js-location-nearest-activation-target="default">EMBL Heidelberg</a>
         </li>
         <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--10">EMBL Rome</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--10" data-vf-js-location-nearest-activation-target="rome">EMBL Rome</a>
         </li>
     </ul>
 </div>
