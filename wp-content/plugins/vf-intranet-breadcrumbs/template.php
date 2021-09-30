@@ -13,9 +13,9 @@ echo '<ul class="vf-breadcrumbs__list | vf-list vf-list--inline">';
 // blog home page
 if ( is_home() ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
-  $insites_url = get_post_type_archive_link('post');
-  $insites_name = 'Insites';
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $insites_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
+  $internal_news_url = get_post_type_archive_link('post');
+  $internal_news_name = 'internal-news';
+  echo '<li class="vf-breadcrumbs__item"><a href="' . $internal_news_url . '" class="vf-breadcrumbs__link">' . $internal-news_name . '</a></li>';
    }
 
 // community blog
@@ -39,11 +39,11 @@ if ( is_post_type_archive('events') ) {
 
     }
 
-//insites    
-if ( is_post_type_archive('insites') ) {
+//internal-news    
+if ( is_post_type_archive('internal-news') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
-  $event_url = get_post_type_archive_link('insites');
-  $event_name = 'INsites';
+  $event_url = get_post_type_archive_link('internal-news');
+  $event_name = 'internal-news';
   echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
   echo '</ul>';
   echo '</nav>';
@@ -124,7 +124,7 @@ if ( is_category() ) {
 
 }
 
-if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !is_archive('documents') && !is_archive('events') && !is_archive('people') && !is_front_page() || is_paged() ) {
+if ( !is_home() && !is_archive('community-blog') && !is_archive('internal-news') && !is_archive('documents') && !is_archive('events') && !is_archive('people') && !is_front_page() || is_paged() ) {
 
   echo '
   <li class="vf-breadcrumbs__item">
@@ -206,11 +206,11 @@ if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !i
     echo '<li class="vf-breadcrumbs__item"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
     echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
     
-    // insites single post
-  } elseif ( is_singular('insites') ) {
-    $insites_url = get_post_type_archive_link('insites');
-    $insites_name = 'INsites';
-    echo '<li class="vf-breadcrumbs__item" false><a href="' . $insites_url . '" class="vf-breadcrumbs__link">' . $insites_name . '</a></li>';
+    // internal-news single post
+  } elseif ( is_singular('internal-news') ) {
+    $internal_news_url = get_post_type_archive_link('internal-news');
+    $internal_news_name = 'Internal news';
+    echo '<li class="vf-breadcrumbs__item" false><a href="' . $internal_news_url . '" class="vf-breadcrumbs__link">' . $internal-news_name . '</a></li>';
     echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
 
     // documents single post

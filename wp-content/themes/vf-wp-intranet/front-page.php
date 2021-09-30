@@ -87,7 +87,6 @@ $vf_theme->the_content();
   </div>
 </section>
 
-<?php include(locate_template('partials/vf-nearest-location.php', false, false)); ?>
 
 <?php 
 

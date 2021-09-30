@@ -31,7 +31,7 @@ $total_results = $wp_query->found_posts;
             <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
               <option value="any" selected="">Everything</option>
               <option value="page" name="post_type[]">Pages</option>
-              <option value="insites" name="post_type[]">INsites</option>
+              <option value="internal-news" name="post_type[]">Internal news</option>
               <option value="events" name="post_type[]">Events</option>
               <option value="people" name="post_type[]">People</option>
               <option value="documents" name="post_type[]">Documents</option>
@@ -69,7 +69,7 @@ $total_results = $wp_query->found_posts;
               elseif($type == 'page') {
                 include(locate_template('partials/vf-summary--page.php', false, false)); 
               }
-              elseif($type == 'insites') {
+              elseif($type == 'internal-news') {
                 include(locate_template('partials/vf-summary-insites-latest.php', false, false)); 
               }
               elseif($type == 'documents') {

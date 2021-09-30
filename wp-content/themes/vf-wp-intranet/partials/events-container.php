@@ -10,31 +10,28 @@
     <p class="vf-section-header__text">EMBL's internal events</p>
   </div>
   <div class="vf-grid vf-grid__col-3">
-    <?php
-          $eventsLoop = new WP_Query (array( 
-            'post_type' => 'events',
-            'post_per_page' => 3,
-            'order' => 'ASC', 
-            'orderby' => 'meta_value_num',
-            'meta_key' => 'vf_event_internal_start_date',
-            'meta_query' => array(
-              array(
-                  'key' => 'vf_event_internal_start_date',
-                  'value' => $current_date,
-                  'compare' => '>=',
-                  'type' => 'numeric'
-              ),
-              array(
-                'key' => 'vf_event_internal_start_date',
-                'value' => date('Ymd', strtotime('now')),
-                'type' => 'numeric',
-                'compare' => '>=',
-                ) 
-              ) ));
-            ?>
-    <?php while ($eventsLoop->have_posts()) : $eventsLoop->the_post();?>
-    <?php include(locate_template('partials/vf-summary-events.php', false, false)); ?>
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>
+      <?php $mainEventloop = new WP_Query (array(
+        'post_type' => 'events', 
+        'posts_per_page' => 3,             
+        'order' => 'ASC', 
+        'orderby' => 'meta_value_num',
+        'meta_key' => 'vf_event_internal_start_date', 'meta_query' => array(
+          array(
+            'key' => 'vf_event_internal_start_date',
+            'value' => $current_date,
+            'compare' => '>=',
+            'type' => 'numeric'
+          ),
+          array(
+            'key' => 'vf_event_internal_start_date',
+            'value' => date('Ymd', strtotime('now')),
+            'type' => 'numeric',
+            'compare' => '>=',
+            ) 
+        ))); 
+      while ($mainEventloop->have_posts()) : $mainEventloop->the_post(); ?>
+        <?php include(locate_template('partials/vf-summary-events.php', false, false)); ?>
+        <?php endwhile;?>
+        <?php wp_reset_postdata(); ?>
   </div>
 </section>

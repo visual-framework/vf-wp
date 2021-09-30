@@ -10,6 +10,7 @@ function add_scripts() {
 require_once('functions/custom-taxonomies.php');
 require_once('functions/cpt-register.php');
 
+
 // CHILD THEME CSS FILE
 
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
@@ -59,7 +60,7 @@ function intranet_search_filter($query) {
 				$query->set('post_type', $post_type);
       }
       else {
-        $query->set('post_type', array('post', 'page', 'documents', 'insites', 'people', 'events'));
+        $query->set('post_type', array('post', 'page', 'documents', 'internal-news', 'people', 'events'));
       }
 		}
 	}
@@ -301,4 +302,9 @@ function sync_people_admin_page() {
 
 }
 
+// Removes comments from admin menu
+add_action( 'admin_menu', 'remove_comments_menu_page' );
+function remove_comments_menu_page() {
+    remove_menu_page('edit-comments.php' );
+}
 ?>

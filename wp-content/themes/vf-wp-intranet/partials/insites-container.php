@@ -1,7 +1,7 @@
 <section class="vf-summary-container" data-vf-google-analytics-region="news">
   <div class="vf-section-header">
-    <a href="/internal-information/insites"
-      class="vf-section-header__heading vf-section-header__heading--is-link">INsites<svg
+    <a href="/internal-information/news"
+      class="vf-section-header__heading vf-section-header__heading--is-link">Internal news<svg
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
         <path
@@ -13,11 +13,12 @@
 
   <div class="vf-section-content | vf-u-margin__top--400">
     <div class="vf-grid vf-grid__col-4">
-      <?php $mainloop = new WP_Query (array('post_type' => 'insites', 'posts_per_page' => 4)); 
+      <?php $mainloop = new WP_Query (array('post_type' => 'internal-news', 'posts_per_page' => 4)); 
     while ($mainloop->have_posts()) : $mainloop->the_post(); ?>
       <?php include(locate_template('partials/vf-summary-insites.php', false, false)); ?>
 
       <?php endwhile;?>
       <?php wp_reset_postdata(); ?>
     </div>
+</div>
 </section>

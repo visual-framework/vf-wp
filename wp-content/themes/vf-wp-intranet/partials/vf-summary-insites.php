@@ -11,6 +11,9 @@ $locations = get_field('embl_location');
   <p class="vf-summary__text">
     <?php echo get_the_excerpt(); ?>
   </p>
+  <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
+      title="<?php the_time('c'); ?>"
+      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
   <p class="vf-summary__meta | vf-u-margin__bottom--200">
     <?php if (($topic_terms)) { ?>
     <span class="topic">
