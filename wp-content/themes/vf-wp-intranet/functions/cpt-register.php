@@ -402,7 +402,7 @@ function vf_wp_intranet_events__init() {
     'can_export'          => true,
     'delete_with_user'    => false,
     'taxonomies'          => array(
-      'embl-location',
+      'event-location',
       'post_tag',
       'topic'
     ),

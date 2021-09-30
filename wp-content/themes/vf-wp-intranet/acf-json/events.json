@@ -139,33 +139,14 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "embl-location",
+            "taxonomy": "event-location",
             "field_type": "checkbox",
             "add_term": 1,
             "save_terms": 1,
             "load_terms": 1,
             "return_format": "object",
-            "multiple": 0,
+            "multiple": 1,
             "allow_null": 0
-        },
-        {
-            "key": "field_614440f6688ca",
-            "label": "Other location",
-            "name": "vf_event_internal_other_location",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         },
         {
             "key": "field_613209352a15b",
@@ -461,5 +442,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "Internal information event post type",
-    "modified": 1631863759
+    "modified": 1632999210
 }
