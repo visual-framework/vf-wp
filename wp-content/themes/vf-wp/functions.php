@@ -142,6 +142,7 @@ add_filter( 'allowed_block_types_all', 'allowed_block_types' );
 function allowed_block_types($allowed_blocks) {
  
 	return array(
+    'core/block',
 		'core/image',
 		'core/paragraph',
 		'core/heading',
