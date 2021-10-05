@@ -1661,9 +1661,11 @@ function emblNotificationsInject(message) {
     target.parentNode.prepend(output);
     vfBanner();
   } else if (message.field_notification_position == "inline") {
-    output.classList.add("vf-grid"); // we wrap in vf-grid for layout
+    output.classList.add("vf-grid", "vf-u-margin__top--400"); // we wrap in vf-grid for layout
+    // we use vf-u-margin__top--400 as this element is usually inserted inside a contentHub wrapper and not affected by body.vf-stack
+    // if vf-stack is set, this will have no practical affect
 
-    output.innerHTML = "\n      <div class=\"vf-banner vf-banner--phase | vf-content\">\n        <div class=\"vf-banner__content\">\n          <p class=\"vf-banner__text\">".concat(message.body, "</p>\n        </div>\n      </div>"); // insert after `vf-header` or at after `vf-body`
+    output.innerHTML = "\n      <div class=\"vf-banner vf-banner--alert vf-banner--info | vf-content\">\n        <div class=\"vf-banner__content\">\n          <p class=\"vf-banner__text\">".concat(message.body, "</p>\n        </div>\n      </div>"); // insert after `vf-header` or at after `vf-body`
     // @todo: add support for where "inline" message should be shown
     // @todo: don't rely on the presence of vf-header to show inline notification, maybe <div data-notifications-go-here>
 
