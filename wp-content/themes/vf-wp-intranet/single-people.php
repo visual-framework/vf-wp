@@ -39,7 +39,7 @@ get_header();
           class="vf-profile__link vf-profile__link--secondary"><?php echo esc_attr($telephone); ?></a>
         </p>
         <?php if (!empty($room)) { ?>
-        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0">
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--100">
         <span>Room:</span> <?php echo esc_html($room); ?>
         </p>
         <?php } ?>

@@ -362,4 +362,17 @@ function cf_search_distinct( $where ) {
   return $where;
 }
 add_filter( 'posts_distinct', 'cf_search_distinct' );
+
+/*
+ * Redirect pages to external links
+ */
+
+add_action( 'template_redirect', 'redirect_externally' );
+function redirect_externally(){
+    $redirect = get_post_meta( get_the_ID(), 'vf_wp_intranet_redirect', true );
+    if (is_page()) {
+    if( $redirect ){
+        wp_redirect( $redirect );
+    } }
+}
 ?>
