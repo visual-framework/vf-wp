@@ -14,29 +14,6 @@ $event_type = get_field('vf_event_internal_event_type');
 $venue = get_field('vf_event_internal_venue'); 
 $has_page = get_field('vf_event_internal_has_page'); 
 
-if (!empty($start_time)) {
-  $calendar_start_time = 'T' . $start_time_format->format('Hi') . '00';
-}
-else {
-  $calendar_start_time = '';
-}
-
-if (!empty($end_time)) {
-  $calendar_end_time = 'T' . $end_time_format->format('Hi') . '00';
-}
-elseif (empty($end_time) && !empty($start_time)) {
-  $calendar_end_time = 'T' . $start_time_format->format('Hi') . '00';
-}
-else {
-  $calendar_end_time = '';
-}
-
-if (!empty($end_date)) {
-  $calendar_end_date = '/' . $end->format('Ymd');
-}
-else {
-  $calendar_end_date = '/' . $start->format('Ymd');
-}
 ?>
 
 <article class="vf-summary vf-summary--event" data-jplist-item>
@@ -55,10 +32,6 @@ else {
         } 
         
      ?>
-     &nbsp;&nbsp;
-     <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
-     <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:" target="_blank" rel="nofollow">Add to calendar</a>
-    </span>
   </p>
   <?php } ?>
   <h3 class="vf-summary__title | vf-u-margin__bottom--100 | name ">

@@ -13,7 +13,7 @@ $embl_location_terms = get_terms(
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-  <legend class="vf-form__legend">EMBL site</legend>
+  <legend class="vf-form__legend">Location</legend>
     <?php
     foreach($embl_location_terms as $term) {
       ?>

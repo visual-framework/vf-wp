@@ -9,7 +9,7 @@
           fill="" fill-rule="nonzero"></path>
       </svg></a>
   </div>
-  <div class="vf-grid vf-grid__col-3">
+  <div class="vf-grid vf-grid__col-3 | vf-content">
     <?php
         $request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today
         ' );
@@ -34,14 +34,14 @@
 
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
-            $newDate = date("l, j F Y, g:i a", strtotime($event->field_event_start_date_time));
+            $newDate = date("D, j M Y, g:i a", strtotime($event->field_event_start_date_time));
             $info = $event->field_event_additional_info;  
             
                 echo '<article class="vf-summary vf-summary--event">';
 
                 //Date
                 echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
-
+                echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;"><a href="https://seminarlist.embl.de/rest/calendar?seminarID=' . substr($event->field_event_unique_identifier, strpos($event->field_event_unique_identifier, "-") + 1) . '&origin=intranet.embl.de">Add to calendar</a></span></p>';
                 //Title
                 echo '<h3 class="vf-summary__title">';
 

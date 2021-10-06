@@ -9,7 +9,7 @@
       </svg></a>
     <p class="vf-section-header__text">EMBL's internal events</p>
   </div>
-  <div class="vf-grid vf-grid__col-3">
+  <div class="vf-grid vf-grid__col-3 | vf-content">
       <?php $mainEventloop = new WP_Query (array(
         'post_type' => 'events', 
         'posts_per_page' => 3,             
