@@ -1934,17 +1934,17 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/embl-notifications/-/embl-notifications-1.1.1.tgz#6466597e155944739fb78cc000d1e56c64d1a969"
   integrity sha512-h8ZaWkJB6V0KH0qIcGY70d44OsKs7jI/FXqg0rhGnRpFNm/9lmTSk7m3gJwSQHI/nQonUpXuNFi4JLU7/uig5g==
 
-"@visual-framework/vf-activity-group@1.0.0-alpha.11":
-  version "1.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-group/-/vf-activity-group-1.0.0-alpha.11.tgz#e4b2edb73d7ea17d5e526dc0bfd34305969cc1bb"
-  integrity sha512-988hvFO+yWNMSvff0eUijT9+OSH6yRgmfgJFrpK++FV5883lYeumHgX5HOD2shuKC56H4Mot1F/32YQ0p+3YCg==
+"@visual-framework/vf-activity-group@1.0.0-alpha.12":
+  version "1.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-group/-/vf-activity-group-1.0.0-alpha.12.tgz#8f41c46b1404a35133d2787e930496f6acb74234"
+  integrity sha512-+DW/9jAwn2yEaYYsIIuuGyR1DMhQGRn/rIeT8qhqNSN0MoeLv6qRtBGSkY8ccszkShmKNAcgCfx3zqgxS91Z3g==
   dependencies:
-    "@visual-framework/vf-activity-list" "^1.0.0-alpha.10"
+    "@visual-framework/vf-activity-list" "^1.0.0-alpha.11"
 
-"@visual-framework/vf-activity-list@^1.0.0-alpha.10":
-  version "1.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-list/-/vf-activity-list-1.0.0-alpha.10.tgz#94db0e91e83bbeadf16e54057b6a1ce994a7ed8b"
-  integrity sha512-msLxXMXVYjayeplaModfpXz057CL+02QYM0MbdC9ruyZnjKgL1nN7Sy5TZLwSSRXBDI0v1TAZ+YJwbUAWBgcXQ==
+"@visual-framework/vf-activity-list@^1.0.0-alpha.11":
+  version "1.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-activity-list/-/vf-activity-list-1.0.0-alpha.11.tgz#3ee047c9ff0c811c43d8c3a980136e5a51fbb8be"
+  integrity sha512-l5Fm/twRAO2n6zYN8Qusw3aHvRfgmqQ0JLJmN+2q57B7lu1dWHmjp0qRUts3+gxCtM5o6JF9qsoGTlWsQX0MYA==
 
 "@visual-framework/vf-analytics-google@1.0.4":
   version "1.0.4"
