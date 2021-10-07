@@ -10,7 +10,7 @@ $locations = get_field('cb_embl_location');
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h3>
-  <p class="vf-summary__text | vf-u-margin__bottom--200">
+  <p class="vf-summary__text | vf-u-margin__top--600">
     <?php if (($topic_terms)) { ?>
     <span class="vf-summary__category">
       <span>
@@ -18,7 +18,7 @@ $locations = get_field('cb_embl_location');
         if( $topic_terms ) {
           $topics_list = array(); 
           foreach( $topic_terms as $term ) {
-            $topics_list[] = '<a class="vf-link" style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . strtoupper(esc_html( $term->name )) . '</a>'; }
+            $topics_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</span>'; }
             echo implode(', ', $topics_list); }?>
       </span>
       <?php } 
