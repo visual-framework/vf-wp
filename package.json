@@ -38,7 +38,7 @@
     ]
   },
   "dependencies": {
-    "@visual-framework/vf-button": "2.0.0-alpha.1",
+    "@visual-framework/vf-button": "2.0.0-alpha.2",
     "@visual-framework/vf-flag": "1.0.0-alpha.2",
     "@visual-framework/vf-form": "2.0.0-alpha.1",
     "@visual-framework/vf-form__fieldset": "2.0.0-alpha.0",

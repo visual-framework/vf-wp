@@ -2029,7 +2029,12 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.4.tgz#b5b72701966030c38f2ed7dd34b602a703692ce2"
   integrity sha512-D9hvL4TG5Xu4XnWLi/Kc6gDiJEsazvivT0ZtIMd7DhxigEm6+ebnkuBt7yfhpfxqay0Ugu0LMWLVAjQ5pyr5Eg==
 
-"@visual-framework/vf-button@2.0.0-alpha.1", "@visual-framework/vf-button@^2.0.0-alpha.1":
+"@visual-framework/vf-button@2.0.0-alpha.2":
+  version "2.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-2.0.0-alpha.2.tgz#c8abdbeb8e45598fa01ddf74afe093bb1db237f2"
+  integrity sha512-XAXXRNE8dhoJeAvDlCmof20/YkaxKKWlZ6caBt1/XzsIGjQPkA69X12pF+ffVPIzTpDDL65lof49vQMbJU6BBw==
+
+"@visual-framework/vf-button@^2.0.0-alpha.1":
   version "2.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-2.0.0-alpha.1.tgz#22d3193db46800f2d5648882b05a13a46d5ca5eb"
   integrity sha512-S0ucUg1sqR+8qCwYGo4WMPwZ+ArsDhJu5c/B0WgGvllhIory1FGDbtAhI333iHW6O3wAznqv+uaO8CMPJQos4g==
