@@ -1,4 +1,4 @@
-<section class="vf-summary-container | embl-grid">
+<section class="vf-summary-container">
   <div class="vf-section-header">
     <a href="/internal-information/seminars"
       class="vf-section-header__heading vf-section-header__heading--is-link">Seminars <svg
@@ -9,7 +9,8 @@
           fill="" fill-rule="nonzero"></path>
       </svg></a>
   </div>
-  <div class="vf-grid vf-grid__col-3 | vf-content">
+  <div class="vf-section-content | vf-u-margin__top--600">
+  <div class="vf-grid vf-grid__col-4 | vf-content">
     <?php
         $request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today
         ' );
@@ -30,7 +31,7 @@
             return strcmp($param1->field_event_start_date_time, $param2->field_event_start_date_time);
         }
         usort($content, "sortByStartDate");
-        $data = array_slice($content, 0, 3);
+        $data = array_slice($content, 0, 4);
 
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
@@ -53,20 +54,20 @@
                      echo ($event->title . '</h3>'); }
 
                 // additional info field break down
-                echo '<p class="vf-summary__text" style="font-size: 16px;">'; 
+                // echo '<p class="vf-summary__text" style="font-size: 16px;">'; 
                  // show only speaker    
-                $speaker = substr($info, strpos($info, 'Speaker'));
-                $venue = $event->field_event_venue;
-                $venue = str_replace('<br />', '', $venue );
-                $venue = str_replace('\n', ', ', $venue );
-                echo '<span>' . strstr($speaker, '<br />', true) . ', ' . $venue . '</span><br>';
-                 // show only host
-                if (strpos($info, 'Host') !== false) {     
-                $host = substr($info, strpos($info, 'Host'));
-                echo '<span>' . strstr($host, 'Location', true);'</span><br>'; }
+                // $speaker = substr($info, strpos($info, 'Speaker'));
+                // $venue = $event->field_event_venue;
+                // $venue = str_replace('<br />', '', $venue );
+                // $venue = str_replace('\n', ', ', $venue );
+                // echo '<span>' . strstr($speaker, '<br />', true) . ', ' . $venue . '</span><br>';
+                //  // show only host
+                // if (strpos($info, 'Host') !== false) {     
+                // $host = substr($info, strpos($info, 'Host'));
+                // echo '<span>' . strstr($host, 'Location', true);'</span><br>'; }
                  // show location
-                $newinfo = str_replace('Location', 'Place', $info); 
-                echo '<span>' . substr($newinfo, strpos($newinfo, 'Place'));'</span></p>';
+                // $newinfo = str_replace('Location', 'Place', $info); 
+                // echo '<span>' . substr($newinfo, strpos($newinfo, 'Place'));'</span></p>';
 
                 // Seminar type
                 echo '<p class="vf-summary__text | vf-text-heading--5 | type">' . strstr($info, '<', true) . '</p>';
@@ -86,4 +87,5 @@
         ?>
 
   </div>
+    </div>
 </section>

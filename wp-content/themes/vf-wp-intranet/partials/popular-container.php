@@ -1,10 +1,11 @@
-<section class="embl-grid | vf-content | vf-u-margin__bottom--600">
-  <div class="vf-section-header">
+<section class="vf-summary-container">
+<div class="vf-section-header">
     <p class="vf-section-header__heading">Quick links </p>
     <p class="vf-section-header__text">Most visited and featured pages</p>
   </div>
-  <div>
-  <div class="vf-tabs">
+
+<div class="vf-section-content | vf-u-margin__top--200">
+<div class="vf-tabs">
     <ul class="vf-tabs__list | vf-u-margin__top--0" data-vf-js-tabs>
         <li class="vf-tabs__item">
             <a class="vf-tabs__link" href="#vf-tabs__section--1" data-vf-js-location-nearest-activation-target="barcelona">EMBL Barcelona</a>
@@ -95,5 +96,8 @@
     </section>
 
 </div>
+
+
+
 </div>
 </section>

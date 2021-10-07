@@ -11,9 +11,6 @@ $locations = get_field('embl_location');
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h3>
-  <p class="vf-summary__text">
-    <?php echo get_the_excerpt(); ?>
-  </p>
   <p class="vf-summary__meta | vf-u-margin__bottom--200">
     <?php if (($topic_terms)) { ?>
     <span class="topic">
