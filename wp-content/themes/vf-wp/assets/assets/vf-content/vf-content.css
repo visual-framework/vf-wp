@@ -916,7 +916,7 @@ input[type=search]::-webkit-search-cancel-button {
 
 /*!
 * Component: @visual-framework/vf-button
-* Version: 2.0.0-alpha.1
+* Version: 2.0.0-alpha.2
 * Location: components/undefined
 */
 .vf-button {
@@ -1218,8 +1218,8 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-divider
- * Version: 2.0.0
- * Location: components/vf-divider
+ * Version: 2.0.1
+ * Location: components/undefined
  */
 .vf-divider {
   --context-margin--inline: 1rem;
@@ -1395,7 +1395,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.2
+ * Version: 1.6.3
  * Location: components/undefined
  */
 .vf-content h1:not([class*=vf-]) {

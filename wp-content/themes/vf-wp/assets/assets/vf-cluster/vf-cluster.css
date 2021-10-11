@@ -123,7 +123,7 @@
       -ms-flex: var(--vf-cluster__item--flex);
           flex: var(--vf-cluster__item--flex);
   margin: 1rem;
-  margin: calc( var(--vf-cluster-margin) / 2) !important;
+  margin: calc(var(--vf-cluster-margin) / 2) !important;
 }
 
 .vf-cluster--400 > * {

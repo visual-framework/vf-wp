@@ -44,7 +44,7 @@ class VF_Gutenberg {
 
   function initialize() {
     add_filter(
-      'block_categories',
+      'block_categories_all',
       array($this, 'block_categories'),
       10, 2
     );
@@ -129,17 +129,31 @@ class VF_Gutenberg {
   /**
    * Action: `block_categories`
    */
-  function block_categories($categories, $post) {
-    return array_merge(
-      array(
+  // function block_categories($categories, $post) {
+  //   return array_merge(
+  //     array(
+  //       array(
+  //         'slug'  => 'vf/core',
+  //         'title' => __('EMBL – Visual Framework', 'vfwp'),
+  //         'icon'  => null
+  //       )
+  //     ),
+  //     $categories
+  //   );
+  // }
+
+  function block_categories( $categories, $editor_context ) {
+    if ( ! empty( $editor_context->post ) ) {
+      array_push(
+        $categories,
         array(
           'slug'  => 'vf/core',
-          'title' => __('EMBL – Visual Framework', 'vfwp'),
-          'icon'  => null
+                  'title' => __('EMBL – Visual Framework', 'vfwp'),
+                  'icon'  => null
         )
-      ),
-      $categories
-    );
+      );
+    }
+    return $categories;
   }
 
   /**
