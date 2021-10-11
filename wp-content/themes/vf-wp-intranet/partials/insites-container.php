@@ -1,6 +1,6 @@
 
 <section
-  class="vf-news-container vf-news-container--featured | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
+  class="vf-news-container vf-news-container--featured | vf-u-margin__bottom--100 | vf-u-padding__top--400">
   <div class="vf-section-header">
     <a href="/internal-information/news"
       class="vf-section-header__heading vf-section-header__heading--is-link vf-u-margin__bottom--400">Internal news<svg
@@ -11,7 +11,8 @@
           fill="" fill-rule="nonzero"></path>
       </svg></a>
   </div>
-  <div class="vf-news-container__content vf-grid vf-grid__col-4">
+  <div class="vf-news-container__content">
+    <div class="vf-grid vf-grid__col-4">
     <?php
           $args = array(
             'post_type' => 'insites',
@@ -24,5 +25,6 @@
             include(locate_template('partials/vf-summary-insites-latest.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
+    </div>
   </div>
 </section>
