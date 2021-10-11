@@ -173,7 +173,7 @@ add_action(
 
   function insites_init_register() {
 
-    register_post_type('internal-news', array(
+    register_post_type('insites', array(
       'labels'              => insites_get_labels(),
       'description'         => __('Internal news', 'vfwp'),
       'public'              => true,
