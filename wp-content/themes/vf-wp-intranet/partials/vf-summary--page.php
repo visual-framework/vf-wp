@@ -1,6 +1,7 @@
 <?php
 
 $title = esc_html(get_the_title());
+$redirect_url = get_field('vf_wp_intranet_redirect');
 
 ?>
 <article class="vf-summary">
@@ -21,9 +22,14 @@ $title = esc_html(get_the_title());
       $content .= '...';
   }
   echo $content; ?></p>
+  <?php if (!empty($redirect_url)) { ?>
+  <div class="vf-summary__meta"><a href="<?php echo esc_url($redirect_url); ?>"
+      class="vf-summary__author vf-summary__link"><?php echo esc_url($redirect_url); ?></a></div> 
+  <?php }
+  else { ?>    
   <div class="vf-summary__meta"><a href="<?php the_permalink(); ?>"
       class="vf-summary__author vf-summary__link"><?php the_permalink(); ?></a></div>
-
+  <?php } ?>
 </article>
 
 

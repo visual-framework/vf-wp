@@ -19,10 +19,30 @@ $title = $vf_theme->get_title();
   </div>
 </section>
 
+<section
+  class="vf-news-container vf-news-container--featured | vf-u-margin__bottom--100 | vf-u-padding__top--400">
+  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Featured</h2>
+  <div class="vf-news-container__content vf-grid vf-grid__col-4">
+  <?php
+			$featured = new WP_Query (array(
+        'posts_per_page' => 4, 
+        'post_type' => 'internal-news', 
+        'meta_key' => 'featured',
+        'meta_value' => '1'  ));
+      $ids = array();
+    while ($featured->have_posts()) : $featured->the_post();
+      $ids[] = get_the_ID(); ?>
+    <?php include(locate_template('partials/vf-summary-insites-featured.php', false, false)); ?>
+    <?php endwhile;?>
+    <?php wp_reset_postdata(); ?>  </div>
+</section>
 
-<div
+<hr class="vf-divider">
+
+<section
   class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
-  <div></div>
+  <div>
+  </div>
   <form action="#eventsFilter" onsubmit="return false;"
     class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
     <div class="vf-sidebar__inner">
@@ -38,7 +58,7 @@ $title = $vf_theme->get_title();
       </button>
     </div>
   </form>
-</div>
+</section>
 
 <section class="embl-grid embl-grid--has-centered-content">
   <div>
@@ -104,27 +124,10 @@ $title = $vf_theme->get_title();
         <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
       </svg>
     </a></h3>
+    <p class="vf-card__text">Latest updates from EMBL's six sites</p>
 </div>
 </article>
   </div>
-</section>
-
-<section
-  class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
-  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Featured stories</h2>
-  <div class="vf-news-container__content vf-grid vf-grid__col-4">
-  <?php
-			$featured = new WP_Query (array(
-        'posts_per_page' => 4, 
-        'post_type' => 'internal-news', 
-        'meta_key' => 'featured',
-        'meta_value' => '1'  ));
-      $ids = array();
-    while ($featured->have_posts()) : $featured->the_post();
-      $ids[] = get_the_ID(); ?>
-    <?php include(locate_template('partials/vf-summary-insites.php', false, false)); ?>
-    <?php endwhile;?>
-    <?php wp_reset_postdata(); ?>  </div>
 </section>
 
 <script type="text/javascript">

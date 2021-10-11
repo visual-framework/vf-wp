@@ -91,7 +91,10 @@ function get_all_documents_posts() {
 	return $published_posts;
   }
 
-// Set cron
+/*
+ * Set cron for people data
+ */
+
 add_filter( 'cron_schedules', 'vfwp_intranet_add_cron_interval' );
 function vfwp_intranet_add_cron_interval( $schedules ) {
   $schedules['every_six_hours'] = array(
@@ -133,7 +136,10 @@ function vfwp_intranet_cron_process_people_data() {
   }
 }
 
-// Function to Insert/Update people records in WP.
+/*
+ * Function to Insert/Update people records in WP.
+ */
+
 function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_number) {
   $raw_content = file_get_contents($people_json_feed_api_endpoint . "&page=$page_number");
   $raw_content_decoded = json_decode($raw_content, true);
@@ -306,5 +312,68 @@ function sync_people_admin_page() {
 add_action( 'admin_menu', 'remove_comments_menu_page' );
 function remove_comments_menu_page() {
     remove_menu_page('edit-comments.php' );
+}
+
+/*
+ * Extend WordPress search to include custom fields
+ */
+
+// Join posts and postmeta tables
+// http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_join
+
+function cf_search_join( $join ) {
+  global $wpdb;
+
+  if ( is_search() ) {    
+      $join .=' LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
+  }
+
+  return $join;
+}
+add_filter('posts_join', 'cf_search_join' );
+
+
+// Modify the search query with posts_where
+// http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_where
+
+function cf_search_where( $where ) {
+  global $pagenow, $wpdb;
+
+  if ( is_search() ) {
+      $where = preg_replace(
+          "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+          "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+  }
+
+  return $where;
+}
+add_filter( 'posts_where', 'cf_search_where' );
+
+
+// Prevent duplicates
+// http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_distinct
+
+function cf_search_distinct( $where ) {
+  global $wpdb;
+
+  if ( is_search() ) {
+      return "DISTINCT";
+  }
+
+  return $where;
+}
+add_filter( 'posts_distinct', 'cf_search_distinct' );
+
+/*
+ * Redirect pages to external links
+ */
+
+add_action( 'template_redirect', 'redirect_externally' );
+function redirect_externally(){
+    $redirect = get_post_meta( get_the_ID(), 'vf_wp_intranet_redirect', true );
+    if (is_page()) {
+    if( $redirect ){
+        wp_redirect( $redirect );
+    } }
 }
 ?>

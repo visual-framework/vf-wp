@@ -44,7 +44,7 @@ $title = $vf_theme->get_title();
   <div>
     <?php include(locate_template('partials/events-filter.php', false, false)); ?>
   </div>
-  <div>
+  <div class="vf-content">
     <div class="vf-tabs">
       <ul class="vf-tabs__list | vf-u-margin__top--0" data-vf-js-tabs>
         <li class="vf-tabs__item">
@@ -117,7 +117,7 @@ $title = $vf_theme->get_title();
           $current_month = ""; ?>
           <?php while ($pastLoop->have_posts()) : $pastLoop->the_post();?>
           <?php
-          include(locate_template('partials/vf-summary-events.php', false, false)); ?>
+          include(locate_template('partials/vf-summary-events-past.php', false, false)); ?>
           <?php endwhile;?>
         </div>
       </section>
