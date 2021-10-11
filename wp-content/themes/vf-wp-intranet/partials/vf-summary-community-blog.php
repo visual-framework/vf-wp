@@ -3,17 +3,20 @@ $topic_terms = get_field('cb_topic');
 $locations = get_field('cb_embl_location');
 
 ?>
-<article class="vf-summary vf-summary--news" style="display: block; display: unset;">
+<article class="vf-summary vf-summary--news" data-jplist-item>
   <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
       title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h3>
-  <p class="vf-summary__text | vf-u-margin__top--600">
+  <?php if (is_post_type_archive('community-blog')) { ?>
+    <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
+  <?php } ?>
+  <p class="vf-summary__text | vf-u-margin__top--200">
     <?php if (($topic_terms)) { ?>
     <span class="vf-summary__category">
-      <span>
+      <span class="topic">
         <?php 
         if( $topic_terms ) {
           $topics_list = array(); 

@@ -76,11 +76,11 @@
                 echo '<p class="vf-summary__location | location">' . $event->field_event_location . '</p>';
 
                 // Abstract
-                if (!empty($event->field_event_summary)) {
-                echo '<details class="vf-details | vf-u-padding__left--0" close>
-                <summary class="vf-details--summary" style="font-size: 16px;">Show abstract</summary>
-                ' . $event->field_event_summary . '</details>';
-                }
+                // if (!empty($event->field_event_summary)) {
+                // echo '<details class="vf-details | vf-u-padding__left--0" close>
+                // <summary class="vf-details--summary" style="font-size: 16px;">Show abstract</summary>
+                // ' . $event->field_event_summary . '</details>';
+                // }
                 echo '</article>';
             }
         }
