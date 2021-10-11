@@ -1996,13 +1996,13 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-embed/-/vf-embed-1.1.2.tgz#b4d24768bcf49ec31f15f34b37b427beb7098e1b"
   integrity sha512-/ZRb6os6BivwRg7Ukao6DxFIns5pOW83DRL+A2sGblhJtZRMGs8SS5WfeX/BGH/TWX+8DfMaXrhBrAvCBi6Zhw==
 
-"@visual-framework/vf-extensions@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-1.0.0.tgz#2536411fac389d2a3eae611213d535a3cf1b50eb"
-  integrity sha512-kelKUUIkWbj0AvbHzwmr8t2Q0htkPkf1Go0QBYfvf/p5kdsdR4aSPCjrkSaGWgPwBQ1UxwoQNZ1siJmwoiOraQ==
+"@visual-framework/vf-extensions@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-1.0.1.tgz#3762fbce2eafafaa9b873e0ba5056aebdbffdc24"
+  integrity sha512-haYMD91JCPL0Ag2BXq+BbRu8X4Ps8q3p9VCEVzzZ+kKFEQQzlF0WCexcx1zWWnpe1aor2boSocGUP8NG6VUHTg==
   dependencies:
     "@11ty/eleventy-plugin-rss" "^1.0.7"
-    luxon "^1.22.2"
+    luxon "^2.0.0"
     touch "^3.1.0"
 
 "@visual-framework/vf-figure@^1.3.0":
@@ -7582,10 +7582,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-luxon@^1.22.2:
-  version "1.27.0"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.27.0.tgz#ae10c69113d85dab8f15f5e8390d0cbeddf4f00f"
-  integrity sha512-VKsFsPggTA0DvnxtJdiExAucKdAnwbCCNlMM5ENvHlxubqWd0xhZcdb4XgZ7QFNhaRhilXCFxHuoObP5BNA4PA==
+luxon@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.0.2.tgz#11f2cd4a11655fdf92e076b5782d7ede5bcdd133"
+  integrity sha512-ZRioYLCgRHrtTORaZX1mx+jtxKtKuI5ZDvHNAmqpUzGqSrR+tL4FVLn/CUGMA3h0+AKD1MAxGI5GnCqR5txNqg==
 
 magic-string@^0.25.7:
   version "0.25.7"
