@@ -109,7 +109,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "internal-news"
+                "value": "insites"
             }
         ]
     ],

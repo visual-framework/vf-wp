@@ -12,7 +12,7 @@ elseif($post_type == 'page') {
   //  border-color: #54585a;">Page</span>';
    include(locate_template('partials/vf-summary--page.php', false, false)); }
 
-elseif($post_type == 'internal-news') {
+elseif($post_type == 'insites') {
    include(locate_template('partials/vf-summary-insites-latest.php', false, false)); }
 
 elseif($post_type == 'documents') {

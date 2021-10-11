@@ -26,7 +26,7 @@ $title = $vf_theme->get_title();
   <?php
 			$featured = new WP_Query (array(
         'posts_per_page' => 4, 
-        'post_type' => 'internal-news', 
+        'post_type' => 'insites', 
         'meta_key' => 'featured',
         'meta_value' => '1'  ));
       $ids = array();
