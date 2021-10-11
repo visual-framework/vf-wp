@@ -1986,12 +1986,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-discussion/-/vf-discussion-1.0.1.tgz#c5c18f4a9d0db72ef98e1c2932622fa539d82d1e"
   integrity sha512-ywUAGYRxjsX/iXHnghHPN9dzM2GA1yeFzagfI9WW490mV4kgeflZXHOj/mY+bPFYl/orAWJmOru0j6Jun1d57Q==
 
-"@visual-framework/vf-divider@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-divider/-/vf-divider-2.0.0.tgz#1a23ebc5475be7f7e927c09ed2b6ce6e75e88fc0"
-  integrity sha512-TVRB3Jg6wcKZi7TlQvWjAX7nzGdS9kJTMtvOMWfyM8+rFnM8A+VZ32vkT+UXHGa/8Lxl5ccTsCCnHgsRZu2mgA==
-
-"@visual-framework/vf-divider@^2.0.1":
+"@visual-framework/vf-divider@2.0.1", "@visual-framework/vf-divider@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-divider/-/vf-divider-2.0.1.tgz#d9d426f9283b44b332f11bac6607504acc20c1b0"
   integrity sha512-qVoSxEE1lcXjqk8D5dYYDRql/f/cPf+f3oy4jHfSUN2LeEomOOGyUhIix0xzcWwy0MDimb5O/3WJE3p7L3Mcfg==
