@@ -1,4 +1,4 @@
-<section class="vf-summary-container">
+<section class="vf-summary-container | vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-padding__bottom--500">
   <div class="vf-section-header">
     <a href="/internal-information/seminars"
       class="vf-section-header__heading vf-section-header__heading--is-link">Seminars <svg
@@ -35,10 +35,10 @@
 
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
-            $newDate = date("D, j M Y, g:i a", strtotime($event->field_event_start_date_time));
+            $newDate = date("j M Y, g:i a", strtotime($event->field_event_start_date_time));
             $info = $event->field_event_additional_info;  
             
-                echo '<article class="vf-summary vf-summary--event">';
+                echo '<article class="vf-summary vf-summary--event | vf-u-padding--200">';
 
                 //Date
                 echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
