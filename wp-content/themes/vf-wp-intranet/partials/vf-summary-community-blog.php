@@ -14,8 +14,8 @@ $locations = get_field('cb_embl_location');
     <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
   <?php } ?>
   <p class="vf-summary__text | vf-u-margin__top--200">
-    <?php if (($topic_terms)) { ?>
     <span class="vf-summary__category">
+    <?php if (($topic_terms)) { ?>
       <span class="topic">
         <?php 
         if( $topic_terms ) {

@@ -81,11 +81,6 @@
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
-                <a class="vf-list__link" href="https://rooms.embl.de">
-                  Room reservation
-                </a>
-              </li>
-              <li class="vf-list__item">
                 <a class="vf-list__link" href="https://saperp.embl.de/nwbc">
                   SAP
                 </a>
@@ -95,17 +90,16 @@
                   Service request
                 </a>
               </li>
-
-            </ul>
-          </div>
-          <!-- 4 -->
-          <div>
-            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="https://staffassociation.embl.org/">
                   Staff Association
                 </a>
               </li>
+            </ul>
+          </div>
+          <!-- 4 -->
+          <div>
+            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/it-services/network-access-barcelona/">
@@ -175,7 +169,7 @@
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
-                <a class="vf-list__link" href="https://rooms.embl.de">
+                <a class="vf-list__link" href="https://booking.embl.fr/Web/view-schedule.php">
                   Room reservation
                 </a>
               </li>
@@ -280,7 +274,7 @@
               </li>
 
               <li class="vf-list__item">
-                <a class="vf-list__link" href="https://rooms.embl.de">
+                <a class="vf-list__link" href="https://rooms.embl.de/HH-OFFICES">
                   Room reservation
                 </a>
               </li>
@@ -495,7 +489,7 @@
               </li>
 
               <li class="vf-list__item">
-                <a class="vf-list__link" href="https://rooms.embl.de">
+                <a class="vf-list__link" href="https://rooms.embl.de/MR-ROOM">
                   Room reservation
                 </a>
               </li>

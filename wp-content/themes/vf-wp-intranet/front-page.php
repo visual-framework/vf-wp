@@ -77,12 +77,13 @@ $close_wrap,
 
 <?php include(locate_template('partials/events-container.php', false, false)); ?>
 
+<div>
 <?php 
 
 $vf_theme->the_content();
 
 ?>
-
+</div>
 
 
 <?php 

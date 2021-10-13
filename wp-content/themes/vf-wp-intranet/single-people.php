@@ -40,7 +40,7 @@ get_header();
         </p>
         <?php if (!empty($room)) { ?>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--100">
-        <span>Room:</span> <?php echo esc_html($room); ?>
+        <span>Location:</span> <?php echo esc_html($room); ?>
         </p>
         <?php } ?>
       <p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200"><?php echo esc_html($outstation); ?></p>
