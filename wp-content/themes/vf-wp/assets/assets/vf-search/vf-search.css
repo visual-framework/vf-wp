@@ -95,12 +95,12 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-search
- * Version: 3.0.0-alpha.0
+ * Version: 3.0.0-alpha.1
  * Location: components/undefined
  */
 /*!
 * Component: @visual-framework/vf-search
-* Version: 3.0.0-alpha.0
+* Version: 3.0.0-alpha.1
 * Location: components/undefined
 */
 .vf-form--search .vf-button {
@@ -110,23 +110,26 @@
   margin: calc(var(--vf-sidebar--spacing, 1rem) / 2);
 }
 .vf-form--search .vf-button__icon {
+  fill: #ffffff;
   height: 1em;
   width: 1em;
-  fill: white;
 }
 
 .vf-form--search.vf-sidebar {
-  --vf-sidebar-spacing: 1rem;
+  --vf-sidebar-spacing: 0.5rem;
   --vf-sidebar-main-width: 60%;
   overflow: visible;
 }
 .vf-form--search.vf-sidebar .vf-form__item {
   position: relative;
 }
+.vf-form--search.vf-sidebar .vf-form__item:last-of-type {
+  padding-right: 0.25rem;
+}
 .vf-form--search.vf-sidebar .vf-form__helper {
-  margin-left: calc(var(--vf-sidebar-spacing) / 2);
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
+  margin-left: calc(var(--vf-sidebar-spacing) / 2);
 }
 .vf-form--search.vf-sidebar > * {
   -webkit-box-align: center;
