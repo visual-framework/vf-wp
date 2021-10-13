@@ -20,7 +20,7 @@ function sortByStartDate($param1, $param2) {
     <?php if( ! empty( $data ) ) { ?>
 
     <section
-      class="vf-summary-container | vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-padding__bottom--500">
+      class="vf-summary-container | vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-margin__bottom--500">
       <div class="vf-section-header">
         <a href="/internal-information/seminars"
           class="vf-section-header__heading vf-section-header__heading--is-link">Seminars <svg
