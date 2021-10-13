@@ -1,38 +1,39 @@
-<section class="vf-summary-container | vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-padding__bottom--500">
-  <div class="vf-section-header">
-    <a href="/internal-information/seminars"
-      class="vf-section-header__heading vf-section-header__heading--is-link">Seminars <svg
-        class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-          fill="" fill-rule="nonzero"></path>
-      </svg></a>
-  </div>
-  <div class="vf-section-content | vf-u-margin__top--600">
-  <div class="vf-grid vf-grid__col-4 | vf-content">
     <?php
-        $request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today
-        ' );
-        if( is_wp_error( $request ) ) {
-            return false; // Bail early
-        }
-        $body = wp_remote_retrieve_body( $request );
-        $content = json_decode( $body );
+$request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today' );
+    if( is_wp_error( $request ) ) {
+        return false; }
+$body = wp_remote_retrieve_body( $request );
+$content = json_decode( $body );
 
-        // excludes Other - EBI seminars
-        foreach ($content as $key => $item) {
-            if($item->field_event_location == 'Other') {
-                unset($content[$key]);
-            }
-        }
+// excludes Other - EBI seminars
+foreach ($content as $key => $item) {
+    if($item->field_event_location == 'Other') {
+        unset($content[$key]);
+    }
+}
         
-        function sortByStartDate($param1, $param2) {
-            return strcmp($param1->field_event_start_date_time, $param2->field_event_start_date_time);
-        }
-        usort($content, "sortByStartDate");
-        $data = array_slice($content, 0, 4);
+function sortByStartDate($param1, $param2) {
+    return strcmp($param1->field_event_start_date_time, $param2->field_event_start_date_time); }
+    usort($content, "sortByStartDate");
+    $data = array_slice($content, 0, 4);
+    ?>
+    <?php if( ! empty( $data ) ) { ?>
 
+    <section
+      class="vf-summary-container | vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-padding__bottom--500">
+      <div class="vf-section-header">
+        <a href="/internal-information/seminars"
+          class="vf-section-header__heading vf-section-header__heading--is-link">Seminars <svg
+            class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+              fill="" fill-rule="nonzero"></path>
+          </svg></a>
+      </div>
+      <div class="vf-section-content | vf-u-margin__top--600">
+        <div class="vf-grid vf-grid__col-4 | vf-content">
+          <?php
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
             $newDate = date("j M Y, g:i a", strtotime($event->field_event_start_date_time));
@@ -86,6 +87,8 @@
         }
         ?>
 
-  </div>
-    </div>
-</section>
+        </div>
+      </div>
+    </section>
+    <?php } 
+    else  { ?> <hr class="vf-divider"> <?php } ?>  
