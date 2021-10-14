@@ -36,21 +36,20 @@ $topic_terms = get_terms(
     }
     ?>
   </fieldset>
+
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
   <legend class="vf-form__legend">Topic</legend>
+  <div class="vf-form__item vf-stack">
+  <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter" data-group="data-group-1" data-name="name2">
+  <option value="0" data-path="default">All</option>
     <?php
     foreach($topic_terms as $term) {
       ?>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="topic-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".topic" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="<?php echo esc_attr($term->slug); ?>"
-        data-id="name<?php echo $counter; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
-      <label for="topic-<?php echo $counter; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?></label>
+      <option  
+        data-path=".<?php echo esc_attr($term->slug); ?>" 
+        value="<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></option>
+      <?php } ?>
+    </select>
     </div>
-    <?php
-      $counter++;
-    }
-    ?>
   </fieldset>
 </form>
