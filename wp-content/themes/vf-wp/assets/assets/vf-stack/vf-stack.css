@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-stack
- * Version: 2.1.1
+ * Version: 2.1.2
  * Location: components/undefined
  */
 /*
@@ -109,7 +109,7 @@
  *
  * notes:
  * a: We are using `!important` here because some components have
- *    margin set that we need to overide.
+ *    margin set that we need to override.
  * b: We can probably remove the custom property when all components
  *    have been purged of margin-bottom too.
  *
@@ -154,4 +154,12 @@
 
 .vf-stack--1600 > * + * {
   --vf-stack-margin: 4rem;
+}
+
+.vf-stack > :not(.vf-hero) + .vf-u-fullbleed:not(.vf-hero):not(.ebi-header-footer) {
+  margin-top: 3rem !important;
+}
+
+.vf-stack > .vf-hero + .vf-u-fullbleed {
+  margin-top: unset !important;
 }
