@@ -14,14 +14,14 @@ $locations = get_field('cb_embl_location');
     <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
   <?php } ?>
   <p class="vf-summary__text | vf-u-margin__top--200">
-    <?php if (($topic_terms)) { ?>
     <span class="vf-summary__category">
+    <?php if (($topic_terms)) { ?>
       <span class="topic">
         <?php 
         if( $topic_terms ) {
           $topics_list = array(); 
           foreach( $topic_terms as $term ) {
-            $topics_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</span>'; }
+            $topics_list[] = '<a class="vf-link ' . esc_attr( $term->slug ) . '"style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</a>'; }
             echo implode(', ', $topics_list); }?>
       </span>
       <?php } 

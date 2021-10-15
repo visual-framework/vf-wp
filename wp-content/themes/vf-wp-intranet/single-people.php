@@ -40,7 +40,7 @@ get_header();
         </p>
         <?php if (!empty($room)) { ?>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--100">
-        <span>Room:</span> <?php echo esc_html($room); ?>
+        <span>Location:</span> <?php echo esc_html($room); ?>
         </p>
         <?php } ?>
       <p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200"><?php echo esc_html($outstation); ?></p>
@@ -129,20 +129,22 @@ get_header();
 
 
 <!-- PUBLICATIONS -->
-<section class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-centered-content | publications-container">
 <div class="vf-section-header">
   <h2 class="vf-section-header__heading">Publications</h2>
 </div>
   <div class="embl-content-hub-loader">
-  <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&orcid=<?php echo $orcid; ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader>
-
-
+  <?php if (!empty($orcid)) { ?>
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&orcid=<?php echo $orcid; ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader-no-content-hide=".publications-container" data-embl-js-content-hub-loader>
+    <?php }
+  else  { ?>
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&title=<?php echo get_the_title(); ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader-no-content-hide=".publications-container" data-embl-js-content-hub-loader>
+    <?php } ?>
   </div>
   <div>
     <!-- empty -->
   </div>
 </section>
-
 
 <?php 
 

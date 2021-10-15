@@ -73,20 +73,17 @@ $close_wrap,
 
 <?php include(locate_template('partials/community-blog-container.php', false, false)); ?>
 
-<hr class="vf-divider">
-
 <?php include(locate_template('partials/seminars-container.php', false, false)); ?>
-
-<hr class="vf-divider">
 
 <?php include(locate_template('partials/events-container.php', false, false)); ?>
 
+<div>
 <?php 
 
 $vf_theme->the_content();
 
 ?>
-
+</div>
 
 
 <?php 

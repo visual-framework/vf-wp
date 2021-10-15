@@ -70,7 +70,7 @@ else {
     </a>
     <?php } ?>
   </h3>
-  <?php if (!is_front_page()) { ?>
+  <?php if (is_post_type_archive('events')) { ?>
     <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
   <?php } ?>
   <?php if ( ! empty($locations)) { ?>

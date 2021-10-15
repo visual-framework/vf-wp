@@ -21,7 +21,7 @@ $locations = get_field('embl_location');
         if( $topic_terms ) {
           $topics_list = array(); 
           foreach( $topic_terms as $term ) {
-            $topics_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</span>'; }
+            $topics_list[] = '<a class="' . esc_attr( $term->slug ) . '"style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</a>'; }
             echo implode(', ', $topics_list); }?>
     </span>
     <?php } 

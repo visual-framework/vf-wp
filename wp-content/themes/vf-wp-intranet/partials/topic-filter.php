@@ -9,13 +9,6 @@ $embl_location_terms = get_terms(
   )
 );
 
-// Get all "Topic" terms
-$topic_terms = get_terms(
-    array(
-      'taxonomy'   => 'topic',
-      'hide_empty' => false,
-    )
-  );
 ?>
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
@@ -25,7 +18,7 @@ $topic_terms = get_terms(
       <input id="location-1" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="all"
-        data-id="name1-all" class="vf-form__checkbox" checked>
+        data-id="name1-all" class="vf-form__checkbox">
       <label for="location-1" class="vf-form__label">All EMBL Sites</label>
     </div>
 
@@ -43,21 +36,5 @@ $topic_terms = get_terms(
       $counter++;
     }
     ?>
-  </fieldset>
-
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-  <legend class="vf-form__legend">Topic</legend>
-  <div class="vf-form__item vf-stack">
-  <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter" data-group="data-group-1" data-name="name2">
-  <option value="0" data-path="default">All</option>
-    <?php
-    foreach($topic_terms as $term) {
-      ?>
-      <option  
-        data-path=".<?php echo esc_attr($term->slug); ?>" 
-        value="<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></option>
-      <?php } ?>
-    </select>
-    </div>
   </fieldset>
 </form>
