@@ -45,7 +45,7 @@ function sortByStartDate($param1, $param2) {
                 echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
                 echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;"><a href="https://seminarlist.embl.de/rest/calendar?seminarID=' . substr($event->field_event_unique_identifier, strpos($event->field_event_unique_identifier, "-") + 1) . '&origin=intranet.embl.de">Add to calendar</a></span></p>';
                 //Title
-                echo '<h3 class="vf-summary__title">';
+                echo '<h3 class="vf-summary__title" style="font-size: 19px;">';
 
                 //Link
                 if (!empty($event->field_event_more_information)) {
@@ -71,7 +71,7 @@ function sortByStartDate($param1, $param2) {
                 // echo '<span>' . substr($newinfo, strpos($newinfo, 'Place'));'</span></p>';
 
                 // Seminar type
-                echo '<p class="vf-summary__text | vf-text-heading--5 | type">' . strstr($info, '<', true) . '</p>';
+                echo '<p class="vf-summary__text | type" style="font-size: 16px; font-weight: 500;">' . strstr($info, '<', true) . '</p>';
 
                 // Location
                 echo '<p class="vf-summary__location | location">' . $event->field_event_location . '</p>';
