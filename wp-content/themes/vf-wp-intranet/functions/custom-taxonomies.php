@@ -90,7 +90,7 @@ add_action(
       'query_var'          => true,
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
-      'rewrite'            => false,
+      'rewrite'            => array( 'slug' => 'topic' ),
       'show_in_rest'       => false,
     ));
   }

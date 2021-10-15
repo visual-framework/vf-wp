@@ -81,7 +81,7 @@ if (is_tag()){
   echo '</nav>';
 
 }
-/*
+
 // topic taxonomy
 if (is_tax('topic')){
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
@@ -92,6 +92,8 @@ if (is_tax('topic')){
   echo '</nav>';
 
 }
+
+/*
 
 // embl location taxonomy
 if (is_tax('embl-location')){
