@@ -1080,7 +1080,9 @@ function vfTabs(scope) {
       }
     }
 
-    newTab.focus(); // Make the active tab focusable by the user (Tab key)
+    newTab.focus({
+      preventScroll: true
+    }); // Make the active tab focusable by the user (Tab key)
 
     newTab.removeAttribute("tabindex"); // Set the selected state
 
@@ -1128,7 +1130,9 @@ function vfTabs(scope) {
         e.preventDefault(); // If the down key is pressed, move focus to the open panel,
         // otherwise switch to the adjacent tab
 
-        dir === "down" ? panels[i].focus() : tabs[dir] ? switchTab(tabs[dir]) : void 0;
+        dir === "down" ? panels[i].focus({
+          preventScroll: true
+        }) : tabs[dir] ? switchTab(tabs[dir]) : void 0;
       }
     });
   }); // Add tab panel semantics and hide them all
@@ -1211,17 +1215,17 @@ function vfLocationNearestDetect(locationsList) {
  * Receive a location and process it against a user location if any.
  * @example vfLocationNearestResolve(locationsList, userLocation)
  * @param {object} [locationsList] - An object of locations
- * @param {object} [userLocation] - An obhject with .latitude and .lognitude
+ * @param {object} [userLocation] - An object with .latitude and .longitude
  */
 
 
 function vfLocationNearestResolve(locationsList, userLocation) {
   // console.log(locationsList, userLocation);
-  console.log("user at", userLocation.latitude + ", " + userLocation.longitude); // Determing which location is closest using circles
+  // console.log("user at",userLocation.latitude + ", " + userLocation.longitude);
+  // Determine which location is closest using circles
   // https://stackoverflow.com/questions/21279559/geolocation-closest-locationlat-long-from-my-position/21297385#21297385
-
   function calculateNearestCity(latitude, longitude) {
-    // Convert Degress to Radians
+    // Convert Degrees to Radians
     function Deg2Rad(deg) {
       return deg * Math.PI / 180;
     }

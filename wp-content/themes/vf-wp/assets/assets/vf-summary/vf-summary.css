@@ -103,7 +103,7 @@
 
 /*!
  * Component: @visual-framework/vf-summary
- * Version: 1.5.1
+ * Version: 1.6.0
  * Location: components/undefined
  */
 .vf-summary {
@@ -125,27 +125,6 @@
 }
 .vf-summary > *:last-child {
   margin-bottom: 0;
-}
-.vf-box .vf-summary .vf-summary__title {
-  color: inherit;
-}
-.vf-box .vf-summary .vf-summary__link {
-  color: inherit;
-}
-.vf-box .vf-summary .vf-summary__date {
-  color: inherit;
-}
-.vf-box .vf-summary .vf-summary__text {
-  color: inherit;
-}
-.vf-box .vf-summary .vf-summary__source {
-  color: inherit;
-}
-.vf-box .vf-summary .vf-summary__author {
-  color: inherit;
-}
-.vf-box .vf-summary .vf-link {
-  color: inherit;
 }
 
 .vf-summary__category {

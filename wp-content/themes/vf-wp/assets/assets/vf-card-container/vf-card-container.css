@@ -95,13 +95,15 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card-container
- * Version: 3.1.2
+ * Version: 3.2.0
  * Location: components/undefined
  */
 .vf-card-container {
   grid-column: 1/-1;
-  margin: 0 0 3rem 0;
+  margin: 0 0 2rem 0;
+  margin: 0 0 calc(var(--page-grid-gap)) 0;
   padding: 2rem 0;
+  padding: var(--page-grid-gap) 0;
 }
 
 .vf-card-container__inner {
@@ -119,7 +121,7 @@
   .vf-card-container__inner {
     --vf-card-container__grid--size: 18rem;
     display: grid;
-    gap: var(--page-grid-gap);
+    gap: calc(var(--page-grid-gap) / 2) var(--page-grid-gap);
     grid-template-columns: repeat(auto-fit, minmax(var(--vf-card-container__grid--size--overide, var(--vf-card-container__grid--size)), 1fr));
     margin: 0 auto;
     max-width: 80em;
@@ -146,6 +148,21 @@
 }
 @supports (display: grid) {
   .vf-card-container__inner .vf-card {
+    margin-bottom: unset;
+    width: unset;
+  }
+}
+
+@supports (display: grid) {
+  .vf-card-container__col-4 .vf-card-container__inner {
+    --vf-card-container__grid--size: 18rem;
+  }
+}
+.vf-card-container__col-4 .vf-card-container__inner .vf-card {
+  width: 24%;
+}
+@supports (display: grid) {
+  .vf-card-container__col-4 .vf-card-container__inner .vf-card {
     margin-bottom: unset;
     width: unset;
   }
