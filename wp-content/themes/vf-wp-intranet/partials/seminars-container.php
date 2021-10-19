@@ -18,9 +18,19 @@ function sortByStartDate($param1, $param2) {
     $data = array_slice($content, 0, 4);
     ?>
     <?php if( ! empty( $data ) ) { ?>
-
+        <style>
+.seminars-container::before {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-02-scaled.jpg);
+  background-position: 50%;
+  background-size: cover;
+}
+.seminars-container .vf-section-header__heading,
+.seminars-container .vf-section-header__subheading {
+  color: #fff;
+}
+</style>
     <section
-      class="vf-summary-container | vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-margin__bottom--500">
+      class="vf-summary-container | vf-u-fullbleed | seminars-container vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500" style="margin-top: 0 !important;">
       <div class="vf-section-header">
         <a href="/internal-information/seminars"
           class="vf-section-header__heading vf-section-header__heading--is-link">Seminars <svg
@@ -39,13 +49,13 @@ function sortByStartDate($param1, $param2) {
             $newDate = date("j M Y, g:i a", strtotime($event->field_event_start_date_time));
             $info = $event->field_event_additional_info;  
             
-                echo '<article class="vf-summary vf-summary--event | vf-u-padding--200">';
-
+                echo '<article class="vf-card vf-card--brand vf-card--bordered | vf-u-padding--200">';
+                echo '<div class="vf-summary vf-summary--event | vf-u-margin__bottom--0">';
                 //Date
-                echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
+                echo '<p class="vf-summary__date" style="margin-bottom: 12px !important;">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
                 echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;"><a href="https://seminarlist.embl.de/rest/calendar?seminarID=' . substr($event->field_event_unique_identifier, strpos($event->field_event_unique_identifier, "-") + 1) . '&origin=intranet.embl.de">Add to calendar</a></span></p>';
                 //Title
-                echo '<h3 class="vf-summary__title" style="font-size: 19px;">';
+                echo '<h3 class="vf-summary__title" style="font-size: 18px;">';
 
                 //Link
                 if (!empty($event->field_event_more_information)) {
@@ -82,6 +92,7 @@ function sortByStartDate($param1, $param2) {
                 // <summary class="vf-details--summary" style="font-size: 16px;">Show abstract</summary>
                 // ' . $event->field_event_summary . '</details>';
                 // }
+                echo '</div>';
                 echo '</article>';
             }
         }
