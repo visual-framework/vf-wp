@@ -22,7 +22,7 @@
           );
           $featured = new WP_Query ($args);
             while ($featured->have_posts()) : $featured->the_post(); 
-            include(locate_template('partials/vf-summary-insites-latest.php', false, false)); ?>
+            include(locate_template('partials/vf-summary-insites-featured.php', false, false)); ?>
     <?php endwhile;?>
     <?php wp_reset_postdata(); ?>
     </div>

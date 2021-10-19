@@ -381,20 +381,29 @@ function redirect_externally(){
  * Search results post type order
  */
 
-function order_search_by_posttype($orderby){
-  if (!is_admin() && is_search()) :
-      global $wpdb;
-      $orderby =
-          "
-          CASE WHEN {$wpdb->prefix}posts.post_type = 'page' THEN '1' 
-               WHEN {$wpdb->prefix}posts.post_type = 'documents' THEN '2' 
-               WHEN {$wpdb->prefix}posts.post_type = 'people' THEN '3' 
-               WHEN {$wpdb->prefix}posts.post_type = 'insites' THEN '4' 
-               WHEN {$wpdb->prefix}posts.post_type = 'events' THEN '5' 
-          ELSE {$wpdb->prefix}posts.post_type END ASC, 
-          {$wpdb->prefix}posts.post_title ASC";
-  endif;
-  return $orderby;
-}
-add_filter('posts_orderby', 'order_search_by_posttype');
+// function order_search_by_posttype($orderby){
+//   if (!is_admin() && is_search()) :
+//       global $wpdb;
+//       $orderby =
+//           "
+//           CASE WHEN {$wpdb->prefix}posts.post_type = 'page' THEN '1' 
+//                WHEN {$wpdb->prefix}posts.post_type = 'documents' THEN '2' 
+//                WHEN {$wpdb->prefix}posts.post_type = 'people' THEN '3' 
+//                WHEN {$wpdb->prefix}posts.post_type = 'insites' THEN '4' 
+//                WHEN {$wpdb->prefix}posts.post_type = 'events' THEN '5' 
+//           ELSE {$wpdb->prefix}posts.post_type END ASC, 
+//           {$wpdb->prefix}posts.post_title ASC";
+//   endif;
+//   return $orderby;
+// }
+// add_filter('posts_orderby', 'order_search_by_posttype');
+
+// function be_change_event_posts_per_page( $query ) {
+	
+// 	if( $query->is_search() && !is_admin() ) {
+// 		$query->set( 'orderby', 'relevance' );
+// 	}
+
+// }
+// add_action( 'pre_get_posts', 'be_change_event_posts_per_page' );
 ?>
