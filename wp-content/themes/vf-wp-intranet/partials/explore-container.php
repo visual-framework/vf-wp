@@ -36,6 +36,6 @@
         </div>
       </form>
     </div>
-    <p class="vf-text-body vf-text-body--5">Directories: <span><a href="/internal-information/documents">Documents</a></span>, <span><a href="/internal-information/people">People</a></span>, <span><a href="/internal-information/seminars">Seminars</a></span></p>
+    <p class="vf-text-body vf-text-body--5">Directories: <span><a href="/internal-information/documents">Documents</a></span> | <span><a href="/internal-information/people">People</a></span> | <span><a href="/internal-information/seminars">Seminars</a></span></p>
   </div>
 </section>
