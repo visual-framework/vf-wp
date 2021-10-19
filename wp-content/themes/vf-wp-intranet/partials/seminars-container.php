@@ -25,7 +25,8 @@ function sortByStartDate($param1, $param2) {
   background-size: cover;
 }
 .seminars-container .vf-section-header__heading,
-.seminars-container .vf-section-header__subheading {
+.seminars-container .vf-section-header__subheading,
+.seminars-container .vf-section-header__heading--is-link:hover {
   color: #fff;
 }
 </style>

@@ -38,6 +38,12 @@
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
+                <a class="vf-list__link"
+                  href="https://www.embl.org/internal-information/administration/administration-in-barcelona/">
+                  Administration
+                </a>
+              </li>
+              <li class="vf-list__item">
                 <a class="vf-list__link" href="https://www.embl.org/internal-information/coronavirus/">
                   COVID-19 Information
                 </a>
@@ -48,31 +54,26 @@
                   Design resources
                 </a>
               </li>
-              <li class="vf-list__item">
-                <a class="vf-list__link" href="http://gcal.embl.de/">
-                  EMBL Calendar
-                </a>
-              </li>
             </ul>
           </div>
           <!-- 2 -->
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
-                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
-                  EMBL Programme
+                <a class="vf-list__link" href="http://gcal.embl.de/">
+                  EMBL Calendar
                 </a>
               </li>
 
               <li class="vf-list__item">
-                <a class="vf-list__link"
-                  href="https://www.embl.org/internal-information/human-resources/health-insurance/">
-                  Health insurance
+                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
+                  EMBL Programme
                 </a>
               </li>
               <li class="vf-list__item">
-                <a class="vf-list__link" href="https://ppms.embl.de/start/">
-                  PPMS
+                <a class="vf-list__link"
+                  href="https://www.embl.org/internal-information/human-resources/health-insurance/">
+                  Health insurance
                 </a>
               </li>
             </ul>
@@ -80,6 +81,11 @@
           <!-- 3 -->
           <div>
             <ul class="vf-list">
+              <li class="vf-list__item">
+                <a class="vf-list__link" href="https://ppms.embl.de/start/">
+                  PPMS
+                </a>
+              </li>
               <li class="vf-list__item">
                 <a class="vf-list__link" href="https://saperp.embl.de/nwbc">
                   SAP
@@ -90,16 +96,16 @@
                   Service request
                 </a>
               </li>
-              <li class="vf-list__item">
-                <a class="vf-list__link" href="https://staffassociation.embl.org/">
-                  Staff Association
-                </a>
-              </li>
             </ul>
           </div>
           <!-- 4 -->
           <div>
             <ul class="vf-list">
+              <li class="vf-list__item">
+                <a class="vf-list__link" href="https://staffassociation.embl.org/">
+                  Staff Association
+                </a>
+              </li>
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/it-services/network-access-barcelona/">
@@ -121,6 +127,12 @@
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
+                <a class="vf-list__link"
+                  href="https://www.embl.org/internal-information/administration/administration-in-grenoble/">
+                  Administration
+                </a>
+              </li>
+              <li class="vf-list__item">
                 <a class="vf-list__link" href="https://www.embl.org/internal-information/coronavirus/">
                   COVID-19 Information
                 </a>
@@ -136,16 +148,16 @@
                   EMBL Calendar
                 </a>
               </li>
-              <li class="vf-list__item">
-                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
-                  EMBL Programme
-                </a>
-              </li>
             </ul>
           </div>
           <!-- 2 -->
           <div>
             <ul class="vf-list">
+              <li class="vf-list__item">
+                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
+                  EMBL Programme
+                </a>
+              </li>
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/human-resources/health-insurance/">
@@ -184,16 +196,16 @@
                   Service request
                 </a>
               </li>
-            </ul>
-          </div>
-          <!-- 4 -->
-          <div>
-            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="https://staffassociation.embl.org/">
                   Staff Association
                 </a>
               </li>
+            </ul>
+          </div>
+          <!-- 4 -->
+          <div>
+            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/it-services/network-access-grenoble/">
@@ -220,6 +232,12 @@
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
+                <a class="vf-list__link"
+                  href="https://www.embl.org/internal-information/administration/administration-in-hamburg/">
+                  Administration
+                </a>
+              </li>
+              <li class="vf-list__item">
                 <a class="vf-list__link" href="https://www.embl.org/internal-information/coronavirus/">
                   COVID-19 Information
                 </a>
@@ -235,16 +253,17 @@
                   EMBL Calendar
                 </a>
               </li>
-              <li class="vf-list__item">
-                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
-                  EMBL Programme
-                </a>
-              </li>
             </ul>
           </div>
           <!-- 2 -->
           <div>
             <ul class="vf-list">
+              <li class="vf-list__item">
+                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
+                  EMBL Programme
+                </a>
+              </li>
+
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/human-resources/health-insurance/">
@@ -283,23 +302,21 @@
                   SAP
                 </a>
               </li>
-
+              <li class="vf-list__item">
+                <a class="vf-list__link" href="https://itsupport.embl.de/index.php?/Tickets/Submit">
+                  Service request
+                </a>
+              </li>
             </ul>
           </div>
           <!-- 4 -->
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
-                <a class="vf-list__link" href="https://itsupport.embl.de/index.php?/Tickets/Submit">
-                  Service request
-                </a>
-              </li>
-              <li class="vf-list__item">
                 <a class="vf-list__link" href="https://staffassociation.embl.org/">
                   Staff Association
                 </a>
               </li>
-
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/it-services/network-access-hamburg/">
@@ -435,6 +452,12 @@
           <div>
             <ul class="vf-list">
               <li class="vf-list__item">
+                <a class="vf-list__link"
+                  href="https://www.embl.org/internal-information/administration/administration-in-rome/">
+                  Administration
+                </a>
+              </li>
+              <li class="vf-list__item">
                 <a class="vf-list__link" href="https://www.embl.org/internal-information/coronavirus/">
                   COVID-19 Information
                 </a>
@@ -448,11 +471,6 @@
               <li class="vf-list__item">
                 <a class="vf-list__link" href="http://gcal.embl.de/">
                   EMBL Calendar
-                </a>
-              </li>
-              <li class="vf-list__item">
-                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
-                  EMBL Programme
                 </a>
               </li>
             </ul>
@@ -477,17 +495,17 @@
                   Owncloud
                 </a>
               </li>
-            </ul>
-          </div>
-          <!-- 3 -->
-          <div>
-            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="https://ppms.embl.de/start/">
                   PPMS
                 </a>
               </li>
 
+            </ul>
+          </div>
+          <!-- 3 -->
+          <div>
+            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="https://rooms.embl.de/MR-ROOM">
                   Room reservation
@@ -498,12 +516,6 @@
                   SAP
                 </a>
               </li>
-
-            </ul>
-          </div>
-          <!-- 4 -->
-          <div>
-            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/it-services/network-access-heidelberg/">
@@ -515,12 +527,16 @@
                   Service request
                 </a>
               </li>
+            </ul>
+          </div>
+          <!-- 4 -->
+          <div>
+            <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link" href="https://staffassociation.embl.org/">
                   Staff Association
                 </a>
               </li>
-
             </ul>
           </div>
           <div>
