@@ -203,7 +203,7 @@
       -ms-flex: var(--vf-cluster__item--flex);
           flex: var(--vf-cluster__item--flex);
   margin: 1rem;
-  margin: calc( var(--vf-cluster-margin) / 2) !important;
+  margin: calc(var(--vf-cluster-margin) / 2) !important;
 }
 
 .vf-cluster--400 > * {
@@ -220,7 +220,7 @@
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 3.0.0-beta.1
+ * Version: 3.0.0-beta.2
  * Location: components/undefined
  */
 .vf-navigation__item [aria-current=page] {

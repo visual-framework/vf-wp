@@ -34,7 +34,7 @@ get_header();
         if( $topic_terms ) {
           $topics_list = array(); 
           foreach( $topic_terms as $term ) {
-            $topics_list[] = '<a class="vf-link" style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . strtoupper(esc_html( $term->name )) . '</a>'; }
+            $topics_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</span>'; }
             echo implode(', ', $topics_list); } ?>
         </p>
         <?php }

@@ -3,6 +3,32 @@
     "title": "Latest Posts",
     "fields": [
         {
+            "key": "field_614da0994c7eb",
+            "label": "Post type",
+            "name": "post_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "post": "Post",
+                "insites": "Internal news (intranet only)",
+                "community-blog": "Community blog (intranet only)"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
             "key": "field_5f3fb86736d90",
             "label": "Layout",
             "name": "layout",
@@ -137,7 +163,49 @@
             "type": "true_false",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "post"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_6166f38238b98",
+            "label": "Show topics",
+            "name": "show_topics",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "insites"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "community-blog"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -176,13 +244,58 @@
             "type": "taxonomy",
             "instructions": "Display the posts by a category",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "post"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
             "taxonomy": "category",
+            "field_type": "multi_select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_6166f0d01d927",
+            "label": "Topic",
+            "name": "topic",
+            "type": "taxonomy",
+            "instructions": "Display the posts by a topic",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "insites"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "community-blog"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "topic",
             "field_type": "multi_select",
             "allow_null": 1,
             "add_term": 0,
@@ -250,5 +363,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Latest News ACF Gutenberg block",
-    "modified": 1610707866
+    "modified": 1634208264
 }

@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
 * Component: @visual-framework/vf-table
-* Version: 1.2.0-rc.2
+* Version: 1.2.0-rc.3
 * Location: components/undefined
 */
 .vf-table {
@@ -146,11 +146,11 @@
   padding: 2px;
 }
 .vf-table__button--sortable:hover svg {
-  fill: #54585A;
+  fill: #54585a;
 }
 
 .vf-table__button--sorted-bottom #vf-table--sortable-top-arrow {
-  fill: #54585A;
+  fill: #54585a;
 }
 .vf-table__button--sorted-bottom #vf-table--sortable-bottom-arrow {
   opacity: 0;
@@ -160,7 +160,7 @@
   opacity: 0;
 }
 .vf-table__button--sorted-top #vf-table--sortable-bottom-arrow {
-  fill: #54585A;
+  fill: #54585a;
 }
 
 .vf-table__cell {
@@ -192,7 +192,7 @@
 }
 
 .vf-table__body .vf-table__row:not(.vf-table__row--selected):hover {
-  background-color: #fffadc;
+  background-color: #d1e3f6;
 }
 
 .vf-table__label {
@@ -214,7 +214,7 @@
 }
 
 .vf-table__row--selected {
-  background-color: #3b6fb6;
+  background-color: #d1e3f6;
   color: #ffffff;
 }
 .vf-table__row--selected .vf-button {

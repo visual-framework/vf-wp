@@ -10,10 +10,10 @@ $is_container = (bool) $is_container;
 $title = get_the_title();
 
 $limit = get_field('limit');
-
+$post_type = get_field('post_type');
+$show_topics = get_field('show_topics');
 $heading_singular = get_field('heading_singular');
 $heading_singular = trim($heading_singular);
-
 $heading_text = get_field('heading_text');
 
 $layout = get_field('layout');
@@ -29,6 +29,9 @@ $show_categories = get_field('show_categories');
 if (empty($heading_singular)) {
   $heading_singular = __('Latest posts', 'vfwp');
 }
+if (empty($post_type)) {
+  $post_type = 'post';
+}
 
 $latest_posts = get_posts(array(
   'posts_per_page' => 3
@@ -41,10 +44,6 @@ if (count($latest_posts)) {
   $post = $latest_posts[0];
   setup_postdata($post);
 
-  $excerpt = apply_filters(
-    'get_the_excerpt',
-    $post->post_content
-  );
 
 $vf_grid = '';
 $embl_grid = '';

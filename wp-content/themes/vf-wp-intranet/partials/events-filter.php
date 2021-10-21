@@ -4,23 +4,16 @@ $counter = 1;
 // Get all "location" terms
 $embl_location_terms = get_terms(
   array(
-    'taxonomy'   => 'embl-location',
+    'taxonomy'   => 'event-location',
     'hide_empty' => false,
   )
 );
 
-// Get all "Topic" terms
-$topic_terms = get_terms(
-    array(
-      'taxonomy'   => 'topic',
-      'hide_empty' => false,
-    )
-  );
 ?>
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-  <legend class="vf-form__legend">EMBL site</legend>
+  <legend class="vf-form__legend">Location</legend>
     <?php
     foreach($embl_location_terms as $term) {
       ?>

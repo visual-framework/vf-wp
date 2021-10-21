@@ -377,14 +377,13 @@
 
 /*!
  * Component: @visual-framework/vf-activity-list
- * Version: 1.0.0-alpha.10
+ * Version: 1.0.0-alpha.11
  * Location: components/undefined
  */
-.vf-activity {
+html:not(.vf-disable-deprecated) .vf-activity {
   margin-bottom: 54px;
 }
-
-.vf-activity__date {
+html:not(.vf-disable-deprecated) .vf-activity__date {
   margin: 0 0 32px 0;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
@@ -394,12 +393,10 @@
   margin: 0 0 16px 0;
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
 }
-
-.vf-activity__list {
+html:not(.vf-disable-deprecated) .vf-activity__list {
   padding: 0;
 }
-
-.vf-activity__item {
+html:not(.vf-disable-deprecated) .vf-activity__item {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   color: #1a1c1a;
@@ -412,26 +409,25 @@
   border: 1px solid #707372;
   padding: 22px 16px;
 }
-.vf-activity__item > a {
+html:not(.vf-disable-deprecated) .vf-activity__item > a {
   border-bottom: none;
   text-decoration: none;
   color: #3b6fb6;
 }
-.vf-activity__item > a:visited {
+html:not(.vf-disable-deprecated) .vf-activity__item > a:visited {
   color: #563d82;
   border-bottom: none;
 }
-.vf-activity__item > a:visited:hover {
+html:not(.vf-disable-deprecated) .vf-activity__item > a:visited:hover {
   color: #563d82;
   text-decoration: underline;
 }
-.vf-activity__item > a:hover {
+html:not(.vf-disable-deprecated) .vf-activity__item > a:hover {
   color: #193f90;
   border-bottom: none;
   text-decoration: underline;
 }
-
-.vf-activity__blockquote {
+html:not(.vf-disable-deprecated) .vf-activity__blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: #373a36;
@@ -446,15 +442,14 @@
 
 /*!
  * Component: @visual-framework/vf-activity-group
- * Version: 1.0.0-alpha.11
+ * Version: 1.0.0-alpha.12
  * Location: components/undefined
  */
-.vf-activity-group {
+html:not(.vf-disable-deprecated) .vf-activity-group {
   background-color: #d0d0ce;
   grid-column: 1/-1;
 }
-
-.vf-activity-group__heading {
+html:not(.vf-disable-deprecated) .vf-activity-group__heading {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 21px;
   color: #1a1c1a;
@@ -464,7 +459,6 @@
   margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 16px 0;
 }
-
-.vf-activity {
+html:not(.vf-disable-deprecated) .vf-activity {
   grid-column: 2/auto;
 }

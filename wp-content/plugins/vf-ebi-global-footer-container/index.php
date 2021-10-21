@@ -108,9 +108,9 @@ class VF_EBI_Global_Footer extends VF_Plugin {
     }
     wp_enqueue_script(
       'ebi-framework--defer',
-      'https://dev.ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.3/js/script.js',
+      'https://ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js',
       false,
-      'v1.3',
+      'v1.4',
       true
     );
     // wp_enqueue_style(
@@ -132,7 +132,7 @@ class VF_EBI_Global_Footer extends VF_Plugin {
     );
     wp_enqueue_style(
       'ebi-fonts',
-      'https://dev.ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css',
+      'https://ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css',
       array(),
       'v1.3',
       'all'

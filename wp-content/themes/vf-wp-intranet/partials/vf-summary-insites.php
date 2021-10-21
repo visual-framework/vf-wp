@@ -11,6 +11,9 @@ $locations = get_field('embl_location');
   <p class="vf-summary__text">
     <?php echo get_the_excerpt(); ?>
   </p>
+  <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
+      title="<?php the_time('c'); ?>"
+      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
   <p class="vf-summary__meta | vf-u-margin__bottom--200">
     <?php if (($topic_terms)) { ?>
     <span class="topic">
@@ -18,7 +21,7 @@ $locations = get_field('embl_location');
         if( $topic_terms ) {
           $topics_list = array(); 
           foreach( $topic_terms as $term ) {
-            $topics_list[] = '<a class="vf-link" style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '" class="vf-link">' . strtoupper(esc_html( $term->name )) . '</a>'; }
+            $topics_list[] = '<a class="' . esc_attr( $term->slug ) . '"style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</a>'; }
             echo implode(', ', $topics_list); }?>
     </span>
     <?php } 

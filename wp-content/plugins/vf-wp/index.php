@@ -78,7 +78,7 @@ class VF_WP {
     );
 
     add_filter(
-      'block_categories',
+      'block_categories_all',
       array($this, 'block_categories'),
       10, 2
     );
@@ -174,17 +174,17 @@ class VF_WP {
   /**
    * Action: `block_categories`
    */
-  static public function block_categories($categories, $post) {
-    return array_merge(
-      array(
+  function block_categories( $categories, $editor_context ) {
+    if ( ! empty( $editor_context->post ) ) {
+      array_push(
+        $categories,
         array(
           'slug'  => 'vf/wp',
           'title' => __('EMBL – WordPress (local content)', 'vfwp'),
-          'icon'  => null
-        ),
-      ),
-      $categories
-    );
+          'icon'  => null )
+      );
+    }
+    return $categories;
   }
 
   /**

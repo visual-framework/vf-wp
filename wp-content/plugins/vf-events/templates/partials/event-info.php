@@ -17,6 +17,15 @@ $abstract_closing = get_field('vf_event_submission_closing');
 $application_closing = get_field('vf_event_application_deadline');
 $registration_closing = get_field('vf_event_registration_closing');
 
+$now = new DateTime();
+$application_date = new DateTime($application_closing);
+$registration_date = new DateTime($registration_closing);
+$abstract_date = new DateTime($abstract_closing);
+$current_date = $now->format('Y-m-d');
+$registration_date_formated = $registration_date->format('Y-m-d');
+$application_date_formated = $application_date->format('Y-m-d');
+$abstract_date_formated = $abstract_date->format('Y-m-d');
+
 $event_topic = get_field('vf_event_event_topic');
 
 $registration_link = get_field('vf_event_registration_link');
@@ -49,8 +58,6 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     'itemprop' => 'image',
   ));
 
-$current_date = new DateTime();
-$now = $current_date->format('j M Y');
 ?>
 
 <div>
@@ -110,25 +117,24 @@ $now = $current_date->format('j M Y');
     <?php } ?>
 
     <?php if ( ! empty($abstract_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if ($abstract_closing < $now) {
-          echo 'Closed';
-        }  
-        else {
-          echo esc_html($abstract_closing);
-        }
-      ?></span></p>
+    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if ($abstract_date_formated >= $current_date) {
+    echo esc_html($abstract_closing);
+     }  
+    else {
+    echo 'Closed';
+     }
+    ?></span></p>
     <?php } 
     
     /* Application date
     if ( ! empty($application_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span class="vf-u-text-color--grey">
-        <?php if ($application_closing < $now) {
+        <?php if ($application_date < $now) {
           echo 'Closed';
         }  
         else if ($application_closing) {
           echo esc_html($application_closing);
         }
-
       ?></span></p>
     <?php } 
     // Show info text
@@ -148,11 +154,11 @@ $now = $current_date->format('j M Y');
         Application:
         <?php  } ?>
       </span> <span class="vf-u-text-color--grey">
-        <?php if ($registration_closing < $now) {
-          echo 'Closed';
-        }  
-        else if ($registration_closing) {
+        <?php if ($registration_date_formated >= $current_date) {
           echo esc_html($registration_closing);
+        }  
+        else {
+          echo 'Closed';
         } ?>
       </span></p>
     <?php } 
@@ -175,9 +181,9 @@ $now = $current_date->format('j M Y');
       // Buttons
       if ( !empty($registration_link)) { 
             if (
-              (($registration_date > $now)) 
+              (($registration_date_formated >= $current_date)) 
               || 
-              (($application_closing) && ($application_closing > $now))) { ?>
+              (($application_closing) && ($application_date_formated >= $current_date))) { ?>
       <div style="display: inline-block;">
         <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
             class="vf-button vf-button--primary vf-button--sm"><?php echo($register_button); ?></button></a>
@@ -185,7 +191,7 @@ $now = $current_date->format('j M Y');
       <?php }} ?>
 
       <?php if ( ! empty($abstract_link)) { 
-                if (($abstract_closing > $now)) {?>
+                if (($abstract_date_formated >= $current_date)) {?>
       <div style="display: inline-block;">
         <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
             class="vf-button vf-button--tertiary vf-button--sm"><?php echo($abstract_button); ?></button></a>

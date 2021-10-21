@@ -39,8 +39,8 @@ get_header();
           class="vf-profile__link vf-profile__link--secondary"><?php echo esc_attr($telephone); ?></a>
         </p>
         <?php if (!empty($room)) { ?>
-        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0">
-        <span>Room:</span> <?php echo esc_html($room); ?>
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--100">
+        <span>Location:</span> <?php echo esc_html($room); ?>
         </p>
         <?php } ?>
       <p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200"><?php echo esc_html($outstation); ?></p>
@@ -67,7 +67,6 @@ get_header();
       <div class="vf-grid vf-grid__col-2">
         <?php
             if (!empty($team_1)) { ?>
-           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -75,11 +74,9 @@ get_header();
                     </h3>
                 </div>
             </article>
-           </div> 
          <?php }?>
         <?php
             if (!empty($team_2)) { ?>
-           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -87,11 +84,9 @@ get_header();
                     </h3>
                 </div>
             </article>
-           </div> 
          <?php }?>
         <?php
             if (!empty($team_3)) { ?>
-           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -99,11 +94,9 @@ get_header();
                     </h3>
                 </div>
             </article>
-           </div> 
          <?php }?>
         <?php
             if (!empty($team_4)) { ?>
-           <div>
             <article class="vf-card vf-card--brand vf-card--bordered">
                 <div class="vf-card__content | vf-stack vf-stack--400">
                     <h3 class="vf-card__heading">
@@ -111,7 +104,6 @@ get_header();
                     </h3>
                 </div>
             </article>
-           </div> 
          <?php }?>
      </div>
   </div>
@@ -120,16 +112,15 @@ get_header();
   </div>
 </section>
 
-<?php if (!empty($biography)) { ?>
 <!-- Biography -->
+<?php if (!empty($biography)) {
+  $bio =  html_entity_decode($biography);?>
 <section class="embl-grid embl-grid--has-centered-content">
 <div class="vf-section-header">
   <h2 class="vf-section-header__heading">Biography</h2>
 </div>
   <div class="vf-content">
-  <?php
-  $bio = htmlspecialchars_decode($biography);
-  echo ($bio); ?>
+    <?php echo ($bio); ?>
   </div>
   <div>
     <!-- empty -->
@@ -139,15 +130,16 @@ get_header();
 
 
 <!-- PUBLICATIONS -->
-<section class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-centered-content | publications-container">
 <div class="vf-section-header">
   <h2 class="vf-section-header__heading">Publications</h2>
 </div>
   <div class="embl-content-hub-loader">
   <?php if (!empty($orcid)) { ?>
-    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&orcid=<?php echo $orcid; ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader>
-  <?php } else { ?>
-    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&title=<?php echo get_the_title(); ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader>
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&orcid=<?php echo $orcid; ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader-no-content-hide=".publications-container" data-embl-js-content-hub-loader>
+    <?php }
+  else  { ?>
+    <link rel="import" href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&title=<?php echo get_the_title(); ?>&source=contenthub" data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found." data-embl-js-content-hub-loader-no-content-hide=".publications-container" data-embl-js-content-hub-loader>
     <?php } ?>
   </div>
   <div>

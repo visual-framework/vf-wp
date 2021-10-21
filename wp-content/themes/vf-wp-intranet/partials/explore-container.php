@@ -1,5 +1,5 @@
 <section
-  class="vf-summary-container | embl-grid embl-grid--has-centered-content | vf-u-background-color--grey--lightest vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-padding__bottom--500  vf-u-margin__bottom--800">
+  class="vf-summary-container | embl-grid embl-grid--has-centered-content | vf-u-background-color--grey--lightest vf-u-fullbleed vf-u-background-color-ui--off-white vf-u-padding__top--500 vf-u-margin__bottom--800">
 
   <div class="vf-section-header">
     <a href="/internal-information/search" class="vf-section-header__heading vf-section-header__heading--is-link">Search
@@ -11,7 +11,7 @@
       </svg></a>
   </div>
 
-  <div class="vf-section-content">
+  <div class="vf-section-content vf-stack vf-stack--200">
     <div>
       <form role="search" method="get" class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar"
         action="<?php echo esc_url(home_url('/')); ?>">
@@ -25,8 +25,8 @@
             <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
               <option value="any" selected="">Everything</option>
               <option value="page" name="post_type[]">Pages</option>
-              <option value="insites" name="post_type[]">INsites</option>
-              <option value="vf_event" name="post_type[]">Events</option>
+              <option value="insites" name="post_type[]">Internal news</option>
+              <option value="events" name="post_type[]">Events</option>
               <option value="people" name="post_type[]">People</option>
               <option value="documents" name="post_type[]">Documents</option>
             </select>
@@ -36,5 +36,6 @@
         </div>
       </form>
     </div>
+    <p class="vf-text-body vf-text-body--5">Directories: <span><a href="/internal-information/documents">Documents</a></span> | <span><a href="/internal-information/people">People</a></span> | <span><a href="/internal-information/seminars">Seminars</a></span></p>
   </div>
 </section>

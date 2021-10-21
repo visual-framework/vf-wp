@@ -16,6 +16,22 @@ function vf_wp_intranet_location_labels() {
     );
   }
 
+function vf_wp_intranet_event_location_labels() {
+    return array(
+      'name'              => _x( 'Event Locations', 'taxonomy general name', 'vfwp' ),
+      'singular_name'     => _x( 'Event Location', 'taxonomy singular name', 'vfwp' ),
+      'search_items'      => __( 'Search Event Locations', 'vfwp' ),
+      'all_items'         => __( 'All Event Locations', 'vfwp' ),
+      'parent_item'       => __( 'Parent Event Location', 'vfwp' ),
+      'parent_item_colon' => __( 'Parent Event Location:', 'vfwp' ),
+      'edit_item'         => __( 'Edit Event Location', 'vfwp' ),
+      'update_item'       => __( 'Update Event Location', 'vfwp' ),
+      'add_new_item'      => __( 'Add New Event Location', 'vfwp' ),
+      'new_item_name'     => __( 'New Event Location Name', 'vfwp' ),
+      'menu_name'         => __( 'Event Locations', 'vfwp' ),
+    );
+  }
+
   function vf_wp_intranet_topic_labels() {
     return array(
       'name'              => _x( 'Topics', 'taxonomy general name', 'vfwp' ),
@@ -53,6 +69,18 @@ add_action(
       'rewrite'            => false,
       'show_in_rest'       => false,
     ));
+
+    register_taxonomy('event-location', array('event-location'), array(
+      'labels'             => vf_wp_intranet_event_location_labels(),
+      'hierarchical'       => true,
+      'show_ui'            => true,
+      'show_admin_column'  => true,
+      'query_var'          => true,
+      'publicly_queryable' => true,
+      'show_in_nav_menus'  => false,
+      'rewrite'            => false,
+      'show_in_rest'       => false,
+    ));
   
     register_taxonomy('topic', array('topic'), array(
       'labels'             => vf_wp_intranet_topic_labels(),
@@ -62,7 +90,7 @@ add_action(
       'query_var'          => true,
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
-      'rewrite'            => false,
+      'rewrite'            => array( 'slug' => 'topic' ),
       'show_in_rest'       => false,
     ));
   }

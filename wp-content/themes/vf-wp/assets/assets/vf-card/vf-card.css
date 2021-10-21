@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card
- * Version: 2.6.0
+ * Version: 2.6.1
  * Location: components/undefined
  */
 .vf-card {
@@ -319,15 +319,14 @@
   color: currentColor;
 }
 .vf-card--striped .vf-card__subheading {
-  background-color: #18974c;
-  background-color: var(--vf-card-bg-color, #18974c);
+  background-color: #007b53;
+  background-color: var(--vf-card--striped-bg-color, #007b53);
   color: #ffffff;
   margin: -1rem;
-  margin-bottom: 0;
-  margin-top: -0.5rem !important;
+  margin-bottom: -1rem;
   padding: 1rem;
   padding-bottom: 0.5rem;
-  padding-top: 0;
+  padding-top: 0.5rem;
 }
 .vf-card--striped .vf-card__text {
   color: #ffffff;

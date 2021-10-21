@@ -48,7 +48,7 @@ class VF_Type {
       'template_redirect',
       array($this, 'template_redirect')
     );
-    add_filter('allowed_block_types',
+    add_filter('allowed_block_types_all',
       array($this, 'allowed_block_types'),
       10, 2
     );
@@ -298,17 +298,18 @@ class VF_Type {
    * Disallow all Gutenberg blocks for the post type by default.
    * Effectively disabling the editor.
    */
-  public function allowed_block_types($allowed, $post) {
-    if ($post->post_type === $this->post_type) {
+  public function allowed_block_types($allowed, $editor_context) {
+    if ( ! empty( $editor_context->post ) ) {
+    if ($editor_context->post === $this->post_type) {
       // Check if plugin supports editor preview
-      $plugin = VF_Plugin::get_plugin($post->post_name);
+      $plugin = VF_Plugin::get_plugin($editor_context->post_name);
       if ($plugin) {
         return array(
           'vf/plugin'
         );
       }
       return false;
-    }
+    } }
     return $allowed;
   }
 

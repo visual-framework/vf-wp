@@ -52,27 +52,11 @@ $close_wrap,
 
 <?php include(locate_template('partials/popular-container.php', false, false)); ?>
 
+<hr class="vf-divider">
+
 <?php include(locate_template('partials/insites-container.php', false, false)); ?>
 
-<hr class="vf-divider">
-
-<?php include(locate_template('partials/seminars-container.php', false, false)); ?>
-
-<hr class="vf-divider">
-
-<?php include(locate_template('partials/events-container.php', false, false)); ?>
-
-<hr class="vf-divider">
-
-<?php include(locate_template('partials/community-blog-container.php', false, false)); ?>
-
-<?php 
-
-$vf_theme->the_content();
-
-?>
-
-<section class="vf-hero | vf-u-fullbleed | vf-u-margin__bottom--0" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-04-scaled.jpg');">
+<section class="vf-hero vf-hero--800 | vf-u-fullbleed" id="hero-coronavirus" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-04-scaled.jpg');">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
   <h2 class="vf-hero__heading">
     <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information/coronavirus/">COVID-19 updates</a>
@@ -87,7 +71,20 @@ $vf_theme->the_content();
   </div>
 </section>
 
-<?php include(locate_template('partials/vf-nearest-location.php', false, false)); ?>
+<?php include(locate_template('partials/community-blog-container.php', false, false)); ?>
+
+<?php include(locate_template('partials/seminars-container.php', false, false)); ?>
+
+<?php include(locate_template('partials/events-container.php', false, false)); ?>
+
+<div>
+<?php 
+
+$vf_theme->the_content();
+
+?>
+</div>
+
 
 <?php 
 

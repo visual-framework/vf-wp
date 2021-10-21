@@ -1,6 +1,4 @@
-<script type="text/javascript">
-
-  window.onload = function() {
+window.onload = function() {
 
     // Configure an object of your locations to detect
     let vfLocationNearestLocations = {
@@ -36,4 +34,3 @@
     // Bootstrap location detection
     vfLocationNearest(vfLocationNearestLocations);
   };
-</script>
