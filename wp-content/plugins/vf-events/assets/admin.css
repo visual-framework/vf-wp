@@ -30,10 +30,13 @@
 .acf-field[data-name="vf_event_end_time"] .acf-input-wrap,
 .acf-field[data-name="vf_event_application_deadline"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_opening"] .acf-input-wrap,
+.acf-field[data-name="vf_event_registration_opening_on-site"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_closing"] .acf-input-wrap,
+.acf-field[data-name="vf_event_registration_closing_on-site"] .acf-input-wrap,
 .acf-field[data-name="vf_event_submission_opening"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_fee"] .acf-input-wrap,
 .acf-field[data-name="vf_event_registration_button_text"] .acf-input-wrap,
+.acf-field[data-name="vf_event_registration_button_text_on-site"] .acf-input-wrap,
 .acf-field[data-name="vf_event_abstract_submission_button_text"] .acf-input-wrap,
 .acf-field[data-name="vf_event_submission_closing"] .acf-input-wrap {
   max-width: 150px;
@@ -46,15 +49,16 @@
 .acf-field[data-name="vf_event_contact"] .acf-input-wrap,
 .acf-field[data-name="vf_event_contact_name"] .acf-input-wrap,
 .acf-field[data-name="vf_event_hashtag"] .acf-input-wrap,
-.acf-field[data-name="vf_event_organiser"] .acf-input,
-.acf-field[data-name="vf_event_location"] .acf-input {
+.acf-field[data-name="vf_event_organiser"] .acf-input
+ {
   max-width: 200px !important;
 }
 
 .acf-field[data-name="vf_event_more_information_link"] .acf-input-wrap,
 .acf-field[data-name="vf_event_abstract_link"] .acf-input-wrap,
 .acf-field[data-name="vf_event_info_text"] .acf-input-wrap,
-.acf-field[data-name="vf_event_registration_link"] .acf-input-wrap {
+.acf-field[data-name="vf_event_registration_link"] .acf-input-wrap,
+.acf-field[data-name="vf_event_registration_link_on-site"] .acf-input-wrap {
   max-width: 500px;
 }
 
@@ -63,7 +67,8 @@
 .acf-field[data-name="vf_event_embo_subtype"] .acf-input,
 .acf-field[data-name="vf_event_ss_subtype"] .acf-input,
 .acf-field[data-name="vf_event_industry_type"] .acf-input,
-.acf-field[data-name="vf_event_event_topic"] .acf-input {
+.acf-field[data-name="vf_event_event_topic"] .acf-input,
+.acf-field[data-name="vf_event_location"] .acf-input {
   max-width: 400px;
 }
 

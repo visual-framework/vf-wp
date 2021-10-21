@@ -16,19 +16,23 @@ $venue = get_field('vf_event_venue');
 $abstract_closing = get_field('vf_event_submission_closing');
 $application_closing = get_field('vf_event_application_deadline');
 $registration_closing = get_field('vf_event_registration_closing');
+$registration_closing_on_site = get_field('vf_event_registration_closing_on-site');
 
 $now = new DateTime();
 $application_date = new DateTime($application_closing);
 $registration_date = new DateTime($registration_closing);
+$registration_date_on_site = new DateTime($registration_closing_on_site);
 $abstract_date = new DateTime($abstract_closing);
 $current_date = $now->format('Y-m-d');
 $registration_date_formated = $registration_date->format('Y-m-d');
+$registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
 $application_date_formated = $application_date->format('Y-m-d');
 $abstract_date_formated = $abstract_date->format('Y-m-d');
 
 $event_topic = get_field('vf_event_event_topic');
 
 $registration_link = get_field('vf_event_registration_link');
+$registration_link_on_site = get_field('vf_event_registration_link_on-site');
 $contact = get_field('vf_event_contact');
 $contact_name = get_field('vf_event_contact_name');
 $hashtag = get_field('vf_event_hashtag');
@@ -37,7 +41,9 @@ $poster_file = get_field('vf_event_poster_file');
 $abstract_button = get_field('vf_event_abstract_submission_button_text');
 $abstract_button = ucfirst(strtolower($abstract_button));
 $register_button = get_field('vf_event_registration_button_text');
+$register_button_on_site = get_field('vf_event_registration_button_text_on-site');
 $register_button = ucfirst(strtolower($register_button));
+$register_button_on_site = ucfirst(strtolower($register_button_on_site));
 $info_text = get_field('vf_event_info_text');
 $registration_type = get_field('vf_event_registration_type');
 
@@ -89,15 +95,16 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     </p>
     <?php 
     if (!empty($location)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span class="vf-u-text-color--grey">
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span
+        class="vf-u-text-color--grey">
         <?php
         if (!empty($other_location)) {
         echo esc_html($other_location); 
         }
         else {
-          echo esc_html($location);
+          echo implode( ' and ', $location );
         } ?>
-    </span>
+      </span>
     </p>
     <?php } ?>
 
@@ -145,11 +152,25 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     <?php  }
     ?> */
 
-    // Registration dates
+     ?>
+
+    <?php
+    // Buttons abstract
+    if ( ! empty($abstract_link)) { 
+                if (($abstract_date_formated >= $current_date)) {?>
+    <div style="display: inline-block;">
+      <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
+          class="vf-button vf-button--tertiary vf-button--sm vf-u-margin__bottom--600"><?php echo($abstract_button); ?></button></a>
+    </div>
+    <?php }} ?>
+
+
+    <?php 
+    // Registration dates - Virtual
     if ( ! empty($registration_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>
         <?php if ($registration_type == 'registration') { ?>
-        Registration:
+        Registration <?php if (!empty($registration_closing_on_site)) {echo '(Virtual)';} ?>:
         <?php } else if ($registration_type == 'application'){ ?>
         Application:
         <?php  } ?>
@@ -162,8 +183,9 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
         } ?>
       </span></p>
     <?php } 
-    // Show info text
-    else if (!empty($info_text)) { ?>
+
+      // Show info text
+      else if (!empty($info_text)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>
         <?php if ($registration_type == 'registration') { ?>
         Registration:
@@ -173,31 +195,51 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
         <span class="vf-u-text-color--grey">
           <?php echo esc_html($info_text); ?>
         </span></p>
-    <?php  }
-    ?>
-
-    <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
-      <?php 
-      // Buttons
+    <?php  } ?>
+    <?php 
+      // Buttons virtual
       if ( !empty($registration_link)) { 
             if (
               (($registration_date_formated >= $current_date)) 
               || 
               (($application_closing) && ($application_date_formated >= $current_date))) { ?>
+    <div style="display: inline-block;">
+      <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
+          class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button); ?></button></a>
+    </div>
+    <?php }} ?>
+
+    <?php // Registration dates - On-site
+     if ( ! empty($registration_closing_on_site)) { ?>
+    <p class="vf-text-body vf-text-body--3"><span>
+        <?php if ($registration_type == 'registration') { ?>
+        Registration (On-site):
+        <?php } else if ($registration_type == 'application'){ ?>
+        Application:
+        <?php  } ?>
+      </span> <span class="vf-u-text-color--grey">
+        <?php if ($registration_date_formated_on_site >= $current_date) {
+          echo esc_html($registration_closing_on_site);
+        }  
+        else {
+          echo 'Closed';
+        } ?>
+      </span></p>
+    <?php } ?>
+
+      <?php 
+      // Buttons on site
+      if ( !empty($registration_link_on_site)) { 
+            if (
+              (($registration_date_formated_on_site >= $current_date)) 
+              || 
+              (($application_closing) && ($application_date_formated >= $current_date))) { ?>
       <div style="display: inline-block;">
-        <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
-            class="vf-button vf-button--primary vf-button--sm"><?php echo($register_button); ?></button></a>
+        <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
+            class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button_on_site); ?></button></a>
       </div>
       <?php }} ?>
 
-      <?php if ( ! empty($abstract_link)) { 
-                if (($abstract_date_formated >= $current_date)) {?>
-      <div style="display: inline-block;">
-        <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
-            class="vf-button vf-button--tertiary vf-button--sm"><?php echo($abstract_button); ?></button></a>
-      </div>
-      <?php }} ?>
-    </div>
     <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <?php }
