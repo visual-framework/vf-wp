@@ -49,11 +49,12 @@ get_header();
       <span>ORCID:</span>
       <a class="vf-profile__link vf-profile__link--secondary" href="https://europepmc.org/authors/<?php echo $orcid; ?>"><?php echo esc_html($orcid); ?></a>
     </p>
+    
     <?php } ?>
     </article>
   </div>
   <div>
-    <!-- empty -->
+    <p class="vf-text-body vf-text-body--5"><a href="https://pgs.embl.de/EMBLPersonGroup-PublicTools/" target="_blank">[Profile settings]</a></p>
   </div>
 </section>
 
