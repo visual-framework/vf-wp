@@ -41,7 +41,7 @@ settings.save = (props) => {
         {props.attributes.tabs.map((tab, i) => {
           return (
             <li key={i + tab.id} className='vf-tabs__item'>
-              <a className='vf-tabs__link' href={`#vf-tabs__section-${tab.id}`}>
+              <a className='vf-tabs__link' href={`#vf-tabs__section-${tab.id}`} data-vf-js-location-nearest-activation-target={tab.geolocation}>
                 {tab.label}
               </a>
             </li>
@@ -84,10 +84,11 @@ settings.edit = (props) => {
         const innerTabs = getTabs();
         const newTabs = [];
         innerTabs.forEach((block) => {
-          const {id, label} = block.attributes;
+          const {id, label, geolocation} = block.attributes;
           newTabs.push({
             id,
-            label
+            label,
+            geolocation
           });
         });
         props.setAttributes({dirty: 0, tabs: newTabs});

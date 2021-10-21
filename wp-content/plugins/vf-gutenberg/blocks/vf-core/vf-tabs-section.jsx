@@ -34,6 +34,10 @@ const settings = {
       type: 'string',
       default: ''
     },
+    geolocation: {
+      type: 'string',
+      default: ''
+    },
     unlabelled: {
       type: 'integer',
       default: 0
@@ -42,7 +46,7 @@ const settings = {
 };
 
 settings.save = (props) => {
-  const {id, label, unlabelled} = props.attributes;
+  const {id, label, unlabelled, geolocation} = props.attributes;
   const attr = {
     className: `vf-tabs__section`
   };
@@ -67,7 +71,7 @@ settings.edit = (props) => {
   }
 
   const {clientId} = props;
-  let {id, label, unlabelled} = props.attributes;
+  let {id, label, unlabelled, geolocation} = props.attributes;
 
   const {removeBlock, updateBlockAttributes} = useDispatch('core/block-editor');
 
@@ -105,7 +109,7 @@ settings.edit = (props) => {
   // Flag the parent tabs block as "dirty" if any attributes change
   useEffect(() => {
     updateTabs();
-  }, [id, label, tabOrder]);
+  }, [id, label, geolocation, tabOrder]);
 
   // Callback for inspector changes to update attributes
   // Flags the parent tabs block as "dirty"
@@ -141,6 +145,12 @@ settings.edit = (props) => {
       name: 'id',
       control: 'text',
       label: __('Anchor ID'),
+      onChange
+    },
+    {
+      name: 'geolocation',
+      control: 'text',
+      label: __('Geolocation'),
       onChange
     },
     {
