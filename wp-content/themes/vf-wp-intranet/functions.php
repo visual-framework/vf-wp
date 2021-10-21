@@ -3,7 +3,6 @@
 add_action( 'wp_enqueue_scripts', 'add_scripts' );
 function add_scripts() {
     wp_enqueue_script('jplist', get_theme_file_uri( '/scripts/jplist.min.js'));
-    wp_enqueue_script('nearest-location', get_theme_file_uri( '/scripts/nearest-location.js'));
 }
 
 

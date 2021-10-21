@@ -447,6 +447,14 @@ class VF_Theme {
       $theme->version,
       true
     );
+
+    wp_enqueue_script(
+      'nearest-location',
+      $dir . '/assets/scripts/nearest-location.js',
+      array(),
+      $theme->version,
+      true
+    );
   }
 
   /**
