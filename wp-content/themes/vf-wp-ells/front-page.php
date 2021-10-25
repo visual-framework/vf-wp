@@ -14,7 +14,7 @@ global $vf_theme;
 
   <div class="vf-section-content | vf-grid__col--span-2">
     <div>
-      <form role="search" method="get" class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar" action="https://wwwdev.embl.org/ells/">
+      <form role="search" method="get" class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar" action="https://www.embl.org/ells/">
         <div class="vf-form__item">
         <div class="vf-form__item | vf-search__item">
           <input type="search" class="vf-form__input | vf-search__input" value="" name="s" placeholder="Search ELLS">
