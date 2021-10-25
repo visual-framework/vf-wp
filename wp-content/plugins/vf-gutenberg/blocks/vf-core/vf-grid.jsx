@@ -14,6 +14,8 @@ import {__} from '@wordpress/i18n';
 import useVFDefaults from '../hooks/use-vf-defaults';
 import ColumnsControl from '../components/columns-control';
 import {fromColumns} from './transforms/grid';
+import VFBlockFields from '../vf-block/block-fields';
+
 
 const defaults = useVFDefaults();
 
@@ -49,27 +51,31 @@ const settings = {
     dirty: {
       type: 'integer',
       default: 0
-    }
+    },
+    cards: {
+      type: 'integer',
+      default: 0
+    },
   }
 };
 
 settings.save = (props) => {
-  const {columns, placeholder} = props.attributes;
+  const {columns, placeholder, cards} = props.attributes;
   if (placeholder === 1) {
     return null;
   }
-  const className = `vf-grid | vf-grid__col-${columns}`;
+  const className = `vf-grid | vf-grid__col-${columns} | vf-content`;
   const blockProps = useBlockProps.save({ className });
-  return (
-    <div {...blockProps}>
+    return (
+      <div {...blockProps}>
       <InnerBlocks.Content />
-    </div>
-  );
+    </div>    );
+   
 };
 
 settings.edit = (props) => {
   const {clientId} = props;
-  const {dirty, columns, placeholder} = props.attributes;
+  const {dirty, columns, placeholder, cards} = props.attributes;
 
   // Turn on setup placeholder if no columns are defined
   useEffect(() => {
@@ -77,6 +83,7 @@ settings.edit = (props) => {
       props.setAttributes({placeholder: 1});
     }
   }, [clientId]);
+
 
   const {replaceInnerBlocks} = useDispatch('core/block-editor');
 
@@ -158,6 +165,27 @@ settings.edit = (props) => {
     }
   }, [dirty]);
 
+// Toggle attribute `onChange` callback
+const setToggle = useCallback((name, value) => {
+  value = value ? 1 : 0;
+  props.setAttributes({
+    cards: 0,
+
+    [name]: value
+  });
+
+});
+
+  // Setup placeholder fields
+  const fields = [
+    {
+      label: __('Cards'),
+      control: 'toggle',
+      name: 'cards',
+      onChange: setToggle
+    }
+  ];
+
   // Return setup placeholder
   if (placeholder === 1) {
     const blockProps = useBlockProps({
@@ -173,13 +201,15 @@ settings.edit = (props) => {
               max={MAX_COLUMNS}
               onChange={useCallback(value => setColumns(value), [])}
             />
+                      <VFBlockFields {...props} fields={fields} />
+
           </Placeholder>
         </div>
       </>
     );
   }
 
-  const className = `vf-grid | vf-grid__col-${columns}`;
+  const className = `vf-grid | vf-grid__col-${columns} | vf-content`;
 
   const styles = {
     ['--block-columns']: columns
@@ -200,6 +230,8 @@ settings.edit = (props) => {
             onChange={useCallback(value => setColumns(value), [])}
             help={__('Content may be reorganised when columns are reduced.')}
           />
+                    <VFBlockFields {...props} fields={fields} />
+
         </PanelBody>
       </InspectorControls>
       <div {...blockProps}>
@@ -207,6 +239,7 @@ settings.edit = (props) => {
       </div>
     </>
   );
+  
 };
 
 // Block transforms
