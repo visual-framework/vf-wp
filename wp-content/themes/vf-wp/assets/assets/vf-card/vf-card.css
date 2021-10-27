@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card
- * Version: 2.6.1
+ * Version: 2.6.2
  * Location: components/undefined
  */
 .vf-card {
@@ -373,6 +373,11 @@
 .vf-card__content.vf-stack .vf-card__heading,
 .vf-card__content.vf-stack .vf-card__text {
   margin-bottom: 0;
+}
+.vf-card__content.vf-stack .vf-card__text {
+  margin-top: 1rem;
+  /* IE Fallback */
+  margin-top: var(--vf-stack-margin, 1rem);
 }
 
 html:not(.vf-disable-deprecated) .vf-card--very-easy {
