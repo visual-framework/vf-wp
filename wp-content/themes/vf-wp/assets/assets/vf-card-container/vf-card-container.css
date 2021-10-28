@@ -95,13 +95,22 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card-container
- * Version: 3.2.0
+ * Version: 3.2.1
  * Location: components/undefined
  */
+.vf-stack .vf-card-container + *,
+.vf-stack * + .vf-card-container {
+  --vf-stack-margin--custom: var(--page-grid-gap);
+}
+
+.vf-stack .vf-card-container.vf-u-fullbleed + .vf-u-fullbleed,
+.vf-stack .vf-card-container.vf-u-fullbleed + .vf-hero,
+.vf-stack .vf-card-container.vf-u-fullbleed + .vf-footer {
+  --vf-stack-margin--custom: 0;
+}
+
 .vf-card-container {
   grid-column: 1/-1;
-  margin: 0 0 2rem 0;
-  margin: 0 0 calc(var(--page-grid-gap)) 0;
   padding: 2rem 0;
   padding: var(--page-grid-gap) 0;
 }
