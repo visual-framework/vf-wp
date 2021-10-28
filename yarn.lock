@@ -1938,10 +1938,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1-alpha.0.tgz#2dda99f7d2766c32cb46b321560ec15c8a3d55fe"
   integrity sha512-T5XSohedN4OKxqA0n44V8xvpDMAz1zAW0TGa+2a1B3lMpAWAt5WVpG2tdOQknHDQQpq/K/YRxFySSXk+G7f8Ew==
 
-"@visual-framework/vf-content@1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.3.tgz#e75f00b45cec49d91c8cfc327058ff8c02644744"
-  integrity sha512-cGUoZ6yvF3vzmlooTB6Bw7sCU3WBgyeZ/ehsva8bY7bhBcTNIDtrrGmF8yD1CMAntUApKk5Cwm0dsx0fYeOadA==
+"@visual-framework/vf-content@1.6.4":
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.4.tgz#309e26387c908562c2f14aeb2f3c55404f57fcc3"
+  integrity sha512-1dTLWCj9t9KfI4mqmxivtKEsxhSa9YDhcy/AKbcYbcc8evxa0uq8zN80tGURAbJ0KFJ//Ab6/phcdQlYddTkZg==
   dependencies:
     "@visual-framework/vf-badge" "^2.0.0"
     "@visual-framework/vf-blockquote" "^1.2.0"
@@ -1949,7 +1949,7 @@
     "@visual-framework/vf-button" "^2.0.0-alpha.2"
     "@visual-framework/vf-divider" "^2.0.1"
     "@visual-framework/vf-figure" "^1.3.0"
-    "@visual-framework/vf-form" "^2.0.0-alpha.1"
+    "@visual-framework/vf-form" "^2.0.0-alpha.2"
     "@visual-framework/vf-heading" "^1.0.1"
     "@visual-framework/vf-link" "^2.0.0"
     "@visual-framework/vf-list" "^1.0.0"
@@ -2030,7 +2030,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.2.0.tgz#42a0a1e30ebe3012edfeb55e906a7bbb3e5a856c"
   integrity sha512-Ssr5jmuf2NFiJt35aIeMQeJsKwXv6Yq/d1p4rK6/8ZCUZuXMcVTBU+VJwZj1he4714ec4l2ZbWXOZ8swt2sFDA==
 
-"@visual-framework/vf-form@2.0.0-alpha.1", "@visual-framework/vf-form@^2.0.0-alpha.1":
+"@visual-framework/vf-form@2.0.0-alpha.1":
   version "2.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form/-/vf-form-2.0.0-alpha.1.tgz#16f0dfef3c053cf00bbb1d61217ea8a8128f12c6"
   integrity sha512-Xm2RYVSJBzXaIg4oVSGe3N3V8CG2O1kqrXDKU0zDrzNlzDVtWz27T+tngoFl2xfIOZAGvS6LGhsUFkWa4gOu4Q==
@@ -2044,6 +2044,22 @@
     "@visual-framework/vf-form__legend" "^2.0.0-alpha.0"
     "@visual-framework/vf-form__radio" "^3.0.0-alpha.0"
     "@visual-framework/vf-form__select" "^3.0.0-alpha.0"
+    "@visual-framework/vf-form__textarea" "^3.0.0-alpha.0"
+
+"@visual-framework/vf-form@^2.0.0-alpha.2":
+  version "2.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form/-/vf-form-2.0.0-alpha.2.tgz#884e08639759a43f36b3292cdb8e63fb1b7c208a"
+  integrity sha512-cPns+1llUW+bMOZR+6plUD8Ym1VLzpCn2hpj3DGcvcMjVYRp4hfIftmjsAdK+BdocaVfH/Bdk9frpbGxcxdCSA==
+  dependencies:
+    "@visual-framework/vf-form__checkbox" "^3.0.0-alpha.0"
+    "@visual-framework/vf-form__fieldset" "^2.0.0-alpha.0"
+    "@visual-framework/vf-form__helper" "^3.0.0-alpha.0"
+    "@visual-framework/vf-form__input" "^3.0.0-alpha.1"
+    "@visual-framework/vf-form__item" "^3.0.0-alpha.0"
+    "@visual-framework/vf-form__label" "^3.0.0-alpha.0"
+    "@visual-framework/vf-form__legend" "^2.0.0-alpha.0"
+    "@visual-framework/vf-form__radio" "^3.0.0-alpha.0"
+    "@visual-framework/vf-form__select" "^3.0.0"
     "@visual-framework/vf-form__textarea" "^3.0.0-alpha.0"
 
 "@visual-framework/vf-form__checkbox@3.0.0-alpha.0", "@visual-framework/vf-form__checkbox@^3.0.0-alpha.0":
@@ -2090,6 +2106,11 @@
   version "3.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-3.0.0-alpha.0.tgz#9d64c70063019971203ad89a592696a6606d0adb"
   integrity sha512-0gMKephEnUBnA4jVFc0hnh/c4jCxRllCis9NUulwsLV9OUoDG/aGRqs3N2+lmYoqcPAjlnXbkdeXz69aAECmIQ==
+
+"@visual-framework/vf-form__select@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-3.0.0.tgz#9d8d67fbda556edf656c8903953891ff9bc8f96b"
+  integrity sha512-TP5T3x4XURQABK2rK64wBDtGTO2ktmnPYKnre9jIgHl+EJgzfo5/kBLLDcSarTkwqaAVddTMT1KG0TkpM525Cg==
 
 "@visual-framework/vf-form__textarea@3.0.0-alpha.0", "@visual-framework/vf-form__textarea@^3.0.0-alpha.0":
   version "3.0.0-alpha.0"
