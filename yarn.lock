@@ -1950,23 +1950,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.2.0.tgz#42a0a1e30ebe3012edfeb55e906a7bbb3e5a856c"
   integrity sha512-Ssr5jmuf2NFiJt35aIeMQeJsKwXv6Yq/d1p4rK6/8ZCUZuXMcVTBU+VJwZj1he4714ec4l2ZbWXOZ8swt2sFDA==
 
-"@visual-framework/vf-form@2.0.0-alpha.1":
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form/-/vf-form-2.0.0-alpha.1.tgz#16f0dfef3c053cf00bbb1d61217ea8a8128f12c6"
-  integrity sha512-Xm2RYVSJBzXaIg4oVSGe3N3V8CG2O1kqrXDKU0zDrzNlzDVtWz27T+tngoFl2xfIOZAGvS6LGhsUFkWa4gOu4Q==
-  dependencies:
-    "@visual-framework/vf-form__checkbox" "^3.0.0-alpha.0"
-    "@visual-framework/vf-form__fieldset" "^2.0.0-alpha.0"
-    "@visual-framework/vf-form__helper" "^3.0.0-alpha.0"
-    "@visual-framework/vf-form__input" "^3.0.0-alpha.1"
-    "@visual-framework/vf-form__item" "^3.0.0-alpha.0"
-    "@visual-framework/vf-form__label" "^3.0.0-alpha.0"
-    "@visual-framework/vf-form__legend" "^2.0.0-alpha.0"
-    "@visual-framework/vf-form__radio" "^3.0.0-alpha.0"
-    "@visual-framework/vf-form__select" "^3.0.0-alpha.0"
-    "@visual-framework/vf-form__textarea" "^3.0.0-alpha.0"
-
-"@visual-framework/vf-form@^2.0.0-alpha.2":
+"@visual-framework/vf-form@2.0.0-alpha.2", "@visual-framework/vf-form@^2.0.0-alpha.2":
   version "2.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form/-/vf-form-2.0.0-alpha.2.tgz#884e08639759a43f36b3292cdb8e63fb1b7c208a"
   integrity sha512-cPns+1llUW+bMOZR+6plUD8Ym1VLzpCn2hpj3DGcvcMjVYRp4hfIftmjsAdK+BdocaVfH/Bdk9frpbGxcxdCSA==
@@ -2022,7 +2006,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__radio/-/vf-form__radio-3.0.0-alpha.0.tgz#58e82bee95f93f90a70bdc70914c61580c27ee05"
   integrity sha512-bngEDEwFOSjSNB60an2DHiqDCnnjiTu/cuBPHkvt6HbhFTEQrd9/Cjt6Vo/f9Ip6Oax+F1LBPOQD6RtMSNC2Og==
 
-"@visual-framework/vf-form__select@3.0.0-alpha.0", "@visual-framework/vf-form__select@^3.0.0-alpha.0":
+"@visual-framework/vf-form__select@3.0.0-alpha.0":
   version "3.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__select/-/vf-form__select-3.0.0-alpha.0.tgz#9d64c70063019971203ad89a592696a6606d0adb"
   integrity sha512-0gMKephEnUBnA4jVFc0hnh/c4jCxRllCis9NUulwsLV9OUoDG/aGRqs3N2+lmYoqcPAjlnXbkdeXz69aAECmIQ==
