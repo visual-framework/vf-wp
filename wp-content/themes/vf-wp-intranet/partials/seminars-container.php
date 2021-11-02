@@ -47,7 +47,7 @@ function sortByStartDate($param1, $param2) {
           <?php
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
-            $newDate = date("j M Y, H:i", strtotime($event->field_event_start_date_time . '-1 hour'));
+            $newDate = date("j M Y, H:i", strtotime($event->field_event_start_date_time));
             $info = $event->field_event_additional_info;  
             
                 echo '<article class="vf-card vf-card--brand vf-card--bordered | vf-u-padding--200">';
