@@ -208,12 +208,12 @@
             <ul class="vf-list">
               <li class="vf-list__item">
                 <a class="vf-list__link"
-                  href="https://www.embl.org/internal-information/it-services/network-access-grenoble/">
-                  VPN
+                  href="https://www.embl.org/internal-information/it-services/">
+                  IT Services
                 </a>
               </li>
               <li class="vf-list__item">
-                <a class="vf-list__link" href="http://wiki.structures.embl.de/">
+                <a class="vf-list__link" href="https://wiki.embl.fr">
                   Wiki
                 </a>
               </li>
@@ -337,6 +337,12 @@
           <!-- 1 -->
           <div>
             <ul class="vf-list">
+            <li class="vf-list__item">
+                <a class="vf-list__link" href="https://www.embl.org/sites/heidelberg/accommodation/">
+                  Accommodation
+                </a>
+              </li>
+
               <li class="vf-list__item">
                 <a class="vf-list__link" href="https://www.embl.org/internal-information/coronavirus/">
                   COVID-19 Information
@@ -353,25 +359,20 @@
                   EMBL Calendar
                 </a>
               </li>
-              <li class="vf-list__item">
-                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
-                  EMBL Programme
-                </a>
-              </li>
             </ul>
           </div>
           <!-- 2 -->
           <div>
             <ul class="vf-list">
+            <li class="vf-list__item">
+                <a class="vf-list__link" href="https://www.embl.org/internal-information/embl-programme/">
+                  EMBL Programme
+                </a>
+              </li>
               <li class="vf-list__item">
                 <a class="vf-list__link"
                   href="https://www.embl.org/internal-information/human-resources/health-insurance/">
                   Health insurance
-                </a>
-              </li>
-              <li class="vf-list__item">
-                <a class="vf-list__link" href="https://www.embl.org/internal-information/housing-service/">
-                  Housing service
                 </a>
               </li>
               <li class="vf-list__item">

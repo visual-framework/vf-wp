@@ -51,9 +51,9 @@
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-5" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Career Day"
+        value="Career Event"
         data-id="name-career" class="vf-form__checkbox">
-      <label for="type-5" class="vf-form__label">Career Day</label>
+      <label for="type-5" class="vf-form__label">Career Event</label>
     </div>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-4" type="checkbox" data-jplist-control="checkbox-text-filter"
@@ -159,6 +159,13 @@
         value="Seminar given by an external postdoc"
         data-id="name-external-postdoc" class="vf-form__checkbox">
       <label for="type-13" class="vf-form__label">Seminar given by an external postdoc</label>
+    </div>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="type-20" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
+        value="Symbnet series"
+        data-id="name-external-postdoc" class="vf-form__checkbox">
+      <label for="type-20" class="vf-form__label">Symbnet series</label>
     </div>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-19" type="checkbox" data-jplist-control="checkbox-text-filter"

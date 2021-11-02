@@ -65,8 +65,8 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "g:i a",
-            "return_format": "g:i a"
+            "display_format": "H:i",
+            "return_format": "H:i"
         },
         {
             "key": "field_6132093529ea3",
@@ -81,8 +81,8 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "g:i a",
-            "return_format": "g:i a"
+            "display_format": "H:i",
+            "return_format": "H:i"
         },
         {
             "key": "field_6132093529f42",

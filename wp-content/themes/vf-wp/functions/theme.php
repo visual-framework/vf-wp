@@ -448,6 +448,9 @@ class VF_Theme {
       true
     );
 
+    // run only on the intranet theme
+    $theme = wp_get_theme(); // gets the current theme
+    if ( 'VF-WP Intranet' == $theme->name || 'VF-WP Intranet' == $theme->parent_theme ) {
     wp_enqueue_script(
       'nearest-location',
       $dir . '/assets/scripts/nearest-location.js',
@@ -455,6 +458,7 @@ class VF_Theme {
       $theme->version,
       true
     );
+   }
   }
 
   /**
