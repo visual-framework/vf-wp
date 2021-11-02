@@ -15,14 +15,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Install
-      uses: CultureHQ/actions-yarn@master
+    - name: Setup
+      uses: actions/setup-node@v2
       with:
-        args: install
+        node-version: '14.x'
+    - name: Install dependencies
+      run: yarn install && yarn run build
     - name: Build
-      uses: CultureHQ/actions-yarn@master
-      with:
-        args: build
+      run: yarn run build
     - name: Commit
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
