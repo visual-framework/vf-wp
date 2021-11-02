@@ -54,7 +54,7 @@ get_header();
     </article>
   </div>
   <div>
-    <p class="vf-text-body vf-text-body--5"><a href="https://pgs.embl.de/EMBLPersonGroup-PublicTools/" target="_blank">[Profile settings]</a></p>
+    <p class="vf-text-body vf-text-body--5"><a href="https://privacysettings.embl.de/" target="_blank">[Privacy settings]</a></p>
   </div>
 </section>
 
