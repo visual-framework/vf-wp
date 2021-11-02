@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-embed
  * Version: 1.1.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-embed
  */
 .vf-embed {
   max-width: var(--vf-embed-max-width, 100%);

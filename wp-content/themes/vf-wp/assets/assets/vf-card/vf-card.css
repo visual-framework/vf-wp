@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-card
  * Version: 2.6.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-card
  */
 .vf-card {
   --card-text-color: var(--vf-card-theme-color--foreground, #1a1c1a);

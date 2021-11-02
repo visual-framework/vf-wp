@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-global-header
  * Version: 3.1.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-global-header
  */
 .vf-global-header {
   -webkit-box-align: center;
@@ -137,7 +137,7 @@
 /*!
  * Component: @visual-framework/vf-masthead
  * Version: 2.0.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-masthead
  */
 .vf-masthead {
   background-color: #d0d0ce;
@@ -274,7 +274,7 @@
 /*!
  * Component: @visual-framework/vf-navigation
  * Version: 3.0.0-beta.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-navigation
  */
 .vf-navigation__item [aria-current=page] {
   color: #000000;
@@ -321,7 +321,7 @@
 /*!
  * Component: @visual-framework/vf-header
  * Version: 2.0.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-header
  */
 .vf-header {
   background-position: top center;

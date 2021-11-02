@@ -95,8 +95,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0-rc.1
- * Location: components/vf-list
+ * Version: 1.0.0
+ * Location: components/vf-core-components/vf-list
  */
 .vf-list {
   list-style-type: none;
@@ -176,7 +176,7 @@
 /*!
  * Component: @visual-framework/vf-cluster
  * Version: 1.0.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-cluster
  */
 .vf-cluster {
   --vf-cluster-margin: var(--vf-cluster-margin--override, 1rem);
@@ -221,7 +221,7 @@
 /*!
  * Component: @visual-framework/vf-navigation
  * Version: 3.0.0-beta.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-navigation
  */
 .vf-navigation__item [aria-current=page] {
   color: #000000;

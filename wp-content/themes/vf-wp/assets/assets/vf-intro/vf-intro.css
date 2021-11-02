@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-text
  * Version: 1.0.2
- * Location: components/vf-text
+ * Location: components/vf-core-components/vf-text
  */
 .vf-text-body a {
   border-bottom: none;
@@ -179,7 +179,7 @@
 /*!
  * Component: @visual-framework/vf-heading
  * Version: 1.0.1
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-heading
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -257,7 +257,7 @@
 /*!
  * Component: @visual-framework/vf-intro
  * Version: 1.5.0
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-intro
  */
 .vf-intro {
   margin-bottom: 1rem;

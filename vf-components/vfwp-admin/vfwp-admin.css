@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-content
  * Version: 1.6.4
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]), .editor-styles-wrapper h1:not([class*=vf-]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;

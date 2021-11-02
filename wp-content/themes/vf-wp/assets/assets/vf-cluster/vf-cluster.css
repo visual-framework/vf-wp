@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-cluster
  * Version: 1.0.2
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-cluster
  */
 .vf-cluster {
   --vf-cluster-margin: var(--vf-cluster-margin--override, 1rem);

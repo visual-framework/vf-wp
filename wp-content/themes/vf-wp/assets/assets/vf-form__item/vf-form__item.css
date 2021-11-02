@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 3.0.0-alpha.0
- * Location: components/undefined
+ * Location: components/vf-core-components/vf-form__item
  */
 .vf-form__item > * {
   --vf-stack-margin--custom: 0.25rem;
