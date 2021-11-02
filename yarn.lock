@@ -2041,10 +2041,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-heading/-/vf-heading-1.0.1.tgz#eca72aa548ae25a80750384ec8c3e5fb0e93f96b"
   integrity sha512-c5mapj0/NK57KkY+RYZdR9RCAlaKGoyg0x0nBv3fCnGlcr+gxB1spg/5s8RfZkFerLFDjymInmrAxsB7PRkwqQ==
 
-"@visual-framework/vf-hero@3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-3.3.1.tgz#8f8832aa9b99dcd256f27fdb2d6086f29d3dfd5c"
-  integrity sha512-mLEBBrRZMDZYIDZ5WYfeIn7F/DKA81QIjPWUlKOKqsTUuFnk3+CA+UfaQbwC+JxziJyK/hb5X3Ny4EnzexcScA==
+"@visual-framework/vf-hero@3.3.2":
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-3.3.2.tgz#1c076e2e303c640beca9aec410c9965d270a1e18"
+  integrity sha512-oA/VbZ/BmUE7sXaW612LZEobZyt/hukMwyUvqJMO9q8vGW9mzMpLJI60+K0TrfmJTQs+KhCPOjThzJn1jdMJvA==
 
 "@visual-framework/vf-intro@1.5.0":
   version "1.5.0"
