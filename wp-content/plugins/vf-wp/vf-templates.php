@@ -23,6 +23,7 @@ class VF_Templates {
    * Return true if `$post` is valid `vf_template`
    */
   static public function is_template_post($post, $post_name = '') {
+    $theme = wp_get_theme();
     if ( ! $post instanceof WP_Post) {
       return false;
     }
@@ -42,6 +43,9 @@ class VF_Templates {
     if (is_page_template(array( 'template-industry-workshop-archive.php', 'template-industry-quarterly-meeting-archive.php', 'template-industry-members-area.php', 'template-industry-quarterly-meeting.php', 'template-industry-workshops.php', 'template-hero-secondary.php'  ))) {
       return false;
     }
+    if (($theme == 'VF-WP Intranet') && ((is_search()) || (is_page_template('searchpage.php')))) {
+      return false;
+     }
     
     return true;
   }

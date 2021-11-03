@@ -48,7 +48,7 @@ $close_wrap,
 
 ?>
 
-<?php include(locate_template('partials/explore-container.php', false, false)); ?>
+<?php // include(locate_template('partials/explore-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/popular-container.php', false, false)); ?>
 

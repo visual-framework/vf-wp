@@ -1,6 +1,36 @@
 <?php get_header(); 
 
+if (class_exists('VF_Global_Header')) {
+  VF_Plugin::render(VF_Global_Header::get_plugin('vf_global_header'));
+}
+if (class_exists('VF_Intranet_Breadcrumbs')) {
+  VF_Plugin::render(VF_Intranet_Breadcrumbs::get_plugin('vf_wp_breadcrumbs_intranet'));
+}
+
 $total_results = $wp_query->found_posts;
+
+?>
+
+<section class="vf-hero | vf-u-fullbleed | vf-hero--800 | vf-u-margin__bottom--0">
+  <style>
+    .vf-hero {
+      --vf-hero--bg-image-size: auto 28.5rem;
+            }
+  </style>
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
+        <h2 class="vf-hero__heading">
+      <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information">
+        EMBL Intranet      </a>
+    </h2>
+        <p class="vf-hero__subheading">Internal information, news and updates</p>
+      </div>
+</section>
+
+<?php
+
+if (class_exists('VF_Navigation')) {
+  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
+}
 
 ?>
 
@@ -97,4 +127,10 @@ $total_results = $wp_query->found_posts;
     <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>
 </section>
+
+<?php
+if (class_exists('VF_Global_Footer')) {
+  VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));
+} ?>
+
 <?php get_footer(); ?>

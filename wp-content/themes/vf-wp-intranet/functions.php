@@ -397,12 +397,17 @@ function redirect_externally(){
 // }
 // add_filter('posts_orderby', 'order_search_by_posttype');
 
-// function be_change_event_posts_per_page( $query ) {
-	
-// 	if( $query->is_search() && !is_admin() ) {
-// 		$query->set( 'orderby', 'relevance' );
+// function my_search_query( $query ) {
+// 	// not an admin page and is the main query
+// 	if ( !is_admin() && $query->is_main_query() ) {
+// 		if ( is_search() ) {
+// 			$query->set( 'orderby', 'relevance' );
+// 		}
 // 	}
-
 // }
-// add_action( 'pre_get_posts', 'be_change_event_posts_per_page' );
+// add_action( 'pre_get_posts', 'my_search_query' );
+
+// enables excerpt field for pages
+add_post_type_support( 'page', 'excerpt' );
+
 ?>
