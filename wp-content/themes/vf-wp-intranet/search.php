@@ -15,15 +15,15 @@ $total_results = $wp_query->found_posts;
   <style>
     .vf-hero {
       --vf-hero--bg-image-size: auto 28.5rem;
-            }
+    }
+
   </style>
-  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
-        <h2 class="vf-hero__heading">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
+    <h2 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information">
-        EMBL Intranet      </a>
+        EMBL Intranet </a>
     </h2>
-        <p class="vf-hero__subheading">Internal information, news and updates</p>
-      </div>
+  </div>
 </section>
 
 <?php
@@ -85,46 +85,96 @@ if (class_exists('VF_Navigation')) {
       <div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--400">
         <div class="vf-banner__content">
           <p class="vf-banner__text">If you haven't found what you are looking for please use <a class="vf-banner__link"
-              href="<?php echo 'https://www.embl.org/search/?searchQuery=' . get_search_query() . '&activeFacet=#stq=' . get_search_query() ?>" target="_blank">embl.org
+              href="<?php echo 'https://www.embl.org/search/?searchQuery=' . get_search_query() . '&activeFacet=#stq=' . get_search_query() ?>"
+              target="_blank">embl.org
               search</a></p>
         </div>
       </div>
       <p><?php echo $total_results; ?> result(s) found for "<?php echo esc_html(get_search_query()); ?>"</p>
-      <?php
-        if ( have_posts() ) {
-          while ( have_posts() ) {
-            the_post();
-            if(isset($_GET['post_type'])) {
-              $type = $_GET['post_type'];
+      <div class="vf-tabs">
+        <ul class="vf-tabs__list" data-vf-js-tabs>
+          <li class="vf-tabs__item">
+            <a class="vf-tabs__link" href="#vf-tabs__section--1">Pages</a>
+          </li>
+          <li class="vf-tabs__item">
+            <a class="vf-tabs__link" href="#vf-tabs__section--2">People</a>
+          </li>
+          <li class="vf-tabs__item">
+            <a class="vf-tabs__link" href="#vf-tabs__section--3">Documents</a>
+          </li>
+          <li class="vf-tabs__item">
+            <a class="vf-tabs__link" href="#vf-tabs__section--4">News</a>
+          </li>
+          <li class="vf-tabs__item">
+            <a class="vf-tabs__link" href="#vf-tabs__section--5">Events</a>
+          </li>
+        </ul>
+      </div>
 
-              if($type == 'any') {
-                include(locate_template('partials/search-results.php', false, false)); 
-              } 
-              elseif($type == 'people') {
-                include(locate_template('partials/vf-profile.php', false, false)); 
-              } 
-              elseif($type == 'page') {
-                include(locate_template('partials/vf-summary--page.php', false, false)); 
-              }
-              elseif($type == 'insites') {
-                include(locate_template('partials/vf-summary-insites-latest.php', false, false)); 
-              }
-              elseif($type == 'documents') {
-                include(locate_template('partials/vf-summary--document.php', false, false)); 
-              }
-              elseif($type == 'events') {
-                include(locate_template('partials/vf-summary-events.php', false, false)); 
-              }
-          }
-          if (($wp_query->current_post + 1) < ($wp_query->post_count)) {
-            echo '<hr class="vf-divider">';
-         }
-          }
-        } else {
-          echo '<p>', __('No results found', 'vfwp'), '</p>';
+      <div class="vf-tabs-content" data-vf-js-tabs-content>
+        <?php
+      if ( have_posts() ) { ?>
+        <section class="vf-tabs__section" id="vf-tabs__section--1">
+          <?php while( have_posts() ) { the_post(); ?>
+          <?php if ( $post->post_type == 'page' ) { 
+           include(locate_template('partials/vf-summary--page.php', false, false));  ?>
+          <?php } ?>
+          <?php
         } ?>
+        </section>
+        <?php
+        rewind_posts(); ?>
+          <section class="vf-tabs__section" id="vf-tabs__section--2">
+            <?php while( have_posts() ) { the_post(); ?>
+            <?php if ( $post->post_type == 'people' ) { 
+             include(locate_template('partials/vf-profile.php', false, false));  ?>
+            <?php } ?>
+            <?php
+          } ?>
+          </section>
+        <section class="vf-tabs__section" id="vf-tabs__section--3">
+          <?php while( have_posts() ) { the_post(); ?>
+          <?php if ( $post->post_type == 'documents' ) { 
+           include(locate_template('partials/vf-summary--document.php', false, false));  ?>
+          <?php } ?>
+          <?php
+        } ?>
+        </section>
+        <?php
+        rewind_posts(); ?>
+        <?php
+        rewind_posts(); ?>
+        <section class="vf-tabs__section" id="vf-tabs__section--4">
+          <?php while( have_posts() ) { the_post(); ?>
+          <?php if ( $post->post_type == 'insites' ) { 
+           include(locate_template('partials/vf-summary-insites-latest.php', false, false));  ?>
+          <?php } ?>
+          <?php
+        } ?>
+        </section>
+        <?php
+        rewind_posts(); ?>
+        <section class="vf-tabs__section" id="vf-tabs__section--5">
+          <?php while( have_posts() ) { the_post(); ?>
+          <?php if ( $post->post_type == 'events' ) { 
+           include(locate_template('partials/vf-summary-events.php', false, false));  ?>
+          <?php } ?>
+          <?php
+        } ?>
+        </section>
+        <?php
+        rewind_posts(); ?>
+
+
+<?php
+} // End your if statement
+        ?>
+
+
+      </div>
+
+
     </div>
-    <div class="vf-grid"> <?php vf_pagination();?></div>
   </div>
 </section>
 
