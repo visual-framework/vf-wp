@@ -1,7 +1,6 @@
-<section class="vf-summary-container">
+<section class="vf-summary-container" style="margin-top: 2.5rem !important;">
   <div class="vf-section-header">
     <p class="vf-section-header__heading">Quick links </p>
-    <p class="vf-section-header__text">Most visited and popular pages</p>
   </div>
 
   <div class="vf-section-content | vf-u-margin__top--200">
