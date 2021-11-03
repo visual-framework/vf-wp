@@ -256,7 +256,7 @@
 
 /*!
  * Component: @visual-framework/vf-intro
- * Version: 1.5.0
+ * Version: 1.5.1
  * Location: components/vf-core-components/vf-intro
  */
 .vf-intro {
@@ -302,10 +302,10 @@
   line-height: 1.25;
 }
 .vf-intro__heading + .vf-lede {
-  --vf-stack-margin--custom: 2rem;
+  --vf-stack-margin: 2rem;
 }
 .vf-intro__heading + .vf-intro__subheading {
-  --vf-stack-margin--custom: 0;
+  --vf-stack-margin: 0;
 }
 
 .vf-intro__subheading {
@@ -317,7 +317,7 @@
   margin: 0 0 0 0;
 }
 .vf-intro__subheading + * {
-  --vf-stack-margin--custom: 2rem;
+  --vf-stack-margin: 2rem;
 }
 
 .vf-intro__heading--has-tag {
