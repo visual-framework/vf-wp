@@ -12,7 +12,7 @@
     <p class="vf-text vf-text-heading--4 | vf-u-text-color--ui--white">European Learning Laboratory for the Life Sciences</p>
     <div class="vf-grid | vf-grid__col-3">
       <div class="vf-grid__col--span-2">
-    <p class="vf-text-body vf-text-body--3">Our inspiring educational experiences share the scientific discoveries of EMBL with young people aged 10-19 years and teachers in Europe and beyond.
+    <p class="vf-text-body vf-text-body--3" style="color: #fff;">Our inspiring educational experiences share the scientific discoveries of EMBL with young people aged 10-19 years and teachers in Europe and beyond.
     </p>
     </div>
     </div>
@@ -34,7 +34,7 @@
         </ul>
       </div>
       <div class="vf-links | vf-grid__col--span-2">
-        <h4 class="vf-text vf-text-heading--5">
+        <h4 class="vf-text vf-text-heading--5" style="color: #fff;">
           Subscribe to our newsletter</h4>
         <div class="vf-form__item vf-stack">
         <form action="https://embl.us20.list-manage.com/subscribe/post?u=6407e1524014635f8879568bd&amp;id=2b6803aee1" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
@@ -46,7 +46,7 @@
         </div>
       </div>
       <div class="vf-links">
-        <h4 class="vf-text vf-text-heading--5">
+        <h4 class="vf-text vf-text-heading--5" style="color: #fff;">
           Follow us</h4>
         <svg aria-hidden="true" display="none" class="vf-icon-collection vf-icon-collection--social">
           <defs>
