@@ -4,8 +4,8 @@
     "fields": [
         {
             "key": "field_618293e510859",
-            "label": "",
-            "name": "",
+            "label": "Keyword",
+            "name": "keyword",
             "type": "text",
             "instructions": "",
             "required": 0,
