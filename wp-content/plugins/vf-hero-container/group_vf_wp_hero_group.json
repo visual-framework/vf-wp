@@ -159,6 +159,7 @@
             },
             "choices": {
                 "default": "Default",
+                "400": "400",
                 "800": "800",
                 "1200": "1200",
                 "1600": "1600"
@@ -170,6 +171,25 @@
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_6182698c68593",
+            "label": "Search",
+            "name": "vf_hero_search",
+            "type": "true_false",
+            "instructions": "Toggle on to add search bar",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_603b3d0403884",
@@ -224,5 +244,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-Hero container",
-    "modified": 1614495456
+    "modified": 1635940900
 }
