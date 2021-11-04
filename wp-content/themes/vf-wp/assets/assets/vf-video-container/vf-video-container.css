@@ -95,12 +95,9 @@
 /* stylelint-enable */
 /*!
 * Component: @visual-framework/embl-grid
-* Version: 2.1.2
+* Version: 2.2.0
 * Location: components/vf-core-components/embl-grid
 */
-.embl-grid {
-  margin-bottom: 48px;
-}
 .embl-grid > :first-child {
   grid-column: 1/-1;
 }
