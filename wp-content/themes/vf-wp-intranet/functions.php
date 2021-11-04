@@ -401,13 +401,43 @@ function redirect_externally(){
 // 	// not an admin page and is the main query
 // 	if ( !is_admin() && $query->is_main_query() ) {
 // 		if ( is_search() ) {
-// 			$query->set( 'orderby', 'relevance' );
-// 		}
+//       $query->set( 'orderby', 'relevance' );
+//       return $query;		}
 // 	}
 // }
 // add_action( 'pre_get_posts', 'my_search_query' );
 
 // enables excerpt field for pages
 add_post_type_support( 'page', 'excerpt' );
+
+
+/*
+ * Changes search url and opens the relevant tab on the search results page
+ */
+
+function change_search_url() {
+  if ( is_search() && ! empty( $_GET['s'] ) ) {
+      if (get_query_var( 'post_type' ) == 'people') { 
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--people' );
+      }
+      elseif (get_query_var( 'post_type' ) == 'documents') { 
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--documents' );
+      }
+      elseif (get_query_var( 'post_type' ) == 'insites') { 
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--news' );
+      }
+      elseif (get_query_var( 'post_type' ) == 'events') { 
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--events' );
+      }
+      elseif (get_query_var( 'post_type' ) == 'page') { 
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--pages' );
+      }
+      elseif (get_query_var( 'post_type' ) == 'any') {
+        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) );
+      }
+      exit();
+  }   
+}
+add_action( 'template_redirect', 'change_search_url' );
 
 ?>

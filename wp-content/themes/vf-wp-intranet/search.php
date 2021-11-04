@@ -77,8 +77,6 @@ if (class_exists('VF_Navigation')) {
 
 <section class="embl-grid embl-grid--has-centered-content">
   <div>
-    <?php include(locate_template('partials/search-filter.php', false, false)); 
- ?>
   </div>
   <div>
     <div class="vf-content">
@@ -94,19 +92,19 @@ if (class_exists('VF_Navigation')) {
       <div class="vf-tabs">
         <ul class="vf-tabs__list" data-vf-js-tabs>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--1">Pages</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--pages">Pages</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--2">People</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--people">People</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--3">Documents</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--4">News</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--news">News</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--5">Events</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--events">Events</a>
           </li>
         </ul>
       </div>
@@ -114,7 +112,7 @@ if (class_exists('VF_Navigation')) {
       <div class="vf-tabs-content" data-vf-js-tabs-content>
         <?php
       if ( have_posts() ) { ?>
-        <section class="vf-tabs__section" id="vf-tabs__section--1">
+        <section class="vf-tabs__section" id="vf-tabs__section--pages">
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'page' ) { 
            include(locate_template('partials/vf-summary--page.php', false, false));  ?>
@@ -124,7 +122,7 @@ if (class_exists('VF_Navigation')) {
         </section>
         <?php
         rewind_posts(); ?>
-          <section class="vf-tabs__section" id="vf-tabs__section--2">
+          <section class="vf-tabs__section" id="vf-tabs__section--people">
             <?php while( have_posts() ) { the_post(); ?>
             <?php if ( $post->post_type == 'people' ) { 
              include(locate_template('partials/vf-profile.php', false, false));  ?>
@@ -132,7 +130,7 @@ if (class_exists('VF_Navigation')) {
             <?php
           } ?>
           </section>
-        <section class="vf-tabs__section" id="vf-tabs__section--3">
+        <section class="vf-tabs__section" id="vf-tabs__section--documents">
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'documents' ) { 
            include(locate_template('partials/vf-summary--document.php', false, false));  ?>
@@ -144,7 +142,7 @@ if (class_exists('VF_Navigation')) {
         rewind_posts(); ?>
         <?php
         rewind_posts(); ?>
-        <section class="vf-tabs__section" id="vf-tabs__section--4">
+        <section class="vf-tabs__section" id="vf-tabs__section--news">
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'insites' ) { 
            include(locate_template('partials/vf-summary-insites-latest.php', false, false));  ?>
@@ -154,7 +152,7 @@ if (class_exists('VF_Navigation')) {
         </section>
         <?php
         rewind_posts(); ?>
-        <section class="vf-tabs__section" id="vf-tabs__section--5">
+        <section class="vf-tabs__section" id="vf-tabs__section--events">
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'events' ) { 
            include(locate_template('partials/vf-summary-events.php', false, false));  ?>
@@ -163,17 +161,10 @@ if (class_exists('VF_Navigation')) {
         } ?>
         </section>
         <?php
-        rewind_posts(); ?>
-
-
-<?php
-} // End your if statement
+        rewind_posts(); 
+      } 
         ?>
-
-
       </div>
-
-
     </div>
   </div>
 </section>
