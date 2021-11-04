@@ -109,7 +109,7 @@
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--4 {
@@ -119,7 +119,7 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--3 {
@@ -129,7 +129,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--2 {
@@ -139,7 +139,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--1 {
@@ -149,7 +149,7 @@
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text--has-tag {
@@ -194,7 +194,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0;
 }
 
@@ -205,7 +205,7 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 0;
   color: #707372;
 }

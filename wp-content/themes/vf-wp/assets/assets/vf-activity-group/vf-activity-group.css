@@ -313,7 +313,7 @@
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--4 {
@@ -323,7 +323,7 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--3 {
@@ -333,7 +333,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--2 {
@@ -343,7 +343,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--1 {
@@ -353,7 +353,7 @@
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text--has-tag {
@@ -391,7 +391,7 @@ html:not(.vf-disable-deprecated) .vf-activity__date {
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 html:not(.vf-disable-deprecated) .vf-activity__list {
   padding: 0;
@@ -403,7 +403,7 @@ html:not(.vf-disable-deprecated) .vf-activity__item {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 8px 0;
   background-color: #ffffff;
   border: 1px solid #707372;
@@ -434,7 +434,7 @@ html:not(.vf-disable-deprecated) .vf-activity__blockquote {
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   color: #54585a;
   margin-bottom: 8px;
   margin-top: 16px;
@@ -456,7 +456,7 @@ html:not(.vf-disable-deprecated) .vf-activity-group__heading {
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 16px 0;
 }
 html:not(.vf-disable-deprecated) .vf-activity {

@@ -333,7 +333,7 @@
   color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -350,7 +350,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   position: relative;
   top: -4px;
 }
@@ -367,7 +367,7 @@
   color: #373a36;
   font-weight: 500;
   line-height: 1.57;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   text-transform: uppercase;
 }
 

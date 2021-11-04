@@ -110,7 +110,7 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   text-align: left;
 }
 
@@ -124,7 +124,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 8px 16px;
   text-align: left;
 }
@@ -169,7 +169,7 @@
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 8px 16px;
   vertical-align: top;
 }
@@ -187,7 +187,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   text-align: left;
 }
 
@@ -241,7 +241,7 @@
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   color: #ffffff;
   font-weight: 400;
   margin-left: 1em;

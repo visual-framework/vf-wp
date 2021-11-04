@@ -108,7 +108,7 @@
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-list__item {
   margin-bottom: 1rem;
@@ -121,7 +121,7 @@
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-list--ordered {
@@ -185,7 +185,7 @@
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 0 0;
   border: 0;
   padding: 10px 8px 10px 32px;
@@ -216,7 +216,7 @@ html:not(.vf-disable-deprecated) .vf-activity__date {
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 html:not(.vf-disable-deprecated) .vf-activity__list {
   padding: 0;
@@ -228,7 +228,7 @@ html:not(.vf-disable-deprecated) .vf-activity__item {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 8px 0;
   background-color: #ffffff;
   border: 1px solid #707372;
@@ -259,7 +259,7 @@ html:not(.vf-disable-deprecated) .vf-activity__blockquote {
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   color: #54585a;
   margin-bottom: 8px;
   margin-top: 16px;

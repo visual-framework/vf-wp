@@ -104,7 +104,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 0;
 }
 

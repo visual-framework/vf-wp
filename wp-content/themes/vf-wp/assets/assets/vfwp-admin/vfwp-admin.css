@@ -104,7 +104,7 @@
   color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
 }
 .vf-content h1:not([class*=vf-]) + small, .editor-styles-wrapper h1:not([class*=vf-]) + small {
   margin-bottom: 35px;
@@ -122,7 +122,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h2:not([class*=vf-]) b, .editor-styles-wrapper h2:not([class*=vf-]) b,
 .vf-content h2:not([class*=vf-]) strong,
@@ -136,7 +136,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h3:not([class*=vf-]) b, .editor-styles-wrapper h3:not([class*=vf-]) b,
 .vf-content h3:not([class*=vf-]) strong,
@@ -150,7 +150,7 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h4:not([class*=vf-]) b, .editor-styles-wrapper h4:not([class*=vf-]) b,
 .vf-content h4:not([class*=vf-]) strong,
@@ -164,7 +164,7 @@
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h5:not([class*=vf-]) b, .editor-styles-wrapper h5:not([class*=vf-]) b,
 .vf-content h5:not([class*=vf-]) strong,
@@ -178,7 +178,7 @@
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h6:not([class*=vf-]) b, .editor-styles-wrapper h6:not([class*=vf-]) b,
 .vf-content h6:not([class*=vf-]) strong,
@@ -194,7 +194,7 @@
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 1rem 0;
+  margin: var(--vf-stack-margin, 0) 0 1rem 0;
 }
 .vf-content .vf-link, .editor-styles-wrapper .vf-link,
 .vf-content a:not([class*=vf-]),
@@ -229,7 +229,7 @@
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   display: block;
 }
 .vf-content ol:not([class*=vf-]), .editor-styles-wrapper ol:not([class*=vf-]) {
@@ -259,7 +259,7 @@
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin-bottom: 0.5rem;
 }
 .vf-content li:not([class*=vf-]) > ul:not([class*=vf-]), .editor-styles-wrapper li:not([class*=vf-]) > ul:not([class*=vf-]),
@@ -293,7 +293,7 @@
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 1rem 0;
   border: 0;
   padding: 10px 8px 10px 32px;
@@ -321,7 +321,7 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   text-align: left;
 }
 .vf-content table:not([class*=vf-]) thead, .editor-styles-wrapper table:not([class*=vf-]) thead {
@@ -333,7 +333,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 8px 16px;
   text-align: left;
 }
@@ -343,7 +343,7 @@
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 8px 16px;
   text-align: left;
   vertical-align: top;
@@ -367,7 +367,7 @@
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   color: #54585a;
 }
 .vf-content .vf-video, .editor-styles-wrapper .vf-video {
@@ -459,7 +459,7 @@
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .editor-styles-wrapper .wp-block .acf-table td,
@@ -483,7 +483,7 @@
   font-weight: 500;
   line-height: 1.3125;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .block-editor .editor-styles-wrapper .has-large-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -492,7 +492,7 @@
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .block-editor .editor-styles-wrapper .has-regular-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -501,7 +501,7 @@
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .block-editor .editor-styles-wrapper .has-small-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -510,7 +510,7 @@
   font-weight: 500;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .block-editor .editor-styles-wrapper .has-extra-small-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -519,5 +519,5 @@
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }

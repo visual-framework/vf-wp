@@ -109,7 +109,7 @@
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--4 {
@@ -119,7 +119,7 @@
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--3 {
@@ -129,7 +129,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--2 {
@@ -139,7 +139,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-heading--1 {
@@ -149,7 +149,7 @@
   font-weight: 700;
   line-height: 1.547;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text--has-tag {
@@ -273,7 +273,7 @@ a.vf-badge--secondary:hover {
   font-weight: 600;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-body--5 {
@@ -283,7 +283,7 @@ a.vf-badge--secondary:hover {
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-body--4 {
@@ -293,7 +293,7 @@ a.vf-badge--secondary:hover {
   font-weight: 500;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-body--3 {
@@ -303,7 +303,7 @@ a.vf-badge--secondary:hover {
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-body--2 {
@@ -313,7 +313,7 @@ a.vf-badge--secondary:hover {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-text-body--1 {
@@ -323,7 +323,7 @@ a.vf-badge--secondary:hover {
   font-weight: 500;
   line-height: 1.3125;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 /*!
@@ -379,7 +379,7 @@ a.vf-badge--secondary:hover {
   color: #373a36;
   font-weight: 400;
   line-height: 1.71;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   color: #707372;
 }
 
@@ -398,7 +398,7 @@ a.vf-badge--secondary:hover {
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   /* stylelint-disable */
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -629,7 +629,7 @@ input[type=search]::-webkit-search-cancel-button {
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 0;
 }
 
@@ -672,7 +672,7 @@ input[type=search]::-webkit-search-cancel-button {
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   /* stylelint-disable */
   --webkit-appearance: none;
   -webkit-appearance: none;
@@ -846,7 +846,7 @@ input[type=search]::-webkit-search-cancel-button {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   /* stylelint-disable */
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -900,7 +900,7 @@ input[type=search]::-webkit-search-cancel-button {
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1074,7 +1074,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-figure__image {
@@ -1122,7 +1122,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-list__item {
   margin-bottom: 1rem;
@@ -1135,7 +1135,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-list--ordered {
@@ -1199,7 +1199,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 0 0;
   border: 0;
   padding: 10px 8px 10px 32px;
@@ -1283,7 +1283,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-box__link {
@@ -1314,7 +1314,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content .vf-box__text a,
 .vf-box__text a {
@@ -1402,7 +1402,7 @@ a.vf-button:hover, a.vf-button:focus {
   color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
 }
 .vf-content h1:not([class*=vf-]) + small {
   margin-bottom: 35px;
@@ -1419,7 +1419,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h2:not([class*=vf-]) b,
 .vf-content h2:not([class*=vf-]) strong {
@@ -1432,7 +1432,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h3:not([class*=vf-]) b,
 .vf-content h3:not([class*=vf-]) strong {
@@ -1445,7 +1445,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h4:not([class*=vf-]) b,
 .vf-content h4:not([class*=vf-]) strong {
@@ -1458,7 +1458,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h5:not([class*=vf-]) b,
 .vf-content h5:not([class*=vf-]) strong {
@@ -1471,7 +1471,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content h6:not([class*=vf-]) b,
 .vf-content h6:not([class*=vf-]) strong {
@@ -1486,7 +1486,7 @@ a.vf-button:hover, a.vf-button:focus {
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 1rem 0;
+  margin: var(--vf-stack-margin, 0) 0 1rem 0;
 }
 .vf-content .vf-link,
 .vf-content a:not([class*=vf-]) {
@@ -1517,7 +1517,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   display: block;
 }
 .vf-content ol:not([class*=vf-]) {
@@ -1547,7 +1547,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin-bottom: 0.5rem;
 }
 .vf-content li:not([class*=vf-]) > ul:not([class*=vf-]),
@@ -1580,7 +1580,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.421;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 1rem 0;
   border: 0;
   padding: 10px 8px 10px 32px;
@@ -1608,7 +1608,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 500;
   line-height: 1.29;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   text-align: left;
 }
 .vf-content table:not([class*=vf-]) thead {
@@ -1620,7 +1620,7 @@ a.vf-button:hover, a.vf-button:focus {
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 8px 16px;
   text-align: left;
 }
@@ -1630,7 +1630,7 @@ a.vf-button:hover, a.vf-button:focus {
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding: 8px 16px;
   text-align: left;
   vertical-align: top;
@@ -1653,7 +1653,7 @@ a.vf-button:hover, a.vf-button:focus {
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   color: #54585a;
 }
 .vf-content .vf-video {

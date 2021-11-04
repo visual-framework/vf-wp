@@ -174,7 +174,7 @@
   font-size: 24px;
   font-weight: 500;
   line-height: 1.333;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   background-color: var(--card-background-color);
   color: #1a1c1a;
   color: var(--card-text-color, #1a1c1a);
@@ -243,7 +243,7 @@
   font-size: 19px;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   word-break: break-word;
 }
 
@@ -252,7 +252,7 @@
   font-size: 19px;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   color: #ffffff;
   color: var(--card-text-color, #ffffff);
   word-break: break-word;
@@ -412,7 +412,7 @@ html:not(.vf-disable-deprecated) .vf-card--hard .vf-card__heading {
   font-weight: 400;
   line-height: 1.57;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   display: inline-block;
   margin-bottom: 0;
   margin-left: -24px;

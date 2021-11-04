@@ -125,7 +125,7 @@
   color: #373a36;
   font-weight: 400;
   line-height: 1.71;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
 }
 
 @media (min-width: 768px) {
@@ -170,7 +170,7 @@
   color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -187,7 +187,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.5;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   position: relative;
   top: -4px;
 }
@@ -204,7 +204,7 @@
   color: #373a36;
   font-weight: 500;
   line-height: 1.57;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   text-transform: uppercase;
 }
 
@@ -309,7 +309,7 @@
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
 }
 
 @media (min-width: 1024px) {

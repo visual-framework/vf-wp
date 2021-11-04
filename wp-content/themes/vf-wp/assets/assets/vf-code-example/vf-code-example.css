@@ -107,7 +107,7 @@
   color: #373a36;
   font-weight: 400;
   line-height: 1.57;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   padding-bottom: 0.25rem;
   padding-top: 0.25rem;
   background: #f3f3f3;

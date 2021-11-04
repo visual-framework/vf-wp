@@ -200,5 +200,5 @@
   color: #373a36;
   font-weight: 400;
   line-height: 1.71;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
 }

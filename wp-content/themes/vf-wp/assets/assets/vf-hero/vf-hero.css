@@ -136,7 +136,7 @@
   color: #373a36;
   font-weight: 400;
   line-height: 1.71;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   line-height: 1;
   position: relative;
 }
@@ -153,7 +153,7 @@
   color: #1a1c1a;
   font-weight: 700;
   line-height: 1.547;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   line-height: 1.25;
   word-break: break-word;
   max-width: 30ch;
@@ -174,7 +174,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.29;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   --vf-stack-margin: 0;
   max-width: 50ch;
 }
@@ -185,7 +185,7 @@
   color: #1a1c1a;
   font-weight: 400;
   line-height: 1.421;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   max-width: 60ch;
 }
 .vf-hero__text a {
@@ -209,7 +209,7 @@
   color: #1a1c1a;
   font-weight: 500;
   line-height: 1.29;
-  margin: 0 0 0 0;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;

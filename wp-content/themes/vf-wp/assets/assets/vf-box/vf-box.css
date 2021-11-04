@@ -148,7 +148,7 @@
   font-weight: 500;
   line-height: 1.333;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-box__link {
@@ -179,7 +179,7 @@
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
-  margin: 0 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 .vf-content .vf-box__text a,
 .vf-box__text a {
