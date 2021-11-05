@@ -433,7 +433,7 @@ function change_search_url() {
       wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--pages' );
       }
       elseif (get_query_var( 'post_type' ) == 'any') {
-        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) );
+        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#stq=' . urlencode( get_query_var( 's' ) ) . '&stp=1');
       }
       exit();
   }   

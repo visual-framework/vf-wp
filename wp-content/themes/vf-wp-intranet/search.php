@@ -84,7 +84,8 @@ if (class_exists('VF_Navigation')) {
       action="<?php echo esc_url(home_url('/')); ?>">
       <div class="vf-sidebar__inner">
         <div class="vf-form__item | vf-search__item">
-          <input type="search" class="vf-form__input | vf-search__input" placeholder="Enter your search term"
+          <input autofocus data-embl-search-input data-vf-search-client-side-input type="search"
+            class="vf-form__input | vf-search__input" placeholder="Enter your search term"
             value="<?php echo esc_attr(get_search_query()); ?>" name="s">
         </div>
         <div class="vf-form__item | vf-search__item" style="display: none">
@@ -98,8 +99,18 @@ if (class_exists('VF_Navigation')) {
             <option value="documents" name="post_type[]">Documents</option>
           </select>
         </div>
-        <input type="submit" class="vf-search__button | vf-button vf-button--primary"
-          value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+        <button type="submit" class="vf-search__button | vf-button vf-button--primary" data-embl-search-submit>
+          <span class="vf-button__text">Search</span>
+          <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+            xmlns:svgjs="http://svgjs.com/svgjs" viewBox="0 0 140 140" width="140" height="140">
+            <g transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)">
+              <path
+                d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
+                fill="#FFFFFF" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"></path>
+            </g>
+          </svg>
+        </button>
       </div>
     </form>
   </div>
@@ -110,6 +121,7 @@ if (class_exists('VF_Navigation')) {
   </div>
   <div>
     <div class="vf-content">
+      <?php /*
       <div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--400">
         <div class="vf-banner__content">
           <p class="vf-banner__text">If you haven't found what you are looking for please use <a class="vf-banner__link"
@@ -118,6 +130,7 @@ if (class_exists('VF_Navigation')) {
               search</a></p>
         </div>
       </div>
+        */ ?>
       <div class="vf-tabs">
         <ul class="vf-tabs__list" data-vf-js-tabs>
           <li class="vf-tabs__item">
@@ -127,13 +140,17 @@ if (class_exists('VF_Navigation')) {
             <a class="vf-tabs__link" href="#vf-tabs__section--people">People (<?php echo $people_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents (<?php echo $documents_count_final; ?>)</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents
+              (<?php echo $documents_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
             <a class="vf-tabs__link" href="#vf-tabs__section--news">News (<?php echo $insites_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
             <a class="vf-tabs__link" href="#vf-tabs__section--events">Events (<?php echo $events_count_final; ?>)</a>
+          </li>
+          <li class="vf-tabs__item">
+            <a class="vf-tabs__link" href="#vf-tabs__section--public">Public</a>
           </li>
         </ul>
       </div>
@@ -152,7 +169,7 @@ if (class_exists('VF_Navigation')) {
         <?php
         rewind_posts(); ?>
 
-          <section class="vf-tabs__section" id="vf-tabs__section--people">
+        <section class="vf-tabs__section" id="vf-tabs__section--people">
           <?php if (get_posts(array('post_type' => 'people', '_meta_or_title' => get_search_query(), 'meta_query' => array(
             'relation' => 'OR',
         array(
@@ -166,16 +183,16 @@ if (class_exists('VF_Navigation')) {
            'compare' => 'LIKE'
         ),
      )))) { ?>
-            <?php while( have_posts() ) { the_post(); ?>
-            <?php if ( $post->post_type == 'people' ) { 
+          <?php while( have_posts() ) { the_post(); ?>
+          <?php if ( $post->post_type == 'people' ) { 
              include(locate_template('partials/vf-profile.php', false, false));  ?>
           <?php } } } else {echo 'No people found. Please check the other content types.';}?>
-          </section>
-          <?php
+        </section>
+        <?php
         rewind_posts(); ?>
 
         <section class="vf-tabs__section" id="vf-tabs__section--documents">
-        <?php if (get_posts(array('post_type' => 'documents', 's' => get_search_query() ))) { ?>
+          <?php if (get_posts(array('post_type' => 'documents', 's' => get_search_query() ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'documents' ) { 
            include(locate_template('partials/vf-summary--document.php', false, false));  ?>
@@ -185,7 +202,7 @@ if (class_exists('VF_Navigation')) {
         rewind_posts(); ?>
 
         <section class="vf-tabs__section" id="vf-tabs__section--news">
-        <?php if (get_posts(array('post_type' => 'insites', 's' => get_search_query() ))) { ?>
+          <?php if (get_posts(array('post_type' => 'insites', 's' => get_search_query() ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'insites' ) { 
            include(locate_template('partials/vf-summary-insites-latest.php', false, false));  ?>
@@ -195,7 +212,7 @@ if (class_exists('VF_Navigation')) {
         rewind_posts(); ?>
 
         <section class="vf-tabs__section" id="vf-tabs__section--events">
-        <?php if (get_posts(array('post_type' => 'events', 's' => get_search_query() ))) { ?>
+          <?php if (get_posts(array('post_type' => 'events', 's' => get_search_query() ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'events' ) { 
            include(locate_template('partials/vf-summary-events.php', false, false));  ?>
@@ -205,10 +222,15 @@ if (class_exists('VF_Navigation')) {
         rewind_posts(); 
       } 
         ?>
+        <section class="vf-tabs__section" id="vf-tabs__section--public">
+          <?php include(locate_template('partials/swiftype-search.php', false, false));  ?>
+        </section>
       </div>
     </div>
   </div>
 </section>
+
+
 
 <?php
 if (class_exists('VF_Global_Footer')) {
