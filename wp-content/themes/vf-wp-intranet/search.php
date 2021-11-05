@@ -6,9 +6,29 @@ if (class_exists('VF_Global_Header')) {
 if (class_exists('VF_Intranet_Breadcrumbs')) {
   VF_Plugin::render(VF_Intranet_Breadcrumbs::get_plugin('vf_wp_breadcrumbs_intranet'));
 }
-
 $total_results = $wp_query->found_posts;
-
+$pages_count = get_posts(array('post_type' => 'page', 's' => get_search_query() ));
+$pages_count_final = count($pages_count);
+$insites_count = get_posts(array('post_type' => 'insites', 's' => get_search_query() ));
+$insites_count_final = count($insites_count);
+$documents_count = get_posts(array('post_type' => 'documents', 's' => get_search_query() ));
+$documents_count_final = count($documents_count);
+$events_count = get_posts(array('post_type' => 'events', 's' => get_search_query() ));
+$events_count_final = count($events_count);
+$people_count = get_posts(array('post_type' => 'people', '_meta_or_title' => get_search_query(), 'meta_query' => array(
+  'relation' => 'OR',
+array(
+ 'key' => 'positions_name_1',
+ 'value' => get_search_query(),
+ 'compare' => 'LIKE'
+),
+array(
+ 'key' => 'team_name_1',
+ 'value' => get_search_query(),
+ 'compare' => 'LIKE'
+),
+)));
+$people_count_final = count($people_count);
 ?>
 
 <section class="vf-hero | vf-u-fullbleed | vf-hero--800 | vf-u-margin__bottom--0">
@@ -92,63 +112,85 @@ if (class_exists('VF_Navigation')) {
       <div class="vf-tabs">
         <ul class="vf-tabs__list" data-vf-js-tabs>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--pages">Pages</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--pages">Pages (<?php echo $pages_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--people">People</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--people">People (<?php echo $people_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents (<?php echo $documents_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--news">News</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--news">News (<?php echo $insites_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--events">Events</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--events">Events (<?php echo $events_count_final; ?>)</a>
           </li>
         </ul>
       </div>
 
-      <div class="vf-tabs-content" data-vf-js-tabs-content>
-        <?php
+      <?php
       if ( have_posts() ) { ?>
+      <div class="vf-tabs-content" data-vf-js-tabs-content>
+
         <section class="vf-tabs__section" id="vf-tabs__section--pages">
+          <?php if (get_posts(array('post_type' => 'page', 's' => get_search_query() ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'page' ) { 
            include(locate_template('partials/vf-summary--page.php', false, false));  ?>
-          <?php } }?>
+          <?php } } } else {echo 'No pages found. Please check the other content types.';}?>
         </section>
         <?php
         rewind_posts(); ?>
+
           <section class="vf-tabs__section" id="vf-tabs__section--people">
+          <?php if (get_posts(array('post_type' => 'people', '_meta_or_title' => get_search_query(), 'meta_query' => array(
+            'relation' => 'OR',
+        array(
+           'key' => 'positions_name_1',
+           'value' => get_search_query(),
+           'compare' => 'LIKE'
+        ),
+        array(
+           'key' => 'team_name_1',
+           'value' => get_search_query(),
+           'compare' => 'LIKE'
+        ),
+     )))) { ?>
             <?php while( have_posts() ) { the_post(); ?>
             <?php if ( $post->post_type == 'people' ) { 
              include(locate_template('partials/vf-profile.php', false, false));  ?>
-          <?php } }?>
+          <?php } } } else {echo 'No people found. Please check the other content types.';}?>
           </section>
           <?php
         rewind_posts(); ?>
+
         <section class="vf-tabs__section" id="vf-tabs__section--documents">
+        <?php if (get_posts(array('post_type' => 'documents', 's' => get_search_query() ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'documents' ) { 
            include(locate_template('partials/vf-summary--document.php', false, false));  ?>
-          <?php } }?>
+          <?php } } } else {echo 'No documents found. Please check the other content types.';}?>
         </section>
         <?php
         rewind_posts(); ?>
+
         <section class="vf-tabs__section" id="vf-tabs__section--news">
+        <?php if (get_posts(array('post_type' => 'insites', 's' => get_search_query() ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'insites' ) { 
            include(locate_template('partials/vf-summary-insites-latest.php', false, false));  ?>
-          <?php } }?>
+          <?php } } } else {echo 'No articles found. Please check the other content types.';}?>
         </section>
         <?php
         rewind_posts(); ?>
+
         <section class="vf-tabs__section" id="vf-tabs__section--events">
+        <?php if (get_posts(array('post_type' => 'events', 's' => get_search_query() ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'events' ) { 
            include(locate_template('partials/vf-summary-events.php', false, false));  ?>
-          <?php } }?>
+          <?php } } } else {echo 'No events found. Please check the other content types.';}?>
         </section>
         <?php
         rewind_posts(); 
