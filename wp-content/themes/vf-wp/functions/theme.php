@@ -458,6 +458,13 @@ class VF_Theme {
       $theme->version,
       true
     );
+    wp_enqueue_script(
+      'people-group',
+      $dir . '/assets/scripts/people-group.js',
+      array(),
+      $theme->version,
+      true
+    );
    }
   }
 
