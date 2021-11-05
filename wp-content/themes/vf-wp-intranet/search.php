@@ -116,9 +116,7 @@ if (class_exists('VF_Navigation')) {
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'page' ) { 
            include(locate_template('partials/vf-summary--page.php', false, false));  ?>
-          <?php } ?>
-          <?php
-        } ?>
+          <?php } }?>
         </section>
         <?php
         rewind_posts(); ?>
@@ -126,29 +124,23 @@ if (class_exists('VF_Navigation')) {
             <?php while( have_posts() ) { the_post(); ?>
             <?php if ( $post->post_type == 'people' ) { 
              include(locate_template('partials/vf-profile.php', false, false));  ?>
-            <?php } ?>
-            <?php
-          } ?>
+          <?php } }?>
           </section>
+          <?php
+        rewind_posts(); ?>
         <section class="vf-tabs__section" id="vf-tabs__section--documents">
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'documents' ) { 
            include(locate_template('partials/vf-summary--document.php', false, false));  ?>
-          <?php } ?>
-          <?php
-        } ?>
+          <?php } }?>
         </section>
-        <?php
-        rewind_posts(); ?>
         <?php
         rewind_posts(); ?>
         <section class="vf-tabs__section" id="vf-tabs__section--news">
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'insites' ) { 
            include(locate_template('partials/vf-summary-insites-latest.php', false, false));  ?>
-          <?php } ?>
-          <?php
-        } ?>
+          <?php } }?>
         </section>
         <?php
         rewind_posts(); ?>
@@ -156,9 +148,7 @@ if (class_exists('VF_Navigation')) {
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'events' ) { 
            include(locate_template('partials/vf-summary-events.php', false, false));  ?>
-          <?php } ?>
-          <?php
-        } ?>
+          <?php } }?>
         </section>
         <?php
         rewind_posts(); 
