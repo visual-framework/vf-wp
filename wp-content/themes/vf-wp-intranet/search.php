@@ -7,23 +7,33 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
   VF_Plugin::render(VF_Intranet_Breadcrumbs::get_plugin('vf_wp_breadcrumbs_intranet'));
 }
 $total_results = $wp_query->found_posts;
-$pages_count = get_posts(array('post_type' => 'page', 's' => get_search_query() ));
+
+$pages_count = get_posts(array('post_type' => 'page', 'numberposts' => -1, 's' => get_search_query() ));
 $pages_count_final = count($pages_count);
-$insites_count = get_posts(array('post_type' => 'insites', 's' => get_search_query() ));
+
+$insites_count = get_posts(array('post_type' => 'insites', 'numberposts' => -1, 's' => get_search_query() ));
 $insites_count_final = count($insites_count);
-$documents_count = get_posts(array('post_type' => 'documents', 's' => get_search_query() ));
+
+$documents_count = get_posts(array('post_type' => 'documents', 'numberposts' => -1, 's' => get_search_query() ));
 $documents_count_final = count($documents_count);
-$events_count = get_posts(array('post_type' => 'events', 's' => get_search_query() ));
+
+$events_count = get_posts(array('post_type' => 'events', 'numberposts' => -1, 's' => get_search_query() ));
 $events_count_final = count($events_count);
-$people_count = get_posts(array('post_type' => 'people', '_meta_or_title' => get_search_query(), 'meta_query' => array(
+
+$people_count = get_posts(array('post_type' => 'people', 'numberposts' => -1,  'meta_query' => array(
   'relation' => 'OR',
 array(
- 'key' => 'positions_name_1',
+ 'key' => array('positions_name_1', 'positions_name_2', 'positions_name_3', 'positions_name_4'),
  'value' => get_search_query(),
  'compare' => 'LIKE'
 ),
 array(
- 'key' => 'team_name_1',
+ 'key' => array('team_name_1', 'team_name_2', 'team_name_3', 'team_name_4'),
+ 'value' => get_search_query(),
+ 'compare' => 'LIKE'
+),
+array(
+ 'key' => 'post_title',
  'value' => get_search_query(),
  'compare' => 'LIKE'
 ),
@@ -108,7 +118,6 @@ if (class_exists('VF_Navigation')) {
               search</a></p>
         </div>
       </div>
-      <p><?php echo $total_results; ?> result(s) found for "<?php echo esc_html(get_search_query()); ?>"</p>
       <div class="vf-tabs">
         <ul class="vf-tabs__list" data-vf-js-tabs>
           <li class="vf-tabs__item">
@@ -147,12 +156,12 @@ if (class_exists('VF_Navigation')) {
           <?php if (get_posts(array('post_type' => 'people', '_meta_or_title' => get_search_query(), 'meta_query' => array(
             'relation' => 'OR',
         array(
-           'key' => 'positions_name_1',
+           'key' => array('positions_name_1', 'positions_name_2', 'positions_name_3', 'positions_name_4'),
            'value' => get_search_query(),
            'compare' => 'LIKE'
         ),
         array(
-           'key' => 'team_name_1',
+           'key' => array('team_name_1', 'team_name_2', 'team_name_3', 'team_name_4'),
            'value' => get_search_query(),
            'compare' => 'LIKE'
         ),
