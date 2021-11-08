@@ -177,7 +177,7 @@ if (class_exists('VF_Navigation')) {
         rewind_posts(); ?>
 
         <section class="vf-tabs__section" id="vf-tabs__section--people">
-          <?php if (get_posts(array('post_type' => 'people', '_meta_or_title' => get_search_query(), 'meta_query' => array(
+          <?php if (get_posts(array('post_type' => 'people', 'meta_query' => array(
             'relation' => 'OR',
         array(
            'key' => array('positions_name_1', 'positions_name_2', 'positions_name_3', 'positions_name_4'),
@@ -189,6 +189,11 @@ if (class_exists('VF_Navigation')) {
            'value' => get_search_query(),
            'compare' => 'LIKE'
         ),
+        array(
+          'key' => 'post_title',
+          'value' => get_search_query(),
+          'compare' => 'LIKE'
+         ),
      )))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'people' ) { 

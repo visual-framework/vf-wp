@@ -194,6 +194,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
   // Insert post
   if (!get_page_by_title($title, 'OBJECT', 'people')) {
     $post_id = wp_insert_post($new_post);
+    add_post_meta($post_id, 'post_title', $title);
     add_post_meta($post_id, 'cpid', $cpid);
     add_post_meta($post_id, 'orcid', $orcid);
     add_post_meta($post_id, 'photo', $photo);
@@ -259,7 +260,10 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     }
     if (!empty($telephones[0])) {
     update_post_meta($existing_post_id, 'telephone', $telephone);
-    }     
+    } 
+    if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {
+      add_post_meta($post_id, 'post_title', $title);
+    }    
     // compare two arrays and trash post if the title doesn't exists in the API
     // $people_array = array();
     // $people_posts = get_posts( array( 'post_type' => 'people', 'nopaging' => true) ); 
@@ -444,27 +448,27 @@ add_action( 'template_redirect', 'change_search_url' );
  * Enables search by the “s” parameter and a meta_query
  */
 
-add_action( 'pre_get_posts', function( $q ) {
-	if( $title = $q->get( '_meta_or_title' ) )
-	{
-		add_filter( 'get_meta_sql', function( $sql ) use ( $title )
-		{
-			global $wpdb;
+// add_action( 'pre_get_posts', function( $q ) {
+// 	if( $title = $q->get( '_meta_or_title' ) )
+// 	{
+// 		add_filter( 'get_meta_sql', function( $sql ) use ( $title )
+// 		{
+// 			global $wpdb;
  
-			// Only run once:
-			static $nr = 0; 
-			if( 0 != $nr++ ) return $sql;
+// 			// Only run once:
+// 			static $nr = 0; 
+// 			if( 0 != $nr++ ) return $sql;
  
-			// Modified WHERE
-			$sql['where'] = sprintf(
-				" AND ( %s OR %s ) ",
-				$wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
-				mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
-			);
+// 			// Modified WHERE
+// 			$sql['where'] = sprintf(
+// 				" AND ( %s OR %s ) ",
+// 				$wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
+// 				mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
+// 			);
  
-			return $sql;
-		});
-	}
-});
+// 			return $sql;
+// 		});
+// 	}
+// });
 
 ?>

@@ -18,6 +18,9 @@ $title = get_post_meta( $post->ID, 'full_name', true);
 get_header();
 
 ?>
+<?php $meta_values = get_post_meta( get_the_ID() );
+
+var_dump( $meta_values ); ?>
 <!-- PROFILE -->
 <section class="embl-grid embl-grid--has-centered-content">
   <div>
@@ -63,7 +66,7 @@ get_header();
 
 
 <!-- TEAMS -->
-<section class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--400">
   <div class="vf-section-header">
     <h2 class="vf-section-header__heading">Teams</h2>
   </div>
@@ -166,7 +169,7 @@ get_header();
 
 
 <!-- PUBLICATIONS -->
-<section class="embl-grid embl-grid--has-centered-content | publications-container">
+<section class="embl-grid embl-grid--has-centered-content | publications-container | vf-u-margin__bottom--400">
   <div class="vf-section-header">
     <h2 class="vf-section-header__heading">Publications</h2>
   </div>
