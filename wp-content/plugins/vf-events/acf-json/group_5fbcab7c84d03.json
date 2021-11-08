@@ -931,11 +931,6 @@
                         "field": "field_5fbcab958038b",
                         "operator": "==",
                         "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
                     }
                 ]
             ],
@@ -1507,5 +1502,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1636365409
+    "modified": 1636370767
 }
