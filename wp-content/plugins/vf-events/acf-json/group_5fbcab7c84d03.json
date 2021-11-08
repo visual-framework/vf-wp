@@ -177,9 +177,9 @@
                 "364": "Virtual",
                 "98": "Other"
             },
-            "default_value": false,
+            "default_value": [],
             "allow_null": 0,
-            "multiple": 0,
+            "multiple": 1,
             "ui": 1,
             "ajax": 0,
             "return_format": "label",
@@ -493,8 +493,33 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_61713d2a583ec",
+            "label": "Virtual registration",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
             "key": "field_5e984858010ed",
-            "label": "Opening date",
+            "label": "Opening date (virtual)",
             "name": "vf_event_registration_opening",
             "type": "date_picker",
             "instructions": "",
@@ -511,7 +536,7 @@
         },
         {
             "key": "field_5e9848d6010ee",
-            "label": "Closing date",
+            "label": "Closing date (virtual)",
             "name": "vf_event_registration_closing",
             "type": "date_picker",
             "instructions": "",
@@ -527,35 +552,8 @@
             "first_day": 1
         },
         {
-            "key": "field_5e98502253db0",
-            "label": "Registration fee",
-            "name": "vf_event_registration_fee",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_5e9851f4f52eb",
-            "label": "Registration\/Application link",
+            "label": "Registration\/Application link (virtual)",
             "name": "vf_event_registration_link",
             "type": "text",
             "instructions": "",
@@ -574,7 +572,7 @@
         },
         {
             "key": "field_5f7473f59e83d",
-            "label": "Registration\/Application button text",
+            "label": "Registration\/Application button text (virtual)",
             "name": "vf_event_registration_button_text",
             "type": "text",
             "instructions": "",
@@ -599,6 +597,162 @@
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61713d4e583ed",
+            "label": "On-site registration",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_61713b31f430f",
+            "label": "Opening date (on-site)",
+            "name": "vf_event_registration_opening_on-site",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_61713b58f4310",
+            "label": "Closing date (on-site)",
+            "name": "vf_event_registration_closing_on-site",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_61713b68f4311",
+            "label": "Registration\/Application link (on-site)",
+            "name": "vf_event_registration_link_on-site",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61713b75f4312",
+            "label": "Registration\/Application button text (on-site)",
+            "name": "vf_event_registration_button_text_on-site",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Register",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5e98502253db0",
+            "label": "Registration fee",
+            "name": "vf_event_registration_fee",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "embl_ebi_training"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1352,5 +1506,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type"
+    "description": "`vf_event` post type",
+    "modified": 1636365409
 }

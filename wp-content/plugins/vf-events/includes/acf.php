@@ -302,7 +302,9 @@ class VF_Events_ACF {
       'vf_event_featured',
       'vf_event_organisers_listing',
       'vf_event_displayed',
-      'vf_event_subjects_training'
+      'vf_event_subjects_training',
+      'vf_event_registration_closing_on-site',
+      'vf_event_registration_link_on-site'
 
 
     );
