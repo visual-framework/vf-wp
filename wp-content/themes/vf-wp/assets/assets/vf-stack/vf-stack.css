@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-stack
- * Version: 2.1.2
+ * Version: 3.0.0
  * Location: components/vf-core-components/vf-stack
  */
 /*
@@ -107,24 +107,23 @@
  * 2. default for when browsers don't support CSS custom properties.
  * 3. removes top margin for any child of the vf-stack component.
  *
- * notes:
- * a: We are using `!important` here because some components have
- *    margin set that we need to override.
- * b: We can probably remove the custom property when all components
- *    have been purged of margin-bottom too.
- *
  */
 [class^=vf-stack] > * {
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
   /* [1] */
-  margin-top: 0 !important;
+  margin-top: 0;
   /* [2] */
 }
 
+.vf-stack > * + * > * {
+  --vf-stack-margin: 0;
+}
+
 .vf-stack > * + * {
+  --vf-stack-margin: 1rem;
   margin-top: 1rem;
   /* IE Fallback */
-  margin-top: var(--vf-stack-margin--custom, var(--vf-stack-margin, 1rem)) !important;
+  margin-top: var(--vf-stack-margin--custom, var(--vf-stack-margin, 1rem));
   /* [3] */
 }
 
@@ -154,10 +153,6 @@
 
 .vf-stack--1600 > * + * {
   --vf-stack-margin: 4rem;
-}
-
-.vf-stack > :not(.vf-hero) + .vf-u-fullbleed:not(.vf-hero):not(.ebi-header-footer) {
-  margin-top: 3rem !important;
 }
 
 .vf-stack > .vf-hero + .vf-u-fullbleed {
