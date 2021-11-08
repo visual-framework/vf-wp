@@ -200,7 +200,7 @@ $(function() {
         renderFunction: customRenderFunction,
         //fetchFields: {'books': ['title','body','published_on']},
         //searchFields: {'books': ['title']},
-        perPage: 5,
+        perPage: 10,
         filters: {'page': activeFacet},
         resultContainingElement: '.st-search-container',
         engineKey: 'uhn1PwHVEgsdzhbgQUPz'

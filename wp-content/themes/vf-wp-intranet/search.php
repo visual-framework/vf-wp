@@ -76,7 +76,7 @@ if (class_exists('VF_Navigation')) {
 </section>
 
 <section
-  class="embl-grid embl-grid--has-centered-content vf-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--400">
+  class="embl-grid embl-grid--has-centered-content vf-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--0">
   <div></div>
   <div>
     <form role="search" method="get"
@@ -113,13 +113,15 @@ if (class_exists('VF_Navigation')) {
         </button>
       </div>
     </form>
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0"><a
+        href="https://www.embl.org/search/?searchQuery=<?php echo esc_attr(get_search_query()); ?>&activeFacet=Alumni#stq=<?php echo esc_attr(get_search_query()); ?>"
+        target="_blank">Search for Alumni</a></p>
   </div>
 </section>
 
-<section class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid | vf-u-margin__bottom--0" style="margin-top: 0px !important;">
   <div>
   </div>
-  <div>
     <div class="vf-content">
       <?php /*
       <div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--400">
@@ -150,10 +152,15 @@ if (class_exists('VF_Navigation')) {
             <a class="vf-tabs__link" href="#vf-tabs__section--events">Events (<?php echo $events_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--public">Public</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--public">embl.org</a>
           </li>
         </ul>
       </div>
+</div>
+</section>
+<section class="embl-grid embl-grid--has-centered-content">
+<div>
+  </div>
 
       <?php
       if ( have_posts() ) { ?>
@@ -226,11 +233,7 @@ if (class_exists('VF_Navigation')) {
           <?php include(locate_template('partials/swiftype-search.php', false, false));  ?>
         </section>
       </div>
-    </div>
-  </div>
 </section>
-
-
 
 <?php
 if (class_exists('VF_Global_Footer')) {
