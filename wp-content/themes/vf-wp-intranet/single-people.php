@@ -18,9 +18,12 @@ $title = get_post_meta( $post->ID, 'full_name', true);
 get_header();
 
 ?>
-<?php $meta_values = get_post_meta( get_the_ID() );
-
-var_dump( $meta_values ); ?>
+<?php 
+/*
+$meta_values = get_post_meta( get_the_ID() );
+var_dump( $meta_values ); 
+*/
+?>
 <!-- PROFILE -->
 <section class="embl-grid embl-grid--has-centered-content">
   <div>
