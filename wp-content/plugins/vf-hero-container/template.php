@@ -49,7 +49,7 @@ $spacing_class .= "{$spacing}";
     }
 
   </style>
-  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
     <?php
   //Additional headings
   if (!empty ($add_heading_1)) { ?>
