@@ -1,9 +1,9 @@
 {
-    "key": "group_vf_members",
-    "title": "VF Members",
+    "key": "group_618a4d417e502",
+    "title": "VF Members (internal)",
     "fields": [
         {
-            "key": "field_vf_members_limit",
+            "key": "field_618a4d418299a",
             "label": "Limit",
             "name": "vf_members_limit",
             "type": "range",
@@ -23,7 +23,7 @@
             "append": ""
         },
         {
-            "key": "field_5ea988878eacf",
+            "key": "field_618a4d4182a20",
             "label": "Search by",
             "name": "vf_members_team",
             "type": "select",
@@ -49,7 +49,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5ea98ec74dd0e",
+            "key": "field_618a4d4182aaa",
             "label": "Default",
             "name": "",
             "type": "message",
@@ -58,7 +58,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ea988878eacf",
+                        "field": "field_618a4d4182a20",
                         "operator": "==",
                         "value": "default"
                     }
@@ -74,7 +74,7 @@
             "esc_html": 0
         },
         {
-            "key": "field_5ea98b26aaf6c",
+            "key": "field_618a4d4182b32",
             "label": "EMBL Taxonomy",
             "name": "vf_members_term",
             "type": "taxonomy",
@@ -83,7 +83,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ea988878eacf",
+                        "field": "field_618a4d4182a20",
                         "operator": "==",
                         "value": "taxonomy"
                     }
@@ -104,7 +104,7 @@
             "multiple": 0
         },
         {
-            "key": "field_5ea98b56aaf6d",
+            "key": "field_618a4d4182bbc",
             "label": "Keyword",
             "name": "vf_members_keyword",
             "type": "text",
@@ -113,7 +113,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ea988878eacf",
+                        "field": "field_618a4d4182a20",
                         "operator": "==",
                         "value": "keyword"
                     }
@@ -131,7 +131,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5ea983003e756",
+            "key": "field_618a4d4182c45",
             "label": "Include Team Leader",
             "name": "vf_members_leader",
             "type": "true_false",
@@ -150,7 +150,7 @@
             "ui_off_text": ""
         },
         {
-            "key": "field_vf_members_variation",
+            "key": "field_618a4d4182ce3",
             "label": "Variation",
             "name": "vf_members_variation",
             "type": "select",
@@ -184,7 +184,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5f0c72719058a",
+            "key": "field_618a4d4182d72",
             "label": "Hide fields",
             "name": "hide_fields",
             "type": "checkbox",
@@ -214,7 +214,7 @@
             "save_custom": 0
         },
         {
-            "key": "field_5f107250fb92d",
+            "key": "field_618a4d4182df7",
             "label": "Display in columns",
             "name": "vf_members_columns",
             "type": "range",
@@ -239,14 +239,14 @@
             {
                 "param": "vf_block",
                 "operator": "==",
-                "value": "vf_members"
+                "value": "vf_members_internal"
             }
         ],
         [
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/vf-members"
+                "value": "acf\/vf-members-internal"
             }
         ]
     ],
@@ -257,7 +257,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF Members Gutenberg block",
-    "modified": 1618305951
-
+    "description": "VF Members Gutenberg block"
 }

@@ -1,9 +1,9 @@
 {
-    "key": "group_5ea93b5d10f9d",
-    "title": "VF Person",
+    "key": "group_618a4d44667d5",
+    "title": "VF Person (internal)",
     "fields": [
         {
-            "key": "field_5ea93b6c43753",
+            "key": "field_618a4d446ab74",
             "label": "Search by",
             "name": "field",
             "type": "select",
@@ -19,9 +19,7 @@
                 "full_name": "Full Name",
                 "embl_id": "EMBL CP-ID"
             },
-            "default_value": [
-                "full_name"
-            ],
+            "default_value": "full_name",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -30,7 +28,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5ea93bf243754",
+            "key": "field_618a4d446abf3",
             "label": "Full Name",
             "name": "full_name",
             "type": "text",
@@ -39,7 +37,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ea93b6c43753",
+                        "field": "field_618a4d446ab74",
                         "operator": "==",
                         "value": "full_name"
                     }
@@ -57,7 +55,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5ea93bfb43755",
+            "key": "field_618a4d446acb2",
             "label": "EMBL CP-ID",
             "name": "embl_id",
             "type": "text",
@@ -66,7 +64,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_5ea93b6c43753",
+                        "field": "field_618a4d446ab74",
                         "operator": "==",
                         "value": "embl_id"
                     }
@@ -84,7 +82,7 @@
             "maxlength": ""
         },
         {
-            "key": "field_5ea94bd34f1b9",
+            "key": "field_618a4d446ad36",
             "label": "Variation",
             "name": "variation",
             "type": "select",
@@ -109,9 +107,7 @@
                 "inline-easy-primary": "inline-easy-primary",
                 "inline-easy-secondary": "inline-easy-secondary"
             },
-            "default_value": [
-                "inline"
-            ],
+            "default_value": "inline",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -120,7 +116,7 @@
             "placeholder": ""
         },
         {
-            "key": "field_5f0c72719058a",
+            "key": "field_618a4d446adea",
             "label": "Hide fields",
             "name": "hide_fields",
             "type": "checkbox",
@@ -156,7 +152,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/vf-person"
+                "value": "acf\/vf-person-internal"
             }
         ]
     ],
@@ -167,7 +163,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF Person ACF Gutenberg block",
-    "modified": 1622098556
-  }
-  
+    "description": "VF Person ACF Gutenberg block"
+}
