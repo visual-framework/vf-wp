@@ -154,7 +154,7 @@
             "label": "Variation",
             "name": "vf_members_variation",
             "type": "select",
-            "instructions": "Design variation.",
+            "instructions": "Design variation. *Currently limited to inline variant.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -163,17 +163,7 @@
                 "id": ""
             },
             "choices": {
-                "block": "block",
-                "block-small": "block-small",
-                "block-large": "block-large",
-                "inline": "inline",
-                "inline-small": "inline-small",
-                "inline-large": "inline-large",
-                "inline-primary": "inline-primary",
-                "inline-secondary": "inline-secondary",
-                "inline-easy": "inline-easy",
-                "inline-easy-primary": "inline-easy-primary",
-                "inline-easy-secondary": "inline-easy-secondary"
+                "inline": "inline"
             },
             "default_value": "inline",
             "allow_null": 0,
@@ -257,5 +247,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF Members Gutenberg block"
+    "description": "VF Members (internal) Gutenberg block. Only to use on VF-WP Intranet theme"
 }
