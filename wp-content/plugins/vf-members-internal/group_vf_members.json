@@ -1,0 +1,263 @@
+{
+    "key": "group_vf_members",
+    "title": "VF Members",
+    "fields": [
+        {
+            "key": "field_vf_members_limit",
+            "label": "Limit",
+            "name": "vf_members_limit",
+            "type": "range",
+            "instructions": "Maximum number of group members to show.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 50,
+            "min": 1,
+            "max": 50,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_5ea988878eacf",
+            "label": "Search by",
+            "name": "vf_members_team",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.333",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "taxonomy": "EMBL Taxonomy",
+                "keyword": "Keyword"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5ea98ec74dd0e",
+            "label": "Default",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ea988878eacf",
+                        "operator": "==",
+                        "value": "default"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33.333",
+                "class": "",
+                "id": ""
+            },
+            "message": "The default team is chosen by the <b>EMBL Taxonomy: What<\/a><\/b> setting on the <a href=\"\/wp-admin\/admin.php?page=vf-settings\">Content Hub settings page<\/a>.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_5ea98b26aaf6c",
+            "label": "EMBL Taxonomy",
+            "name": "vf_members_term",
+            "type": "taxonomy",
+            "instructions": "Find team by EMBL taxonomy term.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ea988878eacf",
+                        "operator": "==",
+                        "value": "taxonomy"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33.333",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl_taxonomy",
+            "field_type": "select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_5ea98b56aaf6d",
+            "label": "Keyword",
+            "name": "vf_members_keyword",
+            "type": "text",
+            "instructions": "Find team by keyword search.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ea988878eacf",
+                        "operator": "==",
+                        "value": "keyword"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33.333",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ea983003e756",
+            "label": "Include Team Leader",
+            "name": "vf_members_leader",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33.333",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_vf_members_variation",
+            "label": "Variation",
+            "name": "vf_members_variation",
+            "type": "select",
+            "instructions": "Design variation.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "block": "block",
+                "block-small": "block-small",
+                "block-large": "block-large",
+                "inline": "inline",
+                "inline-small": "inline-small",
+                "inline-large": "inline-large",
+                "inline-primary": "inline-primary",
+                "inline-secondary": "inline-secondary",
+                "inline-easy": "inline-easy",
+                "inline-easy-primary": "inline-easy-primary",
+                "inline-easy-secondary": "inline-easy-secondary"
+            },
+            "default_value": "inline",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5f0c72719058a",
+            "label": "Hide fields",
+            "name": "hide_fields",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "image": "Image",
+                "name": "Name",
+                "position": "Position",
+                "email": "Email",
+                "phones": "Phones",
+                "mobile": "Mobile",
+                "orcid": "ORCID",
+                "link": "Link"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "save_custom": 0
+        },
+        {
+            "key": "field_5f107250fb92d",
+            "label": "Display in columns",
+            "name": "vf_members_columns",
+            "type": "range",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 2,
+            "min": 1,
+            "max": 3,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_members"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-members"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF Members Gutenberg block",
+    "modified": 1618305951
+
+}
