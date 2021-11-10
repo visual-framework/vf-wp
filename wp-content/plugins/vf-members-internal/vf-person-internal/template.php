@@ -41,11 +41,11 @@ if (empty($value)) {
 }
 
 // Get pattern variation
-$variation = get_field('variation');
-$suffix = '';
-if ( ! empty($variation)) {
-  $suffix = "-{$variation}";
-}
+// $variation = get_field('variation');
+// $suffix = '';
+// if ( ! empty($variation)) {
+//   $suffix = "-{$variation}";
+// }
 
 // Hide selected fields
 $hide_fields = get_field('hide_fields');
@@ -62,7 +62,7 @@ $url = VF_Cache::get_api_url();
 $url .= '/pattern.html';
 $url = add_query_arg(array(
   'source'              => 'contenthub',
-  'pattern'             => "vf-profile{$suffix}",
+  'pattern'             => "vf-profile-inline-internal",
   'filter-content-type' => 'person',
   'limit'               => 1,
   'filter-ref-entity[field_person_positions][title]' => "",

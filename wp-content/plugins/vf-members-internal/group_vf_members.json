@@ -163,9 +163,9 @@
                 "id": ""
             },
             "choices": {
-                "inline": "inline"
+                "inline": "inline-internal"
             },
-            "default_value": "inline",
+            "default_value": "inline-internal",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
