@@ -1,0 +1,157 @@
+{
+    "key": "group_618a4d44667d5",
+    "title": "VF Person (internal)",
+    "fields": [
+        {
+            "key": "field_618a4d446ab74",
+            "label": "Search by",
+            "name": "field",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "full_name": "Full Name",
+                "embl_id": "EMBL CP-ID"
+            },
+            "default_value": "full_name",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_618a4d446abf3",
+            "label": "Full Name",
+            "name": "full_name",
+            "type": "text",
+            "instructions": "Find person by name, e.g. \"Ken Hawkins\".",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618a4d446ab74",
+                        "operator": "==",
+                        "value": "full_name"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_618a4d446acb2",
+            "label": "EMBL CP-ID",
+            "name": "embl_id",
+            "type": "text",
+            "instructions": "Find person by EMBL CP-ID, e.g. \"CP-60022294\".",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618a4d446ab74",
+                        "operator": "==",
+                        "value": "embl_id"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_618a4d446ad36",
+            "label": "Variation",
+            "name": "variation",
+            "type": "select",
+            "instructions": "Design variation. *Currently limited to inline variant.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "inline": "inline-internal"
+            },
+            "default_value": "inline-internal",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_618a4d446adea",
+            "label": "Hide fields",
+            "name": "hide_fields",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "image": "Image",
+                "name": "Name",
+                "position": "Position",
+                "team": "Team",
+                "email": "Email",
+                "phones": "Phones",
+                "mobile": "Mobile",
+                "orcid": "ORCID",
+                "link": "Link"
+            },
+            "allow_custom": 0,
+            "default_value": [],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value",
+            "save_custom": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-person-internal"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF Person (internal) ACF Gutenberg block. Only to use on VF-WP Intranet theme"
+}
