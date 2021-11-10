@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: VF-WP Members (internal)
-Description: VF-WP theme block.
+Description: VF-WP theme block. Use only to display EMBL staff on VF-WP Intranet theme. 
 Version: 1.0.0-beta.3
 Author: EMBL-EBI Web Development
 Plugin URI: https://github.com/visual-framework/vf-wp
