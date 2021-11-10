@@ -471,4 +471,22 @@ add_action( 'template_redirect', 'change_search_url' );
 // 	}
 // });
 
+
+/* 
+ * Do not log VF CACHE update activity in Simple Histroy plugin
+ */
+
+add_filter('simple_history/log/do_log', function ($do_log = null, $level = null, $message = null, $context = null, $logger = null) {
+
+  $post_types_to_not_log = array(
+      'vf_cache',
+  );
+
+  if (( isset($logger->slug) && ($logger->slug === 'SimplePostLogger' || $logger->slug === 'SimpleMediaLogger') ) && ( isset($context['post_type']) && in_array($context['post_type'], $post_types_to_not_log) )) {
+      $do_log = false;
+  }
+
+  return $do_log;
+}, 10, 5);
+
 ?>
