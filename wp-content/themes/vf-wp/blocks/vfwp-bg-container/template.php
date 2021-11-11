@@ -10,6 +10,7 @@ $background_image = get_field('background_image');
 $header_color = get_field('header_color');
 $container_content = get_field('container_content');
 $block_id = get_field('block_id');
+$column = get_field('columns');
 
 $type = get_field('select_type');
 
@@ -18,6 +19,15 @@ if (empty($type)) {
 }
 if (is_array($type)) {
   $type = $type[0];
+}
+
+if (get_field('container_content') == 'card') {
+  if (empty($column)) {
+    $column = 'vf-card-container__col-3';
+  }
+}
+else {
+  $column = '';
 }
 
 // Block preview in Gutenberg editor
@@ -66,7 +76,7 @@ else { echo '';} ?>
 </style>
 
 <section id="<?php echo esc_attr($block_id); ?>">
-  <div class="vf-card-container | vf-u-fullbleed  
+  <div class="vf-card-container <?php echo esc_attr($column); ?> | vf-u-fullbleed  
 <?php if (($background_color == "-ui--grey--light") || ($background_color == "--grey--lightest") || ($background_color == "-ui--white")) { ?>
   | vf-u-background-color<?php echo esc_attr($background_color); ?> <?php } ?>
 ">

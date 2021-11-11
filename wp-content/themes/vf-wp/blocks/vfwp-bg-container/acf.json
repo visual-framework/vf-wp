@@ -27,6 +27,38 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_618cea2eda882",
+            "label": "Columns",
+            "name": "columns",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6001851e5efa7",
+                        "operator": "==",
+                        "value": "card"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "vf-card-container__col-3": "3",
+                "vf-card-container__col-4": "4"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "vf-card-container__col-3",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5fda15153097c",
             "label": "Section header",
             "name": "select_type",
@@ -332,6 +364,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
-    "modified": 1613469306
+    "description": ""
 }
