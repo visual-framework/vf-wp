@@ -32,6 +32,7 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
     return;
   }
 ?>
+
 <div class="vf-banner vf-banner--alert vf-banner--<?php echo $modifier; ?>">
   <div class="vf-banner__content">
     <p class="vf-banner__text">
@@ -46,6 +47,9 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 ?>
 <style>
   <?php if ($header_color['label'] == 'White') { ?>
+    <?php echo '#' . ($block_id); ?> .vf-section-header__text,
+    <?php echo '#' . ($block_id); ?> .vf-section-header__subheading,
+    <?php echo '#' . ($block_id); ?> .vf-section-header__heading,
     <?php echo '#' . ($block_id); ?> .vf-section-header,
     <?php echo '#' . ($block_id); ?> .vf-section-header__heading--is-link,
     <?php echo '#' . ($block_id); ?> .vf-section-header__heading--is-link:visited {
