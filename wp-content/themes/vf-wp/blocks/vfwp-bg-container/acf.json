@@ -59,6 +59,33 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_618cf066d029f",
+            "label": "Inside of embl grid",
+            "name": "grid_setting",
+            "type": "true_false",
+            "instructions": "Toggle to yes if you are nesting the cards in the embl grid",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6001851e5efa7",
+                        "operator": "==",
+                        "value": "card"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_5fda15153097c",
             "label": "Section header",
             "name": "select_type",
@@ -267,8 +294,8 @@
             },
             "choices": {
                 "-ui--white": "White",
-                "--grey--lightest": "Grey lightest",
-                "-ui--grey--light": "Grey light",
+                "-ui--grey--light": "Grey lightest",
+                "--grey--lightest": "Grey light",
                 "image": "Image"
             },
             "default_value": "-ui--white",

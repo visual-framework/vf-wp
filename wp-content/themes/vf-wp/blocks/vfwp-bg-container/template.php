@@ -11,6 +11,7 @@ $header_color = get_field('header_color');
 $container_content = get_field('container_content');
 $block_id = get_field('block_id');
 $column = get_field('columns');
+$grid_setting = get_field('grid_setting');
 
 $type = get_field('select_type');
 
@@ -28,6 +29,23 @@ if (get_field('container_content') == 'card') {
 }
 else {
   $column = '';
+}
+
+if (empty($grid_setting)) {
+  $grid_setting = '';
+}
+if ($grid_setting == 1) { ?>
+  <style>
+ <?php echo '#' . ($block_id); ?> .vf-card-container__inner {
+    --vf-card-container__grid--size: 18rem !important;
+}
+<?php echo '#' . ($block_id); ?> .vf-card-container {
+  padding-top: 0px !important;
+}
+  </style>
+<?php }
+else {
+  $grid_setting = '';
 }
 
 // Block preview in Gutenberg editor
