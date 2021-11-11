@@ -152,7 +152,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     <?php  }
     ?> */
 
-     ?>
+    ?>
 
     <?php
     // Buttons abstract
@@ -161,51 +161,6 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     <div style="display: inline-block;">
       <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
           class="vf-button vf-button--tertiary vf-button--sm vf-u-margin__bottom--600"><?php echo($abstract_button); ?></button></a>
-    </div>
-    <?php }} ?>
-
-
-    <?php 
-    // Registration dates - Virtual
-    if ( ! empty($registration_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>
-        <?php if ($registration_type == 'registration') { ?>
-        Registration <?php if (!empty($registration_closing_on_site)) {echo '(Virtual)';} ?>:
-        <?php } else if ($registration_type == 'application'){ ?>
-        Application:
-        <?php  } ?>
-      </span> <span class="vf-u-text-color--grey">
-        <?php if ($registration_date_formated >= $current_date) {
-          echo esc_html($registration_closing);
-        }  
-        else {
-          echo 'Closed';
-        } ?>
-      </span></p>
-    <?php } 
-
-      // Show info text
-      else if (!empty($info_text)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>
-        <?php if ($registration_type == 'registration') { ?>
-        Registration:
-        <?php } else if ($registration_type == 'application'){ ?>
-        Application:
-        <?php  } ?>
-        <span class="vf-u-text-color--grey">
-          <?php echo esc_html($info_text); ?>
-        </span></p>
-    <?php  } ?>
-    <?php 
-      // Buttons virtual
-      if ( !empty($registration_link)) { 
-            if (
-              (($registration_date_formated >= $current_date)) 
-              || 
-              (($application_closing) && ($application_date_formated >= $current_date))) { ?>
-    <div style="display: inline-block;">
-      <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
-          class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button); ?></button></a>
     </div>
     <?php }} ?>
 
@@ -227,23 +182,69 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
       </span></p>
     <?php } ?>
 
-      <?php 
+    <?php 
       // Buttons on site
       if ( !empty($registration_link_on_site)) { 
             if (
               (($registration_date_formated_on_site >= $current_date)) 
               || 
               (($application_closing) && ($application_date_formated >= $current_date))) { ?>
-      <div style="display: inline-block;">
-        <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
-            class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button_on_site); ?></button></a>
-      </div>
-      <?php }} ?>
+    <div style="display: inline-block;">
+      <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
+          class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button_on_site); ?></button></a>
+    </div>
+    <?php }} ?>
+
+    <?php
+  // Registration dates - Virtual
+  if ( ! empty($registration_closing)) { ?>
+    <p class="vf-text-body vf-text-body--3"><span>
+        <?php if ($registration_type == 'registration') { ?>
+        Registration <?php if (!empty($registration_closing_on_site)) {echo '(Virtual)';} ?>:
+        <?php } else if ($registration_type == 'application'){ ?>
+        Application:
+        <?php  } ?>
+      </span> <span class="vf-u-text-color--grey">
+        <?php if ($registration_date_formated >= $current_date) {
+      echo esc_html($registration_closing);
+    }  
+    else {
+      echo 'Closed';
+    } ?>
+      </span></p>
+    <?php } 
+
+  // Show info text
+  else if (!empty($info_text)) { ?>
+    <p class="vf-text-body vf-text-body--3"><span>
+        <?php if ($registration_type == 'registration') { ?>
+        Registration:
+        <?php } else if ($registration_type == 'application'){ ?>
+        Application:
+        <?php  } ?>
+        <span class="vf-u-text-color--grey">
+          <?php echo esc_html($info_text); ?>
+        </span></p>
+    <?php  } ?>
+    <?php 
+  // Buttons virtual
+  if ( !empty($registration_link)) { 
+        if (
+          (($registration_date_formated >= $current_date)) 
+          || 
+          (($application_closing) && ($application_date_formated >= $current_date))) { ?>
+    <div style="display: inline-block;">
+      <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
+          class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button); ?></button></a>
+    </div>
+    <?php }} ?>
 
     <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
-    <?php }
+    <?php } ?>
 
+
+    <?php 
     // Organisers
     if( have_rows('vf_event_organisers_event_template') ): ?>
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organisers: </span></p>
