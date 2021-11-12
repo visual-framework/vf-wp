@@ -1,10 +1,45 @@
 {
-    "key": "group_vf_wp_breadcrumbs_intranet",
-    "title": "Related",
+    "key": "group_615d678cb1622",
+    "title": "Page settings",
     "fields": [
         {
+            "key": "field_615d679bb8857",
+            "label": "Redirect",
+            "name": "vf_wp_intranet_redirect",
+            "type": "url",
+            "instructions": "Redirect to the other URL",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_618293e510859",
+            "label": "Keyword",
+            "name": "keyword",
+            "type": "text",
+            "instructions": "This is not yet implemented. Please use excerpt field instead.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_6036132931f9f",
-            "label": "",
+            "label": "Related",
             "name": "vf-wp-intranet-related",
             "type": "repeater",
             "instructions": "",
@@ -38,6 +73,8 @@
                 }
             ]
         }
+
+
     ],
     "location": [
         [
@@ -56,5 +93,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1614168398
+    "modified": 1636713925
 }
