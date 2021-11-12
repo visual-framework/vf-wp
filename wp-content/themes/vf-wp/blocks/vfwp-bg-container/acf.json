@@ -27,13 +27,85 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_618cf066d029f",
+            "label": "Inside of embl grid",
+            "name": "grid_setting",
+            "type": "true_false",
+            "instructions": "Toggle to yes if you are nesting the cards in the embl grid",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6001851e5efa7",
+                        "operator": "==",
+                        "value": "card"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_618cea2eda882",
+            "label": "Columns",
+            "name": "columns",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6001851e5efa7",
+                        "operator": "==",
+                        "value": "card"
+                    },
+                    {
+                        "field": "field_618cf066d029f",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "vf-card-container__col-3": "3",
+                "vf-card-container__col-4": "4"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "vf-card-container__col-3",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5fda15153097c",
             "label": "Section header",
             "name": "select_type",
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618cf066d029f",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -63,26 +135,15 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5fda151530aaa",
-            "label": "HTML anchor",
-            "name": "anchor",
-            "type": "text",
-            "instructions": "Enter a word to make a unique web address just for this heading, called an 'anchor'. Then, you’ll be able to link directly to this section of your page.",
-            "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618cf066d029f",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -177,7 +238,7 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "array"
+            "return_format": "url"
         },
         {
             "key": "field_5fda151530c79",
@@ -227,7 +288,15 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618cf066d029f",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -235,8 +304,8 @@
             },
             "choices": {
                 "-ui--white": "White",
-                "--grey--lightest": "Grey lightest",
-                "-ui--grey--light": "Grey light",
+                "-ui--grey--light": "Grey lightest",
+                "--grey--lightest": "Grey light",
                 "image": "Image"
             },
             "default_value": "-ui--white",
@@ -278,7 +347,15 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618cf066d029f",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -314,6 +391,33 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5fda151530aaa",
+            "label": "HTML anchor",
+            "name": "anchor",
+            "type": "text",
+            "instructions": "Enter a word to make a unique web address just for this heading, called an 'anchor'. Then, you’ll be able to link directly to this section of your page.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618cf066d029f",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -333,5 +437,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1613469306
+    "modified": 1636714849
 }

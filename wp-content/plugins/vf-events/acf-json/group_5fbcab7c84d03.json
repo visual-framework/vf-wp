@@ -493,122 +493,6 @@
             "save_other_choice": 0
         },
         {
-            "key": "field_61713d2a583ec",
-            "label": "Virtual registration",
-            "name": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_5e984858010ed",
-            "label": "Opening date (virtual)",
-            "name": "vf_event_registration_opening",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5e9848d6010ee",
-            "label": "Closing date (virtual)",
-            "name": "vf_event_registration_closing",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5e9851f4f52eb",
-            "label": "Registration\/Application link (virtual)",
-            "name": "vf_event_registration_link",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f7473f59e83d",
-            "label": "Registration\/Application button text (virtual)",
-            "name": "vf_event_registration_button_text",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Register",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_6005734043e1e",
-            "label": "Registration\/Application info text",
-            "name": "vf_event_info_text",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_61713d4e583ed",
             "label": "On-site registration",
             "name": "",
@@ -732,6 +616,122 @@
                 "id": ""
             },
             "default_value": "Register",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61713d2a583ec",
+            "label": "Virtual registration",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_5e984858010ed",
+            "label": "Opening date (virtual)",
+            "name": "vf_event_registration_opening",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_5e9848d6010ee",
+            "label": "Closing date (virtual)",
+            "name": "vf_event_registration_closing",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_5e9851f4f52eb",
+            "label": "Registration\/Application link (virtual)",
+            "name": "vf_event_registration_link",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5f7473f59e83d",
+            "label": "Registration\/Application button text (virtual)",
+            "name": "vf_event_registration_button_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Register",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_6005734043e1e",
+            "label": "Registration\/Application info text",
+            "name": "vf_event_info_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
             "placeholder": "",
             "prepend": "",
             "append": "",
@@ -1502,5 +1502,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1636370767
+    "modified": 1636658293
 }

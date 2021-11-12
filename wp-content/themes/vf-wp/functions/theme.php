@@ -465,6 +465,7 @@ class VF_Theme {
       $theme->version,
       true
     );
+    if (is_search()) {
     wp_enqueue_script(
       'embl-swiftype-search',
       $dir . '/assets/scripts/embl-swiftype-search.js',
@@ -479,6 +480,7 @@ class VF_Theme {
       $theme->version,
       true
     );
+    }
    }
   }
 

@@ -15,7 +15,7 @@ $title = get_field('title');
 $title = trim($title);
 
 $link = get_field('link');
-
+$link_target = $link['target'] ? $link['target'] : '_self';
 $text = get_field('text', false, false);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-summary__text">', $text);
@@ -72,7 +72,7 @@ if ( $type === 'custom' ) {
   ?>
   <h3 class="vf-summary__title">
     <?php if ($link) { ?>
-      <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
+      <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link" target="<?php echo esc_attr( $link_target ); ?>">
     <?php } ?>
 
     <?php echo esc_html($title); ?>

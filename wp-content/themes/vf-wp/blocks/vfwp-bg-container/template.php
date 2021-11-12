@@ -10,6 +10,8 @@ $background_image = get_field('background_image');
 $header_color = get_field('header_color');
 $container_content = get_field('container_content');
 $block_id = get_field('block_id');
+$column = get_field('columns');
+$grid_setting = get_field('grid_setting');
 
 $type = get_field('select_type');
 
@@ -18,6 +20,32 @@ if (empty($type)) {
 }
 if (is_array($type)) {
   $type = $type[0];
+}
+
+if (get_field('container_content') == 'card') {
+  if (empty($column)) {
+    $column = 'vf-card-container__col-3';
+  }
+}
+else {
+  $column = '';
+}
+
+if (empty($grid_setting)) {
+  $grid_setting = '';
+}
+if ($grid_setting == 1) { ?>
+  <style>
+ <?php echo '#' . ($block_id); ?> .vf-card-container__inner {
+    --vf-card-container__grid--size: 18rem !important;
+}
+<?php echo '#' . ($block_id); ?> .vf-card-container {
+  padding-top: 0px !important;
+}
+  </style>
+<?php }
+else {
+  $grid_setting = '';
 }
 
 // Block preview in Gutenberg editor
@@ -32,6 +60,7 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
     return;
   }
 ?>
+
 <div class="vf-banner vf-banner--alert vf-banner--<?php echo $modifier; ?>">
   <div class="vf-banner__content">
     <p class="vf-banner__text">
@@ -46,6 +75,9 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 ?>
 <style>
   <?php if ($header_color['label'] == 'White') { ?>
+    <?php echo '#' . ($block_id); ?> .vf-section-header__text,
+    <?php echo '#' . ($block_id); ?> .vf-section-header__subheading,
+    <?php echo '#' . ($block_id); ?> .vf-section-header__heading,
     <?php echo '#' . ($block_id); ?> .vf-section-header,
     <?php echo '#' . ($block_id); ?> .vf-section-header__heading--is-link,
     <?php echo '#' . ($block_id); ?> .vf-section-header__heading--is-link:visited {
@@ -62,7 +94,7 @@ else { echo '';} ?>
 </style>
 
 <section id="<?php echo esc_attr($block_id); ?>">
-  <div class="vf-card-container | vf-u-fullbleed  
+  <div class="vf-card-container <?php echo esc_attr($column); ?> | vf-u-fullbleed  
 <?php if (($background_color == "-ui--grey--light") || ($background_color == "--grey--lightest") || ($background_color == "-ui--white")) { ?>
   | vf-u-background-color<?php echo esc_attr($background_color); ?> <?php } ?>
 ">
@@ -83,7 +115,7 @@ else { echo '';} ?>
         if ($type === 'is_a_link' || $type === 'has_sub-heading_and_link' || $type === 'has_sub-heading_link_text' || $type === 'has_link_text') { ?>
         <a class="vf-section-header__heading vf-section-header__heading--is-link"
           <?php if ($anchor) { echo 'id="' . $anchor .'"';} ?>
-          href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($heading); ?><svg aria-hidden="true"
+          href="<?php echo esc_url($link); ?>"><?php echo esc_html($heading); ?><svg aria-hidden="true"
             class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
             xmlns="http://www.w3.org/2000/svg">
             <path

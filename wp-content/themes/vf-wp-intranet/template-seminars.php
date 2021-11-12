@@ -169,7 +169,7 @@ get_header();
 </section>
 
 <script type="text/javascript">
-  jplist.init();
+  jplist.init({deepLinking: true});
 </script>
 
 <?php
