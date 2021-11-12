@@ -20,7 +20,7 @@
         },
         {
             "key": "field_618293e510859",
-            "label": "Keyword",
+            "label": "Search keyword",
             "name": "keyword",
             "type": "text",
             "instructions": "This is not yet implemented. Please use excerpt field instead.",

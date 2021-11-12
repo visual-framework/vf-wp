@@ -115,7 +115,7 @@ else { echo '';} ?>
         if ($type === 'is_a_link' || $type === 'has_sub-heading_and_link' || $type === 'has_sub-heading_link_text' || $type === 'has_link_text') { ?>
         <a class="vf-section-header__heading vf-section-header__heading--is-link"
           <?php if ($anchor) { echo 'id="' . $anchor .'"';} ?>
-          href="<?php echo esc_url($link['url']); ?>"><?php echo esc_html($heading); ?><svg aria-hidden="true"
+          href="<?php echo esc_url($link); ?>"><?php echo esc_html($heading); ?><svg aria-hidden="true"
             class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
             xmlns="http://www.w3.org/2000/svg">
             <path
