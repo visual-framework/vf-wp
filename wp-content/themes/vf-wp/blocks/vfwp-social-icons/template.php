@@ -33,6 +33,7 @@ $youtube_link = get_field('vf_social_youtube');
 $linkedin_link = get_field('vf_social_linkedin');
 $social_url = get_the_permalink();
 $select = get_field('vf_social_select');
+$custom = get_field('vf_social_custom');
 
 
 $class = '';
@@ -163,10 +164,15 @@ if (empty($choose)) {
   
   else if ($choose == 'share') { ?>
   <ul class="vf-social-links__list">
-    <?php if ($select && in_array('twitter', $select)) { ?>
+    <?php if (($select && in_array('twitter', $select)) || (!empty($twitter_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
-              <span class="vf-u-sr-only">
+            <a class="vf-social-links__link"
+            <?php if ($custom == 'auto') { ?>
+            href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
+            <?php } else if ($custom == 'custom') { ?> 
+            href="<?php echo esc_url($twitter_link);?>">
+            <?php } ?>  
+            <span class="vf-u-sr-only">
                 twitter
               </span>
               <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
@@ -177,9 +183,14 @@ if (empty($choose)) {
             </a>
           </li>
     <?php } ?>
-    <?php if ($select && in_array('facebook', $select)) { ?>
+    <?php if (($select && in_array('facebook', $select)) || (!empty($facebook_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
+            <a class="vf-social-links__link"
+            <?php if ($custom == 'auto') { ?> 
+            href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
+            <?php } else if ($custom == 'custom') { ?> 
+            href="<?php echo esc_url($facebook_link);?>">
+            <?php } ?>  
               <span class="vf-u-sr-only">
                 facebook
               </span>
@@ -191,9 +202,14 @@ if (empty($choose)) {
             </a>
           </li>
     <?php } ?>
-    <?php if ($select && in_array('linkedin', $select)) { ?>
+    <?php if (($select && in_array('linkedin', $select)) || (!empty($linkedin_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+            <a class="vf-social-links__link" 
+            <?php if ($custom == 'auto') { ?> 
+            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+            <?php } else if ($custom == 'custom') { ?> 
+            href="<?php echo esc_url($linkedin_link);?>">
+            <?php } ?>  
               <span class="vf-u-sr-only">
                 linkedin
               </span>

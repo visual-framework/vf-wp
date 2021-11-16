@@ -46,6 +46,38 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_6193b4166952b",
+            "label": "",
+            "name": "vf_social_custom",
+            "type": "radio",
+            "instructions": "Use Custom URL field if adding icons in editorhub",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "share"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "auto": "Auto",
+                "custom": "Custom URL"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5f522bcea7360",
             "label": "Twitter",
             "name": "vf_social_twitter",
@@ -58,6 +90,13 @@
                         "field": "field_61137d6d0a1dd",
                         "operator": "==",
                         "value": "follow"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_6193b4166952b",
+                        "operator": "==",
+                        "value": "custom"
                     }
                 ]
             ],
@@ -82,6 +121,13 @@
                         "field": "field_61137d6d0a1dd",
                         "operator": "==",
                         "value": "follow"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_6193b4166952b",
+                        "operator": "==",
+                        "value": "custom"
                     }
                 ]
             ],
@@ -155,6 +201,13 @@
                         "operator": "==",
                         "value": "follow"
                     }
+                ],
+                [
+                    {
+                        "field": "field_6193b4166952b",
+                        "operator": "==",
+                        "value": "custom"
+                    }
                 ]
             ],
             "wrapper": {
@@ -175,9 +228,9 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_61137d6d0a1dd",
+                        "field": "field_6193b4166952b",
                         "operator": "==",
-                        "value": "share"
+                        "value": "auto"
                     }
                 ]
             ],
@@ -267,5 +320,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1628674122
+    "modified": 1637071066
 }
