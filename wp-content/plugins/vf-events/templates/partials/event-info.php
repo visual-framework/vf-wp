@@ -118,7 +118,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
         class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
     <?php } ?>
 
-    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
+    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || $registration_closing_on_site || ($info_text))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Deadline(s):</span></p>
     <?php } ?>
