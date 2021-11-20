@@ -85,14 +85,21 @@ class VF_Admin {
    * Filter: `update_footer`
    */
   public function update_footer($content) {
+    // Get the vf-wp release version from build file
+    $build_file = WP_PLUGIN_DIR . '/vf-wp/vfwp_build.txt';
+    $vfwp_build_tag = '';
+    if(file_exists($build_file)) {
+      $vfwp_build_tag = trim(file_get_contents($build_file));
+    }
+    $version_text = !empty($vfwp_build_tag) ? $vfwp_build_tag : 'N/A';
     $theme = wp_get_theme();
     if ($theme->parent()) {
       $theme = $theme->parent();
     }
     $version = sprintf(
-      __('%1$s Version %2$s', 'vfwp'),
+      __('%1$s Version:  %2$s', 'vfwp'),
       $theme->get('Name'),
-      $theme->get('Version')
+      $version_text
     );
     return "({$version}) – {$content}";
   }
