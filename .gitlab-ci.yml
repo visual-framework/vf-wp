@@ -33,6 +33,8 @@ build:
     - echo ${VF_EXTERNAL_PLUGINS_REPO_TAG}
     - git clone https://github.com/visual-framework/vfwp-external-plugins.git --branch ${VF_EXTERNAL_PLUGINS_REPO_TAG} --depth 1
     - rsync -acv --exclude=.git ./vfwp-external-plugins/. wp-content/plugins/
+    # Create build tag file in vfwp plugin location
+    - echo "$CI_COMMIT_TAG" > wp-content/plugins/vf-wp/vfwp_build.txt
     - cd wp-content/plugins/
     - zip -r $CI_PROJECT_DIR/data_sync/plugins.zip .
     - cd $CI_PROJECT_DIR/wp-content/themes/
