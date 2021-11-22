@@ -1,5 +1,5 @@
 {
-    "key": "group_618a4d417e502",
+    "key": "group_vf_members_internal",
     "title": "VF Members (internal)",
     "fields": [
         {
@@ -247,5 +247,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF Members (internal) Gutenberg block. Only to use on VF-WP Intranet theme"
+    "description": "VF Members (internal) Gutenberg block. Only to use on VF-WP Intranet theme",
+    "modified": 1637576558
 }
