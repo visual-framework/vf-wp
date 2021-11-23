@@ -234,7 +234,7 @@
                 "exhibition": "Conference exhibition",
                 "festival": "Science festival",
                 "fair": "Career fair",
-                "other: Other": "other: Other"
+                "other": "Other"
             },
             "default_value": false,
             "allow_null": 1,
