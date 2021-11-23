@@ -1,0 +1,59 @@
+<?php
+
+$title = get_the_title();
+$event_type = get_field('vf_event_event_type');
+$seminar_type = get_field('vf_event_seminar_subtype');
+$public_type = get_field('vf_event_public_subtype');
+$displayed = get_field('vf_event_displayed');
+$location = get_field('vf_event_location');
+$banner_text = get_field('vf_event_banner_text');
+$canceled = get_field('vf_event_canceled');
+
+$hero_image = get_field('vf_event_hero');
+$hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
+    'loading'  => 'lazy',
+    'itemprop' => 'image',
+  ));
+?>
+<?php if (($canceled == 'yes') || ($canceled == 'postponed') ) { ?>
+<div class="vf-banner vf-banner--alert vf-banner--<?php if ($canceled == 'yes') { echo 'danger'; } else if ($canceled == 'postponed') { echo 'info'; } ?>">
+    <div class="vf-banner__content">
+        <p class="vf-banner__text"><?php echo ($banner_text); ?></p>
+    </div>
+</div>   
+<?php } ?>
+
+<section class="vf-hero | vf-u-fullbleed">
+  <style>
+    .vf-hero {
+      <?php if ($hero_image) {
+        ?>--vf-hero--bg-image: url('<?php echo esc_url($hero_image); ?>');
+        <?php
+      }
+      else {
+        ?>--vf-hero--bg-image-size: auto 28.5rem;
+        <?php
+      }
+      ?>
+    }
+  </style>
+
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
+      <p class="vf-hero__kicker">
+        <?php
+        if (!empty ($displayed)) {
+          echo esc_html($displayed);
+        }
+        else if ($event_type['value'] == "public_event"){
+           echo esc_html($event_type['label']) . ' | ' . esc_html($public_type['label']);
+        }
+        else if ($event_type['value'] == "seminar") {
+           echo esc_html($event_type['label']) . ' | ' . esc_html($seminar_type['label']);
+        }
+      ?>
+      </p>
+    <h2 class="vf-hero__heading" style="font-size: 30px;">
+      <?php echo $title; ?>
+    </h2>
+  </div>
+</section>
