@@ -163,7 +163,7 @@
             "key": "field_619cc059aea2d",
             "label": "Event type",
             "name": "vf_event_event_type",
-            "type": "select",
+            "type": "taxonomy",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -172,17 +172,14 @@
                 "class": "",
                 "id": ""
             },
-            "choices": {
-                "seminar": "Seminar",
-                "public_event": "Public event"
-            },
-            "default_value": false,
+            "taxonomy": "type",
+            "field_type": "select",
             "allow_null": 0,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "array",
-            "placeholder": ""
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
         },
         {
             "key": "field_619cc059aeafd",
@@ -191,15 +188,7 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_619cc059aea2d",
-                        "operator": "==",
-                        "value": "seminar"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -230,15 +219,7 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_619cc059aea2d",
-                        "operator": "==",
-                        "value": "public_event"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1163,6 +1144,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP-EBI Event post type",
-    "modified": 1637664220
+    "description": "VF-WP-EBI Event post type"
 }

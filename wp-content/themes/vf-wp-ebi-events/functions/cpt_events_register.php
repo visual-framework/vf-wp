@@ -48,7 +48,10 @@ add_action(
   
   
   function vf_wp_ebi_events__init() {
-  
+    add_rewrite_tag('%event_year%','(\d+)');
+    add_rewrite_tag('%event_month%','(.+)');
+    add_rewrite_tag('%type%', '([^&]+)');
+
     register_post_type('events', array(
       'labels'              => get_ebi_events_labels(),
       'description'         => __('Events', 'vfwp'),
@@ -66,17 +69,15 @@ add_action(
       'menu_icon'           => 'dashicons-calendar',
       'capability_type'     => 'page',
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'revisions', 'thumbnail'),
-      'has_archive'         => true,
-      'rewrite'             => array(
-        'slug' => 'events'
-      ),
-      'query_var'           => true,
+      'has_archive'         => false,
+      "cptp_permalink_structure" => "/%type%/%event_year%/%postname%/",
+      'rewrite' => array('slug' => 'events', 'with_front' => false), 
+    'query_var'           => true,
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(
-        'event-location',
+        'type',
         'post_tag',
-        'topic'
       ),
     ));
     
