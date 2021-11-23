@@ -9,11 +9,16 @@ get_header();
 ?>
 <span data-protection-message-disable="true"></span>
 <!-- embl-ebi global header -->
-<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed">
+</header>
+<link rel="import"
+  href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub"
+  data-target="self" data-embl-js-content-hub-loader>
+<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css"
+  media="all" />
 <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all" />
+<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css"
+  type="text/css" media="all" />
 
 <?php
 if (class_exists('VF_Breadcrumbs')) {
@@ -92,9 +97,9 @@ $close_wrap,
 
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
-<div>
-</div>
-<div class="vf-u-margin__bottom--800">
+  <div>
+  </div>
+  <div class="vf-u-margin__bottom--800">
     <form action="#eventsFilter" onsubmit="return false;"
       class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
       <div class="vf-sidebar__inner">
@@ -112,7 +117,7 @@ $close_wrap,
     </form>
   </div>
 
-</section>    
+</section>
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
   <div>
     <?php include(locate_template('partials/filter-seminar.php', false, false)); ?>
@@ -123,13 +128,6 @@ $close_wrap,
     <div data-jplist-group="data-group-1">
       <?php
 $forthcomingLoop = new WP_Query (array( 
-  'tax_query' => array(
-    array (
-        'taxonomy' => 'type',
-        'field' => 'slug',
-        'terms' => 'seminar',
-    )
-  ), 
   'post_type' => 'events', 
   'order' => 'ASC', 
   'orderby' => 'meta_value_num',
@@ -137,16 +135,22 @@ $forthcomingLoop = new WP_Query (array(
   'meta_key' => 'vf_event_start_date', 
   'meta_query' => array(
       array(
-          'key' => 'vf_event_start_date',
-          'value' => $current_date,
-          'compare' => '>=',
-          'type' => 'numeric'
-      ),        array(
+        'key' => 'vf_event_start_date',
+        'value' => $current_date,
+        'compare' => '>=',
+        'type' => 'numeric'
+      ),        
+      array(
         'key' => 'vf_event_start_date',
         'value' => date('Ymd', strtotime('now')),
         'type' => 'numeric',
         'compare' => '>=',
         ),
+      array(
+        'key' => 'vf_event_event_type',
+        'value' => 'seminar',
+        ),
+  
 
 
   ) ));
@@ -204,11 +208,11 @@ $temp_query = $wp_query;
             </a>
           </li>
         </ul>
-    </nav>
-  </div>
+      </nav>
+    </div>
   </div>
   <div>
-</div>
+  </div>
 </section>
 
 <script type="text/javascript">

@@ -163,7 +163,7 @@
             "key": "field_619cc059aea2d",
             "label": "Event type",
             "name": "vf_event_event_type",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -172,14 +172,17 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "type",
-            "field_type": "select",
+            "choices": {
+                "public_event": "Public event",
+                "seminar": "Seminar"
+            },
+            "default_value": false,
             "allow_null": 0,
-            "add_term": 1,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "multiple": 0
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_619cc059aeafd",
@@ -188,7 +191,15 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_619cc059aea2d",
+                        "operator": "==",
+                        "value": "seminar"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -219,7 +230,15 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_619cc059aea2d",
+                        "operator": "==",
+                        "value": "public_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",

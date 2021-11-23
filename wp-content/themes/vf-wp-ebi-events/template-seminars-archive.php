@@ -122,13 +122,6 @@ $close_wrap,
     <div data-jplist-group="data-group-1">
       <?php
 $forthcomingLoop = new WP_Query (array( 
-  'tax_query' => array(
-    array (
-        'taxonomy' => 'type',
-        'field' => 'slug',
-        'terms' => 'seminar',
-    )
-  ), 
   'post_type' => 'events', 
   'order' => 'ASC', 
   'orderby' => 'meta_value_num',
@@ -136,16 +129,22 @@ $forthcomingLoop = new WP_Query (array(
   'meta_key' => 'vf_event_start_date', 
   'meta_query' => array(
       array(
-          'key' => 'vf_event_start_date',
-          'value' => $current_date,
-          'compare' => '<=',
-          'type' => 'numeric'
-      ),        array(
+        'key' => 'vf_event_start_date',
+        'value' => $current_date,
+        'compare' => '<=',
+        'type' => 'numeric'
+      ),        
+      array(
         'key' => 'vf_event_start_date',
         'value' => date('Ymd', strtotime('now')),
         'type' => 'numeric',
         'compare' => '<=',
         ),
+      array(
+        'key' => 'vf_event_event_type',
+        'value' => 'seminar',
+        ),
+  
 
 
   ) ));

@@ -123,13 +123,6 @@ $close_wrap,
     <div data-jplist-group="data-group-1">
       <?php
 $forthcomingLoop = new WP_Query (array( 
-  'tax_query' => array(
-    array (
-        'taxonomy' => 'type',
-        'field' => 'slug',
-        'terms' => 'public-event',
-    )
-  ), 
   'post_type' => 'events', 
   'order' => 'ASC', 
   'orderby' => 'meta_value_num',
@@ -147,6 +140,11 @@ $forthcomingLoop = new WP_Query (array(
         'type' => 'numeric',
         'compare' => '<=',
         ),
+        array(
+          'key' => 'vf_event_event_type',
+          'value' => 'public_event',
+          ),
+  
 
 
   ) ));
