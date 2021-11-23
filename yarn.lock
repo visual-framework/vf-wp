@@ -2526,15 +2526,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.4.tgz#b5b72701966030c38f2ed7dd34b602a703692ce2"
   integrity sha512-D9hvL4TG5Xu4XnWLi/Kc6gDiJEsazvivT0ZtIMd7DhxigEm6+ebnkuBt7yfhpfxqay0Ugu0LMWLVAjQ5pyr5Eg==
 
-"@visual-framework/vf-button@2.0.0-alpha.5":
+"@visual-framework/vf-button@2.0.0-alpha.5", "@visual-framework/vf-button@^2.0.0-alpha.5":
   version "2.0.0-alpha.5"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-2.0.0-alpha.5.tgz#c4fdc92e4ec4cfed38c9f5afb92172fd271367c5"
   integrity sha512-TZSJBePsYT2i8YEbDoP5ZINgnKt5lQkTSjTq9bFwgQ7SADqEkNCR45w5SABS19izie61ran+jMJ/R9VUORiX9w==
-
-"@visual-framework/vf-button@^2.0.0-alpha.2":
-  version "2.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-2.0.0-alpha.2.tgz#c8abdbeb8e45598fa01ddf74afe093bb1db237f2"
-  integrity sha512-XAXXRNE8dhoJeAvDlCmof20/YkaxKKWlZ6caBt1/XzsIGjQPkA69X12pF+ffVPIzTpDDL65lof49vQMbJU6BBw==
 
 "@visual-framework/vf-card-container@3.2.1":
   version "3.2.1"
@@ -2578,15 +2573,15 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1-alpha.0.tgz#2dda99f7d2766c32cb46b321560ec15c8a3d55fe"
   integrity sha512-T5XSohedN4OKxqA0n44V8xvpDMAz1zAW0TGa+2a1B3lMpAWAt5WVpG2tdOQknHDQQpq/K/YRxFySSXk+G7f8Ew==
 
-"@visual-framework/vf-content@1.6.4":
-  version "1.6.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.4.tgz#309e26387c908562c2f14aeb2f3c55404f57fcc3"
-  integrity sha512-1dTLWCj9t9KfI4mqmxivtKEsxhSa9YDhcy/AKbcYbcc8evxa0uq8zN80tGURAbJ0KFJ//Ab6/phcdQlYddTkZg==
+"@visual-framework/vf-content@1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.5.tgz#fd9ad06675dd163f5af75f7bfe50ef0deb732d4c"
+  integrity sha512-R54ivbHffEITvmfDMDQrgl2RxSn3L2MWrAMqTjfBtDeBZD3LelU28skR7oxxsdO8PJOYpFhNmcdJzoqbEarJEg==
   dependencies:
     "@visual-framework/vf-badge" "^2.0.0"
     "@visual-framework/vf-blockquote" "^1.2.0"
     "@visual-framework/vf-box" "^2.4.0"
-    "@visual-framework/vf-button" "^2.0.0-alpha.2"
+    "@visual-framework/vf-button" "^2.0.0-alpha.5"
     "@visual-framework/vf-divider" "^2.0.1"
     "@visual-framework/vf-figure" "^1.3.0"
     "@visual-framework/vf-form" "^2.0.0-alpha.2"
