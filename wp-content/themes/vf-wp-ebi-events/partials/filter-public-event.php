@@ -60,4 +60,15 @@ $type_list = $choices['choices'];
 
   </fieldset>
 
+  <fieldset class="vf-form__fieldset | vf-stack vf-stack--400">
+      <label class="vf-form__label">Open</label>
+      <div class="vf-form__item vf-form__item--checkbox">
+        <input type="checkbox" class="vf-form__checkbox" data-jplist-control="checkbox-text-filter" data-path=".jplist-event-registration" data-group="data-group-1" data-order="asc" data-name="reg1" data-type="datetime" data-datetime-format="{day} {month}, {year} {hour}:{min}" name="reg1" id="reg-id1" />
+        <label for="reg-id1" class="vf-form__label">Registration</label>
+        <input type="checkbox" class="vf-form__checkbox" data-jplist-control="checkbox-text-filter" data-path=".jplist-event-abstract" data-group="data-group-1" data-order="asc" data-name="sub1" data-type="datetime" data-datetime-format="{day} {month}, {year} {hour}:{min}" name="sub1" id="sub-id1" />
+        <label for="sub-id1" class="vf-form__label vf-u-margin__top--400">Abstract submission</label>
+      </div>
+    </fieldset>
+
+
 </form>

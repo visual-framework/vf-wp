@@ -14,7 +14,23 @@ $event_type = get_field('vf_event_event_type');
 $public_type = get_field('vf_event_public_subtype'); 
 $seminar_type = get_field('vf_event_seminar_subtype'); 
 $venue = get_field('vf_event_venue'); 
+$summary = get_field('vf_event_summary'); 
 $organisers= get_field('vf_event_organisers_listing'); 
+$abstract_closing = get_field('vf_event_submission_closing');
+$application_closing = get_field('vf_event_application_deadline');
+$registration_closing = get_field('vf_event_registration_closing');
+$registration_closing_on_site = get_field('vf_event_registration_closing_on-site');
+
+$now = new DateTime();
+$application_date = new DateTime($application_closing);
+$registration_date = new DateTime($registration_closing);
+$registration_date_on_site = new DateTime($registration_closing_on_site);
+$abstract_date = new DateTime($abstract_closing);
+$current_date = $now->format('Y-m-d');
+$registration_date_formated = $registration_date->format('Y-m-d');
+$registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
+$application_date_formated = $application_date->format('Y-m-d');
+$abstract_date_formated = $abstract_date->format('Y-m-d');
 
 ?>
 
@@ -50,8 +66,7 @@ $organisers= get_field('vf_event_organisers_listing');
 
   <!-- Summary  -->
   <p class="vf-summary__text | vf-u-display-none | used-for-search-index">
-    <span class="jplist-event-summary">{{ event.field_event_summary }}
-      {{ event.body | striptags | safe | truncate(900) }}</span>
+    <span class="jplist-event-summary"><?php echo esc_html($organisers); ?></span>
   </p>
 
 
@@ -77,42 +92,39 @@ $organisers= get_field('vf_event_organisers_listing');
         <!-- Location  -->
         <p class="vf-summary__location"> <?php echo implode( ', ', $locations ); ?></p>
       </div>
-      <?php /*
-              <!-- Registration  -->
-              <div class="">
-                {% if event.field_event_registration_closing != '' %}
-                {%- if event.field_event_registration_closing | dateMoment("unix") >= ('' | dateMoment("unix") ) -%}
-                <span class="jplist-event-registration">
-                  <span class="vf-text-body vf-text-body--2">Registration</span> <br />
-                  <span class="vf-u-text-color--grey | vf-u-text--nowrap">{{ event.field_event_registration_closing | dateMoment('DD MMMM YYYY')}}</span>
-                </span>
-                {%- else -%}
-                <span class="vf-text-body vf-text-body--2">Registration</span> <br />
-                <span class="vf-u-text-color--grey | vf-u-text--nowrap">Closed</span>
-                {%- endif -%}
-                {%- else -%}
-                <span class="jplist-event-open-shortly">
-                  <span class="vf-text-body vf-text-body--2">Registration</span> <br />
-                  <span class="vf-u-text-color--grey | vf-u-text--nowrap">Will open shortly</span>
-                </span>
-                {%- endif -%}
-              </div>
 
-              <!-- Abstract  -->
-              {% if event.field_event_submission_closing != '' %}
-              <div class="">
-                {%- if event.field_event_submission_closing | dateMoment("unix") > ('' | dateMoment("unix") ) -%}
-                <span class="jplist-event-submission">
-                  <span class="vf-text-body vf-text-body--2">Abstract submission</span> <br />
-                  <span class="vf-u-text-color--grey vf-u-text--nowrap">{{ event.field_event_submission_closing | dateMoment('DD MMMM YYYY')}}</span>
-                </span>
-                {%- else -%}
-                <span class="vf-text-body vf-text-body--2">Abstract submission</span> <br />
-                <span class="vf-u-text-color--grey vf-u-text--nowrap">Closed</span>
-                {%- endif -%}
-              </div>
-              {%- endif -%}
-            </div> {# / vf-cluster__inner #}
-          </section> {# / vf-cluster #}
-*/?>
+      <!-- Registration  -->
+
+      <div class="">
+        <?php if (!empty($registration_closing_on_site)) { ?>
+        <?php if ($registration_date_formated_on_site >= $current_date) { ?>
+        <span class="jplist-event-registration">
+          <span class="vf-text-body vf-text-body--2">Registration</span> <br />
+          <span
+            class="vf-u-text-color--grey | vf-u-text--nowrap"><?php echo esc_html($registration_closing_on_site); ?></span>
+        </span>
+        <?php } else { ?>
+        <span class="vf-text-body vf-text-body--2">Registration</span> <br />
+        <span class="vf-u-text-color--grey | vf-u-text--nowrap">Closed</span>
+        <?php } } ?>
+      </div>
+
+
+      <!-- Abstract  -->
+      <div class="">
+        <?php if (!empty($$abstract_closing)) { ?>
+        <?php if ($abstract_date_formated >= $current_date) { ?>
+        <span class="jplist-event-abstract">
+          <span class="vf-text-body vf-text-body--2">Abstract submission</span> <br />
+          <span class="vf-u-text-color--grey | vf-u-text--nowrap"><?php echo esc_html($$abstract_closing); ?></span>
+        </span>
+        <?php } else { ?>
+        <span class="vf-text-body vf-text-body--2">Abstract submission</span> <br />
+        <span class="vf-u-text-color--grey | vf-u-text--nowrap">Closed</span>
+        <?php } } ?>
+      </div>
+
+    </div>
+  </section>
+  <hr class="vf-divider">
 </article>

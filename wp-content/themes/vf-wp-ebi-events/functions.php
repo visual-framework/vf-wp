@@ -26,7 +26,7 @@ function my_theme_enqueue_styles() {
 	);
 	wp_enqueue_style(
 		'vf-events-admin',
-		get_stylesheet_directory_uri() . 'assets/admin.css',
+		get_stylesheet_directory_uri() . '/assets/admin.css',
 		array('vfwp'),
 		wp_get_theme()->get('Version')
 	);
