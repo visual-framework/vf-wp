@@ -19,8 +19,8 @@ get_header();
 if (class_exists('VF_Breadcrumbs')) {
   VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
 }
-if (class_exists('VF_WP_Hero')) {
-    VF_Plugin::render(VF_WP_Hero::get_plugin('vf_wp_hero_group'));
+if (class_exists('VF_WP_Hero_Secondary')) {
+    VF_Plugin::render(VF_WP_Hero_Secondary::get_plugin('vf_wp_hero_secondary'));
   }
 
 global $post;
@@ -36,9 +36,9 @@ $current_date = date('Ymd');
   <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
     <?php
 
-    if (has_nav_menu('primary')) {
+    if (has_nav_menu('secondary')) {
       wp_nav_menu(array(
-        'theme_location' => 'primary',
+        'theme_location' => 'secondary',
         'depth'          => 1,
         'container'      => false,
         'items_wrap'     => '%3$s'
