@@ -90,7 +90,7 @@ $abstract_date_formated = $abstract_date->format('Y-m-d');
         </p>
 
         <!-- Location  -->
-        <p class="vf-summary__location"> <?php echo implode( ', ', $locations ); ?></p>
+        <p class="vf-summary__location | location"> <?php echo implode( ', ', $locations ); ?></p>
       </div>
 
       <!-- Registration  -->

@@ -62,33 +62,35 @@ $title = get_the_title();
 ?>
 
 <?php 
-
 $open_wrap = function($html, $block_name) {
-  $html = '
-<div class="vf-grid vf-grid__col-1">
-  <div>
-' . $html;
-return $html;
-};
-
-$close_wrap = function($html, $block_name) {
-  $html .= '
+    $html = '
+  <div class="embl-grid embl-grid--has-centered-content">
+    <div></div>
+    <div>
+  ' . $html;
+  return $html;
+  };
+  
+  $close_wrap = function($html, $block_name) {
+    $html .= '
+    </div>
+    <div></div>
   </div>
-  </div>';
-return $html;
-};
-
-add_filter(
-'vf/__experimental__/theme/content/open_block_wrap',
-$open_wrap,
-10, 2
-);
-
-add_filter(
-'vf/__experimental__/theme/content/close_block_wrap',
-$close_wrap,
-10, 2
-);
+  <!--/embl-grid-->';
+  return $html;
+  };
+  
+  add_filter(
+  'vf/__experimental__/theme/content/open_block_wrap',
+  $open_wrap,
+  10, 2
+  );
+  
+  add_filter(
+  'vf/__experimental__/theme/content/close_block_wrap',
+  $close_wrap,
+  10, 2
+  );
 
 ?>
 
@@ -120,15 +122,13 @@ $close_wrap,
     <?php include(locate_template('partials/filter-public-event.php', false, false)); ?>
   </div>
   <div>
-
-
     <div data-jplist-group="data-group-1">
       <?php
 $forthcomingLoop = new WP_Query (array( 
   'post_type' => 'events', 
   'order' => 'ASC', 
   'orderby' => 'meta_value_num',
-  'posts_per_page' => 20, 
+  'posts_per_page' => 2, 
   'meta_key' => 'vf_event_start_date', 
   'meta_query' => array(
       array(
@@ -183,7 +183,7 @@ $temp_query = $wp_query;
 
       </style>
       <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-        data-items-per-page="20" data-current-page="0" data-name="pagination1">
+        data-items-per-page="2" data-current-page="0" data-name="pagination1">
 
         <ul class="vf-pagination__list">
           <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
@@ -209,6 +209,10 @@ $temp_query = $wp_query;
   </div>
   <div>
   </div>
+</section>
+
+<section>
+<?php $vf_theme->the_content(); ?>
 </section>
 
 <script type="text/javascript">

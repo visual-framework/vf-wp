@@ -209,9 +209,12 @@ $temp_query = $wp_query;
 </div>
 </section>
 
+<section>
+<?php $vf_theme->the_content(); ?>
+</section>
+
 <script type="text/javascript">
   jplist.init();
-
 </script>
 
 <?php 
