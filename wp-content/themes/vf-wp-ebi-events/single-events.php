@@ -42,19 +42,21 @@ include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
 
 <?php 
 // CPP container
-if ($cpp_container == 1 && $event_organiser == "cco_hd") {
+if ($cpp_container == 1) {
 include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); 
 }
 
 // Social media container
-if ($social_media_container == 1 && $event_organiser == "cco_hd") {
+if ($social_media_container == 1) {
 include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); 
 }
+?>
 
-// Global Footer
-if (class_exists('VF_EBI_Global_Footer')) {
-  VF_Plugin::render(VF_EBI_Global_Footer::get_plugin('vf_ebi_global_footer'));
-}
+<!-- embl-ebi global footer -->
+<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
+<div class="vf-u-display-none" data-protection-message-disable="true"></div>
+
+<?php get_footer(); ?>
 
 get_footer();
 

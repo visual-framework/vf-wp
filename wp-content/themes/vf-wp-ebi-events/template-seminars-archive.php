@@ -35,9 +35,9 @@ $current_date = date('Ymd');
   <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
     <?php
 
-    if (has_nav_menu('primary')) {
+    if (has_nav_menu('secondary')) {
       wp_nav_menu(array(
-        'theme_location' => 'primary',
+        'theme_location' => 'secondary',
         'depth'          => 1,
         'container'      => false,
         'items_wrap'     => '%3$s'
@@ -216,10 +216,8 @@ $temp_query = $wp_query;
   jplist.init();
 </script>
 
-<?php 
-// Global Footer
-if (class_exists('VF_EBI_Global_Footer')) {
-  VF_Plugin::render(VF_EBI_Global_Footer::get_plugin('vf_ebi_global_footer'));
-}
+<!-- embl-ebi global footer -->
+<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
+<div class="vf-u-display-none" data-protection-message-disable="true"></div>
 
-get_footer(); ?>
+<?php get_footer(); ?>
