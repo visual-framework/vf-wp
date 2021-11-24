@@ -2590,21 +2590,21 @@
     "@visual-framework/vf-list" "^1.0.0"
     "@visual-framework/vf-text" "^1.0.2"
 
-"@visual-framework/vf-core@2.2.33":
-  version "2.2.33"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.33.tgz#884e1b360a210b26f8d6fcc893f8174874f69e31"
-  integrity sha512-w+lSoAt0a+Bc7ByjY8zYuEU+Rby1Xje1MTNAK1EggR2Rrg8G7YL2lK05pf1IX1uwA18KjB8KM6cp23Ep2/Hppg==
+"@visual-framework/vf-core@2.2.36":
+  version "2.2.36"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.36.tgz#124609c866873e3476bf469eb52c366d12527b65"
+  integrity sha512-nvQSSYrWIVzP2KUFsV1ZOHeOKXvlUEv+AZTIvvWtzPxxOfloEJvkZxWf/CUdTxS6RkQSXU/ar9ieU+XSDKt2Ng==
   dependencies:
     "@visual-framework/vf-component-generator" "^1.1.5"
     "@visual-framework/vf-component-initialization" "^1.1.7"
-    "@visual-framework/vf-frctl-extensions" "^1.0.1"
+    "@visual-framework/vf-frctl-extensions" "^2.0.0"
     "@visual-framework/vf-sass-compilation" "^1.1.16"
     chalk "^4.0.0"
     del "^6.0.0"
     fast-glob "^3.1.0"
     gulp "^4.0.2"
     highlight.js "^11.0.0"
-    marked "3.0.8"
+    marked "4.0.4"
 
 "@visual-framework/vf-design-tokens@3.6.2":
   version "3.6.2"
@@ -2731,10 +2731,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__textarea/-/vf-form__textarea-3.0.0-alpha.0.tgz#d3eb392634a1a55fc0568b723f28a33c0282aeb2"
   integrity sha512-rOCqitbk/MNyei5bXjkToSMqF6d4W3pO8PIRxdWPVkFTS7KQZFVC1OpCI+m54NCTS58CYjV431aB0gm3MilSGA==
 
-"@visual-framework/vf-frctl-extensions@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-frctl-extensions/-/vf-frctl-extensions-1.0.1.tgz#5cd70b84d1a5bc43e42ff221cc7f5ca94a204877"
-  integrity sha512-+Om0izveMLCq9ZFLZm+1c6Z6FARf+gXaRj5+yLo4z4qCijrRf3CiWno99Le+m3Yh07jiWsDgOll3KbCaBtWFfA==
+"@visual-framework/vf-frctl-extensions@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-frctl-extensions/-/vf-frctl-extensions-2.0.0.tgz#c3fa6237090fcedaffdc5610b6e46bd0932bd30b"
+  integrity sha512-oRrZJWGSRkuuPGe4I8h7/OSa/cILy7gVDkvhLnqZ2k+BadHBEi8Zsk5rjxHg5xMbjFJ/PeFkTtlwANH+DpR/Ww==
 
 "@visual-framework/vf-global-header@3.1.2":
   version "3.1.2"
@@ -8407,10 +8407,10 @@ markdown-table@^1.1.0:
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-1.1.3.tgz#9fcb69bcfdb8717bfd0398c6ec2d93036ef8de60"
   integrity sha512-1RUZVgQlpJSPWYbFSpmudq5nHY1doEIv89gBtF0s4gW1GF2XorxcA/70M5vq7rLv0a6mhOUccRsqkwhwLCIQ2Q==
 
-marked@3.0.8:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/marked/-/marked-3.0.8.tgz#2785f0dc79cbdc6034be4bb4f0f0a396bd3f8aeb"
-  integrity sha512-0gVrAjo5m0VZSJb4rpL59K1unJAMb/hm8HRXqasD8VeC8m91ytDPMritgFSlKonfdt+rRYYpP/JfLxgIX8yoSw==
+marked@4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-4.0.4.tgz#d7cb16adaa474291307c521824c5716d32b95c36"
+  integrity sha512-d8v7SensuOj+gxi0TGbqb2WtS60ycZfZuqtmAB9yz0JLotKerTob/47Qk9oLCDmn5G1dcdn3d5ydR+ih9dvS0A==
 
 marked@^2.0.3:
   version "2.0.4"
