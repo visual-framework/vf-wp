@@ -66,7 +66,7 @@ $abstract_date_formated = $abstract_date->format('Y-m-d');
 
   <!-- Summary  -->
   <p class="vf-summary__text | vf-u-display-none | used-for-search-index">
-    <span class="jplist-event-summary"><?php echo esc_html($organisers); ?></span>
+    <span class="jplist-event-summary"><?php echo esc_html($summary); ?></span>
   </p>
 
 

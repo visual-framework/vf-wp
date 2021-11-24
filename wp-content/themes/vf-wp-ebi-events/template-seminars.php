@@ -107,7 +107,7 @@ $close_wrap,
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
           <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
             data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-            placeholder="Filter by event title" data-clear-btn-id="name-clear-btn"
+            placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn"
             class="vf-form__input | vf-search__input" />
         </div>
         <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
@@ -131,7 +131,6 @@ $forthcomingLoop = new WP_Query (array(
   'post_type' => 'events', 
   'order' => 'ASC', 
   'orderby' => 'meta_value_num',
-  'posts_per_page' => 20, 
   'meta_key' => 'vf_event_start_date', 
   'meta_query' => array(
       array(
@@ -166,7 +165,7 @@ $temp_query = $wp_query;
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
         <p class="vf-summary__text">
-          No matching events found
+          No matching seminars found
         </p>
       </article>
 

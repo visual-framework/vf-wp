@@ -126,7 +126,6 @@ $forthcomingLoop = new WP_Query (array(
   'post_type' => 'events', 
   'order' => 'ASC', 
   'orderby' => 'meta_value_num',
-  'posts_per_page' => 20, 
   'meta_key' => 'vf_event_start_date', 
   'meta_query' => array(
       array(

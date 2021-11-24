@@ -128,7 +128,6 @@ $forthcomingLoop = new WP_Query (array(
   'post_type' => 'events', 
   'order' => 'ASC', 
   'orderby' => 'meta_value_num',
-  'posts_per_page' => 2, 
   'meta_key' => 'vf_event_start_date', 
   'meta_query' => array(
       array(
@@ -183,7 +182,7 @@ $temp_query = $wp_query;
 
       </style>
       <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-        data-items-per-page="2" data-current-page="0" data-name="pagination1">
+        data-items-per-page="20" data-current-page="0" data-name="pagination1">
 
         <ul class="vf-pagination__list">
           <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">

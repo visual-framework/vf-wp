@@ -44,14 +44,14 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
         if (!empty ($displayed)) {
           echo esc_html($displayed);
         }
-        else if ($event_type->name == "Public event"){
-           echo esc_html($event_type->name) . ' | ' . esc_html($public_type['label']);
+        else if ($event_type['label'] == "Public event"){
+           echo esc_html($event_type['label']) . ' | ' . esc_html($public_type['label']);
         }
-        else if ($event_type->name == "Seminar") {
-           echo esc_html($event_type->name) . ' | ' . esc_html($seminar_type['label']);
+        else if ($event_type['label'] == "Seminar") {
+           echo esc_html($event_type['label']) . ' | ' . esc_html($seminar_type['label']);
         }
         else {
-          echo esc_html($event_type->name);
+          echo esc_html($event_type['label']);
         }
       ?>
       </p>
