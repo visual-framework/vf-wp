@@ -75,15 +75,15 @@ function event_custom_acf_field_link( $permalink, $post, $leavename ) {
     return $permalink;
 }
 
-// Adds taxonomy to the permalink
+// Adds event type field value to the permalink
 
 add_filter('post_type_link', 'event_permalink_structure', 10, 3);
 function event_permalink_structure($post_link, $post, $leavename) {
     if (false !== strpos($post_link, '%type%')) {
-        $type_term = get_the_terms($post->ID, 'type');
+        $type_term = get_post_meta($post->ID, 'vf_event_event_type', true);
+		$type_term = str_replace('_', '-', $type_term);
         if (!empty($type_term))
-            $post_link = str_replace('%type%', array_pop($type_term)->
-            slug, $post_link);
+            $post_link = str_replace('%type%', $type_term, $post_link);
         else
             $post_link = str_replace('%type%', 'uncategorized', $post_link);
     } 
