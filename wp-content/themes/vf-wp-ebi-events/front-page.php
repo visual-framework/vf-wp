@@ -133,14 +133,14 @@ $forthcomingLoop = new WP_Query (array(
       array(
         'key' => 'vf_event_start_date',
         'value' => $current_date,
-        'compare' => '>=',
+        'compare' => '>',
         'type' => 'numeric'
       ),        
       array(
         'key' => 'vf_event_start_date',
         'value' => date('Ymd', strtotime('now')),
         'type' => 'numeric',
-        'compare' => '>=',
+        'compare' => '>',
         ),
     array(
         'key' => 'vf_event_event_type',

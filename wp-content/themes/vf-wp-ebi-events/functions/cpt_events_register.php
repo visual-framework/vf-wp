@@ -76,7 +76,6 @@ add_action(
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(
-        'type',
         'post_tag',
       ),
     ));

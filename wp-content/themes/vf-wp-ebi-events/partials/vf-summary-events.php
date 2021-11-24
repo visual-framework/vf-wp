@@ -96,14 +96,23 @@ $abstract_date_formated = $abstract_date->format('Y-m-d');
       <!-- Registration  -->
 
       <div class="">
-        <?php if (!empty($registration_closing_on_site)) { ?>
-        <?php if ($registration_date_formated_on_site >= $current_date) { ?>
+        <?php if (!empty(($registration_closing_on_site) || ($registration_closing))) { ?>
+        <?php if (($registration_date_formated_on_site >= $current_date) && (!empty($registration_date_formated_on_site)) ) { ?>
         <span class="jplist-event-registration">
-          <span class="vf-text-body vf-text-body--2">Registration</span> <br />
+          <span class="vf-text-body vf-text-body--2">Registration </span> <br />
           <span
             class="vf-u-text-color--grey | vf-u-text--nowrap"><?php echo esc_html($registration_closing_on_site); ?></span>
         </span>
-        <?php } else { ?>
+        <?php } 
+        else if ($registration_date_formated >= $current_date){ ?>
+        <span class="jplist-event-registration">
+          <span class="vf-text-body vf-text-body--2">Registration (Virtual)</span> <br />
+          <span
+            class="vf-u-text-color--grey | vf-u-text--nowrap"><?php echo esc_html($registration_closing); ?></span>
+        </span>
+
+        <?php
+        } else if (($registration_date_formated_on_site <= $current_date) && ($registration_date_formated <= $current_date)) { ?>
         <span class="vf-text-body vf-text-body--2">Registration</span> <br />
         <span class="vf-u-text-color--grey | vf-u-text--nowrap">Closed</span>
         <?php } } ?>
@@ -112,11 +121,11 @@ $abstract_date_formated = $abstract_date->format('Y-m-d');
 
       <!-- Abstract  -->
       <div class="">
-        <?php if (!empty($$abstract_closing)) { ?>
+        <?php if (!empty($abstract_closing)) { ?>
         <?php if ($abstract_date_formated >= $current_date) { ?>
         <span class="jplist-event-abstract">
           <span class="vf-text-body vf-text-body--2">Abstract submission</span> <br />
-          <span class="vf-u-text-color--grey | vf-u-text--nowrap"><?php echo esc_html($$abstract_closing); ?></span>
+          <span class="vf-u-text-color--grey | vf-u-text--nowrap"><?php echo esc_html($abstract_closing); ?></span>
         </span>
         <?php } else { ?>
         <span class="vf-text-body vf-text-body--2">Abstract submission</span> <br />

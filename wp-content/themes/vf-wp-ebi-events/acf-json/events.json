@@ -830,44 +830,6 @@
             "maxlength": ""
         },
         {
-            "key": "field_619cc4ae9e556",
-            "label": "contentHub",
-            "name": "vf_event_contenthub",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_619cc059afeaa",
-            "label": "Unique Identifier",
-            "name": "vf_event_unique_identifier",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_619cc059aff4a",
             "label": "Template",
             "name": "",
@@ -1165,4 +1127,5 @@
     "active": true,
     "description": "VF-WP-EBI Event post type",
     "modified": 1637694957
+
 }
