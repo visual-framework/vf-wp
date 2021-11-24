@@ -46,7 +46,7 @@ class VF_Templates {
     if (($theme == 'VF-WP Intranet') && ((is_search()) || (is_page_template('searchpage.php')))) {
       return false;
      }
-     if (($theme == 'VF-WP EMBL-EBI Events') && ((is_front_page()) || (is_page_template(array('template-seminars.php', 'template-public-events-archive.php', 'template-seminars-archive.php'))))) {
+     if (($theme == 'VF-WP EMBL-EBI Events') && ((is_front_page()) || (is_page_template(array('template-seminars.php', 'template-public-events-archive.php', 'template-seminars-archive.php', 'single-events.php'))))) {
       return false;
      }
     
