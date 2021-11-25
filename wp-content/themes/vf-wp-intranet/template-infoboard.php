@@ -90,4 +90,5 @@ if ( $internal_news_query->have_posts() ) {
 
 wp_reset_postdata();
 
+echo do_shortcode('[get_posts_via_rest]'); 
 ?>

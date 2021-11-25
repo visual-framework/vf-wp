@@ -8,6 +8,7 @@ function add_scripts() {
 
 require_once('functions/custom-taxonomies.php');
 require_once('functions/cpt-register.php');
+require_once('functions/infoboard-news.php');
 
 
 // CHILD THEME CSS FILE
