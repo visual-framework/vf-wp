@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-card
- * Version: 2.6.2
+ * Version: 2.7.0
  * Location: components/vf-core-components/vf-card
  */
 .vf-card {
@@ -239,6 +239,7 @@
 
 .vf-card__subheading {
   --vf-stack-margin--custom: 0.25rem;
+  --vf-stack-margin: 0.25rem;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 19px;
   font-weight: 500;
@@ -323,7 +324,7 @@
   background-color: var(--vf-card--striped-bg-color, #007b53);
   color: #ffffff;
   margin: -1rem;
-  margin-bottom: -1rem;
+  margin-top: 0;
   padding: 1rem;
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
@@ -333,6 +334,7 @@
 }
 .vf-card--striped .vf-card__text:first-of-type {
   --vf-stack-margin--custom: 0;
+  --vf-stack-margin: 0;
 }
 .vf-card--striped .vf-card__text .vf-card__link,
 .vf-card--striped .vf-card__text a {
@@ -342,6 +344,7 @@
 .vf-card--striped .vf-card__title + .vf-card__text,
 .vf-card--striped .vf-card__heading + .vf-card__text {
   --vf-stack-margin--custom: 1rem;
+  --vf-stack-margin: 1rem;
 }
 
 .vf-card--primary,
