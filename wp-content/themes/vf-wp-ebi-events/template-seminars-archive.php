@@ -13,12 +13,26 @@ get_header();
 <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
 <link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
 <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all" />
 
+<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all" />
+<nav class="vf-breadcrumbs" aria-label="Breadcrumb">
+  <ul class="vf-breadcrumbs__list | vf-list vf-list--inline">
+    <li class="vf-breadcrumbs__item">
+      <a href="/about" class="vf-breadcrumbs__link">About us</a>
+    </li>
+    <li class="vf-breadcrumbs__item">
+      <a href="/about/events" class="vf-breadcrumbs__link">Events</a>
+    </li>
+    <li class="vf-breadcrumbs__item" aria-current="location">
+      Seminars
+    </li>
+  </ul>
+  <span class="vf-breadcrumbs__heading">Related:</span>
+  <ul class="vf-breadcrumbs__list vf-breadcrumbs__list--related vf-list vf-list--inline">
+    <li class="vf-breadcrumbs__item" false=""><a href="https://www.embl.org/events" class="vf-breadcrumbs__link">All EMBL Events</a></li>
+  </ul>
+</nav>
 <?php
-if (class_exists('VF_Breadcrumbs')) {
-  VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
-}
 if (class_exists('VF_WP_Hero_Secondary')) {
   VF_Plugin::render(VF_WP_Hero_Secondary::get_plugin('vf_wp_hero_secondary'));
 }
@@ -90,7 +104,7 @@ $close_wrap,
 ?>
 
 
-<section class="embl-grid embl-grid--has-centered-content | vf-content">
+<section class="embl-grid  embl-grid--has-centered-content | vf-content">
 <div>
 </div>
 <div class="vf-u-margin__bottom--800">
@@ -216,6 +230,7 @@ $temp_query = $wp_query;
   jplist.init();
 </script>
 
+<?php include(locate_template('partials/seminar_footer.php', false, false)); ?>
 <!-- embl-ebi global footer -->
 <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
 <div class="vf-u-display-none" data-protection-message-disable="true"></div>

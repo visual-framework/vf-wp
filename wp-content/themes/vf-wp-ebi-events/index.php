@@ -6,7 +6,7 @@ if (get_option('show_on_front') !== 'page') {
 } ?>
 
 <?php
-exit("test");
+
 get_header();
 global $post;
 setup_postdata($post);

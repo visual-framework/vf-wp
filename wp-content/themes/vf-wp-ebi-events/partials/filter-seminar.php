@@ -1,6 +1,6 @@
 <?php
 $current_year = date('Y') + 1; // 1 year ahead
-$year_list = range(2021, $current_year); // we have imported events only from 2016 onwards
+$year_list = range(2019, $current_year); // we have imported events only from 2016 onwards
 $year_list = array_reverse($year_list);
 $counter = 1;
 $choices= get_field_object('field_619cc059aeafd');

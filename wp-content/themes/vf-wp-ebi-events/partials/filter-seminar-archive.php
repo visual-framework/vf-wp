@@ -1,6 +1,6 @@
 <?php
 $current_year = date('Y'); // 1 year ahead
-$year_list = range(2016, $current_year); // we have imported events only from 2016 onwards
+$year_list = range(2019, $current_year); // we have imported events only from 2016 onwards
 $year_list = array_reverse($year_list);
 $counter = 1;
 $choices= get_field_object('field_619cc059aeafd');
@@ -10,7 +10,7 @@ $location_list = $location_choices['choices'];
 
 ?>
 
-<form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
+<form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400" >
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
     <label class="vf-form__label">Type</label>
     <?php
@@ -18,11 +18,25 @@ $location_list = $location_choices['choices'];
       ?>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="typedata" data-or="type"
+        data-path=".type" data-group="data-group-1" data-name="typedata" data-or="type"  data-mode="dynamic"
         value="<?php echo $type_item; ?>" data-id="name<?php echo $counter; ?>-<?php echo $type_item; ?>"
         class="vf-form__checkbox">
       <label for="type-<?php echo $counter; ?>" class="vf-form__label"><?php echo $type_item; ?></label>
+
+      <span
+        id="type-<?php echo $counter; ?>"
+        data-jplist-control="counter"
+        data-group="data-group-1"
+        data-name="counter-type-filter-<?php echo $counter; ?>"
+        data-format="({count})"
+        data-path=".type_<?php echo $type_item; ?>"
+        data-value="<?php echo $type_item; ?>"
+        data-mode="dynamic"
+        data-filter-type="path"></span>
+
+
     </div>
+
     <?php
       $counter++;
     }

@@ -1,67 +1,73 @@
-{
-    "key": "group_619e278e5cee8",
-    "title": "VF-WP-EBI Event Admin",
-    "fields": [
-        {
-            "key": "field_619cc4ae9e556",
-            "label": "contentHub",
-            "name": "vf_event_contenthub",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_619cc059afeaa",
-            "label": "Unique Identifier",
-            "name": "vf_event_unique_identifier",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        }
-    ],
-    "location": [
-        [
+[
+    {
+        "key": "group_619e278e5cee8",
+        "title": "VF-WP-EBI Event Admin",
+        "fields": [
             {
-                "param": "user_role",
-                "operator": "==",
-                "value": "administrator"
+                "key": "field_619cc4ae9e556",
+                "label": "contentHub",
+                "name": "vf_event_contenthub",
+                "type": "radio",
+                "instructions": "Save this event record in ContentHub.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "Yes": "Yes",
+                    "No": "No"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "Yes",
+                "layout": "horizontal",
+                "return_format": "array",
+                "save_other_choice": 0
             },
             {
-                "param": "post_type",
-                "operator": "==",
-                "value": "events"
+                "key": "field_619cc059afeaa",
+                "label": "Unique Identifier",
+                "name": "vf_event_unique_identifier",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
             }
-        ]
-    ],
-    "menu_order": 2,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "top",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "modified": 1637694957
-}
+        ],
+        "location": [
+            [
+                {
+                    "param": "current_user_role",
+                    "operator": "==",
+                    "value": "administrator"
+                },
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "events"
+                }
+            ]
+        ],
+        "menu_order": 2,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": ""
+    }
+]

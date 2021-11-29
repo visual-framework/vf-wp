@@ -14,11 +14,9 @@ get_header();
 <link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
 <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
 <link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all" />
-
+<?php include(locate_template('partials/main_top_navigation.php', FALSE, FALSE)); ?>
 <?php
-if (class_exists('VF_Breadcrumbs')) {
-  VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
-}
+
 if (class_exists('VF_WP_Hero')) {
     VF_Plugin::render(VF_WP_Hero::get_plugin('vf_wp_hero_group'));
   }
@@ -93,6 +91,7 @@ $close_wrap,
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
 <div>
+
 </div>
 <div class="vf-u-margin__bottom--800">
     <form action="#eventsFilter" onsubmit="return false;"
@@ -115,7 +114,7 @@ $close_wrap,
 </section>    
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
   <div>
-    <?php include(locate_template('partials/filter-public-event-archive.php', false, false)); ?>
+    <?php  include(locate_template('partials/filter-public-event.php', false, false)); ?>
   </div>
   <div>
 
@@ -205,6 +204,7 @@ $temp_query = $wp_query;
   </div>
   </div>
   <div>
+
 </div>
 </section>
 

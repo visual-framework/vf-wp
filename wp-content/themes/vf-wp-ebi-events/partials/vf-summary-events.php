@@ -34,23 +34,31 @@ $abstract_date_formated = $abstract_date->format('Y-m-d');
 
 ?>
 
+<div class="vf-grid vf-grid__col-3">
+<!--  <div class="vf-grid__col--span-2">-->
+<!--    <article class="vf-summary vf-summary--event">-->
+<!--      <p class="vf-summary__date">04th September 2019</p>-->
+<!--      <h3 class="vf-summary__title">-->
+<!--        <a href="JavaScript:Void(0);" class="vf-summary__link">Executive Masters in Management of Research Infrastructures</a>-->
+<!--      </h3>-->
+<!--      <p class="vf-summary__text">This Masters development programme is aimed at current Research Infrastructures managers and leaders who wish to develop the competencies required to meet the needs of Research Infrastructures in the planning, construction and operation phases.</p>-->
+<!--      <p class="vf-summary__text">EMBO Workshop</p>-->
+<!--      <p class="vf-summary__location">Heidelberg</p>-->
+<!---->
+<!--    </article>-->
+<!--  </div>-->
+<!--  <p class="vf-summary__text">EMBO Workshop</p>-->
+<!--  <p class="vf-summary__location">Heidelberg</p>-->
+<!--</div>-->
 
 
 <article class="vf-summary vf-summary--event | jplist-text-area" style="margin-bottom: 1rem; display: block;"
   data-jplist-item>
   <p class="vf-summary__date">
     <?php       // Event dates
-        if ($end_date) { 
-          if ($start->format('M') == $end->format('M')) {
-            echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
-          else {
-            echo $start->format('j M'); ?> - <?php echo $end->format('j F Y'); }
-      ?>
-    <?php } 
-        else {
+
           echo $start->format('j F Y'); 
-        } 
-     ?>
+?>
   </p>
 
   <h3 class="vf-summary__title | vf-u-margin__bottom--100 | name ">

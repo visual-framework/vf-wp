@@ -57,7 +57,3 @@ include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php');
 <div class="vf-u-display-none" data-protection-message-disable="true"></div>
 
 <?php get_footer(); ?>
-
-get_footer();
-
-?>
