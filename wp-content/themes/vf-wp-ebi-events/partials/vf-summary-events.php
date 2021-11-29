@@ -89,7 +89,10 @@ $abstract_date_formated = $abstract_date->format('Y-m-d');
     <div class="vf-cluster__inner">
       <div>
         <!-- Type  -->
-        <p class="vf-summary__text vf-text-heading--5 | type">
+        <?php 
+        $seminar_type_class = $seminar_type['label'];
+        $seminar_type_class1 = str_replace(' ', '_', $seminar_type_class); ?>
+        <p class="vf-summary__text vf-text-heading--5 | type | type_<?php echo esc_attr($seminar_type_class1); ?>">
           <?php
                 if (!empty($public_type)){
                 echo esc_html($public_type['label']); }

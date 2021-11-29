@@ -48,7 +48,6 @@ global $vf_theme;
 $title = get_the_title();
 $current_date = date('Ymd');
 
-
 ?>
 
 <nav class="vf-navigation vf-navigation--main | vf-cluster">
@@ -71,9 +70,7 @@ $current_date = date('Ymd');
 
 global $post;
 setup_postdata($post);
-
 global $vf_theme;
-
 $title = get_the_title();
 
 ?>
@@ -110,7 +107,7 @@ $close_wrap,
 ?>
 
 
-<section class="embl-grid embl-grid--has-centered-content | vf-content">
+<section class="embl-grid | vf-content">
   <div>
   </div>
   <div class="vf-u-margin__bottom--800">
@@ -228,9 +225,10 @@ $temp_query = $wp_query;
   </div>
 </section>
 
-<section>
-<?php $vf_theme->the_content(); ?>
-</section>
+<section class="vf-content">
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php the_content(); ?>
+<?php endwhile; endif; ?></section>
 
 
 <script type="text/javascript">

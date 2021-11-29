@@ -112,7 +112,7 @@ $close_wrap,
   </div>
 
 </section>    
-<section class="embl-grid embl-grid--has-centered-content | vf-content">
+<section class="embl-grid | vf-content">
   <div>
     <?php  include(locate_template('partials/filter-public-event.php', false, false)); ?>
   </div>
@@ -208,8 +208,10 @@ $temp_query = $wp_query;
 </div>
 </section>
 
-<section>
-<?php $vf_theme->the_content(); ?>
+<section class="vf-content">
+<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php the_content(); ?>
+<?php endwhile; endif; ?>
 </section>
 
 <script type="text/javascript">

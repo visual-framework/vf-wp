@@ -1,6 +1,6 @@
 <?php
 /**
-* Template Name: Seminars Archive
+* Template Name: Internal events
 */
 
 get_header();
@@ -9,12 +9,16 @@ get_header();
 ?>
 <span data-protection-message-disable="true"></span>
 <!-- embl-ebi global header -->
-<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
+<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed">
+</header>
+<link rel="import"
+  href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub"
+  data-target="self" data-embl-js-content-hub-loader>
+<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css"
+  media="all" />
 <script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all" />
+<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css"
+  type="text/css" media="all" />
 <nav class="vf-breadcrumbs" aria-label="Breadcrumb">
   <ul class="vf-breadcrumbs__list | vf-list vf-list--inline">
     <li class="vf-breadcrumbs__item">
@@ -24,7 +28,7 @@ get_header();
       <a href="/about/events" class="vf-breadcrumbs__link">Events</a>
     </li>
     <li class="vf-breadcrumbs__item" aria-current="location">
-      Seminars
+      Internal events
     </li>
   </ul>
   <span class="vf-breadcrumbs__heading">Related:</span>
@@ -32,10 +36,15 @@ get_header();
     <li class="vf-breadcrumbs__item" false=""><a href="https://www.embl.org/events" class="vf-breadcrumbs__link">All EMBL Events</a></li>
   </ul>
 </nav>
+
+<section class="vf-hero | vf-u-fullbleed" style=" --vf-hero--bg-image-size: auto 28.5rem">
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
+    <h2 class="vf-hero__heading"><a class="vf-hero__heading_link" href="/internal-events">Internal events</a></h2>
+    <p class="vf-hero__text"></p> 
+  </div>
+</section>
+
 <?php
-if (class_exists('VF_WP_Hero_Secondary')) {
-  VF_Plugin::render(VF_WP_Hero_Secondary::get_plugin('vf_wp_hero_secondary'));
-}
 
 global $post;
 setup_postdata($post);
@@ -43,21 +52,17 @@ global $vf_theme;
 $title = get_the_title();
 $current_date = date('Ymd');
 
+
 ?>
 
 <nav class="vf-navigation vf-navigation--main | vf-cluster">
   <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
-    <?php
-
-    if (has_nav_menu('secondary')) {
-      wp_nav_menu(array(
-        'theme_location' => 'secondary',
-        'depth'          => 1,
-        'container'      => false,
-        'items_wrap'     => '%3$s'
-      ));
-    }
-    ?>
+    <li class="vf-navigation__item">
+      <a href="/internal-events" class="vf-navigation__link" aria-current="page">Upcoming events</a>
+    </li>
+    <li class="vf-navigation__item">
+      <a href="/internal-events/past-events" class="vf-navigation__link">Past events</a>
+    </li>
   </ul>
 </nav>
 
@@ -65,7 +70,9 @@ $current_date = date('Ymd');
 
 global $post;
 setup_postdata($post);
+
 global $vf_theme;
+
 $title = get_the_title();
 
 ?>
@@ -103,9 +110,9 @@ $close_wrap,
 
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content">
-<div>
-</div>
-<div class="vf-u-margin__bottom--800">
+  <div>
+  </div>
+  <div class="vf-u-margin__bottom--800">
     <form action="#eventsFilter" onsubmit="return false;"
       class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
       <div class="vf-sidebar__inner">
@@ -123,10 +130,10 @@ $close_wrap,
     </form>
   </div>
 
-</section>    
+</section>
 <section class="embl-grid | vf-content">
   <div>
-    <?php include(locate_template('partials/filter-seminar-archive.php', false, false)); ?>
+    <?php include(locate_template('partials/filter-internal.php', false, false)); ?>
   </div>
   <div>
 
@@ -142,18 +149,18 @@ $forthcomingLoop = new WP_Query (array(
       array(
         'key' => 'vf_event_start_date',
         'value' => $current_date,
-        'compare' => '<=',
+        'compare' => '>',
         'type' => 'numeric'
       ),        
       array(
         'key' => 'vf_event_start_date',
         'value' => date('Ymd', strtotime('now')),
         'type' => 'numeric',
-        'compare' => '<=',
+        'compare' => '>',
         ),
       array(
         'key' => 'vf_event_event_type',
-        'value' => 'seminar',
+        'value' => 'internal-event',
         ),
   
 
@@ -171,7 +178,7 @@ $temp_query = $wp_query;
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
         <p class="vf-summary__text">
-          No matching seminars found
+          No matching events found
         </p>
       </article>
 
@@ -213,11 +220,11 @@ $temp_query = $wp_query;
             </a>
           </li>
         </ul>
-    </nav>
-  </div>
+      </nav>
+    </div>
   </div>
   <div>
-</div>
+  </div>
 </section>
 
 <section class="vf-content">
@@ -229,7 +236,6 @@ $temp_query = $wp_query;
   jplist.init();
 </script>
 
-<?php include(locate_template('partials/seminar_footer.php', false, false)); ?>
 <!-- embl-ebi global footer -->
 <link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
 <div class="vf-u-display-none" data-protection-message-disable="true"></div>

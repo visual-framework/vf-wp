@@ -1,4 +1,4 @@
-[
+
     {
         "key": "group_619cc059a9685",
         "title": "VF-WP-EBI Event Information",
@@ -1125,6 +1125,7 @@
         "instruction_placement": "label",
         "hide_on_screen": "",
         "active": true,
-        "description": "VF-WP-EBI Event post type"
+        "description": "VF-WP-EBI Event post type",
+        "modified": 1638187923
     }
-]
+
