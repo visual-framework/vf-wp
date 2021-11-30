@@ -168,7 +168,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
      if ( ! empty($registration_closing_on_site)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>
         <?php if ($registration_type == 'registration') { ?>
-        Registration (On-site):
+        Registration<?php if (!empty($registration_closing)) {echo ' (On-site)';} ?>:
         <?php } else if ($registration_type == 'application'){ ?>
         Application:
         <?php  } ?>
@@ -200,7 +200,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
   if ( ! empty($registration_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>
         <?php if ($registration_type == 'registration') { ?>
-        Registration <?php if (!empty($registration_closing_on_site)) {echo '(Virtual)';} ?>:
+        Registration<?php if (!empty($registration_closing_on_site)) {echo ' (Virtual)';} ?>:
         <?php } else if ($registration_type == 'application'){ ?>
         Application:
         <?php  } ?>
@@ -239,7 +239,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     </div>
     <?php }} ?>
 
-    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($info_text))) { ?>
+    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($registration_closing_on_site) || ($info_text))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <?php } ?>
 
