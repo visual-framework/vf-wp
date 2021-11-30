@@ -34,6 +34,7 @@ $linkedin_link = get_field('vf_social_linkedin');
 $social_url = get_the_permalink();
 $select = get_field('vf_social_select');
 $custom = get_field('vf_social_custom');
+$custom_url = get_field('vf_social_share_url');
 
 
 $class = '';
@@ -170,7 +171,7 @@ if (empty($choose)) {
             <?php if ($custom == 'auto') { ?>
             href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
             <?php } else if ($custom == 'custom') { ?> 
-            href="<?php echo esc_url($twitter_link);?>">
+              href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $custom_url; ?>&amp;via=embl">
             <?php } ?>  
             <span class="vf-u-sr-only">
                 twitter
@@ -189,7 +190,7 @@ if (empty($choose)) {
             <?php if ($custom == 'auto') { ?> 
             href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
             <?php } else if ($custom == 'custom') { ?> 
-            href="<?php echo esc_url($facebook_link);?>">
+              href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $custom_url; ?>">
             <?php } ?>  
               <span class="vf-u-sr-only">
                 facebook
@@ -208,7 +209,7 @@ if (empty($choose)) {
             <?php if ($custom == 'auto') { ?> 
             href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
             <?php } else if ($custom == 'custom') { ?> 
-            href="<?php echo esc_url($linkedin_link);?>">
+              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?>&title=<?php echo $title; ?>">
             <?php } ?>  
               <span class="vf-u-sr-only">
                 linkedin
