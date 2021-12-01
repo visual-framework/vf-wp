@@ -14,6 +14,7 @@ $topic_area = get_field('labs_topic_area');
 $format = get_field('labs_format');
 $location = get_field('labs_location');
 $download = get_field('labs_download');
+$fee = get_field('labs_fee');
 $contact = get_field('labs_contact');
 $contact_disp = get_field('labs_contact_displayed');
 $organisers = get_field('labs_organisers');
@@ -83,6 +84,11 @@ $title = esc_html(get_the_title());
       <?php if ($location) { ?>
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span>&nbsp;<span
           class="vf-u-text-color--grey"><?php echo ($location->name); ?></span></p>
+      <?php } ?>
+
+      <?php if ($fee) { ?>
+      <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Fee:</span>&nbsp;<span
+          class="vf-u-text-color--grey"><?php echo esc_html($fee); ?></span></p>
       <?php } ?>
 
       <?php if ( ! empty($contact)) { ?>
