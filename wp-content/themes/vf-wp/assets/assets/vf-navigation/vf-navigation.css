@@ -220,7 +220,7 @@
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 3.0.0-rc.0
+ * Version: 3.0.0-rc.1
  * Location: components/vf-core-components/vf-navigation
  */
 .vf-navigation__link {
@@ -308,6 +308,7 @@
 
 @media only screen and (min-width: 768px) {
   .vf-navigation--on-this-page.vf-u-fullbleed {
+    margin-bottom: 2rem;
     overflow: unset;
   }
   .vf-navigation--on-this-page.vf-u-fullbleed::before {

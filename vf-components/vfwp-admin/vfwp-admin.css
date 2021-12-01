@@ -280,6 +280,9 @@
   border: none;
   height: 1px;
   margin-block: 0 var(--vf-divider-margin--block-end, 1.5rem);
+  margin-top: 1rem;
+  /* IE Fallback */
+  margin-top: var(--vf-stack-margin, 1rem);
   width: 100%;
 }
 .vf-content code:not([class*=vf-]), .editor-styles-wrapper code:not([class*=vf-]) {
