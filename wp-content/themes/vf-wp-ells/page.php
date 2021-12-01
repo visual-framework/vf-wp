@@ -71,7 +71,12 @@ $close_wrap,
    </section>  
    <?php } 
 
+// If post password required and it doesn't match the cookie.
+if ( post_password_required( get_the_ID())) {
+  echo get_the_password_form( get_the_ID());
+} else {
 $vf_theme->the_content();
+}
 
 ?>
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>
