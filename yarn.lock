@@ -6962,10 +6962,10 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
-list-stream@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/list-stream/-/list-stream-2.0.0.tgz#c474edd43ab7d9647f5a9aafcbade52de15b068f"
-  integrity sha512-s9BgobQNJt767O+CJXlNeDmzkbjyiE0Zt1u24D89J3QnQXWwFeuvx7dWzutkBotTuWfk+n+Gc2E0RwfmEx53NA==
+list-stream@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/list-stream/-/list-stream-2.1.0.tgz#514e7606de46474f3c25cee78f8cb2d08498b631"
+  integrity sha512-CkEgbERCsaO2qEf5WL9RGKtJtDQ/qsnIU95+5Pfikp2jYuh9TRLgTZpJ3Pyc3f2Sqt1Uj+1vSZCXRaa/VlRlyQ==
   dependencies:
     readable-stream "~3.4.0"
 

@@ -44,7 +44,7 @@
     "@visual-framework/vf-form__fieldset": "2.0.0-alpha.0",
     "@visual-framework/vf-sidebar": "1.0.0-alpha.2",
     "gulp-better-rollup": "4.0.1",
-    "list-stream": "2.0.0"
+    "list-stream": "2.1.0"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
