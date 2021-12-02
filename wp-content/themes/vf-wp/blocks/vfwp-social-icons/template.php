@@ -35,6 +35,7 @@ $social_url = get_the_permalink();
 $select = get_field('vf_social_select');
 $custom = get_field('vf_social_custom');
 $custom_url = get_field('vf_social_share_url');
+$custom_title = get_field('vf_social_share_title');
 
 
 $class = '';
@@ -92,7 +93,7 @@ if (empty($choose)) {
   <ul class="vf-social-links__list">
     <?php if (!empty($twitter_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" href="<?php echo esc_url($twitter_link);?>">
+      <a class="vf-social-links__link" target="_blank"  href="<?php echo esc_url($twitter_link);?>">
         <span class="vf-u-sr-only">
           twitter
         </span>
@@ -106,7 +107,7 @@ if (empty($choose)) {
     <?php } ?>
     <?php if (!empty($facebook_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" href="<?php echo esc_url($facebook_link);?>">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($facebook_link);?>">
         <span class="vf-u-sr-only">
           facebook
         </span>
@@ -120,7 +121,7 @@ if (empty($choose)) {
     <?php } ?>
     <?php if (!empty($instagram_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" href="<?php echo esc_url($instagram_link);?>">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($instagram_link);?>">
         <span class="vf-u-sr-only">
           instagram
         </span>
@@ -134,7 +135,7 @@ if (empty($choose)) {
     <?php } ?>
     <?php if (!empty($youtube_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" href="<?php echo esc_url($youtube_link);?>">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($youtube_link);?>">
         <span class="vf-u-sr-only">
           youtube
         </span>
@@ -148,7 +149,7 @@ if (empty($choose)) {
     <?php } ?>
     <?php if (!empty($linkedin_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" href="<?php echo esc_url($linkedin_link);?>">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($linkedin_link);?>">
         <span class="vf-u-sr-only">
           linkedin
         </span>
@@ -167,11 +168,11 @@ if (empty($choose)) {
   <ul class="vf-social-links__list">
     <?php if (($select && in_array('twitter', $select)) || (!empty($twitter_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link"
+            <a class="vf-social-links__link" target="_blank"
             <?php if ($custom == 'auto') { ?>
             href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
             <?php } else if ($custom == 'custom') { ?> 
-              href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $custom_url; ?>&amp;via=embl">
+              href="https://twitter.com/intent/tweet?text=<?php echo $custom_title; ?>&amp;url=<?php echo $custom_url; ?>&amp;via=embl">
             <?php } ?>  
             <span class="vf-u-sr-only">
                 twitter
@@ -186,7 +187,7 @@ if (empty($choose)) {
     <?php } ?>
     <?php if (($select && in_array('facebook', $select)) || (!empty($facebook_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link"
+            <a class="vf-social-links__link" target="_blank"
             <?php if ($custom == 'auto') { ?> 
             href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
             <?php } else if ($custom == 'custom') { ?> 
@@ -205,11 +206,11 @@ if (empty($choose)) {
     <?php } ?>
     <?php if (($select && in_array('linkedin', $select)) || (!empty($linkedin_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link" 
+            <a class="vf-social-links__link" target="_blank" 
             <?php if ($custom == 'auto') { ?> 
             href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
             <?php } else if ($custom == 'custom') { ?> 
-              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?>&title=<?php echo $title; ?>">
+              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?>&title=<?php echo $custom_title; ?>">
             <?php } ?>  
               <span class="vf-u-sr-only">
                 linkedin

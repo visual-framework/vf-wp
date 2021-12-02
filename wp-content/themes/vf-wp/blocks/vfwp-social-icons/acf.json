@@ -222,6 +222,33 @@
             "placeholder": ""
         },
         {
+            "key": "field_61a89b4bc145f",
+            "label": "Custom share title",
+            "name": "vf_social_share_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6193b4166952b",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_611384e04dc48",
             "label": "Select",
             "name": "vf_social_select",
@@ -330,5 +357,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1638280125
+    "modified": 1638440399
 }
