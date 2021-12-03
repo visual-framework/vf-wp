@@ -172,7 +172,7 @@ if (empty($choose)) {
             <?php if ($custom == 'auto') { ?>
             href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
             <?php } else if ($custom == 'custom') { ?> 
-              href="https://twitter.com/intent/tweet?text=<?php echo $custom_title; ?>&amp;url=<?php echo $custom_url; ?>&amp;via=embl">
+              href="https://twitter.com/intent/tweet?url=<?php echo $custom_url; ?>&amp;via=embl<?php if (!empty($custom_title)) { echo '&text=' . $custom_title; } else echo ''; ?>">
             <?php } ?>  
             <span class="vf-u-sr-only">
                 twitter
@@ -210,7 +210,7 @@ if (empty($choose)) {
             <?php if ($custom == 'auto') { ?> 
             href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
             <?php } else if ($custom == 'custom') { ?> 
-              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?>&title=<?php echo $custom_title; ?>">
+              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?><?php if (!empty($custom_title)) { echo '&title=' . $custom_title; } else echo '';?>">
             <?php } ?>  
               <span class="vf-u-sr-only">
                 linkedin

@@ -226,7 +226,7 @@
             "label": "Custom share title",
             "name": "vf_social_share_title",
             "type": "text",
-            "instructions": "",
+            "instructions": "(Optional)",
             "required": 0,
             "conditional_logic": [
                 [
