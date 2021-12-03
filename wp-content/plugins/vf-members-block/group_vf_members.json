@@ -38,7 +38,8 @@
             "choices": {
                 "default": "Default",
                 "taxonomy": "EMBL Taxonomy",
-                "keyword": "Keyword"
+                "keyword": "Keyword",
+                "uuid": "UUID"
             },
             "default_value": "default",
             "allow_null": 0,
@@ -121,6 +122,33 @@
             ],
             "wrapper": {
                 "width": "33.333",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61a9e4886cdae",
+            "label": "UUID",
+            "name": "vf_members_uuid",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ea988878eacf",
+                        "operator": "==",
+                        "value": "uuid"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
                 "class": "",
                 "id": ""
             },
@@ -258,6 +286,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF Members Gutenberg block",
-    "modified": 1618305951
-
+    "modified": 1638527255
 }
