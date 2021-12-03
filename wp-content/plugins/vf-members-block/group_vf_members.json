@@ -39,7 +39,8 @@
                 "default": "Default",
                 "taxonomy": "EMBL Taxonomy",
                 "keyword": "Keyword",
-                "uuid": "UUID"
+                "uuid": "UUID",
+                "bdrid": "BDR ID"
             },
             "default_value": "default",
             "allow_null": 0,
@@ -144,6 +145,33 @@
                         "field": "field_5ea988878eacf",
                         "operator": "==",
                         "value": "uuid"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61a9fe6194a51",
+            "label": "BDR ID",
+            "name": "vf_members_bdrid",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ea988878eacf",
+                        "operator": "==",
+                        "value": "bdrid"
                     }
                 ]
             ],
@@ -286,5 +314,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF Members Gutenberg block",
-    "modified": 1638527255
+    "modified": 1638530750
 }

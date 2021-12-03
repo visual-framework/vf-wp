@@ -9,6 +9,7 @@ $team = get_field('vf_members_team', $acf_id);
 $term_id = get_field('vf_members_term', $acf_id);
 $keyword = get_field('vf_members_keyword', $acf_id);
 $uuid = get_field('vf_members_uuid', $acf_id);
+$bdrid = get_field('vf_members_bdrid', $acf_id);
 
 $limit = intval($limit);
 $limit = $limit < 1 || $limit > 50 ? 50 : $limit;
@@ -53,6 +54,7 @@ if ($leader !== true) {
 
 $key = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.title]';
 $key_uuid = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.uuid]';
+$key_bdrid = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.field_foreignid]';
 
 // Search based on EMBL Taxonomy (default or specified)
 if (function_exists('embl_taxonomy_get_term')) {
@@ -66,9 +68,13 @@ if (function_exists('embl_taxonomy_get_term')) {
     $term_id = get_field('embl_taxonomy_term_what', 'option');
     $term = embl_taxonomy_get_term($term_id);
   }
+
   if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
     if ($team === 'uuid' && ! empty($uuid)) {
     $vars[$key_uuid] = $term->meta[EMBL_Taxonomy::META_NAME];
+    }
+    elseif ($team === 'bdrid' && ! empty($bdrid)) {
+    $vars[$key_bdrid] = $term->meta[EMBL_Taxonomy::META_NAME];
     }
     else {
     $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
@@ -81,10 +87,16 @@ if ($team === 'uuid' && ! empty($uuid)) {
   $vars[$key_uuid] = $uuid;
 }
 
+// Search by bdrid
+if ($team === 'bdrid' && ! empty($bdrid)) {
+  $vars[$key_bdrid] = $bdrid;
+}
+
 // Search by keyword
 if ($team === 'keyword' && ! empty($keyword)) {
   $vars[$key] = $keyword;
 }
+
 // Setup base API URL
 $url = VF_Cache::get_api_url();
 $url .= '/pattern.html';
