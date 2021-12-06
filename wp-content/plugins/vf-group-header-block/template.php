@@ -48,12 +48,17 @@ $heading_html = function() use ($acf_id) {
 };
 
 $heading = $heading_html();
+$gtl_limit = get_field('vf_group_header_limit', $acf_id);
+
+$gtl_limit = intval($gtl_limit);
+$gtl_limit = $gtl_limit < 1 || $gtl_limit > 5 ? 5 : $gtl_limit;
 
 $vars = array(
   'source'                    => 'contenthub',
   'filter-content-type'       => 'person',
   'pattern'                   => 'vf-profile-inline',
-  'hide[team,mobile,phones]' => 1,
+  'limit'                     => $gtl_limit,
+  'hide[team,mobile,phones]'  => 1,
   'sort-field-value[changed]' => 'DESC',
   'filter-ref-entity[field_person_positions][title]' => "",
   'filter-field-value[field_person_positions.entity.field_position_membership]' => 'leader'
