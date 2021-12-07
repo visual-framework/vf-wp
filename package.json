@@ -125,7 +125,7 @@
     "@visual-framework/vf-video-container": "1.0.0-beta.1",
     "@visual-framework/vf-video-teaser": "2.0.0",
     "chalk": "4.1.2",
-    "core-js": "3.19.2",
+    "core-js": "3.19.3",
     "rollup": "2.60.2",
     "rollup-plugin-terser": "7.0.2"
   }
