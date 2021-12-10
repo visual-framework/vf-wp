@@ -208,13 +208,13 @@
                     "id": ""
                 },
                 "choices": {
-                    "Ad hoc talk": "Ad hoc talk",
-                    "Biocuration talk": "Biocuration talk",
-                    "Distinguished lecture series": "Distinguished lecture series",
-                    "EMBL-EBI seminar": "EMBL-EBI seminar",
-                    "EMBL-EBI\/Sanger seminar": "EMBL-EBI\/Sanger seminar",
-                    "Pink seminar": "Pink seminar",
-                    "Research talk": "Research talk",
+                    "ad_hoc_talk": "Ad hoc talk",
+                    "biocuration_talk": "Biocuration talk",
+                    "distinguished_lecture_series": "Distinguished lecture series",
+                    "embl_ebi_seminar": "EMBL-EBI seminar",
+                    "embl_ebi_sanger_seminar": "EMBL-EBI\/Sanger seminar",
+                    "pink_seminar": "Pink seminar",
+                    "research_talk": "Research talk",
                     "HRF": "HRF"
                 },
                 "default_value": false,
@@ -247,12 +247,12 @@
                     "id": ""
                 },
                 "choices": {
-                    "Conference": "Conference",
-                    "Course": "Course",
-                    "Webinar": "Webinar",
-                    "Science and Society": "Science and Society",
-                    "Public engagement": "Public engagement",
-                    "Other": "Other"
+                    "conference": "Conference",
+                    "course": "Course",
+                    "webinar": "Webinar",
+                    "science_and_society": "Science and Society",
+                    "public_engagement": "Public engagement",
+                    "other": "Other"
                 },
                 "default_value": false,
                 "allow_null": 0,
@@ -284,9 +284,9 @@
                     "id": ""
                 },
                 "choices": {
-                    "Town Halls": "Town Halls",
-                    "Staff Association event": "Staff Association event",
-                    "Other": "Other"
+                    "town_halls": "Town Halls",
+                    "staff_association_event": "Staff Association event",
+                    "other": "Other"
                 },
                 "default_value": false,
                 "allow_null": 0,
@@ -1126,6 +1126,6 @@
         "hide_on_screen": "",
         "active": true,
         "description": "VF-WP-EBI Event post type",
-        "modified": 1638187923
+        "modified": 1638810753
     }
 

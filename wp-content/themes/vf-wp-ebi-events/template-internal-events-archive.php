@@ -7,18 +7,8 @@ get_header();
 
 // Global Header
 ?>
-<span data-protection-message-disable="true"></span>
-<!-- embl-ebi global header -->
-<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed">
-</header>
-<link rel="import"
-  href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub"
-  data-target="self" data-embl-js-content-hub-loader>
-<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css"
-  media="all" />
-<script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css"
-  type="text/css" media="all" />
+<?php include(locate_template('partials/ebi_header.php', false, false)); ?>
+
 <nav class="vf-breadcrumbs" aria-label="Breadcrumb">
   <ul class="vf-breadcrumbs__list | vf-list vf-list--inline">
     <li class="vf-breadcrumbs__item">
@@ -113,21 +103,10 @@ $close_wrap,
   <div>
   </div>
   <div class="vf-u-margin__bottom--800">
-    <form action="#eventsFilter" onsubmit="return false;"
-      class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
-      <div class="vf-sidebar__inner">
-        <div class="vf-form__item">
-          <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
-          <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
-            data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-            placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn"
-            class="vf-form__input | vf-search__input" />
-        </div>
-        <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
-          <span class="vf-button__text">Filter</span>
-        </button>
-      </div>
-    </form>
+    <?php
+    $search_placeholder_text = "Filter by event title";
+    ?>
+    <?php include(locate_template('partials/event_search_form.php', false, false)); ?>
   </div>
 
 </section>
@@ -236,8 +215,5 @@ $temp_query = $wp_query;
   jplist.init();
 </script>
 
-<!-- embl-ebi global footer -->
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<div class="vf-u-display-none" data-protection-message-disable="true"></div>
 
 <?php get_footer(); ?>

@@ -45,22 +45,46 @@ $location_list = $location_choices['choices'];
     ?>
   </fieldset>
 
+<!--  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">-->
+<!--    <label class="vf-form__label">Location</label>-->
+<!--    --><?php
+//    foreach($location_list as $location_key => $location_item) {
+//      ?>
+<!--    <div class="vf-form__item vf-form__item--checkbox">-->
+<!--      <input id="location---><?php //echo $counter; ?><!--" type="checkbox" data-jplist-control="checkbox-text-filter"-->
+<!--        data-path=".location" data-group="data-group-1" data-name="locationdata" data-or="location"-->
+<!--        value="--><?php //echo $location_item; ?><!--" data-id="name--><?php //echo $counter; ?><!-----><?php //echo $location_item; ?><!--"-->
+<!--        class="vf-form__checkbox">-->
+<!--      <label for="location---><?php //echo $counter; ?><!--" class="vf-form__label">--><?php //echo $location_item; ?><!--</label>-->
+<!--    </div>-->
+<!--    --><?php
+//      $counter++;
+//    }
+//    ?>
+<!--  </fieldset>-->
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
     <label class="vf-form__label">Location</label>
-    <?php
-    foreach($location_list as $location_key => $location_item) {
-      ?>
     <div class="vf-form__item vf-form__item--checkbox">
-      <input id="location-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".location" data-group="data-group-1" data-name="locationdata" data-or="location"
-        value="<?php echo $location_item; ?>" data-id="name<?php echo $counter; ?>-<?php echo $location_item; ?>"
-        class="vf-form__checkbox">
-      <label for="location-<?php echo $counter; ?>" class="vf-form__label"><?php echo $location_item; ?></label>
+      <input id="location-1" type="checkbox" data-jplist-control="checkbox-text-filter"
+             data-path=".location" data-group="data-group-1" data-name="locationdata" data-or="location"
+             value="Virtual" data-id="name1-Virtual"
+             class="vf-form__checkbox">
+      <label for="location-1" class="vf-form__label">Virtual</label>
     </div>
-    <?php
-      $counter++;
-    }
-    ?>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="location-2" type="checkbox" data-jplist-control="checkbox-text-filter"
+             data-path=".location" data-group="data-group-2" data-name="locationdata" data-or="location"
+             value="EMBL-EBI" data-id="name2-EMBL-EBI"
+             class="vf-form__checkbox">
+      <label for="location-2" class="vf-form__label">United Kingdom</label>
+    </div>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="location-3" type="checkbox" data-jplist-control="checkbox-text-filter"
+             data-path=".location" data-group="data-group-3" data-name="locationdata" data-or="location"
+             value="Other" data-id="name3-Other"
+             class="vf-form__checkbox">
+      <label for="location-3" class="vf-form__label">Other</label>
+    </div>
   </fieldset>
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">

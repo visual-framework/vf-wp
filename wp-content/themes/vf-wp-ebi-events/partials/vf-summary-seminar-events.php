@@ -31,53 +31,37 @@ $registration_date_formated = $registration_date->format('Y-m-d');
 $registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
 $application_date_formated = $application_date->format('Y-m-d');
 $abstract_date_formated = $abstract_date->format('Y-m-d');
-
+$seminar_type_class = $seminar_type['value'];
 ?>
 <article class="vf-summary--event | jplist-text-area" data-jplist-item>
-  <div class="vf-grid vf-grid__col-3">
+  <div class="vf-u-display-none | used-for-filtering">
+    <span class="jplist-event-time" data-eventtime="<?php echo $start->format('Ymdhis'); ?>"><?php echo $start->format('j F Y'); ?></span>
+    <span class="jplist-event-year year_<?php echo $start->format('Y'); ?>"><?php echo $start->format('Y'); ?></span>
+    <span class="jplist-event-type type_<?php echo $seminar_type_class; ?>"><?php echo $seminar_type_class; ?></span>
+    <span class="jplist-event-location location_<?php echo implode( ', ', $locations ); ?>"><?php echo implode( ', ', $locations ); ?></span>
+  </div>
+<div class="vf-grid vf-grid__col-3">
   <span class="vf-grid__col--span-2">
     <p class="vf-summary__date">
       <?php echo $start->format('j F Y'); ?>
     </p>
-    <h3 class="vf-summary__title | title">
+    <h3 class="vf-summary__title">
       <a href="<?php echo get_permalink(); ?>" class="vf-summary__link">
         <?php the_title(); ?>
       </a>
     </h3>
   </span>
-    <span class="vf-grid__col--span-1">
-    <!-- Type  -->
-    <?php
-    $seminar_type_class = $seminar_type['label'];
-    $seminar_type_class1 = str_replace(' ', '_', $seminar_type_class); ?>
-    <p class="vf-summary__text vf-text-heading--5 | type | type_<?php echo esc_attr($seminar_type_class1); ?>">
+  <span class="vf-grid__col--span-1">
+    <p class="vf-summary__text vf-text-heading--5 | type_<?php echo $seminar_type_class; ?> | <?php echo $seminar_type_class; ?>">
       <?php
       if (!empty($public_type)){
         echo esc_html($public_type['label']); }
       else if (!empty($seminar_type)){
         echo esc_html($seminar_type['label']); } ?>
     </p>
-    <p class="vf-summary__location | location"> <?php echo implode( ', ', $locations ); ?></p>
-      <!-- Registration  -->
-
-      <div class="">
-        <?php if (!empty(($registration_closing_on_site) || ($registration_closing))) { ?>
-          <?php if (($registration_date_formated_on_site >= $current_date) && (!empty($registration_date_formated_on_site)) ) { ?>
-            <span class="jplist-event-registration">
-          <span class="vf-text-body vf-text-body--2">Open</span> <br />
-
-          <?php }
-          else if ($registration_date_formated >= $current_date){ ?>
-            <span class="jplist-event-registration">
-          <span class="vf-text-body vf-text-body--2">Open</span>
-
-            <?php
-          } else if (($registration_date_formated_on_site <= $current_date) && ($registration_date_formated <= $current_date)) { ?>
-            <span class="vf-u-text-color--grey | vf-u-text--nowrap">Closed</span>
-          <?php } } ?>
-      </div>
+    <p class="vf-summary__location | location | <?php echo implode( ', ', $locations ); ?> "><?php echo implode( ', ', $locations ); ?></p>
   </span>
-  </div>
+</div>
   <hr class="vf-divider">
 </article>
 

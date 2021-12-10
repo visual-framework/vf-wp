@@ -4,31 +4,25 @@
 */
 
 get_header();
-
+global $post;
+setup_postdata($post);
+global $vf_theme;
+$title = get_the_title();
+$current_date = date('Ymd');
 // Global Header
 ?>
-<span data-protection-message-disable="true"></span>
-<!-- embl-ebi global header -->
-<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed">
-</header>
-<link rel="import"
-  href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub"
-  data-target="self" data-embl-js-content-hub-loader>
-<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css"
-  media="all" />
-<script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css"
-  type="text/css" media="all" />
+<?php include(locate_template('partials/ebi_header.php', false, false)); ?>
+
 <nav class="vf-breadcrumbs" aria-label="Breadcrumb">
   <ul class="vf-breadcrumbs__list | vf-list vf-list--inline">
     <li class="vf-breadcrumbs__item">
-      <a href="/about" class="vf-breadcrumbs__link">About us</a>
-    </li>
-    <li class="vf-breadcrumbs__item">
       <a href="/about/events" class="vf-breadcrumbs__link">Events</a>
     </li>
+    <li class="vf-breadcrumbs__item">
+      <a href="/about/events/seminars" class="vf-breadcrumbs__link">Seminars</a>
+    </li>
     <li class="vf-breadcrumbs__item" aria-current="location">
-      Internal events
+      <?php echo $title;?>
     </li>
   </ul>
   <span class="vf-breadcrumbs__heading">Related:</span>
@@ -37,31 +31,7 @@ get_header();
   </ul>
 </nav>
 
-<?php
-if (class_exists('VF_WP_Hero')) {
-  VF_Plugin::render(VF_WP_Hero::get_plugin('vf_wp_hero_group'));
-}
-global $post;
-setup_postdata($post);
-global $vf_theme;
-$title = get_the_title();
-$current_date = date('Ymd');
-?>
 
-<nav class="vf-navigation vf-navigation--main | vf-cluster">
-  <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
-    <?php
-    if (has_nav_menu('primary')) {
-      wp_nav_menu([
-        'theme_location' => 'primary',
-        'depth' => 1,
-        'container' => FALSE,
-        'items_wrap' => '%3$s',
-      ]);
-    }
-    ?>
-  </ul>
-</nav>
 
 <?php 
 
@@ -127,9 +97,6 @@ $close_wrap,
 $vf_theme->the_content();
 
 ?>
-
-<!-- embl-ebi global footer -->
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<div class="vf-u-display-none" data-protection-message-disable="true"></div>
+<?php include(locate_template('partials/ebi_footer.php', false, false)); ?>
 
 <?php get_footer(); ?>

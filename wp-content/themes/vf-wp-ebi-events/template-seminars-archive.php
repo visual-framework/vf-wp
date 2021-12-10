@@ -7,14 +7,7 @@ get_header();
 
 // Global Header
 ?>
-<span data-protection-message-disable="true"></span>
-<!-- embl-ebi global header -->
-<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
-<script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all" />
+<?php include(locate_template('partials/ebi_header.php', false, false)); ?>
 <nav class="vf-breadcrumbs" aria-label="Breadcrumb">
   <ul class="vf-breadcrumbs__list | vf-list vf-list--inline">
     <li class="vf-breadcrumbs__item">
@@ -106,32 +99,27 @@ $close_wrap,
 <div>
 </div>
 <div class="vf-u-margin__bottom--800">
-    <form action="#eventsFilter" onsubmit="return false;"
-      class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
-      <div class="vf-sidebar__inner">
-        <div class="vf-form__item">
-          <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
-          <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
-            data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-            placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn"
-            class="vf-form__input | vf-search__input" />
-        </div>
-        <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
-          <span class="vf-button__text">Filter</span>
-        </button>
-      </div>
-    </form>
-  </div>
+  <?php
+  $search_placeholder_text = "Filter by seminar title";
+  ?>
+  <?php include(locate_template('partials/event_search_form.php', false, false)); ?>
+</div>
 
 </section>    
 <section class="embl-grid | vf-content">
   <div>
-    <?php include(locate_template('partials/filter-seminar-archive.php', false, false)); ?>
+    <?php
+    $current_year = date('Y') + 1; // 1 year ahead
+    $year_list = range(2020, $current_year); // we have imported events only from 2019 onwards
+    $year_list = array_reverse($year_list);
+    ?>
+    <?php include(locate_template('partials/filter-seminar.php', false, false)); ?>
   </div>
   <div>
 
 
     <div data-jplist-group="data-group-1">
+
       <?php
 $forthcomingLoop = new WP_Query (array( 
   'post_type' => 'events', 
@@ -163,20 +151,20 @@ $temp_query = $wp_query;
   $wp_query   = NULL;
   $wp_query   = $forthcomingLoop;
   $current_month = ""; ?>
+
       <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
       <?php
-    include(locate_template('partials/vf-summary-events.php', false, false)); ?>
+    include(locate_template('partials/vf-summary-seminar-events.php', false, false)); ?>
       <?php endwhile;?>
       <!-- no results control -->
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-        data-name="no-results">
+      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1" data-name="no-results">
         <p class="vf-summary__text">
           No matching seminars found
         </p>
       </article>
 
     </div>
-    <div>
+    <nav>
       <?php 
         $wp_query = NULL;
         $wp_query = $temp_query;
@@ -191,33 +179,12 @@ $temp_query = $wp_query;
         }
 
       </style>
-      <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-        data-items-per-page="20" data-current-page="0" data-name="pagination1">
+      <!-- pagination results -->
+      <?php include(locate_template('partials/paging-controls.php', false, false)); ?>
 
-        <ul class="vf-pagination__list">
-          <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
-            <a class="vf-pagination__link">
-              Previous<span class="vf-u-sr-only"> page</span>
-            </a>
-          </li>
-          <div data-type="pages" style="display: flex;">
-            <li class="vf-pagination__item" data-type="page">
-              <a href="#" class="vf-pagination__link">
-                {pageNumber}<span class="vf-u-sr-only">page</span>
-              </a>
-            </li>
-          </div>
-          <li class="vf-pagination__item vf-pagination__item--next-page" data-type="next">
-            <a href="#" class="vf-pagination__link">
-              Next<span class="vf-u-sr-only"> page</span>
-            </a>
-          </li>
-        </ul>
-    </nav>
   </div>
   </div>
-  <div>
-</div>
+
 </section>
 
 <section class="vf-content">
@@ -226,12 +193,61 @@ $temp_query = $wp_query;
 <?php endwhile; endif; ?></section>
 
 <script type="text/javascript">
-  jplist.init();
+ // jplist.init();
+</script>
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    jplist.init({
+      // deepLinking: true
+    });
+
+    // this is a sort of callback on jplist to enforce showing newest events first.
+    // Unfortunately, the jplist sorting does not combine reliably will multiple facets.
+    // This is an interim solution until we replace jplist.
+    function sortEvents() {
+      var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
+      var events = document.querySelectorAll("[data-jplist-item]");
+      var eventsArr = [];
+
+      // eventsContainer.innerHTML = "Rendering";
+
+      for (var i in events) {
+        if (events[i].nodeType == 1) { // get rid of the whitespace text nodes
+          eventsArr.push(events[i]);
+        }
+      }
+
+      eventsArr.sort(function(a, b) {
+        // console.log(a.querySelectorAll("[data-eventtime]")[0]);
+        return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
+      });
+
+      // console.log('eventsArr',eventsArr)
+
+      for (i = 0; i < eventsArr.length; ++i) {
+        eventsContainer.appendChild(eventsArr[i]);
+      }
+    }
+
+    var inputs = document.querySelectorAll('input');
+    // brute force to refresh jplist to ensure date filtering is intact
+    inputs.forEach(function(item) {
+      item.addEventListener('keydown', function(e) {
+        setTimeout(function(){ sortEvents() }, 300);
+      });
+      item.addEventListener("change", function(e) {
+        // jplist.refresh();
+        sortEvents();
+        // setTimeout(function(){ sortEvents() }, 300);
+      });
+    });
+
+    // sort on page load
+    sortEvents();
+    // setTimeout(function(){ sortEvents() }, 300);
+  });
 </script>
 
-<?php include(locate_template('partials/seminar_footer.php', false, false)); ?>
-<!-- embl-ebi global footer -->
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<div class="vf-u-display-none" data-protection-message-disable="true"></div>
+<?php include(locate_template('partials/ebi_footer.php', false, false)); ?>
 
 <?php get_footer(); ?>

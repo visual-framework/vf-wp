@@ -1,18 +1,9 @@
 <?php 
 // Global Header
 ?>
-<span data-protection-message-disable="true"></span>
-<!-- embl-ebi global header -->
-<header id="masthead-black-bar" class="clearfix masthead-black-bar | ebi-header-footer vf-content vf-u-fullbleed"></header>
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=6682&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<link rel="stylesheet" href="//ebi.emblstatic.net/web_guidelines/EBI-Icon-fonts/v1.3/fonts.css" type="text/css" media="all" />
-<script defer="defer" src="//ebi.emblstatic.net/web_guidelines/EBI-Framework/v1.4/js/script.js"></script>
-<link rel="stylesheet" href="https://assets.emblstatic.net/vf/v2.4.12/assets/ebi-header-footer/ebi-header-footer.css" type="text/css" media="all" />
-
+<?php include(locate_template('partials/ebi_header.php', false, false)); ?>
 <?php
-if (class_exists('VF_Breadcrumbs')) {
-  VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
-}
+
 
 get_header();
 
@@ -21,11 +12,57 @@ global $post;
 $event_organiser = get_field('vf_event_organiser');
 $social_media_container = get_field('vf_event_social_media', $post->post_parent);
 $cpp_container = get_field('vf_event_cpp_container', $post->post_parent);
-$cancelled = get_field('vf_event_canceled');
+$home = get_bloginfo('url');
+$title = get_the_title();
+$event_type = get_field('vf_event_event_type');
+$event_type_label = $event_type['label'];
+$event_type_value = $event_type['value'];
+$breadcrumb_string = "";
+
+if ($event_type_value == 'seminar') {
+  $seminar_type = get_field('vf_event_seminar_subtype');
+  $seminar_type_label = $seminar_type['label'];
+  $seminar_type_value = $seminar_type['value'];
+  $landing_page = $home . "/seminars";
+  $members_link_html_string = "<li class=\"vf-breadcrumbs__item\" false=\"\"><a href=\"$landing_page\" class=\"vf-breadcrumbs__link\">$event_type_label</a></li>";
+  $breadcrumb_string = $members_link_html_string . "<li class=\"vf-breadcrumbs__item\" aria-current=\"location\">$seminar_type_label</li>";
+}
+
+if ($event_type_value == 'public_event') {
+  $public_type = get_field('vf_event_public_subtype');
+  $public_type_label = $public_type['label'];
+  $public_type_value = $public_type['value'];
+  $landing_page = $home;
+  $members_link_html_string = "<li class=\"vf-breadcrumbs__item\" false=\"\"><a href=\"$landing_page\" class=\"vf-breadcrumbs__link\">$event_type_label</a></li>";
+  $breadcrumb_string = $members_link_html_string . "<li class=\"vf-breadcrumbs__item\" aria-current=\"location\">$public_type_label</li>";
+}
+
+if ($event_type_value == 'internal_event') {
+  $internal_type = get_field('vf_event_internal_subtype');
+  $internal_type_label = $internal_type['label'];
+  $internal_type_value = $internal_type['value'];
+  $landing_page = $home;
+  $members_link_html_string = "<li class=\"vf-breadcrumbs__item\" false=\"\"><a href=\"$landing_page\" class=\"vf-breadcrumbs__link\">$event_type_label</a></li>";
+  $breadcrumb_string = $members_link_html_string . "<li class=\"vf-breadcrumbs__item\" aria-current=\"location\">$internal_type_label</li>";
+}
+
+$displayed = get_field('vf_event_displayed');
+$location = get_field('vf_event_location');
+$banner_text = get_field('vf_event_banner_text');
+$canceled = get_field('vf_event_canceled');
+
+
 
 ?>
-
-
+<nav class="vf-breadcrumbs" aria-label="Breadcrumb">
+  <ul class="vf-breadcrumbs__list vf-list vf-list--inline">
+    <li class="vf-breadcrumbs__item"  false=""><a href="<?php echo $home;?>" class="vf-breadcrumbs__link">Events</a></li>
+    <?php echo $breadcrumb_string; ?>
+  </ul><span class="vf-breadcrumbs__heading">Related:</span>
+  <ul class="vf-breadcrumbs__list vf-breadcrumbs__list--related vf-list vf-list--inline">
+    <li class="vf-breadcrumbs__item" false=""><a href="https://www.embl.org/events" class="vf-breadcrumbs__link">All EMBL events</a></li>
+  </ul>
+</nav>
 <?php     
 // vf-hero container
 include( plugin_dir_path( __FILE__ ) . 'partials/hero.php'); 
@@ -52,8 +89,5 @@ include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php');
 }
 ?>
 
-<!-- embl-ebi global footer -->
-<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=106902&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
-<div class="vf-u-display-none" data-protection-message-disable="true"></div>
-
+<?php include(locate_template('partials/ebi_footer.php', false, false)); ?>
 <?php get_footer(); ?>

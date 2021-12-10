@@ -1,7 +1,4 @@
 <?php
-$current_year = date('Y') + 1; // 1 year ahead
-$year_list = range(2019, $current_year); // we have imported events only from 2016 onwards
-$year_list = array_reverse($year_list);
 $counter = 1;
 $choices= get_field_object('field_619cc059aeafd');
 $type_list = $choices['choices'];
@@ -11,18 +8,36 @@ $location_list = $location_choices['choices'];
 ?>
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" style="margin-right: 15px;">
     <label class="vf-form__label">Type</label>
     <?php
     foreach($type_list as $type_key => $type_item) {
+
       ?>
     <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="typedata" data-or="type"
-        value="<?php echo $type_item; ?>" data-id="name<?php echo $counter; ?>-<?php echo $type_item; ?>"
-        class="vf-form__checkbox">
-      <label for="type-<?php echo $counter; ?>" class="vf-form__label"><?php echo $type_item; ?></label>
+      <input type="checkbox" id="checkbox-type-<?php echo $counter; ?>" class="vf-form__checkbox" data-jplist-control="checkbox-text-filter"
+             data-path=".jplist-event-type"
+             data-group="data-group-1"
+             data-name="type"
+             data-or="eventtypes"
+             data-id="type-<?php echo $type_key; ?>"
+             value="<?php echo $type_key; ?>">
+      <label for="checkbox-type-<?php echo $counter; ?>" class="vf-form__label"><?php echo $type_item; ?>
+        <div>&nbsp;<span
+                  data-jplist-control="counter"
+                  data-group="data-group-1"
+                  data-name="counter-type-filter-<?php echo $counter; ?>"
+                  data-format="({count})"
+                  data-value="<?php echo $type_key; ?>"
+                  data-path=".type_<?php echo $type_key; ?>"
+                  data-mode="dynamic"
+                  data-filter-type="path">
+
+         </span>
+        </div>
+      </label>
     </div>
+
     <?php
       $counter++;
     }
@@ -31,20 +46,66 @@ $location_list = $location_choices['choices'];
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
     <label class="vf-form__label">Location</label>
-    <?php
-    foreach($location_list as $location_key => $location_item) {
-      ?>
     <div class="vf-form__item vf-form__item--checkbox">
-      <input id="location-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".location" data-group="data-group-1" data-name="locationdata" data-or="location"
-        value="<?php echo $location_item; ?>" data-id="name<?php echo $counter; ?>-<?php echo $location_item; ?>"
-        class="vf-form__checkbox">
-      <label for="location-<?php echo $counter; ?>" class="vf-form__label"><?php echo $location_item; ?></label>
+      <input id="location-1" type="checkbox" data-jplist-control="checkbox-text-filter"
+             data-path=".jplist-event-location" data-group="data-group-1" data-name="location" data-or="location"
+             value="Virtual" data-id="location-Virtual"
+             class="vf-form__checkbox">
+      <label for="location-1" class="vf-form__label">Virtual
+        <div>&nbsp;<span
+                  data-jplist-control="counter"
+                  data-group="data-group-1"
+                  data-name="counter-location-filter-1"
+                  data-format="({count})"
+                  data-value="Virtual"
+                  data-path=".location_Virtual"
+                  data-mode="filter"
+                  data-filter-type="path">
+
+         </span>
+        </div>
+      </label>
     </div>
-    <?php
-      $counter++;
-    }
-    ?>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="location-2" type="checkbox" data-jplist-control="checkbox-text-filter"
+             data-path=".jplist-event-location" data-group="data-group-1" data-name="location" data-or="location"
+             value="EMBL-EBI" data-id="location-EMBL-EBI"
+             class="vf-form__checkbox">
+      <label for="location-2" class="vf-form__label">United Kingdom
+        <div>&nbsp;<span
+                  data-jplist-control="counter"
+                  data-group="data-group-1"
+                  data-name="counter-location-filter-2"
+                  data-format="({count})"
+                  data-value="EMBL-EBI"
+                  data-path=".location_EMBL-EBI"
+                  data-mode="static"
+                  data-filter-type="path">
+
+         </span>
+        </div>
+      </label>
+    </div>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="location-3" type="checkbox" data-jplist-control="checkbox-text-filter"
+             data-path=".jplist-event-location" data-group="data-group-1" data-name="location" data-or="location"
+             value="Other" data-id="location-Other"
+             class="vf-form__checkbox">
+      <label for="location-3" class="vf-form__label">Other
+        <div>&nbsp;<span
+                  data-jplist-control="counter"
+                  data-group="data-group-1"
+                  data-name="counter-location-filter-3"
+                  data-format="({count})"
+                  data-value="Other"
+                  data-path=".location_Other"
+                  data-mode="static"
+                  data-filter-type="path">
+
+         </span>
+        </div>
+      </label>
+    </div>
   </fieldset>
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
@@ -54,10 +115,23 @@ $location_list = $location_choices['choices'];
       ?>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".vf-summary__date" data-group="data-group-1" data-name="yeardata" data-or="year"
+        data-path=".jplist-event-year" data-group="data-group-1" data-name="yeardata" data-or="year"
         value="<?php echo $year_item; ?>" data-id="name<?php echo $counter; ?>-<?php echo $year_item; ?>"
         class="vf-form__checkbox">
-      <label for="type-<?php echo $counter; ?>" class="vf-form__label"><?php echo $year_item; ?></label>
+      <label for="type-<?php echo $counter; ?>" class="vf-form__label"><?php echo $year_item; ?>
+        <div>&nbsp;<span
+                  data-jplist-control="counter"
+                  data-group="data-group-1"
+                  data-name="counter-year-filter-<?php echo $counter; ?>"
+                  data-format="({count})"
+                  data-value="<?php echo $year_item; ?>"
+                  data-path=".year_<?php echo $year_item; ?>"
+                  data-mode="static"
+                  data-filter-type="path">
+
+         </span>
+        </div>
+      </label>
     </div>
     <?php
       $counter++;
@@ -66,18 +140,5 @@ $location_list = $location_choices['choices'];
 
   </fieldset>
 
-  <fieldset class="vf-form__fieldset | vf-stack vf-stack--400">
-    <label class="vf-form__label">Open</label>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input type="checkbox" class="vf-form__checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".jplist-event-registration" data-group="data-group-1" data-order="asc" data-name="reg1"
-        data-type="datetime" data-datetime-format="{day} {month}, {year} {hour}:{min}" name="reg1" id="reg-id1" />
-      <label for="reg-id1" class="vf-form__label">Registration</label>
-      <input type="checkbox" class="vf-form__checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".jplist-event-abstract" data-group="data-group-1" data-order="asc" data-name="sub1"
-        data-type="datetime" data-datetime-format="{day} {month}, {year} {hour}:{min}" name="sub1" id="sub-id1" />
-      <label for="sub-id1" class="vf-form__label vf-u-margin__top--400">Abstract submission</label>
-    </div>
-  </fieldset>
 
 </form>
