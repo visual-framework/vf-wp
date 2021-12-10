@@ -1,9 +1,9 @@
 <?php
 
 $counter = 1;
-$type_choices= get_field_object('field_619cc059aeb94');
+$type_choices = get_field_object('field_619cc059aeb94');
 $type_list = $type_choices['choices'];
-$location_choices= get_field_object('field_619cc059ae8d7');
+$location_choices = get_field_object('field_619cc059ae8d7');
 $location_list = $location_choices['choices'];
 ?>
 
@@ -12,13 +12,45 @@ $location_list = $location_choices['choices'];
     <label class="vf-form__label">Type</label>
     <?php
     foreach($type_list as $type_key => $type_item) {
+      $events_count = get_posts(array(
+        'post_type' => 'events', 
+        'numberposts' => -1,
+        'meta_query' => [
+          [
+            'key' => 'vf_event_start_date',
+            'value' => $current_date,
+            'compare' => '>',
+            'type' => 'numeric',
+          ],
+          [
+            'key' => 'vf_event_start_date',
+            'value' => date('Ymd', strtotime('now')),
+            'type' => 'numeric',
+            'compare' => '>',
+          ],
+          [
+            'key' => 'vf_event_public_subtype',
+            'value' => $type_key,
+          ],
+        ],
+      ));
+      $events_number = count($events_count);
+      
+      //disable filters with value 0
+      if ($events_number == '0') {
+        $disabled = 'disabled';
+      }
+      else {
+        $disabled = '';
+      }
       ?>
+
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="typedata" data-or="type"
         value="<?php echo $type_item; ?>" data-id="name<?php echo $counter; ?>-<?php echo $type_item; ?>"
-        class="vf-form__checkbox">
-      <label for="type-<?php echo $counter; ?>" class="vf-form__label"><?php echo $type_item; ?></label>
+        class="vf-form__checkbox" <?php echo $disabled; ?>>
+      <label for="type-<?php echo $counter; ?>" class="vf-form__label"><?php echo $type_item; ?> (<?php echo $events_number; ?>)</label>
     </div>
     <?php
       $counter++;
