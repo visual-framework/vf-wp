@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-list
- * Version: 1.0.0
+ * Version: 1.1.0
  * Location: components/vf-core-components/vf-list
  */
 .vf-list {
@@ -112,16 +112,6 @@
 }
 .vf-list__item {
   margin-bottom: 1rem;
-}
-
-.vf-list--l {
-  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  font-size: 19px;
-  color: #1a1c1a;
-  font-weight: 400;
-  line-height: 1.421;
-  margin: 0 0 16px 0;
-  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
 }
 
 .vf-list--ordered {
@@ -154,6 +144,25 @@
   margin-bottom: 1rem;
 }
 
+.vf-list--definition__term {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  color: #1a1c1a;
+  font-weight: 500;
+  line-height: 1.29;
+  margin: var(--vf-stack-margin, 0) 0 8px 0;
+}
+
+.vf-list--definition__details {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  color: #1a1c1a;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
 .vf-list__link {
   border-bottom: none;
   text-decoration: none;
@@ -171,4 +180,18 @@
   color: #193f90;
   border-bottom: none;
   text-decoration: underline;
+}
+
+.vf-list--l {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  color: #1a1c1a;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
+}
+
+.vf-list--tight .vf-list__item {
+  margin-bottom: 0.25rem;
 }
