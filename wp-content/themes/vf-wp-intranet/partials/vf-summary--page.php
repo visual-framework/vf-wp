@@ -10,6 +10,10 @@ $redirect_url = get_field('vf_wp_intranet_redirect');
   </h2>
   <p class="vf-summary__text">
     <?php
+    if (has_excerpt()) {
+      echo get_the_excerpt();
+    }
+    else {
     $content = strip_tags(get_the_content());
     if (strlen($content) > 200) {
 
@@ -21,7 +25,7 @@ $redirect_url = get_field('vf_wp_intranet_redirect');
       $content = $endPoint? substr($contentCut, 0, $endPoint) : substr($contentCut, 0);
       $content .= '...';
   }
-  echo $content; ?></p>
+  echo $content; }?></p>
   <?php if (!empty($redirect_url)) { ?>
   <div class="vf-summary__meta"><a href="<?php echo esc_url($redirect_url); ?>"
       class="vf-summary__author vf-summary__link"><?php echo esc_url($redirect_url); ?></a></div> 

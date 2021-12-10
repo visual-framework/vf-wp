@@ -158,6 +158,25 @@
             "multiple": 0
         },
         {
+            "key": "field_61a752e47cdb3",
+            "label": "Fee",
+            "name": "labs_fee",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5f50e682b3a59",
             "label": "Contact email",
             "name": "labs_contact",
@@ -251,5 +270,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1624003049
+    "modified": 1638355834
 }

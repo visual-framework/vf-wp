@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-heading
- * Version: 1.0.1
+ * Version: 1.1.0
  * Location: components/vf-core-components/vf-heading
  */
 .vf-text {
@@ -245,7 +245,7 @@ a.vf-badge--secondary:hover {
 
 /*!
  * Component: @visual-framework/vf-text
- * Version: 1.0.2
+ * Version: 1.1.0
  * Location: components/vf-core-components/vf-text
  */
 .vf-text-body a {
@@ -1225,6 +1225,9 @@ a.vf-button:hover, a.vf-button:focus {
   border: none;
   height: 1px;
   margin-block: 0 var(--vf-divider-margin--block-end, 1.5rem);
+  margin-top: 1rem;
+  /* IE Fallback */
+  margin-top: var(--vf-stack-margin, 1rem);
   width: 100%;
 }
 
@@ -1393,7 +1396,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.5
+ * Version: 1.6.6
  * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]) {
@@ -1567,6 +1570,9 @@ a.vf-button:hover, a.vf-button:focus {
   border: none;
   height: 1px;
   margin-block: 0 var(--vf-divider-margin--block-end, 1.5rem);
+  margin-top: 1rem;
+  /* IE Fallback */
+  margin-top: var(--vf-stack-margin, 1rem);
   width: 100%;
 }
 .vf-content code:not([class*=vf-]) {

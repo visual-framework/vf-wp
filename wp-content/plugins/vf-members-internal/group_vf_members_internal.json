@@ -38,7 +38,9 @@
             "choices": {
                 "default": "Default",
                 "taxonomy": "EMBL Taxonomy",
-                "keyword": "Keyword"
+                "keyword": "Keyword",
+                "uuid": "UUID",
+                "bdrid": "BDR ID"
             },
             "default_value": "default",
             "allow_null": 0,
@@ -121,6 +123,60 @@
             ],
             "wrapper": {
                 "width": "33.333",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61a9f1e742129",
+            "label": "UUID",
+            "name": "vf_members_uuid",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618a4d4182a20",
+                        "operator": "==",
+                        "value": "uuid"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61a9fa65f480a",
+            "label": "BDR ID",
+            "name": "vf_members_bdrid",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_618a4d4182a20",
+                        "operator": "==",
+                        "value": "bdrid"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
                 "class": "",
                 "id": ""
             },
@@ -248,5 +304,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF Members (internal) Gutenberg block. Only to use on VF-WP Intranet theme",
-    "modified": 1637576558
+    "modified": 1638530750
+
 }

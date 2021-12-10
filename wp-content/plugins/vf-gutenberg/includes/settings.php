@@ -70,6 +70,38 @@ class VF_Gutenberg_Settings {
       'description' => '',
       'modified' => 1544016028,
     ));
+
+    // Register field group
+    acf_add_local_field_group(array(
+      'key' => 'group_bdr_id',
+      'title' => __('Team BDR ID', 'vfwp'),
+      'fields' => array(
+        array(
+          'key' => 'field_bdr_id',
+          'label' => 'ID',
+          'name' => 'bdr_id',
+          'type' => 'text',
+        ),
+      ),
+      'location' => array(
+        array(
+          array(
+            'param' => 'options_page',
+            'operator' => '==',
+            'value' => 'vf-settings',
+          ),
+        ),
+      ),
+      'menu_order' => 101,
+      'position' => 'normal',
+      'style' => 'default',
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'hide_on_screen' => '',
+      'active' => 1,
+      'description' => '',
+      'modified' => 1544016028,
+    ));
   }
 
 } // VF_Gutenberg_Settings

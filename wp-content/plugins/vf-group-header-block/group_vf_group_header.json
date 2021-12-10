@@ -1,68 +1,89 @@
 {
-"key": "group_vf_group_header",
-"title": "VF Group Header (block)",
-"fields": [
-    {
-        "key": "field_vf_group_header_heading",
-        "label": "Heading",
-        "name": "vf_group_header_heading",
-        "type": "textarea",
-        "instructions": "",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": {
-            "width": "",
-            "class": "",
-            "id": ""
-        },
-        "default_value": "",
-        "placeholder": "",
-        "maxlength": "",
-        "rows": 4,
-        "new_lines": ""
-    },
-    {
-        "key": "field_5ff82a3459eb2",
-        "label": "Profile",
-        "name": "vf_group_header_profile",
-        "type": "text",
-        "instructions": "Find a person by name, e.g. \"John Doe\"",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": {
-            "width": "",
-            "class": "",
-            "id": ""
-        },
-        "default_value": "",
-        "placeholder": "",
-        "prepend": "",
-        "append": "",
-        "maxlength": ""
-    }
-],
-"location": [
-    [
+    "key": "group_vf_group_header",
+    "title": "VF Group Header (block)",
+    "fields": [
         {
-            "param": "vf_block",
-            "operator": "==",
-            "value": "vf_group_header"
+            "key": "field_vf_group_header_heading",
+            "label": "Heading",
+            "name": "vf_group_header_heading",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 4,
+            "new_lines": ""
+        },
+        {
+            "key": "field_5ff82a3459eb2",
+            "label": "Profile",
+            "name": "vf_group_header_profile",
+            "type": "text",
+            "instructions": "Find a person by name, e.g. \"John Doe\"",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_61add01642818",
+            "label": "Limit",
+            "name": "vf_group_header_limit",
+            "type": "range",
+            "instructions": "Show more than one group\/team leader",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 1,
+            "min": 1,
+            "max": 5,
+            "step": "",
+            "prepend": "",
+            "append": ""
         }
     ],
-    [
-        {
-            "param": "block",
-            "operator": "==",
-            "value": "acf\/vf-group-header"
-        }
-    ]
-],
-"menu_order": 0,
-"position": "normal",
-"style": "seamless",
-"label_placement": "top",
-"instruction_placement": "label",
-"hide_on_screen": "",
-"active": true,
-"description": ""
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_group_header"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-group-header"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1638783821
 }

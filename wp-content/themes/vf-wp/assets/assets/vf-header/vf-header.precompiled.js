@@ -19,16 +19,13 @@ output += runtime.suppressValue(t_3, true && env.opts.autoescape);
 env.getExtension("render")["run"](context,"@vf-navigation--main", function(t_6,t_5) {
 if(t_6) { cb(t_6); return; }
 output += runtime.suppressValue(t_5, true && env.opts.autoescape);
-env.getExtension("render")["run"](context,"@vf-navigation--additional", function(t_8,t_7) {
-if(t_8) { cb(t_8); return; }
-output += runtime.suppressValue(t_7, true && env.opts.autoescape);
 output += "\n</header>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
 cb(null, output);
 }
-})})})});
+})})});
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }

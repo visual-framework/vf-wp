@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/embl-content-hub-loader
- * Version: 1.1.1
+ * Version: 1.2.0
  * Location: components/vf-core-components/embl-content-hub-loader
  */
 .embl-grid > .vf-content-hub-html,
@@ -116,4 +116,19 @@
 
 .vf-content-hub-html {
   --vf-stack-margin--custom: 0;
+}
+
+.vf-stack .vf-content-hub-html .embl-grid,
+.vf-stack .vf-content-hub-html .vf-grid,
+.vf-stack .vf-content-hub-html .vf-content > * {
+  --vf-stack-margin: 1rem;
+  --vf-stack-margin--custom: 1rem;
+  margin-top: var(--vf-stack-margin, 1rem);
+}
+
+.vf-stack .vf-content-hub-html .embl-grid > *,
+.vf-stack .vf-content-hub-html .vf-grid > *,
+.vf-stack .vf-content-hub-html .vf-content > * > * {
+  --vf-stack-margin: 0;
+  --vf-stack-margin--custom: 0 ;
 }

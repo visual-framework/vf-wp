@@ -78,16 +78,17 @@ if ( $internal_news_query->have_posts() ) {
     echo '<div id="internal_news">';
     while ( $internal_news_query->have_posts() ) {
         $internal_news_query->the_post();
-        echo '<div class="newsDate">' . get_the_date( 'j F Y' ) . '</div>';
+        echo '<div style="display: inline-block; margin-right: 24px;"><table class="newsContent"><tr><td> <img src="' . get_the_post_thumbnail_url( get_the_ID(), 'medium_large' ) . '"</td></tr></table></div>';
+        echo '<div style="display: inline-block; position: absolute;"><div class="newsDate">' . get_the_date( 'j F Y' ) . '</div>';
         echo '<div class="newsTitle">' . get_the_title() . '</div>';
-        echo '<div class="newsSubtitle">' . get_the_excerpt() . '</div>';
-        echo '<table class="newsContent"><tr><td> <img src="' . get_the_post_thumbnail_url( get_the_ID(), 'medium_large' ) . '"</td></tr></table>';
+        echo '<div class="newsSubtitle"><p>' . get_the_excerpt() . '</p></div>';
     }
-    echo '</div>';
+    echo '</div></div>';
 } else {
     // no posts found
 }
 
 wp_reset_postdata();
 
+echo do_shortcode('[get_posts_via_rest]'); 
 ?>
