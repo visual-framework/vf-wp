@@ -1564,10 +1564,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1-alpha.0.tgz#2dda99f7d2766c32cb46b321560ec15c8a3d55fe"
   integrity sha512-T5XSohedN4OKxqA0n44V8xvpDMAz1zAW0TGa+2a1B3lMpAWAt5WVpG2tdOQknHDQQpq/K/YRxFySSXk+G7f8Ew==
 
-"@visual-framework/vf-content@1.6.6":
-  version "1.6.6"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.6.tgz#7abe31841fcedcfb9c5d2c0fc96bb647625050d0"
-  integrity sha512-cy1ZSlP7D44WPAQe6janbgLfsxji0sS4gV4/k0FBAIoyxWiuiUSeKSwdGb0DmHBVO8PkVqh5WLl+Mj0U1E9SgQ==
+"@visual-framework/vf-content@1.6.7":
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.7.tgz#1643153a73e1d6d2d178c6a1c1833be4fc032cc3"
+  integrity sha512-DJZVViwyngnS5uO2AojB6DF8rRl8zfgarvzLH+l3VeoeJEESpbhVfo879aU8wzqDPFPIesqDJLhfTcK/ADnIMA==
   dependencies:
     "@visual-framework/vf-badge" "^2.0.0"
     "@visual-framework/vf-blockquote" "^1.2.0"
@@ -1578,7 +1578,7 @@
     "@visual-framework/vf-form" "^2.0.0-alpha.2"
     "@visual-framework/vf-heading" "^1.1.0"
     "@visual-framework/vf-link" "^2.0.0"
-    "@visual-framework/vf-list" "^1.0.0"
+    "@visual-framework/vf-list" "^1.1.0"
     "@visual-framework/vf-text" "^1.1.0"
 
 "@visual-framework/vf-core@2.2.37":
@@ -1772,10 +1772,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-link/-/vf-link-2.0.0.tgz#55dfaa6a3b989a47ae1c480a0df7bbc2618b63ca"
   integrity sha512-LKv7D9MwHb4vxEXR4uXSTYqWaJ+WGd3ZfwHIOO1brcbh0q6657aXOte12Yy3RIUOJiZMlJQjs1w3V7myizPe7A==
 
-"@visual-framework/vf-list@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-list/-/vf-list-1.0.0.tgz#b9811e51b9abf7951f02525c9d71b70fe04d3ec3"
-  integrity sha512-8JID0VCV4+X5zvX7DjCyzqXJX4is9wehf0fLDJJnBPzwziJ+Rgy9PdzH6AAbcEWUTdlLtSczWE7uMJyMst5tGQ==
+"@visual-framework/vf-list@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-list/-/vf-list-1.1.0.tgz#afafe30b4614a0419f900c7631ad98be27371187"
+  integrity sha512-L3zbshK2ALeRqA1vxWbnBQuiBXhjfPqhndNYFvQv0Mgo9U920v29Twv2Hf74Ew0wyQSaCjLhJS9z/GbPO1R2vA==
 
 "@visual-framework/vf-location-nearest@1.0.2":
   version "1.0.2"
