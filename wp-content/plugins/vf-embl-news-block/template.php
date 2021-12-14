@@ -20,14 +20,19 @@ $is_preview = isset($is_preview) && $is_preview;
 
 // Get search values
 $limit = get_field('limit');
+$variant = get_field('variant');
 $type = get_field('type');
 $embl_terms = get_field('embl_terms');
 $keyword = get_field('keyword');
 $ids = get_field('ids');
 $tags = get_field('tags');
 $display = get_field('display_publication');
+
 if (empty($display)) {
   $display = 'EMBL News';
+}
+if (empty($variant)) {
+  $variant = 'vf-news-item-default';
 }
 
 // Validate values
@@ -48,7 +53,7 @@ $url = VF_Cache::get_api_url();
 $url .= '/pattern.html';
 $url = add_query_arg(array(
   'source'                    => 'contenthub',
-  'pattern'                   => 'vf-news-item-default',
+  'pattern'                   => $variant,
   'filter-content-type'       => 'article',
   'filter-field-value[field_display_publication]' => $display,
   'sort-field-value[created]' => 'DESC',
