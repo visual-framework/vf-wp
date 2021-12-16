@@ -1639,15 +1639,22 @@ function emblNotificationsInject(message) {
     if (_target.length > 0) {
       _target[0].parentNode.insertBefore(output, _target[0].nextSibling);
     } else {
-      // if no vf-header, show at vf-body
-      // @thought: we might instead make this show as "top"
-      var _target2 = document.getElementsByClassName("vf-body");
+      // if no vf-header, perhaps there's a masthead-black-bar?
+      var _target2 = document.getElementsByClassName("masthead-black-bar");
 
       if (_target2.length > 0) {
-        // output.classList.add('vf-u-grid--reset');
-        _target2[0].prepend(output);
-      } // if still no success, we soft fail
+        _target2[0].parentNode.insertBefore(output, _target2[0].nextSibling);
+      } else {
+        // if no vf-header, show at vf-body
+        // @thought: we might instead make this show as "top"
+        var _target3 = document.getElementsByClassName("vf-body");
 
+        if (_target3.length > 0) {
+          // output.classList.add('vf-u-grid--reset');
+          _target3[0].prepend(output);
+        } // if still no success, we soft fail
+
+      }
     }
   } else if (message.field_notification_position == "top") {
     output.classList.add("vf-banner", "vf-banner--fixed", "vf-banner--top", "vf-banner--phase");
@@ -1657,9 +1664,9 @@ function emblNotificationsInject(message) {
     // output.dataset.vfJsBannerExtraButton = "<a href='#'>Optional button</a><a target='_blank' href='#'>New tab button</a>";
 
     output.innerHTML = "\n      <div class=\"vf-banner__content\" data-vf-js-banner-text>\n        <p class=\"vf-banner__text\">".concat(message.body, "</p>\n      </div>");
-    var _target3 = document.body.firstChild;
+    var _target4 = document.body.firstChild;
 
-    _target3.parentNode.prepend(output);
+    _target4.parentNode.prepend(output);
 
     vfBanner();
   } // console.log('emblNotifications, showing:', message);
