@@ -22,7 +22,7 @@
         </p>
         <ul class="vf-social-links__list">
           <li class="vf-social-links__item">
-            <a class="vf-social-links__link" href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
+            <a class="vf-social-links__link" href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=emblebi">
               <span class="vf-u-sr-only">
                 twitter
               </span>

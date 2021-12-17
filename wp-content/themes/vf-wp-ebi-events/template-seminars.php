@@ -158,7 +158,7 @@ $temp_query = $wp_query;
       <?php endwhile;?>
       <!-- no results control -->
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-        data-name="no-results" id="noresults">
+        data-name="no-results" id="no-results">
         <p class="vf-summary__text">
           No matching seminars found
         </p>
@@ -195,10 +195,6 @@ $temp_query = $wp_query;
 
 <script type="text/javascript">
   jplist.init();
-  if ($('article[data-name="no-results"]')) {
-    // do something...
-    alert("coming in");
-  }
 </script>
 
 <?php include(locate_template('partials/ebi_footer.php', false, false)); ?>

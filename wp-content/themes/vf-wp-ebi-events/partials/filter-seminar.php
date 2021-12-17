@@ -8,8 +8,9 @@ $location_list = $location_choices['choices'];
 ?>
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
+  <legend class="vf-form__legend">Refine by</legend>
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400" style="margin-right: 15px;">
-    <label class="vf-form__label">Type</label>
+    <label class="vf-form__legend">Type</label>
     <?php
     foreach($type_list as $type_key => $type_item) {
 
@@ -45,7 +46,7 @@ $location_list = $location_choices['choices'];
   </fieldset>
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-    <label class="vf-form__label">Location</label>
+    <label class="vf-form__legend">Location</label>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="location-1" type="checkbox" data-jplist-control="checkbox-text-filter"
              data-path=".jplist-event-location" data-group="data-group-1" data-name="location" data-or="location"
@@ -59,7 +60,7 @@ $location_list = $location_choices['choices'];
                   data-format="({count})"
                   data-value="Virtual"
                   data-path=".location_Virtual"
-                  data-mode="filter"
+                  data-mode="static"
                   data-filter-type="path">
 
          </span>
@@ -71,7 +72,7 @@ $location_list = $location_choices['choices'];
              data-path=".jplist-event-location" data-group="data-group-1" data-name="location" data-or="location"
              value="EMBL-EBI" data-id="location-EMBL-EBI"
              class="vf-form__checkbox">
-      <label for="location-2" class="vf-form__label">United Kingdom
+      <label for="location-2" class="vf-form__label">EMBL-EBI
         <div>&nbsp;<span
                   data-jplist-control="counter"
                   data-group="data-group-1"
@@ -109,7 +110,7 @@ $location_list = $location_choices['choices'];
   </fieldset>
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-    <label class="vf-form__label">Event year</label>
+    <label class="vf-form__legend">Event year</label>
     <?php
     foreach($year_list as $year_key => $year_item) {
       ?>

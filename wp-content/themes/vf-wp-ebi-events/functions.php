@@ -107,5 +107,35 @@ function event_permalink_structure($post_link, $post, $leavename) {
 
 add_filter( 'post_type_link', 'event_custom_acf_field_link', 10, 4 );
 
+function split_location_text($location_array, $event_type = 'public_event') {
+  $location_string = "";
+  if (!empty($location_array)) {
+    if ($event_type == 'public_event') {
+      $location_string = implode(', ', array_map(function($el){ return update_location_text($el); }, $location_array));
+    }
+    else {
+      $location_string = implode(', ', $location_array);
+    }
+    return $location_string;
+  }
+}
+
+function update_location_text($location) {
+  $location_text = "";
+  if(!empty($location)) {
+    switch($location) {
+      case "EMBL-EBI":
+        $location_text = "United Kingdom";
+        break;
+      case "Other":
+        $location_text = "Outside United Kingdom";
+        break;
+      default;
+        $location_text = $location;
+        break;
+    }
+    return $location_text;
+  }
+}
 
 ?>

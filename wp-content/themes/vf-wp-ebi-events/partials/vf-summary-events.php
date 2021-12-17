@@ -19,65 +19,70 @@ $organisers= get_field('vf_event_organisers_listing');
 $abstract_closing = get_field('vf_event_submission_closing');
 $application_closing = get_field('vf_event_application_deadline');
 $registration_closing = get_field('vf_event_registration_closing');
+$registration_opening_on_site = get_field('vf_event_registration_opening_on-site');
 $registration_closing_on_site = get_field('vf_event_registration_closing_on-site');
 
 $now = new DateTime();
 $application_date = new DateTime($application_closing);
-$registration_date = new DateTime($registration_closing);
+$registration_date = !empty($registration_closing) ? new DateTime($registration_closing) : '';
 $registration_date_on_site = new DateTime($registration_closing_on_site);
 $abstract_date = new DateTime($abstract_closing);
 $current_date = $now->format('Y-m-d');
-$registration_date_formated = $registration_date->format('Y-m-d');
+$registration_date_formated = !empty($registration_date) ? $registration_date->format('Y-m-d') : '';
 $registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
 $application_date_formated = $application_date->format('Y-m-d');
 $abstract_date_formated = $abstract_date->format('Y-m-d');
+$public_type_class = $public_type['value'];
 
 ?>
-<article class="vf-summary--event | jplist-text-area" data-jplist-item>
-  <div class="vf-grid vf-grid__col-3">
-  <span class="vf-grid__col--span-2">
-    <p class="vf-summary__date">
-      <?php echo $start->format('j F Y'); ?>
-    </p>
-    <h3 class="vf-summary__title | title">
-      <a href="<?php echo get_permalink(); ?>" class="vf-summary__link">
-        <?php the_title(); ?>
-      </a>
-    </h3>
-  </span>
-    <span class="vf-grid__col--span-1">
-    <!-- Type  -->
+<article class="vf-summary| jplist-text-area" data-jplist-item>
+  <p class="vf-summary__date custom_font_date"><?php echo $start->format('j F Y'); ?></p>
+  <h3 class="vf-summary__title | title">
+    <a href="<?php echo get_permalink(); ?>" class="vf-summary__link">
+      <?php the_title(); ?>
+    </a>
+  </h3>
+  <div class="vf-u-display-none | used-for-filtering">
+    <span class="jplist-event-time" data-eventtime="<?php echo $start->format('Ymdhis'); ?>"><?php echo $start->format('j F Y'); ?></span>
+    <span class="jplist-event-year year_<?php echo $start->format('Y'); ?>"><?php echo $start->format('Y'); ?></span>
+    <span class="jplist-event-type type_<?php echo $public_type_class; ?>"><?php echo $public_type_class; ?></span>
     <?php
-    $seminar_type_class = $seminar_type['label'];
-    $seminar_type_class1 = str_replace(' ', '_', $seminar_type_class); ?>
-    <p class="vf-summary__text vf-text-heading--5 | type | type_<?php echo esc_attr($seminar_type_class1); ?>">
-      <?php
-      if (!empty($public_type)){
-        echo esc_html($public_type['label']); }
-      else if (!empty($seminar_type)){
-        echo esc_html($seminar_type['label']); } ?>
-    </p>
-    <p class="vf-summary__location | location"> <?php echo implode( ', ', $locations ); ?></p>
-      <!-- Registration  -->
+    foreach($locations as $location) {
+      ?>
+      <span class="jplist-event-location location_<?php echo $location;?> | <?php echo $location; ?>"><?php echo $location; ?></span>
+    <?php
+    }
+    ?>
 
-      <div class="">
-        <?php if (!empty(($registration_closing_on_site) || ($registration_closing))) { ?>
-          <?php if (($registration_date_formated_on_site >= $current_date) && (!empty($registration_date_formated_on_site)) ) { ?>
-            <span class="jplist-event-registration">
-          <span class="vf-text-body vf-text-body--2">Open</span> <br />
+  </div>
+  <div class="vf-summary__date vf-text-body custom_font_text_size_extra">
+    <span class="type_<?php echo $public_type_class; ?> | <?php echo $public_type_class; ?>">
+          <?php
+          if (!empty($public_type)){
+            echo esc_html($public_type['label']); }
+          ?>
+        </span>  |
+    <span class=""><?php echo split_location_text($locations); ?></span> |
+    <span class="">Registration: </span>
+    <?php if (!empty(($registration_closing_on_site) || ($registration_closing))) { ?>
+    <?php if (($registration_date_formated_on_site >= $current_date) && (!empty($registration_date_formated_on_site)) ) { ?>
+    <span class="jplist-event-registration">
+          <span class="registration_open | Open">Open</span>
 
           <?php }
-          else if ($registration_date_formated >= $current_date){ ?>
+
+          else if (!empty($registration_date_formated)  && ($registration_date_formated >= $current_date)){
+          ?>
             <span class="jplist-event-registration">
-          <span class="vf-text-body vf-text-body--2">Open</span>
+          <span class="registration_open | Open">Open</span>
 
             <?php
-          } else if (($registration_date_formated_on_site <= $current_date) && ($registration_date_formated <= $current_date)) { ?>
-            <span class="vf-u-text-color--grey | vf-u-text--nowrap">Closed</span>
-          <?php } } ?>
-      </div>
-  </span>
+            } else if (($registration_date_formated_on_site <= $current_date) && (!empty($registration_date_formated) <= $current_date)) { ?>
+              <span class="vf-u-text-color--grey | vf-u-text--nowrap | registration_closed | Closed">Closed</span>
+            <?php } } ?>
   </div>
+  <p></p>
   <hr class="vf-divider">
 </article>
+
 

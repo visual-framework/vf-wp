@@ -70,8 +70,9 @@ add_action(
       'capability_type'     => 'page',
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'revisions', 'thumbnail'),
       'has_archive'         => false,
-      'rewrite' => array('slug' => '%event_year%/%type%', 'with_front' => false), 
-      'query_var'           => true,
+      "cptp_permalink_structure" => "/%type%/%event_year%/%postname%/",
+      'rewrite' => array('slug' => 'events', 'with_front' => false), 
+    'query_var'           => true,
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(

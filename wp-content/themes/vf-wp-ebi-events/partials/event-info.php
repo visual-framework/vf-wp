@@ -9,7 +9,7 @@ $end_date = get_field('vf_event_end_date');
 $end = DateTime::createFromFormat('j M Y', $end_date);
 
 $location = get_field('vf_event_location');
-$other_location = get_field('vf_event_other_location');
+//$other_location = get_field('vf_event_other_location');
 $time = get_field('vf_event_start_time');
 $venue = get_field('vf_event_venue');
 
@@ -63,7 +63,9 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
-
+$event_type = get_field('vf_event_event_type');
+$event_type_label = $event_type['label'];
+$event_type_value = $event_type['value'];
 ?>
 
 <div>
@@ -98,12 +100,8 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span
         class="vf-u-text-color--grey">
         <?php
-        if (!empty($other_location)) {
-        echo esc_html($other_location); 
-        }
-        else {
-          echo implode( ' and ', $location );
-        } ?>
+          echo split_location_text($location, $event_type_value);;
+         ?>
       </span>
     </p>
     <?php } ?>

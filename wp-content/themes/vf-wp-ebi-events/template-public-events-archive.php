@@ -144,7 +144,7 @@ $temp_query = $wp_query;
       <?php endwhile;?>
       <!-- no results control -->
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-        data-name="no-results">
+        data-name="no-results" id="no-results">
         <p class="vf-summary__text">
           No matching events found
         </p>

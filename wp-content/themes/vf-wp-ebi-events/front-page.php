@@ -125,7 +125,7 @@ add_filter(
       <?php endwhile; ?>
       <!-- no results control -->
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-               data-name="no-results">
+               data-name="no-results" id="no-results">
         <p class="vf-summary__text">
           No matching events found
         </p>
@@ -147,33 +147,7 @@ add_filter(
         }
 
       </style>
-      <nav class="vf-pagination" aria-label="Pagination"
-           data-jplist-control="pagination" data-group="data-group-1"
-           data-items-per-page="20" data-current-page="0"
-           data-name="pagination1">
-
-        <ul class="vf-pagination__list">
-          <li class="vf-pagination__item vf-pagination__item--previous-page"
-              data-type="prev">
-            <a class="vf-pagination__link">
-              Previous<span class="vf-u-sr-only"> page</span>
-            </a>
-          </li>
-          <div data-type="pages" style="display: flex;">
-            <li class="vf-pagination__item" data-type="page">
-              <a href="#" class="vf-pagination__link">
-                {pageNumber}<span class="vf-u-sr-only">page</span>
-              </a>
-            </li>
-          </div>
-          <li class="vf-pagination__item vf-pagination__item--next-page"
-              data-type="next">
-            <a href="#" class="vf-pagination__link">
-              Next<span class="vf-u-sr-only"> page</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <?php include(locate_template('partials/paging-controls.php', false, false)); ?>
     </div>
   </div>
 

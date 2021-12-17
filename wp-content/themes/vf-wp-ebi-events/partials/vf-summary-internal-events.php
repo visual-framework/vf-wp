@@ -13,7 +13,8 @@ $locations = get_field('vf_event_location',$post_id);
 $event_type = get_field('vf_event_event_type'); 
 $public_type = get_field('vf_event_public_subtype'); 
 $seminar_type = get_field('vf_event_seminar_subtype'); 
-$venue = get_field('vf_event_venue'); 
+$internal_type = get_field('vf_event_internal_subtype');
+$venue = get_field('vf_event_venue');
 $summary = get_field('vf_event_summary'); 
 $organisers= get_field('vf_event_organisers_listing'); 
 $abstract_closing = get_field('vf_event_submission_closing');
@@ -31,7 +32,7 @@ $registration_date_formated = $registration_date->format('Y-m-d');
 $registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
 $application_date_formated = $application_date->format('Y-m-d');
 $abstract_date_formated = $abstract_date->format('Y-m-d');
-$seminar_type_value = $seminar_type['value'];
+$internal_type_value = $internal_type['value'];
 ?>
 <article class="vf-summary| jplist-text-area" data-jplist-item>
   <p class="vf-summary__date custom_font_date"><?php echo $start->format('j F Y'); ?></p>
@@ -43,7 +44,7 @@ $seminar_type_value = $seminar_type['value'];
   <div class="vf-u-display-none | used-for-filtering">
     <span class="jplist-event-time" data-eventtime="<?php echo $start->format('Ymdhis'); ?>"><?php echo $start->format('j F Y'); ?></span>
     <span class="jplist-event-year year_<?php echo $start->format('Y'); ?>"><?php echo $start->format('Y'); ?></span>
-    <span class="jplist-event-type type_<?php echo $seminar_type_value; ?>"><?php echo $seminar_type_value; ?></span>
+    <span class="jplist-event-type type_<?php echo $internal_type_value; ?>"><?php echo $internal_type_value; ?></span>
     <?php
     foreach($locations as $location) {
       ?>
@@ -54,13 +55,13 @@ $seminar_type_value = $seminar_type['value'];
 
   </div>
   <div class="vf-summary__date vf-text-body custom_font_text_size_extra">
-    <span class="type_<?php echo $seminar_type_value; ?> | <?php echo $seminar_type_value; ?>">
+    <span class="type_<?php echo $internal_type_value; ?> | <?php echo $internal_type_value; ?>">
           <?php
-          if (!empty($seminar_type)){
-            echo esc_html($seminar_type['label']); }
+          if (!empty($internal_type)){
+            echo esc_html($internal_type['label']); }
           ?>
         </span>  |
-    <span class=""><?php echo split_location_text($locations, $seminar_type_value); ?></span>
+    <span class=""><?php echo split_location_text($locations, $internal_type_value); ?></span>
   <p></p>
   <hr class="vf-divider">
 </article>

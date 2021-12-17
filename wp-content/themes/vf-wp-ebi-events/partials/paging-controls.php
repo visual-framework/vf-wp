@@ -1,5 +1,5 @@
 <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-     data-items-per-page="10" data-current-page="0" data-range="5" data-name="pagination1">
+     data-items-per-page="10" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
 
   <ul class="vf-pagination__list">
     <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">

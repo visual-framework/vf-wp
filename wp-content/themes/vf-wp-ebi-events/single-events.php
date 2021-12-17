@@ -15,7 +15,7 @@ $cpp_container = get_field('vf_event_cpp_container', $post->post_parent);
 $home = get_bloginfo('url');
 $title = get_the_title();
 $event_type = get_field('vf_event_event_type');
-$event_type_label = $event_type['label'];
+$event_type_label = $event_type['label'] . 's';
 $event_type_value = $event_type['value'];
 $breadcrumb_string = "";
 
@@ -41,7 +41,7 @@ if ($event_type_value == 'internal_event') {
   $internal_type = get_field('vf_event_internal_subtype');
   $internal_type_label = $internal_type['label'];
   $internal_type_value = $internal_type['value'];
-  $landing_page = $home;
+  $landing_page = $home . "/internal-events";
   $members_link_html_string = "<li class=\"vf-breadcrumbs__item\" false=\"\"><a href=\"$landing_page\" class=\"vf-breadcrumbs__link\">$event_type_label</a></li>";
   $breadcrumb_string = $members_link_html_string . "<li class=\"vf-breadcrumbs__item\" aria-current=\"location\">$internal_type_label</li>";
 }
@@ -65,7 +65,7 @@ $canceled = get_field('vf_event_canceled');
 </nav>
 <?php     
 // vf-hero container
-include( plugin_dir_path( __FILE__ ) . 'partials/hero.php'); 
+include( plugin_dir_path( __FILE__ ) . 'partials/event-info-hero.php');
 ?>
 
 <section class="vf-grid vf-grid__col-4">
@@ -76,18 +76,6 @@ include( plugin_dir_path( __FILE__ ) . 'partials/hero.php');
 // info box
 include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
 </section>
-
-<?php 
-// CPP container
-if ($cpp_container == 1) {
-include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); 
-}
-
-// Social media container
-if ($social_media_container == 1) {
-include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); 
-}
-?>
 
 <?php include(locate_template('partials/ebi_footer.php', false, false)); ?>
 <?php get_footer(); ?>

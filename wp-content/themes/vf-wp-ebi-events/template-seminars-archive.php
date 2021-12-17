@@ -158,7 +158,7 @@ $temp_query = $wp_query;
       <?php endwhile;?>
       <!-- no results control -->
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1" data-name="no-results">
-        <p class="vf-summary__text">
+        <p class="vf-summary__text" id="no-results">
           No matching seminars found
         </p>
       </article>
@@ -193,61 +193,8 @@ $temp_query = $wp_query;
 <?php endwhile; endif; ?></section>
 
 <script type="text/javascript">
- // jplist.init();
+  jplist.init();
 </script>
-<script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-    jplist.init({
-      // deepLinking: true
-    });
-
-    // this is a sort of callback on jplist to enforce showing newest events first.
-    // Unfortunately, the jplist sorting does not combine reliably will multiple facets.
-    // This is an interim solution until we replace jplist.
-    function sortEvents() {
-      var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
-      var events = document.querySelectorAll("[data-jplist-item]");
-      var eventsArr = [];
-
-      // eventsContainer.innerHTML = "Rendering";
-
-      for (var i in events) {
-        if (events[i].nodeType == 1) { // get rid of the whitespace text nodes
-          eventsArr.push(events[i]);
-        }
-      }
-
-      eventsArr.sort(function(a, b) {
-        // console.log(a.querySelectorAll("[data-eventtime]")[0]);
-        return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
-      });
-
-      // console.log('eventsArr',eventsArr)
-
-      for (i = 0; i < eventsArr.length; ++i) {
-        eventsContainer.appendChild(eventsArr[i]);
-      }
-    }
-
-    var inputs = document.querySelectorAll('input');
-    // brute force to refresh jplist to ensure date filtering is intact
-    inputs.forEach(function(item) {
-      item.addEventListener('keydown', function(e) {
-        setTimeout(function(){ sortEvents() }, 300);
-      });
-      item.addEventListener("change", function(e) {
-        // jplist.refresh();
-        sortEvents();
-        // setTimeout(function(){ sortEvents() }, 300);
-      });
-    });
-
-    // sort on page load
-    sortEvents();
-    // setTimeout(function(){ sortEvents() }, 300);
-  });
-</script>
-
 <?php include(locate_template('partials/ebi_footer.php', false, false)); ?>
 
 <?php get_footer(); ?>

@@ -1,4 +1,4 @@
-
+[
     {
         "key": "group_619cc059a9685",
         "title": "VF-WP-EBI Event Information",
@@ -295,25 +295,6 @@
                 "ajax": 0,
                 "return_format": "array",
                 "placeholder": ""
-            },
-            {
-                "key": "field_619cc059aec27",
-                "label": "Displayed as",
-                "name": "vf_event_displayed",
-                "type": "text",
-                "instructions": "If empty the event type will be displayed",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
             },
             {
                 "key": "field_619cc059aecb9",
@@ -733,6 +714,25 @@
                 "ui_off_text": ""
             },
             {
+                "key": "field_61ba2a24ca87d",
+                "label": "Event summary for listing page",
+                "name": "vf_event_summary_for_listing_page",
+                "type": "textarea",
+                "instructions": "This summary appears on the event listing page. There is a limit of 200 characters.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": 200,
+                "rows": 5,
+                "new_lines": ""
+            },
+            {
                 "key": "field_619cc059afbc4",
                 "label": "Summary",
                 "name": "vf_event_summary",
@@ -806,14 +806,14 @@
                     [
                         {
                             "field": "field_619cc059afd58",
-                            "operator": "=",
+                            "operator": "==",
                             "value": "yes"
                         }
                     ],
                     [
                         {
                             "field": "field_619cc059afd58",
-                            "operator": "=",
+                            "operator": "==",
                             "value": "postponed"
                         }
                     ]
@@ -1069,44 +1069,6 @@
                 "min_size": "",
                 "max_size": "",
                 "mime_types": ""
-            },
-            {
-                "key": "field_619cc059b04fa",
-                "label": "CPP container",
-                "name": "vf_event_cpp_container",
-                "type": "true_false",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "",
-                "default_value": 1,
-                "ui": 1,
-                "ui_on_text": "",
-                "ui_off_text": ""
-            },
-            {
-                "key": "field_619cc059b05c9",
-                "label": "Social Media container",
-                "name": "vf_event_social_media",
-                "type": "true_false",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "",
-                "default_value": 0,
-                "ui": 1,
-                "ui_on_text": "",
-                "ui_off_text": ""
             }
         ],
         "location": [
@@ -1126,6 +1088,6 @@
         "hide_on_screen": "",
         "active": true,
         "description": "VF-WP-EBI Event post type",
-        "modified": 1638810753
+        "modified": 1639672799
     }
-
+]
