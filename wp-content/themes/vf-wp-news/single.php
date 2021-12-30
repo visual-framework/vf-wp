@@ -6,7 +6,6 @@ $user_id = get_the_author_meta('ID');
 $tags = get_the_tags($post->ID);
 $social_url = get_the_permalink();
 
-
 get_header();
 
 the_post();
@@ -273,6 +272,14 @@ if ($tags) {
             'posts_per_page' => 4,
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
+            'meta_query'    => array(
+              array(
+                  'key'       => 'field_target_display',
+                  'value'     => 'embl-ebi',
+                  'compare' => 'NOT LIKE'
+              ),
+          ) 
+    
           );
 
           $cats = wp_get_post_terms( get_the_ID(), 'category' );

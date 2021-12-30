@@ -60,7 +60,7 @@
             "key": "field_611e28a7822e8",
             "label": "Display",
             "name": "field_target_display",
-            "type": "checkbox",
+            "type": "radio",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -71,14 +71,16 @@
             },
             "choices": {
                 "embl": "embl.org",
-                "embl-ebi": "ebi.ac.uk"
+                "embl-ebi": "ebi.ac.uk",
+                "both": "both"
             },
-            "allow_custom": 0,
-            "default_value": [],
+            "allow_null": 1,
+            "other_choice": 0,
+            "default_value": "embl",
             "layout": "vertical",
-            "toggle": 0,
             "return_format": "value",
-            "save_custom": 0        },
+            "save_other_choice": 0
+        },
         {
             "key": "field_60a376e9a501a",
             "label": "Article Intro",
@@ -536,5 +538,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1632477115
+    "modified": 1640859875
 }

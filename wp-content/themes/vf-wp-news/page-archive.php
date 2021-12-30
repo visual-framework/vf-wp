@@ -14,10 +14,19 @@ the_post();
   </div>
   <div class="vf-news-container vf-news-container--featured">
     <div class="vf-news-container__content vf-grid vf-grid__col-4">
-      <?php $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
-$args = array(
-    'posts_per_page' => 12,
-    'paged' => $page,);
+      <?php 
+      $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+      $args = array(
+        'posts_per_page' => 12,
+        'paged' => $page,
+        'meta_query'    => array(
+          array(
+              'key'       => 'field_target_display',
+              'value'     => 'embl-ebi',
+              'compare' => 'NOT LIKE'
+          ),
+  ) 
+);
 query_posts($args);?>
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>

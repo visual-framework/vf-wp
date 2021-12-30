@@ -34,10 +34,23 @@ $category_name = single_cat_title("", false);
       <?php echo esc_html($category_name) ?></h2>
     </div>
     <div class="vf-news-container__content vf-grid vf-grid__col-4">
-        <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-        <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
-        <?php endwhile; endif; ?>
-    </div>
+    <?php 
+    $page = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    $popular = new WP_Query(array(
+      'paged' => $page,
+      'posts_per_page'=> 12, 
+      'cat' => get_query_var('cat'),         
+      'meta_query'    => array(
+          array(
+              'key'       => 'field_target_display',
+              'value'     => 'embl-ebi',
+              'compare' => 'NOT LIKE'
+          ),
+      ) 
+));
+        while ($popular->have_posts()) : $popular->the_post();
+        include(locate_template('partials/vf-summary--news.php', false, false)); ?>
+        <?php endwhile; wp_reset_postdata(); ?>    </div>
     <div class="vf-grid" style="margin: 4%">
       <?php vf_pagination(); ?>
     </div>
@@ -46,7 +59,20 @@ $category_name = single_cat_title("", false);
   <div class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
     <h2 class="vf-section-header__heading vf-u-margin__bottom--400">Popular</h2>
   <div class="vf-news-container__content vf-grid vf-grid__col-4">
-        <?php $popular = new WP_Query(array('posts_per_page'=>4, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC', 'cat' => get_query_var('cat')));
+        <?php $popular = new WP_Query(array(
+          'posts_per_page'=>4, 
+          'meta_key'=>'popular_posts', 
+          'orderby'=>'meta_value_num', 
+          'order'=>'DESC', 
+          'cat' => get_query_var('cat'),         
+          'meta_query'    => array(
+          array(
+              'key'       => 'field_target_display',
+              'value'     => 'embl-ebi',
+              'compare' => 'NOT LIKE'
+          ),
+      ) 
+));
         while ($popular->have_posts()) : $popular->the_post();
         include(locate_template('partials/vf-summary--news.php', false, false)); ?>
         <?php endwhile; wp_reset_postdata(); ?>
