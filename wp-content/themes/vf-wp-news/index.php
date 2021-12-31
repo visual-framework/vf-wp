@@ -20,6 +20,7 @@ $pow_link = get_category_link( $category_pow );
 $title = get_the_title(get_option('page_for_posts'));
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 
+
 if (is_search()) {
   $title = sprintf(__('Search: %s', 'vfwp'), get_search_query());
 } elseif (is_category()) {
@@ -46,7 +47,18 @@ if (is_search()) {
 <section class="vf-grid vf-grid__col-6 | vf-u-background-color-ui--grey | vf-u-padding__bottom--400 | vf-u-padding__top--800 | vf-u-margin__bottom--800 | vf-u-fullbleed">
     <div class="vf-grid__col--span-4 | vf-u-margin__bottom--500 | vf-grid-featured-col-left">
       <?php
-			$mainPostLoop = new WP_Query (array('posts_per_page' => 1, 'meta_key' => 'featured', 'meta_value' => '1' ));
+			$mainPostLoop = new WP_Query (array(
+        'posts_per_page' => 1,
+        'meta_key' => 'featured', 
+        'meta_value' => '1' ,
+        'meta_query'    => array(
+          array(
+              'key'       => 'field_target_display',
+              'value'     => 'embl-ebi',
+              'compare' => 'NOT LIKE'
+          ),
+      ) 
+ ));
 $ids = array();
 while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post();
 $ids[] = get_the_ID(); ?>
@@ -57,8 +69,20 @@ $ids[] = get_the_ID(); ?>
 
     <div class="vf-grid__col--span-2 | vf-grid-featured-col-right">
       <?php
-$cardsPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 2, 'meta_key' => 'featured',
-	'meta_value' => '1' ));
+$cardsPostLoop = new WP_Query(array(
+  'post__not_in' => $ids,         
+  'posts_per_page' => 2,
+  'meta_key' => 'featured', 
+  'meta_value' => '1' ,
+  'meta_query'    => array(
+    array(
+      'key'       => 'field_target_display',
+      'value'     => 'embl-ebi',
+      'compare' => 'NOT LIKE'
+),
+) 
+));
+
 while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 				$ids[] = get_the_ID(); ?>
       <?php include(locate_template('partials/vf-card--article-no-excerpt.php', false, false)); ?>
@@ -80,7 +104,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
   <div class="vf-news-container__content vf-grid vf-grid__col-3">
     <?php
-		$latestPostLoop = new WP_Query(array('post__not_in' => $ids, 'posts_per_page' => 6, 'category__not_in' => 6));
+		$latestPostLoop = new WP_Query(array(
+      'post__not_in' => $ids, 
+      'posts_per_page' => 6, 
+      'category__not_in' => 6, 
+      'meta_query'    => array(
+      array(
+          'key'       => 'field_target_display',
+          'value'     => 'embl-ebi',
+          'compare' => 'NOT LIKE'
+  ),
+    ) 
+    ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -107,7 +142,19 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
   <div class="vf-news-container__content vf-grid vf-grid__col-3">
     <?php
-		$latestPostLoop = new WP_Query(array('category_name' => 'science','post__not_in' => $ids, 'posts_per_page' => 3));
+		$latestPostLoop = new WP_Query(array(
+      'category_name' => 
+      'science',
+      'post__not_in' => $ids, 
+      'posts_per_page' => 3, 
+      'meta_query'    => array(
+      array(
+          'key'       => 'field_target_display',
+          'value'     => 'embl-ebi',
+          'compare' => 'NOT LIKE'
+      ),
+    ) 
+    ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -132,7 +179,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
   <div class="vf-news-container__content vf-grid vf-grid__col-3">
     <?php
-		$latestPostLoop = new WP_Query(array('category_name' => 'lab-matters','post__not_in' => $ids, 'posts_per_page' => 3));
+		$latestPostLoop = new WP_Query(array(
+      'category_name' => 'lab-matters',
+      'post__not_in' => $ids, 
+      'posts_per_page' => 3, 
+      'meta_query'    => array(
+      array(
+          'key'       => 'field_target_display',
+          'value'     => 'embl-ebi',
+          'compare' => 'NOT LIKE'
+      ),
+    ) 
+    ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -158,7 +216,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
   <div class="vf-news-container__content vf-grid vf-grid__col-3">
     <?php
-		$latestPostLoop = new WP_Query(array('category_name' => 'alumni','post__not_in' => $ids, 'posts_per_page' => 3));
+		$latestPostLoop = new WP_Query(array(
+      'category_name' => 'alumni',
+      'post__not_in' => $ids, 
+      'posts_per_page' => 3, 
+      'meta_query'    => array(
+      array(
+          'key'       => 'field_target_display',
+          'value'     => 'embl-ebi',
+          'compare' => 'NOT LIKE'
+      ),
+    ) 
+    ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -184,7 +253,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
 
   <div class="vf-news-container__content vf-grid vf-grid__col-3">
     <?php
-		$latestPostLoop = new WP_Query(array('category_name' => 'events','post__not_in' => $ids, 'posts_per_page' => 3));
+		$latestPostLoop = new WP_Query(array(
+      'category_name' => 
+      'events','post__not_in' => $ids, 
+      'posts_per_page' => 3, 
+      'meta_query'    => array(
+      array(
+          'key'       => 'field_target_display',
+          'value'     => 'embl-ebi',
+          'compare' => 'NOT LIKE'
+      ),
+    ) 
+    ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
