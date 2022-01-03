@@ -4,6 +4,17 @@ get_header();
 
 $title = get_the_title(get_option('page_for_posts'));
 $user_id = get_the_author_meta('ID');
+$image = get_field('vf_wp_avatar_image', 'user_'. $user_id);
+if ( ! is_array($image)) {
+  $image = null;
+} else {
+  $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
+    'class'    => 'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--200',
+    'style' => 'width: 90px; height: 90px;',
+    'loading'  => 'lazy',
+    'itemprop' => 'image',
+  ));
+}
 
 if (is_search()) {
   $title = sprintf(__('Search: %s', 'vfwp'), get_search_query());
@@ -29,7 +40,10 @@ if (is_search()) {
 
 <h2 class="vf-text vf-text-heading--2">About the author</h2>
 <div class="vf-grid vf-content vf-u-margin__bottom--400" style="max-width: fit-content;">
-    <?php echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--200' ) ); ?>
+    <?php 
+    if (!empty($image)) { echo $image; ?>
+   <?php }
+   else { echo get_avatar( get_the_author_meta( 'ID' ), '90', '', '', array( 'class' =>  'vf-summary__image vf-summary__image--avatar vf-u-margin__bottom--200' ) ); }?>
     <div>
       <h3><?php the_author(); ?></h3>
         <p><?php echo nl2br(get_the_author_meta('description')); ?></p>
