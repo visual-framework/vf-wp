@@ -50,7 +50,9 @@ $close_wrap,
 
 <?php // include(locate_template('partials/explore-container.php', false, false)); ?>
 
-<?php include(locate_template('partials/popular-container.php', false, false)); ?>
+<div class="vf-u-margin__top--800">
+<?php $vf_theme->the_content(); ?>
+</div>
 
 <hr class="vf-divider">
 
@@ -76,15 +78,6 @@ $close_wrap,
 <?php include(locate_template('partials/seminars-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/events-container.php', false, false)); ?>
-
-<div>
-<?php 
-
-$vf_theme->the_content();
-
-?>
-</div>
-
 
 <?php 
 
