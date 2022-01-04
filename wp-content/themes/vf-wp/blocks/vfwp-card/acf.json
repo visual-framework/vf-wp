@@ -178,6 +178,31 @@
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_61d41d4bcbbee",
+            "label": "Image ratio",
+            "name": "image_ratio",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "large": "16\/9"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -197,5 +222,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Card ACF Gutenberg block",
-    "modified": 1616588858
+    "modified": 1641292450
 }
