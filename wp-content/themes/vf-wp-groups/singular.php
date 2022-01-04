@@ -6,7 +6,7 @@ global $post;
 setup_postdata($post);
 
 global $vf_theme;
-
+$show = get_post_meta( get_the_ID(), 'hide_featured_image', true );
 ?>
 <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
   <div class="vf-grid__col--span-2">
@@ -21,6 +21,7 @@ global $vf_theme;
   <div class="vf-grid__col--span-2">
 
     <?php
+    if ($show == '0') {
       if (has_post_thumbnail()) {
         $caption = get_the_post_thumbnail_caption();
       ?>
@@ -32,7 +33,7 @@ global $vf_theme;
       </figcaption>
       <?php } ?>
     </figure>
-    <?php } ?>
+    <?php } } ?>
 
     <?php
 

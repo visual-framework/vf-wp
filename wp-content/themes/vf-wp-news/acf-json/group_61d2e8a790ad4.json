@@ -25,22 +25,6 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
-        },
-        {
-            "key": "field_61d2e92738a2c",
-            "label": "Custom link",
-            "name": "vf_wp_custom_link",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
         }
     ],
     "location": [
@@ -60,5 +44,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1641212593
+    "modified": 1641290846
 }
