@@ -10,10 +10,16 @@ $text = str_replace('<a', '<a class="vf-card_link"', $text);
 $subheading = get_field('subheading');
 $image = get_field('image');
 $image_url = get_field('image_url');
-
+$image_ratio = get_field('image_ratio');
 $is_link = ! empty($link);
-
 $style = get_field('style');
+
+if (empty($image_ratio)) {
+  $image_ratio = '';
+}
+if ($image_ratio == 'large') {
+  $image_ratio = 'style="--vf-card__image--aspect-ratio: 16 / 9;"';
+}
 if (empty($style)) {
   $style = 'bordered';
 }
@@ -69,7 +75,7 @@ if ($style) {
 
 ?>
 
-<article class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--800">
+<article class="<?php echo esc_attr($classes); ?> vf-u-margin__bottom--800" <?php echo ($image_ratio); ?>>
 <?php
 if (!empty($image_url)) { ?>
 <img src="<?php echo esc_url($image_url); ?>" class="vf-card__image" alt="" loading="lazy" itemprop="image">
