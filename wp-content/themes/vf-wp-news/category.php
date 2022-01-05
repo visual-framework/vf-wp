@@ -41,12 +41,17 @@ $category_name = single_cat_title("", false);
       'posts_per_page'=> 12, 
       'cat' => get_query_var('cat'),         
       'meta_query'    => array(
-          array(
-              'key'       => 'field_target_display',
-              'value'     => 'embl-ebi',
-              'compare' => 'NOT LIKE'
-          ),
-      ) 
+        'relation' => 'OR',
+        array(
+            'key'       => 'field_target_display',
+            'value'     => 'embl-ebi',
+            'compare' => 'NOT LIKE'
+        ),
+        array(
+          'key' => 'field_target_display',
+          'compare' => 'NOT EXISTS'
+        )
+    ) 
 ));
         while ($popular->have_posts()) : $popular->the_post();
         include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -66,11 +71,16 @@ $category_name = single_cat_title("", false);
           'order'=>'DESC', 
           'cat' => get_query_var('cat'),         
           'meta_query'    => array(
-          array(
-              'key'       => 'field_target_display',
-              'value'     => 'embl-ebi',
-              'compare' => 'NOT LIKE'
-          ),
+            'relation' => 'OR',
+            array(
+                'key'       => 'field_target_display',
+                'value'     => 'embl-ebi',
+                'compare' => 'NOT LIKE'
+            ),
+            array(
+              'key' => 'field_target_display',
+              'compare' => 'NOT EXISTS'
+            )
       ) 
 ));
         while ($popular->have_posts()) : $popular->the_post();

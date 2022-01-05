@@ -20,14 +20,18 @@ the_post();
         'posts_per_page' => 12,
         'paged' => $page,
         'meta_query'    => array(
+          'relation' => 'OR',
           array(
               'key'       => 'field_target_display',
               'value'     => 'embl-ebi',
               'compare' => 'NOT LIKE'
           ),
-  ) 
-);
-query_posts($args);?>
+          array(
+            'key' => 'field_target_display',
+            'compare' => 'NOT EXISTS'
+          )
+      ));
+    query_posts($args);?>
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
       <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
       <?php endwhile; endif; ?>

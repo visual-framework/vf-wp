@@ -52,11 +52,16 @@ if (is_search()) {
         'meta_key' => 'featured', 
         'meta_value' => '1' ,
         'meta_query'    => array(
+          'relation' => 'OR',
           array(
               'key'       => 'field_target_display',
               'value'     => 'embl-ebi',
               'compare' => 'NOT LIKE'
           ),
+          array(
+            'key' => 'field_target_display',
+            'compare' => 'NOT EXISTS'
+          )
       ) 
  ));
 $ids = array();
@@ -75,11 +80,16 @@ $cardsPostLoop = new WP_Query(array(
   'meta_key' => 'featured', 
   'meta_value' => '1' ,
   'meta_query'    => array(
+    'relation' => 'OR',
     array(
-      'key'       => 'field_target_display',
-      'value'     => 'embl-ebi',
-      'compare' => 'NOT LIKE'
-),
+        'key'       => 'field_target_display',
+        'value'     => 'embl-ebi',
+        'compare' => 'NOT LIKE'
+    ),
+    array(
+      'key' => 'field_target_display',
+      'compare' => 'NOT EXISTS'
+    )
 ) 
 ));
 
@@ -109,13 +119,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
       'posts_per_page' => 6, 
       'category__not_in' => 6, 
       'meta_query'    => array(
-      array(
-          'key'       => 'field_target_display',
-          'value'     => 'embl-ebi',
-          'compare' => 'NOT LIKE'
-  ),
+        'relation' => 'OR',
+        array(
+            'key'       => 'field_target_display',
+            'value'     => 'embl-ebi',
+            'compare' => 'NOT LIKE'
+        ),
+        array(
+          'key' => 'field_target_display',
+          'compare' => 'NOT EXISTS'
+        )
     ) 
-    ));
+  ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -148,13 +163,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
       'post__not_in' => $ids, 
       'posts_per_page' => 3, 
       'meta_query'    => array(
-      array(
-          'key'       => 'field_target_display',
-          'value'     => 'embl-ebi',
-          'compare' => 'NOT LIKE'
-      ),
+        'relation' => 'OR',
+        array(
+            'key'       => 'field_target_display',
+            'value'     => 'embl-ebi',
+            'compare' => 'NOT LIKE'
+        ),
+        array(
+          'key' => 'field_target_display',
+          'compare' => 'NOT EXISTS'
+        )
     ) 
-    ));
+  ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -184,13 +204,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
       'post__not_in' => $ids, 
       'posts_per_page' => 3, 
       'meta_query'    => array(
-      array(
-          'key'       => 'field_target_display',
-          'value'     => 'embl-ebi',
-          'compare' => 'NOT LIKE'
-      ),
+        'relation' => 'OR',
+        array(
+            'key'       => 'field_target_display',
+            'value'     => 'embl-ebi',
+            'compare' => 'NOT LIKE'
+        ),
+        array(
+          'key' => 'field_target_display',
+          'compare' => 'NOT EXISTS'
+        )
     ) 
-    ));
+  ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -221,13 +246,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
       'post__not_in' => $ids, 
       'posts_per_page' => 3, 
       'meta_query'    => array(
-      array(
-          'key'       => 'field_target_display',
-          'value'     => 'embl-ebi',
-          'compare' => 'NOT LIKE'
-      ),
+        'relation' => 'OR',
+        array(
+            'key'       => 'field_target_display',
+            'value'     => 'embl-ebi',
+            'compare' => 'NOT LIKE'
+        ),
+        array(
+          'key' => 'field_target_display',
+          'compare' => 'NOT EXISTS'
+        )
     ) 
-    ));
+  ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
@@ -258,13 +288,18 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
       'events','post__not_in' => $ids, 
       'posts_per_page' => 3, 
       'meta_query'    => array(
-      array(
-          'key'       => 'field_target_display',
-          'value'     => 'embl-ebi',
-          'compare' => 'NOT LIKE'
-      ),
+        'relation' => 'OR',
+        array(
+            'key'       => 'field_target_display',
+            'value'     => 'embl-ebi',
+            'compare' => 'NOT LIKE'
+        ),
+        array(
+          'key' => 'field_target_display',
+          'compare' => 'NOT EXISTS'
+        )
     ) 
-    ));
+  ));
 		while ($latestPostLoop->have_posts()) : $latestPostLoop->the_post(); ?>
     <?php	$ids[] = get_the_ID(); ?>
     <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>

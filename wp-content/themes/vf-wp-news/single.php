@@ -273,14 +273,17 @@ if ($tags) {
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
             'meta_query'    => array(
+              'relation' => 'OR',
               array(
                   'key'       => 'field_target_display',
                   'value'     => 'embl-ebi',
                   'compare' => 'NOT LIKE'
               ),
-          ) 
-    
-          );
+              array(
+                'key' => 'field_target_display',
+                'compare' => 'NOT EXISTS'
+              )
+          ));
 
           $cats = wp_get_post_terms( get_the_ID(), 'category' );
           $cats_ids = array();

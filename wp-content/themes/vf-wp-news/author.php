@@ -64,11 +64,16 @@ if (is_search()) {
         'paged' => $page, 
         'author__in' => $user_id,
         'meta_query'    => array(
+          'relation' => 'OR',
           array(
               'key'       => 'field_target_display',
               'value'     => 'embl-ebi',
               'compare' => 'NOT LIKE'
           ),
+          array(
+            'key' => 'field_target_display',
+            'compare' => 'NOT EXISTS'
+          )
       ) 
 ));
 					while ($author->have_posts()) : $author->the_post();
@@ -88,13 +93,18 @@ if (is_search()) {
           'order'=>'DESC', 
           'author__in' => $user_id,       
           'meta_query'    => array(
-          array(
-              'key'       => 'field_target_display',
-              'value'     => 'embl-ebi',
-              'compare' => 'NOT LIKE'
-          ),
-      ) 
-));
+            'relation' => 'OR',
+            array(
+                'key'       => 'field_target_display',
+                'value'     => 'embl-ebi',
+                'compare' => 'NOT LIKE'
+            ),
+            array(
+              'key' => 'field_target_display',
+              'compare' => 'NOT EXISTS'
+            )
+        ) 
+  ));
 					while ($popular->have_posts()) : $popular->the_post();
 					include(locate_template('partials/vf-summary--news.php', false, false));?>
         <?php endwhile; wp_reset_postdata(); ?>
