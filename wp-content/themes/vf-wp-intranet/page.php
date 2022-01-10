@@ -7,6 +7,9 @@ setup_postdata($post);
 
 global $vf_theme;
 $title = get_the_title();
+$keyword = get_field('keyword');
+
+
 ?>
 <?php 
 
@@ -85,6 +88,9 @@ if ( post_password_required( get_the_ID())) {
 $vf_theme->the_content();
 }
 ?>
+<div>
+  <?php echo $keyword; ?>
+</div>
 <?php 
 
 get_footer();

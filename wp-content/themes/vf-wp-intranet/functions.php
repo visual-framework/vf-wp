@@ -490,4 +490,50 @@ add_filter('simple_history/log/do_log', function ($do_log = null, $level = null,
   return $do_log;
 }, 10, 5);
 
+
+
+
+
+add_action( 'pre_get_posts', function( $q )
+{
+    if( $title = $q->get( '_meta_or_title' ) )
+    {
+        add_filter( 'get_meta_sql', function( $sql ) use ( $title )
+        {
+            global $wpdb;
+
+            // Only run once:
+            static $nr = 0; 
+            if( 0 != $nr++ ) return $sql;
+
+            // Modified WHERE
+            $sql['where'] = sprintf(
+                " AND ( %s OR %s ) ",
+                $wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
+                mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
+            );
+
+            return $sql;
+        });
+    } 
+});
+
+//Relevansii customization
+
+add_filter( 'post_limits', 'rlv_postsperpage' );
+function rlv_postsperpage( $limits ) {
+	if ( is_search() ) {
+		global $wp_query;
+		$wp_query->query_vars['posts_per_page'] = -1;
+	}
+	return $limits;
+}
+
+add_filter( 'relevanssi_match', 'rlv_customfield_boost' );
+function rlv_customfield_boost( $match ) {
+	if ( $match->customfield > 0 ) {
+		$match->weight *= 4;
+	}
+	return $match;
+}
 ?>

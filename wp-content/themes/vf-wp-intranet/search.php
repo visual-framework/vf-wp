@@ -8,7 +8,12 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
 }
 $total_results = $wp_query->found_posts;
 
-$pages_count = get_posts(array('post_type' => 'page', 'numberposts' => -1, 's' => get_search_query() ));
+$pages_count = get_posts(array('post_type' => 'page', 'numberposts' => -1, '_meta_or_title' => get_search_query(), 'meta_query' => array(        
+  array(
+  'key' => 'keyword',
+  'value' => get_search_query(),
+  'compare' => 'LIKE'
+ ), )));
 $pages_count_final = count($pages_count);
 
 $insites_count = get_posts(array('post_type' => 'insites', 'numberposts' => -1, 's' => get_search_query() ));
@@ -39,6 +44,7 @@ array(
 ),
 )));
 $people_count_final = count($people_count);
+
 ?>
 
 <section class="vf-hero | vf-u-fullbleed | vf-hero--800 | vf-u-margin__bottom--0">
@@ -167,7 +173,13 @@ if (class_exists('VF_Navigation')) {
       <div class="vf-tabs-content" data-vf-js-tabs-content>
 
         <section class="vf-tabs__section" id="vf-tabs__section--pages">
-          <?php if (get_posts(array('post_type' => 'page', 's' => get_search_query() ))) { ?>
+          <?php if (get_posts(array('post_type' => 'page', 'numberposts' => -1, '_meta_or_title' => get_search_query(), 'meta_query' => array(        
+          array(
+          'key' => 'keyword',
+          'value' => get_search_query(),
+          'compare' => 'LIKE'
+         ),
+         ) ))) { ?>
           <?php while( have_posts() ) { the_post(); ?>
           <?php if ( $post->post_type == 'page' ) { 
            include(locate_template('partials/vf-summary--page.php', false, false));  ?>
@@ -177,7 +189,7 @@ if (class_exists('VF_Navigation')) {
         rewind_posts(); ?>
 
         <section class="vf-tabs__section" id="vf-tabs__section--people">
-          <?php if (get_posts(array('post_type' => 'people', 'meta_query' => array(
+          <?php if (get_posts(array('post_type' => 'people', 'numberposts' => -1, 'meta_query' => array(
             'relation' => 'OR',
         array(
            'key' => array('positions_name_1', 'positions_name_2', 'positions_name_3', 'positions_name_4'),
