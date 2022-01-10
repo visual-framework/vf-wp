@@ -1,0 +1,219 @@
+[
+  {
+    "key": "group_61d5cee2b4ef6",
+    "title": "VF-WP-EBI Events Email Reminders Fields",
+    "fields": [
+      {
+        "key": "field_61d5cf34b0362",
+        "label": "Event Reference ID",
+        "name": "event_reference_id",
+        "type": "post_object",
+        "instructions": "Post reference id of the Event",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "post_type": [
+          "events"
+        ],
+        "taxonomy": "",
+        "allow_null": 0,
+        "multiple": 0,
+        "return_format": "id",
+        "ui": 1
+      },
+      {
+        "key": "field_61d5d25cb0366",
+        "label": "Email from user",
+        "name": "email_from_user",
+        "type": "email",
+        "instructions": "Email id of from user",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "no-reply@ebi.ac.uk",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_61d5d298b0367",
+        "label": "Email to user(s)",
+        "name": "email_to_users",
+        "type": "textarea",
+        "instructions": "Email ids to which we need to send reminders. Add multiple email id with comma (,) separated.",
+        "required": 1,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "maxlength": "",
+        "rows": 5,
+        "new_lines": ""
+      },
+      {
+        "key": "field_61d5d99cb0368",
+        "label": "Reminder lead time",
+        "name": "reminder_lead_time",
+        "type": "select",
+        "instructions": "Reminder lead time to set reminder on",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "604800": "1 week before the event",
+          "monday_week_of_event": "Monday of the week of the event",
+          "morning_of_event": "Morning of the event"
+        },
+        "default_value": false,
+        "allow_null": 0,
+        "multiple": 0,
+        "ui": 0,
+        "return_format": "array",
+        "ajax": 0,
+        "placeholder": ""
+      },
+      {
+        "key": "field_61d5da81b0369",
+        "label": "Reminder time set on",
+        "name": "reminder_time_set_on",
+        "type": "date_time_picker",
+        "instructions": "Reminder time set on as per reminder lead time",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "display_format": "Y-m-d H:i:s",
+        "return_format": "Y-m-d H:i:s",
+        "first_day": 1
+      },
+      {
+        "key": "field_61d5d0a4b0365",
+        "label": "Reminder triggered on",
+        "name": "reminder_triggered_on",
+        "type": "date_time_picker",
+        "instructions": "Email reminder triggered on by cron",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "display_format": "Y-m-d H:i:s",
+        "return_format": "Y-m-d H:i:s",
+        "first_day": 1
+      },
+      {
+        "key": "field_61d5cf7cb0363",
+        "label": "Status",
+        "name": "reminder_status",
+        "type": "text",
+        "instructions": "Status of email reminder",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_61d5ddf918da6",
+        "label": "Reminder debug information",
+        "name": "reminder_debug_information",
+        "type": "textarea",
+        "instructions": "Debug information logged content",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "maxlength": "",
+        "rows": "",
+        "new_lines": ""
+      },
+      {
+        "key": "field_61d5e9951719b",
+        "label": "Reminder events meta content",
+        "name": "reminder_events_meta_content",
+        "type": "post_object",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "post_type": [
+          "events"
+        ],
+        "taxonomy": "",
+        "allow_null": 0,
+        "multiple": 0,
+        "return_format": "object",
+        "ui": 1
+      }
+    ],
+    "location": [
+      [
+        {
+          "param": "post_type",
+          "operator": "==",
+          "value": "email-reminders"
+        }
+      ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+      "permalink",
+      "the_content",
+      "excerpt",
+      "discussion",
+      "comments",
+      "revisions",
+      "slug",
+      "author",
+      "format",
+      "page_attributes",
+      "featured_image",
+      "categories",
+      "tags",
+      "send-trackbacks"
+    ],
+    "active": true,
+    "description": "VF-WP-EBI Events Email Reminders Fields"
+  }
+]

@@ -31,7 +31,7 @@ $location_list = $location_choices['choices'];
                     data-format="({count})"
                     data-value="<?php echo $type_key; ?>"
                     data-path=".type_<?php echo $type_key; ?>"
-                    data-mode="dynamic"
+                    data-mode="static"
                     data-filter-type="path">
 
          </span>

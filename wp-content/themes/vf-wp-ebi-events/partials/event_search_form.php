@@ -4,7 +4,7 @@
     <div class="vf-form__item">
       <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
       <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
-             data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
+             data-name="my-filter-1" data-path=".summary" data-id="search" type="text" value=""
              placeholder="<?php echo $search_placeholder_text;?>" data-clear-btn-id="name-clear-btn"
              class="vf-form__input | vf-search__input" />
     </div>

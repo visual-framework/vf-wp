@@ -96,8 +96,8 @@ $close_wrap,
 <section class="embl-grid | vf-content">
   <div>
     <?php
-    $current_year = date('Y') + 1; // 1 year ahead
-    $year_list = range(2021, $current_year); // we have imported events only from 2019 onwards
+    $current_year = date('Y'); // 1 year ahead
+    $year_list = range(2022, $current_year); // we have imported events only from 2019 onwards
     $year_list = array_reverse($year_list);
     ?>
     <?php include(locate_template('partials/filter-internal.php', false, false)); ?>

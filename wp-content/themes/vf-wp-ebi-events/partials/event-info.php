@@ -11,6 +11,7 @@ $end = DateTime::createFromFormat('j M Y', $end_date);
 $location = get_field('vf_event_location');
 //$other_location = get_field('vf_event_other_location');
 $time = get_field('vf_event_start_time');
+$event_timezone = get_field('vf_event_time_zone');
 $venue = get_field('vf_event_venue');
 
 $abstract_closing = get_field('vf_event_submission_closing');
@@ -96,7 +97,7 @@ $event_type_value = $event_type['value'];
       </span>
     </p>
     <?php 
-    if (!empty($location)) { ?>
+    if (!empty($location)) {?>
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span
         class="vf-u-text-color--grey">
         <?php
@@ -290,3 +291,4 @@ $event_type_value = $event_type['value'];
     </div>
   </div>
 </div>
+<!--<a href="--><?php //echo get_feed_link('calendar'); ?><!--?id=--><?php //echo get_the_ID(); ?><!--"> Download the ics/ical </a>-->

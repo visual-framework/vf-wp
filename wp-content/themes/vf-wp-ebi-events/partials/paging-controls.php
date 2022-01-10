@@ -20,5 +20,5 @@
       </a>
     </li>
   </ul>
-  <!--        <span data-type="info">Page {pageNumber} of {pagesNumber} </span>-->
+  <div class="vf-u-display-none totalrecords" data-type="info" id="totalrecords">{itemsNumber}</div>
 </nav>

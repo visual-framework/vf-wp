@@ -124,8 +124,7 @@ add_filter(
         include(locate_template('partials/vf-summary-events.php', FALSE, FALSE)); ?>
       <?php endwhile; ?>
       <!-- no results control -->
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-               data-name="no-results" id="no-results">
+      <article class="vf-summary vf-summary--event jplist-text-area" data-jplist-control="no-results" data-group="data-group-1" data-name="no-results" id="no-results">
         <p class="vf-summary__text">
           No matching events found
         </p>

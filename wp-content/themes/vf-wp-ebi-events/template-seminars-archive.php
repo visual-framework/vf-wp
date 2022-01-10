@@ -109,7 +109,7 @@ $close_wrap,
 <section class="embl-grid | vf-content">
   <div>
     <?php
-    $current_year = date('Y') + 1; // 1 year ahead
+    $current_year = date('Y'); // 1 year ahead
     $year_list = range(2020, $current_year); // we have imported events only from 2019 onwards
     $year_list = array_reverse($year_list);
     ?>
@@ -157,14 +157,14 @@ $temp_query = $wp_query;
     include(locate_template('partials/vf-summary-seminar-events.php', false, false)); ?>
       <?php endwhile;?>
       <!-- no results control -->
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1" data-name="no-results">
+      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1" data-name="no-results" id="no-results">
         <p class="vf-summary__text" id="no-results">
           No matching seminars found
         </p>
       </article>
 
     </div>
-    <nav>
+    <div>
       <?php 
         $wp_query = NULL;
         $wp_query = $temp_query;

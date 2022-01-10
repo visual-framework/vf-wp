@@ -30,11 +30,11 @@
 
     function handleReady() {
       // Ensure input element exists
-      var $field = document.querySelector('article[id="no-results"]');
-      if ($field) {
+      const el = document.querySelector('#totalrecords');
+      const pagingCount = el.textContent || el.innerText;
+      if (pagingCount <= 0) {
         $('#paging-data').hide();
       }
-
     } // handleReady
 
   })();
