@@ -536,4 +536,14 @@ function rlv_customfield_boost( $match ) {
 	}
 	return $match;
 }
+
+add_filter( 'relevanssi_match', 'rlv_boost_excerpts' );
+function rlv_boost_excerpts( $match ) {
+	if ( $match->excerpt > 0 ) {
+		$match->weight *= 3;
+	}
+	return $match;
+}
+
+
 ?>
