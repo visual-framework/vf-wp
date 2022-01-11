@@ -88,9 +88,6 @@ if ( post_password_required( get_the_ID())) {
 $vf_theme->the_content();
 }
 ?>
-<div>
-  <?php echo $keyword; ?>
-</div>
 <?php 
 
 get_footer();
