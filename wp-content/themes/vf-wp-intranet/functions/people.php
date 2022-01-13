@@ -173,16 +173,6 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {
       add_post_meta($post_id, 'post_title', $title);
     }    
-    // compare two arrays and trash post if the title doesn't exists in the API
-    // $people_array = array();
-    // $people_posts = get_posts( array( 'post_type' => 'people', 'nopaging' => true) ); 
-    //   foreach ($people_posts as $people_post):
-    //     $people_array[] = $people_post->post_title;
-    //     $result = array_diff($people_array, $names_array);   
-    //       if (in_array($people_post->post_title, $result)) {
-    //         wp_trash_post( $people_post->ID );
-    //       }
-    //   endforeach; 
   }
 }
 
@@ -241,20 +231,6 @@ function delete_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     $raw_content_decoded = json_decode($raw_content, true);
     $people_data = $raw_content_decoded['rows'];
     $names_array = array_column($people_data, 'full_name');
-    // compare two arrays and trash post if the title doesn't exists in the API
-    // $people_array = array();
-    // $people_posts = get_posts( array( 'post_type' => 'people', 'numberposts' => -1, 'nopaging' => true) ); 
-    //   foreach ($people_posts as $people_post):
-    //     $people_array[] = $people_post->post_title;
-    //     echo print_r($people_array);
-
-    //     $result = array_diff($people_array, $names_array);   
-
-    //       if (in_array($people_post->post_title, $result)) {
-    //         wp_trash_post( $people_post->ID );
-    //       }
-    //   endforeach; 
-
 
       $people_array = array();
 
