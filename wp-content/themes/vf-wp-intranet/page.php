@@ -82,6 +82,40 @@ else { ?>
 if ( post_password_required( get_the_ID())) {
     echo get_the_password_form( get_the_ID());
 } else {
+  $people_array = array();
+
+// the query
+$args=array('post_type' => 'people', 'numberposts'=> -1);
+
+$posts = get_posts( $args );
+
+if ( $posts ) {
+    foreach ( $posts as $post ) {
+        $people_array[] = $post->post_title;
+    }
+    // echo print_r($people_array);
+    $my_array = array("Ilka Singer", "John Doe");
+    // echo print_r($my_array);
+    $result = array_intersect($people_array, $my_array); 
+    print_r($result);  
+
+}
+
+  // $people_array = array();
+  // $people_posts = get_posts( array( 'post_type' => 'people', 'numberposts' => -1) ); 
+  //   foreach ($people_posts as $people_post):
+  //     $posts = people_post->post_title;
+  //     foreach ($posts as $post_title ):
+  //     $people_array[] = $post_title;
+  //     // $res = $people_post->post_title;
+  //     // $fruits = explode(', ', $res);
+  //     // // $result = array_merge(...$fruits);
+
+  //     // echo gettype($people_post->post_title);
+  //   endforeach; 
+  //   echo print_r($people_array);
+  //   endforeach; 
+
 $vf_theme->the_content();
 }
 ?>
