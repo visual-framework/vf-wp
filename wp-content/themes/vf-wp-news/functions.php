@@ -386,4 +386,37 @@ function custom_profile_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
     // Return our new avatar
     return $avatar;
 }
+
+
+/// YOAST SEO overwrite canonical url for EBI news
+
+function ebi_news_canonical_url( $canonical ) {
+    global $post;
+    $display = get_field('field_target_display', $post->ID);
+    $category = get_the_category($post->ID);
+    $cat_slug = strtolower($category[0]->cat_name);
+    if ( (is_single()) && ($display == 'embl-ebi') ) {
+      $canonical = 'https://www.ebi.ac.uk/about/news/'. $cat_slug . '/' . $post->post_name;
+    }
+  
+    return $canonical;
+  }
+  
+  add_filter( 'wpseo_canonical', 'ebi_news_canonical_url', 20 );
+
+  
+  function ebi_news_opengraph_url( $url ) {
+      global $post;
+      $display = get_field('field_target_display', $post->ID);
+      $category = get_the_category($post->ID);
+      $cat_slug = strtolower($category[0]->cat_name);
+      if ( (is_single()) && ($display == 'embl-ebi') ) {
+          $url = 'https://www.ebi.ac.uk/about/news/'. $cat_slug . '/' . $post->post_name;
+        }
+        
+        return $url;
+  }
+
+    add_filter( 'wpseo_opengraph_url', 'ebi_news_opengraph_url' );
+  
 ?>
