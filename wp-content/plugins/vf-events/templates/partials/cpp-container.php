@@ -40,6 +40,9 @@
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.de/layout/images/cco/3rd_column_text/cpp-logos/NetApp-logo.jpg" style="width: 120px">
       </figure>
       <figure class="vf-figure">
+        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/2022/01/Resolve-Bio-Logo_4c_auf_weiss.png" style="width: 120px">
+      </figure>
+      <figure class="vf-figure">
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.de/layout/images/cco/3rd_column_text/cpp-logos/Stilla-logo.jpg" style="width: 120px">
       </figure>
       <figure class="vf-figure">
