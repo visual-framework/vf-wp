@@ -394,9 +394,12 @@ function ebi_news_canonical_url( $canonical ) {
     global $post;
     $display = get_field('field_target_display', $post->ID);
     $category = get_the_category($post->ID);
-    $cat_slug = strtolower($category[0]->cat_name);
-    if ( (is_single()) && ($display == 'embl-ebi') ) {
-      $canonical = 'https://www.ebi.ac.uk/about/news/'. $cat_slug . '/' . $post->post_name;
+    $cat_slug = '';
+    if (!empty($category[0]->cat_name)) {
+        $cat_slug = $category[0]->cat_name;
+      }
+  if ( (is_single()) && ($display == 'embl-ebi') ) {
+      $canonical = 'https://www.ebi.ac.uk/about/news/'. strtolower($cat_slug) . '/' . $post->post_name;
     }
   
     return $canonical;
@@ -409,9 +412,12 @@ function ebi_news_canonical_url( $canonical ) {
       global $post;
       $display = get_field('field_target_display', $post->ID);
       $category = get_the_category($post->ID);
-      $cat_slug = strtolower($category[0]->cat_name);
+      $cat_slug = '';
+      if (!empty($category[0]->cat_name)) {
+          $cat_slug = $category[0]->cat_name;
+        }
       if ( (is_single()) && ($display == 'embl-ebi') ) {
-          $url = 'https://www.ebi.ac.uk/about/news/'. $cat_slug . '/' . $post->post_name;
+          $url = 'https://www.ebi.ac.uk/about/news/'. strtolower($cat_slug) . '/' . $post->post_name;
         }
         
         return $url;
