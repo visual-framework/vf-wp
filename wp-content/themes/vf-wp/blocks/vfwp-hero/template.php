@@ -9,6 +9,7 @@ $add_heading_2 = get_field('vf_hero_additional_heading_2');
 $hero_text = get_field('vf_hero_text', false, false);
 $hero_subheading = get_field('vf_hero_subheading');
 $hero_heading = get_field('vf_hero_heading');
+$hero_url = get_field('vf_hero_url');
 
 $spacing = get_field('vf_hero_spacing');
 $spacing_class = "| vf-hero--";
@@ -26,6 +27,13 @@ elseif ($spacing === '1600') {
 $spacing_class .= "{$spacing}";
  }
 
+$headink_link =''; 
+if (!empty($hero_url)) {
+  $headink_link = $hero_url['url'];
+}
+else {
+  $headink_link = get_home_url();
+} 
 ?>
 
 <section class="vf-hero | vf-u-fullbleed <?php echo esc_attr($spacing_class); ?> | vf-u-margin__bottom--0">
@@ -54,7 +62,7 @@ $spacing_class .= "{$spacing}";
     </p>
     <?php } }?>
     <h2 class="vf-hero__heading">
-      <a class="vf-hero__heading_link" href="<?php echo get_home_url(); ?>">
+      <a class="vf-hero__heading_link | heading_link" href="<?php echo esc_url($headink_link); ?>">
         <?php echo ($hero_heading); ?>
       </a>
     </h2>

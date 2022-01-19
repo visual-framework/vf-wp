@@ -11,7 +11,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -20,6 +20,21 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_61e814a69b4b1",
+            "label": "Heading link",
+            "name": "vf_hero_url",
+            "type": "link",
+            "instructions": "Leave blank for default setting",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         },
         {
             "key": "field_603b407b5ffdf",
@@ -173,5 +188,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-Hero block",
-    "modified": 1614496208
+    "modified": 1642600096
 }
