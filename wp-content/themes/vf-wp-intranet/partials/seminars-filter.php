@@ -46,147 +46,158 @@
       <label for="location-2" class="vf-form__label">Virtual</label>
     </div>
   </fieldset>
+
+
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
   <legend class="vf-form__legend">Type</legend>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-5" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Career Event"
-        data-id="name-career" class="vf-form__checkbox">
-      <label for="type-5" class="vf-form__label">Career Event</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-4" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Company representative"
-        data-id="name-company" class="vf-form__checkbox">
-      <label for="type-4" class="vf-form__label">Company representative</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-3" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="EIPOD Seminar"
-        data-id="name-eipod" class="vf-form__checkbox">
-      <label for="type-3" class="vf-form__label">EIPOD Seminar</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-16" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="EMBL - Sapienza Lecture"
-        data-id="name-sapienza" class="vf-form__checkbox">
-      <label for="type-16" class="vf-form__label">EMBL Sapienza Lecture</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-1" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="EMBL Distinguished Visitor Lecture"
-        data-id="name-lecture" class="vf-form__checkbox">
-      <label for="type-1" class="vf-form__label">EMBL Distinguished Visitor Lecture</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-6" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="EMBL Event"
-        data-id="name-event" class="vf-form__checkbox">
-      <label for="type-6" class="vf-form__label">EMBL Event</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-2" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="External Faculty Speaker"
-        data-id="name-faculty" class="vf-form__checkbox">
-      <label for="type-2" class="vf-form__label">External Faculty Speaker</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-7" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="One-EMBL Faculty Seminar"
-        data-id="name-faculty-seminar" class="vf-form__checkbox">
-      <label for="type-7" class="vf-form__label">One-EMBL Faculty Seminar</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-17" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Hamburg Speaker"
-        data-id="name-faculty-seminar" class="vf-form__checkbox">
-      <label for="type-17" class="vf-form__label">Hamburg Speaker</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-8" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Journal Club"
-        data-id="name-journal" class="vf-form__checkbox">
-      <label for="type-8" class="vf-form__label">Journal Club</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-18" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="MR Postdoc"
-        data-id="name-mr" class="vf-form__checkbox">
-      <label for="type-18" class="vf-form__label">MR Postdoc</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-9" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="PhD Thesis Defense"
-        data-id="name-phd" class="vf-form__checkbox">
-      <label for="type-9" class="vf-form__label">PhD Thesis Defense</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-10" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Progress Report"
-        data-id="name-progress" class="vf-form__checkbox">
-      <label for="type-10" class="vf-form__label">Progress Report</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-11" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="PSB Seminar"
-        data-id="name-psb" class="vf-form__checkbox">
-      <label for="type-11" class="vf-form__label">PSB Seminar</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-12" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Science and Society"
-        data-id="name-society" class="vf-form__checkbox">
-      <label for="type-12" class="vf-form__label">Science and Society</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-13" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Seminar given by an external postdoc"
-        data-id="name-external-postdoc" class="vf-form__checkbox">
-      <label for="type-13" class="vf-form__label">Seminar given by an external postdoc</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-20" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Symbnet series"
-        data-id="name-external-postdoc" class="vf-form__checkbox">
-      <label for="type-20" class="vf-form__label">Symbnet series</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-19" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="TAC Seminar"
-        data-id="name-tac" class="vf-form__checkbox">
-      <label for="type-19" class="vf-form__label">TAC Seminar</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-14" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Unit Seminar"
-        data-id="name-unit" class="vf-form__checkbox">
-      <label for="type-14" class="vf-form__label">Unit Seminar</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-15" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Planetary Biology Lectures"
-        data-id="name-planetary" class="vf-form__checkbox">
-      <label for="type-15" class="vf-form__label">Planetary Biology Lectures</label>
-    </div>
+  <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter" data-group="data-group-1" data-name="name2" data-path=".type">
+    <option value="0" data-path="default">All</option>
+    <option  
+      data-path=".career_event" 
+      value="career_event"
+      >
+    Career Event</option>
+    
+    
+    
+      <option id="type-4" 
+        data-path=".company_representative" 
+        value="company_representative"
+        >
+      Company representative</option>
+    
+    
+      <option id="type-3" 
+        data-path=".eipod_seminar" 
+        value="eipod_seminar"
+       >
+      EIPOD Seminar</option>
+    
+    
+      <option id="type-16" 
+        data-path=".embl_-_sapienza_lecture" 
+        value="embl_-_sapienza_lecture"
+        >
+      EMBL Sapienza Lecture</option>
+    
+    
+      <option id="type-1" 
+        data-path=".embl_distinguished_visitor_lecture" 
+        value="embl_distinguished_visitor_lecture"
+        >
+      EMBL Distinguished Visitor Lecture</option>
+    
+    
+      <option id="type-6" 
+        data-path=".embl_event" 
+        value="embl_event"
+        >
+     EMBL Event</option>
+    
+    
+      <option id="type-2" 
+        data-path=".external_faculty_speaker" 
+        value="external_faculty_speaker"
+        >
+      External Faculty Speaker</option>
+    
+    
+      <option id="type-7" 
+        data-path=".one-embl_faculty_seminar" 
+        value="one-embl_faculty_seminar"
+        >
+      One-EMBL Faculty Seminar</option>
+    
+    
+      <option id="type-17" 
+        data-path=".hamburg_speaker" 
+        value="hamburg_speaker"
+        >
+      Hamburg Speaker</option>
+    
+    
+      <option id="type-8" 
+        data-path=".journal_club" 
+        value="journal_club"
+        >
+      Journal Club</option>
+    
+    
+      <option id="type-18" 
+        data-path=".mr_postdoc" 
+        value="mr_postdoc"
+        >
+      MR Postdoc</option>
+    
+    
+      <option id="type-9" 
+        data-path=".phd_thesis_defense" 
+        value="phd_thesis_defense"
+        >
+      PhD Thesis Defense</option>
+    
+    
+      <option id="type-10" 
+        data-path=".progress_report" 
+        value="progress_report"
+        >
+      Progress Report</option>
+    
+    
+      <option id="type-11" 
+        data-path=".psb_seminar" 
+        value="psb_seminar"
+        >
+      PSB Seminar</option>
+    
+    
+      <option id="type-12" 
+        data-path=".science_and_society" 
+        value="science_and_society"
+        >
+      Science and Society</option>
+    
+    
+      <option id="type-13" 
+        data-path=".seminar_given_by_an_external_postdoc" 
+        value="seminar_given_by_an_external_postdoc"
+        >
+      Seminar given by an external postdoc</option>
+    
+    
+      <option  
+        data-path=".symbnet_series" 
+        value="symbnet_series"
+        >
+      Symbnet series</option>
+    
+    
+      <option id="type-19" 
+        data-path=".tac_seminar" 
+        value="tac_seminar"
+        >
+      TAC Seminar</option>
+    
+    
+      <option id="type-14" 
+        data-path=".unit_seminar" 
+        value="unit_seminar"
+        >
+      Unit Seminar</option>
+    
+    
+      <option id="type-15" 
+        data-path=".planetary_biology_lectures" 
+        value="planetary_biology_lectures"
+        >
+      Planetary Biology Lectures</option>
+      </select>
+
+    
   </fieldset>
+
 </form>
+
+
+
+

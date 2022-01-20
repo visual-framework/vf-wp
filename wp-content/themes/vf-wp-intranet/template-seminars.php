@@ -104,7 +104,7 @@ get_header();
                 echo '<span>' . substr($newinfo, strpos($newinfo, 'Place'));'</span></p>';
 
                 // Seminar type
-                echo '<p class="vf-summary__text | vf-text-heading--5 | type">' . strstr($info, '<', true) . '</p>';
+                echo '<p class="vf-summary__text | vf-text-heading--5 | type ' . str_replace(" ", '_', strtolower(strstr($info, '<', true))) . '">' . strstr($info, '<', true) . '</p>';
 
                 // Location
                 echo '<p class="vf-summary__location | location">' . $event->field_event_location . '</p>';
