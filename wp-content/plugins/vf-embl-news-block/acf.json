@@ -219,7 +219,7 @@
             "label": "Free Tag(s)",
             "name": "tags",
             "type": "text",
-            "instructions": "Filter news by tags (comma separated, e.g. \"bioinformatics, chemistry\").\r\n<br>\r\n<b>Please note: free tag search has yet to be implemented.<\/b>",
+            "instructions": "Filter news by tags (comma separated, e.g. \"bioinformatics, chemistry\").",
             "required": 0,
             "conditional_logic": [
                 [
@@ -259,5 +259,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF EMBL News ACF Gutenberg block",
-    "modified": 1639485801
+    "modified": 1642671260
 }

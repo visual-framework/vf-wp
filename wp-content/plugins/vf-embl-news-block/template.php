@@ -97,11 +97,10 @@ if ($type === 'ids') {
   ), $url);
 }
 
-// (placeholder) Add tags filter query var
-// TODO: replace once Content Hub API supports tags
+// Add tags filter query var
 if ($type === 'tags') {
   $url = add_query_arg(array(
-    'filter-tag' => implode(',', $tags)
+    'filter-field-contains[field_article_tags.entity.name]' => implode(',', $tags)
   ), $url);
 }
 
