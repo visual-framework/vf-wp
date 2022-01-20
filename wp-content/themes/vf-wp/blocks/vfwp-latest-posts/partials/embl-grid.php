@@ -10,7 +10,16 @@ $ids[] = get_the_ID();
 
 <article class="vf-summary vf-summary--news">
   <span class="vf-summary__date" title="<?php the_time('c'); ?>"
-    datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></span>
+    datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?>
+    <?php if ($show_location == 1) { 
+      $location_terms = get_the_terms( $post->ID, 'embl-location' );
+      if( $location_terms ) {
+          $locations_list = array(); 
+          foreach( $location_terms as $term ) {
+            $locations_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . esc_html( $term->name ) . '</span>'; }
+            echo ' | ' . implode(', ', $locations_list); }?>  </span>
+    <?php } ?>    
+</span>
   <?php if ($show_image == 1) { ?>
   <?php the_post_thumbnail('full', array('class' => 'vf-summary__image', 'style' => 'height: auto;')); ?>
   <?php } ?>

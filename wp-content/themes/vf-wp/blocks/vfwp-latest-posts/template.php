@@ -24,6 +24,7 @@ $tag = get_field('tag');
 $keyword = get_field('keyword');
 
 $show_image = get_field('show_image');
+$show_location = get_field('show_location');
 $show_categories = get_field('show_categories');
 
 if (empty($heading_singular)) {

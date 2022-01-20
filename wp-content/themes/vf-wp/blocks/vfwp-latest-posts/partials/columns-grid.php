@@ -18,7 +18,17 @@
 
   <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
       title="<?php the_time('c'); ?>"
-      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
+      datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time>
+      <?php if ($show_location == 1) { 
+      $location_terms = get_the_terms( $post->ID, 'embl-location' );
+      if( $location_terms ) {
+          $locations_list = array(); 
+          foreach( $location_terms as $term ) {
+            $locations_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . esc_html( $term->name ) . '</span>'; }
+            echo ' | ' . implode(', ', $locations_list); }?>  </span>
+    <?php } ?>    
+
+    </span>
   <?php if ($show_categories == 1) { ?>
   <span class="vf-summary__category">
     <?php echo get_the_category_list(', '); ?>
