@@ -30,7 +30,7 @@ the_post();
       <div class="vf-meta__details">
         <p class="vf-meta__date"><time title="<?php the_time('c'); ?>"
             datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
-        <p class="vf-meta__topics"><?php echo get_the_category_list(','); ?></p>
+        <p class="vf-meta__topics"><?php echo get_the_category_list(' '); ?></p>
       </div>
       <?php if( have_rows('in_this_article') ): ?>
       <div class="vf-links vf-links--tight vf-links__list--s">
