@@ -395,8 +395,8 @@ function ebi_news_canonical_url( $canonical ) {
     $display = get_field('field_target_display', $post->ID);
     $category = get_the_category($post->ID);
     $cat_slug = '';
-    if (!empty($category[0]->cat_name)) {
-        $cat_slug = $category[0]->cat_name;
+    if (!empty($category[0]->slug)) {
+        $cat_slug = $category[0]->slug;
       }
   if ( (is_single()) && ($display == 'embl-ebi') ) {
       $canonical = 'https://www.ebi.ac.uk/about/news/'. strtolower($cat_slug) . '/' . $post->post_name;
@@ -413,8 +413,8 @@ function ebi_news_canonical_url( $canonical ) {
       $display = get_field('field_target_display', $post->ID);
       $category = get_the_category($post->ID);
       $cat_slug = '';
-      if (!empty($category[0]->cat_name)) {
-          $cat_slug = $category[0]->cat_name;
+      if (!empty($category[0]->slug)) {
+          $cat_slug = $category[0]->slug;
         }
       if ( (is_single()) && ($display == 'embl-ebi') ) {
           $url = 'https://www.ebi.ac.uk/about/news/'. strtolower($cat_slug) . '/' . $post->post_name;
@@ -424,5 +424,25 @@ function ebi_news_canonical_url( $canonical ) {
   }
 
     add_filter( 'wpseo_opengraph_url', 'ebi_news_opengraph_url' );
+
+
+/*
+ * Redirect posts to EMBL-EBI URL
+ */
+
+add_action( 'template_redirect', 'redirect_to_ebi' );
+function redirect_to_ebi(){
+    global $post;
+    $display = get_field('field_target_display', $post->ID);
+    $category = get_the_category($post->ID);
+    $cat_slug = '';
+    if (!empty($category[0]->slug)) {
+        $cat_slug = $category[0]->slug;
+      }
+    $redirect = 'https://www.ebi.ac.uk/about/news/'. strtolower($cat_slug) . '/' . trim($post->post_name, '-2');
+    if ((is_single()) && ($display == 'embl-ebi')) {
+        wp_redirect( $redirect );
+     }
+}    
   
 ?>
