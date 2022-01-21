@@ -67,7 +67,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
 ?>
 
 <div>
-  <?php if ($event_organiser == "cco_hd") { ?>
+  <?php if ($event_organiser == ("cco_hd") || ("default")) { ?>
   <figure class="vf-figure vf-figure--align vf-figure--align-centered | vf-u-margin__bottom--400">
     <?php 
     // Event logo

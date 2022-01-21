@@ -1203,6 +1203,13 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "default"
+                    }
                 ]
             ],
             "wrapper": {
@@ -1385,6 +1392,13 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
+                ],
+                [    
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "default"
+                    }
                 ]
             ],
             "wrapper": {
@@ -1417,7 +1431,15 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
+                ],
+                [    
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "default"
+                    }
                 ]
+
             ],
             "wrapper": {
                 "width": "",
@@ -1502,5 +1524,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1636658293
+    "modified": 1642671260
 }
