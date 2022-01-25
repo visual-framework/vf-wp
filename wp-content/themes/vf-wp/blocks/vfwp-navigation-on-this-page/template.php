@@ -25,10 +25,10 @@ global $post;
 ?>
 <nav class="vf-navigation vf-navigation--on-this-page | vf-u-fullbleed | vf-cluster">
   <?php if (have_rows('vf-wp-navigation-otp')) { ?>
-    <ul class="vf-navigation__list | vf-list | vf-cluster__inner" data-vf-js-navigation-on-this-page-container="false">
+    <ul class="vf-navigation__list | vf-list | vf-cluster__inner" data-vf-js-navigation-on-this-page-container="true">
     <li class="vf-navigation__item">
-On this page
-</li>
+      On this page
+    </li>
       <?php
       while (have_rows('vf-wp-navigation-otp')) {
         the_row();
