@@ -297,12 +297,77 @@ function vfBannerInsert(banner, bannerId, scope) {
 // vf-masthead
 
 /**
-  * This was a function for making background color of banner from image file name.
+  * Function for making background color of banner from image file name
+  * The background image for the banner element are taken from the CSS custom property.
+  * The filename includes the hex code for the background colour of the image.
+  * Then test if the 6 characters are a hex code and declare the background-color
+  * @example vfMastheadSetStyle()
   */
 
 
 function vfMastheadSetStyle() {
-  console.warn("vfMasthead", "This component has been deprecated, you should remove it from your VF scripts.js rollup. https://github.com/visual-framework/vf-core/pull/1406/");
+  var vfMastheads = document.querySelectorAll("[data-vf-js-masthead]"); // utility colour functions
+
+  function cutHex(h) {
+    return h.charAt(0) == "#" ? h.substring(1, 7) : h;
+  }
+
+  function hexToR(h) {
+    return parseInt(cutHex(h).substring(0, 2), 16);
+  }
+
+  function hexToG(h) {
+    return parseInt(cutHex(h).substring(2, 4), 16);
+  }
+
+  function hexToB(h) {
+    return parseInt(cutHex(h).substring(4, 6), 16);
+  }
+
+  function getCorrectTextColor(hex) {
+    var hRed = hexToR(hex);
+    var hGreen = hexToG(hex);
+    var hBlue = hexToB(hex);
+    return (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
+  }
+
+  if (vfMastheads[0]) {
+    var el = vfMastheads[0];
+    var bannerBG = getComputedStyle(el).getPropertyValue("--vf-masthead__bg-image");
+    var regex = /\\/gi; // avoid escaped syntax like "bg_2d4155\.png"
+
+    bannerBG = bannerBG.replaceAll(regex, "");
+    var filename = bannerBG.substr(0, bannerBG.lastIndexOf(".")) || bannerBG;
+    var hexcode = filename.substr(filename.length - 6);
+    var bannerBGC = "#" + hexcode;
+    var regHex = /[0-9A-Fa-f]{6}/g;
+    var threshold = 130; // about half of 256. Lower threshold equals more dark text on dark background
+
+    var cBrightness = 255; // default to above the threshold
+
+    var modalAlertClasses = ["vf-masthead--with-title-block"];
+    var modal = document.querySelector(".vf-masthead");
+
+    if (modal.classList.contains(modalAlertClasses)) {// if using title block no action neccessary
+    } else {
+      if (regHex.test(hexcode)) {
+        if (!bannerBGC) return; // if no background colour specified, nothing to do
+
+        bannerBGC = bannerBGC.trim();
+        cBrightness = getCorrectTextColor(bannerBGC);
+
+        if (cBrightness > threshold) {
+          el.style.setProperty("--vf-masthead__color--foreground-default", "#000000");
+          el.style.setProperty("--vf-masthead__color--background-default", "#FFFFFF");
+        } else if (cBrightness < threshold) {
+          el.style.setProperty("--vf-masthead__color--foreground-default", "#FFFFFF");
+          el.style.setProperty("--vf-masthead__color--background-default", "#000000");
+        }
+      } else {
+        el.style.setProperty("--vf-masthead__bg-image", "unset");
+      }
+    }
+  }
 } // vf-analytics-google
 
 /*
@@ -1119,6 +1184,56 @@ function vfTabsDeepLinkOnLoad(tabs, panels) {
       vfTabsSwitch(tab, panels);
     }
   });
+} // vf-navigation
+// only required for vf-navigation--on-this-page
+
+/**
+ * Function for JS scroll to top functionality
+ * That must be executed exactly once
+ * @example vfNavigationOnThisPage()
+ */
+
+
+function vfNavigationOnThisPage() {
+  var sectionList = document.querySelectorAll("[data-vf-js-navigation-on-this-page-container='true'],[data-vf-js-navigation-on-this-page-container='1']")[0];
+  var section = document.querySelectorAll("[id]");
+  var sectionPositions = {};
+  var i = 0;
+
+  if (!sectionList || !section) {
+    // exit: either sections or section content not found
+    return;
+  }
+
+  if (sectionList.length == 0 || section.length == 0) {
+    // exit: either sections or section content not found
+    return;
+  }
+
+  section.forEach(function (e) {
+    sectionPositions[e.id] = e.offsetTop;
+  });
+
+  function activateNavigationItem() {
+    var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+
+    for (i in sectionPositions) {
+      // this implements a scrollspy concept based on https://codepen.io/zchee/pen/ogzvZZ
+      if (sectionPositions[i] <= scrollPosition + 70) {
+        // we activate the section 70 pixels before coming into view, as the sticky bar will cover it
+        // only add remove the class if there is a new section to activate
+        if (sectionList.querySelector("a[href*=" + i + "]") != null) {
+          sectionList.querySelector("[aria-selected]").removeAttribute("aria-selected");
+          sectionList.querySelector("a[href*=" + i + "]").setAttribute("aria-selected", "true");
+        }
+      }
+    }
+  }
+
+  window.onscroll = function () {
+    // we could introduce throttling, but as this is a fairly simple repaint, throttling is not likely required
+    window.requestAnimationFrame(activateNavigationItem);
+  };
 } // vf-location-nearest
 
 /**
@@ -1639,22 +1754,15 @@ function emblNotificationsInject(message) {
     if (_target.length > 0) {
       _target[0].parentNode.insertBefore(output, _target[0].nextSibling);
     } else {
-      // if no vf-header, perhaps there's a masthead-black-bar?
-      var _target2 = document.getElementsByClassName("masthead-black-bar");
+      // if no vf-header, show at vf-body
+      // @thought: we might instead make this show as "top"
+      var _target2 = document.getElementsByClassName("vf-body");
 
       if (_target2.length > 0) {
-        _target2[0].parentNode.insertBefore(output, _target2[0].nextSibling);
-      } else {
-        // if no vf-header, show at vf-body
-        // @thought: we might instead make this show as "top"
-        var _target3 = document.getElementsByClassName("vf-body");
+        // output.classList.add('vf-u-grid--reset');
+        _target2[0].prepend(output);
+      } // if still no success, we soft fail
 
-        if (_target3.length > 0) {
-          // output.classList.add('vf-u-grid--reset');
-          _target3[0].prepend(output);
-        } // if still no success, we soft fail
-
-      }
     }
   } else if (message.field_notification_position == "top") {
     output.classList.add("vf-banner", "vf-banner--fixed", "vf-banner--top", "vf-banner--phase");
@@ -1664,9 +1772,9 @@ function emblNotificationsInject(message) {
     // output.dataset.vfJsBannerExtraButton = "<a href='#'>Optional button</a><a target='_blank' href='#'>New tab button</a>";
 
     output.innerHTML = "\n      <div class=\"vf-banner__content\" data-vf-js-banner-text>\n        <p class=\"vf-banner__text\">".concat(message.body, "</p>\n      </div>");
-    var _target4 = document.body.firstChild;
+    var _target3 = document.body.firstChild;
 
-    _target4.parentNode.prepend(output);
+    _target3.parentNode.prepend(output);
 
     vfBanner();
   } // console.log('emblNotifications, showing:', message);
@@ -2846,6 +2954,7 @@ var vfGaTrackOptions = {
 };
 vfGaIndicateLoaded(vfGaTrackOptions);
 vfTabs();
+vfNavigationOnThisPage();
 emblContentHub();
 emblBreadcrumbs(); // if you use embl-content-hub-loader, it will automatically invoke emblNotifications
 // emblNotifications();
