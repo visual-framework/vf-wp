@@ -20,15 +20,15 @@
       <div class="vf-links ells-links">
         <ul class="vf-links__list | vf-list">
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="about">
+            <a class="vf-list__link" href="<?php echo get_home_url() . '/about'?>">
               About Us</a>
           </li>
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="about">
+            <a class="vf-list__link" href="<?php echo get_home_url() . '/about'?>">
               Contact</a>
           </li>
           <li class="vf-list__item" style="margin-bottom: 0.5rem !important">
-            <a class="vf-list__link" href="terms-and-conditions">
+            <a class="vf-list__link" href="<?php echo get_home_url() . '/terms-and-conditions'?>">
               Terms of Use</a>
           </li>
         </ul>
