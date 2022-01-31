@@ -13,34 +13,34 @@
  * 🚫 Don't: const tabs = document.querySelectorAll('.vf-tabs');
  * ✅ Do:    const tabs = document.querySelectorAll('[data-vf-js-tabs]');
  *
- * This allows users who would prefer not to have this JS engange on an element
+ * This allows users who would prefer not to have this JS engage on an element
  * to drop `data-vf-js-component` and still maintain CSS styling.
  */
 
 // Uncomment this boilerplate
 // // if you need to import any other components' JS to use here
-// import { vfOthercomponent } from 'vf-other-component/vf-other-component';
+// import { vfOthercomponent } from vfImportPrefix + '../vf-other-component/vf-other-component';
 //
 //  /**
 //   * The global function for this component
-//   * @example vfcomponentName(firstPassedVar)
+//   * @example <%= componentNameJs %>(firstPassedVar)
 //   * @param {string} [firstPassedVar]  - An option to be passed
 //   */
-// function vfcomponentName(firstPassedVar) {
+// function <%= componentNameJs %>(firstPassedVar) {
 //   firstPassedVar = firstPassedVar || 'defaultVal';
 //
 // }
 //
 // // If you need to invoke the component by default
-// vfcomponentName();
+// <%= componentNameJs %>();
 //
 // // By default your component should be usable with js imports
-// export { vfcomponentName };
+// export { <%= componentNameJs %> };
 //
 // // You should also import it at ./components/vf-component-rollup/scripts.js
-// // import { vfcomponentName } from '<%= componentName %>/<%= componentName %>';
+// // import { <%= componentNameJs %> } from '<%= componentName %>/<%= componentName %>';
 // // Or import directly
-// // import { vfcomponentName } from '../components/raw/<%= componentName %>/<%= componentName %>.js';
+// // import { <%= componentNameJs %> } from '../components/raw/<%= componentName %>/<%= componentName %>.js';
 // // And, if needed, invoke it
-// // vfcomponentName();
+// // <%= componentNameJs %>();
 

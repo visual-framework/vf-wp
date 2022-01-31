@@ -1,0 +1,59 @@
+{
+    "key": "group_61efc162d4852",
+    "title": "VF Navigation On this page",
+    "fields": [
+        {
+            "key": "field_61efc1838494e",
+            "label": "On this page",
+            "name": "vf-wp-navigation-otp",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add link",
+            "sub_fields": [
+                {
+                    "key": "field_61efc1c18494f",
+                    "label": "Link",
+                    "name": "vf-wp-navigation-otp-link",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vfwp-navigation-on-this-page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}

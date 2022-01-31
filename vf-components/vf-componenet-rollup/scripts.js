@@ -27,6 +27,9 @@ vfGaIndicateLoaded(vfGaTrackOptions);
 import { vfTabs } from 'vf-tabs/vf-tabs';
 vfTabs();
 
+import { vfNavigationOnThisPage } from 'vf-navigation/vf-navigation';
+vfNavigationOnThisPage();
+
 import { vfLocationNearest } from 'vf-location-nearest/vf-location-nearest';
 // vfLocationNearest is invoked by the vf-wp code
 // vfLocationNearest();
