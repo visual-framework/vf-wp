@@ -63,7 +63,7 @@
     "@visual-framework/embl-content-meta-properties": "1.0.1",
     "@visual-framework/embl-grid": "2.2.0",
     "@visual-framework/embl-logo": "1.2.0",
-    "@visual-framework/embl-notifications": "1.2.0",
+    "@visual-framework/embl-notifications": "1.2.3",
     "@visual-framework/vf-activity-group": "1.0.0-alpha.12",
     "@visual-framework/vf-analytics-google": "1.0.4",
     "@visual-framework/vf-article-meta-information": "1.1.2",
