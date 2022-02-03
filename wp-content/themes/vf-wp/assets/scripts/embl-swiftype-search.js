@@ -36,8 +36,11 @@ $(function() {
         results = results + ' in the category "' + activeFacet.what + '"';
       }
       results = results + '.</p>';
+      var resultsCount = '';
+      var resultsCount = '(' + info['info']['page']['total_result_count'] + ')';
       // console.log('activeFacet',activeFacet)
       $('.st-info-container').html(results);
+      $('.st-info-container-count').html(resultsCount);
       // if no results
       if (Math.floor(info['record_count']) == 0) {
         $('.st-info-container').html('<!-- no results -->');      
