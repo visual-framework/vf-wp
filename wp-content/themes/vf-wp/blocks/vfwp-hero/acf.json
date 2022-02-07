@@ -37,6 +37,25 @@
             "return_format": "array"
         },
         {
+            "key": "field_6200f88607183",
+            "label": "ID",
+            "name": "vf_hero_id",
+            "type": "text",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_603b407b5ffdf",
             "label": "Subheading",
             "name": "vf_hero_subheading",
@@ -169,6 +188,25 @@
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_6200faa5d21b0",
+            "label": "Navigation",
+            "name": "vf_hero_navigation",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         }
     ],
     "location": [
@@ -188,5 +226,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-Hero block",
-    "modified": 1642600096
+    "modified": 1644232111
 }

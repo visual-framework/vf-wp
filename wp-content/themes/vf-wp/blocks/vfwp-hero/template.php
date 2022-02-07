@@ -10,6 +10,8 @@ $hero_text = get_field('vf_hero_text', false, false);
 $hero_subheading = get_field('vf_hero_subheading');
 $hero_heading = get_field('vf_hero_heading');
 $hero_url = get_field('vf_hero_url');
+$hero_id = get_field('vf_hero_id');
+$hero_navigation = get_field('vf_hero_navigation');
 
 $spacing = get_field('vf_hero_spacing');
 $spacing_class = "| vf-hero--";
@@ -34,9 +36,16 @@ if (!empty($hero_url)) {
 else {
   $headink_link = get_home_url();
 } 
+
+if ($hero_id) {
+  $hero_id = 'id="' . $hero_id . '"';
+}
+else {
+  echo '';
+}
 ?>
 
-<section class="vf-hero | vf-u-fullbleed <?php echo esc_attr($spacing_class); ?> | vf-u-margin__bottom--0">
+<section <?php echo $hero_id ?> class="vf-hero | vf-u-fullbleed <?php echo esc_attr($spacing_class); ?> | vf-u-margin__bottom--0">
   <style>
     .vf-hero {
       <?php if ($image) {
@@ -61,7 +70,7 @@ else {
       | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?></a>
     </p>
     <?php } }?>
-    <h2 class="vf-hero__heading">
+    <h2 class="vf-hero__heading" >
       <a class="vf-hero__heading_link | heading_link" href="<?php echo esc_url($headink_link); ?>">
         <?php echo ($hero_heading); ?>
       </a>
@@ -91,9 +100,12 @@ else {
 </section>
 <!--/vf-hero-->
 <?php
+if ($hero_navigation) {
 if (class_exists('VF_Navigation')) {
   VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
+} }
+else {
+  echo '';
 }
 ?>
-<!--/vf-navigation-->
 
