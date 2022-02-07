@@ -4,6 +4,7 @@
 
 $ids = array();
 while ($loopPost->have_posts()) : $loopPost->the_post();
+
 $ids[] = get_the_ID();
 
 ?>
@@ -42,7 +43,10 @@ $ids[] = get_the_ID();
             $topics_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</span>'; }
             echo implode(', ', $topics_list); }?>  </span>
   <?php } ?>
-    <?php echo get_the_excerpt(); ?></p>
+  <?php if ($show_excerpt) { 
+     echo get_the_excerpt();
+   } ?>
+</p>
 
 </article>
 <!--/vf-summary-->

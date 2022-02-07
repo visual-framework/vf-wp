@@ -12,9 +12,11 @@
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h3>
+  <?php if ($show_excerpt) { ?>
   <p class="vf-summary__text">
     <?php echo get_the_excerpt();?>
   </p>
+  <?php } ?>
 
   <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
       title="<?php the_time('c'); ?>"
