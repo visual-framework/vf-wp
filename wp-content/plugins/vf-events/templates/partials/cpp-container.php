@@ -54,6 +54,9 @@
   <div class="vf-cluster vf-cluster--200">
     <div class="vf-cluster__inner" style="--vf-cluster-margin: 1rem;">
       <figure class="vf-figure">
+        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Eclipse_480X270-1.jpg" style="width: 120px">
+      </figure>
+      <figure class="vf-figure">
       <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/merck-logo.jpg" style="width: 120px">
       </figure>
       <figure class="vf-figure">
@@ -67,9 +70,6 @@
       </figure>
       <figure class="vf-figure">
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Roche-logo.jpg" style="width: 120px">
-      </figure>
-      <figure class="vf-figure">
-        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Eclipse_480X270-1.jpg" style="width: 120px">
       </figure>
       <figure class="vf-figure">
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/sanofi-logo.jpg" style="width: 120px">
