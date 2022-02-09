@@ -54,9 +54,16 @@ $close_wrap,
 <?php $vf_theme->the_content(); ?>
 </div>
 
-<hr class="vf-divider">
 
 <?php include(locate_template('partials/insites-container.php', false, false)); ?>
+
+<hr class="vf-divider">
+
+<?php include(locate_template('partials/community-blog-container.php', false, false)); ?>
+
+<?php include(locate_template('partials/seminars-container.php', false, false)); ?>
+
+<?php include(locate_template('partials/events-container.php', false, false)); ?>
 
 <section class="vf-hero vf-hero--800 | vf-u-fullbleed" id="hero-coronavirus" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-04-scaled.jpg');">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
@@ -72,13 +79,6 @@ $close_wrap,
     </p>
   </div>
 </section>
-
-<?php include(locate_template('partials/community-blog-container.php', false, false)); ?>
-
-<?php include(locate_template('partials/seminars-container.php', false, false)); ?>
-
-<?php include(locate_template('partials/events-container.php', false, false)); ?>
-
 <?php 
 
 get_footer();
