@@ -142,7 +142,7 @@ if (class_exists('VF_Navigation')) {
             <a class="vf-tabs__link" href="#vf-tabs__section--people">People (<?php echo $people_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents
+            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Docs
               (<?php echo $documents_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
@@ -152,7 +152,7 @@ if (class_exists('VF_Navigation')) {
             <a class="vf-tabs__link" href="#vf-tabs__section--events">Events (<?php echo $events_count_final; ?>)</a>
           </li>
           <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--public">embl.org</a>
+            <a class="vf-tabs__link" href="#vf-tabs__section--public">Public search <span class="st-info-container-count"></span></a>
           </li>
         </ul>
       </div>

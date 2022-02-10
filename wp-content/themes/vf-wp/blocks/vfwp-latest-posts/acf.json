@@ -91,14 +91,7 @@
             "type": "text",
             "instructions": "Leave blank for default heading",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5f3fb86736d90",
-                        "operator": "!=empty"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -109,6 +102,21 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_6200ff5de0868",
+            "label": "Heading URL",
+            "name": "heading_url",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         },
         {
             "key": "field_5efc4b6737d2d",
@@ -128,6 +136,33 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_6200ffc2e086a",
+            "label": "Show heading",
+            "name": "show_heading",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f3fb86736d90",
+                        "operator": "==",
+                        "value": "list"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_5f3e15e7a0a54",
@@ -152,6 +187,25 @@
             },
             "message": "",
             "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_6200ff89e0869",
+            "label": "Show excerpt",
+            "name": "show_excerpt",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
@@ -434,5 +488,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Latest News ACF Gutenberg block",
-    "modified": 1642671260
+    "modified": 1644232111
 }

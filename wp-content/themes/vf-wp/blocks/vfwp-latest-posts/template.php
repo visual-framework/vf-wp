@@ -8,13 +8,32 @@ if ($is_container === null) {
 $is_container = (bool) $is_container;
 
 $title = get_the_title();
-
+$theme = wp_get_theme();
 $limit = get_field('limit');
 $post_type = get_field('post_type');
 $show_topics = get_field('show_topics');
+$show_excerpt = get_field('show_excerpt');
+$show_heading = get_field('show_heading');
 $heading_singular = get_field('heading_singular');
 $heading_singular = trim($heading_singular);
 $heading_text = get_field('heading_text');
+$heading_url = get_field('heading_url');
+if (empty($post_type)) {
+  $post_type = 'post';
+}
+
+$heading_link =''; 
+if (!empty($heading_url)) {
+  $heading_link = $heading_url['url'];
+}
+else {
+  if ($theme == 'VF-WP Intranet') {
+    $heading_link = '/community-blog';
+  }
+  else {
+  $heading_link = get_permalink( get_option( 'page_for_posts' ) );
+  }
+} 
 
 $layout = get_field('layout');
 $grid = get_field('grid');
@@ -29,9 +48,6 @@ $show_categories = get_field('show_categories');
 
 if (empty($heading_singular)) {
   $heading_singular = __('Latest posts', 'vfwp');
-}
-if (empty($post_type)) {
-  $post_type = 'post';
 }
 
 $latest_posts = get_posts(array(
@@ -60,12 +76,12 @@ else {
 ?>
 
 <?php if ($is_container) {
-        if ((get_field('layout') == 'list') || (get_field('grid') == 'embl-grid')) { ?>
+        if (((get_field('layout') == 'list') && ($show_heading)) || (get_field('grid') == 'embl-grid') ) { ?>
 
 <div class="embl-grid <?php echo ($embl_grid); ?> ">
   <?php if ( ! empty($heading_singular)) { ?>
   <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link"
-      href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"> <?php echo ($heading_singular); ?> <svg
+      href="<?php echo esc_url($heading_link); ?>"> <?php echo ($heading_singular); ?> <svg
         aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
         <path
@@ -81,7 +97,7 @@ else {
 
   <?php if ( ! empty($heading_singular)) { ?>
   <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link"
-      href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"> <?php echo ($heading_singular); ?> <svg
+      href="<?php echo esc_url($heading_link); ?>"> <?php echo ($heading_singular); ?> <svg
         aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
         <path

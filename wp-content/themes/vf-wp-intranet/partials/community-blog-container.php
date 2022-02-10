@@ -1,6 +1,6 @@
 <div class="vf-summary-container">
   <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link"
-      href="/internal-information/community-blog">Community blog<svg aria-hidden="true"
+      href="/internal-information/updates">Important updates<svg aria-hidden="true"
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
         <path
