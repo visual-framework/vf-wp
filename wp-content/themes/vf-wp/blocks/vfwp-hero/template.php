@@ -37,19 +37,14 @@ else {
   $headink_link = get_home_url();
 } 
 
-if ($hero_id) {
-  $hero_id = 'id="' . $hero_id . '"';
-}
-else {
-  echo '';
-}
+
 ?>
 
-<section <?php echo $hero_id ?> class="vf-hero | vf-u-fullbleed <?php echo esc_attr($spacing_class); ?> | vf-u-margin__bottom--0">
+
   <style>
-    .vf-hero {
-      <?php if ($image) {
-        ?>--vf-hero--bg-image: url('<?php echo esc_url($image['url']); ?>');
+    <?php if($hero_id) { echo '#' . ($hero_id); }?>.vf-hero {
+      <?php if ($image) { ?>
+        --vf-hero--bg-image: url('<?php echo esc_url($image['url']); ?>');
         <?php
       }
       else {
@@ -60,6 +55,7 @@ else {
     }
 
   </style>
+<section <?php echo 'id="' . $hero_id . '"'; ?> class="vf-hero | vf-u-fullbleed <?php echo esc_attr($spacing_class); ?> | vf-u-margin__bottom--0">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
     <?php
   //Additional headings
