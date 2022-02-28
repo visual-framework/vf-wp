@@ -1,0 +1,243 @@
+{
+    "key": "group_621c9cc1beb6f",
+    "title": "VF Hero Blog",
+    "fields": [
+        {
+            "key": "field_621c9cc1c7875",
+            "label": "Hero",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_621c9cc1c78f8",
+            "label": "Heading",
+            "name": "vf_hero_heading",
+            "type": "text",
+            "instructions": "Use the placeholder <code> %1$s<\/code> for the blog name.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "%1$s",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_621c9cc1c7978",
+            "label": "Subheading",
+            "name": "vf_hero_subheading",
+            "type": "text",
+            "instructions": "Leave blank for an introduction from the contentHub",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_621c9cc1c79ed",
+            "label": "Text",
+            "name": "vf_hero_text",
+            "type": "wysiwyg",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_621c9cc1c7a68",
+            "label": "Additional link 1",
+            "name": "vf_hero_additional_heading_1",
+            "type": "link",
+            "instructions": "(Optional) The link will appear above the title",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_621c9cc1c7ae2",
+            "label": "Additional link 2",
+            "name": "vf_hero_additional_heading_2",
+            "type": "link",
+            "instructions": "(Optional) The link will appear above the title",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_621c9cc1c7b48",
+            "label": "Inline link",
+            "name": "vf_hero_link",
+            "type": "link",
+            "instructions": "(Optional) The link will appear after the introduction text. Example: 'Read more'",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_621c9cc1c7bdf",
+            "label": "Background image",
+            "name": "vf_hero_image",
+            "type": "image",
+            "instructions": "Recommended size: 2000×400",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium_large",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpeg,jpg,png"
+        },
+        {
+            "key": "field_621c9cc1c7c74",
+            "label": "Spacing",
+            "name": "vf_hero_spacing",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default",
+                "800": "800",
+                "1200": "1200",
+                "1600": "1600"
+            },
+            "default_value": "default",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_621c9cc1c7d09",
+            "label": "Navigation",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_621c9cc1c7da0",
+            "label": "Enable Navigation",
+            "name": "vf_navigation_enable",
+            "type": "true_false",
+            "instructions": "Toggle off to disable the navigation bar.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_621c9cc1c7e36",
+            "label": "Heading link",
+            "name": "vf_hero_url",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "vf_container",
+                "operator": "==",
+                "value": "vf_wp_hero_blog"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "VF-Hero container for blog pages",
+    "modified": 1646044300
+}
