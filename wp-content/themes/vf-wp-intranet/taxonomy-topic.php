@@ -8,13 +8,16 @@ $title = $vf_theme->get_title();
 
 ?>
 
-<section class="vf-intro | vf-u-margin__bottom--0">
+<section class="embl-grid embl-grid--has-centered-content | vf-content | vf-u-margin__bottom--0">
   <div>
     <!-- empty -->
   </div>
-  <div class="vf-stack">
-    <h1 class="vf-intro__heading">
-      Topic: <?php echo single_tag_title(); ?>
+  <div>
+    <h3 class="vf-text vf-text-heading--3 | vf-u-margin__bottom--0">
+      Topic:
+    </h3>
+    <h1>
+      <?php echo single_tag_title(); ?>
     </h1>
   </div>
 </section>
@@ -108,7 +111,7 @@ $title = $vf_theme->get_title();
 </article>
   <article class="vf-card vf-card--brand vf-card--bordered">
 <div class="vf-card__content | vf-stack vf-stack--400">
-  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/internal-information/community-blog/">Community blog<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/internal-information/updates/">Important updates<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
       </svg>
     </a></h3>
@@ -117,8 +120,20 @@ $title = $vf_theme->get_title();
   </div>
 </section>
 
+<style>
+  .vf-form__label {
+    font-size: 16px;
+  }
+  .vf-form__legend {
+    font-size: 19px;
+  }
+  .vf-form__checkbox+.vf-form__label::before  {
+    position: unset;
+  }
+</style>
+
 <script type="text/javascript">
-  jplist.init();
+  jplist.init({deepLinking: true});
 </script>
 
 <?php

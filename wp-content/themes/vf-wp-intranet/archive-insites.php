@@ -163,7 +163,7 @@ $title = $vf_theme->get_title();
 </section>
 
 <script type="text/javascript">
-  jplist.init({deepLinking: true});
+  jplist.init();
 
 </script>
 

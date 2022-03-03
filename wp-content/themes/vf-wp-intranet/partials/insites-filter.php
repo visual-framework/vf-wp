@@ -25,7 +25,7 @@ $topic_terms = get_terms(
       <input id="location-1" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="location" data-or="location"
         value="all"
-        data-id="location-all" class="vf-form__checkbox" checked>
+        data-id="location-all" class="vf-form__checkbox">
       <label for="location-1" class="vf-form__label">All EMBL Sites</label>
     </div>
 
@@ -47,6 +47,7 @@ $topic_terms = get_terms(
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
   <legend class="vf-form__legend">Topic</legend>
+  <?php /*
   <div class="vf-form__item vf-form__item--checkbox" >
       <input id="topic-1" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path="default" data-group="data-group-1" data-name="topic" data-or="topic"
@@ -69,7 +70,7 @@ $topic_terms = get_terms(
       $counter++;
     }
     ?>
-  <?php /*
+  */ ?>
   <div class="vf-form__item vf-stack">
   <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter" data-group="data-group-1" >
   <option value="0" data-path="default" >All</option>
@@ -82,13 +83,15 @@ $topic_terms = get_terms(
       <?php } ?>
     </select>
     </div>
-    */ ?>
   </fieldset>
 </form>
 
 <style>
   .vf-form__label {
-    font-size: 14px;
+    font-size: 16px;
+  }
+  .vf-form__select {
+    font-size: 16px;
   }
   .vf-form__legend {
     font-size: 19px;

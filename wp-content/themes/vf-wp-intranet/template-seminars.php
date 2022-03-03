@@ -170,7 +170,7 @@ get_header();
 
 <style>
   .vf-form__label {
-    font-size: 14px;
+    font-size: 16px;
   }
   .vf-form__legend {
     font-size: 19px;
