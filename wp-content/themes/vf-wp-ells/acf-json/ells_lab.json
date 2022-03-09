@@ -103,6 +103,25 @@
             "first_day": 1
         },
         {
+            "key": "field_62288f85ad768",
+            "label": "Time",
+            "name": "labs_time",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5f50e544b3a55",
             "label": "Application deadline",
             "name": "labs_application_deadline",
@@ -270,5 +289,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1638355834
+    "modified": 1646825647
 }
