@@ -264,7 +264,7 @@ html:not(.vf-disable-deprecated) [class*=with-title-block][class*=theme] .vf-mas
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 3.0.0-rc.1
+ * Version: 3.0.0-rc.2
  * Location: components/vf-core-components/vf-navigation
  */
 .vf-navigation__link {
@@ -321,7 +321,7 @@ html:not(.vf-disable-deprecated) [class*=with-title-block][class*=theme] .vf-mas
   position: sticky;
   top: 0;
   background: white;
-  z-index: 1001;
+  z-index: 1986;
 }
 .vf-navigation--on-this-page.vf-u-fullbleed .vf-navigation__link:focus, .vf-navigation--on-this-page.vf-u-fullbleed .vf-navigation__link:hover {
   text-decoration: none;
