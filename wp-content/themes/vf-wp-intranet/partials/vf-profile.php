@@ -26,7 +26,7 @@ $title = get_post_meta( $post->ID, 'full_name', true);
     <a href="<?php echo get_the_permalink(); ?>" class="vf-profile__link"><?php echo get_the_title(); ?></a>
   </h3>
   <p class="vf-profile__job-title | people-search"><?php echo esc_html($position); ?></p>
-  <p class="vf-profile__text">
+  <p class="vf-profile__text | people-search">
     <?php
             if (!empty($team_1) && ($primary_1 == 1)) { ?>
     <a data-embl-js-group-link="<?php echo esc_attr($team_1); ?>" class="vf-link"
