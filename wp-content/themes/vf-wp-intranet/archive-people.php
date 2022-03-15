@@ -4,7 +4,6 @@ get_header();
 
 ?>
 
-
 <section class="vf-intro | vf-u-margin__bottom--0">
   <div>
     <!-- empty -->
@@ -13,35 +12,80 @@ get_header();
     <h1 class="vf-intro__heading">
       <?php wp_title(''); ?>
     </h1>
+    <h2 class="vf-intro__subheading" style="margin-bottom: 2rem;">Find anyone at EMBL.
+    </h2>
+    <p class="vf-intro__text">Search for a person in the <strong>People</strong> tab by name or job title. Or you can
+      use the <strong>Teams</strong> tab to find people by research area or organisational group.</p>
   </div>
 </section>
 
-<div
-  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
+<div class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500">
   <div></div>
-  <form action="#eventsFilter" onsubmit="return false;"
-    class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
-    <div class="vf-sidebar__inner">
-      <div class="vf-form__item">
-        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
-        <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
-          data-name="my-filter-1" data-path=".people-search" data-id="search" type="text" value=""
-          placeholder="Filter by person name or job title" data-clear-btn-id="name-clear-btn"
-          class="vf-form__input | vf-search__input" />
-      </div>
-      <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
-        <span class="vf-button__text">Filter</span>
-      </button>
+
+  <div>
+    <div class="vf-tabs | vf-u-margin__bottom--400">
+      <ul class="vf-tabs__list" data-vf-js-tabs>
+        <li class="vf-tabs__item">
+          <a class="vf-tabs__link" href="#vf-tabs__section--1" onclick="ClearFields();">Person</a>
+        </li>
+        <li class="vf-tabs__item">
+          <a class="vf-tabs__link" href="#vf-tabs__section--2" onclick="ClearFields();">Team</a>
+        </li>
+      </ul>
     </div>
-  </form>
+    <div class="vf-tabs-content" data-vf-js-tabs-content>
+      <section class="vf-tabs__section" id="vf-tabs__section--1">
+        <div class="vf-form__item">
+          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+            data-group="data-group-1" data-name="my-filter-1" data-path=".people-search" type="text" value=""
+            placeholder="Search by name or job title" data-clear-btn-id="name-clear-btn">
+        </div>
+        <button style="display: none;" type="button" id="name-clear-btn"
+          class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
+          <span class="vf-button__text">Reset</span>
+        </button>
+      </section>
+      <section class="vf-tabs__section" id="vf-tabs__section--2">
+        <div class="vf-form__item">
+          <input id="search2" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+            data-group="data-group-1" data-name="my-filter-1" data-path=".team-search" type="text" value=""
+            placeholder="Search by organisational group" data-clear-btn-id="name-clear-btn">
+        </div>
+        <button style="display: none;" type="button" id="name-clear-btn"
+          class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
+          <span class="vf-button__text">Reset</span>
+        </button>
+
+        <fieldset class="vf-form__fieldset | vf-stack vf-stack--400 | vf-u-margin__top--200">
+          <div class="vf-cluster vf-cluster--400">
+            <div class="vf-cluster__inner">
+              <div class="vf-form__item vf-form__item--radio">
+                <input id="teamasc" class="vf-form__radio" type="radio" data-jplist-control="radio-buttons-sort"
+                  data-path=".team-search" data-group="data-group-1" data-order="asc" data-type="text" data-name="sort1"
+                  name="sort1" /> <label for="teamasc" class="vf-form__label">Sort A-Z</label>
+              </div>
+
+              <div class="vf-form__item vf-form__item--radio">
+                <input id="teamdsc" class="vf-form__radio" type="radio" data-jplist-control="radio-buttons-sort"
+                  data-path=".team-search" data-group="data-group-1" data-order="desc" data-type="text"
+                  data-name="sort1" name="sort1" /> <label for="teamdsc" class="vf-form__label">Sort
+                  Z-A</label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </section>
+    </div>
+  </div>
+  <div></div>
 </div>
 
-<section class="embl-grid embl-grid--has-centered-content">
-  <div>
-  </div>
+<div
+  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--800 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
+  <div></div>
   <div>
     <div data-jplist-group="data-group-1">
-    <?php
+      <?php
           $forthcomingLoop = new WP_Query (array( 
           'post_type' => 'people',
           'orderby' => 'title', 
@@ -52,10 +96,11 @@ get_header();
           $wp_query   = NULL;
           $wp_query   = $forthcomingLoop;
           $current_month = ""; ?>
-          <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
-          <?php
+      <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
+      <?php
          include(locate_template('partials/vf-profile.php', false, false)); ?>
-          <?php endwhile;?>      <!-- no results control -->
+      <?php endwhile;?>
+      <!-- no results control -->
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
         <p class="vf-summary__text">
@@ -75,7 +120,7 @@ get_header();
     </style>
 
     <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-      data-items-per-page="50" data-current-page="0" data-name="pagination1">
+      data-items-per-page="15" data-current-page="0" data-name="pagination1">
       <ul class="vf-pagination__list">
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">
@@ -96,12 +141,13 @@ get_header();
         </li>
       </ul>
     </nav>
-
   </div>
-  <div>
-  <article class="vf-card vf-card--brand vf-card--bordered">
+
+  <div class="vf-stack vf-stack--400 | vf-content">
+    <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/search/?searchQuery=jo&activeFacet=Alumni#stq=">Alumni search<svg
+        <h3 class="vf-card__heading"><a class="vf-card__link"
+            href="https://www.embl.org/search/?searchQuery=jo&activeFacet=Alumni#stq=">Alumni search<svg
               aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
               height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -112,11 +158,21 @@ get_header();
         <p class="vf-card__text">Search for EMBL Alumni on embl.org</p>
       </div>
     </article>
+    <p><a href="https://www.embl.org/internal-information/departments-and-teams/">Departments and teams
+      </a></p>
+    <p><a href="https://www.embl.org/internal-information/documents/embls-organisational-chart/">EMBL’s organisational
+        chart
+      </a></p>
   </div>
-</section>
+</div>
+</div>
 
 <script type="text/javascript">
+  function ClearFields() {
+    document.getElementById("name-clear-btn").click();
+  }
   jplist.init();
+
 </script>
 
 <?php

@@ -15,7 +15,7 @@ add_action(
 
     register_post_type('learninglab', array(
       'labels'              => llabs_get_labels(),
-      'description'         => __('LearningLabs', 'vfwp'),
+      'description'         => __('Teacher training', 'vfwp'),
       'public'              => true,
       'hierarchical'        => true,
       'exclude_from_search' => false,
@@ -25,13 +25,13 @@ add_action(
       'show_in_nav_menus'   => true,
       'show_in_admin_bar'   => true,
       'show_in_rest'        => true,
-      'rest_base'           => "learninglab",
+      'rest_base'           => "training",
       'menu_icon'           => 'dashicons-edit-page',
       'capability_type'     => 'page',
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
       'has_archive'         => true,
       'rewrite'             => array(
-        'slug' => 'learninglab'
+        'slug' => 'training'
       ),
       'query_var'           => true,
       'can_export'          => true,

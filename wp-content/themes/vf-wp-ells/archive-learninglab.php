@@ -5,17 +5,16 @@ get_header();
 
 <div class="vf-grid vf-grid__col-3 | vf-content">
   <div class="vf-grid__col--span-2">
-    <h1 class="vf-text vf-text-heading--1">LearningLABs
+    <h1 class="vf-text vf-text-heading--1">Teacher training
     </h1>
-    <p>Our professional development opportunities for teachers aim to empower educators to share the latest developments in life sciences with their students. Our courses are open to science educators teaching at secondary schools in Europe and beyond.
-
+    <p>Our professional development opportunities for teachers aim to empower educators to share the latest developments in life sciences with their students. Our courses are open to science educators teaching at secondary schools in Europe and beyond and held in English unless stated otherwise. All of our trainings are <strong>free of charge</strong>. 
     </p>
-    <p>The ELLS teacher training courses (LearningLABs) take place either face-to-face over 2–3 days or virtually across several weeks. All courses provide an update on current research and offer teaching and learning materials that bring real-life science into the classroom. Face-to-face courses include training in laboratory or bioinformatics practices. All of our training is free of charge for participants.
-
-</p>
+    <p>The ELLS <strong>LearningLABs</strong> are teacher training courses held face-to-face over 2–3 days or virtually across several weeks. All courses provide an update on current scientific research and offer teaching and learning materials that bring real-life science into the classroom. Face-to-face courses include training in laboratory or bioinformatics practices. 
+    </p>
+    <p>The ELLS <strong>TeachingBASE</strong> workshops are 60-120 minute long teacher training sessions that provide hands-on training on using classroom-ready teaching and learning materials developed by ELLS. All TeachingBASE workshops take place live on Zoom. 
+    </p>
   </div>
   <div>
-  <h3>Upcoming LearningLAB</h3>
   <?php
  $current_date = date('Ymd');
  $args = array(
@@ -33,7 +32,9 @@ get_header();
 // The Query
 $the_query = new WP_Query( $args );
 // The Loop
-if ( $the_query->have_posts() ) {
+if ( $the_query->have_posts() ) { ?>
+    <h3>Upcoming LearningLAB</h3>
+    <?php
     while ( $the_query->have_posts() ) {
         $the_query->the_post();
         include(locate_template('partials/vf-card-llabs-upcoming.php', false, false));

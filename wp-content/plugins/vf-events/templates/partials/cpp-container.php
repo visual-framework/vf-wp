@@ -66,7 +66,7 @@
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/nikon-logo.jpg" style="width: 120px">
       </figure>
       <figure class="vf-figure">
-        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Promega-logo.jpg" style="width: 120px">
+        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/promega-logo.png" style="width: 120px">
       </figure>
       <figure class="vf-figure">
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Roche-logo.jpg" style="width: 120px">

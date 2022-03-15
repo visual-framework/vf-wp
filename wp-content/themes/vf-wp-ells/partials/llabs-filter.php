@@ -180,7 +180,7 @@ $archive = home_url('/?post_type=learninglab');
 	    $count++;
 	  } ?>
     </fieldset>
-
+    <div>
     <button class="vf-button vf-button--primary vf-button--sm" type="submit">
       <?php esc_html_e('Apply filters', 'theme'); ?>
     </button>
@@ -188,4 +188,5 @@ $archive = home_url('/?post_type=learninglab');
     <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/learninglab'; ?>">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
+    </div>
 </form>

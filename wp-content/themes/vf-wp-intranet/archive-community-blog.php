@@ -109,8 +109,20 @@ $title = $vf_theme->get_title();
   </div>
 </section>
 
+<style>
+  .vf-form__label {
+    font-size: 14px;
+  }
+  .vf-form__legend {
+    font-size: 19px;
+  }
+  .vf-form__checkbox+.vf-form__label::before  {
+    position: unset;
+  }
+</style>
+
 <script type="text/javascript">
-  jplist.init();
+  jplist.init({deepLinking: true});
 </script>
 
 <?php

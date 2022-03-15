@@ -37,4 +37,29 @@ $embl_location_terms = get_terms(
     }
     ?>
   </fieldset>
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+  <legend class="vf-form__legend">Type</legend>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="type-1" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path="default" data-group="data-group-1" data-name="type" data-or="type"
+        value="All"
+        data-id="type-all" class="vf-form__checkbox" checked>
+      <label for="type-1" class="vf-form__label">All</label>
+    </div>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="type-2" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".type" data-group="data-group-1" data-name="type" data-or="type"
+        value="Internal news"
+        data-id="type-news" class="vf-form__checkbox">
+      <label for="type-2" class="vf-form__label">Internal news</label>
+    </div>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="type-3" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".type" data-group="data-group-1" data-name="type" data-or="type"
+        value="Important updates"
+        data-id="type-updates" class="vf-form__checkbox">
+      <label for="type-3" class="vf-form__label">Important updates</label>
+    </div>
+
+  </fieldset>
 </form>

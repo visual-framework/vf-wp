@@ -43,6 +43,10 @@ require_once('blocks/vfwp-navigation-on-this-page/index.php');
 require_once('blocks/vfwp-masthead/index.php');
 */
 
+//evaluate if xml-rpc is required and disable or restrict the access
+add_filter('xmlrpc_enabled', '__return_false');
+
+
 if (vf_debug()) {
   require_once('blocks/vfwp-debug/index.php');
 }

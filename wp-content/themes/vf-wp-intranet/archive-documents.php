@@ -104,6 +104,21 @@ get_header();
   <div></div>
 </section>
 
+<style>
+  .vf-form__label {
+    font-size: 16px;
+  }
+  .vf-form__select {
+    font-size: 16px;
+  }
+  .vf-form__legend {
+    font-size: 19px;
+  }
+  .vf-form__checkbox+.vf-form__label::before  {
+    position: unset;
+  }
+</style>
+
 <script type="text/javascript">
   jplist.init();
 </script>

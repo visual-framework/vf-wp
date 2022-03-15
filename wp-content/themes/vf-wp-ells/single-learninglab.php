@@ -18,6 +18,7 @@ $fee = get_field('labs_fee');
 $contact = get_field('labs_contact');
 $contact_disp = get_field('labs_contact_displayed');
 $organisers = get_field('labs_organisers');
+$time = get_field('labs_time');
 $registration_link = get_field('labs_application_form_link');
 $social_url = get_the_permalink();
 $title = esc_html(get_the_title());
@@ -62,6 +63,10 @@ $title = esc_html(get_the_title());
       ?>
         </span>
       </p>
+      <?php if ($time) { ?>
+        <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Time:</span>&nbsp;<span
+          class="vf-u-text-color--grey"><?php echo esc_html($time); ?></span></p>
+      <?php } ?>
       <?php if ( ! empty($application_deadline)) { ?>
       <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Application
           deadline:</span> <span class="vf-u-text-color--grey"><?php echo esc_html($application_deadline); ?></span></p>

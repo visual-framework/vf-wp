@@ -177,7 +177,7 @@ $archive = home_url('/?post_type=teachingbase');
       </select>
       <?php } ?>
     </fieldset>
-
+    <div>
     <button class="vf-button vf-button--primary vf-button--sm" type="submit">
       <?php esc_html_e('Apply filters', 'theme'); ?>
     </button>
@@ -185,4 +185,5 @@ $archive = home_url('/?post_type=teachingbase');
     <a class="vf-button vf-button--sm vf-button--tertiary" href="/teachingbase">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
+    </div>
 </form>
