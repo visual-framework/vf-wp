@@ -29,7 +29,7 @@ get_header();
           <a class="vf-tabs__link" href="#vf-tabs__section--1" onclick="ClearFields();">Person</a>
         </li>
         <li class="vf-tabs__item">
-          <a class="vf-tabs__link" href="#vf-tabs__section--2" onclick="ClearFields();">Team members</a>
+          <a class="vf-tabs__link" href="#vf-tabs__section--2" onclick="ClearFields();">Team</a>
         </li>
       </ul>
     </div>
@@ -38,8 +38,7 @@ get_header();
         <div class="vf-form__item">
           <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
             data-group="data-group-1" data-name="my-filter-1" data-path=".people-search" type="text" value=""
-            placeholder="Search by name or job title
-" data-clear-btn-id="name-clear-btn">
+            placeholder="Search by name or job title" data-clear-btn-id="name-clear-btn">
         </div>
         <button style="display: none;" type="button" id="name-clear-btn"
           class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">

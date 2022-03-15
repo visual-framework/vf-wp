@@ -84,7 +84,7 @@ function sortByStartDate($param1, $param2) {
                 // echo '<span>' . substr($newinfo, strpos($newinfo, 'Place'));'</span></p>';
 
                 // Seminar type
-                echo '<p class="vf-summary__text | type" style="font-size: 16px; font-weight: 500;">' . strstr($info, '<', true) . '</p>';
+                echo '<p class="vf-summary__text | type" style="font-size: 16px; font-weight: 500;">' . $event->field_embl_seminars_type . '</p>';
 
                 // Location
                 echo '<p class="vf-summary__location | location">' . $event->field_event_location . '</p>';
