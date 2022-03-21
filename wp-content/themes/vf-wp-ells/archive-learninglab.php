@@ -33,7 +33,7 @@ get_header();
 $the_query = new WP_Query( $args );
 // The Loop
 if ( $the_query->have_posts() ) { ?>
-    <h3>Upcoming LearningLAB</h3>
+    <h3>Upcoming training</h3>
     <?php
     while ( $the_query->have_posts() ) {
         $the_query->the_post();
