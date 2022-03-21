@@ -198,11 +198,6 @@
                         "field": "field_5e958b24aa2e0",
                         "operator": "==",
                         "value": "98"
-                    },
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "default"
                     }
                 ]
             ],
@@ -1524,5 +1519,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1642671260
+    "modified": 1647868687
 }
