@@ -7,6 +7,9 @@ setup_postdata($post);
 
 global $vf_theme;
 $title = get_the_title();
+$keyword = get_field('keyword');
+
+
 ?>
 <?php 
 
