@@ -23,7 +23,7 @@
             "label": "Search keyword",
             "name": "keyword",
             "type": "text",
-            "instructions": "This is not yet implemented. Please use excerpt field instead.",
+            "instructions": "Enter a comma-separated keyword list to improve the search results",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {

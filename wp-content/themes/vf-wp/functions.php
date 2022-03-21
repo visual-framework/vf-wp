@@ -100,13 +100,7 @@ function vf_wp_theme__acf_settings_load_json($paths) {
   return $paths;
 }
 
-//Adds vf class to links in category list
-function add_class_to_category( $thelist, $separator, $parents){
-  $class_to_add = 'vf-link';
-  return str_replace('<a href="',  '<a class="'. $class_to_add. '" href="', $thelist);
-}
 
-add_filter('the_category', __NAMESPACE__ . '\\add_class_to_category',10,3);
 
 // Search filter
 function search_filter($query) {

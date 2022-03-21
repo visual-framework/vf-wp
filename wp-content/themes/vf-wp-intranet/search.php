@@ -6,39 +6,52 @@ if (class_exists('VF_Global_Header')) {
 if (class_exists('VF_Intranet_Breadcrumbs')) {
   VF_Plugin::render(VF_Intranet_Breadcrumbs::get_plugin('vf_wp_breadcrumbs_intranet'));
 }
-$total_results = $wp_query->found_posts;
 
-$pages_count = get_posts(array('post_type' => 'page', 'numberposts' => -1, 's' => get_search_query() ));
-$pages_count_final = count($pages_count);
+// Pages search query
+$page_args = array(
+  'post_type' => 'page',
+  'posts_per_page' => -1,
+   's' => get_search_query(), 
+   'relevanssi' => true,
+);
+$page_query = new WP_Query( $page_args );
 
-$insites_count = get_posts(array('post_type' => 'insites', 'numberposts' => -1, 's' => get_search_query() ));
-$insites_count_final = count($insites_count);
+// People search query
+$people_args = array(
+  'post_type' => 'people',
+  'posts_per_page' => -1,
+   's' => get_search_query(), 
+   'relevanssi' => true,
+);
+$people_query = new WP_Query( $people_args );
 
-$documents_count = get_posts(array('post_type' => 'documents', 'numberposts' => -1, 's' => get_search_query() ));
-$documents_count_final = count($documents_count);
+// documents search query
+$documents_args = array(
+  'post_type' => 'documents',
+  'posts_per_page' => -1,
+   's' => get_search_query(), 
+   'relevanssi' => true,
+);
+$documents_query = new WP_Query( $documents_args );
 
-$events_count = get_posts(array('post_type' => 'events', 'numberposts' => -1, 's' => get_search_query() ));
-$events_count_final = count($events_count);
+// People search query
+$insites_args = array(
+  'post_type' => 'insites',
+  'posts_per_page' => -1,
+   's' => get_search_query(), 
+   'relevanssi' => true,
+);
+$insites_query = new WP_Query( $insites_args );
 
-$people_count = get_posts(array('post_type' => 'people', 'numberposts' => -1,  'meta_query' => array(
-  'relation' => 'OR',
-array(
- 'key' => array('positions_name_1', 'positions_name_2', 'positions_name_3', 'positions_name_4'),
- 'value' => get_search_query(),
- 'compare' => 'LIKE'
-),
-array(
- 'key' => array('team_name_1', 'team_name_2', 'team_name_3', 'team_name_4'),
- 'value' => get_search_query(),
- 'compare' => 'LIKE'
-),
-array(
- 'key' => 'post_title',
- 'value' => get_search_query(),
- 'compare' => 'LIKE'
-),
-)));
-$people_count_final = count($people_count);
+// People search query
+$events_args = array(
+  'post_type' => 'events',
+  'posts_per_page' => -1,
+   's' => get_search_query(), 
+   'relevanssi' => true,
+);
+$events_query = new WP_Query( $events_args );
+
 ?>
 
 <section class="vf-hero | vf-u-fullbleed | vf-hero--800 | vf-u-margin__bottom--0">
@@ -57,11 +70,9 @@ $people_count_final = count($people_count);
 </section>
 
 <?php
-
 if (class_exists('VF_Navigation')) {
   VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
 }
-
 ?>
 
 <section class="vf-intro | vf-u-margin__bottom--0">
@@ -122,122 +133,103 @@ if (class_exists('VF_Navigation')) {
 <section class="embl-grid | vf-u-margin__bottom--0" style="margin-top: 0px !important;">
   <div>
   </div>
-    <div class="vf-content">
-      <?php /*
-      <div class="vf-banner vf-banner--alert vf-banner--info | vf-u-margin__bottom--400">
-        <div class="vf-banner__content">
-          <p class="vf-banner__text">If you haven't found what you are looking for please use <a class="vf-banner__link"
-              href="<?php echo 'https://www.embl.org/search/?searchQuery=' . get_search_query() . '&activeFacet=#stq=' . get_search_query() ?>"
-              target="_blank">embl.org
-              search</a></p>
-        </div>
-      </div>
-        */ ?>
-      <div class="vf-tabs">
-        <ul class="vf-tabs__list" data-vf-js-tabs>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--pages">Pages (<?php echo $pages_count_final; ?>)</a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--people">People (<?php echo $people_count_final; ?>)</a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Docs
-              (<?php echo $documents_count_final; ?>)</a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--news">News (<?php echo $insites_count_final; ?>)</a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--events">Events (<?php echo $events_count_final; ?>)</a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--public">Public search <span class="st-info-container-count"></span></a>
-          </li>
-        </ul>
-      </div>
-</div>
+  <div class="vf-content">
+  <div class="vf-tabs">
+    <ul class="vf-tabs__list" data-vf-js-tabs>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--pages">Pages (<?php echo $page_query->post_count; ?>)
+        </a>
+      </li>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--people">People (<?php echo $people_query->post_count; ?>)</a>
+      </li>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents
+          (<?php echo $documents_query->post_count; ?>)</a>
+      </li>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--news">News (<?php echo $insites_query->post_count; ?>)</a>
+      </li>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--events">Events (<?php echo $events_query->post_count; ?>)</a>
+      </li>
+      <li class="vf-tabs__item">
+        <a class="vf-tabs__link" href="#vf-tabs__section--public">embl.org</a>
+      </li>
+    </ul>
+  </div>
+  </div>
 </section>
 <section class="embl-grid embl-grid--has-centered-content">
-<div>
+  <div>
   </div>
 
-      <?php
-      if ( have_posts() ) { ?>
-      <div class="vf-tabs-content" data-vf-js-tabs-content>
+  <div class="vf-tabs-content" data-vf-js-tabs-content>
 
-        <section class="vf-tabs__section" id="vf-tabs__section--pages">
-          <?php if (get_posts(array('post_type' => 'page', 's' => get_search_query() ))) { ?>
-          <?php while( have_posts() ) { the_post(); ?>
-          <?php if ( $post->post_type == 'page' ) { 
-           include(locate_template('partials/vf-summary--page.php', false, false));  ?>
-          <?php } } } else {echo 'No pages found. Please check the other content types.';}?>
-        </section>
-        <?php
-        rewind_posts(); ?>
+    <!-- Pages -->
+    <section class="vf-tabs__section" id="vf-tabs__section--pages">
+      <?php if ( $page_query->have_posts() ): ?>
+      <?php while ( $page_query->have_posts() ) : $page_query->the_post(); ?>
+      <?php include(locate_template('partials/vf-summary--page.php', false, false)); ?>
+      <?php endwhile; ?>
+      <?php else : ?>
+      <?php _e( 'No pages found. Please check the other content types.' ); ?>
+      <?php endif; ?>
+    </section>
+    <?php rewind_posts(); ?>
 
-        <section class="vf-tabs__section" id="vf-tabs__section--people">
-          <?php if (get_posts(array('post_type' => 'people', 'meta_query' => array(
-            'relation' => 'OR',
-        array(
-           'key' => array('positions_name_1', 'positions_name_2', 'positions_name_3', 'positions_name_4'),
-           'value' => get_search_query(),
-           'compare' => 'LIKE'
-        ),
-        array(
-           'key' => array('team_name_1', 'team_name_2', 'team_name_3', 'team_name_4'),
-           'value' => get_search_query(),
-           'compare' => 'LIKE'
-        ),
-        array(
-          'key' => 'post_title',
-          'value' => get_search_query(),
-          'compare' => 'LIKE'
-         ),
-     )))) { ?>
-          <?php while( have_posts() ) { the_post(); ?>
-          <?php if ( $post->post_type == 'people' ) { 
-             include(locate_template('partials/vf-profile.php', false, false));  ?>
-          <?php } } } else {echo 'No people found. Please check the other content types.';}?>
-        </section>
-        <?php
-        rewind_posts(); ?>
+    <!-- People -->
+    <section class="vf-tabs__section" id="vf-tabs__section--people">
+      <?php if ( $people_query->have_posts() ): ?>
+      <?php while ( $people_query->have_posts() ) : $people_query->the_post(); ?>
+      <?php include(locate_template('partials/vf-profile.php', false, false)); ?>
+      <?php endwhile; ?>
+      <?php else : ?>
+      <?php _e( 'No people found. Please check the other content types.' ); ?>
+      <?php endif; ?>
+    </section>
+    <?php rewind_posts(); ?>
 
-        <section class="vf-tabs__section" id="vf-tabs__section--documents">
-          <?php if (get_posts(array('post_type' => 'documents', 's' => get_search_query() ))) { ?>
-          <?php while( have_posts() ) { the_post(); ?>
-          <?php if ( $post->post_type == 'documents' ) { 
-           include(locate_template('partials/vf-summary--document.php', false, false));  ?>
-          <?php } } } else {echo 'No documents found. Please check the other content types.';}?>
-        </section>
-        <?php
-        rewind_posts(); ?>
+    <!-- Documents -->
+    <section class="vf-tabs__section" id="vf-tabs__section--documents">
+      <?php if ( $documents_query->have_posts() ): ?>
+      <?php while ( $documents_query->have_posts() ) : $documents_query->the_post(); ?>
+      <?php include(locate_template('partials/vf-summary--document.php', false, false)); ?>
+      <?php endwhile; ?>
+      <?php else : ?>
+      <?php _e( 'No documents found. Please check the other content types.' ); ?>
+      <?php endif; ?>
+    </section>
+    <?php rewind_posts(); ?>
 
-        <section class="vf-tabs__section" id="vf-tabs__section--news">
-          <?php if (get_posts(array('post_type' => 'insites', 's' => get_search_query() ))) { ?>
-          <?php while( have_posts() ) { the_post(); ?>
-          <?php if ( $post->post_type == 'insites' ) { 
-           include(locate_template('partials/vf-summary-insites-latest.php', false, false));  ?>
-          <?php } } } else {echo 'No articles found. Please check the other content types.';}?>
-        </section>
-        <?php
-        rewind_posts(); ?>
+    <!-- News -->
+    <section class="vf-tabs__section" id="vf-tabs__section--news">
+      <?php if ( $insites_query->have_posts() ): ?>
+      <?php while ( $insites_query->have_posts() ) : $insites_query->the_post(); ?>
+      <?php include(locate_template('partials/vf-summary-insites-latest.php', false, false)); ?>
+      <?php endwhile; ?>
+      <?php else : ?>
+      <?php _e( 'No articles found. Please check the other content types.' ); ?>
+      <?php endif; ?>
+    </section>
+    <?php rewind_posts(); ?>
 
-        <section class="vf-tabs__section" id="vf-tabs__section--events">
-          <?php if (get_posts(array('post_type' => 'events', 's' => get_search_query() ))) { ?>
-          <?php while( have_posts() ) { the_post(); ?>
-          <?php if ( $post->post_type == 'events' ) { 
-           include(locate_template('partials/vf-summary-events.php', false, false));  ?>
-          <?php } } } else {echo 'No events found. Please check the other content types.';}?>
-        </section>
-        <?php
-        rewind_posts(); 
-      } 
-        ?>
-        <section class="vf-tabs__section" id="vf-tabs__section--public">
-          <?php include(locate_template('partials/swiftype-search.php', false, false));  ?>
-        </section>
-      </div>
+    <!-- Events -->
+    <section class="vf-tabs__section" id="vf-tabs__section--events">
+      <?php if ( $events_query->have_posts() ): ?>
+      <?php while ( $events_query->have_posts() ) : $events_query->the_post(); ?>
+      <?php include(locate_template('partials/vf-summary-events.php.php', false, false)); ?>
+      <?php endwhile; ?>
+      <?php else : ?>
+      <?php _e( 'No events found. Please check the other content types.' ); ?>
+      <?php endif; ?>
+    </section>
+    <?php rewind_posts(); ?>
+
+    <section class="vf-tabs__section" id="vf-tabs__section--public">
+      <?php include(locate_template('partials/swiftype-search.php', false, false));  ?>
+    </section>
+  </div>
 </section>
 
 <?php
