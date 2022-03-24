@@ -43,11 +43,13 @@
     $communityBlogLoop_1 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('barcelona', 'all')
+            'terms'    => array('barcelona', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_1->have_posts()) : $communityBlogLoop_1->the_post();
@@ -64,11 +66,13 @@
     $communityBlogLoop_2 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('grenoble', 'all')
+            'terms'    => array('grenoble', 'all'),
         ) ) )); 
     $ids = array();
     while ($communityBlogLoop_2->have_posts()) : $communityBlogLoop_2->the_post();
@@ -85,11 +89,13 @@
     $communityBlogLoop_3 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('hamburg', 'all')
+            'terms'    => array('hamburg', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_3->have_posts()) : $communityBlogLoop_3->the_post();
@@ -106,11 +112,13 @@
     $communityBlogLoop_4 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('heidelberg', 'all')
+            'terms'    => array('heidelberg', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_4->have_posts()) : $communityBlogLoop_4->the_post();
@@ -127,11 +135,13 @@
     $communityBlogLoop_5 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('rome', 'all')
+            'terms'    => array('rome', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_5->have_posts()) : $communityBlogLoop_5->the_post();

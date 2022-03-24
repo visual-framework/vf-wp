@@ -20,6 +20,8 @@
             'posts_per_page' => 4,
             'post__not_in'   => array( get_the_ID() ),
             'no_found_rows'  => true,
+            'meta_key'		=> 'featured',
+            'meta_value'	=> true
           );
           $featured = new WP_Query ($args);
             while ($featured->have_posts()) : $featured->the_post(); 

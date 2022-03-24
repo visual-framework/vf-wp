@@ -322,7 +322,7 @@ function vf_wp_intranet_blog__init() {
     'taxonomies'          => array(
       'embl-location',
       'post_tag',
-      'topic'
+      'updates-topic'
     ),
   ));
   

@@ -37,7 +37,7 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "topic",
+            "taxonomy": "updates-topic",
             "field_type": "multi_select",
             "allow_null": 1,
             "add_term": 1,
@@ -45,6 +45,25 @@
             "load_terms": 1,
             "return_format": "object",
             "multiple": 0
+        },
+        {
+            "key": "field_623c26b4c94f7",
+            "label": "Featured",
+            "name": "cb_featured",
+            "type": "true_false",
+            "instructions": "Toggle on to display the article on the front page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         }
     ],
     "location": [
@@ -63,6 +82,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
-    "modified": 1633604189
+    "description": ""
 }
