@@ -1,4 +1,4 @@
-<div class="vf-summary-container">
+<div class="vf-summary-container | vf-u-background-color-ui--off-white | vf-u-fullbleed | vf-u-padding__top--500">
   <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link"
       href="/internal-information/updates">Important updates<svg aria-hidden="true"
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
@@ -38,7 +38,7 @@
 
     <div class="vf-tabs-content" data-vf-js-tabs-content>
       <section class="vf-tabs__section" id="vf-tabs__section--6">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_1 = new WP_Query (array(
     'post_type' => 'community-blog', 
@@ -61,7 +61,7 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--7">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_2 = new WP_Query (array(
     'post_type' => 'community-blog', 
@@ -84,7 +84,7 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--8">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_3 = new WP_Query (array(
     'post_type' => 'community-blog', 
@@ -107,7 +107,7 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--9">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_4 = new WP_Query (array(
     'post_type' => 'community-blog', 
@@ -130,7 +130,7 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--10">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_5 = new WP_Query (array(
     'post_type' => 'community-blog', 

@@ -15,7 +15,7 @@ foreach ($content as $key => $item) {
 function sortByStartDate($param1, $param2) {
     return strcmp($param1->field_event_start_date_time, $param2->field_event_start_date_time); }
     usort($content, "sortByStartDate");
-    $data = array_slice($content, 0, 4);
+    $data = array_slice($content, 0, 3);
     ?>
     <?php if( ! empty( $data ) ) { ?>
         <style>
@@ -45,7 +45,7 @@ function sortByStartDate($param1, $param2) {
           </p>
       </div>
       <div class="vf-section-content | vf-u-margin__top--600">
-        <div class="vf-grid vf-grid__col-4 | vf-content">
+        <div class="vf-grid vf-grid__col-3 | vf-content">
           <?php
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
