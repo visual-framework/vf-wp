@@ -48,6 +48,22 @@ function vf_wp_intranet_event_location_labels() {
     );
   }
 
+  function vf_wp_intranet_topic_updates_labels() {
+    return array(
+      'name'              => _x( 'Updates topics', 'taxonomy general name', 'vfwp' ),
+      'singular_name'     => _x( 'Updates topic', 'taxonomy singular name', 'vfwp' ),
+      'search_items'      => __( 'Search Updates topics', 'vfwp' ),
+      'all_items'         => __( 'All Updates topics', 'vfwp' ),
+      'parent_item'       => __( 'Parent Updates topic', 'vfwp' ),
+      'parent_item_colon' => __( 'Parent Updates topic:', 'vfwp' ),
+      'edit_item'         => __( 'Edit Updates topic', 'Updates vfwp' ),
+      'update_item'       => __( 'Update Updates topic', 'vfwp' ),
+      'add_new_item'      => __( 'Add New Updates topic', 'vfwp' ),
+      'new_item_name'     => __( 'New Updates topic Name', 'vfwp' ),
+      'menu_name'         => __( 'Updates topics', 'vfwp' ),
+    );
+  }
+
   /**
  * Action: `init`
  */
@@ -91,6 +107,18 @@ add_action(
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
       'rewrite'            => array( 'slug' => 'topic' ),
+      'show_in_rest'       => false,
+    ));
+
+    register_taxonomy('updates-topic', array('updates-topic'), array(
+      'labels'             => vf_wp_intranet_topic_labels(),
+      'hierarchical'       => true,
+      'show_ui'            => true,
+      'show_admin_column'  => true,
+      'query_var'          => true,
+      'publicly_queryable' => true,
+      'show_in_nav_menus'  => false,
+      'rewrite'            => array( 'slug' => 'topic-iu' ),
       'show_in_rest'       => false,
     ));
   }

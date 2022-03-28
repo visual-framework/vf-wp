@@ -185,7 +185,7 @@ $archive = home_url('/?post_type=learninglab');
       <?php esc_html_e('Apply filters', 'theme'); ?>
     </button>
 
-    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/learninglab'; ?>">
+    <a class="vf-button vf-button--sm vf-button--tertiary" href="<?php echo get_home_url() . '/training'; ?>">
       <?php esc_html_e('Reset filters', 'theme'); ?>
     </a>
     </div>

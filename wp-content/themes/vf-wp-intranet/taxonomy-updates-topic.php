@@ -8,13 +8,16 @@ $title = $vf_theme->get_title();
 
 ?>
 
-<section class="vf-intro | vf-u-margin__bottom--0">
+<section class="embl-grid embl-grid--has-centered-content | vf-content | vf-u-margin__bottom--0">
   <div>
     <!-- empty -->
   </div>
-  <div class="vf-stack">
-    <h1 class="vf-intro__heading">
-      <?php wp_title(''); ?>
+  <div>
+    <h3 class="vf-text vf-text-heading--3 | vf-u-margin__bottom--0">
+      Topic:
+    </h3>
+    <h1>
+      <?php echo single_tag_title(); ?>
     </h1>
   </div>
 </section>
@@ -42,7 +45,7 @@ $title = $vf_theme->get_title();
 
 <section class="embl-grid embl-grid--has-centered-content">
   <div>
-    <?php include(locate_template('partials/topic-updates-filter.php', false, false)); ?>
+  <?php include(locate_template('partials/topic-filter.php', false, false)); ?>
   </div>
   <div>
     <div data-jplist-group="data-group-1">
@@ -50,7 +53,7 @@ $title = $vf_theme->get_title();
         if ( have_posts() ) {
           while ( have_posts() ) {
             the_post();
-            include(locate_template('partials/vf-summary-community-blog.php', false, false)); 
+            include(locate_template('partials/vf-summary-topic.php', false, false)); 
           }
         }  ?>
       <!-- no results control -->
@@ -74,7 +77,7 @@ $title = $vf_theme->get_title();
     </style>
 
     <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-      data-items-per-page="50" data-current-page="0" data-name="pagination1">
+      data-items-per-page="10" data-current-page="0" data-name="pagination1">
       <ul class="vf-pagination__list">
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">
@@ -97,10 +100,18 @@ $title = $vf_theme->get_title();
     </nav>
 
   </div>
-  <div>
+  <div class="vf-stack vf-stack--400">
   <article class="vf-card vf-card--brand vf-card--bordered">
 <div class="vf-card__content | vf-stack vf-stack--400">
   <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/internal-information/news/">Internal news<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
+      </svg>
+    </a></h3>
+</div>
+</article>
+  <article class="vf-card vf-card--brand vf-card--bordered">
+<div class="vf-card__content | vf-stack vf-stack--400">
+  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/internal-information/updates/">Important updates<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
         <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
       </svg>
     </a></h3>
@@ -111,7 +122,7 @@ $title = $vf_theme->get_title();
 
 <style>
   .vf-form__label {
-    font-size: 14px;
+    font-size: 16px;
   }
   .vf-form__legend {
     font-size: 19px;

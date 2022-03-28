@@ -4,7 +4,10 @@ $acf_id = isset($acf_id) ? $acf_id : false;
 
 $heading = get_field('vf_jobs_heading', $acf_id);
 $heading = trim($heading);
-
+$filter_by =  get_field('vf_jobs_filter', $acf_id);
+$ref_num =  get_field('vf_jobs_reference_number', $acf_id);
+$group =  get_field('vf_jobs_group', $acf_id);
+$type =  get_field('vf_jobs_type', $acf_id);
 $site = get_field('vf_jobs_site', $acf_id);
 
 $limit = get_field('vf_jobs_limit', $acf_id);
@@ -32,7 +35,7 @@ if ( ! empty($keyword)) {
 // Otherwise use defaults
 } else if (function_exists('embl_taxonomy')) {
   $term = null;
-  $filter = get_field('vf_jobs_filter', $acf_id);
+  $filter = get_field('vf_jobs_filter_tax', $acf_id);
   switch ( $filter ) {
     case 'cluster':
       $term = embl_taxonomy_get_term(
@@ -67,6 +70,20 @@ if ( ! empty($keyword)) {
   if ($term instanceof WP_Term) {
     $vars[$filter_key] = $term->meta[EMBL_Taxonomy::META_NAME];
   }
+}
+
+$key_ref = 'filter-field-contains[field_jobs_reference_number]';
+$key_group = 'filter-field-contains[field_jobs_group]';
+$key_type = 'filter-field-contains[field_jobs_type]';
+
+if ($filter_by === 'ref_num' && ! empty($ref_num)) {
+  $vars[$key_ref] = $ref_num;
+}
+if ($filter_by === 'group' && ! empty($group)) {
+  $vars[$key_group] = $group;
+}
+if ($filter_by === 'type' && ! empty($type)) {
+  $vars[$key_type] = $type;
 }
 
 // Setup base API URL
@@ -132,3 +149,5 @@ $content = preg_replace(
 ?>
 </div>
 </div>
+
+

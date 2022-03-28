@@ -57,8 +57,6 @@ $close_wrap,
 
 <?php include(locate_template('partials/insites-container.php', false, false)); ?>
 
-<hr class="vf-divider">
-
 <?php include(locate_template('partials/community-blog-container.php', false, false)); ?>
 
 <?php include(locate_template('partials/seminars-container.php', false, false)); ?>

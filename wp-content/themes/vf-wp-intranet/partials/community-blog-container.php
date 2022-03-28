@@ -1,4 +1,4 @@
-<div class="vf-summary-container">
+<div class="vf-summary-container | vf-u-background-color-ui--off-white | vf-u-fullbleed | vf-u-padding__top--500">
   <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link"
       href="/internal-information/updates">Important updates<svg aria-hidden="true"
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
@@ -38,16 +38,18 @@
 
     <div class="vf-tabs-content" data-vf-js-tabs-content>
       <section class="vf-tabs__section" id="vf-tabs__section--6">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_1 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('barcelona', 'all')
+            'terms'    => array('barcelona', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_1->have_posts()) : $communityBlogLoop_1->the_post();
@@ -59,16 +61,18 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--7">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_2 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('grenoble', 'all')
+            'terms'    => array('grenoble', 'all'),
         ) ) )); 
     $ids = array();
     while ($communityBlogLoop_2->have_posts()) : $communityBlogLoop_2->the_post();
@@ -80,16 +84,18 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--8">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_3 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('hamburg', 'all')
+            'terms'    => array('hamburg', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_3->have_posts()) : $communityBlogLoop_3->the_post();
@@ -101,16 +107,18 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--9">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_4 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('heidelberg', 'all')
+            'terms'    => array('heidelberg', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_4->have_posts()) : $communityBlogLoop_4->the_post();
@@ -122,16 +130,18 @@
         </div>
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--10">
-        <div class="vf-grid | vf-grid__col-4">
+        <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_5 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 4,
+    'meta_key'		=> 'cb_featured',
+    'meta_value'	=> true,
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
             'field' => 'slug',
-            'terms'    => array('rome', 'all')
+            'terms'    => array('rome', 'all'),
         ) ) ));
     $ids = array();
     while ($communityBlogLoop_5->have_posts()) : $communityBlogLoop_5->the_post();

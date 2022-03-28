@@ -12,10 +12,10 @@
       </p>
   </div>
   <div class="vf-section-content | vf-u-margin__top--600">
-  <div class="vf-grid vf-grid__col-4 | vf-content">
+  <div class="vf-grid vf-grid__col-3 | vf-content">
       <?php $mainEventloop = new WP_Query (array(
         'post_type' => 'events', 
-        'posts_per_page' => 4,             
+        'posts_per_page' => 3,             
         'order' => 'ASC', 
         'orderby' => 'meta_value_num',
         'meta_key' => 'vf_event_internal_start_date', 'meta_query' => array(
