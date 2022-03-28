@@ -1,94 +1,223 @@
 {
-"key": "group_vf_jobs",
-"title": "VF Jobs (block)",
-"fields": [
-    {
-        "key": "field_vf_jobs_heading",
-        "label": "Heading",
-        "name": "vf_jobs_heading",
-        "type": "text",
-        "instructions": "",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": {
-            "width": "",
-            "class": "",
-            "id": ""
-        },
-        "default_value": "Latest jobs",
-        "placeholder": "",
-        "prepend": "",
-        "append": "",
-        "maxlength": ""
-    },
-    {
-        "key": "field_vf_jobs_limit",
-        "label": "Display",
-        "name": "vf_jobs_limit",
-        "type": "range",
-        "instructions": "How many jobs?",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": {
-            "width": "",
-            "class": "",
-            "id": ""
-        },
-        "default_value": 3,
-        "min": 1,
-        "max": 50,
-        "step": "",
-        "prepend": "",
-        "append": ""
-    },
-    {
-        "key": "field_60d300ba3349b",
-        "label": "",
-        "name": "vf_jobs_site",
-        "type": "radio",
-        "instructions": "",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": {
-            "width": "",
-            "class": "",
-            "id": ""
-        },
-        "choices": {
-            "embl": "EMBL",
-            "embl-ebi": "EMBL-EBI"
-        },
-        "allow_null": 0,
-        "other_choice": 0,
-        "default_value": "embl",
-        "layout": "vertical",
-        "return_format": "value",
-        "save_other_choice": 0
-    }
-],
-"location": [
-    [
+    "key": "group_vf_jobs",
+    "title": "VF Jobs (block)",
+    "fields": [
         {
-            "param": "vf_block",
-            "operator": "==",
-            "value": "vf_jobs"
+            "key": "field_vf_jobs_heading",
+            "label": "Heading",
+            "name": "vf_jobs_heading",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Latest jobs",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_vf_jobs_limit",
+            "label": "Display",
+            "name": "vf_jobs_limit",
+            "type": "range",
+            "instructions": "How many jobs?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 3,
+            "min": 1,
+            "max": 50,
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_60d300ba3349b",
+            "label": "",
+            "name": "vf_jobs_site",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "embl": "EMBL",
+                "embl-ebi": "EMBL-EBI"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "embl",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_62419b02e9147",
+            "label": "Filter by",
+            "name": "vf_jobs_filter",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "all": "All",
+                "ref_num": "Reference number",
+                "group": "Group\/Team",
+                "type": "Type",
+                "taxonomy": "EMBL Taxonomy"
+            },
+            "default_value": "all",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_62419dc7ac802",
+            "label": "Reference number",
+            "name": "vf_jobs_reference_number",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_62419b02e9147",
+                        "operator": "==",
+                        "value": "ref_num"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_62419df588101",
+            "label": "Group\/Team",
+            "name": "vf_jobs_group",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_62419b02e9147",
+                        "operator": "==",
+                        "value": "group"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_62419e1576805",
+            "label": "Type",
+            "name": "vf_jobs_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_62419b02e9147",
+                        "operator": "==",
+                        "value": "type"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "ADM": "Administration",
+                "BIO": "Bioinformatics",
+                "COM": "Communication",
+                "DTC": "Data Curation",
+                "GEN": "General Support Services",
+                "ITS": "IT and Infrastructure",
+                "OTH": "Other",
+                "POS": "Postdoctoral Fellowships",
+                "PRE": "Predoctoral Fellowships",
+                "RES": "Research",
+                "FAC": "Science Faculty",
+                "SSS": "Scientific Services and Support",
+                "SDE": "Software Development and Engineering",
+                "TEC": "Technical Support",
+                "TRA": "Trainee and Internships",
+                "TRN": "Training"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
-    [
-        {
-            "param": "block",
-            "operator": "==",
-            "value": "acf\/vf-jobs"
-        }
-    ]
-],
-"menu_order": 0,
-"position": "normal",
-"style": "seamless",
-"label_placement": "top",
-"instruction_placement": "label",
-"hide_on_screen": "",
-"active": true,
-"description": "",
-"modified": 1624443098
+    "location": [
+        [
+            {
+                "param": "vf_block",
+                "operator": "==",
+                "value": "vf_jobs"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-jobs"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1648470517
 }

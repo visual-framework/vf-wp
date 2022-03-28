@@ -107,11 +107,13 @@ class VF_Jobs extends VF_Plugin {
         }
       }
 
+
       $choices['term'] = sprintf(
         $format,
         __('Other jobs', 'vfwp'),
         __('select a term', 'vfwp')
       );
+
     }
 
     acf_add_local_field(
@@ -119,12 +121,19 @@ class VF_Jobs extends VF_Plugin {
         'parent' => 'group_vf_jobs',
         'key' => 'field_vf_jobs_filter',
         'label' => __('Show', 'vfwp'),
-        'name' => 'vf_jobs_filter',
+        'name' => 'vf_jobs_filter_tax',
         'type' => 'radio',
         'instructions' => '',
         'required' => 0,
-        'conditional_logic' => 0,
-        'wrapper' => array(
+        'conditional_logic' => array(
+          array(
+            array(
+              'field' => 'field_62419b02e9147',
+              'operator' => '==',
+              'value' => 'taxonomy',
+            ),
+          ),
+        ),        'wrapper' => array(
           'width' => '',
           'class' => '',
           'id' => '',
@@ -139,12 +148,13 @@ class VF_Jobs extends VF_Plugin {
       )
     );
 
+
     if (function_exists('embl_taxonomy')) {
       acf_add_local_field(
         array(
           'parent' => 'group_vf_jobs',
           'key' => 'field_vf_jobs_term',
-          'label' => __('Show Other', 'vfwp'),
+          'label' => __('EMBL Taxonomy', 'vfwp'),
           'name' => 'vf_jobs_term',
           'type' => 'taxonomy',
           'instructions' => '',
