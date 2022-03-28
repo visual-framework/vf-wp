@@ -6,7 +6,7 @@
 if( ! defined( 'ABSPATH' ) ) exit;
 
 include_once('admin-customize.php');
-// include_once('admin-reusable.php');
+include_once('admin-reusable.php');
 include_once('admin-lock.php');
 
 if ( ! class_exists('VF_Admin') ) :
@@ -15,14 +15,14 @@ class VF_Admin {
 
   // Sub-class instances
   private $admin_customize;
-  // private $admin_reusable;
+  private $admin_reusable;
   private $admin_lock;
 
   public function __construct() {
 
     // Initialize sub-class instances
     $this->admin_customize = new VF_Admin_Customize();
-    // $this->admin_reusable  = new VF_Admin_Reusable();
+    $this->admin_reusable  = new VF_Admin_Reusable();
     $this->admin_lock      = new VF_Admin_Lock();
 
     // Add admin hooks
