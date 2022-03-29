@@ -18,7 +18,8 @@
             "choices": {
                 "post": "Post",
                 "insites": "Internal news (intranet only)",
-                "community-blog": "Community blog (intranet only)"
+                "community-blog": "Important updates (intranet only)",
+                "both": "News + updates (intranet only)"
             },
             "default_value": false,
             "allow_null": 0,
@@ -258,6 +259,13 @@
                         "operator": "==",
                         "value": "community-blog"
                     }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "both"
+                    }
                 ]
             ],
             "wrapper": {
@@ -291,6 +299,13 @@
                         "field": "field_614da0994c7eb",
                         "operator": "==",
                         "value": "community-blog"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "both"
                     }
                 ]
             ],
@@ -357,7 +372,7 @@
         },
         {
             "key": "field_6166f0d01d927",
-            "label": "Topic",
+            "label": "Topic (News)",
             "name": "topic",
             "type": "taxonomy",
             "instructions": "Display the posts by a topic",
@@ -374,7 +389,7 @@
                     {
                         "field": "field_614da0994c7eb",
                         "operator": "==",
-                        "value": "community-blog"
+                        "value": "both"
                     }
                 ]
             ],
@@ -384,6 +399,43 @@
                 "id": ""
             },
             "taxonomy": "topic",
+            "field_type": "multi_select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_6242bf6b13076",
+            "label": "Topic (updates)",
+            "name": "topic_updates",
+            "type": "taxonomy",
+            "instructions": "Display the posts by a topic",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "community-blog"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "both"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "updates-topic",
             "field_type": "multi_select",
             "allow_null": 1,
             "add_term": 0,
@@ -412,6 +464,13 @@
                         "field": "field_614da0994c7eb",
                         "operator": "==",
                         "value": "community-blog"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "both"
                     }
                 ]
             ],
@@ -487,6 +546,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Latest News ACF Gutenberg block",
-    "modified": 1644232111
+    "description": "VF-WP Latest News ACF Gutenberg block"
 }
