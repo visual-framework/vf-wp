@@ -207,7 +207,7 @@
       <input id="type-17" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Hamburg Speaker"
-        data-id="name-faculty-seminar" class="vf-form__checkbox">
+        data-id="name-hamburg-speaker" class="vf-form__checkbox">
       <label for="type-17" class="vf-form__label">Hamburg Speaker&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -249,7 +249,7 @@
       <input id="type-23" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Next Generation"
-        data-id="name-mr" class="vf-form__checkbox">
+        data-id="name-ng" class="vf-form__checkbox">
       <label for="type-23" class="vf-form__label">Next Generation&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -271,6 +271,20 @@
         data-path=".phd_thesis_defense"
         data-mode="static"
         data-name="counter-phd-filter"
+        data-filter-type="path"></span></label>
+    </div>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="type-15" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
+        value="Planetary Biology Lectures"
+        data-id="name-planetary" class="vf-form__checkbox">
+      <label for="type-15" class="vf-form__label">Planetary Biology Lectures&nbsp;<span 
+        data-jplist-control="counter"
+        data-group="data-group-1"
+        data-format="({count})"
+        data-path=".planetary_biology_lectures"
+        data-mode="static"
+        data-name="counter-pbl-filter"
         data-filter-type="path"></span></label>
     </div>
     <div class="vf-form__item vf-form__item--checkbox">
@@ -348,7 +362,7 @@
       <input id="type-20" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Symbnet series"
-        data-id="name-external-postdoc" class="vf-form__checkbox">
+        data-id="name-symbnet" class="vf-form__checkbox">
       <label for="type-20" class="vf-form__label">Symbnet series&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -384,20 +398,6 @@
         data-path=".unit_seminar"
         data-mode="static"
         data-name="counter-unit-filter"
-        data-filter-type="path"></span></label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="type-15" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Planetary Biology Lectures"
-        data-id="name-planetary" class="vf-form__checkbox">
-      <label for="type-15" class="vf-form__label">Planetary Biology Lectures&nbsp;<span 
-        data-jplist-control="counter"
-        data-group="data-group-1"
-        data-format="({count})"
-        data-path=".planetary_biology_lectures"
-        data-mode="static"
-        data-name="counter-pbl-filter"
         data-filter-type="path"></span></label>
     </div>
   </fieldset>

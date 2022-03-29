@@ -38,7 +38,7 @@
   <?php } ?>
   <?php if ($show_topics == 1) { ?>
   <span class="vf-summary__category">
-    <?php
+  <?php if (get_post_type() === 'insites') { 
   $topic_terms = get_the_terms( $post->ID, 'topic' );
   if( $topic_terms ) {
           $topics_list = array(); 
@@ -46,6 +46,14 @@
             $topics_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</span>'; }
             echo implode(', ', $topics_list); }?>  </span>
   <?php } ?>
+  <?php if (get_post_type() === 'community-blog') { 
+  $topic_terms = get_the_terms( $post->ID, 'updates-topic' );
+  if( $topic_terms ) {
+          $topics_list = array(); 
+          foreach( $topic_terms as $term ) {
+            $topics_list[] = '<span style="color: #707372;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</span>'; }
+            echo implode(', ', $topics_list); }?>  </span>
+  <?php } } ?>
 </article>
 
 <!--/vf-summary-->

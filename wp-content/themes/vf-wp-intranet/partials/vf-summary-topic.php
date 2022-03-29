@@ -16,14 +16,7 @@ $locations_news = get_field('embl_location');
     <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
   <p class="vf-summary__text | vf-u-margin__top--200">
     <span class="vf-summary__category | type">
-  <?php if (get_post_type() === 'insites') { ?>
-    <span style="text-transform: none; color: #000; font-weight: 500;">Internal news</span>
-    <?php
-    if (($locations_news))
-    { ?>
-      <span style="color: #000">&nbsp;|&nbsp;</span>
-      <?php
-    }
+  <?php if (get_post_type() === 'insites') { 
     if (($locations_news)) { ?>
       <span class="vf-u-text-color--grey | location" style="text-transform: none;">
         <?php $location_list = [];
@@ -35,14 +28,7 @@ $locations_news = get_field('embl_location');
     </span>
   </p>
   <?php } ?>
-  <?php if (get_post_type() === 'community-blog') { ?>
-    <span style="text-transform: none; color: #000; font-weight: 500;">Important update</span>
-    <?php
-    if (($locations_blog))
-    { ?>
-      <span style="color: #000">&nbsp;|&nbsp;</span>
-      <?php
-    }
+  <?php if (get_post_type() === 'community-blog') { 
     if (($locations_blog)) { ?>
       <span class="vf-u-text-color--grey | location" style="text-transform: none;">
         <?php $location_list = [];
