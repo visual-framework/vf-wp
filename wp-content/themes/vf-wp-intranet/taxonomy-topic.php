@@ -14,7 +14,7 @@ $title = $vf_theme->get_title();
   </div>
   <div>
     <h3 class="vf-text vf-text-heading--3 | vf-u-margin__bottom--0">
-      Topic:
+      Internal news / Topic:
     </h3>
     <h1>
       <?php echo single_tag_title(); ?>
@@ -77,7 +77,7 @@ $title = $vf_theme->get_title();
     </style>
 
     <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-      data-items-per-page="10" data-current-page="0" data-name="pagination1">
+      data-items-per-page="50" data-current-page="0" data-name="pagination1">
       <ul class="vf-pagination__list">
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">

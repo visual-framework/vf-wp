@@ -37,7 +37,7 @@ $embl_location_terms = get_terms(
     }
     ?>
   </fieldset>
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+  <!-- <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
   <legend class="vf-form__legend">Type</legend>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-1" type="checkbox" data-jplist-control="checkbox-text-filter"
@@ -61,5 +61,5 @@ $embl_location_terms = get_terms(
       <label for="type-3" class="vf-form__label">Important updates</label>
     </div>
 
-  </fieldset>
+  </fieldset> -->
 </form>

@@ -106,7 +106,7 @@ add_action(
       'query_var'          => true,
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
-      'rewrite'            => array( 'slug' => 'topic' ),
+      'rewrite'            => array( 'slug' => 'news/topic' ),
       'show_in_rest'       => false,
     ));
 
@@ -118,7 +118,7 @@ add_action(
       'query_var'          => true,
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
-      'rewrite'            => array( 'slug' => 'topic-iu' ),
+      'rewrite'            => array( 'slug' => 'updates/topic' ),
       'show_in_rest'       => false,
     ));
   }
