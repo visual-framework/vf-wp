@@ -42,7 +42,7 @@
           <?php
     $communityBlogLoop_1 = new WP_Query (array(
     'post_type' => 'community-blog', 
-    'posts_per_page' => 4,
+    'posts_per_page' => 3,
     'meta_key'		=> 'cb_featured',
     'meta_value'	=> true,
     'tax_query' => array(
@@ -65,7 +65,7 @@
           <?php
     $communityBlogLoop_2 = new WP_Query (array(
     'post_type' => 'community-blog', 
-    'posts_per_page' => 4,
+    'posts_per_page' => 3,
     'meta_key'		=> 'cb_featured',
     'meta_value'	=> true,
     'tax_query' => array(
@@ -88,7 +88,7 @@
           <?php
     $communityBlogLoop_3 = new WP_Query (array(
     'post_type' => 'community-blog', 
-    'posts_per_page' => 4,
+    'posts_per_page' => 3,
     'meta_key'		=> 'cb_featured',
     'meta_value'	=> true,
     'tax_query' => array(
@@ -111,7 +111,7 @@
           <?php
     $communityBlogLoop_4 = new WP_Query (array(
     'post_type' => 'community-blog', 
-    'posts_per_page' => 4,
+    'posts_per_page' => 3,
     'meta_key'		=> 'cb_featured',
     'meta_value'	=> true,
     'tax_query' => array(
@@ -134,7 +134,7 @@
           <?php
     $communityBlogLoop_5 = new WP_Query (array(
     'post_type' => 'community-blog', 
-    'posts_per_page' => 4,
+    'posts_per_page' => 3,
     'meta_key'		=> 'cb_featured',
     'meta_value'	=> true,
     'tax_query' => array(
