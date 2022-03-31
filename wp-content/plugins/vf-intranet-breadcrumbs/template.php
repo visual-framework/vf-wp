@@ -18,11 +18,11 @@ if ( is_home() ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $internal_news_url . '" class="vf-breadcrumbs__link">' . $internal_news_name . '</a></li>';
    }
 
-// community blog
+// Important updates
 if ( is_post_type_archive('community-blog') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $community_url = get_post_type_archive_link('community-blog');
-  $community_name = 'Community blog';
+  $community_name = 'Important updates';
   echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $community_url . '" class="vf-breadcrumbs__link">' . $community_name . '</a></li>';
   echo '</ul>';
   echo '</nav>';
@@ -85,6 +85,17 @@ if (is_tag()){
 // topic taxonomy
 if (is_tax('topic')){
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
+  echo '<li class="vf-breadcrumbs__item"><a href="https://www.embl.org/internal-information/news" class="vf-breadcrumbs__link">Internal news</a>';
+  echo $currentBefore . 'Topic: ';
+  single_tag_title();
+  echo $currentAfter;
+  echo '</ul>';
+  echo '</nav>';
+
+}
+if (is_tax('updates-topic')){
+  echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
+  echo '<li class="vf-breadcrumbs__item"><a href="https://www.embl.org/internal-information/updates" class="vf-breadcrumbs__link">Important updates</a>';
   echo $currentBefore . 'Topic: ';
   single_tag_title();
   echo $currentAfter;
@@ -194,47 +205,59 @@ if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !i
   } elseif ( is_year() ) {
     echo $currentBefore . get_the_time('Y') . $currentAfter;
 
-    // community blog single post
+    // Important updates single post
   } elseif ( is_singular('community-blog') ) {
     $community_url = get_post_type_archive_link('community-blog');
-    $community_name = 'Community blog';
+    $community_name = 'Important updates';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $community_url . '" class="vf-breadcrumbs__link">' . $community_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+    echo $currentBefore;
+    single_post_title();
+    echo $currentAfter;
 
     // event single post
   } elseif ( is_singular('events') ) {
     $event_url = get_post_type_archive_link('events');
     $event_name = 'Internal events';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item">' . single_post_title() . '</li>';
+    echo $currentBefore;
+    single_post_title();
+    echo $currentAfter;
     
     // internal-news single post
   } elseif ( is_singular('insites') ) {
     $internal_news_url = get_post_type_archive_link('insites');
     $internal_news_name = 'News';
     echo '<li class="vf-breadcrumbs__item" false><a href="' . $internal_news_url . '" class="vf-breadcrumbs__link">' . $internal_news_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+    echo $currentBefore;
+    single_post_title();
+    echo $currentAfter;
 
     // documents single post
   } elseif ( is_singular('documents') ) {
     $documents_url = get_post_type_archive_link('documents');
     $documents_name = 'Documents';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $documents_url . '" class="vf-breadcrumbs__link">' . $documents_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+    echo $currentBefore;
+    single_post_title();
+    echo $currentAfter;
 
     // people single post
   } elseif ( is_singular('people') ) {
     $people_url = get_post_type_archive_link('people');
     $people_name = 'People';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $people_url . '" class="vf-breadcrumbs__link">' . $people_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+    echo $currentBefore;
+    single_post_title();
+    echo $currentAfter;
 
     // blog single post
   } elseif ( is_single() && !is_attachment() ) {
     $blog_url = get_post_type_archive_link('post');
     $blog_name = 'Blog';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $blog_url . '" class="vf-breadcrumbs__link">' . $blog_name . '</a></li>';
-    echo '<li class="vf-breadcrumbs__item" aria-current="location">' . single_post_title() . '</li>';
+    echo $currentBefore;
+    single_post_title();
+    echo $currentAfter;
 
   } elseif ( is_attachment() ) {
     $parent = get_post($post->post_parent);
