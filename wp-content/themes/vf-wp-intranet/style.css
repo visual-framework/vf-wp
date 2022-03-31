@@ -7,3 +7,12 @@ Template:      vf-wp
 Version:       1.0.0-beta.1
 Text Domain:	 vfwp
 */
+
+.vf-hero__heading {
+    font-size: 28px !important;
+}
+.vf-form__select,
+.vf-search__input,
+.vf-hero .vf-button {
+    font-size: 14px !important;
+}

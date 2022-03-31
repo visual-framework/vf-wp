@@ -7,7 +7,7 @@ $locations = get_field('cb_embl_location');
   <span class="vf-summary__date"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
       title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
-  <h3 class="vf-summary__title" style="font-size: 18px;">
+  <h3 class="vf-summary__title" <?php if (is_front_page()) { echo 'style="font-size: 18px;"'; } ?>>
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h3>
   <?php if (is_post_type_archive('community-blog')) { ?>
