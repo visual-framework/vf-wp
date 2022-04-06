@@ -63,4 +63,23 @@ function vf_wp_groups_update_menu_atts( $atts, $item, $args )
   return $atts;
 }
 
+// redirects blog posts
+add_action( 'template_redirect', 'blog_posts_redirect_externally' );
+function blog_posts_redirect_externally(){
+    $redirect = get_post_meta( get_the_ID(), 'post_redirect', true );
+    if (is_single()) {
+    if( $redirect ){
+        wp_redirect( $redirect );
+    } }
+}
+
+// add canonical link if redirected
+add_action('wp_head','add_canonical_link');
+function add_canonical_link(){
+  $redirect = get_post_meta( get_the_ID(), 'post_redirect', true );
+  if (is_single()) {
+  if( $redirect ){
+    echo '<link rel="canonical" href="' . $redirect. '" />';
+  } }    
+}
 ?>
