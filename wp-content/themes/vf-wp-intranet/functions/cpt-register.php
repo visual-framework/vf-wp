@@ -186,6 +186,7 @@ add_action(
       'show_in_admin_bar'   => true,
       'show_in_rest'        => true,
       'rest_base'           => "news",
+      'menu_position'       => 22,
       'menu_icon'           => 'dashicons-text-page',
       'capability_type'     => 'page',
       'supports'            => array('title', 'author', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
@@ -307,7 +308,7 @@ function vf_wp_intranet_blog__init() {
     'show_in_admin_bar'   => true,
     'show_in_rest'        => true,
     'rest_base'           => 'blog',
-    'menu_position'       => 20,
+    'menu_position'       => 23,
     'menu_icon'           => 'dashicons-groups',
     'capability_type'     => 'page',
     'supports'            => array('title', 'editor', 'revisions', 'author', 'excerpt', 'thumbnail'),
@@ -390,7 +391,7 @@ function vf_wp_intranet_events__init() {
     'show_in_admin_bar'   => true,
     'show_in_rest'        => true,
     'rest_base'           => 'events',
-    'menu_position'       => 20,
+    'menu_position'       => 25,
     'menu_icon'           => 'dashicons-calendar',
     'capability_type'     => 'page',
     'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'revisions', 'thumbnail'),
@@ -405,6 +406,86 @@ function vf_wp_intranet_events__init() {
       'event-location',
       'post_tag',
       'topic'
+    ),
+  ));
+  
+}  
+
+/**
+ * Action: `init`
+ */
+add_action(
+  'init',
+  'vf_wp_intranet_teams__init'
+);
+
+/**
+ * Reference: `get_post_type_labels`
+ * https://core.trac.wordpress.org/browser/tags/5.4/src/wp-includes/post.php
+ */
+function get_intranet_teams_labels() {
+  return array(
+    'name'                     => _x( 'Teams', 'Team type general name', 'vfwp' ),
+    'singular_name'            => _x( 'Team', 'Team type singular name', 'vfwp' ),
+    'add_new'                  => _x( 'Add New', 'Team', 'vfwp' ),
+    'add_new_item'             => __( 'Add New Team', 'vfwp' ),
+    'edit_item'                => __( 'Edit Team', 'vfwp' ),
+    'new_item'                 => __( 'New Team', 'vfwp' ),
+    'view_item'                => __( 'View Team', 'vfwp' ),
+    'view_items'               => __( 'View Teams', 'vfwp' ),
+    'search_items'             => __( 'Search Teams', 'vfwp' ),
+    'not_found'                => __( 'No Teams found.', 'vfwp' ),
+    'not_found_in_trash'       => __( 'No Teams found in Trash.', 'vfwp' ),
+    'parent_item_colon'        => __( 'Parent Page:', 'vfwp' ),
+    'all_items'                => __( 'All Teams', 'vfwp' ),
+    'archives'                 => __( 'Team Archives', 'vfwp' ),
+    'attributes'               => __( 'Team Attributes', 'vfwp' ),
+    'insert_into_item'         => __( 'Insert into Team', 'vfwp' ),
+    'uploaded_to_this_item'    => __( 'Uploaded to this Team', 'vfwp' ),
+    'featured_image'           => _x( 'Featured image', 'Team', 'vfwp' ),
+    'set_featured_image'       => _x( 'Set featured image', 'Team', 'vfwp' ),
+    'remove_featured_image'    => _x( 'Remove featured image', 'Team', 'vfwp' ),
+    'use_featured_image'       => _x( 'Use as featured image', 'Team', 'vfwp' ),
+    'filter_items_list'        => __( 'Filter Teams list', 'vfwp' ),
+    'items_list_navigation'    => __( 'Teams list navigation', 'vfwp' ),
+    'items_list'               => __( 'Teams list', 'vfwp' ),
+    'item_published'           => __( 'Team published.', 'vfwp' ),
+    'item_published_privately' => __( 'Team published privately.', 'vfwp' ),
+    'item_reverted_to_draft'   => __( 'Team reverted to draft.', 'vfwp' ),
+    'item_scheduled'           => __( 'Team scheduled.', 'vfwp' ),
+    'item_updated'             => __( 'Team updated.', 'vfwp' ),
+);
+}
+
+
+function vf_wp_intranet_teams__init() {
+
+  register_post_type('teams', array(
+    'labels'              => get_intranet_teams_labels(),
+    'description'         => __('Team', 'vfwp'),
+    'public'              => true,
+    'hierarchical'        => true,
+    'exclude_from_search' => false,
+    'publicly_queryable'  => true,
+    'show_ui'             => true,
+    'show_in_menu'        => true,
+    'show_in_nav_menus'   => true,
+    'show_in_admin_bar'   => true,
+    'show_in_rest'        => true,
+    'rest_base'           => 'external',
+    'menu_position'       => 21,
+    'menu_icon'           => 'dashicons-external',
+    'capability_type'     => 'page',
+    'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'revisions', 'thumbnail'),
+    'has_archive'         => true,
+    'rewrite'             => array(
+      'slug' => 'external'
+    ),
+    'query_var'           => true,
+    'can_export'          => true,
+    'delete_with_user'    => false,
+    'taxonomies'          => array(
+      'post_tag',
     ),
   ));
   
