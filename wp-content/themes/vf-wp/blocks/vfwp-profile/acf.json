@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_5f2289bfeadcd",
-            "label": "Profile image",
+            "label": "Profile image (Media library)",
             "name": "image",
             "type": "image",
             "instructions": "Min width: 160px",
@@ -25,6 +25,22 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_624d774c4f639",
+            "label": "Profile image (URL)",
+            "name": "image_url",
+            "type": "url",
+            "instructions": "(Optional)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
         },
         {
             "key": "field_5f2288ffb7262",
@@ -54,13 +70,45 @@
             "maxlength": ""
         },
         {
+            "key": "field_624d77924f63a",
+            "label": "Text input",
+            "name": "text_input",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "rows": "Rows",
+                "WYSIWYG": "WYSIWYG editor"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "rows",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5f228c23fcfbd",
-            "label": "Text",
+            "label": "Rows",
             "name": "text",
             "type": "repeater",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_624d77924f63a",
+                        "operator": "==",
+                        "value": "rows"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -92,6 +140,33 @@
                     "maxlength": ""
                 }
             ]
+        },
+        {
+            "key": "field_624d77fe4f63b",
+            "label": "Editor",
+            "name": "text_editor",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_624d77924f63a",
+                        "operator": "==",
+                        "value": "WYSIWYG"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
         },
         {
             "key": "field_5f228a7a0e022",
@@ -245,9 +320,7 @@
                 "block": "block",
                 "inline": "inline"
             },
-            "default_value": [
-                "inline"
-            ],
+            "default_value": "inline",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -288,9 +361,7 @@
                 "medium": "medium",
                 "large": "large"
             },
-            "default_value": [
-                "medium"
-            ],
+            "default_value": "medium",
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -316,5 +387,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF Profile ACF Gutenberg block",
-    "modified": 1632316042
+    "modified": 1649245703
 }

@@ -1,4 +1,5 @@
 <?php
+$image_url = get_field('image_url');
 $image = get_field('image');
 $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
     'class'    => 'vf-profile__image',
@@ -12,6 +13,8 @@ $email = get_field('profile_email');
 $phone = get_field('profile_phone');
 $layout = get_field('layout');
 $size = get_field('size');
+$text_editor = get_field('text_editor', false, false);
+$text_input = get_field('text_input');
 
 if (empty($layout)) {
     $layout == 'inline';
@@ -27,9 +30,13 @@ if (empty($layout)) {
     <article class="vf-profile vf-profile--very-easy vf-profile--<?php echo $size; ?> vf-profile--inline | vf-u-margin__bottom--400">
 <?php } ?>
 
-    <?php if (! empty($image)) {
+    <?php 
+    if (! empty($image)) {
         echo $image; 
     }
+    else if (!empty($image_url)) { ?>
+        <img class="vf-profile__image" src="<?php echo $image_url; ?>" >  
+    <?php }
     else { ?>
         <img class="vf-profile__image" src="https://dev.assets.emblstatic.net/vf/v2.0.0-alpha.6/assets/vf-summary/assets/vf-icon--avatar.svg" > 
 
@@ -64,7 +71,12 @@ if (empty($layout)) {
        >
        <?php echo $profile_text; ?></p>
     <?php endwhile; endif; ?>
-    
+    <?php if (!empty($text_editor)) { ?>
+    <div class="vf-content">    
+    <?php echo ($text_editor); ?>
+    </div>
+    <?php } ?>
+
     <?php if (! empty($email)) { ?>
     <p class="vf-profile__email | vf-u-last-item ">
         <a href="mailto:<?php echo $email; ?>" class="vf-profile__link vf-profile__link--secondary"><?php echo $email; ?></a>
