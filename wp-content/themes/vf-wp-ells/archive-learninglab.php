@@ -2,7 +2,9 @@
 get_header();
 
 ?>
-
+<div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
+  <?php echo swiftype_metadata_description(); ?>
+</div>
 <div class="vf-grid vf-grid__col-3 | vf-content">
   <div class="vf-grid__col--span-2">
     <h1 class="vf-text vf-text-heading--1">Teacher training

@@ -135,6 +135,25 @@ function remove_margin_wp_toolbar() {
 add_action( 'admin_head', 'remove_margin_wp_toolbar' );
 add_action( 'wp_head', 'remove_margin_wp_toolbar' );
 
+function swiftype_metadata_description() {
+    // Get the global taxonomy term
+    $term_id = get_field('embl_taxonomy_term_what', 'option');
+    $term_uuid = embl_taxonomy_get_uuid($term_id);
+    // Query Content Hub via cache
+    if ($term_uuid) {
+      $url = VF_Cache::get_api_url();
+      $url .= '/pattern.html';
+      $url = add_query_arg(array(
+        'filter-uuid'         => $term_uuid,
+        'filter-content-type' => 'profiles',
+        'pattern'             => 'node-teaser',
+        'source'              => 'contenthub',
+      ), $url);
+      $text = VF_Cache::fetch($url);
+    }
+  return $text;
+}
+
 // allow only certain WP Gutenberg blocks
 // add_filter( 'allowed_block_types_all', 'allowed_block_types' );
  

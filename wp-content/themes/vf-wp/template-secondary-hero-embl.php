@@ -65,7 +65,9 @@ $close_wrap,
 10, 2
 );
 ?>
-
+<div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
+  <?php echo swiftype_metadata_description(); ?>
+</div>
 <div>
   <h1 class="vf-text vf-text-heading--1">
     <?php echo $title;?>

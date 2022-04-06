@@ -5,7 +5,9 @@ get_header();
 global $vf_theme;
 
 ?>
-
+<div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
+  <?php echo swiftype_metadata_description(); ?>
+</div>
 <!-- SEARCH -->
 
 <section class="vf-summary-container | vf-grid vf-grid__col-4 | vf-u-fullbleed | vf-u-background-color-ui--off-white | vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500">
