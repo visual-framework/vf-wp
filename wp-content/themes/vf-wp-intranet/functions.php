@@ -582,4 +582,14 @@ function rlv_phrase_fallback( $args ) {
   $args['return'] = $return;
   return $args;
 }
+
+// restrict some cpt only for the administrator role
+function remove_menu_items() {
+  if( !current_user_can( 'administrator' ) ):
+      remove_menu_page( 'edit.php?post_type=teams' );
+      remove_menu_page( 'edit.php?post_type=people' );
+      remove_menu_page( 'edit.php?post_type=insites' );
+  endif;
+}
+add_action( 'admin_menu', 'remove_menu_items' );
 ?>
