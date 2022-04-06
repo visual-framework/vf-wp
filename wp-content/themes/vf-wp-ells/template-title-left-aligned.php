@@ -48,9 +48,7 @@ $close_wrap,
 );
 
 ?>
-<div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
-  <?php echo swiftype_metadata_description(); ?>
-</div>
+
 <?php
 
   if ( has_block( 'acf/vfwp-intro', $post ) ) {  

@@ -136,6 +136,9 @@ add_action( 'admin_head', 'remove_margin_wp_toolbar' );
 add_action( 'wp_head', 'remove_margin_wp_toolbar' );
 
 function swiftype_metadata_description() {
+  $text = '';
+  // If text is empty use the Content Hub description
+  if (class_exists('VF_Cache')) {
     // Get the global taxonomy term
     $term_id = get_field('embl_taxonomy_term_what', 'option');
     $term_uuid = embl_taxonomy_get_uuid($term_id);
@@ -150,7 +153,7 @@ function swiftype_metadata_description() {
         'source'              => 'contenthub',
       ), $url);
       $text = VF_Cache::fetch($url);
-    }
+    } }
   return $text;
 }
 
