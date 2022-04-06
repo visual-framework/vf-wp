@@ -73,8 +73,6 @@
                 }
             ]
         }
-
-
     ],
     "location": [
         [
@@ -83,9 +81,15 @@
                 "operator": "==",
                 "value": "page"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "teams"
+            }
         ]
-    ],
-    "menu_order": 0,
+    ],    "menu_order": 0,
     "position": "normal",
     "style": "seamless",
     "label_placement": "top",
@@ -93,5 +97,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1636713925
+    "modified": 1649237798
 }

@@ -375,7 +375,7 @@ add_filter( 'posts_distinct', 'cf_search_distinct' );
 add_action( 'template_redirect', 'redirect_externally' );
 function redirect_externally(){
     $redirect = get_post_meta( get_the_ID(), 'vf_wp_intranet_redirect', true );
-    if (is_page()) {
+    if (is_page() || is_singular('teams')) {
     if( $redirect ){
         wp_redirect( $redirect );
     } }
@@ -582,4 +582,14 @@ function rlv_phrase_fallback( $args ) {
   $args['return'] = $return;
   return $args;
 }
+
+// restrict some cpt only for the administrator role
+function remove_menu_items() {
+  if( !current_user_can( 'administrator' ) ):
+      remove_menu_page( 'edit.php?post_type=teams' );
+      remove_menu_page( 'edit.php?post_type=people' );
+      remove_menu_page( 'edit.php?post_type=insites' );
+  endif;
+}
+add_action( 'admin_menu', 'remove_menu_items' );
 ?>
