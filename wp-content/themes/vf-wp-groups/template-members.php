@@ -16,12 +16,15 @@ get_header();
 global $vf_theme;
 
 ?>
+<div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
+  <?php echo swiftype_metadata_description(); ?>
+</div>
 <div class="vf-grid">
   <div>
-      <h1 class="vf-text vf-text-heading--1">
-        <?php the_title(); ?>
-      </h1>
-      <?php
+    <h1 class="vf-text vf-text-heading--1">
+      <?php the_title(); ?>
+    </h1>
+    <?php
 
       // Render the group header plugin with the team leader only
       if (class_exists('VF_Group_Header')) {

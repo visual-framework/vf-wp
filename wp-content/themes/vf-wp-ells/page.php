@@ -8,7 +8,9 @@ setup_postdata($post);
 global $vf_theme;
 $title = get_the_title();
 ?>
-
+<div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
+  <?php echo swiftype_metadata_description(); ?>
+</div>
 <?php 
 
   

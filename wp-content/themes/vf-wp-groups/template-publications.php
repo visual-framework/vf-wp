@@ -18,12 +18,15 @@ $keyword = $vf_publications->get_query_keyword();
 global $vf_theme;
 
 ?>
-  <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800">
-    <div class="vf-grid__col--span-2">
-      <h1 class="vf-text vf-text-heading--1">
-        <?php the_title(); ?>
-      </h1>
-      <?php
+<div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
+  <?php echo swiftype_metadata_description(); ?>
+</div>
+<div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800">
+  <div class="vf-grid__col--span-2">
+    <h1 class="vf-text vf-text-heading--1">
+      <?php the_title(); ?>
+    </h1>
+    <?php
 
       VF_Plugin::render($vf_publications);
 
@@ -35,20 +38,24 @@ global $vf_theme;
       ?>
     <?php /*
       <form id="publications-filter" role="search" method="get" action="<?php the_permalink(); ?>">
-        <div class="vf-search vf-search--inline">
-          <div class="vf-form__item | vf-search__item">
-            <label class="vf-form__label vf-sr-only | vf-search__label" for="filter_keyword"><?php _e('Search by keyword:', 'vfwp'); ?></label>
-            <input class="vf-form__input | vf-search__input" value="<?php echo esc_attr($keyword); ?>" placeholder="<?php esc_attr_e('Search publications...', 'vfwp'); ?>" name="filter_keyword">
-          </div>
-          <input type="submit" class="vf-search__button | vf-button vf-button--primary" value="<?php esc_attr_e('Search', 'vfwp'); ?>">
-        </div>
-        <div class="vf-box vf-box--inlay">
-          <h3 class="vf-box__heading"><?php _e('Publications by year', 'vfwp'); ?></h3>
-          <div class="vf-form">
-            <label class="vf-sr-only" for="filter_year">Categories</label>
-            <select class="vf-form__select" name="filter_year" onchange="document.querySelector('#publications-filter').submit();">
-              <option value=""><?php _e('Select year', 'vfwp'); ?></option>
-              <?php
+    <div class="vf-search vf-search--inline">
+      <div class="vf-form__item | vf-search__item">
+        <label class="vf-form__label vf-sr-only | vf-search__label"
+          for="filter_keyword"><?php _e('Search by keyword:', 'vfwp'); ?></label>
+        <input class="vf-form__input | vf-search__input" value="<?php echo esc_attr($keyword); ?>"
+          placeholder="<?php esc_attr_e('Search publications...', 'vfwp'); ?>" name="filter_keyword">
+      </div>
+      <input type="submit" class="vf-search__button | vf-button vf-button--primary"
+        value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+    </div>
+    <div class="vf-box vf-box--inlay">
+      <h3 class="vf-box__heading"><?php _e('Publications by year', 'vfwp'); ?></h3>
+      <div class="vf-form">
+        <label class="vf-sr-only" for="filter_year">Categories</label>
+        <select class="vf-form__select" name="filter_year"
+          onchange="document.querySelector('#publications-filter').submit();">
+          <option value=""><?php _e('Select year', 'vfwp'); ?></option>
+          <?php
               foreach ($vf_publications->get_years() as $key => $value) {
                 echo '<option';
                 echo ' value="' . esc_attr($key) . '"';
@@ -60,10 +67,10 @@ global $vf_theme;
                 echo '</option>';
               }
               ?>
-            </select>
-          </div>
-        </div>
-      </form>
+        </select>
+      </div>
+    </div>
+    </form>
     */ ?>
   </div>
 </div>
