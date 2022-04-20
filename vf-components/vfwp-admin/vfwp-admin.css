@@ -495,6 +495,13 @@
 .editor-styles-wrapper .vf-details[open] .vf-details--summary {
   pointer-events: none;
 }
+.editor-styles-wrapper .wp-block-vf-grid-column .block-list-appender.wp-block {
+  -ms-flex-item-align: center;
+      align-self: center;
+  padding: 0;
+  list-style: none;
+  margin: 8px !important;
+}
 
 .block-editor .editor-styles-wrapper .has-extra-large-font-size {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;

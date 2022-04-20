@@ -96,6 +96,13 @@
       pointer-events: none;
     }
   }
+
+  .wp-block-vf-grid-column .block-list-appender.wp-block {
+    align-self: center;
+    padding: 0;
+    list-style: none;
+    margin: 8px !important;
+  }
 }
 
 // Include custom typography styles within editor
