@@ -121,6 +121,16 @@ if (class_exists('VF_Navigation')) {
           </svg>
         </button>
       </div>
+      <?php
+      if ( function_exists( 'relevanssi_didyoumean' ) ) {
+        relevanssi_didyoumean(
+          get_search_query( false ),
+            '<p>Did you mean: ',
+            '</p>',
+            5
+        );
+    }
+    ?>
     </form>
     <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0"><a
         href="https://www.embl.org/search/?searchQuery=<?php echo esc_attr(get_search_query()); ?>&activeFacet=Alumni#stq=<?php echo esc_attr(get_search_query()); ?>"

@@ -423,22 +423,22 @@ add_post_type_support( 'page', 'excerpt' );
 function change_search_url() {
   if ( is_search() && ! empty( $_GET['s'] ) ) {
       if (get_query_var( 'post_type' ) == 'people') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--people' );
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--people' );
       }
       elseif (get_query_var( 'post_type' ) == 'documents') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--documents' );
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--documents' );
       }
       elseif (get_query_var( 'post_type' ) == 'insites') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--news' );
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--news' );
       }
       elseif (get_query_var( 'post_type' ) == 'events') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--events' );
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--events' );
       }
       elseif (get_query_var( 'post_type' ) == 'page') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#vf-tabs__section--pages' );
+      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--pages' );
       }
       elseif (get_query_var( 'post_type' ) == 'any') {
-        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '#stq=' . urlencode( get_query_var( 's' ) ) . '&stp=1');
+        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '&#stq=' . urlencode( get_query_var( 's' ) ) . '&stp=1');
       }
       exit();
   }   
@@ -592,4 +592,11 @@ function remove_menu_items() {
   endif;
 }
 add_action( 'admin_menu', 'remove_menu_items' );
+
+// Filters the Did you mean suggestion URL.
+
+add_filter( 'relevanssi_didyoumean_url', 'rlv_add_dym_parameters' );
+function rlv_add_dym_parameters( $url ) {
+  return add_query_arg( 'post_type', 'any', $url );
+}
 ?>
