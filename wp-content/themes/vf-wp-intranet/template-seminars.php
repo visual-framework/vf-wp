@@ -74,7 +74,7 @@ get_header();
               $location = $event->field_event_location;
               $type_filter_class = strtolower(str_replace(' ', '_', $type)); 
               $location_filter_class = strtolower(str_replace(' ', '_', $location)); 
-              $address = $event->field_event_address;
+              $address = html_entity_decode(strip_tags($event->field_event_address));
               $speaker = strstr($info, 'Host', true);
               if (strpos($info, 'Host') == false) {
                 $address = '';
@@ -109,7 +109,7 @@ get_header();
                   // echo '<span>' . strstr($host, 'Location', true);'</span><br>'; }
                   
                 // show only speaker
-                echo '<span>' . $speaker  . '</span><span style="font-size: 14px; color: #707372;">' . $address . '</span></p>' ;
+                echo '<span>' . $speaker  . '</span></br><span style="font-size: 14px; color: #707372;">' . $address . '</span></p>' ;
 
                 // show host
                 echo '<p class="vf-summary__text" style="font-size: 16px; margin-top: 6px;"><span>' . substr($info, strpos($info, 'Host')) . '</span></p>';
