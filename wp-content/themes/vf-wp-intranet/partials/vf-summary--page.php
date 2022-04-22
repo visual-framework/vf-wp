@@ -5,10 +5,10 @@ $redirect_url = get_field('vf_wp_intranet_redirect');
 
 ?>
 <article class="vf-summary">
-  <h2 class="vf-summary__title">
+  <h2 class="vf-summary__title" style="margin-bottom: 4px;">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo $title; ?></a>
   </h2>
-  <p class="vf-summary__text">
+  <p class="vf-summary__meta" style="margin-bottom: 8px;">
     <?php
     if (has_excerpt()) {
       echo get_the_excerpt();

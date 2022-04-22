@@ -120,15 +120,25 @@ if (class_exists('VF_Navigation')) {
             </g>
           </svg>
         </button>
+        <?php
+          if ( function_exists( 'relevanssi_didyoumean' ) ) {
+            relevanssi_didyoumean(
+              get_search_query(false),
+                '<p>Did you mean: ',
+                '</p>',
+                5
+            );
+        }
+        ?>
       </div>
     </form>
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0"><a
-        href="https://www.embl.org/search/?searchQuery=<?php echo esc_attr(get_search_query()); ?>&activeFacet=Alumni#stq=<?php echo esc_attr(get_search_query()); ?>"
-        target="_blank">Search for Alumni</a></p>
+    <!-- <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0"><a
+        href="https://www.embl.org/search/?searchQuery=&activeFacet=Alumni#stq=<?php echo esc_attr(get_search_query()); ?>"
+        target="_blank">Search for Alumni</a></p> -->
   </div>
 </section>
 
-<section class="embl-grid | vf-u-margin__bottom--0" style="margin-top: 0px !important;">
+<section class="embl-grid | vf-u-margin__bottom--0">
   <div>
   </div>
   <div class="vf-content">
@@ -158,7 +168,7 @@ if (class_exists('VF_Navigation')) {
   </div>
   </div>
 </section>
-<section class="embl-grid embl-grid--has-centered-content">
+<section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--600">
   <div>
   </div>
 
