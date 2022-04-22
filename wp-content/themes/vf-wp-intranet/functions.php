@@ -196,6 +196,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
   if (!get_page_by_title($title, 'OBJECT', 'people')) {
     $post_id = wp_insert_post($new_post);
     add_post_meta($post_id, 'post_title', $title);
+    add_post_meta($post_id, 'keyword', $title);
     add_post_meta($post_id, 'cpid', $cpid);
     add_post_meta($post_id, 'orcid', $orcid);
     add_post_meta($post_id, 'photo', $photo);
@@ -232,6 +233,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     $get_post = get_page_by_title($title, 'OBJECT', 'people');
     $existing_post_id = $get_post->ID;
     update_post_meta($existing_post_id, 'post_title', $title);
+    update_post_meta($existing_post_id, 'keyword', $title);
     update_post_meta($existing_post_id, 'cpid', $cpid);
     update_post_meta($existing_post_id, 'orcid', $orcid);
     update_post_meta($existing_post_id, 'photo', $photo);
@@ -599,4 +601,11 @@ add_filter( 'relevanssi_didyoumean_url', 'rlv_add_dym_parameters' );
 function rlv_add_dym_parameters( $url ) {
   return add_query_arg( 'post_type', 'any', $url );
 }
+
+// To help populate the cache in case the AJAX action fails, Relevanssi has a function that you can run to populate the cache. The function is relevanssi_update_words_option(), and you can call it like this:
+
+if ( is_user_logged_in() ) {
+  relevanssi_update_words_option();
+}
+
 ?>
