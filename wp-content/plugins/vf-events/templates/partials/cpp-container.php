@@ -8,7 +8,7 @@
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/leica-logo.jpg" style="width: 120px">
       </figure>
       <figure class="vf-figure">
-        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/olympus-logo.jpg" style="width: 120px">
+        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/EVIDENT_Olympus_Logo_Vertical.jpg" style="width: 120px">
       </figure>
     </div>
   </div>
