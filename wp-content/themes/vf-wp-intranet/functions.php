@@ -603,9 +603,10 @@ function rlv_add_dym_parameters( $url ) {
 }
 
 // To help populate the cache in case the AJAX action fails, Relevanssi has a function that you can run to populate the cache. The function is relevanssi_update_words_option(), and you can call it like this:
-
-if ( is_user_logged_in() ) {
-  relevanssi_update_words_option();
-}
+  
+  if ( function_exists( 'relevanssi_update_words_option' ) ) {
+    if ( is_user_logged_in() ) {
+     relevanssi_update_words_option();
+  } }
 
 ?>
