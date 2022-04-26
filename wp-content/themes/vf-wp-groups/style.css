@@ -10,3 +10,12 @@ Text Domain:  vfwp
 ul li ul.children li {
     list-style: none;
    }
+
+   .tag-cloud-link { 
+    font-size:16px !important;
+    }
+    .tag-cloud-link {
+        text-decoration:none;
+        background-color:#fff;
+    }
+  

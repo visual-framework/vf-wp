@@ -99,6 +99,7 @@ function add_canonical_link(){
   } }    
 }
 
+// changes default archive widget option
 function my_limit_archives( $args ) {
   $args['type'] = 'yearly';
   return $args;
@@ -106,4 +107,13 @@ function my_limit_archives( $args ) {
 
 add_filter( 'widget_archives_args', 'my_limit_archives' );
 add_filter( 'widget_archives_dropdown_args', 'my_limit_archives' );
+
+/**
+ * Filter arguments of tag cloud widget to add commas
+ */
+function myfunc_filter_tag_cloud($args) {
+  $args['separator']= ', ';
+  return $args;
+}
+add_filter ( 'widget_tag_cloud_args', 'myfunc_filter_tag_cloud');
 ?>

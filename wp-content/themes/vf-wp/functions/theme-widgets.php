@@ -104,7 +104,7 @@ class VF_Theme_Widgets {
       // 'WP_Widget_Recent_Posts',
       'WP_Widget_Recent_Comments',
       'WP_Widget_RSS',
-      'WP_Widget_Tag_Cloud',
+      // 'WP_Widget_Tag_Cloud',
       'WP_Nav_Menu_Widget'
     );
   }
