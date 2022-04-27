@@ -89,7 +89,7 @@ if ($style !== 'normal') {
   $classes .= " vf-box-theme--{$theme_easy}";
 } }?>
 
-<div class="<?php echo esc_attr($classes); ?>">
+<div class="<?php echo esc_attr($classes); ?> | vf-u-margin__bottom--400">
   <?php if (! empty($heading)) { ?>
     <h3 class="vf-box__heading">
       <?php } if ($link) { ?>
