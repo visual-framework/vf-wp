@@ -35,6 +35,15 @@ function my_theme_enqueue_styles() {
 );
 }
 
+//ADDING CLASS TO A LINK IN CATEGORY
+
+function add_class_to_category( $thelist, $separator, $parents){
+  $class_to_add = 'vf-link';
+  return str_replace('<a href="',  '<a class="'. $class_to_add. '" href="', $thelist);
+}
+
+add_filter('the_category', __NAMESPACE__ . '\\add_class_to_category',10,3);
+
 // Add feature image support
 
 add_theme_support( 'post-thumbnails' );
