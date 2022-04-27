@@ -91,7 +91,7 @@ class VF_Theme_Widgets {
       // 'WP_Widget_Archives',
       'WP_Widget_Calendar',
       // 'WP_Widget_Categories',
-      'WP_Widget_Custom_HTML',
+      // 'WP_Widget_Custom_HTML',
       // 'WP_Widget_Links',
       'WP_Widget_Media_Audio',
       'WP_Widget_Media_Gallery',
