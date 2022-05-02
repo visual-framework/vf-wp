@@ -7,3 +7,15 @@ Template:     vf-wp
 Version:      1.0.0-beta.5
 Text Domain:  vfwp
 */
+ul li ul.children li {
+    list-style: none;
+   }
+
+   .tag-cloud-link { 
+    font-size:16px !important;
+    }
+    .tag-cloud-link {
+        text-decoration:none;
+        background-color:#fff;
+    }
+  

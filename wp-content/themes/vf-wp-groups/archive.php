@@ -60,6 +60,7 @@ if ($custom_template) {echo '<br>';}
     </div>
     <?php } ?>
 </div>
+
 <?php
 // Global Footer
 if (class_exists('VF_Global_Footer')) {

@@ -46,7 +46,7 @@ if ($ratio === '16 x 9 max width') {
 }
 ?>
 
-<div class="vf-embed <?php echo ($class); ?>"
+<div class="vf-embed <?php echo ($class); ?> | vf-u-margin__bottom--400"
 <?php
 if ($ratio === '16 x 9 max width') {
   echo 'style="--vf-embed-max-width: 400px"';

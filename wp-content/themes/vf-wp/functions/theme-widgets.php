@@ -91,7 +91,7 @@ class VF_Theme_Widgets {
       // 'WP_Widget_Archives',
       'WP_Widget_Calendar',
       // 'WP_Widget_Categories',
-      'WP_Widget_Custom_HTML',
+      // 'WP_Widget_Custom_HTML',
       // 'WP_Widget_Links',
       'WP_Widget_Media_Audio',
       'WP_Widget_Media_Gallery',
@@ -104,7 +104,7 @@ class VF_Theme_Widgets {
       // 'WP_Widget_Recent_Posts',
       'WP_Widget_Recent_Comments',
       'WP_Widget_RSS',
-      'WP_Widget_Tag_Cloud',
+      // 'WP_Widget_Tag_Cloud',
       'WP_Nav_Menu_Widget'
     );
   }
@@ -176,15 +176,16 @@ class VF_Theme_Widgets {
    */
   public function render_widget_archive($html) {
     // Replace hidden text class
-    $html = str_replace('screen-reader-text', 'vf-sr-only', $html);
+    $html = str_replace('screen-reader-text', 'vf-u-sr-only', $html);
+    $html = str_replace('Select Year', 'All', $html);
     // Add select class
     $html = preg_replace(
       '#<select([^>]*?)>#',
-      '<select $1 class="vf-form__select">',
+      '<select $1 class="vf-form__select | vf-u-width__60">',
       $html
     );
     // Add `vf-list` classes
-    $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+    $html = str_replace('<ul>', '<ul class="vf-list vf-list--default | vf-list--tight">', $html);
     $html = str_replace('<li>', '<li class="vf-list__item">', $html);
     return $html;
   }
@@ -194,20 +195,22 @@ class VF_Theme_Widgets {
    */
   public function render_widget_categories($html) {
     // Replace hidden text class
-    $html = str_replace('screen-reader-text', 'vf-sr-only', $html);
+    $html = str_replace('screen-reader-text', 'vf-u-sr-only', $html);
+    $html = str_replace('Select Category', 'All', $html);
     // Add select class
     $html = preg_replace(
       '#<select[^>]*?>#',
-      '<select class="vf-form__select" id="cat" name="cat">',
+      '<select class="vf-form__select | vf-u-width__60" id="cat" name="cat">',
       $html
     );
     // Add `vf-list` classes
-    $html = str_replace('<ul>', '<ul class="vf-links__list | vf-list">', $html);
+    $html = str_replace('<ul>', '<ul class="vf-list vf-list--default | vf-list--tight">', $html);
     $html = preg_replace(
       '#<li\s+class="(cat-item[^"]*?)"#',
       '<li class="$1 | vf-list__item"',
       $html
     );
+
     return $html;
   }
 
