@@ -1,6 +1,7 @@
 <div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue | vf-u-fullbleed"
   id="footer-ells" style="grid-column-gap: 0">
-  <div class="vf-u-background-color--blue | vf-u-margin__right--0 | vf-u-padding__top--200  | vf-u-padding__bottom--200">
+  <div
+    class="vf-u-background-color--blue | vf-u-margin__right--0 | vf-u-padding__top--200  | vf-u-padding__bottom--200">
     <figure class="vf-figure" style="text-align: center">
       <img class="vf-figure__image"
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/04/20200527_ELLS_VisualTag_RGB_COLOR.png"
@@ -9,12 +10,14 @@
   </div>
 
   <div class="vf-u-background-color--blue | vf-u-text-color--ui--white | vf-u-padding--400">
-    <p class="vf-text vf-text-heading--4 | vf-u-text-color--ui--white">European Learning Laboratory for the Life Sciences</p>
+    <p class="vf-text vf-text-heading--4 | vf-u-text-color--ui--white">European Learning Laboratory for the Life
+      Sciences</p>
     <div class="vf-grid | vf-grid__col-3">
       <div class="vf-grid__col--span-2">
-    <p class="vf-text-body vf-text-body--3" style="color: #fff;">Our inspiring educational experiences share the scientific discoveries of EMBL with young people aged 10-19 years and teachers in Europe and beyond.
-    </p>
-    </div>
+        <p class="vf-text-body vf-text-body--3" style="color: #fff;">Our inspiring educational experiences share the
+          scientific discoveries of EMBL with young people aged 10-19 years and teachers in Europe and beyond.
+        </p>
+      </div>
     </div>
     <div class="vf-grid | vf-grid__col-4">
       <div class="vf-links ells-links">
@@ -37,12 +40,15 @@
         <h4 class="vf-text vf-text-heading--5" style="color: #fff;">
           Subscribe to our newsletter</h4>
         <div class="vf-form__item vf-stack">
-        <form action="https://embl.us20.list-manage.com/subscribe/post?u=6407e1524014635f8879568bd&amp;id=2b6803aee1" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-          <input  type="email" value="" name="EMAIL" class="vf-form__input" placeholder="Email"
-            style="padding: 3px 12px; width: 260px; display: inline-block;">
-          <input  type="submit" value="Subscribe" name="subscribe" class="vf-button vf-button--tertiary vf-button--sm | vf-u-margin__left--200"
-            style="display: inline-block;">
-        </form>
+          <form action="https://embl.us20.list-manage.com/subscribe/post?u=6407e1524014635f8879568bd&amp;id=2b6803aee1"
+            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
+            target="_blank" novalidate>
+            <input type="email" value="" name="EMAIL" class="vf-form__input" placeholder="Email"
+              style="padding: 3px 12px; width: 260px; display: inline-block;">
+            <input type="submit" value="Subscribe" name="subscribe"
+              class="vf-button vf-button--tertiary vf-button--sm | vf-u-margin__left--200"
+              style="display: inline-block;">
+          </form>
         </div>
       </div>
       <div class="vf-links">
@@ -89,6 +95,15 @@
                   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
                   <use xlink:href="#vf-social--facebook">
                   </use>
+                </svg>
+              </a>
+            </li>
+            <li class="vf-social-links__item">
+              <a class="vf-social-links__link" href="https://www.linkedin.com/company/embl-science-education">
+                <span class="vf-u-sr-only">linkedin</span>
+                <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+                  <use xlink:href="#vf-social--linkedin"></use>
                 </svg>
               </a>
             </li>
