@@ -226,7 +226,7 @@ if (class_exists('VF_Navigation')) {
     <section class="vf-tabs__section" id="vf-tabs__section--events">
       <?php if ( $events_query->have_posts() ): ?>
       <?php while ( $events_query->have_posts() ) : $events_query->the_post(); ?>
-      <?php include(locate_template('partials/vf-summary-events.php.php', false, false)); ?>
+      <?php include(locate_template('partials/vf-summary-events.php', false, false)); ?>
       <?php endwhile; ?>
       <?php else : ?>
       <?php _e( 'No events found. Please check the other content types.' ); ?>
