@@ -43,7 +43,7 @@ $vars = array(
   'pattern'                   => "vf-profile-inline-internal",
   'limit'                     => $limit,
   'sort-field-value[field_person_name_last]' => 'DSC',
-  'filter-fields-empty'       => 'hide_person_externally',
+  'filter-fields-empty'       => 'field_person_visible_internally',
   'filter-ref-entity[field_person_positions][title]' => "",
   'hide[team,' . $hide_fields . ']' => 1
 );
