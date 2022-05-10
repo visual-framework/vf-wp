@@ -62,8 +62,10 @@ var_dump( $meta_values );
     </article>
   </div>
   <div>
+    <?php if ($outstation != 'EMBL-EBI') { ?>
     <p class="vf-text-body vf-text-body--5"><a href="https://privacysettings.embl.de/" target="_blank">[Privacy
         settings]</a></p>
+    <?php } ?>
   </div>
 </section>
 
