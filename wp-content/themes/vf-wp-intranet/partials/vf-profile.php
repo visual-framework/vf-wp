@@ -6,6 +6,7 @@ $photo = get_field('photo');
 $email = get_field('email');
 $position = get_field('positions_name_1');
 $outstation = get_field('outstation');
+$full_name = get_field('full_name');
 $room = get_field('room');
 $biography = get_field('biography');
 $team_1 = get_field('team_name_1');
@@ -23,7 +24,7 @@ $title = get_post_meta( $post->ID, 'full_name', true);
 <article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
   <img class="vf-profile__image" src="<?php echo esc_url($photo); ?>" alt="" loading="lazy">
   <h3 class="vf-profile__title | people-search">
-    <a href="<?php echo get_the_permalink(); ?>" class="vf-profile__link"><?php echo get_the_title(); ?></a>
+    <a href="<?php echo get_the_permalink(); ?>" class="vf-profile__link"><?php echo esc_html($full_name); ?></a>
   </h3>
   <p class="vf-profile__job-title | people-search"><?php echo esc_html($position); ?></p>
   <p class="vf-profile__text | team-search">
