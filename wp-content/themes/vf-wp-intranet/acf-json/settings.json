@@ -19,25 +19,6 @@
             "placeholder": ""
         },
         {
-            "key": "field_618293e510859",
-            "label": "Search keyword",
-            "name": "keyword",
-            "type": "text",
-            "instructions": "Enter a comma-separated keyword list to improve the search results",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_6036132931f9f",
             "label": "Related",
             "name": "vf-wp-intranet-related",
@@ -87,13 +68,6 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "teams"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "people"
             }
         ]
     ],    
