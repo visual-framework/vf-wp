@@ -7,6 +7,7 @@ $photo = get_field('photo');
 $email = get_field('email');
 $position = get_field('positions_name_1');
 $outstation = get_field('outstation');
+$full_name = get_field('full_name');
 $room = get_field('room');
 $biography = get_field('biography');
 $team_1 = get_field('team_name_1');
@@ -33,7 +34,7 @@ var_dump( $meta_values );
     <article class="vf-profile vf-profile--medium vf-profile--inline">
       <img class="vf-profile__image" src="<?php echo esc_url($photo); ?>" alt="" loading="lazy">
       <h3 class="vf-profile__title">
-        <?php echo get_the_title(); ?>
+      <?php echo esc_html($full_name); ?>
       </h3>
       <p class="vf-profile__job-title"><?php echo esc_html($position); ?></p>
       <p class="vf-profile__email">
