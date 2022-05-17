@@ -82,6 +82,34 @@
             "save_other_choice": 0
         },
         {
+            "key": "field_6282047450cbe",
+            "label": "Article language",
+            "name": "select_translations",
+            "type": "radio",
+            "instructions": "Please indicate the language of this article",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "english": "English",
+                "french": "French",
+                "german": "German",
+                "italian": "Italian",
+                "spanish": "Spanish",
+                "catalan": "Catalan"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "english",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_60a376e9a501a",
             "label": "Article Intro",
             "name": "",
@@ -457,7 +485,7 @@
             "label": "Translations",
             "name": "translations",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "THIS FUNCTIONALITY HAS BEEN DEPRECATED. TO ADD OTHER LANGUAGES, PLEASE GO TO THE 'TRANSLATIONS' TAB INSTEAD",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -521,11 +549,27 @@
             ]
         },
         {
+            "key": "field_62835da489017",
+            "label": "Translations",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_6282018499c70",
-            "label": "Languages",
+            "label": "Translations",
             "name": "languages",
             "type": "relationship",
-            "instructions": "",
+            "instructions": "Please select all posts with additional translations available for this article",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -538,41 +582,14 @@
             ],
             "taxonomy": "",
             "filters": [
-                "search",
-                "post_type"
+                "search"
             ],
-            "elements": "",
+            "elements": [
+                "featured_image"
+            ],
             "min": "",
             "max": "",
             "return_format": "object"
-        },
-        {
-            "key": "field_6282047450cbe",
-            "label": "Select translations",
-            "name": "select_translations",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "english": "English",
-                "german": "German",
-                "french": "French",
-                "spanish": "Spanish",
-                "catalan": "Catalan",
-                "italian": "Italian"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "default_value": "",
-            "layout": "vertical",
-            "return_format": "value",
-            "save_other_choice": 0
         }
     ],
     "location": [
@@ -581,6 +598,13 @@
                 "param": "post_type",
                 "operator": "==",
                 "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "embletc"
             }
         ]
     ],
@@ -591,5 +615,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "modified": 1652792567
 }

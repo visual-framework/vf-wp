@@ -210,3 +210,17 @@ margin-bottom: 1rem !important;
 .press-box .vf-link {
   color: #fff !important;
 }
+
+.language-switcher {
+  font-size: 14px !important; 
+  margin-bottom: 0 !important; 
+  grid-row: 8 !important;
+}
+
+.language-switcher-summary {
+  margin-top: 1rem !important; 
+}
+
+.language-switcher-archive {
+  color: #707372 !important;
+}

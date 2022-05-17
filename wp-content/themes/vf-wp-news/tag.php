@@ -4,6 +4,8 @@ get_header();
 
 the_post();
 $tag = get_queried_object();
+$languages = get_field('languages');
+
 ?>
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content | vf-u-margin__top--800">

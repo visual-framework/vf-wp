@@ -57,7 +57,7 @@ else { ≈?>
       $all_fields_count = count(get_field('languages'));
       $fields_count = 1;
 ?>
-        <p class="vf-card__text">This article is also available in
+        <p class="vf-card__text | language-switcher language-switcher-main-card">Read in
         <?php foreach( $languages as $l ):
          $related = get_field('select_translations', $l->ID);
          if ($related == 'german') {
@@ -81,9 +81,9 @@ else { ≈?>
         $permalink = get_permalink( $l->ID );
         // $title = get_the_title( $l->ID );
         ?>
-          <a class="vf-banner__link" href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a><?php
+          <a class="vf-card__link" href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a><?php
        if ($fields_count == $all_fields_count - 1) {
-          echo " and"; }
+          echo " or"; }
          else if ($fields_count == $all_fields_count) {
           echo "."; }
         else {

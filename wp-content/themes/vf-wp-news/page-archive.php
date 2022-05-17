@@ -5,6 +5,8 @@ Template Name: Archives
 get_header();
 
 the_post();
+$languages = get_field('languages');
+
 ?>
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content | vf-u-margin__top--800">

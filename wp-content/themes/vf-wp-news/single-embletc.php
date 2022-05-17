@@ -51,7 +51,31 @@ the_post();
       <?php endif; ?>
 
     </aside>
+    <?php
 
+  if( get_field('press_contact') == 'EMBL Generic' ) { ?>
+    <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
+    <div class="vf-card__content | vf-stack vf-stack--400">
+    <h3 class="vf-card__heading" style="font-size: 21px;">EMBL Press Office</h3>
+    <p class="vf-card__text">Meyerhofstraße 1</br> 69117 Heidelberg</br> Germany
+      </p>
+      <p class="vf-card__text"><a class="vf-card__link" href="mailto:media@embl.org">media@embl.org</a></br>+49 6221 387-8726</p>
+    </div>
+  </article>
+    <?php }
+
+else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
+    <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
+    <div class="vf-card__content | vf-stack vf-stack--400">
+    <h3 class="vf-card__heading" style="font-size: 21px;">EMBL-EBI Press Office</h3>
+      <p class="vf-card__text">Wellcome Genome Campus</br> Hinxton,
+        Cambridgeshire</br> CB10 1SD, UK</p>
+      <p class="vf-card__text"><a class="vf-card__link" href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
+    </div>
+    </article>
+    <?php }
+
+else {} ?>
 
   </div>
   <div class="vf-content | vf-u-padding__bottom--800">
@@ -292,64 +316,8 @@ if ($tags) {
         </li>
       </ul>
     </div>
-    <?php
-
-if( get_field('press_contact') == 'EMBL Generic' ) { ?>
-  <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
-  <div class="vf-card__content | vf-stack vf-stack--400">
-  <h3 class="vf-card__heading" style="font-size: 21px;">EMBL Press Office</h3>
-  <p class="vf-card__text">Meyerhofstraße 1</br> 69117 Heidelberg</br> Germany
-    </p>
-    <p class="vf-card__text"><a class="vf-card__link" href="mailto:media@embl.org">media@embl.org</a></br>+49 6221 387-8726</p>
   </div>
-</article>
-  <?php }
-
-else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
-  <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
-  <div class="vf-card__content | vf-stack vf-stack--400">
-  <h3 class="vf-card__heading" style="font-size: 21px;">EMBL-EBI Press Office</h3>
-    <p class="vf-card__text">Wellcome Genome Campus</br> Hinxton,
-      Cambridgeshire</br> CB10 1SD, UK</p>
-    <p class="vf-card__text"><a class="vf-card__link" href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
-  </div>
-  </article>
-  <?php }
-
-else {} ?>
-  </div>
-  
 </main>
-
-<div
-  class="vf-news-container vf-news-container--featured | vf-u-background-color-ui--off-white | vf-u-margin__bottom--100 | vf-u-padding__top--400 | vf-u-fullbleed">
-  <h2 class="vf-section-header__heading vf-u-margin__bottom--400">More from this category</h2>
-  <div class="vf-news-container__content vf-grid vf-grid__col-4">
-    <?php
-          $args = array(
-            'posts_per_page' => 4,
-            'post__not_in'   => array( get_the_ID() ),
-            'no_found_rows'  => true,
-            'category_name' => $categories_embl,);
-
-          $cats = wp_get_post_terms( get_the_ID(), 'category' );
-          $cats_ids = array();
-          foreach( $cats as $related_cat ) {
-            $cats_ids[] = $related_cat->term_id;
-          }
-          if ( ! empty( $cats_ids ) ) {
-            $args['category__in'] = $cats_ids;
-          }
-
-          $query = new wp_query( $args );
-
-          foreach( $query->posts as $post ) : setup_postdata( $post ); ?>
-
-    <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
-    <?php endforeach; wp_reset_postdata(); ?>
-  </div>
-
-</div>
 
 <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
 

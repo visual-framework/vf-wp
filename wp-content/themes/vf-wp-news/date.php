@@ -4,6 +4,8 @@ get_header();
 
 the_post();
 $post_date = get_the_date('Y');
+$languages = get_field('languages');
+
 ?>
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content | vf-u-margin__top--800">

@@ -2,7 +2,7 @@
 <?php
 $counter = 2;
 ?>
-<fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+<fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800">
   <legend class="vf-form__legend">Year</legend>
 
   <div class="vf-form__item vf-stack">

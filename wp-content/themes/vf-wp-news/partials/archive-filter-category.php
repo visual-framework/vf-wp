@@ -13,7 +13,7 @@ $category_terms = get_terms(
  ?>
 
 
-<fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+<fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800">
   <legend class="vf-form__legend">Category</legend>
     <?php
     foreach($category_terms as $term) {

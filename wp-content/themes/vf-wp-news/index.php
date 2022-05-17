@@ -214,7 +214,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
     <?php
 		$latestPostLoop5 = new WP_Query(array(
       'category_name' => 'events',
-      'post__not_in' => $ids, 
+      'post__not_in' => array_merge($ids, $excluded_translations_array), 
       'posts_per_page' => 3, 
   ));
 		while ($latestPostLoop5->have_posts()) : $latestPostLoop5->the_post(); ?>

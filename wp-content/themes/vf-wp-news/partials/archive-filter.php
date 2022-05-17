@@ -33,7 +33,7 @@ $category_terms = get_terms(
     }
     ?>
   </fieldset>
-<fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+<fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800">
   <legend class="vf-form__legend">Year</legend>
 
   <div class="vf-form__item vf-stack">
@@ -42,7 +42,7 @@ $category_terms = get_terms(
     <?php echo wp_get_archives(array('type' => 'yearly', 'format' => 'custom', 'echo'=>'0', 'show_post_count' => 'true')) ?>
     </select>
     </div>
-  </fieldset>
+</fieldset>
 
 
 

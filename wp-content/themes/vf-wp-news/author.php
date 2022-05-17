@@ -3,6 +3,8 @@
 get_header();
 
 $user_id = get_the_author_meta('ID');
+$languages = get_field('languages');
+
 ?>
 
 <section class="embl-grid embl-grid--has-centered-content | vf-content | vf-u-margin__top--800">

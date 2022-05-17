@@ -2,6 +2,7 @@
 $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
+$languages = get_field('languages');
 
 ?>
 
@@ -32,5 +33,43 @@ $user_id = get_the_author_meta('ID');
   <?php
   if ( function_exists('icl_object_id') ) {
   wpml_post_languages_in_loop(); } ?>
-
+      <?php
+    // custom switcher
+    if( $languages ):
+      $all_fields_count = count(get_field('languages'));
+      $fields_count = 1; ?>
+        <p class="vf-summary__text | language-switcher language-switcher-archive">Read in
+        <?php foreach( $languages as $l ):
+         $related = get_field('select_translations', $l->ID);
+         if ($related == 'german') {
+           $title = 'Deutsch';
+         }
+         if ($related == 'french') {
+           $title = 'Français';
+         }
+         if ($related == 'english') {
+           $title = 'English';
+         }
+         if ($related == 'italian') {
+           $title = 'Italiano';
+         }
+         if ($related == 'spanish') {
+           $title = 'Español';
+         }
+         if ($related == 'catalan') {
+           $title = 'Catalan';
+         }
+        $permalink = get_permalink( $l->ID );
+        // $title = get_the_title( $l->ID );
+        ?>
+          <a class="vf-link" href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a><?php
+       if ($fields_count == $all_fields_count - 1) {
+          echo " or"; }
+         else if ($fields_count == $all_fields_count) {
+          echo "."; }
+        else {
+          echo ","; }
+        $fields_count++; ?>
+        <?php endforeach; ?></p>
+    <?php endif; ?> 
 </article>
