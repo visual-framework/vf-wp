@@ -135,7 +135,7 @@ $title = $vf_theme->get_title();
     <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://www.embl.org/internal-information/topic/internal-newsletter/">Internal newsletter<svg
+            href="https://www.embl.org/internal-information/news/topic/internal-newsletter/">Internal newsletter<svg
               aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
               height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
