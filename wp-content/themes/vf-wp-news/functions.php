@@ -218,7 +218,41 @@ function hide_acf_field($field) {
   }
   add_filter("acf/prepare_field/name=translations", "hide_acf_field");
  
+  /*
+   * Add columns to posts post list
+   */
+  function add_acf_columns ( $columns ) {
+      return array_merge ( $columns, array ( 
+        'language' => __ ( 'Language' )
+      ) );
+    }
+    add_filter ( 'manage_post_posts_columns', 'add_acf_columns' );
+/*
+ * Add columns to posts post list
+ */
+function posts_custom_column ( $column, $post_id ) {
+    switch ( $column ) {
+      case 'language':
+        $field = get_field ( 'select_translations', $post_id,  true );
+        echo $field['label'];
+        break;
+    }
+  }
+  add_action ( 'manage_post_posts_custom_column', 'posts_custom_column', 10, 2 );
 
 
+  function adjust_admin_style() {
+    echo '<style>
+      .fixed .column-categories,
+      .fixed .column-language {
+          width: 5%;
+      }
+      .fixed .column-date {
+          width: 11%;
+      }
+    </style>';
+  }
+  add_action('admin_head', 'adjust_admin_style');
+  
 
 ?>

@@ -33,28 +33,7 @@ $languages = get_field('languages');
       $fields_count = 1; ?>
         <p class="vf-card__text | language-switcher">Read in
         <?php foreach( $languages as $l ):
-         $related = get_field('select_translations', $l->ID);
-         if ($related == 'german') {
-           $title = 'Deutsch';
-         }
-         if ($related == 'french') {
-           $title = 'Français';
-         }
-         if ($related == 'english') {
-           $title = 'English';
-         }
-         if ($related == 'italian') {
-           $title = 'Italiano';
-         }
-         if ($related == 'spanish') {
-           $title = 'Español';
-         }
-         if ($related == 'catalan') {
-           $title = 'Catalan';
-         }
-        $permalink = get_permalink( $l->ID );
-        // $title = get_the_title( $l->ID );
-        ?>
+        include(locate_template('partials/language-switcher.php', false, false));        ?>
           <a class="vf-card__link" href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a><?php
        if ($fields_count == $all_fields_count - 1) {
           echo " or"; }

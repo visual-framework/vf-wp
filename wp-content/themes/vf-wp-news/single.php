@@ -15,7 +15,7 @@ the_post();
 
 <main
   class="embl-grid embl-grid--has-centered-content | vf-u-background-color-ui--white | vf-u-padding__top--800 | vf-u-margin__bottom--0">
-  <div class="article-left-col">
+  <div class="article-left-col | vf-content">
     <aside class="vf-article-meta-information">
       <div class="vf-author | vf-article-meta-info__author">
         <p class="vf-author__name">
@@ -33,75 +33,40 @@ the_post();
             datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
         <p class="vf-meta__topics"><?php echo get_the_category_list(' '); ?></p>
       </div>
+      <?php
+  // custom switcher
+    if( $languages ): ?>
+      <div class="vf-meta__details">
+        <p class="vf-text vf-text-heading--5">Available languages</p>
+        <ul class="vf-list vf-list--default | vf-list--tight">
+          <?php foreach( $languages as $l ):
+          include(locate_template('partials/language-switcher.php', false, false)); ?>
+          <li class="vf-list__item "><a class="vf-list__link"
+              href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+      </div>
       <?php if( have_rows('in_this_article') ): ?>
-      <div class="vf-links vf-links--tight vf-links__list--s">
-        <p class="vf-links__heading">In this article</p>
-        <ul class="vf-links__list vf-links__list--secondary | vf-list">
-
-          <?php while( have_rows('in_this_article') ): the_row();
+      <div class="vf-meta__details">
+        <div class="vf-links vf-links--tight vf-links__list--s">
+          <p class="vf-links__heading">In this article</p>
+          <ul class="vf-links__list vf-links__list--secondary | vf-list">
+            <?php while( have_rows('in_this_article') ): the_row();
         $anchor = get_sub_field('anchor');
         $heading = get_sub_field('heading_description');?>
-
-          <li class="vf-list__item">
-            <a href="<?php echo esc_url( $anchor ); ?>" class="vf-list__link"><?php echo esc_html($heading) ?></a>
-          </li>
-          <?php endwhile; ?>
-        </ul>
+            <li class="vf-list__item">
+              <a href="<?php echo esc_url( $anchor ); ?>" class="vf-list__link"><?php echo esc_html($heading) ?></a>
+            </li>
+            <?php endwhile; ?>
+          </ul>
+        </div>
       </div>
       <?php endif; ?>
-
     </aside>
-
-
   </div>
+
   <div class="vf-content | vf-u-padding__bottom--800">
-
-  <?php
-  
-  // custom switcher
-    if( $languages ):
-      $all_fields_count = count(get_field('languages'));
-      $fields_count = 1;
-?>
-    <div class="vf-banner vf-banner--alert vf-banner--info">
-      <div class="vf-banner__content">
-        <p class="vf-banner__text">This article is also available in
-        <?php foreach( $languages as $l ):
-         $related = get_field('select_translations', $l->ID);
-         if ($related == 'german') {
-           $title = 'Deutsch';
-         }
-         if ($related == 'french') {
-           $title = 'Français';
-         }
-         if ($related == 'english') {
-           $title = 'English';
-         }
-         if ($related == 'italian') {
-           $title = 'Italiano';
-         }
-         if ($related == 'spanish') {
-           $title = 'Español';
-         }
-         if ($related == 'catalan') {
-           $title = 'Catalan';
-         }
-        $permalink = get_permalink( $l->ID );
-        // $title = get_the_title( $l->ID );
-        ?>
-          <a class="vf-banner__link" href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a><?php
-       if ($fields_count == $all_fields_count - 1) {
-          echo " and"; }
-         else if ($fields_count == $all_fields_count) {
-          echo "."; }
-        else {
-          echo ","; }
-        $fields_count++; ?>
-        <?php endforeach; ?></p>
-        </div>
-    </div>
-    <?php endif; ?>
-
     <?php
     // WPML
     if ( function_exists('icl_object_id') ) {
@@ -216,7 +181,7 @@ else {
     <?php 
     // related links
     if( ! have_rows('source_article') ): ?>
-      <hr class="vf-divider">
+    <hr class="vf-divider">
     <?php endif; 
 
     if( have_rows('related_links') ): ?>
@@ -295,30 +260,32 @@ if ($tags) {
     <?php
 
 if( get_field('press_contact') == 'EMBL Generic' ) { ?>
-  <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
-  <div class="vf-card__content | vf-stack vf-stack--400">
-  <h3 class="vf-card__heading" style="font-size: 21px;">EMBL Press Office</h3>
-  <p class="vf-card__text">Meyerhofstraße 1</br> 69117 Heidelberg</br> Germany
-    </p>
-    <p class="vf-card__text"><a class="vf-card__link" href="mailto:media@embl.org">media@embl.org</a></br>+49 6221 387-8726</p>
-  </div>
-</article>
-  <?php }
+    <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading" style="font-size: 21px;">EMBL Press Office</h3>
+        <p class="vf-card__text">Meyerhofstraße 1</br> 69117 Heidelberg</br> Germany
+        </p>
+        <p class="vf-card__text"><a class="vf-card__link" href="mailto:media@embl.org">media@embl.org</a></br>+49 6221
+          387-8726</p>
+      </div>
+    </article>
+    <?php }
 
 else if( get_field('press_contact') == 'EMBL-EBI Generic' ) { ?>
-  <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
-  <div class="vf-card__content | vf-stack vf-stack--400">
-  <h3 class="vf-card__heading" style="font-size: 21px;">EMBL-EBI Press Office</h3>
-    <p class="vf-card__text">Wellcome Genome Campus</br> Hinxton,
-      Cambridgeshire</br> CB10 1SD, UK</p>
-    <p class="vf-card__text"><a class="vf-card__link" href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
-  </div>
-  </article>
-  <?php }
+    <article class="vf-card vf-card--brand vf-card--bordered | vf-u-margin__top--800">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading" style="font-size: 21px;">EMBL-EBI Press Office</h3>
+        <p class="vf-card__text">Wellcome Genome Campus</br> Hinxton,
+          Cambridgeshire</br> CB10 1SD, UK</p>
+        <p class="vf-card__text"><a class="vf-card__link"
+            href="mailto:contactpress@ebi.ac.uk">contactpress@ebi.ac.uk</a></br>+44 1223 494369</p>
+      </div>
+    </article>
+    <?php }
 
 else {} ?>
   </div>
-  
+
 </main>
 
 <div
