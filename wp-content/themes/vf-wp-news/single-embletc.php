@@ -91,7 +91,7 @@ else {} ?>
       <div class="vf-banner__content">
         <p class="vf-banner__text">This article is also available in
         <?php foreach( $languages as $l ):
-         $related = get_field('select_translations', $l->ID);
+         $related = get_field('field_article_language', $l->ID);
          if ($related == 'german') {
            $title = 'Deutsch';
          }

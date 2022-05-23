@@ -233,7 +233,7 @@ function hide_acf_field($field) {
 function posts_custom_column ( $column, $post_id ) {
     switch ( $column ) {
       case 'language':
-        $field = get_field ( 'select_translations', $post_id,  true );
+        $field = get_field ( 'field_article_language', $post_id,  true );
         echo $field['label'];
         break;
     }

@@ -15,27 +15,27 @@ function languages_global() {
         'meta_query'    => array(
           'relation' => 'OR',
           array(
-              'key'       => 'select_translations',
+              'key'       => 'field_article_language',
               'value'     => 'french',
               'compare' => 'LIKE'
           ),
           array(
-              'key'       => 'select_translations',
+              'key'       => 'field_article_language',
               'value'     => 'italian',
               'compare' => 'LIKE'
           ),
           array(
-              'key'       => 'select_translations',
+              'key'       => 'field_article_language',
               'value'     => 'catalan',
               'compare' => 'LIKE'
           ),
           array(
-              'key'       => 'select_translations',
+              'key'       => 'field_article_language',
               'value'     => 'spanish',
               'compare' => 'LIKE'
           ),
           array(
-              'key'       => 'select_translations',
+              'key'       => 'field_article_language',
               'value'     => 'german',
               'compare' => 'LIKE'
       

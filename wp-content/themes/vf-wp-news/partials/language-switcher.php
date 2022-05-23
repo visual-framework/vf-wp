@@ -1,5 +1,5 @@
 <?php 
- $related = get_field('select_translations', $l->ID);
+ $related = get_field('field_article_language', $l->ID);
  if ($related['value'] == 'german') {
    $title = 'Deutsch';
  }

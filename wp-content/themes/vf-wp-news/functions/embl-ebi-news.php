@@ -3,8 +3,8 @@
    * Add metadata to REST API
    */
 
-  function register_display_api_field()
-{
+// display
+function register_display_api_field() {
     register_rest_field('post', 'field_target_display',
         array(
             'get_callback' => 'get_display_api_field',
@@ -15,9 +15,24 @@
 
 add_action('rest_api_init', 'register_display_api_field');
 
-function get_display_api_field($post)
-{
+function get_display_api_field($post) {
     return get_field('field_target_display', $post['id']);
+}
+
+// language
+function register_language_api_field() {
+    register_rest_field('post', 'field_article_language',
+        array(
+            'get_callback' => 'get_language_api_field',
+            'schema' => null,
+        )
+    );
+}
+
+add_action('rest_api_init', 'register_language_api_field');
+
+function get_language_api_field($post) {
+    return get_field('field_article_language', $post['id']);
 }
 
 // Add featured image to REST API
@@ -32,6 +47,8 @@ function register_rest_images(){
         )
     );
 }
+
+
 function get_rest_featured_image( $object, $field_name, $request ) {
     if( $object['featured_media'] ){
         $img = wp_get_attachment_image_src( $object['featured_media'], 'app-thumb' );

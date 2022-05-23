@@ -59,7 +59,7 @@ else { ≈?>
 ?>
         <p class="vf-card__text | language-switcher language-switcher-main-card">Read in
         <?php foreach( $languages as $l ):
-         $related = get_field('select_translations', $l->ID);
+         $related = get_field('field_article_language', $l->ID);
          include(locate_template('partials/language-switcher.php', false, false));
         ?>
           <a class="vf-card__link" href="<?php echo esc_url( $permalink ); ?>"><?php echo esc_html( $title ); ?></a><?php

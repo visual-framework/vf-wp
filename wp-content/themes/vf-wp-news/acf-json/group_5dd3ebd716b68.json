@@ -84,7 +84,7 @@
         {
             "key": "field_6282047450cbe",
             "label": "Article language",
-            "name": "select_translations",
+            "name": "field_article_language",
             "type": "radio",
             "instructions": "Please indicate the language of this article",
             "required": 0,
@@ -616,5 +616,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1652854293
+    "modified": 1653032515
 }
