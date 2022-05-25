@@ -260,7 +260,7 @@ add_action(
  */
 function get_blog_labels() {
   return array(
-    'name'                     => _x( 'Important updates', 'post type general name', 'vfwp' ),
+    'name'                     => _x( 'Updates', 'post type general name', 'vfwp' ),
     'singular_name'            => _x( 'Important update', 'post type singular name', 'vfwp' ),
     'add_new'                  => _x( 'Add New', 'Important update', 'vfwp' ),
     'add_new_item'             => __( 'Add New Important update', 'vfwp' ),
@@ -297,7 +297,7 @@ function vf_wp_intranet_blog__init() {
 
   register_post_type('community-blog', array(
     'labels'              => get_blog_labels(),
-    'description'         => __('Important updates', 'vfwp'),
+    'description'         => __('Updates', 'vfwp'),
     'public'              => true,
     'hierarchical'        => false,
     'exclude_from_search' => false,

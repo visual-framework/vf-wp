@@ -23,21 +23,11 @@ get_header();
 <div
   class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
   <div></div>
-  <form action="#eventsFilter" onsubmit="return false;"
-    class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
-    <div class="vf-sidebar__inner">
-      <div class="vf-form__item">
-        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
-        <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
-          data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-          placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn"
-          class="vf-form__input | vf-search__input" />
-      </div>
-      <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
-        <span class="vf-button__text">Filter</span>
-      </button>
-    </div>
-  </form>
+  <div class="vf-form__item">
+          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+            data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
+            placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn">
+   </div>
 </div>
 
 <section class="embl-grid embl-grid--has-centered-content">
@@ -97,6 +87,7 @@ get_header();
                      echo ($event->title . '</h3>'); }
 
                 // additional info field break down
+                if ($speaker) {
                 echo '<p class="vf-summary__text" style="font-size: 16px;">'; 
                 // $speaker = substr($info, strpos($info, 'Speaker:'));
                 // $venue = $event->field_event_venue;
@@ -109,13 +100,13 @@ get_header();
                   // echo '<span>' . strstr($host, 'Location', true);'</span><br>'; }
                   
                 // show only speaker
-                echo '<span>' . $speaker  . '</span><br><span style="font-size: 14px; color: #707372;">' . $address . '</span></p>' ;
-
+                echo '<span  style="font-weight: 500;">' . $speaker  . '</span><span style="font-size: 16px;">'. ' - ' . $address . '</span></p>' ;
+                } 
                 // show host
-                echo '<p class="vf-summary__text" style="font-size: 16px; margin-top: 6px;"><span>' . substr($info, strpos($info, 'Host')) . '</span></p>';
+                echo '<p class="vf-summary__text host" style="font-size: 16px; margin-top: 0px;"><span>' . substr($info, strpos($info, 'Host')) . '</span></p>';
 
                 // show venue
-                echo '<p class="vf-summary__text" style="font-size: 16px; margin-top: 0px;"><span>Place: ' . $event->field_event_venue . '</span></p>';
+                echo '<p class="vf-summary__text place" style="font-size: 16px; margin-top: 0px;"><span>Place: ' . $event->field_event_venue . '</span></p>';
                 // Seminar type
                 echo '<p class="vf-summary__text | vf-text-heading--5 | type | ' . $type_filter_class .'">' . $type . '</p>';
 
@@ -178,7 +169,33 @@ get_header();
     </nav>
 
   </div>
-  <div></div>
+  <div class="vf-stack vf-stack--400">
+    <article class="vf-card vf-card--brand vf-card--bordered">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link"
+            href="https://www.embl.org/events">Courses and conferences<svg aria-hidden="true"
+              class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                fill="currentColor" fill-rule="nonzero"></path>
+            </svg>
+          </a></h3>
+      </div>
+    </article>
+    <article class="vf-card vf-card--brand vf-card--striped">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.ebi.ac.uk/about/events/seminars">EMBL-EBI Seminars<svg
+              aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
+              height="1em" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                fill="currentColor" fill-rule="nonzero"></path>
+            </svg>
+          </a></h3>
+      </div>
+    </article>
+  </div>
 </section>
 
 <style>
