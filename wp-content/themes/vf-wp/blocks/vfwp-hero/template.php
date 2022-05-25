@@ -33,9 +33,6 @@ $headink_link ='';
 if (!empty($hero_url)) {
   $headink_link = $hero_url['url'];
 }
-else {
-  $headink_link = get_home_url();
-} 
 
 
 ?>
@@ -66,10 +63,13 @@ else {
       | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?></a>
     </p>
     <?php } }?>
-    <h2 class="vf-hero__heading" >
-      <a class="vf-hero__heading_link | heading_link" href="<?php echo esc_url($headink_link); ?>">
+    <h2 class="vf-hero__heading">
+      <?php if ($headink_link) { ?>
+      <a class="vf-hero__heading_link | heading_link" href="<?php echo esc_url($headink_link); ?>"> <?php } ?>
         <?php echo ($hero_heading); ?>
+      <?php if ($headink_link) { ?>  
       </a>
+      <?php } ?>
     </h2>
 
     <?php if ($hero_subheading) {?>
