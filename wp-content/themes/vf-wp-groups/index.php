@@ -12,7 +12,7 @@ if (class_exists('VF_Breadcrumbs')) {
 get_header();
 
 global $vf_theme;
-
+$page_for_posts_id = get_option( 'page_for_posts' );
 $title = $vf_theme->get_title();
 $slug = get_page_by_path( 'blog' ); 
 $custom_template = get_field('vf_groups_custom_blog_template', $slug->ID);
@@ -32,9 +32,11 @@ else {
 }
 if ($custom_template) {echo '<br>';}
 ?>
+
 <div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
   <?php echo swiftype_metadata_description(); ?>
 </div>
+<?php echo apply_filters( 'the_content', get_post_field( 'post_content', $page_for_posts_id ) ); ?>
 <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800">
     <div class="vf-grid__col--span-2">
       <?php
