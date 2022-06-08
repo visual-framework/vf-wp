@@ -105,16 +105,52 @@ function ebi_news_canonical_url( $canonical ) {
 add_action( 'template_redirect', 'redirect_to_ebi' );
 function redirect_to_ebi(){
     global $post;
-    $display = get_field('field_target_display', $post->ID);
-    $category = get_the_category($post->ID);
-    $cat_slug = '';
-    if (!empty($category[0]->slug)) {
-        $cat_slug = $category[0]->slug;
-      }
-    $redirect = 'https://www.ebi.ac.uk/about/news/'. strtolower($cat_slug) . '/' . trim($post->post_name, '-2');
-    if ((is_single()) && ($display == 'embl-ebi')) {
-        wp_redirect( $redirect );
-     }
+    if( strpos( $_SERVER["REQUEST_URI"], '/announcements/' ) !== false ){ 
+      if( strpos( $_SERVER["REQUEST_URI"], '/category/' ) !== false ){ 
+      $redirect = 'https://www.ebi.ac.uk/about/news/category/announcements/';
+       }
+      else {
+      $redirect = 'https://www.ebi.ac.uk/about/news/announcements/' . trim($post->post_name, '-2');
+      }      
+      wp_redirect( $redirect );
+    }
+    if( strpos( $_SERVER["REQUEST_URI"], '/perspectives/' ) !== false ){ 
+      if( strpos( $_SERVER["REQUEST_URI"], '/category/' ) !== false ){ 
+      $redirect = 'https://www.ebi.ac.uk/about/news/category/perspectives/';
+       }
+      else {
+      $redirect = 'https://www.ebi.ac.uk/about/news/perspectives/' . trim($post->post_name, '-2');
+      }      
+      wp_redirect( $redirect );
+    }
+    if( strpos( $_SERVER["REQUEST_URI"], '/research-highlights/' ) !== false ){ 
+      if( strpos( $_SERVER["REQUEST_URI"], '/category/' ) !== false ){ 
+      $redirect = 'https://www.ebi.ac.uk/about/news/category/research-highlights/';
+       }
+      else {
+      $redirect = 'https://www.ebi.ac.uk/about/news/research-highlights/' . trim($post->post_name, '-2');
+      }      
+      wp_redirect( $redirect );
+    }
+    if( strpos( $_SERVER["REQUEST_URI"], '/technology-and-innovation/' ) !== false ){ 
+      if( strpos( $_SERVER["REQUEST_URI"], '/category/' ) !== false ){ 
+      $redirect = 'https://www.ebi.ac.uk/about/news/category/technology-and-innovation/';
+       }
+      else {
+      $redirect = 'https://www.ebi.ac.uk/about/news/technology-and-innovation/' . trim($post->post_name, '-2');
+      }      
+      wp_redirect( $redirect );
+    }
+    if( strpos( $_SERVER["REQUEST_URI"], '/updates-from-data-resources/' ) !== false ){ 
+      if( strpos( $_SERVER["REQUEST_URI"], '/category/' ) !== false ){ 
+      $redirect = 'https://www.ebi.ac.uk/about/news/category/updates-from-data-resources/';
+       }
+      else {
+      $redirect = 'https://www.ebi.ac.uk/about/news/updates-from-data-resources/' . trim($post->post_name, '-2');
+      }      
+      wp_redirect( $redirect );
+    }
+
 }  
 
 /**
