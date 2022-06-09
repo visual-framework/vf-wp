@@ -485,7 +485,7 @@
             "label": "Translations",
             "name": "translations",
             "type": "repeater",
-            "instructions": "THIS FUNCTIONALITY HAS BEEN DEPRECATED. TO ADD OTHER LANGUAGES, PLEASE GO TO THE 'TRANSLATIONS' TAB INSTEAD",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -550,7 +550,7 @@
         },
         {
             "key": "field_62835da489017",
-            "label": "Translations",
+            "label": "Translations (TEST)",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -569,7 +569,7 @@
             "label": "Translations",
             "name": "languages",
             "type": "relationship",
-            "instructions": "Please select all posts with additional translations available for this article",
+            "instructions": "THIS IS A TEST VERSION. TO ADD TRANSLATIONS PLEASE USE FIELDS UNDER 'PRESS RELEASE' TAB",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -616,5 +616,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1653032515
+    "modified": 1654763401
 }
