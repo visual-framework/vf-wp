@@ -18,7 +18,7 @@ $languages = get_field('languages');
     </h3>
 
     <h1>
-      <?php wp_title(''); ?>
+      <?php echo $category->name; ?>
     </h1>
   </div>
 </section>

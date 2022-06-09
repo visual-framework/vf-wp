@@ -3,6 +3,7 @@
 get_header();
 
 $user_id = get_the_author_meta('ID');
+$user_name = get_the_author_meta('display_name');
 $languages = get_field('languages');
 
 ?>
@@ -17,7 +18,7 @@ $languages = get_field('languages');
     </h3>
 
     <h1>
-      <?php wp_title(''); ?>
+      <?php echo $user_name; ?>
     </h1>
   </div>
 </section>

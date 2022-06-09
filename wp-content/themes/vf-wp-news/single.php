@@ -67,13 +67,11 @@ the_post();
   </div>
 
   <div class="vf-content | vf-u-padding__bottom--800">
-    <?php
-    // WPML
-    if ( function_exists('icl_object_id') ) {
-        languages_links_switcher(); }?>
     <h1><?php the_title(); ?></h1>
-    <?php /*  languages_links_switcher(); */?>
-    <?php  if( have_rows('translations') ):
+    <?php
+     if( !$languages ): 
+    // old
+    if( have_rows('translations') ):
         $all_fields_count = count(get_field('translations'));
         $fields_count = 1;
       ?>
@@ -95,6 +93,32 @@ the_post();
       </div>
     </div>
     <?php endif;  ?>
+    <?php
+    // updated
+    if( have_rows('article_translations') ):
+        $all_fields_count = count(get_field('article_translations'));
+        $fields_count = 1;
+      ?>
+    <div class="vf-banner vf-banner--alert vf-banner--info">
+      <div class="vf-banner__content">
+        <p class="vf-banner__text">This article is also available in
+          <?php while( have_rows('article_translations') ): the_row();
+        $anchor = get_sub_field('translation_anchor');
+        $language = get_sub_field('translation_language', false, false);?>
+          <a class="vf-banner__link" href="<?php echo esc_url( $anchor ); ?>"><?php echo ($language) ?></a><?php
+       if ($fields_count == $all_fields_count - 1) {
+          echo " and"; }
+         else if ($fields_count == $all_fields_count) {
+          echo "."; }
+        else {
+          echo ","; }
+        $fields_count++; ?>
+          <?php endwhile; ?></p>
+      </div>
+    </div>
+    <?php endif;  ?>
+    <?php endif; ?>
+
 
     <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?>
