@@ -47,7 +47,7 @@ class VF_Navigation extends VF_Plugin {
    */
   public function nav_menu_css_class($classes, $item, $args, $depth) {
     if (in_array($args->theme_location, array('primary', 'secondary'))) {
-      return ['vf-navigation__item'];
+      $classes[] = 'vf-navigation__item';
     }
     return $classes;
   }
