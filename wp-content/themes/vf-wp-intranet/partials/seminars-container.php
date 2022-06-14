@@ -50,13 +50,19 @@ function sortByStartDate($param1, $param2) {
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
             $newDate = date("j M Y, H:i", strtotime($event->field_event_start_date_time));
+            $calendarStartDate = date("Ymd", strtotime($event->field_event_start_date_time));
+            $calendarStartTime = date("Hi", strtotime($event->field_event_start_date_time));
+            $calendarEndTime = date("Hi", strtotime($event->field_event_start_date_time) + 60*60);
             $info = $event->field_event_additional_info;  
             
                 echo '<article class="vf-card vf-card--brand vf-card--bordered | vf-u-padding--200">';
                 echo '<div class="vf-summary vf-summary--event | vf-u-margin__bottom--0">';
                 //Date
                 echo '<p class="vf-summary__date" style="margin-bottom: 12px !important;">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
-                echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;"><a href="https://seminarlist.embl.de/rest/calendar?seminarID=' . substr($event->field_event_unique_identifier, strpos($event->field_event_unique_identifier, "-") + 1) . '&origin=intranet.embl.de">Add to calendar</a></span></p>';
+                echo ' <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
+                <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=' . $event->title . '&location=' . $event->field_event_venue . '&dates=' . $calendarStartDate . 'T' . $calendarStartTime . '00/' . $calendarStartDate . 'T' . $calendarEndTime . '00'.'&sprop=name:" target="_blank" rel="nofollow">Add to calendar</a>
+               </span>
+           </p>';
                 //Title
                 echo '<h3 class="vf-summary__title" style="font-size: 18px;">';
 

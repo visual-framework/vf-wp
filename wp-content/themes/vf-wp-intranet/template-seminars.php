@@ -66,6 +66,10 @@ get_header();
               $location_filter_class = strtolower(str_replace(' ', '_', $location)); 
               $address = html_entity_decode(strip_tags($event->field_event_address));
               $speaker = strstr($info, 'Host', true);
+              $calendarStartDate = date("Ymd", strtotime($event->field_event_start_date_time));
+              $calendarStartTime = date("Hi", strtotime($event->field_event_start_date_time));
+              $calendarEndTime = date("Hi", strtotime($event->field_event_start_date_time) + 60*60);
+  
               if (strpos($info, 'Host') == false) {
                 $address = '';
               }
@@ -74,7 +78,9 @@ get_header();
 
                 //Date
                 echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
-                echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;"><a href="https://seminarlist.embl.de/rest/calendar?seminarID=' . substr($event->field_event_unique_identifier, strpos($event->field_event_unique_identifier, "-") + 1) . '&origin=intranet.embl.de">Add to calendar</a></span></p>';
+                echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
+                <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=' . $event->title . '&location=' . $event->field_event_venue . '&dates=' . $calendarStartDate . 'T' . $calendarStartTime . '00/' . $calendarStartDate . 'T' . $calendarEndTime . '00'.'&sprop=name:" target="_blank" rel="nofollow">Add to calendar</a>
+               </span></p>';
 
                 //Title
                 echo '<h3 class="vf-summary__title">';
