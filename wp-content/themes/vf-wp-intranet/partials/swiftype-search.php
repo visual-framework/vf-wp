@@ -12,9 +12,6 @@
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
           <select class="vf-form__select" id="vf-form__select" data-embl-search-facet>
             <option value="all" selected>Everything</option>
-            <option value="People directory">People</option>
-            <option value="Jobs">Jobs</option>
-            <option value="News">News</option>
           </select>
         </div>
         <button type="submit" class="vf-search__button | vf-button vf-button--primary" data-embl-search-submit>
@@ -35,24 +32,10 @@
   </div>
   <section>
     <main class="vf-content">
-      <div class="st-info-container"></div>
       <div class="vf-form__item | vf-content" data-embl-search-filters>
       </div>
       <section class="st-search-container" data-embl-search-web-results>
       </section>
-      <section class="vf-u-display-none" data-embl-search-results-divider>
-        <h2 class="vf-text vf-text-heading--1 vf-text--invert vf-u-display-none">Alumni</h2>
-      </section>
-      <div class="results-container | vf-u-display-none" data-embl-search-alumni-results-wrapper>
-        <div class="results-container" data-embl-search-alumni-results>
-        </div>
-        <br />
-        <a href="https://hd-tqportal.embl.de/EMBL_LIVE_thankQ_Web/public/network/results.aspx"
-          class="vf-button vf-button--outline vf-button--sm vf-u-display-none">See Alumni Directory for more
-          info</a>
-      </div>
     </main>
-    <aside class="vf-content | vf-u-display-none" data-embl-search-alumni-info>
-    </aside>
   </section>
 </div>
