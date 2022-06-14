@@ -84,6 +84,7 @@ if (class_exists('VF_Navigation')) {
   </div>
 </section>
 
+
 <section
   class="embl-grid embl-grid--has-centered-content vf-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--0">
   <div></div>
@@ -137,7 +138,7 @@ if (class_exists('VF_Navigation')) {
         target="_blank">Search for Alumni</a></p> -->
   </div>
 </section>
-
+<div id="search-content" class="vf-stack vf-stack--400">
 <section class="embl-grid | vf-u-margin__bottom--0">
   <div>
   </div>
@@ -237,8 +238,15 @@ if (class_exists('VF_Navigation')) {
     <section class="vf-tabs__section" id="vf-tabs__section--public">
       <?php include(locate_template('partials/swiftype-search.php', false, false));  ?>
     </section>
+
   </div>
 </section>
+</div>
+<section id="load-container" class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--200">
+  <div></div>
+  <div id="load"></div>
+</section>
+
 
 <?php
 if (class_exists('VF_Global_Footer')) {
@@ -246,3 +254,26 @@ if (class_exists('VF_Global_Footer')) {
 } ?>
 
 <?php get_footer(); ?>
+
+<script>
+function onReady(callback) {
+    var intervalID = window.setInterval(checkReady, 1000);
+
+    function checkReady() {
+        if (document.getElementsByTagName('body')[0] !== undefined) {
+            window.clearInterval(intervalID);
+            callback.call(this);
+        }
+    }
+}
+
+function show(id, value) {
+    document.getElementById(id).style.display = value ? 'block' : 'none';
+}
+
+onReady(function () {
+    show('search-content', true);
+    show('load', false);
+    show('load-container', false);
+});
+</script>
