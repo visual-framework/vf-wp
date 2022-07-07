@@ -43,9 +43,9 @@
         },
         {
             "key": "field_60d300ba3349b",
-            "label": "",
+            "label": "EMBL site",
             "name": "vf_jobs_site",
-            "type": "radio",
+            "type": "checkbox",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -55,15 +55,22 @@
                 "id": ""
             },
             "choices": {
-                "embl": "EMBL",
-                "embl-ebi": "EMBL-EBI"
+                "all": "All",
+                "embl-ebi": "EMBL-EBI",
+                "embl-heidelberg": "Heidelberg",
+                "embl-hamburg": "Hamburg",
+                "embl-barcelona": "Barcelona",
+                "embl-rome": "Rome",
+                "embl-grenoble": "Grenoble"
             },
-            "allow_null": 0,
-            "other_choice": 0,
-            "default_value": "embl",
+            "allow_custom": 0,
+            "default_value": [
+                "all"
+            ],
             "layout": "vertical",
-            "return_format": "value",
-            "save_other_choice": 0
+            "toggle": 0,
+            "return_format": "label",
+            "save_custom": 0
         },
         {
             "key": "field_62419b02e9147",
@@ -219,5 +226,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1648470517
+    "modified": 1657189987
 }
