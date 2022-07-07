@@ -266,43 +266,60 @@ class VF_Theme {
    * https://developer.wordpress.org/block-editor/developers/themes/theme-support/#block-color-palettes
    */
   public function editor_color_palette($supports) {
+    $theme = wp_get_theme();
+    if ( 'VF-WP SIS' == $theme->name) {
     $color_palette = array(
       array(
-        'name' => __('EMBL Grey', $this->domain),
-        'slug' => 'grey',
-        'color' => '#707372',
+        'name' => __('SiS Green', $this->domain),
+        'slug' => 'sis_green',
+        'color' => '#748f2e',
       ),
       array(
-        'name' => __('EMBL Green', $this->domain),
-        'slug' => 'green',
-        'color' => '#009f4d',
+        'name' => __('SiS Orange', $this->domain),
+        'slug' => 'sis_orange',
+        'color' => '#eb9d28',
       ),
       array(
-        'name' => __('EMBL Blue', $this->domain),
-        'slug' => 'blue',
-        'color' => '#307fe2',
+        'name' => __('SiS Blue', $this->domain),
+        'slug' => 'sis_blue',
+        'color' => '#256ec1',
       ),
-      array(
-        'name' => __('EMBL Red', $this->domain),
-        'slug' => 'red',
-        'color' => '#e40046',
-      ),
-      // array(
-      //   'name' => __('EMBL Purple', $this->domain),
-      //   'slug' => 'purple',
-      //   'color' => '#8246af',
-      // ),
-      // array(
-      //   'name' => __('EMBL Orange', $this->domain),
-      //   'slug' => 'orange',
-      //   'color' => '#ffa300',
-      // ),
-      // array(
-      //   'name' => __('EMBL Yellow', $this->domain),
-      //   'slug' => 'yellow',
-      //   'color' => '#ffcd00',
-      // ),
-    );
+
+    ); }
+    else {
+      $color_palette = array(
+        array(
+          'name' => __('EMBL Grey', $this->domain),
+          'slug' => 'grey',
+          'color' => '#707372',
+        ),
+        array(
+          'name' => __('EMBL Green', $this->domain),
+          'slug' => 'green',
+          'color' => '#009f4d',
+        ),
+        array(
+          'name' => __('EMBL Blue', $this->domain),
+          'slug' => 'blue',
+          'color' => '#307fe2',
+        ),
+        array(
+          'name' => __('EMBL Red', $this->domain),
+          'slug' => 'red',
+          'color' => '#e40046',
+        ),
+        // array(
+        //   'name' => __('EMBL Orange', $this->domain),
+        //   'slug' => 'orange',
+        //   'color' => '#ffa300',
+        // ),
+        // array(
+        //   'name' => __('EMBL Yellow', $this->domain),
+        //   'slug' => 'yellow',
+        //   'color' => '#ffcd00',
+        // ),
+      );
+    }
     // Apply filters
     $color_palette = VF_Theme::apply_filters(
       'vf/theme/editor_color_palette',
