@@ -18,8 +18,12 @@ get_header();
       use the <strong>Teams</strong> tab to find people by research area or organisational group.</p>
   </div>
 </section>
-
-<div class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500">
+<section id="load-container" class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--200">
+  <div></div>
+  <div id="load"></div>
+</section>
+<div id="search-content">
+<div  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500">
   <div></div>
 
   <div>
@@ -147,7 +151,7 @@ get_header();
     <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://www.embl.org/search/?searchQuery=jo&activeFacet=Alumni#stq=">Alumni search<svg
+            href="https://www.embl.org/search/#vf-tabs__section--4">Alumni search<svg
               aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
               height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -165,6 +169,7 @@ get_header();
       </a></p>
   </div>
 </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -180,3 +185,25 @@ get_header();
 get_footer();
 
 ?>
+<script>
+function onReady(callback) {
+    var intervalID = window.setInterval(checkReady, 1000);
+
+    function checkReady() {
+        if (document.getElementsByTagName('body')[0] !== undefined) {
+            window.clearInterval(intervalID);
+            callback.call(this);
+        }
+    }
+}
+
+function show(id, value) {
+    document.getElementById(id).style.display = value ? 'grid' : 'none';
+}
+
+onReady(function () {
+    show('search-content', true);
+    show('load', false);
+    show('load-container', false);
+});
+</script>
