@@ -25,6 +25,25 @@
             "ui": 1
         },
         {
+            "key": "field_62cdad4c09641",
+            "label": "Main story subheading",
+            "name": "embletc_main_story_subheading",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
             "key": "field_62cc2847bd9c0",
             "label": "Main story teaser",
             "name": "embletc_main_story_teaser",
@@ -39,8 +58,8 @@
             },
             "default_value": "",
             "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
+            "toolbar": "full",
+            "media_upload": 1,
             "delay": 0
         },
         {

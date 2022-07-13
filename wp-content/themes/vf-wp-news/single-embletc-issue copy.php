@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -54,7 +53,12 @@ if( $main_story): ?>
   </div>
 </div>
   
-<div class="vf-grid vf-grid__col-3 | vf-content">
+<div class="vf-grid vf-grid__col-4 | vf-content">
+<div class="vf-grid__col--span-2">
+<?php the_post_thumbnail( 'large', array( 'class' => '', 'style' => 'max-height: 650px' ) ); ?>
+
+
+</div>
   <div class="vf-grid__col--span-2">
 <?php echo $teaser_text; ?>
 
@@ -72,14 +76,7 @@ if( $main_story): ?>
     wp_reset_postdata(); ?>
 <?php endif; ?>  
 </div>
-<div>
-<figure class="vf-figure">
-    <?php
-    if( $main_image ) { ?>
-      <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($main_image['alt']); ?>" /> <?php } ?>
-  </figure>
 
-</div>
 </div>
 <?php
 
@@ -117,7 +114,4 @@ wp_reset_postdata(); ?>
 </div>
 </section>
 
-<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
-
 <?php get_footer(); ?>
-

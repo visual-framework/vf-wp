@@ -43,7 +43,7 @@ function create_post_type() {
         'menu_icon'           => 'dashicons-star-filled',
         'capability_type'     => 'page',
         'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
-        'has_archive'         => true,
+        'has_archive'         => false,
         'rewrite'             => array(
           'slug' => 'embl-etc'
         ),
