@@ -13,7 +13,7 @@ the_post();
 
 ?>
 <section class="vf-hero vf-hero--1200 | vf-u-fullbleed"
-  style="--vf-hero--bg-image: url('http://emblebivfwp.docker.localhost:60956/wp-content/uploads/2022/07/blur-color-scaled.jpg'); margin-bottom: 0; padding: 1rem 0;">
+  style="--vf-hero--bg-image: url('http://emblebivfwp.docker.localhost:55156/wp-content/uploads/2022/07/20220713_EMBLetc_test_HeroBanners2-scaled.jpg'); margin-bottom: 0; padding: 1rem 0;">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="<?php echo get_the_permalink(); ?>">EMBL etc.</a>
@@ -46,7 +46,7 @@ the_post();
       <figure class="vf-figure">
       <?php
       if ( has_post_thumbnail() ) {
-      the_post_thumbnail('full', array('class' => 'vf-figure__image', 'style' => 'max-height: 320px;')); ?>
+      the_post_thumbnail('full', array('class' => 'vf-figure__image', 'style' => 'max-height: 400px;')); ?>
       <figcaption class="vf-figure__caption">
         <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
       </figcaption>
@@ -133,7 +133,6 @@ if( have_rows('related_links') ): ?>
 
   </div>
   <div>
-    
   <div class="social-box vf-u-padding__top--400">
   <div class="article-left-col | vf-content">
     <aside class="vf-article-meta-information">
@@ -187,7 +186,7 @@ if( have_rows('related_links') ): ?>
   </div>
     <?php include(locate_template('partials/social-icons.php', false, false)); ?>
 
-    <div class="vf-social-links | vf-u-margin__bottom--800">
+    <div class="vf-social-links | vf-u-margin__bottom--800 vf-u-margin__top--400">
       <h3 class="vf-social-links__heading">
         Share
       </h3>
