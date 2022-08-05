@@ -79,8 +79,15 @@ if (class_exists('VF_Navigation')) {
   </div>
   <div class="vf-stack">
     <h1 class="vf-intro__heading">
-      Search
+      Intranet search
     </h1>
+    <div class="vf-banner vf-banner--alert vf-banner--info">
+
+  <div class="vf-banner__content">
+    <p class="vf-banner__text">Can't find what you need on the intranet? It may be on the public website <a class="vf-banner__link" href="https://www.embl.org/search">embl.org/search</a></p>
+  </div>
+
+</div>
   </div>
 </section>
 
@@ -94,7 +101,7 @@ if (class_exists('VF_Navigation')) {
       action="<?php echo esc_url(home_url('/')); ?>">
       <div class="vf-sidebar__inner">
         <div class="vf-form__item | vf-search__item">
-          <input autofocus data-embl-search-input data-vf-search-client-side-input type="search"
+          <input autofocus type="search"
             class="vf-form__input | vf-search__input" placeholder="Enter your search term"
             value="<?php echo esc_attr(get_search_query()); ?>" name="s">
         </div>
@@ -109,7 +116,7 @@ if (class_exists('VF_Navigation')) {
             <option value="documents" name="post_type[]">Documents</option>
           </select>
         </div>
-        <button type="submit" class="vf-search__button | vf-button vf-button--primary" data-embl-search-submit>
+        <button type="submit" class="vf-search__button | vf-button vf-button--primary" >
           <span class="vf-button__text">Search</span>
           <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -133,9 +140,7 @@ if (class_exists('VF_Navigation')) {
         ?>
       </div>
     </form>
-    <!-- <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0"><a
-        href="https://www.embl.org/search/?searchQuery=&activeFacet=Alumni#stq=<?php echo esc_attr(get_search_query()); ?>"
-        target="_blank">Search for Alumni</a></p> -->
+
   </div>
 </section>
 <div id="search-content" class="vf-stack vf-stack--400">
@@ -162,9 +167,9 @@ if (class_exists('VF_Navigation')) {
       <li class="vf-tabs__item">
         <a class="vf-tabs__link" href="#vf-tabs__section--events">Events (<?php echo $events_query->post_count; ?>)</a>
       </li>
-      <li class="vf-tabs__item">
+      <!-- <li class="vf-tabs__item">
         <a class="vf-tabs__link" href="#vf-tabs__section--public">Public search <span class="st-info-container-count"></span></a>
-      </li>
+      </li> -->
     </ul>
   </div>
   </div>
@@ -235,9 +240,9 @@ if (class_exists('VF_Navigation')) {
     </section>
     <?php rewind_posts(); ?>
 
-    <section class="vf-tabs__section" id="vf-tabs__section--public">
-      <?php include(locate_template('partials/swiftype-search.php', false, false));  ?>
-    </section>
+    <!-- <section class="vf-tabs__section" id="vf-tabs__section--public">
+      <?php // include(locate_template('partials/swiftype-search.php', false, false));  ?>
+    </section> -->
 
   </div>
 </section>

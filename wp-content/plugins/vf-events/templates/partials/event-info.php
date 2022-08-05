@@ -189,7 +189,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
               (($registration_date_formated_on_site >= $current_date)) 
               || 
               (($application_closing) && ($application_date_formated >= $current_date))) { ?>
-    <div style="display: inline-block;">
+    <div style="display: inline-block;" data-vf-google-analytics-region="registration-onsite">
       <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
           class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button_on_site); ?></button></a>
     </div>
@@ -233,7 +233,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
           (($registration_date_formated >= $current_date)) 
           || 
           (($application_closing) && ($application_date_formated >= $current_date))) { ?>
-    <div style="display: inline-block;">
+    <div style="display: inline-block;" data-vf-google-analytics-region="registration-virtual">
       <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
           class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button); ?></button></a>
     </div>
