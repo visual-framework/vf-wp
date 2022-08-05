@@ -110,7 +110,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
         }
         $new_post = [
             'post_title' => $title,
-            'post_name' => $bdr_id,
+            'post_name' => $title,
             'post_content' => '',
             'post_status' => 'publish',
             'post_author' => 1,
