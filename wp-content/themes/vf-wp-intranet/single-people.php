@@ -33,7 +33,7 @@ var_dump( $meta_values );
   <div class="vf-content">
     <article class="vf-profile vf-profile--medium vf-profile--inline">
       <img class="vf-profile__image" src="<?php echo esc_url($photo); ?>" alt="" loading="lazy">
-      <h3 class="vf-profile__title" style="font-size: 24px;">
+      <h3 class="vf-text vf-text-heading--3 vf-u-margin__bottom--0">
       <?php echo esc_html($full_name); ?>
       </h3>
       <p class="vf-profile__job-title"><?php echo esc_html($position); ?></p>

@@ -82,12 +82,9 @@ if (class_exists('VF_Navigation')) {
       Intranet search
     </h1>
     <div class="vf-banner vf-banner--alert vf-banner--info">
-
-  <div class="vf-banner__content">
+    <div class="vf-banner__content">
     <p class="vf-banner__text">Can't find what you need on the intranet? It may be on the public website <a class="vf-banner__link" href="https://www.embl.org/search">embl.org/search</a></p>
   </div>
-
-</div>
   </div>
 </section>
 
