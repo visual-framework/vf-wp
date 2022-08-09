@@ -42,21 +42,19 @@ class VF_Templates {
     if (is_singular( 'industry_event' )) {
       return false;
     }
-    // if (is_page_template(array( 'template-industry-workshop-archive.php', 'template-industry-quarterly-meeting-archive.php', 'template-industry-members-area.php', 'template-industry-quarterly-meeting.php', 'template-industry-workshops.php', 'template-hero-secondary.php', 'template-secondary-hero-embl.php', 'template-secondary-hero-ebi.php'  ))) {
-    //   return false;
-    // }
+    if (is_page_template(array( 'template-industry-workshop-archive.php', 'template-industry-quarterly-meeting-archive.php', 'template-industry-members-area.php', 'template-industry-quarterly-meeting.php', 'template-industry-workshops.php', 'template-hero-secondary.php', 'template-secondary-hero-embl.php', 'template-secondary-hero-ebi.php'  ))) {
+      return false;
+    }
     if (($theme == 'VF-WP Intranet') && ((is_search()) || (is_page_template('searchpage.php')))) {
       return false;
      }
 
     if (($theme == 'VF-WP EMBL-EBI Events')) {
-      if (is_page_template($template_name)) {
+      if ((is_page_template($template_name)) || (is_front_page()) || (is_singular( 'events' ))) {
         return false;
-      }      
+      }   
     }
-    //  if (($theme == 'VF-WP EMBL-EBI Events') && ((is_front_page()) || (is_page_template(array('template-seminars.php', 'template-public-events-archive.php', 'template-seminars-archive.php', 'template-breadcrumbs.php', 'template-internal-events-archive.php', 'template-internal-events.php'))) || (is_singular( 'events' )))) {
-    //   return false;
-    //  }
+
      if ($theme == 'VF-WP Groups')  {
        if 
          (((is_home()) && (!is_front_page())) || (is_single() && 'post' == get_post_type()) || (is_archive())) {
