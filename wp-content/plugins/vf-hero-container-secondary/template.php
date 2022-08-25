@@ -62,11 +62,11 @@ else {
       | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?></a>
     </p>
     <?php } }?>
-    <h2 class="vf-hero__heading">
+    <h1 class="vf-hero__heading">
       <a class="vf-hero__heading_link | heading_link" href="<?php echo esc_url($headink_link); ?>">
         <?php echo ($hero_heading); ?>
       </a>
-    </h2>
+    </h1>
 
     <?php if ($hero_subheading) {?>
     <p class="vf-hero__subheading"><?php echo ($hero_subheading); ?></p>
