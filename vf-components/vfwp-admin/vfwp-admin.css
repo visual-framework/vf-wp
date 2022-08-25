@@ -501,6 +501,7 @@
   padding: 0;
   list-style: none;
   margin: 8px !important;
+  max-width: 100%;
 }
 
 .block-editor .editor-styles-wrapper .has-extra-large-font-size {
