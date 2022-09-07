@@ -1,49 +1,51 @@
-
-    {
-        "key": "group_6283aa9ccb2aa",
-        "title": "EMBLetc additional settings",
-        "fields": [
+{
+    "key": "group_6283aa9ccb2aa",
+    "title": "EMBLetc",
+    "fields": [
+        {
+            "key": "field_63185556aad94",
+            "label": "Issue number",
+            "name": "embletc_issue",
+            "type": "relationship",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "embletc-issue"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": "",
+            "max": "",
+            "return_format": "object"
+        }
+    ],
+    "location": [
+        [
             {
-                "key": "field_6283aaa78655f",
-                "label": "Background image",
-                "name": "background_image",
-                "type": "image",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "return_format": "array",
-                "preview_size": "medium",
-                "library": "all",
-                "min_width": "",
-                "min_height": "",
-                "min_size": "",
-                "max_width": "",
-                "max_height": "",
-                "max_size": "",
-                "mime_types": ""
+                "param": "post_type",
+                "operator": "==",
+                "value": "embletc"
             }
-        ],
-        "location": [
-            [
-                {
-                    "param": "post_type",
-                    "operator": "==",
-                    "value": "embletc-issue"
-                }
-            ]
-        ],
-        "menu_order": 2,
-        "position": "normal",
-        "style": "seamless",
-        "label_placement": "top",
-        "instruction_placement": "label",
-        "hide_on_screen": "",
-        "active": true,
-        "description": "",
-        "modified": 1652792567
-    }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1662551084
+}

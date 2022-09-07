@@ -10,13 +10,14 @@ $main_story = get_field('embletc_main_stories');
 $other_stories = get_field('embletc_other_stories');
 $teaser_text = get_field('embletc_main_story_teaser');
 $main_image = get_field('embletc_main_story_image');
+$main_hero = get_field('embletc_main_story_hero');
 $intro_text = get_field('embletc_main_story_subheading', false, false);
 $thumb = $main_image['sizes'][ 'large' ];
 $issue_number = get_the_title();
 ?>
 
 <section class="vf-hero vf-hero--1200 | vf-u-fullbleed"
-  style="--vf-hero--bg-image: url('http://emblebivfwp.docker.localhost:55156/wp-content/uploads/2022/07/20220713_EMBLetc_test_HeroBanners2-scaled.jpg'); margin-bottom: 0; padding: 1rem 0;">
+  style="--vf-hero--bg-image: url('<?php echo esc_url($main_hero['url']); ?>'); margin-bottom: 0;">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="<?php echo get_the_permalink(); ?>">EMBL etc.</a>
@@ -33,15 +34,15 @@ $issue_number = get_the_title();
   </div>
 </section>
 
-<div class="vf-grid vf-grid__col-1 | vf-content">
-  <div>
+<div class="vf-grid vf-grid__col-3 | vf-content">
+  <div class="vf-grid__col--span-2">
   <?php
 if( $main_story): ?>
     <?php foreach( $main_story as $post ): 
 
         // Setup this post for WP functions (variable must be named $post).
         setup_postdata($post); ?>
-        <h1 style="font-weight: 500; font-size: 52px;">
+        <h1 style="font-weight: 500; font-size: 52px; line-height: 1.2;">
         <?php echo the_title(); ?>
         </h1>
         <h2 style="font-weight: 400;">
@@ -52,21 +53,23 @@ if( $main_story): ?>
   </div>
 </div>
   
-<div class="vf-grid vf-grid__col-4 | vf-content">
+<div class="vf-grid vf-grid__col-3 | vf-content">
 <div class="vf-grid__col--span-2">
-<?php the_post_thumbnail( 'large', array( 'class' => '', 'style' => 'max-height: 550px' ) ); ?>
-
-
+  <?php echo $teaser_text; ?>
+  
+  <div class="vf-section-header">
+     <h2 class="vf-section-header__heading vf-section-header__heading--is-link" id="section-link"><a href="<?php echo get_the_permalink(); ?>">Read more</a><svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+         <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+       </svg></h2>
+   </div>
+  
 </div>
-  <div class="vf-grid__col--span-2">
-<?php echo $teaser_text; ?>
+<div>
+  <?php
+if( !empty( $main_image ) ): ?>
+    <img src="<?php echo esc_url($main_image['url']); ?>" alt="<?php echo esc_attr($main_image['alt']); ?>" />
+<?php endif; ?>
 
-
-<div class="vf-section-header">
-   <h2 class="vf-section-header__heading vf-section-header__heading--is-link" id="section-link"><a href="<?php echo get_the_permalink(); ?>">Read more</a><svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
-       <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
-     </svg></h2>
- </div>
 
 
     <?php endforeach; ?>

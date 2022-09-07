@@ -12,15 +12,33 @@ get_header();
 the_post();
 
 ?>
-<section class="vf-hero vf-hero--1200 | vf-u-fullbleed"
-  style="--vf-hero--bg-image: url('http://emblebivfwp.docker.localhost:55156/wp-content/uploads/2022/07/20220713_EMBLetc_test_HeroBanners2-scaled.jpg'); margin-bottom: 0; padding: 1rem 0;">
+
+<?php
+$featured_posts = get_field('embletc_issue');
+if ($featured_posts) { ?>
+    <?php foreach( $featured_posts as $post ): 
+      setup_postdata($post);
+      $main_hero = get_field('embletc_main_story_hero');
+
+      ?>
+  <section class="vf-hero vf-hero--1200 | vf-u-fullbleed"
+  style="--vf-hero--bg-image: url('<?php echo esc_url($main_hero['url']); ?>'); margin-bottom: 0; padding: 1rem 0;">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading">
-      <a class="vf-hero__heading_link" href="<?php echo get_the_permalink(); ?>">EMBL etc.</a>
+      <a class="vf-hero__heading_link" href="<?php the_permalink(); ?>">EMBL etc.</a>
     </h2>
-    <p class="vf-hero__subheading">Issue 78</p>
+    <p class="vf-hero__subheading"><?php the_title(); ?></p>
   </div>
 </section>
+
+    <?php endforeach; ?>
+    <?php 
+    // Reset the global post object so that the rest of the page works correctly.
+    wp_reset_postdata(); ?>
+<?php } ?>
+
+
+
 
 <section class="vf-grid vf-grid__col-1 | vf-content">
   <div>

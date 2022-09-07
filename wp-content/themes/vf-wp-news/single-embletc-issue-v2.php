@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -17,7 +16,7 @@ $issue_number = get_the_title();
 ?>
 
 <section class="vf-hero vf-hero--1200 | vf-u-fullbleed"
-  style="--vf-hero--bg-image: url('http://emblebivfwp.docker.localhost:55156/wp-content/uploads/2022/07/20220713_EMBLetc_test_HeroBanners2-scaled.jpg'); margin-bottom: 0; padding: 2rem 0;">
+  style="--vf-hero--bg-image: url('http://emblebivfwp.docker.localhost:59230/wp-content/uploads/2022/07/20220713_EMBLetc_test_HeroBanners2-scaled.jpg'); margin-bottom: 0; padding: 1rem 0;">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400 ">
     <h2 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="<?php echo get_the_permalink(); ?>">EMBL etc.</a>
@@ -42,18 +41,23 @@ if( $main_story): ?>
 
         // Setup this post for WP functions (variable must be named $post).
         setup_postdata($post); ?>
-<?php the_post_thumbnail( 'large', array( 'class' => 'vf-card__image', 'style' => 'max-height: 320px;margin-bottom: 6px;' ) ); ?>
-<h1 style="font-weight: 500; font-size: 52px;">
-<?php echo the_title(); ?>
-</h1>
-<h2 style="font-weight: 400;">
-<?php echo $intro_text; ?>
-</h2>
+        <h1 style="font-weight: 500; font-size: 52px;">
+        <?php echo the_title(); ?>
+        </h1>
+        <h2 style="font-weight: 400;">
+        <?php echo $intro_text; ?>
+
+        </h2>
 
   </div>
 </div>
   
-<div class="vf-grid vf-grid__col-3 | vf-content">
+<div class="vf-grid vf-grid__col-4 | vf-content">
+<div class="vf-grid__col--span-2">
+<?php the_post_thumbnail( 'large', array( 'class' => '', 'style' => 'max-height: 550px' ) ); ?>
+
+
+</div>
   <div class="vf-grid__col--span-2">
 <?php echo $teaser_text; ?>
 
@@ -71,14 +75,7 @@ if( $main_story): ?>
     wp_reset_postdata(); ?>
 <?php endif; ?>  
 </div>
-<div>
-<figure class="vf-figure">
-    <?php
-    if( $main_image ) { ?>
-      <img src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($main_image['alt']); ?>" /> <?php } ?>
-  </figure>
 
-</div>
 </div>
 <?php
 
@@ -116,7 +113,4 @@ wp_reset_postdata(); ?>
 </div>
 </section>
 
-<?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
-
 <?php get_footer(); ?>
-
