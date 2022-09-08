@@ -59,10 +59,10 @@ function intranet_search_filter($query) {
 				// Filter it just to be safe
 				$post_type = sanitize_text_field($_GET['post_type']);
 				// Set the post type
-				$query->set('post_type', $post_type);
+				$query->set('post_type', array('page', 'documents', 'insites', 'events', 'teams'));
       }
       else {
-        $query->set('post_type', array('post', 'page', 'documents', 'insites', 'people', 'events'));
+        $query->set('post_type', array('page', 'documents', 'insites', 'events'));
       }
 		}
 	}
@@ -70,6 +70,34 @@ function intranet_search_filter($query) {
 }
 
 add_filter('pre_get_posts', 'intranet_search_filter');
+
+
+add_action('pre_get_posts', 'remove_my_cpt_from_search_results');
+
+function remove_my_cpt_from_search_results($query) {
+    if (is_admin() || !$query->is_main_query() || !$query->is_search()) {
+        return $query;
+    }
+
+    // can exclude multiple post types, for ex. array('staticcontent', 'cpt2', 'cpt3')
+    $post_types_to_exclude = array('people');
+
+    if ($query->get('post_type')) {
+        $query_post_types = $query->get('post_type');
+
+        if (is_string($query_post_types)) {
+            $query_post_types = explode(',', $query_post_types);
+        }
+    } else {
+        $query_post_types = get_post_types(array('exclude_from_search' => false));
+    }
+
+    if (sizeof(array_intersect($query_post_types, $post_types_to_exclude))) {
+        $query->set('post_type', array_diff($query_post_types, $post_types_to_exclude));
+    }
+
+    return $query;
+}
 
 
 // add tag support to pages
@@ -164,36 +192,6 @@ function redirect_externally(){
     } }
 }
 
-/*
- * Search results post type order
- */
-
-// function order_search_by_posttype($orderby){
-//   if (!is_admin() && is_search()) :
-//       global $wpdb;
-//       $orderby =
-//           "
-//           CASE WHEN {$wpdb->prefix}posts.post_type = 'page' THEN '1' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'documents' THEN '2' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'people' THEN '3' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'insites' THEN '4' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'events' THEN '5' 
-//           ELSE {$wpdb->prefix}posts.post_type END ASC, 
-//           {$wpdb->prefix}posts.post_title ASC";
-//   endif;
-//   return $orderby;
-// }
-// add_filter('posts_orderby', 'order_search_by_posttype');
-
-// function my_search_query( $query ) {
-// 	// not an admin page and is the main query
-// 	if ( !is_admin() && $query->is_main_query() ) {
-// 		if ( is_search() ) {
-//       $query->set( 'orderby', 'relevance' );
-//       return $query;		}
-// 	}
-// }
-// add_action( 'pre_get_posts', 'my_search_query' );
 
 // enables excerpt field for pages
 add_post_type_support( 'page', 'excerpt' );
@@ -203,30 +201,30 @@ add_post_type_support( 'page', 'excerpt' );
  * Changes search url and opens the relevant tab on the search results page
  */
 
-function change_search_url() {
-  if ( is_search() && ! empty( $_GET['s'] ) ) {
-      if (get_query_var( 'post_type' ) == 'people') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--people' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'documents') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--documents' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'insites') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--news' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'events') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--events' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'page') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--pages' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'any') {
-        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) );
-      }
-      exit();
-  }   
-}
-add_action( 'template_redirect', 'change_search_url' );
+// function change_search_url() {
+//   if ( is_search() && ! empty( $_GET['s'] ) ) {
+//       if (get_query_var( 'post_type' ) == 'people') { 
+//       wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--people' );
+//       }
+//       elseif (get_query_var( 'post_type' ) == 'documents') { 
+//       wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--documents' );
+//       }
+//       elseif (get_query_var( 'post_type' ) == 'insites') { 
+//       wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--news' );
+//       }
+//       elseif (get_query_var( 'post_type' ) == 'events') { 
+//       wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--events' );
+//       }
+//       elseif (get_query_var( 'post_type' ) == 'page') { 
+//       wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--pages' );
+//       }
+//       elseif (get_query_var( 'post_type' ) == 'any') {
+//         wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) );
+//       }
+//       exit();
+//   }   
+// }
+// add_action( 'template_redirect', 'change_search_url' );
 
 /*
  * Enables search by the “s” parameter and a meta_query

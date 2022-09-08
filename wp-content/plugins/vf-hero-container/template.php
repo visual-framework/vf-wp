@@ -82,7 +82,7 @@ $spacing_class .= "{$spacing}";
           <input type="search" class="vf-form__input | vf-search__input" placeholder="Search term"
             value="<?php echo esc_attr(get_search_query()); ?>" name="s">
         </div>
-        <div class="vf-form__item | vf-search__item" style="width: 155px;">
+        <!-- <div class="vf-form__item | vf-search__item" style="width: 155px;">
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
           <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
             <option value="any" selected="">Everything</option>
@@ -92,7 +92,7 @@ $spacing_class .= "{$spacing}";
             <option value="people" name="post_type[]">People</option>
             <option value="documents" name="post_type[]">Documents</option>
           </select>
-        </div>
+        </div> -->
         <button type="submit" value="<?php esc_attr_e('Search', 'vfwp'); ?>"
           class="vf-search__button | vf-button vf-button--primary">
           <span class="vf-button__text | vf-u-sr-only">Search</span>
