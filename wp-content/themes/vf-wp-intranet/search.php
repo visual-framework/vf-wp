@@ -166,7 +166,10 @@ if (class_exists('VF_Navigation')) {
           </li>
           <li class="vf-tabs__item">
             <a class="vf-tabs__link" href="#vf-tabs__section--people">People
-              (<?php echo $people_query->post_count; ?>)</a>
+              <span data-jplist-control="counter" data-group="data-group-1" data-format="({count})"
+                data-path=".people-search" data-mode="dynamic" data-name="counter-desc-filter"
+                data-filter-type="path"></span>
+            </a>
           </li>
           <li class="vf-tabs__item">
             <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents
@@ -208,7 +211,7 @@ if (class_exists('VF_Navigation')) {
       <section class="vf-tabs__section" id="vf-tabs__section--people">
         <div class="vf-content">
           <div class="embl-content-hub-loader | vf-grid vf-grid__col-1" data-jplist-group="data-group-1">
-          <?php
+            <?php
             
             $people_json_feed_api_endpoint = 'https://content.embl.org/api/v1/people-all-info?items_per_page=100';
             $raw_content = file_get_contents($people_json_feed_api_endpoint);
@@ -219,16 +222,82 @@ if (class_exists('VF_Navigation')) {
             if (!empty($people_data) && is_array($people_data)) {
               foreach ($people_data as $person) {
               $title = $person['full_name']; 
-              $photo = $person['photo']; ?>
-                <article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
-    
-      <img class="vf-profile__image" src="<?php echo $photo; ?> " alt="" loading="lazy">
-    <h3 class="vf-profile__title | people-search">
-        <a href="" class="vf-profile__link"><?php  echo $title; ?></a>
-      </h3>
-    
-    </article>
-    <?php
+              $orcid = $person['orcid'];
+              $photo = $person['photo'];
+              $email = $person['email'];
+              $biography = $person['biography'];
+              $room = $person['room'];
+              $bdr_id = $person['bdr_public_id'];
+              $outstation = $person['outstation'];
+              $telephones = $person['telephones'];
+              $positions = $person['positions'];
+      
+              if (!empty($telephones[0])) {
+                  $telephone = $person['telephones'][0]['telephone'];
+              }
+              
+              
+              if (!empty($positions[0])) {
+                  $positions_name_1 = $person['positions'][0]['name'];
+                  $team_name_1 = $person['positions'][0]['team_name'];
+                  $team_url_1 = $person['positions'][0]['team_url'];
+                  $is_primary_1 = $person['positions'][0]['is_primary'];
+              }
+              if (!empty($positions[1])) {
+                  $positions_name_2 = $person['positions'][1]['name'];
+                  $team_name_2 = $person['positions'][1]['team_name'];
+                  $is_primary_2 = $person['positions'][1]['is_primary'];
+              }
+              if (!empty($positions[2])) {
+                  $positions_name_3 = $person['positions'][2]['name'];
+                  $team_name_3 = $person['positions'][2]['team_name'];
+                  $is_primary_3 = $person['positions'][2]['is_primary'];
+              }
+              if (!empty($positions[3])) {
+                  $positions_name_4 = $person['positions'][3]['name'];
+                  $team_name_4 = $person['positions'][3]['team_name'];
+                  $is_primary_4 = $person['positions'][3]['is_primary'];
+              } 
+                                     ?>
+            <article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600"
+              data-jplist-item>
+
+              <img class="vf-profile__image" src="<?php echo $photo; ?> " alt="" loading="lazy">
+              <h3 class="vf-profile__title | people-search">
+                <a href="https://www.embl.org/internal-information/people/<?php  echo $bdr_id; ?>"
+                  class="vf-profile__link"><?php  echo $title; ?></a>
+              </h3>
+
+              <?php if (!empty($positions)) { ?>
+              <p class="vf-profile__job-title"><?php  echo $positions_name_1; ?></p>
+              <p class="vf-profile__text | team-search" style="margin-bottom: 1rem;">
+                <a class="vf-link" href="<?php  echo $team_url_1; ?>"><?php  echo $team_name_1; ?></a></p>
+              <?php } ?>
+
+              <?php if (!empty($email)) { ?>
+              <p class="vf-profile__email">Email:
+                <a href="mailto:<?php  echo $email; ?>" class="vf-profile__link vf-profile__link--secondary"><?php  echo $email; ?></a>
+              </p>
+              <?php } ?>
+
+              <?php if (!empty($telephone)) { ?>
+              <p class="vf-profile__phone">Tel:
+                <a href="<?php  echo $telephone ; ?>" class="vf-profile__link vf-profile__link--secondary"><?php  echo $telephone ; ?></a>
+              </p>
+              <?php } ?>
+
+              <?php if (!empty($room)) { ?>
+              <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--100">
+                <span>Location:</span> <?php  echo $room; ?> </p>
+              <?php } ?>
+
+              <?php if (!empty($outstation)) { ?>
+              <p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200">
+                <?php  echo $outstation; ?></p>
+              <?php } ?>
+
+            </article>
+            <?php
                 }
             }
             ?>
