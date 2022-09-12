@@ -54,7 +54,7 @@
     "@babel/runtime": "7.16.3",
     "@rollup/plugin-babel": "5.3.1",
     "@rollup/plugin-commonjs": "21.1.0",
-    "@rollup/plugin-node-resolve": "13.3.0",
+    "@rollup/plugin-node-resolve": "14.1.0",
     "@rollup/plugin-replace": "3.1.0",
     "@visual-framework/ebi-vf1-integration": "1.0.7",
     "@visual-framework/embl-breadcrumbs-lookup": "2.0.1",
