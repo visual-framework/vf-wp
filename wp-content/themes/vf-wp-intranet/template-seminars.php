@@ -32,6 +32,8 @@ get_header();
 
 <section class="embl-grid embl-grid--has-centered-content">
   <div>
+  <div class="link-container"></div>
+
     <?php include(locate_template('partials/seminars-filter.php', false, false)); ?>
   </div>
   <div>
@@ -224,6 +226,31 @@ get_header();
     deepLinking: true
   });
 
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+  
+$(document).on("change", ".vf-form__checkbox", function() {
+  var arrOS = []
+  var arrTYP = []
+
+  $(".jplist-selected").each(function() {
+    arrOS.push($(this).attr("subscribe"));
+  })
+  var valsOS = arrOS.join('')
+  var valsOS = valsOS.slice(0, -1)
+  
+  $(".jplist-selected").each(function() {
+    arrTYP.push($(this).attr("subscribet"));
+  })
+  var valsTYP = arrTYP.join('')
+  var valsTYP = valsTYP.slice(0, -1)
+
+  var str = "https://seminarlist.embl.de/rest/calendar?dutystationID=" + valsOS + "&seminarTypeID=" + valsTYP + "&timeFrame=0&origin=intranet-test.embl.de";
+  var link =  '<a href="'+str+'">Subscribe</a>' ;
+  
+  $('.link-container').html(link);
+});
 </script>
 
 <?php

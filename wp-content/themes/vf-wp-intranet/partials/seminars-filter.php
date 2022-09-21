@@ -7,7 +7,7 @@
       <input id="location-5" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="EMBL Barcelona"
-        data-id="name-barcelona" class="vf-form__checkbox">
+        data-id="name-barcelona" class="vf-form__checkbox" subscribe="7,">
       <label for="location-5" class="vf-form__label">EMBL Barcelona&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -21,7 +21,7 @@
       <input id="location-4" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="EMBL Grenoble"
-        data-id="name-grenoble" class="vf-form__checkbox">
+        data-id="name-grenoble" class="vf-form__checkbox" subscribe="4,">
       <label for="location-4" class="vf-form__label">EMBL Grenoble&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -35,7 +35,7 @@
       <input id="location-3" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="EMBL Hamburg"
-        data-id="name-hamburg" class="vf-form__checkbox">
+        data-id="name-hamburg" class="vf-form__checkbox" subscribe="3,">
       <label for="location-3" class="vf-form__label">EMBL Hamburg&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -49,7 +49,7 @@
       <input id="location-1" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="EMBL Heidelberg"
-        data-id="name-heidelberg" class="vf-form__checkbox">
+        data-id="name-heidelberg" class="vf-form__checkbox" subscribe="1,">
       <label for="location-1" class="vf-form__label">EMBL Heidelberg&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -63,7 +63,7 @@
       <input id="location-6" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="EMBL Rome"
-        data-id="name-rome" class="vf-form__checkbox">
+        data-id="name-rome" class="vf-form__checkbox" subscribe="5,">
       <label for="location-6" class="vf-form__label">EMBL Rome&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -77,7 +77,7 @@
       <input id="location-2" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="virtual"
-        data-id="name-virtual" class="vf-form__checkbox">
+        data-id="name-virtual" class="vf-form__checkbox" subscribe="">
       <label for="location-2" class="vf-form__label">Virtual&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -95,7 +95,7 @@
       <input id="type-5" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Career Event"
-        data-id="name-career" class="vf-form__checkbox">
+        data-id="name-career" class="vf-form__checkbox" subscribet="5,">
       <label for="type-5" class="vf-form__label">Career Event&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -109,7 +109,7 @@
       <input id="type-4" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Company representative"
-        data-id="name-company" class="vf-form__checkbox">
+        data-id="name-company" class="vf-form__checkbox" subscribet="3,">
       <label for="type-4" class="vf-form__label">Company representative&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -123,7 +123,7 @@
       <input id="type-3" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="EIPOD Seminar"
-        data-id="name-eipod" class="vf-form__checkbox">
+        data-id="name-eipod" class="vf-form__checkbox" subscribet="2,">
       <label for="type-3" class="vf-form__label">EIPOD Seminar&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
