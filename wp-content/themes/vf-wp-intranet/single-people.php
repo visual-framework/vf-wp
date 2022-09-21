@@ -188,7 +188,7 @@ var_dump( $meta_values );
     <?php }
   else  { ?>
     <link rel="import"
-      href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&title=<?php echo get_the_title(); ?>&source=contenthub"
+      href="https://www.embl.org/api/v1/pattern.html?source=contenthub&pattern=embl-person-publications&limit=100&sort-field-value[changed]=DESC&cpid=<?php echo $cpid; ?>&source=contenthub"
       data-target="self" data-embl-js-content-hub-loader-no-content="No publications were found."
       data-embl-js-content-hub-loader-no-content-hide=".publications-container" data-embl-js-content-hub-loader>
     <?php } ?>
