@@ -26,16 +26,16 @@ get_header();
   <form action="#eventsFilter" onsubmit="return false;"
     class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
     <div class="vf-sidebar__inner">
-      <div class="vf-form__item">
-        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
-        <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
-          data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-          placeholder="Filter by document title" data-clear-btn-id="name-clear-btn"
-          class="vf-form__input | vf-search__input" />
-      </div>
-      <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
-        <span class="vf-button__text">Filter</span>
-      </button>
+    <div class="vf-form__item">
+          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+            data-group="documents" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
+            placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
+        </div>
+        <button style="display: none;" type="button" id="name-clear-btn"
+          class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
+          <span class="vf-button__text">Reset</span>
+        </button>
+
     </div>
   </form>
   </div>
@@ -47,7 +47,7 @@ get_header();
     <?php include(locate_template('partials/document-filter.php', false, false)); ?>
   </div>
   <div>
-    <div data-jplist-group="data-group-1">
+    <div data-jplist-group="documents">
       <?php
         if ( have_posts() ) {
           while ( have_posts() ) {
@@ -56,7 +56,7 @@ get_header();
           }
         } ?>
       <!-- no results control -->
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="documents"
         data-name="no-results">
         <p class="vf-summary__text">
           No matching documents found
@@ -75,8 +75,8 @@ get_header();
 
     </style>
 
-    <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-      data-items-per-page="25" data-current-page="0" data-name="pagination1">
+    <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="documents"
+      data-items-per-page="50" data-current-page="0" data-name="pagination1">
       <ul class="vf-pagination__list">
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">
@@ -103,10 +103,13 @@ get_header();
 </section>
 <!--/vf-grid-->
 
-<script type="text/javascript">
-  jplist.init();
-</script>
 
+<script type="text/javascript">
+  jplist.init({
+    deepLinking: true
+  });
+
+</script>
 
 <?php
 

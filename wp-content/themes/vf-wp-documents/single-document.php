@@ -30,12 +30,11 @@ if ( ! is_array($image)) {
       <?php if ($image) { echo $image; } ?>
       <h2 class="vf-text vf-text-heading--2 | vf-u-margin__bottom--400 vf-u-padding__top--0"><?php the_title(); ?>
       </h2>
-      <?php the_content(); ?>
       <div>
-      <?php if ($update) { ?>
-  <p class="vf-summary__meta"><strong>Updated: </strong>
-    <span class="vf-u-text-color--grey"><?php echo esc_html($update); ?></span></p>
-  <?php }   ?>
+      <?php the_content(); ?>
+      </div>
+      <div>
+
 
       <?php if( have_rows('vf-document_file_upload') ):
         $start = 1; $end = 1; 
@@ -98,6 +97,10 @@ if ( ! is_array($image)) {
         <?php endwhile; ?></p>
       <?php endif; ?>
     </ul>
+    <?php if ($update) { ?>
+    <p class="vf-summary__meta"><strong>Updated: </strong>
+      <span class="vf-u-text-color--grey"><?php echo esc_html($update); ?></span></p>
+    <?php }   ?>
   </div>
 </div>
 
