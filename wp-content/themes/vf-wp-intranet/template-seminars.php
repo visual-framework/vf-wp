@@ -9,31 +9,26 @@ get_header();
 ?>
 
 
-<section class="vf-intro | vf-u-margin__bottom--0">
-  <div>
-    <!-- empty -->
-  </div>
-  <div class="vf-stack">
-    <h1 class="vf-intro__heading">
-      <?php wp_title(''); ?>
-    </h1>
-  </div>
-</section>
 
 <div
-  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
+  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800 | vf-content">
   <div></div>
-  <div class="vf-form__item">
+  <div class="vf-stack vf-stack--400">
+  <h1 class="vf-intro__heading">
+      <?php wp_title(''); ?>
+    </h1>
+
+
+  <div class="vf-form__item | vf-u-margin__top--800">
           <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
             data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
             placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn">
    </div>
+  </div>
 </div>
 
 <section class="embl-grid embl-grid--has-centered-content">
   <div>
-  <div class="link-container"></div>
-
     <?php include(locate_template('partials/seminars-filter.php', false, false)); ?>
   </div>
   <div>
@@ -178,6 +173,39 @@ get_header();
 
   </div>
   <div class="vf-stack vf-stack--400">
+  <fieldset class="vf-form__fieldset | vf-stack vf-stack--400 vf-u-margin__bottom--800 | vf-u-background-color-ui--off-white | vf-u-padding--400">
+  <p class="vf-text-body vf-text-body--3 | calendar-feed">
+    <a class="seminar-addtocalendar" href="https://seminarlist.embl.de/rest/calendar?dutystationID=0&seminarTypeID=0&timeFrame=0">Add</a> selected seminars to your calendar or 
+    
+     <a class="seminar-subscribe" href="#" url="https://seminarlist.embl.de/rest/calendar?dutystationID=0&seminarTypeID=0&timeFrame=0">subscribe</a> to the seminar feed. 
+    </p>
+  <div class="vf-cluster vf-cluster--400">
+    <div class="vf-cluster__inner">
+
+
+      <div class="vf-form__item vf-form__item--radio">
+        <input type="radio" name="timeframe" value="week" id="week" class="vf-form__radio | subscrition-time-filter" timeframe="2">
+        <label for="week" class="vf-form__label">One week</label>
+      </div>
+
+
+      <div class="vf-form__item vf-form__item--radio">
+        <input type="radio" name="timeframe" value="month" id="month" class="vf-form__radio | subscrition-time-filter" timeframe="3">
+        <label for="month" class="vf-form__label">One month</label>
+      </div>
+
+
+      <div class="vf-form__item vf-form__item--radio">
+        <input type="radio" name="timeframe" value="all" id="all" class="vf-form__radio | subscrition-time-filter" timeframe="0">
+        <label for="all" class="vf-form__label">All upcoming</label>
+      </div>
+
+    </div>
+  </div>
+  <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0">Read instructions <a href="#">here</a>.
+     </p>
+
+</fieldset>
     <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
@@ -230,27 +258,45 @@ get_header();
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
   
-$(document).on("change", ".vf-form__checkbox", function() {
+$(document).on("change", ".vf-form__item", function() {
   var arrOS = []
   var arrTYP = []
+  var arrTIME = []
 
   $(".jplist-selected").each(function() {
     arrOS.push($(this).attr("subscribe"));
   })
   var valsOS = arrOS.join('')
-  var valsOS = valsOS.slice(0, -1)
   
   $(".jplist-selected").each(function() {
     arrTYP.push($(this).attr("subscribet"));
   })
   var valsTYP = arrTYP.join('')
-  var valsTYP = valsTYP.slice(0, -1)
+  // var valsTYP = valsTYP.slice(0, -1)
 
-  var str = "https://seminarlist.embl.de/rest/calendar?dutystationID=" + valsOS + "&seminarTypeID=" + valsTYP + "&timeFrame=0&origin=intranet-test.embl.de";
-  var link =  '<a href="'+str+'">Subscribe</a>' ;
+  $(".subscrition-time-filter:checked").each(function() {
+    arrTIME.push($(this).attr("timeframe"));
+  })
+  var valsTIME = arrTIME.join('')
+
+  var str = "https://seminarlist.embl.de/rest/calendar?dutystationID=" + valsOS + "&seminarTypeID=" + valsTYP + "&timeFrame=" + valsTIME;
+  var subscribe =  
+  '<a class="seminar-addtocalendar" href="'+str+'">Add</a> selected seminars to your calendar or <a class="seminar-subscribe" href="javascript: void(0)" url="'+str+'">subscribe</a> to the seminar feed.'
   
-  $('.link-container').html(link);
+  
+  $('.calendar-feed').html(subscribe);
+  var $temp = $("<input>");
+  var $url = $('.seminar-subscribe').attr('url');
+  
+  $('.seminar-subscribe').on('click', function() {
+    $("body").append($temp);
+    $temp.val($url).select();
+    document.execCommand("copy");
+    $temp.remove();
+    // $("p").text("URL copied!");
+  })
 });
+
 </script>
 
 <?php
