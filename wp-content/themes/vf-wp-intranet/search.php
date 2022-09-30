@@ -93,11 +93,21 @@ if (class_exists('VF_Navigation')) {
 <div
   class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
   <div></div>
-  <div class="vf-form__item">
-          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
-            data-group="data-group-1" data-name="my-filter-1" data-path=".search" type="text" value=""
-            placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn">
-   </div>
+  <form role="search" method="get"
+    class="vf-form vf-form--search vf-form--search--<?php echo esc_html($type); ?> | vf-sidebar vf-sidebar--end"
+    action="<?php echo esc_url(home_url('/')); ?>">
+    <div class="vf-sidebar__inner">
+      <div class="vf-form__item | vf-search__item">
+      <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+            data-group="data-group-1" data-name="my-filter-1" data-path=".search" type="text"
+            placeholder="Enter your search term" data-clear-btn-id="name-clear-btn"
+            value="<?php echo esc_attr(get_search_query()); ?>" name="s">      </div>
+      <button type="submit" class="vf-search__button | vf-button vf-button--primary"
+        value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+        <span class="vf-button__text">Search</span>
+      </button>
+    </div>
+  </form>
 </div>
 
 
