@@ -12,7 +12,6 @@ $page_args = array(
   'post_type' => array('page', 'teams'),
   'posts_per_page' => -1,
    's' => get_search_query(), 
-   'relevanssi' => true,
 );
 $page_query = new WP_Query( $page_args );
 
@@ -105,115 +104,79 @@ if (class_exists('VF_Navigation')) {
   class="embl-grid embl-grid--has-centered-content vf-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--0">
   <div></div>
   <div>
-    <form role="search" method="get"
-      class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end"
-      action="<?php echo esc_url(home_url('/')); ?>">
-      <div class="vf-sidebar__inner">
-        <div class="vf-form__item | vf-search__item">
-          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
-            data-group="data-group-1" data-name="my-filter-1" data-path=".people-search" type="text"
+  <form role="search" method="get"
+    class="vf-form vf-form--search vf-form--search--<?php echo esc_html($type); ?> | vf-sidebar vf-sidebar--end"
+    action="<?php echo esc_url(home_url('/')); ?>">
+    <div class="vf-sidebar__inner">
+      <div class="vf-form__item | vf-search__item">
+      <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+            data-group="data-group-1" data-name="my-filter-1" data-path=".search" type="text"
             placeholder="Enter your search term" data-clear-btn-id="name-clear-btn"
-            value="<?php echo esc_attr(get_search_query()); ?>" name="s">
-        </div>
-        <div class="vf-form__item | vf-search__item" style="display: none">
-          <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
-          <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
-            <option value="any" selected="">Everything</option>
-            <option value="page" name="post_type[]">Pages</option>
-            <option value="insites" name="post_type[]">INsites</option>
-            <option value="events" name="post_type[]">Events</option>
-            <option value="people" name="post_type[]">People</option>
-            <option value="documents" name="post_type[]">Documents</option>
-          </select>
-        </div>
-        <button type="submit" class="vf-search__button | vf-button vf-button--primary">
-          <span class="vf-button__text">Search</span>
-          <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-            xmlns:svgjs="http://svgjs.com/svgjs" viewBox="0 0 140 140" width="140" height="140">
-            <g transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)">
-              <path
-                d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z"
-                fill="#FFFFFF" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"></path>
-            </g>
-          </svg>
-        </button>
-        <?php
-          if ( function_exists( 'relevanssi_didyoumean' ) ) {
-            relevanssi_didyoumean(
-              get_search_query(false),
-                '<p>Did you mean: ',
-                '</p>',
-                5
-            );
-        }
-        ?>
-      </div>
-    </form>
+            value="<?php echo esc_attr(get_search_query()); ?>" name="s">      </div>
+      <button type="submit" class="vf-search__button | vf-button vf-button--primary"
+        value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+        <span class="vf-button__text">Search</span>
+      </button>
+    </div>
+  </form>
+
+
+
+
+
 
   </div>
 </section>
 <div id="search-content" class="vf-stack vf-stack--400">
-  <section class="embl-grid | vf-u-margin__bottom--0">
-    <div>
-    </div>
-    <div class="vf-content">
-      <div class="vf-tabs">
-        <ul class="vf-tabs__list" data-vf-js-tabs>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--pages">Pages (<?php echo $page_query->post_count; ?>)
-            </a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--people">People
-              <span data-jplist-control="counter" data-group="data-group-1" data-format="({count})"
-                data-path=".people-search" data-mode="dynamic" data-name="counter-desc-filter"
-                data-filter-type="path"></span>
-            </a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--documents">Documents
-              (<?php echo $documents_query->post_count; ?>)</a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--news">News (<?php echo $insites_query->post_count; ?>)</a>
-          </li>
-          <li class="vf-tabs__item">
-            <a class="vf-tabs__link" href="#vf-tabs__section--events">Events
-              (<?php echo $events_query->post_count; ?>)</a>
-          </li>
-          <!-- <li class="vf-tabs__item">
-        <a class="vf-tabs__link" href="#vf-tabs__section--public">Public search <span class="st-info-container-count"></span></a>
-      </li> -->
-        </ul>
-      </div>
-    </div>
-  </section>
+
   <section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--600">
     <div>
+
+    <?php include(locate_template('partials/search-filter.php', false, false)); ?>
+
+
+
     </div>
 
-    <div class="vf-tabs-content" data-vf-js-tabs-content>
+    <div data-jplist-group="data-group-1">
 
       <!-- Pages -->
-      <section class="vf-tabs__section" id="vf-tabs__section--pages">
-        <?php if ( $page_query->have_posts() ): ?>
-        <?php while ( $page_query->have_posts() ) : $page_query->the_post(); ?>
-        <?php include(locate_template('partials/vf-summary--page.php', false, false)); ?>
-        <?php endwhile; ?>
-        <?php else : ?>
-        <?php _e( 'No pages found. Please check the other content types.' ); ?>
-        <?php endif; ?>
-      </section>
-      <?php rewind_posts(); ?>
+      <div >
+      <?php
+            
+            $pages_json_feed_api_endpoint = 'https://www.embl.org/internal-information/wp-json/wp/v2/pages?per_page=100';
+            $raw_content = file_get_contents($pages_json_feed_api_endpoint);
+            $pages_data = json_decode($raw_content, true);
+                
+    
+            if (!empty($pages_data) && is_array($pages_data)) {
+              foreach ($pages_data as $page) {
+              $title = $page['title']['rendered']; 
+              $link = $page['link']; 
+                                     ?>
+<article class="vf-summary" data-jplist-item>
+  <h2 class="vf-summary__title | search | search-counter" style="margin-bottom: 4px;">
+    <a href="<?php echo $link; ?>" class="vf-summary__link"><?php echo $title; ?></a>
+  </h2>
+  <p class="vf-summary__meta" style="margin-bottom: 8px;">
+</p>
+
+  <div class="vf-summary__meta"><a href="<?php echo $link; ?>"
+      class="vf-summary__author vf-summary__link"><?php echo $link; ?></a></div>
+  <p class="page vf-u-display-none | used-for-filtering">Page</p>
+</article>          <?php
+                }
+            }
+            ?>
+
+      </div>
 
       <!-- People -->
-      <section class="vf-tabs__section" id="vf-tabs__section--people">
-        <div class="vf-content">
-          <div class="embl-content-hub-loader | vf-grid vf-grid__col-1" data-jplist-group="data-group-1">
-            <?php
+      <div class="vf-content">
+        <div class="embl-content-hub-loader | vf-grid vf-grid__col-1" ">
+          <?php
             
-            $people_json_feed_api_endpoint = 'https://content.embl.org/api/v1/people-all-info?items_per_page=100';
+            $people_json_feed_api_endpoint = 'https://content.embl.org/api/v1/people-all-info?items_per_page=200';
             $raw_content = file_get_contents($people_json_feed_api_endpoint);
             $raw_content_decoded = json_decode($raw_content, true);
             $people_data = $raw_content_decoded['rows'];  
@@ -235,7 +198,6 @@ if (class_exists('VF_Navigation')) {
               if (!empty($telephones[0])) {
                   $telephone = $person['telephones'][0]['telephone'];
               }
-              
               
               if (!empty($positions[0])) {
                   $positions_name_1 = $person['positions'][0]['name'];
@@ -259,105 +221,53 @@ if (class_exists('VF_Navigation')) {
                   $is_primary_4 = $person['positions'][3]['is_primary'];
               } 
                                      ?>
-            <article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600"
-              data-jplist-item>
+          <article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
 
-              <img class="vf-profile__image" src="<?php echo $photo; ?> " alt="" loading="lazy">
-              <h3 class="vf-profile__title | people-search">
-                <a href="https://www.embl.org/internal-information/people/<?php  echo $bdr_id; ?>"
-                  class="vf-profile__link"><?php  echo $title; ?></a>
-              </h3>
+            <img class="vf-profile__image" src="<?php echo $photo; ?> " alt="" loading="lazy">
+            <h3 class="vf-profile__title | search">
+              <a href="https://www.embl.org/internal-information/people/<?php  echo $bdr_id; ?>"
+                class="vf-profile__link"><?php  echo $title; ?></a>
+            </h3>
 
-              <?php if (!empty($positions)) { ?>
-              <p class="vf-profile__job-title"><?php  echo $positions_name_1; ?></p>
-              <p class="vf-profile__text | team-search" style="margin-bottom: 1rem;">
-                <a class="vf-link" href="<?php  echo $team_url_1; ?>"><?php  echo $team_name_1; ?></a></p>
-              <?php } ?>
+            <?php if (!empty($positions)) { ?>
+            <p class="vf-profile__job-title"><?php  echo $positions_name_1; ?></p>
+            <p class="vf-profile__text | team-search" style="margin-bottom: 1rem;">
+              <a class="vf-link" href="<?php  echo $team_url_1; ?>"><?php  echo $team_name_1; ?></a></p>
+            <?php } ?>
 
-              <?php if (!empty($email)) { ?>
-              <p class="vf-profile__email">Email:
-                <a href="mailto:<?php  echo $email; ?>" class="vf-profile__link vf-profile__link--secondary"><?php  echo $email; ?></a>
-              </p>
-              <?php } ?>
 
-              <?php if (!empty($telephone)) { ?>
-              <p class="vf-profile__phone">Tel:
-                <a href="<?php  echo $telephone ; ?>" class="vf-profile__link vf-profile__link--secondary"><?php  echo $telephone ; ?></a>
-              </p>
-              <?php } ?>
+            <p class="people vf-u-display-none | used-for-filtering">People</p>
 
-              <?php if (!empty($room)) { ?>
-              <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--100">
-                <span>Location:</span> <?php  echo $room; ?> </p>
-              <?php } ?>
-
-              <?php if (!empty($outstation)) { ?>
-              <p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200">
-                <?php  echo $outstation; ?></p>
-              <?php } ?>
-
-            </article>
-            <?php
+          </article>
+          <?php
                 }
             }
             ?>
-          </div>
-
-          <!-- no results control -->
-          <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-            data-name="no-results">
-            <p class="vf-summary__text">
-              No people found
-            </p>
-          </article>
         </div>
-      </section>
 
-      <!-- Documents -->
-      <section class="vf-tabs__section" id="vf-tabs__section--documents">
-        <?php if ( $documents_query->have_posts() ): ?>
-        <?php while ( $documents_query->have_posts() ) : $documents_query->the_post(); ?>
-        <?php include(locate_template('partials/vf-summary--document.php', false, false)); ?>
-        <?php endwhile; ?>
-        <?php else : ?>
-        <?php _e( 'No documents found. Please check the other content types.' ); ?>
-        <?php endif; ?>
-      </section>
-      <?php rewind_posts(); ?>
+        <!-- no results control -->
+        <!-- <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+          data-name="no-results">
+          <p class="vf-summary__text">
+            No people found
+          </p>
+        </article> -->
+      </div>
 
-      <!-- News -->
-      <section class="vf-tabs__section" id="vf-tabs__section--news">
-        <?php if ( $insites_query->have_posts() ): ?>
-        <?php while ( $insites_query->have_posts() ) : $insites_query->the_post(); ?>
-        <?php include(locate_template('partials/vf-summary-insites-latest.php', false, false)); ?>
-        <?php endwhile; ?>
-        <?php else : ?>
-        <?php _e( 'No articles found. Please check the other content types.' ); ?>
-        <?php endif; ?>
-      </section>
-      <?php rewind_posts(); ?>
-
-      <!-- Events -->
-      <section class="vf-tabs__section" id="vf-tabs__section--events">
-        <?php if ( $events_query->have_posts() ): ?>
-        <?php while ( $events_query->have_posts() ) : $events_query->the_post(); ?>
-        <?php include(locate_template('partials/vf-summary-events.php', false, false)); ?>
-        <?php endwhile; ?>
-        <?php else : ?>
-        <?php _e( 'No events found. Please check the other content types.' ); ?>
-        <?php endif; ?>
-      </section>
-      <?php rewind_posts(); ?>
+  <!-- Documents -->
 
 
 
-      <!-- <section class="vf-tabs__section" id="vf-tabs__section--public">
+
+  <!-- <section class="vf-tabs__section" id="vf-tabs__section--public">
       <?php // include(locate_template('partials/swiftype-search.php', false, false));  ?>
     </section> -->
 
-    </div>
+  </div>
   </section>
-</div>
+
+
+
 <section id="load-container" class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--200">
   <div></div>
   <div id="load"></div>

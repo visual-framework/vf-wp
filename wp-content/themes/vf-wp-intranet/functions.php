@@ -151,33 +151,33 @@ add_filter('posts_join', 'cf_search_join' );
 // Modify the search query with posts_where
 // http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_where
 
-function cf_search_where( $where ) {
-  global $pagenow, $wpdb;
+// function cf_search_where( $where ) {
+//   global $pagenow, $wpdb;
 
-  if ( is_search() ) {
-      $where = preg_replace(
-          "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-          "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
-  }
+//   if ( is_search() ) {
+//       $where = preg_replace(
+//           "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
+//           "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
+//   }
 
-  return $where;
-}
-add_filter( 'posts_where', 'cf_search_where' );
+//   return $where;
+// }
+// add_filter( 'posts_where', 'cf_search_where' );
 
 
 // Prevent duplicates
 // http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_distinct
 
-function cf_search_distinct( $where ) {
-  global $wpdb;
+// function cf_search_distinct( $where ) {
+//   global $wpdb;
 
-  if ( is_search() ) {
-      return "DISTINCT";
-  }
+//   if ( is_search() ) {
+//       return "DISTINCT";
+//   }
 
-  return $where;
-}
-add_filter( 'posts_distinct', 'cf_search_distinct' );
+//   return $where;
+// }
+// add_filter( 'posts_distinct', 'cf_search_distinct' );
 
 /*
  * Redirect pages to external links
@@ -275,29 +275,29 @@ add_filter('simple_history/log/do_log', function ($do_log = null, $level = null,
 
 
 
-add_action( 'pre_get_posts', function( $q )
-{
-    if( $title = $q->get( '_meta_or_title' ) )
-    {
-        add_filter( 'get_meta_sql', function( $sql ) use ( $title )
-        {
-            global $wpdb;
+// add_action( 'pre_get_posts', function( $q )
+// {
+//     if( $title = $q->get( '_meta_or_title' ) )
+//     {
+//         add_filter( 'get_meta_sql', function( $sql ) use ( $title )
+//         {
+//             global $wpdb;
 
-            // Only run once:
-            static $nr = 0; 
-            if( 0 != $nr++ ) return $sql;
+//             // Only run once:
+//             static $nr = 0; 
+//             if( 0 != $nr++ ) return $sql;
 
-            // Modified WHERE
-            $sql['where'] = sprintf(
-                " AND ( %s OR %s ) ",
-                $wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
-                mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
-            );
+//             // Modified WHERE
+//             $sql['where'] = sprintf(
+//                 " AND ( %s OR %s ) ",
+//                 $wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
+//                 mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
+//             );
 
-            return $sql;
-        });
-    } 
-});
+//             return $sql;
+//         });
+//     } 
+// });
 
 
 

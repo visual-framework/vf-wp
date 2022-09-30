@@ -4,8 +4,8 @@ $title = esc_html(get_the_title());
 $redirect_url = get_field('vf_wp_intranet_redirect');
 
 ?>
-<article class="vf-summary">
-  <h2 class="vf-summary__title" style="margin-bottom: 4px;">
+<article class="vf-summary" data-jplist-item>
+  <h2 class="vf-summary__title | search | search-counter" style="margin-bottom: 4px;">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo $title; ?></a>
   </h2>
   <p class="vf-summary__meta" style="margin-bottom: 8px;">
@@ -34,7 +34,7 @@ $redirect_url = get_field('vf_wp_intranet_redirect');
   <div class="vf-summary__meta"><a href="<?php the_permalink(); ?>"
       class="vf-summary__author vf-summary__link"><?php the_permalink(); ?></a></div>
   <?php } ?>
+  <p class="page vf-u-display-none | used-for-filtering">Page</p>
 </article>
-
 
 <!--/vf-summary-->
