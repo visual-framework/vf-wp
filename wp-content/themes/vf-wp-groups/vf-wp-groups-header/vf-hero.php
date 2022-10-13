@@ -56,11 +56,11 @@ $spacing_class .= "{$spacing}";
       | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?></a>
     </p>
     <?php } }?>
-    <h2 class="vf-hero__heading">
+    <h1 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="<?php echo get_home_url(); ?>">
         <?php echo $vf_plugin->get_hero_heading(); ?>
       </a>
-    </h2>
+    </h1>
 
     <p class="vf-hero__subheading"><?php echo $vf_plugin->get_hero_text(); ?></p>
 
