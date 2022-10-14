@@ -110,7 +110,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
         }
         $new_post = [
             'post_title' => $title,
-            'post_name' => $bdr_id,
+            'post_name' => $title,
             'post_content' => '',
             'post_status' => 'publish',
             'post_author' => 1,
@@ -118,7 +118,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
         ];
 
         // Insert post
-        if (!get_page_by_path($bdr_id, 'OBJECT', 'people')) {
+        if (!get_page_by_path($title, 'OBJECT', 'people')) {
             $post_id = wp_insert_post($new_post);
             add_post_meta($post_id, 'post_title', $title);
             add_post_meta($post_id, 'full_name', $title);
@@ -155,8 +155,8 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
             }
 
         // update post if already exists
-        else if (get_page_by_path($bdr_id, 'OBJECT', 'people')){
-            $get_post = get_page_by_path($bdr_id, 'OBJECT', 'people');
+        else if (get_page_by_path($title, 'OBJECT', 'people')){
+            $get_post = get_page_by_path($title, 'OBJECT', 'people');
             $existing_post_id = $get_post->ID;
             update_post_meta($existing_post_id, 'post_title', $title);
             update_post_meta($existing_post_id, 'full_name', $title);
