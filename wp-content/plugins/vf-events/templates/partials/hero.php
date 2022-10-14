@@ -59,8 +59,8 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
         }
       ?>
       </p>
-    <h2 class="vf-hero__heading" style="font-size: 30px;">
+    <h1 class="vf-hero__heading" style="font-size: 30px;">
       <?php echo $title; ?>
-    </h2>
+    </h1>
   </div>
 </section>

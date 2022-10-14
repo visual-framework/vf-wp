@@ -63,14 +63,14 @@ if (!empty($hero_url)) {
       | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?></a>
     </p>
     <?php } }?>
-    <h2 class="vf-hero__heading">
+    <h1 class="vf-hero__heading">
       <?php if ($headink_link) { ?>
       <a class="vf-hero__heading_link | heading_link" href="<?php echo esc_url($headink_link); ?>"> <?php } ?>
         <?php echo ($hero_heading); ?>
       <?php if ($headink_link) { ?>  
       </a>
       <?php } ?>
-    </h2>
+    </h1>
 
     <?php if ($hero_subheading) {?>
     <p class="vf-hero__subheading"><?php echo ($hero_subheading); ?></p>
