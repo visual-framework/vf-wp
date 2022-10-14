@@ -65,9 +65,9 @@ $close_wrap,
 
 <section class="vf-hero vf-hero--800 | vf-u-fullbleed" id="hero-coronavirus" style="--vf-hero--bg-image: url('https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20201116_Banners_EMBL.org_Option2-04-scaled.jpg');">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400">
-  <h2 class="vf-hero__heading">
+  <h1 class="vf-hero__heading">
     <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information/coronavirus/">COVID-19 updates</a>
-  </h2>
+  </h1>
     <p class="vf-hero__text">
       <a class="vf-hero__link" href="https://www.embl.org/internal-information/coronavirus/">Latest updates on Coronavirus for EMBL staff
       <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
