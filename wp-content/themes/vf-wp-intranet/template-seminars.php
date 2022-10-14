@@ -267,18 +267,18 @@ get_header();
       arrOS.push($(this).attr("subscribe"));
     })
     var valsOS = arrOS.join('')
+    var valsOS = valsOS.slice(0, -1)
 
     $(".jplist-selected").each(function () {
       arrTYP.push($(this).attr("subscribet"));
     })
     var valsTYP = arrTYP.join('')
-    // var valsTYP = valsTYP.slice(0, -1)
+    var valsTYP = valsTYP.slice(0, -1)
 
     $(".subscrition-time-filter:checked").each(function () {
       arrTIME.push($(this).attr("timeframe"));
     })
     var valsTIME = arrTIME.join('')
-
     var str = "https://seminarlist.embl.de/rest/calendar?dutystationID=" + valsOS + "&seminarTypeID=" + valsTYP +
       "&timeFrame=" + valsTIME;
     var subscribe =
