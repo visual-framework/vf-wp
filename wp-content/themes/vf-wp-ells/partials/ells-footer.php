@@ -10,8 +10,7 @@
   </div>
 
   <div class="vf-u-background-color--blue | vf-u-text-color--ui--white | vf-u-padding--400">
-    <p class="vf-text vf-text-heading--4 | vf-u-text-color--ui--white">European Learning Laboratory for the Life
-      Sciences</p>
+    <p class="vf-text vf-text-heading--4 | vf-u-text-color--ui--white">Science Education and Public Engagement</p>
     <div class="vf-grid | vf-grid__col-3">
       <div class="vf-grid__col--span-2">
         <p class="vf-text-body vf-text-body--3" style="color: #fff;">Our inspiring educational experiences share the
