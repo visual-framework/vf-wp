@@ -38,13 +38,14 @@ class VF_Templates {
     if (is_singular( 'vf_event' )) {
       return false;
     }
-    // industry theme templates
+    if (($theme == 'VF-WP Industry')) {
     if (is_singular( 'industry_event' )) {
       return false;
     }
-    if (is_page_template(array( 'template-industry-workshop-archive.php', 'template-industry-quarterly-meeting-archive.php', 'template-industry-members-area.php', 'template-industry-quarterly-meeting.php', 'template-industry-workshops.php', 'template-hero-secondary.php', 'template-secondary-hero-embl.php', 'template-secondary-hero-ebi.php'  ))) {
+    if (is_page_template($template_name)) {
       return false;
-    }
+    }}
+    
     if (($theme == 'VF-WP Intranet') && ((is_search()) || (is_page_template('searchpage.php')))) {
       return false;
      }
