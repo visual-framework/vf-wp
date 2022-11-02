@@ -32,9 +32,7 @@ $telephone = get_field('telephone');
     if ( get_post_type() ==  'people') {
     echo '<b>People</b> | ' . $position . ' | ' . $team_1 . ' | ' . $outstation;  
   }
-  if ( get_post_type() ==  'page') {
-    echo '<b>Page</b> | ';  
-  }
+
   if ( get_post_type() ==  'insites') {
     echo '<b>News</b>';  
   }
@@ -47,10 +45,11 @@ $telephone = get_field('telephone');
 
 
     if (has_excerpt()) {
-      echo get_the_excerpt();
+      echo '<b>Page</b> | ' . get_the_excerpt();
     }
     else {
     $content = strip_tags(get_the_content());
+    if ($content != '') {
     if (strlen($content) > 200) {
 
       // truncate content
@@ -61,7 +60,16 @@ $telephone = get_field('telephone');
       $content = $endPoint? substr($contentCut, 0, $endPoint) : substr($contentCut, 0);
       $content .= '...';
   }
-  echo $content; }?></p>
+  echo '<b>Page</b> | ' . $content; 
+    }
+    else {
+      if ( get_post_type() ==  'page') {
+        echo '<b>Page</b>';  
+      }    }
+}
+  
+  ?></p>
+
   <?php if (!empty($redirect_url)) { ?>
   <div class="vf-summary__meta"><a href="<?php echo esc_url($redirect_url); ?>"
       class="vf-summary__author vf-summary__link"><?php echo esc_url($redirect_url); ?></a></div> 
