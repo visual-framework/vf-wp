@@ -8,12 +8,7 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
 }
 
 // Pages search query
-$page_args = array(
-  'post_type' => array('page', 'teams'),
-  'posts_per_page' => -1,
-   's' => get_search_query(), 
-);
-$page_query = new WP_Query( $page_args );
+
 
 // People search query
 // $people_args = array(
@@ -24,32 +19,7 @@ $page_query = new WP_Query( $page_args );
 // );
 // $people_query = new WP_Query( $people_args );
 
-// documents search query
-$documents_args = array(
-  'post_type' => 'documents',
-  'posts_per_page' => -1,
-   's' => get_search_query(), 
-   'relevanssi' => true,
-);
-$documents_query = new WP_Query( $documents_args );
 
-// People search query
-$insites_args = array(
-  'post_type' => 'insites',
-  'posts_per_page' => -1,
-   's' => get_search_query(), 
-   'relevanssi' => true,
-);
-$insites_query = new WP_Query( $insites_args );
-
-// People search query
-$events_args = array(
-  'post_type' => 'events',
-  'posts_per_page' => -1,
-   's' => get_search_query(), 
-   'relevanssi' => true,
-);
-$events_query = new WP_Query( $events_args );
 
 ?>
 
@@ -109,10 +79,22 @@ if (class_exists('VF_Navigation')) {
     action="<?php echo esc_url(home_url('/')); ?>">
     <div class="vf-sidebar__inner">
       <div class="vf-form__item | vf-search__item">
-      <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+      <input id="search" class="vf-form__input vf-form__input--filter" 
             data-group="data-group-1" data-name="my-filter-1" data-path=".search" type="text"
             placeholder="Enter your search term" data-clear-btn-id="name-clear-btn"
-            value="<?php echo esc_attr(get_search_query()); ?>" name="s">      </div>
+            value="<?php echo esc_attr(get_search_query()); ?>" name="s">  
+              </div>
+              <div class="vf-form__item | vf-search__item" style="display: none">
+        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
+        <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
+          <option value="any" selected="">Everything</option>
+          <option value="page" name="post_type[]">Pages</option>
+          <option value="insites" name="post_type[]">Internal news</option>
+          <option value="events" name="post_type[]">Events</option>
+          <option value="people" name="post_type[]">People</option>
+          <option value="documents" name="post_type[]">Documents</option>
+        </select>
+      </div>
       <button type="submit" class="vf-search__button | vf-button vf-button--primary"
         value="<?php esc_attr_e('Search', 'vfwp'); ?>">
         <span class="vf-button__text">Search</span>
@@ -141,117 +123,24 @@ if (class_exists('VF_Navigation')) {
     <div data-jplist-group="data-group-1">
 
       <!-- Pages -->
-      <div >
+      <div>
       <?php
             
-            $pages_json_feed_api_endpoint = 'https://www.embl.org/internal-information/wp-json/wp/v2/pages?per_page=100';
-            $raw_content = file_get_contents($pages_json_feed_api_endpoint);
-            $pages_data = json_decode($raw_content, true);
-                
-    
-            if (!empty($pages_data) && is_array($pages_data)) {
-              foreach ($pages_data as $page) {
-              $title = $page['title']['rendered']; 
-              $link = $page['link']; 
-                                     ?>
-<article class="vf-summary" data-jplist-item>
-  <h2 class="vf-summary__title | search | search-counter" style="margin-bottom: 4px;">
-    <a href="<?php echo $link; ?>" class="vf-summary__link"><?php echo $title; ?></a>
-  </h2>
-  <p class="vf-summary__meta" style="margin-bottom: 8px;">
-</p>
-
-  <div class="vf-summary__meta"><a href="<?php echo $link; ?>"
-      class="vf-summary__author vf-summary__link"><?php echo $link; ?></a></div>
-  <p class="page vf-u-display-none | used-for-filtering">Page</p>
-</article>          <?php
-                }
-            }
-            ?>
+        if ( have_posts() ) {
+          while ( have_posts() ) {
+            the_post();
+            include(locate_template('partials/vf-summary--page.php', false, false)); 
+          }
+        } else {
+          echo '<p>', __('No results found', 'vfwp'), '</p>';
+        } ?>
 
       </div>
 
       <!-- People -->
       <div class="vf-content">
-        <div class="embl-content-hub-loader | vf-grid vf-grid__col-1" ">
-          <?php
-            
-            $people_json_feed_api_endpoint = 'https://content.embl.org/api/v1/people-all-info?items_per_page=200';
-            $raw_content = file_get_contents($people_json_feed_api_endpoint);
-            $raw_content_decoded = json_decode($raw_content, true);
-            $people_data = $raw_content_decoded['rows'];  
-                
-    
-            if (!empty($people_data) && is_array($people_data)) {
-              foreach ($people_data as $person) {
-              $title = $person['full_name']; 
-              $orcid = $person['orcid'];
-              $photo = $person['photo'];
-              $email = $person['email'];
-              $biography = $person['biography'];
-              $room = $person['room'];
-              $bdr_id = $person['bdr_public_id'];
-              $outstation = $person['outstation'];
-              $telephones = $person['telephones'];
-              $positions = $person['positions'];
-      
-              if (!empty($telephones[0])) {
-                  $telephone = $person['telephones'][0]['telephone'];
-              }
-              
-              if (!empty($positions[0])) {
-                  $positions_name_1 = $person['positions'][0]['name'];
-                  $team_name_1 = $person['positions'][0]['team_name'];
-                  $team_url_1 = $person['positions'][0]['team_url'];
-                  $is_primary_1 = $person['positions'][0]['is_primary'];
-              }
-              if (!empty($positions[1])) {
-                  $positions_name_2 = $person['positions'][1]['name'];
-                  $team_name_2 = $person['positions'][1]['team_name'];
-                  $is_primary_2 = $person['positions'][1]['is_primary'];
-              }
-              if (!empty($positions[2])) {
-                  $positions_name_3 = $person['positions'][2]['name'];
-                  $team_name_3 = $person['positions'][2]['team_name'];
-                  $is_primary_3 = $person['positions'][2]['is_primary'];
-              }
-              if (!empty($positions[3])) {
-                  $positions_name_4 = $person['positions'][3]['name'];
-                  $team_name_4 = $person['positions'][3]['team_name'];
-                  $is_primary_4 = $person['positions'][3]['is_primary'];
-              } 
-                                     ?>
-          <article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
-
-            <img class="vf-profile__image" src="<?php echo $photo; ?> " alt="" loading="lazy">
-            <h3 class="vf-profile__title | search">
-              <a href="https://www.embl.org/internal-information/people/<?php  echo $bdr_id; ?>"
-                class="vf-profile__link"><?php  echo $title; ?></a>
-            </h3>
-
-            <?php if (!empty($positions)) { ?>
-            <p class="vf-profile__job-title"><?php  echo $positions_name_1; ?></p>
-            <p class="vf-profile__text | team-search" style="margin-bottom: 1rem;">
-              <a class="vf-link" href="<?php  echo $team_url_1; ?>"><?php  echo $team_name_1; ?></a></p>
-            <?php } ?>
-
-
-            <p class="people vf-u-display-none | used-for-filtering">People</p>
-
-          </article>
-          <?php
-                }
-            }
-            ?>
-        </div>
 
         <!-- no results control -->
-        <!-- <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-          data-name="no-results">
-          <p class="vf-summary__text">
-            No people found
-          </p>
-        </article> -->
       </div>
 
   <!-- Documents -->

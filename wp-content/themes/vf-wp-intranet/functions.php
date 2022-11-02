@@ -10,7 +10,7 @@ require_once('functions/custom-taxonomies.php');
 require_once('functions/cpt-register.php');
 require_once('functions/infoboard-news.php');
 require_once('functions/people.php');
-require_once('functions/relevanssi.php');
+// require_once('functions/relevanssi.php');
 
 
 // CHILD THEME CSS FILE
@@ -51,53 +51,35 @@ function vf_wp_documents__acf_settings_load_json($paths) {
   }
 
 // Search filter
-function intranet_search_filter($query) {
-	if(!is_admin()) {
-		if($query->is_main_query() && $query->is_search()) {
-			// Check if $_GET['post_type'] is set
-			if(isset($_GET['post_type']) && $_GET['post_type'] != 'any') {
-				// Filter it just to be safe
-				$post_type = sanitize_text_field($_GET['post_type']);
-				// Set the post type
-				$query->set('post_type', array('page', 'documents', 'insites', 'events', 'teams'));
-      }
-      else {
-        $query->set('post_type', array('page', 'documents', 'insites', 'events'));
-      }
-		}
-	}
-	return $query;
-}
-
-add_filter('pre_get_posts', 'intranet_search_filter');
 
 
-add_action('pre_get_posts', 'remove_my_cpt_from_search_results');
 
-function remove_my_cpt_from_search_results($query) {
-    if (is_admin() || !$query->is_main_query() || !$query->is_search()) {
-        return $query;
-    }
+// add_action('pre_get_posts', 'remove_my_cpt_from_search_results');
 
-    // can exclude multiple post types, for ex. array('staticcontent', 'cpt2', 'cpt3')
-    $post_types_to_exclude = array('people');
+// function remove_my_cpt_from_search_results($query) {
+//     if (is_admin() || !$query->is_main_query() || !$query->is_search()) {
+//         return $query;
+//     }
 
-    if ($query->get('post_type')) {
-        $query_post_types = $query->get('post_type');
+//     // can exclude multiple post types, for ex. array('staticcontent', 'cpt2', 'cpt3')
+//     $post_types_to_exclude = array('people');
 
-        if (is_string($query_post_types)) {
-            $query_post_types = explode(',', $query_post_types);
-        }
-    } else {
-        $query_post_types = get_post_types(array('exclude_from_search' => false));
-    }
+//     if ($query->get('post_type')) {
+//         $query_post_types = $query->get('post_type');
 
-    if (sizeof(array_intersect($query_post_types, $post_types_to_exclude))) {
-        $query->set('post_type', array_diff($query_post_types, $post_types_to_exclude));
-    }
+//         if (is_string($query_post_types)) {
+//             $query_post_types = explode(',', $query_post_types);
+//         }
+//     } else {
+//         $query_post_types = get_post_types(array('exclude_from_search' => false));
+//     }
 
-    return $query;
-}
+//     if (sizeof(array_intersect($query_post_types, $post_types_to_exclude))) {
+//         $query->set('post_type', array_diff($query_post_types, $post_types_to_exclude));
+//     }
+
+//     return $query;
+// }
 
 
 // add tag support to pages
@@ -136,16 +118,16 @@ function remove_comments_menu_page() {
 // Join posts and postmeta tables
 // http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_join
 
-function cf_search_join( $join ) {
-  global $wpdb;
+// function cf_search_join( $join ) {
+//   global $wpdb;
 
-  if ( is_search() ) {    
-      $join .=' LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
-  }
+//   if ( is_search() ) {    
+//       $join .=' LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
+//   }
 
-  return $join;
-}
-add_filter('posts_join', 'cf_search_join' );
+//   return $join;
+// }
+// add_filter('posts_join', 'cf_search_join' );
 
 
 // Modify the search query with posts_where
@@ -302,3 +284,89 @@ add_filter('simple_history/log/do_log', function ($do_log = null, $level = null,
 
 
 ?>
+<?php
+
+// /**
+//  * [list_searcheable_acf list all the custom fields we want to include in our search query]
+//  * @return [array] [list of custom fields]
+//  */
+// function list_searcheable_acf(){
+//   $list_searcheable_acf = array("keyword");
+//   return $list_searcheable_acf;
+// }
+
+
+// /**
+//  * [advanced_custom_search search that encompasses ACF/advanced custom fields and taxonomies and split expression before request]
+//  * @param  [query-part/string]      $where    [the initial "where" part of the search query]
+//  * @param  [object]                 $wp_query []
+//  * @return [query-part/string]      $where    [the "where" part of the search query as we customized]
+//  * see https://vzurczak.wordpress.com/2013/06/15/extend-the-default-wordpress-search/
+//  * credits to Vincent Zurczak for the base query structure/spliting tags section
+//  */
+// function advanced_custom_search( $where, $wp_query ) {
+
+//     global $wpdb;
+ 
+//     if ( empty( $where ))
+//         return $where;
+ 
+//     // get search expression
+//     $terms = $wp_query->query_vars[ 's' ];
+    
+//     // explode search expression to get search terms
+//     $exploded = explode( ' ', $terms );
+//     if( $exploded === FALSE || count( $exploded ) == 0 )
+//         $exploded = array( 0 => $terms );
+         
+//     // reset search in order to rebuilt it as we whish
+//     $where = '';
+    
+//     // get searcheable_acf, a list of advanced custom fields you want to search content in
+//     $list_searcheable_acf = list_searcheable_acf();
+
+//     foreach( $exploded as $tag ) :
+//         $where .= " 
+//           AND (
+//             (wp_posts.post_title LIKE '%$tag%')
+//             OR (wp_posts.post_content LIKE '%$tag%')
+//             OR EXISTS (
+//               SELECT * FROM wp_postmeta
+// 	              WHERE post_id = wp_posts.ID
+// 	                AND (";
+
+//         foreach ($list_searcheable_acf as $searcheable_acf) :
+//           if ($searcheable_acf == $list_searcheable_acf[0]):
+//             $where .= " (meta_key LIKE '%" . $searcheable_acf . "%' AND meta_value LIKE '%$tag%') ";
+//           else :
+//             $where .= " OR (meta_key LIKE '%" . $searcheable_acf . "%' AND meta_value LIKE '%$tag%') ";
+//           endif;
+//         endforeach;
+
+// 	        $where .= ")
+//             )
+//             OR EXISTS (
+//               SELECT * FROM wp_comments
+//               WHERE comment_post_ID = wp_posts.ID
+//                 AND comment_content LIKE '%$tag%'
+//             )
+//             OR EXISTS (
+//               SELECT * FROM wp_terms
+//               INNER JOIN wp_term_taxonomy
+//                 ON wp_term_taxonomy.term_id = wp_terms.term_id
+//               INNER JOIN wp_term_relationships
+//                 ON wp_term_relationships.term_taxonomy_id = wp_term_taxonomy.term_taxonomy_id
+//               WHERE (
+//           		taxonomy = 'post_tag'
+//             		OR taxonomy = 'category'          		
+//             		OR taxonomy = 'myCustomTax'
+//           		)
+//               	AND object_id = wp_posts.ID
+//               	AND wp_terms.name LIKE '%$tag%'
+//             )
+//         )";
+//     endforeach;
+//     return $where;
+// }
+ 
+// add_filter( 'posts_search', 'advanced_custom_search', 500, 2 );

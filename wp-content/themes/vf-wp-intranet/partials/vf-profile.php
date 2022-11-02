@@ -64,4 +64,5 @@ $title = get_post_meta( $post->ID, 'full_name', true);
   <?php } ?> <p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200">
     <?php echo esc_html($outstation); ?>
   </p>
+  <p class="people vf-u-display-none | used-for-filtering">People</p>
 </article>

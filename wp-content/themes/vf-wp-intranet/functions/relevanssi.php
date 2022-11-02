@@ -5,7 +5,7 @@ add_filter( 'post_limits', 'rlv_postsperpage' );
 function rlv_postsperpage( $limits ) {
 	if ( is_search() ) {
 		global $wp_query;
-		$wp_query->query_vars['posts_per_page'] = -1;
+		$wp_query->query_vars['posts_per_page'] = 25;
 	}
 	return $limits;
 }
