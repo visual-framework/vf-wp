@@ -13,14 +13,14 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
   <style>
     .vf-hero {
       --vf-hero--bg-image: url('https://www.embl.org/internal-information/wp-content/uploads/20220325_Intranet-hero-scaled.jpg');
-    }
 
-  </style>
+            }
+  </style>  
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
-    <h2 class="vf-hero__heading">
+    <h1 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information">
         EMBL Intranet </a>
-    </h2>
+    </h1>
   </div>
 </section>
 

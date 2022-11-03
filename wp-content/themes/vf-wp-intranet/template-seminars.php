@@ -8,26 +8,20 @@ get_header();
 
 ?>
 
-
-<section class="vf-intro | vf-u-margin__bottom--0">
-  <div>
-    <!-- empty -->
-  </div>
-  <div class="vf-stack">
+<div
+  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800 | vf-content">
+  <div></div>
+  <div class="vf-stack vf-stack--400">
     <h1 class="vf-intro__heading">
       <?php wp_title(''); ?>
     </h1>
-  </div>
-</section>
 
-<div
-  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
-  <div></div>
-  <div class="vf-form__item">
-          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
-            data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
-            placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn">
-   </div>
+    <div class="vf-form__item | vf-u-margin__top--800">
+      <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+        data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
+        placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn">
+    </div>
+  </div>
 </div>
 
 <section class="embl-grid embl-grid--has-centered-content">
@@ -176,12 +170,48 @@ get_header();
 
   </div>
   <div class="vf-stack vf-stack--400">
+    <fieldset
+      class="vf-form__fieldset | vf-stack vf-stack--400 vf-u-margin__bottom--800 | vf-u-background-color-ui--off-white | vf-u-padding--400">
+      <p class="vf-text-body vf-text-body--3">
+        Subscribe to the selected seminars.</p>
+      </p>
+      <div class="vf-cluster vf-cluster--400">
+        <div class="vf-cluster__inner" style="padding: 3px;">
+
+          <div class="vf-form__item vf-form__item--radio">
+            <input type="radio" name="timeframe" value="week" id="week" class="vf-form__radio | subscrition-time-filter"
+              timeframe="2">
+            <label for="week" class="vf-form__label">One week</label>
+          </div>
+
+          <div class="vf-form__item vf-form__item--radio">
+            <input type="radio" name="timeframe" value="month" id="month"
+              class="vf-form__radio | subscrition-time-filter" timeframe="3">
+            <label for="month" class="vf-form__label">One month</label>
+          </div>
+
+          <div class="vf-form__item vf-form__item--radio">
+            <input type="radio" name="timeframe" value="all" id="all" class="vf-form__radio | subscrition-time-filter"
+              timeframe="0" checked>
+            <label for="all" class="vf-form__label">All upcoming</label>
+          </div>
+
+        </div>
+      </div>
+      <div class="calendar-feed">
+        <button class="vf-button vf-button--primary vf-button--sm | seminar-subscribe | url-copied"
+          url="https://seminarlist.embl.de/rest/calendar?dutystationID=0&seminarTypeID=0&timeFrame=0">Subscribe</button>
+      </div>
+      <hr class="vf-divider  vf-u-margin__bottom--200">
+      <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--0"><a
+          href="https://www.embl.org/internal-information/help/seminars-subscription">Read instructions</a>
+
+    </fieldset>
     <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://www.embl.org/events">Courses and conferences<svg aria-hidden="true"
-              class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
-              xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/events">Courses and
+            conferences<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
+              width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
                 fill="currentColor" fill-rule="nonzero"></path>
@@ -191,9 +221,10 @@ get_header();
     </article>
     <article class="vf-card vf-card--brand vf-card--striped">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.ebi.ac.uk/about/events/seminars">EMBL-EBI Seminars<svg
-              aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-              height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link"
+            href="https://www.ebi.ac.uk/about/events/seminars">EMBL-EBI Seminars<svg aria-hidden="true"
+              class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
                 fill="currentColor" fill-rule="nonzero"></path>
@@ -222,6 +253,50 @@ get_header();
 <script type="text/javascript">
   jplist.init({
     deepLinking: true
+  });
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).on("change", ".vf-form__item", function () {
+    var arrOS = []
+    var arrTYP = []
+    var arrTIME = []
+
+    $(".jplist-selected").each(function () {
+      arrOS.push($(this).attr("subscribe"));
+    })
+    var valsOS = arrOS.join('')
+
+    $(".jplist-selected").each(function () {
+      arrTYP.push($(this).attr("subscribet"));
+    })
+    var valsTYP = arrTYP.join('')
+    // var valsTYP = valsTYP.slice(0, -1)
+
+    $(".subscrition-time-filter:checked").each(function () {
+      arrTIME.push($(this).attr("timeframe"));
+    })
+    var valsTIME = arrTIME.join('')
+
+    var str = "https://seminarlist.embl.de/rest/calendar?dutystationID=" + valsOS + "&seminarTypeID=" + valsTYP +
+      "&timeFrame=" + valsTIME;
+    var subscribe =
+      '  <button class="vf-button vf-button--primary vf-button--sm | seminar-subscribe | url-copied" url="' + str +
+      '">Subscribe</button>'
+
+
+    $('.calendar-feed').html(subscribe);
+    var $temp = $("<input>");
+    var $url = $('.seminar-subscribe').attr('url');
+
+    $('.seminar-subscribe').on('click', function () {
+      $("body").append($temp);
+      $temp.val($url).select();
+      document.execCommand("copy");
+      $temp.remove();
+      $(".url-copied").text("URL copied!");
+    })
   });
 
 </script>

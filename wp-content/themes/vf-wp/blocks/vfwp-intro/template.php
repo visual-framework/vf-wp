@@ -55,9 +55,10 @@ if ($is_container) {
   </div>
   <div class="vf-stack">
 <?php } ?>
-
+  <?php if ( ! empty($heading)) { ?>
     <h1 class="vf-intro__heading<?php if ( ! empty($badge_link)) { ?> vf-intro__heading--has-tag<?php } ?>">
       <?php echo ($heading); ?>
+      <?php } ?>
       <?php if ( ! empty($badge_link)) { ?>
         <a href="<?php echo esc_url($badge_link['url']); ?>" class="vf-badge vf-badge--<?php echo esc_attr($badge_style); ?> vf-badge--phases">
           <?php echo esc_html($badge_link['title']); ?>
@@ -67,8 +68,12 @@ if ($is_container) {
     <?php if ($subheading) { ?>
     <h2 class="vf-intro__subheading"><?php echo ($subheading); ?></h2>
     <?php } ?>
+    <?php if ( ! empty($lede)) { ?>
     <?php echo ($lede); ?>
+    <?php } ?>
+    <?php if ( ! empty($text)) { ?>
     <?php echo ($text); ?>
+    <?php } ?>
 
 <?php
 // Close wrappers for container

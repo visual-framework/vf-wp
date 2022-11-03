@@ -20,14 +20,12 @@ $total_results = $wp_query->found_posts;
   <style>
     .vf-hero {
       --vf-hero--bg-image: url('https://www.embl.org/internal-information/wp-content/uploads/20220325_Intranet-hero-scaled.jpg');
-    }
-
-  </style>
-  <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
-    <h2 class="vf-hero__heading">
+            }
+  </style>  <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
+    <h1 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information">
         EMBL Intranet </a>
-    </h2>
+    </h1>
   </div>
 </section>
 

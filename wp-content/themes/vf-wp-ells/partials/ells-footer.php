@@ -1,7 +1,7 @@
 <div class="embl-grid | vf-u-margin__bottom--0 embl-etc-container vf-u-background-color--blue | vf-u-fullbleed"
   id="footer-ells" style="grid-column-gap: 0">
   <div
-    class="vf-u-background-color--blue | vf-u-margin__right--0 | vf-u-padding__top--200  | vf-u-padding__bottom--200">
+    class="vf-u-background-color--blue | vf-u-margin__right--0 | vf-u-padding__top--600  | vf-u-padding__bottom--200">
     <figure class="vf-figure" style="text-align: center">
       <img class="vf-figure__image"
         src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/04/20200527_ELLS_VisualTag_RGB_COLOR.png"
@@ -15,7 +15,7 @@
     <div class="vf-grid | vf-grid__col-3">
       <div class="vf-grid__col--span-2">
         <p class="vf-text-body vf-text-body--3" style="color: #fff;">Our inspiring educational experiences share the
-          scientific discoveries of EMBL with young people aged 10-19 years and teachers in Europe and beyond.
+          scientific discoveries of EMBL with young people aged 10-19 years and teachers in Europe and beyond. We belong to EMBL’s Science Education and Public Engagement office.
         </p>
       </div>
     </div>

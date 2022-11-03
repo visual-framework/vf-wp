@@ -151,7 +151,7 @@ get_header();
     <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://www.embl.org/search/#vf-tabs__section--4">Alumni search<svg
+            href="https://www.embl.org/search/">Alumni search<svg
               aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
               height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
