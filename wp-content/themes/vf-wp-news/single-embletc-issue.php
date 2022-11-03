@@ -24,7 +24,6 @@ $pdf = get_field('embletc_pdf_link');
       <a class="vf-hero__heading_link" href="<?php echo get_the_permalink(); ?>">EMBL etc.</a>
     </h2>
     <p class="vf-hero__subheading" style="font-size: 26px;"><?php echo $issue_number; ?></p>
-    <p class="vf-hero__kicker"><a href="<?php echo esc_url($pdf); ?>">Download</a></p>
   </div>
 </section>
 
@@ -37,7 +36,7 @@ $pdf = get_field('embletc_pdf_link');
   </div>
 </section>
 
-<div class="vf-grid vf-grid__col-3 | vf-content">
+<div class="vf-grid vf-grid__col-4 | vf-content">
   <div class="vf-grid__col--span-2">
     <?php
 if( $main_story): ?>
@@ -65,7 +64,7 @@ if( $main_story): ?>
     </div>
 
   </div>
-  <div>
+  <div class="vf-grid__col--span-2">
     <?php
 if( !empty( $main_image ) ): ?>
     <img src="<?php echo esc_url($main_image['url']); ?>" alt="<?php echo esc_attr($main_image['alt']); ?>" />
@@ -121,6 +120,8 @@ wp_reset_postdata(); ?>
     <?php endif; ?>
   </div>
 </section>
+
+<?php include(locate_template('partials/embletc-footer.php', false, false)); ?>
 
 <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 

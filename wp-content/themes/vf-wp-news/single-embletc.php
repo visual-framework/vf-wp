@@ -22,7 +22,9 @@ if ($featured_posts) { ?>
 <?php foreach( $featured_posts as $post ): 
       setup_postdata($post);
       $main_hero = get_field('embletc_main_story_hero');
-      $pdf = get_field('embletc_pdf_link'); ?>
+      $pdf = get_field('embletc_pdf_link'); 
+      $preview = get_field('embletc_preview_image'); 
+      ?>
 <section class="vf-hero vf-hero--1200 | vf-u-fullbleed"
   style="--vf-hero--bg-image: url('<?php echo esc_url($main_hero['url']); ?>'); margin-bottom: 0; padding: 1rem 0;">
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--400 ">
@@ -30,7 +32,6 @@ if ($featured_posts) { ?>
       <a class="vf-hero__heading_link" href="<?php the_permalink(); ?>">EMBL etc.</a>
     </h2>
     <p class="vf-hero__subheading" style="font-size: 26px;"><?php the_title(); ?></p>
-    <p class="vf-hero__kicker"><a href="<?php echo esc_url($pdf); ?>">Download</a></p>
   </div>
 </section>
 
@@ -53,7 +54,7 @@ if ($featured_posts) { ?>
 <div class="vf-grid vf-grid__col-3 | vf-content">
   <div class="vf-grid__col--span-2">
     <div class="vf-content">
-      <h1><?php the_title(); ?></h1>
+      <h1 style="font-weight: 500;"><?php the_title(); ?></h1>
     </div>
   </div>
   <div></div>
@@ -61,12 +62,12 @@ if ($featured_posts) { ?>
 
 <div class="vf-grid vf-grid__col-3 | vf-content">
   <div class="vf-grid__col--span-2 | vf-u-padding__bottom--400">
-    <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800 | vf-u-margin__top--0">
+    <p class="vf-lede | vf-u-padding__top--400 | vf-u-padding__bottom--800 | vf-u-margin__top--0" style="font-weight: 400;">
       <?php echo get_post_meta($post->ID, 'article_intro', true); ?> </p>
     <figure class="vf-figure">
       <?php
       if ( has_post_thumbnail() ) {
-      the_post_thumbnail('full', array('class' => 'vf-figure__image', 'style' => 'max-height: 400px;')); ?>
+      the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
       <figcaption class="vf-figure__caption">
         <?php echo wp_kses_post(get_post(get_post_thumbnail_id())->post_excerpt); ?>
       </figcaption>
@@ -292,6 +293,18 @@ setup_postdata($post); ?>
         <?php endif; ?>
       </div>
     </div>
+    <div>
+    <article class="vf-card vf-card--brand vf-card--bordered">
+
+<img src="<?php echo esc_url($preview['url']); ?>" alt="Image alt text" class="vf-card__image" loading="lazy">
+<div class="vf-card__content | vf-stack vf-stack--400">
+  <h3 class="vf-card__heading"><a class="vf-card__link" href="<?php echo esc_url($pdf); ?>">Download printable preview <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
+      </svg>
+    </a></h3>
+  <p class="vf-card__text">Click here to download a quick overview of all the articles included in this digital issue of EMBLetc.</p>
+</div>
+</article>    </div>
   </div>
 </div>
 <?php // echo ($issue_number[0]->post_title); ?>
