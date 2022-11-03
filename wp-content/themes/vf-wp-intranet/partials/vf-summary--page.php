@@ -2,25 +2,10 @@
 
 $title = esc_html(get_the_title());
 $redirect_url = get_field('vf_wp_intranet_redirect');
-$user_id = get_the_author_meta('ID');
-$cpid = get_field('cpid');
-$orcid = get_field('orcid');
-$photo = get_field('photo');
-$email = get_field('email');
 $position = get_field('positions_name_1', $post->ID);
 $outstation = get_field('outstation', $post->ID);
-$full_name = get_field('full_name');
-$room = get_field('room');
-$biography = get_field('biography');
 $team_1 = get_field('team_name_1', $post->ID);
-$team_2 = get_field('team_name_2');
-$team_3 = get_field('team_name_3');
-$team_4 = get_field('team_name_4');
-$primary_1 = get_field('is_primary_1');
-$primary_2 = get_field('is_primary_2');
-$primary_3 = get_field('is_primary_3');
-$primary_4 = get_field('is_primary_4');
-$telephone = get_field('telephone');
+
 ?>
 <article class="vf-summary" data-jplist-item>
 
@@ -29,23 +14,28 @@ $telephone = get_field('telephone');
   </h2>
   <p class="vf-summary__meta" style="margin-bottom: 8px;">
     <?php
+    // display the post type
     if ( get_post_type() ==  'people') {
     echo '<b>People</b> | ' . $position . ' | ' . $team_1 . ' | ' . $outstation;  
   }
 
   if ( get_post_type() ==  'insites') {
-    echo '<b>News</b>';  
+    echo '<b>News</b> | ';  
   }
   if ( get_post_type() ==  'documents') {
-    echo '<b>Document</b>';  
+    echo '<b>Document</b> | ';  
   }
   if ( get_post_type() ==  'events') {
     echo '<b>Event</b>';  
   }
 
-
     if (has_excerpt()) {
+      if ( get_post_type() ==  'page') {
       echo '<b>Page</b> | ' . get_the_excerpt();
+      }
+      else {
+        echo get_the_excerpt();
+      }
     }
     else {
     $content = strip_tags(get_the_content());
@@ -67,29 +57,28 @@ $telephone = get_field('telephone');
         echo '<b>Page</b>';  
       }    }
 }
-  
-  ?></p>
+  ?>
+  </p>
 
   <?php if (!empty($redirect_url)) { ?>
   <div class="vf-summary__meta"><a href="<?php echo esc_url($redirect_url); ?>"
       class="vf-summary__author vf-summary__link"><?php echo esc_url($redirect_url); ?></a></div> 
   <?php }
   else { ?>    
-  <div class="vf-summary__meta"><a href="<?php the_permalink(); ?>"
-      class="vf-summary__author vf-summary__link"><?php the_permalink(); ?></a></div>
+  <div class="vf-summary__meta"><?php $uri = get_page_uri(); echo '<a class="vf-summary__author vf-summary__link" href="' . get_the_permalink() . '">' . '/' . esc_html__($uri ) . '</a>'; ?></div>
   <?php } ?>
   <?php
   if ( get_post_type() == 'page' ) {
     echo '<p class="page vf-u-display-none | used-for-filtering">Page</p>';
 }
-elseif ( get_post_type() ==  'people') {
-  echo '<p class="people vf-u-display-none | used-for-filtering">People</p>';
+  elseif ( get_post_type() ==  'people') {
+    echo '<p class="people vf-u-display-none | used-for-filtering">People</p>';
 }
-elseif ( get_post_type() ==  'documents') {
-  echo '<p class="documents vf-u-display-none | used-for-filtering">Documents</p>';
+  elseif ( get_post_type() ==  'documents') {
+    echo '<p class="documents vf-u-display-none | used-for-filtering">Documents</p>';
 }
-elseif ( get_post_type() ==  'insites') {
-  echo '<p class="news vf-u-display-none | used-for-filtering">News</p>';
+  elseif ( get_post_type() ==  'insites') {
+    echo '<p class="news vf-u-display-none | used-for-filtering">News</p>';
 }
 ?>
   

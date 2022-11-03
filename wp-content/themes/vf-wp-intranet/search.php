@@ -7,20 +7,6 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
   VF_Plugin::render(VF_Intranet_Breadcrumbs::get_plugin('vf_wp_breadcrumbs_intranet'));
 }
 
-// Pages search query
-
-
-// People search query
-// $people_args = array(
-//   'post_type' => 'people',
-//   'posts_per_page' => -1,
-//    's' => get_search_query(), 
-//    'relevanssi' => true,
-// );
-// $people_query = new WP_Query( $people_args );
-
-
-
 ?>
 
 <section class="vf-hero | vf-u-fullbleed | vf-hero--800 | vf-u-margin__bottom--0">
@@ -59,72 +45,53 @@ if (class_exists('VF_Navigation')) {
       </div>
     </div>
 </section>
-<!-- <div
-  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
-  <div></div>
-  <div class="vf-form__item">
-          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
-            data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
-            placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn">
-   </div>
-</div> -->
-
 
 <section
   class="embl-grid embl-grid--has-centered-content vf-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--0">
   <div></div>
   <div>
-  <form role="search" method="get"
-    class="vf-form vf-form--search vf-form--search--<?php echo esc_html($type); ?> | vf-sidebar vf-sidebar--end"
-    action="<?php echo esc_url(home_url('/')); ?>">
-    <div class="vf-sidebar__inner">
-      <div class="vf-form__item | vf-search__item">
-      <input id="search" class="vf-form__input vf-form__input--filter" 
-            data-group="data-group-1" data-name="my-filter-1" data-path=".search" type="text"
-            placeholder="Enter your search term" data-clear-btn-id="name-clear-btn"
-            value="<?php echo esc_attr(get_search_query()); ?>" name="s">  
-              </div>
-              <div class="vf-form__item | vf-search__item" style="display: none">
-        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
-        <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
-          <option value="any" selected="">Everything</option>
-          <option value="page" name="post_type[]">Pages</option>
-          <option value="insites" name="post_type[]">Internal news</option>
-          <option value="events" name="post_type[]">Events</option>
-          <option value="people" name="post_type[]">People</option>
-          <option value="documents" name="post_type[]">Documents</option>
-        </select>
+    <form role="search" method="get"
+      class="vf-form vf-form--search vf-form--search--<?php echo esc_html($type); ?> | vf-sidebar vf-sidebar--end"
+      action="<?php echo esc_url(home_url('/')); ?>">
+      <div class="vf-sidebar__inner">
+        <div class="vf-form__item | vf-search__item">
+          <input id="search" class="vf-form__input vf-form__input--filter" data-group="data-group-1"
+            data-name="my-filter-1" data-path=".search" type="text" placeholder="Enter your search term"
+            data-clear-btn-id="name-clear-btn" value="<?php echo esc_attr(get_search_query()); ?>" name="s">
+        </div>
+        <div class="vf-form__item | vf-search__item" style="display: none">
+          <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
+          <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
+            <option value="any" selected="">Everything</option>
+            <option value="page" name="post_type[]">Pages</option>
+            <option value="insites" name="post_type[]">Internal news</option>
+            <option value="events" name="post_type[]">Events</option>
+            <option value="people" name="post_type[]">People</option>
+            <option value="documents" name="post_type[]">Documents</option>
+          </select>
+        </div>
+        <button type="submit" class="vf-search__button | vf-button vf-button--primary"
+          value="<?php esc_attr_e('Search', 'vfwp'); ?>">
+          <span class="vf-button__text">Search</span>
+        </button>
       </div>
-      <button type="submit" class="vf-search__button | vf-button vf-button--primary"
-        value="<?php esc_attr_e('Search', 'vfwp'); ?>">
-        <span class="vf-button__text">Search</span>
-      </button>
-    </div>
-  </form>
-
-
-
-
-
-
+    </form>
   </div>
 </section>
-<div id="search-content" class="vf-stack vf-stack--400">
+<!-- spinner -->
+<section id="load-container" class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--200">
+  <div></div>
+  <div id="load"></div>
+</section>
 
+<div id="search-content" class="vf-stack vf-stack--400">
   <section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--600">
     <div>
-
-    <?php include(locate_template('partials/search-filter.php', false, false)); ?>
-
-
-
+      <?php include(locate_template('partials/search-filter.php', false, false)); ?>
     </div>
-
     <div data-jplist-group="data-group-1">
-
-      <!-- Pages -->
       <div>
-      <?php
+        <?php
             
         if ( have_posts() ) {
           while ( have_posts() ) {
@@ -134,68 +101,43 @@ if (class_exists('VF_Navigation')) {
         } else {
           echo '<p>', __('No results found', 'vfwp'), '</p>';
         } ?>
-
       </div>
-
-      <!-- People -->
-      <div class="vf-content">
-
-        <!-- no results control -->
-      </div>
-
-  <!-- Documents -->
-
-
-
-
-  <!-- <section class="vf-tabs__section" id="vf-tabs__section--public">
-      <?php // include(locate_template('partials/swiftype-search.php', false, false));  ?>
-    </section> -->
-
-  </div>
+    </div>
   </section>
 
+  <?php
+    if (class_exists('VF_Global_Footer')) {
+      VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));
+    } ?>
 
+  <?php get_footer(); ?>
 
-<section id="load-container" class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--200">
-  <div></div>
-  <div id="load"></div>
-</section>
+  <script>
+    function onReady(callback) {
+      var intervalID = window.setInterval(checkReady, 1000);
 
-
-<?php
-if (class_exists('VF_Global_Footer')) {
-  VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));
-} ?>
-
-<?php get_footer(); ?>
-
-<script>
-  function onReady(callback) {
-    var intervalID = window.setInterval(checkReady, 1000);
-
-    function checkReady() {
-      if (document.getElementsByTagName('body')[0] !== undefined) {
-        window.clearInterval(intervalID);
-        callback.call(this);
+      function checkReady() {
+        if (document.getElementsByTagName('body')[0] !== undefined) {
+          window.clearInterval(intervalID);
+          callback.call(this);
+        }
       }
     }
-  }
 
-  function show(id, value) {
-    document.getElementById(id).style.display = value ? 'block' : 'none';
-  }
+    function show(id, value) {
+      document.getElementById(id).style.display = value ? 'block' : 'none';
+    }
 
-  onReady(function () {
-    show('search-content', true);
-    show('load', false);
-    show('load-container', false);
-  });
+    onReady(function () {
+      show('search-content', true);
+      show('load', false);
+      show('load-container', false);
+    });
 
-</script>
-<script type="text/javascript">
-  jplist.init({
-    deepLinking: true
-  });
+  </script>
+  <script type="text/javascript">
+    jplist.init({
+      deepLinking: true
+    });
 
-</script>
+  </script>

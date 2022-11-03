@@ -17,11 +17,13 @@ $total_results = $wp_query->found_posts;
 ?>
 
 <section class="vf-hero | vf-u-fullbleed | vf-hero--800 | vf-u-margin__bottom--0">
-<style>
+  <style>
     .vf-hero {
       --vf-hero--bg-image: url('https://www.embl.org/internal-information/wp-content/uploads/20220325_Intranet-hero-scaled.jpg');
-            }
-  </style>  <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
+    }
+
+  </style>
+  <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
     <h2 class="vf-hero__heading">
       <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information">
         EMBL Intranet </a>
@@ -30,11 +32,9 @@ $total_results = $wp_query->found_posts;
 </section>
 
 <?php
-
 if (class_exists('VF_Navigation')) {
   VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
 }
-
 ?>
 
 <section class="vf-intro | vf-u-margin__bottom--0">
@@ -46,10 +46,11 @@ if (class_exists('VF_Navigation')) {
       Intranet search
     </h1>
     <div class="vf-banner vf-banner--alert vf-banner--info">
-    <div class="vf-banner__content">
-    <p class="vf-banner__text">Can't find what you need on the intranet? It may be on the public website <a class="vf-banner__link" href="https://www.embl.org/search">embl.org/search</a></p>
-  </div>
-  </div>
+      <div class="vf-banner__content">
+        <p class="vf-banner__text">Can't find what you need on the intranet? It may be on the public website <a
+            class="vf-banner__link" href="https://www.embl.org/search">embl.org/search</a></p>
+      </div>
+    </div>
 </section>
 
 <div
