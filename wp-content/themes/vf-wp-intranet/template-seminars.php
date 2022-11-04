@@ -60,6 +60,13 @@ get_header();
               $location_filter_class = strtolower(str_replace(' ', '_', $location)); 
               $address = html_entity_decode(strip_tags($event->field_event_address));
               $speaker = strstr($info, 'Host', true);
+              $canceled = $event->field_event_canceled;
+              if ($canceled == 'No') {
+                $canceled = ''; }
+              elseif ($canceled == 'Yes') {
+                $canceled = ' - Cancelled'; }
+              elseif ($canceled == 'Postponed') {
+                $canceled = ' - Postponed'; }  
               $calendarStartDate = date("Ymd", strtotime($event->field_event_start_date_time));
               $calendarStartTime = date("Hi", strtotime($event->field_event_start_date_time));
               $calendarEndTime = date("Hi", strtotime($event->field_event_start_date_time) + 60*60);
@@ -67,8 +74,7 @@ get_header();
               if (strpos($info, 'Host') == false) {
                 $address = '';
               }
-            
-                echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
+              echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
 
                 //Date
                 echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -81,10 +87,10 @@ get_header();
 
                 //Link
                 if (!empty($event->field_event_more_information)) {
-                    echo '<a href="'. $event->field_event_more_information . '" class="vf-summary__link">' . $event->title . '</a></h3>' ;
+                    echo '<a href="'. $event->field_event_more_information . '" class="vf-summary__link">' . $event->title . '</a>' . $canceled . '</h3>';
                 }
                 else {
-                     echo ($event->title . '</h3>'); }
+                     echo ($event->title . $canceled . '</h3>'); }
 
                 // additional info field break down
                 if ($speaker) {
@@ -267,18 +273,18 @@ get_header();
       arrOS.push($(this).attr("subscribe"));
     })
     var valsOS = arrOS.join('')
+    var valsOS = valsOS.slice(0, -1)
 
     $(".jplist-selected").each(function () {
       arrTYP.push($(this).attr("subscribet"));
     })
     var valsTYP = arrTYP.join('')
-    // var valsTYP = valsTYP.slice(0, -1)
+    var valsTYP = valsTYP.slice(0, -1)
 
     $(".subscrition-time-filter:checked").each(function () {
       arrTIME.push($(this).attr("timeframe"));
     })
     var valsTIME = arrTIME.join('')
-
     var str = "https://seminarlist.embl.de/rest/calendar?dutystationID=" + valsOS + "&seminarTypeID=" + valsTYP +
       "&timeFrame=" + valsTIME;
     var subscribe =

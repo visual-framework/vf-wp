@@ -2,12 +2,11 @@
   class="embl-grid vf-u-background-color-ui--off-white vf-u-fullbleed vf-u-padding__top--600 vf-u-padding__bottom--800 vf-u-margin__bottom--0">
   <div class="vf-section-header">
     <h2 class="vf-section-header__heading" id="section-sub-heading">
-      Stay in touch
+    What's new on our blog
     </h2>
   </div>
   <div class="vf-grid vf-grid__col-3">
     <div class="vf-grid__col--span-2">
-      <h4 class="vf-text vf-text-heading--4">What's new on our blog</h4>
       <?php
     $eventsloop = new WP_Query(array('posts_per_page' => 3 ));
     while ($eventsloop->have_posts()) : $eventsloop->the_post(); ?>
