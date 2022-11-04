@@ -13,7 +13,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_barcelona"
-        data-mode="dynamic"
+        data-mode="static"
         data-name="counter-barcelona-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -27,7 +27,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_grenoble"
-        data-mode="dynamic"
+        data-mode="static"
         data-name="counter-grenoble-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -41,7 +41,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_hamburg"
-        data-mode="dynamic"
+        data-mode="static"
         data-name="counter-hamburg-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -55,7 +55,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_heidelberg"
-        data-mode="dynamic"
+        data-mode="static"
         data-name="counter-heidelberg-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -69,7 +69,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_rome"
-        data-mode="dynamic"
+        data-mode="static"
         data-name="counter-rome-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -83,7 +83,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".virtual"
-        data-mode="dynamic"
+        data-mode="static"
         data-name="counter-virtual-filter"
         data-filter-type="path"></span></label>
     </div>
