@@ -137,7 +137,7 @@
       <input id="type-16" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="EMBL - Sapienza Lecture"
-        data-id="name-sapienza" class="vf-form__checkbox">
+        data-id="name-sapienza" class="vf-form__checkbox" subscribet="24,">
       <label for="type-16" class="vf-form__label">EMBL Sapienza Lecture&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -207,7 +207,7 @@
       <input id="type-17" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Hamburg Speaker"
-        data-id="name-hamburg-speaker" class="vf-form__checkbox">
+        data-id="name-hamburg-speaker" class="vf-form__checkbox" subscribet="18,">
       <label for="type-17" class="vf-form__label">Hamburg Speaker&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -235,7 +235,7 @@
       <input id="type-18" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="MR Postdoc"
-        data-id="name-mr" class="vf-form__checkbox">
+        data-id="name-mr" class="vf-form__checkbox" subscribet="19,">
       <label for="type-18" class="vf-form__label">MR Postdoc&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -249,7 +249,7 @@
       <input id="type-23" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Next Generation"
-        data-id="name-ng" class="vf-form__checkbox">
+        data-id="name-ng" class="vf-form__checkbox" subscribet="69,">
       <label for="type-23" class="vf-form__label">Next Generation&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -333,7 +333,7 @@
       <input id="type-22" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Science by the Beach"
-        data-id="name-beach" class="vf-form__checkbox">
+        data-id="name-beach" class="vf-form__checkbox" subscribet="78,">
       <label for="type-22" class="vf-form__label">Science by the Beach&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -362,7 +362,7 @@
       <input id="type-20" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="Symbnet series"
-        data-id="name-symbnet" class="vf-form__checkbox">
+        data-id="name-symbnet" class="vf-form__checkbox" subscribet="68,">
       <label for="type-20" class="vf-form__label">Symbnet series&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
@@ -376,7 +376,7 @@
       <input id="type-19" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
         value="TAC Seminar"
-        data-id="name-tac" class="vf-form__checkbox">
+        data-id="name-tac" class="vf-form__checkbox" subscribet="13,">
       <label for="type-19" class="vf-form__label">TAC Seminar&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
