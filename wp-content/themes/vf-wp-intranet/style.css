@@ -39,3 +39,9 @@ Text Domain:	 vfwp
 #search-content {
     display: none;
 }
+
+.intranet-directory-badge {
+    font-weight: 600 !important;
+    font-size: 14px !important; 
+    padding: 1px 4px !important;
+}
