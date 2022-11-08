@@ -94,7 +94,7 @@ class VF_Cache {
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($curl, CURLOPT_URL,            $url);
     curl_setopt($curl, CURLOPT_HTTPHEADER,     $headers);
-    curl_setopt($curl, CURLOPT_USERAGENT,      'Mozilla/5.0 (compatible; EMBL VF WP; http://content.embl.org/user-agent)');
+    curl_setopt($curl, CURLOPT_USERAGENT,      'Mozilla/5.0 (compatible; EMBL VF WP; https://content.embl.org/user-agent)');
     curl_setopt($curl, CURLOPT_REFERER,        'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
     curl_setopt($curl, CURLOPT_ENCODING,       'gzip,deflate');
     curl_setopt($curl, CURLOPT_AUTOREFERER,    TRUE);
@@ -236,7 +236,6 @@ class VF_Cache {
     // generate nonce for ajax response
     $nonce = wp_create_nonce("vf_nonce_{$now}");
     update_option('vf_cache_update', $now);
-
     /**
      * Send AJAX request via front-end JavaScript
      * we could trigger a cache udate server-side with: `wp_remote_post`
@@ -410,15 +409,6 @@ xhr.send('<?php echo build_query($data); ?>');
     add_action('init', array($this, 'init'));
     add_action('acf/init', array($this, 'acf_init'));
 
-    add_action(
-      'wp_ajax_vf/cache/update',
-      array($this, 'handle_schedule_ajax')
-    );
-    add_action(
-      'wp_ajax_nopriv_vf/cache/update',
-      array($this, 'handle_schedule_ajax')
-    );
-
     if (is_admin()) {
       add_action(
         'admin_notices',
@@ -483,12 +473,36 @@ xhr.send('<?php echo build_query($data); ?>');
   }
 
   /**
+   * Function to process any stale api cache and refresh them if they passed
+   * rate limit defined.
+   *
+   * This function is copy of handle_schedule_ajax() which only executes via
+   * wp-ajax action whereas this function is explicitly called by cron schedule.
+   *
+   */
+  public function process_api_cache_cron() {
+    write_log("Coming in process_api_cache_cron() function");
+    ignore_user_abort(true);
+    session_write_close();
+
+    // Update cache
+    update_option('vf_cache_update', time());
+
+    // Skip update if cache is disabled
+    if (VF_Cache::is_disabled()) {
+      wp_send_json_error(__('Cache disabled', 'vfwp'));
+    }
+
+    $this->update_cache_posts();
+
+    wp_send_json_success();
+  }
+
+  /**
    * Action: `init`
    * Register custom post type
    */
   public function init() {
-    // check if a cache update can be scheduled
-    $this->maybe_schedule_ajax();
 
     register_post_type($this->post_type, array(
       'labels' => array(

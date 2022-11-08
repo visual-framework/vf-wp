@@ -95,7 +95,7 @@ add_filter(
 );
 
 // Load ACF JSON from theme
- 
+
 function vf_wp_theme__acf_settings_load_json($paths) {
   $paths[] = get_stylesheet_directory() . '/acf-json';
   return $paths;
@@ -160,9 +160,9 @@ function swiftype_metadata_description() {
 
 // allow only certain WP Gutenberg blocks
 // add_filter( 'allowed_block_types_all', 'allowed_block_types' );
- 
+
 // function allowed_block_types($allowed_blocks) {
- 
+
 // 	return array(
 //    'core/block',
 // 		'core/image',
@@ -234,9 +234,9 @@ function swiftype_metadata_description() {
 //     'acf/vf-publications',
 //     'acf/vf-publications-group-ebi',
 //     'acf/vf-embl-news',
-    
+
 // 	);
- 
+
 // }
 
 
@@ -270,4 +270,68 @@ if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-b
   }
   }
   */
+
+
+
+/**
+ * Function to write logs using debug flag of wordpress, it will log messages in
+ * debug.log file.
+ *
+ * usage: write_log("your message here");
+ */
+if (!function_exists('write_log')) {
+  function write_log($log) {
+    if (true === WP_DEBUG) {
+      if (is_array($log) || is_object($log)) {
+        error_log(print_r($log, true));
+      } else {
+        error_log($log);
+      }
+    }
+  }
+}
+
+/**
+ * Setup cron to schedule check on stale api cache request and process them as
+ * per the rate limit defined for the cache in vf-cache plugin.
+ *
+ * Multiple issues reported in Gitlab & Snow
+ * - https://embl.service-now.com/nav_to.do?uri=sc_task.do?sys_id=c381121e1bce9510b7405fc4464bcb1a
+ * - https://gitlab.ebi.ac.uk/emblorg/backlog/-/issues/724
+ * - https://github.com/visual-framework/vf-wp/issues/975
+ *
+ * Cron documentation
+ * @see http://codex.wordpress.org/Plugin_API/Filter_Reference/cron_schedules
+ */
+add_filter( 'cron_schedules', 'vfwp_add_cron_interval' );
+function vfwp_add_cron_interval( $schedules ) {
+  $schedules['every_five_minutes'] = array(
+    'interval'  => 60 * 5,
+    'display'   => __( 'Every 5 Minutes', 'textdomain' )
+  );
+  return $schedules;
+}
+
+// Schedule an action if it's not already scheduled
+if ( ! wp_next_scheduled( 'vfwp_add_every_five_minutes' ) ) {
+  wp_schedule_event( time(), 'every_five_minutes', 'vfwp_add_every_five_minutes' );
+}
+
+// Hook into that action that'll fire every five minutes
+// Call the $vf_cache class object to clear the cache of expired cache tokens
+add_action( 'vfwp_add_every_five_minutes', 'vf_every_five_minutes_event_cache_func' );
+function vf_every_five_minutes_event_cache_func() {
+  global $vf_cache;
+  // Check if valid vf_Cache object
+  if ($vf_cache instanceof VF_Cache) {
+    // Invoke function to process the stale cache from vf-cache class
+    $vf_cache->process_api_cache_cron();
+  }
+  else {
+    // log error for debug
+    write_log("Failed to process 'vf_every_five_minutes_event_cache_func' cron for clearing api cache");
+  }
+}
+
+
 ?>
