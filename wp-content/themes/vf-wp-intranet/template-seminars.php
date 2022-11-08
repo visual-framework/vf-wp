@@ -132,6 +132,7 @@ get_header();
           No matching seminars found
         </p>
       </article>
+      <?php the_content(); ?>
     </div>
 
     <style>
@@ -170,7 +171,7 @@ get_header();
 
   </div>
   <div class="vf-stack vf-stack--400">
-    <fieldset
+    <fieldset id="seminars-subscription"
       class="vf-form__fieldset | vf-stack vf-stack--400 vf-u-margin__bottom--800 | vf-u-background-color-ui--off-white | vf-u-padding--400">
       <p class="vf-text-body vf-text-body--3">
         Subscribe to the selected seminars.</p>
