@@ -74,6 +74,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
     if (!empty($people_data) && is_array($people_data)) {
         foreach ($people_data as $key => $person) {
         $title = $person['full_name'];
+        $url = basename($person['url']);
         $cpid = $person['cpid'];
         $orcid = $person['orcid'];
         $photo = $person['photo'];
@@ -110,7 +111,7 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
         }
         $new_post = [
             'post_title' => $title,
-            'post_name' => $title,
+            'post_name' => $url,
             'post_content' => '',
             'post_status' => 'publish',
             'post_author' => 1,
@@ -118,9 +119,10 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
         ];
 
         // Insert post
-        if (!get_page_by_path($title, 'OBJECT', 'people')) {
+        if (!get_page_by_path($url, 'OBJECT', 'people')) {
             $post_id = wp_insert_post($new_post);
             add_post_meta($post_id, 'post_title', $title);
+            add_post_meta($post_id, 'url', $url);
             add_post_meta($post_id, 'full_name', $title);
             add_post_meta($post_id, 'cpid', $cpid);
             add_post_meta($post_id, 'orcid', $orcid);
@@ -155,10 +157,11 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
             }
 
         // update post if already exists
-        else if (get_page_by_path($title, 'OBJECT', 'people')){
-            $get_post = get_page_by_path($title, 'OBJECT', 'people');
+        else if (get_page_by_path($url, 'OBJECT', 'people')){
+            $get_post = get_page_by_path($url, 'OBJECT', 'people');
             $existing_post_id = $get_post->ID;
             update_post_meta($existing_post_id, 'post_title', $title);
+            update_post_meta($existing_post_id, 'url', $url);
             update_post_meta($existing_post_id, 'full_name', $title);
             update_post_meta($existing_post_id, 'cpid', $cpid);
             update_post_meta($existing_post_id, 'orcid', $orcid);
