@@ -122,7 +122,7 @@ $spacing_class .= "{$spacing}";
         </button>
       </div>
     </form>
-    <p><span class="vf-text-body vf-text-body--2 | vf-u-margin__right--100">Directories:</span>  
+    <p><span class="vf-text-body vf-text-body--3 | vf-u-margin__right--100">Directories:</span>  
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/people">People</a></span>    
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/documents">Documents</a></span>    
       <span><a class="vf-badge vf-badge--tertiary | intranet-directory-badge" href="/internal-information/seminars">Seminars</a></span></p>

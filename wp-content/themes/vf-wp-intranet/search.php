@@ -21,7 +21,7 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
       <a class="vf-hero__heading_link" href="https://www.embl.org/internal-information">
         EMBL Intranet </a>
     </h1>
-    <p><span class="vf-text-body vf-text-body--2 | vf-u-margin__right--100">Directories:</span>  
+    <p><span class="vf-text-body vf-text-body--3 | vf-u-margin__right--100">Directories:</span>  
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/people">People</a></span>    
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/documents">Documents</a></span>    
       <span><a class="vf-badge vf-badge--tertiary | intranet-directory-badge" href="/internal-information/seminars">Seminars</a></span></p>
@@ -78,6 +78,16 @@ if (class_exists('VF_Navigation')) {
           value="<?php esc_attr_e('Search', 'vfwp'); ?>">
           <span class="vf-button__text">Search</span>
         </button>
+        <?php
+          if ( function_exists( 'relevanssi_didyoumean' ) ) {
+            relevanssi_didyoumean(
+              get_search_query(false),
+                '<p>Did you mean: ',
+                '</p>',
+                5
+            );
+        }
+        ?>
       </div>
     </form>
   </div>
