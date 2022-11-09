@@ -28,17 +28,6 @@ function my_theme_enqueue_styles() {
 );
 }
 
-//ADDING CLASS TO A LINK IN CATEGORY
-//
-// function add_class_to_category( $thelist, $separator, $parents){
-//   $class_to_add = 'vf-link';
-//   return str_replace('<a href="',  '<a class="'. $class_to_add. '" href="', $thelist);
-// }
-
-// add_filter('the_category', __NAMESPACE__ . '\\add_class_to_category',10,3);
-
-// adds support for feature images
-
 add_theme_support( 'post-thumbnails' );
 add_theme_support( 'title-tag' );
 
@@ -49,27 +38,6 @@ function vf_wp_documents__acf_settings_load_json($paths) {
     $paths[] = get_stylesheet_directory() . '/acf-json';
     return $paths;
   }
-
-// Search filter
-function intranet_search_filter($query) {
-	if(!is_admin()) {
-		if($query->is_main_query() && $query->is_search()) {
-			// Check if $_GET['post_type'] is set
-			if(isset($_GET['post_type']) && $_GET['post_type'] != 'any') {
-				// Filter it just to be safe
-				$post_type = sanitize_text_field($_GET['post_type']);
-				// Set the post type
-				$query->set('post_type', $post_type);
-      }
-      else {
-        $query->set('post_type', array('post', 'page', 'documents', 'insites', 'people', 'events'));
-      }
-		}
-	}
-	return $query;
-}
-
-add_filter('pre_get_posts', 'intranet_search_filter');
 
 
 // add tag support to pages
@@ -101,55 +69,6 @@ function remove_comments_menu_page() {
     remove_menu_page('edit-comments.php' );
 }
 
-/*
- * Extend WordPress search to include custom fields
- */
-
-// Join posts and postmeta tables
-// http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_join
-
-function cf_search_join( $join ) {
-  global $wpdb;
-
-  if ( is_search() ) {    
-      $join .=' LEFT JOIN '.$wpdb->postmeta. ' ON '. $wpdb->posts . '.ID = ' . $wpdb->postmeta . '.post_id ';
-  }
-
-  return $join;
-}
-add_filter('posts_join', 'cf_search_join' );
-
-
-// Modify the search query with posts_where
-// http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_where
-
-function cf_search_where( $where ) {
-  global $pagenow, $wpdb;
-
-  if ( is_search() ) {
-      $where = preg_replace(
-          "/\(\s*".$wpdb->posts.".post_title\s+LIKE\s*(\'[^\']+\')\s*\)/",
-          "(".$wpdb->posts.".post_title LIKE $1) OR (".$wpdb->postmeta.".meta_value LIKE $1)", $where );
-  }
-
-  return $where;
-}
-add_filter( 'posts_where', 'cf_search_where' );
-
-
-// Prevent duplicates
-// http://codex.wordpress.org/Plugin_API/Filter_Reference/posts_distinct
-
-function cf_search_distinct( $where ) {
-  global $wpdb;
-
-  if ( is_search() ) {
-      return "DISTINCT";
-  }
-
-  return $where;
-}
-add_filter( 'posts_distinct', 'cf_search_distinct' );
 
 /*
  * Redirect pages to external links
@@ -164,96 +83,10 @@ function redirect_externally(){
     } }
 }
 
-/*
- * Search results post type order
- */
-
-// function order_search_by_posttype($orderby){
-//   if (!is_admin() && is_search()) :
-//       global $wpdb;
-//       $orderby =
-//           "
-//           CASE WHEN {$wpdb->prefix}posts.post_type = 'page' THEN '1' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'documents' THEN '2' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'people' THEN '3' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'insites' THEN '4' 
-//                WHEN {$wpdb->prefix}posts.post_type = 'events' THEN '5' 
-//           ELSE {$wpdb->prefix}posts.post_type END ASC, 
-//           {$wpdb->prefix}posts.post_title ASC";
-//   endif;
-//   return $orderby;
-// }
-// add_filter('posts_orderby', 'order_search_by_posttype');
-
-// function my_search_query( $query ) {
-// 	// not an admin page and is the main query
-// 	if ( !is_admin() && $query->is_main_query() ) {
-// 		if ( is_search() ) {
-//       $query->set( 'orderby', 'relevance' );
-//       return $query;		}
-// 	}
-// }
-// add_action( 'pre_get_posts', 'my_search_query' );
 
 // enables excerpt field for pages
 add_post_type_support( 'page', 'excerpt' );
 
-
-/*
- * Changes search url and opens the relevant tab on the search results page
- */
-
-function change_search_url() {
-  if ( is_search() && ! empty( $_GET['s'] ) ) {
-      if (get_query_var( 'post_type' ) == 'people') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--people' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'documents') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--documents' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'insites') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--news' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'events') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--events' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'page') { 
-      wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) . '&q=' . urlencode( get_query_var( 's' ) ) . '#vf-tabs__section--pages' );
-      }
-      elseif (get_query_var( 'post_type' ) == 'any') {
-        wp_redirect( home_url( "/search/" ) . urlencode( get_query_var( 's' ) ) . '?post_type=' . urlencode( get_query_var( 'post_type' ) ) );
-      }
-      exit();
-  }   
-}
-add_action( 'template_redirect', 'change_search_url' );
-
-/*
- * Enables search by the “s” parameter and a meta_query
- */
-
-// add_action( 'pre_get_posts', function( $q ) {
-// 	if( $title = $q->get( '_meta_or_title' ) )
-// 	{
-// 		add_filter( 'get_meta_sql', function( $sql ) use ( $title )
-// 		{
-// 			global $wpdb;
- 
-// 			// Only run once:
-// 			static $nr = 0; 
-// 			if( 0 != $nr++ ) return $sql;
- 
-// 			// Modified WHERE
-// 			$sql['where'] = sprintf(
-// 				" AND ( %s OR %s ) ",
-// 				$wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
-// 				mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
-// 			);
- 
-// 			return $sql;
-// 		});
-// 	}
-// });
 
 
 /* 
@@ -272,35 +105,6 @@ add_filter('simple_history/log/do_log', function ($do_log = null, $level = null,
 
   return $do_log;
 }, 10, 5);
-
-
-
-
-
-add_action( 'pre_get_posts', function( $q )
-{
-    if( $title = $q->get( '_meta_or_title' ) )
-    {
-        add_filter( 'get_meta_sql', function( $sql ) use ( $title )
-        {
-            global $wpdb;
-
-            // Only run once:
-            static $nr = 0; 
-            if( 0 != $nr++ ) return $sql;
-
-            // Modified WHERE
-            $sql['where'] = sprintf(
-                " AND ( %s OR %s ) ",
-                $wpdb->prepare( "{$wpdb->posts}.post_title like '%%%s%%'", $title),
-                mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
-            );
-
-            return $sql;
-        });
-    } 
-});
-
 
 
 ?>

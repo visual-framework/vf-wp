@@ -75,14 +75,26 @@ $spacing_class .= "{$spacing}";
 
     <?php if ($search == 1) { 
       if ($theme == 'VF-WP Intranet') { ?>
+
     <form role="search" method="get" class="vf-form vf-form--search vf-form--search--mini | vf-sidebar vf-sidebar--end"
       action="<?php echo esc_url(home_url('/')); ?>">
       <div class="vf-sidebar__inner">
-        <div class="vf-form__item | vf-search__item" style="min-width: unset;">
-          <input type="search" class="vf-form__input | vf-search__input" placeholder="Search term"
-            value="<?php echo esc_attr(get_search_query()); ?>" name="s">
-        </div>
-        <div class="vf-form__item | vf-search__item" style="width: 155px;">
+      <div class="vf-form__item | vf-search__item">
+        <input type="search" class="vf-form__input | vf-search__input" placeholder="Enter your search term"
+          value="<?php echo esc_attr(get_search_query()); ?>" name="s">
+      </div>
+      <div class="vf-form__item | vf-search__item" style="display: none">
+        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
+        <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
+          <option value="any" selected="">Everything</option>
+          <option value="page" name="post_type[]">Pages</option>
+          <option value="insites" name="post_type[]">Internal news</option>
+          <option value="events" name="post_type[]">Events</option>
+          <option value="people" name="post_type[]">People</option>
+          <option value="documents" name="post_type[]">Documents</option>
+        </select>
+      </div>
+        <!-- <div class="vf-form__item | vf-search__item" style="width: 155px;">
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
           <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
             <option value="any" selected="">Everything</option>
@@ -92,7 +104,7 @@ $spacing_class .= "{$spacing}";
             <option value="people" name="post_type[]">People</option>
             <option value="documents" name="post_type[]">Documents</option>
           </select>
-        </div>
+        </div> -->
         <button type="submit" value="<?php esc_attr_e('Search', 'vfwp'); ?>"
           class="vf-search__button | vf-button vf-button--primary">
           <span class="vf-button__text | vf-u-sr-only">Search</span>
@@ -110,10 +122,10 @@ $spacing_class .= "{$spacing}";
         </button>
       </div>
     </form>
-    <p class="vf-text-body vf-text-body--5">Directories: <span><a
-          href="/internal-information/documents">Documents</a></span> | <span><a
-          href="/internal-information/people">People</a></span> | <span><a
-          href="/internal-information/seminars">Seminars</a></span></p>
+    <p><span class="vf-text-body vf-text-body--3 | vf-u-margin__right--100">Directories:</span>  
+      <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/people">People</a></span>    
+      <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/documents">Documents</a></span>    
+      <span><a class="vf-badge vf-badge--tertiary | intranet-directory-badge" href="/internal-information/seminars">Seminars</a></span></p>
 
     <?php }
        else { ?>

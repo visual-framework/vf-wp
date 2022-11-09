@@ -2,19 +2,44 @@
 
 $title = esc_html(get_the_title());
 $redirect_url = get_field('vf_wp_intranet_redirect');
+$position = get_field('positions_name_1', $post->ID);
+$outstation = get_field('outstation', $post->ID);
+$team_1 = get_field('team_name_1', $post->ID);
 
 ?>
-<article class="vf-summary">
-  <h2 class="vf-summary__title" style="margin-bottom: 4px;">
+<article class="vf-summary" data-jplist-item>
+
+  <h2 class="vf-summary__title | search | search-counter" style="margin-bottom: 4px;">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo $title; ?></a>
   </h2>
   <p class="vf-summary__meta" style="margin-bottom: 8px;">
     <?php
+    // display the post type
+    if ( get_post_type() ==  'people') {
+    echo '<b>People</b> | ' . $position . ' | ' . $team_1 . ' | ' . $outstation;  
+  }
+
+  if ( get_post_type() ==  'insites') {
+    echo '<b>News</b> | ';  
+  }
+  if ( get_post_type() ==  'documents') {
+    echo '<b>Document</b> | ';  
+  }
+  if ( get_post_type() ==  'events') {
+    echo '<b>Event</b>';  
+  }
+
     if (has_excerpt()) {
-      echo get_the_excerpt();
+      if ( get_post_type() ==  'page') {
+      echo '<b>Page</b> | ' . get_the_excerpt();
+      }
+      else {
+        echo get_the_excerpt();
+      }
     }
     else {
     $content = strip_tags(get_the_content());
+    if ($content != '') {
     if (strlen($content) > 200) {
 
       // truncate content
@@ -25,15 +50,38 @@ $redirect_url = get_field('vf_wp_intranet_redirect');
       $content = $endPoint? substr($contentCut, 0, $endPoint) : substr($contentCut, 0);
       $content .= '...';
   }
-  echo $content; }?></p>
+  echo '<b>Page</b> | ' . $content; 
+    }
+    else {
+      if ( get_post_type() ==  'page') {
+        echo '<b>Page</b>';  
+      }    }
+}
+  ?>
+  </p>
+
   <?php if (!empty($redirect_url)) { ?>
   <div class="vf-summary__meta"><a href="<?php echo esc_url($redirect_url); ?>"
       class="vf-summary__author vf-summary__link"><?php echo esc_url($redirect_url); ?></a></div> 
   <?php }
   else { ?>    
-  <div class="vf-summary__meta"><a href="<?php the_permalink(); ?>"
-      class="vf-summary__author vf-summary__link"><?php the_permalink(); ?></a></div>
+  <div class="vf-summary__meta"><?php $uri = get_page_uri(); echo '<a class="vf-summary__author vf-summary__link" href="' . get_the_permalink() . '">' . '/' . esc_html__($uri ) . '</a>'; ?></div>
   <?php } ?>
+  <?php
+  if ( get_post_type() == 'page' ) {
+    echo '<p class="page vf-u-display-none | used-for-filtering">Page</p>';
+}
+  elseif ( get_post_type() ==  'people') {
+    echo '<p class="people vf-u-display-none | used-for-filtering">People</p>';
+}
+  elseif ( get_post_type() ==  'documents') {
+    echo '<p class="documents vf-u-display-none | used-for-filtering">Documents</p>';
+}
+  elseif ( get_post_type() ==  'insites') {
+    echo '<p class="news vf-u-display-none | used-for-filtering">News</p>';
+}
+?>
+  
 </article>
 
 
