@@ -180,7 +180,7 @@ get_header();
     <fieldset id="seminars-subscription"
       class="vf-form__fieldset | vf-stack vf-stack--400 vf-u-margin__bottom--800 | vf-u-background-color-ui--off-white | vf-u-padding--400">
       <p class="vf-text-body vf-text-body--3">
-        Subscribe to the selected seminars.</p>
+        Add selected seminars to your calendar for:</p>
       </p>
       <div class="vf-cluster vf-cluster--400">
         <div class="vf-cluster__inner" style="padding: 3px;">
@@ -207,7 +207,7 @@ get_header();
       </div>
       <div class="calendar-feed">
         <button class="vf-button vf-button--primary vf-button--sm | seminar-subscribe | url-copied"
-          url="https://seminarlist.embl.de/rest/calendar?dutystationID=0&seminarTypeID=0&timeFrame=0">Subscribe</button>
+          url="https://seminarlist.embl.de/rest/calendar?dutystationID=0&seminarTypeID=0&timeFrame=0">Add to calendar</button>
       </div>
       <hr class="vf-divider  vf-u-margin__bottom--200">
       <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0 vf-u-margin__top--0"><a
@@ -290,7 +290,7 @@ get_header();
       "&timeFrame=" + valsTIME;
     var subscribe =
       '  <button class="vf-button vf-button--primary vf-button--sm | seminar-subscribe | url-copied" url="' + str +
-      '">Subscribe</button>'
+      '">Add to calendar</button>'
 
 
     $('.calendar-feed').html(subscribe);
