@@ -60,15 +60,19 @@ $team_1 = get_field('team_name_1', $post->ID);
   ?>
   </p>
 
-  <?php if (!empty($redirect_url)) { ?>
+  <?php 
+  if ( (get_post_type() == 'page') || (get_post_type() == 'teams')) {
+  if (!empty($redirect_url)) { ?>
   <div class="vf-summary__meta"><a href="<?php echo esc_url($redirect_url); ?>"
       class="vf-summary__author vf-summary__link"><?php echo esc_url($redirect_url); ?></a></div> 
   <?php }
   else { ?>    
-  <div class="vf-summary__meta"><?php $uri = get_page_uri(); echo '<a class="vf-summary__author vf-summary__link" href="' . get_the_permalink() . '">' . '/' . esc_html__($uri ) . '</a>'; ?></div>
-  <?php } ?>
+  <div class="vf-summary__meta"><?php 
+  $uri = get_page_uri(); 
+  echo '<p class="vf-summary__author">' . esc_html__($uri ) . '</p>'; ?></div>
+  <?php } }?>
   <?php
-  if ( get_post_type() == 'page' ) {
+  if ((get_post_type() == 'page') || (get_post_type() == 'teams'))  {
     echo '<p class="page vf-u-display-none | used-for-filtering">Page</p>';
 }
   elseif ( get_post_type() ==  'people') {
