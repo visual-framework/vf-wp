@@ -1,8 +1,8 @@
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+  <fieldset id="checkbox-container" class="vf-form__fieldset vf-stack vf-stack--400">
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="page" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".page" data-group="data-group-1" data-name="name3" data-or="name3"
+        data-path=".page" data-group="data-group-1" data-name="name1" data-or="name1"
         value="Page"
         data-id="page" class="vf-form__checkbox">
       <label for="page" class="vf-form__label">Page&nbsp;<span 
@@ -72,3 +72,6 @@
     </div>
   </fieldset>
 </form>
+<script>
+
+</script>
