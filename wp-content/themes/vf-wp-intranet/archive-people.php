@@ -151,7 +151,7 @@ get_header();
     <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://www.embl.org/search/">Alumni search<svg
+            href="https://hd-tqportal.embl.de/EMBL_LIVE_thankQ_Web/public/network/results.aspx">Alumni directory<svg
               aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
               height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -159,7 +159,7 @@ get_header();
                 fill="currentColor" fill-rule="nonzero"></path>
             </svg>
           </a></h3>
-        <p class="vf-card__text">Search for EMBL Alumni on embl.org</p>
+        <p class="vf-card__text">Find alumni from EMBL</p>
       </div>
     </article>
     <p><a href="https://www.embl.org/internal-information/departments-and-teams/">Departments and teams
