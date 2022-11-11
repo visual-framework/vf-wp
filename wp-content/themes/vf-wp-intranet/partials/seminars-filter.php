@@ -13,7 +13,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_barcelona"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-barcelona-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -27,7 +27,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_grenoble"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-grenoble-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -41,7 +41,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_hamburg"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-hamburg-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -55,7 +55,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_heidelberg"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-heidelberg-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -69,7 +69,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_rome"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-rome-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -83,7 +83,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".virtual"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-virtual-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -101,7 +101,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".career_event"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-career-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -115,7 +115,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".company_representative"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-rep-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -129,7 +129,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".eipod_seminar"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-eipod-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -143,7 +143,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_sapienza_lecture"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-sapienza-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -157,7 +157,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_distinguished_visitor_lecture"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-visitor-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -171,7 +171,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".embl_event"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-event-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -185,7 +185,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".external_faculty_speaker"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-faculty-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -199,7 +199,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".one-embl_faculty_seminar"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-one-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -213,7 +213,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".hamburg_speaker"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-hamburg-speaker-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -227,7 +227,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".journal_club"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-journal-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -241,7 +241,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".mr_postdoc"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-mr-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -255,7 +255,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".next_generation"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-next-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -269,7 +269,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".phd_thesis_defense"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-phd-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -283,7 +283,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".planetary_biology_lectures"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-pbl-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -297,7 +297,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".progress_report"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-progress-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -311,7 +311,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".psb_seminar"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-psb-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -325,7 +325,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".science_and_society"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-society-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -339,7 +339,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".science_by_the_beach"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-title-filter"
         data-filter-type="path"></span>
         </label> 
@@ -354,7 +354,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".seminar_given_by_an_external_postdoc"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-extpostdoc-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -368,7 +368,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".symbnet_series"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-symbnet-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -382,7 +382,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".tac_seminar"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-tac-filter"
         data-filter-type="path"></span></label>
     </div>
@@ -396,7 +396,7 @@
         data-group="data-group-1"
         data-format="({count})"
         data-path=".unit_seminar"
-        data-mode="static"
+        data-mode="dynamic"
         data-name="counter-unit-filter"
         data-filter-type="path"></span></label>
     </div>

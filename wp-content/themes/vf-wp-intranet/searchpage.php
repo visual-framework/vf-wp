@@ -29,7 +29,7 @@ $total_results = $wp_query->found_posts;
     <p><span class="vf-text-body vf-text-body--3 | vf-u-margin__right--100">Directories:</span>  
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/people">People</a></span>    
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/documents">Documents</a></span>    
-      <span><a class="vf-badge vf-badge--tertiary | intranet-directory-badge" href="/internal-information/seminars">Seminars</a></span></p>
+      <span><a class="vf-badge vf-badge--tertiary | intranet-directory-badge" href="https://hd-tqportal.embl.de/EMBL_LIVE_thankQ_Web/public/network/results.aspx">Alumni</a></span></p>
   </div>
 </section>
 

@@ -42,7 +42,7 @@ var_dump( $meta_values );
           class="vf-profile__link vf-profile__link--secondary"><?php echo esc_attr($email); ?></a>
       </p>
       <p class="vf-profile__phone">
-        <a href="<?php echo esc_attr($telephone); ?>"
+        <a href="tel:<?php echo esc_attr($telephone); ?>"
           class="vf-profile__link vf-profile__link--secondary"><?php echo esc_attr($telephone); ?></a>
       </p>
       <?php if (!empty($room)) { ?>
