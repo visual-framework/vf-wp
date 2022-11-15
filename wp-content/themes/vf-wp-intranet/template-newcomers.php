@@ -75,8 +75,13 @@ get_header();
     <?php
     $newcomers_start = get_field('newcomers_start_date');
     $newcomers_end = get_field('newcomers_end_date');
-    $request = wp_remote_get( 'https://xs-db.embl.de/v2/newcomers/' . $newcomers_start . '/' . $newcomers_end );
-    
+    $remote_url = ('https://xs-db.embl.de/v2/newcomers/' . $newcomers_start . '/' . $newcomers_end);
+    $args = array(
+      'headers'     => array(
+          'Authorization' => 'Bearer fQqhZNPTN2bI3LpMEK4tZDS1sYpn452K'
+      ),
+    );
+    $request = wp_remote_get( $remote_url, $args );
     if( is_wp_error( $request ) ) {
       return false; // Bail early
     }
