@@ -78,7 +78,7 @@ get_header();
     $remote_url = ('https://xs-db.embl.de/v2/newcomers/' . $newcomers_start . '/' . $newcomers_end);
     $args = array(
       'headers'     => array(
-          'Authorization' => 'Bearer fQqhZNPTN2bI3LpMEK4tZDS1sYpn452K'
+          'Authorization' => ''
       ),
     );
     $request = wp_remote_get( $remote_url, $args );
