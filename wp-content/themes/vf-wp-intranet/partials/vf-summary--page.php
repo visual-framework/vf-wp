@@ -20,23 +20,20 @@ $team_1 = get_field('team_name_1', $post->ID);
   }
 
   if ( get_post_type() ==  'insites') {
-    echo '<b>News</b> | ';  
+    echo '<b>News</b>';  
   }
   if ( get_post_type() ==  'documents') {
-    echo '<b>Document</b> | ';  
+    echo '<b>Document</b>';  
   }
   if ( get_post_type() ==  'events') {
     echo '<b>Event</b>';  
   }
-
+  if ((get_post_type() == 'page') || (get_post_type() == 'teams')) {
+    echo '<b>Page</b>';
+  }
     if (has_excerpt()) {
-      if ( get_post_type() ==  'page') {
-      echo '<b>Page</b> | ' . get_the_excerpt();
+      echo ' | ' . get_the_excerpt();
       }
-      else {
-        echo get_the_excerpt();
-      }
-    }
     else {
     $content = strip_tags(get_the_content());
     if ($content != '') {
@@ -50,21 +47,16 @@ $team_1 = get_field('team_name_1', $post->ID);
       $content = $endPoint? substr($contentCut, 0, $endPoint) : substr($contentCut, 0);
       $content .= '...';
   }
-  echo '<b>Page</b> | ' . $content; 
+  echo ' | ' . $content; 
     }
-    else {
-      if ( get_post_type() ==  'page') {
-        echo '<b>Page</b>';  
-      }    }
-}
+  }
   ?>
   </p>
 
   <?php 
   if ( (get_post_type() == 'page') || (get_post_type() == 'teams')) {
   if (!empty($redirect_url)) { ?>
-  <div class="vf-summary__meta"><a href="<?php echo esc_url($redirect_url); ?>"
-      class="vf-summary__author vf-summary__link"><?php echo esc_url($redirect_url); ?></a></div> 
+  <div class="vf-summary__meta"><p class="vf-summary__author"><?php echo esc_url($redirect_url); ?></p></div> 
   <?php }
   else { ?>    
   <div class="vf-summary__meta"><?php 
