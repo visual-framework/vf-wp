@@ -78,7 +78,7 @@ get_header();
     $remote_url = ('https://xs-db.embl.de/v2/newcomers/' . $newcomers_start . '/' . $newcomers_end);
     $args = array(
       'headers'     => array(
-          'Authorization' => ''
+          'Authorization' => '',
       ),
     );
     $request = wp_remote_get( $remote_url, $args );
@@ -88,13 +88,72 @@ get_header();
     
     $body = wp_remote_retrieve_body( $request );
     $data = json_decode( $body );
-    
-    if( ! empty( $data ) ) {
-      foreach ($data as $person) {
-        $title = $person->displayName; ?>
+    function sortByName($param1, $param2) {
+      return strcmp($param1->displayName, $param2->displayName);
+  }
 
-      <p><?php  echo $title; ?></p>
-      <?php }} ?>
+    if( ! empty( $data ) ) {
+      $group = array();
+      usort($data, "sortByName");
+
+      foreach ( $data as $value ) {
+        $group[$value->personDutystation][] = $value;
+
+      } 
+      $group_r = $group['Rome'];
+      $group_hd = $group['Heidelberg'];
+      $group_b = $group['Barcelona'];
+      $group_g = $group['Grenoble'];
+      $group_h = $group['Hinxton'];
+      $group_hb = $group['Hamburg'];
+
+    if( ! empty( $group_b ) ) { 
+      echo '<h2>Barcelona</h2>';
+    foreach ($group_b as $person) {
+    include(locate_template('partials/newcomers-summary.php', false, false));
+    }
+    echo '<div class="vf-divider"></div>';
+    }
+    
+    if( ! empty( $group_g ) ) { 
+      echo '<h2>Grenoble</h2>';
+    foreach ($group_g as $person) {
+    include(locate_template('partials/newcomers-summary.php', false, false));
+    }
+    echo '<div class="vf-divider"></div>';
+      }
+
+    if( ! empty( $group_hb ) ) { 
+      echo '<h2>Hamburg</h2>';
+    foreach ($group_hb as $person) {
+    include(locate_template('partials/newcomers-summary.php', false, false));
+    }
+    echo '<div class="vf-divider"></div>';
+      }
+
+    if( ! empty( $group_hd ) ) { 
+      echo '<h2>Heidelberg</h2>';
+    foreach ($group_hd as $person) {
+    include(locate_template('partials/newcomers-summary.php', false, false));
+    }
+    echo '<div class="vf-divider"></div>';
+      }
+
+    if( ! empty( $group_h ) ) { 
+      echo '<h2>Hinxton</h2>';
+    foreach ($group_h as $person) {
+    include(locate_template('partials/newcomers-summary.php', false, false));
+    }
+    echo '<div class="vf-divider"></div>';
+      }
+
+    if( ! empty( $group_r ) ) { 
+      echo '<h2>Rome</h2>';
+    foreach ($group_r as $person) {
+    include(locate_template('partials/newcomers-summary.php', false, false));
+    }}
+    }
+?>
   </div>
   <div>
     <?php if (is_active_sidebar('sidebar-blog')) { ?>
