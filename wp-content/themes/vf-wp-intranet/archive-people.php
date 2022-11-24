@@ -89,21 +89,60 @@ get_header();
   <div></div>
   <div>
     <div data-jplist-group="data-group-1">
-      <?php
-          $forthcomingLoop = new WP_Query (array( 
-          'post_type' => 'people',
-          'orderby' => 'title', 
-          'order' => 'ASC', 
-          'posts_per_page' => -1,
-            ));
-          $temp_query = $wp_query;
-          $wp_query   = NULL;
-          $wp_query   = $forthcomingLoop;
-          $current_month = ""; ?>
-      <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
-      <?php
-         include(locate_template('partials/vf-profile.php', false, false)); ?>
-      <?php endwhile;?>
+    <?php
+        $request = wp_remote_get( 'https://xs-db.test.embl.de/v2/search' );
+        if( is_wp_error( $request ) ) {
+            return false; // Bail early
+        }
+        $body = wp_remote_retrieve_body( $request );
+        $data = json_decode( $body );
+        function sortByName($param1, $param2) {
+          return strcmp($param1->displayName, $param2->displayName);
+      }        
+      usort($data, "sortByName");
+
+        if( ! empty( $data ) ) {
+            foreach( $data as $person ) { 
+              if (!isset($person->department)) {
+                $person->department = "";
+              }
+              echo '<article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
+              <img class="vf-profile__image" src="' . $person->photoUrl . '" alt="" loading="lazy">';
+
+              echo '<h3 class="vf-profile__title | people-search"><a href="#" class="vf-profile__link">' . $person->displayName . '</a></h3>';
+
+              echo '<p class="vf-profile__job-title | people-search">' . $person->title . '</p>';
+
+              echo '<p class="vf-profile__text | team-search"><a data-embl-js-group-link="' . $person->department . '" class="vf-link"
+              href="//www.embl.org/search?searchQuery=' . $person->department . '">' . $person->department . '</a></p>';
+
+              echo '<p class="vf-profile__email | vf-u-margin__top--100">
+              <a href="mailto:' . $person->mail . '"
+              class="vf-profile__link vf-profile__link--secondary">' . $person->mail . '</a>
+              </p>';
+
+              if (!empty($person->telephoneNumber)) {
+              echo '<p class="vf-profile__phone vf-u-margin__bottom--100">
+              <a href="tel:' . $person->telephoneNumber . '"
+              class="vf-profile__link vf-profile__link--secondary">' . $person->telephoneNumber . '</a>
+              </p>'; }
+
+              if (!empty($person->roomNumber)) {
+              echo '<p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0">
+              <span>Location: </span>' . $person->roomNumber . '
+              </p>'; }
+
+              echo '<p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200">
+              ' . $person->personDutystation . '
+              </p>';
+
+              echo '<p class="people vf-u-display-none | used-for-filtering">People</p>
+              </article>'; 
+                
+              
+              }
+        }
+        ?>
       <!-- no results control -->
       <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
