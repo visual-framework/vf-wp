@@ -133,11 +133,11 @@ $hash_profile = VF_Cache::hash(
     <div >
 <?php } // is_minimal ?>
 
-<style>
+<!-- <style>
   .vf-content-hub-html {
     --vf-stack-margin--custom: unset !important;
   }
-</style>
+</style> -->
 
     <?php
 $content = preg_replace(
