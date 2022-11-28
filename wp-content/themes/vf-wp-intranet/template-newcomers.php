@@ -95,10 +95,9 @@ get_header();
     if( ! empty( $data ) ) {
       $group = array();
       usort($data, "sortByName");
-
+      
       foreach ( $data as $value ) {
         $group[$value->personDutystation][] = $value;
-
       } 
       $group_r = $group['Rome'];
       $group_hd = $group['Heidelberg'];
