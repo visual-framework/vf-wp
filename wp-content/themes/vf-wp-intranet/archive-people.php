@@ -105,11 +105,20 @@ get_header();
             foreach( $data as $person ) { 
               if (!isset($person->department)) {
                 $person->department = "";
-              }
+              };
+              if (!isset($person->photoUrl)) {
+                $person->photoUrl = "http://content.embl.org/sites/default/files/default_images/vf-icon--avatar.png";
+              };
+              if (isset($person->personUrl)) {
+                $peopleBaseUrl = "https://www.embl.org/internal-information/people/";
+                $peopleSlug = basename($person->personUrl);
+                $peopleEndUrl = $peopleBaseUrl . $peopleSlug;
+                };
+
               echo '<article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
               <img class="vf-profile__image" src="' . $person->photoUrl . '" alt="" loading="lazy">';
 
-              echo '<h3 class="vf-profile__title | people-search"><a href="#" class="vf-profile__link">' . $person->displayName . '</a></h3>';
+              echo '<h3 class="vf-profile__title | people-search"><a href="' . $peopleEndUrl . '" class="vf-profile__link">' . $person->displayName . '</a></h3>';
 
               echo '<p class="vf-profile__job-title | people-search">' . $person->title . '</p>';
 
