@@ -9,7 +9,9 @@ $ref_num =  get_field('vf_jobs_reference_number', $acf_id);
 $group =  get_field('vf_jobs_group', $acf_id);
 $type =  get_field('vf_jobs_type', $acf_id);
 $site_values = get_field('vf_jobs_site', $acf_id);
-$site = implode(',', $site_values);
+if (!empty($site_values)) {
+  $site = implode(',', $site_values);
+}
 
 $limit = get_field('vf_jobs_limit', $acf_id);
 $limit = intval($limit);
@@ -75,9 +77,10 @@ if ( ! empty($keyword)) {
 
 $key_sites = 'filter-field-contains[field_jobs_duty_station]';
 
+if (!empty($site)) {
 if ($site != 'All') {
   $vars[$key_sites] = $site;
-}
+}}
 
 $key_ref = 'filter-field-contains[field_jobs_reference_number]';
 $key_group = 'filter-field-contains[field_jobs_group]';

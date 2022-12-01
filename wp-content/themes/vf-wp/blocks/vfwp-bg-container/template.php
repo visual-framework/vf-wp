@@ -12,6 +12,14 @@ $container_content = get_field('container_content');
 $block_id = get_field('block_id');
 $column = get_field('columns');
 $grid_setting = get_field('grid_setting');
+$show_header = get_field('show_header');
+if ($show_header) { 
+  $hide_header_class = '';
+}
+else {
+  $hide_header_class = ' | vf-u-sr-only';
+}
+
 
 $type = get_field('select_type');
 
@@ -101,28 +109,26 @@ else { echo '';} ?>
     <?php if (get_field('container_content') == 'card') { ?>
     <div class="vf-card-container__inner">
       <?php } ?>
-      <?php if (!empty ($heading)) { ?>
-      <div class="vf-section-header | vf-u-margin__bottom--600">
-        <?php 
-        if ($type === 'default' || $type === 'has_sub-heading' || $type === 'has_text') { ?>
+      <div class="vf-section-header | vf-u-margin__bottom--600<?php echo $hide_header_class; ?>">
         <h2 class="vf-section-header__heading" <?php 
       if ($anchor) { 
        echo 'id="' . $anchor .'"';
       } ?>>
-          <?php echo $heading; ?>
-        </h2>
-        <?php }
+        <?php 
         if ($type === 'is_a_link' || $type === 'has_sub-heading_and_link' || $type === 'has_sub-heading_link_text' || $type === 'has_link_text') { ?>
-        <a class="vf-section-header__heading vf-section-header__heading--is-link"
-          <?php if ($anchor) { echo 'id="' . $anchor .'"';} ?>
-          href="<?php echo esc_url($link); ?>"><?php echo esc_html($heading); ?><svg aria-hidden="true"
-            class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-              fill="" fill-rule="nonzero"></path>
-          </svg></a>
-        <?php } 
+        <a class="vf-section-header__heading--is-link"
+        <?php if ($anchor) { echo 'id="' . $anchor .'"';} ?>
+        href="<?php echo esc_url($link); ?>"><?php echo esc_html($heading); ?><svg aria-hidden="true"
+        class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+        d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+        fill="" fill-rule="nonzero"></path>
+      </svg></a>
+      <?php }
+      else { echo $heading; } ?>
+    </h2>
+        <?php  
         if ($type === 'has_sub-heading' || $type === 'has_sub-heading_and_link' || $type === 'has_sub-heading_link_text') { ?>
         <p class="vf-section-header__subheading"><?php echo esc_html($sub_heading); ?></p>
         <?php } 
@@ -130,7 +136,6 @@ else { echo '';} ?>
         <p class="vf-section-header__text"><?php echo esc_html($text); ?></p>
         <?php } ?>
       </div>
-      <?php } ?>
       <InnerBlocks />
       <?php if (get_field('container_content') == 'card') { ?>
     </div>
