@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-grid
  * Version: 1.4.1
- * Location: components/vf-core-components/vf-grid
+ * Location: components/undefined
  */
 /* stylelint-disable order/order */
 .vf-grid {
@@ -300,7 +300,7 @@
 /*!
  * Component: @visual-framework/vf-heading
  * Version: 1.1.0
- * Location: components/vf-core-components/vf-heading
+ * Location: components/undefined
  */
 .vf-text {
   margin: 0 0 16px 0;
@@ -378,7 +378,7 @@
 /*!
  * Component: @visual-framework/vf-activity-list
  * Version: 1.0.0-alpha.11
- * Location: components/vf-core-components/vf-activity-list
+ * Location: components/undefined
  */
 html:not(.vf-disable-deprecated) .vf-activity {
   margin-bottom: 54px;
@@ -443,7 +443,7 @@ html:not(.vf-disable-deprecated) .vf-activity__blockquote {
 /*!
  * Component: @visual-framework/vf-activity-group
  * Version: 1.0.0-alpha.12
- * Location: components/vf-core-components/vf-activity-group
+ * Location: components/undefined
  */
 html:not(.vf-disable-deprecated) .vf-activity-group {
   background-color: #d0d0ce;

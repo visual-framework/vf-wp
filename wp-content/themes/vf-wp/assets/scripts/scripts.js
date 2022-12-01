@@ -344,6 +344,7 @@ var lastGaEventTime = Date.now();
  * Port of https://github.com/ebiwd/EBI-Framework/blob/v1.3/js/foundationExtendEBI.js#L4
  * @param {object} [vfGaTrackOptions]
  * @param {binary} [vfGaTrackOptions.vfGaTrackPageLoad=true] If true, the function will track the initial page view. Set this to false if you track the page view in your HTML.
+ * @param {string} [vfGaTrackOptions.vfGa4MeasurementId] The GA4 site measurement ID.
  * @param {number} [numberOfGaChecksLimit=2]
  * @param {number} [checkTimeout=900]
  * @example
@@ -368,18 +369,34 @@ function vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaC
   /* eslint-enable no-redeclare*/
 
   var el = document.querySelector("body"); // debug
-  // console.log('checking',numberOfGaChecks,numberOfGaChecksLimit)
 
+  vfGaLogMessage('checking ' + numberOfGaChecks + ", limit: " + numberOfGaChecksLimit);
   numberOfGaChecks++; // If successful we set `data-vf-google-analytics-loaded` on the `body` to true.
 
   try {
     // unset our check
-    vfGaIndicateUnloaded();
+    if (el.getAttribute("data-vf-google-analytics-loaded") != "true") {
+      vfGaIndicateUnloaded();
+    } // check to see if gtag is loaded, and then if UA is loaded, and if neither, check once more (to a limit)
 
-    if (ga && ga.loaded) {
-      el.setAttribute("data-vf-google-analytics-loaded", "true");
-      vfGaInit(vfGaTrackOptions);
+
+    if (typeof gtag !== "undefined") {
+      vfGaLogMessage('ga4 found');
+
+      if (el.getAttribute("data-vf-google-analytics-loaded") != "true") {
+        el.setAttribute("data-vf-google-analytics-loaded", "true");
+        vfGaInit(vfGaTrackOptions);
+      }
+    } else if (ga && ga.loaded) {
+      vfGaLogMessage('ua found');
+
+      if (el.getAttribute("data-vf-google-analytics-loaded") != "true") {
+        el.setAttribute("data-vf-google-analytics-loaded", "true");
+        vfGaInit(vfGaTrackOptions);
+      }
     } else {
+      vfGaLogMessage('GA tracking code not ready, scheduling another check');
+
       if (numberOfGaChecks <= numberOfGaChecksLimit) {
         setTimeout(function () {
           vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaChecks, checkTimeout);
@@ -387,6 +404,8 @@ function vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaC
       }
     }
   } catch (err) {
+    vfGaLogMessage('error in vfGaIndicateLoaded');
+
     if (numberOfGaChecks <= numberOfGaChecksLimit) {
       setTimeout(function () {
         vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaChecks, checkTimeout);
@@ -421,22 +440,41 @@ function vfGetMeta(metaName) {
  * Hooks into common analytics tracking
  * @param {object} [vfGaTrackOptions]
  * @param {binary} [vfGaTrackOptions.vfGaTrackPageLoad=true] If true, the function will track the initial page view. Set this to false if you track the page view in your HTML.
+ * @param {string} [vfGaTrackOptions.vfGa4MeasurementId] The GA4 site measurement ID.
  */
 
 
 function vfGaInit(vfGaTrackOptions) {
+  vfGaLogMessage('initing vfGaInit');
   /* eslint-disable no-redeclare*/
+
   var vfGaTrackOptions = vfGaTrackOptions || {};
   /* eslint-enable no-redeclare*/
 
-  if (vfGaTrackOptions.vfGaTrackPageLoad == null) vfGaTrackOptions.vfGaTrackPageLoad = true; // Need help
+  if (vfGaTrackOptions.vfGaTrackPageLoad == null) vfGaTrackOptions.vfGaTrackPageLoad = true; // Need help?
   // How to add dimension to your property
   // https://developers.google.com/analytics/devguides/collection/analyticsjs/custom-dims-mets
   // https://support.google.com/analytics/answer/2709829?hl=en
-  // standard google analytics bootstrap
+
+  if (typeof gtag === "undefined") {
+    // if the site is still using legacy GA, set a dummy gtag function so we don't have to add a bunch of if statements
+    vfGaLogMessage('GA4 dummy function has been set.');
+
+    window.gtag = function () {};
+  }
+
+  if (typeof ga === "undefined") {
+    // if the site is still using legacy GA, set a dummy gtag function so we don't have to add a bunch of if statements
+    vfGaLogMessage('GA UA dummy function has been set.');
+
+    window.ga = function () {};
+  } // standard google analytics bootstrap
   // @todo: add conditional
 
-  ga("set", "anonymizeIp", true); // Use the more robust "beacon" logging, when available
+
+  ga("set", "anonymizeIp", true); // For Gtag you should do this in your tracking snippet
+  // https://developers.google.com/analytics/devguides/collection/gtagjs/ip-anonymization
+  // Use the more robust "beacon" logging, when available
   // https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits
 
   ga("set", "transport", "beacon"); // lookup metadata  <meta name="vf:page-type" content="category;pageTypeHere">
@@ -449,13 +487,20 @@ function vfGaInit(vfGaTrackOptions) {
     var dimension = toLog[1];
     var pageTypeName = toLog[0];
     ga("set", dimension, pageTypeName);
+    gtag('config', vfGaTrackOptions.vfGa4MeasurementId, {
+      'custom_map': {
+        dimension: pageTypeName
+      }
+    });
   } // If you want to track the network of visitors be sure to
   // - follow the setup guide at https://ipmeta.io/instructions
   // - view the directions in README.md
-  // note: this feature may be broken out as a seperate dependency if the code size needs to grow further
+  // note: this feature may be broken out as a separate dependency if the code size needs to grow further
+  // note: the VF has not yet added support for this using gtag
+  //       https://ipmeta.io/instructions/google-analytics-4
 
 
-  if (vfGaTrackOptions.vfGaTrackNetwork != null) {
+  if (vfGaTrackOptions.vfGaTrackNetwork != null && ga) {
     // a copy of https://ipmeta.io/plugin.js
     // included here to simplify usage and reduce external requests
 
@@ -683,7 +728,9 @@ function vfGaInit(vfGaTrackOptions) {
 
 
   if (vfGaTrackOptions.vfGaTrackPageLoad) {
+    vfGaLogMessage('sending page view');
     ga("send", "pageview");
+    gtag("event", "page_view");
   } // If we want to send metrics in one go
   // ga('set', {
   //   'dimension5': 'custom dimension data'
@@ -691,6 +738,7 @@ function vfGaInit(vfGaTrackOptions) {
   // });
 
 
+  vfGaLogMessage('prepare vfGaLinkTrackingInit');
   vfGaLinkTrackingInit();
 }
 /**
@@ -699,14 +747,16 @@ function vfGaInit(vfGaTrackOptions) {
 
 
 function vfGaLinkTrackingInit() {
+  vfGaLogMessage('vfGaLinkTrackingInit');
   document.body.addEventListener("mousedown", function (evt) {
     // Debug event type clicked
-    // console.log(evt.target.tagName, evt.target);
-    // we only track clicks on interactive elements (links, buttons, forms)
+    vfGaLogMessage(evt.target.tagName);
+    vfGaLogMessage(evt.target); // we only track clicks on interactive elements (links, buttons, forms)
+
     if (evt.target) {
       if (evt.target.tagName) {
         var clickedElementTag = evt.target.tagName.toLowerCase();
-        var actionElements = ["a", "button", "label", "input", "select", "textarea", "details"];
+        var actionElements = ["a", "button", "label", "input", "select", "textarea", "details", "area"];
 
         if (actionElements.indexOf(clickedElementTag) > -1) {
           vfGaTrackInteraction(evt.target);
@@ -805,6 +855,13 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
 
   var linkName;
 
+  if (typeof gtag === "undefined") {
+    // if the site is still using legacy GA, set a dummy gtag function so we don't have to add a bunch of if statements
+    window.gtag = function () {};
+
+    vfGaLogMessage('GA4 dummy function has been set.');
+  }
+
   if (customEventName.length > 0) {
     linkName = customEventName;
   } else if (actedOnItem.dataset.vfAnalyticsLabel) {
@@ -835,7 +892,7 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
     } // fallback to an href value
 
 
-    if (linkName.length == 0 && actedOnItem.href) linkName = actedOnItem.href; // special things for gloabl search box
+    if (linkName.length == 0 && actedOnItem.href) linkName = actedOnItem.href; // special things for global search box
     // if (parentContainer == 'Global search') {
     //   linkName = 'query: ' + jQuery('#global-search input#query').value;
     // }
@@ -877,12 +934,29 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
       // email click
       var mailLink = href.replace(/^mailto\:/i, "");
       ga && ga("send", "event", "Email", "Region / " + parentContainer, mailLink);
+      gtag && gtag("event", "Region / " + parentContainer, {
+        "vf_analytics": "true",
+        "page_container": parentContainer,
+        "event_label": mailLink,
+        "event_category": "UI",
+        "event_type": "Email",
+        "email_address": mailLink
+      });
       vfGaLogMessage("Email", "Region / " + parentContainer, mailLink, lastGaEventTime, actedOnItem);
     } else if (href && href.match(filetypes)) {
       // download event
       var extension = /[.]/.exec(href) ? /[^.]+$/.exec(href) : undefined;
       var filePath = href;
       ga && ga("send", "event", "Download", "Type / " + extension + " / " + parentContainer, filePath);
+      gtag && gtag("event", "Type / " + extension + " / " + parentContainer, {
+        "vf_analytics": "true",
+        "page_container": parentContainer,
+        "event_label": filePath,
+        "file_extension": extension,
+        "event_category": "UI",
+        "event_type": "Download",
+        "link_url": filePath
+      });
       vfGaLogMessage("Download", "Type / " + extension + " / " + parentContainer, filePath, lastGaEventTime, actedOnItem);
     }
     /* eslint-enable no-useless-escape */
@@ -895,6 +969,14 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
 
       if (newDestination.hostname != window.location.hostname) {
         ga && ga("send", "event", "External links", "External link / " + linkName + " / " + parentContainer, href);
+        gtag && gtag("event", "External link / " + parentContainer, {
+          "vf_analytics": "true",
+          "page_container": parentContainer,
+          "event_category": "UI",
+          "event_type": "External link or button",
+          "link_text": linkName,
+          "link_url": href
+        });
         vfGaLogMessage("External links", "External link / " + linkName + " / " + parentContainer, href, lastGaEventTime, actedOnItem);
       }
     } // is it a form interaction or something with text?
@@ -931,11 +1013,29 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
       }
 
       ga && ga("send", "event", "UI", "UI Element / " + parentContainer, linkName);
-      vfGaLogMessage("UI", "UI Element / " + parentContainer, linkName, lastGaEventTime, actedOnItem);
+      gtag && gtag("event", "UI Element / " + parentContainer, {
+        "vf_analytics": "true",
+        "page_container": parentContainer,
+        "event_label": linkName,
+        "event_category": "UI",
+        "event_type": "Webform",
+        "link_text": linkName
+      });
+      vfGaLogMessage("UI Form", "UI Element / " + parentContainer, linkName, lastGaEventTime, actedOnItem);
     } else {
       // generic catch all
+      vfGaLogMessage("vfGaTrackInteraction: generic catch all");
       ga && ga("send", "event", "UI", "UI Element / " + parentContainer, linkName);
-      vfGaLogMessage("UI", "UI Element / " + parentContainer, linkName, lastGaEventTime, actedOnItem);
+      gtag && gtag("event", "UI Element / " + parentContainer, {
+        "vf_analytics": "true",
+        "page_container": parentContainer,
+        "event_label": linkName,
+        "event_category": "UI",
+        "event_type": "Link, button, image or similar",
+        "link_text": linkName,
+        "link_url": href
+      });
+      vfGaLogMessage("UI Catch all", "UI Element / " + parentContainer, linkName, lastGaEventTime, actedOnItem);
     }
   }
 }
@@ -958,10 +1058,16 @@ function vfGaLogMessage(eventCategory, eventAction, eventLabel, lastGaEventTime,
   if (conditionalLoggingCheck.dataset.vfGoogleAnalyticsVerbose) {
     if (conditionalLoggingCheck.dataset.vfGoogleAnalyticsVerbose == "true") {
       /* eslint-disable */
-      console.log("%c Verbose analytics on ", "color: #FFF; background: #111; font-size: .75rem;");
-      console.log("clicked on: %o ", actedOnItem);
-      console.log("sent to GA: ", "event ->", eventCategory + " ->", eventAction + " ->", eventLabel, "; at: ", lastGaEventTime);
+      if (eventAction == undefined) {
+        // It's a simple message debug
+        console.log("Verbose analytics: %o ", eventCategory);
+      } else {
+        console.log("%c Verbose analytics on ", "color: #FFF; background: #111; font-size: .75rem;");
+        console.log("clicked on: %o ", actedOnItem);
+        console.log("sent to GA: ", "event ->", eventCategory + " ->", eventAction + " ->", eventLabel, "; at: ", lastGaEventTime);
+      }
       /* eslint-enable */
+
     }
   }
 } // vf-tabs
@@ -1003,7 +1109,7 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
     tab.setAttribute("role", "tab");
     tab.setAttribute("id", tabId);
     tab.setAttribute("data-tabs__item", tabId);
-    tab.setAttribute("tabindex", "-1");
+    tab.setAttribute("tabindex", "0");
     tab.parentNode.setAttribute("role", "presentation"); // Reset any active tabs from a previous JS call
 
     tab.removeAttribute("aria-selected");
@@ -1062,7 +1168,11 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
 
 
 var vfTabsSwitch = function vfTabsSwitch(newTab, panels) {
-  // get the parent ul of the clicked tab
+  // Update url based on tab id
+  var data = newTab.getAttribute("id");
+  var url = '#' + data;
+  window.history.replaceState(data, null, url); // get the parent ul of the clicked tab
+
   var parentTabSet = newTab.closest(".vf-tabs__list");
   var oldTab = parentTabSet.querySelector("[aria-selected]");
 
@@ -1130,45 +1240,100 @@ function vfTabsDeepLinkOnLoad(tabs, panels) {
 
 
 function vfNavigationOnThisPage() {
-  var sectionList = document.querySelectorAll("[data-vf-js-navigation-on-this-page-container='true'],[data-vf-js-navigation-on-this-page-container='1']")[0];
-  var section = document.querySelectorAll("[id]");
-  var sectionPositions = {};
-  var i = 0;
+  var scope = document; // based on the attribute we select all navigation links
 
-  if (!sectionList || !section) {
+  var navLinks = scope.querySelectorAll("[data-vf-js-navigation-on-this-page-container='true'] .vf-navigation__item a"); // we store all ids from anchor tags to know the sections we should care about
+
+  var ids = [];
+  navLinks.forEach(function (link) {
+    if (link.hash) {
+      ids.push(link.hash.substring(1));
+    }
+  }); // get all elements with an id and convert it from NodeList to Array
+
+  var sections = Array.prototype.slice.call(scope.querySelectorAll("[id]"));
+  var sectionPositions = [];
+
+  if (!navLinks || !sections) {
     // exit: either sections or section content not found
     return;
   }
 
-  if (sectionList.length == 0 || section.length == 0) {
+  if (navLinks.length === 0 || sections.length === 0) {
     // exit: either sections or section content not found
     return;
-  }
+  } // remove all the elements that doesn't appear in the navigation based on it's id
 
-  section.forEach(function (e) {
-    sectionPositions[e.id] = e.offsetTop;
+
+  sections = sections.filter(function (section) {
+    return ids.indexOf(section.id) !== -1;
   });
 
   function activateNavigationItem() {
-    var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+    // althought costly, we recalculate the position of elements each time as things move or load dynamically
+    sectionPositions = [];
+    sections.forEach(function (e) {
+      var rect = e.getBoundingClientRect();
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      sectionPositions.push({
+        id: e.id,
+        position: rect.top + scrollTop
+      });
+    }); // put sections in the bottom at the beginning of the array
 
-    for (i in sectionPositions) {
-      // this implements a scrollspy concept based on https://codepen.io/zchee/pen/ogzvZZ
-      if (sectionPositions[i] <= scrollPosition + 70) {
-        // we activate the section 70 pixels before coming into view, as the sticky bar will cover it
-        // only add remove the class if there is a new section to activate
-        if (sectionList.querySelector("a[href*=" + i + "]") != null) {
-          sectionList.querySelector("[aria-selected]").removeAttribute("aria-selected");
-          sectionList.querySelector("a[href*=" + i + "]").setAttribute("aria-selected", "true");
+    sectionPositions.reverse();
+    var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop; // We reverse the array because Array.find starts to search from position 0 and to simplify
+    // the logic to find which element is closest to the current scroll position, otherwise it will always
+    // select the first element.
+
+    var currentSection = sectionPositions.find(function (s) {
+      return !(scrollPosition <= s.position - 95);
+    });
+    navLinks.forEach(function (link) {
+      link.setAttribute("aria-selected", "false");
+    }); // if we don't match any section yet, highlight the first link
+
+    if (!currentSection) {
+      navLinks[0].setAttribute("aria-selected", "true");
+    } else {
+      navLinks.forEach(function (link) {
+        if (link.hash === '#' + currentSection.id) {
+          link.setAttribute("aria-selected", "true");
         }
-      }
+      });
     }
+
+    isCalculating = false;
   }
 
+  var isCalculating = false;
+
   window.onscroll = function () {
-    // we could introduce throttling, but as this is a fairly simple repaint, throttling is not likely required
-    window.requestAnimationFrame(activateNavigationItem);
+    if (!isCalculating) {
+      isCalculating = true;
+      window.requestAnimationFrame(activateNavigationItem);
+    }
   };
+
+  navLinks.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      var section = document.querySelector(link.hash);
+      var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+      if (!section) return;
+      event.preventDefault(); // get current styles of element we are moving to
+
+      var elemStyles = window.getComputedStyle(section); // take into account the padding and/or margin top
+
+      var value = elemStyles.paddingTop !== '0px' ? elemStyles.paddingTop : elemStyles.marginTop; // we remove the px characters from the value
+
+      var offset = parseInt(value.slice(0, -2), 10); // total offset: margin/padding top of the element plus the size of the navigation bar
+
+      window.scroll({
+        top: section.getBoundingClientRect().top + scrollPosition - (offset + 40),
+        behavior: 'smooth'
+      });
+    });
+  });
 } // vf-location-nearest
 
 /**

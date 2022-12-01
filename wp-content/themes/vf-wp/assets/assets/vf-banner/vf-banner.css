@@ -95,8 +95,8 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-banner
- * Version: 1.9.1
- * Location: components/vf-core-components/vf-banner
+ * Version: 1.9.2
+ * Location: components/undefined
  */
 .vf-banner {
   -webkit-box-sizing: border-box;
@@ -246,6 +246,12 @@
   position: fixed;
   width: 100%;
   z-index: 5150;
+}
+.vf-banner--fixed a:not(.vf-button):focus:focus-visible {
+  outline: transparent auto 1px;
+}
+.vf-banner--fixed.vf-banner--top a:not(.vf-button):focus:focus-visible {
+  outline-color: var(--vf-color--grey--darkest);
 }
 
 html:not(.vf-disable-deprecated) .vf-banner--phase {

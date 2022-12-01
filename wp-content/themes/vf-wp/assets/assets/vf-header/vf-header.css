@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-global-header
  * Version: 3.1.2
- * Location: components/vf-core-components/vf-global-header
+ * Location: components/undefined
  */
 .vf-global-header {
   -webkit-box-align: center;
@@ -138,7 +138,7 @@ html:not(.vf-disable-deprecated) {
   /*!
   * Component: @visual-framework/vf-masthead
   * Version: 3.0.1
-  * Location: components/vf-core-components/vf-masthead
+  * Location: components/undefined
   */
 }
 html:not(.vf-disable-deprecated) .vf-masthead {
@@ -264,8 +264,8 @@ html:not(.vf-disable-deprecated) [class*=with-title-block][class*=theme] .vf-mas
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 3.0.0-rc.2
- * Location: components/vf-core-components/vf-navigation
+ * Version: 5.0.0
+ * Location: components/undefined
  */
 .vf-navigation__link {
   border-bottom: none;
@@ -370,7 +370,7 @@ html:not(.vf-disable-deprecated) [class*=with-title-block][class*=theme] .vf-mas
 /*!
  * Component: @visual-framework/vf-header
  * Version: 3.0.1
- * Location: components/vf-core-components/vf-header
+ * Location: components/undefined
  */
 html:not(.vf-disable-deprecated) .vf-header {
   background-position: top center;

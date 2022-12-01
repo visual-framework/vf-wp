@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-list
  * Version: 1.1.0
- * Location: components/vf-core-components/vf-list
+ * Location: components/undefined
  */
 .vf-list {
   list-style-type: none;
@@ -199,7 +199,7 @@
 /*!
  * Component: @visual-framework/vf-blockquote
  * Version: 1.2.0
- * Location: components/vf-core-components/vf-blockquote
+ * Location: components/undefined
  */
 .vf-blockquote {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -226,7 +226,7 @@
 /*!
  * Component: @visual-framework/vf-activity-list
  * Version: 1.0.0-alpha.11
- * Location: components/vf-core-components/vf-activity-list
+ * Location: components/undefined
  */
 html:not(.vf-disable-deprecated) .vf-activity {
   margin-bottom: 54px;

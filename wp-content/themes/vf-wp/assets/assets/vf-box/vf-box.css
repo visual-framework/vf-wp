@@ -96,7 +96,7 @@
 /*!
  * Component: @visual-framework/vf-box
  * Version: 2.4.0
- * Location: components/vf-core-components/vf-box
+ * Location: components/undefined
  */
 .vf-box {
   --box-text-color: var( --vf-box-theme-color--foreground, var(--vf-theme-color--foreground, #000000));

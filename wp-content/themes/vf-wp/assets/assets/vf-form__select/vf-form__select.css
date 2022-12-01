@@ -96,12 +96,12 @@
 /*!
  * Component: @visual-framework/vf-form
  * Version: 2.0.0-alpha.2
- * Location: components/vf-core-components/vf-form
+ * Location: components/undefined
  */
 /*!
  * Component: @visual-framework/vf-form__helper
  * Version: 3.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__helper
+ * Location: components/undefined
  */
 .vf-form__helper {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -120,7 +120,7 @@
 /*!
  * Component: @visual-framework/vf-form__input
  * Version: 3.0.0-alpha.1
- * Location: components/vf-core-components/vf-form__input
+ * Location: components/undefined
  */
 .vf-form__input:not([type=file]) {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -351,7 +351,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__legend
  * Version: 2.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__legend
+ * Location: components/undefined
  */
 .vf-form__legend {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -380,7 +380,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__fieldset
  * Version: 2.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__fieldset
+ * Location: components/undefined
  */
 .vf-form__fieldset {
   border: 0;
@@ -394,7 +394,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__select
  * Version: 3.0.0
- * Location: components/vf-core-components/vf-form__select
+ * Location: components/undefined
  */
 .vf-form__select {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -444,7 +444,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__checkbox
  * Version: 3.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__checkbox
+ * Location: components/undefined
  */
 .vf-form__item--checkbox .vf-form__checkbox + .vf-form__label::before {
   margin-right: 8px;
@@ -509,7 +509,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__radio
  * Version: 3.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__radio
+ * Location: components/undefined
  */
 .vf-form__radio {
   opacity: 0;
@@ -567,7 +567,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__textarea
  * Version: 3.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__textarea
+ * Location: components/undefined
  */
 .vf-form__textarea {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -602,7 +602,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__item
  * Version: 3.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__item
+ * Location: components/undefined
  */
 .vf-form__item > * {
   --vf-stack-margin--custom: 0.25rem;
@@ -622,7 +622,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__label
  * Version: 3.0.0-alpha.0
- * Location: components/vf-core-components/vf-form__label
+ * Location: components/undefined
  */
 .vf-form__label {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
@@ -645,7 +645,7 @@ input[type=search]::-webkit-search-cancel-button {
 /*!
  * Component: @visual-framework/vf-form__select
  * Version: 3.0.0
- * Location: components/vf-core-components/vf-form__select
+ * Location: components/undefined
  */
 .vf-form__select {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
