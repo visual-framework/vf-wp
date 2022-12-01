@@ -130,11 +130,11 @@
         },
         {
             "key": "field_5fda151530a15",
-            "label": "Heading",
+            "label": "Header",
             "name": "heading",
             "type": "text",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
@@ -154,6 +154,25 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_638894277f83f",
+            "label": "Show header",
+            "name": "show_header",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_5fda151530b49",
@@ -437,5 +456,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1636714849
+    "modified": 1669896884
 }

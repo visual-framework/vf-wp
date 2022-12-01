@@ -12,6 +12,14 @@ $container_content = get_field('container_content');
 $block_id = get_field('block_id');
 $column = get_field('columns');
 $grid_setting = get_field('grid_setting');
+$show_header = get_field('show_header');
+if ($show_header) { 
+  $hide_header_class = '';
+}
+else {
+  $hide_header_class = ' | vf-u-sr-only';
+}
+
 
 $type = get_field('select_type');
 
@@ -101,8 +109,7 @@ else { echo '';} ?>
     <?php if (get_field('container_content') == 'card') { ?>
     <div class="vf-card-container__inner">
       <?php } ?>
-      <?php if (!empty ($heading)) { ?>
-      <div class="vf-section-header | vf-u-margin__bottom--600">
+      <div class="vf-section-header | vf-u-margin__bottom--600<?php echo $hide_header_class; ?>">
         <h2 class="vf-section-header__heading" <?php 
       if ($anchor) { 
        echo 'id="' . $anchor .'"';
@@ -129,7 +136,6 @@ else { echo '';} ?>
         <p class="vf-section-header__text"><?php echo esc_html($text); ?></p>
         <?php } ?>
       </div>
-      <?php } ?>
       <InnerBlocks />
       <?php if (get_field('container_content') == 'card') { ?>
     </div>
