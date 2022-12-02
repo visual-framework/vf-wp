@@ -32,13 +32,13 @@ frame.set("loop.last", t_1 === t_2 - 1);
 frame.set("loop.length", t_2);
 output += "<li class=\"vf-social-links__item\">\n\n      <a class=\"vf-social-links__link\" href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"url"), env.opts.autoescape);
-output += "\">\n        <span class=\"vf-u-sr-only\">";
+output += "\" aria-label=\"Follow us on ";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"name"), env.opts.autoescape);
-output += "</span>\n\n        <svg aria-hidden=\"true\" class=\"vf-icon vf-icon--social vf-icon--";
+output += "\">\n        <svg aria-hidden=\"true\" class=\"vf-icon vf-icon--social vf-icon--";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"name"), env.opts.autoescape);
 output += "\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" preserveAspectRatio=\"xMinYMin\">\n          <use xlink:href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"useUrl"), env.opts.autoescape);
-output += "\"></use>\n        </svg>\n\n      </a>\n\n    </li>";
+output += "\"></use>\n        </svg>\n      </a>\n\n    </li>";
 ;
 }
 }

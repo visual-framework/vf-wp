@@ -57,7 +57,7 @@ if(runtime.contextOrFrameLookup(context, frame, "classModifier") == "on-this-pag
 output += " | vf-u-fullbleed";
 ;
 }
-output += " | vf-cluster\">\r\n  <ul class=\"vf-navigation__list | vf-list | vf-cluster__inner\"";
+output += " | vf-cluster\">\n  <ul class=\"vf-navigation__list | vf-list | vf-cluster__inner\"";
 if(runtime.contextOrFrameLookup(context, frame, "classModifier") == "on-this-page" && runtime.contextOrFrameLookup(context, frame, "activateJavascript") == true) {
 output += " data-vf-js-navigation-on-this-page-container=\"true\"";
 ;
@@ -66,12 +66,12 @@ if(runtime.contextOrFrameLookup(context, frame, "classModifier") == "on-this-pag
 output += " data-vf-js-navigation-on-this-page-container=\"false\"";
 ;
 }
-output += ">\r\n";
+output += ">\n";
 if(runtime.contextOrFrameLookup(context, frame, "heading")) {
-output += "<li class=\"vf-navigation__item\">\r\n      ";
-output += "\r\n      ";
+output += "<li class=\"vf-navigation__item\">\n      ";
+output += "\n      ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "heading"), env.opts.autoescape);
-output += "\r\n    </li>";
+output += "\n    </li>";
 ;
 }
 frame = frame.push();
@@ -88,9 +88,9 @@ frame.set("loop.revindex0", t_6 - t_5 - 1);
 frame.set("loop.first", t_5 === 0);
 frame.set("loop.last", t_5 === t_6 - 1);
 frame.set("loop.length", t_6);
-output += "    <li class=\"vf-navigation__item\">\r\n      <a\r\n      href=\"";
+output += "    <li class=\"vf-navigation__item\">\n      <a\n      href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_8),"navigation_href"), env.opts.autoescape);
-output += "\"\r\n      class=\"vf-navigation__link\"";
+output += "\"\n      class=\"vf-navigation__link\"";
 if(runtime.memberLookup((t_8),"currentPage")) {
 output += " aria-current=\"page\"";
 ;
@@ -101,12 +101,12 @@ output += " aria-selected=\"true\"";
 }
 output += ">";
 output += runtime.suppressValue(runtime.memberLookup((t_8),"text"), env.opts.autoescape);
-output += "</a>\r\n    </li>";
+output += "</a>\n    </li>";
 ;
 }
 }
 frame = frame.pop();
-output += "  </ul>\r\n</nav>\r\n";
+output += "  </ul>\n</nav>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {
