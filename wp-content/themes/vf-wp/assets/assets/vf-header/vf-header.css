@@ -330,16 +330,14 @@ html:not(.vf-disable-deprecated) [class*=with-title-block][class*=theme] .vf-mas
   text-decoration-thickness: 4px;
   text-underline-offset: 0.5em;
   text-underline-position: under;
-  -webkit-text-decoration-color: #000000;
-          text-decoration-color: #000000;
+  text-decoration-color: #000000;
 }
 .vf-navigation--on-this-page.vf-u-fullbleed .vf-navigation__link[aria-selected=true] {
   text-decoration: underline;
   text-decoration-thickness: 4px;
   text-underline-offset: 0.5em;
   text-underline-position: under;
-  -webkit-text-decoration-color: #3b6fb6;
-          text-decoration-color: #3b6fb6;
+  text-decoration-color: #3b6fb6;
 }
 .vf-navigation--on-this-page.vf-u-fullbleed > .vf-list {
   -ms-flex-wrap: nowrap;
