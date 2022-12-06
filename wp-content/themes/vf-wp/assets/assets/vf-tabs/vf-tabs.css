@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-tabs
- * Version: 2.1.0
+ * Version: 2.1.1
  * Location: components/vf-core-components/vf-tabs
  */
 .vf-tabs__list {
@@ -151,12 +151,15 @@
   color: #000000;
   z-index: 5150;
 }
+.vf-tabs__link:focus:focus-visible {
+  outline: -webkit-focus-ring-color auto 1px;
+}
 
 .vf-tabs__link.is-active {
   border-bottom-color: #3b6fb6;
   color: #3b6fb6;
   text-shadow: 1px 0 0 currentColor;
-  z-index: 5150;
+  z-index: 1800;
 }
 .vf-tabs__link.is-active:hover, .vf-tabs__link.is-active:focus {
   color: #3b6fb6;

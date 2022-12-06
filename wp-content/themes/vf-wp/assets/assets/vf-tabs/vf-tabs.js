@@ -6,7 +6,7 @@
  * @param {boolean} [activateDeepLinkOnLoad] - if deep linked tabs should be activated on page load, defaults to true
  * @example vfTabs(document.querySelectorAll('.vf-component__container')[0]);
  */
-function vfTabs(scope, activateDeepLinkOnLoad) {
+ function vfTabs(scope, activateDeepLinkOnLoad) {
   /* eslint-disable no-redeclare */
   var scope = scope || document;
   var activateDeepLinkOnLoad = activateDeepLinkOnLoad || true;
@@ -31,7 +31,7 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
     tab.setAttribute("role", "tab");
     tab.setAttribute("id", tabId);
     tab.setAttribute("data-tabs__item", tabId);
-    tab.setAttribute("tabindex", "-1");
+    tab.setAttribute("tabindex", "0");
     tab.parentNode.setAttribute("role", "presentation");
 
     // Reset any active tabs from a previous JS call
@@ -43,7 +43,9 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
     tab.addEventListener("click", e => {
       e.preventDefault();
       vfTabsSwitch(e.currentTarget, panels);
-    });
+    });    
+
+
 
     // Handle keydown events for keyboard users
     tab.addEventListener("keydown", e => {
@@ -93,6 +95,11 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
 
 // The tab switching function
 const vfTabsSwitch = (newTab, panels) => {
+  // Update url based on tab id
+  const data = newTab.getAttribute("id");
+  const url = '#' + data;
+  window.history.replaceState(data, null, url);
+
   // get the parent ul of the clicked tab
   let parentTabSet = newTab.closest(".vf-tabs__list");
   let oldTab = parentTabSet.querySelector("[aria-selected]");
