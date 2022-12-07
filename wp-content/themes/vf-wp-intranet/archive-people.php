@@ -90,7 +90,7 @@ get_header();
   <div>
     <div data-jplist-group="data-group-1">
     <?php
-        $request = wp_remote_get( 'https://xs-db.test.embl.de/v2/search' );
+        $request = wp_remote_get( 'https://xs-db.embl.de/v2/search' );
         if( is_wp_error( $request ) ) {
             return false; // Bail early
         }
@@ -103,53 +103,67 @@ get_header();
 
         if( ! empty( $data ) ) {
             foreach( $data as $person ) { 
-              if (!isset($person->department)) {
-                $person->department = "";
-              };
-              if (!isset($person->photoUrl)) {
-                $person->photoUrl = "http://content.embl.org/sites/default/files/default_images/vf-icon--avatar.png";
-              };
-              if (isset($person->personUrl)) {
-                $peopleBaseUrl = "https://www.embl.org/internal-information/people/";
-                $peopleSlug = basename($person->personUrl);
-                $peopleEndUrl = $peopleBaseUrl . $peopleSlug;
+              // show people only with positions
+              if (isset($person->title)) {
+                if (!isset($person->department)) {
+                  $person->department = "";
                 };
+                // if no photo show a placeholder
+                if (!isset($person->photoUrl)) {
+                  $person->photoUrl = "http://content.embl.org/sites/default/files/default_images/vf-icon--avatar.png";
+                };
+                // display a telephone number
+                if (isset($person->primaryTelephoneNumber)) {
+                  $telephoneNr = $person->primaryTelephoneNumber;
+                }
+                elseif (isset($person->telephoneNumber)) {
+                  $telephoneNr = $person->telephoneNumber;
+                }
+                else {
+                  $telephoneNr = null;
+                }
+                // create urls 
+                if (isset($person->personUrl)) {
+                  $peopleBaseUrl = "https://www.embl.org/internal-information/people/";
+                  $peopleSlug = basename($person->personUrl);
+                  $peopleEndUrl = $peopleBaseUrl . $peopleSlug;
+                  };
 
-              echo '<article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
-              <img class="vf-profile__image" src="' . $person->photoUrl . '" alt="" loading="lazy">';
+                echo '<article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
+                <img class="vf-profile__image" src="' . $person->photoUrl . '" alt="" loading="lazy">';
 
-              echo '<h3 class="vf-profile__title | people-search"><a href="' . $peopleEndUrl . '" class="vf-profile__link">' . $person->displayName . '</a></h3>';
+                echo '<h3 class="vf-profile__title | people-search"><a href="' . $peopleEndUrl . '" class="vf-profile__link">' . $person->displayName . '</a></h3>';
 
-              echo '<p class="vf-profile__job-title | people-search">' . $person->title . '</p>';
+                echo '<p class="vf-profile__job-title | people-search">' . $person->title . '</p>';
 
-              echo '<p class="vf-profile__text | team-search"><a data-embl-js-group-link="' . $person->department . '" class="vf-link"
-              href="//www.embl.org/search?searchQuery=' . $person->department . '">' . $person->department . '</a></p>';
+                echo '<p class="vf-profile__text | team-search"><a data-embl-js-group-link="' . $person->department . '" class="vf-link"
+                href="//www.embl.org/search?searchQuery=' . $person->department . '">' . $person->department . '</a></p>';
 
-              echo '<p class="vf-profile__email | vf-u-margin__top--100">
-              <a href="mailto:' . $person->mail . '"
-              class="vf-profile__link vf-profile__link--secondary">' . $person->mail . '</a>
-              </p>';
+                echo '<p class="vf-profile__email | vf-u-margin__top--100">
+                <a href="mailto:' . $person->mail . '"
+                class="vf-profile__link vf-profile__link--secondary">' . $person->mail . '</a>
+                </p>';
 
-              if (!empty($person->telephoneNumber)) {
-              echo '<p class="vf-profile__phone vf-u-margin__bottom--100">
-              <a href="tel:' . $person->telephoneNumber . '"
-              class="vf-profile__link vf-profile__link--secondary">' . $person->telephoneNumber . '</a>
-              </p>'; }
+                if (!empty($telephoneNr)) {
+                echo '<p class="vf-profile__phone vf-u-margin__bottom--100">
+                <a href="tel:' . $telephoneNr . '"
+                class="vf-profile__link vf-profile__link--secondary">' . $telephoneNr . '</a>
+                </p>'; }
 
-              if (!empty($person->roomNumber)) {
-              echo '<p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0">
-              <span>Location: </span>' . $person->roomNumber . '
-              </p>'; }
+                if (!empty($person->roomNumber)) {
+                echo '<p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0">
+                <span>Location: </span>' . $person->roomNumber . '
+                </p>'; }
 
-              echo '<p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200">
-              ' . $person->personDutystation . '
-              </p>';
+                echo '<p class="vf-profile__text | vf-u-margin__top--100 | vf-u-margin__bottom--200">
+                ' . $person->personDutystation . '
+                </p>';
 
-              echo '<p class="people vf-u-display-none | used-for-filtering">People</p>
-              </article>'; 
-                
-              
-              }
+                echo '<p class="people vf-u-display-none | used-for-filtering">People</p>
+                </article>'; 
+                  
+                } 
+            }
         }
         ?>
       <!-- no results control -->
