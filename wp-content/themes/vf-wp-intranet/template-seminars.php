@@ -32,7 +32,7 @@ get_header();
     <div class="vf-content">
       <div class="embl-content-hub-loader | vf-grid vf-grid__col-1" data-jplist-group="data-group-1">
         <?php
-        $request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today
+        $request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today&items_per_page=400
         ' );
         if( is_wp_error( $request ) ) {
             return false; // Bail early

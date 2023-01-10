@@ -1,5 +1,5 @@
     <?php
-$request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today' );
+$request = wp_remote_get( 'https://www.embl.org/api/v1/events?_format=json&source=contenthub&field_event_type=Seminar&start_date=today&items_per_page=400' );
     if( is_wp_error( $request ) ) {
         return false; }
 $body = wp_remote_retrieve_body( $request );
