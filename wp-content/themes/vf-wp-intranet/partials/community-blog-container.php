@@ -14,30 +14,30 @@
     <div class="vf-tabs">
       <ul class="vf-tabs__list | vf-u-margin__top--0" data-vf-js-tabs>
         <li class="vf-tabs__item">
-          <a class="vf-tabs__link" href="#vf-tabs__section--6"
+          <a class="vf-tabs__link" href="#vf-tabs__section--barcelona"
             data-vf-js-location-nearest-activation-target="barcelona">Barcelona</a>
         </li>
         <li class="vf-tabs__item">
-          <a class="vf-tabs__link" href="#vf-tabs__section--7"
+          <a class="vf-tabs__link" href="#vf-tabs__section--grenoble"
             data-vf-js-location-nearest-activation-target="grenoble">Grenoble</a>
         </li>
         <li class="vf-tabs__item">
-          <a class="vf-tabs__link" href="#vf-tabs__section--8"
+          <a class="vf-tabs__link" href="#vf-tabs__section--hamburg"
             data-vf-js-location-nearest-activation-target="hamburg">Hamburg</a>
         </li>
         <li class="vf-tabs__item">
-          <a class="vf-tabs__link" href="#vf-tabs__section--9"
+          <a class="vf-tabs__link" href="#vf-tabs__section--heidelberg"
             data-vf-js-location-nearest-activation-target="default">Heidelberg</a>
         </li>
         <li class="vf-tabs__item">
-          <a class="vf-tabs__link" href="#vf-tabs__section--10"
+          <a class="vf-tabs__link" href="#vf-tabs__section--rome"
             data-vf-js-location-nearest-activation-target="rome">Rome</a>
         </li>
       </ul>
     </div>
 
     <div class="vf-tabs-content" data-vf-js-tabs-content>
-      <section class="vf-tabs__section" id="vf-tabs__section--6">
+      <section class="vf-tabs__section" id="vf-tabs__section--barcelona">
         <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_1 = new WP_Query (array(
@@ -60,7 +60,7 @@
           <?php wp_reset_postdata(); ?>
         </div>
       </section>
-      <section class="vf-tabs__section" id="vf-tabs__section--7">
+      <section class="vf-tabs__section" id="vf-tabs__section--grenoble">
         <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_2 = new WP_Query (array(
@@ -83,7 +83,7 @@
           <?php wp_reset_postdata(); ?>
         </div>
       </section>
-      <section class="vf-tabs__section" id="vf-tabs__section--8">
+      <section class="vf-tabs__section" id="vf-tabs__section--hamburg">
         <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_3 = new WP_Query (array(
@@ -106,7 +106,7 @@
           <?php wp_reset_postdata(); ?>
         </div>
       </section>
-      <section class="vf-tabs__section" id="vf-tabs__section--9">
+      <section class="vf-tabs__section" id="vf-tabs__section--heidelberg">
         <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_4 = new WP_Query (array(
@@ -129,7 +129,7 @@
           <?php wp_reset_postdata(); ?>
         </div>
       </section>
-      <section class="vf-tabs__section" id="vf-tabs__section--10">
+      <section class="vf-tabs__section" id="vf-tabs__section--rome">
         <div class="vf-grid | vf-grid__col-3">
           <?php
     $communityBlogLoop_5 = new WP_Query (array(
