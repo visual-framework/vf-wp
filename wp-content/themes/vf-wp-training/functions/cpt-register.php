@@ -38,7 +38,8 @@ add_action(
       'delete_with_user'    => false,
       'taxonomies'          => array(
         'post_tag',
-        'training-category'
+        'training-category',
+        'training-location'
   
       ),
     ));

@@ -8,9 +8,18 @@ $category_terms = get_terms(
   )
 );
 
+// Get all "Location" terms
+$location_terms = get_terms(
+  array(
+    'taxonomy'   => 'training-location',
+    'hide_empty' => false,
+  )
+);
+
 
 
 $counterCat = 1;
+$counterLoc = 1;
   
 ?>
 
@@ -29,6 +38,24 @@ $counterCat = 1;
     </div>
     <?php
       $counterCat++;
+    }
+    ?>
+  </fieldset>
+
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
+    <legend class="vf-form__legend">Location</legend>
+    <?php
+    foreach($location_terms as $term) {
+      ?>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="location-<?php echo $counterLoc; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".location" data-group="data-group-1" data-name="location" data-or="location"
+        value="<?php echo esc_attr($term->name); ?>"
+        data-id="location<?php echo $counterLoc; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
+      <label for="location-<?php echo $counterLoc; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?></label>
+    </div>
+    <?php
+      $counterLoc++;
     }
     ?>
   </fieldset>

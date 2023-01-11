@@ -1,5 +1,6 @@
 <?php
 $category = get_the_terms( $post->ID , 'training-category' );
+$location = get_the_terms( $post->ID , 'training-location' );
 $post_id = get_the_ID();
 $start_date = get_field('vf-wp-training-start_date',$post_id);
 $start_time = get_field('vf-wp-training-start_time',$post_id);
@@ -71,6 +72,14 @@ else {
         foreach( $category as $cat ) { 
           $cat_list[] = $cat->name; }
           echo implode(', ', $cat_list); ?></span>&nbsp;&nbsp;&nbsp;&nbsp;
+  <?php } ?>
+  <?php if (($location)) { ?>
+    <span>Location:</span>&nbsp;
+    <span class="vf-u-text-color--grey | location">
+      <?php $loc_list = [];
+        foreach( $location as $loc ) { 
+          $loc_list[] = $loc->name; }
+          echo implode(', ', $loc_list); ?></span>&nbsp;&nbsp;&nbsp;&nbsp;
   <?php } ?>
           </p>
   </div>
