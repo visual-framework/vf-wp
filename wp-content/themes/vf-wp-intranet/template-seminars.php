@@ -77,7 +77,7 @@ get_header();
               echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
 
                 //Date
-                echo '<p class="vf-summary__date">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
+                echo '<p class="vf-summary__date">' . $newDate . ' CET&nbsp;&nbsp;&nbsp;&nbsp;';
                 echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
                 <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=' . $event->title . '&location=' . $event->field_event_venue . '&dates=' . $calendarStartDate . 'T' . $calendarStartTime . '00/' . $calendarStartDate . 'T' . $calendarEndTime . '00'.'&sprop=name:" target="_blank" rel="nofollow">Add to calendar</a>
                </span></p>';
@@ -87,10 +87,10 @@ get_header();
 
                 //Link
                 if (!empty($event->field_event_more_information)) {
-                    echo '<a href="'. $event->field_event_more_information . '" class="vf-summary__link">' . $event->title . '</a>' . $canceled . '</h3>';
+                    echo '<a target="_blank" href="'. $event->field_event_more_information . '" class="vf-summary__link">' . $event->title . '</a>' . $canceled . '</h3>';
                 }
                 else {
-                     echo ($event->title . $canceled . '</h3>'); }
+                     echo '<a target="_blank" href="'. $event->field_event_print_link . '" class="vf-summary__link">' . $event->title . '</a>' . $canceled . '</h3>'; }
 
                 // additional info field break down
                 if ($speaker) {
@@ -119,12 +119,6 @@ get_header();
                 // Location
                 echo '<p class="vf-summary__location | location | ' . $location_filter_class . '">' . $event->field_event_location . '</p>';
 
-                // Abstract
-                if (!empty($event->field_event_summary)) {
-                echo '<details class="vf-details | vf-u-padding__left--0" close>
-                <summary class="vf-details--summary" style="font-size: 16px;">Show abstract</summary>
-                ' . $event->body . '</details>';
-                }
                 echo '</article>';
             }
         }

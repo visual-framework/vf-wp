@@ -54,11 +54,18 @@ function sortByStartDate($param1, $param2) {
             $calendarStartTime = date("Hi", strtotime($event->field_event_start_date_time));
             $calendarEndTime = date("Hi", strtotime($event->field_event_start_date_time) + 60*60);
             $info = $event->field_event_additional_info;  
+            $canceled = $event->field_event_canceled;
+              if ($canceled == 'No') {
+                $canceled = ''; }
+              elseif ($canceled == 'Yes') {
+                $canceled = ' - Cancelled'; }
+              elseif ($canceled == 'Postponed') {
+                $canceled = ' - Postponed'; }  
             
                 echo '<article class="vf-card vf-card--brand vf-card--bordered | vf-u-padding--200">';
                 echo '<div class="vf-summary vf-summary--event | vf-u-margin__bottom--0">';
                 //Date
-                echo '<p class="vf-summary__date" style="margin-bottom: 12px !important;">' . $newDate . '&nbsp;&nbsp;&nbsp;&nbsp;';
+                echo '<p class="vf-summary__date" style="margin-bottom: 12px !important;">' . $newDate . ' CET&nbsp;&nbsp;&nbsp;&nbsp;';
                 echo ' <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
                 <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=' . $event->title . '&location=' . $event->field_event_venue . '&dates=' . $calendarStartDate . 'T' . $calendarStartTime . '00/' . $calendarStartDate . 'T' . $calendarEndTime . '00'.'&sprop=name:" target="_blank" rel="nofollow">Add to calendar</a>
                </span>
@@ -71,7 +78,7 @@ function sortByStartDate($param1, $param2) {
                     echo '<a href="'. $event->field_event_more_information . '" class="vf-summary__link">' . $event->title . '</a></h3>' ;
                 }
                 else {
-                     echo ($event->title . '</h3>'); }
+                  echo '<a target="_blank" href="'. $event->field_event_print_link . '" class="vf-summary__link">' . $event->title . '</a>' . $canceled . '</h3>'; }
 
                 // additional info field break down
                 // echo '<p class="vf-summary__text" style="font-size: 16px;">'; 
