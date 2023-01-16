@@ -53,11 +53,13 @@ get_header();
         if( ! empty( $data ) ) {
             foreach( $data as $event ) {
               $newDate = date("j M Y, H:i", strtotime($event->field_event_start_date_time));
+              $customDateSorting = date("Ymd", strtotime($event->field_event_start_date_time));
               $info = html_entity_decode(strip_tags($event->field_event_additional_info));  
               $type = $event->field_embl_seminars_type;  
               $location = $event->field_event_location;
               $type_filter_class = strtolower(str_replace(' ', '_', $type)); 
-              $location_filter_class = strtolower(str_replace(' ', '_', $location)); 
+              $location_filter_class1 = strtolower(str_replace(' ', '_', $location)); 
+              $location_filter_class = strtolower(str_replace(',_', ' ', $location_filter_class1)); 
               $address = html_entity_decode(strip_tags($event->field_event_address));
               $speaker = strstr($info, 'Host', true);
               $canceled = $event->field_event_canceled;
@@ -77,7 +79,7 @@ get_header();
               echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
 
                 //Date
-                echo '<p class="vf-summary__date">' . $newDate . ' CET&nbsp;&nbsp;&nbsp;&nbsp;';
+                echo '<p class="vf-summary__date" data-eventtime="'. $customDateSorting . '">' . $newDate . ' CET&nbsp;&nbsp;&nbsp;&nbsp;';
                 echo '<span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
                 <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=' . $event->title . '&location=' . $event->field_event_venue . '&dates=' . $calendarStartDate . 'T' . $calendarStartTime . '00/' . $calendarStartDate . 'T' . $calendarEndTime . '00'.'&sprop=name:" target="_blank" rel="nofollow">Add to calendar</a>
                </span></p>';
@@ -248,14 +250,59 @@ get_header();
   .vf-form__checkbox+.vf-form__label::before {
     position: unset;
   }
+  
+  </style>
+ <script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function() {
+    jplist.init({
+      // deepLinking: true
+    });
 
-</style>
+    // this is a sort of callback on jplist to enforce showing newest events first.
+    // Unfortunately, the jplist sorting does not combine reliably will multiple facets. 
+    // This is an interim solution until we replace jplist.
+    function sortEvents() {
+      var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
+      var events = document.querySelectorAll("[data-jplist-item]");
+      var eventsArr = [];
 
-<script type="text/javascript">
-  jplist.init({
-    deepLinking: true
+      // eventsContainer.innerHTML = "Rendering";
+
+      for (var i in events) {
+        if (events[i].nodeType == 1) { // get rid of the whitespace text nodes
+          eventsArr.push(events[i]);
+        }
+      }
+
+      eventsArr.sort(function(a, b) {
+        // console.log(a.querySelectorAll("[data-eventtime]")[0]);
+        return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
+      });
+
+      // console.log('eventsArr',eventsArr)
+
+      for (i = 0; i < eventsArr.length; ++i) {
+        eventsContainer.appendChild(eventsArr[i]);
+      }
+    }
+
+    var inputs = document.querySelectorAll('input');
+    // brute force to refresh jplist to ensure date filtering is intact
+    inputs.forEach(function(item) {
+      item.addEventListener('keydown', function(e) {
+        setTimeout(function(){ sortEvents() }, 300);
+      });
+      item.addEventListener("change", function(e) {
+        // jplist.refresh();
+        sortEvents();
+        // setTimeout(function(){ sortEvents() }, 300);
+      });
+    });
+
+    // sort on page load
+    sortEvents();
+    // setTimeout(function(){ sortEvents() }, 300);
   });
-
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -301,6 +348,7 @@ get_header();
   });
 
 </script>
+
 
 <?php
 
