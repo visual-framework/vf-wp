@@ -22,8 +22,14 @@ $ids[] = get_the_ID();
     <?php } ?>    
 </span>
   <?php if ($show_image == 1) { ?>
-  <?php the_post_thumbnail('full', array('class' => 'vf-summary__image', 'style' => 'height: auto;')); ?>
-  <?php } ?>
+    <?php 
+  if ( has_post_thumbnail() ) {
+    the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image', 'style' => 'height: auto;' ) ); 
+  }
+  else { 
+    if ( 'community-blog' == get_post_type() ) { ?>
+    <img class="vf-summary__image" src="https://www.embl.org/internal-information/wp-content/uploads/Announcementes-and-updates.jpg" alt="Placeholder" loading="lazy">
+  <?php } } } ?>
   <h2 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h2>

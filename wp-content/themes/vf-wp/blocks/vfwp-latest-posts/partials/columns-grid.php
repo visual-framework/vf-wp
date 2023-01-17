@@ -8,7 +8,15 @@
 ?>
 
 <article class="vf-summary vf-summary--news" style="display: block; display: unset;">
-  <?php the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image vf-u-margin__bottom--400', 'style' => 'max-width: 100%; height: auto;' ) ); ?>
+<?php 
+  if ( has_post_thumbnail() ) {
+    the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image vf-u-margin__bottom--400', 'style' => 'max-width: 100%; height: auto;' ) ); 
+  }
+  else { 
+    if ( 'community-blog' == get_post_type() ) { ?>
+    <img class="vf-summary__image" src="https://www.embl.org/internal-information/wp-content/uploads/Announcementes-and-updates.jpg" alt="Placeholder" loading="lazy" style="max-width: 100%; height: auto;">
+  <?php } } ?>
+
   <h3 class="vf-summary__title">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php echo esc_html(get_the_title()); ?></a>
   </h3>
