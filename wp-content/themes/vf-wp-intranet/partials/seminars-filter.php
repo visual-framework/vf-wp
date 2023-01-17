@@ -77,7 +77,7 @@
       <input id="location-2" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="name1" data-or="name1"
         value="virtual"
-        data-id="name-virtual" class="vf-form__checkbox" subscribe="10,">
+        data-id="name-virtual" class="vf-form__checkbox" subscribe="99,">
       <label for="location-2" class="vf-form__label">Virtual&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
