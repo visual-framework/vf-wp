@@ -23,21 +23,11 @@ $title = $vf_theme->get_title();
 <div
   class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800">
   <div></div>
-  <form action="#eventsFilter" onsubmit="return false;"
-    class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
-    <div class="vf-sidebar__inner">
-      <div class="vf-form__item">
-        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="textbox-filter">Search</label>
-        <input id="textbox-filter" data-jplist-control="textbox-filter" data-group="data-group-1"
-          data-name="my-filter-1" data-path=".vf-summary__title" data-id="search" type="text" value=""
-          placeholder="Filter by event title" data-clear-btn-id="name-clear-btn"
-          class="vf-form__input | vf-search__input" />
-      </div>
-      <button href="#eventsFilter" class="vf-search__button | vf-button vf-button--primary">
-        <span class="vf-button__text">Filter</span>
-      </button>
-    </div>
-  </form>
+  <div class="vf-form__item">
+      <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+        data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
+        placeholder="Filter by update title" data-clear-btn-id="name-clear-btn">
+   </div>
 </div>
 
 <section class="embl-grid embl-grid--has-centered-content">
@@ -60,6 +50,7 @@ $title = $vf_theme->get_title();
         <div data-jplist-group="data-group-1">
           <?php
           $forthcomingLoop = new WP_Query (array( 
+          'posts_per_page' => -1,
           'post_type' => 'events',
           'order' => 'ASC', 
           'orderby' => 'meta_value_num',
@@ -93,6 +84,7 @@ $title = $vf_theme->get_title();
         <div data-jplist-group="data-group-1">
           <?php
           $pastLoop = new WP_Query (array( 
+          'posts_per_page' => -1,
           'post_type' => 'events',
           'order' => 'DESC', 
           'orderby' => 'meta_value_num',
@@ -120,20 +112,8 @@ $title = $vf_theme->get_title();
           include(locate_template('partials/vf-summary-events-past.php', false, false)); ?>
           <?php endwhile;?>
         </div>
-      </section>
-    </div>
-
-    <style>
-      .jplist-selected {
-        background-color: #707372;
-      }
-      .jplist-selected a {
-        color: #fff;
-      }
-    </style>
-
-    <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-      data-items-per-page="10" data-current-page="0" data-name="pagination1">
+        <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
+      data-items-per-page="20" data-current-page="0" data-name="pagination1">
       <ul class="vf-pagination__list">
         <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
           <a class="vf-pagination__link">
@@ -155,6 +135,19 @@ $title = $vf_theme->get_title();
       </ul>
     </nav>
 
+      </section>
+    </div>
+
+    <style>
+      .jplist-selected {
+        background-color: #707372;
+      }
+      .jplist-selected a {
+        color: #fff;
+      }
+    </style>
+
+
   </div>
   <div class="vf-stack vf-stack--400">
     <article class="vf-card vf-card--brand vf-card--bordered">
@@ -168,7 +161,7 @@ $title = $vf_theme->get_title();
     </article>
     <article class="vf-card vf-card--brand vf-card--bordered">
       <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/internal-information/seminars/">Seminars<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/internal-information/seminars/">Scientific Events and Seminars<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
             </svg>
           </a>

@@ -18,7 +18,7 @@
             "choices": {
                 "post": "Post",
                 "insites": "Internal news (intranet only)",
-                "community-blog": "Important updates (intranet only)",
+                "community-blog": "Announcements and updates (intranet only)",
                 "both": "News + updates (intranet only)"
             },
             "default_value": false,
@@ -546,5 +546,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Latest News ACF Gutenberg block"
+    "description": "VF-WP Latest News ACF Gutenberg block",
+    "modified": 1673950034
 }

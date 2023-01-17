@@ -61,7 +61,7 @@ $team_1 = get_field('team_name_1', $post->ID);
   else { ?>    
   <div class="vf-summary__meta"><?php 
   $uri = get_page_uri(); 
-  echo '<p class="vf-summary__author">' . esc_html__($uri ) . '</p>'; ?></div>
+  echo '<p class="vf-summary__author | vf-u-margin__bottom--0">/' . esc_html__($uri ) . '</p>'; ?></div>
   <?php } }?>
   <?php
   if ((get_post_type() == 'page') || (get_post_type() == 'teams'))  {
