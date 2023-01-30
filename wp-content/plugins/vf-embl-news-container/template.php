@@ -80,6 +80,7 @@ if ($enable_sidebar == 1) {
 ?>
   <section class="<?php echo $embl_grid; ?>">
     <div class="vf-section-header">
+    <h2 class="vf-section-header__heading">
       <a class="vf-section-header__heading vf-section-header__heading--is-link" href="
       <?php 
       if (! empty($link)){
@@ -102,7 +103,7 @@ if ($enable_sidebar == 1) {
             fill="" fill-rule="nonzero">
           </path>
         </svg>
-      </a>
+      </a></h2>
       <?php if ($additional_text) { ?>
       <p class="vf-section-header__text">
         <?php echo $additional_text; ?>
