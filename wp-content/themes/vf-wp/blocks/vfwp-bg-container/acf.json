@@ -323,8 +323,8 @@
             },
             "choices": {
                 "-ui--white": "White",
-                "-ui--grey--light": "UI Grey light",
-                "--grey--lightest": "Grey lightest",
+                "-ui--grey--light": "Grey lightest",
+                "--grey--lightest": "Grey light",
                 "image": "Image"
             },
             "default_value": "-ui--white",
