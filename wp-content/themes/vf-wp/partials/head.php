@@ -11,6 +11,8 @@
   <meta name="theme-color" content="#ffffff">
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta class="swiftype" name="page-description" data-type="string" content="<?php echo swiftype_metadata_description(); ?>" />
+
   <!-- Social meta tags for events -->
 <?php
 if(is_singular('vf_event')) {

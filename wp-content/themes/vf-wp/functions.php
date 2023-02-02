@@ -154,9 +154,13 @@ function swiftype_metadata_description() {
         'source'              => 'contenthub',
       ), $url);
       $text = VF_Cache::fetch($url);
+      $text = strstr($text, '<p>',);
+      $text = strstr($text, '</p>', true);
+      $text = str_replace('<p>','', $text);
     } }
   return $text;
 }
+
 
 // allow only certain WP Gutenberg blocks
 // add_filter( 'allowed_block_types_all', 'allowed_block_types' );
