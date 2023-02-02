@@ -34,7 +34,7 @@ if ( ! is_array($button_link)) {
 }
 ?>
 
-<a href="<?php echo esc_url($button_link['url']); ?>">
+<a href="<?php echo esc_url($button_link['url']); ?>" target="_blank">
 <button class="vf-button vf-button--<?php echo esc_attr($button_style); echo esc_attr($size); ?>"><?php echo esc_html($button_link['title']) ?>
 </button>
 </a>
