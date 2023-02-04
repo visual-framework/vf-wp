@@ -13,7 +13,7 @@ $block_id = get_field('block_id');
 $column = get_field('columns');
 $grid_setting = get_field('grid_setting');
 $show_header = get_field('show_header');
-if ($show_header) { 
+if ($show_header || empty($show_header)) { 
   $hide_header_class = '';
 }
 else {
