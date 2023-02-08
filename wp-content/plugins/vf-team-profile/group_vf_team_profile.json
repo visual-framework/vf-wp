@@ -1,0 +1,66 @@
+{
+    "key": "group_vf_team_profile",
+    "title": "VF Team profile",
+    "fields": [
+        {
+            "key": "field_63e226ccfe1fd",
+            "label": "Search by",
+            "name": "vf_team_profile_search_by",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "name": "Team name",
+                "bdrid": "BDR ID"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "name",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 1
+        },
+        {
+            "key": "field_63e22748fe1fe",
+            "label": "Name \/ ID",
+            "name": "vf_team_profile_team_name",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-team-profile"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}
