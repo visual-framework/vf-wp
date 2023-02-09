@@ -22,6 +22,25 @@
             "maxlength": ""
         },
         {
+            "key": "field_63e4c42375247",
+            "label": "ID",
+            "name": "vf-details-id",
+            "type": "text",
+            "instructions": "(optional) Use for adding anchors",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_609a2ea1a84dc",
             "label": "",
             "name": "display_content",
@@ -65,5 +84,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1620719138
+    "modified": 1675937145
 }

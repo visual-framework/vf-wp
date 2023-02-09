@@ -4,6 +4,7 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $title = get_field('title');
+$id = get_field('vf-details-id');
 $display_content = get_field('display_content');
 $summary = get_field('summary', false, false);
 
@@ -32,7 +33,7 @@ if (
 }
 ?>
 
-<details class="vf-details"<?php if ($is_preview) { echo ' open="open"'; } ?> <?php if ($display_content == true) { echo ' open="open"'; } ?>>
+<details  class="vf-details" id="<?php echo $id; ?>" <?php if ($is_preview) { echo ' open="open"'; } ?> <?php if ($display_content == true) { echo ' open="open"'; } ?>>
 <summary class="vf-details--summary">
 <?php echo esc_html($title); ?>
 </summary>
