@@ -38,6 +38,7 @@ require_once('blocks/vfwp-bg-container/index.php');
 require_once('blocks/vfwp-embl-events/index.php');
 require_once('blocks/vfwp-post-fetch/index.php');
 require_once('blocks/vfwp-blockquote/index.php');
+require_once('blocks/vfwp-team-profile/index.php');
 require_once('blocks/vfwp-navigation-on-this-page/index.php');
 
 /*deprecated
