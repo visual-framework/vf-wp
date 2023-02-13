@@ -1557,7 +1557,7 @@
     yeoman-generator "^4.2.0"
     yosay "^2.0.2"
 
-"@visual-framework/vf-component-initialization@^1.1.7":
+"@visual-framework/vf-component-initialization@^1.1.9":
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-component-initialization/-/vf-component-initialization-1.1.9.tgz#6e4fe4d8e8b05604ab2488340ce36cd19086d075"
   integrity sha512-0Mp1Byc7ip1eSdJsZUHVJ9Zp971NEe/04jf1cN7DSAjbM70ZdrJi+eCTxV839A+liEjSL2xdszLzUOJId0LTrA==
@@ -1587,13 +1587,13 @@
     "@visual-framework/vf-list" "^1.1.0"
     "@visual-framework/vf-text" "^1.1.0"
 
-"@visual-framework/vf-core@2.2.37":
-  version "2.2.37"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.37.tgz#925dd5104b1b6bf2267f8a853a4b29f58c57e70a"
-  integrity sha512-BqXHjSoJ0EOHJmIhBx1lWK32Tv6yiqQgpFl7l5nh/VPDy8fX9RnVQS1x/EXRaWh3HokLQGCDTCdIVVsUNxzpOg==
+"@visual-framework/vf-core@2.2.38":
+  version "2.2.38"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.38.tgz#894a9cc497b25bbdead7b23bd4b26fbb832639f6"
+  integrity sha512-TvuhetDsMnwHQsdBUA9hnU+843TDSF4Dn1EQkTRXnR7eCy1/dTMj3TbJnyvis/xyWJBfAq/DLyassXZHCxRSpQ==
   dependencies:
     "@visual-framework/vf-component-generator" "^1.1.5"
-    "@visual-framework/vf-component-initialization" "^1.1.7"
+    "@visual-framework/vf-component-initialization" "^1.1.9"
     "@visual-framework/vf-frctl-extensions" "^2.0.0"
     "@visual-framework/vf-sass-compilation" "^1.1.19"
     chalk "^4.0.0"
