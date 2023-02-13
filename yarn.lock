@@ -1523,7 +1523,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.4.tgz#b5b72701966030c38f2ed7dd34b602a703692ce2"
   integrity sha512-D9hvL4TG5Xu4XnWLi/Kc6gDiJEsazvivT0ZtIMd7DhxigEm6+ebnkuBt7yfhpfxqay0Ugu0LMWLVAjQ5pyr5Eg==
 
-"@visual-framework/vf-button@2.0.0-alpha.6", "@visual-framework/vf-button@^2.0.0-alpha.6":
+"@visual-framework/vf-button@^2.0.0-alpha.6":
   version "2.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-2.0.0-alpha.6.tgz#8f48193699f60dd16ee8e62decd831a599cf80a3"
   integrity sha512-HvIc8SIpw8WZBaBXodhmx/faW2HxrlB6JMdlO95YByElA+JG9IfTyMWZv7R5ac6lUn6ixQNwCa2s690BXahSdg==
@@ -1557,7 +1557,7 @@
     yeoman-generator "^4.2.0"
     yosay "^2.0.2"
 
-"@visual-framework/vf-component-initialization@^1.1.7":
+"@visual-framework/vf-component-initialization@^1.1.9":
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-component-initialization/-/vf-component-initialization-1.1.9.tgz#6e4fe4d8e8b05604ab2488340ce36cd19086d075"
   integrity sha512-0Mp1Byc7ip1eSdJsZUHVJ9Zp971NEe/04jf1cN7DSAjbM70ZdrJi+eCTxV839A+liEjSL2xdszLzUOJId0LTrA==
@@ -1587,13 +1587,13 @@
     "@visual-framework/vf-list" "^1.1.0"
     "@visual-framework/vf-text" "^1.1.0"
 
-"@visual-framework/vf-core@2.2.37":
-  version "2.2.37"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.37.tgz#925dd5104b1b6bf2267f8a853a4b29f58c57e70a"
-  integrity sha512-BqXHjSoJ0EOHJmIhBx1lWK32Tv6yiqQgpFl7l5nh/VPDy8fX9RnVQS1x/EXRaWh3HokLQGCDTCdIVVsUNxzpOg==
+"@visual-framework/vf-core@2.2.38":
+  version "2.2.38"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-core/-/vf-core-2.2.38.tgz#894a9cc497b25bbdead7b23bd4b26fbb832639f6"
+  integrity sha512-TvuhetDsMnwHQsdBUA9hnU+843TDSF4Dn1EQkTRXnR7eCy1/dTMj3TbJnyvis/xyWJBfAq/DLyassXZHCxRSpQ==
   dependencies:
     "@visual-framework/vf-component-generator" "^1.1.5"
-    "@visual-framework/vf-component-initialization" "^1.1.7"
+    "@visual-framework/vf-component-initialization" "^1.1.9"
     "@visual-framework/vf-frctl-extensions" "^2.0.0"
     "@visual-framework/vf-sass-compilation" "^1.1.19"
     chalk "^4.0.0"
@@ -1813,10 +1813,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-page-header/-/vf-page-header-1.1.2.tgz#27ed45ba8bc768d86b6406fb99d8168e94736183"
   integrity sha512-qdnNZ+cK2BW9H5JL+pLmeaRO3YMP/eeLyHOqzgdVSNyDvVD9hl4l3BfeybQmrFjQfM0sNtJC1aZu/VfqKSLFHg==
 
-"@visual-framework/vf-pagination@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-pagination/-/vf-pagination-1.1.0.tgz#e48127f74b4c09e3399846bf700b237dc1519037"
-  integrity sha512-gSgoYtgkn2dimhriF7ieBYy2YJHgOrHqa3glHbxD3eVV9TxW7tSD7mKlrSxDv2KTF5Hd1kCpvjkZPfquGAsEWg==
+"@visual-framework/vf-pagination@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-pagination/-/vf-pagination-1.1.1.tgz#0a9e915f7308dd23c75c94e9909d4cd033382c8a"
+  integrity sha512-+QSHpQD9dl2uxNFK0Mvni1V+9okGfdK4Ro0TUyj+JIDlw6lunwfhqFUU3V697qQOeZB6s9GHHVB9zGqSwQe3Dg==
 
 "@visual-framework/vf-profile@1.4.0":
   version "1.4.0"
@@ -1864,10 +1864,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-search/-/vf-search-3.0.0-alpha.1.tgz#98af682b5133415acf7638be34d2ff42e41e8e8f"
   integrity sha512-3mfyEnlHI4pJK+b0CA4UotcBcwFR9dF9aO1voRbkDutCXVrVU6AQel5F0yfobiLxxphTTZOi6LES1WRuGtxXGQ==
 
-"@visual-framework/vf-section-header@1.5.3":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-section-header/-/vf-section-header-1.5.3.tgz#8be76c9c67d4e2778be662c2b1b3b01ffc86a39c"
-  integrity sha512-wUGd5WFsOd8o+ASQudgARfoaPet7l2O7ZIh+h/LA5nTKyrhB8LUYIeIMU31oU1qKqFgh/2O+E1i7S8Pdi+Pl1w==
+"@visual-framework/vf-section-header@1.5.4":
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-section-header/-/vf-section-header-1.5.4.tgz#f6a7881a3136de3eed87cd861b73643b1acbc8ce"
+  integrity sha512-ui801r9aZpJc6bSc1F9lVibIXHDiC52chVX6x7lfUvVbMmym2QOefDa06vMzxJAUzmpnp9OZSPy/Try79/3qEQ==
 
 "@visual-framework/vf-sidebar@1.0.0-alpha.2":
   version "1.0.0-alpha.2"

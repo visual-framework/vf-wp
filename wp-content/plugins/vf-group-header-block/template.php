@@ -9,6 +9,8 @@ if ($vf_plugin) {
 
 $acf_id = isset($acf_id) ? $acf_id : false;
 
+$bdrid = get_field('field_bdr_id', 'option');
+
 $heading_html = function() use ($acf_id) {
   $heading = get_field('vf_group_header_heading', $acf_id);
   $heading = esc_html($heading);
@@ -68,14 +70,34 @@ if ($is_minimal) {
   $vars['pattern'] = 'vf-profile-inline';
 }
 
+$key = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.title]';
+$key_bdrid = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.field_foreignid]';
+
 if (function_exists('embl_taxonomy_get_term')) {
+  // Use specified term
+  $term = null;
   $term_id = get_field('embl_taxonomy_term_what', 'option');
-  $term = embl_taxonomy_get_term($term_id);
-  $key = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.title]';
+  if (is_numeric($term_id)) {
+    $term = embl_taxonomy_get_term(intval($term_id));
+  }
+  // Use default
+  if ( ! $term instanceof WP_Term) {
+    $term_id = get_field('embl_taxonomy_term_what', 'option');
+    $term = embl_taxonomy_get_term($term_id);
+  }
+
   if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
-    $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
+    if ($bdrid === 'null' || $bdrid ==='') {
+      $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
+    }
+    else {
+      $vars[$key_bdrid] = $bdrid;
+    }
   }
 }
+
+
+
 
 // Setup base API URL
 $url = VF_Cache::get_api_url();

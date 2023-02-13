@@ -11,6 +11,8 @@
   <meta name="theme-color" content="#ffffff">
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta class="swiftype" name="page-description" data-type="string" content="<?php echo swiftype_metadata_description(); ?>" />
+
   <!-- Social meta tags for events -->
 <?php
 if(is_singular('vf_event')) {
@@ -36,6 +38,8 @@ if($card_name) { ?>
   <meta property="og:title" content="<?php echo $card_title; ?>" />
   <meta property="og:description" content="<?php echo $card_desc; ?>" />
   <meta property="og:image" content="<?php echo $card_thumb; ?>" />
+
+  <meta class="swiftype" name="what" data-type="string" content="Events" />
 <?php } ?>
   <!-- Search indexing optimisations -->
   <?php
@@ -43,6 +47,7 @@ if($card_name) { ?>
     if (get_the_post_thumbnail_url()) {
       echo '<meta class="swiftype" name="image" data-type="enum" content="' . get_the_post_thumbnail_url() . '" />';
     }
+
   ?>
 <?php wp_head(); ?>
 </head>
