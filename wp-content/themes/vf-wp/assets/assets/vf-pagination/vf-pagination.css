@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-pagination
- * Version: 1.1.0
+ * Version: 1.1.1
  * Location: components/vf-core-components/vf-pagination
  */
 .vf-pagination__list {
@@ -117,11 +117,8 @@
   padding-right: 0.5rem;
 }
 
-.vf-pagination__item--is-active {
-  background-color: #707372;
-}
 .vf-pagination__item--is-active .vf-pagination__label {
-  color: #ffffff;
+  font-weight: bold;
 }
 
 .vf-pagination__label,
@@ -132,15 +129,38 @@
   font-weight: 400;
   line-height: 1.71;
   margin: var(--vf-stack-margin, 0) 0 0 0;
-  color: #707372;
+  color: var(--vf-color__text--primary);
   display: block;
   padding: 4px 8px;
   text-decoration: none;
 }
 
+.vf-pagination__link {
+  border-bottom: none;
+  text-decoration: none;
+  color: #3b6fb6;
+  color: var(--vf-color__link);
+}
+.vf-pagination__link:visited {
+  color: #563d82;
+  border-bottom: none;
+}
+.vf-pagination__link:visited:hover {
+  color: #563d82;
+  text-decoration: underline;
+}
 .vf-pagination__link:hover {
-  background-color: #707372;
-  color: #ffffff;
+  color: #193f90;
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+.vf-pagination__link--visited, .vf-pagination__link:visited {
+  color: var(--vf-color__link--visited);
+}
+
+.vf-pagination__link--hover, .vf-pagination__link:hover {
+  color: var(--vf-color__link--hover);
 }
 
 .vf-pagination__item--jump-back {
@@ -149,6 +169,18 @@
 
 .vf-pagination__item--jump-forward {
   border-left: 1px solid #d0d0ce;
+}
+
+.disabled {
+  color: var(--vf-color__text--primary);
+  cursor: not-allowed;
+  pointer-events: all;
+}
+
+[disabled] {
+  color: var(--vf-color__text--primary);
+  cursor: not-allowed;
+  pointer-events: all;
 }
 
 html:not(.vf-disable-deprecated) .vf-pagination__item--pages-per:hover {
