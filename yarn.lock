@@ -1523,7 +1523,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.4.tgz#b5b72701966030c38f2ed7dd34b602a703692ce2"
   integrity sha512-D9hvL4TG5Xu4XnWLi/Kc6gDiJEsazvivT0ZtIMd7DhxigEm6+ebnkuBt7yfhpfxqay0Ugu0LMWLVAjQ5pyr5Eg==
 
-"@visual-framework/vf-button@^2.0.0-alpha.6":
+"@visual-framework/vf-button@2.0.0-alpha.6", "@visual-framework/vf-button@^2.0.0-alpha.6":
   version "2.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-2.0.0-alpha.6.tgz#8f48193699f60dd16ee8e62decd831a599cf80a3"
   integrity sha512-HvIc8SIpw8WZBaBXodhmx/faW2HxrlB6JMdlO95YByElA+JG9IfTyMWZv7R5ac6lUn6ixQNwCa2s690BXahSdg==
@@ -1628,10 +1628,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-embed/-/vf-embed-1.1.2.tgz#b4d24768bcf49ec31f15f34b37b427beb7098e1b"
   integrity sha512-/ZRb6os6BivwRg7Ukao6DxFIns5pOW83DRL+A2sGblhJtZRMGs8SS5WfeX/BGH/TWX+8DfMaXrhBrAvCBi6Zhw==
 
-"@visual-framework/vf-extensions@2.0.0-alpha.2":
-  version "2.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-2.0.0-alpha.2.tgz#a6fc7c690d5dc175cc4440e852a77e9992ddb47f"
-  integrity sha512-1zUquoOHDEq92uQr1oIzzmG+lJ1WFv+m8xYAXYub8fwbMytJvVU/c9hJrUxPqB4hV+64NJGWeFzmNeRhVaossA==
+"@visual-framework/vf-extensions@2.0.0-alpha.3":
+  version "2.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-2.0.0-alpha.3.tgz#71a88a177c46122b60d0888fe17a9236c0f29a11"
+  integrity sha512-FMCoZwuOyf4RKOMjLEwmmbcfYaWLVEySju4Ca9f2uk6Z1oBhZ+P21y7VB+19lpcD+5H8GMZw8Ar69gIKRGiVbg==
   dependencies:
     "@11ty/eleventy-plugin-rss" "^1.0.7"
     luxon "^2.0.0"
