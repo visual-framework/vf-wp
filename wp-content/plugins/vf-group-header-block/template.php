@@ -71,7 +71,7 @@ if ($is_minimal) {
 }
 
 $key = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.title]';
-$key_bdrid = 'filter-field-contains[field_person_positions.entity.field_position_team.entity.field_foreignid]';
+$key_bdrid = 'filter-field-value[field_person_positions.entity.field_position_team.entity.field_foreignid]';
 
 if (function_exists('embl_taxonomy_get_term')) {
   // Use specified term
