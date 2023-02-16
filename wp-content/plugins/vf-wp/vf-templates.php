@@ -24,7 +24,7 @@ class VF_Templates {
    */
   static public function is_template_post($post, $post_name = '') {
     $theme = wp_get_theme();
-    // $template_name = get_page_template_slug( $post->ID );
+    $template_name = get_page_template_slug( $post->ID );
 
     if ( ! $post instanceof WP_Post) {
       return false;
