@@ -3,22 +3,19 @@
 * Template Name: Publications with filter
 */
 
+get_header();
 // The plugin is missing so use the default page template
 if ( ! class_exists('VF_Publications')) {
   get_template_part('page');
   return;
 }
-
 $vf_publications = VF_Plugin::get_plugin('vf_publications');
 
-get_header();
-
-$keyword = $vf_publications->get_query_keyword();
-$years = array('2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015');
 global $vf_theme;
 
 ?>
-
+<script>
+</script>
 <div class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--800">
   <div></div>
   <div>
@@ -41,15 +38,8 @@ global $vf_theme;
         <div class="vf-form__item vf-stack">
           <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter"
             data-group="data-group-1">
-            <option value="0" data-path="default">All</option>
-            <option data-path="default" value="0">2022</option>
-            <?php
-            foreach($years as $year) {
-            ?>
-            <option data-path=".<?php echo esc_attr($year); ?>" value="<?php echo esc_attr($year); ?>">
-              <?php echo esc_html($year); ?> </option>
-            <?php } ?>
-          </select>
+            <option value="0" data-path="default" data-name="default" data-group="data-group-1">All</option>  
+                  </select>
         </div>
       </fieldset>
     </form>
@@ -60,21 +50,74 @@ global $vf_theme;
     <div data-jplist-group="data-group-1">
       <?php
 
-      VF_Plugin::render($vf_publications);
+VF_Plugin::render($vf_publications);
 
-      echo '<hr class="vf-divider">';
 
       // the_content();
       $vf_theme->the_content();
 
       ?>
+            <!-- no results control -->
+            <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+        data-name="no-results">
+        <p class="vf-summary__text">
+          No matching seminars found
+        </p>
+      </article>
     </div>
+
+<!-- <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
+     data-items-per-page="10" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
+
+  <ul class="vf-pagination__list" id="pagination_list">
+    <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
+      <a class="vf-pagination__link" href="#">
+        <span class="vf-pagination__label">Previous <span class="vf-u-sr-only"> page</span></span>
+      </a>
+    </li>
+    <div data-type="pages" style="display: flex;">
+      <li class="vf-pagination__item" data-type="page" data-current-page="{pageNumber}">
+        <a href="#" class="vf-pagination__link">
+          {pageNumber}
+        </a>
+      </li>
+    </div>
+    <li class="vf-pagination__item vf-pagination__item--next-page" data-type="next">
+      <a href="#" class="vf-pagination__link">
+        Next<span class="vf-u-sr-only"> page</span>
+      </a>
+    </li>
+  </ul>
+  <div class="vf-u-display-none totalrecords" data-type="info" id="totalrecords">{itemsNumber}</div>
+</nav> -->
+
+    </div>
+    
   </div>
+  
 </div>
 
 <script type="text/javascript">
+
+              // getElementsByClassName only selects elements that have both given classes
+              const pub = document.getElementsByClassName('publication-year');
+            let result = [];
+            for (let i = 0; i < pub.length; i++) {
+              result += `  ${pub[i].textContent}`;
+            }
+            let myArray = result.split(" ");
+            let uniqueChars = [...new Set(myArray)];
+            var sel = document.querySelector('.vf-form__select');
+            uniqueChars.forEach(unique => {
+    let opt = document.createElement('option');
+    opt.value = 'year-'+unique;
+    opt.setAttribute('data-path', '.year-'+unique);
+    opt.setAttribute('data-name', 'default');
+    opt.setAttribute('data-group', 'data-group-1');
+    opt.textContent += unique // or opt.innerHTML += user.name
+    sel.appendChild(opt);
+  });
   jplist.init({
-    deepLinking: true
   });
 
 </script>
