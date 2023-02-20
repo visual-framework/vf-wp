@@ -3,18 +3,14 @@
 * Template Name: Publications with filter
 */
 
+get_header();
 // The plugin is missing so use the default page template
 if ( ! class_exists('VF_Publications')) {
   get_template_part('page');
   return;
 }
-
 $vf_publications = VF_Plugin::get_plugin('vf_publications');
 
-get_header();
-
-$keyword = $vf_publications->get_query_keyword();
-$years = array('2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015');
 global $vf_theme;
 
 ?>
@@ -41,14 +37,7 @@ global $vf_theme;
         <div class="vf-form__item vf-stack">
           <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter"
             data-group="data-group-1">
-            <option value="0" data-path="default">All</option>
-            <option data-path="default" value="0">2022</option>
-            <?php
-            foreach($years as $year) {
-            ?>
-            <option data-path=".<?php echo esc_attr($year); ?>" value="<?php echo esc_attr($year); ?>">
-              <?php echo esc_html($year); ?> </option>
-            <?php } ?>
+            <option value="0" data-path="default" data-name="default" data-group="data-group-1">All</option>
           </select>
         </div>
       </fieldset>
@@ -56,26 +45,66 @@ global $vf_theme;
   </div>
   <div>
 
+    <div id="content">
+      <div data-jplist-group="data-group-1">
+        <?php
 
-    <div data-jplist-group="data-group-1">
-      <?php
+        VF_Plugin::render($vf_publications);
 
-      VF_Plugin::render($vf_publications);
+        // the_content();
+        $vf_theme->the_content();
 
-      echo '<hr class="vf-divider">';
-
-      // the_content();
-      $vf_theme->the_content();
-
-      ?>
+        ?>
+        <!-- no results control -->
+        <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+          data-name="no-results">
+          <p class="vf-summary__text">
+            No matching seminars found
+          </p>
+        </article>
+      </div>
     </div>
   </div>
 </div>
+</div>
 
 <script type="text/javascript">
-  jplist.init({
-    deepLinking: true
-  });
+
+// get all the values based on the class name
+const publicationYear = document.getElementsByClassName('publication-year');
+let allYears = [];
+for (let i = 0; i < publicationYear.length; i++) {
+  allYears += `  ${publicationYear[i].textContent}`;
+  if (allYears[i] == 2) {}
+}
+// create an array
+let YearsArray = allYears.split(" ");
+
+// count the occurrences
+const counts = {};
+for (const num of YearsArray) {
+  counts[num] = counts[num] ? counts[num] + 1 : 1;
+}
+
+// create an array without the duplicates and remove empty values
+let uniqueYears = [...new Set(YearsArray)].filter(function (e) {
+  return e
+});
+
+// loop thorugh the values and create option elements
+var sel = document.querySelector('.vf-form__select');
+uniqueYears.forEach(unique => {
+  let opt = document.createElement('option');
+  opt.value = 'year-' + unique;
+  opt.setAttribute('data-path', '.year-' + unique);
+  opt.setAttribute('data-name', 'default');
+  opt.setAttribute('data-group', 'data-group-1');
+  opt.textContent += unique + ' (' + counts[unique] + ')'; 
+  sel.appendChild(opt);
+});
+
+// activate jplist library
+jplist.init({});
 
 </script>
 

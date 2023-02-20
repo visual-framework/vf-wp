@@ -40,7 +40,7 @@ $grid = get_field('grid');
 
 $category = get_field('category');
 $tag = get_field('tag');
-$keyword = get_field('keyword');
+$keyword = get_field('keyword_search');
 
 $show_image = get_field('show_image');
 $show_location = get_field('show_location');
