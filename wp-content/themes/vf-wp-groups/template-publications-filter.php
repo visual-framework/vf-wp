@@ -14,8 +14,7 @@ $vf_publications = VF_Plugin::get_plugin('vf_publications');
 global $vf_theme;
 
 ?>
-<script>
-</script>
+
 <div class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--800">
   <div></div>
   <div>
@@ -38,87 +37,74 @@ global $vf_theme;
         <div class="vf-form__item vf-stack">
           <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter"
             data-group="data-group-1">
-            <option value="0" data-path="default" data-name="default" data-group="data-group-1">All</option>  
-                  </select>
+            <option value="0" data-path="default" data-name="default" data-group="data-group-1">All</option>
+          </select>
         </div>
       </fieldset>
     </form>
   </div>
   <div>
 
+    <div id="content">
+      <div data-jplist-group="data-group-1">
+        <?php
 
-    <div data-jplist-group="data-group-1">
-      <?php
+        VF_Plugin::render($vf_publications);
 
-VF_Plugin::render($vf_publications);
+        // the_content();
+        $vf_theme->the_content();
 
-
-      // the_content();
-      $vf_theme->the_content();
-
-      ?>
-            <!-- no results control -->
-            <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
-        data-name="no-results">
-        <p class="vf-summary__text">
-          No matching seminars found
-        </p>
-      </article>
+        ?>
+        <!-- no results control -->
+        <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+          data-name="no-results">
+          <p class="vf-summary__text">
+            No matching seminars found
+          </p>
+        </article>
+      </div>
     </div>
-
-<!-- <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-     data-items-per-page="10" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
-
-  <ul class="vf-pagination__list" id="pagination_list">
-    <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
-      <a class="vf-pagination__link" href="#">
-        <span class="vf-pagination__label">Previous <span class="vf-u-sr-only"> page</span></span>
-      </a>
-    </li>
-    <div data-type="pages" style="display: flex;">
-      <li class="vf-pagination__item" data-type="page" data-current-page="{pageNumber}">
-        <a href="#" class="vf-pagination__link">
-          {pageNumber}
-        </a>
-      </li>
-    </div>
-    <li class="vf-pagination__item vf-pagination__item--next-page" data-type="next">
-      <a href="#" class="vf-pagination__link">
-        Next<span class="vf-u-sr-only"> page</span>
-      </a>
-    </li>
-  </ul>
-  <div class="vf-u-display-none totalrecords" data-type="info" id="totalrecords">{itemsNumber}</div>
-</nav> -->
-
-    </div>
-    
   </div>
-  
+</div>
 </div>
 
 <script type="text/javascript">
 
-              // getElementsByClassName only selects elements that have both given classes
-              const pub = document.getElementsByClassName('publication-year');
-            let result = [];
-            for (let i = 0; i < pub.length; i++) {
-              result += `  ${pub[i].textContent}`;
-            }
-            let myArray = result.split(" ");
-            let uniqueChars = [...new Set(myArray)];
-            var sel = document.querySelector('.vf-form__select');
-            uniqueChars.forEach(unique => {
-    let opt = document.createElement('option');
-    opt.value = 'year-'+unique;
-    opt.setAttribute('data-path', '.year-'+unique);
-    opt.setAttribute('data-name', 'default');
-    opt.setAttribute('data-group', 'data-group-1');
-    opt.textContent += unique // or opt.innerHTML += user.name
-    sel.appendChild(opt);
-  });
-  jplist.init({
-  });
+// get all the values based on the class name
+const publicationYear = document.getElementsByClassName('publication-year');
+let allYears = [];
+for (let i = 0; i < publicationYear.length; i++) {
+  allYears += `  ${publicationYear[i].textContent}`;
+  if (allYears[i] == 2) {}
+}
+// create an array
+let YearsArray = allYears.split(" ");
+
+// count the occurrences
+const counts = {};
+for (const num of YearsArray) {
+  counts[num] = counts[num] ? counts[num] + 1 : 1;
+}
+
+// create an array without the duplicates and remove empty values
+let uniqueYears = [...new Set(YearsArray)].filter(function (e) {
+  return e
+});
+
+// loop thorugh the values and create option elements
+var sel = document.querySelector('.vf-form__select');
+uniqueYears.forEach(unique => {
+  let opt = document.createElement('option');
+  opt.value = 'year-' + unique;
+  opt.setAttribute('data-path', '.year-' + unique);
+  opt.setAttribute('data-name', 'default');
+  opt.setAttribute('data-group', 'data-group-1');
+  opt.textContent += unique + ' (' + counts[unique] + ')'; 
+  sel.appendChild(opt);
+});
+
+// activate jplist library
+jplist.init({});
 
 </script>
 
