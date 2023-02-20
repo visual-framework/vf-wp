@@ -465,14 +465,6 @@ class VF_Theme {
       true
     );
 
-    wp_enqueue_script(
-      'jplist-pagination',
-      $dir . '/assets/scripts/jplist-pagination.js',
-      array(),
-      $theme->version,
-      true
-    );
-
     // run only on the intranet theme
     $theme = wp_get_theme(); // gets the current theme
     if ( 'VF-WP Intranet' == $theme->name || 'VF-WP Intranet' == $theme->parent_theme ) {
