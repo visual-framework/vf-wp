@@ -18,7 +18,8 @@
             "choices": {
                 "default": "Default",
                 "cco_hd": "CCO Heidelberg",
-                "science_society": "Science and Society"
+                "science_society": "Science and Society",
+                "trec_event": "TREC Events"
             },
             "default_value": false,
             "allow_null": 0,
@@ -85,7 +86,15 @@
             "type": "time_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -101,7 +110,15 @@
             "type": "time_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -117,7 +134,15 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -159,7 +184,15 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -183,6 +216,110 @@
             "ui": 1,
             "ajax": 0,
             "return_format": "label",
+            "placeholder": ""
+        },
+        {
+            "key": "field_63fc98afb1339",
+            "label": "Location TREC",
+            "name": "vf_event_trec_location",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Belgium": "Belgium",
+                "Croatia": "Croatia",
+                "Denmark": "Denmark",
+                "England": "England",
+                "Estonia": "Estonia",
+                "Finland": "Finland",
+                "France": "France",
+                "Germany": "Germany",
+                "Greece": "Greece",
+                "Irland": "Irland",
+                "Italy": "Italy",
+                "Latvia": "Latvia",
+                "Lithuania": "Lithuania",
+                "Montenegro": "Montenegro",
+                "Norway": "Norway",
+                "Poland": "Poland",
+                "Portugal": "Portugal",
+                "Spain": "Spain",
+                "Sweden": "Sweden",
+                "The Netherlands": "The Netherlands"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "label",
+            "placeholder": ""
+        },
+        {
+            "key": "field_63fcbb7c22389",
+            "label": "City TREC",
+            "name": "vf_event_trec_city",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Aarhus": "Aarhus",
+                "Athens": "Athens",
+                "Bergen": "Bergen",
+                "Bilbao": "Bilbao",
+                "Bremerhaven": "Bremerhaven",
+                "Galway": "Galway",
+                "Klaipeda": "Klaipeda",
+                "Kotor": "Kotor",
+                "Kristineberg \/ Gothenburg": "Kristineberg \/ Gothenburg",
+                "Liepaja": "Liepaja",
+                "Lorient": "Lorient",
+                "Mallorca": "Mallorca",
+                "Naples": "Naples",
+                "Oostende": "Oostende",
+                "Porto": "Porto",
+                "Roscoff": "Roscoff",
+                "Sopot": "Sopot",
+                "Southampton": "Southampton",
+                "Split": "Split",
+                "Tallinn": "Tallinn",
+                "Texel": "Texel",
+                "Turku": "Turku"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
             "placeholder": ""
         },
         {
@@ -229,7 +366,12 @@
                     {
                         "field": "field_5fbcab958038b",
                         "operator": "!=",
-                        "value": "embl_ebi_industry"
+                        "value": "default"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
                     }
                 ]
             ],
@@ -407,7 +549,15 @@
             "type": "text",
             "instructions": "If empty the event type will be displayed",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
@@ -426,7 +576,15 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -486,6 +644,51 @@
             "layout": "horizontal",
             "return_format": "value",
             "save_other_choice": 0
+        },
+        {
+            "key": "field_63fc9b7bb133a",
+            "label": "Registration TREC",
+            "name": "vf_event_trec_registration",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_63fc9b97b133b",
+                    "label": "Registration link",
+                    "name": "vf_event_trec_reg_link",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
         },
         {
             "key": "field_61713d4e583ed",
@@ -648,7 +851,15 @@
             "type": "date_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -665,7 +876,15 @@
             "type": "date_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -682,7 +901,15 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -701,7 +928,15 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -720,7 +955,15 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1065,7 +1308,15 @@
             "type": "radio",
             "instructions": "",
             "required": 1,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1095,7 +1346,27 @@
                     {
                         "field": "field_5e98505453db1",
                         "operator": "!=",
-                        "value": "no"
+                        "value": "yes"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5e98505453db1",
+                        "operator": "!=",
+                        "value": "postponed"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5e98505453db1",
+                        "operator": "==empty"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
                     }
                 ]
             ],
@@ -1151,7 +1422,15 @@
             "type": "tab",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1388,7 +1667,7 @@
                         "value": "cco_hd"
                     }
                 ],
-                [    
+                [
                     {
                         "field": "field_5fbcab958038b",
                         "operator": "==",
@@ -1427,14 +1706,13 @@
                         "value": "cco_hd"
                     }
                 ],
-                [    
+                [
                     {
                         "field": "field_5fbcab958038b",
                         "operator": "==",
                         "value": "default"
                     }
                 ]
-
             ],
             "wrapper": {
                 "width": "",
@@ -1518,6 +1796,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type",
-    "modified": 1647868687
+    "description": "`vf_event` post type"
 }
