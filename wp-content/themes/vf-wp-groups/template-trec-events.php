@@ -68,7 +68,9 @@ while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post(); ?>
 
 <!--/vf-grid-->
 
-
+<script>
+    var counter = document.querySelectorAll('.city-Southampton').length;
+</script>
 <script type="text/javascript">
   jplist.init({
     deepLinking: true

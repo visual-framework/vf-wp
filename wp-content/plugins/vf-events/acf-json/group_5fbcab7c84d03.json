@@ -261,7 +261,7 @@
                 "Sweden": "Sweden",
                 "The Netherlands": "The Netherlands"
             },
-            "default_value": [],
+            "default_value": false,
             "allow_null": 0,
             "multiple": 0,
             "ui": 1,
@@ -319,7 +319,7 @@
             "multiple": 0,
             "ui": 1,
             "ajax": 0,
-            "return_format": "value",
+            "return_format": "label",
             "placeholder": ""
         },
         {
@@ -649,7 +649,7 @@
             "key": "field_63fc9b7bb133a",
             "label": "Registration TREC",
             "name": "vf_event_trec_registration",
-            "type": "repeater",
+            "type": "url",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -666,29 +666,8 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "",
-            "sub_fields": [
-                {
-                    "key": "field_63fc9b97b133b",
-                    "label": "Registration link",
-                    "name": "vf_event_trec_reg_link",
-                    "type": "url",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": ""
-                }
-            ]
+            "default_value": "",
+            "placeholder": ""
         },
         {
             "key": "field_61713d4e583ed",
@@ -1144,7 +1123,7 @@
                     {
                         "field": "field_5fbcab958038b",
                         "operator": "!=",
-                        "value": "select"
+                        "value": "default"
                     }
                 ]
             ],
@@ -1347,6 +1326,11 @@
                         "field": "field_5e98505453db1",
                         "operator": "!=",
                         "value": "yes"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
                     }
                 ],
                 [
@@ -1354,18 +1338,48 @@
                         "field": "field_5e98505453db1",
                         "operator": "!=",
                         "value": "postponed"
+                    },
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
                     }
                 ],
                 [
                     {
                         "field": "field_5e98505453db1",
                         "operator": "==empty"
-                    }
-                ],
-                [
+                    },
                     {
                         "field": "field_5fbcab958038b",
                         "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_63fdd146a1327",
+            "label": "Partners TREC",
+            "name": "vf_event_trec_partners",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
                         "value": "trec_event"
                     }
                 ]
