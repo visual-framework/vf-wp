@@ -1,4 +1,4 @@
-<nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="news"
+<nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="events"
      data-items-per-page="15" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
 
   <ul class="vf-pagination__list" id="pagination_list">

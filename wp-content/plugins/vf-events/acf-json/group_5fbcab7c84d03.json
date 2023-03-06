@@ -576,15 +576,7 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1241,7 +1233,15 @@
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "!=",
+                        "value": "trec_event"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1810,5 +1810,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "`vf_event` post type"
+    "description": "`vf_event` post type",
+    "modified": 1678098746
 }

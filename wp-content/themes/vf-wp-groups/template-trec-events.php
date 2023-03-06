@@ -5,32 +5,34 @@
 
 get_header();
 
+global $vf_theme;
+
+?>
+
+<?php
+$vf_theme->the_content();
 ?>
 
 <div
-  class="embl-grid embl-grid--has-centered-content | vf-u-padding__top--500 vf-u-padding__bottom--500 | vf-u-margin__bottom--800 | vf-content">
+  class="embl-grid embl-grid--has-centered-content vf-u-padding__bottom--500 | vf-content">
   <div></div>
   <div>
-  <p></p>
-
 
   <form action="#eventsFilter" onsubmit="return false;"
     class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
     <div class="vf-sidebar__inner">
     <div class="vf-form__item">
           <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
-            data-group="news" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
+            data-group="events" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
             placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
         </div>
         <button style="display: none;" type="button" id="name-clear-btn"
           class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
           <span class="vf-button__text">Reset</span>
         </button>
-
     </div>
   </form>
   </div>
-
 </div>
 
 <section class="embl-grid embl-grid--has-centered-content">
@@ -38,7 +40,7 @@ get_header();
   <?php include(locate_template('partials/trec-filter.php', false, false)); ?>
   </div>
   <div>
-    <div data-jplist-group="news">
+    <div data-jplist-group="events">
       
     <?php 
 
@@ -51,7 +53,7 @@ while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post(); ?>
 <?php wp_reset_postdata(); ?>
 
       <!-- no results control -->
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="news"
+      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="events"
         data-name="no-results">
         <p class="vf-summary__text">
           No matching posts found
@@ -68,9 +70,6 @@ while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post(); ?>
 
 <!--/vf-grid-->
 
-<script>
-    var counter = document.querySelectorAll('.city-Southampton').length;
-</script>
 <script type="text/javascript">
   jplist.init({
     deepLinking: true
