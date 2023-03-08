@@ -16,7 +16,7 @@ $heading = trim($heading);
 
 $vars = array(
   'source'                    => 'contenthub',
-  'filter-content-type'       => 'resource',
+  'filter-content-type'       => 'data_resource',
   'pattern'                   => 'vf-summary-image',
   'limit'                     => $limit,
   'sort-field-value[changed]' => $order,
@@ -25,7 +25,7 @@ $vars = array(
 if (function_exists('embl_taxonomy_get_term')) {
   $term_id = get_field('embl_taxonomy_term_what', 'option');
   $term = embl_taxonomy_get_term($term_id);
-  $key = 'filter-field-contains[field_resource_team.entity.title]';
+  $key = 'filter-field-contains[field_resource_teams.entity.title]';
   if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
     $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
   }
