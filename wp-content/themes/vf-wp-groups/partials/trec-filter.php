@@ -27,11 +27,11 @@ $cities = ['Aarhus',
         <legend class="vf-form__legend">Location</legend>
         <div class="vf-form__item vf-stack">
           <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter"
-            data-group="events">
-            <option value="0" data-path="default" data-name="default" data-group="events">All</option>
+            data-group="data-group-1">
+            <option value="0" data-path="default" data-name="default" data-group="data-group-1">All</option>
             <?php foreach ($cities as $city): ?>
                
-<option value="city-<?php echo $city; ?>" data-path=".city-<?php echo $city; ?>" data-name="default" data-group="events"><?php echo $city; ?>
+<option value="city-<?php echo $city; ?>" data-path=".city-<?php echo $city; ?>" data-name="default" data-group="data-group-1"><?php echo $city; ?>
 </option>
 
         <?php endforeach; ?>

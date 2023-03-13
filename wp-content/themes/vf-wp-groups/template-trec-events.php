@@ -23,7 +23,7 @@ $vf_theme->the_content();
     <div class="vf-sidebar__inner">
     <div class="vf-form__item">
           <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
-            data-group="events" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
+            data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
             placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
         </div>
         <button style="display: none;" type="button" id="name-clear-btn"
@@ -40,7 +40,7 @@ $vf_theme->the_content();
   <?php include(locate_template('partials/trec-filter.php', false, false)); ?>
   </div>
   <div>
-    <div data-jplist-group="events">
+    <div data-jplist-group="data-group-1">
       
     <?php 
 
@@ -53,7 +53,7 @@ while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post(); ?>
 <?php wp_reset_postdata(); ?>
 
       <!-- no results control -->
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="events"
+      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
         <p class="vf-summary__text">
           No matching posts found
