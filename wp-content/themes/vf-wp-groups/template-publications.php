@@ -26,7 +26,16 @@ global $vf_theme;
         data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
         placeholder="Search by title" data-clear-btn-id="name-clear-btn">
     </div>
+    <p class="vf-u-margin__bottom--0">Total number of publications: <span style="font-weight: 700;"
+    data-jplist-control="counter"
+    data-group="data-group-1"
+    data-format="{count}"
+    data-path=".vf-summary__title"
+    data-mode="static"
+    data-name="counter-barcelona-filter"
+    data-filter-type="path"></span></p>
   </div>
+
 </div>
 
 <div class="embl-grid embl-grid--has-centered-content">
@@ -63,6 +72,8 @@ global $vf_theme;
           </p>
         </article>
       </div>
+      <?php include(locate_template('partials/paging-controls.php', false, false)); ?>
+
     </div>
   </div>
 </div>
