@@ -7,6 +7,7 @@ $currentAfter = '</li>';
 $home = get_bloginfo('url');
 $post = get_queried_object();
 
+echo '<hr class="vf-divider">';
 echo '<nav class="vf-breadcrumbs" aria-label="Breadcrumb">';
 echo '<ul class="vf-breadcrumbs__list | vf-list vf-list--inline">';
 

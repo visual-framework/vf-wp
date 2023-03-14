@@ -63,7 +63,7 @@ $close_wrap,
     parse_blocks( 'acf/vfwp-masthead' ); }
 
   else {  ?>
-     <div>
+     <div class="title-container">
      <?php
     $tags = get_the_tags($post->ID);
     if ($tags) {
