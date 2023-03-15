@@ -83,7 +83,7 @@
     "@visual-framework/vf-discussion": "1.0.1",
     "@visual-framework/vf-divider": "2.0.1",
     "@visual-framework/vf-embed": "1.1.2",
-    "@visual-framework/vf-extensions": "2.0.0-alpha.3",
+    "@visual-framework/vf-extensions": "3.0.0",
     "@visual-framework/vf-font-plex-mono": "1.1.1",
     "@visual-framework/vf-font-plex-sans": "1.1.1",
     "@visual-framework/vf-footer": "1.2.0",

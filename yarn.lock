@@ -1628,10 +1628,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-embed/-/vf-embed-1.1.2.tgz#b4d24768bcf49ec31f15f34b37b427beb7098e1b"
   integrity sha512-/ZRb6os6BivwRg7Ukao6DxFIns5pOW83DRL+A2sGblhJtZRMGs8SS5WfeX/BGH/TWX+8DfMaXrhBrAvCBi6Zhw==
 
-"@visual-framework/vf-extensions@2.0.0-alpha.3":
-  version "2.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-2.0.0-alpha.3.tgz#71a88a177c46122b60d0888fe17a9236c0f29a11"
-  integrity sha512-FMCoZwuOyf4RKOMjLEwmmbcfYaWLVEySju4Ca9f2uk6Z1oBhZ+P21y7VB+19lpcD+5H8GMZw8Ar69gIKRGiVbg==
+"@visual-framework/vf-extensions@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-3.0.0.tgz#9c59912a98766410c1cd4a442431c024fd878815"
+  integrity sha512-Kk1+9pX7oHdcIJD6m9uvY7pHWUYLbNdySQJ3VFVOZoiemVCawW2Ov3n9oVFOj/MUMznccVle2JF13WRHllXH5Q==
   dependencies:
     "@11ty/eleventy-plugin-rss" "^1.0.7"
     luxon "^2.0.0"
