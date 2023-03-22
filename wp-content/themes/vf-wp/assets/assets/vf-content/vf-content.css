@@ -173,7 +173,7 @@
 
 /*!
  * Component: @visual-framework/vf-badge
- * Version: 2.0.1
+ * Version: 3.0.0-alpha.0
  * Location: components/vf-core-components/vf-badge
  */
 .vf-badge {
@@ -328,7 +328,7 @@ a.vf-badge--secondary:hover {
 
 /*!
  * Component: @visual-framework/vf-link
- * Version: 2.0.0
+ * Version: 2.0.1
  * Location: components/vf-core-components/vf-link
  */
 .vf-link {
@@ -1419,7 +1419,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.8
+ * Version: 1.6.9
  * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]) {
