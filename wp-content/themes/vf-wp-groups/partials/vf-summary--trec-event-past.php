@@ -38,10 +38,10 @@ $endTime = get_field('vf_event_end_time',$post_id);
         }
     ?>
     <?php if ( ! empty($city)) { ?>
-    <span class="vf-summary__location | city-<?php echo $cityFormated; ?>"><?php echo ' | ' . $city. ', '; ?>
+      <span class="vf-summary__location | city-<?php echo $cityFormated; ?>"><?php echo ' | ' . $city. ', '; ?>
     </span><?php } ?>
     <?php if ( ! empty($location)) { ?>
-    <span class="vf-summary__location"><?php echo strtoupper($location); ?>
+      <span class="vf-summary__location"><?php echo strtoupper($location); ?>
     </span>
     <?php } ?>
     <?php if ( ! empty($venue)) { ?>
@@ -53,27 +53,18 @@ $endTime = get_field('vf_event_end_time',$post_id);
   </h3>
   <div>
     <div class="vf-content | wysiwyg">
-      <?php echo $additionalInfo; ?>
+    <?php echo $additionalInfo; ?>
     </div>
-    <div
-      class="vf-grid vf-grid__col-2 | vf-u-margin__top--200 <?php if (empty($registration)) { echo 'vf-u-margin__bottom--400'; } ?>">
-      <div
-        <?php if ( empty($partners) && empty($registration) && empty($registrationInfo)) { echo 'class="vf-u-margin__top--400"'; } ?>>
+    <div class="vf-grid vf-grid__col-2 | vf-u-margin__top--200 <?php if (empty($registration)) { echo 'vf-u-margin__bottom--400'; } ?>">
+      <div <?php if ( empty($partners) && empty($registration) && empty($registrationInfo)) { echo 'class="vf-u-margin__top--400"'; } ?>>
         <?php if ( ! empty($partners)) { ?>
         <p class="vf-u-margin--0"><span style="font-weight: 500;">Partners: </span><span
             class="vf-summary__location"><?php echo $partners; ?></span></p>
         <?php } ?>
-        <?php if ( ! empty($registration)) { ?>
-        <button class="vf-button vf-button--link" onclick="location.href='<?php echo $registration; ?>';"
-          style="padding-left: 0; border-left: 0;">Registration</button>
-        <?php } ?>
-        <?php if ( ! empty($registrationInfo)) { ?>
-        <p><?php echo $registrationInfo; ?></p>
-        <?php } ?>
       </div>
     </div>
   </div>
-  <?php if ($forthcomingLoop->current_post +1 < $forthcomingLoop->post_count) {
+  <?php if ($pastLoop->current_post +1 < $pastLoop->post_count) {
     echo '  <hr class="vf-divider">';
 
 } ?>
