@@ -86,22 +86,14 @@
             "type": "time_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "display_format": "g:i a",
-            "return_format": "g:i a"
+            "display_format": "g:i",
+            "return_format": "g:i"
         },
         {
             "key": "field_5e9852f0ec0f1",
@@ -110,22 +102,14 @@
             "type": "time_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "display_format": "g:i a",
-            "return_format": "g:i a"
+            "display_format": "g:i",
+            "return_format": "g:i"
         },
         {
             "key": "field_5ed74d4c8c0cf",
@@ -299,7 +283,7 @@
                 "Galway": "Galway",
                 "Klaipeda": "Klaipeda",
                 "Kotor": "Kotor",
-                "Kristineberg \/ Gothenburg": "Kristineberg \/ Gothenburg",
+                "Kristineberg-Gothenburg": "Kristineberg/Gothenburg",
                 "Liepaja": "Liepaja",
                 "Lorient": "Lorient",
                 "Mallorca": "Mallorca",
@@ -933,6 +917,13 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "trec_event"
+                    }
                 ]
             ],
             "wrapper": {
@@ -1249,8 +1240,8 @@
             },
             "default_value": "",
             "tabs": "all",
-            "media_upload": 0,
             "toolbar": "basic",
+            "media_upload": 0,
             "delay": 0
         },
         {
@@ -1265,7 +1256,14 @@
                     {
                         "field": "field_5fbcab958038b",
                         "operator": "==",
-                        "value": "embl_ebi_training"
+                        "value": "default"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "trec_event"
                     }
                 ]
             ],
@@ -1811,5 +1809,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "`vf_event` post type",
-    "modified": 1678098746
+    "modified": 1679488395
 }

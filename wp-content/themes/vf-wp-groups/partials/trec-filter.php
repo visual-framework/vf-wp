@@ -7,7 +7,7 @@ $cities = ['Aarhus',
 'Galway',
 'Klaipeda',
 'Kotor',
-'Kristineberg / Gothenburg',
+'Kristineberg/Gothenburg',
 'Liepaja',
 'Lorient',
 'Mallorca',
@@ -29,9 +29,10 @@ $cities = ['Aarhus',
           <select class="vf-form__select" id="vf-form__select" data-jplist-control="select-filter"
             data-group="data-group-1">
             <option value="0" data-path="default" data-name="default" data-group="data-group-1">All</option>
-            <?php foreach ($cities as $city): ?>
+            <?php foreach ($cities as $city):
+              $cityFormated = str_replace("/","-",$city); ?>
                
-<option value="city-<?php echo $city; ?>" data-path=".city-<?php echo $city; ?>" data-name="default" data-group="data-group-1"><?php echo $city; ?>
+<option value="city-<?php echo $cityFormated; ?>" data-path=".city-<?php echo $cityFormated; ?>" data-name="default" data-group="data-group-1"><?php echo $city; ?>
 </option>
 
         <?php endforeach; ?>
