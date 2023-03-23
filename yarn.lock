@@ -1960,10 +1960,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-search/-/vf-search-3.0.0-alpha.1.tgz#98af682b5133415acf7638be34d2ff42e41e8e8f"
   integrity sha512-3mfyEnlHI4pJK+b0CA4UotcBcwFR9dF9aO1voRbkDutCXVrVU6AQel5F0yfobiLxxphTTZOi6LES1WRuGtxXGQ==
 
-"@visual-framework/vf-section-header@1.5.4":
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-section-header/-/vf-section-header-1.5.4.tgz#f6a7881a3136de3eed87cd861b73643b1acbc8ce"
-  integrity sha512-ui801r9aZpJc6bSc1F9lVibIXHDiC52chVX6x7lfUvVbMmym2QOefDa06vMzxJAUzmpnp9OZSPy/Try79/3qEQ==
+"@visual-framework/vf-section-header@1.5.5":
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-section-header/-/vf-section-header-1.5.5.tgz#07e1f1610a439809aa9ff58da30763843c1fbb67"
+  integrity sha512-xNBh2/YrZtCkYGsbT8TfwHHLrVLbsxqQuBLU9tBB23ldhU/TKsOvkN8CwL2YB0wvvBfCeIx0Kiuc1c1g5XIbGg==
 
 "@visual-framework/vf-sidebar@1.0.0-alpha.2":
   version "1.0.0-alpha.2"
