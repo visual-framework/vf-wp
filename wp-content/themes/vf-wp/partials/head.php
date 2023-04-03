@@ -12,7 +12,21 @@
   <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta class="swiftype" name="page-description" data-type="string" content="<?php echo swiftype_metadata_description(); ?>" />
-  <meta class="swiftype" name="what" data-type="string" content="Page" />
+  <?php
+  global $wp;
+  $url =  home_url( $wp->request ); 
+  echo $url;
+
+  if(strpos($url, 'outreach/events') == true && is_singular('vf_event') ) {
+   echo  '<meta name="robots" content="noindex">';
+  } ?>
+
+  <?php if(!is_singular('vf_event')) {
+   echo  '<meta class="swiftype" name="what" data-type="string" content="Page" />';
+  } else {
+    echo '<meta class="swiftype" name="what" data-type="string" content="Events" />';
+  } ?>
+
 
   <!-- Social meta tags for events -->
 <?php
@@ -39,8 +53,6 @@ if($card_name) { ?>
   <meta property="og:title" content="<?php echo $card_title; ?>" />
   <meta property="og:description" content="<?php echo $card_desc; ?>" />
   <meta property="og:image" content="<?php echo $card_thumb; ?>" />
-
-  <meta class="swiftype" name="what" data-type="string" content="Events" />
 <?php } ?>
   <!-- Search indexing optimisations -->
   <?php
