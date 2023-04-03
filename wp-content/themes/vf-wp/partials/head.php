@@ -13,10 +13,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta class="swiftype" name="page-description" data-type="string" content="<?php echo swiftype_metadata_description(); ?>" />
   <?php
+  // don't index trec outreach events
   global $wp;
   $url =  home_url( $wp->request ); 
-  echo $url;
-
   if(strpos($url, 'outreach/events') == true && is_singular('vf_event') ) {
    echo  '<meta name="robots" content="noindex">';
   } ?>
