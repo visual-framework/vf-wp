@@ -16,7 +16,7 @@ if ( is_home() ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
   $internal_news_url = get_post_type_archive_link('post');
   $internal_news_name = 'Blog';
-  echo '<li class="vf-breadcrumbs__item"><a href="' . $internal_news_url . '" class="vf-breadcrumbs__link">' . $internal_news_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item">' . $internal_news_name . '</li>';
    }
 
 // Important updates
@@ -24,7 +24,7 @@ if ( is_post_type_archive('community-blog') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $community_url = get_post_type_archive_link('community-blog');
   $community_name = 'Important updates';
-  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $community_url . '" class="vf-breadcrumbs__link">' . $community_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location">' . $community_name . '</li>';
   echo '</ul>';
   echo '</nav>';
     }
@@ -34,7 +34,7 @@ if ( is_post_type_archive('events') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $event_url = get_post_type_archive_link('events');
   $event_name = 'Internal events';
-  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location">' . $event_name . '</li>';
   echo '</ul>';
   echo '</nav>';
 
@@ -45,7 +45,7 @@ if ( is_post_type_archive('insites') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $event_url = get_post_type_archive_link('insites');
   $event_name = 'News';
-  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $event_url . '" class="vf-breadcrumbs__link">' . $event_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location">' . $event_name . '</li>';
   echo '</ul>';
   echo '</nav>';
 
@@ -56,7 +56,18 @@ if ( is_post_type_archive('documents') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $documents_url = get_post_type_archive_link('documents');
   $documents_name = 'Documents';
-  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $documents_url . '" class="vf-breadcrumbs__link">' . $documents_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location">' . $documents_name . '</li>';
+  echo '</ul>';
+  echo '</nav>';
+
+    }
+
+//training   
+if ( is_post_type_archive('training') ) {
+  echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
+  $training_url = get_post_type_archive_link('training');
+  $training_name = 'Training';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location">' . $training_name . '</li>';
   echo '</ul>';
   echo '</nav>';
 
@@ -67,7 +78,7 @@ if ( is_post_type_archive('people') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $people_url = get_post_type_archive_link('people');
   $people_name = 'People';
-  echo '<li class="vf-breadcrumbs__item" aria-current="location"><a href="' . $people_url . '" class="vf-breadcrumbs__link">' . $people_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location">' . $people_name . '</li>';
   echo '</ul>';
   echo '</nav>';
 
@@ -138,7 +149,7 @@ if ( is_category() ) {
 
 }
 
-if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !is_archive('documents') && !is_archive('events') && !is_archive('people') && !is_front_page() || is_paged() ) {
+if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !is_archive('documents') && !is_archive('training') && !is_archive('events') && !is_archive('people') && !is_front_page() || is_paged() ) {
 
   echo '
   <li class="vf-breadcrumbs__item">
@@ -238,6 +249,15 @@ if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !i
     $documents_url = get_post_type_archive_link('documents');
     $documents_name = 'Documents';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $documents_url . '" class="vf-breadcrumbs__link">' . $documents_name . '</a></li>';
+    echo $currentBefore;
+    single_post_title();
+    echo $currentAfter;
+
+    // training single post
+  } elseif ( is_singular('training') ) {
+    $training_url = get_post_type_archive_link('training');
+    $training_name = 'Training';
+    echo '<li class="vf-breadcrumbs__item"><a href="' . $training_url . '" class="vf-breadcrumbs__link">' . $training_name . '</a></li>';
     echo $currentBefore;
     single_post_title();
     echo $currentAfter;

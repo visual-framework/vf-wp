@@ -92,8 +92,8 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "g:i",
-            "return_format": "g:i"
+            "display_format": "H:i",
+            "return_format": "H:i"
         },
         {
             "key": "field_5e9852f0ec0f1",
@@ -108,8 +108,8 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "g:i",
-            "return_format": "g:i"
+            "display_format": "H:i",
+            "return_format": "H:i"
         },
         {
             "key": "field_5ed74d4c8c0cf",
