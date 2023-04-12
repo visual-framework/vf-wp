@@ -45,7 +45,7 @@ $endTime = get_field('vf_event_end_time',$post_id);
     </span>
     <?php } ?>
     <?php if ( ! empty($venue)) { ?>
-    <span class="vf-text-body vf-text-body--3"><?php echo ' | '; ?><a href="<?php echo esc_url($venue); ?>">Venue</a>
+    <span class="vf-text-body vf-text-body--3"><?php echo ' | '; ?><a target="_blank" href="<?php echo esc_url($venue); ?>">Venue</a>
     </span><?php } ?>
   </p>
   <h3 class="vf-summary__title | vf-u-margin__bottom--100 | name " style="font-weight: 500; font-size: 24px;">
