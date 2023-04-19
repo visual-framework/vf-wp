@@ -159,20 +159,33 @@
             "key": "field_638894277f83f",
             "label": "Show header",
             "name": "show_header",
-            "type": "true_false",
+            "type": "radio",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fda15153097c",
+                        "operator": "==",
+                        "value": "default"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "choices": {
+                "yes": "Yes",
+                "no": "No"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "yes",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
         },
         {
             "key": "field_5fda151530b49",
@@ -456,5 +469,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1669896884
+    "modified": 1681900110
 }
