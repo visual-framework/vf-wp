@@ -1,7 +1,7 @@
 <?php 
 
 $delimiter = '&raquo;';
-$name = 'Home'; //text for the 'Home' link
+$name = 'EMBL Intranet'; //text for the 'Home' link
 $currentBefore = '<li class="vf-breadcrumbs__item" aria-current="location">';
 $currentAfter = '</li>';
 $home = get_bloginfo('url');
