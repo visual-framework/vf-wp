@@ -66,7 +66,7 @@ $embl_grid = '';
 
 if (get_field('layout') == 'columns') {
   $embl_grid = null;
-  $vf_grid = 'class="vf-grid vf-grid__col-' . $limit . '"';
+  $vf_grid = 'class="vf-grid vf-grid__col-' . $limit . ' | vf-content"';
 }
 else {
   $embl_grid = 'embl-grid--has-centered-content';
@@ -77,7 +77,7 @@ else {
 <?php if ($is_container) {
         if (((get_field('layout') == 'list') && ($show_heading)) || (get_field('grid') == 'embl-grid') ) { ?>
 
-<div class="embl-grid <?php echo ($embl_grid); ?> ">
+<div class="embl-grid <?php echo ($embl_grid); ?> | vf-content">
   <?php if ( ! empty($heading_singular)) { ?>
   <div class="vf-section-header"><h2 class="vf-section-header__heading"><a class="vf-section-header__heading vf-section-header__heading--is-link"
       href="<?php echo esc_url($heading_link); ?>"> <?php echo ($heading_singular); ?> <svg
