@@ -125,12 +125,16 @@ get_footer();
 ?>
 <script>
   // no results handlers
+     if ( $('#upcoming-events').children().length <= 0 ) {
+        $('#upcoming-events').append('<p id="no-upcoming" class="vf-text-body vf-text-body--2">No upcoming events found</p>');
+      }
+
       $('#vf-form__select').change(function(){
         if  ( $('#no-upcoming').length ) {
         $( "#no-upcoming" ).remove();
       }
       if ( $('#upcoming-events').children().length <= 0 ) {
-        $('#upcoming-events').append('<p id="no-upcoming" class="vf-text-body vf-text-body--2">No results found. Please check past events.</p>');
+        $('#upcoming-events').append('<p id="no-upcoming" class="vf-text-body vf-text-body--2">No upcoming events found</p>');
       }
     });
       $('#vf-form__select').change(function(){
