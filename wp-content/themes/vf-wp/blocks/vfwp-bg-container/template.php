@@ -14,14 +14,13 @@ $column = get_field('columns');
 $grid_setting = get_field('grid_setting');
 $show_header = get_field('show_header');
 
-$hide_header_class = '';
-if (!$show_header || empty($show_header)) { 
-  $hide_header_class = ' | vf-u-sr-only';
-}
-else {
+$hide_header_class = ' | vf-u-sr-only';
+if ($show_header == 'yes' || empty($show_header)) { 
   $hide_header_class = '';
 }
-
+else {
+  $hide_header_class = ' | vf-u-sr-only';
+}
 
 $type = get_field('select_type');
 
