@@ -509,25 +509,6 @@
             "load_terms": 0,
             "return_format": "id",
             "multiple": 0
-        },
-        {
-            "key": "field_63ef34b3e5a3b",
-            "label": "Keyword",
-            "name": "keyword_search",
-            "type": "text",
-            "instructions": "Display the posts by a keyword",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         }
     ],
     "location": [
@@ -546,5 +527,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "VF-WP Latest News ACF Gutenberg block"
+    "description": "VF-WP Latest News ACF Gutenberg block",
+    "modified": 1683279893
 }

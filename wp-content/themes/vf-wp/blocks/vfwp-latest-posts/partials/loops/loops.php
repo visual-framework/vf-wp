@@ -8,8 +8,7 @@ if ($post_type == 'post') {
     'posts_per_page' => $limit,
     'post_type' => 'post',
     'cat' => $category,
-    'tag__in' => $tag,
-    's' => $keyword
+    'tag__in' => $tag
    )); }
   
 elseif (($post_type == 'insites') && (!empty($topic)) && (!empty($location))) {
@@ -29,8 +28,7 @@ elseif (($post_type == 'insites') && (!empty($topic)) && (!empty($location))) {
          'terms' => $topic,
      )
    ),  
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); }
 
 elseif (($post_type == 'insites') && (!empty($topic))) {
@@ -44,8 +42,7 @@ elseif (($post_type == 'insites') && (!empty($topic))) {
           'terms' => $topic,
       )
   ),  
-    'tag__in' => $tag,
-    's' => $keyword
+    'tag__in' => $tag
  )); }
      
 
@@ -60,8 +57,7 @@ elseif (($post_type == 'insites') && (!empty($location))) {
          'terms' => $location,
      )
    ),  
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); }
   
     
@@ -69,8 +65,7 @@ elseif (($post_type == 'insites') && (empty($topic))) {
   $loopPost= new WP_Query (array(
     'posts_per_page' => $limit,
     'post_type' => 'insites',
-    'tag__in' => $tag,
-    's' => $keyword
+    'tag__in' => $tag
    )); }
 
 //community blog 
@@ -92,8 +87,7 @@ elseif (($post_type == 'community-blog') && (!empty($topic_updates)) && (!empty(
          'terms' => $topic_updates,
      )
    ),  
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); }
   
 elseif (($post_type == 'community-blog') && (!empty($topic_updates))) {
@@ -107,8 +101,7 @@ elseif (($post_type == 'community-blog') && (!empty($topic_updates))) {
          'terms' => $topic_updates,
      )
    ),  
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); }
        
   
@@ -123,8 +116,7 @@ elseif (($post_type == 'community-blog') && (!empty($location))) {
          'terms' => $location,
      )
    ),  
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); }
     
       
@@ -132,8 +124,7 @@ elseif (($post_type == 'community-blog') && (empty($topic_updates))) {
 $loopPost= new WP_Query (array(
   'posts_per_page' => $limit,
   'post_type' => 'community-blog',
-  'tag__in' => $tag,
-  's' => $keyword
+  'tag__in' => $tag
  )); }
 
 elseif (($post_type == 'both') && (!empty((($topic_updates) && ($topic)) && ($location)))) {
@@ -163,8 +154,7 @@ elseif (($post_type == 'both') && (!empty((($topic_updates) && ($topic)) && ($lo
 
    ),  
 
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); } 
 
 elseif (($post_type == 'both') && (!empty(($topic_updates) && ($topic)))) {
@@ -184,16 +174,14 @@ elseif (($post_type == 'both') && (!empty(($topic_updates) && ($topic)))) {
          'terms' => $topic,
      ),
    ),  
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); } 
 
 elseif (($post_type == 'both') && (empty(($topic_updates) && ($topic) && ($location))))  {
  $loopPost= new WP_Query (array(
    'posts_per_page' => $limit,
    'post_type' => array('community-blog', 'insites'),
-   'tag__in' => $tag,
-   's' => $keyword
+   'tag__in' => $tag
   )); } 
 
 

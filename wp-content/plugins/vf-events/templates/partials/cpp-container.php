@@ -54,6 +54,9 @@
       <figure class="vf-figure">
         <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/thermofisher-logo.jpg" style="width: 120px">
       </figure>
+      <figure class="vf-figure">
+        <img decoding="async" class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Vizgen_website_480X270.jpg" style="width: 120px">
+      </figure>
     </div>
   </div>
   <h3 class="vf-text vf-text-heading--4 | vf-u-margin__top--800">Associate partners</h3>

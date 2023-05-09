@@ -63,7 +63,7 @@ $close_wrap,
      <div>
      
        <h1 class="vf-text vf-text-heading--1">
-         <?php echo $title;?>
+         <?php echo esc_html($title);?>
        </h1>
      </div>
      <div></div>
