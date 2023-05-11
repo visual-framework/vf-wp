@@ -173,7 +173,7 @@
 
 /*!
  * Component: @visual-framework/vf-badge
- * Version: 3.0.0-alpha.0
+ * Version: 3.0.0-alpha.1
  * Location: components/vf-core-components/vf-badge
  */
 .vf-badge {
@@ -1419,7 +1419,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.9
+ * Version: 1.6.10
  * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]) {
