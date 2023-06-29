@@ -12,6 +12,7 @@ require_once('functions/theme.php');
 // Require Gutenberg block classes
 
 require_once('functions/theme-block.php');
+require_once('functions/v6-theme-block.php');
 require_once('blocks/vfwp-latest-posts/index.php');
 require_once('blocks/vfwp-summary/index.php');
 require_once('blocks/vfwp-card/index.php');

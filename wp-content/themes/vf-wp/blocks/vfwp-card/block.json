@@ -1,0 +1,16 @@
+{
+    "name": "acf/vfwp-card",
+    "title": "Card",
+    "description": "VF card block.",
+    "category": "vf/wp",
+    "icon": "admin-comments",
+    "keywords": ["card", "vf"],
+    "acf": {
+        "mode": "edit",
+        "renderTemplate": "template.php"
+    },
+    "supports": {
+        "align": false,
+        "customClassName": false
+    }
+}

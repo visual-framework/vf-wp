@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Card') ) :
 
-class VFWP_Card extends VFWP_Block {
+class VFWP_Card extends V6VFWP_Block {
 
   public function __construct() {
     parent::__construct(__FILE__);
@@ -14,7 +14,7 @@ class VFWP_Card extends VFWP_Block {
    * Return the block name
    */
   static public function get_name() {
-    return 'vfwp-card';
+    return 'acf/vfwp-card';
   }
 
   /**
