@@ -1,0 +1,372 @@
+{
+    "key": "group_63bd68b26249f-json",
+    "title": "Training additional information",
+    "fields": [
+        {
+            "key": "field_63bd68db58cd3",
+            "label": "Organiser",
+            "name": "vf-wp-training-organiser",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "training-organiser",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_642d4c3f6fc3f",
+            "label": "Date and time",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_63bd693c58cd4",
+            "label": "Start date",
+            "name": "vf-wp-training-start_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_63bd698558cd6",
+            "label": "End date",
+            "name": "vf-wp-training-end_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_63bd706e7fb79",
+            "label": "Start time",
+            "name": "vf-wp-training-start_time",
+            "type": "time_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "H:i",
+            "return_format": "H:i"
+        },
+        {
+            "key": "field_63bd70a47fb7a",
+            "label": "End time",
+            "name": "vf-wp-training-end_time",
+            "type": "time_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "H:i",
+            "return_format": "H:i"
+        },
+        {
+            "key": "field_642d4cae6fc40",
+            "label": "Location",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_63be812d390bb",
+            "label": "Location",
+            "name": "vf-wp-training-location",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "event-location",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0
+        },
+        {
+            "key": "field_642d4b40a1e0d",
+            "label": "Venue",
+            "name": "vf-wp-training-venue",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_642d4cc96fc42",
+            "label": "Registration",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_649d48d7be206",
+            "label": "Registration deadline",
+            "name": "vf-wp-training-registration-deadline",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "j M Y",
+            "return_format": "j M Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_649d485cbe205",
+            "label": "Registration status",
+            "name": "vf-wp-training-registration-status",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "not-open": "Not yet open",
+                "open": "Open",
+                "closed": "Closed",
+                "waiting": "Waiting list only",
+                "no-needed": "No registration needed"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "label",
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d4b59d03ab",
+            "label": "Registration link",
+            "name": "vf-wp-training-registration-link",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d4b69d03ac",
+            "label": "Registration remark",
+            "name": "vf-wp-training-remark",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_642d4ce66fc43",
+            "label": "Additional information",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_642d4b84d03ad",
+            "label": "Overview",
+            "name": "vf-wp-training-info",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "text",
+            "media_upload": 0,
+            "toolbar": "full",
+            "delay": 0
+        },
+        {
+            "key": "field_649d44e651c8b",
+            "label": "Contact",
+            "name": "vf-wp-training-contact",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "text",
+            "media_upload": 0,
+            "toolbar": "full",
+            "delay": 0
+        },
+        {
+            "key": "field_649d474f51c90",
+            "label": "Alternative dates",
+            "name": "vf-wp-training-alternative",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Next date",
+            "sub_fields": [
+                {
+                    "key": "field_649d477151c91",
+                    "label": "Date",
+                    "name": "vf-wp-training-alternative-date",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "j M Y",
+                    "return_format": "j M Y",
+                    "first_day": 1
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "training"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}
