@@ -67,10 +67,11 @@ else {
     <?php the_content(); ?>
   </div>
   <div>
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Date:</span>
+    
+  <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Date:</span>
       <span class="vf-u-text-color--grey">
         <?php 
-      // Event dates
+      // Date
       if ( ! empty($start_date)) {
         if ($end_date) { 
           if ($start->format('M') == $end->format('M')) {
@@ -90,9 +91,10 @@ else {
       </span>
     </p>
 
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Time:</span> <span
-        class="vf-u-text-color--grey">
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Time:</span>
+      <span class="vf-u-text-color--grey">
         <?php 
+        // Time
       if ( ! empty($start_time)) { ?>
         <?php        
          if ($start_time) {
@@ -101,33 +103,47 @@ else {
         if ($end_time) {
           echo ' - '. $end_time . ' CET';
         } ?>
-        </span></p>
+      </span></p>
     <?php } 
          else {
            echo 'See the course description</span>';
         }
       ?>
+
     <?php 
       // Location
       if (($locations)) { ?>
-    <p class="vf-text-body vf-text-body--3
-       location"><span style="font-weight: 600;">Location:</span>
-       <span class="vf-u-text-color--grey">
-      <?php $location_list = [];
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Location:</span>
+      <span class="vf-u-text-color--grey">
+        <?php $location_list = [];
               foreach( $locations as $location ) { 
                 $location_list[] = $location->name; }
                 echo implode(', ', $location_list); ?>
-  </span>
+      </span>
     </p>
     <?php } ?>
+
+    <?php 
+      // Venue
+      if (($venue)) { ?>
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Venue:</span>
+      <span class="vf-u-text-color--grey">
+        <?php echo $venue; ?>
+      </span>
+    </p>
+    <?php } ?>
+
     <hr class="vf-divider | vf-u-margin__bottom--400">
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Registration:</span></p>
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span
+        style="font-weight: 600;">Registration:</span></p>
+
     <?php 
       if ($registrationRemark) { ?>
     <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><?php echo $registrationRemark; ?></p>
     <?php } ?>
-    <p class="vf-text-body vf-text-body--3">Status: 
-    <?php 
+
+    <p class="vf-text-body vf-text-body--3">Status:
+      <?php 
       if (empty($registrationDeadline)) {
         if ($registrationStatus == 'Open') {
           echo '<span class="vf-u-text-color--green">Open</span>';
@@ -151,52 +167,43 @@ else {
         }
       } ?>
     </p>
+
     <?php 
       // register button
       if ( !empty($registrationLink)) { 
-            if ((($registrationDeadlineFormatted >= $current_date)) || (($registrationStatus == 'Open'))) { ?>
+        if ((($registrationDeadlineFormatted >= $current_date)) || (($registrationStatus == 'Open'))) { ?>
     <div style="display: inline-block;" data-vf-google-analytics-region="registration-training">
       <a href="<?php echo esc_url($registrationLink); ?>" target="_blank"><button
           class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600">Register</button></a>
     </div>
     <?php }} ?>
+
     <hr class="vf-divider | vf-u-margin__bottom--400">
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Organiser:</span></p>
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100">Organised by: <span class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser">
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Organiser:</span>
+    </p>
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100">Organised by: <span
+        class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser">
         <?php $org_list = [];
         foreach( $organiser as $org ) { 
           $org_list[] = $org->name; }
           echo implode(', ', $org_list); ?></span> </p>
+
     <p class="vf-text-body vf-text-body--3">Contact: <?php echo $contact; ?> </p>
     <?php
 
-// Check rows existexists.
+// alternative dates
 if( have_rows('vf-wp-training-alternative') ): ?>
-  <hr class="vf-divider | vf-u-margin__bottom--400">
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Alternative dates:</span></p>
+    <hr class="vf-divider | vf-u-margin__bottom--400">
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Alternative
+        dates:</span></p>
     <ul class="vf-list vf-list--default | vf-list--tight">
-<?php
-
-    // Loop through rows.
+      <?php
     while( have_rows('vf-wp-training-alternative') ) : the_row();
-
-        // Load sub field value.
         $alternativeDate = get_sub_field('vf-wp-training-alternative-date'); ?>
-        <li class="vf-list__item "> <span class="vf-u-text-color--grey"><?php  echo $alternativeDate; ?></span></li>
-        <?php
-       
-       
-       // End loop.
-      endwhile;
-      
-      // No value.
-        // Do something... ?>
-
-        </ul>
-        <?php
-      endif;
-?>
-
+      <li class="vf-list__item "> <span class="vf-u-text-color--grey"><?php  echo $alternativeDate; ?></span></li>
+      <?php endwhile;?>
+    </ul>
+    <?php endif; ?>
 
     <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
     </div>
