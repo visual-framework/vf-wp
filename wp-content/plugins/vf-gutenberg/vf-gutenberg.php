@@ -302,9 +302,9 @@ class VF_Gutenberg {
 <?php
       }
     }
-    // Output foot include for preview
+
     if ($is_preview) {
-      get_template_part('partials/foot');
+      return;
     }
     $html = ob_get_contents();
     ob_end_clean();
