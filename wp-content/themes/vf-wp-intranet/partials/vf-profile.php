@@ -31,22 +31,22 @@ $title = get_post_meta( $post->ID, 'full_name', true);
     <?php
             if (!empty($team_1) && ($primary_1 == 1)) { ?>
     <a data-embl-js-group-link="<?php echo esc_attr($team_1); ?>" class="vf-link"
-              href="//www.embl.org/search?searchQuery=<?php echo esc_html($team_1); ?> "><?php echo esc_html($team_1); ?>
+              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_1); ?> "><?php echo esc_html($team_1); ?>
     <?php }?>
     <?php
             if (!empty($team_2) && ($primary_2 == 1)) { ?>
     <a data-embl-js-group-link="<?php echo esc_attr($team_2); ?>" class="vf-link"
-              href="//www.embl.org/search?searchQuery=<?php echo esc_html($team_2); ?> "><?php echo esc_html($team_2); ?>
+              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_2); ?> "><?php echo esc_html($team_2); ?>
     <?php }?>
     <?php
             if (!empty($team_3) && ($primary_3 == 1)) { ?>
     <a data-embl-js-group-link="<?php echo esc_attr($team_3); ?>" class="vf-link"
-              href="//www.embl.org/search?searchQuery=<?php echo esc_html($team_3); ?> "><?php echo esc_html($team_3); ?>
+              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_3); ?> "><?php echo esc_html($team_3); ?>
     <?php }?>
     <?php
             if (!empty($team_4) && ($primary_4 == 1)) { ?>
     <a data-embl-js-group-link="<?php echo esc_attr($team_4); ?>" class="vf-link"
-              href="//www.embl.org/search?searchQuery=<?php echo esc_html($team_4); ?> "><?php echo esc_html($team_4); ?>
+              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_4); ?> "><?php echo esc_html($team_4); ?>
     <?php }?>
   </p>
   <p class="vf-profile__email">

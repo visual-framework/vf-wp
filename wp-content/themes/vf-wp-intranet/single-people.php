@@ -197,6 +197,35 @@ var_dump( $meta_values );
     <!-- empty -->
   </div>
 </section>
+<script>
+    // With the emblTaxonomy loaded, we can assign links to containers
+  // <a data-embl-js-group-link="team name" href="#placeholder">
+  function emblPeoplePagesGroupLinkAssign() {
+    var emblPeoplePagesGroupLinkTarget = document.querySelectorAll("[data-embl-js-group-link]");
+  
+    if (emblPeoplePagesGroupLinkTarget.length === 0) {
+      console.warn('There is no `[data-embl-js-group-link]` in which to insert the breadcrumbs; exiting');
+      return false;
+    }
+    // console.log(emblTaxonomy)
+    // console.log(emblPeoplePagesGroupLinkTarget)
+  
+    // process each link target found
+    for (const key in emblPeoplePagesGroupLinkTarget) {
+      if (Object.hasOwnProperty.call(emblPeoplePagesGroupLinkTarget, key)) {
+        const element = emblPeoplePagesGroupLinkTarget[key];
+        let team = emblOntologyFindTeamByName(element.dataset.emblJsGroupLink)
+  
+        if (team != false) {
+          element.href = team.url;
+        } else {
+          console.warn('emblPeoplePagesGroupLinkAssign', 'No team match found, leaving default search in place')
+        }
+      }
+    }
+  }
+  emblPeoplePagesGroupLinkAssign(); 
+</script>
 
 <?php 
 

@@ -42,7 +42,7 @@ $pageURL = home_url( $wp->request );
     <div class="vf-tabs-content" data-vf-js-tabs-content>
       <section class="vf-tabs__section" id="vf-tabs__section--1">
         <div class="vf-form__item">
-          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+          <input onkeypress="emblPeoplePagesGroupLinkAssign()" id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
             data-group="data-group-1" data-name="my-filter-1" data-path=".people-search" type="text" value=""
             placeholder="Search by name or job title" data-clear-btn-id="name-clear-btn">
         </div>
@@ -53,7 +53,7 @@ $pageURL = home_url( $wp->request );
       </section>
       <section class="vf-tabs__section" id="vf-tabs__section--2">
         <div class="vf-form__item">
-          <input id="search2" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+          <input onkeypress="emblPeoplePagesGroupLinkAssign()" id="search2" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
             data-group="data-group-1" data-name="my-filter-1" data-path=".team-search" type="text" value=""
             placeholder="Search by organisational group" data-clear-btn-id="name-clear-btn">
         </div>
@@ -248,4 +248,65 @@ onReady(function () {
     show('load', false);
     show('load-container', false);
 });
+
+// Lookup a group in the ontology by name
+function emblPeoplePagesGroupLink(numberOfChecks, numberOfChecksLimit) {
+    // emblTaxonomy is a global variable fetched by embl-breadcumbs-lookup
+    // we must wait for it to load
+  
+    if (typeof emblTaxonomy === "object") {
+      if (emblTaxonomy.version != undefined) {
+        emblPeoplePagesGroupLinkReady();
+      } else {
+        // console.log('retry')
+        if (numberOfChecks <= numberOfChecksLimit) {
+          setTimeout(function () {
+            emblPeoplePagesGroupLinkAssign(numberOfChecks, numberOfChecksLimit);
+          }, 900); // give a second check if breadcumbs was slow to load
+        }
+      }
+    }
+  }
+  
+  // lookup a team in the onotology
+  function emblOntologyFindTeamByName(teamName) {
+    for (const key in emblTaxonomy.terms) {
+      if (Object.hasOwnProperty.call(emblTaxonomy.terms, key)) {
+        const element = emblTaxonomy.terms[key];
+        if (teamName == element.name || teamName == element.name_display) {
+          return element
+        }
+      }
+    }
+  
+    return false;
+  }
+  
+  // With the emblTaxonomy loaded, we can assign links to containers
+  // <a data-embl-js-group-link="team name" href="#placeholder">
+  function emblPeoplePagesGroupLinkAssign() {
+    var emblPeoplePagesGroupLinkTarget = document.querySelectorAll("[data-embl-js-group-link]");
+  
+    if (emblPeoplePagesGroupLinkTarget.length === 0) {
+      console.warn('There is no `[data-embl-js-group-link]` in which to insert the breadcrumbs; exiting');
+      return false;
+    }
+    // console.log(emblTaxonomy)
+    // console.log(emblPeoplePagesGroupLinkTarget)
+  
+    // process each link target found
+    for (const key in emblPeoplePagesGroupLinkTarget) {
+      if (Object.hasOwnProperty.call(emblPeoplePagesGroupLinkTarget, key)) {
+        const element = emblPeoplePagesGroupLinkTarget[key];
+        let team = emblOntologyFindTeamByName(element.dataset.emblJsGroupLink)
+  
+        if (team != false) {
+          element.href = team.url;
+        } else {
+          console.warn('emblPeoplePagesGroupLinkAssign', 'No team match found, leaving default search in place')
+        }
+      }
+    }
+  }
+  emblPeoplePagesGroupLinkAssign(); 
 </script>
