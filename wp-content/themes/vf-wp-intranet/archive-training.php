@@ -45,18 +45,6 @@ $today_date = date('Ymd');
     <?php include(locate_template('partials/training-filter.php', false, false)); ?>
   </div>
   <main>
-    <div class="vf-tabs">
-      <ul class="vf-tabs__list | vf-u-margin__top--0" data-vf-js-tabs>
-        <li class="vf-tabs__item">
-          <a class="vf-tabs__link vf-u-padding__top--0" href="#vf-tabs__section--upcoming-events">Upcoming</a>
-        </li>
-        <li class="vf-tabs__item">
-          <a class="vf-tabs__link vf-u-padding__top--0" href="#vf-tabs__section--past-events">Past</a>
-        </li>
-      </ul>
-    </div>
-    <div class="vf-tabs-content" data-vf-js-tabs-content>
-      <section class="vf-tabs__section vf-u-padding__top--800" id="vf-tabs__section--upcoming-events">
         <div id="upcoming-events" data-jplist-group="data-group-1">
           <?php
           $forthcomingLoop = new WP_Query (array( 
@@ -84,45 +72,10 @@ $today_date = date('Ymd');
           <?php
          include(locate_template('partials/vf-summary--training.php', false, false)); ?>
           <?php endwhile;?>
-        </div>
-      </section>
-
-      <section class="vf-tabs__section vf-u-padding__top--800" id="vf-tabs__section--past-events">
-        <div id="past-events" data-jplist-group="data-group-1">
-          <?php
-          $pastLoop = new WP_Query (array( 
-          'posts_per_page' => -1,
-          'post_type' => 'training',
-          'order' => 'DESC', 
-          'orderby' => 'meta_value_num',
-          'meta_key' => 'vf-wp-training-start_date',
-          'meta_query' => array(
-            array(
-                'key' => 'vf-wp-training-start_date',
-                'value' => $today_date,
-                'compare' => '<',
-                'type' => 'numeric'
-            ),
-            array(
-              'key' => 'vf-wp-training-start_date',
-              'value' => date('Ymd', strtotime('now')),
-              'type' => 'numeric',
-              'compare' => '<',
-              ) 
-            ) ));
-          $current_month = ""; ?>
-          <?php while ($pastLoop->have_posts()) : $pastLoop->the_post();?>
-          <?php 
-          include(locate_template('partials/vf-summary--training-past.php', false, false)); ?>
-          <?php endwhile;?>
-        </div>
-        <?php // include(locate_template('partials/paging-controls.php', false, false)); ?>
-      </section>
     </div>
   </main>
   <div class="vf-stack vf-stack--400">
   <article class="vf-card vf-card--brand vf-card--bordered">
-
 
 <div class="vf-card__content | vf-stack vf-stack--400"><h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Example link       <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path></svg>
 </a></h3>

@@ -67,7 +67,10 @@ else {
     <?php the_content(); ?>
   </div>
   <div>
-    
+  <figure class="vf-figure">
+      <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
+    </figure>
+
   <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Date:</span>
       <span class="vf-u-text-color--grey">
         <?php 

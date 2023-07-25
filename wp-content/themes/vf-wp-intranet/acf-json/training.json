@@ -289,9 +289,9 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "text",
+            "tabs": "all",
             "media_upload": 0,
-            "toolbar": "full",
+            "toolbar": "basic",
             "delay": 0
         },
         {
@@ -308,9 +308,9 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "text",
+            "tabs": "all",
             "media_upload": 0,
-            "toolbar": "full",
+            "toolbar": "basic",
             "delay": 0
         },
         {
@@ -368,5 +368,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "modified": 1690285448
 }

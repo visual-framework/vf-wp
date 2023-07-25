@@ -79,10 +79,12 @@ else {
     <div class="vf-content | wysiwyg-training-info | search-data">
       <?php echo $additionalInfo; ?>
     </div>
-    <p class="vf-summary__meta | vf-u-margin__bottom--600">
+    <p class="vf-summary__meta | vf-u-margin__bottom--600" id="trainingMeta">
       <?php if (($organiser)) { ?>
-      <span>Organiser:</span>&nbsp;
-      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser">
+      <span class="vf-badge vf-badge--primary | vf-u-margin__right--600 | organiser | organiser-<?php $org_list = [];
+        foreach( $organiser as $org ) { 
+          $org_list[] = $org->name; }
+          echo implode(', ', $org_list); ?>">
         <?php $org_list = [];
         foreach( $organiser as $org ) { 
           $org_list[] = $org->name; }
@@ -90,7 +92,10 @@ else {
       <?php } ?>
       <?php if (($location)) { ?>
       <span>Location:</span>&nbsp;
-      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location">
+      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | <?php $loc_list = [];
+        foreach( $location as $loc ) { 
+          $loc_list[] = $loc->name; }
+          echo implode(' ', $loc_list); ?>">
         <?php // if (!empty($venue)) {
        // echo esc_html($venue) . ', '; } ?>
         <?php $loc_list = [];
@@ -124,6 +129,10 @@ else {
       }
       ?>
     </p>
+  </div>
+  <!-- for filtering -->
+  <div class="vf-u-display-none">
+    <span class="year year-<?php echo $start->format('Y');?>"><?php echo $start->format('Y'); ?></span>
   </div>
   <?php if ($forthcomingLoop->current_post +1 < $forthcomingLoop->post_count) {
     echo '<hr class="vf-divider">';

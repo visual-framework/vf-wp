@@ -53,3 +53,13 @@ Text Domain:	 vfwp
 .wysiwyg-training-info p{
     font-size: 16px !important;
 }
+
+#trainingMeta .vf-badge--primary {
+    background-color: #f3f3f3;
+    border-color: #f3f3f3;
+    color: #373A36;
+}
+#trainingMeta .vf-badge {
+    font-size: 14px;
+    font-weight: 500;
+}
