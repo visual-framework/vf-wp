@@ -59,16 +59,12 @@ else {
         else {
           echo $start->format('j F Y'); 
         }  
-        if ($start_time) {
-          echo ', ' . $start_time;
-        } 
-        if ($end_time) {
-          echo ' - '. $end_time . ' CET';
-        }     ?>
-    <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;"> |
-      <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:"
-        target="_blank" rel="nofollow">Add to calendar</a>
-    </span>
+        // if ($start_time) {
+        //   echo ', ' . $start_time;
+        // } 
+        // if ($end_time) {
+        //   echo ' - '. $end_time . ' CET';
+        // }     ?>
   </p>
   <?php } ?>
 
@@ -81,20 +77,20 @@ else {
     </div>
     <p class="vf-summary__meta | vf-u-margin__bottom--600" id="trainingMeta">
       <?php if (($organiser)) { ?>
-      <span class="vf-badge vf-badge--primary | vf-u-margin__right--600 | organiser | organiser-<?php $org_list = [];
+      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser | organiser-<?php $org_list = [];
         foreach( $organiser as $org ) { 
-          $org_list[] = $org->name; }
+          $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
           echo implode(', ', $org_list); ?>">
         <?php $org_list = [];
         foreach( $organiser as $org ) { 
-          $org_list[] = $org->name; }
+          $org_list[] = strtoupper($org->name); }
           echo implode(', ', $org_list); ?></span>
       <?php } ?>
       <?php if (($location)) { ?>
       <span>Location:</span>&nbsp;
-      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | <?php $loc_list = [];
+      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | location-<?php $loc_list = [];
         foreach( $location as $loc ) { 
-          $loc_list[] = $loc->name; }
+          $loc_list[] = strtolower($loc->name); }
           echo implode(' ', $loc_list); ?>">
         <?php // if (!empty($venue)) {
        // echo esc_html($venue) . ', '; } ?>

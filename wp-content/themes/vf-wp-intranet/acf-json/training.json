@@ -317,7 +317,7 @@
             "key": "field_649d474f51c90",
             "label": "Alternative dates",
             "name": "vf-wp-training-alternative",
-            "type": "repeater",
+            "type": "relationship",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -326,30 +326,17 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Next date",
-            "sub_fields": [
-                {
-                    "key": "field_649d477151c91",
-                    "label": "Date",
-                    "name": "vf-wp-training-alternative-date",
-                    "type": "date_picker",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "display_format": "j M Y",
-                    "return_format": "j M Y",
-                    "first_day": 1
-                }
-            ]
+            "post_type": [
+                "training"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "elements": "",
+            "min": "",
+            "max": "",
+            "return_format": "object"
         }
     ],
     "location": [
@@ -368,6 +355,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
-    "modified": 1690285448
+    "description": ""
 }

@@ -63,3 +63,7 @@ Text Domain:	 vfwp
     font-size: 14px;
     font-weight: 500;
 }
+
+#typeTraining .vf-tabs__section {
+    padding: 0px
+}

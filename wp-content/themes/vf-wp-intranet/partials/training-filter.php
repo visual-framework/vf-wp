@@ -25,7 +25,7 @@ $counterLoc = 1;
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-organiser">
-    <legend class="vf-form__legend">Organiser</legend>
+    <legend class="vf-form__legend">Provider</legend>
     <?php
     foreach($organiser_terms as $term) {
       ?>
@@ -39,9 +39,9 @@ $counterLoc = 1;
       data-jplist-control="counter"
       data-group="data-group-1"
       data-format="({count})"
-      data-path=".organiser-<?php echo esc_attr($term->name); ?>"
+      data-path=".organiser-<?php echo esc_attr($term->slug); ?>"
       data-mode="static"
-      data-name="counter-organiser-<?php echo esc_attr($term->name); ?>"
+      data-name="counter-organiser-<?php echo esc_attr($term->slug); ?>"
       data-filter-type="path"></span>
     </label>
     </div>
@@ -88,24 +88,6 @@ $counterLoc = 1;
   </fieldset>
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-location">
-    <legend class="vf-form__legend">Status</legend>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="status-open" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".status" data-group="data-group-1" data-name="status" data-or="status"
-        value="open"
-        data-id="status-open" class="vf-form__checkbox">
-      <label for="status-open" class="vf-form__label">Open</label>
-    </div>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="status-closed" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".status" data-group="data-group-1" data-name="status" data-or="status"
-        value="closed"
-        data-id="status-closed" class="vf-form__checkbox">
-      <label for="status-closed" class="vf-form__label">Closed</label>
-    </div>
-  </fieldset>
-
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-location">
     <legend class="vf-form__legend">Location</legend>
     <?php
     foreach($location_terms as $term) {
@@ -120,9 +102,9 @@ $counterLoc = 1;
       data-jplist-control="counter"
       data-group="data-group-1"
       data-format="({count})"
-      data-path=".<?php echo esc_attr($term->name); ?>"
+      data-path=".location-<?php echo esc_attr($term->slug); ?>"
       data-mode="static"
-      data-name="counter-location-<?php echo esc_attr($term->name); ?>"
+      data-name="counter-location-<?php echo esc_attr($term->slug); ?>"
       data-filter-type="path"></span>
     </label>
     </div>

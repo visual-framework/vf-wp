@@ -528,7 +528,7 @@ function vf_wp_intranet_teams__init() {
         'delete_with_user'    => false,
         'taxonomies'          => array(
           'training-organiser',
-          'embl-location',
+          'event-location',
     
         ),
       ));

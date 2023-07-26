@@ -25,6 +25,7 @@ $registrationDeadlineFormatted = $deadlineDate->format('Y-m-d');
 $venue = get_field('vf-wp-training-venue',$post_id);
 $contact = get_field('vf-wp-training-contact',$post_id, false, false);
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
+$alternative_dates = get_field('vf-wp-training-alternative', $post_id);
 
 
 
@@ -67,11 +68,11 @@ else {
     <?php the_content(); ?>
   </div>
   <div>
-  <figure class="vf-figure">
+    <figure class="vf-figure">
       <?php the_post_thumbnail('full', array('class' => 'vf-figure__image')); ?>
     </figure>
 
-  <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Date:</span>
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Date:</span>
       <span class="vf-u-text-color--grey">
         <?php 
       // Date
@@ -87,11 +88,11 @@ else {
           echo $start->format('j M Y'); 
         } }
         ?>
-      </span> |
-      <span style="text-transform: none;">
+      </span>
+      <!-- <span style="text-transform: none;">
         <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:"
           target="_blank" rel="nofollow">Add to calendar</a>
-      </span>
+      </span> -->
     </p>
 
     <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Time:</span>
@@ -174,7 +175,7 @@ else {
     <?php 
       // register button
       if ( !empty($registrationLink)) { 
-        if ((($registrationDeadlineFormatted >= $current_date)) || (($registrationStatus == 'Open'))) { ?>
+        if ((($registrationDeadlineFormatted >= $current_date)) || (($registrationStatus == 'Open')) || (($registrationStatus == 'Waiting list only'))) { ?>
     <div style="display: inline-block;" data-vf-google-analytics-region="registration-training">
       <a href="<?php echo esc_url($registrationLink); ?>" target="_blank"><button
           class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600">Register</button></a>
@@ -195,22 +196,25 @@ else {
     <?php
 
 // alternative dates
-if( have_rows('vf-wp-training-alternative') ): ?>
+
+if( $alternative_dates ): ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Alternative
         dates:</span></p>
     <ul class="vf-list vf-list--default | vf-list--tight">
-      <?php
-    while( have_rows('vf-wp-training-alternative') ) : the_row();
-        $alternativeDate = get_sub_field('vf-wp-training-alternative-date'); ?>
-      <li class="vf-list__item "> <span class="vf-u-text-color--grey"><?php  echo $alternativeDate; ?></span></li>
-      <?php endwhile;?>
+      <?php foreach( $alternative_dates as $alternative_date ): 
+        $alternativeDatePermalink = get_permalink( $alternative_date->ID );
+        $alternativeStartDate = get_field( 'vf-wp-training-start_date', $alternative_date->ID );
+        ?>
+      <li class="vf-list__item">
+        <a
+          href="<?php echo esc_url( $alternativeDatePermalink ); ?>"><?php echo esc_html( $alternativeStartDate ); ?></a>
+      </li>
+      <?php endforeach; ?>
     </ul>
     <?php endif; ?>
-
     <div class="vf-u-margin__top--400 vf-u-margin__bottom--400">
     </div>
   </div>
-
 
   <?php get_footer(); ?>
