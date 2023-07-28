@@ -17,7 +17,7 @@ services:
   php:
     depends_on:
       - mysql
-    image: ebiwd/php7-apache-wptools:latest
+    image: ebiwd/php7-apache-wptools:8.2
     container_name: "${PROJECT_NAME}_php"
     environment:
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
