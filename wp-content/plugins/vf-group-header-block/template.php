@@ -63,7 +63,9 @@ $vars = array(
   'hide[team,mobile,phones]'  => 1,
   'sort-field-value[changed]' => 'DESC',
   'filter-ref-entity[field_person_positions][title]' => "",
-  'filter-field-value[field_person_positions.entity.field_position_membership]' => 'leader'
+  'filter-field-value[field_person_positions.entity.field_position_membership]' => 'leader',
+  'filter-ref-entity[field_person_positions][field_position_primary]' => 1
+
 );
 
 if ($is_minimal) {

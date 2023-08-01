@@ -67,6 +67,8 @@ $url = add_query_arg(array(
   'limit'               => 1,
   'filter-ref-entity[field_person_positions][title]' => "",
   'hide[' . $hide_fields . ']' => 1,
+  'filter-ref-entity[field_person_positions][field_position_primary]' => 1
+
 ), $url);
 
 // Add search field query var

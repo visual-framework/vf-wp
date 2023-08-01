@@ -45,7 +45,8 @@ $vars = array(
   'sort-field-value[field_person_full_name]' => 'ASC',
   'filter-fields-empty'       => 'field_person_visible_internally',
   'filter-ref-entity[field_person_positions][title]' => "",
-  'hide[team,' . $hide_fields . ']' => 1
+  'hide[team,' . $hide_fields . ']' => 1,
+  'filter-ref-entity[field_person_positions][field_position_primary]' => 1
 );
 
 if ($leader !== true) {
@@ -120,7 +121,7 @@ if (empty($columns)) {
 
 $content = preg_replace(
   '#^(\s*<[^>]+?vf-content-hub-html)#',
-  '$1 vf-grid vf-grid__col-' . $columns,
+  '$1 vf-grid vf-grid__col-' . $columns . ' | vf-u-margin__bottom--800',
   $content
 );
 
