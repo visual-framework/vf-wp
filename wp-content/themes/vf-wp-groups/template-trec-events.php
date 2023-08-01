@@ -57,8 +57,15 @@ $vf_theme->the_content();
           'orderby' => 'meta_value_num',
           'meta_key' => 'vf_event_start_date',
           'meta_query' => array(
+            'relation' => 'OR',
             array(
                 'key' => 'vf_event_start_date',
+                'value' => $current_date,
+                'compare' => '>=',
+                'type' => 'numeric'
+            ),
+            array(
+                'key' => 'vf_event_end_date',
                 'value' => $current_date,
                 'compare' => '>=',
                 'type' => 'numeric'
@@ -70,7 +77,7 @@ $vf_theme->the_content();
               'compare' => '>=',
               ) 
             ) ));
-          $current_month = ""; ?>
+            $current_month = ""; ?>
           <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
           <?php
          include(locate_template('partials/vf-summary--trec-event.php', false, false)); ?>
