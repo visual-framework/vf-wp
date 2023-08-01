@@ -137,7 +137,9 @@ class VF_WP_Groups_Header extends VF_Plugin {
       'vf_hero_heading',
       $this->post()->ID
     );
+    if (!empty($heading)) {
     $heading = trim($heading);
+    }
     if (empty($heading)) {
       $heading = get_bloginfo('name');
     }
@@ -165,7 +167,9 @@ class VF_WP_Groups_Header extends VF_Plugin {
    */
   public function get_hero_text() {
     $text = get_field('vf_hero_subheading', false, false, $this->post()->ID);
+    if (!empty($text)) {
     $text = trim($text);
+    }
     // If text is empty use the Content Hub description
     if (vf_html_empty($text) && class_exists('VF_Cache')) {
       // Get the global taxonomy term
@@ -199,10 +203,12 @@ class VF_WP_Groups_Header extends VF_Plugin {
       return $text;
     }
     // Cleanup Content Hub response
+    if (!empty($text)) {
     $text = preg_replace(
       '#<[^>]*?embl-conditional-edit[^>]*?>.*?</[^>]*?>#',
       '', $text
     );
+  }
     // Filter allowed tags
     $text = wp_kses($text, array(
       'a' => array(

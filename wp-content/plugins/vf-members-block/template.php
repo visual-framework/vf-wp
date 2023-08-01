@@ -25,7 +25,9 @@ if (is_array($variation)) {
 
 $leader = boolval($leader);
 
+if (!empty($keyword)) {
 $keyword = trim($keyword);
+}
 
 // Hide selected fields
 $hide_fields = get_field('hide_fields');

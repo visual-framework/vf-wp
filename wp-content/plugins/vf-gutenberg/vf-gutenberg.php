@@ -104,12 +104,14 @@ class VF_Gutenberg {
    * Render VF Nunjuck template blocks
    */
   public function render_block_nunjucks($html, $block) {
-    if (preg_match('/^vf\//', $block['blockName'])) {
-      if (isset($block['attrs']['render'])) {
-        return $block['attrs']['render'];
+    if (!empty($block['blockName'])) {
+      if (preg_match('/^vf\//', $block['blockName'])) {
+        if (isset($block['attrs']['render'])) {
+          return $block['attrs']['render'];
+        }
       }
     }
-    return $html;
+      return $html;
   }
 
   /**
