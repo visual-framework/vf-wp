@@ -12,7 +12,7 @@ $today_date = date('Ymd');
   </div>
   <div class="vf-stack">
     <h1 class="vf-intro__heading | vf-u-margin__bottom--400">
-      Professional Development Training Catalogue
+      Professional Skills & Career Development
     </h1>
     <p class="vf-intro__subheading">Improve your skills in communication, management and leadership; learn a language,
       or find support for planning your career.
@@ -93,11 +93,12 @@ $today_date = date('Ymd');
           <?php endwhile;?>
         </div>
       </main>
-      <div class="vf-stack vf-stack--400">
-        <article class="vf-card vf-card--brand vf-card--bordered">
-
+      <div class="vf-content">
+        <h4>See also:</h4>
+      <div class="vf-stack vf-stack--600">
+        <article class="vf-card vf-card--brand vf-card--striped">
           <div class="vf-card__content | vf-stack vf-stack--400">
-            <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Example link <svg
+            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses<svg style="width: auto; height: 100%;"
                   aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
                   height="1em" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -105,12 +106,11 @@ $today_date = date('Ymd');
                     fill="currentColor" fill-rule="nonzero"></path>
                 </svg>
               </a></h3>
-            <p class="vf-card__text">Sapiente harum, omnis provident</p>
           </div>
         </article>
-        <article class="vf-card vf-card--brand vf-card--bordered">
+        <article class="vf-card vf-card--brand vf-card--striped">
           <div class="vf-card__content | vf-stack vf-stack--400">
-            <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Example link <svg
+            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career webinars<svg style="width: auto; height: 100%;"
                   aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
                   height="1em" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -118,9 +118,33 @@ $today_date = date('Ymd');
                     fill="currentColor" fill-rule="nonzero"></path>
                 </svg>
               </a></h3>
-            <p class="vf-card__text">Sapiente harum, omnis provident</p>
           </div>
         </article>
+        <article class="vf-card vf-card--brand vf-card--striped">
+          <div class="vf-card__content | vf-stack vf-stack--400">
+            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://bio-it.embl.de/upcoming-courses/">Bio-IT courses<svg style="width: auto; height: 100%;"
+                  aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
+                  height="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                    fill="currentColor" fill-rule="nonzero"></path>
+                </svg>
+              </a></h3>
+          </div>
+        </article>
+        <article class="vf-card vf-card--brand vf-card--striped">
+          <div class="vf-card__content | vf-stack vf-stack--400">
+            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://www.ebi.ac.uk/training/">EMBL-EBI training<svg style="width: auto; height: 100%;"
+                  aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
+                  height="1em" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                    fill="currentColor" fill-rule="nonzero"></path>
+                </svg>
+              </a></h3>
+          </div>
+        </article>
+      </div>
       </div>
     </section>
   </section>
@@ -129,7 +153,23 @@ $today_date = date('Ymd');
     <div class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--800">
       <div></div>
       <div class="vf-content">
-        <p>Content here</p>
+        <h3>Learning-on-the-go</h3>
+        <p>Learning-on-the-go is EMBL's e-learning platform for professional development and training available to use
+          at any time that suits you.
+        </p>
+        <p>Use it to access training opportunities:
+        </p>
+        <ul>
+          <li>Aligned to development pathways </li>
+          <li>About EMBL Policies and Guidelines </li>
+          <li>On Data Protection and IT Security </li>
+          <li>Via the Ethics Academy </li>
+        </ul>
+        <p>Much content is offered in micro-learning components which means that 5 minutes are all you need to learn
+          about the key aspects of these career enhancing topics.</p>
+        <p>Find out more when you log-in with your EMBL credentials.</p>
+        <button class="vf-button vf-button--primary vf-button--sm "
+          onclick="location.href='https://embl.clcmoodle.org';">Learning-on-the-go login</button>
       </div>
     </div>
   </section>
@@ -137,6 +177,7 @@ $today_date = date('Ymd');
 
 <script type="text/javascript">
   jplist.init({});
+
 </script>
 
 <script>

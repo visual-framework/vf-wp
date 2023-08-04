@@ -88,9 +88,11 @@ else {
       <?php } ?>
       <?php if (($location)) { ?>
       <span>Location:</span>&nbsp;
-      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | location-<?php $loc_list = [];
+      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | 
+      <?php $loc_list = [];
         foreach( $location as $loc ) { 
-          $loc_list[] = strtolower($loc->name); }
+          $locClass = 'location-' . strtolower($loc->name);;
+          $loc_list[] = $locClass; }
           echo implode(' ', $loc_list); ?>">
         <?php // if (!empty($venue)) {
        // echo esc_html($venue) . ', '; } ?>

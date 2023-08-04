@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_63bd68db58cd3",
-            "label": "Organiser",
+            "label": "Provider",
             "name": "vf-wp-training-organiser",
             "type": "taxonomy",
             "instructions": "",
@@ -153,7 +153,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -172,7 +172,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -188,7 +188,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -205,7 +205,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -233,7 +233,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -249,7 +249,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -277,7 +277,7 @@
         },
         {
             "key": "field_642d4b84d03ad",
-            "label": "Overview",
+            "label": "One line overview of course",
             "name": "vf-wp-training-info",
             "type": "wysiwyg",
             "instructions": "",
@@ -355,5 +355,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "modified": 1691134927
 }

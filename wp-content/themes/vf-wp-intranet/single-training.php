@@ -183,7 +183,7 @@ else {
     <?php }} ?>
 
     <hr class="vf-divider | vf-u-margin__bottom--400">
-    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Organiser:</span>
+    <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Provider:</span>
     </p>
     <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100">Organised by: <span
         class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser">

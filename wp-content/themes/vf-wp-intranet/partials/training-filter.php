@@ -15,6 +15,7 @@ $location_terms = get_terms(
     'hide_empty' => false,
   )
 );
+unset($location_terms[5]);
 
 $currentYear = date("Y");
 
@@ -89,6 +90,12 @@ $counterLoc = 1;
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-location">
     <legend class="vf-form__legend">Location</legend>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="location-7" type="checkbox" data-jplist-control="checkbox-text-filter" data-path=".location" data-group="data-group-1" data-name="location" data-or="location" value="Online" data-id="location6-online" class="vf-form__checkbox">
+      <label for="location-7" class="vf-form__label">Online&nbsp;
+        <span data-jplist-control="counter" data-group="data-group-1" data-format="({count})" data-path=".location-online" data-mode="static" data-name="counter-location-online" data-filter-type="path"></span>
+    </label>
+    </div>
     <?php
     foreach($location_terms as $term) {
       ?>
@@ -111,6 +118,7 @@ $counterLoc = 1;
     <?php
       $counterLoc++;
     }
+
     ?>
   </fieldset>
 
