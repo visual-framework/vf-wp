@@ -46,7 +46,8 @@ class VF_Events_Register {
       'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'revisions'),
       'has_archive'         => true,
       'rewrite'             => array(
-        'slug' => 'events'
+        'slug' => 'events',
+        'with_front' => false,
       ),
       'query_var'           => true,
       'can_export'          => true,
