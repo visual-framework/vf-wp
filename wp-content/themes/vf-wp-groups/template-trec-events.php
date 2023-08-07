@@ -51,7 +51,7 @@ $vf_theme->the_content();
         <div id="upcoming-events" data-jplist-group="data-group-1">
           <?php
           $forthcomingLoop = new WP_Query (array( 
-          'posts_per_page' => -1,
+          'posts_per_page' =>100,
           'post_type' => 'vf_event',
           'order' => 'ASC', 
           'orderby' => 'meta_value_num',
@@ -83,13 +83,15 @@ $vf_theme->the_content();
          include(locate_template('partials/vf-summary--trec-event.php', false, false)); ?>
           <?php endwhile;?>
         </div>
+        <?php // include(locate_template('partials/paging-controls.php', false, false)); ?>
+
       </section>
 
       <section class="vf-tabs__section vf-u-padding__top--800" id="vf-tabs__section--past-events">
         <div id="past-events" data-jplist-group="data-group-1">
           <?php
           $pastLoop = new WP_Query (array( 
-          'posts_per_page' => -1,
+          'posts_per_page' =>100,
           'post_type' => 'vf_event',
           'order' => 'DESC', 
           'orderby' => 'meta_value_num',
@@ -114,7 +116,7 @@ $vf_theme->the_content();
           include(locate_template('partials/vf-summary--trec-event-past.php', false, false)); ?>
           <?php endwhile;?>
         </div>
-        <?php // include(locate_template('partials/paging-controls.php', false, false)); ?>
+        <?php include(locate_template('partials/paging-controls.php', false, false)); ?>
       </section>
     </div>
   </main>
