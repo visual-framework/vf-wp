@@ -98,7 +98,7 @@ add_action(
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
       'rewrite'            => false,
-      'show_in_rest'       => false,
+      'show_in_rest'       => true,
     ));
 
     register_taxonomy('event-location', array('event-location'), array(
@@ -110,7 +110,7 @@ add_action(
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
       'rewrite'            => false,
-      'show_in_rest'       => false,
+      'show_in_rest'       => true,
     ));
   
     register_taxonomy('topic', array('topic'), array(
@@ -122,7 +122,7 @@ add_action(
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
       'rewrite'            => array( 'slug' => 'news/topic' ),
-      'show_in_rest'       => false,
+      'show_in_rest'       => true,
     ));
 
     register_taxonomy('updates-topic', array('updates-topic'), array(
@@ -134,7 +134,7 @@ add_action(
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
       'rewrite'            => array( 'slug' => 'updates/topic' ),
-      'show_in_rest'       => false,
+      'show_in_rest'       => true,
     ));
 
     register_taxonomy('training-organiser', array('training-organiser'), array(
@@ -146,7 +146,7 @@ add_action(
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
       'rewrite'            => false,
-      'show_in_rest'       => false,
+      'show_in_rest'       => true,
     ));
   
   }
