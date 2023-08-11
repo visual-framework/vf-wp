@@ -209,6 +209,7 @@ function allowed_block_types($allowed_blocks) {
     'acf/vf-members-internal',
     'acf/vf-person',
     'acf/vf-person-internal',
+    'acf/vf-related-courses',
     'acf/vf-events-list',
     'acf/vf-group-header',
     'acf/vf-jobs',
