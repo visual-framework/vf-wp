@@ -260,6 +260,25 @@
             "maxlength": ""
         },
         {
+            "key": "field_64d7226ffcd0c",
+            "label": "Registration button text",
+            "name": "vf-wp-button-text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_642d4ce66fc43",
             "label": "Additional information",
             "name": "",
@@ -355,6 +374,5 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "",
-    "modified": 1691134927
+    "description": ""
 }

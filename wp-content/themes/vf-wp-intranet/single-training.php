@@ -26,6 +26,7 @@ $venue = get_field('vf-wp-training-venue',$post_id);
 $contact = get_field('vf-wp-training-contact',$post_id, false, false);
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
 $alternative_dates = get_field('vf-wp-training-alternative', $post_id);
+$buttonText= get_field('vf-wp-button-text', $post_id);
 
 
 
@@ -148,40 +149,44 @@ else {
 
     <p class="vf-text-body vf-text-body--3">Status:
       <?php 
-      if (empty($registrationDeadline)) {
-        if ($registrationStatus == 'Open') {
-          echo '<span class="vf-u-text-color--green">Open</span>';
+            if (!empty($registrationStatus)) {
+              if ($registrationStatus == 'Open') {
+                echo '<span class="vf-u-text-color--green">Open</span>';
+              }
+              else if ($registrationStatus == 'Closed') {
+                echo '<span class="vf-u-text-color--red">Closed</span>';
+              }
+              else if ($registrationStatus == 'Waiting list only') {
+                echo '<span class="vf-u-text-color--orange">Waiting list only</span>';
+              }
+              else {
+              echo '<span class="vf-u-text-color--grey">' . $registrationStatus . '</span>';
+              }
+            }
+            else if (!empty($registrationDeadlineFormatted)) {
+              if ($registrationDeadlineFormatted >= $current_date) {
+                echo '<span class="vf-u-text-color--green">Open</span>';
+              }
+              else  {
+                echo '<span class="vf-u-text-color--red">Closed</span>';
+              }
         }
-        else if ($registrationStatus == 'Closed') {
-          echo '<span class="vf-u-text-color--red">Closed</span>';
-        }
-        else if ($registrationStatus == 'Waiting list only') {
-          echo '<span class="vf-u-text-color--orange">Waiting list only</span>';
-        }
-        else {
-        echo '<span class="vf-u-text-color--grey">' . $registrationStatus . '</span>';
-        }
-      }
-      else {
-        if ($registrationDeadlineFormatted >= $current_date) {
-          echo '<span class="vf-u-text-color--green">Open</span>';
-        }
-        else {
-          echo '<span class="vf-u-text-color--red">Closed</span>';
-        }
-      } ?>
+       ?>
     </p>
 
     <?php 
       // register button
       if ( !empty($registrationLink)) { 
-        if ((($registrationDeadlineFormatted >= $current_date)) || (($registrationStatus == 'Open')) || (($registrationStatus == 'Waiting list only'))) { ?>
+        if ((($registrationDeadlineFormatted >= $current_date && $registrationStatus != 'Closed')) || (($registrationStatus == 'Open')) || (($registrationStatus == 'Waiting list only'))) { ?>
     <div style="display: inline-block;" data-vf-google-analytics-region="registration-training">
       <a href="<?php echo esc_url($registrationLink); ?>" target="_blank"><button
-          class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600">Register</button></a>
+          class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600">
+        <?php if (!empty($buttonText)) {echo $buttonText;} else {echo 'Register';} ?>
+        </button></a>
     </div>
     <?php }} ?>
 
+    <?php if(!empty($organiser)) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Provider:</span>
     </p>
@@ -191,9 +196,11 @@ else {
         foreach( $organiser as $org ) { 
           $org_list[] = $org->name; }
           echo implode(', ', $org_list); ?></span> </p>
+    <?php }
 
+    if(!empty($contact)) { ?>
     <p class="vf-text-body vf-text-body--3">Contact: <?php echo $contact; ?> </p>
-    <?php
+    <?php }
 
 // alternative dates
 
