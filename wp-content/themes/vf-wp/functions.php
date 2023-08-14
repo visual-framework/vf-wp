@@ -214,6 +214,7 @@ function allowed_block_types($allowed_blocks) {
     'acf/vf-jobs',
     'acf/vf-publications',
     'acf/vf-publications-group-ebi',
+    'acf/vf-related-courses',
     'acf/vf-embl-news',
     'acf/vfwp-latest-posts',
     'acf/vfwp-summary',

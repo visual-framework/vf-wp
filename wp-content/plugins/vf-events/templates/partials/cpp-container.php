@@ -5,7 +5,7 @@
   <div class="vf-cluster vf-cluster--200">
     <div class="vf-cluster__inner" style="--vf-cluster-margin: 1rem;">
       <figure class="vf-figure">
-        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/EVIDENT_Olympus_Logo_Vertical.jpg" style="width: 120px">
+        <img class="vf-figure__image | vf-u-margin__bottom--0" src="https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Evident-new-logo.jpg" style="width: 120px">
       </figure>
     </div>
   </div>
