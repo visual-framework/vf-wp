@@ -5,6 +5,36 @@ $redirect_url = get_field('vf_wp_intranet_redirect');
 $position = get_field('positions_name_1', $post->ID);
 $outstation = get_field('outstation', $post->ID);
 $team_1 = get_field('team_name_1', $post->ID);
+$team_2 = get_field('team_name_2', $post->ID);
+$team_3 = get_field('team_name_3', $post->ID);
+$team_4 = get_field('team_name_4', $post->ID);
+$is_primary_1 = get_field('is_primary_1', $post->ID);
+$is_primary_2 = get_field('is_primary_2', $post->ID);
+$is_primary_3 = get_field('is_primary_3', $post->ID);
+$is_primary_4 = get_field('is_primary_4', $post->ID);
+$teamArray = array(
+  array(
+"team" => $team_1,
+"isPrimary" => $is_primary_1,
+),
+  array(
+"team" => $team_2,
+"isPrimary" => $is_primary_2,
+),
+  array(
+"team" => $team_3,
+"isPrimary" => $is_primary_3,
+  ),
+  array(
+"team" => $team_4,
+"isPrimary" => $is_primary_4
+),
+);
+$key_values = array_column($teamArray, 'isPrimary'); 
+array_multisort($key_values, SORT_DESC, $teamArray);
+$teamArray = array_map('array_filter', $teamArray);
+$teamArray = array_filter($teamArray);
+
 
 ?>
 <article class="vf-summary" data-jplist-item>
@@ -16,7 +46,7 @@ $team_1 = get_field('team_name_1', $post->ID);
     <?php
     // display the post type
     if ( get_post_type() ==  'people') {
-    echo '<b>People</b> | ' . $position . ' | ' . $team_1 . ' | ' . $outstation;  
+    echo '<b>People</b> | ' . $position . ' | ' . $teamArray[0]['team'] . ' | ' . $outstation;  
   }
 
   if ( get_post_type() ==  'insites') {

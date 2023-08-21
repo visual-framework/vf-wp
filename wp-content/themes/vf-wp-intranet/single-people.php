@@ -14,8 +14,35 @@ $team_1 = get_field('team_name_1');
 $team_2 = get_field('team_name_2');
 $team_3 = get_field('team_name_3');
 $team_4 = get_field('team_name_4');
+$is_primary_1 = get_field('is_primary_1');
+$is_primary_2 = get_field('is_primary_2');
+$is_primary_3 = get_field('is_primary_3');
+$is_primary_4 = get_field('is_primary_4');
 $telephone = get_field('telephone');
 $title = get_post_meta( $post->ID, 'full_name', true);
+$teamArray = array(
+  array(
+"team" => $team_1,
+"isPrimary" => $is_primary_1,
+),
+  array(
+"team" => $team_2,
+"isPrimary" => $is_primary_2,
+),
+  array(
+"team" => $team_3,
+"isPrimary" => $is_primary_3,
+  ),
+  array(
+"team" => $team_4,
+"isPrimary" => $is_primary_4
+),
+);
+$key_values = array_column($teamArray, 'isPrimary'); 
+array_multisort($key_values, SORT_DESC, $teamArray);
+$teamArray = array_map('array_filter', $teamArray);
+$teamArray = array_filter($teamArray);
+
 get_header();
 
 ?>
@@ -79,66 +106,12 @@ var_dump( $meta_values );
   <div class="vf-content">
     <div class="vf-grid vf-grid__col-2">
       <?php
-            if (!empty($team_1)) { ?>
+            foreach ($teamArray as $key => $teamName)  { ?>
       <article class="vf-card vf-card--brand vf-card--bordered">
         <div class="vf-card__content | vf-stack vf-stack--400">
           <h3 class="vf-card__heading">
-            <a data-embl-js-group-link="<?php echo esc_attr($team_1); ?>" class="vf-card__link"
-              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_1); ?>&post_type=any"><?php echo esc_html($team_1); ?>
-              <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-                height="1em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                  fill="currentColor" fill-rule="nonzero"></path>
-              </svg>
-            </a>
-          </h3>
-        </div>
-      </article>
-      <?php }?>
-      <?php
-            if (!empty($team_2)) { ?>
-      <article class="vf-card vf-card--brand vf-card--bordered">
-        <div class="vf-card__content | vf-stack vf-stack--400">
-          <h3 class="vf-card__heading">
-            <a data-embl-js-group-link="<?php echo esc_attr($team_2); ?>" class="vf-card__link"
-              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_2); ?>&post_type=any"><?php echo esc_html($team_2); ?>
-              <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-                height="1em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                  fill="currentColor" fill-rule="nonzero"></path>
-              </svg>
-            </a>
-          </h3>
-        </div>
-      </article>
-      <?php }?>
-      <?php
-            if (!empty($team_3)) { ?>
-      <article class="vf-card vf-card--brand vf-card--bordered">
-        <div class="vf-card__content | vf-stack vf-stack--400">
-          <h3 class="vf-card__heading">
-            <a data-embl-js-group-link="<?php echo esc_attr($team_3); ?>" class="vf-card__link"
-              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_3); ?>&post_type=any"><?php echo esc_html($team_3); ?>
-              <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-                height="1em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                  fill="currentColor" fill-rule="nonzero"></path>
-              </svg>
-            </a>
-          </h3>
-        </div>
-      </article>
-      <?php }?>
-      <?php
-            if (!empty($team_4)) { ?>
-      <article class="vf-card vf-card--brand vf-card--bordered">
-        <div class="vf-card__content | vf-stack vf-stack--400">
-          <h3 class="vf-card__heading">
-            <a data-embl-js-group-link="<?php echo esc_attr($team_4); ?>" class="vf-card__link"
-              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($team_4); ?>&post_type=any"><?php echo esc_html($team_4); ?>
+            <a data-embl-js-group-link="<?php echo esc_attr($teamName['team']); ?>" class="vf-card__link"
+              href="https://www.embl.org/internal-information/?s=<?php echo esc_html($teamName['team']); ?>&post_type=any"><?php echo esc_html($teamName['team']); ?>
               <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
                 height="1em" xmlns="http://www.w3.org/2000/svg">
                 <path
