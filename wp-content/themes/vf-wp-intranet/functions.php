@@ -1,9 +1,18 @@
 <?php
 /* Adds scripts */
-add_action( 'wp_enqueue_scripts', 'add_scripts' );
-function add_scripts() {
-    wp_enqueue_script('jplist', get_theme_file_uri( '/scripts/jplist.min.js'));
+
+// include custom jQuery
+function include_jquery() {
+	wp_deregister_script('jquery');
+	wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js', array(), null, true);
 }
+add_action('wp_enqueue_scripts', 'include_jquery');
+
+//inlcude jplist
+function add_scripts() {
+  wp_enqueue_script('jplist', get_theme_file_uri( '/scripts/jplist.min.js'));
+}
+add_action( 'wp_enqueue_scripts', 'add_scripts' );
 
 
 require_once('functions/custom-taxonomies.php');
