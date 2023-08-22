@@ -3,7 +3,6 @@
 
 // include custom jQuery
 function include_jquery() {
-	wp_deregister_script('jquery');
 	wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js', array(), null, true);
 }
 add_action('wp_enqueue_scripts', 'include_jquery');

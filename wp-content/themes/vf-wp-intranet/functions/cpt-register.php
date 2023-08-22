@@ -16,8 +16,8 @@ add_action(
     register_post_type('documents', array(
       'labels'              => document_get_labels(),
       'description'         => __('Documents', 'vfwp'),
-      'public'              => true,
-      'hierarchical'        => true,
+      'public'              => false,
+      'hierarchical'        => false,
       'exclude_from_search' => false,
       'publicly_queryable'  => true,
       'show_ui'             => true,
@@ -33,7 +33,7 @@ add_action(
       'rewrite'             => array(
         'slug' => 'documents'
       ),
-      'query_var'           => true,
+      'query_var'           => false,
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(
@@ -98,8 +98,8 @@ add_action(
     register_post_type('people', array(
       'labels'              => people_get_labels(),
       'description'         => __('People', 'vfwp'),
-      'public'              => true,
-      'hierarchical'        => true,
+      'public'              => false,
+      'hierarchical'        => false,
       'exclude_from_search' => false,
       'publicly_queryable'  => true,
       'show_ui'             => true,
@@ -115,7 +115,7 @@ add_action(
       'rewrite'             => array(
         'slug' => 'people'
       ),
-      'query_var'           => true,
+      'query_var'           => false,
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(  
@@ -176,8 +176,8 @@ add_action(
     register_post_type('insites', array(
       'labels'              => insites_get_labels(),
       'description'         => __('Internal news', 'vfwp'),
-      'public'              => true,
-      'hierarchical'        => true,
+      'public'              => false,
+      'hierarchical'        => false,
       'exclude_from_search' => false,
       'publicly_queryable'  => true,
       'show_ui'             => true,
@@ -194,7 +194,7 @@ add_action(
       'rewrite'             => array(
         'slug' => 'news'
       ),
-      'query_var'           => true,
+      'query_var'           => false,
       'can_export'          => true,
       'delete_with_user'    => false,
       'taxonomies'          => array(
@@ -298,7 +298,7 @@ function vf_wp_intranet_blog__init() {
   register_post_type('community-blog', array(
     'labels'              => get_blog_labels(),
     'description'         => __('Updates', 'vfwp'),
-    'public'              => true,
+    'public'              => false,
     'hierarchical'        => false,
     'exclude_from_search' => false,
     'publicly_queryable'  => true,
@@ -317,7 +317,7 @@ function vf_wp_intranet_blog__init() {
       'slug'       => 'updates',
       'with_front' => false
     ),
-    'query_var'           => true,
+    'query_var'           => false,
     'can_export'          => true,
     'delete_with_user'    => false,
     'taxonomies'          => array(
@@ -463,8 +463,8 @@ function vf_wp_intranet_teams__init() {
   register_post_type('teams', array(
     'labels'              => get_intranet_teams_labels(),
     'description'         => __('Team', 'vfwp'),
-    'public'              => true,
-    'hierarchical'        => true,
+    'public'              => false,
+    'hierarchical'        => false,
     'exclude_from_search' => false,
     'publicly_queryable'  => true,
     'show_ui'             => true,
@@ -481,7 +481,7 @@ function vf_wp_intranet_teams__init() {
     'rewrite'             => array(
       'slug' => 'external'
     ),
-    'query_var'           => true,
+    'query_var'           => false,
     'can_export'          => true,
     'delete_with_user'    => false,
     'taxonomies'          => array(
@@ -506,8 +506,8 @@ function vf_wp_intranet_teams__init() {
       register_post_type('training', array(
         'labels'              => training_get_labels(),
         'description'         => __('Training', 'vfwp'),
-        'public'              => true,
-        'hierarchical'        => true,
+        'public'              => false,
+        'hierarchical'        => false,
         'exclude_from_search' => false,
         'publicly_queryable'  => true,
         'show_ui'             => true,
@@ -523,7 +523,7 @@ function vf_wp_intranet_teams__init() {
         'rewrite'             => array(
           'slug' => 'training'
         ),
-        'query_var'           => true,
+        'query_var'           => false,
         'can_export'          => true,
         'delete_with_user'    => false,
         'taxonomies'          => array(
