@@ -1,4 +1,7 @@
-
+<?php
+global $wp;
+$current_url = home_url(add_query_arg(array(), $wp->request));
+?>
 
 <div class="vf-tree vf-tree__item--expanded" data-vf-js-tree="" aria-expanded="true" data-vf-js-button-hidden-open-text="Open Tree" data-vf-js-button-hidden-close-text="Close Tree" data-vf-js-tree--collapsed="false">
   <div class="vf-tree__inner" role="main">
@@ -11,9 +14,14 @@
         // Loop through rows (parent repeater)
         while (have_rows('vf_tree_top_level')) : the_row();
           $topLink = get_sub_field('vf_tree_top_menu_item');
+          $selectClass = '';
+          $linkUrl = rtrim($topLink['url'], '/');
+          if($current_url == $linkUrl) {
+            $selectClass = ' vf-tree__item--selected';
+          }
           ?>
-          <li class="vf-tree__item" data-vf-js-tree--collapsed="true" data-vf-js-tree="" aria-role="treeitem" aria-expanded="">
-            <a href="<?php echo esc_url($topLink['url']); ?>" class="vf-tree__link"><?php echo esc_html($topLink['title']); ?>
+          <li class="vf-tree__item vf-tree--collapsed <?php echo esc_attr($selectClass); ?>" data-vf-js-tree--collapsed="true" data-vf-js-tree="" aria-role="treeitem" aria-expanded="">
+            <a href="<?php echo esc_url($linkUrl ); ?>" class="vf-tree__link"><?php echo esc_html($topLink['title']); ?>
             <?php
             // Check for rows (sub repeater)
             if (have_rows('vf_tree_sub_menu')) :?>
@@ -26,8 +34,13 @@
                 // Loop through rows (sub repeater)
                 while (have_rows('vf_tree_sub_menu')) : the_row();
                   $subLink = get_sub_field('vf_tree_sub_menu_item');
+                  $selectClass = '';
+                  $linkUrl2 = rtrim($subLink['url'], '/');
+                  if($current_url == $linkUrl2) {
+                    $selectClass = ' vf-tree__item--selected';
+                  }
                   ?>
-                  <li class="vf-tree__item vf-tree--collapsed" data-vf-js-tree--collapsed="true" data-vf-js-tree="" aria-role="treeitem" aria-expanded="false"><a href="<?php echo esc_url($subLink['url']); ?>" class="vf-tree__link"><?php echo esc_html($subLink['title']); ?></li></a>
+                  <li class="vf-tree__item vf-tree--collapsed <?php echo esc_attr($selectClass); ?>" data-vf-js-tree--collapsed="true" data-vf-js-tree="" aria-role="treeitem" aria-expanded="false"><a href="<?php echo esc_url($linkUrl2); ?>" class="vf-tree__link"><?php echo esc_html($subLink['title']); ?></li></a>
                 <?php endwhile; ?>
               </ul>
               <?php else : ?>
