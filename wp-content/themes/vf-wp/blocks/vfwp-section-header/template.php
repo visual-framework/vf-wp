@@ -42,7 +42,7 @@ if (
 }
 
 ?>
-<div class="vf-section-header">
+<div class="vf-section-header | vf-u-margin__bottom--400">
     <h2 class="vf-section-header__heading" 
     <?php 
       if ($anchor) { 

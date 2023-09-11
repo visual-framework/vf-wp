@@ -173,6 +173,7 @@ function allowed_block_types($allowed_blocks) {
 		'core/paragraph',
 		'core/heading',
 		'core/list',
+		'core/list-item',
     'core/audio',
     'core/video',
     'core/table',
