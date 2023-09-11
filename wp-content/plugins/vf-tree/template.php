@@ -21,7 +21,7 @@ $current_url = home_url(add_query_arg(array(), $wp->request));
           }
           ?>
           <li class="vf-tree__item vf-tree--collapsed <?php echo esc_attr($selectClass); ?>" data-vf-js-tree--collapsed="true" data-vf-js-tree="" aria-role="treeitem" aria-expanded="">
-            <a href="<?php echo esc_url($linkUrl ); ?>" class="vf-tree__link"><?php echo esc_html($topLink['title']); ?>
+            <a href="<?php echo esc_url($linkUrl ); ?>" class="vf-tree__link"   <?php if ($topLink['url'] == '#') { echo 'style="color: #000; cursor: text; text-decoration: none;" onclick="return false;"'; } ?>><?php echo esc_html($topLink['title']); ?>
             <?php
             // Check for rows (sub repeater)
             if (have_rows('vf_tree_sub_menu')) :?>
@@ -52,3 +52,9 @@ $current_url = home_url(add_query_arg(array(), $wp->request));
     <?php endif; // if( have_rows('vf_tree_top_level') ): ?>
   </div><!-- #content -->
 </div><!-- #primary -->
+
+<style>
+  .vf-tree__link {
+    color: #3b6fb6;
+  }  
+</style>
