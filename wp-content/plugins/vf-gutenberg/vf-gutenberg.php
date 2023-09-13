@@ -278,6 +278,7 @@ class VF_Gutenberg {
         $path = get_template_directory_uri();
         $path = "{$path}/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css";
         echo '<link rel="stylesheet" href="' . esc_url($path) . '">';
+        echo '<style>html,body{margin-block:0!important;}#wpadminbar{display:none!important;}</style>';
       };
       add_action('wp_head', $wp_head, 20);
       get_template_part('partials/head');
@@ -313,18 +314,11 @@ class VF_Gutenberg {
       echo $html;
       return;
     }
-    $id = "vfwp_{$block['id']}";
+    $uid = hash('md5', $block['id']);
+    $uid = "vfwp_{$uid}";
 ?>
 <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
-  <div class="vf-block__view">
-    <?php /*
-    <iframe
-      class="vf-block__iframe"
-      id="<?php echo $id; ?>"
-      onLoad="<?php echo "setTimeout(()=>{{$id}();}, 1);"; ?>"
-      scrolling="no"></iframe>
-      */ ?>
-  </div>
+  <div class="vf-block__view"></div>
   <?php if ($is_jsx) { ?>
   <div class="vf-block__inner-blocks">
     <InnerBlocks />
@@ -334,8 +328,8 @@ class VF_Gutenberg {
 <script>
 (function() {
 
-window.<?php echo $id; ?> = function() {
-  const iframe = document.getElementById('<?php echo $id; ?>');
+window.<?php echo $uid; ?> = function() {
+  const iframe = document.getElementById('<?php echo $uid; ?>');
   iframe.vfActive = true;
   var doc = iframe.contentWindow.document;
   doc.body.innerHTML = <?php echo json_encode($html); ?>;
@@ -344,36 +338,47 @@ window.<?php echo $id; ?> = function() {
   var script = document.createElement('script');
   script.type = 'text/javascript';
   script.innerHTML = `
-if (ResizeObserver) {
-  const observer = new ResizeObserver(entries => {
-    entries.forEach(entry => {
-      window.parent.postMessage({
-          id: '<?php echo $id; ?>',
-          height: entry.contentRect.height
-        }, '*'
-      );
-    });
-  });
-  observer.observe(document.body);
-} else {
-  const vfResize = () => {
-    window.parent.postMessage({
-        id: '<?php echo $id; ?>',
-        height: document.documentElement.scrollHeight
-      }, '*'
+(function () {
+  function postHeight(height) {
+    window.parent.postMessage(
+      {
+        id: '<?php echo $uid; ?>',
+        height: height
+      },
+      '*'
     );
-  };
-  window.addEventListener('resize', vfResize);
-  setTimeout(vfResize, 100);
-  vfResize();
-}
+  }
+  if ('ResizeObserver' in window) {
+    function onResize(entries) {
+      entries.forEach(function resize(entry) {
+        const newHeight = entry.contentRect.height;
+        if (newHeight > 0) {
+          postHeight(newHeight);
+        }
+      });
+    }
+    var observer = new window.ResizeObserver(onResize);
+    observer.observe(document.body);
+  } else {
+    function onResize() {
+      const newHeight = document.documentElement.scrollHeight;
+      if (newHeight > 0) {
+        postHeight(newHeight);
+      }
+    }
+    window.addEventListener('resize', onResize);
+    window.setTimeout(onResize, 100);
+    onResize();
+  }
+})();
 `;
+
   doc.body.appendChild(script);
   // doc.body.classList.add('ebi-vf1-integration');
 };
 
 const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
-let iframe = document.getElementById('<?php echo $id; ?>');
+let iframe = document.getElementById('<?php echo $uid; ?>');
 const onLoad = () => {
   if (typeof window[iframe.id] === 'function') {
     window[iframe.id]();
@@ -383,7 +388,7 @@ if (iframe) {
   onLoad();
 } else {
   iframe = document.createElement('iframe');
-  iframe.id = '<?php echo $id; ?>';
+  iframe.id = '<?php echo $uid; ?>';
   iframe.className = 'vf-block__iframe';
   iframe.setAttribute('scrolling', 'no');
   iframe.onload = onLoad;
