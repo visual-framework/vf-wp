@@ -368,6 +368,7 @@ class VF_Gutenberg {
       var doc = iframe.contentWindow.document;
       doc.body.innerHTML = <?php echo json_encode($html); ?>;
       // doc.body.className += ' vf-block-render';
+      doc.body.className = '';
       // doc.body.id = '<?php echo $uid; ?>';
       iframe.style.visibility = 'visible';
       iframe.vfActive = true;

@@ -36,11 +36,11 @@
     }
   }
 
-  var now = Date.now();
+  // var now = Date.now();
   function onFrame() {
-    if (Date.now() - now > 5000) {
-      return;
-    }
+    // if (Date.now() - now > 5000) {
+    //   return;
+    // }
     $preview = document.querySelector('.vf-block-render');
     if ($preview) {
       onReady();
