@@ -66,6 +66,16 @@ class VF_Gutenberg {
       array($this, 'render_block_nunjucks'),
       10, 2
     );
+    add_action(
+      'wp_head',
+      array($this, 'wp_head_preview'),
+      20
+    );
+    add_filter(
+      'template_include',
+      array($this, 'template_include_preview'),
+      10, 1
+    );
 
     // ACF options
     include_once('includes/settings.php');
@@ -259,6 +269,54 @@ class VF_Gutenberg {
   }
 
   /**
+   * Returns true if the current template is an iframe block render
+   */
+  function is_block_preview() {
+    return is_user_logged_in() && isset($_GET['vf-block-preview']);
+  }
+
+  /**
+   * Filter: `template_include`
+   */
+  function template_include_preview($template) {
+    if ($this->is_block_preview()) {
+      // Use the empty template for iframe block renders
+      $template = plugin_dir_path(__FILE__) . '/assets/vf-block-render.php';
+    }
+    return $template;
+  }
+
+  /**
+   * Action: `wp_head`
+   */
+  function wp_head_preview() {
+    if ( ! $this->is_block_preview()) {
+      return;
+    }
+    // Configure the empty template for iframe block renders
+    // Ensure admin bar is hidden
+    show_admin_bar(false);
+    // Add additional VF styles
+    $path = get_template_directory_uri();
+    $path = "{$path}/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css";
+    echo '<link rel="stylesheet" href="' . esc_url($path) . '">';
+    // Add iframe styles
+    echo '<style id="vf-block-render-css">';
+    echo file_get_contents(
+      plugin_dir_path(__FILE__) . '/assets/vf-block-render.css',
+      true
+    );
+    echo '</style>';
+    // Add iframe script
+    echo '<script id="vf-block-render-js">';
+    echo file_get_contents(
+      plugin_dir_path(__FILE__) . '/assets/vf-block-render.js',
+      true
+    );
+    echo '</script>';
+  }
+
+  /**
    * Callback for `acf_register_block_type` to render within iframe
    * $args = array($block, $content, $is_preview, $post_id)
    */
@@ -271,19 +329,6 @@ class VF_Gutenberg {
     }
     // Capture the block template
     ob_start();
-    // Output head include for preview
-    if ($is_preview) {
-      // Append iframe stylesheet for preview fixes
-      $wp_head = function() {
-        $path = get_template_directory_uri();
-        $path = "{$path}/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css";
-        echo '<link rel="stylesheet" href="' . esc_url($path) . '">';
-        echo '<style>html,body{margin-block:0!important;}#wpadminbar{display:none!important;}</style>';
-      };
-      add_action('wp_head', $wp_head, 20);
-      get_template_part('partials/head');
-      remove_action('wp_head', $wp_head, 20);
-    }
     // Load template
     if (is_callable($template)) {
       call_user_func($template, $block, '', $is_preview, $acf_id);
@@ -303,100 +348,52 @@ class VF_Gutenberg {
 <?php
       }
     }
-    // Output foot include for preview
-    if ($is_preview) {
-      get_template_part('partials/foot');
-    }
     $html = ob_get_contents();
     ob_end_clean();
+
     // Render block if not admin preview
     if ($is_preview !== true) {
       echo $html;
       return;
     }
-    $uid = hash('md5', $block['id']);
+
+    // $uid = hash('md5', $block['id']);
+    $uid = hash('md5', random_bytes(16));
     $uid = "vfwp_{$uid}";
+    $html = "<div id=\"{$uid}\" class=\"vf-block-render\">{$html}</div>";
 ?>
+  <script>
+    window.<?php echo $uid; ?> = function() {
+      var iframe = document.getElementById('<?php echo $uid; ?>');
+      var doc = iframe.contentWindow.document;
+      doc.body.innerHTML = <?php echo json_encode($html); ?>;
+      // doc.body.className += ' vf-block-render';
+      // doc.body.id = '<?php echo $uid; ?>';
+      iframe.style.visibility = 'visible';
+      iframe.vfActive = true;
+      console.debug('<?php echo $uid; ?>', iframe);
+    };
+  </script>
 <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+  <iframe
+    class="vf-block__iframe"
+    id="<?php echo esc_attr($uid); ?>"
+    src="<?php echo home_url('/?vf-block-preview'); ?>"
+    onload="<?php echo "setTimeout(function(){{$uid}();},1);"; ?>"
+    style="overflow:hidden;visibility:hidden;"
+    scrolling="no"></iframe>
+  <?php /*
+  // This empty <div> should not be needed anymore
+  // I am not sure if it was ever needed...
+  // If something breaks, add it back?
   <div class="vf-block__view"></div>
+  */ ?>
   <?php if ($is_jsx) { ?>
   <div class="vf-block__inner-blocks">
     <InnerBlocks />
   </div>
   <?php } ?>
 </div>
-<script>
-(function() {
-
-window.<?php echo $uid; ?> = function() {
-  const iframe = document.getElementById('<?php echo $uid; ?>');
-  iframe.vfActive = true;
-  var doc = iframe.contentWindow.document;
-  doc.body.innerHTML = <?php echo json_encode($html); ?>;
-  doc.body.style.position = 'absolute';
-  doc.body.style.width = '100%';
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.innerHTML = `
-(function () {
-  function postHeight(height) {
-    window.parent.postMessage(
-      {
-        id: '<?php echo $uid; ?>',
-        height: height
-      },
-      '*'
-    );
-  }
-  if ('ResizeObserver' in window) {
-    function onResize(entries) {
-      entries.forEach(function resize(entry) {
-        const newHeight = entry.contentRect.height;
-        if (newHeight > 0) {
-          postHeight(newHeight);
-        }
-      });
-    }
-    var observer = new window.ResizeObserver(onResize);
-    observer.observe(document.body);
-  } else {
-    function onResize() {
-      const newHeight = document.documentElement.scrollHeight;
-      if (newHeight > 0) {
-        postHeight(newHeight);
-      }
-    }
-    window.addEventListener('resize', onResize);
-    window.setTimeout(onResize, 100);
-    onResize();
-  }
-})();
-`;
-
-  doc.body.appendChild(script);
-  // doc.body.classList.add('ebi-vf1-integration');
-};
-
-const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
-let iframe = document.getElementById('<?php echo $uid; ?>');
-const onLoad = () => {
-  if (typeof window[iframe.id] === 'function') {
-    window[iframe.id]();
-  }
-};
-if (iframe) {
-  onLoad();
-} else {
-  iframe = document.createElement('iframe');
-  iframe.id = '<?php echo $uid; ?>';
-  iframe.className = 'vf-block__iframe';
-  iframe.setAttribute('scrolling', 'no');
-  iframe.onload = onLoad;
-  parent.insertBefore(iframe, parent.firstChild);
-}
-
-})();
-</script>
 <?php
   // Toggle the Gutenberg editor block style for containers
   $is_container = get_field('is_container', $acf_id);

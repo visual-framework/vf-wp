@@ -1,0 +1,30 @@
+html,
+body {
+  margin: 0 !important;
+}
+
+#wpadminbar {
+  display: none !important;
+}
+
+.vf-block-render {
+  display: block;
+  height: auto;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.vf-block-render > *:last-child {
+  margin-bottom: 0;
+}
+
+.vf-block-render > *:first-child {
+  margin-top: 0;
+}
+
+.vf-block-render * {
+  pointer-events: none;
+  user-select: none;
+}
