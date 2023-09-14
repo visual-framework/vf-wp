@@ -161,9 +161,11 @@ class VF_Theme_Content {
       }
       $prefix = "\n{$open}\n";
       $prefix .= "<!--[{$block['blockName']}]-->\n";
-      if (isset($block['attrs']['id'])) {
-        $id = esc_html($block['attrs']['id']);
-        $prefix .= "<!--[{$id}]-->\n";
+      if (isset($block['attrs']['data']['is_container'])) {
+        $is_container = (bool) $block['attrs']['data']['is_container'];
+        if ($is_container) {
+          $prefix .= "<!--(is_container)-->\n";
+        }
       }
       $suffix = "\n{$close}\n";
       return "{$prefix}{$html}{$suffix}";
