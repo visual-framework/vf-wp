@@ -335,7 +335,6 @@ class VF_Gutenberg {
       // doc.body.className += ' vf-block-render';
       doc.body.className = '';
       // doc.body.id = '<?php echo $uid; ?>';
-      iframe.style.visibility = 'visible';
       iframe.vfActive = true;
       console.debug('<?php echo $uid; ?>', iframe);
     };
@@ -346,7 +345,7 @@ class VF_Gutenberg {
     id="<?php echo esc_attr($uid); ?>"
     src="<?php echo home_url('/?vf-block-preview'); ?>"
     onload="<?php echo "setTimeout(function(){{$uid}();},1);"; ?>"
-    style="overflow:hidden;visibility:hidden;"
+    style="overflow:hidden;"
     scrolling="no"></iframe>
   <?php /*
   // This empty <div> should not be needed anymore
