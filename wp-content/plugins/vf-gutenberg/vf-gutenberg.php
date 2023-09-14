@@ -66,11 +66,6 @@ class VF_Gutenberg {
       array($this, 'render_block_nunjucks'),
       10, 2
     );
-    add_action(
-      'wp_head',
-      array($this, 'wp_head_preview'),
-      20
-    );
     add_filter(
       'template_include',
       array($this, 'template_include_preview'),
@@ -284,36 +279,6 @@ class VF_Gutenberg {
       $template = plugin_dir_path(__FILE__) . '/assets/vf-block-render.php';
     }
     return $template;
-  }
-
-  /**
-   * Action: `wp_head`
-   */
-  function wp_head_preview() {
-    if ( ! $this->is_block_preview()) {
-      return;
-    }
-    // Configure the empty template for iframe block renders
-    // Ensure admin bar is hidden
-    show_admin_bar(false);
-    // Add additional VF styles
-    $path = get_template_directory_uri();
-    $path = "{$path}/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css";
-    echo '<link rel="stylesheet" href="' . esc_url($path) . '">';
-    // Add iframe styles
-    echo '<style id="vf-block-render-css">';
-    echo file_get_contents(
-      plugin_dir_path(__FILE__) . '/assets/vf-block-render.css',
-      true
-    );
-    echo '</style>';
-    // Add iframe script
-    echo '<script id="vf-block-render-js">';
-    echo file_get_contents(
-      plugin_dir_path(__FILE__) . '/assets/vf-block-render.js',
-      true
-    );
-    echo '</script>';
   }
 
   /**
