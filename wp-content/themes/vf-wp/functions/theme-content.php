@@ -43,15 +43,15 @@ class VF_Theme_Content {
    */
   public function render_block($html, $block) {
     // Wrapper VF Grid Column inner blocks with `vf-content`
-    
+
     if ($block['blockName'] === 'vf/grid-column') {
       $html = preg_replace(
         '#^\s*(<div[^>]*?>)(.*?)(</div>)\s*$#s',
         "$1<!--[vf/content]-->\n<div class=\"vf-content\">\n$2\n</div>\n$3\n",
         $html
       );
-    } 
-    
+    }
+
     // wp-embed should use vf-embed for responsiveness
     // https://github.com/visual-framework/vf-wp/issues/693
     if (($block['blockName'] === 'core/embed') && ($block['attrs']['type'] === 'video')) {
@@ -60,9 +60,9 @@ class VF_Theme_Content {
         'vf-embed vf-embed--16x9',
         $html
       );
-    } 
+    }
     return $html;
-  
+
   }
 
   /**
@@ -84,6 +84,9 @@ class VF_Theme_Content {
   /**
    * Return the ACF block ID prefixed as HTML comment
    * <!--[block_5ec3c0a7e5b9de]-->
+   * @deprecated
+   * ACF 6 removed block IDs
+   * https://www.advancedcustomfields.com/resources/whats-new-with-acf-blocks-in-acf-6/#block-id
    */
   static public function get_acf_block_ID($html) {
     $open = preg_quote('<!--[');
