@@ -184,6 +184,17 @@ class VF_Gutenberg {
       false,
       true
     );
+
+    wp_register_script(
+      'vf-gutenberg',
+      plugins_url(
+        '/assets/vf-gutenberg.js',
+        __FILE__
+      ),
+      array('wp-editor', 'wp-blocks'),
+      false,
+      true
+    );
     /**
      * "Localize" script by making config available
      * in the global `vfGutenberg` object
@@ -222,6 +233,7 @@ class VF_Gutenberg {
 
     wp_localize_script('vf-blocks', 'vfGutenberg', $config);
     wp_enqueue_script('vf-blocks');
+    wp_enqueue_script('vf-gutenberg');
   }
 
   /**
@@ -321,32 +333,16 @@ class VF_Gutenberg {
       echo $html;
       return;
     }
-
-    // $uid = hash('md5', $block['id']);
-    $uid = hash('md5', random_bytes(16));
-    $uid = "vfwp_{$uid}";
-    $html = "<div id=\"{$uid}\" class=\"vf-block-render\">{$html}</div>";
+    // Render iframe for admin preview
+    $is_container = (bool) get_field('is_container', $acf_id);
 ?>
-  <script>
-    window.<?php echo $uid; ?> = function() {
-      var iframe = document.getElementById('<?php echo $uid; ?>');
-      var doc = iframe.contentWindow.document;
-      doc.body.innerHTML = <?php echo json_encode($html); ?>;
-      // doc.body.className += ' vf-block-render';
-      doc.body.className = '';
-      // doc.body.id = '<?php echo $uid; ?>';
-      iframe.vfActive = true;
-      console.debug('<?php echo $uid; ?>', iframe);
-    };
-  </script>
-<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
-  <iframe
-    class="vf-block__iframe"
-    id="<?php echo esc_attr($uid); ?>"
-    src="<?php echo home_url('/?vf-block-preview'); ?>"
-    onload="<?php echo "setTimeout(function(){{$uid}();},1);"; ?>"
-    style="overflow:hidden;"
-    scrolling="no"></iframe>
+  <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+    <template
+      data-iframe-src="<?php echo esc_url(home_url('/?vf-block-preview')); ?>"
+      <?php if ($is_container) { ?>
+        data-is-container="1"
+      <?php } ?>
+      ><?php echo $html; ?></template>
   <?php /*
   // This empty <div> should not be needed anymore
   // I am not sure if it was ever needed...
@@ -360,40 +356,6 @@ class VF_Gutenberg {
   <?php } ?>
 </div>
 <?php
-  // Toggle the Gutenberg editor block style for containers
-  $is_container = get_field('is_container', $acf_id);
-  $is_container = (bool) $is_container;
-  if ($is_container) {
-?>
-<script>
-(function($){
-  // Callback to update the block inline style
-  function updateBlock(isContainer) {
-    var $el = $('.vf-block[data-acf-id="<?php echo $acf_id; ?>"]');
-    var $block = $el.closest('.wp-block');
-    if ($block.length) {
-      if (isContainer) {
-        $block[0].style.maxWidth = 'none';
-      } else {
-        $block[0].style.removeProperty('max-width');
-      }
-    }
-  }
-  // TODO: move to component scripts / fix?
-  // Trigger first update
-  updateBlock(true);
-  // Add event for live field changes
-  acf.addAction('append_field/name=is_container', function(field) {
-    field.on('change', 'input[type="checkbox"]', function(ev) {
-      if (ev.target.id.indexOf('<?php echo $acf_id; ?>')) {
-        updateBlock(field.val());
-      }
-    });
-  });
-})(window.jQuery);
-</script>
-<?php
-    }
   }
 
 } // VF_Gutenberg
