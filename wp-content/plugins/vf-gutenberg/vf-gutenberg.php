@@ -333,28 +333,73 @@ class VF_Gutenberg {
       echo $html;
       return;
     }
+
     // Render iframe for admin preview
     $is_container = (bool) get_field('is_container', $acf_id);
+
+    ob_start();
+    include(
+      plugin_dir_path(__FILE__) . '/assets/vf-block-render.php'
+    );
+    $template = ob_get_contents();
+    ob_end_clean();
+
+    $template = str_replace(
+      '<!--[BLOCKHTML]--->',
+      $html,
+      $template
+    );
+
+    // Render using React if block is from a plugin
+    $is_plugin = isset($block['data']['is_plugin']) && (bool) $block['data']['is_plugin'];
+    if ($is_plugin) {
+      VF_Gutenberg::acf_render_template__deprecated($block, $template);
+      return;
+    }
+
 ?>
   <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
     <template
-      data-iframe-src="<?php echo esc_url(home_url('/?vf-block-preview')); ?>"
       <?php if ($is_container) { ?>
         data-is-container="1"
       <?php } ?>
-      ><?php echo $html; ?></template>
-  <?php /*
-  // This empty <div> should not be needed anymore
-  // I am not sure if it was ever needed...
-  // If something breaks, add it back?
-  <div class="vf-block__view"></div>
-  */ ?>
+      ><?php echo $template; ?></template>
   <?php if ($is_jsx) { ?>
   <div class="vf-block__inner-blocks">
     <InnerBlocks />
   </div>
   <?php } ?>
 </div>
+<?php
+  }
+
+  static function acf_render_template__deprecated($block, $html) {
+    // Use old block id to match React event listener
+    $acf_id = $block['id'];
+    $id = "vfwp_{$acf_id}";
+    // Wrapper contents for `/assets/vf-block-render.js`
+    $html = preg_replace(
+      '/<body[^>]*>(.*?)<\/body>/is',
+      '<div id="'.$id.'" class="vf-block-render">$1</div>',
+      $html
+    );
+?>
+<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+  <div class="vf-block__view"></div>
+</div>
+<script>
+(function() {
+  const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
+  const iframe = document.createElement('iframe');
+    iframe.id = '<?php echo $id; ?>';
+    iframe.classList.add('vf-block__iframe');
+    iframe.style.overflow = 'hidden';
+    iframe.scrolling = 'no';
+    iframe.srcdoc = <?php echo json_encode($html); ?>;
+    iframe.vfActive = true;
+    parent.insertBefore(iframe, parent.firstChild);
+})();
+</script>
 <?php
   }
 

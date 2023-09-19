@@ -62,14 +62,25 @@
     const iframe = document.createElement('iframe');
     iframe.id = getId();
     iframe.classList.add('vf-block__iframe');
-    iframe.src = template.dataset.iframeSrc;
     iframe.style.overflow = 'hidden';
     iframe.scrolling = 'no';
-    iframe.onload = () => {
-      const doc = iframe.contentWindow.document;
-      doc.body.innerHTML = `<div id="${iframe.id}" class="vf-block-render">${template.innerHTML}</div>`;
-      iframe.vfActive = true;
-    };
+    iframe.srcdoc = template.innerHTML;
+
+    iframe.addEventListener(
+      'load',
+      () => {
+        const doc = iframe.contentWindow.document;
+        const render = document.createElement('div');
+        render.id = iframe.id;
+        render.classList.add('vf-block-render');
+        render.innerHTML = doc.body.innerHTML;
+        doc.body.innerHTML = '';
+        doc.body.appendChild(render);
+        iframe.vfActive = true;
+      },
+      {once: true}
+    );
+
     node.querySelector(`.vf-block`).appendChild(iframe);
     iframes.set(node, iframe);
 

@@ -40,12 +40,6 @@ echo '</script>';
 ?>
 </head>
 <body>
-<div class="vf-banner vf-banner--info">
-  <div class="vf-banner__content">
-    <p class="vf-banner__text">
-      <?php esc_html_e('Loading block preview...', 'vfwp'); ?>
-    </p>
-  </div>
-</div>
+<!--[BLOCKHTML]--->
 </body>
 </html>
