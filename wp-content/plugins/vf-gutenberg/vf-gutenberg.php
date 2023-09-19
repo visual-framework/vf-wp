@@ -358,7 +358,7 @@ class VF_Gutenberg {
     }
 
 ?>
-  <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+  <div class="vf-block vf-block-preview" data-editing="false" data-loading="false">
     <template
       <?php if ($is_container) { ?>
         data-is-container="1"
@@ -384,12 +384,12 @@ class VF_Gutenberg {
       $html
     );
 ?>
-<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+<div class="vf-block vf-block-preview" data-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
   <div class="vf-block__view"></div>
 </div>
 <script>
 (function() {
-  const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
+  const parent = document.querySelector('.vf-block-preview[data-id="<?php echo esc_attr($acf_id); ?>"]');
   const iframe = document.createElement('iframe');
     iframe.id = '<?php echo $id; ?>';
     iframe.classList.add('vf-block__iframe');

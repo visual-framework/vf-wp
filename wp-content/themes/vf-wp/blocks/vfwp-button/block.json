@@ -1,0 +1,12 @@
+{
+  "name": "vfwp-button",
+  "title": "Button",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  },
+  "supports": {
+    "align": false,
+    "customClassName": false
+  }
+}

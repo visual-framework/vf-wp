@@ -8,8 +8,7 @@ class VFWP_Banner extends VFWP_Block {
 
   public function __construct() {
     // Allow block to use full-width container layout
-    if ($is_container = true) {
-    $this->setup_containerable();}
+    $this->setup_containerable();
 
     parent::__construct(__FILE__);
   }

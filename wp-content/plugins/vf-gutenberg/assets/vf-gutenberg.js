@@ -110,7 +110,13 @@
         );
       }
       for (const node of record.removedNodes) {
-        if (node?.classList?.contains('acf-block-preview')) {
+        if (!node?.classList) {
+          continue;
+        }
+        if (
+          node.classList.contains('vf-block-preview') ||
+          node.classList.contains('acf-block-preview')
+        ) {
           const parent = record.target.closest(
             '.wp-block[data-type^="acf/vf"]'
           );
