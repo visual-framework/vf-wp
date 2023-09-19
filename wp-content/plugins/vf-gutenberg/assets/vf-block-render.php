@@ -30,7 +30,7 @@ echo file_get_contents(
 echo '</style>';
 
 // Add iframe script
-echo '<script>';
+echo '<script id="vf-block-render-js">';
 echo file_get_contents(
   plugin_dir_path(__FILE__) . '/vf-block-render.js',
   true
