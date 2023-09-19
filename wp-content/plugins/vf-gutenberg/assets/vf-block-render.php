@@ -30,7 +30,7 @@ echo file_get_contents(
 echo '</style>';
 
 // Add iframe script
-echo '<script id="vf-block-render-js">';
+echo '<script>';
 echo file_get_contents(
   plugin_dir_path(__FILE__) . '/vf-block-render.js',
   true
@@ -40,12 +40,6 @@ echo '</script>';
 ?>
 </head>
 <body>
-<div class="vf-banner vf-banner--info">
-  <div class="vf-banner__content">
-    <p class="vf-banner__text">
-      <?php esc_html_e('Loading block preview...', 'vfwp'); ?>
-    </p>
-  </div>
-</div>
+<!--[BLOCKHTML]--->
 </body>
 </html>

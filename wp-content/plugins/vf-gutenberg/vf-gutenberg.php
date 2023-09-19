@@ -333,22 +333,30 @@ class VF_Gutenberg {
       echo $html;
       return;
     }
+
     // Render iframe for admin preview
     $is_container = (bool) get_field('is_container', $acf_id);
+
+    ob_start();
+    include(
+      plugin_dir_path(__FILE__) . '/assets/vf-block-render.php'
+    );
+    $template = ob_get_contents();
+    ob_end_clean();
+
+    $template = str_replace(
+      '<!--[BLOCKHTML]--->',
+      $html,
+      $template
+    );
+
 ?>
   <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
     <template
-      data-iframe-src="<?php echo esc_url(home_url('/?vf-block-preview')); ?>"
       <?php if ($is_container) { ?>
         data-is-container="1"
       <?php } ?>
-      ><?php echo $html; ?></template>
-  <?php /*
-  // This empty <div> should not be needed anymore
-  // I am not sure if it was ever needed...
-  // If something breaks, add it back?
-  <div class="vf-block__view"></div>
-  */ ?>
+      ><?php echo $template; ?></template>
   <?php if ($is_jsx) { ?>
   <div class="vf-block__inner-blocks">
     <InnerBlocks />
