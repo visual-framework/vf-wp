@@ -66,6 +66,11 @@ class VF_Gutenberg {
       array($this, 'render_block_nunjucks'),
       10, 2
     );
+    add_filter(
+      'template_include',
+      array($this, 'template_include_preview'),
+      10, 1
+    );
 
     // ACF options
     include_once('includes/settings.php');
@@ -179,6 +184,17 @@ class VF_Gutenberg {
       false,
       true
     );
+
+    wp_register_script(
+      'vf-gutenberg',
+      plugins_url(
+        '/assets/vf-gutenberg.js',
+        __FILE__
+      ),
+      array('wp-editor', 'wp-blocks'),
+      false,
+      true
+    );
     /**
      * "Localize" script by making config available
      * in the global `vfGutenberg` object
@@ -217,6 +233,7 @@ class VF_Gutenberg {
 
     wp_localize_script('vf-blocks', 'vfGutenberg', $config);
     wp_enqueue_script('vf-blocks');
+    wp_enqueue_script('vf-gutenberg');
   }
 
   /**
@@ -259,6 +276,24 @@ class VF_Gutenberg {
   }
 
   /**
+   * Returns true if the current template is an iframe block render
+   */
+  function is_block_preview() {
+    return is_user_logged_in() && isset($_GET['vf-block-preview']);
+  }
+
+  /**
+   * Filter: `template_include`
+   */
+  function template_include_preview($template) {
+    if ($this->is_block_preview()) {
+      // Use the empty template for iframe block renders
+      $template = plugin_dir_path(__FILE__) . '/assets/vf-block-render.php';
+    }
+    return $template;
+  }
+
+  /**
    * Callback for `acf_register_block_type` to render within iframe
    * $args = array($block, $content, $is_preview, $post_id)
    */
@@ -271,18 +306,6 @@ class VF_Gutenberg {
     }
     // Capture the block template
     ob_start();
-    // Output head include for preview
-    if ($is_preview) {
-      // Append iframe stylesheet for preview fixes
-      $wp_head = function() {
-        $path = get_template_directory_uri();
-        $path = "{$path}/assets/assets/vfwp-gutenberg-iframe/vfwp-gutenberg-iframe.css";
-        echo '<link rel="stylesheet" href="' . esc_url($path) . '">';
-      };
-      add_action('wp_head', $wp_head, 20);
-      get_template_part('partials/head');
-      remove_action('wp_head', $wp_head, 20);
-    }
     // Load template
     if (is_callable($template)) {
       call_user_func($template, $block, '', $is_preview, $acf_id);
@@ -302,131 +325,37 @@ class VF_Gutenberg {
 <?php
       }
     }
-    // Output foot include for preview
-    if ($is_preview) {
-      get_template_part('partials/foot');
-    }
     $html = ob_get_contents();
     ob_end_clean();
+
     // Render block if not admin preview
     if ($is_preview !== true) {
       echo $html;
       return;
     }
-    $id = "vfwp_{$block['id']}";
+    // Render iframe for admin preview
+    $is_container = (bool) get_field('is_container', $acf_id);
 ?>
-<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
-  <div class="vf-block__view">
-    <?php /*
-    <iframe
-      class="vf-block__iframe"
-      id="<?php echo $id; ?>"
-      onLoad="<?php echo "setTimeout(()=>{{$id}();}, 1);"; ?>"
-      scrolling="no"></iframe>
-      */ ?>
-  </div>
+  <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+    <template
+      data-iframe-src="<?php echo esc_url(home_url('/?vf-block-preview')); ?>"
+      <?php if ($is_container) { ?>
+        data-is-container="1"
+      <?php } ?>
+      ><?php echo $html; ?></template>
+  <?php /*
+  // This empty <div> should not be needed anymore
+  // I am not sure if it was ever needed...
+  // If something breaks, add it back?
+  <div class="vf-block__view"></div>
+  */ ?>
   <?php if ($is_jsx) { ?>
   <div class="vf-block__inner-blocks">
     <InnerBlocks />
   </div>
   <?php } ?>
 </div>
-<script>
-(function() {
-
-window.<?php echo $id; ?> = function() {
-  const iframe = document.getElementById('<?php echo $id; ?>');
-  iframe.vfActive = true;
-  var doc = iframe.contentWindow.document;
-  doc.body.innerHTML = <?php echo json_encode($html); ?>;
-  doc.body.style.position = 'absolute';
-  doc.body.style.width = '100%';
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.innerHTML = `
-if (ResizeObserver) {
-  const observer = new ResizeObserver(entries => {
-    entries.forEach(entry => {
-      window.parent.postMessage({
-          id: '<?php echo $id; ?>',
-          height: entry.contentRect.height
-        }, '*'
-      );
-    });
-  });
-  observer.observe(document.body);
-} else {
-  const vfResize = () => {
-    window.parent.postMessage({
-        id: '<?php echo $id; ?>',
-        height: document.documentElement.scrollHeight
-      }, '*'
-    );
-  };
-  window.addEventListener('resize', vfResize);
-  setTimeout(vfResize, 100);
-  vfResize();
-}
-`;
-  doc.body.appendChild(script);
-  // doc.body.classList.add('ebi-vf1-integration');
-};
-
-const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
-let iframe = document.getElementById('<?php echo $id; ?>');
-const onLoad = () => {
-  if (typeof window[iframe.id] === 'function') {
-    window[iframe.id]();
-  }
-};
-if (iframe) {
-  onLoad();
-} else {
-  iframe = document.createElement('iframe');
-  iframe.id = '<?php echo $id; ?>';
-  iframe.className = 'vf-block__iframe';
-  iframe.setAttribute('scrolling', 'no');
-  iframe.onload = onLoad;
-  parent.insertBefore(iframe, parent.firstChild);
-}
-
-})();
-</script>
 <?php
-  // Toggle the Gutenberg editor block style for containers
-  $is_container = get_field('is_container', $acf_id);
-  $is_container = (bool) $is_container;
-  if ($is_container) {
-?>
-<script>
-(function($){
-  // Callback to update the block inline style
-  function updateBlock(isContainer) {
-    var $el = $('.vf-block[data-acf-id="<?php echo $acf_id; ?>"]');
-    var $block = $el.closest('.wp-block');
-    if ($block.length) {
-      if (isContainer) {
-        $block[0].style.maxWidth = 'none';
-      } else {
-        $block[0].style.removeProperty('max-width');
-      }
-    }
-  }
-  // TODO: move to component scripts / fix?
-  // Trigger first update
-  updateBlock(true);
-  // Add event for live field changes
-  acf.addAction('append_field/name=is_container', function(field) {
-    field.on('change', 'input[type="checkbox"]', function(ev) {
-      if (ev.target.id.indexOf('<?php echo $acf_id; ?>')) {
-        updateBlock(field.val());
-      }
-    });
-  });
-})(window.jQuery);
-</script>
-<?php
-    }
   }
 
 } // VF_Gutenberg

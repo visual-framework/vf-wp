@@ -135,13 +135,8 @@ class VFWP_Block {
       return true;
     }
     // Check block attributes for container toggle
-    $acf_id = VF_Theme_Content::get_acf_block_ID($blocks[$i]);
-    if ($acf_id) {
-      $is_container = get_field('is_container', $acf_id);
-      if ($is_container === null) {
-        $is_container = true;
-      }
-      return ! (bool) $is_container;
+    if (strpos($blocks[$i], '<!--(is_container)-->') !== false) {
+      return false;
     }
     return true;
   }
