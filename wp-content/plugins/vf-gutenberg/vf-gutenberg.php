@@ -350,6 +350,13 @@ class VF_Gutenberg {
       $template
     );
 
+    // Render using React if block is from a plugin
+    $is_plugin = isset($block['data']['is_plugin']) && (bool) $block['data']['is_plugin'];
+    if ($is_plugin) {
+      VF_Gutenberg::acf_render_template__deprecated($block, $template);
+      return;
+    }
+
 ?>
   <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
     <template
@@ -363,6 +370,36 @@ class VF_Gutenberg {
   </div>
   <?php } ?>
 </div>
+<?php
+  }
+
+  static function acf_render_template__deprecated($block, $html) {
+    // Use old block id to match React event listener
+    $acf_id = $block['id'];
+    $id = "vfwp_{$acf_id}";
+    // Wrapper contents for `/assets/vf-block-render.js`
+    $html = preg_replace(
+      '/<body[^>]*>(.*?)<\/body>/is',
+      '<div id="'.$id.'" class="vf-block-render">$1</div>',
+      $html
+    );
+?>
+<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+  <div class="vf-block__view"></div>
+</div>
+<script>
+(function() {
+  const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
+  const iframe = document.createElement('iframe');
+    iframe.id = '<?php echo $id; ?>';
+    iframe.classList.add('vf-block__iframe');
+    iframe.style.overflow = 'hidden';
+    iframe.scrolling = 'no';
+    iframe.srcdoc = <?php echo json_encode($html); ?>;
+    iframe.vfActive = true;
+    parent.insertBefore(iframe, parent.firstChild);
+})();
+</script>
 <?php
   }
 
