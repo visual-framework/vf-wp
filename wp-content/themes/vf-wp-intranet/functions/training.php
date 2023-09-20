@@ -29,30 +29,79 @@ function expire_trainings_function() {
 
 // adds settings to run cron and unpublish trainings manually
 
-add_action('admin_menu', 'unpublish_training_menu');
+add_action('admin_menu', 'settings_training_menu');
 
-function unpublish_training_menu(){
-  add_submenu_page('edit.php?post_type=training', 'Training settings', 'Settings', 'manage_options', 'training-slug', 'unpublish_training_admin_page');
+function settings_training_menu(){
+  add_submenu_page('edit.php?post_type=training', 'Training settings', 'Settings', 'edit_posts', 'training-slug', 'settings_training_admin_page');
 }
 
-function unpublish_training_admin_page() {
+function settings_training_admin_page() {
   if (!current_user_can('manage_options'))  {
     wp_die( __('You do not have sufficient pilchards to access this page.')    );
   }
   // Start building the page
   echo '<div class="wrap">';
-  echo '<h2>Unpublish past trainings manually</h2>';
+  echo '<h2>Settings</h2>';
   // Check whether the button has been pressed AND also check the nonce
   if (isset($_POST['unpublish_training']) && check_admin_referer('unpublish_training_clicked')) {
     // the button has been pressed AND we've passed the security check
     expire_trainings_function();
   }
+  echo '<h3>Unpublish past trainings manually</h2>';
   echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
   // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
   wp_nonce_field('unpublish_training_clicked');
   echo '<input type="hidden" value="true" name="unpublish_training" />';
   submit_button('Unpublish');
   echo '</form>';
+
+
+
+  // Check whether the button has been pressed AND also check the nonce
+  if (isset($_POST['sync_training']) && check_admin_referer('sync_training_clicked')) {
+    // the button has been pressed AND we've passed the security check
+    vfwp_intranet_cron_process_training_data();
+  }
+  echo '<h3>Sync training data</h3>';
+  echo '<form action="edit.php?post_type=training&page=sync-training-slug" method="post">';
+  // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
+  wp_nonce_field('sync_training_clicked');
+  echo '<input type="hidden" value="true" name="sync_training" />';
+  submit_button('Sync');
+  echo '</form>';
+
+
+
+
+  echo '<h3>Delete all training posts</h3>';
+  // Check whether the button has been pressed AND also check the nonce
+  if (isset($_POST['delete_training']) && check_admin_referer('delete_training_clicked')) {
+    // the button has been pressed AND we've passed the security check
+    delete_all_training_posts();
+  }
+  echo '<form action="edit.php?post_type=training&page=delete-training-slug" method="post">';
+  // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
+  wp_nonce_field('delete_training_clicked');
+  echo '<input type="hidden" value="true" name="delete_training" />';
+  submit_button('Delete');
+  echo '</form>';
+
+
+
+  echo '<h3>Sync BioIT</h3>';
+  // Check whether the button has been pressed AND also check the nonce
+  if (isset($_POST['sync_bioit_training']) && check_admin_referer('sync_bioit_training_clicked')) {
+    // the button has been pressed AND we've passed the security check
+    vfwp_intranet_cron_process_bioit_data();
+    }
+  echo '<form action="edit.php?post_type=training&page=delete-training-slug" method="post">';
+  // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
+  wp_nonce_field('sync_bioit_training_clicked');
+  echo '<input type="hidden" value="true" name="sync_bioit_training" />';
+  submit_button('Sync BioIT');
+  echo '</form>';
+
+
   echo '</div>';
 
 }
