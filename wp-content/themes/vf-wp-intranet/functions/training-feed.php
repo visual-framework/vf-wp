@@ -53,7 +53,7 @@ function insert_training_posts_from_json($training_json_feed_api_endpoint) {
     if (!empty($training_data) && is_array($training_data)) {
         foreach ($training_data as $key => $person) {
         $title = $person['name'];
-        $url = $person['url'];
+        $url = basename($person['url']);
 
         $new_post = [
             'post_title' => $title,
