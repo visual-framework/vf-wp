@@ -42,12 +42,15 @@ function settings_training_admin_page() {
   // Start building the page
   echo '<div class="wrap">';
   echo '<h2>Settings</h2>';
+  settings_errors();
   // Check whether the button has been pressed AND also check the nonce
   if (isset($_POST['unpublish_training']) && check_admin_referer('unpublish_training_clicked')) {
     // the button has been pressed AND we've passed the security check
     expire_trainings_function();
   }
   echo '<h3>Unpublish past trainings manually</h2>';
+
+
   echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
   // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
   wp_nonce_field('unpublish_training_clicked');
