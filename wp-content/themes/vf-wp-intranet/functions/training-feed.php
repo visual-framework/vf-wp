@@ -21,33 +21,36 @@ add_action('vfwp_intranet_cron_process', 'vfwp_intranet_cron_process_training_da
 
 // Function to start process training data.
 function vfwp_intranet_cron_process_training_data() {
-
-  // get the data from peolple API  
-  $training_json_feed_api_endpoint = "https://www.ebi.ac.uk/api/v1/ebi-training-courses-tess?source=trainingcontenthub";
-  // Fetch API to get paging details.
-  $training_feed_content = file_get_contents($training_json_feed_api_endpoint);
-  $raw_data = json_decode($training_feed_content, true);
-  if (!empty($raw_data) && is_array($raw_data)) {
-    insert_training_posts_from_json($training_json_feed_api_endpoint);
+    $training_json_feed_api_endpoint = "https://www.ebi.ac.uk/api/v1/ebi-training-courses-tess?source=trainingcontenthub";
+  
+    // Fetch API content and decode it
+    $training_feed_content = file_get_contents($training_json_feed_api_endpoint);
+    $training_data = json_decode($training_feed_content, true);
+    
+    if (!empty($training_data) && is_array($training_data)) {
+      insert_training_posts_from_json($training_data);
+      ?>
+      <div class="notice notice-success is-dismissible">
+          <p><?php _e('Success!', 'sample-text-domain'); ?></p>
+      </div>
+      <?php
+  } else {
+      ?>
+      <div class="notice notice-error is-dismissible">
+          <p><?php _e('Error!', 'sample-text-domain'); ?></p>
+      </div>
+      <?php
   }
-  else {
-    echo "There was error fetching paging details for training api.";
-  }
-
 }
 
 /*
  * Function to Insert/Update training records in WP.
  */
 
-function insert_training_posts_from_json($training_json_feed_api_endpoint) {
+function insert_training_posts_from_json($training_data) {
   if ( ! is_admin() ) {
      require_once( ABSPATH . 'wp-admin/includes/post.php' );
   }
-
-  $raw_content = file_get_contents($training_json_feed_api_endpoint);
-  $raw_content_decoded = json_decode($raw_content, true);
-  $training_data = $raw_content_decoded;
 
   
     if (!empty($training_data) && is_array($training_data)) {

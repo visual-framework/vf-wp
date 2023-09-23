@@ -74,10 +74,15 @@ function insert_bioit_posts_from_xml($xmldata) {
                 $value = $matches[2][$i];
                 $associative_array[$key] = $value;
             }
+            $startDate = isset($associative_array['startDate']) ? $associative_array['startDate'] : '';
+            $endDate = isset($associative_array['endDate']) ? $associative_array['endDate'] : '';
             $provider = isset($associative_array['provider']) ? $associative_array['provider'] : '';
-            echo ($provider);
+            $location = isset($associative_array['location']) ? $associative_array['location'] : '';
+            $overview = isset($associative_array['overview']) ? $associative_array['overview'] : '';
+            $permalink = (string)$item->link;
+            // echo ($provider);
             // Print the associative array
-            // print_r($associative_array);
+            print_r($associative_array);
 
             $new_post = [
                 'post_title' => $title,
@@ -88,27 +93,58 @@ function insert_bioit_posts_from_xml($xmldata) {
                 'post_type' => 'training',
             ];
 
-            // Insert post
-            if (!get_page_by_path($url, 'OBJECT', 'training')) {
-                $post_id = wp_insert_post($new_post);
-                add_post_meta($post_id, 'post_title', $title);
-                add_post_meta($post_id, 'url', $url);
-                add_post_meta($post_id, 'vf-wp-training-venue', $provider);
-            }
+// Insert post
+if (!get_page_by_path($url, 'OBJECT', 'training')) {
+    $post_id = wp_insert_post($new_post);
+    add_post_meta($post_id, 'post_title', $title);
+    add_post_meta($post_id, 'vf-wp-training-start_date', $startDate);
+    add_post_meta($post_id, 'vf-wp-training-end_date', $endDate);
+    add_post_meta($post_id, 'vf-wp-training-info', $overview);
+    add_post_meta($post_id, 'vf-wp-training-url', $permalink);
 
-            // update post if already exists
-            else if ($existing_post = get_page_by_path($url, 'OBJECT', 'training')) {
-                $existing_post_id = $existing_post->ID;
-                update_post_meta($existing_post_id, 'post_title', $title);
-                update_post_meta($existing_post_id, 'url', $url);
-                update_post_meta($existing_post_id, 'vf-wp-training-venue', $provider);
-                if (!metadata_exists('post', $existing_post_id, 'post_title')) {
-                    add_post_meta($existing_post_id, 'post_title', $title);
+                    // Check if the term exists before setting it
+                    $location_term_exists = term_exists(strtolower($location), 'event-location');
+                    if ($location_term_exists !== 0 && $location_term_exists !== null) {
+                        // Set the custom taxonomy terms
+                        wp_set_object_terms($post_id, array(strtolower($location)), 'event-location', false);
+                    }
+                    // Check if the term exists before setting it
+                    $provider_term_exists = term_exists(strtolower($provider), 'training-organiser');
+                    if ($provider_term_exists !== 0 && $provider_term_exists !== null) {
+                        // Set the custom taxonomy terms
+                        wp_set_object_terms($post_id, array(strtolower($provider)), 'training-organiser', false);
+                    }    
                 }
-            }
-        }
+
+// update post if already exists
+else if ($existing_post = get_page_by_path($url, 'OBJECT', 'training')) {
+    $existing_post_id = $existing_post->ID;
+    update_post_meta($existing_post_id, 'post_title', $title);
+    update_post_meta($existing_post_id, 'vf-wp-training-start_date', $startDate);
+    update_post_meta($existing_post_id, 'vf-wp-training-end_date', $endDate);
+    update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
+    update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
+    if (!metadata_exists('post', $existing_post_id, 'post_title')) {
+        add_post_meta($existing_post_id, 'post_title', $title);
     }
+                    // Check if the term exists before setting it
+                    $location_term_exists = term_exists(strtolower($location), 'event-location');
+                    if ($location_term_exists !== 0 && $location_term_exists !== null) {
+                        // Set the custom taxonomy terms
+                        wp_set_object_terms($existing_post_id, array(strtolower($location)), 'event-location', false);
+                    }
+                    // Check if the term exists before setting it
+                    $provider_term_exists = term_exists(strtolower($provider), 'training-organiser');
+                    if ($provider_term_exists !== 0 && $provider_term_exists !== null) {
+                        // Set the custom taxonomy terms
+                        wp_set_object_terms($existing_post_id, array(strtolower($provider)), 'training-organiser', false);
+                    }
+
+
 }
+        }
+    
+} }
 
 
 

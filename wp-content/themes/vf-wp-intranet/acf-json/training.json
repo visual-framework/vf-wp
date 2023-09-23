@@ -356,6 +356,41 @@
             "min": "",
             "max": "",
             "return_format": "object"
+        },
+        {
+            "key": "field_650f0ba3ab90c",
+            "label": "URL",
+            "name": "vf-wp-training-url",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_650f0c2fab90d",
+            "label": "Fee",
+            "name": "vf-wp-training-fee",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
