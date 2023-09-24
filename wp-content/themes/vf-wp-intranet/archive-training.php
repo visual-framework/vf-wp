@@ -3,7 +3,7 @@
 get_header();
 
 global $vf_theme;
-$today_date = date('Ymd');
+$today_date = date('j M Y');
 ?>
 
 <section class="vf-intro | vf-u-margin__bottom--400">
@@ -81,7 +81,7 @@ $today_date = date('Ymd');
             ),
             array(
               'key' => 'vf-wp-training-start_date',
-              'value' => date('Ymd', strtotime('now')),
+              'value' => date('j M Y', strtotime('now')),
               'type' => 'numeric',
               'compare' => '>=',
               ) 

@@ -75,7 +75,14 @@ function insert_bioit_posts_from_xml($xmldata) {
                 $associative_array[$key] = $value;
             }
             $startDate = isset($associative_array['startDate']) ? $associative_array['startDate'] : '';
+
             $endDate = isset($associative_array['endDate']) ? $associative_array['endDate'] : '';
+            if (!empty($startDate)) {
+                $formattedStartDate = date('j M Y', strtotime($startDate));
+            } 
+            if (!empty($endDate)) {
+                $formattedendDate = date('j M Y', strtotime($endDate));
+            } 
             $provider = isset($associative_array['provider']) ? $associative_array['provider'] : '';
             $location = isset($associative_array['location']) ? $associative_array['location'] : '';
             $overview = isset($associative_array['overview']) ? $associative_array['overview'] : '';
@@ -97,8 +104,8 @@ function insert_bioit_posts_from_xml($xmldata) {
 if (!get_page_by_path($url, 'OBJECT', 'training')) {
     $post_id = wp_insert_post($new_post);
     add_post_meta($post_id, 'post_title', $title);
-    add_post_meta($post_id, 'vf-wp-training-start_date', $startDate);
-    add_post_meta($post_id, 'vf-wp-training-end_date', $endDate);
+    add_post_meta($post_id, 'vf-wp-training-start_date', $formattedStartDate);
+    add_post_meta($post_id, 'vf-wp-training-end_date', $formattedendDate);
     add_post_meta($post_id, 'vf-wp-training-info', $overview);
     add_post_meta($post_id, 'vf-wp-training-url', $permalink);
 
@@ -120,8 +127,8 @@ if (!get_page_by_path($url, 'OBJECT', 'training')) {
 else if ($existing_post = get_page_by_path($url, 'OBJECT', 'training')) {
     $existing_post_id = $existing_post->ID;
     update_post_meta($existing_post_id, 'post_title', $title);
-    update_post_meta($existing_post_id, 'vf-wp-training-start_date', $startDate);
-    update_post_meta($existing_post_id, 'vf-wp-training-end_date', $endDate);
+    update_post_meta($existing_post_id, 'vf-wp-training-start_date', $formattedStartDate);
+    update_post_meta($existing_post_id, 'vf-wp-training-end_date', $formattedendDate);
     update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
     update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
     if (!metadata_exists('post', $existing_post_id, 'post_title')) {
