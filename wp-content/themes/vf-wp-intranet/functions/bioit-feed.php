@@ -78,10 +78,10 @@ function insert_bioit_posts_from_xml($xmldata) {
 
             $endDate = isset($associative_array['endDate']) ? $associative_array['endDate'] : '';
             if (!empty($startDate)) {
-                $formattedStartDate = date('j M Y', strtotime($startDate));
+                $formattedStartDate = date('Ymd', strtotime($startDate));
             } 
             if (!empty($endDate)) {
-                $formattedendDate = date('j M Y', strtotime($endDate));
+                $formattedendDate = date('Ymd', strtotime($endDate));
             } 
             $provider = isset($associative_array['provider']) ? $associative_array['provider'] : '';
             $location = isset($associative_array['location']) ? $associative_array['location'] : '';
@@ -89,7 +89,7 @@ function insert_bioit_posts_from_xml($xmldata) {
             $permalink = (string)$item->link;
             // echo ($provider);
             // Print the associative array
-            print_r($associative_array);
+            // print_r($associative_array);
 
             $new_post = [
                 'post_title' => $title,

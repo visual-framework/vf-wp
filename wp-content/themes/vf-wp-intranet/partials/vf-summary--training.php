@@ -1,57 +1,36 @@
 <?php
 $now = new DateTime();
-$current_date = $now->format('Y-m-d');
+$current_date = $now->format('Ymd');
 $organiser = get_the_terms( $post->ID , 'training-organiser' );
 $location = get_the_terms( $post->ID , 'event-location' );
 $post_id = get_the_ID();
 $start_date = get_field('vf-wp-training-start_date',$post_id);
 $start_time = get_field('vf-wp-training-start_time',$post_id);
-$start = DateTime::createFromFormat('j M Y', $start_date);
+$start = DateTime::createFromFormat('Ymd', $start_date);
 $start_time_format = DateTime::createFromFormat('H:i', $start_time);
 $end_date = get_field('vf-wp-training-end_date',$post_id);
 $end_time = get_field('vf-wp-training-end_time',$post_id);
 $end_time_format = DateTime::createFromFormat('H:i', $end_time);
-$end = DateTime::createFromFormat('j M Y', $end_date);
-$end_date_format = DateTime::createFromFormat('j M Y', $end_date);
+$end = DateTime::createFromFormat('Ymd', $end_date);
 $registrationStatus = get_field('vf-wp-training-registration-status',$post_id); 
 $registrationDeadline = get_field('vf-wp-training-registration-deadline',$post_id); 
 $deadlineDate = new DateTime($registrationDeadline);
-$registrationDeadlineFormatted = $deadlineDate->format('Y-m-d');
+$registrationDeadlineFormatted = $deadlineDate->format('Ymd');
 $venue = get_field('vf-wp-training-venue',$post_id);
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
 
 
 
-if (!empty($start_time)) {
-  $calendar_start_time = 'T' . $start_time_format->format('Hi') . '00';
-}
-else {
-  $calendar_start_time = '';
-}
-
-if (!empty($end_time)) {
-  $calendar_end_time = 'T' . $end_time_format->format('Hi') . '00';
-}
-elseif (empty($end_time) && !empty($start_time)) {
-  $calendar_end_time = 'T' . $start_time_format->format('Hi') . '00';
-}
-else {
-  $calendar_end_time = '';
-}
-
-if (!empty($end_date)) {
-  $calendar_end_date = '/' . $end->format('Ymd');
-}
-else {
-  $calendar_end_date = '/' . $start->format('Ymd');
-}
 ?>
 <article class="vf-summary vf-summary--event | vf-u-margin__bottom--400" data-jplist-item>
   <?php if ( ! empty($start_date)) { ?>
   <p class="vf-summary__date">
     <?php       // Event dates
         if ($end_date) { 
-          if ($start->format('M') == $end->format('M')) {
+          if ($start->format('d') == $end->format('d')) {
+            echo $start->format('j F Y');
+          }
+          else if ($start->format('m') == $end->format('m')) {
             echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
           else {
             echo $start->format('j M'); ?> - <?php echo $end->format('j F Y'); }

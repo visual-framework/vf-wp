@@ -3,7 +3,7 @@
 get_header();
 
 global $vf_theme;
-$today_date = date('j M Y');
+$today_date = date('Ymd');
 ?>
 
 <section class="vf-intro | vf-u-margin__bottom--400">
@@ -66,26 +66,27 @@ $today_date = date('j M Y');
       <main>
         <div id="upcoming-events" data-jplist-group="data-group-1">
           <?php
-          $forthcomingLoop = new WP_Query (array( 
-          'posts_per_page' => -1,
+         $forthcomingLoop = new WP_Query(array(
           'post_type' => 'training',
-          'order' => 'ASC', 
-          'orderby' => 'meta_value_num',
-          'meta_key' => 'vf-wp-training-start_date',
+          'posts_per_page' => -1,
+          'post_status' => 'publish',	
+          
           'meta_query' => array(
-            array(
-                'key' => 'vf-wp-training-start_date',
-                'value' => $today_date,
-                'compare' => '>=',
-                'type' => 'numeric'
+            'relation' => 'AND',
+            'date_clause' => array(
+                       'key' => 'vf-wp-training-start_date',
+                      'value' => $today_date,
+                      'type' => 'DATE',
+                      'compare' => '>='
             ),
-            array(
-              'key' => 'vf-wp-training-start_date',
-              'value' => date('j M Y', strtotime('now')),
-              'type' => 'numeric',
-              'compare' => '>=',
-              ) 
-            ) ));
+        
+          ),
+          'orderby' => array(
+            'date_clause' => 'ASC',
+          ),
+
+
+      ));
           $current_month = ""; ?>
           <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
           <?php
