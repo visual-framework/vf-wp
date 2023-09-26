@@ -17,6 +17,8 @@ $registrationDeadline = get_field('vf-wp-training-registration-deadline',$post_i
 $deadlineDate = new DateTime($registrationDeadline);
 $registrationDeadlineFormatted = $deadlineDate->format('Ymd');
 $venue = get_field('vf-wp-training-venue',$post_id);
+$fee = get_field('vf-wp-training-fee',$post_id);
+$category = get_field('vf-wp-training-category',$post_id);
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
 
 
@@ -84,10 +86,10 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
       <?php 
       if (empty($registrationDeadline)) {
         if ($registrationStatus == 'Open') {
-          echo '<span class="vf-u-text-color--green">Open</span>';
+          echo '<span class="vf-u-text-color--green | status-open">Open</span>';
         }
         else if ($registrationStatus == 'Closed') {
-          echo '<span class="vf-u-text-color--red">Closed</span>';
+          echo '<span class="vf-u-text-color--red | status-closed">Closed</span>';
         }
         else if ($registrationStatus == 'Waiting list only') {
           echo '<span class="vf-u-text-color--orange">Waiting list only</span>';
@@ -98,10 +100,10 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
       }
       else {
         if ($registrationDeadlineFormatted >= $current_date) {
-          echo '<span class="vf-u-text-color--green">Open</span>';
+          echo '<span class="vf-u-text-color--green | status-open">Open</span>';
         }
         else {
-          echo '<span class="vf-u-text-color--red">Closed</span>';
+          echo '<span class="vf-u-text-color--red | status-closed">Closed</span>';
         }
       }
       ?>
@@ -110,6 +112,8 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
   <!-- for filtering -->
   <div class="vf-u-display-none">
     <span class="year year-<?php echo $start->format('Y');?>"><?php echo $start->format('Y'); ?></span>
+    <span class="fee-<?php echo $fee; ?>"><?php echo $fee; ?></span>
+    <span class="category-<?php echo $category; ?>"><?php echo $category; ?></span>
   </div>
   <?php if ($forthcomingLoop->current_post +1 < $forthcomingLoop->post_count) {
     echo '<hr class="vf-divider">';

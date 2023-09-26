@@ -34,13 +34,13 @@ function vfwp_intranet_cron_process_bioit_data() {
         insert_bioit_posts_from_xml($xmldata);
         ?>
         <div class="notice notice-success is-dismissible">
-            <p><?php _e('Success!', 'sample-text-domain'); ?></p>
+            <p><?php _e('Bio-IT data imported successfully!!', 'sample-text-domain'); ?></p>
         </div>
         <?php
     } else {
         ?>
         <div class="notice notice-error is-dismissible">
-            <p><?php _e('Error!', 'sample-text-domain'); ?></p>
+            <p><?php _e('An error occured by fetching the Bio-IT data!!', 'sample-text-domain'); ?></p>
         </div>
         <?php
     }
