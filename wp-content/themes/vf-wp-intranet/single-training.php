@@ -3,26 +3,26 @@ get_header();
 
 
 $now = new DateTime();
-$current_date = $now->format('Y-m-d');
+$current_date = $now->format('Ymd');
+$post_id = get_the_ID();
 $organiser = get_the_terms( $post->ID , 'training-organiser' );
 $locations = get_the_terms( $post->ID , 'event-location' );
-$post_id = get_the_ID();
 $start_date = get_field('vf-wp-training-start_date',$post_id);
 $start_time = get_field('vf-wp-training-start_time',$post_id);
-$start = DateTime::createFromFormat('j M Y', $start_date);
+$start = DateTime::createFromFormat('Ymd', $start_date);
 $start_time_format = DateTime::createFromFormat('H:i', $start_time);
 $end_date = get_field('vf-wp-training-end_date',$post_id);
 $end_time = get_field('vf-wp-training-end_time',$post_id);
 $end_time_format = DateTime::createFromFormat('H:i', $end_time);
-$end = DateTime::createFromFormat('j M Y', $end_date);
-$end_date_format = DateTime::createFromFormat('j M Y', $end_date);
+$end = DateTime::createFromFormat('Ymd', $end_date);
 $registrationLink = get_field('vf-wp-training-registration-link',$post_id); 
 $registrationStatus = get_field('vf-wp-training-registration-status',$post_id); 
 $registrationRemark = get_field('vf-wp-training-remark',$post_id); 
 $registrationDeadline = get_field('vf-wp-training-registration-deadline',$post_id); 
 $deadlineDate = new DateTime($registrationDeadline);
-$registrationDeadlineFormatted = $deadlineDate->format('Y-m-d');
+$registrationDeadlineFormatted = $deadlineDate->format('Ymd');
 $venue = get_field('vf-wp-training-venue',$post_id);
+$category = get_field('vf-wp-training-category',$post_id);
 $contact = get_field('vf-wp-training-contact',$post_id, false, false);
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
 $alternative_dates = get_field('vf-wp-training-alternative', $post_id);
@@ -58,6 +58,9 @@ else {
 <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
   <div class="vf-grid__col--span-2">
     <div>
+    <?php if (!empty($category)) { ?>
+      <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
+      <?php } ?>
       <h1><?php the_title(); ?></h1>
     </div>
   </div>
@@ -90,10 +93,12 @@ else {
         } }
         ?>
       </span>
-      <!-- <span style="text-transform: none;">
+      <?php /*
+      <span style="text-transform: none;">
         <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:"
           target="_blank" rel="nofollow">Add to calendar</a>
-      </span> -->
+      </span>
+      */ ?>  
     </p>
 
     <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--100"><span style="font-weight: 600;">Time:</span>
@@ -151,13 +156,13 @@ else {
       <?php 
             if (!empty($registrationStatus)) {
               if ($registrationStatus == 'Open') {
-                echo '<span class="vf-u-text-color--green">Open</span>';
+                echo '<span class="vf-u-text-color--grey">Open</span>';
               }
               else if ($registrationStatus == 'Closed') {
-                echo '<span class="vf-u-text-color--red">Closed</span>';
+                echo '<span class="vf-u-text-color--grey">Closed</span>';
               }
               else if ($registrationStatus == 'Waiting list only') {
-                echo '<span class="vf-u-text-color--orange">Waiting list only</span>';
+                echo '<span class="vf-u-text-color--grey">Waiting list only</span>';
               }
               else {
               echo '<span class="vf-u-text-color--grey">' . $registrationStatus . '</span>';
@@ -165,10 +170,10 @@ else {
             }
             else if (!empty($registrationDeadlineFormatted)) {
               if ($registrationDeadlineFormatted >= $current_date) {
-                echo '<span class="vf-u-text-color--green">Open</span>';
+                echo '<span class="vf-u-text-color--grey">Open</span>';
               }
               else  {
-                echo '<span class="vf-u-text-color--red">Closed</span>';
+                echo '<span class="vf-u-text-color--grey">Closed</span>';
               }
         }
        ?>
