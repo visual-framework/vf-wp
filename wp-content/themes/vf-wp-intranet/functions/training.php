@@ -44,17 +44,7 @@ function settings_training_admin_page() {
   echo '<h2>Settings</h2>';
   settings_errors();
 
-  // Unpublish
-  if (isset($_POST['unpublish_training']) && check_admin_referer('unpublish_training_clicked')) {
-    expire_trainings_function();
-  }
-  echo '<h3>Unpublish past trainings manually</h2>';
-  echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
-  wp_nonce_field('unpublish_training_clicked');
-  echo '<input type="hidden" value="true" name="unpublish_training" />';
-  submit_button('Unpublish');
-  echo '</form>';
-
+  
   // EMBL-EBI
   if (isset($_POST['sync_training']) && check_admin_referer('sync_training_clicked')) {
     vfwp_intranet_cron_process_training_data();
@@ -65,18 +55,29 @@ function settings_training_admin_page() {
   echo '<input type="hidden" value="true" name="sync_training" />';
   submit_button('Sync');
   echo '</form>';
-
-// BioIT
+  
+  // BioIT
   echo '<h3>Sync BioIT trainings</h3>';
   if (isset($_POST['sync_bioit_training']) && check_admin_referer('sync_bioit_training_clicked')) {
     vfwp_intranet_cron_process_bioit_data();
-    }
+  }
   echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
   wp_nonce_field('sync_bioit_training_clicked');
   echo '<input type="hidden" value="true" name="sync_bioit_training" />';
   submit_button('Sync BioIT');
   echo '</form>';
-
+  
+  // Unpublish
+  if (isset($_POST['unpublish_training']) && check_admin_referer('unpublish_training_clicked')) {
+    expire_trainings_function();
+  }
+  echo '<h3>Unpublish past trainings manually</h2>';
+  echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
+  wp_nonce_field('unpublish_training_clicked');
+  echo '<input type="hidden" value="true" name="unpublish_training" />';
+  submit_button('Unpublish');
+  echo '</form>';
+  
 // Delete
   echo '<h3>Delete all training posts</h3>';
   if (isset($_POST['delete_training']) && check_admin_referer('delete_training_clicked')) {
@@ -85,7 +86,7 @@ function settings_training_admin_page() {
   echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
   wp_nonce_field('delete_training_clicked');
   echo '<input type="hidden" value="true" name="delete_training" />';
-  submit_button('Delete');
+  submit_button( __( 'Delete', 'textdomain' ), 'delete' );
   echo '</form>';
   echo '</div>';
 
