@@ -1,9 +1,9 @@
 <?php
 $now = new DateTime();
+$post_id = get_the_ID();
 $current_date = $now->format('Ymd');
 $organiser = get_the_terms( $post->ID , 'training-organiser' );
 $location = get_the_terms( $post->ID , 'event-location' );
-$post_id = get_the_ID();
 $start_date = get_field('vf-wp-training-start_date',$post_id);
 $start_time = get_field('vf-wp-training-start_time',$post_id);
 $start = DateTime::createFromFormat('Ymd', $start_date);
@@ -19,9 +19,11 @@ $registrationDeadlineFormatted = $deadlineDate->format('Ymd');
 $venue = get_field('vf-wp-training-venue',$post_id);
 $fee = get_field('vf-wp-training-fee',$post_id);
 $feeSlug = strtolower(str_replace(' ', '_', $fee));
+$format = get_field('vf-wp-training-format',$post_id);
 $category = get_field('vf-wp-training-category',$post_id);
 $categorySlug = strtolower(str_replace(' ', '_', $category));
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
+$keywords = get_field('keyword',$post_id); 
 
 
 
@@ -66,8 +68,9 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
       }
     ?>
     </div>
-    <p class="vf-summary__meta | vf-u-margin__bottom--600" id="trainingMeta">
-      <?php if (($organiser)) { ?>
+    <p class="vf-summary__meta | vf-u-margin__bottom--200" id="trainingMeta">
+      <?php if (($organiser)) { 
+        /*?>
       <span class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser | organiser-<?php $org_list = [];
         foreach( $organiser as $org ) { 
           $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
@@ -76,7 +79,7 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
         foreach( $organiser as $org ) { 
           $org_list[] = strtoupper($org->name); }
           echo implode(', ', $org_list); ?></span>
-      <?php } ?>
+        <?php */ } ?>
       <?php if (($location)) { ?>
       <span>Location:</span>&nbsp;
       <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | 
@@ -119,11 +122,20 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
       ?>
     </p>
   </div>
+  <div>
+      <?php if (!empty($category)) { ?>
+      <p class="vf-u-margin__top--0"><span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
+      <?php } ?>
+      <?php if (!empty($format)) { ?>
+      <span class="customFormat"><?php echo $format; ?></span></p></div>
+      <?php } 
+      else { echo '</p>'; }?>
   <!-- for filtering -->
   <div class="vf-u-display-none">
     <span class="year year-<?php echo $start->format('Y');?>"><?php echo $start->format('Y'); ?></span>
     <span class="fee-<?php echo $feeSlug; ?>"><?php echo $fee; ?></span>
     <span class="category-<?php echo $categorySlug; ?>"><?php echo $category; ?></span>
+    <span class="keywords | search-data"><?php echo $keywords; ?></span>
   </div>
   <?php if ($forthcomingLoop->current_post +1 < $forthcomingLoop->post_count) {
     echo '<hr class="vf-divider">';

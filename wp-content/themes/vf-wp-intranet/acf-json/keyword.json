@@ -50,6 +50,13 @@
                 "operator": "==",
                 "value": "insites"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "training"
+            }
         ]
     ],
     "menu_order": 6,

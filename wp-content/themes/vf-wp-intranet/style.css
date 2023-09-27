@@ -67,3 +67,16 @@ Text Domain:	 vfwp
 #typeTraining .vf-tabs__section {
     padding: 0px
 }
+
+.customBadge {
+    background-color: #d1e3f6 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+
+.customFormat {
+    font-size: 14px !important;
+}

@@ -359,7 +359,7 @@
                 "webinar": "Webinar"
             },
             "default_value": false,
-            "return_format": "value",
+            "return_format": "label",
             "multiple": 0,
             "allow_null": 0,
             "ui": 0,
