@@ -521,7 +521,7 @@ function vf_wp_intranet_teams__init() {
         'supports'            => array('title', 'editor', 'page-attributes', 'excerpt', 'thumbnail'),
         'has_archive'         => true,
         'rewrite'             => array(
-          'slug' => 'training'
+          'slug' => 'training-catalogue'
         ),
         'query_var'           => false,
         'can_export'          => true,

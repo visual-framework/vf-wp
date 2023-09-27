@@ -1,17 +1,17 @@
 <?php
 function vf_wp_intranet_training_organiser_labels() {
   return array(
-    'name'              => _x( 'Organiser', 'taxonomy general name', 'vfwp' ),
-    'singular_name'     => _x( 'Organiser', 'taxonomy singular name', 'vfwp' ),
-    'search_items'      => __( 'Search Categories', 'vfwp' ),
-    'all_items'         => __( 'All Categories', 'vfwp' ),
-    'parent_item'       => __( 'Parent Organiser', 'vfwp' ),
-    'parent_item_colon' => __( 'Parent Organiser:', 'vfwp' ),
-    'edit_item'         => __( 'Edit Organiser', 'vfwp' ),
-    'update_item'       => __( 'Update Organiser', 'vfwp' ),
-    'add_new_item'      => __( 'Add New Organiser', 'vfwp' ),
-    'new_item_name'     => __( 'New Organiser Name', 'vfwp' ),
-    'menu_name'         => __( 'Categories', 'vfwp' ),
+    'name'              => _x( 'Provider', 'taxonomy general name', 'vfwp' ),
+    'singular_name'     => _x( 'Provider', 'taxonomy singular name', 'vfwp' ),
+    'search_items'      => __( 'Search Providers', 'vfwp' ),
+    'all_items'         => __( 'All Providers', 'vfwp' ),
+    'parent_item'       => __( 'Parent Provider', 'vfwp' ),
+    'parent_item_colon' => __( 'Parent Provider:', 'vfwp' ),
+    'edit_item'         => __( 'Edit Provider', 'vfwp' ),
+    'update_item'       => __( 'Update Provider', 'vfwp' ),
+    'add_new_item'      => __( 'Add New Provider', 'vfwp' ),
+    'new_item_name'     => __( 'New Provider Name', 'vfwp' ),
+    'menu_name'         => __( 'Provider', 'vfwp' ),
   );
 }
 
