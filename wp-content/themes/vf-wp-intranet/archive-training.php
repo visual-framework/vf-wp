@@ -60,7 +60,7 @@ $today_date = date('Ymd');
     </div>
 
     <section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--800">
-      <div class="vf-stack vf-stack--400">
+      <div>
         <?php include(locate_template('partials/training-filter.php', false, false)); ?>
       </div>
       <main>
