@@ -18,7 +18,9 @@ $deadlineDate = new DateTime($registrationDeadline);
 $registrationDeadlineFormatted = $deadlineDate->format('Ymd');
 $venue = get_field('vf-wp-training-venue',$post_id);
 $fee = get_field('vf-wp-training-fee',$post_id);
+$feeSlug = strtolower(str_replace(' ', '_', $fee));
 $category = get_field('vf-wp-training-category',$post_id);
+$categorySlug = strtolower(str_replace(' ', '_', $category));
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
 
 
@@ -49,12 +51,20 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
   </p>
   <?php } ?>
 
-  <h3 class="vf-summary__title | vf-u-margin__bottom--100 vf-u-margin__top--200 | search-data">
+  <h3 class="vf-summary__title | vf-u-margin__bottom--200 vf-u-margin__top--200 | search-data">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h3>
   <div>
     <div class="vf-content | wysiwyg-training-info | search-data">
-      <?php echo $additionalInfo; ?>
+      <?php
+      $limitStr = 170;
+      if (strlen($additionalInfo) > $limitStr) {
+        $limitedString = substr($additionalInfo, 0, $limitStr - 3) . '...';
+        echo '<p>' . $limitedString . '</p>';
+      } else {
+        echo $additionalInfo;
+      }
+    ?>
     </div>
     <p class="vf-summary__meta | vf-u-margin__bottom--600" id="trainingMeta">
       <?php if (($organiser)) { ?>
@@ -86,13 +96,13 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
       <?php 
       if (empty($registrationDeadline)) {
         if ($registrationStatus == 'Open') {
-          echo '<span class="vf-u-text-color--green | status-open">Open</span>';
+          echo '<span class="vf-u-text-color--grey | status-open">Open</span>';
         }
         else if ($registrationStatus == 'Closed') {
-          echo '<span class="vf-u-text-color--red | status-closed">Closed</span>';
+          echo '<span class="vf-u-text-color--grey | status-closed">Closed</span>';
         }
         else if ($registrationStatus == 'Waiting list only') {
-          echo '<span class="vf-u-text-color--orange">Waiting list only</span>';
+          echo '<span class="vf-u-text-color--grey">Waiting list only</span>';
         }
         else {
         echo '<span class="vf-u-text-color--grey">' . $registrationStatus . '</span>';
@@ -100,10 +110,10 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
       }
       else {
         if ($registrationDeadlineFormatted >= $current_date) {
-          echo '<span class="vf-u-text-color--green | status-open">Open</span>';
+          echo '<span class="vf-u-text-color--grey | status-open">Open</span>';
         }
         else {
-          echo '<span class="vf-u-text-color--red | status-closed">Closed</span>';
+          echo '<span class="vf-u-text-color--grey | status-closed">Closed</span>';
         }
       }
       ?>
@@ -112,8 +122,8 @@ $additionalInfo = get_field('vf-wp-training-info',$post_id);
   <!-- for filtering -->
   <div class="vf-u-display-none">
     <span class="year year-<?php echo $start->format('Y');?>"><?php echo $start->format('Y'); ?></span>
-    <span class="fee-<?php echo $fee; ?>"><?php echo $fee; ?></span>
-    <span class="category-<?php echo $category; ?>"><?php echo $category; ?></span>
+    <span class="fee-<?php echo $feeSlug; ?>"><?php echo $fee; ?></span>
+    <span class="category-<?php echo $categorySlug; ?>"><?php echo $category; ?></span>
   </div>
   <?php if ($forthcomingLoop->current_post +1 < $forthcomingLoop->post_count) {
     echo '<hr class="vf-divider">';

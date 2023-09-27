@@ -30,8 +30,8 @@ $counterStatus = 1;
   
 ?>
 
-<form class="vf-stack vf-stack-400 | vf-u-margin__bottom--400">
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-organiser">
+<form class="vf-stack vf-stack-400 | vf-u-margin__bottom--800">
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-category">
     <legend class="vf-form__legend">Category</legend>
     <?php
     foreach($category_terms as $cat) {
@@ -40,8 +40,8 @@ $counterStatus = 1;
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="category-<?php echo $catSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".category-<?php echo $catSlug; ?>" data-group="data-group-1" data-name="category" data-or="category"
-        value="<?php echo esc_attr($catSlug); ?>"
-        data-id="category<?php echo $catSlug; ?>-<?php echo esc_attr($catSlug); ?>" class="vf-form__checkbox">
+        value="<?php echo esc_attr($cat); ?>"
+        data-id="category-<?php echo esc_attr($catSlug); ?>" class="vf-form__checkbox">
       <label for="category-<?php echo $catSlug; ?>" class="vf-form__label"><?php echo esc_html($cat); ?>
       &nbsp;<span 
       data-jplist-control="counter"
@@ -87,7 +87,7 @@ $counterStatus = 1;
   </fieldset>
   */ ?>
 
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-location">
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-year">
     <legend class="vf-form__legend">Year</legend>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="year-<?php echo $currentYear + 1; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
@@ -123,7 +123,7 @@ $counterStatus = 1;
     </div>
   </fieldset>
 
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-location">
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-location">
     <legend class="vf-form__legend">Location</legend>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="location-7" type="checkbox" data-jplist-control="checkbox-text-filter" data-path=".location" data-group="data-group-1" data-name="location" data-or="location" value="Online" data-id="location6-online" class="vf-form__checkbox">
@@ -138,7 +138,7 @@ $counterStatus = 1;
       <input id="location-<?php echo $counterLoc; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="location" data-or="location"
         value="<?php echo esc_attr($term->name); ?>"
-        data-id="location<?php echo $counterLoc; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
+        data-id="location-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
       <label for="location-<?php echo $counterLoc; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
       &nbsp;<span 
       data-jplist-control="counter"
@@ -157,7 +157,7 @@ $counterStatus = 1;
     ?>
   </fieldset>
 
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-organiser">
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-status">
     <legend class="vf-form__legend">Status</legend>
     <?php
     foreach($status_terms as $status) {
@@ -167,7 +167,7 @@ $counterStatus = 1;
       <input id="status-<?php echo $statusSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".status-<?php echo $statusSlug; ?>" data-group="data-group-1" data-name="status" data-or="status"
         value="<?php echo esc_attr($statusSlug); ?>"
-        data-id="status<?php echo $statusSlug; ?>-<?php echo esc_attr($statusSlug); ?>" class="vf-form__checkbox">
+        data-id="status-<?php echo esc_attr($statusSlug); ?>" class="vf-form__checkbox">
       <label for="status-<?php echo $statusSlug; ?>" class="vf-form__label"><?php echo esc_html($status); ?>
       &nbsp;<span 
       data-jplist-control="counter"
@@ -185,7 +185,7 @@ $counterStatus = 1;
     ?>
   </fieldset>
 
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-organiser">
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-fee">
     <legend class="vf-form__legend">Fee</legend>
     <?php
     foreach($fee_terms as $fee) {
@@ -195,7 +195,7 @@ $counterStatus = 1;
       <input id="fee-<?php echo $feeSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".fee-<?php echo $feeSlug; ?>" data-group="data-group-1" data-name="fee" data-or="fee"
         value="<?php echo esc_attr($feeSlug); ?>"
-        data-id="fee<?php echo $feeSlug; ?>-<?php echo esc_attr($feeSlug); ?>" class="vf-form__checkbox">
+        data-id="fee-<?php echo esc_attr($feeSlug); ?>" class="vf-form__checkbox">
       <label for="fee-<?php echo $feeSlug; ?>" class="vf-form__label"><?php echo esc_html($fee); ?>
       &nbsp;<span 
       data-jplist-control="counter"
@@ -212,7 +212,12 @@ $counterStatus = 1;
     }
     ?>
   </fieldset>
-
-
-
 </form>
+<style>
+  .vf-form__label {
+    font-size: 16px !important;
+}
+.vf-form__legend {
+    font-size: 21px !important;
+}
+</style>

@@ -332,7 +332,7 @@
                 "workplace": "Workplace"
             },
             "default_value": false,
-            "return_format": "value",
+            "return_format": "label",
             "multiple": 0,
             "allow_null": 0,
             "ui": 0,
@@ -425,7 +425,7 @@
                 "paid": "Paid"
             },
             "default_value": "",
-            "return_format": "value",
+            "return_format": "label",
             "allow_null": 0,
             "other_choice": 0,
             "layout": "vertical",
@@ -513,5 +513,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0
+    "show_in_rest": 0,
+    "modified": 1695812357
 }
