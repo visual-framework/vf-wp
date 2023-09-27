@@ -113,5 +113,18 @@ function my_acf_fields_relationship_result( $text, $post, $field, $post_id ) {
     return $text;
 }
 
+/*
+ * Redirect pages to external links
+ */
+
+ add_action( 'template_redirect', 'trainingRedirect' );
+ function trainingRedirect(){
+     $redirect = get_post_meta( get_the_ID(), 'vf-wp-training-url', true );
+     if (is_page() || is_singular('training')) {
+     if( $redirect ){
+         wp_redirect( $redirect );
+     } }
+ }
+
 
 ?>
