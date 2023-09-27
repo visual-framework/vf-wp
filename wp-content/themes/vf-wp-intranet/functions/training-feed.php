@@ -61,6 +61,7 @@ function insert_training_posts_from_json($training_data) {
         $startDate = $training_ebi['opening_date'];
         $endDate = $training_ebi['closing_date'];
         $location = $training_ebi['location'];
+        $format = $training_ebi['eventType'];
         $category = $training_ebi['category'];
         $fee = $training_ebi['registration_fees'];
         $registrationDeadline = $training_ebi['registration_deadline'];
@@ -101,6 +102,7 @@ function insert_training_posts_from_json($training_data) {
             add_post_meta($post_id, 'vf-wp-training-start_date', $formattedStartDate);
             add_post_meta($post_id, 'vf-wp-training-end_date', $formattedendDate);
             add_post_meta($post_id, 'vf-wp-training-category', $category);
+            add_post_meta($post_id, 'vf-wp-training-format', $format);
             add_post_meta($post_id, 'vf-wp-training-fee', $fee);
             add_post_meta($post_id, 'vf-wp-training-registration-deadline', $formattedregDate);
             add_post_meta($post_id, 'vf-wp-training-info', $overview);
@@ -128,6 +130,7 @@ function insert_training_posts_from_json($training_data) {
             update_post_meta($existing_post_id, 'vf-wp-training-start_date', $formattedStartDate);
             update_post_meta($existing_post_id, 'vf-wp-training-end_date', $formattedendDate); 
             update_post_meta($existing_post_id, 'vf-wp-training-category', $category);
+            update_post_meta($existing_post_id, 'vf-wp-training-format', $format);
             update_post_meta($existing_post_id, 'vf-wp-training-fee', $fee);
             update_post_meta($existing_post_id, 'vf-wp-training-registration-deadline', $formattedregDate);
             update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
