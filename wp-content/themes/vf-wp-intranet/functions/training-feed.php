@@ -21,7 +21,7 @@ add_action('vfwp_intranet_cron_process', 'vfwp_intranet_cron_process_training_da
 
 // Function to start process training data.
 function vfwp_intranet_cron_process_training_data() {
-    $training_json_feed_api_endpoint = "https://www.ebi.ac.uk/api/v1/ebi-training-events-webinars?source=trainingcontenthub";
+    $training_json_feed_api_endpoint = "https://www.ebi.ac.uk/api/v1/ebi-training-events-webinars?source=trainingcontenthub&timeframe=upcoming";
   
     // Fetch API content and decode it
     $training_feed_content = file_get_contents($training_json_feed_api_endpoint);
@@ -54,13 +54,19 @@ function insert_training_posts_from_json($training_data) {
 
   
     if (!empty($training_data) && is_array($training_data)) {
-        foreach ($training_data as $key => $person) {
-        $title = $person['title'];
-        $url = basename($person['more_info_link']);
-        $permalink = $person['more_info_link'];
-        $startDate = $person['opening_date'];
-        $endDate = $person['closing_date'];
-        $location = $person['location'];
+        foreach ($training_data as $key => $training_ebi) {
+        $title = $training_ebi['title'];
+        $url = basename($training_ebi['more_info_link']);
+        $permalink = $training_ebi['more_info_link'];
+        $startDate = $training_ebi['opening_date'];
+        $endDate = $training_ebi['closing_date'];
+        $location = $training_ebi['location'];
+        $category = $training_ebi['category'];
+        $fee = $training_ebi['registration_fees'];
+        $registrationDeadline = $training_ebi['registration_deadline'];
+        $overview = $training_ebi['description'];
+        $overview = strip_tags($overview);
+        
         // $provider = $person['provider'];
         if (!empty($startDate)) {
             $formattedStartDate = date('Ymd', strtotime($startDate));
@@ -69,7 +75,14 @@ function insert_training_posts_from_json($training_data) {
             $formattedendDate = date('Ymd', strtotime($endDate));
         } 
 
-        echo $formattedStartDate;
+        if (!empty($registrationDeadline)) {
+            $formattedregDate = date('Ymd', strtotime($registrationDeadline));
+        } 
+        else {
+            $formattedregDate = $formattedStartDate;
+        }
+
+        // echo $permalink;
 
         $new_post = [
             'post_title' => $title,
@@ -84,9 +97,13 @@ function insert_training_posts_from_json($training_data) {
         if (!get_page_by_path($url, 'OBJECT', 'training')) {
             $post_id = wp_insert_post($new_post);
             add_post_meta($post_id, 'post_title', $title);
-            add_post_meta($post_id, 'url', $permalink);
+            add_post_meta($post_id, 'vf-wp-training-url', $permalink);
             add_post_meta($post_id, 'vf-wp-training-start_date', $formattedStartDate);
             add_post_meta($post_id, 'vf-wp-training-end_date', $formattedendDate);
+            add_post_meta($post_id, 'vf-wp-training-category', $category);
+            add_post_meta($post_id, 'vf-wp-training-fee', $fee);
+            add_post_meta($post_id, 'vf-wp-training-registration-deadline', $formattedregDate);
+            add_post_meta($post_id, 'vf-wp-training-info', $overview);
             // Check if the term exists before setting it
             $location_term_exists = term_exists(strtolower($location), 'event-location');
             if ($location_term_exists !== 0 && $location_term_exists !== null) {
@@ -107,9 +124,14 @@ function insert_training_posts_from_json($training_data) {
             $get_post = get_page_by_path($url, 'OBJECT', 'training');
             $existing_post_id = $get_post->ID;
             update_post_meta($existing_post_id, 'post_title', $title);
-            update_post_meta($existing_post_id, 'url', $url);
+            update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
             update_post_meta($existing_post_id, 'vf-wp-training-start_date', $formattedStartDate);
-            update_post_meta($existing_post_id, 'vf-wp-training-end_date', $formattedendDate);        
+            update_post_meta($existing_post_id, 'vf-wp-training-end_date', $formattedendDate); 
+            update_post_meta($existing_post_id, 'vf-wp-training-category', $category);
+            update_post_meta($existing_post_id, 'vf-wp-training-fee', $fee);
+            update_post_meta($existing_post_id, 'vf-wp-training-registration-deadline', $formattedregDate);
+            update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
+       
             if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {
             add_post_meta($post_id, 'post_title', $title);
             }    
