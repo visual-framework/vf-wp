@@ -6,16 +6,15 @@ global $vf_theme;
 $today_date = date('Ymd');
 ?>
 
-<section class="vf-intro | vf-u-margin__bottom--400">
+<section class="vf-intro | vf-u-margin__bottom--600">
   <div>
     <!-- empty -->
   </div>
   <div class="vf-stack">
     <h1 class="vf-intro__heading | vf-u-margin__bottom--400">
-      Professional Skills & Career Development
+      Training catalogue
     </h1>
-    <p class="vf-intro__subheading">Improve your skills in communication, management and leadership; learn a language,
-      or find support for planning your career.
+    <p class="vf-intro__text">Browse all <b>live</b> and <b>on-demand</b> training available for EMBL staff and fellows; continue your professional development, improve your skills in data science or complete workplace related courses and activities.
     </p>
   </div>
 </section>
@@ -96,56 +95,13 @@ $today_date = date('Ymd');
       </main>
       <div class="vf-content">
         <h4>See also:</h4>
-      <div class="vf-stack vf-stack--600">
-        <article class="vf-card vf-card--brand vf-card--striped">
-          <div class="vf-card__content | vf-stack vf-stack--400">
-            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses<svg style="width: auto; height: 100%;"
-                  aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-                  height="1em" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                    fill="currentColor" fill-rule="nonzero"></path>
-                </svg>
-              </a></h3>
-          </div>
-        </article>
-        <article class="vf-card vf-card--brand vf-card--striped">
-          <div class="vf-card__content | vf-stack vf-stack--400">
-            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career webinars<svg style="width: auto; height: 100%;"
-                  aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-                  height="1em" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                    fill="currentColor" fill-rule="nonzero"></path>
-                </svg>
-              </a></h3>
-          </div>
-        </article>
-        <article class="vf-card vf-card--brand vf-card--striped">
-          <div class="vf-card__content | vf-stack vf-stack--400">
-            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://bio-it.embl.de/upcoming-courses/">Bio-IT courses<svg style="width: auto; height: 100%;"
-                  aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-                  height="1em" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                    fill="currentColor" fill-rule="nonzero"></path>
-                </svg>
-              </a></h3>
-          </div>
-        </article>
-        <article class="vf-card vf-card--brand vf-card--striped">
-          <div class="vf-card__content | vf-stack vf-stack--400">
-            <h3 class="vf-card__heading" style="font-size: 21px;"><a class="vf-card__link" href="https://www.ebi.ac.uk/training/">EMBL-EBI training<svg style="width: auto; height: 100%;"
-                  aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
-                  height="1em" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                    fill="currentColor" fill-rule="nonzero"></path>
-                </svg>
-              </a></h3>
-          </div>
-        </article>
-      </div>
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses</a></p>
+        <hr class="vf-divider | vf-u-margin__bottom--400">      
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career webinars</a></p>
+        <hr class="vf-divider | vf-u-margin__bottom--400">      
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="https://catalogue.bio-it.embl.de/courses/catalogue/">EMBL Bio-IT training courses</a></p>
+        <hr class="vf-divider | vf-u-margin__bottom--400">      
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href=https://www.ebi.ac.uk/training/">EMBL-EBI training</a></p>
       </div>
     </section>
   </section>
