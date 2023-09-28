@@ -12,6 +12,10 @@ $is_primary_1 = get_field('is_primary_1', $post->ID);
 $is_primary_2 = get_field('is_primary_2', $post->ID);
 $is_primary_3 = get_field('is_primary_3', $post->ID);
 $is_primary_4 = get_field('is_primary_4', $post->ID);
+$training_date = get_field('vf-wp-training-start_date', $post->ID);
+$training_date_fromatted = DateTime::createFromFormat('Ymd', $training_date);
+$training_category = get_field('vf-wp-training-category', $post->ID);
+$training_location = get_the_terms( $post->ID , 'event-location' );
 $teamArray = array(
   array(
 "team" => $team_1,
@@ -35,6 +39,12 @@ array_multisort($key_values, SORT_DESC, $teamArray);
 $teamArray = array_map('array_filter', $teamArray);
 $teamArray = array_filter($teamArray);
 
+if (is_array($training_location) || is_object($training_location)) {
+$loc_list = [];
+foreach( $training_location as $loc ) { 
+  $loc_list[] = $loc->name; 
+  }
+}
 
 ?>
 <article class="vf-summary" data-jplist-item>
@@ -60,6 +70,9 @@ $teamArray = array_filter($teamArray);
   }
   if ( get_post_type() ==  'events') {
     echo '<b>Event</b>';  
+  }
+  if ( get_post_type() ==  'training') {
+    echo '<b>Training</b> | ' . $training_category . ' | ' . implode(', ', $loc_list) . ' | ' . $training_date_fromatted->format('j F Y') ;  
   }
   if ((get_post_type() == 'page') || (get_post_type() == 'teams')) {
     echo '<b>Page</b>';
@@ -114,6 +127,9 @@ $teamArray = array_filter($teamArray);
 }
   elseif ( get_post_type() ==  'events') {
     echo '<p class="events vf-u-display-none | used-for-filtering">Events</p>';
+}
+  elseif ( get_post_type() ==  'training') {
+    echo '<p class="training vf-u-display-none | used-for-filtering">Training</p>';
 }
 ?>
   

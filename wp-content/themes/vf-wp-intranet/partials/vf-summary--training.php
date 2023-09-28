@@ -40,7 +40,7 @@ $keywords = get_field('keyword',$post_id);
             echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
           else {
             echo $start->format('j M'); ?> - <?php echo $end->format('j F Y'); }
-           } 
+          } 
         else {
           echo $start->format('j F Y'); 
         }  
@@ -124,7 +124,7 @@ $keywords = get_field('keyword',$post_id);
   </div>
   <div>
       <?php if (!empty($category)) { ?>
-      <p class="vf-u-margin__top--0"><span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
+      <p class="vf-u-margin__top--0 vf-u-margin__bottom--800"><span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
       <?php } ?>
       <?php if (!empty($format)) { ?>
       <span class="customFormat"><?php echo $format; ?></span></p></div>

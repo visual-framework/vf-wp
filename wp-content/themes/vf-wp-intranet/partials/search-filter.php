@@ -84,6 +84,20 @@
         data-name="counter-events-filter"
         data-filter-type="path"></span></label>
     </div>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="training" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".training" data-group="data-group-1" data-name="name1" data-or="name1"
+        value="Training"
+        data-id="training" class="vf-form__checkbox">
+      <label for="training" class="vf-form__label">Training&nbsp;<span 
+        data-jplist-control="counter"
+        data-group="data-group-1"
+        data-format="({count})"
+        data-path=".training"
+        data-mode="static"
+        data-name="counter-training-filter"
+        data-filter-type="path"></span></label>
+    </div>
   </fieldset>
 </form>
 <script>
