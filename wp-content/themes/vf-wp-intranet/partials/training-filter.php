@@ -48,7 +48,7 @@ $counterStatus = 1;
       data-group="data-group-1"
       data-format="({count})"
       data-path=".category-<?php echo esc_attr($catSlug); ?>"
-      data-mode="static"
+      data-mode="dynamic"
       data-name="counter-category-<?php echo esc_attr($catSlug); ?>"
       data-filter-type="path"></span>
     </label>
@@ -75,7 +75,7 @@ $counterStatus = 1;
       data-group="data-group-1"
       data-format="({count})"
       data-path=".organiser-<?php echo esc_attr($term->slug); ?>"
-      data-mode="static"
+      data-mode="dynamic"
       data-name="counter-organiser-<?php echo esc_attr($term->slug); ?>"
       data-filter-type="path"></span>
     </label>
@@ -100,7 +100,7 @@ $counterStatus = 1;
       data-group="data-group-1"
       data-format="({count})"
       data-path=".year-2024"
-      data-mode="static"
+      data-mode="dynamic"
       data-name="counter-next-year"
       data-filter-type="path"></span>
     </label>
@@ -116,7 +116,7 @@ $counterStatus = 1;
       data-group="data-group-1"
       data-format="({count})"
       data-path=".year-2023"
-      data-mode="static"
+      data-mode="dynamic"
       data-name="counter-current-year"
       data-filter-type="path"></span>
     </label>
@@ -128,7 +128,7 @@ $counterStatus = 1;
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="location-7" type="checkbox" data-jplist-control="checkbox-text-filter" data-path=".location" data-group="data-group-1" data-name="location" data-or="location" value="Online" data-id="location6-online" class="vf-form__checkbox">
       <label for="location-7" class="vf-form__label">Online&nbsp;
-        <span data-jplist-control="counter" data-group="data-group-1" data-format="({count})" data-path=".location-online" data-mode="static" data-name="counter-location-online" data-filter-type="path"></span>
+        <span data-jplist-control="counter" data-group="data-group-1" data-format="({count})" data-path=".location-online" data-mode="dynamic" data-name="counter-location-online" data-filter-type="path"></span>
     </label>
     </div>
     <?php
@@ -145,7 +145,7 @@ $counterStatus = 1;
       data-group="data-group-1"
       data-format="({count})"
       data-path=".location-<?php echo esc_attr($term->slug); ?>"
-      data-mode="static"
+      data-mode="dynamic"
       data-name="counter-location-<?php echo esc_attr($term->slug); ?>"
       data-filter-type="path"></span>
     </label>
@@ -174,7 +174,7 @@ $counterStatus = 1;
       data-group="data-group-1"
       data-format="({count})"
       data-path=".status-<?php echo esc_attr($statusSlug); ?>"
-      data-mode="static"
+      data-mode="dynamic"
       data-name="counter-status-<?php echo esc_attr($statusSlug); ?>"
       data-filter-type="path"></span>
     </label>
@@ -202,7 +202,7 @@ $counterStatus = 1;
       data-group="data-group-1"
       data-format="({count})"
       data-path=".fee-<?php echo esc_attr($feeSlug); ?>"
-      data-mode="static"
+      data-mode="dynamic"
       data-name="counter-fee-<?php echo esc_attr($feeSlug); ?>"
       data-filter-type="path"></span>
     </label>
