@@ -23,6 +23,7 @@ $format = get_field('vf-wp-training-format',$post_id);
 $category = get_field('vf-wp-training-category',$post_id);
 $categorySlug = strtolower(str_replace(' ', '_', $category));
 $additionalInfo = get_field('vf-wp-training-info',$post_id); 
+$audience = get_field('vf-wp-training-audience',$post_id); 
 $keywords = get_field('keyword',$post_id); 
 
 
@@ -79,7 +80,7 @@ $keywords = get_field('keyword',$post_id);
         foreach( $organiser as $org ) { 
           $org_list[] = strtoupper($org->name); }
           echo implode(', ', $org_list); ?></span>
-        <?php */ } ?>
+      <?php */ } ?>
       <?php if (($location)) { ?>
       <span>Location:</span>&nbsp;
       <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | 
@@ -95,40 +96,48 @@ $keywords = get_field('keyword',$post_id);
           $loc_list[] = $loc->name; }
           echo implode(', ', $loc_list); ?></span>
       <?php } ?>
-      <span>Registration:</span>&nbsp;
       <?php 
-      if (empty($registrationDeadline)) {
+      if (empty($registrationDeadline)) { ?>
+      <span>Registration:</span>&nbsp;
+      <?php
         if ($registrationStatus == 'Open') {
-          echo '<span class="vf-u-text-color--grey | status-open">Open</span>';
+          echo '<span class="vf-u-text-color--grey | status-open  | vf-u-margin__right--600">Open</span>';
         }
         else if ($registrationStatus == 'Closed') {
-          echo '<span class="vf-u-text-color--grey | status-closed">Closed</span>';
+          echo '<span class="vf-u-text-color--grey | status-closed  | vf-u-margin__right--600">Closed</span>';
         }
         else if ($registrationStatus == 'Waiting list only') {
-          echo '<span class="vf-u-text-color--grey">Waiting list only</span>';
+          echo '<span class="vf-u-text-color--grey | status-open  | vf-u-margin__right--600">Waiting list only</span>';
         }
         else {
         echo '<span class="vf-u-text-color--grey">' . $registrationStatus . '</span>';
         }
       }
       else {
+        echo '<span>Registration:</span>&nbsp;';
         if ($registrationDeadlineFormatted >= $current_date) {
-          echo '<span class="vf-u-text-color--grey | status-open">Open</span>';
+          echo '<span class="vf-u-text-color--grey | status-open  | vf-u-margin__right--600">Open</span>';
         }
         else {
-          echo '<span class="vf-u-text-color--grey | status-closed">Closed</span>';
+          echo '<span class="vf-u-text-color--grey | status-closed  | vf-u-margin__right--600">Closed</span>';
         }
       }
       ?>
+      <?php if (($audience)) { ?>
+      <span>Audience:</span>&nbsp;
+      <span class="vf-u-text-color--grey"><?php echo $audience; ?></span>
+      <?php } ?>
     </p>
   </div>
   <div>
-      <?php if (!empty($category)) { ?>
-      <p class="vf-u-margin__top--0 vf-u-margin__bottom--800"><span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
+    <?php if (!empty($category)) { ?>
+    <p class="vf-u-margin__top--0 vf-u-margin__bottom--800"><span
+        class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
       <?php } ?>
       <?php if (!empty($format)) { ?>
-      <span class="customFormat"><?php echo $format; ?></span></p></div>
-      <?php } 
+      <span class="customFormat"><?php echo $format; ?></span></p>
+  </div>
+  <?php } 
       else { echo '</p>'; }?>
   <!-- for filtering -->
   <div class="vf-u-display-none">

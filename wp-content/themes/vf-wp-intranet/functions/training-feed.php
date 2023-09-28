@@ -66,6 +66,7 @@ function insert_training_posts_from_json($training_data) {
         $category = $training_ebi['category'];
         $fee = $training_ebi['registration_fees'];
         $registrationDeadline = $training_ebi['registration_deadline'];
+        $audience = 'Open to internal and external applicants';
         $overview = $training_ebi['description'];
         $overview = strip_tags($overview);
         
@@ -108,6 +109,7 @@ function insert_training_posts_from_json($training_data) {
             add_post_meta($post_id, 'vf-wp-training-registration-deadline', $formattedregDate);
             add_post_meta($post_id, 'vf-wp-training-info', $overview);
             add_post_meta($post_id, 'keyword', $keywords);
+            add_post_meta($post_id, 'vf-wp-training-audience', $audience);
             // Check if the term exists before setting it
             $location_term_exists = term_exists(strtolower($location), 'event-location');
             if ($location_term_exists !== 0 && $location_term_exists !== null) {
@@ -137,6 +139,7 @@ function insert_training_posts_from_json($training_data) {
             update_post_meta($existing_post_id, 'vf-wp-training-registration-deadline', $formattedregDate);
             update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
             update_post_meta($existing_post_id, 'keyword', $keywords);
+            update_post_meta($existing_post_id, 'vf-wp-training-audience', $audience);
        
             if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {
             add_post_meta($post_id, 'post_title', $title);

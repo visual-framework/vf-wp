@@ -14,7 +14,9 @@ $today_date = date('Ymd');
     <h1 class="vf-intro__heading | vf-u-margin__bottom--400">
       Training catalogue
     </h1>
-    <p class="vf-intro__text">Browse all <b>live</b> and <b>on-demand</b> training available for EMBL staff and fellows; continue your professional development, improve your skills in data science or complete workplace related courses and activities.
+    <p class="vf-intro__text">Browse all <b>live</b> and <b>on-demand</b> training available for EMBL staff and fellows;
+      continue your professional development, improve your skills in data science or complete workplace related courses
+      and activities.
     </p>
   </div>
 </section>
@@ -91,17 +93,28 @@ $today_date = date('Ymd');
           <?php
          include(locate_template('partials/vf-summary--training.php', false, false)); ?>
           <?php endwhile;?>
+          <!-- no results control -->
+          <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+            data-name="no-results">
+            <p class="vf-summary__text">
+              No results found
+            </p>
+          </article>
+
         </div>
       </main>
       <div class="vf-content">
         <h4>See also:</h4>
-        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses</a></p>
-        <hr class="vf-divider | vf-u-margin__bottom--400">      
-        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career webinars</a></p>
-        <hr class="vf-divider | vf-u-margin__bottom--400">      
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
+            href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses</a></p>
+        <hr class="vf-divider | vf-u-margin__bottom--400">
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
+            href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career
+            webinars</a></p>
+        <!-- <hr class="vf-divider | vf-u-margin__bottom--400">      
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="https://catalogue.bio-it.embl.de/courses/catalogue/">EMBL Bio-IT training courses</a></p>
         <hr class="vf-divider | vf-u-margin__bottom--400">      
-        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href=https://www.ebi.ac.uk/training/">EMBL-EBI training</a></p>
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href=https://www.ebi.ac.uk/training/">EMBL-EBI training</a></p> -->
       </div>
     </section>
   </section>
@@ -110,23 +123,65 @@ $today_date = date('Ymd');
     <div class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--800">
       <div></div>
       <div class="vf-content">
-        <h3>Learning-on-the-go</h3>
-        <p>Learning-on-the-go is EMBL's e-learning platform for professional development and training available to use
-          at any time that suits you.
+        <h3>Get professional and scientific training at your own pace</h3>
+        <p>Take the step towards your personal and professional goals with on-demand training.
         </p>
-        <p>Use it to access training opportunities:
-        </p>
-        <ul>
-          <li>Aligned to development pathways </li>
-          <li>About EMBL Policies and Guidelines </li>
-          <li>On Data Protection and IT Security </li>
-          <li>Via the Ethics Academy </li>
-        </ul>
-        <p>Much content is offered in micro-learning components which means that 5 minutes are all you need to learn
-          about the key aspects of these career enhancing topics.</p>
-        <p>Find out more when you log-in with your EMBL credentials.</p>
-        <button class="vf-button vf-button--primary vf-button--sm "
-          onclick="location.href='https://embl.clcmoodle.org';">Learning-on-the-go login</button>
+        <div class="vf-grid vf-grid__col-2">
+          <article class="vf-card vf-card--brand vf-card--bordered">
+
+
+            <div class="vf-card__content | vf-stack vf-stack--400">
+              <h3 class="vf-card__heading" style="font-size: 23px;"><a class="vf-card__link"
+                  href="https://embl.clcmoodle.org">Professional development <svg style="width: auto; height: 100%;"
+                    aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
+                    height="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                      fill="currentColor" fill-rule="nonzero"></path>
+                  </svg>
+                </a></h3>
+              <p class="vf-card__subheading">Learning on-the-go</p>
+              <p class="vf-text-body vf-text-body--3">Use it to access training opportunities:
+
+                <ul>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">Aligned to development pathways
+                  </li>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">About EMBL Policies and Guidelines
+                  </li>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">On Data Protection and IT Security
+                  </li>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">Via the Ethics Academy </li>
+                </ul>
+              </p>
+            </div>
+          </article>
+          <article class="vf-card vf-card--brand vf-card--bordered">
+
+
+            <div class="vf-card__content | vf-stack vf-stack--400">
+              <h3 class="vf-card__heading" style="font-size: 23px;"><a class="vf-card__link"
+                  href="https://www.ebi.ac.uk/training/on-demand">Data science <svg style="width: auto; height: 100%;"
+                    aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em"
+                    height="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                      fill="currentColor" fill-rule="nonzero"></path>
+                  </svg>
+                </a></h3>
+              <p class="vf-card__subheading">With sub–heading</p>
+              <p class="vf-text-body vf-text-body--3">Use it to access training opportunities:
+
+                <ul>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">Text </li>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">Text </li>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">Text </li>
+                  <li class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--200">Text </li>
+                </ul>
+              </p>
+            </div>
+          </article>
+        </div>
+
       </div>
     </div>
   </section>
@@ -139,24 +194,15 @@ $today_date = date('Ymd');
 
 <script>
   // no results handlers
-  $('#checkbox-filter-organiser, #checkbox-filter-location').change(function () {
-    if ($('#no-upcoming').length) {
-      $("#no-upcoming").remove();
-    }
-    if ($('#upcoming-events').children().length <= 0) {
-      $('#upcoming-events').append(
-        '<p id="no-upcoming" class="vf-text-body vf-text-body--2">No results found.</p>');
-    }
-  });
-
-  $('#checkbox-filter-organiser, #checkbox-filter-location').change(function () {
-    if ($('#no-past').length) {
-      $("#no-past").remove();
-    }
-    if ($('#past-events').children().length <= 0) {
-      $('#past-events').append('<p id="no-past" class="vf-text-body vf-text-body--2">No results found.</p>');
-    }
-  });
+  // $('#checkbox-filter-organiser, #checkbox-filter-location').change(function () {
+  //   if ($('#no-upcoming').length) {
+  //     $("#no-upcoming").remove();
+  //   }
+  //   if ($('#upcoming-events').children().length <= 0) {
+  //     $('#upcoming-events').append(
+  //       '<p id="no-upcoming" class="vf-text-body vf-text-body--2">No results found.</p>');
+  //   }
+  // });
 
 </script>
 

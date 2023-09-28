@@ -388,8 +388,8 @@
         },
         {
             "key": "field_65127ea323b78",
-            "label": "Specific info",
-            "name": "vf-wp-training-specific_info",
+            "label": "Audience",
+            "name": "vf-wp-training-audience",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -514,5 +514,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1695812357
+    "modified": 1695904362
 }
