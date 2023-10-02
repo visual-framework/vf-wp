@@ -407,11 +407,11 @@
   display: table-caption;
 }
 .vf-content .vf-figure--align-inline-start, .editor-styles-wrapper .vf-figure--align-inline-start {
-  /* margin-bottom: 32px; */
+  margin-bottom: 32px;
   margin-right: 32px;
 }
 .vf-content .vf-figure--align-inline-end, .editor-styles-wrapper .vf-figure--align-inline-end {
-  /* margin-bottom: 32px; */
+  margin-bottom: 32px;
   margin-left: 32px;
 }
 
