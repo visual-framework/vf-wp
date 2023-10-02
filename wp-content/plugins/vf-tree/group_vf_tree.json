@@ -1,0 +1,95 @@
+{
+    "key": "group_64fac70b87290",
+    "title": "VF Tree",
+    "fields": [
+        {
+            "key": "field_64fac717c5c99",
+            "label": "VF Tree menu",
+            "name": "vf_tree_top_level",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Add TOP level item",
+            "sub_fields": [
+                {
+                    "key": "field_64fac760c5c9a",
+                    "label": "Top menu item",
+                    "name": "vf_tree_top_menu_item",
+                    "type": "link",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array"
+                },
+                {
+                    "key": "field_64fac836c5c9b",
+                    "label": "Sub menu",
+                    "name": "vf_tree_sub_menu",
+                    "type": "repeater",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "collapsed": "",
+                    "min": 0,
+                    "max": 0,
+                    "layout": "table",
+                    "button_label": "Add SUB level item",
+                    "sub_fields": [
+                        {
+                            "key": "field_64fac869c5c9c",
+                            "label": "Sub menu item",
+                            "name": "vf_tree_sub_menu_item",
+                            "type": "link",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-tree"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}
