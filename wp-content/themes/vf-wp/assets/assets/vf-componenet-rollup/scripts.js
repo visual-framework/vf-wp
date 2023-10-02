@@ -34,8 +34,8 @@ import { vfLocationNearest } from 'vf-location-nearest/vf-location-nearest';
 // vfLocationNearest is invoked by the vf-wp code
 // vfLocationNearest();
 
-// import { vfTree } from 'vf-tree/vf-tree';
-// vfTree();
+import { vfTree } from 'vf-tree/vf-tree';
+vfTree();
 
 // import { vfFormFloatLabels } from 'vf-form__core/assets/vf-form__float-labels.js';
 // vfFormFloatLabels();
