@@ -30,131 +30,159 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 if( $relatedCourses ): ?>
 <div class="vf-u-margin__top--400">
   <?php foreach( $relatedCourses as $relatedCourse ): 
-      $now = new DateTime();
-      $current_date = $now->format('Y-m-d');
-      $organiser = get_the_terms( $relatedCourse->ID , 'training-organiser' );
-      $location = get_the_terms( $relatedCourse->ID , 'event-location' );
-      $start_date = get_field('vf-wp-training-start_date',$relatedCourse->ID);
-      $start_time = get_field('vf-wp-training-start_time',$relatedCourse->ID);
-      $start = DateTime::createFromFormat('j M Y', $start_date);
-      $start_time_format = DateTime::createFromFormat('H:i', $start_time);
-      $end_date = get_field('vf-wp-training-end_date',$relatedCourse->ID);
-      $end_time = get_field('vf-wp-training-end_time',$relatedCourse->ID);
-      $end_time_format = DateTime::createFromFormat('H:i', $end_time);
-      $end = DateTime::createFromFormat('j M Y', $end_date);
-      $end_date_format = DateTime::createFromFormat('j M Y', $end_date);
-      $registrationStatus = get_field('vf-wp-training-registration-status',$relatedCourse->ID); 
-      $registrationDeadline = get_field('vf-wp-training-registration-deadline',$relatedCourse->ID); 
-      $deadlineDate = new DateTime($registrationDeadline);
-      $registrationDeadlineFormatted = $deadlineDate->format('Y-m-d');
-      $venue = get_field('vf-wp-training-venue',$relatedCourse->ID);
-      $additionalInfo = get_field('vf-wp-training-info',$relatedCourse->ID); 
-      $relatedCoursePermalink = get_permalink( $relatedCourse->ID );
-      $relatedCourseTitle = get_the_title($relatedCourse->ID );
-    
-      
-      if (!empty($start_time)) {
-        $calendar_start_time = 'T' . $start_time_format->format('Hi') . '00';
-      }
-      else {
-        $calendar_start_time = '';
-      }
-      
-      if (!empty($end_time)) {
-        $calendar_end_time = 'T' . $end_time_format->format('Hi') . '00';
-      }
-      elseif (empty($end_time) && !empty($start_time)) {
-        $calendar_end_time = 'T' . $start_time_format->format('Hi') . '00';
-      }
-      else {
-        $calendar_end_time = '';
-      }
-      
-      if (!empty($end_date)) {
-        $calendar_end_date = '/' . $end->format('Ymd');
-      }
-      else {
-        $calendar_end_date = '/' . $start->format('Ymd');
-      }
-        ?>
-  <article class="vf-summary vf-summary--event | vf-u-margin__bottom--400">
-    <?php if ( ! empty($start_date)) { ?>
-    <p class="vf-summary__date">
-      <?php       // Event dates
+$now = new DateTime();
+$post_id = get_the_ID();
+$current_date = $now->format('Ymd');
+$organiser = get_the_terms( $relatedCourse->ID , 'training-organiser' );
+$location = get_the_terms( $relatedCourse->ID , 'event-location' );
+$start_date = get_field('vf-wp-training-start_date',$relatedCourse);
+$start_time = get_field('vf-wp-training-start_time',$relatedCourse);
+$start = DateTime::createFromFormat('Ymd', $start_date);
+$start_time_format = DateTime::createFromFormat('H:i', $start_time);
+$end_date = get_field('vf-wp-training-end_date',$relatedCourse);
+$end_time = get_field('vf-wp-training-end_time',$relatedCourse);
+$end_time_format = DateTime::createFromFormat('H:i', $end_time);
+$end = DateTime::createFromFormat('Ymd', $end_date);
+$registrationStatus = get_field('vf-wp-training-registration-status',$relatedCourse); 
+$registrationDeadline = get_field('vf-wp-training-registration-deadline',$relatedCourse); 
+$deadlineDate = new DateTime($registrationDeadline);
+$registrationDeadlineFormatted = $deadlineDate->format('Ymd');
+$venue = get_field('vf-wp-training-venue',$relatedCourse);
+$fee = get_field('vf-wp-training-fee',$relatedCourse);
+$feeSlug = strtolower(str_replace(' ', '_', $fee));
+$format = get_field('vf-wp-training-format',$relatedCourse);
+$category = get_field('vf-wp-training-category',$relatedCourse);
+$categorySlug = strtolower(str_replace(' ', '_', $category));
+$additionalInfo = get_field('vf-wp-training-info',$relatedCourse); 
+$audience = get_field('vf-wp-training-audience',$relatedCourse); 
+$keywords = get_field('keyword',$relatedCourse); 
+$relatedCoursePermalink = get_permalink( $relatedCourse->ID );
+$relatedCourseTitle = get_the_title($relatedCourse->ID );
+
+
+
+?>
+<article class="vf-summary vf-summary--event | vf-u-margin__bottom--400" data-jplist-item>
+  <?php if ( ! empty($start_date)) { ?>
+  <p class="vf-summary__date">
+    <?php       // Event dates
         if ($end_date) { 
-          if ($start->format('M') == $end->format('M')) {
+          if ($start->format('d') == $end->format('d')) {
+            echo $start->format('j F Y');
+          }
+          else if ($start->format('m') == $end->format('m')) {
             echo $start->format('j'); ?> - <?php echo $end->format('j F Y'); }
           else {
             echo $start->format('j M'); ?> - <?php echo $end->format('j F Y'); }
-           } 
+          } 
         else {
           echo $start->format('j F Y'); 
-        }  ?>
-    </p>
-    <?php } ?>
+        }  
+        // if ($start_time) {
+        //   echo ', ' . $start_time;
+        // } 
+        // if ($end_time) {
+        //   echo ' - '. $end_time . ' CET';
+        // }     ?>
+  </p>
+  <?php } ?>
 
-    <h3 class="vf-summary__title | vf-u-margin__bottom--100 vf-u-margin__top--200 | search-data">
-      <a href="<?php echo $relatedCoursePermalink; ?>" class="vf-summary__link"><?php echo $relatedCourseTitle ?></a>
-    </h3>
-    <div>
-      <div class="vf-content | wysiwyg-training-info | search-data">
-        <?php echo $additionalInfo; ?>
-      </div>
-      <p class="vf-summary__meta | vf-u-margin__bottom--600" id="trainingMeta">
-        <?php if (($organiser)) { ?>
-        <span class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser | organiser-<?php $org_list = [];
+  <h3 class="vf-summary__title | vf-u-margin__bottom--200 vf-u-margin__top--200 | search-data">
+  <a href="<?php echo $relatedCoursePermalink; ?>" class="vf-summary__link"><?php echo $relatedCourseTitle ?></a>  </h3>
+  <div>
+    <div class="vf-content | wysiwyg-training-info | search-data">
+      <?php
+      $limitStr = 170;
+      if (strlen($additionalInfo) > $limitStr) {
+        $limitedString = substr($additionalInfo, 0, $limitStr - 3) . '...';
+        echo '<p>' . $limitedString . '</p>';
+      } else {
+        echo $additionalInfo;
+      }
+    ?>
+    </div>
+    <p class="vf-summary__meta | vf-u-margin__bottom--200" id="trainingMeta">
+      <?php if (($organiser)) { 
+        /*?>
+      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | organiser | organiser-<?php $org_list = [];
         foreach( $organiser as $org ) { 
           $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
           echo implode(', ', $org_list); ?>">
-          <?php $org_list = [];
+        <?php $org_list = [];
         foreach( $organiser as $org ) { 
           $org_list[] = strtoupper($org->name); }
           echo implode(', ', $org_list); ?></span>
-        <?php } ?>
-        <?php if (($location)) { ?>
-        <span>Location:</span>&nbsp;
-        <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | 
+      <?php */ } ?>
+      <?php if (($location)) { ?>
+      <span>Location:</span>&nbsp;
+      <span class="vf-u-text-color--grey | vf-u-margin__right--600 | location | 
       <?php $loc_list = [];
         foreach( $location as $loc ) { 
           $locClass = 'location-' . strtolower($loc->name);;
           $loc_list[] = $locClass; }
           echo implode(' ', $loc_list); ?>">
-          <?php // if (!empty($venue)) {
+        <?php // if (!empty($venue)) {
        // echo esc_html($venue) . ', '; } ?>
-          <?php $loc_list = [];
+        <?php $loc_list = [];
         foreach( $location as $loc ) { 
           $loc_list[] = $loc->name; }
           echo implode(', ', $loc_list); ?></span>
-        <?php } ?>
-        <span>Registration:</span>&nbsp;
-        <?php 
-      if (empty($registrationDeadline)) {
+      <?php } ?>
+      <?php 
+      if (empty($registrationDeadline)) { ?>
+      <span>Registration:</span>&nbsp;
+      <?php
         if ($registrationStatus == 'Open') {
-          echo '<span class="vf-u-text-color--green">Open</span>';
+          echo '<span class="vf-u-text-color--grey | status-open  | vf-u-margin__right--600">Open</span>';
         }
         else if ($registrationStatus == 'Closed') {
-          echo '<span class="vf-u-text-color--red">Closed</span>';
+          echo '<span class="vf-u-text-color--grey | status-closed  | vf-u-margin__right--600">Closed</span>';
         }
         else if ($registrationStatus == 'Waiting list only') {
-          echo '<span class="vf-u-text-color--orange">Waiting list only</span>';
+          echo '<span class="vf-u-text-color--grey | vf-u-margin__right--600">Waiting list only</span>';
         }
         else {
         echo '<span class="vf-u-text-color--grey">' . $registrationStatus . '</span>';
         }
       }
       else {
+        echo '<span>Registration:</span>&nbsp;';
         if ($registrationDeadlineFormatted >= $current_date) {
-          echo '<span class="vf-u-text-color--green">Open</span>';
+          echo '<span class="vf-u-text-color--grey | status-open  | vf-u-margin__right--600">Open</span>';
         }
         else {
-          echo '<span class="vf-u-text-color--red">Closed</span>';
+          echo '<span class="vf-u-text-color--grey | status-closed  | vf-u-margin__right--600">Closed</span>';
         }
       }
       ?>
-      </p>
-    </div>
-  </article>
+      <?php if (($audience)) { ?>
+      <span>Audience:</span>&nbsp;
+      <span class="vf-u-text-color--grey"><?php echo $audience; ?></span>
+      <?php } ?>
+    </p>
+  </div>
+  <div>
+    <?php if (!empty($category)) { ?>
+    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span
+        class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
+      <?php } ?>
+      <?php if (!empty($format)) { ?>
+      <span class="customFormat"><?php echo $format; ?></span></p>
+  </div>
+  <?php } 
+      else { echo '</p>'; }?>
+  <!-- for filtering -->
+  <div class="vf-u-display-none">
+    <span class="year year-<?php echo $start->format('Y');?>"><?php echo $start->format('Y'); ?></span>
+    <span class="fee-<?php echo $feeSlug; ?>"><?php echo $fee; ?></span>
+    <span class="category-<?php echo $categorySlug; ?>"><?php echo $category; ?></span>
+    <span class="keywords | search-data"><?php echo $keywords; ?></span>
+    <?php
+    if ($registrationStatus == 'Waiting list only') { echo '<span class="status-open">Open</span>'; } ?>
+  </div>
 
+</article>
+<hr class="vf-divider">
   <?php endforeach; ?>
   <?php endif; ?>
 
