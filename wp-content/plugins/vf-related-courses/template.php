@@ -163,7 +163,7 @@ $relatedCourseTitle = get_the_title($relatedCourse->ID );
   </div>
   <div>
     <?php if (!empty($category)) { ?>
-    <p class="vf-u-margin__top--0 vf-u-margin__bottom--800"><span
+    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span
         class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
       <?php } ?>
       <?php if (!empty($format)) { ?>
