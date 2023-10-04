@@ -164,6 +164,52 @@ $today_date = date('Ymd');
   // });
 </script>
 
+<script>
+let inputTimer; // Define a timer variable
+
+function updateCheckboxAttributes() {
+  // Get all the span elements with data-jplist-control="counter"
+  const counterSpans = document.querySelectorAll('[data-jplist-control="counter"]');
+
+  counterSpans.forEach((element) => {
+    // Check if the inner text of the current span element is equal to '(0)'
+    const isChecked = element.innerText.trim() === '(0)';
+
+    // Find the checkbox with the class 'vf-form__checkbox' that corresponds to this span
+    const checkbox = element.closest('.vf-form__item').querySelector('.vf-form__checkbox');
+
+    if (checkbox) {
+      if (isChecked) {
+        checkbox.setAttribute('disabled', 'disabled');
+      } else {
+        checkbox.removeAttribute('disabled');
+      }
+    }
+  });
+}
+
+// Add an event listener to run the function when the DOM content is loaded
+document.addEventListener('DOMContentLoaded', updateCheckboxAttributes);
+
+// Add an event listener for the checkbox change event
+document.addEventListener('change', function(event) {
+  // Check if the changed element is a checkbox with the class 'vf-form__checkbox'
+  if (event.target.classList.contains('vf-form__checkbox')) {
+    updateCheckboxAttributes(); // Run the function when a checkbox state changes
+  }
+});
+
+// Add an event listener for input changes in the search input form with a delay
+document.querySelector('#search').addEventListener('input', function() {
+  // Clear any previous timers to ensure only one timer is active
+  clearTimeout(inputTimer);
+
+  // Set a new timer to run the function after 0.5 seconds (500 milliseconds)
+  inputTimer = setTimeout(updateCheckboxAttributes,100);
+});
+
+</script>
+
 <?php
 
 get_footer();
