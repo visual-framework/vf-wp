@@ -47,6 +47,7 @@ $today_date = date('Ymd');
           class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
           <div class="vf-sidebar__inner">
             <div class="vf-form__item">
+              <label class="vf-form__label vf-u-sr-only | vf-search__label" for="search">Search</label>
               <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
                 data-group="data-group-1" data-name="my-filter-1" data-path=".search-data" type="text" value=""
                 placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
@@ -104,7 +105,7 @@ $today_date = date('Ymd');
         </div>
       </main>
       <div class="vf-content">
-        <h4>See also:</h4>
+        <h3>See also:</h3>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
             href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses</a></p>
         <hr class="vf-divider | vf-u-margin__bottom--400">

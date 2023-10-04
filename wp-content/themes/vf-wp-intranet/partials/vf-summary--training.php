@@ -54,9 +54,9 @@ $keywords = get_field('keyword',$post_id);
   </p>
   <?php } ?>
 
-  <h3 class="vf-summary__title | vf-u-margin__bottom--200 vf-u-margin__top--200 | search-data">
+  <h2 class="vf-summary__title | vf-u-margin__bottom--200 vf-u-margin__top--200 | search-data">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
-  </h3>
+  </h2>
   <div>
     <div class="vf-content | wysiwyg-training-info | search-data">
       <?php
