@@ -22,7 +22,7 @@ $feeSlug = strtolower(str_replace(' ', '_', $fee));
 $format = get_field('vf-wp-training-format',$post_id);
 $category = get_field('vf-wp-training-category',$post_id);
 $categorySlug = strtolower(str_replace(' ', '_', $category));
-$additionalInfo = get_field('vf-wp-training-info',$post_id); 
+$additionalInfo = get_field('vf-wp-training-info',$post_id, false, false); 
 $audience = get_field('vf-wp-training-audience',$post_id); 
 $keywords = get_field('keyword',$post_id); 
 
@@ -31,7 +31,7 @@ $keywords = get_field('keyword',$post_id);
 ?>
 <article class="vf-summary vf-summary--event | vf-u-margin__bottom--400" data-jplist-item>
   <?php if ( ! empty($start_date)) { ?>
-  <p class="vf-summary__date">
+  <p class="vf-summary__date" data-eventtime="<?php echo $start->format('Ymd'); ?>">
     <?php       // Event dates
         if ($end_date) { 
           if ($start->format('d') == $end->format('d')) {
@@ -60,14 +60,18 @@ $keywords = get_field('keyword',$post_id);
   <div>
     <div class="vf-content | wysiwyg-training-info | search-data">
       <?php
-      $limitStr = 170;
+      $limitStr = 175;
       if (strlen($additionalInfo) > $limitStr) {
-        $limitedString = substr($additionalInfo, 0, $limitStr - 3) . '...';
-        echo '<p>' . $limitedString . '</p>';
+        $limitedString = substr($additionalInfo, 0, $limitStr);
+        $lastSpace = strrpos($limitedString, ' ');
+        if ($lastSpace !== false) {
+            $limitedString = substr($limitedString, 0, $lastSpace);
+        }
+        echo '<p>' . $limitedString . ' ...</p>';
       } else {
-        echo $additionalInfo;
-      }
-    ?>
+        echo '<p>' . $additionalInfo . '</p>';
+      } 
+      ?>
     </div>
     <p class="vf-summary__meta | vf-u-margin__bottom--200" id="trainingMeta">
       <?php if (($organiser)) { 

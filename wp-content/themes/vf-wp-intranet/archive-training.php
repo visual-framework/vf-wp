@@ -50,7 +50,7 @@ $today_date = date('Ymd');
               <label class="vf-form__label vf-u-sr-only | vf-search__label" for="search">Search</label>
               <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
                 data-group="data-group-1" data-name="my-filter-1" data-path=".search-data" type="text" value=""
-                placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
+                placeholder="Search by title, description or keyword" data-clear-btn-id="name-clear-btn">
             </div>
             <button style="display: none;" type="button" id="name-clear-btn"
               class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
@@ -101,22 +101,21 @@ $today_date = date('Ymd');
               No results found
             </p>
           </article>
-
         </div>
+        <?php include(locate_template('partials/paging-controls-training.php', false, false)); ?>
+
       </main>
       <div class="vf-content">
-        <h3>See also:</h3>
+      <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
+            href="/training-archive/">Past trainings</a></p>
+        <hr class="vf-divider | vf-u-margin__bottom--400">
+        <h3 class="vf-text vf-text-heading--5">Other training and development opportunities</h3>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
             href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses</a></p>
-        <hr class="vf-divider | vf-u-margin__bottom--400">
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
             href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career
             webinars</a></p>
-        <!-- <hr class="vf-divider | vf-u-margin__bottom--400">      
-        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="https://catalogue.bio-it.embl.de/courses/catalogue/">EMBL Bio-IT training courses</a></p>
-        <hr class="vf-divider | vf-u-margin__bottom--400">      
-        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href=https://www.ebi.ac.uk/training/">EMBL-EBI training</a></p> -->
-      </div>
+                </div>
     </section>
   </section>
 
@@ -196,6 +195,7 @@ document.addEventListener('change', function(event) {
   // Check if the changed element is a checkbox with the class 'vf-form__checkbox'
   if (event.target.classList.contains('vf-form__checkbox')) {
     updateCheckboxAttributes(); // Run the function when a checkbox state changes
+    checkPaginationVisibility();
   }
 });
 
@@ -203,10 +203,129 @@ document.addEventListener('change', function(event) {
 document.querySelector('#search').addEventListener('input', function() {
   // Clear any previous timers to ensure only one timer is active
   clearTimeout(inputTimer);
-
+  checkPaginationVisibility();
   // Set a new timer to run the function after 0.5 seconds (500 milliseconds)
   inputTimer = setTimeout(updateCheckboxAttributes,100);
 });
+
+
+// Initialize an empty array to store all scraped data
+// const allArticleData = [];
+
+// function extractArticleInfo(article) {
+//     const titleElement = article.querySelector('.vf-summary__title a');
+//     const dateElement = article.querySelector('.vf-summary__date');
+    
+//     // Check if the titleElement exists
+//     if (titleElement) {
+//         const link = titleElement.href;
+//         const title = titleElement.textContent.trim();
+        
+//         // Check if the dateElement exists
+//         if (dateElement) {
+//             const date = dateElement.textContent.trim();
+//             return { title, date, link };
+//         }
+//     }
+
+//     // Return null if any required element is missing
+//     return null;
+// }
+
+// Function to scrape articles from the current page and add them to the global array
+// function scrapeArticles() {
+//     const articles = document.querySelectorAll('.vf-summary--event');
+
+//     articles.forEach((article) => {
+//         const articleInfo = extractArticleInfo(article);
+//         if (articleInfo) {
+//             allArticleData.push(articleInfo); // Add the data to the global array
+//         }
+//     });
+// }
+
+// // Function to sort the global array by date
+// function sortArticleDataByDate() {
+//     allArticleData.sort((a, b) => {
+//         const dateA = new Date(a.date);
+//         const dateB = new Date(b.date);
+//         return dateA - dateB;
+//     });
+// }
+
+// // Function to handle checkbox click events and sort data
+// function handleCheckboxClick() {
+//     const checkboxes = document.querySelectorAll('.vf-form__checkbox');
+
+//     checkboxes.forEach((checkbox) => {
+//         checkbox.addEventListener('click', () => {
+//             sortArticleDataByDate();
+//             console.log('Data sorted by date:', allArticleData);
+//         });
+//     });
+// }
+
+// // Function to navigate to the next page if it exists
+// function goToNextPage() {
+//     const nextPageButton = document.querySelector('.vf-pagination__item--next-page a');
+//     if (nextPageButton) {
+//         nextPageButton.click();
+//         setTimeout(scrapeAndNavigate, 1000); // Adjust the delay as needed
+//     } else {
+//         console.log('No more pages to scrape.');
+//         console.log('Initial data:', allArticleData);
+//         handleCheckboxClick(); // Attach event listeners to checkboxes
+//     }
+// }
+
+// // Function to scrape articles and navigate to the next page if available
+// function scrapeAndNavigate() {
+//     scrapeArticles();
+//     console.log('Scraping current page...');
+//     goToNextPage();
+// }
+
+// // Start scraping from the first page
+// scrapeAndNavigate();
+
+
+</script>
+
+<script type="text/javascript">
+function sortEvents() {
+  var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
+  var events = document.querySelectorAll("[data-jplist-item]");
+  var eventsArr = [];
+
+  for (var i in events) {
+    if (events[i].nodeType == 1) {
+      eventsArr.push(events[i]);
+    }
+  }
+
+  eventsArr.sort(function(a, b) {
+    // Compare in ascending order by reversing the order of comparison
+    return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
+  });
+
+  for (var i = 0; i < eventsArr.length; ++i) {
+    eventsContainer.appendChild(eventsArr[i]);
+  }
+}
+
+var inputs = document.querySelectorAll('input');
+
+inputs.forEach(function(item) {
+  item.addEventListener('keydown', function(e) {
+    setTimeout(function(){ sortEvents() }, 300);
+  });
+  item.addEventListener("change", function(e) {
+    sortEvents();
+  });
+});
+
+// Sort on page load
+sortEvents();
 
 </script>
 
