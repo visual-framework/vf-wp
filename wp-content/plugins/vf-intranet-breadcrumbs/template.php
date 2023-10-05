@@ -66,12 +66,25 @@ if ( is_post_type_archive('documents') ) {
 if ( is_post_type_archive('training') ) {
   echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
   $training_url = get_post_type_archive_link('training');
-  $training_name = 'Training';
+  $training_name = 'Training catalogue';
   echo '<li class="vf-breadcrumbs__item" aria-current="location">' . $training_name . '</li>';
   echo '</ul>';
   echo '</nav>';
 
     }
+
+if ( is_page('past-training') ) {
+  echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a></li>';
+  $training_url = get_post_type_archive_link('training');
+  $training_name = 'Training catalogue';
+  echo '<li class="vf-breadcrumbs__item"><a href="' . $training_url . '" class="vf-breadcrumbs__link">' . $training_name . '</a></li>';
+  echo '<li class="vf-breadcrumbs__item" aria-current="location">Past training</li>';
+  echo '</ul>';
+  echo '</nav>';
+
+    }
+
+
 
 //People   
 if ( is_post_type_archive('people') ) {
@@ -256,7 +269,7 @@ if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !i
     // training single post
   } elseif ( is_singular('training') ) {
     $training_url = get_post_type_archive_link('training');
-    $training_name = 'Training';
+    $training_name = 'Training catalogue';
     echo '<li class="vf-breadcrumbs__item"><a href="' . $training_url . '" class="vf-breadcrumbs__link">' . $training_name . '</a></li>';
     echo $currentBefore;
     single_post_title();
