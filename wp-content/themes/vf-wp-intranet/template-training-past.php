@@ -140,10 +140,14 @@ inputs.forEach(function(item) {
   item.addEventListener('keyup', function(e) {
     displayPageRange();
     setTimeout(function(){ sortEvents() }, 300);
+    checkPaginationVisibility();
+
   });
   item.addEventListener("change", function(e) {
     displayPageRange();
     sortEvents();
+    checkPaginationVisibility();
+
   });
 });
 
