@@ -96,14 +96,17 @@ $today_date = date('Ymd');
          include(locate_template('partials/vf-summary--training.php', false, false)); ?>
           <?php endwhile;?>
           <!-- no results control -->
-          <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+          <article class="vf-summary" data-jplist-control="no-results" data-group="data-group-1"
             data-name="no-results">
             <p class="vf-summary__text">
               No results found
             </p>
           </article>
         </div>
-        <?php include(locate_template('partials/paging-controls-training.php', false, false)); ?>
+        <nav id="paging-data" class="vf-pagination" aria-label="Pagination">
+  <ul class="vf-pagination__list"></ul>
+  </nav>
+   <?php // include(locate_template('partials/paging-controls-training.php', false, false)); ?>
 
       </main>
       <div class="vf-content">
@@ -150,6 +153,102 @@ $today_date = date('Ymd');
 <script type="text/javascript">
   jplist.init({});
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const articles = document.querySelectorAll(".vf-summary--event");
+    const itemsPerPage = 3;
+    let currentPage = 1;
+
+    function showPage(page) {
+      articles.forEach((article, index) => {
+        if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+          article.style.display = "block";
+        } else {
+          article.style.display = "none";
+        }
+      });
+    }
+
+    function updatePaginationLinks() {
+      const pageNumbers = document.querySelector(".vf-pagination__list");
+
+      // Calculate the total number of pages
+      const totalPages = Math.ceil(articles.length / itemsPerPage);
+      // Clear existing pagination links
+      pageNumbers.innerHTML = "";
+
+      // Add "Previous" link
+      const prevPageItem = document.createElement("li");
+      const prevPageLink = document.createElement("a");
+      prevPageLink.textContent = "Previous";
+      prevPageLink.href = "#"; // Set the href attribute as needed
+      prevPageItem.classList.add("vf-pagination__item");
+      prevPageItem.classList.add("vf-pagination__item--previous-page");
+      prevPageLink.classList.add("vf-pagination__link");
+
+      prevPageLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (currentPage > 1) {
+          currentPage--;
+          showPage(currentPage);
+          updatePaginationLinks();
+        }
+      });
+      prevPageItem.appendChild(prevPageLink);
+      pageNumbers.appendChild(prevPageItem);
+      
+      // Create and display page numbers as list items
+      for (let i = 1; i <= totalPages; i++) {
+        const pageNumberItem = document.createElement("li");
+        const pageNumberLink = document.createElement("a");
+        pageNumberLink.textContent = i;
+        pageNumberLink.href = "#"; // Set the href attribute as needed
+        pageNumberItem.classList.add("vf-pagination__item");
+        pageNumberLink.classList.add("vf-pagination__link");
+        pageNumberLink.addEventListener("click", (event) => {
+          event.preventDefault();
+          currentPage = i;
+          showPage(currentPage);
+          updatePaginationLinks();
+        });
+        pageNumberItem.appendChild(pageNumberLink);
+        pageNumbers.appendChild(pageNumberItem);
+      }
+
+
+      // Add "Next" link
+      const nextPageItem = document.createElement("li");
+      const nextPageLink = document.createElement("a");
+      nextPageLink.textContent = "Next";
+      nextPageLink.href = "#"; // Set the href attribute as needed
+      nextPageItem.classList.add("vf-pagination__item");
+      nextPageItem.classList.add("vf-pagination__item--next-page");
+      nextPageLink.classList.add("vf-pagination__link");
+      nextPageLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        const totalPages = Math.ceil(articles.length / itemsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          showPage(currentPage);
+          updatePaginationLinks();
+        }
+      });
+      nextPageItem.appendChild(nextPageLink);
+      pageNumbers.appendChild(nextPageItem);
+    }
+
+    // Initial page load
+    showPage(currentPage);
+    updatePaginationLinks();
+
+
+  });
+
+</script>
+
+
+
+
 
 <script>
   // no results handlers
@@ -276,14 +375,12 @@ var inputs = document.querySelectorAll('input');
 
 inputs.forEach(function(item) {
   item.addEventListener('keyup', function(e) {
-    displayPageRange();
+    updatePaginationLinks();
     setTimeout(function(){ sortEvents() }, 300);
-    checkPaginationVisibility();
   });
   item.addEventListener("change", function(e) {
-    displayPageRange();
-    sortEvents();
-    checkPaginationVisibility();
+    updatePaginationLinks();
+        sortEvents();
   });
 });
 

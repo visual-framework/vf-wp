@@ -1,5 +1,5 @@
 <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-     data-items-per-page="25" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
+     data-items-per-page="3" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
 
   <ul class="vf-pagination__list" id="pagination_list">
     <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
@@ -47,7 +47,7 @@
 
   // Rest of your code
   var totalPage = parseInt(document.getElementById("totalrecords").textContent);
-  var perPageNumber = 25;
+  var perPageNumber = 3;
 
   var numberOfPages = Math.ceil(totalPage / perPageNumber),
       start = ((currentPageNumber - 1) * perPageNumber + 1)  + ' - ',
@@ -122,7 +122,7 @@ function activePaginationUpdate() {
 // Function to check if there is only one page and hide pagination if needed
 function checkPaginationVisibility() {
   var totalRecords = parseInt(document.getElementById("totalrecords").textContent);
-  if (totalRecords <= 25) {
+  if (totalRecords <= 3) {
     document.getElementById("paging-data").style.display = "none";
   } else {
     document.getElementById("paging-data").style.display = "block";
