@@ -17,7 +17,7 @@ $today_date = date('Ymd');
   </div>
   <div class="vf-stack">
     <h1 class="vf-intro__heading | vf-u-margin__bottom--400">
-      Past trainings
+      Past training
     </h1>
     <!-- <p class="vf-intro__text">Browse all <b>live</b> and <b>on-demand</b> training available for EMBL staff and fellows;
       continue your professional development, improve your skills in data science or complete workplace related courses
@@ -94,7 +94,7 @@ $today_date = date('Ymd');
       </main>
       <div class="vf-content">
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
-            href="/internal-information/training-catalogue/">Upcoming trainings</a></p>
+            href="/internal-information/training-catalogue/">Upcoming training</a></p>
         <hr class="vf-divider | vf-u-margin__bottom--400">
         <h3 class="vf-text vf-text-heading--5">Other training and development opportunities</h3>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a

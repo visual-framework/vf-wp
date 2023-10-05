@@ -107,7 +107,7 @@ $today_date = date('Ymd');
       </main>
       <div class="vf-content">
       <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
-            href="/internal-information/training-archive/">Past trainings</a></p>
+            href="/internal-information/training-archive/">Past training</a></p>
         <hr class="vf-divider | vf-u-margin__bottom--400">
         <h3 class="vf-text vf-text-heading--5">Other training and development opportunities</h3>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
