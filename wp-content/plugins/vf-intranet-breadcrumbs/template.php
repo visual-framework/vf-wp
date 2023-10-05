@@ -162,7 +162,7 @@ if ( is_category() ) {
 
 }
 
-if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !is_archive('documents') && !is_archive('training') && !is_archive('events') && !is_archive('people') && !is_front_page() || is_paged() ) {
+if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !is_archive('documents') && !is_archive('training') && !is_archive('events') && !is_archive('people') && !is_page('past-training') && !is_front_page() || is_paged() ) {
 
   echo '
   <li class="vf-breadcrumbs__item">
