@@ -144,4 +144,53 @@ function get_image_src( $object, $field_name, $request ) {
 }
 
 
+
+function get_training_posts_callback() {
+  $today_date = date('Ymd');
+  $args = array(
+    'post_type' => 'training',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',	
+    
+    'meta_query' => array(
+      'relation' => 'AND',
+      'date_clause' => array(
+                 'key' => 'vf-wp-training-start_date',
+                'value' => $today_date,
+                'type' => 'DATE',
+                'compare' => '<='
+      ),
+  
+    ),
+    'orderby' => array(
+      'date_clause' => 'DESC',
+    ),
+);
+
+  $training_posts = new WP_Query($args);
+
+  if ($training_posts->have_posts()) {
+    echo '<div data-jplist-group="data-group-2">';
+    while ($training_posts->have_posts()) : $training_posts->the_post();
+      // Display the training post content as needed
+      include(locate_template('partials/vf-summary--training-past.php', false, false)); 
+
+    endwhile;
+    wp_reset_postdata();
+  } 
+  echo '          <!-- no results control -->
+  <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-2"
+    data-name="no-results">
+    <p class="vf-summary__text">
+      No results found
+    </p>
+  </article>
+  </div>';
+
+  wp_die();
+}
+
+add_action('wp_ajax_get_training_posts', 'get_training_posts_callback');
+add_action('wp_ajax_nopriv_get_training_posts', 'get_training_posts_callback');
+
 ?>

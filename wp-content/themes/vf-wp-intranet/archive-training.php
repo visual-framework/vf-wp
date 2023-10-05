@@ -63,10 +63,33 @@ $today_date = date('Ymd');
 
     <section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--800">
       <div>
-        <?php include(locate_template('partials/training-filter.php', false, false)); ?>
-      </div>
+      <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-category">
+  <div class="vf-form__item vf-form__item--radio">
+  <input type="radio" name="action" value="reset" id="reset-radio" class="vf-form__radio" checked>
+  <label for="reset-radio" class="vf-form__label">Upcoming</label>
+</div>
+      <div class="vf-form__item vf-form__item--radio">
+  <input type="radio" name="action" value="show_training" id="show-training-radio" class="vf-form__radio">
+  <label for="show-training-radio" class="vf-form__label">Past</label>
+</div>
+  </fieldset>
+  <div id="upcoming">
+    <?php include(locate_template('partials/training-filter.php', false, false)); ?>
+  </div>
+  <div id="past" style="display: none";>
+    <?php include(locate_template('partials/training-filter-past.php', false, false)); ?>
+  </div>
+</div>
       <main>
-        <div id="upcoming-events" data-jplist-group="data-group-1">
+      <div id="loading-spinner" style="display: none;">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+    <p></p>
+  </div>
+</div>
+
+        <div id="upcoming-events">
+          <div data-jplist-group="data-group-1">
           <?php
          $forthcomingLoop = new WP_Query(array(
           'post_type' => 'training',
@@ -93,7 +116,10 @@ $today_date = date('Ymd');
           <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
           <?php
          include(locate_template('partials/vf-summary--training.php', false, false)); ?>
-          <?php endwhile;?>
+          <?php endwhile;
+          // wp_reset_postdata();
+           ?>
+          
           <!-- no results control -->
           <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
             data-name="no-results">
@@ -101,8 +127,10 @@ $today_date = date('Ymd');
               No results found
             </p>
           </article>
+          </div>
         </div>
         <?php include(locate_template('partials/paging-controls-training.php', false, false)); ?>
+        <?php //include(locate_template('partials/paging-controls-training-past.php', false, false)); ?>
 
       </main>
       <div class="vf-content">
@@ -195,7 +223,7 @@ document.addEventListener('change', function(event) {
   // Check if the changed element is a checkbox with the class 'vf-form__checkbox'
   if (event.target.classList.contains('vf-form__checkbox')) {
     updateCheckboxAttributes(); // Run the function when a checkbox state changes
-    checkPaginationVisibility();
+    // checkPaginationVisibility();
   }
 });
 
@@ -203,7 +231,7 @@ document.addEventListener('change', function(event) {
 document.querySelector('#search').addEventListener('input', function() {
   // Clear any previous timers to ensure only one timer is active
   clearTimeout(inputTimer);
-  checkPaginationVisibility();
+  // checkPaginationVisibility();
   // Set a new timer to run the function after 0.5 seconds (500 milliseconds)
   inputTimer = setTimeout(updateCheckboxAttributes,100);
 });
@@ -292,41 +320,139 @@ document.querySelector('#search').addEventListener('input', function() {
 </script>
 
 <script type="text/javascript">
-function sortEvents() {
-  var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
-  var events = document.querySelectorAll("[data-jplist-item]");
-  var eventsArr = [];
+// function sortEvents() {
+//   var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
+//   var events = document.querySelectorAll("[data-jplist-item]");
+//   var eventsArr = [];
 
-  for (var i in events) {
-    if (events[i].nodeType == 1) {
-      eventsArr.push(events[i]);
+//   for (var i in events) {
+//     if (events[i].nodeType == 1) {
+//       eventsArr.push(events[i]);
+//     }
+//   }
+
+//   eventsArr.sort(function(a, b) {
+//     // Compare in ascending order by reversing the order of comparison
+//     return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
+//   });
+
+//   for (var i = 0; i < eventsArr.length; ++i) {
+//     eventsContainer.appendChild(eventsArr[i]);
+//   }
+// }
+
+// var inputs = document.querySelectorAll('input');
+
+// inputs.forEach(function(item) {
+//   item.addEventListener('keydown', function(e) {
+//     setTimeout(function(){ sortEvents() }, 300);
+//   });
+//   item.addEventListener("change", function(e) {
+//     sortEvents();
+//   });
+// });
+
+// // Sort on page load
+// sortEvents();
+
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const showTrainingRadio = document.getElementById('show-training-radio');
+    const resetRadio = document.getElementById('reset-radio');
+    const trainingPostsContainer = document.getElementById('upcoming-events');
+    const loadingSpinner = document.getElementById('loading-spinner');
+
+    let defaultContent = ''; // Store the default content
+
+    // Initialize jplist
+    function initializeJplist() {
+      jplist.init();
+      updateCheckboxAttributes();
+      // Add your jplist initialization code here
+      // For example:
+      // $('#training-posts-container').jplist({ options });
     }
-  }
 
-  eventsArr.sort(function(a, b) {
-    // Compare in ascending order by reversing the order of comparison
-    return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
+    // Function to show the spinner
+    function showSpinner() {
+      loadingSpinner.style.display = 'block';
+    }
+
+    // Function to hide the spinner
+    function hideSpinner() {
+      loadingSpinner.style.display = 'none';
+    }
+
+    // Function to fetch and display training posts
+    function showTrainingPosts() {
+      // Show the spinner while loading
+      showSpinner();
+
+      // Send an AJAX request to fetch training posts
+      const xhr = new XMLHttpRequest();
+      xhr.open('GET', '<?php echo admin_url('admin-ajax.php'); ?>?action=get_training_posts', true);
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Hide the spinner when the request is completed
+          hideSpinner();
+
+          // Display the fetched posts in the container
+          trainingPostsContainer.innerHTML = xhr.responseText;
+
+          // Refresh jplist after updating content
+          initializeJplist();
+        }
+      };
+      xhr.send();
+    }
+
+    // Click event handler for radio buttons
+    showTrainingRadio.addEventListener('change', function () {
+      if (showTrainingRadio.checked) {
+        showTrainingPosts();
+      }
+    });
+
+    resetRadio.addEventListener('change', function () {
+      if (resetRadio.checked) {
+        // Restore default content
+        trainingPostsContainer.innerHTML = defaultContent;
+
+        // Refresh jplist after resetting
+        initializeJplist();
+      }
+    });
+
+    // Save the default content when the page loads
+    defaultContent = trainingPostsContainer.innerHTML;
+
+    // Initialize jplist on page load
+    initializeJplist();
   });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get references to the radio buttons and divs
+    var radioReset = document.getElementById("reset-radio");
+    var showTraining = document.getElementById("show-training-radio");
+    var upcomingDiv = document.getElementById("upcoming");
+    var pastDiv = document.getElementById("past");
 
-  for (var i = 0; i < eventsArr.length; ++i) {
-    eventsContainer.appendChild(eventsArr[i]);
-  }
-}
+    // Add event listeners to the radio buttons
+    radioReset.addEventListener("click", function() {
+        // Show the "upcoming" div and hide the "past" div
+        upcomingDiv.style.display = "block";
+        pastDiv.style.display = "none";
+    });
 
-var inputs = document.querySelectorAll('input');
-
-inputs.forEach(function(item) {
-  item.addEventListener('keydown', function(e) {
-    setTimeout(function(){ sortEvents() }, 300);
-  });
-  item.addEventListener("change", function(e) {
-    sortEvents();
-  });
+    showTraining.addEventListener("click", function() {
+        // Show the "past" div and hide the "upcoming" div
+        pastDiv.style.display = "block";
+        upcomingDiv.style.display = "none";
+    });
 });
-
-// Sort on page load
-sortEvents();
-
 </script>
 
 <?php

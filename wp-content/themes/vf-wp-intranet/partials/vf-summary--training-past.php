@@ -2,8 +2,8 @@
 $now = new DateTime();
 $post_id = get_the_ID();
 $current_date = $now->format('Ymd');
-$organiser = get_the_terms( $post->ID , 'training-organiser' );
-$location = get_the_terms( $post->ID , 'event-location' );
+$organiser = get_the_terms( $post_id , 'training-organiser' );
+$location = get_the_terms( $post_id , 'event-location' );
 $start_date = get_field('vf-wp-training-start_date',$post_id);
 $start_time = get_field('vf-wp-training-start_time',$post_id);
 $start = DateTime::createFromFormat('Ymd', $start_date);
@@ -125,7 +125,8 @@ $keywords = get_field('keyword',$post_id);
     <?php
     if ($registrationStatus == 'Waiting list only') { echo '<span class="status-open">Open</span>'; } ?>
   </div>
-  <?php if ($forthcomingLoop->current_post +1 < $forthcomingLoop->post_count) {
+  <?php if ($training_posts->current_post +1 < $training_posts->post_count) {
     echo '<hr class="vf-divider">';
 } ?>
+
 </article>
