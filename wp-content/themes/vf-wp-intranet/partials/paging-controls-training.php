@@ -1,5 +1,5 @@
 <nav class="vf-pagination" aria-label="Pagination" data-jplist-control="pagination" data-group="data-group-1"
-     data-items-per-page="25" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
+     data-items-per-page="3" data-current-page="0" data-range="5" data-name="pagination1" id="paging-data">
 
   <ul class="vf-pagination__list" id="pagination_list">
     <li class="vf-pagination__item vf-pagination__item--previous-page" data-type="prev">
@@ -22,7 +22,51 @@
   </ul>
   <div class="vf-u-display-none totalrecords" data-type="info" id="totalrecords">{itemsNumber}</div>
 </nav>
+
 <script>
+    // display how many results is shown
+    var displayPageRange = (currentPageNumber, totalPage, perPageNumber) => {
+      // Get all list items with data-selected="true" attribute
+      if (typeof currentPageNumber === 'undefined') {
+  // Get all list items with data-selected="true" attribute
+  const selectedItems = document.querySelectorAll('li[data-selected="true"]');
+  let currentPageNumber = null;
+  
+  selectedItems.forEach(item => {
+    const currentPage = item.getAttribute('data-current-page');
+    
+    if (currentPage !== null) {
+      currentPageNumber = currentPage;
+    }
+  });
+
+  if (currentPageNumber === null) {
+    console.log('No element with data-selected="true" attribute found.');
+    currentPageNumber = 1; // Set a default value if needed
+  }
+
+  // Rest of your code
+  var totalPage = parseInt(document.getElementById("totalrecords").textContent);
+  var perPageNumber = 3;
+
+  var numberOfPages = Math.ceil(totalPage / perPageNumber),
+      start = ((currentPageNumber - 1) * perPageNumber + 1)  + ' - ',
+      end = Math.min(currentPageNumber * perPageNumber, totalPage);
+  
+  if (totalPage <= perPageNumber) {
+    start = "";
+  }  
+
+  document.querySelector('#start-counter').textContent = start;
+  document.querySelector('#total-result').textContent = totalPage;
+  document.querySelector('#end-counter').textContent = end;
+}
+
+
+  };
+  displayPageRange();
+
+
 function disablePaginationUpdate() {
   var li_disabled = document.querySelector('[class*="jplist-disabled"]');
   var pagination_disable_label = 'Previous';
@@ -78,7 +122,7 @@ function activePaginationUpdate() {
 // Function to check if there is only one page and hide pagination if needed
 function checkPaginationVisibility() {
   var totalRecords = parseInt(document.getElementById("totalrecords").textContent);
-  if (totalRecords <= 25) {
+  if (totalRecords <= 3) {
     document.getElementById("paging-data").style.display = "none";
   } else {
     document.getElementById("paging-data").style.display = "block";
@@ -90,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
   disablePaginationUpdate();
   activePaginationUpdate();
   checkPaginationVisibility();
+  displayPageRange();
 });
 
 // Call paging functions and checkPaginationVisibility on click of paging element as well to update logic correctly
@@ -97,5 +142,6 @@ document.getElementById("paging-data").addEventListener("click", function(){
   disablePaginationUpdate();
   activePaginationUpdate();
   checkPaginationVisibility();
+  displayPageRange();
 });
 </script>

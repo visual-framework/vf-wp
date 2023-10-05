@@ -80,3 +80,8 @@ Text Domain:	 vfwp
 .customFormat {
     font-size: 14px !important;
 }
+
+.counter-highlight {
+    font-weight: 700; 
+    color: #111;
+  }

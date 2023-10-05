@@ -41,7 +41,7 @@ $today_date = date('Ymd');
   <section class="vf-tabs__section" id="vf-tabs__section--live-training">
     <div class="embl-grid embl-grid--has-centered-content vf-u-padding__bottom--800 | vf-content">
       <div></div>
-      <div>
+      <div class="vf-content">
 
         <form action="#eventsFilter" onsubmit="return false;"
           class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end">
@@ -50,7 +50,7 @@ $today_date = date('Ymd');
               <label class="vf-form__label vf-u-sr-only | vf-search__label" for="search">Search</label>
               <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
                 data-group="data-group-1" data-name="my-filter-1" data-path=".search-data" type="text" value=""
-                placeholder="Search by title, description or keyword" data-clear-btn-id="name-clear-btn">
+                placeholder="Search within live training" data-clear-btn-id="name-clear-btn">
             </div>
             <button style="display: none;" type="button" id="name-clear-btn"
               class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
@@ -58,6 +58,7 @@ $today_date = date('Ymd');
             </button>
           </div>
         </form>
+        <p class="vf-text-body vf-text-body--2 | vf-u-text-color--grey--darkest | vf-u-margin__bottom--0 vf-u-margin__top--600" id="total-results-info">Showing <span id="start-counter" class="counter-highlight"></span><span id="end-counter" class="counter-highlight"></span> results out of <span id="total-result" class="counter-highlight"></span></p>
       </div>
     </div>
 
@@ -164,49 +165,7 @@ $today_date = date('Ymd');
 </script>
 
 <script>
-let inputTimer; // Define a timer variable
 
-function updateCheckboxAttributes() {
-  // Get all the span elements with data-jplist-control="counter"
-  const counterSpans = document.querySelectorAll('[data-jplist-control="counter"]');
-
-  counterSpans.forEach((element) => {
-    // Check if the inner text of the current span element is equal to '(0)'
-    const isChecked = element.innerText.trim() === '(0)';
-
-    // Find the checkbox with the class 'vf-form__checkbox' that corresponds to this span
-    const checkbox = element.closest('.vf-form__item').querySelector('.vf-form__checkbox');
-
-    if (checkbox) {
-      if (isChecked) {
-        checkbox.setAttribute('disabled', 'disabled');
-      } else {
-        checkbox.removeAttribute('disabled');
-      }
-    }
-  });
-}
-
-// Add an event listener to run the function when the DOM content is loaded
-document.addEventListener('DOMContentLoaded', updateCheckboxAttributes);
-
-// Add an event listener for the checkbox change event
-document.addEventListener('change', function(event) {
-  // Check if the changed element is a checkbox with the class 'vf-form__checkbox'
-  if (event.target.classList.contains('vf-form__checkbox')) {
-    updateCheckboxAttributes(); // Run the function when a checkbox state changes
-    checkPaginationVisibility();
-  }
-});
-
-// Add an event listener for input changes in the search input form with a delay
-document.querySelector('#search').addEventListener('input', function() {
-  // Clear any previous timers to ensure only one timer is active
-  clearTimeout(inputTimer);
-  checkPaginationVisibility();
-  // Set a new timer to run the function after 0.5 seconds (500 milliseconds)
-  inputTimer = setTimeout(updateCheckboxAttributes,100);
-});
 
 
 // Initialize an empty array to store all scraped data
@@ -316,10 +275,12 @@ function sortEvents() {
 var inputs = document.querySelectorAll('input');
 
 inputs.forEach(function(item) {
-  item.addEventListener('keydown', function(e) {
+  item.addEventListener('keyup', function(e) {
+    displayPageRange();
     setTimeout(function(){ sortEvents() }, 300);
   });
   item.addEventListener("change", function(e) {
+    displayPageRange();
     sortEvents();
   });
 });
