@@ -154,200 +154,155 @@ $today_date = date('Ymd');
   jplist.init({});
 </script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const articles = document.querySelectorAll(".vf-summary--event");
-    const itemsPerPage = 3;
-    let currentPage = 1;
-
-    function showPage(page) {
-      articles.forEach((article, index) => {
-        if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
-          article.style.display = "block";
-        } else {
-          article.style.display = "none";
-        }
-      });
-    }
-
-    function updatePaginationLinks() {
-      const pageNumbers = document.querySelector(".vf-pagination__list");
-
-      // Calculate the total number of pages
-      const totalPages = Math.ceil(articles.length / itemsPerPage);
-      // Clear existing pagination links
-      pageNumbers.innerHTML = "";
-
-      // Add "Previous" link
-      const prevPageItem = document.createElement("li");
-      const prevPageLink = document.createElement("a");
-      prevPageLink.textContent = "Previous";
-      prevPageLink.href = "#"; // Set the href attribute as needed
-      prevPageItem.classList.add("vf-pagination__item");
-      prevPageItem.classList.add("vf-pagination__item--previous-page");
-      prevPageLink.classList.add("vf-pagination__link");
-
-      prevPageLink.addEventListener("click", (event) => {
-        event.preventDefault();
-        if (currentPage > 1) {
-          currentPage--;
-          showPage(currentPage);
-          updatePaginationLinks();
-        }
-      });
-      prevPageItem.appendChild(prevPageLink);
-      pageNumbers.appendChild(prevPageItem);
-      
-      // Create and display page numbers as list items
-      for (let i = 1; i <= totalPages; i++) {
-        const pageNumberItem = document.createElement("li");
-        const pageNumberLink = document.createElement("a");
-        pageNumberLink.textContent = i;
-        pageNumberLink.href = "#"; // Set the href attribute as needed
-        pageNumberItem.classList.add("vf-pagination__item");
-        pageNumberLink.classList.add("vf-pagination__link");
-        pageNumberLink.addEventListener("click", (event) => {
-          event.preventDefault();
-          currentPage = i;
-          showPage(currentPage);
-          updatePaginationLinks();
-        });
-        pageNumberItem.appendChild(pageNumberLink);
-        pageNumbers.appendChild(pageNumberItem);
-      }
-
-
-      // Add "Next" link
-      const nextPageItem = document.createElement("li");
-      const nextPageLink = document.createElement("a");
-      nextPageLink.textContent = "Next";
-      nextPageLink.href = "#"; // Set the href attribute as needed
-      nextPageItem.classList.add("vf-pagination__item");
-      nextPageItem.classList.add("vf-pagination__item--next-page");
-      nextPageLink.classList.add("vf-pagination__link");
-      nextPageLink.addEventListener("click", (event) => {
-        event.preventDefault();
-        const totalPages = Math.ceil(articles.length / itemsPerPage);
-        if (currentPage < totalPages) {
-          currentPage++;
-          showPage(currentPage);
-          updatePaginationLinks();
-        }
-      });
-      nextPageItem.appendChild(nextPageLink);
-      pageNumbers.appendChild(nextPageItem);
-    }
-
-    // Initial page load
+document.addEventListener("DOMContentLoaded", function () {
     showPage(currentPage);
     updatePaginationLinks();
-
-
+  });
+  // Add event listeners to checkboxes with class 'lolo'
+  const checkboxes = document.querySelectorAll(".vf-form__checkbox");
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", () => {
+      // Call showPage function when a 'lolo' checkbox is clicked
+      // showPage(currentPage);
+    });
   });
 
+  const itemsPerPage = 3;
+  let currentPage = 1;
+  
+  function showPage(page) {
+  let articles = document.querySelectorAll(".vf-summary--event");
+  articles.forEach((article, index) => {
+    if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+      article.classList.remove('vf-u-display-none'); // Remove the class to display the article
+    } else {
+      article.classList.add('vf-u-display-none'); // Add the class to hide the article
+    }
+  });
+
+  // Count all articles on the page
+  let totalArticleCount = articles.length;
+
+  // Count the visible articles without the 'vf-u-display-none' class
+  const visibleArticles = document.querySelectorAll(".vf-summary--event:not(.vf-u-display-none)");
+
+  console.log(`Total Articles: ${totalArticleCount}`);
+
+
+  // Add the condition to hide the element with id "paging-data" if totalArticleCount is lower than itemsPerPage
+  const pagingDataElement = document.getElementById("paging-data");
+  if (totalArticleCount < itemsPerPage) {
+    pagingDataElement.style.display = "none";
+  } else {
+    pagingDataElement.style.display = "block";
+  }
+}
+
+// Call showPage to display the initial page
+function updatePaginationLinks() {
+  let articleTotal = document.querySelectorAll(".vf-summary--event");
+
+  const pageNumbers = document.querySelector(".vf-pagination__list");
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(articleTotal.length / itemsPerPage);
+  // Clear existing pagination links
+  pageNumbers.innerHTML = "";
+
+  // Add "Previous" link
+  const prevPageItem = document.createElement("li");
+  prevPageItem.classList.add("vf-pagination__item");
+  prevPageItem.classList.add("vf-pagination__item--previous-page");
+  const prevPageLink = document.createElement("a");
+  if (currentPage > 1) {
+    prevPageLink.textContent = "Previous";
+    prevPageLink.href = "#"; // Set the href attribute as needed
+    prevPageLink.classList.add("vf-pagination__link");
+    prevPageLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+        updatePaginationLinks();
+      }
+    });
+  } else {
+    prevPageLink.textContent = "Previous";
+    prevPageItem.classList.add("disabled");
+  }
+  prevPageItem.appendChild(prevPageLink);
+  pageNumbers.appendChild(prevPageItem);
+
+  // Create and display page numbers as list items
+  for (let i = 1; i <= totalPages; i++) {
+    const pageNumberItem = document.createElement("li");
+    const pageNumberLink = document.createElement("a");
+    if (i === currentPage) {
+      const pageNumberSpan = document.createElement("span");
+      pageNumberSpan.classList.add("vf-pagination__label");
+      pageNumberItem.classList.add("vf-pagination__item--is-active");
+      pageNumberSpan.setAttribute("aria-current", "page");
+      pageNumberSpan.textContent = i;
+      pageNumberItem.appendChild(pageNumberSpan);
+    } else {
+      pageNumberLink.textContent = i;
+      pageNumberLink.href = "#"; // Set the href attribute as needed
+      pageNumberLink.classList.add("vf-pagination__link");
+      pageNumberLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        currentPage = i;
+        showPage(currentPage);
+        updatePaginationLinks();
+      });
+      pageNumberItem.appendChild(pageNumberLink);
+    }
+    pageNumberItem.classList.add("vf-pagination__item");
+    pageNumbers.appendChild(pageNumberItem);
+  }
+
+  // Add "Next" link
+  const nextPageItem = document.createElement("li");
+  nextPageItem.classList.add("vf-pagination__item");
+  nextPageItem.classList.add("vf-pagination__item--next-page");
+  const nextPageLink = document.createElement("a");
+  if (currentPage < totalPages) {
+    nextPageLink.textContent = "Next";
+    nextPageLink.href = "#"; // Set the href attribute as needed
+    nextPageLink.classList.add("vf-pagination__link");
+    nextPageLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      const totalPages = Math.ceil(articleTotal.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+        updatePaginationLinks();
+      }
+    });
+  } else {
+    nextPageLink.textContent = "Next";
+    nextPageItem.classList.add("disabled");
+  }
+  nextPageItem.appendChild(nextPageLink);
+  pageNumbers.appendChild(nextPageItem);
+
+  var rangeTotalPages = articleTotal.length;
+
+
+  var numberOfPages = Math.ceil(rangeTotalPages / itemsPerPage),
+      start = ((currentPage - 1) * itemsPerPage + 1)  + ' - ',
+      end = Math.min(currentPage * itemsPerPage, rangeTotalPages);
+  
+  if (rangeTotalPages <= itemsPerPage) {
+    start = "";
+  }  
+
+  document.querySelector('#start-counter').textContent = start;
+  document.querySelector('#total-result').textContent = rangeTotalPages;
+  document.querySelector('#end-counter').textContent = end;
+}
+
 </script>
 
-
-
-
-
-<script>
-  // no results handlers
-  // $('#checkbox-filter-organiser, #checkbox-filter-location').change(function () {
-  //   if ($('#no-upcoming').length) {
-  //     $("#no-upcoming").remove();
-  //   }
-  //   if ($('#upcoming-events').children().length <= 0) {
-  //     $('#upcoming-events').append(
-  //       '<p id="no-upcoming" class="vf-text-body vf-text-body--2">No results found.</p>');
-  //   }
-  // });
-</script>
-
-<script>
-
-
-
-// Initialize an empty array to store all scraped data
-// const allArticleData = [];
-
-// function extractArticleInfo(article) {
-//     const titleElement = article.querySelector('.vf-summary__title a');
-//     const dateElement = article.querySelector('.vf-summary__date');
-    
-//     // Check if the titleElement exists
-//     if (titleElement) {
-//         const link = titleElement.href;
-//         const title = titleElement.textContent.trim();
-        
-//         // Check if the dateElement exists
-//         if (dateElement) {
-//             const date = dateElement.textContent.trim();
-//             return { title, date, link };
-//         }
-//     }
-
-//     // Return null if any required element is missing
-//     return null;
-// }
-
-// Function to scrape articles from the current page and add them to the global array
-// function scrapeArticles() {
-//     const articles = document.querySelectorAll('.vf-summary--event');
-
-//     articles.forEach((article) => {
-//         const articleInfo = extractArticleInfo(article);
-//         if (articleInfo) {
-//             allArticleData.push(articleInfo); // Add the data to the global array
-//         }
-//     });
-// }
-
-// // Function to sort the global array by date
-// function sortArticleDataByDate() {
-//     allArticleData.sort((a, b) => {
-//         const dateA = new Date(a.date);
-//         const dateB = new Date(b.date);
-//         return dateA - dateB;
-//     });
-// }
-
-// // Function to handle checkbox click events and sort data
-// function handleCheckboxClick() {
-//     const checkboxes = document.querySelectorAll('.vf-form__checkbox');
-
-//     checkboxes.forEach((checkbox) => {
-//         checkbox.addEventListener('click', () => {
-//             sortArticleDataByDate();
-//             console.log('Data sorted by date:', allArticleData);
-//         });
-//     });
-// }
-
-// // Function to navigate to the next page if it exists
-// function goToNextPage() {
-//     const nextPageButton = document.querySelector('.vf-pagination__item--next-page a');
-//     if (nextPageButton) {
-//         nextPageButton.click();
-//         setTimeout(scrapeAndNavigate, 1000); // Adjust the delay as needed
-//     } else {
-//         console.log('No more pages to scrape.');
-//         console.log('Initial data:', allArticleData);
-//         handleCheckboxClick(); // Attach event listeners to checkboxes
-//     }
-// }
-
-// // Function to scrape articles and navigate to the next page if available
-// function scrapeAndNavigate() {
-//     scrapeArticles();
-//     console.log('Scraping current page...');
-//     goToNextPage();
-// }
-
-// // Start scraping from the first page
-// scrapeAndNavigate();
-
-
-</script>
 
 <script type="text/javascript">
 function sortEvents() {
@@ -376,16 +331,22 @@ var inputs = document.querySelectorAll('input');
 inputs.forEach(function(item) {
   item.addEventListener('keyup', function(e) {
     updatePaginationLinks();
-    setTimeout(function(){ sortEvents() }, 300);
+    sortEvents();
+    showPage(currentPage);
   });
   item.addEventListener("change", function(e) {
     updatePaginationLinks();
-        sortEvents();
+    sortEvents();
+    showPage(currentPage);
   });
 });
 
 // Sort on page load
 sortEvents();
+
+</script>
+
+<script>
 
 </script>
 
