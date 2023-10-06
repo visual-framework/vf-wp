@@ -162,9 +162,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const checkboxes = document.querySelectorAll(".vf-form__checkbox");
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener("click", () => {
-      // Call showPage function when a 'lolo' checkbox is clicked
-      // showPage(currentPage);
-    });
+    // Reset the current page to 1 when a 'lolo' checkbox is clicked
+    currentPage = 1;
+    updatePaginationLinks();    });
   });
 
   const itemsPerPage = 3;
