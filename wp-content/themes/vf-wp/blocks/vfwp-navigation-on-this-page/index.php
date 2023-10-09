@@ -13,14 +13,6 @@ class VFWP_On_This_Page_Navigation extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-navigation-on-this-page';
-  }
-
   /**
    * Return Gutenberg block registration configuration
    * https://www.advancedcustomfields.com/resources/acf_register_block_type/
@@ -28,7 +20,7 @@ class VFWP_On_This_Page_Navigation extends VFWP_Block {
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-navigation-on-this-page',
       'title'    => 'On this page navigation',
       'category' => 'vf/wp',
       'supports' => array(

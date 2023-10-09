@@ -8,14 +8,6 @@ class VFWP_Search extends VFWP_Block {
 
   public function __construct() {
     parent::__construct(__FILE__);
-
-  }
-
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-search';
   }
 
   /**
@@ -25,7 +17,7 @@ class VFWP_Search extends VFWP_Block {
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-search',
       'title'    => 'Search',
       'category' => 'vf/wp',
       'supports' => array(
@@ -40,5 +32,5 @@ class VFWP_Search extends VFWP_Block {
 $vfwp_search = new VFWP_Search();
 
 // VFWP_Search
-endif; 
+endif;
  ?>

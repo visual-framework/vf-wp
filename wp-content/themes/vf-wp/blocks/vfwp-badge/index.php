@@ -7,7 +7,6 @@ if ( ! class_exists('VFWP_Badge') ) :
 class VFWP_Badge extends VFWP_Block {
 
   public function __construct() {
-
     parent::__construct(__FILE__);
   }
 

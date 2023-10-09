@@ -11,20 +11,13 @@ class VFWP_Summary extends VFWP_Block {
   }
 
   /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-summary';
-  }
-
-  /**
    * Return Gutenberg block registration configuration
    * https://www.advancedcustomfields.com/resources/acf_register_block_type/
    * https://developer.wordpress.org/block-editor/developers/block-api/block-registration/
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-summary',
       'title'    => 'Summary',
       'category' => 'vf/wp',
       'supports' => array(

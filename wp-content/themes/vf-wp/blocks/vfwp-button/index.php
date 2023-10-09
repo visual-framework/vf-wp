@@ -10,13 +10,6 @@ class VFWP_Button extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-button';
-  }
-
 } // VFWP_Button
 
 // Initialize one instance

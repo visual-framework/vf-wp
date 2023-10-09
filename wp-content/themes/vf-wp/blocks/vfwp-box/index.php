@@ -4,18 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Box') ) :
 
-  require_once('widget.php');
+require_once('widget.php');
+
 class VFWP_Box extends VFWP_Block {
 
   public function __construct() {
     parent::__construct(__FILE__);
-  }
-
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-box';
   }
 
   /**
@@ -25,7 +19,7 @@ class VFWP_Box extends VFWP_Block {
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-box',
       'title'    => 'Box',
       'category' => 'vf/wp',
       'supports' => array(

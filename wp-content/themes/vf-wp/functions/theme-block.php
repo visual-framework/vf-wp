@@ -9,7 +9,7 @@ class VFWP_Block {
   private $file = null;
   private $config = null;
   private $is_containerable = false;
-  private $admin_notices = array();
+  private $debug = array();
 
   public function __construct($file) {
     $this->file = $file;
@@ -19,32 +19,25 @@ class VFWP_Block {
     add_action('acf/init',
       array($this, 'acf_init')
     );
-    add_action('admin_notices',
-      array($this, 'admin_notices')
-    );
     add_filter(
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
-    add_filter(
-      "vf/theme/content/is_block_wrapped/name=acf/{$this->get_name()}",
-      array($this, 'is_block_wrapped'),
-      10, 4
-    );
     add_filter('block_type_metadata',
       array($this, 'block_type_metadata')
     );
+    if (vf_debug()) {
+      add_action('admin_notices',
+        array($this, 'admin_notices')
+      );
+    }
   }
 
-  public function admin_notices() {
-    foreach ($this->admin_notices as $notice) {
-      $type = isset($notice['type']) ? $notice['type'] : 'notice';
-?>
-  <div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
-    <p><?php echo wp_kses_post($notice['message']); ?></p>
-  </div>
-<?php
-    }
+  /**
+   * Return block name
+   */
+  public function name() {
+    return isset($this->config['name']) ? $this->config['name'] : null;
   }
 
   /**
@@ -65,24 +58,17 @@ class VFWP_Block {
   public function get_template() {
     // Allow themes to provide a custom template
     $template = locate_template(
-      "blocks/{$this->get_name()}.php",
+      "blocks/{$this->name()}.php",
       false, false
     );
     if ( ! file_exists($template)) {
       $template = locate_template(
-        "blocks/{$this->get_name()}/template.php",
+        "blocks/{$this->name()}/template.php",
         false, false
       );
     }
     return $template;
   }
-
-  // public function get_name() {
-  //   if (isset($this->config['name'])) {
-  //     return $this->config['name'];
-  //   }
-  //   return undefined;
-  // }
 
   /**
    * Action: `acf/init`
@@ -93,7 +79,7 @@ class VFWP_Block {
     if (file_exists($json)) {
       $this->config = json_decode(file_get_contents($json), true);
       if ( ! is_array($this->config)) {
-        $this->admin_notices[] = array(
+        $this->debug[] = array(
           'type' => 'error',
           'message' => sprintf(
             __('Invalid Block JSON: <code>%s</code>', 'vfwp'),
@@ -107,29 +93,18 @@ class VFWP_Block {
       $this->config = $this->get_config();
       $json = false;
     }
-    // Basic validation
-    // if ( ! $this->get_name()) {
-    //   $this->admin_notices[] = array(
-    //     'type' => 'error',
-    //     'message' => sprintf(
-    //       __('Block missing name: <code>%s</code>', 'vfwp'),
-    //       $this->file
-    //     )
-    //   );
-    //   return;
-    // }
 
     // Basic validation
-    // if ($this->config['name'] !== $this->get_name() ) {
-    //   $this->admin_notices[] = array(
-    //     'type' => 'error',
-    //     'message' => sprintf(
-    //       __('Invalid block name: %s', 'vfwp'),
-    //       $this->get_name()
-    //     )
-    //   );
-    //   return;
-    // }
+    if ( ! $this->name()) {
+      $this->debug[] = array(
+        'type' => 'error',
+        'message' => sprintf(
+          __('Block missing name: <code>%s</code>', 'vfwp'),
+          $this->file
+        )
+      );
+      return;
+    }
 
     $this->config = VFWP_Block::merge_config(
       VFWP_Block::default_config(),
@@ -216,23 +191,27 @@ class VFWP_Block {
             array(
               'param'    => 'block',
               'operator' => '==',
-              'value'    => "acf/{$this->get_name()}",
+              'value'    => "acf/{$this->name()}",
             ),
           ),
         ),
         'menu_order' => 100,
       ));
     }
+
+    // Add hooks
+    add_filter(
+      "vf/theme/content/is_block_wrapped/name=acf/{$this->name()}",
+      array($this, 'is_block_wrapped'),
+      10, 4
+    );
   }
 
   /**
    * Filter block registration to ensure default config
    */
   public function block_type_metadata($metadata) {
-    if ( ! isset($this->config['name'])) {
-      return $metadata;
-    }
-    if ($metadata['name'] === "acf/{$this->config['name']}") {
+    if ($this->name() && $metadata['name'] === "acf/{$this->name()}") {
       $metadata = VFWP_Block::merge_config($this->config, $metadata);
     }
     return $metadata;
@@ -261,6 +240,21 @@ class VFWP_Block {
       $paths[] = plugin_dir_path($this->file);
     }
     return $paths;
+  }
+
+  /**
+   * Handle developer admin notices
+   */
+  public function admin_notices() {
+    foreach ($this->debug as $notice) {
+      vf_log($notice['message']);
+      $type = isset($notice['type']) ? $notice['type'] : 'notice';
+?>
+  <div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
+    <p><?php echo wp_kses_post($notice['message']); ?></p>
+  </div>
+<?php
+    }
   }
 
   // Return defaults for block.json

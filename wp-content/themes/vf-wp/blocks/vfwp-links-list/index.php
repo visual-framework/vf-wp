@@ -3,7 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Lists') ) :
-  
+
   require_once('widget.php');
 
 class VFWP_Lists extends VFWP_Block {
@@ -13,20 +13,13 @@ class VFWP_Lists extends VFWP_Block {
   }
 
   /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-links-list';
-  }
-
-  /**
    * Return Gutenberg block registration configuration
    * https://www.advancedcustomfields.com/resources/acf_register_block_type/
    * https://developer.wordpress.org/block-editor/developers/block-api/block-registration/
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-links-list',
       'title'    => 'Links List',
       'category' => 'vf/wp',
       'supports' => array(

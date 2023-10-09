@@ -7,15 +7,7 @@ if ( ! class_exists('VFWP_Profile') ) :
 class VFWP_Profile extends VFWP_Block {
 
   public function __construct() {
-
     parent::__construct(__FILE__);
-  }
-
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-profile';
   }
 
   /**
@@ -25,7 +17,7 @@ class VFWP_Profile extends VFWP_Block {
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-profile',
       'title'    => 'Profile',
       'category' => 'vf/wp',
       'supports' => array(

@@ -5,18 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists('VFWP_Post_Fetch') ) :
 
   require_once('widget.php');
-  
+
 class VFWP_Post_Fetch extends VFWP_Block {
 
   public function __construct() {
     parent::__construct(__FILE__);
-  }
-
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-post-fetch';
   }
 
   /**
@@ -26,7 +19,7 @@ class VFWP_Post_Fetch extends VFWP_Block {
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-post-fetch',
       'title'    => 'Fetch posts',
       'category' => 'vf/wp',
       'supports' => array(

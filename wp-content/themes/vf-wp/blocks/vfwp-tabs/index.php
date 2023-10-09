@@ -7,16 +7,7 @@ if ( ! class_exists('VFWP_Tabs') ) :
 class VFWP_Tabs extends VFWP_Block {
 
   public function __construct() {
-    // Allow block to use full-width container layout
-
     parent::__construct(__FILE__);
-  }
-
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-tabs';
   }
 
   /**
@@ -26,7 +17,7 @@ class VFWP_Tabs extends VFWP_Block {
    */
   public function get_config() {
     return array(
-      'name'     => $this->get_name(),
+      'name'     => 'vfwp-tabs',
       'title'    => 'Tabs',
       'category' => 'vf/wp',
       'supports' => array(
