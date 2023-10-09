@@ -9,6 +9,7 @@ class VFWP_Block {
   private $file = null;
   private $config = null;
   private $is_containerable = false;
+  private $admin_notices = array();
 
   public function __construct($file) {
     $this->file = $file;
@@ -17,6 +18,9 @@ class VFWP_Block {
     // Add hooks
     add_action('acf/init',
       array($this, 'acf_init')
+    );
+    add_action('admin_notices',
+      array($this, 'admin_notices')
     );
     add_filter(
       'acf/settings/load_json',
@@ -32,11 +36,23 @@ class VFWP_Block {
     );
   }
 
+  public function admin_notices() {
+    foreach ($this->admin_notices as $notice) {
+      $type = isset($notice['type']) ? $notice['type'] : 'notice';
+?>
+  <div class="notice notice-<?php echo esc_attr($type); ?> is-dismissible">
+    <p><?php echo wp_kses_post($notice['message']); ?></p>
+  </div>
+<?php
+    }
+  }
+
   /**
    * Return true if this block has container layout
    */
   public function is_containerable() {
-    return (bool) $this->config['vfwp']['containerable'];
+    return isset($this->config['vfwp']['containerable'])
+      && (bool) $this->config['vfwp']['containerable'];
   }
 
   public function setup_containerable() {
@@ -61,6 +77,13 @@ class VFWP_Block {
     return $template;
   }
 
+  // public function get_name() {
+  //   if (isset($this->config['name'])) {
+  //     return $this->config['name'];
+  //   }
+  //   return undefined;
+  // }
+
   /**
    * Action: `acf/init`
    */
@@ -69,16 +92,44 @@ class VFWP_Block {
     $json = plugin_dir_path($this->file) . 'block.json';
     if (file_exists($json)) {
       $this->config = json_decode(file_get_contents($json), true);
+      if ( ! is_array($this->config)) {
+        $this->admin_notices[] = array(
+          'type' => 'error',
+          'message' => sprintf(
+            __('Invalid Block JSON: <code>%s</code>', 'vfwp'),
+            $json
+          )
+        );
+        return;
+      }
     } else {
       // Otherwise fallback to PHP config
       $this->config = $this->get_config();
       $json = false;
     }
+    // Basic validation
+    // if ( ! $this->get_name()) {
+    //   $this->admin_notices[] = array(
+    //     'type' => 'error',
+    //     'message' => sprintf(
+    //       __('Block missing name: <code>%s</code>', 'vfwp'),
+    //       $this->file
+    //     )
+    //   );
+    //   return;
+    // }
 
     // Basic validation
-    if ( ! isset($this->config['name']) || $this->config['name'] !== $this->get_name() ) {
-      return;
-    }
+    // if ($this->config['name'] !== $this->get_name() ) {
+    //   $this->admin_notices[] = array(
+    //     'type' => 'error',
+    //     'message' => sprintf(
+    //       __('Invalid block name: %s', 'vfwp'),
+    //       $this->get_name()
+    //     )
+    //   );
+    //   return;
+    // }
 
     $this->config = VFWP_Block::merge_config(
       VFWP_Block::default_config(),
