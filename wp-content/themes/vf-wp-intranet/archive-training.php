@@ -104,9 +104,8 @@ $today_date = date('Ymd');
           </article>
         </div>
         <nav id="paging-data" class="vf-pagination" aria-label="Pagination">
-  <ul class="vf-pagination__list"></ul>
-  </nav>
-   <?php // include(locate_template('partials/paging-controls-training.php', false, false)); ?>
+          <ul class="vf-pagination__list"></ul>
+        </nav>
 
       </main>
       <div class="vf-content">
@@ -153,6 +152,7 @@ $today_date = date('Ymd');
 <script type="text/javascript">
   jplist.init({});
 </script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     showPage(currentPage);
@@ -167,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
     updatePaginationLinks();    });
   });
 
-  const itemsPerPage = 3;
+  const itemsPerPage = 20;
   let currentPage = 1;
   
   function showPage(page) {
@@ -186,8 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Count the visible articles without the 'vf-u-display-none' class
   const visibleArticles = document.querySelectorAll(".vf-summary--event:not(.vf-u-display-none)");
 
-  console.log(`Total Articles: ${totalArticleCount}`);
-
+  // console.log(`Total Articles: ${totalArticleCount}`);
 
   // Add the condition to hide the element with id "paging-data" if totalArticleCount is lower than itemsPerPage
   const pagingDataElement = document.getElementById("paging-data");
@@ -198,7 +197,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 }
 
-// Call showPage to display the initial page
 function updatePaginationLinks() {
   let articleTotal = document.querySelectorAll(".vf-summary--event");
 
@@ -285,9 +283,8 @@ function updatePaginationLinks() {
   nextPageItem.appendChild(nextPageLink);
   pageNumbers.appendChild(nextPageItem);
 
+// Page range display
   var rangeTotalPages = articleTotal.length;
-
-
   var numberOfPages = Math.ceil(rangeTotalPages / itemsPerPage),
       start = ((currentPage - 1) * itemsPerPage + 1)  + ' - ',
       end = Math.min(currentPage * itemsPerPage, rangeTotalPages);
@@ -301,10 +298,7 @@ function updatePaginationLinks() {
   document.querySelector('#end-counter').textContent = end;
 }
 
-</script>
-
-
-<script type="text/javascript">
+// sort events
 function sortEvents() {
   var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
   var events = document.querySelectorAll("[data-jplist-item]");
@@ -343,10 +337,6 @@ inputs.forEach(function(item) {
 
 // Sort on page load
 sortEvents();
-
-</script>
-
-<script>
 
 </script>
 
