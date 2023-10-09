@@ -20,6 +20,7 @@ get_header();
       <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
         data-group="data-group-1" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
         placeholder="Filter by seminar title" data-clear-btn-id="name-clear-btn">
+        <p class="vf-text-body vf-text-body--2 | vf-u-text-color--grey--darkest | vf-u-margin__bottom--0 vf-u-margin__top--600" id="total-results-info">Showing <span id="start-counter" class="counter-highlight"></span><span id="end-counter" class="counter-highlight"></span> results out of <span id="total-result" class="counter-highlight"></span></p>
     </div>
   </div>
 </div>
@@ -77,7 +78,7 @@ get_header();
               // if (strpos($info, 'Host') == false) {
               //   $address = '';
               // }
-              echo '<article class="vf-summary vf-summary--event" data-jplist-item>';
+              echo '<article class="vf-summary vf-summary--event vf-u-margin__bottom--0 vf-u-padding__bottom--800 | customDivider" data-jplist-item>';
 
                 //Date
                 echo '<p class="vf-summary__date" data-eventtime="'. $customDateSorting . '">' . $newDate . ' CET&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -125,15 +126,16 @@ get_header();
             }
         }
         ?>
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="data-group-1"
+      <article class="vf-summary" data-jplist-control="no-results" data-group="data-group-1"
         data-name="no-results">
         <p class="vf-summary__text">
           No matching seminars found
         </p>
       </article>
       </div>
-
-      <?php include(locate_template('partials/paging-controls-seminars.php', false, false)); ?>
+      <nav id="paging-data" class="vf-pagination" aria-label="Pagination">
+          <ul class="vf-pagination__list"></ul>
+        </nav>
     </div>
 
 
@@ -225,6 +227,10 @@ get_header();
   .vf-form__checkbox+.vf-form__label::before {
     position: unset;
   }
+
+  .customDivider {
+    border-bottom: 1px solid #d0d0ce !important;
+  }
   
   </style>
   <script type="text/javascript">
@@ -233,55 +239,193 @@ get_header();
     });
   </script>
 
- <script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-
-    // this is a sort of callback on jplist to enforce showing newest events first.
-    // Unfortunately, the jplist sorting does not combine reliably will multiple facets. 
-    // This is an interim solution until we replace jplist.
-    function sortEvents() {
-      var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
-      var events = document.querySelectorAll("[data-jplist-item]");
-      var eventsArr = [];
-
-      // eventsContainer.innerHTML = "Rendering";
-
-      for (var i in events) {
-        if (events[i].nodeType == 1) { // get rid of the whitespace text nodes
-          eventsArr.push(events[i]);
-        }
-      }
-
-      eventsArr.sort(function(a, b) {
-        // console.log(a.querySelectorAll("[data-eventtime]")[0]);
-        return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
-      });
-
-      // console.log('eventsArr',eventsArr)
-
-      for (i = 0; i < eventsArr.length; ++i) {
-        eventsContainer.appendChild(eventsArr[i]);
-      }
-    }
-
-    var inputs = document.querySelectorAll('input');
-    // brute force to refresh jplist to ensure date filtering is intact
-    inputs.forEach(function(item) {
-      item.addEventListener('keydown', function(e) {
-        setTimeout(function(){ sortEvents() }, 300);
-      });
-      item.addEventListener("change", function(e) {
-        // jplist.refresh();
-        sortEvents();
-        // setTimeout(function(){ sortEvents() }, 300);
-      });
-    });
-
-    // sort on page load
-    sortEvents();
-    // setTimeout(function(){ sortEvents() }, 300);
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    showPage(currentPage);
+    updatePaginationLinks();
   });
+  // Add event listeners to checkboxes with class 'lolo'
+  const checkboxes = document.querySelectorAll(".vf-form__checkbox");
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener("click", () => {
+    // Reset the current page to 1 when a 'lolo' checkbox is clicked
+    currentPage = 1;
+    updatePaginationLinks();    });
+  });
+
+  const itemsPerPage = 20;
+  let currentPage = 1;
+  
+  function showPage(page) {
+  let articles = document.querySelectorAll(".vf-summary--event");
+  articles.forEach((article, index) => {
+    if (index >= (page - 1) * itemsPerPage && index < page * itemsPerPage) {
+      article.classList.remove('vf-u-display-none'); // Remove the class to display the article
+    } else {
+      article.classList.add('vf-u-display-none'); // Add the class to hide the article
+    }
+  });
+
+  // Count all articles on the page
+  let totalArticleCount = articles.length;
+
+  // Count the visible articles without the 'vf-u-display-none' class
+  const visibleArticles = document.querySelectorAll(".vf-summary--event:not(.vf-u-display-none)");
+
+  // console.log(`Total Articles: ${totalArticleCount}`);
+
+  // Add the condition to hide the element with id "paging-data" if totalArticleCount is lower than itemsPerPage
+  const pagingDataElement = document.getElementById("paging-data");
+  if (totalArticleCount < itemsPerPage) {
+    pagingDataElement.style.display = "none";
+  } else {
+    pagingDataElement.style.display = "block";
+  }
+}
+
+function updatePaginationLinks() {
+  let articleTotal = document.querySelectorAll(".vf-summary--event");
+
+  const pageNumbers = document.querySelector(".vf-pagination__list");
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(articleTotal.length / itemsPerPage);
+  // Clear existing pagination links
+  pageNumbers.innerHTML = "";
+
+  // Add "Previous" link
+  const prevPageItem = document.createElement("li");
+  prevPageItem.classList.add("vf-pagination__item");
+  prevPageItem.classList.add("vf-pagination__item--previous-page");
+  const prevPageLink = document.createElement("a");
+  if (currentPage > 1) {
+    prevPageLink.textContent = "Previous";
+    prevPageLink.href = "#"; // Set the href attribute as needed
+    prevPageLink.classList.add("vf-pagination__link");
+    prevPageLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (currentPage > 1) {
+        currentPage--;
+        showPage(currentPage);
+        updatePaginationLinks();
+      }
+    });
+  } else {
+    prevPageLink.textContent = "Previous";
+    prevPageItem.classList.add("disabled");
+  }
+  prevPageItem.appendChild(prevPageLink);
+  pageNumbers.appendChild(prevPageItem);
+
+  // Create and display page numbers as list items
+  for (let i = 1; i <= totalPages; i++) {
+    const pageNumberItem = document.createElement("li");
+    const pageNumberLink = document.createElement("a");
+    if (i === currentPage) {
+      const pageNumberSpan = document.createElement("span");
+      pageNumberSpan.classList.add("vf-pagination__label");
+      pageNumberItem.classList.add("vf-pagination__item--is-active");
+      pageNumberSpan.setAttribute("aria-current", "page");
+      pageNumberSpan.textContent = i;
+      pageNumberItem.appendChild(pageNumberSpan);
+    } else {
+      pageNumberLink.textContent = i;
+      pageNumberLink.href = "#"; // Set the href attribute as needed
+      pageNumberLink.classList.add("vf-pagination__link");
+      pageNumberLink.addEventListener("click", (event) => {
+        event.preventDefault();
+        currentPage = i;
+        showPage(currentPage);
+        updatePaginationLinks();
+      });
+      pageNumberItem.appendChild(pageNumberLink);
+    }
+    pageNumberItem.classList.add("vf-pagination__item");
+    pageNumbers.appendChild(pageNumberItem);
+  }
+
+  // Add "Next" link
+  const nextPageItem = document.createElement("li");
+  nextPageItem.classList.add("vf-pagination__item");
+  nextPageItem.classList.add("vf-pagination__item--next-page");
+  const nextPageLink = document.createElement("a");
+  if (currentPage < totalPages) {
+    nextPageLink.textContent = "Next";
+    nextPageLink.href = "#"; // Set the href attribute as needed
+    nextPageLink.classList.add("vf-pagination__link");
+    nextPageLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      const totalPages = Math.ceil(articleTotal.length / itemsPerPage);
+      if (currentPage < totalPages) {
+        currentPage++;
+        showPage(currentPage);
+        updatePaginationLinks();
+      }
+    });
+  } else {
+    nextPageLink.textContent = "Next";
+    nextPageItem.classList.add("disabled");
+  }
+  nextPageItem.appendChild(nextPageLink);
+  pageNumbers.appendChild(nextPageItem);
+
+// Page range display
+  var rangeTotalPages = articleTotal.length;
+  var numberOfPages = Math.ceil(rangeTotalPages / itemsPerPage),
+      start = ((currentPage - 1) * itemsPerPage + 1)  + ' - ',
+      end = Math.min(currentPage * itemsPerPage, rangeTotalPages);
+  
+  if (rangeTotalPages <= itemsPerPage) {
+    start = "";
+  }  
+
+  document.querySelector('#start-counter').textContent = start;
+  document.querySelector('#total-result').textContent = rangeTotalPages;
+  document.querySelector('#end-counter').textContent = end;
+}
+
+// sort events
+function sortEvents() {
+  var eventsContainer = document.querySelectorAll("[data-jplist-group]")[0];
+  var events = document.querySelectorAll("[data-jplist-item]");
+  var eventsArr = [];
+
+  for (var i in events) {
+    if (events[i].nodeType == 1) {
+      eventsArr.push(events[i]);
+    }
+  }
+
+  eventsArr.sort(function(a, b) {
+    // Compare in ascending order by reversing the order of comparison
+    return +a.querySelectorAll("[data-eventtime]")[0].dataset.eventtime - +b.querySelectorAll("[data-eventtime]")[0].dataset.eventtime;
+  });
+
+  for (var i = 0; i < eventsArr.length; ++i) {
+    eventsContainer.appendChild(eventsArr[i]);
+  }
+}
+
+var inputs = document.querySelectorAll('input');
+
+inputs.forEach(function(item) {
+  item.addEventListener('keyup', function(e) {
+    updatePaginationLinks();
+    sortEvents();
+    showPage(currentPage);
+  });
+  item.addEventListener("change", function(e) {
+    updatePaginationLinks();
+    sortEvents();
+    showPage(currentPage);
+  });
+});
+
+// Sort on page load
+sortEvents();
+
 </script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
   $(document).on("change", ".vf-form__item", function () {
