@@ -4,7 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Details') ) :
 
-  require_once('widget.php');
+require_once('widget.php');
+
 class VFWP_Details extends VFWP_Block {
 
   public function __construct() {
@@ -16,9 +17,11 @@ class VFWP_Details extends VFWP_Block {
       'name'     => 'vfwp-details',
       'title'    => 'Details',
       'category' => 'vf/wp',
+      'vfwp'     => array(
+        'iframeRender' => false,
+      ),
       'supports' => array(
-        'vf/renderIFrame' => false,
-        'vf/innerBlocks'  => true,
+        'jsx'             => true,
         'align'           => false,
         'customClassName' => false,
       )

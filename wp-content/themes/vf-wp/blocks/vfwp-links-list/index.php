@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Lists') ) :
 
-  require_once('widget.php');
+require_once('widget.php');
 
 class VFWP_Lists extends VFWP_Block {
 

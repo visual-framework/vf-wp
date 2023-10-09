@@ -18,8 +18,11 @@ class VFWP_BG_Container extends VFWP_Block {
       'name'     => 'vfwp-bg-container',
       'title'    => 'Container',
       'category' => 'vf/wp',
+      // 'vfwp'     => array(
+      //   'iframeRender' => false
+      // ),
       'supports' => array(
-        'vf/innerBlocks'  => true,
+        'jsx'             => true,
         'align'           => false,
         'customClassName' => false,
       )

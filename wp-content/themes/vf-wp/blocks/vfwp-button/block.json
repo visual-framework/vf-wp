@@ -4,9 +4,5 @@
   "apiVersion": 3,
   "acf": {
     "mode": "preview"
-  },
-  "supports": {
-    "align": false,
-    "customClassName": false
   }
 }

@@ -2,14 +2,10 @@
   "name": "vfwp-divider",
   "title": "Divider",
   "apiVersion": 3,
-  "vfwp": {
-    "containerable": true
-  },
   "acf": {
     "mode": "preview"
   },
-  "supports": {
-    "align": false,
-    "customClassName": false
+  "vfwp": {
+    "containerable": true
   }
 }

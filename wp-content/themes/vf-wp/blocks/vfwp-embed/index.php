@@ -4,7 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Embed') ) :
 
-  require_once('widget.php');
+require_once('widget.php');
+
 class VFWP_Embed extends VFWP_Block {
 
   public function __construct() {

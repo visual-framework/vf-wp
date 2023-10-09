@@ -4,11 +4,15 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Block') ) :
 
+// TODO: remove once all blocks use `block.json` without `setup_containerable`
+$deprecated__containerable = array();
+
 class VFWP_Block {
 
   private $file = null;
   private $config = null;
-  private $is_containerable = false;
+
+  // Debug developer admin notices
   private $debug = array();
 
   public function __construct($file) {
@@ -37,7 +41,21 @@ class VFWP_Block {
    * Return block name
    */
   public function name() {
-    return isset($this->config['name']) ? $this->config['name'] : null;
+    return $this->conf(['name']);
+  }
+
+  /**
+   * Return config value for the given keys
+   */
+  public function conf($keys = array(), $default = null) {
+    $v = $this->config;
+    foreach ($keys as $k) {
+      if (!is_array($v) || !array_key_exists($k, $v)) {
+        return $default;
+      }
+      $v = $v[$k];
+    }
+    return $v;
   }
 
   /**
@@ -48,8 +66,13 @@ class VFWP_Block {
       && (bool) $this->config['vfwp']['containerable'];
   }
 
+  /**
+   * Allow block to use container layout
+   * @deprecated - use `block.json` instead
+   */
   public function setup_containerable() {
-    $this->is_containerable = true;
+    global $deprecated__containerable;
+    $deprecated__containerable[] = get_class($this);
   }
 
   /**
@@ -79,13 +102,7 @@ class VFWP_Block {
     if (file_exists($json)) {
       $this->config = json_decode(file_get_contents($json), true);
       if ( ! is_array($this->config)) {
-        $this->debug[] = array(
-          'type' => 'error',
-          'message' => sprintf(
-            __('Invalid Block JSON: <code>%s</code>', 'vfwp'),
-            $json
-          )
-        );
+        $this->notice_invalid_json();
         return;
       }
     } else {
@@ -96,13 +113,7 @@ class VFWP_Block {
 
     // Basic validation
     if ( ! $this->name()) {
-      $this->debug[] = array(
-        'type' => 'error',
-        'message' => sprintf(
-          __('Block missing name: <code>%s</code>', 'vfwp'),
-          $this->file
-        )
-      );
+      $this->notice_missing_name();
       return;
     }
 
@@ -110,6 +121,15 @@ class VFWP_Block {
       VFWP_Block::default_config(),
       $this->config
     );
+
+    // Support legacy setting (deprecated)
+    global $deprecated__containerable;
+    if (
+        is_array($deprecated__containerable) &&
+        in_array(get_class($this), $deprecated__containerable)
+      ) {
+      $this->config['vfwp']['containerable'] = true;
+    }
 
     // Decide which template to use
     if (isset($this->config['acf']['renderTemplate'])) {
@@ -119,30 +139,19 @@ class VFWP_Block {
       $this->config['acf']['renderTemplate'] = $this->get_template();
     }
 
-    // TODO: remove?
-    if (isset($this->config['supports']['vf/innerBlocks'])) {
-      $this->config['supports']['jsx'] = boolval($this->config['supports']['vf/innerBlocks']);
-    }
-
-    // TODO: remove?
-    // Support legacy setting
-    if ($this->is_containerable) {
-      $this->config['vfwp']['containerable'] = true;
-    }
-
     // Setup render callback using VF Gutenberg plugin or fallback
     $callback = function() {
       $args = func_get_args();
       $template = $this->config['acf']['renderTemplate'];
       // Render block in iFrame by default if plugin exists
       $is_iframe = class_exists('VF_Gutenberg');
-      // Disable iFrame render if support is disabled
-      if (
-        isset($this->config['supports']['vf/renderIFrame']) &&
-        $this->config['supports']['vf/renderIFrame'] === false
-      ) {
+      // Disable iFrame render if specified
+      if ($this->conf(['vfwp', 'iframeRender']) === false) {
         $is_iframe = false;
       }
+      // if ($this->conf(['supports', 'jsx']) === true) {
+      //   $is_iframe = false;
+      // }
       if ($is_iframe) {
         VF_Gutenberg::acf_render_template($args, $template);
       } else {
@@ -244,6 +253,29 @@ class VFWP_Block {
   }
 
   /**
+   * Developer admin notices
+   */
+  private function notice_invalid_json() {
+    $this->debug[] = array(
+      'type' => 'error',
+      'message' => sprintf(
+        __('Invalid Block JSON: <code>%s</code>', 'vfwp'),
+        dirname($this->file)
+      )
+    );
+  }
+
+  private function notice_missing_name() {
+    $this->debug[] = array(
+      'type' => 'error',
+      'message' => sprintf(
+        __('Block name missing: <code>%s</code>', 'vfwp'),
+        dirname($this->file)
+      )
+    );
+  }
+
+  /**
    * Handle developer admin notices
    */
   public function admin_notices() {
@@ -263,6 +295,7 @@ class VFWP_Block {
     return array(
       'category' => 'vf/wp',
       'vfwp' => array(
+        'iframeRender'  => true,
         'containerable' => false
       ),
       'acf' => array(

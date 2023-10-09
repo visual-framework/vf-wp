@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Post_Fetch') ) :
 
-  require_once('widget.php');
+require_once('widget.php');
 
 class VFWP_Post_Fetch extends VFWP_Block {
 
@@ -17,9 +17,11 @@ class VFWP_Post_Fetch extends VFWP_Block {
       'name'     => 'vfwp-post-fetch',
       'title'    => 'Fetch posts',
       'category' => 'vf/wp',
+      'vfwp'     => array(
+        'iframeRender' => false,
+      ),
       'supports' => array(
-        'vf/renderIFrame' => false,
-        'vf/innerBlocks'  => true,
+        'jsx'             => true,
         'align'           => false,
         'customClassName' => false,
       )
