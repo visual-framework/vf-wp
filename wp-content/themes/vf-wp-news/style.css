@@ -68,18 +68,41 @@ Text Domain:	 vfwp
 }
 
 .magazine img {
-  margin-right: 20px;
-  float: left;
-  width: 120px;
+  width: 150px;
   height: auto;
   box-shadow: 1px 1px 2px #333;
 }
 
 .embl-etc-left-col .embl-etc-heading {
-  margin-top: 5px;
-  font-size: 40px;
+  font-size: 45px;
   font-style: italic;
   font-weight: 100;
+}
+
+#cardContainer .vf-card-container__inner {
+  --vf-card-container__grid--size: 18rem !important;
+}
+
+.embletcCard {
+  border-bottom: 8px solid #193f90 !important;
+}
+
+.embletcCard .vf-card__heading {
+  font-size: 21px !important;
+}
+
+.embletcReadSeason {
+  display: block;
+  font-weight: 200;
+  font-size: 15px;
+}
+
+.embletcReadLatest {
+  font-size: 19px;
+  color: white;
+  margin-top: 0;
+  margin-bottom: 4px;
+  font-weight: 300;
 }
 
 /* ---Author----*/
@@ -118,8 +141,8 @@ Text Domain:	 vfwp
 }
 
 @media (max-width: 1023px) {
-  .vf-grid-featured-col-right {
-    grid-column-end: span 4 !important;
+  .image_class_HERE {
+    display: none;
     
   }
 }
@@ -133,13 +156,6 @@ Text Domain:	 vfwp
 
 .vf-u-fullbleed::before {
   grid-column: unset !important;
-}
-
-.embl-etc-right-col {
-  margin-top: -1.5em;
-  margin-bottom: -1.5em;
-  padding-top: 2.5em;
-  padding-bottom: 1em;
 }
 
 /* embedding responsive youtube videos */
@@ -227,4 +243,8 @@ margin-bottom: 1rem !important;
 
 .heading-embletc-footer-green {
   color: #18974c !important;
+}
+
+.vf-card__title .vf-card__link:hover::after, .vf-card__heading .vf-card__link:hover::after {
+  box-shadow: 0 0 0.125rem 0.125rem rgba(250,250,250, .35) !important;
 }

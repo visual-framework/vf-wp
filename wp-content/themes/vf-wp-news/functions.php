@@ -275,4 +275,16 @@ function event_permalink_structure($post_link, $post, $leavename) {
     return $post_link;
 }
 
+// Support for the shuffle WP_Query argument
+
+add_filter( 'the_posts', function( $posts, \WP_Query $query )
+{
+    if( $pick = $query->get( 'shuffle' ) )
+    {
+        shuffle( $posts );
+        $posts = array_slice( $posts, 0, (int) $pick );
+    }
+    return $posts;
+}, 10, 2 );
+
 ?>
