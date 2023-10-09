@@ -153,11 +153,12 @@ class VFWP_Block {
     };
 
     if ($json) {
+
       // Use modern block.json registration
       register_block_type(
         $json,
         array(
-        'render_callback' => $callback
+          'render_callback' => $callback
         )
       );
     } else {
@@ -268,7 +269,9 @@ class VFWP_Block {
         'mode' => 'preview'
       ),
       'supports' => array(
-        'jsx' => false
+        'jsx'             => false,
+        'align'           => false,
+        'customClassName' => false
       )
     );
   }

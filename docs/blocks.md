@@ -6,6 +6,7 @@ There are three types of blocks:
 
 1. [Plugin Blocks](#plugin-blocks)
 2. [ACF Blocks](#acf-blocks)
+  2.1 [ACF Blocks (JSON)](#acf-blocks-json)
 3. [React Blocks](#react-blocks)
 
 Additional topics on this page:
@@ -61,6 +62,22 @@ ACF blocks from plugins:
 * [Events List](/wp-content/plugins/vf-events/README.md#gutenberg-block)
 
 <sup>†3 The Tabs ACF block was deprecated and replaced with a React block listed below.</sup>
+
+External resources:
+
+* [ACF: register block type](https://www.advancedcustomfields.com/resources/acf_register_block_type/)
+* [WP: block registration](https://developer.wordpress.org/block-editor/developers/block-api/block-registration/)
+
+### ACF Blocks (JSON)
+
+WordPress 5.8 and ACF 6.0 support file based config via `block.json`. VF-WP blocks should prefer this format instead of the older PHP configuration.
+
+See the [debug test block](/wp-content/themes/vf-wp/blocks/vfwp-debug/block.json) for an example of the minimum configuration required.
+
+External resources:
+
+* [WP: metadata in block.json](https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/)
+* [ACF: blocks and block.json](https://www.advancedcustomfields.com/resources/acf-blocks-key-concepts/#acf-blocks-and-blockjson)
 
 ## React Blocks
 

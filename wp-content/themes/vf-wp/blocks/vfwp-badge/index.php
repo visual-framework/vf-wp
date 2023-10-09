@@ -17,11 +17,6 @@ class VFWP_Badge extends VFWP_Block {
     return 'vfwp-badge';
   }
 
-  /**
-   * Return Gutenberg block registration configuration
-   * https://www.advancedcustomfields.com/resources/acf_register_block_type/
-   * https://developer.wordpress.org/block-editor/developers/block-api/block-registration/
-   */
   public function get_config() {
     return array(
       'name'     => $this->get_name(),
