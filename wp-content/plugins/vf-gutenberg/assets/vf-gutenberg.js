@@ -2,14 +2,22 @@
   const waitForSelector = (selector, parent, callback) => {
     const observer = new MutationObserver((records, observer) => {
       for (const record of records) {
-        if (record.type === 'childList') {
-          const target = parent.querySelector(selector);
-          if (target) {
-            observer.disconnect();
-            callback(target);
-            return;
+        for (const node of record.addedNodes) {
+          if (node instanceof HTMLElement) {
+            const target = node.querySelector(selector);
+            if (target) {
+              callback(target);
+            }
           }
         }
+        // if (record.type === 'childList') {
+        //   const target = parent.querySelector(selector);
+        //   if (target) {
+        //     // observer.disconnect();
+        //     callback(target);
+        //     // return;
+        //   }
+        // }
       }
     });
     observer.observe(parent, {childList: true, subtree: true});
@@ -131,7 +139,29 @@
     });
   });
 
+  let initACF = false;
+  const wrapperMap = new WeakMap();
+
   waitForSelector('.editor-styles-wrapper', document, (wrapper) => {
+    // Handle the `is_container` ACF field toggle
+    if (window.acf && !initACF) {
+      initACF = true;
+      acf.addAction('append_field/name=is_container', (field) => {
+        field.on('change', 'input[type="checkbox"]', (ev) => {
+          const acfId = ev.target.id
+            .replace(/^acf-/, '')
+            .replace(/-field_.+$/, '');
+          updateContainer(acfId, field.val());
+        });
+      });
+    }
+
+    // Skip if already initialised
+    if (wrapperMap.has(wrapper)) {
+      return;
+    }
+    wrapperMap.set(wrapper, true);
+
     // Render existing blocks on first load
     [...wrapper.querySelectorAll('.wp-block[data-type^="acf/vf"]')].forEach(
       (node) => {
@@ -144,17 +174,5 @@
       childList: true,
       subtree: true
     });
-
-    // Handle the `is_container` ACF field toggle
-    if (window.acf) {
-      acf.addAction('append_field/name=is_container', (field) => {
-        field.on('change', 'input[type="checkbox"]', (ev) => {
-          const acfId = ev.target.id
-            .replace(/^acf-/, '')
-            .replace(/-field_.+$/, '');
-          updateContainer(acfId, field.val());
-        });
-      });
-    }
   });
 })();
