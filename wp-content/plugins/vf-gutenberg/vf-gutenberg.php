@@ -222,13 +222,14 @@ class VF_Gutenberg {
     }
 
     global $post;
+    $postId = $post instanceof WP_Post ? $post->ID : 0;
 
     $config = array(
       'renderPrefix' => $prefix,
       'renderSuffix' => $suffix,
       'coreOptin'    => 1,
-      'postId'       => $post->ID,
-      'nonce'        => wp_create_nonce("vf_nonce_{$post->ID}")
+      'postId'       => $postId,
+      'nonce'        => wp_create_nonce("vf_nonce_{$postId}")
     );
 
     wp_localize_script('vf-blocks', 'vfGutenberg', $config);
