@@ -72,7 +72,45 @@ External resources:
 
 WordPress 5.8 and ACF 6.0 support file based config via `block.json`. VF-WP blocks should prefer this format instead of the older PHP configuration.
 
-See the [debug test block](/wp-content/themes/vf-wp/blocks/vfwp-debug/block.json) for an example of the minimum configuration required.
+See the [debug test block](/wp-content/themes/vf-wp/blocks/vfwp-debug/block.json) for an example of configuration. The minimum JSON required is:
+
+```json
+{
+  "name": "vfwp-example",
+  "title": "Example",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}
+```
+
+The default category is `vf/wp`. Other default values can be found in [`theme-block.php` `default_config` method](/wp-content/themes/vf-wp/functions/theme-block.php).
+
+Standard block config options are available. For example to support inner blocks:
+
+```json
+{
+  "supports": {
+    "jsx": true
+  }
+}
+```
+
+Additional VF-WP configuration options are:
+
+```json
+{
+  "vfwp": {
+    "containerable": true,
+    "iframeRender": false
+  }
+}
+```
+
+`containerable` - allow full-width layout (default: `false`)
+
+`iframeRender` - render the block inside an iframe in the editor (default: `true`)
 
 External resources:
 

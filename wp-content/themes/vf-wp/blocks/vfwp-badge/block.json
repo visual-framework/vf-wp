@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-badge",
+  "title": "Badge",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}

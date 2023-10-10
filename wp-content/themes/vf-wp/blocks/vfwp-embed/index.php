@@ -12,14 +12,6 @@ class VFWP_Embed extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-embed',
-      'title'    => 'Embed',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Embed
 
 // Initialize one instance

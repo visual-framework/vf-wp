@@ -10,14 +10,6 @@ class VFWP_Card extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-card',
-      'title'    => 'Card',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Card
 
 // Initialize one instance

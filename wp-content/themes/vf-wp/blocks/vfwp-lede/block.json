@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-lede",
+  "title": "Lede",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}

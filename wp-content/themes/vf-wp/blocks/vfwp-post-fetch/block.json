@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-post-fetch",
+  "title": "Fetch posts",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}

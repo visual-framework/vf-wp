@@ -12,20 +12,6 @@ class VFWP_Details extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-details',
-      'title'    => 'Details',
-      'category' => 'vf/wp',
-      'vfwp'     => array(
-        'iframeRender' => false,
-      ),
-      'supports' => array(
-        'jsx' => true
-      )
-    );
-  }
-
 } // VFWP_Details
 
 // Initialize one instance

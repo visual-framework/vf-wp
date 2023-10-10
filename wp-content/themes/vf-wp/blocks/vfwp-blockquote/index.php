@@ -10,14 +10,6 @@ class VFWP_Blockquote extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-blockquote',
-      'title'    => 'Blockquote',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Blockquote
 
 // Initialize one instance

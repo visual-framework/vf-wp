@@ -10,14 +10,6 @@ class VFWP_Profile extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-profile',
-      'title'    => 'Profile',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Profile
 
 // Initialize one instance

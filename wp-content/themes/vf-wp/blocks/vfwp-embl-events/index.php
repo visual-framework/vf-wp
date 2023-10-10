@@ -10,14 +10,6 @@ class VFWP_EMBL_Events extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-embl-events',
-      'title'    => 'EMBL Events',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_EMBL_Events
 
 // Initialize one instance

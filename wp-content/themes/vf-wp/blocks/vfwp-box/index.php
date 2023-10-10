@@ -12,14 +12,6 @@ class VFWP_Box extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-box',
-      'title'    => 'Box',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Box
 
 // Initialize one instance

@@ -149,9 +149,9 @@ class VFWP_Block {
       if ($this->conf(['vfwp', 'iframeRender']) === false) {
         $is_iframe = false;
       }
-      // if ($this->conf(['supports', 'jsx']) === true) {
-      //   $is_iframe = false;
-      // }
+      if ($this->conf(['supports', 'jsx']) === true) {
+        $is_iframe = false;
+      }
       if ($is_iframe) {
         VF_Gutenberg::acf_render_template($args, $template);
       } else {

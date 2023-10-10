@@ -12,14 +12,6 @@ class VFWP_Lists extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-links-list',
-      'title'    => 'Links List',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Lists
 
 // Initialize one instance

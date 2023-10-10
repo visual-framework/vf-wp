@@ -1,0 +1,11 @@
+{
+  "name": "vfwp-intro",
+  "title": "Intro",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  },
+  "vfwp": {
+    "containerable": true
+  }
+}

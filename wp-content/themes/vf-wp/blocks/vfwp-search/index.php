@@ -10,13 +10,6 @@ class VFWP_Search extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-search',
-      'title'    => 'Search',
-      'category' => 'vf/wp'
-    );
-  }
 }
 
 // Initialize one instance

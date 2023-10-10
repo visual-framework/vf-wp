@@ -15,7 +15,7 @@ $title = get_field('title');
 $title = trim($title);
 
 $link = get_field('link');
-$link_target = $link['target'] ? $link['target'] : '_self';
+$link_target = isset($link['target']) ? $link['target'] : '_self';
 $text = get_field('text', false, false);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-summary__text">', $text);
@@ -98,7 +98,7 @@ if ( $type === 'post' ) {
     if ($image) {
       echo $image;
     }
-  
+
   ?>
   <h3 class="vf-summary__title">
   <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
@@ -132,7 +132,7 @@ if ( $type === 'event' ) {
   <?php echo $date; ?>
   </p>
   <h3 class="vf-summary__title">
-    <?php if ($event_style !== 'alternate') { 
+    <?php if ($event_style !== 'alternate') {
       if (!empty($link)) { ?>
       <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
     <?php } else {echo '';} } ?>
@@ -172,9 +172,9 @@ if ( $type === 'publication' ) {
   $year = get_field('year');
   $source = get_field('source');
   $doi = get_field('doi');
-  
+
   if (
-    
+
     vf_html_empty($title)
     && vf_html_empty($source)
     && vf_html_empty($authors)

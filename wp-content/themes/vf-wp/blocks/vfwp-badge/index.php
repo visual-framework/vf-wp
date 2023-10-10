@@ -10,21 +10,6 @@ class VFWP_Badge extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-badge';
-  }
-
-  public function get_config() {
-    return array(
-      'name'     => $this->get_name(),
-      'title'    => 'Badge',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Badge
 
 // Initialize one instance

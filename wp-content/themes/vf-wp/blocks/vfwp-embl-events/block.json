@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-embl-events",
+  "title": "EMBL Events",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}

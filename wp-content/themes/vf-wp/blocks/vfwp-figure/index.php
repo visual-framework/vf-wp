@@ -12,14 +12,6 @@ class VFWP_Figure extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-figure',
-      'title'    => 'Figure',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Figure
 
 // Initialize one instance
