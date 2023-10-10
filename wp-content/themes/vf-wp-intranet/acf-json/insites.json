@@ -1,0 +1,158 @@
+{
+    "key": "group_600e7912c9cba",
+    "title": "INsites",
+    "fields": [
+        {
+            "key": "field_5dd3ec01c4d1e",
+            "label": "Article intro",
+            "name": "article_intro",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
+        },
+        {
+            "key": "field_6038be645d08e",
+            "label": "EMBL Location",
+            "name": "embl_location",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl-location",
+            "field_type": "checkbox",
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 0
+        },
+        {
+            "key": "field_600e79e442ad5",
+            "label": "Topic",
+            "name": "topic",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "topic",
+            "field_type": "multi_select",
+            "allow_null": 1,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_5dd52ed0509fe",
+            "label": "Featured post",
+            "name": "featured",
+            "type": "true_false",
+            "instructions": "Toggle off to not highlight the article on the front page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5ea15d527ecd1",
+            "label": "Hide featured image in the article",
+            "name": "show_featured_image",
+            "type": "true_false",
+            "instructions": "Toggle on to not display the featured image in the article",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_636cfd3f32f8f",
+            "label": "Newcomers start date",
+            "name": "newcomers_start_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d-M-Y",
+            "return_format": "d-M-Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_636cfe718f756",
+            "label": "Newcomers end date",
+            "name": "newcomers_end_date",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d-M-Y",
+            "return_format": "d-M-Y",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "insites"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}
