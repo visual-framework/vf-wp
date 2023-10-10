@@ -17,11 +17,7 @@ class VFWP_Intro extends VFWP_Block {
     return array(
       'name'     => 'vfwp-intro',
       'title'    => 'Intro',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

@@ -14,11 +14,7 @@ class VFWP_Blockquote extends VFWP_Block {
     return array(
       'name'     => 'vfwp-blockquote',
       'title'    => 'Blockquote',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false,
-      )
+      'category' => 'vf/wp'
     );
   }
 

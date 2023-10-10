@@ -14,11 +14,7 @@ class VFWP_Summary extends VFWP_Block {
     return array(
       'name'     => 'vfwp-summary',
       'title'    => 'Summary',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

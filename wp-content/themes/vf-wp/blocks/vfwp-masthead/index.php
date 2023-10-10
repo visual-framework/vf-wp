@@ -17,11 +17,7 @@ class VFWP_Masthead extends VFWP_Block {
     return array(
       'name'     => 'vfwp-masthead',
       'title'    => 'Masthead',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

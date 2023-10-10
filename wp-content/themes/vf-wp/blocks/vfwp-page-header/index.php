@@ -17,11 +17,7 @@ class VFWP_Page_Header extends VFWP_Block {
     return array(
       'name'     => 'vfwp-page-header',
       'title'    => 'Page Header',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

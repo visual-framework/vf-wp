@@ -17,11 +17,7 @@ class VFWP_Hero extends VFWP_Block {
     return array(
       'name'     => 'vfwp-hero',
       'title'    => 'Hero',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

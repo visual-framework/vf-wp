@@ -21,9 +21,7 @@ class VFWP_Post_Fetch extends VFWP_Block {
         'iframeRender' => false,
       ),
       'supports' => array(
-        'jsx'             => true,
-        'align'           => false,
-        'customClassName' => false,
+        'jsx' => true
       )
     );
   }

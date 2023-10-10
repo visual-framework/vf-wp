@@ -21,11 +21,7 @@ class VFWP_Badge extends VFWP_Block {
     return array(
       'name'     => $this->get_name(),
       'title'    => 'Badge',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

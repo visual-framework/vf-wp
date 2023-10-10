@@ -16,11 +16,7 @@ class VFWP_Box extends VFWP_Block {
     return array(
       'name'     => 'vfwp-box',
       'title'    => 'Box',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

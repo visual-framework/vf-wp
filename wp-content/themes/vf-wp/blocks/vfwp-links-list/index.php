@@ -16,11 +16,7 @@ class VFWP_Lists extends VFWP_Block {
     return array(
       'name'     => 'vfwp-links-list',
       'title'    => 'Links List',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

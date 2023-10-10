@@ -14,11 +14,7 @@ class VFWP_Section_Header extends VFWP_Block {
     return array(
       'name'     => 'vfwp-section-header',
       'title'    => 'Section Header',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

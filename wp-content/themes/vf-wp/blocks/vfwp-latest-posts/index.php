@@ -17,11 +17,7 @@ class VFWP_Latest_Posts extends VFWP_Block {
     return array(
       'name'     => 'vfwp-latest-posts',
       'title'    => 'Latest Posts',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

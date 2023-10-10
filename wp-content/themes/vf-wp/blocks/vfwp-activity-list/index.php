@@ -14,11 +14,7 @@ class VFWP_Activity_List extends VFWP_Block {
     return array(
       'name'     => 'vfwp-activity-list',
       'title'    => 'Activity List',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

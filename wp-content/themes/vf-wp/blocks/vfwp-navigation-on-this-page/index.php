@@ -17,11 +17,7 @@ class VFWP_On_This_Page_Navigation extends VFWP_Block {
     return array(
       'name'     => 'vfwp-navigation-on-this-page',
       'title'    => 'On this page navigation',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

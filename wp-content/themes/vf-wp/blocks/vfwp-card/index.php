@@ -14,11 +14,7 @@ class VFWP_Card extends VFWP_Block {
     return array(
       'name'     => 'vfwp-card',
       'title'    => 'Card',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

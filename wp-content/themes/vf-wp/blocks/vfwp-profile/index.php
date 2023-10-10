@@ -14,11 +14,7 @@ class VFWP_Profile extends VFWP_Block {
     return array(
       'name'     => 'vfwp-profile',
       'title'    => 'Profile',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 

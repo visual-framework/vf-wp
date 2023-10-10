@@ -14,11 +14,7 @@ class VFWP_Search extends VFWP_Block {
     return array(
       'name'     => 'vfwp-search',
       'title'    => 'Search',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 }

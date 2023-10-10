@@ -17,11 +17,7 @@ class VFWP_Banner extends VFWP_Block {
     return array(
       'name'     => 'vfwp-banner',
       'title'    => 'Banner',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'align'           => false,
-        'customClassName' => false
-      )
+      'category' => 'vf/wp'
     );
   }
 
