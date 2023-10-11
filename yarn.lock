@@ -2443,10 +2443,14 @@
     "@visual-framework/vf-stack" "^3.0.0"
     "@visual-framework/vf-u-fullbleed" "^1.2.2"
 
-"@visual-framework/vf-banner@1.9.2":
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-banner/-/vf-banner-1.9.2.tgz#86f559c56bf3b5574aa4d3e4384b3c2cab64ec61"
-  integrity sha512-TKu8XUU8VAfPvvbAavt+tnYjTYMGBFORbUogMD5WFb7kGBz2sTcoACLC0R/eAum0VrAzrVrX4kz8VtCdZOK+2Q==
+"@visual-framework/vf-banner@2.0.0-alpha.1":
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-banner/-/vf-banner-2.0.0-alpha.1.tgz#223d17206ed784f61e4ce2e8caba6aa7f6e01d08"
+  integrity sha512-bryyL2pMmWMYrvq0c7okt4VFKVn3Fb15MNIC2D48M6f/zVdQbf9V8qO2tOYbUbV5cKhwRoAGfp0FXfii021UTQ==
+  dependencies:
+    "@visual-framework/vf-box" "^2.4.0"
+    "@visual-framework/vf-stack" "^3.0.0"
+    "@visual-framework/vf-u-fullbleed" "^1.2.2"
 
 "@visual-framework/vf-blockquote@^1.2.1":
   version "1.2.1"
@@ -2471,12 +2475,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-breadcrumbs/-/vf-breadcrumbs-2.0.5.tgz#37b9d35aadb70adc117aef254e547085cf42acd8"
   integrity sha512-0XbL7oBuLIkuUjKrQh19mmCtAH8lORub/1lxi2s4g/pgwQ8dObkucGn/U9FusYhCFrSPr2jGynU++PLGABqebw==
 
-"@visual-framework/vf-button@2.0.0-alpha.6":
-  version "2.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-2.0.0-alpha.6.tgz#8f48193699f60dd16ee8e62decd831a599cf80a3"
-  integrity sha512-HvIc8SIpw8WZBaBXodhmx/faW2HxrlB6JMdlO95YByElA+JG9IfTyMWZv7R5ac6lUn6ixQNwCa2s690BXahSdg==
-
-"@visual-framework/vf-button@^3.0.0-alpha.0":
+"@visual-framework/vf-button@3.0.0-alpha.0", "@visual-framework/vf-button@^3.0.0-alpha.0":
   version "3.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.0-alpha.0.tgz#a8f953cf015393178fb5cbe81147e32b30377342"
   integrity sha512-I4iDGABcSRLMKiq9ilnibmQXfDpS6E0lljb5zjSBsnJIl/7jQfnL815jrdnRvrhpozO8dzPFizbZir8Yk8aeWw==
@@ -2706,10 +2705,14 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-heading/-/vf-heading-1.1.0.tgz#ab63a68e203b6c526401396eb18b7a8d7b1b8b07"
   integrity sha512-1x2REMGHB1ZS8hkTwJ8a/mSrl1kdZKWlIVNm1yfCugqEPbr5IcyQPB1WmJ7JDSzmggd39eEA/rBZsIMPwFfWSQ==
 
-"@visual-framework/vf-hero@3.3.5":
-  version "3.3.5"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-3.3.5.tgz#540c2d7dde2805d6be49d33a7899af41dce64348"
-  integrity sha512-kcrRkLnbzYqIisD/atXwNzWyLxYnCLSgYlPAECS+F9teXyEp9CtNQ0WEz8LROkuhsutKZS7Nz+VMd6lefgc65w==
+"@visual-framework/vf-hero@4.0.0-alpha.1":
+  version "4.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-4.0.0-alpha.1.tgz#f17ca2688c56cf3c866f6e3b1ac3571e27131995"
+  integrity sha512-23yPH50k9hVEjoQP8flJe+Iawr9wWEHVJ4h76bcnZ8D6HGzad4+77LHUpcNuBf6UTZd8OQ/oeBSTo+VL64X0dQ==
+  dependencies:
+    "@visual-framework/vf-box" "^2.4.0"
+    "@visual-framework/vf-stack" "^3.0.0"
+    "@visual-framework/vf-u-fullbleed" "^1.2.2"
 
 "@visual-framework/vf-intro@1.5.1":
   version "1.5.1"
@@ -2827,10 +2830,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-sidebar/-/vf-sidebar-1.0.0-alpha.2.tgz#7904d0cfab3d83c4b1caad5cbfe31c6e718c99bf"
   integrity sha512-O/CPAmWVw6Ix4p1OGX3fudJQk4OiLKbgB1fAU+KwsJEdUZigK4/uM3hjRsKDDU2KI3tX5wrCuyPpY17RDFLe4w==
 
-"@visual-framework/vf-social-links@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-social-links/-/vf-social-links-0.0.3.tgz#0c1b64c28a45cd99103f156475dac4f29633299b"
-  integrity sha512-5cDVFQvXUCzqY84Iibekw5BQ3wGrN3kw2vhNrhO8OGez/5a7A6YNIzQgr+aIZD2kpo/wUwhIjybzvOwKkOOBMw==
+"@visual-framework/vf-social-links@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-social-links/-/vf-social-links-0.0.4.tgz#c8f9f3f38405c9b3d12b81c8a77657e840194485"
+  integrity sha512-KgkL+EFJ69PZ90dNVKsFLLbUyVHcHqGLuxrCbb+zYgptSQyiK0pmTWriPZaSkeCiZBp6CMQJedT2AdNjc9QUJw==
 
 "@visual-framework/vf-stack@3.0.0", "@visual-framework/vf-stack@^3.0.0":
   version "3.0.0"
