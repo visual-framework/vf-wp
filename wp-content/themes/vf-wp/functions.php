@@ -1,5 +1,14 @@
 <?php
+function enqueue_custom_autocomplete_script() {
+  wp_enqueue_script('custom-autocomplete', get_template_directory_uri() . '/assets/scripts/custom-autocomplete.js', array('jquery'), '1.0', true);
 
+  // Define the AJAX URL for your script
+  wp_localize_script('custom-autocomplete', 'ajax_object', array(
+      'ajax_url' => admin_url('admin-ajax.php'),
+  ));
+}
+
+add_action('wp_enqueue_scripts', 'enqueue_custom_autocomplete_script');
 if( ! defined( 'ABSPATH' ) ) exit;
 
 require_once('functions/walker-comment.php');
@@ -350,5 +359,32 @@ function vf_every_five_minutes_event_cache_func() {
 //   return $allowed_blocks;
 // }
 // add_filter('allowed_block_types_all', 'remove_blocks_type');
+add_action('wp_ajax_custom_autocomplete', 'custom_autocomplete');
+add_action('wp_ajax_nopriv_custom_autocomplete', 'custom_autocomplete');
+
+function custom_autocomplete() {
+    $term = sanitize_text_field($_GET['term']);
+    $results = array();
+
+    $args = array(
+        's' => $term,
+        'post_status' => 'publish',
+        'post_type' => array('page', 'training', 'people', 'documents', 'insites', 'community-blog', 'events'), // Adjust the post type as needed
+        'posts_per_page' => 5, // Retrieve all matching posts
+    );
+
+    $query = new WP_Query($args);
+
+    if ($query->have_posts()) {
+        while ($query->have_posts()) {
+            $query->the_post();
+            $results[] = get_the_title();
+        }
+    }
+
+    wp_reset_postdata();
+
+    wp_send_json($results);
+}
 
 ?>

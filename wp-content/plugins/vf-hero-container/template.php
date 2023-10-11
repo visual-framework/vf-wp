@@ -81,7 +81,7 @@ $spacing_class .= "{$spacing}";
       <div class="vf-sidebar__inner">
       <div class="vf-form__item | vf-search__item">
         <input type="search" class="vf-form__input | vf-search__input" placeholder="Enter your search term"
-          value="<?php echo esc_attr(get_search_query()); ?>" name="s">
+          value="<?php echo esc_attr(get_search_query()); ?>" name="s" id="vf-search-input">
       </div>
       <div class="vf-form__item | vf-search__item" style="display: none">
         <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
@@ -171,3 +171,21 @@ $spacing_class .= "{$spacing}";
   </div>
 </section>
 <!--/vf-hero-->
+<style>
+  .autocomplete-suggestions {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.autocomplete-suggestion {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.autocomplete-suggestion:hover {
+  background-color: #f1f1f1;
+}
+</style>
