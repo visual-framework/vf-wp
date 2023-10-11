@@ -124,7 +124,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
       return $level;
     }
     */
-    
+
   /**
    * Return `vf-hero` "heading" from custom fields or Content Hub
    */
@@ -137,7 +137,9 @@ class VF_WP_Groups_Header extends VF_Plugin {
       'vf_hero_heading',
       $this->post()->ID
     );
-    $heading = trim($heading);
+    if ( ! empty($heading)) {
+      $heading = trim($heading);
+    }
     if (empty($heading)) {
       $heading = get_bloginfo('name');
     }
@@ -165,8 +167,10 @@ class VF_WP_Groups_Header extends VF_Plugin {
    */
   public function get_hero_text() {
     $text = get_field('vf_hero_subheading', false, false, $this->post()->ID);
-    $text = trim($text);
-    // If text is empty use the Content Hub description
+    if ( ! empty($text)) {
+      $text = trim($text);
+    }
+      // If text is empty use the Content Hub description
     if (vf_html_empty($text) && class_exists('VF_Cache')) {
       // Get the global taxonomy term
       $term_id = get_field('embl_taxonomy_term_what', 'option');
@@ -199,10 +203,12 @@ class VF_WP_Groups_Header extends VF_Plugin {
       return $text;
     }
     // Cleanup Content Hub response
-    $text = preg_replace(
-      '#<[^>]*?embl-conditional-edit[^>]*?>.*?</[^>]*?>#',
-      '', $text
-    );
+    if ( ! empty($text)) {
+      $text = preg_replace(
+        '#<[^>]*?embl-conditional-edit[^>]*?>.*?</[^>]*?>#',
+        '', $text
+      );
+    }
     // Filter allowed tags
     $text = wp_kses($text, array(
       'a' => array(
@@ -217,12 +223,12 @@ class VF_WP_Groups_Header extends VF_Plugin {
 
   /**
    * @deprecated  Default filter for hero text
-   
+
   public function filter_hero_text_link($text) {
     if ( ! apply_filters('vf_wp_groups_header/hero_text_link', true)) {
       return $text;
     }
-    /** 
+    /**
      * Adds link to the hero introduction
     $link = $this->get_hero_link();
 
@@ -271,7 +277,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
            'title' => __('Read more', 'vfwp'),
            'url'   => get_the_permalink($page->ID)
           );
-        } 
+        }
       }
       if ($link) {
         $title = $link['title'];

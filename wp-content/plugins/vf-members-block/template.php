@@ -25,16 +25,18 @@ if (is_array($variation)) {
 
 $leader = boolval($leader);
 
-$keyword = trim($keyword);
+if ( ! empty($keyword)) {
+  $keyword = trim($keyword);
+}
 
 // Hide selected fields
 $hide_fields = get_field('hide_fields');
 $values = array();
-if( $hide_fields ): 
- foreach( $hide_fields as $hide_field ): 
+if( $hide_fields ):
+ foreach( $hide_fields as $hide_field ):
   array_push($values, $hide_field);
  endforeach;
-endif; 
+endif;
 $hide_fields = implode(',', $values);
 
 $vars = array(
