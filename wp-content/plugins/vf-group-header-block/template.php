@@ -119,8 +119,10 @@ if (vf_cache_empty($content)) {
 // Query to override the profile:
 // Get search value
 $value = get_field('vf_group_header_profile', $acf_id);
+if ( ! empty($value)) {
+  $value = trim($value);
+}
 
-$value = trim($value);
 // Setup base API URL
 $url_profile = VF_Cache::get_api_url();
 $url_profile .= '/pattern.html';
@@ -131,7 +133,7 @@ $url_profile = add_query_arg(array(
   'limit'               => 1,
   'hide[orcid,mobile,phones,email]' => 1,
   'filter-ref-entity[field_person_positions][title]' => "",
-  
+
 ), $url_profile);
 
 // Add search field query var
@@ -179,7 +181,7 @@ $content = preg_replace(
       );
       echo $content_profile;
     }
-    
+
     else if ( ! vf_cache_empty($content)) {
       $content = preg_replace(
         '#^\s*<([^>]+?)>#',

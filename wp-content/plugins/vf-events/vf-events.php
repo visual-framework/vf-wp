@@ -53,7 +53,7 @@ class VF_Events {
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
     );
-    
+
   }
 
   public function template() {
@@ -217,7 +217,9 @@ class VF_Events {
     if ($option === 'custom') {
       $option = get_field('vf_event_date_format_custom', 'option');
     }
-    $option = trim($option);
+    if ( ! empty($option)) {
+      $option = trim($option);
+    }
     if ( ! empty($option)) {
       $format = $option;
     }
