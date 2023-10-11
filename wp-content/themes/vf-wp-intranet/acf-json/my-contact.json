@@ -12,7 +12,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "19",
                 "class": "",
                 "id": ""
             },
@@ -25,7 +25,7 @@
             "return_format": "label",
             "multiple": 0,
             "allow_null": 0,
-            "ui": 0,
+            "ui": 1,
             "ajax": 0,
             "placeholder": ""
         },
@@ -47,7 +47,7 @@
                 ]
             ],
             "wrapper": {
-                "width": "",
+                "width": "20",
                 "class": "",
                 "id": ""
             },
@@ -88,7 +88,7 @@
                 ]
             ],
             "wrapper": {
-                "width": "",
+                "width": "20",
                 "class": "",
                 "id": ""
             },
@@ -128,24 +128,24 @@
                 ]
             ],
             "wrapper": {
-                "width": "",
+                "width": "20",
                 "class": "",
                 "id": ""
             },
             "relevanssi_exclude": 1,
             "choices": {
-                "COO Office": "COO Office",
-                "OMT": "OMT",
-                "Finance": "Finance",
-                "Health & Safety": "Health & Safety",
-                "Human Resources": "Human Resources",
-                "Internal Audit": "Internal Audit",
-                "Legal Services": "Legal Services",
-                "Purchase": "Purchase",
-                "Staff Association": "Staff Association",
-                "Scientific Information Management": "Scientific Information Management",
-                "Environmental Office": "Environmental Office",
-                "EDI": "EDI"
+                "coo_office": "COO Office",
+                "omt": "OMT",
+                "finance": "Finance",
+                "health_and_safety": "Health and Safety",
+                "human_resources": "Human Resources",
+                "internal_audit": "Internal Audit",
+                "legal_services": "Legal Services",
+                "purchase": "Purchase",
+                "staff_association": "Staff Association",
+                "scientific_information_management": "Scientific Information Management",
+                "environmental_office": "Environmental Office",
+                "edi": "EDI"
             },
             "default_value": [],
             "return_format": "label",
@@ -165,7 +165,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "20",
                 "class": "",
                 "id": ""
             },
@@ -200,5 +200,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0
+    "show_in_rest": 0,
+    "modified": 1697010227
 }
