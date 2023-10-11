@@ -6,6 +6,7 @@
             "key": "field_626f98f4aa458",
             "label": "Quote",
             "name": "text",
+            "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
@@ -23,9 +24,10 @@
         },
         {
             "key": "field_626f995faa45a",
-            "label": "Citation",
+            "label": "Author",
             "name": "citation",
-            "type": "wysiwyg",
+            "aria-label": "",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -34,17 +36,63 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
-            "key": "field_626fa089f3cd1",
-            "label": "Text color",
-            "name": "color",
-            "type": "radio",
+            "key": "field_6526906f16f0f",
+            "label": "Author link",
+            "name": "author_link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_6526909916f10",
+            "label": "Author image",
+            "name": "author_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_6526904716f0e",
+            "label": "Other details",
+            "name": "other_details",
+            "aria-label": "",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -53,16 +101,12 @@
                 "class": "",
                 "id": ""
             },
-            "choices": {
-                "default": "default",
-                "grey": "grey"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
+            "relevanssi_exclude": 0,
             "default_value": "",
-            "layout": "horizontal",
-            "return_format": "value",
-            "save_other_choice": 0
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -82,5 +126,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1651483340
+    "show_in_rest": 0
 }

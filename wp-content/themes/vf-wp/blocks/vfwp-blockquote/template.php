@@ -4,8 +4,18 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $text = get_field('text', false, false);
-$citation = get_field('citation', false, false);
-$color = get_field('color');
+$author = get_field('citation', false, false);
+$author_link = get_field('author_link');
+$author_image = get_field('author_image');
+if ( ! is_array($author_image)) {
+  $author_image = null;
+} else {
+$author_image = wp_get_attachment_image($author_image['ID'], 'medium', false, array(
+  'class'    => 'vf-profile__image vf-u-margin__right--600',
+  'loading'  => 'lazy',
+  'itemprop' => 'image',
+)); }
+$other_details = get_field('other_details');
 
 // Function to output a banner message in the Gutenberg editor only
 $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
@@ -32,14 +42,31 @@ if (
 }
 ?>
 
-<blockquote class="vf-blockquote | vf-stack vf-stack--400 | vf-u-margin__bottom--400">
-  <p
-    class="vf-blockquote__text | vf-u-margin__top--0<?php if ($color == 'grey') { echo ' | vf-u-text-color--grey--dark';} ?>">
-    <?php echo ($text); ?>
-  </p>
-  <?php if ($citation) { ?>
-  <footer class="vf-blockquote__footer">
-    <cite class="vf-blockquote__citation | vf-text-body vf-text-body--3"><?php echo ($citation); ?></cite>
-  </footer>
-  <?php } ?>
+<blockquote class="vf-blockquote vf-u-margin__left--800 | vf-u-margin__bottom--600 vf-u-margin__top--600">
+<?php if (! empty($author_image)) { 
+  echo $author_image;
+} ?>
+  <div>
+    <div>
+      <?php echo ($text); ?>
+    </div>
+    
+    <?php if ($author) { ?>
+      <footer class="vf-u-margin__top--600">
+      <?php if(!empty($author_link)) { ?>
+        <a href="<?php echo ($author_link); ?>" class="vf-blockquote_author__link">
+      <?php } ?>
+
+      <div>
+        <?php echo ($author); ?>
+      </div>
+
+      <?php if(!empty($author_link)) { ?>
+        </a>
+      <?php } ?>
+
+      <div class="vf-text-body--2"><?php echo ($other_details); ?></div>
+    </footer>
+    <?php } ?>
+  </div>
 </blockquote>
