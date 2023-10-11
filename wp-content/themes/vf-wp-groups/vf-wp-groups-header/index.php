@@ -209,15 +209,17 @@ class VF_WP_Groups_Header extends VF_Plugin {
         '', $text
       );
     }
-    // Filter allowed tags
-    $text = wp_kses($text, array(
-      'a' => array(
-        'href' => array(),
-        'title' => array()
-      ),
-      'em'     => array(),
-      'strong' => array(),
-    ));
+    if ( ! empty($text)) {
+      // Filter allowed tags
+      $text = wp_kses($text, array(
+        'a' => array(
+          'href' => array(),
+          'title' => array()
+        ),
+        'em'     => array(),
+        'strong' => array(),
+      ));
+    }
     return $text;
   }
 
