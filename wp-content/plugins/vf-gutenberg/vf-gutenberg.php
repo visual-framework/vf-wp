@@ -180,19 +180,18 @@ class VF_Gutenberg {
         '/assets/vf-blocks' . (vf_debug() ? '' : '.min') .  '.js',
         __FILE__
       ),
-      array('wp-editor', 'wp-blocks', 'vf-plugin'),
-      false,
+      array('vf-plugin'),
+      time(),
       true
     );
-
     wp_register_script(
       'vf-gutenberg',
       plugins_url(
         '/assets/vf-gutenberg.js',
         __FILE__
       ),
-      array('wp-editor', 'wp-blocks'),
-      false,
+      array(),
+      time(),
       true
     );
     /**
