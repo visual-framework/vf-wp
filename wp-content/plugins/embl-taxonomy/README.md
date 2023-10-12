@@ -115,13 +115,9 @@ A list of taxonomy terms can be viewed by visiting **Posts > EMBL Taxonomy**:
 /wp-admin/edit-tags.php?taxonomy=embl_taxonomy
 ```
 
-If the cached taxonomy is older than `MAX_AGE` an admin notice will appear linking to:
+If the cached taxonomy is older than `MAX_AGE` an admin notice will appear with a button to resync the taxonomy. The button opens a modal that handles the sync process. Syncing is done in batches using mutliple API requests to avoid a timeout.
 
-```
-/wp-admin/edit-tags.php?taxonomy=embl_taxonomy&sync=true
-```
-
-This URL will force a resync with the EMBL Taxonomy.
+The `SYNC_MAX_TERMS` constant in [register.php](/wp-content/plugins/embl-taxonomy/includes/register.php) defines the batch size. Lowering this value will slow down the process by using shorter requests.
 
 ## ACF Configuration
 
