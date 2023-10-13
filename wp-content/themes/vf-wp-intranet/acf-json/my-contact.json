@@ -1,0 +1,205 @@
+{
+    "key": "group_6524fc775e9d2",
+    "title": "My Contact custom fields",
+    "fields": [
+        {
+            "key": "field_65250045fb1bd",
+            "label": "Department",
+            "name": "vf_wp_my_contact_department",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "19",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "choices": {
+                "hr": "Human Resources",
+                "finance": "Finance"
+            },
+            "default_value": false,
+            "return_format": "label",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6524fc78fb1ba",
+            "label": "(HR) Topic",
+            "name": "vf_wp_my_contact_hr_topic",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_65250045fb1bd",
+                        "operator": "==",
+                        "value": "hr"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 1,
+            "choices": {
+                "recruitment": "Recruitment",
+                "partnering": "Partnering",
+                "operations": "Operations",
+                "contracting": "Contracting",
+                "development_and_training": "Development and Training",
+                "henner_contract_management": "Henner Contract Management",
+                "embl_pension": "EMBL Pension",
+                "duty_travel": "Duty Travel"
+            },
+            "default_value": [],
+            "return_format": "label",
+            "multiple": 1,
+            "allow_null": 1,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6524fdddfb1bb",
+            "label": "(HR) EMBL site",
+            "name": "vf_wp_my_contact_hr_embl_site",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_65250045fb1bd",
+                        "operator": "==",
+                        "value": "hr"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 1,
+            "choices": {
+                "barcelona": "Barcelona",
+                "grenoble": "Grenoble",
+                "hamburg": "Hamburg",
+                "heidelberg": "Heidelberg",
+                "rome": "Rome",
+                "embo": "Embo",
+                "eurobioimaging": "EuroBioImaging"
+            },
+            "default_value": [],
+            "return_format": "label",
+            "multiple": 1,
+            "allow_null": 1,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6524fef8fb1bc",
+            "label": "(HR) Department, team, group",
+            "name": "vf_wp_my_contact_hr_department_team_group",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_65250045fb1bd",
+                        "operator": "==",
+                        "value": "hr"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 1,
+            "choices": {
+                "coo_office": "COO Office",
+                "omt": "OMT",
+                "finance": "Finance",
+                "health_and_safety": "Health and Safety",
+                "human_resources": "Human Resources",
+                "internal_audit": "Internal Audit",
+                "legal_services": "Legal Services",
+                "purchase": "Purchase",
+                "staff_association": "Staff Association",
+                "scientific_information_management": "Scientific Information Management",
+                "environmental_office": "Environmental Office",
+                "edi": "EDI"
+            },
+            "default_value": [],
+            "return_format": "label",
+            "multiple": 1,
+            "allow_null": 1,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6525084efb41c",
+            "label": "Person profile relationship",
+            "name": "vf_wp_my_contact_profile",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 1,
+            "post_type": [
+                "people"
+            ],
+            "post_status": "",
+            "taxonomy": "",
+            "return_format": "object",
+            "multiple": 1,
+            "allow_null": 0,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "my_contact"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1697010227
+}

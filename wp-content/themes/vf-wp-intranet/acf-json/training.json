@@ -200,11 +200,9 @@
                 "id": ""
             },
             "choices": {
-                "not-open": "Not yet open",
                 "open": "Open",
                 "closed": "Closed",
-                "waiting": "Waiting list only",
-                "no-needed": "No registration needed"
+                "waiting": "Waiting list only"
             },
             "default_value": false,
             "allow_null": 1,

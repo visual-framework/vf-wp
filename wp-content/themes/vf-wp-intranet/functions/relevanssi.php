@@ -75,7 +75,8 @@ function remove_menu_items() {
     remove_menu_page( 'edit.php?post_type=teams' );
     remove_menu_page( 'edit.php?post_type=people' );
     remove_menu_page( 'edit.php?post_type=insites' );
-    remove_menu_page( 'edit.php?post_type=training' );
+    remove_menu_page( 'edit.php?post_type=my_contact' );
+    // remove_menu_page( 'edit.php?post_type=training' );
   }
 }
 add_action( 'admin_menu', 'remove_menu_items' );

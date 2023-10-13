@@ -79,16 +79,16 @@ function settings_training_admin_page() {
   echo '</form>';
   
 // Delete
-  echo '<h3>Delete all training posts</h3>';
-  if (isset($_POST['delete_training']) && check_admin_referer('delete_training_clicked')) {
-    delete_all_training_posts();
-  }
-  echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
-  wp_nonce_field('delete_training_clicked');
-  echo '<input type="hidden" value="true" name="delete_training" />';
-  submit_button( __( 'Delete', 'textdomain' ), 'delete' );
-  echo '</form>';
-  echo '</div>';
+  // echo '<h3>Delete all training posts</h3>';
+  // if (isset($_POST['delete_training']) && check_admin_referer('delete_training_clicked')) {
+  //   delete_all_training_posts();
+  // }
+  // echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
+  // wp_nonce_field('delete_training_clicked');
+  // echo '<input type="hidden" value="true" name="delete_training" />';
+  // submit_button( __( 'Delete', 'textdomain' ), 'delete' );
+  // echo '</form>';
+  // echo '</div>';
 
 }
 

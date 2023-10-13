@@ -110,7 +110,7 @@ $today_date = date('Ymd');
       </main>
       <div class="vf-content">
       <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
-            href="/internal-information/training-archive/">Past training</a></p>
+            href="/internal-information/past-training/">Past training</a></p>
         <hr class="vf-divider | vf-u-margin__bottom--400">
         <h3 class="vf-text vf-text-heading--5">Other training and development opportunities</h3>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
@@ -118,6 +118,8 @@ $today_date = date('Ymd');
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
             href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career
             webinars</a></p>
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
+            href="https://www.embl.org/about/info/alumni/resources/mentorship-progamme/">Mentorship programme</a></p>
                 </div>
     </section>
   </section>
@@ -134,7 +136,7 @@ $today_date = date('Ymd');
           Academy.</p>
         <hr class="vf-divider | vf-u-margin__top--800">
         <h3>Data Science</h3>
-        <h4><a href="https://www.ebi.ac.uk/training/on-demand">EMBL-EBI on demand training catalogue</a> </h4>
+        <h4><a href="https://www.ebi.ac.uk/training/on-demand">EMBL-EBI</a> </h4>
             <p>Discover EMBL-EBI's on-demand training library, offering bioinformatics-themed online tutorials and
             curated collections, webinars, and course materials, all designed and delivered by EMBL-EBI experts and
             trainers from around the world. The training, which is available to anyone anytime, covers introductory

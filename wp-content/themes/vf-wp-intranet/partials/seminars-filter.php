@@ -262,13 +262,13 @@
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="type-15" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type" data-group="data-group-1" data-name="name2" data-or="name2"
-        value="Planetary Biology Lectures"
+        value="Planetary Biology"
         data-id="name-planetary" class="vf-form__checkbox" subscribet="67,">
-      <label for="type-15" class="vf-form__label">Planetary Biology Lectures&nbsp;<span 
+      <label for="type-15" class="vf-form__label">Planetary Biology&nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-1"
         data-format="({count})"
-        data-path=".planetary_biology_lectures"
+        data-path=".planetary_biology"
         data-mode="static"
         data-name="counter-pbl-filter"
         data-filter-type="path"></span></label>
