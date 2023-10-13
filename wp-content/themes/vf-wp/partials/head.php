@@ -35,7 +35,9 @@ if(is_singular('vf_event')) {
   $card_desc   = get_the_excerpt();
   $card_name   = str_replace('@', '', get_the_author_meta('twitter')); 
   $card_thumb = get_field('vf_event_hero', $post->post_parent);
-  $card_thumb = wp_get_attachment_url($card_thumb['ID'], 'full', false);?>
+  if(!empty($card_thumb)){
+  $card_thumb = wp_get_attachment_url($card_thumb['ID'], 'full', false);
+  } ?>
   <!-- Twitter -->
   <meta name="twitter:card" value="summary" />
   <meta name="twitter:url" value="<?php echo $card_url; ?>" />

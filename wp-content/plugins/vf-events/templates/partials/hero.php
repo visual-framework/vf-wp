@@ -11,10 +11,12 @@ $banner_text = get_field('vf_event_banner_text');
 $canceled = get_field('vf_event_canceled');
 
 $hero_image = get_field('vf_event_hero', $post->post_parent);
+if (!empty($hero_image)) {
 $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
+}
 ?>
 <?php if (($canceled == 'yes') || ($canceled == 'postponed') ) { ?>
 <div class="vf-banner vf-banner--alert vf-banner--<?php if ($canceled == 'yes') { echo 'danger'; } else if ($canceled == 'postponed') { echo 'info'; } ?>">

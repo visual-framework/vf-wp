@@ -51,19 +51,21 @@ $social_url = get_the_permalink();
 
 
 $logo_image = get_field('vf_event_logo');
+if(!empty($logo_image)){
 $logo_image = wp_get_attachment_image($logo_image['ID'], 'medium', false, array(
     'style'    => 'max-height: 95px; width: auto;',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
-
+}
 $poster_image = get_field('vf_event_poster');
+if(!empty($poster_image)){
 $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, array(
     'style'    => 'max-width: 175px; height: auto; border: 1px solid #d0d0ce',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
-
+}
 ?>
 
 <div>
