@@ -1,8 +1,4 @@
 <?php
-// expire trainings on date field.
-if (!wp_next_scheduled('expire_trainings')){
-  wp_schedule_event(time(), 'daily', 'expire_trainings'); // this can be hourly, twicedaily, or daily
-}
 
 add_action('expire_trainings', 'expire_trainings_function');
 
