@@ -105,6 +105,8 @@ $today_date = date('Ymd');
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
             href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career
             webinars</a></p>
+        <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
+            href="https://www.embl.org/about/info/alumni/resources/mentorship-progamme/">Mentorship programme</a></p>
       </div>
     </section>
 

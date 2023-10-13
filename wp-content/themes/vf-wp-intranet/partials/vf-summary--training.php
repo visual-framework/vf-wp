@@ -140,9 +140,9 @@ $keywords = get_field('keyword',$post_id);
       <?php } ?>
       <?php if (!empty($format)) { ?>
       <span class="customFormat"><?php echo $format; ?></span></p>
-  </div>
-  <?php } 
+      <?php } 
       else { echo '</p>'; }?>
+  </div>
   <!-- for filtering -->
   <div class="vf-u-display-none">
     <span class="year year-<?php echo $start->format('Y');?>"><?php echo $start->format('Y'); ?></span>
