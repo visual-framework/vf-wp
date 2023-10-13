@@ -85,7 +85,7 @@ function insert_bioit_posts_from_xml($xmldata) {
             } 
             $provider = isset($associative_array['provider']) ? $associative_array['provider'] : '';
             $location = isset($associative_array['location']) ? $associative_array['location'] : '';
-            $overview = isset($associative_array['overview']) ? $associative_array['overview'] : '';
+            $overview = isset($associative_array['overview']) ? $associative_array['overview'] : 'Please visit the course page for more information';
             $permalink = (string)$item->link;
             // echo ($provider);
             // Print the associative array
@@ -109,6 +109,7 @@ if (!get_page_by_path($url, 'OBJECT', 'training')) {
     add_post_meta($post_id, 'vf-wp-training-info', $overview);
     add_post_meta($post_id, 'vf-wp-training-url', $permalink);
     add_post_meta($post_id, 'vf-wp-training-registration-deadline', $formattedStartDate);
+    add_post_meta($post_id, 'vf-wp-training-category', 'Data science');
 
                     // Check if the term exists before setting it
                     $location_term_exists = term_exists(strtolower($location), 'event-location');
@@ -132,6 +133,7 @@ else if ($existing_post = get_page_by_path($url, 'OBJECT', 'training')) {
     update_post_meta($existing_post_id, 'vf-wp-training-end_date', $formattedendDate);
     update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
     update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
+    update_post_meta($existing_post_id, 'vf-wp-training-category', 'Data science');
     update_post_meta($existing_post_id, 'vf-wp-training-registration-deadline', $formattedStartDate);
     if (!metadata_exists('post', $existing_post_id, 'post_title')) {
         add_post_meta($existing_post_id, 'post_title', $title);
