@@ -10,14 +10,6 @@ class VFWP_Summary extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-summary',
-      'title'    => 'Summary',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Summary
 
 // Initialize one instance

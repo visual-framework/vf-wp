@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-tabs",
+  "title": "Tabs",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "vfwp-page-header",
+  "title": "Page Header",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  },
+  "vfwp": {
+    "containerable": true
+  }
+}

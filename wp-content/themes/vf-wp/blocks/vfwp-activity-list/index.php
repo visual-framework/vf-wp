@@ -10,14 +10,6 @@ class VFWP_Activity_List extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-activity-list',
-      'title'    => 'Activity List',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Activity_List
 
 // Initialize one instance

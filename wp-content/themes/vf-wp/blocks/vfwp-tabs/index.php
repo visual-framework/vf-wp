@@ -10,14 +10,6 @@ class VFWP_Tabs extends VFWP_Block {
     parent::__construct(__FILE__);
   }
 
-  public function get_config() {
-    return array(
-      'name'     => 'vfwp-tabs',
-      'title'    => 'Tabs',
-      'category' => 'vf/wp'
-    );
-  }
-
 } // VFWP_Tabs
 
 // Initialize one instance
