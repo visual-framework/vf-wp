@@ -48,13 +48,12 @@ class EMBL_Taxonomy_Settings {
       'wp_head',
       array($this, 'wp_head')
     );
-
-    // foreach ($this->props as $prop) {
-    //   add_filter(
-    //     "acf/fields/taxonomy/query/name={$prop['acf']}",
-    //     array($this, 'acf_query_terms'), 10, 3
-    //   );
-    // }
+    foreach ($this->props as $prop) {
+      add_filter(
+        "acf/fields/taxonomy/query/name={$prop['acf']}",
+        array($this, 'acf_query_terms'), 10, 3
+      );
+    }
   }
 
   /**
@@ -155,19 +154,33 @@ class EMBL_Taxonomy_Settings {
     return $value;
   }
 
-
   /**
    * Filter the ACF taxonomy query response so it's limited to relevant terms
    */
   public function acf_query_terms($args, $field, $post_id) {
-    // This has been disabled as it blocks the normal select2 from working
-    // it requires deeper under the hood work.
-    // foreach ($this->props as $prop) {
-    //   if ($field['name'] === $prop['acf']) {
-    //     $args['search'] = $prop['search'];
-    //     break;
-    //   }
-    // }
+    // Find the root term to filter by
+    foreach ($this->props as $slug => $prop) {
+      if ($field['name'] === $prop['acf']) {
+        // Get the root term object
+        $term = get_term_by('slug', $slug, EMBL_Taxonomy::TAXONOMY_NAME);
+        if ( ! ($term instanceof WP_Term) || $term->slug !== $slug) {
+          break;
+        }
+        // Get the root term meta IDs
+        $meta = get_term_meta($term->term_id, EMBL_Taxonomy::META_IDS, true);
+        if ( ! is_array($meta) || ! count($meta)) {
+          break;
+        }
+        // Filter EMBL taxonomy terms where the root term is a parent
+        // Parent term IDs are stored in the serialized array meta value
+        // These args are for a `LIKE` keyword search on the serialized string
+        // Because IDs are 36 character UUIDs it should not return false positives
+        $args['meta_key'] = EMBL_Taxonomy::META_IDS;
+        $args['meta_value'] = $meta[0];
+        $args['meta_compare'] = 'LIKE';
+        break;
+      }
+    }
     return $args;
   }
 
