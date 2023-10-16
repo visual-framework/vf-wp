@@ -549,10 +549,10 @@ class EMBL_Taxonomy_Register {
       $blen = count($b[EMBL_Taxonomy::META_IDS]);
       // Sort alphabetically if same level
       if ($a[EMBL_Taxonomy::META_IDS][0] !== $b[EMBL_Taxonomy::META_IDS][0] || $alen === $blen) {
-        return $a['name'] > $b['name'];
+        return strcmp($a['name'], $b['name']);
       }
       // Sort by longest chain
-      return $alen > $blen;
+      return $alen - $blen;
     });
   }
 
