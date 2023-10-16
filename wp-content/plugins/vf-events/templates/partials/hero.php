@@ -9,7 +9,6 @@ $industry_event_type = get_field('vf_event_industry_type');
 $location = get_field('vf_event_location');
 $banner_text = get_field('vf_event_banner_text');
 $canceled = get_field('vf_event_canceled');
-
 $hero_image = get_field('vf_event_hero', $post->post_parent);
 if (is_array($hero_image)) {
   $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
