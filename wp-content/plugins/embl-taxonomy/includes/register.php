@@ -220,8 +220,12 @@ class EMBL_Taxonomy_Register {
    * Read and parse the EMBL Taxonomy API as JSON
    * The WordPress Taxonomy is rebuilt with matching ID terms synced
    */
-  public function sync_taxonomy(WP_REST_Request $request) {
-    $params = $request->get_query_params();
+  public function sync_taxonomy(WP_REST_Request $request = null) {
+
+    $params = array();
+    if ($request) {
+      $params = $request->get_query_params();
+    }
     $offset = isset($params['offset']) ? intval($params['offset']) : -1;
 
     // Temporary file location to cache old and new data during sync process
@@ -240,16 +244,16 @@ class EMBL_Taxonomy_Register {
       // Get the existing WordPress taxonomy
       file_put_contents($oldpath, serialize(self::get_wp_taxonomy()));
       // Fetch the new terms
-      $this->sync_taxonomy_temp_file($newpath);
-      // Redirect to start first batch
-      // wp_redirect(
-      //   rest_url(EMBL_Taxonomy::TAXONOMY_NAME .'/v1/sync/?offset=0')
-      // );
+      $total = $this->sync_taxonomy_temp_file($newpath);
       // Return the URL for the first batch
-      return array(
-        'next' =>  rest_url(EMBL_Taxonomy::TAXONOMY_NAME .'/v1/sync/?offset=0')
-      );
-      exit;
+      if ($request) {
+        return array(
+          'next'   => rest_url(EMBL_Taxonomy::TAXONOMY_NAME .'/v1/sync/?offset=0'),
+          'total'  => $total,
+          'offset' => 0
+        );
+        exit;
+      }
     }
 
     // Retrieve the old terms
@@ -260,6 +264,9 @@ class EMBL_Taxonomy_Register {
     // Allow taxonomy terms to be inserted
     $this->set_read_only(false);
 
+    // Batch size for Request API or sync all terms (for WP CLI)
+    $max_terms = $request ? self::SYNC_MAX_TERMS : PHP_INT_MAX;
+
     // Iterate over all terms to sync
     $i = 0;
     foreach ($new_terms as $term) {
@@ -269,16 +276,15 @@ class EMBL_Taxonomy_Register {
         continue;
       }
       // Check if batch is complete
-      if ($i >= $offset + self::SYNC_MAX_TERMS) {
+      if ($i >= $offset + $max_terms) {
         $this->set_read_only(true);
         // Cache progress and redirect to continue
         file_put_contents($oldpath, serialize($wp_taxonomy));
-        // wp_redirect(
-        //   rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/sync/?offset=' . $i)
-        // );
         // Return the URL for the next batch
         return array(
-          'next' =>  rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/sync/?offset=' . $i)
+          'next'   => rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/sync/?offset=' . $i),
+          'total'  => count($new_terms),
+          'offset' => $i,
         );
         exit;
       }
@@ -416,6 +422,8 @@ class EMBL_Taxonomy_Register {
     self::sort_terms($new_terms);
 
     file_put_contents($newpath, serialize($new_terms));
+
+    return count($new_terms);
   }
 
   /**

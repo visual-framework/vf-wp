@@ -43,8 +43,10 @@
   $modal.innerHTML = `
   <h3><b>${data.syncing}</b></h3>
   <p><span class="spinner is-active"></span> ${data.reload}</p>
+  <progress></progress>
 `;
   document.body.appendChild($modal);
+  const $progress = $modal.querySelector('progress');
 
   // Sync button handler
   const startSync = async (url) => {
@@ -55,9 +57,15 @@
           'X-WP-Nonce': token
         }
       });
-      console.debug(response);
       const json = await response.json();
+      if (Object.hasOwn(json, 'total')) {
+        $progress.max = json.total;
+      }
+      if (Object.hasOwn(json, 'offset')) {
+        $progress.value = json.offset;
+      }
       if (json.success === true) {
+        $progress.value = $progress.max;
         window.location.href = redirect;
         return;
       }
@@ -75,6 +83,8 @@
     ev.preventDefault();
     $button.disabled = true;
     $button.innerText = 'Syncing...';
+    $progress.removeAttribute('max');
+    $progress.removeAttribute('value');
     $modal.style.removeProperty('display');
     $modal.showModal();
     startSync(new URL(path));
