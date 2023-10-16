@@ -58,6 +58,10 @@
         }
       });
       const json = await response.json();
+      if (json.error) {
+        $modal.innerHTML = `<p>${json.error}</p>`;
+        return;
+      }
       if (Object.hasOwn(json, 'total')) {
         $progress.max = json.total;
       }

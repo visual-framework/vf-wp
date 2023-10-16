@@ -244,12 +244,22 @@ class EMBL_Taxonomy_Register {
       // Get the existing WordPress taxonomy
       file_put_contents($oldpath, serialize(self::get_wp_taxonomy()));
       // Fetch the new terms
-      $total = $this->sync_taxonomy_temp_file($newpath);
+      $value = $this->sync_taxonomy_temp_file($newpath);
+      // Handle errors
+      if (is_string($value)) {
+        if ($request) {
+          return array(
+            'error' => $value
+          );
+        } else {
+          throw new Exception($value);
+        }
+      }
       // Return the URL for the first batch
       if ($request) {
         return array(
           'next'   => rest_url(EMBL_Taxonomy::TAXONOMY_NAME .'/v1/sync/?offset=0'),
-          'total'  => $total,
+          'total'  => $value,
           'offset' => 0
         );
         exit;
@@ -397,21 +407,19 @@ class EMBL_Taxonomy_Register {
     // Attempt to read the EMBL Taxonomy API
     $data = file_get_contents($embl_taxonomy_url);
     if ($data === false) {
-      $this->sync_error = sprintf(
+      return sprintf(
         __('The %1$s API endpoint could not be accessed.', 'embl'),
         $this->labels['name']
       );
-      return $this->sync_error;
     }
 
     // Attempt to parse API results
     $json_terms = self::decode_terms($data);
     if (empty($json_terms)) {
-      $this->sync_error = sprintf(
+      return sprintf(
         __('The %1$s API result could not be parsed.', 'embl'),
         $this->labels['name']
       );
-      return $this->sync_error;
     }
 
     // Generate the new taxonomy terms from the API terms provided
@@ -554,14 +562,6 @@ class EMBL_Taxonomy_Register {
    * Show admin success notice if a sync happening recently
    */
   public function action_admin_notices() {
-
-    if ($this->sync_error) {
-      printf('<div class="%1$s"><p>%2$s</p></div>',
-        esc_attr('notice notice-error'),
-        esc_html($this->sync_error)
-      );
-    }
-
     if ( ! current_user_can('manage_categories')) {
       return;
     }
