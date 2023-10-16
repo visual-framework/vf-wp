@@ -54,7 +54,6 @@ $register_button = ucfirst(strtolower($register_button));
 $register_button_on_site = ucfirst(strtolower($register_button_on_site));
 $info_text = get_field('vf_event_info_text');
 $registration_type = get_field('vf_event_registration_type');
-
 $social_url = get_the_permalink();
 
 
@@ -75,7 +74,6 @@ if (is_array($poster_image)) {
     'itemprop' => 'image',
   ));
 }
-
 ?>
 
 <div>

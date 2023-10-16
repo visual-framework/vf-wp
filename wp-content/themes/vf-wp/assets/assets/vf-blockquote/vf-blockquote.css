@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-blockquote
- * Version: 1.2.0
+ * Version: 1.2.1
  * Location: components/vf-core-components/vf-blockquote
  */
 .vf-blockquote {
@@ -110,6 +110,16 @@
   border: 0;
   padding: 10px 8px 10px 32px;
   position: relative;
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 28px;
+  color: #1a1c1a;
+  font-weight: 500;
+  line-height: 1.3125;
+  margin: 0 0 16px 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
 }
 .vf-blockquote::before {
   border-left: 4px solid #d0d0ce;
@@ -118,4 +128,30 @@
   left: 12px;
   position: absolute;
   top: 0;
+}
+
+.vf-blockquote::before {
+  margin-right: 1.5rem;
+  border-left: 1px solid var(--vf-color--grey);
+  left: 8px;
+  content: "";
+}
+
+.vf-blockquote_author__link {
+  border-bottom: none;
+  text-decoration: none;
+  color: #3b6fb6;
+}
+.vf-blockquote_author__link:visited {
+  color: #563d82;
+  border-bottom: none;
+}
+.vf-blockquote_author__link:visited:hover {
+  color: #563d82;
+  text-decoration: underline;
+}
+.vf-blockquote_author__link:hover {
+  color: #193f90;
+  border-bottom: none;
+  text-decoration: underline;
 }

@@ -35,9 +35,10 @@ include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
 
 <?php 
 // CPP container
-if ($cpp_container == 1 && $event_organiser == "cco_hd") {
-include( plugin_dir_path( __FILE__ ) . 'partials/cpp-container.php'); 
-}
+if ($cpp_container == 1 && $event_organiser == "cco_hd") { ?>
+<hr class="vf-divider">
+<link rel="import" href="https://www.embl.org/api/v1/pattern.html?filter-content-type=article&filter-id=182875&pattern=node-body&source=contenthub" data-target="self" data-embl-js-content-hub-loader>
+<?php }
 
 // Social media container
 if ($social_media_container == 1 && $event_organiser == "cco_hd") {
