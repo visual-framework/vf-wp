@@ -1,0 +1,60 @@
+/*
+Theme Name:		 VF-WP ELLS
+Theme URI:		 https://github.com/visual-framework/vf-wp/tree/master/wp-content/themes/vf-wp-ells/
+Description:	 Visual Framework WordPress Theme for ELLS
+Author:        Szymon Kasprzyk
+Template:      vf-wp
+Version:       1.0.0-beta.1
+Text Domain:	 vfwp
+*/
+
+.vf-u-fullbleed::before {
+  grid-column: unset !important;
+}
+
+.vf-social-links__link .vf-icon--social {
+  fill: #fff !important;
+}
+
+.vf-social-links--outline .vf-social-links__item {
+  border: 1px solid #fff !important;
+}
+.social-media-block .vf-icon {
+  fill: #000 !important;
+}
+
+.social-media-block .vf-social-links__item {
+  background: #fff;
+}
+
+/* .resources-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-01.png);
+  background-position: 50%;
+  background-size: cover;
+}
+.training-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-02.png);
+  background-position: 50%;
+  background-size: cover;
+}
+.experience-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-03.png);
+  background-position: 50%;
+  background-size: cover;
+} */
+.resources-container .vf-section-header__heading--is-link,
+.resources-container .vf-section-header__heading--is-link:visited,
+.resources-container .vf-section-header__subheading {
+  color: #fff;
+}
+
+#footer-ells {
+    margin-bottom: -1rem !important;
+  }
+
+#footer-ells .ells-links a {
+  color: #fff !important;
+}
+
+
+  
