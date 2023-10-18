@@ -94,78 +94,17 @@
 
 /* stylelint-enable */
 /*!
- * Component: @visual-framework/vf-flag
- * Version: 1.0.0-alpha.2
- * Location: components/vf-core-components/vf-flag
+ * Component: @visual-framework/vf-back-to-top
+ * Version: 1.0.1
+ * Location: components/vf-core-components/vf-back-to-top
  * Build time: Wed, 18 Oct 2023 10:54:01 GMT
  */
-.vf-flag {
-  display: table;
-  width: auto;
+.vf-back-to-top {
+  display: inline;
 }
 
-.vf-flag__media {
-  display: table-cell;
-  padding-right: 1rem;
-  padding-right: var(--vf-flag--spacing, 1rem);
-}
-.vf-flag__media img:not([class*=vf-]) {
-  max-width: -webkit-max-content;
-  max-width: -moz-max-content;
-  max-width: max-content;
-}
-.vf-flag__media > * {
-  display: block;
-}
-
-.vf-flag__body {
-  display: table-cell;
-  width: 100%;
-}
-
-.vf-flag--top .vf-flag__body,
-.vf-flag--top .vf-flag__media {
-  vertical-align: top;
-}
-.vf-flag--middle .vf-flag__body,
-.vf-flag--middle .vf-flag__media {
-  vertical-align: middle;
-}
-.vf-flag--bottom .vf-flag__body,
-.vf-flag--bottom .vf-flag__media {
-  vertical-align: bottom;
-}
-.vf-flag--reversed .vf-flag__body,
-.vf-flag--reversed .vf-flag__media {
-  padding-left: 1rem;
-  padding-left: var(--vf-flag--spacing, 1rem);
-  padding-right: 0 !important;
-}
-
-.vf-flag--200 {
-  --vf-flag--spacing: 0.5rem;
-}
-
-.vf-flag--400 {
-  --vf-flag--spacing: 1rem;
-}
-
-.vf-flag--500 {
-  --vf-flag--spacing: 1.25rem;
-}
-
-.vf-flag--600 {
-  --vf-flag--spacing: 1.5rem;
-}
-
-.vf-flag--800 {
-  --vf-flag--spacing: 2rem;
-}
-
-.vf-flag--1200 {
-  --vf-flag--spacing: 3rem;
-}
-
-.vf-flag--1600 {
-  --vf-flag--spacing: 4rem;
+.vf-back-top--floating {
+  position: fixed;
+  right: 5rem;
+  top: calc(100vh - 6rem);
 }

@@ -1,0 +1,202 @@
+/* stylelint-disable */
+:root {
+  --vf-color--green: #18974c;
+  --vf-color--green--darkest: #0a5032;
+  --vf-color--green--dark: #007b53;
+  --vf-color--green--light: #6cc24a;
+  --vf-color--green--lightest: #d0debb;
+  --vf-color--grey: #707372;
+  --vf-color--grey--darkest: #373a36;
+  --vf-color--grey--dark: #54585a;
+  --vf-color--grey--light: #a8a99e;
+  --vf-color--grey--lightest: #d0d0ce;
+  --vf-color--red: #d41645;
+  --vf-color--red--dark: #a6093d;
+  --vf-color--red--light: #e58f9e;
+  --vf-color--blue: #3b6fb6;
+  --vf-color--blue--dark: #193f90;
+  --vf-color--blue--light: #8bb8e8;
+  --vf-color--purple: #734595;
+  --vf-color--purple--dark: #563d82;
+  --vf-color--purple--light: #cba3d8;
+  --vf-color--orange: #f49e17;
+  --vf-color--orange--dark: #b65417;
+  --vf-color--orange--light: #efc06e;
+  --vf-color--yellow: #f4c61f;
+  --vf-color--yellow--dark: #ffb81c;
+  --vf-color--yellow--light: #fdd757;
+  --vf-color--bright-green: #a1be1f;
+  --vf-color--bright-green--dark: #7fb428;
+  --vf-color--bright-green--light: #e2e868;
+}
+
+:root {
+  --vf-color__text--primary: #1a1c1a;
+  --vf-color__text--secondary: #373a36;
+  --vf-color__link: #3b6fb6;
+  --vf-color__link--hover: #193f90;
+  --vf-color__link--focus: #193f90;
+  --vf-color__link--visited: #563d82;
+}
+
+:root {
+  --vf-color__button__text--primary: #ffffff;
+  --vf-color__button__border--primary: #3b6fb6;
+  --vf-color__button__background--primary: #3b6fb6;
+  --vf-color__button__shadow--primary: #193f90;
+  --vf-color__button__text--secondary: #3b6fb6;
+  --vf-color__button__border--secondary: #3b6fb6;
+  --vf-color__button__background--secondary: #ffffff;
+  --vf-color__button__shadow--secondary: #193f90;
+  --vf-color__button__text--tertiary: #ffffff;
+  --vf-color__button__border--tertiary: #373a36;
+  --vf-color__button__background--tertiary: #373a36;
+  --vf-color__button__shadow--tertiary: #000000;
+}
+
+:root {
+  --vf-color__brand: #18974c;
+  --vf-color__brand--dark: #0a5032;
+}
+
+:root {
+  --vf-ui-color--black: #000000;
+  --vf-ui-color--grey: #d8d8d8;
+  --vf-ui-color--grey--light: #f3f3f3;
+  --vf-ui-color--yellow: #fffadc;
+  --vf-ui-color--red: #d32f2f;
+  --vf-ui-color--white: #ffffff;
+  --vf-ui-color--off-white: #fafafa;
+}
+
+:root {
+  --vf-color--neutral--0: #ffffff;
+  --vf-color--neutral--100: #f3f3f3;
+  --vf-color--neutral--200: #e4e4e4;
+  --vf-color--neutral--300: #d0d0ce;
+  --vf-color--neutral--400: #a9abaa;
+  --vf-color--neutral--500: #8d8f8e;
+  --vf-color--neutral--600: #707372;
+  --vf-color--neutral--700: #54585a;
+  --vf-color--neutral--800: #373a36;
+  --vf-color--neutral--900: #000000;
+}
+
+:root {
+  --vf-theme--primary: #3b6fb6;
+  --vf-theme--primary--dark: #193f90;
+  --vf-theme--secondary: #18974c;
+  --vf-theme--secondary--dark: #007b53;
+  --vf-theme--tertiary: #54585a;
+  --vf-theme--quaternary: #f4c61f;
+  --vf-theme--quinary: #d0d0ce;
+}
+
+/* stylelint-enable */
+/*!
+ * Component: @visual-framework/vf-mega-menu
+ * Version: 1.0.0-alpha.1
+ * Location: components/vf-core-components/vf-mega-menu
+ * Build time: Wed, 18 Oct 2023 10:54:01 GMT
+ */
+.vf-mega-menu__link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+@media (min-width: 1280px) {
+  .vf-mega-menu__link {
+    padding: 0.8rem 1.6rem;
+  }
+}
+.vf-mega-menu__link:focus, .vf-mega-menu__link:hover, .vf-mega-menu__link.is-expanded, .vf-mega-menu__link.is-expanded:hover {
+  text-shadow: 1px 0 0 currentColor;
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+  text-decoration-color: #3b6fb6;
+  text-underline-offset: 0.5em;
+  text-underline-position: under;
+}
+.vf-mega-menu__link:hover {
+  color: #3b6fb6;
+}
+.vf-mega-menu__link.is-expanded, .vf-mega-menu__link.is-expanded:hover {
+  color: unset;
+}
+
+@media (min-width: 1024px) {
+  .vf-mega-menu__link--has-section:after {
+    content: url("data:image/svg+xml,%3Csvg class='arrow-icon' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' height='12' width='12'%3E%3Cg transform='matrix(0.6666666666666666,0,0,0.6666666666666666,0,0)'%3E%3Cpath d='M12,19.5a2.34,2.34,0,0,1-1.73-.78L.46,7.57A1.85,1.85,0,1,1,3.23,5.13l8.58,9.75a.25.25,0,0,0,.38,0l8.58-9.75a1.85,1.85,0,1,1,2.77,2.44L13.73,18.72A2.34,2.34,0,0,1,12,19.5Z' style='fill: %23000000'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    margin-left: 0.4rem;
+    display: inline-block;
+  }
+  .vf-mega-menu__link--has-section:after.is-expanded:after {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .vf-mega-menu__content {
+    display: none !important;
+  }
+}
+
+.vf-mega-menu__content__section {
+  position: absolute;
+  z-index: 10000000;
+  width: 100%;
+  left: 0;
+  background-color: #ffffff;
+  border-bottom: 8px solid #18974c;
+  grid-column: 1/-1;
+  padding-bottom: 60px;
+  padding-top: 24px;
+}
+.vf-mega-menu__content__section::before {
+  background-color: inherit;
+  -webkit-box-shadow: 0 29px 24px rgba(0, 0, 0, 0.2), 0 100px 50px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 29px 24px rgba(0, 0, 0, 0.2), 0 100px 50px rgba(0, 0, 0, 0.3);
+  content: "";
+  grid-column: 1/-1;
+  height: 100%;
+  margin-left: calc(50% - 50vw);
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  z-index: -1;
+}
+.vf-mega-menu__content__section::after {
+  background-color: #18974c;
+  content: "";
+  height: 8px;
+  margin-left: calc(50% - 50vw);
+  position: absolute;
+  bottom: -8px;
+  width: 100vw;
+  z-index: -1;
+}
+.vf-mega-menu__content__section[aria-hidden=true] {
+  display: none;
+}
+.vf-mega-menu__content__section[aria-hidden=false] {
+  display: block;
+}
+.vf-mega-menu__content__section .vf-navigation--main .vf-navigation__link {
+  color: #3b6fb6;
+}
+.vf-mega-menu__content__section .vf-navigation--main .vf-navigation__link:hover {
+  color: #3b6fb6;
+}
+.vf-mega-menu__content__section > .embl-grid {
+  --embl-grid-module--prime: 300px;
+  --page-grid-gap: 100px;
+}
+.vf-mega-menu__content__section > .embl-grid.embl-grid--has-centered-content {
+  --embl-grid-module--prime: 200px;
+  --page-grid-gap: 50px;
+}
+.vf-mega-menu__content__section > .embl-grid,
+.vf-mega-menu__content__section > .vf-grid {
+  padding: 0 1rem;
+}
