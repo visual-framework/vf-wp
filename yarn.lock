@@ -2399,6 +2399,11 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-article-meta-information/-/vf-article-meta-information-1.1.2.tgz#b3b7a37e7acf4091217c2d2c9634d0b05c9640b4"
   integrity sha512-wS6Kdq8u/TnCh4QHlewW5zGOwGeTUa/8FOsdpS2o8110LQqiy3o7NxjZLblqetru0cfy0r5gsq2dogJ0idT7aw==
 
+"@visual-framework/vf-back-to-top@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-back-to-top/-/vf-back-to-top-1.0.1.tgz#1ed1ebf8ad32b2f09aa2a0572cc5f137f6a048a3"
+  integrity sha512-SVycThQcQp3puYdpmRtzg/8Qxa8CfRoVQcXBt75NzU0zB7sCCkds0W3Ri+eEBe2uL+e8ECClQtdvz5frtucpLA==
+
 "@visual-framework/vf-badge@^3.0.0-alpha.1":
   version "3.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-badge/-/vf-badge-3.0.0-alpha.1.tgz#d681303cc9030c535b614b75a2319ebcb03c9b2e"
@@ -2713,6 +2718,11 @@
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-masthead/-/vf-masthead-3.0.1.tgz#1f1afa31ae1a909613bd137563da96423afd294f"
   integrity sha512-6/MXdZaY6SvHyfLt5J2PKJN9hpq3b1cu8UJlCxl/SMT+N2iDaxvi5Vji2be55wP8a4LbUT78S58S+CP9E/OUWQ==
+
+"@visual-framework/vf-mega-menu@^1.0.0-alpha.1":
+  version "1.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-mega-menu/-/vf-mega-menu-1.0.0-alpha.1.tgz#55d45fedc7b11470cdefecdd99b8457b093c10e0"
+  integrity sha512-n4Cu2WncACvysaeakOG69QbrmDxBFWj1o5EXeFmmzsDK42C5R/vCviX6ItVD9sFJ3DxkccwJo5W7bHvUhh9yRA==
 
 "@visual-framework/vf-navigation@5.0.0":
   version "5.0.0"
