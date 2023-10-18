@@ -24,7 +24,7 @@ jobs:
     - name: Build
       run: yarn run build
     - name: Commit
-      uses: stefanzweifel/git-auto-commit-action@v4
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
         # https://github.com/stefanzweifel/git-auto-commit-action
         # Required
