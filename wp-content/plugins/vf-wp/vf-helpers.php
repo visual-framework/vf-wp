@@ -36,7 +36,9 @@ function vf_log($log)  {
  * Return true if a string is empty (including empty HTML)
  */
 function vf_html_empty($str) {
-  return preg_match('#\S#', strip_tags($str)) !== 1;
+  if ( ! empty($str)) {
+    return preg_match('#\S#', strip_tags($str)) !== 1;
+  }
 }
 
 /**

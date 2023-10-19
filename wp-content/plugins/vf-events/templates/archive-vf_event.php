@@ -28,7 +28,9 @@ get_header();
         'vf_event_location',
         $post_id
       );
-      $event_type = get_field('vf_event_event_type'); ?>
+      $event_type = get_field('vf_event_event_type');
+
+      ?>
 
       <article class="vf-summary vf-summary--event">
         <?php if ( ! empty($start_date)) { ?>
@@ -46,12 +48,14 @@ get_header();
           <?php echo strip_tags(get_the_excerpt()); ?>
         </p>
         <?php } ?>
-        <p class="vf-summary__text">
-          <?php echo esc_html($event_type->name); ?>
-        </p>
+        <?php if (array_key_exists('label', $event_type)) { ?>
+          <p class="vf-summary__text">
+            <?php echo esc_html($event_type['label']); ?>
+          </p>
+        <?php } ?>
         <?php if ( ! empty($location)) { ?>
         <p class="vf-summary__location">
-          <?php echo esc_html($location); ?>
+          <?php echo esc_html(implode( ' and ', $location )); ?>
         </p>
         <?php } ?>
       </article>

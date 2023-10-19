@@ -15,7 +15,7 @@
   <?php
   // don't index trec outreach events
   global $wp;
-  $url =  home_url( $wp->request ); 
+  $url =  home_url( $wp->request );
   if(strpos($url, 'outreach/events') == true && is_singular('vf_event') ) {
    echo  '<meta name="robots" content="noindex">';
   } ?>
@@ -33,17 +33,20 @@ if(is_singular('vf_event')) {
   $card_url    = get_permalink();
   $card_title  = get_the_title();
   $card_desc   = get_the_excerpt();
-  $card_name   = str_replace('@', '', get_the_author_meta('twitter')); 
+  $card_name   = str_replace('@', '', get_the_author_meta('twitter'));
   $card_thumb = get_field('vf_event_hero', $post->post_parent);
-  if(!empty($card_thumb)){
-  $card_thumb = wp_get_attachment_url($card_thumb['ID'], 'full', false);
-  } ?>
+  if ($card_thumb) {
+    $card_thumb = wp_get_attachment_url($card_thumb['ID'], 'full', false);
+  }
+  ?>
   <!-- Twitter -->
   <meta name="twitter:card" value="summary" />
   <meta name="twitter:url" value="<?php echo $card_url; ?>" />
   <meta name="twitter:title" value="<?php echo $card_title; ?>" />
   <meta name="twitter:description" value="<?php echo $card_desc; ?>" />
+<?php if ($card_thumb) { ?>
   <meta name="twitter:image" value="<?php echo $card_thumb; ?>" />
+<?php } ?>
   <meta name="twitter:site" value="@emblevents" />
 <?php
 if($card_name) { ?>

@@ -194,7 +194,7 @@ class VF_WP {
     global $post;
 
     // If editing plugin post
-    $plugin = VF_Plugin::get_plugin($post->post_name);
+    $plugin = $post ? VF_Plugin::get_plugin($post->post_name) : null;
 
     wp_register_script(
       'vf-plugin',

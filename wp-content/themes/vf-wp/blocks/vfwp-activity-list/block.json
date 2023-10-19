@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-activity-list",
+  "title": "Activity List",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}

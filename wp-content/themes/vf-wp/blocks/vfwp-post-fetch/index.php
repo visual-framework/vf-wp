@@ -4,38 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('VFWP_Post_Fetch') ) :
 
-  require_once('widget.php');
-  
+require_once('widget.php');
+
 class VFWP_Post_Fetch extends VFWP_Block {
 
   public function __construct() {
     parent::__construct(__FILE__);
-  }
-
-  /**
-   * Return the block name
-   */
-  static public function get_name() {
-    return 'vfwp-post-fetch';
-  }
-
-  /**
-   * Return Gutenberg block registration configuration
-   * https://www.advancedcustomfields.com/resources/acf_register_block_type/
-   * https://developer.wordpress.org/block-editor/developers/block-api/block-registration/
-   */
-  public function get_config() {
-    return array(
-      'name'     => $this->get_name(),
-      'title'    => 'Fetch posts',
-      'category' => 'vf/wp',
-      'supports' => array(
-        'vf/renderIFrame' => false,
-        'vf/innerBlocks'  => true,
-        'align'           => false,
-        'customClassName' => false,
-      )
-    );
   }
 
 } // VFWP_Post_Fetch

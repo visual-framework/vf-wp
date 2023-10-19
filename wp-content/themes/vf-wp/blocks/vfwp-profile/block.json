@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-profile",
+  "title": "Profile",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}

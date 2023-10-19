@@ -1,0 +1,14 @@
+{
+  "name": "vfwp-details",
+  "title": "Details",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  },
+  "supports": {
+    "jsx": true
+  },
+  "vfwp": {
+    "iframeRender": false
+  }
+}

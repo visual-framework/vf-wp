@@ -23,6 +23,9 @@ class VF_Templates {
    * Return true if `$post` is valid `vf_template`
    */
   static public function is_template_post($post, $post_name = '') {
+    if ( ! ($post instanceof WP_Post)) {
+      return false;
+    }
     $theme = wp_get_theme();
     $template_name = get_page_template_slug( $post->ID );
 
@@ -41,12 +44,12 @@ class VF_Templates {
     if (($theme == 'VF-WP Industry')) {
       if ((is_page_template('template-title-left-aligned.php')) ) {
         return true;
-      }   
+      }
       if ((is_page_template($template_name)) || (is_singular( 'industry_event' ))) {
         return false;
-      }   
+      }
     }
-    
+
     if (($theme == 'VF-WP Intranet') && ((is_search()) || (is_page_template('searchpage.php')))) {
       return false;
      }
@@ -54,26 +57,26 @@ class VF_Templates {
     if (($theme == 'VF-WP EMBL-EBI Events')) {
       if ((is_page_template('template-title-left-aligned.php')) ) {
         return true;
-      }   
+      }
       if ((is_page_template($template_name)) || (is_front_page()) || (is_singular( 'events' ))) {
         return false;
-      }   
+      }
     }
 
      if ($theme == 'VF-WP Groups')  {
-       if 
+       if
          (((is_home()) && (!is_front_page())) || (is_single() && 'post' == get_post_type()) || (is_archive())) {
           return false;
        }
      }
-    
+
     return true;
   }
   /**
    * Return default template post content
    */
 
- 
+
 
   static public function default_template() {
     $post_content = '
@@ -154,7 +157,7 @@ class VF_Templates {
     );
    }
 
-  
+
 
   /**
    * Reference: `get_post_type_labels`

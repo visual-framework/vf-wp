@@ -53,7 +53,7 @@ class VF_Events {
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
     );
-    
+
   }
 
   public function template() {
@@ -217,7 +217,9 @@ class VF_Events {
     if ($option === 'custom') {
       $option = get_field('vf_event_date_format_custom', 'option');
     }
-    $option = trim($option);
+    if ( ! empty($option)) {
+      $option = trim($option);
+    }
     if ( ! empty($option)) {
       $format = $option;
     }
@@ -235,7 +237,9 @@ class VF_Events {
       return $post_type_object->label;
     }
     $upcoming_title = get_field('vf_event_upcoming_title', 'options');
-    $upcoming_title = trim($upcoming_title);
+    if ( ! empty($upcoming_title)) {
+      $upcoming_title = trim($upcoming_title);
+    }
     $title = $upcoming_title;
     // Get past events title
     if ( ! is_bool($is_past)) {
@@ -243,7 +247,9 @@ class VF_Events {
     }
     if ($is_past) {
       $past_title = get_field('vf_event_past_title', 'options');
-      $past_title = trim($past_title);
+      if ( ! empty($past_title)) {
+        $past_title = trim($past_title);
+      }
       $title = $past_title;
     }
     // Use post type label for default title
@@ -280,18 +286,20 @@ class VF_Events {
       'next'     => false,
       'previous' => false
     );
-    if (
+    $next_link = get_next_posts_link('', $pages);
+    if ($next_link &&
       preg_match(
         '#href="([^"]*)"#is',
-        get_next_posts_link('', $pages),
+        $next_link,
         $matches)
     ) {
       $pagination['next'] = trim($matches[1]);
     }
-    if (
+    $prev_link = get_previous_posts_link('', $pages);
+    if ($prev_link &&
       preg_match(
         '#href="([^"]*)"#is',
-        get_previous_posts_link('', $pages),
+        $prev_link,
         $matches)
     ) {
       $pagination['previous'] = trim($matches[1]);

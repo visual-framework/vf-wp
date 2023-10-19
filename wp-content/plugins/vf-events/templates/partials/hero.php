@@ -9,10 +9,9 @@ $industry_event_type = get_field('vf_event_industry_type');
 $location = get_field('vf_event_location');
 $banner_text = get_field('vf_event_banner_text');
 $canceled = get_field('vf_event_canceled');
-
 $hero_image = get_field('vf_event_hero', $post->post_parent);
-if (!empty($hero_image)) {
-$hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
+if (is_array($hero_image)) {
+  $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
@@ -23,7 +22,7 @@ $hero_image = wp_get_attachment_url($hero_image['ID'], 'medium', false, array(
     <div class="vf-banner__content">
         <p class="vf-banner__text"><?php echo ($banner_text); ?></p>
     </div>
-</div>   
+</div>
 <?php } ?>
 
 <section class="vf-hero | vf-u-fullbleed">

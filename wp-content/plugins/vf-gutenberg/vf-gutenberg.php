@@ -109,9 +109,11 @@ class VF_Gutenberg {
    * Render VF Nunjuck template blocks
    */
   public function render_block_nunjucks($html, $block) {
-    if (preg_match('/^vf\//', $block['blockName'])) {
-      if (isset($block['attrs']['render'])) {
-        return $block['attrs']['render'];
+    if ( ! empty($block['blockName'])) {
+      if (preg_match('/^vf\//', $block['blockName'])) {
+        if (isset($block['attrs']['render'])) {
+          return $block['attrs']['render'];
+        }
       }
     }
     return $html;
@@ -180,19 +182,18 @@ class VF_Gutenberg {
         '/assets/vf-blocks' . (vf_debug() ? '' : '.min') .  '.js',
         __FILE__
       ),
-      array('wp-editor', 'wp-blocks', 'vf-plugin'),
-      false,
+      array('vf-plugin'),
+      time(),
       true
     );
-
     wp_register_script(
       'vf-gutenberg',
       plugins_url(
         '/assets/vf-gutenberg.js',
         __FILE__
       ),
-      array('wp-editor', 'wp-blocks'),
-      false,
+      array(),
+      time(),
       true
     );
     /**
@@ -222,13 +223,14 @@ class VF_Gutenberg {
     }
 
     global $post;
+    $postId = $post instanceof WP_Post ? $post->ID : 0;
 
     $config = array(
       'renderPrefix' => $prefix,
       'renderSuffix' => $suffix,
       'coreOptin'    => 1,
-      'postId'       => $post->ID,
-      'nonce'        => wp_create_nonce("vf_nonce_{$post->ID}")
+      'postId'       => $postId,
+      'nonce'        => wp_create_nonce("vf_nonce_{$postId}")
     );
 
     wp_localize_script('vf-blocks', 'vfGutenberg', $config);
@@ -358,7 +360,7 @@ class VF_Gutenberg {
     }
 
 ?>
-  <div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+  <div class="vf-block vf-block-preview" data-editing="false" data-loading="false">
     <template
       <?php if ($is_container) { ?>
         data-is-container="1"
@@ -384,12 +386,12 @@ class VF_Gutenberg {
       $html
     );
 ?>
-<div class="vf-block" data-acf-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
+<div class="vf-block vf-block-preview" data-id="<?php echo esc_attr($acf_id); ?>" data-editing="false" data-loading="false">
   <div class="vf-block__view"></div>
 </div>
 <script>
 (function() {
-  const parent = document.querySelector('[data-acf-id="<?php echo esc_attr($acf_id); ?>"]');
+  const parent = document.querySelector('.vf-block-preview[data-id="<?php echo esc_attr($acf_id); ?>"]');
   const iframe = document.createElement('iframe');
     iframe.id = '<?php echo $id; ?>';
     iframe.classList.add('vf-block__iframe');

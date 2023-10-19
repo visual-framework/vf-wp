@@ -1,0 +1,14 @@
+{
+  "name": "vfwp-bg-container",
+  "title": "Container",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  },
+  "supports": {
+    "jsx": true
+  },
+  "vfwp": {
+    "containerable": true
+  }
+}

@@ -19,14 +19,22 @@ $registration_closing = get_field('vf_event_registration_closing');
 $registration_closing_on_site = get_field('vf_event_registration_closing_on-site');
 
 $now = new DateTime();
-$application_date = new DateTime($application_closing);
-$registration_date = new DateTime($registration_closing);
-$registration_date_on_site = new DateTime($registration_closing_on_site);
+if ($application_closing) {
+  $application_date = new DateTime($application_closing);
+  $application_date_formated = $application_date->format('Y-m-d');
+}
+if ($registration_closing) {
+  $registration_date = new DateTime($registration_closing);
+  $registration_date_formated = $registration_date->format('Y-m-d');
+}
+if ($registration_closing_on_site) {
+  $registration_date_on_site = new DateTime($registration_closing_on_site);
+  $registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
+}
+
 $abstract_date = new DateTime($abstract_closing);
 $current_date = $now->format('Y-m-d');
-$registration_date_formated = $registration_date->format('Y-m-d');
-$registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
-$application_date_formated = $application_date->format('Y-m-d');
+
 $abstract_date_formated = $abstract_date->format('Y-m-d');
 
 $event_topic = get_field('vf_event_event_topic');
@@ -46,21 +54,21 @@ $register_button = ucfirst(strtolower($register_button));
 $register_button_on_site = ucfirst(strtolower($register_button_on_site));
 $info_text = get_field('vf_event_info_text');
 $registration_type = get_field('vf_event_registration_type');
-
 $social_url = get_the_permalink();
 
 
 $logo_image = get_field('vf_event_logo');
-if(!empty($logo_image)){
-$logo_image = wp_get_attachment_image($logo_image['ID'], 'medium', false, array(
+if (is_array($logo_image)) {
+  $logo_image = wp_get_attachment_image($logo_image['ID'], 'medium', false, array(
     'style'    => 'max-height: 95px; width: auto;',
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
 }
+
 $poster_image = get_field('vf_event_poster');
-if(!empty($poster_image)){
-$poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, array(
+if (is_array($poster_image)) {
+  $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, array(
     'style'    => 'max-width: 175px; height: auto; border: 1px solid #d0d0ce',
     'loading'  => 'lazy',
     'itemprop' => 'image',
@@ -71,37 +79,37 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
 <div>
   <?php if ($event_organiser == ("cco_hd") || ("default")) { ?>
   <figure class="vf-figure vf-figure--align vf-figure--align-centered | vf-u-margin__bottom--400">
-    <?php 
+    <?php
     // Event logo
-    echo($logo_image); ?>
+    if ($logo_image) { echo($logo_image); } ?>
   </figure>
   <?php } ?>
   <div>
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Date:</span>
       <span class="vf-u-text-color--grey">
-        <?php 
+        <?php
       // Event dates
       if ( ! empty($start_date)) {
-        if ($end_date) { 
+        if ($end_date) {
           if ($start->format('M') == $end->format('M')) {
             echo $start->format('j'); ?> - <?php echo $end->format('j M Y'); }
           else {
             echo $start->format('j M'); ?> - <?php echo $end->format('j M Y'); }
               ?>
-        <?php } 
+        <?php }
         else {
-          echo $start->format('j M Y'); 
+          echo $start->format('j M Y');
         } }
         ?>
       </span>
     </p>
-    <?php 
+    <?php
     if (!empty($location)) { ?>
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Location:</span> <span
         class="vf-u-text-color--grey">
         <?php
         if (!empty($other_location)) {
-        echo esc_html($other_location); 
+        echo esc_html($other_location);
         }
         else {
           echo implode( ' and ', $location );
@@ -128,24 +136,24 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     <?php if ( ! empty($abstract_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if ($abstract_date_formated >= $current_date) {
     echo esc_html($abstract_closing);
-     }  
+     }
     else {
     echo 'Closed';
      }
     ?></span></p>
-    <?php } 
-    
+    <?php }
+
     /* Application date
     if ( ! empty($application_closing)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span class="vf-u-text-color--grey">
         <?php if ($application_date < $now) {
           echo 'Closed';
-        }  
+        }
         else if ($application_closing) {
           echo esc_html($application_closing);
         }
       ?></span></p>
-    <?php } 
+    <?php }
     // Show info text
             else if (!empty($info_text)) { ?>
     <p class="vf-text-body vf-text-body--3"><span>Application:</span> <span class="vf-u-text-color--grey">
@@ -158,7 +166,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
 
     <?php
     // Buttons abstract
-    if ( ! empty($abstract_link)) { 
+    if ( ! empty($abstract_link)) {
                 if (($abstract_date_formated >= $current_date)) {?>
     <div style="display: inline-block;">
       <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
@@ -177,19 +185,19 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
       </span> <span class="vf-u-text-color--grey">
         <?php if ($registration_date_formated_on_site >= $current_date) {
           echo esc_html($registration_closing_on_site);
-        }  
+        }
         else {
           echo 'Closed';
         } ?>
       </span></p>
     <?php } ?>
 
-    <?php 
+    <?php
       // Buttons on site
-      if ( !empty($registration_link_on_site)) { 
+      if ( !empty($registration_link_on_site)) {
             if (
-              (($registration_date_formated_on_site >= $current_date)) 
-              || 
+              (($registration_date_formated_on_site >= $current_date))
+              ||
               (($application_closing) && ($application_date_formated >= $current_date))) { ?>
     <div style="display: inline-block;" data-vf-google-analytics-region="registration-onsite">
       <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
@@ -209,12 +217,12 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
       </span> <span class="vf-u-text-color--grey">
         <?php if ($registration_date_formated >= $current_date) {
       echo esc_html($registration_closing);
-    }  
+    }
     else {
       echo 'Closed';
     } ?>
       </span></p>
-    <?php } 
+    <?php }
 
   // Show info text
   else if (!empty($info_text)) { ?>
@@ -228,12 +236,12 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
           <?php echo esc_html($info_text); ?>
         </span></p>
     <?php  } ?>
-    <?php 
+    <?php
   // Buttons virtual
-  if ( !empty($registration_link)) { 
+  if ( !empty($registration_link)) {
         if (
-          (($registration_date_formated >= $current_date)) 
-          || 
+          (($registration_date_formated >= $current_date))
+          ||
           (($application_closing) && ($application_date_formated >= $current_date))) { ?>
     <div style="display: inline-block;" data-vf-google-analytics-region="registration-virtual">
       <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
@@ -246,7 +254,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
     <?php } ?>
 
 
-    <?php 
+    <?php
     // Organisers
     if( have_rows('vf_event_organisers_event_template') ): ?>
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Organisers: </span></p>
@@ -276,8 +284,8 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
         href="mailto:<?php echo esc_attr($contact); ?>"><?php echo esc_html($contact_name); ?></a></p>
     <?php } ?>
     <div class="vf-grid">
-      <?php 
-      
+      <?php
+
       // Poster image
       if ( ! empty($poster_image) && $event_organiser != "science_society") { ?>
       <div>
@@ -289,7 +297,7 @@ $poster_image = wp_get_attachment_image($poster_image['ID'], 'large', false, arr
         </a>
       </div>
       <?php }
-      include( plugin_dir_path( __FILE__ ) . './social-media-icons.php'); 
+      include( plugin_dir_path( __FILE__ ) . './social-media-icons.php');
       ?>
     </div>
   </div>

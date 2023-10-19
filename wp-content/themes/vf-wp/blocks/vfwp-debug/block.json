@@ -1,0 +1,11 @@
+{
+  "name": "vfwp-debug",
+  "title": "Debug",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  },
+  "supports": {
+    "jsx": true
+  }
+}

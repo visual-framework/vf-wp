@@ -1,0 +1,8 @@
+{
+  "name": "vfwp-embed",
+  "title": "Embed",
+  "apiVersion": 3,
+  "acf": {
+    "mode": "preview"
+  }
+}
