@@ -4,7 +4,12 @@ if( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('EMBL_Taxonomy_Register') ) :
 
+
 class EMBL_Taxonomy_Register {
+
+  // Maximum number of terms to sync per API request
+  // Set as high as possible but reduce if requests timeout
+  const SYNC_MAX_TERMS = 500;
 
   // Options table keys
   const OPTION_MODIFIED = EMBL_Taxonomy::TAXONOMY_NAME . '_modified';
@@ -13,8 +18,6 @@ class EMBL_Taxonomy_Register {
   const UUID_PATTERN = '#^[0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12}$#';
 
   protected $labels;
-
-  private $sync_error = false;
 
   public function __construct() {
 
@@ -33,7 +36,6 @@ class EMBL_Taxonomy_Register {
     add_filter(EMBL_Taxonomy::TAXONOMY_NAME . '_name', array($this, 'filter_term_name'), 10, 3);
 
     if (is_admin()) {
-      add_action('admin_init', array($this, 'action_admin_init'));
       add_action('admin_notices', array($this, 'action_admin_notices'));
       add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
     }
@@ -48,12 +50,8 @@ class EMBL_Taxonomy_Register {
      */
     add_filter( 'manage_edit-embl_taxonomy_columns' , 'wptc_embl_taxonomy_columns' );
     function wptc_embl_taxonomy_columns( $columns ) {
-    	// remove slug column
-    	// unset($columns['slug']);
-
-    	// add column
-    	$columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID');
-    	return $columns;
+      $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
+      return $columns;
     }
 
     /*
@@ -63,18 +61,18 @@ class EMBL_Taxonomy_Register {
      */
     add_filter( 'manage_embl_taxonomy_custom_column', 'wptc_embl_taxonomy_column_content', 10, 3 );
     function wptc_embl_taxonomy_column_content( $content, $column_name, $term_id ) {
-    	// get the term object
-    	$term = get_term( $term_id, 'embl_taxonomy' );
-    	// check if column is our custom column
-    	if ( 'embl_taxonomy_term_uuid' == $column_name ) {
+      // get the term object
+      $term = get_term( $term_id, 'embl_taxonomy' );
+      // check if column is our custom column
+      if ( 'embl_taxonomy_term_uuid' == $column_name ) {
         $full_term = embl_taxonomy_get_term($term->term_id);
         // Eventually we should link back to the contenHub, however we don't currently
         // have a good way to search by UUID
         // https://dev.content.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid=2a270b68-46c3-4b3f-92c5-0a65eb896c86&pattern=node-display-title
         // the above query depends on knowing the conent type
-    		$content = '<code>'.end($full_term->meta['embl_taxonomy_ids']).'</code>';
-    	}
-    	return $content;
+        $content = '<code>'.end($full_term->meta['embl_taxonomy_ids']).'</code>';
+      }
+      return $content;
     }
 
     $this->set_read_only();
@@ -144,9 +142,21 @@ class EMBL_Taxonomy_Register {
 
   /**
    * Hook for `rest_api_init`
-   * Add taxonomy terms assigned to posts
    */
   public function register_rest_api() {
+    // Using `POST` because GET requests are easier to accidentally invoke
+    // API route will be called multiple times with the `offset` parameter
+    register_rest_route(EMBL_Taxonomy::TAXONOMY_NAME . '/v1', '/sync/', array(
+      'methods' => 'POST',
+      'callback' => array($this, 'sync_taxonomy'),
+      // Secure the API route
+      // Header token from `wp_localize_script` below is required
+      'permission_callback' => function () {
+        return current_user_can('manage_categories');
+      }
+    ));
+
+    // Add taxonomy terms assigned to posts as field for WP REST API
     register_rest_field(
       EMBL_Taxonomy::TAXONOMY_TYPES,
       EMBL_Taxonomy::TAXONOMY_NAME . '_terms',
@@ -208,59 +218,87 @@ class EMBL_Taxonomy_Register {
 
   /**
    * Read and parse the EMBL Taxonomy API as JSON
-   * Error messages are picked up by the `admin_notices` action
    * The WordPress Taxonomy is rebuilt with matching ID terms synced
    */
-  public function sync_taxonomy() {
-    // Make contenthub taxonomy api call to work on local
-    $whitelist = array(
-      '127.0.0.1',
-      '::1'
-    );
+  public function sync_taxonomy(WP_REST_Request $request = null) {
 
-    if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
-      $embl_taxonomy_url = "https://content.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub";
+    $params = array();
+    if ($request) {
+      $params = $request->get_query_params();
     }
-    else {
-      // Prod Proxy endpoint.
-      $embl_taxonomy_url = embl_taxonomy_get_url();
+    $offset = isset($params['offset']) ? intval($params['offset']) : -1;
+
+    // Temporary file location to cache old and new data during sync process
+    $oldpath = trailingslashit( WP_CONTENT_DIR ) . 'uploads/' . EMBL_Taxonomy::TAXONOMY_NAME . '.old.txt';
+    $newpath = trailingslashit( WP_CONTENT_DIR ) . 'uploads/' . EMBL_Taxonomy::TAXONOMY_NAME . '.new.txt';
+
+    // Start new sync process if not offset is provided
+    if ($offset < 0) {
+      // Delete temporary files
+      if (file_exists($oldpath)) {
+        unlink($oldpath);
+      }
+      if (file_exists($newpath)) {
+        unlink($newpath);
+      }
+      // Get the existing WordPress taxonomy
+      file_put_contents($oldpath, serialize(self::get_wp_taxonomy()));
+      // Fetch the new terms
+      $value = $this->sync_taxonomy_temp_file($newpath);
+      // Handle errors
+      if (is_string($value)) {
+        if ($request) {
+          return array(
+            'error' => $value
+          );
+        } else {
+          throw new Exception($value);
+        }
+      }
+      // Return the URL for the first batch
+      if ($request) {
+        return array(
+          'next'   => rest_url(EMBL_Taxonomy::TAXONOMY_NAME .'/v1/sync/?offset=0'),
+          'total'  => $value,
+          'offset' => 0
+        );
+        exit;
+      }
     }
 
-    // Attempt to read the EMBL Taxonomy API
-    $data = file_get_contents($embl_taxonomy_url);
-    if ($data === false) {
-      $this->sync_error = sprintf(
-        __('The %1$s API endpoint could not be accessed.', 'embl'),
-        $this->labels['name']
-      );
-      return $this->sync_error;
-    }
-
-    // Attempt to parse API results
-    $json_terms = self::decode_terms($data);
-    if (empty($json_terms)) {
-      $this->sync_error = sprintf(
-        __('The %1$s API result could not be parsed.', 'embl'),
-        $this->labels['name']
-      );
-      return $this->sync_error;
-    }
-
-    // Generate the new taxonomy terms from the API terms provided
-    $new_terms = array();
-
-    self::generate_terms($json_terms, $new_terms);
-
-    self::sort_terms($new_terms);
-
-    // Get the existing WordPress taxonomy
-    $wp_taxonomy = self::get_wp_taxonomy();
+    // Retrieve the old terms
+    $wp_taxonomy = unserialize(file_get_contents($oldpath));
+    // Retrieve the new terms
+    $new_terms = unserialize(file_get_contents($newpath));
 
     // Allow taxonomy terms to be inserted
     $this->set_read_only(false);
 
+    // Batch size for Request API or sync all terms (for WP CLI)
+    $max_terms = $request ? self::SYNC_MAX_TERMS : PHP_INT_MAX;
+
     // Iterate over all terms to sync
+    $i = 0;
     foreach ($new_terms as $term) {
+      // Skip terms before the offset
+      if ($i < $offset) {
+        $i++;
+        continue;
+      }
+      // Check if batch is complete
+      if ($i >= $offset + $max_terms) {
+        $this->set_read_only(true);
+        // Cache progress and redirect to continue
+        file_put_contents($oldpath, serialize($wp_taxonomy));
+        // Return the URL for the next batch
+        return array(
+          'next'   => rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/sync/?offset=' . $i),
+          'total'  => count($new_terms),
+          'offset' => $i,
+        );
+        exit;
+      }
+      $i++;
 
       // Find existing `WP_Term` in the taxonomy based on META_IDS structure
       $wp_term = null;
@@ -339,7 +377,61 @@ class EMBL_Taxonomy_Register {
 
     update_option(self::OPTION_MODIFIED, time());
 
-    return true;
+    unlink($newpath);
+    unlink($oldpath);
+
+    // Return success message
+    return array(
+      'success' => true,
+      'terms'   => count($new_terms)
+    );
+  }
+
+  /**
+   * Request new taxonomy terms from the EMBL Taxonomy API
+   * This is done at the start of the sync process
+   */
+  private function sync_taxonomy_temp_file($newpath) {
+    // Make contenthub taxonomy api call to work on local
+    $whitelist = array(
+      '127.0.0.1',
+      '::1'
+    );
+    if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
+      $embl_taxonomy_url = "https://content.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub";
+    } else {
+      // Prod Proxy endpoint.
+      $embl_taxonomy_url = embl_taxonomy_get_url();
+    }
+
+    // Attempt to read the EMBL Taxonomy API
+    $data = file_get_contents($embl_taxonomy_url);
+    if ($data === false) {
+      return sprintf(
+        __('The %1$s API endpoint could not be accessed.', 'embl'),
+        $this->labels['name']
+      );
+    }
+
+    // Attempt to parse API results
+    $json_terms = self::decode_terms($data);
+    if (empty($json_terms)) {
+      return sprintf(
+        __('The %1$s API result could not be parsed.', 'embl'),
+        $this->labels['name']
+      );
+    }
+
+    // Generate the new taxonomy terms from the API terms provided
+    $new_terms = array();
+
+    self::generate_terms($json_terms, $new_terms);
+
+    self::sort_terms($new_terms);
+
+    file_put_contents($newpath, serialize($new_terms));
+
+    return count($new_terms);
   }
 
   /**
@@ -457,30 +549,11 @@ class EMBL_Taxonomy_Register {
       $blen = count($b[EMBL_Taxonomy::META_IDS]);
       // Sort alphabetically if same level
       if ($a[EMBL_Taxonomy::META_IDS][0] !== $b[EMBL_Taxonomy::META_IDS][0] || $alen === $blen) {
-        return $a['name'] > $b['name'];
+        return strcmp($a['name'], $b['name']);
       }
       // Sort by longest chain
-      return $alen > $blen;
+      return $alen - $blen;
     });
-  }
-
-  /**
-   * Action `admin_init`
-   */
-  public function action_admin_init() {
-    if ( ! current_user_can('manage_categories')) {
-      return;
-    }
-    global $pagenow;
-    if ($pagenow !== 'edit-tags.php') {
-      return;
-    }
-    if (array_key_exists('taxonomy', $_GET) && $_GET['taxonomy'] !== EMBL_Taxonomy::TAXONOMY_NAME) {
-      return;
-    }
-    if (array_key_exists('sync', $_GET) && $_GET['sync'] === 'true') {
-      $this->sync_taxonomy();
-    }
   }
 
   /**
@@ -489,14 +562,6 @@ class EMBL_Taxonomy_Register {
    * Show admin success notice if a sync happening recently
    */
   public function action_admin_notices() {
-
-    if ($this->sync_error) {
-      printf('<div class="%1$s"><p>%2$s</p></div>',
-        esc_attr('notice notice-error'),
-        esc_html($this->sync_error)
-      );
-    }
-
     if ( ! current_user_can('manage_categories')) {
       return;
     }
@@ -508,14 +573,14 @@ class EMBL_Taxonomy_Register {
 
     // Sync required (all pages)
     if (($now - $modified) >= EMBL_Taxonomy::MAX_AGE) {
-      printf('<div class="%1$s"><p>%2$s %3$s</p></div>',
+      printf('<div class="%1$s"><p><span>%2$s</span> %3$s</p></div>',
         esc_attr('notice notice-warning'),
         esc_html(sprintf(
           __('The %1$s may be outdated and should be synced', 'embl'),
           $this->labels['name']
         )),
         sprintf(
-          '<a href="%1$s" class="button button-small">%2$s</a>',
+          '<button id="embl-taxonomy-sync" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
           esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&sync=true'),
           esc_html(__('Sync now', 'embl'))
         )
@@ -539,7 +604,13 @@ class EMBL_Taxonomy_Register {
     if ( ! $notice && function_exists('get_current_screen')) {
       $screen = get_current_screen();
       if ($screen->id === 'edit-embl_taxonomy') {
-        printf('<div class="%1$s"><p>%2$s %3$s</p></div>',
+        if (isset($_GET['synced']) && $_GET['synced'] === 'true') {
+          printf('<div class="%1$s"><p>%2$s</p></div>',
+            esc_attr('notice notice-success'),
+            __('Taxonomy sync complete.', 'embl')
+          );
+        }
+        printf('<div class="%1$s"><p><span>%2$s</span> %3$s</p></div>',
           esc_attr('notice notice-info'),
           esc_html(sprintf(
             __('The %1$s was last synced at %2$s', 'embl'),
@@ -547,7 +618,7 @@ class EMBL_Taxonomy_Register {
             date('jS F Y H:i:s', $modified)
           )),
           sprintf(
-            '<a href="%1$s" class="button button-small">%2$s</a>',
+            '<button id="embl-taxonomy-sync" data-href="%1$s" class="button button-small">%2$s</button>',
             esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&sync=true'),
             esc_html(__('Sync now', 'embl'))
           )
@@ -597,6 +668,28 @@ class EMBL_Taxonomy_Register {
   public function action_admin_enqueue() {
     $screen = get_current_screen();
     $edit_tags_id = 'edit-' . EMBL_Taxonomy::TAXONOMY_NAME;
+
+    wp_register_script(
+      'embl-taxonomy',
+      plugin_dir_url(__FILE__) . '../assets/embl-taxonomy.js',
+      array(),
+      time(),
+      true
+    );
+
+    wp_localize_script('embl-taxonomy', 'emblTaxonomySettings', array(
+      'data' => array(
+        'syncing' => __('Syncing – please do not close this window.', 'embl'),
+        'reload'  => __('This page will reload after the sync is done.', 'embl'),
+        'error'   => __('There was an error syncing the taxonomy.', 'embl')
+      ),
+      'redirect' => esc_url_raw(admin_url('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&synced=true')),
+      'path'     => esc_url_raw(rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/sync')),
+      'token'    => wp_create_nonce('wp_rest')
+    ));
+
+    wp_enqueue_script('embl-taxonomy');
+
     if ($screen->id === $edit_tags_id) {
       wp_enqueue_style(
         $edit_tags_id,
