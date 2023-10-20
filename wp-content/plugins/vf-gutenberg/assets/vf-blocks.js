@@ -720,7 +720,7 @@
   // `RequireObjectCoercible` abstract operation
   // https://tc39.es/ecma262/#sec-requireobjectcoercible
   var requireObjectCoercible$2 = function (it) {
-    if (isNullOrUndefined$1(it)) throw $TypeError$6("Can't call method on " + it);
+    if (isNullOrUndefined$1(it)) throw new $TypeError$6("Can't call method on " + it);
     return it;
   };
 
@@ -869,7 +869,7 @@
   // `Assert: IsCallable(argument) is true`
   var aCallable$2 = function (argument) {
     if (isCallable$8(argument)) return argument;
-    throw $TypeError$5(tryToString(argument) + ' is not a function');
+    throw new $TypeError$5(tryToString(argument) + ' is not a function');
   };
 
   var aCallable$1 = aCallable$2;
@@ -895,7 +895,7 @@
     if (pref === 'string' && isCallable$7(fn = input.toString) && !isObject$4(val = call$3(fn, input))) return val;
     if (isCallable$7(fn = input.valueOf) && !isObject$4(val = call$3(fn, input))) return val;
     if (pref !== 'string' && isCallable$7(fn = input.toString) && !isObject$4(val = call$3(fn, input))) return val;
-    throw $TypeError$4("Can't convert object to primitive value");
+    throw new $TypeError$4("Can't convert object to primitive value");
   };
 
   var shared$3 = {exports: {}};
@@ -926,10 +926,10 @@
   (shared$3.exports = function (key, value) {
     return store$2[key] || (store$2[key] = value !== undefined ? value : {});
   })('versions', []).push({
-    version: '3.32.1',
+    version: '3.33.0',
     mode: 'global',
     copyright: '© 2014-2023 Denis Pushkarev (zloirock.ru)',
-    license: 'https://github.com/zloirock/core-js/blob/v3.32.1/LICENSE',
+    license: 'https://github.com/zloirock/core-js/blob/v3.33.0/LICENSE',
     source: 'https://github.com/zloirock/core-js'
   });
 
@@ -1004,7 +1004,7 @@
       if (pref === undefined) pref = 'default';
       result = call$2(exoticToPrim, input, pref);
       if (!isObject$3(result) || isSymbol$1(result)) return result;
-      throw $TypeError$3("Can't convert object to primitive value");
+      throw new $TypeError$3("Can't convert object to primitive value");
     }
     if (pref === undefined) pref = 'number';
     return ordinaryToPrimitive(input, pref);
@@ -1089,7 +1089,7 @@
   // `Assert: Type(argument) is Object`
   var anObject$2 = function (argument) {
     if (isObject$1(argument)) return argument;
-    throw $TypeError$2($String$1(argument) + ' is not an object');
+    throw new $TypeError$2($String$1(argument) + ' is not an object');
   };
 
   var DESCRIPTORS$3 = descriptors;
@@ -1131,7 +1131,7 @@
     if (IE8_DOM_DEFINE) try {
       return $defineProperty(O, P, Attributes);
     } catch (error) { /* empty */ }
-    if ('get' in Attributes || 'set' in Attributes) throw $TypeError$1('Accessors not supported');
+    if ('get' in Attributes || 'set' in Attributes) throw new $TypeError$1('Accessors not supported');
     if ('value' in Attributes) O[P] = Attributes.value;
     return O;
   };
@@ -1222,7 +1222,7 @@
     return function (it) {
       var state;
       if (!isObject(it) || (state = get(it)).type !== TYPE) {
-        throw TypeError$1('Incompatible receiver, ' + TYPE + ' required');
+        throw new TypeError$1('Incompatible receiver, ' + TYPE + ' required');
       } return state;
     };
   };
@@ -1235,7 +1235,7 @@
     store.set = store.set;
     /* eslint-enable no-self-assign -- prototype methods protection */
     set$1 = function (it, metadata) {
-      if (store.has(it)) throw TypeError$1(OBJECT_ALREADY_INITIALIZED);
+      if (store.has(it)) throw new TypeError$1(OBJECT_ALREADY_INITIALIZED);
       metadata.facade = it;
       store.set(it, metadata);
       return metadata;
@@ -1250,7 +1250,7 @@
     var STATE = sharedKey('state');
     hiddenKeys$2[STATE] = true;
     set$1 = function (it, metadata) {
-      if (hasOwn$4(it, STATE)) throw TypeError$1(OBJECT_ALREADY_INITIALIZED);
+      if (hasOwn$4(it, STATE)) throw new TypeError$1(OBJECT_ALREADY_INITIALIZED);
       metadata.facade = it;
       createNonEnumerableProperty$1(it, STATE, metadata);
       return metadata;
@@ -1646,7 +1646,7 @@
   var $TypeError = TypeError;
 
   var validateArgumentsLength$2 = function (passed, required) {
-    if (passed < required) throw $TypeError('Not enough arguments');
+    if (passed < required) throw new $TypeError('Not enough arguments');
     return passed;
   };
 
@@ -5779,13 +5779,40 @@ if (ResizeObserver) {
   context.addExport("blockquote_text", t_3);
   }
   var t_4;
-  t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"blockquote_citation");
-  frame.set("blockquote_citation", t_4, true);
+  t_4 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"blockquote_author");
+  frame.set("blockquote_author", t_4, true);
   if(frame.topLevel) {
-  context.setVariable("blockquote_citation", t_4);
+  context.setVariable("blockquote_author", t_4);
   }
   if(frame.topLevel) {
-  context.addExport("blockquote_citation", t_4);
+  context.addExport("blockquote_author", t_4);
+  }
+  var t_5;
+  t_5 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"blockquote_author_href");
+  frame.set("blockquote_author_href", t_5, true);
+  if(frame.topLevel) {
+  context.setVariable("blockquote_author_href", t_5);
+  }
+  if(frame.topLevel) {
+  context.addExport("blockquote_author_href", t_5);
+  }
+  var t_6;
+  t_6 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"blockquote_author_details");
+  frame.set("blockquote_author_details", t_6, true);
+  if(frame.topLevel) {
+  context.setVariable("blockquote_author_details", t_6);
+  }
+  if(frame.topLevel) {
+  context.addExport("blockquote_author_details", t_6);
+  }
+  var t_7;
+  t_7 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"blockquote_author_imageurl");
+  frame.set("blockquote_author_imageurl", t_7, true);
+  if(frame.topLevel) {
+  context.setVariable("blockquote_author_imageurl", t_7);
+  }
+  if(frame.topLevel) {
+  context.addExport("blockquote_author_imageurl", t_7);
   }
   ;
   }
@@ -5796,27 +5823,48 @@ if (ResizeObserver) {
   output += "\"";
   ;
   }
-  output += " class=\"vf-blockquote";
+  output += " class=\"vf-blockquote vf-u-margin__left--800";
   if(runtime.contextOrFrameLookup(context, frame, "override_class")) {
   output += " | ";
   output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "override_class"), env.opts.autoescape);
   ;
   }
-  output += " | vf-stack vf-stack--400\">\n";
+  output += "\">\n\n";
+  if((runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"))) {
+  output += "      <img class=\"vf-profile__image vf-u-margin__right--600\" src=\"";
+  output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"), env.opts.autoescape);
+  output += "\" alt=\"\" loading=\"lazy\"/>\n";
+  ;
+  }
+  output += "    <div>\n";
   if((runtime.contextOrFrameLookup(context, frame, "blockquote_text")) || (runtime.contextOrFrameLookup(context, frame, "html")) || (runtime.contextOrFrameLookup(context, frame, "text"))) {
-  output += "    <p class=\"vf-blockquote__text\">";
+  output += "        <div>";
   output += runtime.suppressValue(((runtime.contextOrFrameLookup(context, frame, "html")) || (runtime.contextOrFrameLookup(context, frame, "blockquote_text"))?(runtime.contextOrFrameLookup(context, frame, "html")) || env.getFilter("safe").call(context, (runtime.contextOrFrameLookup(context, frame, "blockquote_text"))):runtime.contextOrFrameLookup(context, frame, "text")), env.opts.autoescape);
-  output += "</p>\n";
+  output += "</div>\n";
   ;
   }
-  output += "\n";
-  if(runtime.contextOrFrameLookup(context, frame, "blockquote_citation")) {
-  output += "  <footer class=\"vf-blockquote__footer\">\n    <cite class=\"vf-blockquote__citation\">";
-  output += runtime.suppressValue(env.getFilter("safe").call(context, runtime.contextOrFrameLookup(context, frame, "blockquote_citation")), env.opts.autoescape);
-  output += "</cite>\n  </footer>\n";
+  output += "\n      <footer class=\"vf-u-margin__top--600\">\n";
+  if(runtime.contextOrFrameLookup(context, frame, "blockquote_author_href")) {
+  output += "        <a href=\"";
+  output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_href"), env.opts.autoescape);
+  output += "\" class=\"vf-blockquote_author__link\">\n          <div>";
+  output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author"), env.opts.autoescape);
+  output += "</div>\n        </a>\n";
   ;
   }
-  output += "\n</blockquote>\n";
+  else {
+  output += "          <div>";
+  output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author"), env.opts.autoescape);
+  output += "</div>\n";
+  ;
+  }
+  if(runtime.contextOrFrameLookup(context, frame, "blockquote_author_details")) {
+  output += "        <div class=\"vf-text-body--2\">";
+  output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_details"), env.opts.autoescape);
+  output += "</div>\n";
+  ;
+  }
+  output += "      </footer>\n    </div>\n</blockquote>\n";
   if(parentTemplate) {
   parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
   } else {

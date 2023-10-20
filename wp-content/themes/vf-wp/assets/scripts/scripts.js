@@ -6,6 +6,9 @@
  * Clear the cooke. This is mostly a development tool.
  */
 /* eslint-disable no-unused-vars */
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function vfBannerReset(vfBannerCookieNameAndVersion) {
   vfBannerSetCookie(vfBannerCookieNameAndVersion, false);
 }
@@ -1589,6 +1592,224 @@ function vfTree(scope) {
   });
 }
 
+// vf-mega-menu
+
+// Don't need JS? Then feel free to delete this file.
+
+/*
+ * A note on the Visual Framework and JavaScript:
+ * The VF is primarily a CSS framework so we've included only a minimal amount
+ * of JS in components and it's fully optional (just remove the JavaScript selectors
+ * i.e. `data-vf-js-tabs`). So if you'd rather use Angular or Bootstrap for your
+ * tabs, the Visual Framework won't get in the way.
+ *
+ * When querying the DOM for elements that should be acted on:
+ * 🚫 Don't: const tabs = document.querySelectorAll('.vf-tabs');
+ * ✅ Do:    const tabs = document.querySelectorAll('[data-vf-js-tabs]');
+ *
+ * This allows users who would prefer not to have this JS engage on an element
+ * to drop `data-vf-js-component` and still maintain CSS styling.
+ */
+
+// Uncomment this boilerplate
+// // if you need to import any other components' JS to use here
+// import { vfOthercomponent } from vfImportPrefix + '../vf-other-component/vf-other-component';
+//
+
+function initMegaMenu(megaMenuComponent) {
+  //add activated class to this mega menu. This will help us differentiate when menu is processed with JS and when its not.
+  megaMenuComponent.classList.add("vf-mega-menu__activated");
+  var previousMenuLinkComponent, previousExpandedSectionComponent;
+  function getWidth() {
+    return Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, document.body.offsetWidth, document.documentElement.offsetWidth, document.documentElement.clientWidth);
+  }
+  megaMenuComponent.querySelectorAll("[data-vf-js-mega-menu-section-id]").forEach(function (item) {
+    item.addEventListener('click', function (event) {
+      // For now we do not show the mega menu on mobile.
+      // We still need to decide on approach for mobile support.
+      if (getWidth() > 768) {
+        event.preventDefault();
+        event.vfMegaMenuLink = true;
+        var linkComponent = event.target;
+        var newReferences = handleMenuClick(linkComponent, previousMenuLinkComponent, previousExpandedSectionComponent);
+        previousMenuLinkComponent = newReferences === null || newReferences === void 0 ? void 0 : newReferences.previousMenuLinkComponent;
+        previousExpandedSectionComponent = newReferences === null || newReferences === void 0 ? void 0 : newReferences.previousExpandedSectionComponent;
+      } else {
+        console.warn("vf-mega-menu: No mega menu shown. Mega menu is currently alpha and not supported on small screen sizes. Your screens size is ".concat(getWidth()));
+      }
+      // console.log({ linkComponent });
+      // console.log({ previousMenuLinkComponent });
+      // const associatedSection = linkComponent.getAttribute(
+      //   "data-vf-js-mega-menu-section-id"
+      // );
+    });
+  });
+}
+
+function handleMenuClick(menuItemComponent, previousMenuLinkComponent, previousExpandedSectionComponent) {
+  // console.log("expand / collapse");
+  // debugger;
+  var sectionAttribute = menuItemComponent.getAttribute("data-vf-js-mega-menu-section-id");
+  var section = document.querySelector("[data-vf-js-mega-menu-section=\"".concat(sectionAttribute, "\"]"));
+  // console.log("section", section, sectionAttribute);
+
+  if (!section) {
+    return;
+  }
+
+  // Capture clicks on things other than mega menu elements
+  // https://www.blustemy.io/detecting-a-click-outside-an-element-in-javascript/
+  document.addEventListener("click", function (evt) {
+    var targetElement = evt.target; // clicked element
+    do {
+      if (targetElement == section || evt.vfMegaMenuLink == true) {
+        // This is a click inside. Do nothing, just return.
+        // console.log("Clicked inside!")
+        return;
+      }
+      // Go up the DOM
+      targetElement = targetElement.parentNode;
+    } while (targetElement);
+
+    // This is a click outside.
+    // console.log("Clicked outside!")
+    if (section.getAttribute("aria-hidden") === "false") {
+      // console.log("hiding!")
+      section.setAttribute("aria-hidden", "true");
+    }
+  });
+
+  //0. if section is visible, just hide it
+  if (section.getAttribute("aria-hidden") === "false") {
+    section.setAttribute("aria-hidden", "true");
+    menuItemComponent.classList.remove("is-expanded");
+    return;
+  }
+
+  //1. section is hidden. Hide all sections
+  if (previousExpandedSectionComponent) {
+    previousExpandedSectionComponent.setAttribute("aria-hidden", "true");
+  }
+
+  //2. remove highlight from previous link
+  if (previousMenuLinkComponent) {
+    previousMenuLinkComponent.classList.remove("is-expanded");
+  }
+
+  //3. show new section and add class to new link
+  section.setAttribute("aria-hidden", "false");
+  menuItemComponent.classList.add("is-expanded");
+
+  //4. return new link and section components to be stored as previous
+  return {
+    previousMenuLinkComponent: menuItemComponent,
+    previousExpandedSectionComponent: section
+  };
+}
+
+// function createMenuSectionMap(megaMenuComponent) {
+//   const allMenuComponents = megaMenuComponent.querySelectorAll(
+//     "[data-vf-js-mega-menu-section-id]"
+//   );
+
+//   const menuSectionsMap = new Map();
+//   allMenuComponents.forEach((component) => {
+//     const sectionAttribute = component.getAttribute(
+//       "data-vf-js-mega-menu-section-id"
+//     );
+//     const section = megaMenuComponent.querySelector(
+//       `[data-vf-js-mega-menu-section="${sectionAttribute}"]`
+//     );
+//     menuSectionsMap.set(component, section);
+//   });
+//   return menuSectionsMap;
+// }
+
+/**
+ * The global function for this component
+ * @example vfMegaMenu(firstPassedVar)
+ * @param {string} [firstPassedVar]  - An option to be passed
+ */
+function vfMegaMenu(firstPassedVar) {
+  firstPassedVar = firstPassedVar || 'defaultVal';
+  var allMegaMenuComponents = document.querySelectorAll("[data-vf-js-mega-menu]") || [];
+
+  //for each mega-menu
+  allMegaMenuComponents.forEach(initMegaMenu);
+}
+
+// You should also import it at ./components/vf-component-rollup/scripts.js
+// import { vfMegaMenu } from 'vf-mega-menu/vf-mega-menu';
+// Or import directly
+// import { vfMegaMenu } from '../components/raw/vf-mega-menu/vf-mega-menu.js';
+// And, if needed, invoke it
+// vfMegaMenu();
+
+// vf-back-to-top
+
+/**
+ * Function for JS scroll to top functionality
+ * That must be executed exactly once
+ * @example vfBackToTop()
+ */
+function vfBackToTop() {
+  // add click handler on ALL of the "Back to top" links on page
+  var links = document.querySelectorAll("[data-vf-js-back-to-top]");
+  var _iterator = _createForOfIteratorHelper(links),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var link = _step.value;
+      link.addEventListener("click", function (event) {
+        // if target element has href defined, prevent it from navigating. Href is a non-js fallback
+        event.preventDefault();
+
+        // we get scroll target if from data param of element
+        var scrollToId = event.target.dataset.scrollToId;
+        // Get the element with given id or body if no id provided
+        var targetElement = scrollToId ? document.getElementById(scrollToId) : document.body;
+        // Scroll to the element
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: "smooth"
+          });
+        }
+      });
+    }
+
+    // On scrolling, show or hide "Back to top" link when scroll is past one full screen height
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  window.addEventListener("DOMContentLoaded", function () {
+    //only handle first floating element, ignore additional elements
+    var floatingElement = document.querySelector("[data-vf-js-back-to-top-floating]");
+    if (!floatingElement) {
+      //exit, no floating button element found
+      return;
+    }
+
+    //hide initially
+    setVisible(floatingElement, false);
+
+    // Add handler only if floating element present
+    if (floatingElement) {
+      window.addEventListener("scroll", function () {
+        // current scrollY value is past one full screen height?
+        var isScrollPastWindowHeight = window.scrollY >= window.innerHeight;
+
+        // toggle visibility
+        setVisible(floatingElement, isScrollPastWindowHeight);
+      });
+    }
+  });
+}
+function setVisible(element, isVisible) {
+  element.style.visibility = isVisible ? "visible" : "hidden";
+}
+
 // embl-content-hub-loader__html-imports
 
 // A trimmed down version of
@@ -2980,6 +3201,8 @@ vfGaIndicateLoaded(vfGaTrackOptions);
 vfTabs();
 vfNavigationOnThisPage();
 vfTree();
+vfMegaMenu();
+vfBackToTop();
 emblContentHub();
 emblBreadcrumbs();
 // if you use embl-content-hub-loader, it will automatically invoke emblNotifications

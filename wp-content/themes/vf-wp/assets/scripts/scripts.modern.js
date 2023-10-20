@@ -36,7 +36,10 @@ import { vfLocationNearest } from 'vf-location-nearest/vf-location-nearest';
 
 import { vfTree } from 'vf-tree/vf-tree';
 vfTree();
-
+import { vfMegaMenu } from 'vf-mega-menu/vf-mega-menu';
+vfMegaMenu();
+import { vfBackToTop } from 'vf-back-to-top/vf-back-to-top';
+vfBackToTop();
 // import { vfFormFloatLabels } from 'vf-form__core/assets/vf-form__float-labels.js';
 // vfFormFloatLabels();
 
