@@ -1,0 +1,87 @@
+/*
+Theme Name:		 VF-WP Intranet
+Theme URI:		 https://github.com/visual-framework/vf-wp/tree/master/wp-content/themes/vf-wp-intranet/
+Description:	 Visual Framework WordPress Theme for EMBL Intranet
+Author:        EMBL
+Template:      vf-wp
+Version:       1.0.0-beta.1
+Text Domain:	 vfwp
+*/
+
+.title-container {
+    margin-top: 0!important;
+}
+
+.vf-hero__heading {
+    font-size: 30px !important;
+}
+.vf-form__select,
+.vf-search__input,
+.vf-hero .vf-button {
+    font-size: 14px !important;
+}
+#load {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: rgb(59, 111, 182);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
+
+#search-content {
+    display: none;
+}
+
+.intranet-directory-badge {
+    font-weight: 600 !important;
+    font-size: 14px !important; 
+    padding: 1px 4px !important;
+}
+
+.wysiwyg-training-info p{
+    font-size: 16px !important;
+}
+
+#trainingMeta .vf-badge--primary {
+    background-color: #f3f3f3;
+    border-color: #f3f3f3;
+    color: #373A36;
+}
+#trainingMeta .vf-badge {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#typeTraining .vf-tabs__section {
+    padding: 0px
+}
+
+.customBadge {
+    background-color: #d1e3f6 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+
+.customFormat {
+    font-size: 14px !important;
+}
+
+.counter-highlight {
+    font-weight: 700; 
+    color: #111;
+  }
