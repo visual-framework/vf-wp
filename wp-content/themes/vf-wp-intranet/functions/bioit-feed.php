@@ -110,6 +110,7 @@ if (!get_page_by_path($url, 'OBJECT', 'training')) {
     add_post_meta($post_id, 'vf-wp-training-url', $permalink);
     add_post_meta($post_id, 'vf-wp-training-registration-deadline', $formattedStartDate);
     add_post_meta($post_id, 'vf-wp-training-category', 'Data science');
+    add_post_meta($post_id, 'vf-wp-training-training_type', 'live');
 
                     // Check if the term exists before setting it
                     $location_term_exists = term_exists(strtolower($location), 'event-location');
@@ -135,6 +136,7 @@ else if ($existing_post = get_page_by_path($url, 'OBJECT', 'training')) {
     update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
     update_post_meta($existing_post_id, 'vf-wp-training-category', 'Data science');
     update_post_meta($existing_post_id, 'vf-wp-training-registration-deadline', $formattedStartDate);
+    update_post_meta($existing_post_id, 'vf-wp-training-training_type', 'live');
     if (!metadata_exists('post', $existing_post_id, 'post_title')) {
         add_post_meta($existing_post_id, 'post_title', $title);
     }

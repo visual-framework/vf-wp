@@ -24,12 +24,13 @@ $category = get_field('vf-wp-training-category',$post_id);
 $categorySlug = strtolower(str_replace(' ', '_', $category));
 $additionalInfo = get_field('vf-wp-training-info',$post_id, false, false); 
 $audience = get_field('vf-wp-training-audience',$post_id); 
+$type = get_field('vf-wp-training-training_type',$post_id); 
 $keywords = get_field('keyword',$post_id); 
 
 
 
 ?>
-<article class="vf-summary vf-summary--event | vf-u-margin__bottom--400" data-jplist-item>
+<article class="vf-summary vf-summary--event | trainingLive | vf-u-margin__bottom--400" data-jplist-item>
   <?php if ( ! empty($start_date)) { ?>
   <p class="vf-summary__date" data-eventtime="<?php echo $start->format('Ymd'); ?>">
     <?php       // Event dates
@@ -57,6 +58,7 @@ $keywords = get_field('keyword',$post_id);
   <h2 class="vf-summary__title | vf-u-margin__bottom--200 vf-u-margin__top--200 | search-data">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h2>
+  <?php echo $type; ?>
   <div>
     <div class="vf-content | wysiwyg-training-info | search-data">
       <?php
@@ -136,7 +138,17 @@ $keywords = get_field('keyword',$post_id);
   <div>
     <?php if (!empty($category)) { ?>
     <p class="vf-u-margin__top--0 vf-u-margin__bottom--800"><span
-        class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadge"><?php echo $category; ?></span>
+        class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue"><?php echo $category; ?></span>
+      <?php } ?>
+      <?php if (($organiser)) { ?>
+      <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey | provider-<?php $org_list = [];
+        foreach( $organiser as $org ) { 
+          $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
+          echo implode(', ', $org_list); ?>">
+        <?php $org_list = [];
+        foreach( $organiser as $org ) { 
+          $org_list[] = strtoupper($org->name); }
+          echo implode(', ', $org_list); ?></span>
       <?php } ?>
       <?php if (!empty($format)) { ?>
       <span class="customFormat"><?php echo $format; ?></span></p>

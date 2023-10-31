@@ -70,6 +70,11 @@ $today_date = date('Ymd');
                       'type' => 'DATE',
                       'compare' => '<='
             ),
+            'training_type_clause' => array(
+              'key' => 'vf-wp-training-training_type',
+              'value' => 'live',
+              'compare' => 'LIKE',
+            ),
         
           ),
           'orderby' => array(

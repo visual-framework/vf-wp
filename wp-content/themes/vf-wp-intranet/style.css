@@ -68,8 +68,17 @@ Text Domain:	 vfwp
     padding: 0px
 }
 
-.customBadge {
+.customBadgeBlue {
     background-color: #d1e3f6 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+
+.customBadgeGrey {
+    background-color: #d0d0ce !important;
     border: 0 !important;
     border-radius: 2px !important;
     color: #373a36 !important;

@@ -3,6 +3,33 @@
     "title": "Training additional information",
     "fields": [
         {
+            "key": "field_6540d05cdce6e",
+            "label": "Training type",
+            "name": "vf-wp-training-training_type",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "choices": {
+                "live": "Live",
+                "on-demand": "On-demand"
+            },
+            "default_value": "live",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_642d4c3f6fc3f",
             "label": "Date and time",
             "name": "",
@@ -10,12 +37,21 @@
             "type": "tab",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -27,12 +63,21 @@
             "type": "date_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "25",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "display_format": "j M Y",
             "return_format": "Ymd",
             "first_day": 1
@@ -45,12 +90,21 @@
             "type": "date_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "25",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "display_format": "j M Y",
             "return_format": "Ymd",
             "first_day": 1
@@ -63,12 +117,21 @@
             "type": "time_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "25",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "display_format": "H:i",
             "return_format": "H:i"
         },
@@ -80,12 +143,21 @@
             "type": "time_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "25",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "display_format": "H:i",
             "return_format": "H:i"
         },
@@ -97,12 +169,21 @@
             "type": "tab",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -114,19 +195,29 @@
             "type": "taxonomy",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "taxonomy": "event-location",
-            "field_type": "multi_select",
-            "allow_null": 0,
             "add_term": 1,
             "save_terms": 1,
             "load_terms": 1,
             "return_format": "id",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "bidirectional": 0,
             "multiple": 0,
             "bidirectional_target": []
         },
@@ -138,17 +229,26 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
+            "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_642d4cc96fc42",
@@ -158,12 +258,21 @@
             "type": "tab",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -175,12 +284,21 @@
             "type": "date_picker",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "display_format": "j M Y",
             "return_format": "j M Y",
             "first_day": 1
@@ -193,23 +311,34 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "choices": {
+                "not-open": "Not yet open",
                 "open": "Open",
                 "closed": "Closed",
-                "waiting": "Waiting list only"
+                "waiting": "Waiting list only",
+                "no-needed": "No registration needed"
             },
             "default_value": false,
-            "allow_null": 1,
+            "return_format": "label",
             "multiple": 0,
+            "allow_null": 1,
             "ui": 1,
             "ajax": 0,
-            "return_format": "label",
             "placeholder": ""
         },
         {
@@ -220,12 +349,21 @@
             "type": "url",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
             "placeholder": ""
         },
@@ -237,17 +375,26 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
+            "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_64d7226ffcd0c",
@@ -257,17 +404,26 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
+            "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_642d4ce66fc43",
@@ -277,12 +433,28 @@
             "type": "tab",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "on-demand"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -294,19 +466,36 @@
             "type": "taxonomy",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "on-demand"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "33",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "taxonomy": "training-organiser",
-            "field_type": "select",
-            "allow_null": 0,
             "add_term": 1,
             "save_terms": 1,
             "load_terms": 1,
             "return_format": "id",
+            "field_type": "select",
+            "allow_null": 0,
+            "bidirectional": 0,
             "multiple": 0,
             "bidirectional_target": []
         },
@@ -318,16 +507,69 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "on-demand"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "33",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "choices": {
                 "data_science": "Data science",
                 "professional_development": "Professional development",
                 "workplace": "Workplace"
+            },
+            "default_value": false,
+            "return_format": "label",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_6540d38c9ceeb",
+            "label": "On demand type",
+            "name": "vf-wp-training-on_demand_type",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "on-demand"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "choices": {
+                "course_materials": "Course materials",
+                "recorded_webinar": "Recorded webinar",
+                "online_tutorial": "Online tutorial",
+                "collection": "Collection"
             },
             "default_value": false,
             "return_format": "label",
@@ -345,16 +587,24 @@
             "type": "select",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "33",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "choices": {
                 "in-person": "In-person",
                 "hybrid": "Hybrid",
-                "virtual": "Virtual",
                 "webinar": "Webinar"
             },
             "default_value": false,
@@ -373,32 +623,57 @@
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "on-demand"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
             "tabs": "all",
-            "media_upload": 0,
             "toolbar": "basic",
+            "media_upload": 0,
             "delay": 0
         },
         {
             "key": "field_65127ea323b78",
-            "label": "Audience",
-            "name": "vf-wp-training-audience",
+            "label": "Specific info",
+            "name": "vf-wp-training-specific_info",
             "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -413,12 +688,21 @@
             "type": "radio",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "10",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "choices": {
                 "free": "Free",
                 "paid": "Paid"
@@ -438,12 +722,21 @@
             "type": "url",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "40",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
             "placeholder": ""
         },
@@ -455,16 +748,25 @@
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "default_value": "",
             "tabs": "all",
-            "media_upload": 0,
             "toolbar": "basic",
+            "media_upload": 0,
             "delay": 0
         },
         {
@@ -475,23 +777,34 @@
             "type": "relationship",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "post_type": [
                 "training"
             ],
+            "post_status": "",
             "taxonomy": "",
             "filters": [
                 "search"
             ],
-            "elements": "",
+            "return_format": "object",
             "min": "",
             "max": "",
-            "return_format": "object",
+            "elements": "",
+            "bidirectional": 0,
             "bidirectional_target": []
         }
     ],
@@ -513,5 +826,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1695982048
+    "modified": 1698761660
 }
