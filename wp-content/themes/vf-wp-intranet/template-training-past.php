@@ -52,7 +52,7 @@ $today_date = date('Ymd');
 
     <section class="embl-grid embl-grid--has-centered-content | vf-u-margin__bottom--800">
       <div>
-        <?php include(locate_template('partials/training-filter-past.php', false, false)); ?>
+        <?php include(locate_template('partials/training/training-filter-past.php', false, false)); ?>
       </div>
       <main>
         <div id="upcoming-events" data-jplist-group="data-group-1">
@@ -86,7 +86,7 @@ $today_date = date('Ymd');
           $current_month = ""; ?>
           <?php while ($forthcomingLoop->have_posts()) : $forthcomingLoop->the_post();?>
           <?php
-         include(locate_template('partials/vf-summary--training-past.php', false, false)); ?>
+         include(locate_template('partials/training/vf-summary--training-past.php', false, false)); ?>
           <?php endwhile;?>
           <!-- no results control -->
           <article class="vf-summary" data-jplist-control="no-results" data-group="data-group-1"

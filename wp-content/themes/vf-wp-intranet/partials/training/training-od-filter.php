@@ -30,7 +30,7 @@ $counterPro = 1;
       <input id="category-od-<?php echo $catSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".category-od-<?php echo $catSlug; ?>" data-group="data-group-2" data-name="category-od" data-or="category-od"
         value="<?php echo esc_attr($cat); ?>"
-        data-id="category-od-<?php echo esc_attr($catSlug); ?>" class="vf-form__checkbox">
+        data-id="category-od-<?php echo esc_attr($catSlug); ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
       <label for="category-od-<?php echo $catSlug; ?>" class="vf-form__label"><?php echo esc_html($cat); ?>
       &nbsp;<span 
       data-jplist-control="counter"
@@ -58,7 +58,7 @@ $counterPro = 1;
       <input id="type-<?php echo $typSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".type-<?php echo $typSlug; ?>" data-group="data-group-2" data-name="type" data-or="type"
         value="<?php echo esc_attr($typ); ?>"
-        data-id="type-<?php echo esc_attr($typSlug); ?>" class="vf-form__checkbox">
+        data-id="type-<?php echo esc_attr($typSlug); ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
       <label for="type-<?php echo $typSlug; ?>" class="vf-form__label"><?php echo esc_html($typ); ?>
       &nbsp;<span 
       data-jplist-control="counter"
@@ -85,7 +85,7 @@ $counterPro = 1;
       <input id="provider-od-<?php echo$term->slug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".provider-od-<?php echo$term->slug; ?>" data-group="data-group-2" data-name="provider-od" data-or="provider-od"
         value="<?php echo esc_attr($term->name); ?>"
-        data-id="provider-od-<?php echo$term->slug; ?>" class="vf-form__checkbox">
+        data-id="provider-od-<?php echo$term->slug; ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
       <label for="provider-od-<?php echo$term->slug; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
       &nbsp;<span 
       data-jplist-control="counter"
