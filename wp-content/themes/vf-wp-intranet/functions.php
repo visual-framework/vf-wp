@@ -19,9 +19,10 @@ require_once('functions/cpt-register.php');
 require_once('functions/infoboard-news.php');
 require_once('functions/people.php');
 require_once('functions/relevanssi.php');
-require_once('functions/training-feed.php');
+require_once('functions/training-ebi-feed.php');
 require_once('functions/bioit-feed.php');
 require_once('functions/training.php');
+require_once('functions/training-on-demand-feed.php');
 
 
 // CHILD THEME CSS FILE

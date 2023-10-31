@@ -51,6 +51,17 @@ function settings_training_admin_page() {
   echo '<input type="hidden" value="true" name="sync_training" />';
   submit_button('Sync');
   echo '</form>';
+
+  // EMBL-EBI
+  if (isset($_POST['sync_training_od']) && check_admin_referer('sync_training_od_clicked')) {
+   vfwp_intranet_cron_process_training_on_demand_data();
+  }
+  echo '<h3>Sync EMBL-EBI on-demand Trainings data</h3>';
+  echo '<form action="edit.php?post_type=training&page=training-slug" method="post">';
+  wp_nonce_field('sync_training_od_clicked');
+  echo '<input type="hidden" value="true" name="sync_training_od" />';
+  submit_button('Sync');
+  echo '</form>';
   
   // BioIT
   echo '<h3>Sync BioIT trainings</h3>';

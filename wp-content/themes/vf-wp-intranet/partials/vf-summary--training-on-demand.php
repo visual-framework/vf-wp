@@ -30,12 +30,11 @@ $keywords = get_field('keyword',$post_id);
 
 
 ?>
-<article class="vf-summary vf-summary--event | trainingOnDemand | vf-u-margin__bottom--400" data-jplist-item>
+<article class="vf-summary vf-summary--event | trainingOnDemand | vf-u-margin__bottom--0" data-jplist-item>
 
   <h2 class="vf-summary__title | vf-u-margin__bottom--200 vf-u-margin__top--200 | search-data-od">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h2>
-  <?php echo $type; ?>
   <div>
     <div class="vf-content | wysiwyg-training-info | search-data-od">
       <?php

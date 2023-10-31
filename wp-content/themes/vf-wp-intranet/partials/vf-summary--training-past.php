@@ -30,7 +30,7 @@ $type = get_field('vf-wp-training-training_type',$post_id);
 
 
 ?>
-<article class="vf-summary vf-summary--event| trainingLive | vf-u-margin__bottom--400" data-jplist-item>
+<article class="vf-summary vf-summary--event | trainingLive | vf-u-margin__bottom--400" data-jplist-item>
   <?php if ( ! empty($start_date)) { ?>
   <p class="vf-summary__date" data-eventtime="<?php echo $start->format('Ymd'); ?>">
     <?php       // Event dates

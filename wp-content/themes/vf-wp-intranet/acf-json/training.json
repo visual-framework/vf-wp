@@ -729,6 +729,13 @@
                         "operator": "==",
                         "value": "live"
                     }
+                ],
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "on-demand"
+                    }
                 ]
             ],
             "wrapper": {
@@ -826,5 +833,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1698761660
+    "modified": 1698764227
 }
