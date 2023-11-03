@@ -21,7 +21,7 @@ add_action('vfwp_intranet_cron_process', 'vfwp_intranet_cron_process_training_on
 
 // Function to start process training_on_demand data.
 function vfwp_intranet_cron_process_training_on_demand_data() {
-    $training_on_demand_json_feed_api_endpoint = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_online?format=json&query=domain_source:ebiweb_training_online&start=0&size=500&fieldurl=true&fields=title,subtitle,description,type,training_type,url,venue,timeframe,slug&facetcount=50&sort=title&facets=type:Collection";
+    $training_on_demand_json_feed_api_endpoint = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_online?format=json&query=domain_source:ebiweb_training_online&start=0&size=500&fieldurl=true&fields=title,subtitle,description,type,training_type,url,venue,timeframe,slug&facetcount=50&sort=title";
   
     // Fetch API content and decode it
     $training_on_demand_feed_content = file_get_contents($training_on_demand_json_feed_api_endpoint);
