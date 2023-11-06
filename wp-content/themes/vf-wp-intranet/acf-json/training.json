@@ -483,7 +483,7 @@
                 ]
             ],
             "wrapper": {
-                "width": "33",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -524,7 +524,7 @@
                 ]
             ],
             "wrapper": {
-                "width": "33",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -560,7 +560,7 @@
                 ]
             ],
             "wrapper": {
-                "width": "33",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -597,7 +597,7 @@
                 ]
             ],
             "wrapper": {
-                "width": "33",
+                "width": "25",
                 "class": "",
                 "id": ""
             },
@@ -614,6 +614,42 @@
             "ui": 0,
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_6548f3a302c08",
+            "label": "EMBL Centre",
+            "name": "vf-wp-training-embl_centre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "for Bio-IT courses only",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "live"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_6540d05cdce6e",
+                        "operator": "==",
+                        "value": "on-demand"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_642d4b84d03ad",
@@ -832,6 +868,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0,
-    "modified": 1698764227
+    "show_in_rest": 0
 }

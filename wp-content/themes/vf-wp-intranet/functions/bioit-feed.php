@@ -83,9 +83,14 @@ function insert_bioit_posts_from_xml($xmldata) {
             if (!empty($endDate)) {
                 $formattedendDate = date('Ymd', strtotime($endDate));
             } 
+            $emblCentre = isset($associative_array['provider']) ? $associative_array['provider'] : '';
+
             $provider = isset($associative_array['provider']) ? $associative_array['provider'] : '';
-            if ($provider != 'EMBL Bio-IT') {
-                $provider = 'Data Centres';
+            if ($provider == 'Bio-IT') {
+                $provider = 'EMBL Bio-IT';
+            } 
+            elseif ($provider != 'Bio-IT') {
+                $provider = 'EMBL Centres';
             } 
             $location = isset($associative_array['location']) ? $associative_array['location'] : '';
             $overview = isset($associative_array['overview']) ? $associative_array['overview'] : 'Please visit the course page for more information';
@@ -111,6 +116,7 @@ if (!get_page_by_path($url, 'OBJECT', 'training')) {
     add_post_meta($post_id, 'vf-wp-training-end_date', $formattedendDate);
     add_post_meta($post_id, 'vf-wp-training-info', $overview);
     add_post_meta($post_id, 'vf-wp-training-url', $permalink);
+    add_post_meta($post_id, 'vf-wp-training-embl_centre', $emblCentre);
     add_post_meta($post_id, 'vf-wp-training-registration-deadline', $formattedStartDate);
     add_post_meta($post_id, 'vf-wp-training-category', 'Data science');
     add_post_meta($post_id, 'vf-wp-training-training_type', 'live');
@@ -137,6 +143,7 @@ else if ($existing_post = get_page_by_path($url, 'OBJECT', 'training')) {
     update_post_meta($existing_post_id, 'vf-wp-training-end_date', $formattedendDate);
     update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
     update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
+    update_post_meta($existing_post_id, 'vf-wp-training-embl_centre', $emblCentre);
     update_post_meta($existing_post_id, 'vf-wp-training-category', 'Data science');
     update_post_meta($existing_post_id, 'vf-wp-training-registration-deadline', $formattedStartDate);
     update_post_meta($existing_post_id, 'vf-wp-training-training_type', 'live');

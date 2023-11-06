@@ -113,14 +113,15 @@ $type = get_field('vf-wp-training-training_type',$post_id);
         class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue"><?php echo $category; ?></span>
       <?php } ?>
       <?php if (($organiser)) { ?>
-      <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey | provider-<?php $org_list = [];
+        <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">
+        <?php
         foreach( $organiser as $org ) { 
-          $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
-          echo implode(', ', $org_list); ?>">
-        <?php $org_list = [];
-        foreach( $organiser as $org ) { 
-          $org_list[] = strtoupper($org->name); }
-          echo implode(', ', $org_list); ?></span>
+          $prov_list = [];
+          if ($org->name === 'EMBL Centres') {
+            $prov_list[] = $emblCentres; }
+            else {
+          $prov_list[] = strtoupper($org->name); } }
+          echo implode(', ', $prov_list); ?></span>
       <?php } ?>
       <?php if (!empty($format)) { ?>
       <span class="customFormat"><?php echo $format; ?></span></p>
@@ -133,6 +134,16 @@ $type = get_field('vf-wp-training-training_type',$post_id);
     <span class="fee-<?php echo $feeSlug; ?>"><?php echo $fee; ?></span>
     <span class="category-<?php echo $categorySlug; ?>"><?php echo $category; ?></span>
     <span class="keywords | search-data"><?php echo $keywords; ?></span>
+    <span class="provider-<?php 
+        $org_list = [];
+        foreach( $organiser as $org ) { 
+          $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
+          echo implode(', ', $org_list); ?>">
+        <?php 
+        foreach( $organiser as $org ) { 
+          $org_list[] = strtoupper($org->name); }
+          echo implode(', ', $org_list); ?>"      
+      </span>
     <?php
     if ($registrationStatus == 'Waiting list only') { echo '<span class="status-open">Open</span>'; } ?>
   </div>

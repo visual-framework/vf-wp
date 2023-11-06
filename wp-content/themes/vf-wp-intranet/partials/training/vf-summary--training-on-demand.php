@@ -58,14 +58,15 @@ $keywords = get_field('keyword',$post_id);
         class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue"><?php echo $category; ?></span>
       <?php } ?>
       <?php if (($organiser)) { ?>
-      <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey | provider-od-<?php $org_list = [];
+        <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">
+        <?php
         foreach( $organiser as $org ) { 
-          $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
-          echo implode(', ', $org_list); ?>">
-        <?php $org_list = [];
-        foreach( $organiser as $org ) { 
-          $org_list[] = strtoupper($org->name); }
-          echo implode(', ', $org_list); ?></span>
+          $prov_list = [];
+          if ($org->name === 'EMBL Centres') {
+            $prov_list[] = $emblCentres; }
+            else {
+          $prov_list[] = strtoupper($org->name); } }
+          echo implode(', ', $prov_list); ?></span>
       <?php } ?>
       <?php if (!empty($odType)) { ?>
       <span class="customFormat"><?php echo $odType; ?></span></p>
@@ -77,6 +78,16 @@ $keywords = get_field('keyword',$post_id);
     <span class="type-<?php echo strtolower(str_replace(' ', '_', $odType)); ?>"><?php echo $odType; ?></span>
     <span class="category-od-<?php echo $categorySlug; ?>"><?php echo $category; ?></span>
     <span class="keywords | search-data-od"><?php echo $keywords; ?></span>
+    <span class="provider-<?php 
+        $org_list = [];
+        foreach( $organiser as $org ) { 
+          $org_list[] = strtolower(str_replace(' ', '-', $org->name)); }
+          echo implode(', ', $org_list); ?>">
+        <?php 
+        foreach( $organiser as $org ) { 
+          $org_list[] = strtoupper($org->name); }
+          echo implode(', ', $org_list); ?>"      
+      </span>
   </div>
   <?php if ($onDemandLoop->current_post +1 < $onDemandLoop->post_count) {
     echo '<hr class="vf-divider">';
