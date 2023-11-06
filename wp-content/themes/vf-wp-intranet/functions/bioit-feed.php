@@ -84,6 +84,9 @@ function insert_bioit_posts_from_xml($xmldata) {
                 $formattedendDate = date('Ymd', strtotime($endDate));
             } 
             $provider = isset($associative_array['provider']) ? $associative_array['provider'] : '';
+            if ($provider != 'EMBL Bio-IT') {
+                $provider = 'Data Centres';
+            } 
             $location = isset($associative_array['location']) ? $associative_array['location'] : '';
             $overview = isset($associative_array['overview']) ? $associative_array['overview'] : 'Please visit the course page for more information';
             $permalink = (string)$item->link;

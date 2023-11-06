@@ -58,8 +58,6 @@ $type = get_field('vf-wp-training-training_type',$post_id);
   <h2 class="vf-summary__title | vf-u-margin__bottom--200 vf-u-margin__top--200 | search-data">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link"><?php the_title(); ?></a>
   </h2>
-  <?php echo $type; ?>
-
   <div>
     <div class="vf-content | wysiwyg-training-info | search-data">
       <?php
