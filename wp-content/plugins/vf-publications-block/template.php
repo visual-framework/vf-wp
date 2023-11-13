@@ -5,9 +5,9 @@ $acf_id = isset($acf_id) ? $acf_id : false;
 $heading = get_field('vf_publications_heading', $acf_id);
 $heading = trim($heading);
 
-$limit = get_field('vf_publications_limit', $acf_id);
-$limit = intval($limit);
-$limit = $limit < 1 || $limit > 100 ? 100 : $limit;
+// $limit = get_field('vf_publications_limit', $acf_id);
+// $limit = intval($limit);
+// $limit = $limit < 1 || $limit > 100 ? 100 : $limit;
 
 $order = get_field('vf_publications_order', $acf_id);
 if (empty($order)) {
@@ -16,7 +16,6 @@ if (empty($order)) {
 
 $vars = array(
   'source'                    => 'contenthub',
-  'limit'                     => $limit,
   'sort-field-value[changed]' => $order,
 );
 
