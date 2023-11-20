@@ -6,6 +6,15 @@ $is_preview = isset($is_preview) && $is_preview;
 // Get search field and value (default `full_name`)
 $field = get_field('vf_team_profile_search_by');
 $value = get_field('vf_team_profile_team_name');
+$ledByText = get_field('vf_team_profile_team_variant');
+$pattern = "vf-team-gtl-regular-inline";
+
+if ($ledByText) {
+  $pattern = "vf-team-gtl-regular-inline";
+}
+else {
+  $pattern = "vf-team-regular-inline";
+}
 
 
 // Show default preview instruction
@@ -31,7 +40,7 @@ $url = VF_Cache::get_api_url();
 $url .= '/pattern.html';
 $url = add_query_arg(array(
   'source'              => 'contenthub',
-  'pattern'             => "vf-team-regular-inline",
+  'pattern'             => $pattern,
   'filter-field-value[field_site_type_conceptual_field]' => 'embl_group_page',
   'limit'               => 1,
 ), $url);

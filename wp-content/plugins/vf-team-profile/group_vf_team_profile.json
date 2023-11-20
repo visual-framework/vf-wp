@@ -6,6 +6,7 @@
             "key": "field_63e226ccfe1fd",
             "label": "Search by",
             "name": "vf_team_profile_search_by",
+            "aria-label": "",
             "type": "radio",
             "instructions": "",
             "required": 0,
@@ -30,6 +31,7 @@
             "key": "field_63e22748fe1fe",
             "label": "Name \/ ID",
             "name": "vf_team_profile_team_name",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -44,6 +46,27 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_65522ce5439a6",
+            "label": "Show \"Led by ...\" text",
+            "name": "vf_team_profile_team_variant",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Yes",
+            "ui_off_text": "No"
         }
     ],
     "location": [
@@ -62,5 +85,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1699884791
 }

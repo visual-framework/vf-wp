@@ -22,26 +22,6 @@
             "maxlength": ""
         },
         {
-            "key": "field_vf_publications_limit",
-            "label": "Limit",
-            "name": "vf_publications_limit",
-            "type": "range",
-            "instructions": "Maximum number of publications to show.",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 100,
-            "min": 1,
-            "max": 100,
-            "step": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_vf_publications_order",
             "label": "Order",
             "name": "vf_publications_order",
