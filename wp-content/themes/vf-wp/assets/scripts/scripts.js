@@ -1655,7 +1655,6 @@ function emblContentHubLoaderHtmlImports() {
         scriptPromises: [],
         progress: progressObject || {} // progress written to this object (loaded, total)
       };
-
       rootContext.progress.loaded = 0;
       rootContext.progress.total = 1; // add root import
     }
@@ -2757,7 +2756,6 @@ function emblBreadcrumbAppend(breadcrumbTarget, termName, facet, type) {
         // otherwise try and search
         termObject.url = "https://www.embl.org/search/#stq=" + termName + "&taxonomyFacet=" + facet + "&origin=breadcrumbTermNotFound"; // if no link specified, do a search
       }
-
       termObject.name_display = termName;
       termObject.uuid = "null";
       termObject.uuid = [];
