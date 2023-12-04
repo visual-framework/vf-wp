@@ -170,8 +170,8 @@ class VF_WP_Groups_Header extends VF_Plugin {
     if ( ! empty($text)) {
       $text = trim($text);
     }
-      // If text is empty use the Content Hub description
-    if (vf_html_empty($text) && class_exists('VF_Cache')) {
+    // If text is empty use the Content Hub description
+    if (empty($text) && class_exists('VF_Cache')) {
       // Get the global taxonomy term
       $term_id = get_field('embl_taxonomy_term_what', 'option');
       $term_uuid = embl_taxonomy_get_uuid($term_id);
