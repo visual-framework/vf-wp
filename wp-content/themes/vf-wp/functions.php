@@ -369,5 +369,12 @@ function get_image_src( $object, $field_name, $request ) {
   return $feat_img_array[0];
 }
 
-
+// Filter to remove default <div class="acf-innerblocks-container"> added by acf for container
+add_filter( 'acf/blocks/wrap_frontend_innerblocks', 'acf_should_wrap_innerblocks', 10, 2 );
+function acf_should_wrap_innerblocks( $wrap, $name ) {
+    if ( $name == 'acf/vfwp-bg-container' ) {
+       return false;
+    }
+    return true;
+}
 ?>
