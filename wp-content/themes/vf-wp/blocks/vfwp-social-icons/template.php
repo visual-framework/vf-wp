@@ -90,12 +90,34 @@ if (empty($choose)) {
   
   ?>
   <ul class="vf-social-links__list">
+  <?php if (!empty($linkedin_link)) { ?>
+    <li class="vf-social-links__item">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($linkedin_link);?>" aria-label="Follow us on Linkedin">
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--linkedin">
+          </use>
+        </svg>
+      </a>
+    </li>
+    <?php } ?>
     <?php if (!empty($twitter_link)) { ?>
     <li class="vf-social-links__item">
       <a class="vf-social-links__link" target="_blank"  href="<?php echo esc_url($twitter_link);?>" aria-label="Follow us on Twitter">
         <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
           <use xlink:href="#vf-social--twitter">
+          </use>
+        </svg>
+      </a>
+    </li>
+    <?php } ?>
+    <?php if (!empty($youtube_link)) { ?>
+    <li class="vf-social-links__item">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($youtube_link);?>" aria-label="Follow us on Youtube">
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--youtube" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--youtube">
           </use>
         </svg>
       </a>
@@ -123,33 +145,27 @@ if (empty($choose)) {
       </a>
     </li>
     <?php } ?>
-    <?php if (!empty($youtube_link)) { ?>
-    <li class="vf-social-links__item">
-      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($youtube_link);?>" aria-label="Follow us on Youtube">
-        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--youtube" width="24" height="24"
-          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-          <use xlink:href="#vf-social--youtube">
-          </use>
-        </svg>
-      </a>
-    </li>
-    <?php } ?>
-    <?php if (!empty($linkedin_link)) { ?>
-    <li class="vf-social-links__item">
-      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($linkedin_link);?>" aria-label="Follow us on Linkedin">
-        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
-          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-          <use xlink:href="#vf-social--linkedin">
-          </use>
-        </svg>
-      </a>
-    </li>
-    <?php } ?>
   </ul>
   <?php } 
   
   else if ($choose == 'share') { ?>
   <ul class="vf-social-links__list">
+  <?php if (($select && in_array('linkedin', $select)) || (!empty($linkedin_link))) { ?>
+      <li class="vf-social-links__item">
+            <a class="vf-social-links__link" target="_blank" aria-label="Share on Linkedin" 
+            <?php if ($custom == 'auto') { ?> 
+            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+            <?php } else if ($custom == 'custom') { ?> 
+              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?><?php if (!empty($custom_title)) { echo '&title=' . $custom_title; } else echo '';?>">
+            <?php } ?>  
+              <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+                <use xlink:href="#vf-social--linkedin">
+                </use>
+              </svg>
+            </a>
+          </li>
+    <?php } ?>
     <?php if (($select && in_array('twitter', $select)) || (!empty($twitter_link))) { ?>
       <li class="vf-social-links__item">
             <a class="vf-social-links__link" target="_blank" aria-label="Share on Twitter"
@@ -177,22 +193,6 @@ if (empty($choose)) {
               <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--facebook" width="24" height="24"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
                 <use xlink:href="#vf-social--facebook">
-                </use>
-              </svg>
-            </a>
-          </li>
-    <?php } ?>
-    <?php if (($select && in_array('linkedin', $select)) || (!empty($linkedin_link))) { ?>
-      <li class="vf-social-links__item">
-            <a class="vf-social-links__link" target="_blank" aria-label="Share on Linkedin" 
-            <?php if ($custom == 'auto') { ?> 
-            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
-            <?php } else if ($custom == 'custom') { ?> 
-              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?><?php if (!empty($custom_title)) { echo '&title=' . $custom_title; } else echo '';?>">
-            <?php } ?>  
-              <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-                <use xlink:href="#vf-social--linkedin">
                 </use>
               </svg>
             </a>
