@@ -405,7 +405,7 @@ function vf_wp_intranet_events__init() {
     'taxonomies'          => array(
       'event-location',
       'post_tag',
-      'topic'
+      'events-topic'
     ),
   ));
   

@@ -1,6 +1,7 @@
 <?php
 $locations_blog = get_field('cb_embl_location');
 $locations_news = get_field('embl_location');
+$locations_events = get_field('vf_event_internal_location');
 $customDateSorting = get_the_time('Ymd');
 
 ?>
@@ -57,6 +58,16 @@ $customDateSorting = get_the_time('Ymd');
     if (($locations_blog)) { ?>
         <?php $location_list = [];
         foreach( $locations_blog as $location ) { 
+          $location_list[] = $location->name; }
+          echo implode(', ', $location_list); ?>
+    <?php } ?>      
+  </p>
+  <?php } ?>
+
+  <?php if (get_post_type() === 'events') { 
+    if (($locations_events)) { ?>
+        <?php $location_list = [];
+        foreach( $locations_events as $location ) { 
           $location_list[] = $location->name; }
           echo implode(', ', $location_list); ?>
     <?php } ?>      

@@ -14,6 +14,8 @@ $event_type = get_field('vf_event_internal_event_type');
 $venue = get_field('vf_event_internal_venue'); 
 $has_page = get_field('vf_event_internal_has_page'); 
 $customDateSorting = DateTime::createFromFormat('Ymd', $start_time);
+$event_topic = get_field('vf_event_internal_events_topic',$post_id);
+
 if (!empty($start_time)) {
   $calendar_start_time = 'T' . $start_time_format->format('Hi') . '00';
 }
@@ -55,13 +57,14 @@ else {
         } 
         
      ?>
-     &nbsp;&nbsp;
-     <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
-     <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:" target="_blank" rel="nofollow">Add to calendar</a>
+    &nbsp;&nbsp;
+    <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
+      <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:"
+        target="_blank" rel="nofollow">Add to calendar</a>
     </span>
   </p>
   <?php } ?>
-  <h3 class="vf-summary__title | vf-u-margin__bottom--100 | name ">
+  <h3 class="vf-summary__title | vf-u-margin__bottom--200">
     <?php if ($has_page == 1) { ?>
     <a href="<?php echo get_permalink(); ?>" class="vf-summary__link">
       <?php } ?>
@@ -71,15 +74,26 @@ else {
     <?php } ?>
   </h3>
   <?php if (is_post_type_archive('events')) { ?>
-    <p class="vf-summary__text"><?php echo get_the_excerpt(); ?></p>
-  <?php } 
-  if (($locations)) { ?>
+  <p class="vf-summary__text" style="margin-bottom: 1rem !important;"><?php echo get_the_excerpt(); ?></p>
+  <?php } ?>
+
+  <?php 
+   if (($event_topic)) { ?>
   <p class="vf-text-body vf-text-body--5
- location vf-u-margin__top--200">
+ location vf-u-margin__bottom--0">
+    <?php $event_topic_list = [];
+        foreach( $event_topic as $topic ) { 
+          $event_topic_list[] = "<a class='vf-link " . $topic->slug . "' style='color: #707372;' href='" . get_term_link( $topic ) . "'>" . strtoupper($topic->name) . "</a>"; }
+          echo implode(', ', $event_topic_list); ?>
+  </p>
+  <?php } ?>
+  <?php 
+   if (($locations)) { ?>
+  <p class="vf-text-body vf-text-body--5">
     <?php $location_list = [];
         foreach( $locations as $location ) { 
           $location_list[] = $location->name; }
           echo implode(', ', $location_list); ?>
-  </p>  
+  </p>
   <?php } ?>
 </article>

@@ -79,6 +79,22 @@ function vf_wp_intranet_event_location_labels() {
     );
   }
 
+  function vf_wp_intranet_topic_events_labels() {
+    return array(
+      'name'              => _x( 'Events topics', 'taxonomy general name', 'vfwp' ),
+      'singular_name'     => _x( 'Events topic', 'taxonomy singular name', 'vfwp' ),
+      'search_items'      => __( 'Search Events topics', 'vfwp' ),
+      'all_items'         => __( 'All Events topics', 'vfwp' ),
+      'parent_item'       => __( 'Parent Events topic', 'vfwp' ),
+      'parent_item_colon' => __( 'Parent Events topic:', 'vfwp' ),
+      'edit_item'         => __( 'Edit Events topic', 'Events vfwp' ),
+      'update_item'       => __( 'Update Events topic', 'vfwp' ),
+      'add_new_item'      => __( 'Add New Events topic', 'vfwp' ),
+      'new_item_name'     => __( 'New Events topic Name', 'vfwp' ),
+      'menu_name'         => __( 'Events topics', 'vfwp' ),
+    );
+  }
+
   /**
  * Action: `init`
  */
@@ -134,6 +150,18 @@ add_action(
       'publicly_queryable' => true,
       'show_in_nav_menus'  => false,
       'rewrite'            => array( 'slug' => 'updates/topic' ),
+      'show_in_rest'       => true,
+    ));
+
+    register_taxonomy('events-topic', array('events-topic'), array(
+      'labels'             => vf_wp_intranet_topic_labels(),
+      'hierarchical'       => true,
+      'show_ui'            => true,
+      'show_admin_column'  => true,
+      'query_var'          => true,
+      'publicly_queryable' => true,
+      'show_in_nav_menus'  => false,
+      'rewrite'            => array( 'slug' => 'events/topic' ),
       'show_in_rest'       => true,
     ));
 
