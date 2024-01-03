@@ -153,10 +153,18 @@ $pageURL = home_url( $wp->request );
                   $peopleEndUrl = $peopleBaseUrl . $peopleSlug;
                 };  
 
+                
+                if (isset($person->personKnownAs)) {
+                  $personName = $person->personKnownAs;
+                }
+                else {
+                  $personName = $person->displayName;
+                }
+
                 echo '<article class="vf-profile vf-profile--medium vf-profile--inline | vf-u-margin__bottom--600" data-jplist-item>
                 <img class="vf-profile__image" src="' . $person->photoUrl . '" alt="" loading="lazy">';
 
-                echo '<h3 class="vf-profile__title | people-search"><a href="' . $peopleEndUrl . '" class="vf-profile__link">' . $person->displayName . '</a></h3>';
+                echo '<h3 class="vf-profile__title | people-search"><a href="' . $peopleEndUrl . '" class="vf-profile__link">' . $personName . '</a></h3>';
 
                 echo '<p class="vf-profile__job-title | people-search">' . $person->title . '</p>';
 
