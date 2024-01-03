@@ -65,15 +65,32 @@ $counterStatus = 1;
       <input id="year-<?php echo $currentYear; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".year" data-group="data-group-1" data-name="year" data-or="year"
         value="<?php echo $currentYear; ?>"
-        data-id="year<?php echo $currentYear; ?>" class="vf-form__checkbox inputLive">
+        data-id="year<?php echo $currentYear; ?>" class="vf-form__checkbox checkboxLive inputLive">
       <label for="year-<?php echo $currentYear; ?>" class="vf-form__label"><?php echo $currentYear; ?>
+      &nbsp;<span 
+      data-jplist-control="counter"
+      data-group="data-group-1"
+      data-format="({count})"
+      data-path=".year-2024"
+      data-mode="static"
+      data-name="counter-current-year"
+      data-filter-type="path"></span>
+    </label>
+    </div>
+
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="year-<?php echo $currentYear - 1; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".year" data-group="data-group-1" data-name="year" data-or="year"
+        value="<?php echo $currentYear - 1; ?>"
+        data-id="year<?php echo $currentYear - 1; ?>" class="vf-form__checkbox checkboxLive inputLive">
+      <label for="year-<?php echo $currentYear - 1; ?>" class="vf-form__label"><?php echo $currentYear - 1; ?>
       &nbsp;<span 
       data-jplist-control="counter"
       data-group="data-group-1"
       data-format="({count})"
       data-path=".year-2023"
       data-mode="static"
-      data-name="counter-current-year"
+      data-name="counter-next-year"
       data-filter-type="path"></span>
     </label>
     </div>

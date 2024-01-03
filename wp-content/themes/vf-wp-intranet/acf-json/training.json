@@ -690,27 +690,18 @@
         },
         {
             "key": "field_65127ea323b78",
-            "label": "Specific info",
-            "name": "vf-wp-training-specific_info",
+            "label": "Audience",
+            "name": "vf-wp-training-audience",
             "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6540d05cdce6e",
-                        "operator": "==",
-                        "value": "live"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
