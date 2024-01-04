@@ -189,6 +189,7 @@ function allowed_block_types($allowed_blocks) {
     'vf/embl-grid',
     'vf/grid-column',
     'vf/breadcrumbs',
+    'vf/wp/vfwp-sis-info-box',
     'acf/vf-container-embl-global-header',
     'acf/vf-container-global-header',
     'acf/vf-container-navigation',
