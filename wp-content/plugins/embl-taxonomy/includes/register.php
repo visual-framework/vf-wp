@@ -601,6 +601,7 @@ class EMBL_Taxonomy_Register {
     }
 
     // Manual sync notice (edit taxonomy page only)
+    if ( current_user_can( 'administrator' ) ) {
     if ( ! $notice && function_exists('get_current_screen')) {
       $screen = get_current_screen();
       if ($screen->id === 'edit-embl_taxonomy') {
@@ -626,6 +627,7 @@ class EMBL_Taxonomy_Register {
       }
     }
   }
+}
 
   /**
    * Filter `pre_insert_term`

@@ -6,6 +6,7 @@
             "key": "field_614da0994c7eb",
             "label": "Post type",
             "name": "post_type",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -15,24 +16,27 @@
                 "class": "",
                 "id": ""
             },
+            "relevanssi_exclude": 0,
             "choices": {
                 "post": "Post",
                 "insites": "Internal news (intranet only)",
                 "community-blog": "Announcements and updates (intranet only)",
-                "both": "News + updates (intranet only)"
+                "both": "News + updates (intranet only)",
+                "events": "Internal events (intranet only)"
             },
             "default_value": false,
-            "allow_null": 0,
+            "return_format": "value",
             "multiple": 0,
+            "allow_null": 0,
             "ui": 1,
             "ajax": 0,
-            "return_format": "value",
             "placeholder": ""
         },
         {
             "key": "field_5f3fb86736d90",
             "label": "Layout",
             "name": "layout",
+            "aria-label": "",
             "type": "radio",
             "instructions": "",
             "required": 0,
@@ -57,6 +61,7 @@
             "key": "field_600170840895d",
             "label": "Grid",
             "name": "grid",
+            "aria-label": "",
             "type": "radio",
             "instructions": "",
             "required": 0,
@@ -89,6 +94,7 @@
             "key": "field_5e99679631cbd",
             "label": "Heading",
             "name": "heading_singular",
+            "aria-label": "",
             "type": "text",
             "instructions": "Leave blank for default heading",
             "required": 0,
@@ -108,6 +114,7 @@
             "key": "field_6200ff5de0868",
             "label": "Heading URL",
             "name": "heading_url",
+            "aria-label": "",
             "type": "link",
             "instructions": "",
             "required": 0,
@@ -123,6 +130,7 @@
             "key": "field_5efc4b6737d2d",
             "label": "Heading text",
             "name": "heading_text",
+            "aria-label": "",
             "type": "text",
             "instructions": "Optional",
             "required": 0,
@@ -142,6 +150,7 @@
             "key": "field_6200ffc2e086a",
             "label": "Show heading",
             "name": "show_heading",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -169,6 +178,7 @@
             "key": "field_5f3e15e7a0a54",
             "label": "Show image",
             "name": "show_image",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -196,6 +206,7 @@
             "key": "field_6200ff89e0869",
             "label": "Show excerpt",
             "name": "show_excerpt",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -215,6 +226,7 @@
             "key": "field_6001416a72980",
             "label": "Show categories",
             "name": "show_categories",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -242,6 +254,7 @@
             "key": "field_6166f38238b98",
             "label": "Show topics",
             "name": "show_topics",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -265,6 +278,13 @@
                         "field": "field_614da0994c7eb",
                         "operator": "==",
                         "value": "both"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "events"
                     }
                 ]
             ],
@@ -283,6 +303,7 @@
             "key": "field_61e9339ffbd27",
             "label": "Show location",
             "name": "show_location",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -307,6 +328,13 @@
                         "operator": "==",
                         "value": "both"
                     }
+                ],
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "events"
+                    }
                 ]
             ],
             "wrapper": {
@@ -324,6 +352,7 @@
             "key": "field_5efc4c2840bc0",
             "label": "Post limit",
             "name": "limit",
+            "aria-label": "",
             "type": "range",
             "instructions": "",
             "required": 0,
@@ -344,6 +373,7 @@
             "key": "field_6000036a8f15a",
             "label": "Category",
             "name": "category",
+            "aria-label": "",
             "type": "taxonomy",
             "instructions": "Display the posts by a category",
             "required": 0,
@@ -368,12 +398,14 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
-            "multiple": 0
+            "multiple": 0,
+            "bidirectional_target": []
         },
         {
             "key": "field_6166f0d01d927",
             "label": "Topic (News)",
             "name": "topic",
+            "aria-label": "",
             "type": "taxonomy",
             "instructions": "Display the posts by a topic",
             "required": 0,
@@ -405,12 +437,14 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
-            "multiple": 0
+            "multiple": 0,
+            "bidirectional_target": []
         },
         {
             "key": "field_6242bf6b13076",
             "label": "Topic (updates)",
             "name": "topic_updates",
+            "aria-label": "",
             "type": "taxonomy",
             "instructions": "Display the posts by a topic",
             "required": 0,
@@ -442,12 +476,48 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
-            "multiple": 0
+            "multiple": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_6596805efbe50",
+            "label": "Topic (events)",
+            "name": "topic_events",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Display the posts by a topic",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "events"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "taxonomy": "events-topic",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "field_type": "multi_select",
+            "allow_null": 1,
+            "bidirectional": 0,
+            "multiple": 0,
+            "bidirectional_target": []
         },
         {
             "key": "field_61e933bbfbd28",
             "label": "Location",
             "name": "location",
+            "aria-label": "",
             "type": "taxonomy",
             "instructions": "Display the posts by location",
             "required": 0,
@@ -486,12 +556,48 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
-            "multiple": 0
+            "multiple": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_65968251b6b04",
+            "label": "Location (events)",
+            "name": "location_events",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Display the posts by location",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614da0994c7eb",
+                        "operator": "==",
+                        "value": "events"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "relevanssi_exclude": 0,
+            "taxonomy": "event-location",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "field_type": "multi_select",
+            "allow_null": 1,
+            "bidirectional": 0,
+            "multiple": 0,
+            "bidirectional_target": []
         },
         {
             "key": "field_600003968f15b",
             "label": "Tag",
             "name": "tag",
+            "aria-label": "",
             "type": "taxonomy",
             "instructions": "Display the posts by a tag",
             "required": 0,
@@ -508,7 +614,8 @@
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
-            "multiple": 0
+            "multiple": 0,
+            "bidirectional_target": []
         }
     ],
     "location": [
@@ -528,5 +635,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Latest News ACF Gutenberg block",
-    "modified": 1683279893
+    "show_in_rest": 0
 }
