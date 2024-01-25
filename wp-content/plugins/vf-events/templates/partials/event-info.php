@@ -192,7 +192,17 @@ if (is_array($poster_image)) {
       </span></p>
     <?php } ?>
 
+
     <?php
+      // Register interest button
+      if ( $registration_type == 'register_interest') { ?>
+        <div style="display: inline-block;">
+      <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
+          class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600 vf-u-margin__top--400"><?php echo($register_button_on_site); ?></button></a>
+    </div>
+     <?php }
+
+      else {
       // Buttons on site
       if ( !empty($registration_link_on_site)) {
             if (
@@ -203,7 +213,8 @@ if (is_array($poster_image)) {
       <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
           class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button_on_site); ?></button></a>
     </div>
-    <?php }} ?>
+    <?php }} 
+    }?>
 
     <?php
   // Registration dates - Virtual
@@ -249,7 +260,7 @@ if (is_array($poster_image)) {
     </div>
     <?php }} ?>
 
-    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($registration_closing_on_site) || ($info_text))) { ?>
+    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($registration_closing_on_site) || ($info_text) || ($registration_link_on_site))) { ?>
     <hr class="vf-divider | vf-u-margin__bottom--400">
     <?php } ?>
 
