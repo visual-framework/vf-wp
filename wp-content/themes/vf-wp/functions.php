@@ -180,7 +180,6 @@ function allowed_block_types($allowed_blocks) {
     'core/spacer',
     'core/search',
     'core/shortcode',
-    'core/embed',
     'core/preformatted',
     'core-embed/twitter',
     'vf/tabs',
