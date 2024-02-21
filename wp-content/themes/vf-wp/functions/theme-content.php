@@ -54,7 +54,7 @@ class VF_Theme_Content {
 
     // wp-embed should use vf-embed for responsiveness
     // https://github.com/visual-framework/vf-wp/issues/693
-    if (($block['blockName'] === 'core/embed') && ($block['attrs']['type'] === 'video')) {
+    if (($block['blockName'] === 'core/embed')) {
       $html = preg_replace(
         '/wp-block-embed__wrapper/',
         'vf-embed vf-embed--16x9',
