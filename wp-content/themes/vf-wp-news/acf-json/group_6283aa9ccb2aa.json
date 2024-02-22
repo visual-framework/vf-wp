@@ -1,0 +1,72 @@
+{
+    "key": "group_6283aa9ccb2aa",
+    "title": "EMBLetc",
+    "fields": [
+        {
+            "key": "field_63185556aad94",
+            "label": "Issue number",
+            "name": "embletc_issue",
+            "type": "relationship",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "embletc-issue"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": "",
+            "max": "",
+            "return_format": "object"
+        },
+        {
+            "key": "field_635662cec5c1e",
+            "label": "Also in this Issue",
+            "name": "embletc_in_this_issue",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "embletc"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "embletc"
+            }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": ""
+}
