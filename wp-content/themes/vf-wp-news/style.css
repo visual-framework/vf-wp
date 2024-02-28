@@ -256,3 +256,21 @@ margin-bottom: 1rem !important;
 .vf-card__title .vf-card__link:hover::after, .vf-card__heading .vf-card__link:hover::after {
   box-shadow: 0 0 0.125rem 0.125rem rgba(250,250,250, .35) !important;
 }
+
+.customBadgeGreen {
+  background-color: #D0DEBB !important;
+  border: 0 !important;
+  border-radius: 2px !important;
+  color: #373a36 !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+.wysiwyg-award-info p {
+  font-size: 16px !important;
+}
+
+.counter-highlight {
+  font-weight: 700; 
+  color: #111;
+}

@@ -17,6 +17,7 @@ $lab_link = get_category_link( $category_lab );
 $category_pow = get_cat_ID( 'picture of the week' );
 $pow_link = get_category_link( $category_pow );
 
+$awards_link = get_post_type_archive_link('awards');
 $title = get_the_title(get_option('page_for_posts'));
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 
@@ -94,7 +95,7 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
     <?php
 		$latestPostLoop1 = new WP_Query(array(
       'post__not_in' => array_merge($ids, $excluded_translations_array),        
-      'posts_per_page' => 6, 
+      'posts_per_page' => 3, 
       'category_name' => $categories_embl, 
   ));
 		while ($latestPostLoop1->have_posts()) : $latestPostLoop1->the_post(); ?>
@@ -226,6 +227,34 @@ while ($cardsPostLoop->have_posts()) : $cardsPostLoop->the_post();
   </div>
 
 </section>
+
+<!-- Awards -->
+<section class="vf-news-container vf-news-container--featured | embl-grid | vf-u-background-color-ui--off-white vf-u-fullbleed | vf-u-padding__top--600">
+
+  <div class="vf-section-header | vf-u-margin__bottom--400">
+    <a href="<?php echo esc_url( $awards_link ); ?>"
+      class="vf-section-header__heading vf-section-header__heading--is-link">Awards & Honours <svg
+        class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+          fill="" fill-rule="nonzero" /></svg></a></div>
+
+  <div class="vf-news-container__content vf-grid vf-grid__col-3">
+    <?php
+		$awardsLoop = new WP_Query(array(
+      'post_type' => 'awards',
+      'posts_per_page' => 3, 
+  ));
+		while ($awardsLoop->have_posts()) : $awardsLoop->the_post(); ?>
+    <?php include(locate_template('partials/vf-summary--news.php', false, false)); ?>
+    <?php endwhile; ?>
+    <?php wp_reset_postdata(); ?>
+
+  </div>
+
+</section>
+
 
 <?php include(locate_template('partials/embletc-container.php', false, false)); ?>
 

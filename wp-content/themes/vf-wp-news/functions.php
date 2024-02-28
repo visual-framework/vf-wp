@@ -2,6 +2,7 @@
 require_once('functions/embl-ebi-news.php');
 require_once('functions/globals.php');
 require_once('functions/gravatar.php');
+require_once('functions/taxonomies.php');
 require_once('functions/post-types.php');
 require_once('functions/widgets.php');
 require_once('functions/wpml-settings.php');
