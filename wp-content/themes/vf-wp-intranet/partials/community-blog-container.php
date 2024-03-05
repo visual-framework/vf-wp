@@ -1,4 +1,4 @@
-<section class="vf-summary-container | vf-u-padding__top--200">
+<section class="vf-summary-container | vf-u-padding__top--600 vf-u-padding__bottom--200 | vf-u-background-color-ui--off-white | vf-u-fullbleed">
   <div class="vf-section-header"><a class="vf-section-header__heading vf-section-header__heading--is-link"
       href="/internal-information/updates">Updates and announcements<svg aria-hidden="true"
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
@@ -89,6 +89,7 @@
     $communityBlogLoop_1 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 3,
+    'meta_key'		=> 'cb_featured',
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
@@ -112,6 +113,7 @@
     $communityBlogLoop_2 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 3,
+    'meta_key'		=> 'cb_featured',
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
@@ -135,6 +137,7 @@
     $communityBlogLoop_3 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 3,
+    'meta_key'		=> 'cb_featured',
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
@@ -158,6 +161,7 @@
     $communityBlogLoop_4 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 3,
+    'meta_key'		=> 'cb_featured',
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
@@ -181,6 +185,7 @@
     $communityBlogLoop_6 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 3,
+    'meta_key'		=> 'cb_featured',
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
@@ -204,6 +209,7 @@
     $communityBlogLoop_5 = new WP_Query (array(
     'post_type' => 'community-blog', 
     'posts_per_page' => 3,
+    'meta_key'		=> 'cb_featured',
     'tax_query' => array(
         array(
             'taxonomy' => 'embl-location',
@@ -247,7 +253,8 @@
   }
 
   .vf-summary--has-image .vf-summary__image--thumbnail {
-    width: 65px;
+    width: 140px;
+    height: auto;
     /* border-radius: 50%; */
   }
 

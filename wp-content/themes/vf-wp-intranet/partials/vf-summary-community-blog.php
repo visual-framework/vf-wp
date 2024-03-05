@@ -31,7 +31,7 @@ $locations = get_field('cb_embl_location');
       </span>
       <?php } ?>
     </p>
-  <h3 class="vf-summary__title" style="font-size: 18px;">
+  <h3 class="vf-summary__title" style="font-size: 22px;">
     <a href="<?php the_permalink(); ?>" class="vf-summary__link">
     <?php echo esc_html(get_the_title()); ?>    </a>
   </h3>

@@ -105,9 +105,9 @@ $pageURL = home_url( $wp->request );
       <div data-jplist-group="data-group-1">
         <?php
     if(strpos($pageURL, 'wwwdev') !== false){
-      $request = wp_remote_get( 'https://xs-db.test.embl.de/v2/public/search' );
+      $request = wp_remote_get( 'https://xs-db.test.embl.de/v3/public/search' );
     } else{
-      $request = wp_remote_get( 'https://xs-db.embl.de/v2/search' );
+      $request = wp_remote_get( 'https://xs-db.embl.de/v3/public/search' );
     }
         
         if( is_wp_error( $request ) ) {

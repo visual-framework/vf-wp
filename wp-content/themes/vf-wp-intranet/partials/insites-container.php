@@ -1,6 +1,6 @@
 
 <section
-  class="vf-news-container vf-news-container--featured | vf-u-padding__top--600 | vf-u-background-color-ui--off-white | vf-u-fullbleed">
+  class="vf-news-container vf-news-container--featured">
   <div class="vf-section-header">
     <a href="/internal-information/news"
       class="vf-section-header__heading vf-section-header__heading--is-link vf-u-margin__bottom--400">Internal news<svg
