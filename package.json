@@ -48,10 +48,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
-    "@babel/plugin-transform-runtime": "7.23.7",
+    "@babel/plugin-transform-runtime": "7.24.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "7.23.3",
-    "@babel/runtime": "7.23.7",
+    "@babel/runtime": "7.24.0",
     "@rollup/plugin-babel": "5.3.1",
     "@rollup/plugin-commonjs": "21.1.0",
     "@rollup/plugin-node-resolve": "13.3.0",
@@ -128,7 +128,7 @@
     "@visual-framework/vf-video-container": "1.0.0-beta.1",
     "@visual-framework/vf-video-teaser": "2.0.0",
     "chalk": "4.1.2",
-    "core-js": "3.35.0",
+    "core-js": "3.36.0",
     "gulp-babel": "next",
     "rollup": "2.79.1",
     "rollup-plugin-terser": "7.0.2"

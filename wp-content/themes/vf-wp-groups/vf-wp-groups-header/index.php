@@ -166,7 +166,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
    * Return `vf-hero` "text" from custom fields or Content Hub
    */
   public function get_hero_text() {
-    $text = get_field('vf_hero_subheading', false, false, $this->post()->ID);
+    $text = get_field('vf_hero_subheading', false, true, $this->post()->ID);
     if ( ! empty($text)) {
       $text = trim($text);
     }

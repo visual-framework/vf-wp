@@ -129,6 +129,17 @@ if (is_tax('updates-topic')){
 
 }
 
+if (is_tax('events-topic')){
+  echo '<li class="vf-breadcrumbs__item"><a href="' . $home . '" class="vf-breadcrumbs__link">' . $name . '</a>';
+  echo '<li class="vf-breadcrumbs__item"><a href="https://www.embl.org/internal-information/updates" class="vf-breadcrumbs__link">Events</a>';
+  echo $currentBefore . 'Topic: ';
+  single_tag_title();
+  echo $currentAfter;
+  echo '</ul>';
+  echo '</nav>';
+
+}
+
 /*
 
 // embl location taxonomy
