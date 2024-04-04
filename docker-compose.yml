@@ -10,6 +10,8 @@ services:
       MYSQL_DATABASE: ${DOCKER_DATABASE}
       MYSQL_USER: ${DOCKER_DATABASE_USER}
       MYSQL_PASSWORD: ${DOCKER_DATABASE_PASS}
+      MYSQL_INNODB_LOG_BUFFER_SIZE: 50M
+      MYSQL_INNODB_LOG_FILE_SIZE: 2047M
     volumes:
       - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDUMP_SRC}:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
       - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDATA_SRC}:/var/lib/mysql # I want to manage volumes manually.
@@ -17,20 +19,32 @@ services:
   php:
     depends_on:
       - mysql
-    image: ebiwd/php7-apache-wptools:latest
+    image: wodby/wordpress-php:${PHP_TAG}
     container_name: "${PROJECT_NAME}_php"
     environment:
-      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      PHP_SENDMAIL_PATH: '"/usr/bin/dos2unix -u | /usr/sbin/ssmtp -t -f"'
+      SSMTP_MAILHUB: mailhog:1025
       DB_HOST: 'mysql'
       DB_USER: ${DOCKER_DATABASE_USER}
       DB_PASSWORD: ${DOCKER_DATABASE_PASS}
       DB_NAME: ${DOCKER_DATABASE}
-      APACHE_LOG_LEVEL: debug
-      APACHE_BACKEND_HOST: php
-      APACHE_DOCUMENT_ROOT: ${VM_CORE_PATH}/${RELATIVE_DOCUMENT_ROOT}
     volumes:
       - ${LOCAL_CORE_PATH}/:${VM_CORE_PATH}
       - ./bin/conf.d/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+
+  apache:
+    image: wodby/apache:${APACHE_TAG}
+    container_name: "${PROJECT_NAME}_apache"
+    depends_on:
+      - php
+    environment:
+      APACHE_LOG_LEVEL: debug
+      APACHE_BACKEND_HOST: php
+      APACHE_VHOST_PRESET: php
+      APACHE_DOCUMENT_ROOT: ${VM_CORE_PATH}/${RELATIVE_DOCUMENT_ROOT}
+      APACHE_SERVER_ROOT: ${VM_CORE_PATH}/${RELATIVE_DOCUMENT_ROOT}
+    volumes:
+      - ${LOCAL_CORE_PATH}/:${VM_CORE_PATH}
     labels:
       - 'traefik.backend=apache'
       - 'traefik.port=80'
@@ -40,7 +54,7 @@ services:
     image: mailhog/mailhog
     container_name: "${PROJECT_NAME}_mailhog"
     labels:
-      - 'traefik.backend=mailhog'
+      - 'traefik.backend=${PROJECT_NAME}_mailhog'
       - 'traefik.port=8025'
       - 'traefik.frontend.rule=Host:mailhog.${PROJECT_NAME}.docker.localhost'
 
@@ -70,7 +84,7 @@ services:
       - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.docker.localhost'
 
   traefik:
-    image: traefik:v1.7.34-alpine
+    image: traefik:1.7.24-alpine
     container_name: "${PROJECT_NAME}_traefik"
     command: -c /dev/null --web --docker --logLevel=INFO
     ports:
