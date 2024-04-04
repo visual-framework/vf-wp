@@ -39,7 +39,7 @@ class VF_Container_Placeholder extends VF_Plugin {
     return;
   }
 
-  public function template_callback($block, $content, $is_preview = false, $acf_id) {
+  public function template_callback($block, $content, $acf_id, $is_preview = false) {
 ?>
 <div class="vf-banner vf-banner--info">
   <div class="vf-banner__content">
