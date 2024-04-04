@@ -12,7 +12,7 @@ $site_values = get_field('vf_jobs_site', $acf_id);
 if (!empty($site_values)) {
   $site = implode(',', $site_values);
 }
-$section_header_link = "https://embl.org/jobs";
+$section_header_link = "https://www.embl.org/jobs";
 
 $limit = get_field('vf_jobs_limit', $acf_id);
 $limit = intval($limit);

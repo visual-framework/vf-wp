@@ -17,6 +17,7 @@ class VF_Widget_Social_Icons extends WP_Widget {
    * Render the plugin using the widget ACF data
    */
   public function widget($args, $instance) {
+    global $post;
 
     
 // widget ID with prefix for use in ACF API functions
@@ -33,8 +34,9 @@ $instagram_link = get_field('vf_social_instagram', $widget_id);
 $youtube_link = get_field('vf_social_youtube', $widget_id);
 $linkedin_link = get_field('vf_social_linkedin', $widget_id);
 $choose = get_field('vf_social_choose', $widget_id);
-$title = get_the_title($post->ID);
-$social_url = get_the_permalink();
+$post_id = isset($post) ? $post->ID : get_queried_object_id();
+$title = get_the_title($post_id);
+$social_url = get_the_permalink($post_id);
 $select = get_field('vf_social_select', $widget_id);
 $custom = get_field('vf_social_custom', $widget_id);
 $custom_url = get_field('vf_social_share_url', $widget_id);
