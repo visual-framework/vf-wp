@@ -12,6 +12,7 @@ $site_values = get_field('vf_jobs_site', $acf_id);
 if (!empty($site_values)) {
   $site = implode(',', $site_values);
 }
+$section_header_link = "https://embl.org/jobs";
 
 $limit = get_field('vf_jobs_limit', $acf_id);
 $limit = intval($limit);
@@ -82,6 +83,7 @@ if ($site != 'All') {
   $vars[$key_sites] = $site;
 }}
 
+
 $key_ref = 'filter-field-contains[field_jobs_reference_number]';
 $key_group = 'filter-field-contains[field_jobs_group]';
 $key_type = 'filter-field-contains[field_jobs_type]';
@@ -130,15 +132,10 @@ $content = preg_replace(
     ?>
   <div class="vf-section-header">
   <h2 class="vf-section-header__heading">
-    <a class="vf-section-header__heading vf-section-header__heading--is-link" 
+    <a class="vf-section-header__heading vf-section-header__heading--is-link" href="
     <?php 
-    if ($site == 'EMBL-EBI') {
-      echo 'href="https://www.ebi.ac.uk/careers/jobs"';
-    } 
-    else {
-      echo 'href="https://embl.org/jobs"';
-    }
-    ?>
+    echo esc_url($section_header_link);
+    ?>" 
         id="section-link"> <?php echo esc_html($heading); ?> <svg aria-hidden="true"
         class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">

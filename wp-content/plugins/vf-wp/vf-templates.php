@@ -386,7 +386,7 @@ class VF_Templates {
     // Label pre-defined templates provide by the child theme
     $templates = array();
     foreach ($page_templates as $key => $value) {
-      $templates[$key] = "${value} (theme)";
+      $templates[$key] = "{$value} (theme)";
     }
     // Get dynamic templates
     $dynamic = array();

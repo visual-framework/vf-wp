@@ -36,14 +36,15 @@ if (empty($variant)) {
 }
 
 // Validate values
+// Validate values
 $limit = intval($limit);
 $limit = $limit < 1 || $limit > 20 ? 3 : $limit;
-$keyword = trim($keyword);
-$ids = explode(',', $ids);
+$keyword = trim($keyword ?? '');
+$ids = explode(',', $ids ?? '');
 $ids = array_map('trim', $ids);
-$tags = explode(',', $tags);
+$tags = explode(',', $tags ?? '');
 $tags = array_map('trim', $tags);
-// Ensure single term is array (for later multi-term support)
+
 if (is_int($embl_terms)) {
   $embl_terms = array($embl_terms);
 }
