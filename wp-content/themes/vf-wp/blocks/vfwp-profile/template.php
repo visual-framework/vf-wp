@@ -1,11 +1,13 @@
 <?php
 $image_url = get_field('image_url');
 $image = get_field('image');
+if (is_array($image) && isset($image['ID'])) {
 $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
     'class'    => 'vf-profile__image',
     'loading'  => 'lazy',
     'itemprop' => 'image',
 ));
+}
 
 $name = get_field('full_name');
 $link = get_field('profile_link');

@@ -232,21 +232,28 @@ class VF_Type {
     }
 
     // Iterate over registered block plugins
-    foreach ($vf_plugins as $key => $config) {
-      // Skip unknown or deprecated plugins
-      $plugin = VF_Plugin::get_plugin($key);
-      if ( ! $plugin || $plugin->is_deprecated()) {
-        continue;
-      }
-      $date = strtotime($plugin->post()->post_date_gmt);
+foreach ($vf_plugins as $key => $config) {
+  // Skip unknown or deprecated plugins
+  $plugin = VF_Plugin::get_plugin($key);
+  if (!$plugin || $plugin->is_deprecated()) {
+      continue;
+  }
 
-      // Force a migration (11/11/2020 @ 11:11am UTC)
-      if ($date < 1605093071) {
-        VF_Plugin::register_update(array(
+  // Ensure that $plugin->post() returns a valid WP_Post object
+  $post = $plugin->post();
+  if (!$post instanceof WP_Post) {
+      continue;
+  }
+
+  $date = strtotime($post->post_date_gmt);
+
+  // Force a migration (11/11/2020 @ 11:11am UTC)
+  if ($date < 1605093071) {
+      VF_Plugin::register_update(array(
           'dates' => true
-        ), $plugin->post());
-      }
-    }
+      ), $post);
+  }
+}
   }
 
   /**

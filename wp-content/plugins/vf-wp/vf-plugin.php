@@ -224,49 +224,51 @@ class VF_Plugin {
    * Ensure plugin post is published with correct content
    */
   static public function register_update($config, $plugin = null) {
-    if ( ! $plugin) {
-      $plugin = get_page_by_path(
-        $config['post_name'],
-        OBJECT,
-        $config['post_type']
-      );
+    if (!$plugin && isset($config['post_name'], $config['post_type'])) {
+        $plugin = get_page_by_path(
+            $config['post_name'],
+            OBJECT,
+            $config['post_type']
+        );
     }
-    if ( ! $plugin instanceof WP_Post) {
-      return;
+    if (!$plugin instanceof WP_Post) {
+        return;
     }
+
+    $post_content = '';
 
     // Add generic plugin preview block to post content
     if ($plugin->post_type === VF_Blocks::post_type()) {
-      $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
-        . VF_Blocks::name_post_to_block($plugin->post_name)
-        . '"} /-->';
+        $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
+            . VF_Blocks::name_post_to_block($plugin->post_name)
+            . '"} /-->';
     }
 
     // Add generic plugin preview block to post content
     if ($plugin->post_type === VF_Containers::post_type()) {
-      $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
-        . VF_Containers::name_post_to_block($plugin->post_name)
-        . '"} /-->';
+        $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
+            . VF_Containers::name_post_to_block($plugin->post_name)
+            . '"} /-->';
     }
 
     $data = array(
-      'ID'           => $plugin->ID,
-      'post_content' => $post_content,
-      'post_status'  => 'publish'
+        'ID'           => $plugin->ID,
+        'post_content' => $post_content,
+        'post_status'  => 'publish'
     );
 
     if (isset($config['post_title'])) {
-      $data['post_title'] = $config['post_title'];
+        $data['post_title'] = $config['post_title'];
     }
 
     if (isset($config['dates'])) {
-      $time = current_time('mysql');
-      $data['post_date'] = $time;
-      $data['post_date_gmt'] = get_gmt_from_date($time);
+        $time = current_time('mysql');
+        $data['post_date'] = $time;
+        $data['post_date_gmt'] = get_gmt_from_date($time);
     }
 
     wp_update_post($data);
-  }
+}
 
     /**
    * Save plugin data to a global option key/value array
