@@ -87,68 +87,79 @@ class VF_Containers extends VF_Type {
    */
   public function after_setup_theme() {
     global $vf_plugins;
-    if ( ! is_array($vf_plugins)) {
-      return;
+    if (!is_array($vf_plugins)) {
+        return;
     }
 
     // Iterate over registered container plugins
     foreach ($vf_plugins as $key => $config) {
-      if ($config['post_type'] !== $this->type()) {
-        continue;
-      }
-
-      // Skip unknown or deprecated plugins
-      $plugin = VF_Plugin::get_plugin($key);
-      if ( ! $plugin || $plugin->is_deprecated()) {
-        continue;
-      }
-
-      // Setup render callback using VF Gutenberg plugin or fallback
-      $callback = function() use ($plugin) {
-        $args = func_get_args();
-        $acf_id = $plugin->post()->ID;
-        $template = $plugin->template();
-        $block = $args[0];
-        if (method_exists($plugin, 'template_callback')) {
-          $template = array($plugin, 'template_callback');
+        if ($config['post_type'] !== $this->type()) {
+            continue;
         }
-        if (get_field('is_plugin', $block['id']) === 1) {
-          $plugin = VF_Containers::name_block_to_post($block['name']);
-          $plugin = VF_Plugin::get_plugin($plugin);
-          if ($plugin) {
-            acf_reset_meta($block['id']);
-            $block['data']['__merge_fields'] = true;
-            $template = function($args) use ($block, $plugin) {
-              VF_Plugin::render($plugin, $block['data']);
-            };
-          }
+
+        // Skip unknown or deprecated plugins
+        $plugin = VF_Plugin::get_plugin($key);
+        if (!$plugin || $plugin->is_deprecated()) {
+            continue;
         }
-        if (class_exists('VF_Gutenberg')) {
-          VF_Gutenberg::acf_render_template($args, $template, $acf_id);
+
+        // Setup render callback using VF Gutenberg plugin or fallback
+        $callback = function() use ($plugin) {
+            $args = func_get_args();
+            $post = $plugin->post();
+            if (!$post) {
+                error_log("Error: No post found for plugin with key {$key}");
+                return;  // Exit the callback if no post is available
+            }
+            $acf_id = $post->ID;
+            $template = $plugin->template();
+            $block = $args[0];
+            if (method_exists($plugin, 'template_callback')) {
+                $template = array($plugin, 'template_callback');
+            }
+            if (get_field('is_plugin', $block['id']) === 1) {
+                $plugin = VF_Containers::name_block_to_post($block['name']);
+                $plugin = VF_Plugin::get_plugin($plugin);
+                if ($plugin) {
+                    acf_reset_meta($block['id']);
+                    $block['data']['__merge_fields'] = true;
+                    $template = function($args) use ($block, $plugin) {
+                        VF_Plugin::render($plugin, $block['data']);
+                    };
+                }
+            }
+            if (class_exists('VF_Gutenberg')) {
+                VF_Gutenberg::acf_render_template($args, $template, $acf_id);
+            } else {
+                include($template);
+            }
+        };
+
+        // Ensure that a valid post object is available before registering the block
+        $post = $plugin->post();
+        if ($post) {
+            // Register the Gutenberg block with ACF
+            acf_register_block_type(array_merge(
+                array(
+                    'name'     => VF_Containers::name_post_to_block($key, ''),
+                    'title'    => $post->post_title,
+                    'category' => VF_Containers::block_category(),
+                    'supports' => array(
+                        'customClassName' => false,
+                        'align'           => false,
+                        'multiple'        => false,
+                        'mode'            => false,
+                    )
+                ),
+                array(
+                    'render_callback' => $callback
+                )
+            ));
         } else {
-          include($template);
+            error_log("Error: No valid post found for plugin with key {$key}");
         }
-      };
-
-      // Register the Gutenberg block with ACF
-      acf_register_block_type(array_merge(
-        array(
-          'name'     => VF_Containers::name_post_to_block($key, ''),
-          'title'    => $plugin->post()->post_title,
-          'category' => VF_Containers::block_category(),
-          'supports' => array(
-            'customClassName' => false,
-            'align'           => false,
-            'multiple'        => false,
-            'mode'            => false,
-          )
-        ),
-        array(
-          'render_callback' => $callback
-        )
-      ));
     }
-  }
+}
 
 } // VF_Containers
 
