@@ -218,9 +218,12 @@ if ( !is_home() && !is_archive('community-blog') && !is_archive('insites') && !i
       <span class="vf-breadcrumbs__heading">Related:</span>
       <ul class="vf-breadcrumbs__list vf-breadcrumbs__list--related vf-list vf-list--inline">';
       while( have_rows('vf-wp-intranet-related') ) : the_row();
-      $related_link = get_sub_field('related-link'); ?>
-      <li class="vf-breadcrumbs__item"><a href="<?php echo esc_url($related_link['url']); ?>" class="vf-breadcrumbs__link"><?php echo esc_html($related_link['title']); ?></a></li>
-    <?php
+      $related_link = get_sub_field('related-link');
+      if (is_array($related_link) && isset($related_link['title']) && isset($related_link['url'])) {
+       echo '<li class="vf-breadcrumbs__item"><a href="' . esc_url($related_link['url']) . '" class="vf-breadcrumbs__link">' . esc_html($related_link['title']) . '</a></li>';
+      } else {
+       echo '';
+      }    
       endwhile;
     echo '</ul>';
     else :
