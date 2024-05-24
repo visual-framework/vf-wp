@@ -108,7 +108,7 @@ class VF_Containers extends VF_Type {
             $args = func_get_args();
             $post = $plugin->post();
             if (!$post) {
-                error_log("Error: No post found for plugin with key {$key}");
+                // error_log("Error: No post found for plugin with key {$key}");
                 return;  // Exit the callback if no post is available
             }
             $acf_id = $post->ID;

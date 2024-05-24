@@ -224,6 +224,7 @@ class VF_Plugin {
    * Ensure plugin post is published with correct content
    */
   static public function register_update($config, $plugin = null) {
+    // Check for necessary keys in the config array
     if (!$plugin && isset($config['post_name'], $config['post_type'])) {
         $plugin = get_page_by_path(
             $config['post_name'],
@@ -231,24 +232,27 @@ class VF_Plugin {
             $config['post_type']
         );
     }
+
+    // Exit the function early if $plugin is not a valid WP_Post object
     if (!$plugin instanceof WP_Post) {
+        error_log('register_update function called with invalid or missing plugin object');
         return;
     }
 
     $post_content = '';
 
-    // Add generic plugin preview block to post content
-    if ($plugin->post_type === VF_Blocks::post_type()) {
-        $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
-            . VF_Blocks::name_post_to_block($plugin->post_name)
-            . '"} /-->';
-    }
-
-    // Add generic plugin preview block to post content
-    if ($plugin->post_type === VF_Containers::post_type()) {
-        $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"'
-            . VF_Containers::name_post_to_block($plugin->post_name)
-            . '"} /-->';
+    // Add generic plugin preview block to post content based on the type of post
+    switch ($plugin->post_type) {
+        case VF_Blocks::post_type():
+            $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"' 
+                . VF_Blocks::name_post_to_block($plugin->post_name) 
+                . '"} /-->';
+            break;
+        case VF_Containers::post_type():
+            $post_content = '<!-- wp:vf/plugin {"ver":"2.0.0","ref":"' 
+                . VF_Containers::name_post_to_block($plugin->post_name) 
+                . '"} /-->';
+            break;
     }
 
     $data = array(
@@ -257,18 +261,22 @@ class VF_Plugin {
         'post_status'  => 'publish'
     );
 
+    // Only add post title if it's explicitly provided in the config
     if (isset($config['post_title'])) {
         $data['post_title'] = $config['post_title'];
     }
 
+    // Handle dates if provided
     if (isset($config['dates'])) {
         $time = current_time('mysql');
         $data['post_date'] = $time;
         $data['post_date_gmt'] = get_gmt_from_date($time);
     }
 
+    // Perform the update
     wp_update_post($data);
 }
+
 
     /**
    * Save plugin data to a global option key/value array
