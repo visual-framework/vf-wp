@@ -156,8 +156,9 @@ function swiftype_metadata_description() {
       $text = strstr($text, '<p>',);
       $text = strstr($text, '</p>', true);
       $text = str_replace('<p>','', $text);
+      $strippedText = strip_tags($text);
     } }
-  return $text;
+  return $strippedText;
 }
 
 
