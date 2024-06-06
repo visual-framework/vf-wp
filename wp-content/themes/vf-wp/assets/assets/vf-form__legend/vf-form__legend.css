@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-form__legend
- * Version: 2.0.0-alpha.0
+ * Version: 2.0.2
  * Location: components/vf-core-components/vf-form__legend
  */
 .vf-form__legend {
@@ -109,12 +109,12 @@
 }
 
 .vf-form__legend--required {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: start;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 .vf-form__legend--required .vf-icon {
   fill: #d41645;

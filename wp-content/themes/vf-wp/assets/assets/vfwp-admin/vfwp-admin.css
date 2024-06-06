@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.11
+ * Version: 1.6.14
  * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]), .editor-styles-wrapper h1:not([class*=vf-]) {
@@ -297,8 +297,7 @@
   border: none;
   height: 1px;
   margin-block: 0 var(--vf-divider-margin--block-end, 1.5rem);
-  margin-top: 1rem;
-  /* IE Fallback */
+  margin-top: 1rem; /* IE Fallback */
   margin-top: var(--vf-stack-margin, 1rem);
   width: 100%;
 }

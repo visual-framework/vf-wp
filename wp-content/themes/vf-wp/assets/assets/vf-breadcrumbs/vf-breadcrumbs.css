@@ -198,7 +198,7 @@
 
 /*!
  * Component: @visual-framework/vf-breadcrumbs
- * Version: 2.0.5
+ * Version: 2.0.6
  * Location: components/vf-core-components/vf-breadcrumbs
  */
 .vf-breadcrumbs {
@@ -253,7 +253,8 @@
   font-weight: 400;
   line-height: 1.71;
   margin: var(--vf-stack-margin, 0) 0 0 0;
-  display: inline;
+  display: inline-block;
+  line-height: 2.75;
 }
 @media (min-width: 1024px) {
   .vf-breadcrumbs__list + .vf-breadcrumbs__heading {
@@ -263,8 +264,15 @@
 
 .vf-breadcrumbs__link {
   color: currentColor;
+  display: inline-block;
+  line-height: 2.75;
 }
 
+@media (max-width: 768px) {
+  .vf-breadcrumbs__list:not(.vf-breadcrumbs__list--related) > .vf-breadcrumbs__item:not(:nth-last-child(2)) {
+    display: none;
+  }
+}
 .vf-breadcrumbs__list--related .vf-breadcrumbs__item {
   color: #707372;
   margin-left: 8px;

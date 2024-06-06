@@ -282,11 +282,9 @@
     grid-template-areas: "... header header" "... ...    links";
     grid-template-columns: var(--embl-grid-module--prime) auto var(--embl-grid-module--prime);
   }
-
   .vf-intro__heading {
     grid-area: header;
   }
-
   .vf-intro .vf-links {
     grid-area: links;
     grid-row-end: -1;

@@ -109,10 +109,8 @@
  *
  */
 [class^=vf-stack] > * {
-  margin-bottom: 0;
-  /* [1] */
-  margin-top: 0;
-  /* [2] */
+  margin-bottom: 0; /* [1] */
+  margin-top: 0; /* [2] */
 }
 
 .vf-stack > * + * > * {
@@ -121,10 +119,8 @@
 
 .vf-stack > * + * {
   --vf-stack-margin: 1rem;
-  margin-top: 1rem;
-  /* IE Fallback */
-  margin-top: var(--vf-stack-margin--custom, var(--vf-stack-margin, 1rem));
-  /* [3] */
+  margin-top: 1rem; /* IE Fallback */
+  margin-top: var(--vf-stack-margin--custom, var(--vf-stack-margin, 1rem)); /* [3] */
 }
 
 .vf-stack--200 > * + * {

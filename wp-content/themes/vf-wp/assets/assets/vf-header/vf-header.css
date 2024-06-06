@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-global-header
- * Version: 3.1.2
+ * Version: 3.1.6
  * Location: components/vf-core-components/vf-global-header
  */
 .vf-global-header {
@@ -264,7 +264,7 @@ html:not(.vf-disable-deprecated) [class*=with-title-block][class*=theme] .vf-mas
 
 /*!
  * Component: @visual-framework/vf-navigation
- * Version: 5.0.0
+ * Version: 5.0.3
  * Location: components/vf-core-components/vf-navigation
  */
 .vf-navigation__link {

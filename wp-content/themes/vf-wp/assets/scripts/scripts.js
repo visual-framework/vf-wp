@@ -270,7 +270,10 @@ function vfMastheadSetStyle() {
 
 // Declare `ga` as a global for eslint
 /* global ga */
-
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  window.dataLayer.push(arguments);
+}
 /**
  * Utility method to invalidate prior GA check.
  */
@@ -315,7 +318,7 @@ function vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaC
   var el = document.querySelector("body");
 
   // debug
-  vfGaLogMessage('checking ' + numberOfGaChecks + ", limit: " + numberOfGaChecksLimit);
+  vfGaLogMessage("checking " + numberOfGaChecks + ", limit: " + numberOfGaChecksLimit);
   numberOfGaChecks++;
 
   // If successful we set `data-vf-google-analytics-loaded` on the `body` to true.
@@ -327,19 +330,19 @@ function vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaC
 
     // check to see if gtag is loaded, and then if UA is loaded, and if neither, check once more (to a limit)
     if (typeof gtag !== "undefined") {
-      vfGaLogMessage('ga4 found');
+      vfGaLogMessage("ga4 found");
       if (el.getAttribute("data-vf-google-analytics-loaded") != "true") {
         el.setAttribute("data-vf-google-analytics-loaded", "true");
         vfGaInit(vfGaTrackOptions);
       }
     } else if (ga && ga.loaded) {
-      vfGaLogMessage('ua found');
+      vfGaLogMessage("ua found");
       if (el.getAttribute("data-vf-google-analytics-loaded") != "true") {
         el.setAttribute("data-vf-google-analytics-loaded", "true");
         vfGaInit(vfGaTrackOptions);
       }
     } else {
-      vfGaLogMessage('GA tracking code not ready, scheduling another check');
+      vfGaLogMessage("GA tracking code not ready, scheduling another check");
       if (numberOfGaChecks <= numberOfGaChecksLimit) {
         setTimeout(function () {
           vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaChecks, checkTimeout);
@@ -347,7 +350,7 @@ function vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaC
       }
     }
   } catch (err) {
-    vfGaLogMessage('error in vfGaIndicateLoaded');
+    vfGaLogMessage("error in vfGaIndicateLoaded");
     if (numberOfGaChecks <= numberOfGaChecksLimit) {
       setTimeout(function () {
         vfGaIndicateLoaded(vfGaTrackOptions, numberOfGaChecksLimit, numberOfGaChecks, checkTimeout);
@@ -383,7 +386,7 @@ function vfGetMeta(metaName) {
  * @param {string} [vfGaTrackOptions.vfGa4MeasurementId] The GA4 site measurement ID.
  */
 function vfGaInit(vfGaTrackOptions) {
-  vfGaLogMessage('initing vfGaInit');
+  vfGaLogMessage("initing vfGaInit");
   /* eslint-disable no-redeclare*/
   var vfGaTrackOptions = vfGaTrackOptions || {};
   /* eslint-enable no-redeclare*/
@@ -395,12 +398,12 @@ function vfGaInit(vfGaTrackOptions) {
 
   if (typeof gtag === "undefined") {
     // if the site is still using legacy GA, set a dummy gtag function so we don't have to add a bunch of if statements
-    vfGaLogMessage('GA4 dummy function has been set.');
+    vfGaLogMessage("GA4 dummy function has been set.");
     window.gtag = function () {};
   }
   if (typeof ga === "undefined") {
     // if the site is still using legacy GA, set a dummy gtag function so we don't have to add a bunch of if statements
-    vfGaLogMessage('GA UA dummy function has been set.');
+    vfGaLogMessage("GA UA dummy function has been set.");
     window.ga = function () {};
   }
 
@@ -422,8 +425,8 @@ function vfGaInit(vfGaTrackOptions) {
     var dimension = toLog[1];
     var pageTypeName = toLog[0];
     ga("set", dimension, pageTypeName);
-    gtag('config', vfGaTrackOptions.vfGa4MeasurementId, {
-      'custom_map': {
+    gtag("config", vfGaTrackOptions.vfGa4MeasurementId, {
+      custom_map: {
         dimension: pageTypeName
       }
     });
@@ -440,16 +443,16 @@ function vfGaInit(vfGaTrackOptions) {
     // included here to simplify usage and reduce external requests
     /* eslint-disable */
     var providePlugin = function providePlugin(pluginName, pluginConstructor) {
-      var ga = window[window.GoogleAnalyticsObject || 'ga'];
-      if (typeof ga === 'undefined') {}
-      if (typeof ga == 'function') {
-        ga('provide', pluginName, pluginConstructor);
+      var ga = window[window.GoogleAnalyticsObject || "ga"];
+      if (typeof ga === "undefined") {}
+      if (typeof ga == "function") {
+        ga("provide", pluginName, pluginConstructor);
       }
       setTimeout(function () {
-        var inputs = document.querySelectorAll('input');
+        var inputs = document.querySelectorAll("input");
         if (inputs) {
           for (var i = 0; i < inputs.length; i++) {
-            inputs[i].addEventListener('blur', riskCheck);
+            inputs[i].addEventListener("blur", riskCheck);
           }
         }
       }, 750);
@@ -473,8 +476,8 @@ function vfGaInit(vfGaTrackOptions) {
     };
     var rc = function rc(d) {
       var xhr = new XMLHttpRequest();
-      xhr.open("POST", 'https://risk.ipmeta.io/check', !0);
-      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.open("POST", "https://risk.ipmeta.io/check", !0);
+      xhr.setRequestHeader("Content-Type", "application/json");
       xhr.send(JSON.stringify({
         assoc: d
       }));
@@ -494,17 +497,17 @@ function vfGaInit(vfGaTrackOptions) {
         return;
       }
       var request = new XMLHttpRequest();
-      var pl = 'h=' + encodeURI(window.location.hostname);
+      var pl = "h=" + encodeURI(window.location.hostname);
       if (key) {
-        pl += '&k=' + key;
+        pl += "&k=" + key;
       }
-      var endpoint = 'https://ipmeta.io/api/enrich';
+      var endpoint = "https://ipmeta.io/api/enrich";
       if (local) {
-        endpoint = 'http://ipmeta.test/api/enrich';
+        endpoint = "http://ipmeta.test/api/enrich";
       }
-      request.open('POST', endpoint, !0);
-      request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      request.setRequestHeader('Accept', 'application/json');
+      request.open("POST", endpoint, !0);
+      request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      request.setRequestHeader("Accept", "application/json");
       request.send(pl);
       request.onreadystatechange = function () {
         if (request.readyState == XMLHttpRequest.DONE) {
@@ -517,85 +520,85 @@ function vfGaInit(vfGaTrackOptions) {
             console.error(JSON.parse(request.responseText)[0]);
             return !1;
           }
-          console.error('IpMeta lookup failed.  Returned status of ' + request.status);
+          console.error("IpMeta lookup failed.  Returned status of " + request.status);
           return !1;
         }
       };
     };
     var encr = function encr(str) {
-      return 'IPM' + btoa(btoa('bf2414cd32581225a82cc4fb46c67643' + btoa(str)) + 'dde9caf18a8fc7d8187f3aa66da8c6bb');
+      return "IPM" + btoa(btoa("bf2414cd32581225a82cc4fb46c67643" + btoa(str)) + "dde9caf18a8fc7d8187f3aa66da8c6bb");
     };
     var IpMeta = function IpMeta(tracker, config) {
       this.tracker = tracker;
-      this.nameDimension = config.serviceProvider || config.nameDimension || 'dimension1';
-      this.domainDimension = config.networkDomain || config.domainDimension || 'dimension2';
-      this.typeDimension = config.networkType || config.typeDimension || 'dimension3';
-      this.gtmEventKey = config.gtmEventKey || 'pageview';
+      this.nameDimension = config.serviceProvider || config.nameDimension || "dimension1";
+      this.domainDimension = config.networkDomain || config.domainDimension || "dimension2";
+      this.typeDimension = config.networkType || config.typeDimension || "dimension3";
+      this.gtmEventKey = config.gtmEventKey || "pageview";
       this.isLocal = config.local || !1;
       this.apiKey = config.apiKey;
       this.isDebug = config.debug;
     };
     IpMeta.prototype.loadNetworkFields = function () {
-      if (typeof Window.IpMeta === 'undefined') {
+      if (typeof Window.IpMeta === "undefined") {
         Window.IpMeta = this;
       }
-      this.debugMessage('Loading network field parameters');
+      this.debugMessage("Loading network field parameters");
       enrichNetwork(this.apiKey, this.isLocal, function (fields, wasAsync) {
         var wasAsync = wasAsync || !1;
-        var nameValue = fields.name || '(not set)';
-        var domainValue = fields.domain || '(not set)';
-        var typeValue = fields.type || '(not set)';
+        var nameValue = fields.name || "(not set)";
+        var domainValue = fields.domain || "(not set)";
+        var typeValue = fields.type || "(not set)";
         if (nameValue) {
           Window.IpMeta.tracker.set(Window.IpMeta.nameDimension, nameValue);
-          Window.IpMeta.debugMessage('Loaded network name: ' + nameValue + ' into ' + Window.IpMeta.nameDimension);
+          Window.IpMeta.debugMessage("Loaded network name: " + nameValue + " into " + Window.IpMeta.nameDimension);
         }
         if (domainValue) {
           Window.IpMeta.tracker.set(Window.IpMeta.domainDimension, domainValue);
-          Window.IpMeta.debugMessage('Loaded network domain: ' + domainValue + ' into ' + Window.IpMeta.domainDimension);
+          Window.IpMeta.debugMessage("Loaded network domain: " + domainValue + " into " + Window.IpMeta.domainDimension);
         }
         if (typeValue) {
           Window.IpMeta.tracker.set(Window.IpMeta.typeDimension, typeValue);
-          Window.IpMeta.debugMessage('Loaded network type: ' + typeValue + ' into ' + Window.IpMeta.typeDimension);
+          Window.IpMeta.debugMessage("Loaded network type: " + typeValue + " into " + Window.IpMeta.typeDimension);
         }
         if (wasAsync) {
-          Window.IpMeta.tracker.send('event', 'IpMeta', 'Enriched', 'IpMeta Enriched', {
+          Window.IpMeta.tracker.send("event", "IpMeta", "Enriched", "IpMeta Enriched", {
             nonInteraction: !0
           });
         }
       });
     };
     IpMeta.prototype.setGtagMapping = function (fields) {
-      var nameValue = fields.name || '(not set)';
-      var domainValue = fields.domain || '(not set)';
-      var typeValue = fields.type || '(not set)';
+      var nameValue = fields.name || "(not set)";
+      var domainValue = fields.domain || "(not set)";
+      var typeValue = fields.type || "(not set)";
       var mapping = {};
       mapping[this.nameDimension] = nameValue;
       mapping[this.domainDimension] = domainValue;
       mapping[this.typeDimension] = typeValue;
       mapping.non_interaction = !0;
-      Window.IpMeta.tracker('event', 'ipmeta_event', mapping);
+      Window.IpMeta.tracker("event", "ipmeta_event", mapping);
     };
     IpMeta.prototype.loadGtagNetworkFields = function () {
-      if (typeof Window.IpMeta === 'undefined') {
+      if (typeof Window.IpMeta === "undefined") {
         Window.IpMeta = this;
       }
-      this.debugMessage('Loading network field parameters');
+      this.debugMessage("Loading network field parameters");
       enrichNetwork(this.apiKey, this.isLocal, function (fields, wasAsync) {
         wasAsync = wasAsync || !1;
         Window.IpMeta.setGtagMapping(fields);
       });
     };
     IpMeta.prototype.loadGtmNetworkFields = function () {
-      if (typeof Window.IpMeta === 'undefined') {
+      if (typeof Window.IpMeta === "undefined") {
         Window.IpMeta = this;
       }
-      this.debugMessage('Loading network field parameters');
+      this.debugMessage("Loading network field parameters");
       var eventKey = this.gtmEventKey;
       enrichNetwork(this.apiKey, this.isLocal, function (fields, wasAsync) {
         wasAsync = wasAsync || !1;
-        var nameValue = fields.name || '(not set)';
-        var domainValue = fields.domain || '(not set)';
-        var typeValue = fields.type || '(not set)';
+        var nameValue = fields.name || "(not set)";
+        var domainValue = fields.domain || "(not set)";
+        var typeValue = fields.type || "(not set)";
         var dataLayerObj = {};
         dataLayerObj.event = eventKey;
         dataLayerObj.nameValue = nameValue;
@@ -612,7 +615,7 @@ function vfGaInit(vfGaTrackOptions) {
       if (!this.isDebug) return;
       if (console) console.debug(message);
     };
-    providePlugin('ipMeta', IpMeta);
+    providePlugin("ipMeta", IpMeta);
     /* eslint-enable */
 
     // Track the network
@@ -626,7 +629,7 @@ function vfGaInit(vfGaTrackOptions) {
 
   // standard google analytics bootstrap
   if (vfGaTrackOptions.vfGaTrackPageLoad) {
-    vfGaLogMessage('sending page view');
+    vfGaLogMessage("sending page view");
     ga("send", "pageview");
     gtag("event", "page_view");
   }
@@ -637,7 +640,7 @@ function vfGaInit(vfGaTrackOptions) {
   //   // 'metric5': 'custom metric data'
   // });
 
-  vfGaLogMessage('prepare vfGaLinkTrackingInit');
+  vfGaLogMessage("prepare vfGaLinkTrackingInit");
   vfGaLinkTrackingInit();
 }
 
@@ -645,7 +648,7 @@ function vfGaInit(vfGaTrackOptions) {
  * Track clicks as events
  */
 function vfGaLinkTrackingInit() {
-  vfGaLogMessage('vfGaLinkTrackingInit');
+  vfGaLogMessage("vfGaLinkTrackingInit");
   document.body.addEventListener("mousedown", function (evt) {
     // Debug event type clicked
     vfGaLogMessage(evt.target.tagName);
@@ -748,7 +751,7 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
   if (typeof gtag === "undefined") {
     // if the site is still using legacy GA, set a dummy gtag function so we don't have to add a bunch of if statements
     window.gtag = function () {};
-    vfGaLogMessage('GA4 dummy function has been set.');
+    vfGaLogMessage("GA4 dummy function has been set.");
   }
   if (customEventName.length > 0) {
     linkName = customEventName;
@@ -827,12 +830,12 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
       var mailLink = href.replace(/^mailto\:/i, "");
       ga && ga("send", "event", "Email", "Region / " + parentContainer, mailLink);
       gtag && gtag("event", "Region / " + parentContainer, {
-        "vf_analytics": "true",
-        "page_container": parentContainer,
-        "event_label": mailLink,
-        "event_category": "UI",
-        "event_type": "Email",
-        "email_address": mailLink
+        vf_analytics: "true",
+        page_container: parentContainer,
+        event_label: mailLink,
+        event_category: "UI",
+        event_type: "Email",
+        email_address: mailLink
       });
       vfGaLogMessage("Email", "Region / " + parentContainer, mailLink, lastGaEventTime, actedOnItem);
     } else if (href && href.match(filetypes)) {
@@ -841,13 +844,13 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
       var filePath = href;
       ga && ga("send", "event", "Download", "Type / " + extension + " / " + parentContainer, filePath);
       gtag && gtag("event", "Type / " + extension + " / " + parentContainer, {
-        "vf_analytics": "true",
-        "page_container": parentContainer,
-        "event_label": filePath,
-        "file_extension": extension,
-        "event_category": "UI",
-        "event_type": "Download",
-        "link_url": filePath
+        vf_analytics: "true",
+        page_container: parentContainer,
+        event_label: filePath,
+        file_extension: extension,
+        event_category: "UI",
+        event_type: "Download",
+        link_url: filePath
       });
       vfGaLogMessage("Download", "Type / " + extension + " / " + parentContainer, filePath, lastGaEventTime, actedOnItem);
     }
@@ -860,12 +863,12 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
       if (newDestination.hostname != window.location.hostname) {
         ga && ga("send", "event", "External links", "External link / " + linkName + " / " + parentContainer, href);
         gtag && gtag("event", "External link / " + parentContainer, {
-          "vf_analytics": "true",
-          "page_container": parentContainer,
-          "event_category": "UI",
-          "event_type": "External link or button",
-          "link_text": linkName,
-          "link_url": href
+          vf_analytics: "true",
+          page_container: parentContainer,
+          event_category: "UI",
+          event_type: "External link or button",
+          link_text: linkName,
+          link_url: href
         });
         vfGaLogMessage("External links", "External link / " + linkName + " / " + parentContainer, href, lastGaEventTime, actedOnItem);
       }
@@ -903,12 +906,12 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
       }
       ga && ga("send", "event", "UI", "UI Element / " + parentContainer, linkName);
       gtag && gtag("event", "UI Element / " + parentContainer, {
-        "vf_analytics": "true",
-        "page_container": parentContainer,
-        "event_label": linkName,
-        "event_category": "UI",
-        "event_type": "Webform",
-        "link_text": linkName
+        vf_analytics: "true",
+        page_container: parentContainer,
+        event_label: linkName,
+        event_category: "UI",
+        event_type: "Webform",
+        link_text: linkName
       });
       vfGaLogMessage("UI Form", "UI Element / " + parentContainer, linkName, lastGaEventTime, actedOnItem);
     } else {
@@ -916,13 +919,13 @@ function vfGaTrackInteraction(actedOnItem, customEventName) {
       vfGaLogMessage("vfGaTrackInteraction: generic catch all");
       ga && ga("send", "event", "UI", "UI Element / " + parentContainer, linkName);
       gtag && gtag("event", "UI Element / " + parentContainer, {
-        "vf_analytics": "true",
-        "page_container": parentContainer,
-        "event_label": linkName,
-        "event_category": "UI",
-        "event_type": "Link, button, image or similar",
-        "link_text": linkName,
-        "link_url": href
+        vf_analytics: "true",
+        page_container: parentContainer,
+        event_label: linkName,
+        event_category: "UI",
+        event_type: "Link, button, image or similar",
+        link_text: linkName,
+        link_url: href
       });
       vfGaLogMessage("UI Catch all", "UI Element / " + parentContainer, linkName, lastGaEventTime, actedOnItem);
     }
@@ -975,7 +978,7 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
   // Get relevant elements and collections
   var tabsList = scope.querySelectorAll("[data-vf-js-tabs]");
   var panelsList = scope.querySelectorAll("[data-vf-js-tabs-content]");
-  var panels = scope.querySelectorAll("[data-vf-js-tabs-content] [id^=\"vf-tabs__section\"]");
+  var panels = scope.querySelectorAll("[data-vf-js-tabs-content] [id^='vf-tabs__section']");
   var tabs = scope.querySelectorAll("[data-vf-js-tabs] .vf-tabs__link");
   if (!tabsList || !panels || !tabs) {
     // exit: either tabs or tabbed content not found
@@ -1058,7 +1061,7 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
 var vfTabsSwitch = function vfTabsSwitch(newTab, panels) {
   // Update url based on tab id
   var data = newTab.getAttribute("id");
-  var url = '#' + data;
+  var url = "#" + data;
   window.history.replaceState(data, null, url);
 
   // get the parent ul of the clicked tab
@@ -1176,7 +1179,7 @@ function vfNavigationOnThisPage() {
       navLinks[0].setAttribute("aria-selected", "true");
     } else {
       navLinks.forEach(function (link) {
-        if (link.hash === '#' + currentSection.id) {
+        if (link.hash === "#" + currentSection.id) {
           link.setAttribute("aria-selected", "true");
         }
       });
@@ -1199,13 +1202,13 @@ function vfNavigationOnThisPage() {
       // get current styles of element we are moving to
       var elemStyles = window.getComputedStyle(section);
       // take into account the padding and/or margin top
-      var value = elemStyles.paddingTop !== '0px' ? elemStyles.paddingTop : elemStyles.marginTop;
+      var value = elemStyles.paddingTop !== "0px" ? elemStyles.paddingTop : elemStyles.marginTop;
       // we remove the px characters from the value
       var offset = parseInt(value.slice(0, -2), 10);
       // total offset: margin/padding top of the element plus the size of the navigation bar
       window.scroll({
         top: section.getBoundingClientRect().top + scrollPosition - (offset + 40),
-        behavior: 'smooth'
+        behavior: "smooth"
       });
     });
   });

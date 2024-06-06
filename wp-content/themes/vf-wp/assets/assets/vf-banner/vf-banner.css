@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-banner
- * Version: 2.0.0-alpha.1
+ * Version: 2.0.2
  * Location: components/vf-core-components/vf-banner
  */
 .vf-banner {
@@ -209,7 +209,7 @@
 }
 @media (min-width: 1024px) {
   .vf-banner--notice .vf-banner__text,
-.vf-banner--notice .vf-text {
+  .vf-banner--notice .vf-text {
     margin: 0;
   }
 }

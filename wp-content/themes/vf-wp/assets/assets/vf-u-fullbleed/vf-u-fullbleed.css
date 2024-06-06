@@ -121,34 +121,25 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 0 0;
-  position: relative;
-  /* 2 */
+  position: relative; /* 2 */
 }
 .vf-u-fullbleed::before {
-  background-color: inherit;
-  /* 3 */
+  background-color: inherit; /* 3 */
   background-image: inherit;
   background-position: inherit;
   background-repeat: inherit;
   background-size: cover;
   content: "";
-  grid-column: 1/-1;
-  /* 4 */
-  height: 100%;
-  /* 5 */
+  grid-column: 1/-1; /* 4 */
+  height: 100%; /* 5 */
   margin-left: calc(50% - 50vw);
-  margin-left: calc(50% - (50vw - var(--context-margin--inline, 0px)));
-  /* 6 */
+  margin-left: calc(50% - (50vw - var(--context-margin--inline, 0px))); /* 6 */
   position: absolute;
-  top: 0;
-  /* 7 */
+  top: 0; /* 7 */
   width: 100vw;
-  width: calc(100vw - var(--context-margin--inline, 0px) * 2);
-  /* 8 */
-  z-index: -1;
-  /* 9 */
+  width: calc(100vw - var(--context-margin--inline, 0px) * 2); /* 8 */
+  z-index: -1; /* 9 */
 }
 body {
-  position: relative;
-  /* 10 */
+  position: relative; /* 10 */
 }
