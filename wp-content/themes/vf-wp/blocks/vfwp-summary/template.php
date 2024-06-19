@@ -15,13 +15,13 @@ $title = get_field('title');
 $title = trim($title);
 
 $link = get_field('link');
-$link_target = isset($link['target']) ? $link['target'] : '_self';
+$link_target = is_array($link) && isset($link['target']) ? $link['target'] : '_self';
 $text = get_field('text', false, false);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-summary__text">', $text);
 
 $image = get_field('image');
-if ( ! is_array($image)) {
+if (!is_array($image)) {
   $image = null;
 } else {
   $image = wp_get_attachment_image($image['ID'], 'medium', false, array(
@@ -33,10 +33,9 @@ if ( ! is_array($image)) {
 }
 $date = get_field('date');
 
-
 // Function to output a banner message in the Gutenberg editor only
 $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
-  if ( ! $is_preview) {
+  if (! $is_preview) {
     return;
   }
 ?>
@@ -54,12 +53,8 @@ $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
 ?>
 
 <?php
-if ( $type === 'custom' ) {
-  if (
-    ! $image
-    && vf_html_empty($title)
-    && vf_html_empty($text)
-  ) {
+if ($type === 'custom') {
+  if (! $image && vf_html_empty($title) && vf_html_empty($text)) {
     $admin_banner(__('Please enter custom content for this summary.', 'vfwp'));
     return;
   }
@@ -72,7 +67,7 @@ if ( $type === 'custom' ) {
   ?>
   <h3 class="vf-summary__title">
     <?php if ($link) { ?>
-      <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link" target="<?php echo esc_attr( $link_target ); ?>">
+      <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link" target="<?php echo esc_attr($link_target); ?>">
     <?php } ?>
 
     <?php echo esc_html($title); ?>
@@ -88,7 +83,7 @@ if ( $type === 'custom' ) {
   return;
 }
 
-if ( $type === 'post' ) {
+if ($type === 'post') {
 ?>
 <article class="vf-summary vf-summary--news">
   <span class="vf-summary__date">
@@ -110,7 +105,7 @@ if ( $type === 'post' ) {
 <?php
 }
 
-if ( $type === 'event' ) {
+if ($type === 'event') {
   $event_style = get_field('event_style');
   if (empty($event_style)) {
     $event_style = 'default';
@@ -144,10 +139,10 @@ if ( $type === 'event' ) {
   <?php if (! empty($text)) { ?>
     <?php echo $text; ?>
   <?php } ?>
-  <?php if ( ! empty($event_type)) { ?>
+  <?php if (! empty($event_type)) { ?>
   <p class="vf-summary__text"><?php echo $event_type; ?></p>
   <?php } ?>
-  <?php if ( ! empty($location)) { ?>
+  <?php if (! empty($location)) { ?>
   <p class="vf-summary__location"><?php echo $location; ?></p>
   <?php } ?>
 <?php if ($event_style === 'alternate') { ?>
@@ -164,7 +159,7 @@ if ( $type === 'event' ) {
 <?php
 }
 
-if ( $type === 'publication' ) {
+if ($type === 'publication') {
 
   $publication_title = get_field('publication_title');
   $publication_link = get_field('publication_link');
@@ -173,24 +168,22 @@ if ( $type === 'publication' ) {
   $source = get_field('source');
   $doi = get_field('doi');
 
-  if (
-
-    vf_html_empty($title)
-    && vf_html_empty($source)
-    && vf_html_empty($authors)
-  ) {
+  if (vf_html_empty($title) && vf_html_empty($source) && vf_html_empty($authors)) {
     $admin_banner(__('Please enter custom content for this publication.', 'vfwp'));
     return;
   }
+
+  $publication_link_url = is_array($publication_link) && isset($publication_link['url']) ? $publication_link['url'] : '';
 ?>
 <article class="vf-summary vf-summary--publication">
     <h3 class="vf-summary__title">
-        <a href="<?php echo esc_url($publication_link['url']); ?>" class="vf-summary__link">
+        <a href="<?php echo esc_url($publication_link_url); ?>" class="vf-summary__link">
         <?php echo $publication_title; ?>
-    </a>
+        </a>
     </h3>
     <p class="vf-summary__author">
-      <?php echo $authors; ?>    </p>
+      <?php echo $authors; ?>
+    </p>
     <p class="vf-summary__source">
     <?php echo $source; ?>
         <span class="vf-summary__date"><?php echo $year; ?></span>

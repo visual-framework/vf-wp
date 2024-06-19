@@ -155,8 +155,6 @@ class VF_Containers extends VF_Type {
                     'render_callback' => $callback
                 )
             ));
-        } else {
-            error_log("Error: No valid post found for plugin with key {$key}");
         }
     }
 }

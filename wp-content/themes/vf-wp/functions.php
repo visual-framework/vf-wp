@@ -137,6 +137,8 @@ add_action( 'wp_head', 'remove_margin_wp_toolbar' );
 
 function swiftype_metadata_description() {
   $text = '';
+  $strippedText = ''; // Initialize the variable
+
   // If text is empty use the Content Hub description
   if (class_exists('VF_Cache')) {
     // Get the global taxonomy term
@@ -153,13 +155,16 @@ function swiftype_metadata_description() {
         'source'              => 'contenthub',
       ), $url);
       $text = VF_Cache::fetch($url);
-      $text = strstr($text, '<p>',);
+      $text = strstr($text, '<p>');
       $text = strstr($text, '</p>', true);
       $text = str_replace('<p>','', $text);
       $strippedText = strip_tags($text);
-    } }
+    }
+  }
+  
   return $strippedText;
 }
+
 
 
 // allow only certain WP Gutenberg blocks
