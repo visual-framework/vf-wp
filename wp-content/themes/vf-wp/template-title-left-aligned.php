@@ -15,7 +15,7 @@ $title = get_the_title();
 // display the latest editor on the intranet theme
 $current_theme = wp_get_theme();
 if ($current_theme->get('Name') === 'VF-WP Intranet') {
-    display_latest_editor_for_admin();
+    display_latest_editor_for_admin(get_the_ID());
 }
 
 ?>
