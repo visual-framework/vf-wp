@@ -190,7 +190,7 @@
 }
 
 .wp-block {
-  max-width: 780px;
+  max-width: 80rem;
   margin-left: auto !important;
   margin-right: auto !important;
 }
@@ -246,7 +246,7 @@
     transparent var(--block-column-width),
     transparent calc(var(--block-column-width) + var(--block-gap-width))
   );
-  max-width: none;
+  max-width: 80rem;
 
   & > .block-editor-inner-blocks {
     display: contents;
