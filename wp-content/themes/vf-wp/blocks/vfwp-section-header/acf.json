@@ -117,7 +117,7 @@
             "name": "link",
             "type": "link",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
