@@ -266,7 +266,7 @@
 }
 
 .wp-block {
-  max-width: 780px;
+  max-width: 80rem;
   margin-left: auto !important;
   margin-right: auto !important;
 }
@@ -310,7 +310,7 @@
     (100% - var(--block-gap-widths)) / var(--block-columns)
   );
   background-image: repeating-linear-gradient(to right, var(--block-column-color) 0, var(--block-column-color) var(--block-column-width), transparent var(--block-column-width), transparent calc(var(--block-column-width) + var(--block-gap-width)));
-  max-width: none;
+  max-width: 80rem;
 }
 .wp-block[data-type="vf/grid"] > .block-editor-inner-blocks,
 .wp-block[data-type="vf/embl-grid"] > .block-editor-inner-blocks {
