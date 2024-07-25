@@ -80,8 +80,9 @@ context.addExport("child_tag", t_8);
 ;
 }
 else {
+if(runtime.contextOrFrameLookup(context, frame, "list_type") == "ordered") {
 var t_9;
-t_9 = "ul";
+t_9 = "ol";
 frame.set("parent_tag", t_9, true);
 if(frame.topLevel) {
 context.setVariable("parent_tag", t_9);
@@ -97,6 +98,29 @@ context.setVariable("child_tag", t_10);
 }
 if(frame.topLevel) {
 context.addExport("child_tag", t_10);
+}
+;
+}
+else {
+var t_11;
+t_11 = "ul";
+frame.set("parent_tag", t_11, true);
+if(frame.topLevel) {
+context.setVariable("parent_tag", t_11);
+}
+if(frame.topLevel) {
+context.addExport("parent_tag", t_11);
+}
+var t_12;
+t_12 = "li";
+frame.set("child_tag", t_12, true);
+if(frame.topLevel) {
+context.setVariable("child_tag", t_12);
+}
+if(frame.topLevel) {
+context.addExport("child_tag", t_12);
+}
+;
 }
 ;
 }
@@ -122,28 +146,28 @@ t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "overr
 }
 t_1 += "\">\n";
 frame = frame.push();
-var t_13 = runtime.contextOrFrameLookup(context, frame, "list");
-if(t_13) {t_13 = runtime.fromIterator(t_13);
-var t_12 = t_13.length;
-for(var t_11=0; t_11 < t_13.length; t_11++) {
-var t_14 = t_13[t_11];
-frame.set("item", t_14);
-frame.set("loop.index", t_11 + 1);
-frame.set("loop.index0", t_11);
-frame.set("loop.revindex", t_12 - t_11);
-frame.set("loop.revindex0", t_12 - t_11 - 1);
-frame.set("loop.first", t_11 === 0);
-frame.set("loop.last", t_11 === t_12 - 1);
-frame.set("loop.length", t_12);
-if(runtime.memberLookup((t_14),"term")) {
+var t_15 = runtime.contextOrFrameLookup(context, frame, "list");
+if(t_15) {t_15 = runtime.fromIterator(t_15);
+var t_14 = t_15.length;
+for(var t_13=0; t_13 < t_15.length; t_13++) {
+var t_16 = t_15[t_13];
+frame.set("item", t_16);
+frame.set("loop.index", t_13 + 1);
+frame.set("loop.index0", t_13);
+frame.set("loop.revindex", t_14 - t_13);
+frame.set("loop.revindex0", t_14 - t_13 - 1);
+frame.set("loop.first", t_13 === 0);
+frame.set("loop.last", t_13 === t_14 - 1);
+frame.set("loop.length", t_14);
+if(runtime.memberLookup((t_16),"term")) {
 t_1 += "    <";
 t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "child_tag"), env.opts.autoescape);
 t_1 += " class=\"vf-list__item vf-list--definition__term\">\n    ";
-t_1 += runtime.suppressValue(runtime.memberLookup((t_14),"term"), env.opts.autoescape);
+t_1 += runtime.suppressValue(runtime.memberLookup((t_16),"term"), env.opts.autoescape);
 t_1 += "\n    </";
 t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "child_tag"), env.opts.autoescape);
 t_1 += ">\n    <dd class=\"vf-list__item vf-list--definition__details\">\n    ";
-t_1 += runtime.suppressValue(runtime.memberLookup((t_14),"definition"), env.opts.autoescape);
+t_1 += runtime.suppressValue(runtime.memberLookup((t_16),"definition"), env.opts.autoescape);
 t_1 += "\n    </dd>\n";
 ;
 }
@@ -153,7 +177,7 @@ t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "child
 t_1 += " class=\"vf-list__item ";
 t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "child_tag_class"), env.opts.autoescape);
 t_1 += "\">\n      ";
-t_1 += runtime.suppressValue(t_14, env.opts.autoescape);
+t_1 += runtime.suppressValue(t_16, env.opts.autoescape);
 t_1 += "\n    </";
 t_1 += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "child_tag"), env.opts.autoescape);
 t_1 += ">\n";
