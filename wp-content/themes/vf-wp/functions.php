@@ -384,4 +384,21 @@ function acf_should_wrap_innerblocks( $wrap, $name ) {
     }
     return true;
 }
+
+// set custom width in the gutenberg editor for all post types other than page
+
+function custom_gutenberg_editor_styles() {
+  global $post_type;
+  if ($post_type != 'page') {
+      echo '
+      <style>
+          .editor-styles-wrapper .wp-block {
+              max-width: 768px !important;
+          }
+      </style>
+      ';
+  }
+}
+add_action('admin_head', 'custom_gutenberg_editor_styles');
+
 ?>
