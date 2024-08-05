@@ -222,7 +222,7 @@
   */
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  color: #373a36;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.71;
   margin: 0 0 16px 0;
@@ -233,7 +233,7 @@
 .vfwp-autocomplete__option {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  color: #373a36;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.57;
   margin: 0 0 16px 0;

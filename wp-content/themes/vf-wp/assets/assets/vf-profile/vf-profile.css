@@ -159,7 +159,7 @@
 .vf-profile__email {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  color: #373a36;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.71;
   margin: var(--vf-stack-margin, 0) 0 0 0;
@@ -171,7 +171,7 @@
 .vf-profile__phone {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 16px;
-  color: #373a36;
+  color: #1a1c1a;
   font-weight: 400;
   line-height: 1.71;
   margin: var(--vf-stack-margin, 0) 0 0 0;
@@ -182,7 +182,7 @@
 .vf-profile__uuid {
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  color: #373a36;
+  color: #1a1c1a;
   font-weight: 500;
   line-height: 1.57;
   margin: var(--vf-stack-margin, 0) 0 0 0;
