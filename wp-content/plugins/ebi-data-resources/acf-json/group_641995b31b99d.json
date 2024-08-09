@@ -1,0 +1,658 @@
+{
+    "key": "group_641995b31b99d",
+    "title": "EBI Data Resources",
+    "fields": [
+        {
+            "key": "field_642d51f43d14c",
+            "label": "General information",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_642d54a8888e4",
+            "label": "Display name",
+            "name": "display_name",
+            "type": "text",
+            "instructions": "The public facing name of the service",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_642d5dfa9d260",
+            "label": "Domain",
+            "name": "resource_domain",
+            "type": "select",
+            "instructions": "What type of resource is this within the EBI domain context?",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Services": "Service Resource",
+                "Research": "Research",
+                "Tools": "Service Tool",
+                "Internal Tool": "Internal Tool",
+                "Project": "Project Website"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d54c7888e5",
+            "label": "Logo",
+            "name": "logo",
+            "type": "image",
+            "instructions": "Your resource's formal logo - for example the version of Ensembl's logo with the word \"Ensembl\".",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_642d5749b0d21",
+            "label": "URL",
+            "name": "url",
+            "type": "url",
+            "instructions": "The homepage of your resource",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d57dab0d22",
+            "label": "Popular",
+            "name": "resource_popular",
+            "type": "true_false",
+            "instructions": "This field is used to manage the 3 popular data resources or tools displayed as featured on the EMBL-EBI corporate website ‘Services’ page. For any queries or requests for updating the resource as ‘popular’ please contact the Resource admin via the Associate Directors’ office at <a href=\"mailto:doffice@ebi.ac.uk\" target=\"_blank\">doffice@ebi.ac.uk<\/a>.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": "popular-field"
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_642d581ab0d23",
+            "label": "Status",
+            "name": "resource_status",
+            "type": "select",
+            "instructions": "The status of the resource. For the live site neither 'Extinct' nor 'Nascent' services will be listed.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Established": "Established",
+                "Extinct": "Extinct",
+                "Young": "Young",
+                "Retiring": "Retiring",
+                "Nascent": "Nascent"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5853b0d24",
+            "label": "Categories",
+            "name": "resource_categories",
+            "type": "select",
+            "instructions": "There are nine service categories. You can select more than one category for each resource.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Communication": "Communication",
+                "DNA & RNA": "DNA & RNA",
+                "Event management": "Event management",
+                "Training": "Training",
+                "Gene expression": "Gene expression",
+                "Proteins": "Proteins",
+                "Structures": "Structures",
+                "Systems": "Systems",
+                "Chemical biology": "Chemical biology",
+                "Ontologies": "Ontologies",
+                "Literature": "Literature",
+                "Cross domain": "Cross domain",
+                "Imaging": "Imaging"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5881b0d25",
+            "label": "Keywords",
+            "name": "resource_keywords",
+            "type": "text",
+            "instructions": "Please add a comma-separate values for each keyword.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_642d58c5b0d26",
+            "label": "Long description",
+            "name": "long_description",
+            "type": "wysiwyg",
+            "instructions": "This introductory text (length: 50-60 words) may be displayed on the Service Team page, and may be used in a brochure promoting EBI resources. Please write this description in sentence format.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_642d58f8b0d27",
+            "label": "Short description",
+            "name": "short_description",
+            "type": "wysiwyg",
+            "instructions": "This text (length: 15-20 words) will show on the Service Category pages, or anywhere services are listed.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_642d59a73fb1e",
+            "label": "Primary team",
+            "name": "resource_primary_team",
+            "type": "taxonomy",
+            "instructions": "This represents the main team that owns this Data resource\/Tool",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl_teams",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_642d59f23fb1f",
+            "label": "Additional teams",
+            "name": "resource_teams",
+            "type": "taxonomy",
+            "instructions": "This represents other team that are associated with this Data resource\/Tool",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl_teams",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_642d5a373fb20",
+            "label": "Tool group",
+            "name": "resource_tool_group",
+            "type": "select",
+            "instructions": "A,B, and C will be displayed on the Services page.  C&D are tools won't be visible on the Services page.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "A": "A: part of the EBI tools portfolio sponsored by the Tools committee",
+                "B": "B: part of the EBI tools portfolio sponsored by a GTL",
+                "C": "C: not part of the EBI tools portfolio but sponsored by a GTL and presented publicly",
+                "D": "D: not part of the EBI tools portfolio and is not displayed publicly"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5a9f3fb21",
+            "label": "Activity",
+            "name": "resource_activity",
+            "type": "select",
+            "instructions": "What can people do with this resource? This will be used on the main website to indicate usage.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Analyse": "Analyse",
+                "Download": "Download",
+                "Search": "Search",
+                "Submit": "Submit"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5aff3fb22",
+            "label": "Functions",
+            "name": "resource_functions",
+            "type": "select",
+            "instructions": "Primary function(s) of the tool. Specify 1 or more \"EDAM Function\" term & ID: http:\/\/edamontology.org\/operation_0004",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": [],
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5b2c3fb23",
+            "label": "REST API landing page",
+            "name": "resource_rest_api_page",
+            "type": "url",
+            "instructions": "The landing page of API REST page",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5b593fb24",
+            "label": "Is the API compliant with the API guidelines paper?",
+            "name": "resource_api_compliant",
+            "type": "select",
+            "instructions": "This states whether the tool\/resource is compliant with the API guidelines paper",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "yes": "Yes",
+                "no": "No",
+                "dk": "Don’t know",
+                "no_api": "The resource does not have an API"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d6187d998b",
+            "label": "Resource out of the EBI technical control",
+            "name": "resource_out_of_ebi_ctrl",
+            "type": "true_false",
+            "instructions": "Is the resource out of EBI control ?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_642d5e359d261",
+            "label": "EMBL site",
+            "name": "resource_embl_site",
+            "type": "select",
+            "instructions": "This indicates the EMBL site that owns the resource",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "EMBL Barcelona": "EMBL Barcelona",
+                "EMBL Grenoble": "EMBL Grenoble",
+                "EMBL Hamburg": "EMBL Hamburg",
+                "EMBL Heidelberg": "EMBL Heidelberg",
+                "EMBL Rome": "EMBL Rome",
+                "EMBL-EBI": "EMBL-EBI",
+                "EMBL-EM": "EMBL-EM",
+                "EMBO": "EMBO",
+                "Virtual": "Virtual",
+                "Other": "Other"
+            },
+            "default_value": "EMBL-EBI",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5ea09d262",
+            "label": "Legacy context",
+            "name": "resource_legacy_context",
+            "type": "textarea",
+            "instructions": "More information on where this resource originates from",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_642d55de7ce10",
+            "label": "Licence data",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_642d5c829d25c",
+            "label": "Data licence type",
+            "name": "resource_data_licence_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "CC0": "CC0",
+                "CC-BY": "CC-BY",
+                "embl-ebi-terms-of-use": "EMBL-EBI Terms of use"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5cb29d25d",
+            "label": "Software licence type",
+            "name": "resource_sw_licence_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "apache-licence": "Apache Licence"
+            },
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_642d5cfa9d25e",
+            "label": "Licence type update log",
+            "name": "resource_licence_log",
+            "type": "textarea",
+            "instructions": "This field automatically logs updates made to the Data licence type",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "readonly": 1,
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_642d5d2d9d25f",
+            "label": "Software licence type update log",
+            "name": "resource_software_log",
+            "type": "textarea",
+            "instructions": "This field automatically logs updates made to the Software licence type",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "readonly": 1,
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_642d5f3a10935",
+            "label": "Administration",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_642d5f5810936",
+                        "operator": "==",
+                        "value": "hidden tab"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_642d5f5810936",
+            "label": "ContentHub ID",
+            "name": "contenthub_id",
+            "type": "text",
+            "instructions": "This represents the corresponding value on the ContentHub",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_642d54a8888e4",
+                        "operator": "==",
+                        "value": "hidden field"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "hidden",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "data-resource"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "modified": 1687872252
+}
