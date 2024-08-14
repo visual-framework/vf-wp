@@ -1769,13 +1769,13 @@
     "@visual-framework/vf-stack" "^3.0.0"
     "@visual-framework/vf-u-fullbleed" "^1.2.2"
 
-"@visual-framework/vf-banner@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-banner/-/vf-banner-2.0.2.tgz#9708564b253e2cb57c31b41c6f3dd8ecbabaf2f0"
-  integrity sha512-sn3vXGbV33z8gmfs+pIMEgli9T0qpZYR+rIiZYaP8QuXMLvjvbUQQhRkE2Xq757WbxGQKs/NEIvhmYoBRuZG1w==
+"@visual-framework/vf-banner@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-banner/-/vf-banner-2.0.3.tgz#8bd24b9c7f419ee0c1edaad97be11a29ebc7da05"
+  integrity sha512-UutHr9JVXJ5qMU5Nhz2G82f2xa/LWtAyf4QjeXST8iUIUwG6V6iTD+Z4N5m6Oi3hWCaRN/eh5mR7TJOYg5S1PQ==
   dependencies:
     "@visual-framework/vf-box" "^2.4.0"
-    "@visual-framework/vf-button" "^3.0.0-alpha.0"
+    "@visual-framework/vf-button" "^3.0.1"
     "@visual-framework/vf-grid" "^1.4.1"
     "@visual-framework/vf-stack" "^3.0.0"
     "@visual-framework/vf-u-fullbleed" "^1.2.2"
@@ -1807,6 +1807,11 @@
   version "3.0.0-alpha.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.0-alpha.0.tgz#a8f953cf015393178fb5cbe81147e32b30377342"
   integrity sha512-I4iDGABcSRLMKiq9ilnibmQXfDpS6E0lljb5zjSBsnJIl/7jQfnL815jrdnRvrhpozO8dzPFizbZir8Yk8aeWw==
+
+"@visual-framework/vf-button@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.1.tgz#6a16cf994feee5b86a818e442f310c1faf0fae7c"
+  integrity sha512-H/TscX8/z1D4DLwsttaDNNByZmZGfybGdOgtthw3QKZ7DSDBlmSkZBVXmawdzQCiHDE9NLZEvaZ0cWuQfX1/xw==
 
 "@visual-framework/vf-card-container@3.2.3":
   version "3.2.3"
