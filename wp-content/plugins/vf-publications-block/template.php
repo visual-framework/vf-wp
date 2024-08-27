@@ -3,7 +3,7 @@
 $acf_id = isset($acf_id) ? $acf_id : false;
 
 $heading = get_field('vf_publications_heading', $acf_id);
-$heading = trim($heading);
+$heading = trim($heading ?? '');
 
 // $limit = get_field('vf_publications_limit', $acf_id);
 // $limit = intval($limit);
@@ -30,7 +30,7 @@ if (empty($searchType)) {
 }
 
 $searchQuery = get_field('vf_publications_query', $acf_id);
-$searchQuery = trim($searchQuery);
+$searchQuery = trim($searchQuery ?? '');
 $searchQuery = str_replace(' ', '-', $searchQuery);
 
 if ($searchType == 'team' || $searchType == 'person_name') {
