@@ -4,8 +4,9 @@
     "fields": [
         {
             "key": "field_vf_data_resources_heading",
-            "label": "Heading",
+            "label": "Section header",
             "name": "vf_data_resources_heading",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -16,15 +17,101 @@
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
+        },
+        {
+            "key": "field_66d6e466e311b",
+            "label": "Title",
+            "name": "vf_data_resources_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Search by display title",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_66d6e49de311c",
+            "label": "Team",
+            "name": "vf_data_resources_team",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Search by team",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_66d6e4abe311d",
+            "label": "Keywords",
+            "name": "vf_data_resources_keywords",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Search by keywords",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_66d6e4b9e311e",
+            "label": "Description",
+            "name": "vf_data_resources_description",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "short": "Short",
+                "long": "Long"
+            },
+            "default_value": "short",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "save_other_choice": 0
         },
         {
             "key": "field_vf_data_resources_limit",
             "label": "Limit",
             "name": "vf_data_resources_limit",
+            "aria-label": "",
             "type": "range",
             "instructions": "Maximum number of group data resources (services) to show.",
             "required": 0,
@@ -45,6 +132,7 @@
             "key": "field_vf_data_resources_order",
             "label": "Order",
             "name": "vf_data_resources_order",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -58,7 +146,7 @@
                 "DESC": "Descending",
                 "ASC": "Ascending"
             },
-            "default_value": [],
+            "default_value": false,
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
@@ -76,11 +164,11 @@
             }
         ],
         [
-          {
-            "param": "block",
-            "operator": "==",
-            "value": "acf/vf-data-resources"
-          }
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/vf-data-resources"
+            }
         ]
     ],
     "menu_order": 0,
@@ -89,7 +177,8 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1589355112
+    "show_in_rest": 0,
+    "modified": 1725359628
 }
