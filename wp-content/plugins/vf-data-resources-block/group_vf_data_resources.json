@@ -97,8 +97,8 @@
                 "id": ""
             },
             "choices": {
-                "short": "Short",
-                "long": "Long"
+                "show": "Show",
+                "hide": "Hide"
             },
             "default_value": "short",
             "return_format": "value",
