@@ -1756,9 +1756,9 @@
   integrity sha512-wS6Kdq8u/TnCh4QHlewW5zGOwGeTUa/8FOsdpS2o8110LQqiy3o7NxjZLblqetru0cfy0r5gsq2dogJ0idT7aw==
 
 "@visual-framework/vf-back-to-top@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-back-to-top/-/vf-back-to-top-1.0.1.tgz#1ed1ebf8ad32b2f09aa2a0572cc5f137f6a048a3"
-  integrity sha512-SVycThQcQp3puYdpmRtzg/8Qxa8CfRoVQcXBt75NzU0zB7sCCkds0W3Ri+eEBe2uL+e8ECClQtdvz5frtucpLA==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-back-to-top/-/vf-back-to-top-1.0.2.tgz#d172b8be35c0e0d849f46bfdf295acd2561abd6a"
+  integrity sha512-w3MIHkzwiTWfq5JfFzPsP78L92SEnv2U6Et6YJ173AD17Kl9PnTGbxCPXQCfiqAyHUN+1HCnNM8g4zo8J+ZAew==
 
 "@visual-framework/vf-badge@^3.0.3":
   version "3.0.3"
