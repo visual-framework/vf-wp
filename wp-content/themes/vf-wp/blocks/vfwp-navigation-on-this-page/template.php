@@ -41,11 +41,15 @@ if (
    while (have_rows('vf-wp-navigation-otp')) {
      the_row();
      $link = get_sub_field('vf-wp-navigation-otp-link');
+     if ($link && isset($link['url']) && isset($link['title'])) { // Check if link exists
    ?>
    <li class="vf-navigation__item">
      <a class="vf-navigation__link" href="<?php echo esc_url($link['url']); ?>" <?php if( $counter == 0 ) { echo 'aria-selected="true"';}?>><?php echo esc_html($link['title']); ?></a>
    </li>
-     <?php $counter++; } ?>
+     <?php $counter++; 
+     } // End if check
+   } ?>
     </ul>
   <?php } ?>
 </nav>
+
