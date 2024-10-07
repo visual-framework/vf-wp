@@ -2,8 +2,14 @@
 $acf_id = isset($acf_id) ? $acf_id : false;
 
 $limit = get_field('vf_data_resources_limit', $acf_id);
+$defaults = get_field('field_defaults', $acf_id);
 $order = get_field('vf_data_resources_order', $acf_id);
+$title = get_field('vf_data_resources_title', $acf_id);
+$team = get_field('vf_data_resources_team', $acf_id);
+$bdr_id = get_field('vf_data_resources_team_bdr', $acf_id);
+$keywords = get_field('vf_data_resources_keywords', $acf_id);
 $heading = get_field('vf_data_resources_heading', $acf_id);
+$description = get_field('vf_data_resources_description', $acf_id);
 
 $limit = intval($limit);
 $limit = $limit < 1 || $limit > 30 ? 30 : $limit;
@@ -18,10 +24,22 @@ $vars = array(
   'source'                    => 'contenthub',
   'filter-content-type'       => 'data_resource',
   'pattern'                   => 'vf-summary-image',
+  'filter-field-contains[title]'  => $title,
+  'filter-field-contains[field_resource_primary_team.entity.title]'  => $team,
+  'filter-field-contains[field_resource_primary_team.entity.field_foreignid]'  => $bdr_id,
   'limit'                     => $limit,
-  'sort-field-value[changed]' => $order,
+  'sort-field-value[title]' => $order,
 );
 
+if ($description === 'short') {
+  $vars['hide[body]'] = '';
+} 
+
+if ($keywords != '') {
+  $vars['filter-field-contains[field_resource_keywords]'] = $keywords;
+} 
+
+if ($defaults == true) {
 if (function_exists('embl_taxonomy_get_term')) {
   $term_id = get_field('embl_taxonomy_term_what', 'option');
   $term = embl_taxonomy_get_term($term_id);
@@ -29,6 +47,7 @@ if (function_exists('embl_taxonomy_get_term')) {
   if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
     $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
   }
+}
 }
 
 // Setup base API URL
