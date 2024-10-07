@@ -6,6 +6,7 @@ $defaults = get_field('field_defaults', $acf_id);
 $order = get_field('vf_data_resources_order', $acf_id);
 $title = get_field('vf_data_resources_title', $acf_id);
 $team = get_field('vf_data_resources_team', $acf_id);
+$bdr_id = get_field('vf_data_resources_team_bdr', $acf_id);
 $keywords = get_field('vf_data_resources_keywords', $acf_id);
 $heading = get_field('vf_data_resources_heading', $acf_id);
 $description = get_field('vf_data_resources_description', $acf_id);
@@ -25,13 +26,17 @@ $vars = array(
   'pattern'                   => 'vf-summary-image',
   'filter-field-contains[title]'  => $title,
   'filter-field-contains[field_resource_primary_team.entity.title]'  => $team,
-  // 'filter-field-contains[field_resource_keywords]'  => $keywords,
+  'filter-field-contains[field_resource_primary_team.entity.field_foreignid]'  => $bdr_id,
   'limit'                     => $limit,
-  'sort-field-value[changed]' => $order,
+  'sort-field-value[title]' => $order,
 );
 
-if ($description === 'hide') {
+if ($description === 'short') {
   $vars['hide[body]'] = '';
+} 
+
+if ($keywords != '') {
+  $vars['filter-field-contains[field_resource_keywords]'] = $keywords;
 } 
 
 if ($defaults == true) {

@@ -23,14 +23,47 @@
             "append": ""
         },
         {
-            "key": "field_66d6e466e311b",
-            "label": "Title",
-            "name": "vf_data_resources_title",
+            "key": "field_6703af6afcc6d",
+            "label": "Search by team",
+            "name": "vf_data_resources_search_by_team",
             "aria-label": "",
-            "type": "text",
-            "instructions": "Search by display title",
+            "type": "radio",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "name": "Name",
+                "bdr_id": "BDR ID"
+            },
+            "default_value": "name",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_66d6e49de311c",
+            "label": "Name",
+            "name": "vf_data_resources_team",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6703af6afcc6d",
+                        "operator": "==",
+                        "value": "name"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -43,12 +76,40 @@
             "append": ""
         },
         {
-            "key": "field_66d6e49de311c",
-            "label": "Team",
-            "name": "vf_data_resources_team",
+            "key": "field_6703afd5fcc6e",
+            "label": "BDR ID",
+            "name": "vf_data_resources_team_bdr",
             "aria-label": "",
             "type": "text",
-            "instructions": "Search by team",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6703af6afcc6d",
+                        "operator": "==",
+                        "value": "bdr_id"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_66d6e466e311b",
+            "label": "Filter by resource \/ tool name",
+            "name": "vf_data_resources_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -64,11 +125,11 @@
         },
         {
             "key": "field_66d6e4abe311d",
-            "label": "Keywords",
+            "label": "Filter by keywords",
             "name": "vf_data_resources_keywords",
             "aria-label": "",
             "type": "text",
-            "instructions": "Search by keywords",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -97,10 +158,10 @@
                 "id": ""
             },
             "choices": {
-                "show": "Show",
-                "hide": "Hide"
+                "long": "Long",
+                "short": "Short"
             },
-            "default_value": "short",
+            "default_value": "long",
             "return_format": "value",
             "allow_null": 0,
             "other_choice": 0,
@@ -146,11 +207,11 @@
                 "DESC": "Descending",
                 "ASC": "Ascending"
             },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
+            "default_value": "ASC",
             "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
             "ajax": 0,
             "placeholder": ""
         }
@@ -180,5 +241,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1725359628
+    "modified": 1728297195
 }
