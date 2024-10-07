@@ -23,7 +23,7 @@
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
-            "return_format": "label",
+            "return_format": "value",
             "ajax": 0,
             "placeholder": ""
         },
