@@ -15,7 +15,7 @@ $limit = intval($limit);
 $limit = $limit < 1 || $limit > 30 ? 30 : $limit;
 
 if (empty($order)) {
-  $order = 'DESC';
+  $order = 'ASC';
 }
 
 $heading = trim($heading);
@@ -43,8 +43,8 @@ if ($defaults == true) {
 if (function_exists('embl_taxonomy_get_term')) {
   $term_id = get_field('embl_taxonomy_term_what', 'option');
   $term = embl_taxonomy_get_term($term_id);
-  $key = 'filter-field-contains[field_resource_teams.entity.title]';
-  if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
+  $key = 'filter-field-contains[field_resource_primary_team.entity.title]';
+    if ($term && array_key_exists(EMBL_Taxonomy::META_NAME, $term->meta)) {
     $vars[$key] = $term->meta[EMBL_Taxonomy::META_NAME];
   }
 }
