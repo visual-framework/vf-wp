@@ -2555,10 +2555,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-heading/-/vf-heading-1.1.1.tgz#5865125af14102d251d5af3abca75de3042e710a"
   integrity sha512-mtjuJ/hmyBbpKhvV2T3yF43h/RiDMUVWn17lHIe9JCVbFp4oTrm0D4tfOsKk1/SIkg8CC4jh+lgCjFtkGcPSzg==
 
-"@visual-framework/vf-hero@4.0.2":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-4.0.2.tgz#860d2b7d70383ce3821677e636a224909f302c3a"
-  integrity sha512-/3n40tmNgApjv7zIgFamuOGyKRVbCktCwWQX7LeBzB4bA/vjGJ2fViDFm0BeGADTfets63Z8e/iWcAPti7b06A==
+"@visual-framework/vf-hero@4.0.3":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-hero/-/vf-hero-4.0.3.tgz#123f0dfb89704a26d59595967e3092152a027903"
+  integrity sha512-3zttnmJpW/KWWViHhxBWSok+8NgCIDhRnz2xp5+ePPi8W2hHGyqlt8RC/omHBrI/rUxalz3DfTamt3wf/cRIgA==
   dependencies:
     "@visual-framework/vf-box" "^2.4.0"
     "@visual-framework/vf-stack" "^3.0.0"
