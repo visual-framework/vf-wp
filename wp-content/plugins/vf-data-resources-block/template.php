@@ -40,6 +40,7 @@ if ($keywords != '') {
 } 
 
 if ($defaults == true) {
+  $heading = 'Data resources';
 if (function_exists('embl_taxonomy_get_term')) {
   $term_id = get_field('embl_taxonomy_term_what', 'option');
   $term = embl_taxonomy_get_term($term_id);
@@ -92,4 +93,5 @@ else {
   <div>
     <?php echo $content; ?>
   </div>
+  <div></div>
 </div>
