@@ -106,7 +106,7 @@
     "@visual-framework/vf-masthead": "3.0.1",
     "@visual-framework/vf-mega-menu": "^1.0.2",
     "@visual-framework/vf-navigation": "5.0.3",
-    "@visual-framework/vf-news-container": "1.1.0",
+    "@visual-framework/vf-news-container": "1.1.1",
     "@visual-framework/vf-no-js": "1.0.1",
     "@visual-framework/vf-page-header": "1.1.2",
     "@visual-framework/vf-pagination": "1.1.2",
