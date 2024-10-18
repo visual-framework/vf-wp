@@ -970,7 +970,7 @@ function vfGaLogMessage(eventCategory, eventAction, eventLabel, lastGaEventTime,
  * @param {boolean} [activateDeepLinkOnLoad] - if deep linked tabs should be activated on page load, defaults to true
  * @example vfTabs(document.querySelectorAll('.vf-component__container')[0]);
  */
-function vfTabs(scope, activateDeepLinkOnLoad) {
+function vfTabs(scope) {
   /* eslint-disable no-redeclare */
   var scope = scope || document;
   var activateDeepLinkOnLoad = activateDeepLinkOnLoad || true;
@@ -1002,11 +1002,10 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
     tab.removeAttribute("aria-selected");
     tab.setAttribute("tabindex", "-1");
     tab.classList.remove("is-active");
-
     // Handle clicking of tabs for mouse users
     tab.addEventListener("click", function (e) {
       e.preventDefault();
-      vfTabsSwitch(e.currentTarget, panels);
+      vfTabsSwitch(e.currentTarget);
     });
 
     // Handle keydown events for keyboard users
@@ -1022,7 +1021,7 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
         // otherwise switch to the adjacent tab
         dir === "down" ? panels[i].focus({
           preventScroll: true
-        }) : tabs[dir] ? vfTabsSwitch(tabs[dir], panels) : void 0;
+        }) : tabs[dir] ? vfTabsSwitch(tabs[dir]) : void 0;
       }
     });
   });
@@ -1053,32 +1052,40 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
 
   // activate any deeplinks to a specific tab
   if (activateDeepLinkOnLoad) {
-    vfTabsDeepLinkOnLoad(tabs, panels);
+    Array.prototype.forEach.call(panels, function (panel) {
+      var links = panel.querySelectorAll("[href*='vf-tabs__section']");
+      links.forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          var href = e.currentTarget.getAttribute("href");
+          vfTabsDeepLinkOnLoad(tabs, href);
+        });
+      });
+    });
   }
 }
 
 // The tab switching function
-var vfTabsSwitch = function vfTabsSwitch(newTab, panels) {
+var vfTabsSwitch = function vfTabsSwitch(newTab) {
   // Update url based on tab id
-  var data = newTab.getAttribute("id");
-  var url = "#" + data;
-  window.history.replaceState(data, null, url);
 
   // get the parent ul of the clicked tab
-  var parentTabSet = newTab.closest(".vf-tabs__list");
-  var oldTab = parentTabSet.querySelector("[aria-selected]");
-  if (oldTab) {
-    oldTab.removeAttribute("aria-selected");
-    oldTab.setAttribute("tabindex", "-1");
-    oldTab.classList.remove("is-active");
-    for (var item = 0; item < panels.length; item++) {
-      var panel = panels[item];
-      if (panel.id === oldTab.id) {
-        panel.hidden = true;
-        break;
-      }
+  var parentTabSet = newTab.closest(".vf-tabs");
+  var parentPanelSet = parentTabSet.nextElementSibling;
+  var tabs = parentTabSet.querySelectorAll("[data-vf-js-tabs] .vf-tabs__link");
+  var panels = parentPanelSet.querySelectorAll("[data-vf-js-tabs-content] [id^='vf-tabs__section']");
+  tabs.forEach(function (tab) {
+    if (tab.getAttribute("aria-selected")) {
+      tab.removeAttribute("aria-selected");
+      tab.setAttribute("tabindex", "-1");
+      tab.classList.remove("is-active");
+      panels.forEach(function (panel) {
+        if (panel.id === tab.id) {
+          panel.hidden = true;
+        }
+      });
     }
-  }
+  });
   newTab.focus({
     preventScroll: true
   });
@@ -1089,18 +1096,16 @@ var vfTabsSwitch = function vfTabsSwitch(newTab, panels) {
   newTab.classList.add("is-active");
   // Get the indices of the new tab to find the correct
   // tab panel to show
-  for (var _item = 0; _item < panels.length; _item++) {
-    var _panel = panels[_item];
-    if (_panel.id === newTab.id) {
-      _panel.hidden = false;
-      break;
+  panels.forEach(function (panel) {
+    if (panel.id === newTab.id) {
+      panel.hidden = false;
     }
-  }
+  });
 };
-function vfTabsDeepLinkOnLoad(tabs, panels) {
+function vfTabsDeepLinkOnLoad(tabs, href) {
   // 1. See if there is a `#vf-tabs__section--88888`
-  if (window.location.hash) {
-    var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+  if (href) {
+    var hash = href.substring(href.indexOf("#") + 1);
   } else {
     // No hash found
     return false;
@@ -1111,7 +1116,7 @@ function vfTabsDeepLinkOnLoad(tabs, panels) {
   Array.prototype.forEach.call(tabs, function (tab) {
     var tabId = tab.getAttribute("data-tabs__item");
     if (tabId == hash) {
-      vfTabsSwitch(tab, panels);
+      vfTabsSwitch(tab);
     }
   });
 }
