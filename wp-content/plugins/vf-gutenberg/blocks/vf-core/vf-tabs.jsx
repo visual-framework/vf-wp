@@ -36,6 +36,7 @@ const settings = {
 settings.save = (props) => {
   const blockProps = useBlockProps.save({className: 'vf-tabs'});
   return (
+    <>
     <div {...blockProps}>
       <ul className='vf-tabs__list' data-vf-js-tabs>
         {props.attributes.tabs.map((tab, i) => {
@@ -48,10 +49,11 @@ settings.save = (props) => {
           );
         })}
       </ul>
-      <div className='vf-tabs-content' data-vf-js-tabs-content>
-        <InnerBlocks.Content />
-      </div>
     </div>
+    <div className='vf-tabs-content' data-vf-js-tabs-content>
+      <InnerBlocks.Content />
+    </div>
+    </>
   );
 };
 
