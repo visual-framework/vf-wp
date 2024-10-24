@@ -4,11 +4,9 @@ if( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists('EMBL_Taxonomy_Register') ) :
 
-
 class EMBL_Taxonomy_Register {
 
   // Maximum number of terms to sync per API request
-  // Set as high as possible but reduce if requests timeout
   const SYNC_MAX_TERMS = 500;
 
   // Options table keys
@@ -40,40 +38,39 @@ class EMBL_Taxonomy_Register {
       add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
     }
 
-    // Add column for term UUID
-    // http://wpthemecraft.com/code-snippets/add-custom-columns-to-taxonomy-list-table/
+    // Add columns for term UUID and META_IDS
+    add_filter('manage_edit-embl_taxonomy_columns', array($this, 'add_embl_taxonomy_columns'));
+    add_filter('manage_embl_taxonomy_custom_column', array($this, 'add_embl_taxonomy_column_content'), 10, 3);
 
-    /*
-     * filter pattern: manage_edit-{taxonomy}_columns
-     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
-     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
-     */
-    add_filter( 'manage_edit-embl_taxonomy_columns' , 'wptc_embl_taxonomy_columns' );
-    function wptc_embl_taxonomy_columns( $columns ) {
-      $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
-      return $columns;
+    $this->set_read_only();
+  }
+
+  /**
+   * Add custom columns to the taxonomy list table
+   */
+  public function add_embl_taxonomy_columns($columns) {
+    $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
+    $columns['embl_taxonomy_term_meta_ids'] = __('EMBL Term Meta IDs', 'embl');
+    return $columns;
+  }
+
+  /**
+   * Populate custom column content
+   */
+  public function add_embl_taxonomy_column_content($content, $column_name, $term_id) {
+    $term = get_term($term_id, 'embl_taxonomy');
+    if ('embl_taxonomy_term_uuid' === $column_name) {
+      $full_term = embl_taxonomy_get_term($term->term_id);
+      $content = '<code>' . end($full_term->meta['embl_taxonomy_ids']) . '</code>';
     }
-
-    /*
-     * filter pattern: manage_{taxonomy}_custom_column
-     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
-     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
-     */
-    add_filter( 'manage_embl_taxonomy_custom_column', 'wptc_embl_taxonomy_column_content', 10, 3 );
-    function wptc_embl_taxonomy_column_content( $content, $column_name, $term_id ) {
-      // get the term object
-      $term = get_term( $term_id, 'embl_taxonomy' );
-      // check if column is our custom column
-      if ( 'embl_taxonomy_term_uuid' == $column_name ) {
-        $full_term = embl_taxonomy_get_term($term->term_id);
-        // Eventually we should link back to the contenHub, however we don't currently
-        // have a good way to search by UUID
-        // https://dev.content.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid=2a270b68-46c3-4b3f-92c5-0a65eb896c86&pattern=node-display-title
-        // the above query depends on knowing the conent type
-        $content = '<code>'.end($full_term->meta['embl_taxonomy_ids']).'</code>';
+    if ('embl_taxonomy_term_meta_ids' === $column_name) {
+      $full_term = embl_taxonomy_get_term($term->term_id);
+      if (!empty($full_term->meta['embl_taxonomy_ids'])) {
+        $content = '<code>' . implode(', ', $full_term->meta['embl_taxonomy_ids']) . '</code>';
       }
-      return $content;
     }
+    return $content;
+  
 
     $this->set_read_only();
   }
@@ -483,61 +480,25 @@ class EMBL_Taxonomy_Register {
     return $new_terms;
   }
 
-  /**
-   * Generate an array of taxonomy terms from JSON
-   * Add new term for each "Child > Parent" relationship
-   */
-  static private function generate_terms(& $api_terms, & $terms, array $term = null, array $parent = null) {
-
-    // If no term is specified start the recursion
-    if ( ! $term) {
-      // Iterate over each base term
-      foreach ($api_terms as $uuid => $term) {
-        self::generate_terms($api_terms, $terms, $term);
-      }
-      // Set the WordPress taxonomy slug
-      // use implode('-', $term[EMBL_Taxonomy::META_IDS]) if name is too long?
-      foreach ($terms as $i => $term) {
-        $terms[$i]['slug'] = sanitize_title($term['name']);
-      }
-      return;
-    }
-
-    // Prefix IDs and name with parent(s)
-    if (is_array($parent)) {
-      $term['name'] .= EMBL_Taxonomy::TAXONOMY_SEPARATOR . $parent['name'];
-      $term[EMBL_Taxonomy::META_NAME] = $parent[EMBL_Taxonomy::META_NAME];
-      $term[EMBL_Taxonomy::META_IDS] = array_merge(
-        $term[EMBL_Taxonomy::META_IDS],
-        $parent[EMBL_Taxonomy::META_IDS]
-      );
-    }
-
-    // If this new term has multiple parents generate a unique term for
-    // the final hierarchy level, for example:
-    // Parent-1 > Term
-    // Parent-2 > Parent-1 > Term
-    if (is_array($term['parents']) && count($term['parents'])) {
-      // Iterate over parent term IDs and then all terms to find the parent
-      foreach ($term['parents'] as $parent_id) {
-
-        if (array_key_exists($parent_id, $api_terms)) {
-          $new_parent = $api_terms[$parent_id];
-          // Cannot generate terms that are a parent of itself
-          if ($term['uuid'] === $new_parent['uuid']) {
-            continue;
-          }
-          self::generate_terms($api_terms, $terms, $new_parent, $term);
-        }
-      }
-    // Otherwise add new term
-    } else {
-      // Ignore base level terms "Who", "What", "Where", etc
-      // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
+ /**
+ * Generate an array of taxonomy terms from JSON
+ * Add new term for each "Child > Parent" relationship
+ */
+static private function generate_terms(& $api_terms, & $terms) {
+    // Iterate over each base term
+    foreach ($api_terms as $uuid => $term) {
+        // Ignore base level terms "Who", "What", "Where", etc
+        // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
         $terms[] = $term;
-      // }
+        // }
     }
-  }
+
+    // Set the WordPress taxonomy slug
+    foreach ($terms as $i => $term) {
+        $terms[$i]['slug'] = sanitize_title($term['name']);
+    }
+}
+
 
   /**
    * Sort taxonomy terms
