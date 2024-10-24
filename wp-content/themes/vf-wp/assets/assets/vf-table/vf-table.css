@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
 * Component: @visual-framework/vf-table
-* Version: 1.2.0-rc.3
+* Version: 1.2.2
 * Location: components/vf-core-components/vf-table
 */
 .vf-table {
@@ -214,7 +214,7 @@
 }
 
 .vf-table__row--selected {
-  background-color: #d1e3f6;
+  background-color: #d1e3f6 !important;
   color: #ffffff;
 }
 .vf-table__row--selected .vf-button {

@@ -29,7 +29,7 @@ $tags = get_field('tags');
 $display = get_field('display_publication');
 
 if (empty($display)) {
-  $display = 'EMBL News';
+  $display = 'embl';
 }
 if (empty($variant)) {
   $variant = 'vf-news-item-default';
@@ -56,7 +56,7 @@ $url = add_query_arg(array(
   'source'                    => 'contenthub',
   'pattern'                   => $variant,
   'filter-content-type'       => 'article',
-  'filter-field-value[field_display_publication]' => $display,
+  'filter-field-value[field_target_display]' => $display,
   'sort-field-value[created]' => 'DESC',
 ), $url);
 

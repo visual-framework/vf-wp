@@ -256,6 +256,19 @@ function allowed_block_types($allowed_blocks) {
 
 }
 
+	// Remove H6.
+function modify_heading_levels_globally( $args, $block_type ) {
+	
+	if ( 'core/heading' !== $block_type ) {
+		return $args;
+	}
+
+	$args['attributes']['levelOptions']['default'] = [ 1, 2, 3, 4, 5 ];
+	
+	return $args;
+}
+add_filter( 'register_block_type_args', 'modify_heading_levels_globally', 10, 2 );
+
 
 
 /* custom language switcher for the WPML plugin
