@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@11ty/eleventy-plugin-rss@^1.0.7":
+"@11ty/eleventy-plugin-rss@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@11ty/eleventy-plugin-rss/-/eleventy-plugin-rss-1.2.0.tgz#06d9901adcd3bcbd912c32427adfb751e596b7e9"
   integrity sha512-YzFnSH/5pObcFnqZ2sAQ782WmpOZHj1+xB9ydY/0j7BZ2jUNahn53VmwCB/sBRwXA/Fbwwj90q1MLo01Ru0UaQ==
@@ -2438,13 +2438,13 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-embed/-/vf-embed-1.1.2.tgz#b4d24768bcf49ec31f15f34b37b427beb7098e1b"
   integrity sha512-/ZRb6os6BivwRg7Ukao6DxFIns5pOW83DRL+A2sGblhJtZRMGs8SS5WfeX/BGH/TWX+8DfMaXrhBrAvCBi6Zhw==
 
-"@visual-framework/vf-extensions@2.0.0-alpha.3":
-  version "2.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-2.0.0-alpha.3.tgz#71a88a177c46122b60d0888fe17a9236c0f29a11"
-  integrity sha512-FMCoZwuOyf4RKOMjLEwmmbcfYaWLVEySju4Ca9f2uk6Z1oBhZ+P21y7VB+19lpcD+5H8GMZw8Ar69gIKRGiVbg==
+"@visual-framework/vf-extensions@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-extensions/-/vf-extensions-2.1.2.tgz#02dc8f4663206c3b4085e7767d5331f1576d516c"
+  integrity sha512-2gTIeL1kimbN2p6ljV28AtooHAZm1540chBjVIFTGouzgf4atjmi/QzBfhCsi58NcHf6uS0jkitCx5UoJFGbKQ==
   dependencies:
-    "@11ty/eleventy-plugin-rss" "^1.0.7"
-    luxon "^2.0.0"
+    "@11ty/eleventy-plugin-rss" "1.2.0"
+    luxon "^3.0.0"
     touch "^3.1.0"
 
 "@visual-framework/vf-figure@^2.0.0":
@@ -8059,10 +8059,10 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
-luxon@^2.0.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.5.0.tgz#098090f67d690b247e83c090267a60b1aa8ea96c"
-  integrity sha512-IDkEPB80Rb6gCAU+FEib0t4FeJ4uVOuX1CQ9GsvU3O+JAGIgu0J7sf1OarXKaKDygTZIoJyU6YdZzTFRu+YR0A==
+luxon@^3.0.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-3.5.0.tgz#6b6f65c5cd1d61d1fd19dbf07ee87a50bf4b8e20"
+  integrity sha512-rh+Zjr6DNfUYR3bPwJEnuwDdqMbxZW7LOQfUN4B54+Cl+0o5zaU9RJ6bcidfDtC1cWCZXQ+nvX8bf6bAji37QQ==
 
 magic-string@^0.25.7:
   version "0.25.9"
