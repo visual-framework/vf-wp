@@ -40,47 +40,45 @@ class EMBL_Taxonomy_Register {
       add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
     }
 
-    // Add column for term UUID
-    // http://wpthemecraft.com/code-snippets/add-custom-columns-to-taxonomy-list-table/
-
-    /*
-     * filter pattern: manage_edit-{taxonomy}_columns
-     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
-     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
-     */
-    add_filter( 'manage_edit-embl_taxonomy_columns' , 'wptc_embl_taxonomy_columns' );
-    function wptc_embl_taxonomy_columns( $columns ) {
-      $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
-      return $columns;
-    }
-
-    /*
-     * filter pattern: manage_{taxonomy}_custom_column
-     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
-     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
-     */
-    add_filter( 'manage_embl_taxonomy_custom_column', 'wptc_embl_taxonomy_column_content', 10, 3 );
-    function wptc_embl_taxonomy_column_content( $content, $column_name, $term_id ) {
-      // get the term object
-      $term = get_term( $term_id, 'embl_taxonomy' );
-      // check if column is our custom column
-      if ( 'embl_taxonomy_term_uuid' == $column_name ) {
-        $full_term = embl_taxonomy_get_term($term->term_id);
-        // Eventually we should link back to the contenHub, however we don't currently
-        // have a good way to search by UUID
-        // https://dev.content.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid=2a270b68-46c3-4b3f-92c5-0a65eb896c86&pattern=node-display-title
-        // the above query depends on knowing the conent type
-        $content = '<code>'.end($full_term->meta['embl_taxonomy_ids']).'</code>';
-      }
-      return $content;
-    }
+    // Add columns for term meta
+    add_filter('manage_edit-embl_taxonomy_columns', array($this, 'embl_taxonomy_columns'));
+    add_filter('manage_embl_taxonomy_custom_column', array($this, 'embl_taxonomy_column_content'), 10, 3);
 
     $this->set_read_only();
   }
 
-  /**
-   * Use a global option to manage the read-only state
-   */
+  public function embl_taxonomy_columns($columns) {
+    $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
+    $columns['embl_taxonomy_meta_ids'] = __('Meta IDs', 'embl');
+    $columns['embl_taxonomy_meta_name'] = __('Meta Name', 'embl');
+    $columns['embl_taxonomy_meta_deprecated'] = __('Meta Deprecated', 'embl');
+    return $columns;
+  }
+
+  public function embl_taxonomy_column_content($content, $column_name, $term_id) {
+    $term = get_term($term_id, 'embl_taxonomy');
+    $full_term = embl_taxonomy_get_term($term->term_id);
+
+    if ($column_name === 'embl_taxonomy_term_uuid') {
+      $content = '<code>' . end($full_term->meta['embl_taxonomy_ids']) . '</code>';
+    } elseif ($column_name === 'embl_taxonomy_meta_ids') {
+      $meta_ids = get_term_meta($term_id, EMBL_Taxonomy::META_IDS, true);
+
+      if (is_array($meta_ids)) {
+        $content = '<code>' . json_encode($meta_ids) . '</code>';
+    } else {
+        $content = '<code>' . $meta_ids . '</code>';
+    }
+
+    } elseif ($column_name === 'embl_taxonomy_meta_name') {
+      $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
+    } elseif ($column_name === 'embl_taxonomy_meta_deprecated') {
+      $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true) . '</code>';
+    }
+
+    return $content;
+  }
+
   public function is_read_only() {
     $name = EMBL_Taxonomy::TAXONOMY_NAME;
     return get_option("vf__{$name}_locked", true);
@@ -90,6 +88,7 @@ class EMBL_Taxonomy_Register {
     $name = EMBL_Taxonomy::TAXONOMY_NAME;
     return update_option("vf__{$name}_locked", boolval($locked));
   }
+
 
   /**
    * Action `init`
@@ -443,7 +442,7 @@ class EMBL_Taxonomy_Register {
       return false;
     }
     $new_terms = array();
-    $term_keys = array('uuid', 'name', 'parents');
+    $term_keys = array('uuid', 'name', 'parents', 'primary');
     // Format term objects as arrays and add meta keys
     foreach($json->terms as $key => $json_term) {
       $json_term = (array) $json_term;
@@ -487,57 +486,66 @@ class EMBL_Taxonomy_Register {
    * Generate an array of taxonomy terms from JSON
    * Add new term for each "Child > Parent" relationship
    */
-  static private function generate_terms(& $api_terms, & $terms, array $term = null, array $parent = null) {
+  static private function generate_terms(& $api_terms, & $terms) {
+    // Iterate over each base term
+    foreach ($api_terms as $uuid => $term) {
+        // Ignore base level terms "Who", "What", "Where", etc.
+        // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
 
-    // If no term is specified start the recursion
-    if ( ! $term) {
-      // Iterate over each base term
-      foreach ($api_terms as $uuid => $term) {
-        self::generate_terms($api_terms, $terms, $term);
-      }
-      // Set the WordPress taxonomy slug
-      // use implode('-', $term[EMBL_Taxonomy::META_IDS]) if name is too long?
-      foreach ($terms as $i => $term) {
-        $terms[$i]['slug'] = sanitize_title($term['name']);
-      }
-      return;
-    }
+        // Initialize variables to hold the prefixed name and IDs
+        $prefix_name = $term['name'];
+        $prefix_ids = $term[EMBL_Taxonomy::META_IDS];
 
-    // Prefix IDs and name with parent(s)
-    if (is_array($parent)) {
-      $term['name'] .= EMBL_Taxonomy::TAXONOMY_SEPARATOR . $parent['name'];
-      $term[EMBL_Taxonomy::META_NAME] = $parent[EMBL_Taxonomy::META_NAME];
-      $term[EMBL_Taxonomy::META_IDS] = array_merge(
-        $term[EMBL_Taxonomy::META_IDS],
-        $parent[EMBL_Taxonomy::META_IDS]
-      );
-    }
-
-    // If this new term has multiple parents generate a unique term for
-    // the final hierarchy level, for example:
-    // Parent-1 > Term
-    // Parent-2 > Parent-1 > Term
-    if (is_array($term['parents']) && count($term['parents'])) {
-      // Iterate over parent term IDs and then all terms to find the parent
-      foreach ($term['parents'] as $parent_id) {
-
-        if (array_key_exists($parent_id, $api_terms)) {
-          $new_parent = $api_terms[$parent_id];
-          // Cannot generate terms that are a parent of itself
-          if ($term['uuid'] === $new_parent['uuid']) {
-            continue;
+        // Check the 'primary' term and add specific IDs to META_IDS
+        if (isset($term['primary'])) {
+          switch ($term['primary']) {
+              case 'what':
+                  array_unshift($prefix_ids, '302cfdf7-365b-462a-be65-82c7b783ebf7');
+                  break;
+              case 'who':
+                  array_unshift($prefix_ids, '4428d1fd-441a-4d6d-a1c5-5dcf5665f213');
+                  break;
+              case 'where':
+                  array_unshift($prefix_ids, 'b14d3f13-5670-44fb-8970-e54dfd9c921a');
+                  break;
           }
-          self::generate_terms($api_terms, $terms, $new_parent, $term);
-        }
       }
-    // Otherwise add new term
-    } else {
-      // Ignore base level terms "Who", "What", "Where", etc
-      // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
+      
+
+        // If the term has parents, prefix IDs and name with parents
+        if (is_array($term['parents']) && count($term['parents'])) {
+            // Iterate over the parents
+            foreach ($term['parents'] as $parent_id) {
+                if (array_key_exists($parent_id, $api_terms)) {
+                    $parent_term = $api_terms[$parent_id];
+                    // Prefix the name with the parent's name
+                    $prefix_name = ucfirst($term['primary']) . EMBL_Taxonomy::TAXONOMY_SEPARATOR . $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR . $prefix_name;
+                    // Prefix the IDs with the parent's IDs
+                    $prefix_ids = array_merge([$parent_term[EMBL_Taxonomy::META_IDS]], $prefix_ids);
+                    // Break after the first parent to prevent further prefixing
+                    break;
+                }
+            }
+        }
+
+        // Update the term with the prefixed name and IDs
+        $term['name'] = $prefix_name;
+        $term[EMBL_Taxonomy::META_IDS] = $prefix_ids;
+
+        // Add the modified term to the terms array
         $terms[] = $term;
-      // }
+        // }
     }
-  }
+
+    // Set the WordPress taxonomy slug
+    foreach ($terms as $i => $term) {
+        $terms[$i]['slug'] = sanitize_title($term['name']);
+    }
+}
+
+
+
+
 
   /**
    * Sort taxonomy terms
