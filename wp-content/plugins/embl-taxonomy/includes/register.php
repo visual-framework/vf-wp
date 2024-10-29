@@ -533,44 +533,63 @@ class EMBL_Taxonomy_Register {
   static private function generate_terms(& $api_terms, & $terms) {
     // Iterate over each base term
     foreach ($api_terms as $uuid => $term) {
-        // Ignore base level terms "Who", "What", "Where", etc.
-        // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
-
         // Initialize variables to hold the prefixed name and IDs
-        $prefix_name = $term['name'];
         $prefix_ids = $term[EMBL_Taxonomy::META_IDS];
 
         // Check the 'primary' term and add specific IDs to META_IDS
         if (isset($term['primary'])) {
-          switch ($term['primary']) {
-              case 'what':
-                  array_unshift($prefix_ids, '302cfdf7-365b-462a-be65-82c7b783ebf7');
-                  break;
-              case 'who':
-                  array_unshift($prefix_ids, '4428d1fd-441a-4d6d-a1c5-5dcf5665f213');
-                  break;
-              case 'where':
-                  array_unshift($prefix_ids, 'b14d3f13-5670-44fb-8970-e54dfd9c921a');
-                  break;
-          }
-      }
-      
-
-        // If the term has parents, prefix IDs and name with parents
-        if (is_array($term['parents']) && count($term['parents'])) {
-            // Iterate over the parents
-            foreach ($term['parents'] as $parent_id) {
-                if (array_key_exists($parent_id, $api_terms)) {
-                    $parent_term = $api_terms[$parent_id];
-                    // Prefix the name with the parent's name
-                    $prefix_name = ucfirst($term['primary']) . EMBL_Taxonomy::TAXONOMY_SEPARATOR . $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR . $prefix_name;
-                    // Prefix the IDs with the parent's IDs
-                    $prefix_ids = array_merge([$parent_term[EMBL_Taxonomy::META_IDS]], $prefix_ids);
-                    // Break after the first parent to prevent further prefixing
+            switch ($term['primary']) {
+                case 'what':
+                    array_unshift($prefix_ids, '302cfdf7-365b-462a-be65-82c7b783ebf7');
                     break;
-                }
+                case 'who':
+                    array_unshift($prefix_ids, '4428d1fd-441a-4d6d-a1c5-5dcf5665f213');
+                    break;
+                case 'where':
+                    array_unshift($prefix_ids, 'b14d3f13-5670-44fb-8970-e54dfd9c921a');
+                    break;
             }
         }
+
+        // Initialize the name with the primary term
+        $prefix_name = ucfirst($term['primary']) . EMBL_Taxonomy::TAXONOMY_SEPARATOR;
+
+        // Check if the term has parents and only get the one that corresponds to the primary term
+        if (is_array($term['parents']) && count($term['parents'])) {
+            // Get the first parent (as per your requirement)
+            $primary_parent_id = $term['parents'][0]; // Take only the first parent
+
+            // Log the identified primary parent ID for debugging
+            error_log("Identified primary parent ID: $primary_parent_id");
+
+            // If a primary parent ID exists, construct the name accordingly
+            if ($primary_parent_id && array_key_exists($primary_parent_id, $api_terms)) {
+                $parent_term = $api_terms[$primary_parent_id];
+
+                // Check if the parent term has a name
+                if (isset($parent_term['name']) && !empty($parent_term['name'])) {
+                    // Append the parent's name to the prefix name
+                    $prefix_name .= $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR;
+                    
+                    // Add the parent term's ID to the prefix_ids
+                    $parent_meta_id = $parent_term[EMBL_Taxonomy::META_IDS];
+                    if (!is_array($parent_meta_id)) {
+                        error_log("Parent term ID is not an array: $parent_meta_id");
+                        $parent_meta_id = [$parent_meta_id];
+                    }
+                    $prefix_ids = array_merge($parent_meta_id, $prefix_ids);
+                } else {
+                    // Debugging statement if the parent's name is empty
+                    error_log("Parent term ID '$primary_parent_id' does not have a valid name.");
+                }
+            } else {
+                // Debugging statement if the primary parent ID is not found in api_terms
+                error_log("Primary parent ID '$primary_parent_id' not found in api_terms.");
+            }
+        }
+
+        // Append the current term's name
+        $prefix_name .= $term['name'];
 
         // Update the term with the prefixed name and IDs
         $term['name'] = $prefix_name;
@@ -578,7 +597,6 @@ class EMBL_Taxonomy_Register {
 
         // Add the modified term to the terms array
         $terms[] = $term;
-        // }
     }
 
     // Set the WordPress taxonomy slug
@@ -586,9 +604,6 @@ class EMBL_Taxonomy_Register {
         $terms[$i]['slug'] = sanitize_title($term['name']);
     }
 }
-
-
-
 
 
   /**
