@@ -389,7 +389,7 @@ class EMBL_Taxonomy_Register {
                     wp_add_object_terms($post_id, $replacement_term_id, EMBL_Taxonomy::TAXONOMY_NAME);
     
                     // Remove the deprecated term from the post
-                    wp_remove_object_terms($post_id, $wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+                    // wp_remove_object_terms($post_id, $wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
                 }
             }
         }
