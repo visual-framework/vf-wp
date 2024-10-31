@@ -714,20 +714,20 @@ class EMBL_Taxonomy_Register {
     }
 
     // Sync happened (all pages)
-    if (($now - $modified) <= 10) {
-      printf('<div class="%1$s"><p>%2$s</p></div>',
-        esc_attr('notice notice-success'),
-        esc_html(sprintf(
-          __('%1$s was recently synced.', 'embl'),
-          $this->labels['name']
-        ))
-      );
-      $notice = true;
-    }
+    // if (($now - $modified) <= 10) {
+    //   printf('<div class="%1$s"><p>%2$s</p></div>',
+    //     esc_attr('notice notice-success'),
+    //     esc_html(sprintf(
+    //       __('%1$s was recently synced.', 'embl'),
+    //       $this->labels['name']
+    //     ))
+    //   );
+    //   $notice = true;
+    // }
 
     // Manual sync notice (edit taxonomy page only)
     if ( current_user_can( 'administrator' ) ) {
-    if ( ! $notice && function_exists('get_current_screen')) {
+    if ( function_exists('get_current_screen')) {
       $screen = get_current_screen();
       if ($screen->id === 'edit-embl_taxonomy') {
         if (isset($_GET['synced']) && $_GET['synced'] === 'true') {
@@ -757,7 +757,13 @@ if (current_user_can('administrator')) {
   $deprecated_count = $this->get_deprecated_terms_count(); // Assume this function returns count of deprecated terms
   if ( function_exists('get_current_screen')) {
     $screen = get_current_screen();
-    if ($screen->id === 'edit-embl_taxonomy') {
+    if ($screen->id === 'edit-embl_taxonomy') { 
+      if (isset($_GET['delete-deprecated']) && $_GET['delete-deprecated'] === 'true') {
+        printf('<div class="%1$s"><p>%2$s</p></div>',
+          esc_attr('notice notice-success'),
+          __('Deprecated terms have been deleted.', 'embl')
+        );
+      }
   if ($deprecated_count > 0) {
     printf('<div class="%1$s"><p><span>%2$s</span> %3$s %4$s</p></div>',
       esc_attr('notice notice-warning'),
@@ -768,7 +774,7 @@ if (current_user_can('administrator')) {
       sprintf(
         '<button id="embl-taxonomy-show-deprecated" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
         esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&filter=deprecated'),
-        esc_html(__('View all deprecated terms', 'embl'))
+        esc_html(__('See all deprecated terms', 'embl'))
       ),
       sprintf(
         '<button id="embl-taxonomy-delete-deprecated" type="button" data-href="%1$s" class="button button-small" style="color: #fff; border-color: #d41645; background: #d41645;">%2$s</button>',

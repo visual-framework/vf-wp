@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const urlParams = new URLSearchParams(window.location.search);
       if (urlParams.has('filter') && urlParams.get('filter') === 'deprecated') {
           // Change button text and URL
-          showDeprecatedButton.textContent = 'View All Terms';
+          showDeprecatedButton.textContent = 'See all taxonomy terms';
           showDeprecatedButton.setAttribute('data-href', `${emblTaxonomySettings.adminUrl}edit-tags.php?taxonomy=${emblTaxonomySettings.taxonomyName}`);
       }
 
