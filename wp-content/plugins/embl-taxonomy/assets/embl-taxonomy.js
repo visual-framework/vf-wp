@@ -94,6 +94,9 @@
     startSync(new URL(path));
   });
 
+
+
+  
    // Bail if no delete button
    const $deleteButton = document.querySelector('#embl-taxonomy-delete-deprecated');
    if (!$deleteButton) return;
@@ -147,4 +150,37 @@
    $deleteModal.querySelector('#cancel-delete').addEventListener('click', () => {
      $deleteModal.close();
    });
+
+   document.addEventListener('DOMContentLoaded', function() {
+    const showDeprecatedButton = document.getElementById('embl-taxonomy-show-deprecated');
+    
+    if (showDeprecatedButton) {
+        showDeprecatedButton.addEventListener('click', function() {
+            const url = this.getAttribute('data-href');
+            window.location.href = url; // Redirect to the URL
+        });
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const showDeprecatedButton = document.getElementById('embl-taxonomy-show-deprecated');
+
+  if (showDeprecatedButton) {
+      // Check if the URL contains 'filter=deprecated'
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('filter') && urlParams.get('filter') === 'deprecated') {
+          // Change button text and URL
+          showDeprecatedButton.textContent = 'View All Terms';
+          showDeprecatedButton.setAttribute('data-href', `${emblTaxonomySettings.adminUrl}edit-tags.php?taxonomy=${emblTaxonomySettings.taxonomyName}`);
+      }
+
+      showDeprecatedButton.addEventListener('click', function() {
+          const url = this.getAttribute('data-href');
+          window.location.href = url; // Redirect to the URL
+      });
+  }
+});
+
+
 })();

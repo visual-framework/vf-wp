@@ -744,7 +744,7 @@ class EMBL_Taxonomy_Register {
             date('jS F Y H:i:s', $modified)
           )),
           sprintf(
-            '<button id="embl-taxonomy-sync" data-href="%1$s" class="button button-small">%2$s</button>',
+            '<button id="embl-taxonomy-sync" data-href="%1$s" class="button button-primary button-small">%2$s</button>',
             esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&sync=true'),
             esc_html(__('Sync now', 'embl'))
           )
@@ -766,14 +766,14 @@ if (current_user_can('administrator')) {
         $deprecated_count
       )),
       sprintf(
-        '<button id="embl-taxonomy-delete-deprecated" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
-        esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&delete_deprecated=true'),
-        esc_html(__('Delete all deprecated terms', 'embl'))
-      ),
-      sprintf(
         '<button id="embl-taxonomy-show-deprecated" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
         esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&filter=deprecated'),
-        esc_html(__('Show only deprecated terms', 'embl'))
+        esc_html(__('View all deprecated terms', 'embl'))
+      ),
+      sprintf(
+        '<button id="embl-taxonomy-delete-deprecated" type="button" data-href="%1$s" class="button button-small" style="color: #fff; border-color: #d41645; background: #d41645;">%2$s</button>',
+        esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&delete_deprecated=true'),
+        esc_html(__('Delete all deprecated terms', 'embl'))
       )
     );
   }
@@ -848,6 +848,8 @@ private function get_deprecated_terms_count() {
     );
 
     wp_localize_script('embl-taxonomy', 'emblTaxonomySettings', array(
+      'adminUrl' => admin_url(),
+        'taxonomyName' => EMBL_Taxonomy::TAXONOMY_NAME,
       'data' => array(
         'syncing' => __('Syncing – please do not close this window.', 'embl'),
         'reload'  => __('This page will reload after the sync is done.', 'embl'),
