@@ -20,13 +20,12 @@ class EMBL_Taxonomy_Register {
   protected $labels;
 
   public function __construct() {
-
     $this->labels = array(
-      'name'              => __('EMBL Taxonomy', 'embl'),
-      'singular_name'     => __('EMBL Taxonomy Term', 'embl'),
-      'search_items'      => __('Search EMBL Taxonomy', 'embl'),
-      'all_items'         => __('All EMBL Taxonomy Terms', 'embl'),
-      'add_new_item'      => __('Add New EMBL Taxonomy Term', 'embl')
+        'name'              => __('EMBL Taxonomy', 'embl'),
+        'singular_name'     => __('EMBL Taxonomy Term', 'embl'),
+        'search_items'      => __('Search EMBL Taxonomy', 'embl'),
+        'all_items'         => __('All EMBL Taxonomy Terms', 'embl'),
+        'add_new_item'      => __('Add New EMBL Taxonomy Term', 'embl')
     );
 
     add_action('init', array($this, 'register_taxonomy'));
@@ -36,9 +35,9 @@ class EMBL_Taxonomy_Register {
     add_filter(EMBL_Taxonomy::TAXONOMY_NAME . '_name', array($this, 'filter_term_name'), 10, 3);
 
     if (is_admin()) {
-      add_action('admin_notices', array($this, 'action_admin_notices'));
-      add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
-      
+        add_action('admin_notices', array($this, 'action_admin_notices'));
+        add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
+        add_action('pre_get_terms', array($this, 'filter_admin_terms'));
     }
 
     // Add columns for term meta
@@ -46,7 +45,8 @@ class EMBL_Taxonomy_Register {
     add_filter('manage_embl_taxonomy_custom_column', array($this, 'embl_taxonomy_column_content'), 10, 3);
 
     $this->set_read_only();
-  }
+}
+
 
   public function embl_taxonomy_columns($columns) {
     $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
@@ -55,6 +55,17 @@ class EMBL_Taxonomy_Register {
     $columns['embl_taxonomy_meta_deprecated'] = __('Meta Deprecated', 'embl');
     return $columns;
   }
+
+  
+  public function filter_admin_terms($query) {
+    if (is_admin() && isset($_GET['taxonomy']) && $_GET['taxonomy'] === EMBL_Taxonomy::TAXONOMY_NAME) {
+        // Check if the 'filter=deprecated' parameter is set
+        if (isset($_GET['filter']) && $_GET['filter'] === 'deprecated') {
+            $query->query_vars['meta_key'] = EMBL_Taxonomy::META_DEPRECATED;
+            $query->query_vars['meta_value'] = '1';
+        }
+    }
+}
 
   public function embl_taxonomy_column_content($content, $column_name, $term_id) {
     $term = get_term($term_id, 'embl_taxonomy');
