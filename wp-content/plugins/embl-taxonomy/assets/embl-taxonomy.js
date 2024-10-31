@@ -93,4 +93,58 @@
     $modal.showModal();
     startSync(new URL(path));
   });
+
+   // Bail if no delete button
+   const $deleteButton = document.querySelector('#embl-taxonomy-delete-deprecated');
+   if (!$deleteButton) return;
+ 
+   // Confirmation modal for deletion
+   const $deleteModal = document.createElement('dialog');
+   $deleteModal.id = 'embl-delete-modal';
+   $deleteModal.innerHTML = `
+     <h3><b>Confirm Deletion</b></h3>
+     <p>Are you sure you want to delete all deprecated terms? This action cannot be undone.</p>
+     <button id="confirm-delete" class="button button-small">Delete</button>
+     <button id="cancel-delete" class="button button-small">Cancel</button>
+   `;
+   document.body.appendChild($deleteModal);
+ 
+   // Show confirmation modal on delete button click
+   $deleteButton.addEventListener('click', (ev) => {
+     ev.preventDefault();
+     $deleteModal.showModal();
+   });
+ 
+   // Handle delete confirmation
+   $deleteModal.querySelector('#confirm-delete').addEventListener('click', async () => {
+     $deleteModal.close();
+     $deleteButton.disabled = true;
+     $deleteButton.innerText = 'Deleting...';
+ 
+     try {
+       const response = await fetch(window.emblTaxonomySettings.deletePath, {
+         method: 'POST',
+         headers: {
+           'X-WP-Nonce': window.emblTaxonomySettings.token
+         }
+       });
+       const json = await response.json();
+ 
+       if (json.success) {
+         alert('All deprecated terms have been deleted successfully.');
+         window.location.reload();
+       } else {
+         throw new Error(json.error || 'Failed to delete deprecated terms.');
+       }
+     } catch (error) {
+       alert(`Error: ${error.message}`);
+       $deleteButton.disabled = false;
+       $deleteButton.innerText = 'Delete all deprecated terms';
+     }
+   });
+ 
+   // Handle delete cancellation
+   $deleteModal.querySelector('#cancel-delete').addEventListener('click', () => {
+     $deleteModal.close();
+   });
 })();

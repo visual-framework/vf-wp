@@ -38,6 +38,7 @@ class EMBL_Taxonomy_Register {
     if (is_admin()) {
       add_action('admin_notices', array($this, 'action_admin_notices'));
       add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
+      
     }
 
     // Add columns for term meta
@@ -111,12 +112,12 @@ class EMBL_Taxonomy_Register {
         'show_in_menu'      => true,
         'show_admin_column' => true,
         'show_in_rest'      => true,
-        'capabilities'      => array(
-          'manage_terms' => 'manage_categories',
-          'edit_terms'   => EMBL_Taxonomy::TAXONOMY_NAME . 'edit_terms',
-          'delete_terms' => EMBL_Taxonomy::TAXONOMY_NAME . 'delete_terms',
-          'assign_terms' => 'edit_posts'
-        )
+        'capabilities' => array(
+    'manage_terms' => 'manage_options',   // Restricting to administrators
+    'edit_terms'   => 'manage_options',   
+    'delete_terms' => 'manage_options',   
+    'assign_terms' => 'manage_options'    
+)
       )
     );
 
@@ -148,12 +149,20 @@ class EMBL_Taxonomy_Register {
     register_rest_route(EMBL_Taxonomy::TAXONOMY_NAME . '/v1', '/sync/', array(
       'methods' => 'POST',
       'callback' => array($this, 'sync_taxonomy'),
-      // Secure the API route
-      // Header token from `wp_localize_script` below is required
       'permission_callback' => function () {
-        return current_user_can('manage_categories');
+          return current_user_can('manage_categories');
       }
-    ));
+  ));
+
+  // Delete deprecated terms route
+  register_rest_route(EMBL_Taxonomy::TAXONOMY_NAME . '/v1', '/delete-deprecated/', array(
+      'methods' => 'POST',
+      'callback' => array($this, 'delete_deprecated_terms'),
+      'permission_callback' => function() {
+          return current_user_can('manage_categories');
+      }
+  ));
+
 
     // Add taxonomy terms assigned to posts as field for WP REST API
     register_rest_field(
@@ -214,6 +223,44 @@ class EMBL_Taxonomy_Register {
     }
     return $wp_taxonomy;
   }
+  public function delete_deprecated_terms() {
+    // Get all deprecated terms
+    $terms = get_terms(array(
+        'taxonomy'   => EMBL_Taxonomy::TAXONOMY_NAME,
+        'meta_key'   => EMBL_Taxonomy::META_DEPRECATED,
+        'meta_value' => '1',
+        'fields'     => 'ids',
+        'hide_empty' => false, // Set to false to include terms without posts
+    ));
+
+    // Check for errors or empty list
+    if (is_wp_error($terms)) {
+        return new WP_Error('term_query_error', __('Error querying terms: ' . $terms->get_error_message(), 'embl'), array('status' => 500));
+    }
+
+    if (empty($terms)) {
+        return rest_ensure_response(array(
+            'success' => true,
+            'message' => __('No deprecated terms found to delete.', 'embl')
+        ));
+    }
+
+    // Delete each deprecated term
+    $deleted_terms = [];
+    foreach ($terms as $term_id) {
+        $result = wp_delete_term($term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+        if (is_wp_error($result)) {
+            return new WP_Error('delete_error', __('Error deleting term ID ' . $term_id . ': ' . $result->get_error_message(), 'embl'), array('status' => 500));
+        } else {
+            $deleted_terms[] = $term_id; // Collect deleted term IDs
+        }
+    }
+
+    return rest_ensure_response(array(
+        'success' => true,
+        'message' => sprintf(__('Successfully deleted %d deprecated terms.', 'embl'), count($deleted_terms))
+    ));
+}
 
   /**
    * Read and parse the EMBL Taxonomy API as JSON
@@ -690,7 +737,45 @@ class EMBL_Taxonomy_Register {
       }
     }
   }
+// Add notice for deleting or displaying deprecated terms (all pages for administrators)
+if (current_user_can('administrator')) {
+  $deprecated_count = $this->get_deprecated_terms_count(); // Assume this function returns count of deprecated terms
+  if ($deprecated_count > 0) {
+    printf('<div class="%1$s"><p><span>%2$s</span> %3$s %4$s</p></div>',
+      esc_attr('notice notice-error'),
+      esc_html(sprintf(
+        __('There are %1$d deprecated terms that may need review.', 'embl'),
+        $deprecated_count
+      )),
+      sprintf(
+        '<button id="embl-taxonomy-delete-deprecated" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
+        esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&delete_deprecated=true'),
+        esc_html(__('Delete all deprecated terms', 'embl'))
+      ),
+      sprintf(
+        '<button id="embl-taxonomy-show-deprecated" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
+        esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&filter=deprecated'),
+        esc_html(__('Show only deprecated terms', 'embl'))
+      )
+    );
+  }
 }
+
+
+
+
+}
+
+private function get_deprecated_terms_count() {
+  $terms = get_terms(array(
+    'taxonomy'   => EMBL_Taxonomy::TAXONOMY_NAME,
+    'meta_key'   => EMBL_Taxonomy::META_DEPRECATED,
+    'meta_value' => '1',
+    'hide_empty' => false, // Ensure all deprecated terms are counted
+  ));
+  return is_array($terms) ? count($terms) : 0;
+}
+
 
   /**
    * Filter `pre_insert_term`
@@ -750,6 +835,7 @@ class EMBL_Taxonomy_Register {
       ),
       'redirect' => esc_url_raw(admin_url('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&synced=true')),
       'path'     => esc_url_raw(rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/sync')),
+      'deletePath' => esc_url_raw(rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/delete-deprecated')),
       'token'    => wp_create_nonce('wp_rest')
     ));
 
