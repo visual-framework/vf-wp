@@ -223,6 +223,9 @@ class EMBL_Taxonomy_Register {
     }
     return $wp_taxonomy;
   }
+
+
+  
   public function delete_deprecated_terms() {
     // Get all deprecated terms
     $terms = get_terms(array(
@@ -232,6 +235,7 @@ class EMBL_Taxonomy_Register {
         'fields'     => 'ids',
         'hide_empty' => false, // Set to false to include terms without posts
     ));
+    
 
     // Check for errors or empty list
     if (is_wp_error($terms)) {
@@ -740,9 +744,12 @@ class EMBL_Taxonomy_Register {
 // Add notice for deleting or displaying deprecated terms (all pages for administrators)
 if (current_user_can('administrator')) {
   $deprecated_count = $this->get_deprecated_terms_count(); // Assume this function returns count of deprecated terms
+  if ( function_exists('get_current_screen')) {
+    $screen = get_current_screen();
+    if ($screen->id === 'edit-embl_taxonomy') {
   if ($deprecated_count > 0) {
     printf('<div class="%1$s"><p><span>%2$s</span> %3$s %4$s</p></div>',
-      esc_attr('notice notice-error'),
+      esc_attr('notice notice-warning'),
       esc_html(sprintf(
         __('There are %1$d deprecated terms that may need review.', 'embl'),
         $deprecated_count
@@ -759,6 +766,8 @@ if (current_user_can('administrator')) {
       )
     );
   }
+}
+}
 }
 
 
