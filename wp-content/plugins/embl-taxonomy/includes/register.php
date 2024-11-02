@@ -49,10 +49,17 @@ class EMBL_Taxonomy_Register {
 
 
   public function embl_taxonomy_columns($columns) {
+    $columns['embl_taxonomy_meta_description'] = __('Parent terms', 'embl');
     $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
-    $columns['embl_taxonomy_meta_ids'] = __('Meta IDs', 'embl');
-    $columns['embl_taxonomy_meta_name'] = __('Meta Name', 'embl');
-    $columns['embl_taxonomy_meta_deprecated'] = __('Meta Deprecated', 'embl');
+    // $columns['embl_taxonomy_meta_ids'] = __('Meta IDs', 'embl');
+    // $columns['embl_taxonomy_meta_name'] = __('Meta Name', 'embl');
+    $columns['embl_taxonomy_meta_deprecated'] = __('Deprecated', 'embl');
+
+       // Unset the slug column to hide it
+       if (isset($columns['slug'])) {
+        unset($columns['slug']);
+    }
+
     return $columns;
   }
 
@@ -71,19 +78,21 @@ class EMBL_Taxonomy_Register {
     $term = get_term($term_id, 'embl_taxonomy');
     $full_term = embl_taxonomy_get_term($term->term_id);
 
-    if ($column_name === 'embl_taxonomy_term_uuid') {
+    if ($column_name === 'embl_taxonomy_meta_description') {
+      $content = esc_html($term->description);
+    } elseif ($column_name === 'embl_taxonomy_term_uuid') {
       $content = '<code>' . end($full_term->meta['embl_taxonomy_ids']) . '</code>';
-    } elseif ($column_name === 'embl_taxonomy_meta_ids') {
-      $meta_ids = get_term_meta($term_id, EMBL_Taxonomy::META_IDS, true);
+    // } elseif ($column_name === 'embl_taxonomy_meta_ids') {
+    //   $meta_ids = get_term_meta($term_id, EMBL_Taxonomy::META_IDS, true);
 
-      if (is_array($meta_ids)) {
-        $content = '<code>' . json_encode($meta_ids) . '</code>';
-    } else {
-        $content = '<code>' . $meta_ids . '</code>';
-    }
+    //   if (is_array($meta_ids)) {
+    //     $content = '<code>' . json_encode($meta_ids) . '</code>';
+    // } else {
+    //     $content = '<code>' . $meta_ids . '</code>';
+    // }
 
-    } elseif ($column_name === 'embl_taxonomy_meta_name') {
-      $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
+    // } elseif ($column_name === 'embl_taxonomy_meta_name') {
+    //   $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
     } elseif ($column_name === 'embl_taxonomy_meta_deprecated') {
       $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true) . '</code>';
     }
@@ -193,7 +202,8 @@ class EMBL_Taxonomy_Register {
               'uuid'    => $id,
               'parents' => $ids,
               'name'    => $meta[EMBL_Taxonomy::META_NAME],
-              'slug'    => $wp_term->slug
+              'slug'    => $wp_term->slug,
+              'description'    => $wp_term->description
             );
             if (
               array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $meta)
@@ -389,12 +399,13 @@ class EMBL_Taxonomy_Register {
       }
 
       // Ensure `name` and `slug` values are up-to-date
-      if ($wp_term->name !== $term['name'] || $wp_term->slug !== $term['slug']) {
+      if ($wp_term->name !== $term['name'] || $wp_term->slug !== $term['slug'] || $wp_term->description !== $term['description']) {
         wp_update_term(
           $wp_term->term_id,
           EMBL_Taxonomy::TAXONOMY_NAME,
           array(
             'name' => $term['name'],
+            'description' => $term['description'],
             'slug' => $term['slug']
           )
         );
@@ -661,13 +672,13 @@ foreach ($wp_taxonomy as $wp_term) {
             foreach ($term['parents'] as $parent_id) {
                 if (array_key_exists($parent_id, $api_terms)) {
                     $parent_term = $api_terms[$parent_id];
-                    
+
                     // Check if the parent term is of the same type as the primary
                     if ($parent_term['primary'] === $term['primary']) {
                         // Append the parent's name to the prefix name
                         $prefix_name .= $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR;
-                        // Add the parent term's IDs to prefix_ids
-                        $prefix_ids = array_merge((array)$parent_term[EMBL_Taxonomy::META_IDS], $prefix_ids);
+                        // Insert the parent term's IDs in the second position of prefix_ids
+                        array_splice($prefix_ids, 1, 0, (array)$parent_term[EMBL_Taxonomy::META_IDS]);
                         $found_parent = true;
                         break; // Stop after finding the first matching parent
                     }
@@ -685,7 +696,7 @@ foreach ($wp_taxonomy as $wp_term) {
         $prefix_name .= $term['name'];
 
         // Update the term with the prefixed name and IDs
-        $term['name'] = rtrim($prefix_name, EMBL_Taxonomy::TAXONOMY_SEPARATOR); // Remove trailing separator
+        $term['description'] = rtrim($prefix_name, EMBL_Taxonomy::TAXONOMY_SEPARATOR); // Remove trailing separator
         $term[EMBL_Taxonomy::META_IDS] = $prefix_ids;
 
         // Add the modified term to the terms array
@@ -694,9 +705,11 @@ foreach ($wp_taxonomy as $wp_term) {
 
     // Set the WordPress taxonomy slug
     foreach ($terms as $i => $term) {
-        $terms[$i]['slug'] = sanitize_title($term['name']);
+        $terms[$i]['slug'] = sanitize_title($term['description']);
+        $terms[$i]['description'] = $term['description'];
     }
 }
+
 
 
 
