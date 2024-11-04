@@ -50,10 +50,10 @@ class EMBL_Taxonomy_Register {
 
   public function embl_taxonomy_columns($columns) {
     $columns['embl_taxonomy_meta_description'] = __('Parent terms', 'embl');
-    $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
     // $columns['embl_taxonomy_meta_ids'] = __('Meta IDs', 'embl');
     // $columns['embl_taxonomy_meta_name'] = __('Meta Name', 'embl');
     $columns['embl_taxonomy_meta_deprecated'] = __('Deprecated', 'embl');
+    $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
 
        // Unset the slug column to hide it
        if (isset($columns['slug'])) {
@@ -94,8 +94,9 @@ class EMBL_Taxonomy_Register {
     // } elseif ($column_name === 'embl_taxonomy_meta_name') {
     //   $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
     } elseif ($column_name === 'embl_taxonomy_meta_deprecated') {
-      $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true) . '</code>';
-    }
+      $deprecatedValue = get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true);
+      $content = '<code>' . ($deprecatedValue == '1' ? 'Yes' : 'No') . '</code>';
+          }
 
     return $content;
   }
@@ -808,7 +809,7 @@ if (current_user_can('administrator')) {
   if ( function_exists('get_current_screen')) {
     $screen = get_current_screen();
     if ($screen->id === 'edit-embl_taxonomy') { 
-      if (isset($_GET['delete-deprecated']) && $_GET['delete-deprecated'] === 'true') {
+      if (isset($_GET['delete_deprecated']) && $_GET['delete_deprecated'] === 'true') {
         printf('<div class="%1$s"><p>%2$s</p></div>',
           esc_attr('notice notice-success'),
           __('Deprecated terms have been deleted.', 'embl')
