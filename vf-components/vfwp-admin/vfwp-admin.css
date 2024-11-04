@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.16
+ * Version: 1.6.17
  * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]), .editor-styles-wrapper h1:not([class*=vf-]) {
@@ -315,14 +315,13 @@
   margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 1rem 0;
   border: 0;
-  padding: 10px 8px 10px 32px;
+  padding: 0;
   position: relative;
 }
 .vf-content blockquote:not([class*=vf-])::before, .editor-styles-wrapper blockquote:not([class*=vf-])::before {
   border-left: 4px solid #d0d0ce;
   content: "";
   height: 100%;
-  left: 12px;
   position: absolute;
   top: 0;
 }

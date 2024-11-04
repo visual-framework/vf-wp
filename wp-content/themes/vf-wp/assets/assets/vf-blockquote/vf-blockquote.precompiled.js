@@ -72,6 +72,15 @@ context.setVariable("blockquote_author_imageurl", t_7);
 if(frame.topLevel) {
 context.addExport("blockquote_author_imageurl", t_7);
 }
+var t_8;
+t_8 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"modifier");
+frame.set("modifier", t_8, true);
+if(frame.topLevel) {
+context.setVariable("modifier", t_8);
+}
+if(frame.topLevel) {
+context.addExport("modifier", t_8);
+}
 ;
 }
 output += "\n<blockquote";
@@ -81,27 +90,48 @@ output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "id
 output += "\"";
 ;
 }
-output += " class=\"vf-blockquote vf-u-margin__left--800";
+output += " class=\"\n";
+if(runtime.contextOrFrameLookup(context, frame, "modifier") == "default") {
+output += "vf-blockquote";
+;
+}
+else {
+if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+output += "vf-blockquote-small";
+;
+}
+;
+}
 if(runtime.contextOrFrameLookup(context, frame, "override_class")) {
 output += " | ";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "override_class"), env.opts.autoescape);
 ;
 }
-output += "\">\n\n";
+output += "\"\n>\n\n";
 if((runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"))) {
-output += "      <img class=\"vf-profile__image vf-u-margin__right--600\" src=\"";
+output += "    <img class=\"vf-profile__image\n";
+if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+output += "vf-profile--medium";
+;
+}
+output += " vf-u-margin__right--600\" src=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"), env.opts.autoescape);
 output += "\" alt=\"\" loading=\"lazy\"/>\n";
 ;
 }
-output += "    <div>\n";
+output += "  <div class=\"";
+if((runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"))) {
+output += "vf-blockquote-has-image";
+;
+}
+output += "\">\n";
 if((runtime.contextOrFrameLookup(context, frame, "blockquote_text")) || (runtime.contextOrFrameLookup(context, frame, "html")) || (runtime.contextOrFrameLookup(context, frame, "text"))) {
-output += "        <div>";
+output += "      <div>";
 output += runtime.suppressValue(((runtime.contextOrFrameLookup(context, frame, "html")) || (runtime.contextOrFrameLookup(context, frame, "blockquote_text"))?(runtime.contextOrFrameLookup(context, frame, "html")) || env.getFilter("safe").call(context, (runtime.contextOrFrameLookup(context, frame, "blockquote_text"))):runtime.contextOrFrameLookup(context, frame, "text")), env.opts.autoescape);
 output += "</div>\n";
 ;
 }
-output += "\n      <footer class=\"vf-u-margin__top--600\">\n";
+output += "\n    <footer class=\"vf-u-margin__top--600\">\n";
 if(runtime.contextOrFrameLookup(context, frame, "blockquote_author_href")) {
 output += "        <a href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_href"), env.opts.autoescape);
@@ -111,18 +141,18 @@ output += "</div>\n        </a>\n";
 ;
 }
 else {
-output += "          <div>";
+output += "        <div class=\"vf-blockquote_author\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author"), env.opts.autoescape);
 output += "</div>\n";
 ;
 }
 if(runtime.contextOrFrameLookup(context, frame, "blockquote_author_details")) {
-output += "        <div class=\"vf-text-body--2\">";
+output += "        <div class=\"vf-blockquote_author__details\">";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_details"), env.opts.autoescape);
 output += "</div>\n";
 ;
 }
-output += "      </footer>\n    </div>\n</blockquote>\n";
+output += "    </footer>\n  </div>\n</blockquote>\n";
 if(parentTemplate) {
 parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
 } else {

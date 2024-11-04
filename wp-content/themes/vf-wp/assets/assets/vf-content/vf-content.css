@@ -1208,7 +1208,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-blockquote
- * Version: 1.2.7
+ * Version: 1.2.8
  * Location: components/vf-core-components/vf-blockquote
  */
 .vf-blockquote {
@@ -1221,7 +1221,7 @@ a.vf-button:hover, a.vf-button:focus {
   margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 0 0;
   border: 0;
-  padding: 10px 8px 10px 32px;
+  padding: 0;
   position: relative;
   font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
   font-size: 28px;
@@ -1233,42 +1233,122 @@ a.vf-button:hover, a.vf-button:focus {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
   display: flex !important;
+  padding-left: 24px;
 }
 .vf-blockquote::before {
   border-left: 4px solid #d0d0ce;
   content: "";
   height: 100%;
-  left: 12px;
   position: absolute;
   top: 0;
 }
-
-.vf-blockquote::before {
-  margin-right: 1.5rem;
-  border-left: 1px solid var(--vf-color--grey);
-  left: 8px;
-  content: "";
-}
-
-.vf-blockquote_author__link {
+.vf-blockquote .vf-blockquote_author__link {
   border-bottom: none;
   text-decoration: none;
   color: #3b6fb6;
 }
-.vf-blockquote_author__link:visited {
+.vf-blockquote .vf-blockquote_author__link:visited {
   color: #563d82;
   border-bottom: none;
 }
-.vf-blockquote_author__link:visited:hover {
+.vf-blockquote .vf-blockquote_author__link:visited:hover {
   color: #563d82;
   text-decoration: underline;
 }
-.vf-blockquote_author__link:hover {
+.vf-blockquote .vf-blockquote_author__link:hover {
   color: #193f90;
   border-bottom: none;
   text-decoration: underline;
 }
+.vf-blockquote .vf-blockquote_author__details {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  color: #1a1c1a;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
+}
 
+.vf-blockquote-small {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 19px;
+  color: #1a1c1a;
+  font-weight: 400;
+  line-height: 1.421;
+  margin: 0 0 16px 0;
+  margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
+  margin: 0 0 0 0;
+  border: 0;
+  padding: 0;
+  position: relative;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.3em;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  padding-left: 16px;
+}
+.vf-blockquote-small::before {
+  border-left: 4px solid #d0d0ce;
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+.vf-blockquote-small .vf-blockquote_author__link {
+  border-bottom: none;
+  text-decoration: none;
+  color: #3b6fb6;
+  font-size: 16px;
+}
+.vf-blockquote-small .vf-blockquote_author__link:visited {
+  color: #563d82;
+  border-bottom: none;
+}
+.vf-blockquote-small .vf-blockquote_author__link:visited:hover {
+  color: #563d82;
+  text-decoration: underline;
+}
+.vf-blockquote-small .vf-blockquote_author__link:hover {
+  color: #193f90;
+  border-bottom: none;
+  text-decoration: underline;
+}
+.vf-blockquote-small .vf-blockquote_author__details {
+  font-family: "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  color: #1a1c1a;
+  font-weight: 400;
+  line-height: 1.71;
+  margin: var(--vf-stack-margin, 0) 0 0 0;
+}
+
+.vf-blockquote::before, .vf-blockquote-small:before {
+  margin-right: 1.5rem;
+  border-left: 1px solid var(--vf-color--grey);
+  left: 0px;
+  content: "";
+}
+
+@media (max-width: 768px) {
+  .vf-blockquote, .vf-blockquote-small {
+    position: relative;
+  }
+  .vf-blockquote img, .vf-blockquote-small img {
+    --vf-profile-avatar--size: 64px;
+    position: absolute;
+    bottom: 0;
+    display: block;
+  }
+  .vf-blockquote-has-image footer {
+    width: calc(100% - 85px);
+    -webkit-transform: translate(85px);
+            transform: translate(85px);
+    display: inline-block;
+    word-break: break-word;
+  }
+}
 /*!
  * Component: @visual-framework/vf-divider
  * Version: 2.0.1
@@ -1450,7 +1530,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.16
+ * Version: 1.6.17
  * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]) {
@@ -1659,14 +1739,13 @@ a.vf-button:hover, a.vf-button:focus {
   margin: var(--vf-stack-margin, 0) 0 var(--vf-text-margin--bottom, 16px) 0;
   margin: 0 0 1rem 0;
   border: 0;
-  padding: 10px 8px 10px 32px;
+  padding: 0;
   position: relative;
 }
 .vf-content blockquote:not([class*=vf-])::before {
   border-left: 4px solid #d0d0ce;
   content: "";
   height: 100%;
-  left: 12px;
   position: absolute;
   top: 0;
 }
