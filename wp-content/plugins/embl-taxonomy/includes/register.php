@@ -819,7 +819,7 @@ if (current_user_can('administrator')) {
     printf('<div class="%1$s"><p><span>%2$s</span> %3$s %4$s</p></div>',
       esc_attr('notice notice-warning'),
       esc_html(sprintf(
-        __('There are %1$d deprecated terms that may need review.', 'embl'),
+        __('There is/are %1$d deprecated terms that may need review.', 'embl'),
         $deprecated_count
       )),
       sprintf(

@@ -1,4 +1,9 @@
 (() => {
+
+    /**
+   * Sync button
+   */
+
   // Bail if no sync button
   $button = document.querySelector('#embl-taxonomy-sync');
   if (!$button) return;
@@ -96,6 +101,10 @@
 
 
 
+
+    /**
+   * Delete button
+   */
   
    // Bail if no delete button
    const $deleteButton = document.querySelector('#embl-taxonomy-delete-deprecated');
@@ -134,8 +143,7 @@
        const json = await response.json();
  
        if (json.success) {
-         alert('All deprecated terms have been deleted successfully.');
-         window.location.reload();
+        window.location.href = `${emblTaxonomySettings.adminUrl}edit-tags.php?taxonomy=${emblTaxonomySettings.taxonomyName}&delete_deprecated=true`;
        } else {
          throw new Error(json.error || 'Failed to delete deprecated terms.');
        }
@@ -162,6 +170,12 @@
     }
 });
 
+
+
+
+    /**
+   * Show deprecated terms button
+   */
 
 document.addEventListener('DOMContentLoaded', function() {
   const showDeprecatedButton = document.getElementById('embl-taxonomy-show-deprecated');
