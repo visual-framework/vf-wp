@@ -52,7 +52,7 @@ class EMBL_Taxonomy_Register {
     $columns['embl_taxonomy_meta_description'] = __('Parent terms', 'embl');
     // $columns['embl_taxonomy_meta_ids'] = __('Meta IDs', 'embl');
     // $columns['embl_taxonomy_meta_name'] = __('Meta Name', 'embl');
-    $columns['embl_taxonomy_meta_deprecated'] = __('Deprecated', 'embl');
+    $columns['embl_taxonomy_meta_deprecated'] = __('Status', 'embl');
     $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
 
        // Unset the slug column to hide it
@@ -95,8 +95,12 @@ class EMBL_Taxonomy_Register {
     //   $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
     } elseif ($column_name === 'embl_taxonomy_meta_deprecated') {
       $deprecatedValue = get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true);
-      $content = '<code>' . ($deprecatedValue == '1' ? 'Yes' : 'No') . '</code>';
-          }
+      $statusClass = $deprecatedValue == '1' ? 'statusDeprecated' : 'statusActive';
+      $statusText = $deprecatedValue == '1' ? 'Deprecated' : 'Active';
+      
+      $content = '<p class="' . $statusClass . '">' . $statusText . '</p>';
+  }
+  
 
     return $content;
   }
