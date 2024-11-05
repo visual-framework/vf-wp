@@ -594,7 +594,7 @@
   };
 
   // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-  var global$f =
+  var globalThis_1 =
     // eslint-disable-next-line es/no-global-this -- safe
     check(typeof globalThis == 'object' && globalThis) ||
     check(typeof window == 'object' && window) ||
@@ -745,7 +745,7 @@
     return typeof it == 'object' ? it !== null : isCallable$b(it);
   };
 
-  var global$e = global$f;
+  var globalThis$g = globalThis_1;
   var isCallable$a = isCallable$c;
 
   var aFunction = function (argument) {
@@ -753,21 +753,26 @@
   };
 
   var getBuiltIn$3 = function (namespace, method) {
-    return arguments.length < 2 ? aFunction(global$e[namespace]) : global$e[namespace] && global$e[namespace][method];
+    return arguments.length < 2 ? aFunction(globalThis$g[namespace]) : globalThis$g[namespace] && globalThis$g[namespace][method];
   };
 
   var uncurryThis$9 = functionUncurryThis;
 
   var objectIsPrototypeOf = uncurryThis$9({}.isPrototypeOf);
 
-  var engineUserAgent = typeof navigator != 'undefined' && String(navigator.userAgent) || '';
+  var globalThis$f = globalThis_1;
 
-  var global$d = global$f;
-  var userAgent$1 = engineUserAgent;
+  var navigator = globalThis$f.navigator;
+  var userAgent$3 = navigator && navigator.userAgent;
 
-  var process$2 = global$d.process;
-  var Deno = global$d.Deno;
-  var versions = process$2 && process$2.versions || Deno && Deno.version;
+  var environmentUserAgent = userAgent$3 ? String(userAgent$3) : '';
+
+  var globalThis$e = globalThis_1;
+  var userAgent$2 = environmentUserAgent;
+
+  var process$2 = globalThis$e.process;
+  var Deno$1 = globalThis$e.Deno;
+  var versions = process$2 && process$2.versions || Deno$1 && Deno$1.version;
   var v8 = versions && versions.v8;
   var match, version;
 
@@ -780,22 +785,22 @@
 
   // BrowserFS NodeJS `process` polyfill incorrectly set `.v8` to `0.0`
   // so check `userAgent` even if `.v8` exists, but 0
-  if (!version && userAgent$1) {
-    match = userAgent$1.match(/Edge\/(\d+)/);
+  if (!version && userAgent$2) {
+    match = userAgent$2.match(/Edge\/(\d+)/);
     if (!match || match[1] >= 74) {
-      match = userAgent$1.match(/Chrome\/(\d+)/);
+      match = userAgent$2.match(/Chrome\/(\d+)/);
       if (match) version = +match[1];
     }
   }
 
-  var engineV8Version = version;
+  var environmentV8Version = version;
 
   /* eslint-disable es/no-symbol -- required for testing */
-  var V8_VERSION = engineV8Version;
+  var V8_VERSION = environmentV8Version;
   var fails$5 = fails$9;
-  var global$c = global$f;
+  var globalThis$d = globalThis_1;
 
-  var $String$3 = global$c.String;
+  var $String$3 = globalThis$d.String;
 
   // eslint-disable-next-line es/no-object-getownpropertysymbols -- required for testing
   var symbolConstructorDetection = !!Object.getOwnPropertySymbols && !fails$5(function () {
@@ -812,9 +817,9 @@
   /* eslint-disable es/no-symbol -- required for testing */
   var NATIVE_SYMBOL$1 = symbolConstructorDetection;
 
-  var useSymbolAsUid = NATIVE_SYMBOL$1
-    && !Symbol.sham
-    && typeof Symbol.iterator == 'symbol';
+  var useSymbolAsUid = NATIVE_SYMBOL$1 &&
+    !Symbol.sham &&
+    typeof Symbol.iterator == 'symbol';
 
   var getBuiltIn$2 = getBuiltIn$3;
   var isCallable$9 = isCallable$c;
@@ -879,30 +884,30 @@
 
   var sharedStore = {exports: {}};
 
-  var global$b = global$f;
+  var globalThis$c = globalThis_1;
 
   // eslint-disable-next-line es/no-object-defineproperty -- safe
   var defineProperty$1 = Object.defineProperty;
 
   var defineGlobalProperty$3 = function (key, value) {
     try {
-      defineProperty$1(global$b, key, { value: value, configurable: true, writable: true });
+      defineProperty$1(globalThis$c, key, { value: value, configurable: true, writable: true });
     } catch (error) {
-      global$b[key] = value;
+      globalThis$c[key] = value;
     } return value;
   };
 
-  var globalThis$1 = global$f;
+  var globalThis$b = globalThis_1;
   var defineGlobalProperty$2 = defineGlobalProperty$3;
 
   var SHARED = '__core-js_shared__';
-  var store$3 = sharedStore.exports = globalThis$1[SHARED] || defineGlobalProperty$2(SHARED, {});
+  var store$3 = sharedStore.exports = globalThis$b[SHARED] || defineGlobalProperty$2(SHARED, {});
 
   (store$3.versions || (store$3.versions = [])).push({
-    version: '3.36.0',
+    version: '3.39.0',
     mode: 'global',
     copyright: '© 2014-2024 Denis Pushkarev (zloirock.ru)',
-    license: 'https://github.com/zloirock/core-js/blob/v3.36.0/LICENSE',
+    license: 'https://github.com/zloirock/core-js/blob/v3.39.0/LICENSE',
     source: 'https://github.com/zloirock/core-js'
   });
 
@@ -944,14 +949,14 @@
     return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString(++id + postfix, 36);
   };
 
-  var global$a = global$f;
+  var globalThis$a = globalThis_1;
   var shared$2 = shared$3;
   var hasOwn$7 = hasOwnProperty_1;
   var uid$1 = uid$2;
   var NATIVE_SYMBOL = symbolConstructorDetection;
   var USE_SYMBOL_AS_UID = useSymbolAsUid;
 
-  var Symbol$1 = global$a.Symbol;
+  var Symbol$1 = globalThis$a.Symbol;
   var WellKnownSymbolsStore = shared$2('wks');
   var createWellKnownSymbol = USE_SYMBOL_AS_UID ? Symbol$1['for'] || Symbol$1 : Symbol$1 && Symbol$1.withoutSetter || uid$1;
 
@@ -999,10 +1004,10 @@
     return isSymbol(key) ? key : key + '';
   };
 
-  var global$9 = global$f;
+  var globalThis$9 = globalThis_1;
   var isObject$2 = isObject$5;
 
-  var document$1 = global$9.document;
+  var document$1 = globalThis$9.document;
   // typeof document.createElement is 'object' in old IE
   var EXISTS$1 = isObject$2(document$1) && isObject$2(document$1.createElement);
 
@@ -1161,10 +1166,10 @@
 
   var inspectSource$1 = store$1.inspectSource;
 
-  var global$8 = global$f;
+  var globalThis$8 = globalThis_1;
   var isCallable$5 = isCallable$c;
 
-  var WeakMap$1 = global$8.WeakMap;
+  var WeakMap$1 = globalThis$8.WeakMap;
 
   var weakMapBasicDetection = isCallable$5(WeakMap$1) && /native code/.test(String(WeakMap$1));
 
@@ -1180,7 +1185,7 @@
   var hiddenKeys$3 = {};
 
   var NATIVE_WEAK_MAP = weakMapBasicDetection;
-  var global$7 = global$f;
+  var globalThis$7 = globalThis_1;
   var isObject = isObject$5;
   var createNonEnumerableProperty$1 = createNonEnumerableProperty$2;
   var hasOwn$4 = hasOwnProperty_1;
@@ -1189,8 +1194,8 @@
   var hiddenKeys$2 = hiddenKeys$3;
 
   var OBJECT_ALREADY_INITIALIZED = 'Object already initialized';
-  var TypeError$1 = global$7.TypeError;
-  var WeakMap = global$7.WeakMap;
+  var TypeError$1 = globalThis$7.TypeError;
+  var WeakMap = globalThis$7.WeakMap;
   var set$1, get, has;
 
   var enforce = function (it) {
@@ -1526,7 +1531,7 @@
 
   var isForced_1 = isForced$1;
 
-  var global$6 = global$f;
+  var globalThis$6 = globalThis_1;
   var getOwnPropertyDescriptor = objectGetOwnPropertyDescriptor.f;
   var createNonEnumerableProperty = createNonEnumerableProperty$2;
   var defineBuiltIn = defineBuiltIn$1;
@@ -1555,11 +1560,11 @@
     var STATIC = options.stat;
     var FORCED, target, key, targetProperty, sourceProperty, descriptor;
     if (GLOBAL) {
-      target = global$6;
+      target = globalThis$6;
     } else if (STATIC) {
-      target = global$6[TARGET] || defineGlobalProperty(TARGET, {});
+      target = globalThis$6[TARGET] || defineGlobalProperty(TARGET, {});
     } else {
-      target = global$6[TARGET] && global$6[TARGET].prototype;
+      target = globalThis$6[TARGET] && globalThis$6[TARGET].prototype;
     }
     if (target) for (key in source) {
       sourceProperty = source[key];
@@ -1631,17 +1636,37 @@
     return passed;
   };
 
-  var userAgent = engineUserAgent;
+  var userAgent$1 = environmentUserAgent;
 
   // eslint-disable-next-line redos/no-vulnerable -- safe
-  var engineIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent);
+  var environmentIsIos = /(?:ipad|iphone|ipod).*applewebkit/i.test(userAgent$1);
 
-  var global$5 = global$f;
+  /* global Bun, Deno -- detection */
+  var globalThis$5 = globalThis_1;
+  var userAgent = environmentUserAgent;
   var classof = classofRaw$1;
 
-  var engineIsNode = classof(global$5.process) === 'process';
+  var userAgentStartsWith = function (string) {
+    return userAgent.slice(0, string.length) === string;
+  };
 
-  var global$4 = global$f;
+  var environment = (function () {
+    if (userAgentStartsWith('Bun/')) return 'BUN';
+    if (userAgentStartsWith('Cloudflare-Workers')) return 'CLOUDFLARE';
+    if (userAgentStartsWith('Deno/')) return 'DENO';
+    if (userAgentStartsWith('Node.js/')) return 'NODE';
+    if (globalThis$5.Bun && typeof Bun.version == 'string') return 'BUN';
+    if (globalThis$5.Deno && typeof Deno.version == 'object') return 'DENO';
+    if (classof(globalThis$5.process) === 'process') return 'NODE';
+    if (globalThis$5.window && globalThis$5.document) return 'BROWSER';
+    return 'REST';
+  })();
+
+  var ENVIRONMENT$1 = environment;
+
+  var environmentIsNode = ENVIRONMENT$1 === 'NODE';
+
+  var globalThis$4 = globalThis_1;
   var apply$1 = functionApply;
   var bind = functionBindContext;
   var isCallable$1 = isCallable$c;
@@ -1651,16 +1676,16 @@
   var arraySlice$1 = arraySlice$2;
   var createElement = documentCreateElement;
   var validateArgumentsLength$1 = validateArgumentsLength$2;
-  var IS_IOS = engineIsIos;
-  var IS_NODE = engineIsNode;
+  var IS_IOS = environmentIsIos;
+  var IS_NODE = environmentIsNode;
 
-  var set = global$4.setImmediate;
-  var clear = global$4.clearImmediate;
-  var process$1 = global$4.process;
-  var Dispatch = global$4.Dispatch;
-  var Function$2 = global$4.Function;
-  var MessageChannel = global$4.MessageChannel;
-  var String$1 = global$4.String;
+  var set = globalThis$4.setImmediate;
+  var clear = globalThis$4.clearImmediate;
+  var process$1 = globalThis$4.process;
+  var Dispatch = globalThis$4.Dispatch;
+  var Function$2 = globalThis$4.Function;
+  var MessageChannel = globalThis$4.MessageChannel;
+  var String$1 = globalThis$4.String;
   var counter = 0;
   var queue = {};
   var ONREADYSTATECHANGE = 'onreadystatechange';
@@ -1668,7 +1693,7 @@
 
   fails(function () {
     // Deno throws a ReferenceError on `location` access without `--location` flag
-    $location = global$4.location;
+    $location = globalThis$4.location;
   });
 
   var run = function (id) {
@@ -1691,7 +1716,7 @@
 
   var globalPostMessageDefer = function (id) {
     // old engines have not location.origin
-    global$4.postMessage(String$1(id), $location.protocol + '//' + $location.host);
+    globalThis$4.postMessage(String$1(id), $location.protocol + '//' + $location.host);
   };
 
   // Node.js 0.9+ & IE10+ has setImmediate, otherwise:
@@ -1729,14 +1754,14 @@
     // Browsers with postMessage, skip WebWorkers
     // IE8 has postMessage, but it's sync & typeof its postMessage is 'object'
     } else if (
-      global$4.addEventListener &&
-      isCallable$1(global$4.postMessage) &&
-      !global$4.importScripts &&
+      globalThis$4.addEventListener &&
+      isCallable$1(globalThis$4.postMessage) &&
+      !globalThis$4.importScripts &&
       $location && $location.protocol !== 'file:' &&
       !fails(globalPostMessageDefer)
     ) {
       defer = globalPostMessageDefer;
-      global$4.addEventListener('message', eventListener, false);
+      globalThis$4.addEventListener('message', eventListener, false);
     // IE8-
     } else if (ONREADYSTATECHANGE in createElement('script')) {
       defer = function (id) {
@@ -1759,30 +1784,27 @@
   };
 
   var $$1 = _export;
-  var global$3 = global$f;
+  var globalThis$3 = globalThis_1;
   var clearImmediate = task.clear;
 
   // `clearImmediate` method
   // http://w3c.github.io/setImmediate/#si-clearImmediate
-  $$1({ global: true, bind: true, enumerable: true, forced: global$3.clearImmediate !== clearImmediate }, {
+  $$1({ global: true, bind: true, enumerable: true, forced: globalThis$3.clearImmediate !== clearImmediate }, {
     clearImmediate: clearImmediate
   });
 
-  /* global Bun -- Bun case */
-  var engineIsBun = typeof Bun == 'function' && Bun && typeof Bun.version == 'string';
-
-  var global$2 = global$f;
+  var globalThis$2 = globalThis_1;
   var apply = functionApply;
   var isCallable = isCallable$c;
-  var ENGINE_IS_BUN = engineIsBun;
-  var USER_AGENT = engineUserAgent;
+  var ENVIRONMENT = environment;
+  var USER_AGENT = environmentUserAgent;
   var arraySlice = arraySlice$2;
   var validateArgumentsLength = validateArgumentsLength$2;
 
-  var Function$1 = global$2.Function;
+  var Function$1 = globalThis$2.Function;
   // dirty IE9- and Bun 0.3.0- checks
-  var WRAP = /MSIE .\./.test(USER_AGENT) || ENGINE_IS_BUN && (function () {
-    var version = global$2.Bun.version.split('.');
+  var WRAP = /MSIE .\./.test(USER_AGENT) || ENVIRONMENT === 'BUN' && (function () {
+    var version = globalThis$2.Bun.version.split('.');
     return version.length < 3 || version[0] === '0' && (version[1] < 3 || version[1] === '3' && version[2] === '0');
   })();
 
@@ -1803,16 +1825,16 @@
   };
 
   var $ = _export;
-  var global$1 = global$f;
+  var globalThis$1 = globalThis_1;
   var setTask = task.set;
   var schedulersFix = schedulersFix$1;
 
   // https://github.com/oven-sh/bun/issues/1633
-  var setImmediate$1 = global$1.setImmediate ? schedulersFix(setTask, false) : setTask;
+  var setImmediate$1 = globalThis$1.setImmediate ? schedulersFix(setTask, false) : setTask;
 
   // `setImmediate` method
   // http://w3c.github.io/setImmediate/#si-setImmediate
-  $({ global: true, bind: true, enumerable: true, forced: global$1.setImmediate !== setImmediate$1 }, {
+  $({ global: true, bind: true, enumerable: true, forced: globalThis$1.setImmediate !== setImmediate$1 }, {
     setImmediate: setImmediate$1
   });
 
@@ -5776,6 +5798,15 @@ if (ResizeObserver) {
   if(frame.topLevel) {
   context.addExport("blockquote_author_imageurl", t_7);
   }
+  var t_8;
+  t_8 = runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "context")),"modifier");
+  frame.set("modifier", t_8, true);
+  if(frame.topLevel) {
+  context.setVariable("modifier", t_8);
+  }
+  if(frame.topLevel) {
+  context.addExport("modifier", t_8);
+  }
   ;
   }
   output += "\n<blockquote";
@@ -5785,27 +5816,48 @@ if (ResizeObserver) {
   output += "\"";
   ;
   }
-  output += " class=\"vf-blockquote vf-u-margin__left--800";
+  output += " class=\"\n";
+  if(runtime.contextOrFrameLookup(context, frame, "modifier") == "default") {
+  output += "vf-blockquote";
+  ;
+  }
+  else {
+  if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+  output += "vf-blockquote-small";
+  ;
+  }
+  ;
+  }
   if(runtime.contextOrFrameLookup(context, frame, "override_class")) {
   output += " | ";
   output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "override_class"), env.opts.autoescape);
   ;
   }
-  output += "\">\n\n";
+  output += "\"\n>\n\n";
   if((runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"))) {
-  output += "      <img class=\"vf-profile__image vf-u-margin__right--600\" src=\"";
+  output += "    <img class=\"vf-profile__image\n";
+  if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+  output += "vf-profile--medium";
+  ;
+  }
+  output += " vf-u-margin__right--600\" src=\"";
   output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"), env.opts.autoescape);
   output += "\" alt=\"\" loading=\"lazy\"/>\n";
   ;
   }
-  output += "    <div>\n";
+  output += "  <div class=\"";
+  if((runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"))) {
+  output += "vf-blockquote-has-image";
+  ;
+  }
+  output += "\">\n";
   if((runtime.contextOrFrameLookup(context, frame, "blockquote_text")) || (runtime.contextOrFrameLookup(context, frame, "html")) || (runtime.contextOrFrameLookup(context, frame, "text"))) {
-  output += "        <div>";
+  output += "      <div>";
   output += runtime.suppressValue(((runtime.contextOrFrameLookup(context, frame, "html")) || (runtime.contextOrFrameLookup(context, frame, "blockquote_text"))?(runtime.contextOrFrameLookup(context, frame, "html")) || env.getFilter("safe").call(context, (runtime.contextOrFrameLookup(context, frame, "blockquote_text"))):runtime.contextOrFrameLookup(context, frame, "text")), env.opts.autoescape);
   output += "</div>\n";
   ;
   }
-  output += "\n      <footer class=\"vf-u-margin__top--600\">\n";
+  output += "\n    <footer class=\"vf-u-margin__top--600\">\n";
   if(runtime.contextOrFrameLookup(context, frame, "blockquote_author_href")) {
   output += "        <a href=\"";
   output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_href"), env.opts.autoescape);
@@ -5815,18 +5867,18 @@ if (ResizeObserver) {
   ;
   }
   else {
-  output += "          <div>";
+  output += "        <div class=\"vf-blockquote_author\">";
   output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author"), env.opts.autoescape);
   output += "</div>\n";
   ;
   }
   if(runtime.contextOrFrameLookup(context, frame, "blockquote_author_details")) {
-  output += "        <div class=\"vf-text-body--2\">";
+  output += "        <div class=\"vf-blockquote_author__details\">";
   output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "blockquote_author_details"), env.opts.autoescape);
   output += "</div>\n";
   ;
   }
-  output += "      </footer>\n    </div>\n</blockquote>\n";
+  output += "    </footer>\n  </div>\n</blockquote>\n";
   if(parentTemplate) {
   parentTemplate.rootRenderFunc(env, context, frame, runtime, cb);
   } else {
@@ -7211,7 +7263,7 @@ if (ResizeObserver) {
     const blockProps = blockEditor.useBlockProps.save({
       className: 'vf-tabs'
     });
-    return wp.element.createElement(React__default["default"].Fragment, null, wp.element.createElement("div", blockProps, wp.element.createElement("ul", {
+    return wp.element.createElement("div", blockProps, wp.element.createElement("ul", {
       className: "vf-tabs__list",
       "data-vf-js-tabs": true
     }, props.attributes.tabs.map((tab, i) => {
@@ -7223,7 +7275,7 @@ if (ResizeObserver) {
         href: `#vf-tabs__section-${tab.id}`,
         "data-vf-js-location-nearest-activation-target": tab.geolocation
       }, tab.label));
-    }))), wp.element.createElement("div", {
+    })), wp.element.createElement("div", {
       className: "vf-tabs-content",
       "data-vf-js-tabs-content": true
     }, wp.element.createElement(blockEditor.InnerBlocks.Content, null)));
