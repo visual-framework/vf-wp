@@ -9,5 +9,6 @@
   "schedule": [
     "after 3:00am and before 5:00am every weekday"
   ],
-  "timezone": "Europe/Berlin"
+  "timezone": "Europe/Berlin",
+  "ignoreDeps": ["@visual-framework/vf-tabs"]
 }
