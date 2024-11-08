@@ -461,34 +461,28 @@ foreach ($wp_taxonomy as $wp_term) {
 
   // Find a replacement term if the term is used in posts and is deprecated
   if ($is_deprecated && $wp_term->count > 0) {
-      $replacement_term_id = null;
-      foreach ($wp_taxonomy as $potential_replacement) {
-          if ($potential_replacement->term_id !== $wp_term->term_id &&
-              array_key_exists(EMBL_Taxonomy::META_NAME, $potential_replacement->meta) &&
-              $potential_replacement->meta[EMBL_Taxonomy::META_NAME] === $wp_term->meta[EMBL_Taxonomy::META_NAME] &&
-              !array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $potential_replacement->meta)) { // Exclude deprecated terms
-              $replacement_term_id = $potential_replacement->term_id;
-              break;
-          }
-      }
+    $replacement_term_id = null;
+    foreach ($wp_taxonomy as $potential_replacement) {
+        if ($potential_replacement->term_id !== $wp_term->term_id &&
+            array_key_exists(EMBL_Taxonomy::META_NAME, $potential_replacement->meta) &&
+            $potential_replacement->meta[EMBL_Taxonomy::META_NAME] === $wp_term->meta[EMBL_Taxonomy::META_NAME] &&
+            !array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $potential_replacement->meta)) {
+            $replacement_term_id = $potential_replacement->term_id;
+            break;
+        }
+    }
 
-      // If a replacement term is found, proceed with updating posts only
-      if ($replacement_term_id) {
-          // Get all post IDs associated with the deprecated term
-          $post_ids = $wpdb->get_col($wpdb->prepare(
-              "SELECT object_id FROM {$wpdb->term_relationships} 
-               WHERE term_taxonomy_id = %d",
-              $wp_term->term_id
-          ));
+    if ($replacement_term_id) {
+        $post_ids = get_objects_in_term($wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
 
-          // Replace the deprecated term for each post
-          foreach ($post_ids as $post_id) {
-              wp_add_object_terms($post_id, $replacement_term_id, EMBL_Taxonomy::TAXONOMY_NAME);
-              // Optionally remove the deprecated term from the post
-              // wp_remove_object_terms($post_id, $wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
-          }
-      }
-  }
+        foreach ($post_ids as $post_id) {
+            wp_add_object_terms($post_id, $replacement_term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+            // Optionally remove the deprecated term from the post
+            // wp_remove_object_terms($post_id, $wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+        }
+    }
+}
+
 
   // Replace terms individually in ACF fields if selected and a non-deprecated equivalent exists
   if ($acf_selected) {
