@@ -1,4 +1,9 @@
 (() => {
+
+    /**
+   * Sync button
+   */
+
   // Bail if no sync button
   $button = document.querySelector('#embl-taxonomy-sync');
   if (!$button) return;
@@ -93,4 +98,103 @@
     $modal.showModal();
     startSync(new URL(path));
   });
+
+
+
+
+    /**
+   * Delete button
+   */
+  
+   // Bail if no delete button
+   const $deleteButton = document.querySelector('#embl-taxonomy-delete-deprecated');
+   if (!$deleteButton) return;
+ 
+   // Confirmation modal for deletion
+   const $deleteModal = document.createElement('dialog');
+   $deleteModal.id = 'embl-delete-modal';
+   $deleteModal.innerHTML = `
+     <h3><b>Confirm Deletion</b></h3>
+     <p>Are you sure you want to delete all deprecated terms? This action cannot be undone.</p>
+     <button id="confirm-delete" class="button button-small">Delete</button>
+     <button id="cancel-delete" class="button button-small">Cancel</button>
+   `;
+   document.body.appendChild($deleteModal);
+ 
+   // Show confirmation modal on delete button click
+   $deleteButton.addEventListener('click', (ev) => {
+     ev.preventDefault();
+     $deleteModal.showModal();
+   });
+ 
+   // Handle delete confirmation
+   $deleteModal.querySelector('#confirm-delete').addEventListener('click', async () => {
+     $deleteModal.close();
+     $deleteButton.disabled = true;
+     $deleteButton.innerText = 'Deleting...';
+ 
+     try {
+       const response = await fetch(window.emblTaxonomySettings.deletePath, {
+         method: 'POST',
+         headers: {
+           'X-WP-Nonce': window.emblTaxonomySettings.token
+         }
+       });
+       const json = await response.json();
+ 
+       if (json.success) {
+        window.location.href = `${emblTaxonomySettings.adminUrl}edit-tags.php?taxonomy=${emblTaxonomySettings.taxonomyName}&delete_deprecated=true`;
+       } else {
+         throw new Error(json.error || 'Failed to delete deprecated terms.');
+       }
+     } catch (error) {
+       alert(`Error: ${error.message}`);
+       $deleteButton.disabled = false;
+       $deleteButton.innerText = 'Delete all deprecated terms';
+     }
+   });
+ 
+   // Handle delete cancellation
+   $deleteModal.querySelector('#cancel-delete').addEventListener('click', () => {
+     $deleteModal.close();
+   });
+
+   document.addEventListener('DOMContentLoaded', function() {
+    const showDeprecatedButton = document.getElementById('embl-taxonomy-show-deprecated');
+    
+    if (showDeprecatedButton) {
+        showDeprecatedButton.addEventListener('click', function() {
+            const url = this.getAttribute('data-href');
+            window.location.href = url; // Redirect to the URL
+        });
+    }
+});
+
+
+
+
+    /**
+   * Show deprecated terms button
+   */
+
+document.addEventListener('DOMContentLoaded', function() {
+  const showDeprecatedButton = document.getElementById('embl-taxonomy-show-deprecated');
+
+  if (showDeprecatedButton) {
+      // Check if the URL contains 'filter=deprecated'
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('filter') && urlParams.get('filter') === 'deprecated') {
+          // Change button text and URL
+          showDeprecatedButton.textContent = 'See all taxonomy terms';
+          showDeprecatedButton.setAttribute('data-href', `${emblTaxonomySettings.adminUrl}edit-tags.php?taxonomy=${emblTaxonomySettings.taxonomyName}`);
+      }
+
+      showDeprecatedButton.addEventListener('click', function() {
+          const url = this.getAttribute('data-href');
+          window.location.href = url; // Redirect to the URL
+      });
+  }
+});
+
+
 })();

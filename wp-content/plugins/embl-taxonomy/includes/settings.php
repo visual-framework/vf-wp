@@ -138,6 +138,50 @@ class EMBL_Taxonomy_Settings {
         'ui_off_text' => '',
       )
     );
+
+        // New field group specifically for Deprecated checkbox
+        acf_add_local_field_group(array(
+          'key' => 'group_embl_taxonomy_deprecated',
+          'fields' => array(
+              array(
+                  'key' => 'field_embl_taxonomy_deprecated',
+                  'label' => 'Deprecated',
+                  'name' => 'embl_taxonomy_deprecated',
+                  'type' => 'true_false',
+                  'instructions' => '',
+                  'required' => 0,
+                  'conditional_logic' => 0,
+                  'wrapper' => array(
+                      'width' => '',
+                      'class' => '',
+                      'id' => '',
+                  ),
+                  'message' => '',
+                  'default_value' => get_term_meta(get_queried_object_id(), EMBL_Taxonomy::META_DEPRECATED, true) ? 1 : 0,
+                  'ui' => 1,
+                  'ui_on_text' => 'Yes',
+                  'ui_off_text' => 'No',
+              ),
+          ),
+          'location' => array(
+              array(
+                  array(
+                      'param' => 'taxonomy',
+                      'operator' => '==',
+                      'value' => 'embl_taxonomy', // Specify the taxonomy
+                  ),
+              ),
+          ),
+          'menu_order' => 20,
+          'position' => 'side',
+          'style' => 'default',
+          'label_placement' => 'top',
+          'instruction_placement' => 'label',
+          'hide_on_screen' => '',
+          'active' => true,
+          'description' => '',
+      ));
+  
   }
 
   /**
