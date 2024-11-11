@@ -36,7 +36,6 @@ class EMBL_Taxonomy {
   public function __construct() {
     register_activation_hook( __FILE__, array( $this, 'activation' ) );
     register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
-    $this->initialize();
 
   }
 
