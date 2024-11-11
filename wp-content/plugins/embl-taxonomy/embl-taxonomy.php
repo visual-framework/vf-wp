@@ -36,6 +36,8 @@ class EMBL_Taxonomy {
   public function __construct() {
     register_activation_hook( __FILE__, array( $this, 'activation' ) );
     register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
+    $this->initialize();
+
   }
 
   function initialize() {
@@ -81,6 +83,12 @@ function embl_taxonomy_sync_terms() {
 function embl_taxonomy_get_term($term_id) {
   if (!$term_id) {
     return null;
+  }
+  // Ensure embl_taxonomy()->register and get_wp_taxonomy() are available
+  $taxonomy_instance = embl_taxonomy();
+  if (!$taxonomy_instance || !isset($taxonomy_instance->register)) {
+      error_log('Register instance is not set or initialized.');
+      return null;
   }
   $wp_terms = embl_taxonomy()->register->get_wp_taxonomy();
   // Get by `WP_Term->term_id`

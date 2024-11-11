@@ -121,29 +121,34 @@ class EMBL_Taxonomy_Register {
    * https://codex.wordpress.org/Function_Reference/register_taxonomy
    */
   public function register_taxonomy() {
-    /**
-     * Register the EMBL Taxnonomy
-     * Because the taxonomy is auto-synced with the contentHub API the
-     * "edit" and "delete" capabilities are not assigned to any user
-     */
+    $active_theme = wp_get_theme();
+    $is_news_theme = ($active_theme->get('Name') === 'VF-WP News');
+
+    // Define common capabilities
+    $user_capabilities = array(
+      'manage_terms' => 'manage_options',
+      'edit_terms'   => 'manage_options',
+      'delete_terms' => 'manage_options',
+      'assign_terms' => 'manage_options'
+  );
+
     register_taxonomy(
       EMBL_Taxonomy::TAXONOMY_NAME,
       EMBL_Taxonomy::TAXONOMY_TYPES,
       array(
         'labels'            => $this->labels,
         'hierarchical'      => false,
-        'public'            => false,
+        'public'            => $is_news_theme,  // true only for the news theme
         'show_ui'           => true,
         'show_in_menu'      => true,
         'show_admin_column' => true,
         'show_in_rest'      => true,
-        'capabilities' => array(
-    'manage_terms' => 'manage_options',   // Restricting to administrators
-    'edit_terms'   => 'manage_options',   
-    'delete_terms' => 'manage_options',   
-    'assign_terms' => 'manage_options'    
-)
-      )
+        'capabilities'      => $user_capabilities,
+        'rewrite'           => array(
+            'slug' => $is_news_theme ? 'embl-taxonomy' : EMBL_Taxonomy::TAXONOMY_NAME,  // Conditional slug
+            'with_front' => false
+        )
+    )
     );
 
     register_term_meta(
