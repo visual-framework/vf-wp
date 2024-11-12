@@ -669,32 +669,40 @@ foreach ($wp_taxonomy as $wp_term) {
 
         // Check if the term has parents and retrieve the correct one based on the primary term
         if (is_array($term['parents']) && !empty($term['parents'])) {
-            // Initialize a variable to track if a parent was found
-            $found_parent = false;
-
-            // Loop through parents to find the one that corresponds to the primary term
-            foreach ($term['parents'] as $parent_id) {
-                if (array_key_exists($parent_id, $api_terms)) {
-                    $parent_term = $api_terms[$parent_id];
-
-                    // Check if the parent term is of the same type as the primary
-                    if ($parent_term['primary'] === $term['primary']) {
-                        // Append the parent's name to the prefix name
-                        $prefix_name .= $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR;
-                        // Insert the parent term's IDs in the second position of prefix_ids
-                        array_splice($prefix_ids, 1, 0, (array)$parent_term[EMBL_Taxonomy::META_IDS]);
-                        $found_parent = true;
-                        break; // Stop after finding the first matching parent
-                    }
-                } else {
-                    error_log("Parent ID '$parent_id' not found in api_terms.");
-                }
-            }
-
-            if (!$found_parent) {
-                error_log("No valid parent found for term '{$term['name']}' with primary '{$term['primary']}'.");
-            }
-        }
+          // Initialize a variable to track if a parent was found
+          $found_parent = false;
+      
+          // Loop through parents to find the one that corresponds to the primary term
+          foreach ($term['parents'] as $parent_id) {
+              if (array_key_exists($parent_id, $api_terms)) {
+                  $parent_term = $api_terms[$parent_id];
+      
+                  // Check if the parent term is of the same type as the primary
+                  if ($parent_term['primary'] === $term['primary']) {
+                      // Check if the prefix is different from the parent term name and if the parent name is different from the term name
+                      if ($prefix_name !== $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR 
+                          && $parent_term['name'] !== $term['name']) {
+                          // Append the parent's name to the prefix name
+                          $prefix_name .= $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR;
+                          // Insert the parent term's IDs in the second position of prefix_ids
+                          array_splice($prefix_ids, 1, 0, (array)$parent_term[EMBL_Taxonomy::META_IDS]);
+                      }
+                      $found_parent = true;
+                      break; // Stop after finding the first matching parent
+                  }
+              } else {
+                  error_log("Parent ID '$parent_id' not found in api_terms.");
+              }
+          }
+      
+          if (!$found_parent) {
+              error_log("No valid parent found for term '{$term['name']}' with primary '{$term['primary']}'.");
+          }
+      }
+      
+      
+      
+      
 
         // Append the current term's name
         $prefix_name .= $term['name'];
@@ -885,7 +893,7 @@ private function get_deprecated_terms_count() {
     if ($context === 'display') {
       $deprecated = get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true);
       if (intval($deprecated) === 1) {
-        return "⚠️ {$value} (deprecated but retained as local content still tagged by term)";
+        return "⚠️ (Deprecated) {$value} ";
       }
     }
     return $value;
