@@ -95,8 +95,16 @@ class EMBL_Taxonomy_Register {
     //   $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
     } elseif ($column_name === 'embl_taxonomy_meta_deprecated') {
       $deprecatedValue = get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true);
-      $statusClass = $deprecatedValue == '1' ? 'statusDeprecated' : 'statusActive';
-      $statusText = $deprecatedValue == '1' ? 'Deprecated' : 'Active';
+      $excludeTerms = get_field('field_embl_taxonomy_exclude', 'option'); // Get excluded terms
+  
+      // Check if the current term is in the excluded terms
+      if (in_array($term_id, $excludeTerms)) {
+          $statusClass = 'statusHidden';
+          $statusText = 'Hidden';
+      } else {
+          $statusClass = $deprecatedValue == '1' ? 'statusDeprecated' : 'statusActive';
+          $statusText = $deprecatedValue == '1' ? 'Deprecated' : 'Active';
+      }
       
       $content = '<p class="' . $statusClass . '">' . $statusText . '</p>';
   }
@@ -140,6 +148,7 @@ class EMBL_Taxonomy_Register {
         'hierarchical'      => false,
         'public'            => $is_news_theme,  // true only for the news theme
         'show_ui'           => true,
+        'meta_box_cb'       => false,
         'show_in_menu'      => true,
         'show_admin_column' => true,
         'show_in_rest'      => true,

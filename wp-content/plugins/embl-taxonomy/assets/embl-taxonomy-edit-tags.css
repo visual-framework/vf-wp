@@ -27,6 +27,11 @@
   padding: 2px 5px;
   background-color: #E58F9E;
 }
+.statusHidden  {
+  width: fit-content;
+  padding: 2px 5px;
+  background-color: #D0D0CE;
+}
 
 
 
