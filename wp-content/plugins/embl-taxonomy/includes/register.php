@@ -95,10 +95,10 @@ class EMBL_Taxonomy_Register {
     //   $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
     } elseif ($column_name === 'embl_taxonomy_meta_deprecated') {
       $deprecatedValue = get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true);
-      $excludeTerms = get_field('field_embl_taxonomy_exclude', 'option'); // Get excluded terms
+      $hiddenValue = get_field('field_embl_taxonomy_hidden', "term_{$term_id}");
+
   
-      // Check if the current term is in the excluded terms
-      if (in_array($term_id, $excludeTerms)) {
+      if ($hiddenValue == '1') {
           $statusClass = 'statusHidden';
           $statusText = 'Hidden';
       } else {

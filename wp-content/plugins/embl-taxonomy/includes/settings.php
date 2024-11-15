@@ -139,34 +139,6 @@ class EMBL_Taxonomy_Settings {
       )
     );
 
-    acf_add_local_field(
-      array(
-        'parent' => 'group_embl_taxonomy_setings',
-        'key' => 'field_embl_taxonomy_exclude',
-        'label' => 'Exclude terms',
-        'name' => 'embl_taxonomy_exclude',
-        'type' => 'taxonomy',
-        'instructions' => 'Select terms that should by excluded by taxonomy sync',
-        'required' => 0,
-        'conditional_logic' => 0,
-        'wrapper' => array(
-          'width' => '',
-          'class' => '',
-          'id' => '',
-        ),
-        'taxonomy' => 'embl_taxonomy',
-        'add_term' => 0,
-        'save_terms' => 0,
-        'load_terms' => 0,
-        'return_format' => 'id',
-        'field_type' => 'multi_select',  // Changed to multi_select for multiple selections
-        'allow_null' => 1,
-        'bidirectional' => 0,
-        'multiple' => 1,  // Set to 1 to allow multiple selections
-        'bidirectional_target' => [],
-      )
-    );
-
         // New field group specifically for Deprecated checkbox
         acf_add_local_field_group(array(
           'key' => 'group_embl_taxonomy_deprecated',
@@ -176,7 +148,7 @@ class EMBL_Taxonomy_Settings {
                   'label' => 'Deprecated',
                   'name' => 'embl_taxonomy_deprecated',
                   'type' => 'true_false',
-                  'instructions' => '',
+                  'instructions' => 'Select "Yes" to manually deprecate the term.',
                   'required' => 0,
                   'conditional_logic' => 0,
                   'wrapper' => array(
@@ -209,7 +181,54 @@ class EMBL_Taxonomy_Settings {
           'active' => true,
           'description' => '',
       ));
-  
+
+      $active_theme = wp_get_theme();
+      $is_news_theme = ($active_theme->get('Name') === 'VF-WP News');
+      
+      if ($active_theme == $is_news_theme) {
+
+        acf_add_local_field_group(array(
+          'key' => 'group_embl_taxonomy_hidden',
+          'fields' => array(
+              array(
+                  'key' => 'field_embl_taxonomy_hidden',
+                  'label' => 'Hidden',
+                  'name' => 'embl_taxonomy_hidden',
+                  'type' => 'true_false',
+                  'instructions' => 'Select "Yes" to not show the term in the taxonomy picker.',
+                  'required' => 0,
+                  'conditional_logic' => 0,
+                  'wrapper' => array(
+                      'width' => '',
+                      'class' => '',
+                      'id' => '',
+                  ),
+                  'message' => '',
+                  'default_value' => 0,
+                  'ui' => 1,
+                  'ui_on_text' => 'Yes',
+                  'ui_off_text' => 'No',
+              ),
+          ),
+          'location' => array(
+              array(
+                  array(
+                      'param' => 'taxonomy',
+                      'operator' => '==',
+                      'value' => 'embl_taxonomy', // Specify the taxonomy
+                  ),
+              ),
+          ),
+          'menu_order' => 20,
+          'position' => 'side',
+          'style' => 'default',
+          'label_placement' => 'top',
+          'instruction_placement' => 'label',
+          'hide_on_screen' => '',
+          'active' => true,
+          'description' => '',
+      ));
+    }
   }
 
   /**
