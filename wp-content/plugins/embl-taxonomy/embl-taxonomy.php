@@ -231,7 +231,7 @@ add_action('admin_notices', function() {
 /**
  * Filters the list of terms in the taxonomy picker
  */
-add_filter('acf/fields/taxonomy/query/name=embl_2taxonomy', function( $args, $field, $post_id ) {
+add_filter('acf/fields/taxonomy/query/name=vfwp-news_embl_taxonomy', function( $args, $field, $post_id ) {
 
   // Set up the arguments for retrieving terms
   $args_terms = array(
