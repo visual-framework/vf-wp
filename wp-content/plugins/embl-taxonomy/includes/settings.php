@@ -148,7 +148,7 @@ class EMBL_Taxonomy_Settings {
                   'label' => 'Deprecated',
                   'name' => 'embl_taxonomy_deprecated',
                   'type' => 'true_false',
-                  'instructions' => '',
+                  'instructions' => 'Select "Yes" to manually deprecate the term.',
                   'required' => 0,
                   'conditional_logic' => 0,
                   'wrapper' => array(
@@ -181,7 +181,54 @@ class EMBL_Taxonomy_Settings {
           'active' => true,
           'description' => '',
       ));
-  
+
+      $active_theme = wp_get_theme();
+      $is_news_theme = ($active_theme->get('Name') === 'VF-WP News');
+      
+      if ($active_theme == $is_news_theme) {
+
+        acf_add_local_field_group(array(
+          'key' => 'group_embl_taxonomy_hidden',
+          'fields' => array(
+              array(
+                  'key' => 'field_embl_taxonomy_hidden',
+                  'label' => 'Hidden',
+                  'name' => 'embl_taxonomy_hidden',
+                  'type' => 'true_false',
+                  'instructions' => 'Select "Yes" to not show the term in the taxonomy picker.',
+                  'required' => 0,
+                  'conditional_logic' => 0,
+                  'wrapper' => array(
+                      'width' => '',
+                      'class' => '',
+                      'id' => '',
+                  ),
+                  'message' => '',
+                  'default_value' => 0,
+                  'ui' => 1,
+                  'ui_on_text' => 'Yes',
+                  'ui_off_text' => 'No',
+              ),
+          ),
+          'location' => array(
+              array(
+                  array(
+                      'param' => 'taxonomy',
+                      'operator' => '==',
+                      'value' => 'embl_taxonomy', // Specify the taxonomy
+                  ),
+              ),
+          ),
+          'menu_order' => 20,
+          'position' => 'side',
+          'style' => 'default',
+          'label_placement' => 'top',
+          'instruction_placement' => 'label',
+          'hide_on_screen' => '',
+          'active' => true,
+          'description' => '',
+      ));
+    }
   }
 
   /**
