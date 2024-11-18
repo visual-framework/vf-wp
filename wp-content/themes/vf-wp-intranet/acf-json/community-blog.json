@@ -1,0 +1,136 @@
+{
+    "key": "group_615ec3fce452d",
+    "title": "Community blog",
+    "fields": [
+        {
+            "key": "field_615ec40794c1f",
+            "label": "EMBL location",
+            "name": "cb_embl_location",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "Select individual sites exclusively for the site specific announcements. If applicable for all, please select 'All EMBL sites'.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "embl-location",
+            "field_type": "checkbox",
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_615ec45d94c20",
+            "label": "Topic",
+            "name": "cb_topic",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "updates-topic",
+            "field_type": "multi_select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_623c26b4c94f7",
+            "label": "Featured",
+            "name": "cb_featured",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Toggle on to display the article on the front page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_667a939194d45",
+            "label": "Emergency notification",
+            "name": "cb_emergency_notification",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "This field is intended only for the DG Office and other designated teams. Please do not modify unless you have the necessary permissions. Unauthorised changes may affect the functionality and integrity of the site.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "None",
+                "yellow": "Priority",
+                "red": "Emergency"
+            },
+            "default_value": "default",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "vertical",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_668bca18072c6",
+            "label": "Display the notification until:",
+            "name": "emergency_notification_display",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "20",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y",
+            "return_format": "d\/m\/Y",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "community-blog"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 1
+}
