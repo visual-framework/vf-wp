@@ -22,7 +22,7 @@ class VF_Widget_Social_Icons extends WP_Widget {
     
 // widget ID with prefix for use in ACF API functions
 $widget_id = 'widget_' . $args['widget_id'];
-
+$is_preview = isset($is_preview) && $is_preview;
 
 $heading = get_field('vf_social_heading', $widget_id);
 $color = get_field('vf_social_color', $widget_id);
@@ -51,6 +51,22 @@ $dark_mode = '';
 if ($color == 'white') {
 $dark_mode = 'dark-mode';
 }
+
+// Function to output a banner message in the Gutenberg editor only
+$admin_banner = function($message, $modifier = 'info') use ($is_preview) {
+  if (! $is_preview) {
+    return; }
+?>
+<div class="vf-banner vf-banner--alert vf-banner--<?php echo $modifier; ?>">
+  <div class="vf-banner__content">
+    <p class="vf-banner__text">
+      <?php echo $message; ?>
+    </p>
+  </div>
+</div>
+<!--/vf-banner-->
+<?php
+};
 
 if (
 (! $select)
