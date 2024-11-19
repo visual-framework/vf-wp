@@ -76,9 +76,25 @@ Text Domain:	 vfwp
     font-weight: 500 !important;
     font-size: 12px !important;
 }
+.customBadgeDarkBlue {
+    background-color: #3b6fb6 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
 
 .customBadgeGrey {
     background-color: #d0d0ce !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+.customBadgeGreen {
+    background-color: #D0DEBB !important;
     border: 0 !important;
     border-radius: 2px !important;
     color: #373a36 !important;
@@ -94,3 +110,7 @@ Text Domain:	 vfwp
     font-weight: 700; 
     color: #111;
   }
+
+ .articleBottomBorder {
+ border-bottom: 1px solid #d8d8d8;
+}

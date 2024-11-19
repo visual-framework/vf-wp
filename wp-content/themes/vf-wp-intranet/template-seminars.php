@@ -178,68 +178,30 @@ get_header();
           href="https://www.embl.org/internal-information/help/seminars-subscription">Read instructions</a>
 
     </fieldset>
-    <article class="vf-card vf-card--brand vf-card--striped">
-      <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://www.embl.org/internal-information/seminars/how-to/">About this section<svg aria-hidden="true"
-              class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                fill="currentColor" fill-rule="nonzero"></path>
-            </svg>
-          </a></h3>
-          <p class="vf-card__text">Learn how to upload your Scientific Events and Seminars to this page.</p>
-      </div>
-    </article>
-    <article class="vf-card vf-card--brand vf-card--bordered">
-      <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://www.ebi.ac.uk/about/events/seminars">EMBL-EBI Seminars<svg aria-hidden="true"
-              class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                fill="currentColor" fill-rule="nonzero"></path>
-            </svg>
-          </a></h3>
-      </div>
-    </article>
-    <article class="vf-card vf-card--brand vf-card--bordered">
-      <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="https://mediasite.embl.de/Mediasite/Channel/seminars/browse/null/most-recent/null/0/6b0655e9ecc64a8fb99c3b157ab8bf9014">EMBL seminars catalogue<svg aria-hidden="true"
-              class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em"
-              xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                fill="currentColor" fill-rule="nonzero"></path>
-            </svg>
-          </a></h3>
-          <p class="vf-card__text">Watch seminars recordings. Log in to access the catalogue.</p>
-      </div>
-    </article>
-    <article class="vf-card vf-card--brand vf-card--bordered">
-<div class="vf-card__content | vf-stack vf-stack--400">
-  <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/internal-information/events/">Internal events<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="currentColor" fill-rule="nonzero"></path>
-      </svg>
-    </a></h3>
-</div>
-</article>
+    <div>
+        <div class="vf-u-background-color-ui--off-white">
+          <div class="vf-content vf-u-padding--200">
+            <p class="vf-text-body vf-text-body--3" style="margin-bottom: 6px;"><a
+            href="https://www.embl.org/internal-information/seminars/how-to/">About this sectios</a></p>
+            <p class="vf-text-body vf-text-body--5">Learn how to upload your Scientific Events and Seminars to this page.</p>
+            <hr class="vf-divider | vf-u-margin__bottom--400">
+            <p class="vf-text-body vf-text-body--3"><a
+            href="https://www.ebi.ac.uk/about/events/seminars">EMBL-EBI Seminars</a></p>
+            <hr class="vf-divider | vf-u-margin__bottom--400">
+            <p class="vf-text-body vf-text-body--3" style="margin-bottom: 6px;"><a
+            href="https://mediasite.embl.de/Mediasite/Channel/seminars/browse/null/most-recent/null/0/6b0655e9ecc64a8fb99c3b157ab8bf9014">EMBL seminars catalogue</a></p>
+            <p class="vf-text-body vf-text-body--5">Watch seminars recordings. Log in to access the catalogue.</p>
+            <hr class="vf-divider | vf-u-margin__bottom--400">
+            <p class="vf-text-body vf-text-body--3"><a
+            href="https://www.embl.org/internal-information/events/">Internal events</a></p>
+            <hr class="vf-divider | vf-u-margin__bottom--400">
+            <p class="vf-text-body vf-text-body--3"><a
+            href="https://www.embl.org/events">Courses and conferences</a></p>
+          </div>
+        </div>
 
-    <article class="vf-card vf-card--brand vf-card--bordered">
-      <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link" href="https://www.embl.org/events">Courses and
-            conferences<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
-              width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                fill="currentColor" fill-rule="nonzero"></path>
-            </svg>
-          </a></h3>
-      </div>
-    </article>
+  </div>
+
   </div>
 </section>
 

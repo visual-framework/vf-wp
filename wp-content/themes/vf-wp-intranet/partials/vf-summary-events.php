@@ -41,7 +41,7 @@ else {
 }
 ?>
 
-<article class="vf-summary vf-summary--event" data-jplist-item>
+<article class="vf-summary vf-summary--event newsItem" data-jplist-item>
   <?php if ( ! empty($start_date)) { ?>
   <p class="vf-summary__date" data-eventtime="<?php echo $customDateSorting; ?>">
     <?php       // Event dates
@@ -87,12 +87,15 @@ else {
   </p>
   <?php } ?>
   <?php 
-   if (($locations)) { ?>
-  <p class="vf-text-body vf-text-body--5 location">
+if (($locations)) { ?>
+<p class="vf-text-body vf-text-body--5
+ location vf-u-margin__top--0 
+ <?php foreach($locations as $location) { echo 'location-' . $location->slug . ' '; } ?>">
     <?php $location_list = [];
-        foreach( $locations as $location ) { 
-          $location_list[] = $location->name; }
-          echo implode(', ', $location_list); ?>
-  </p>
-  <?php } ?>
+    foreach( $locations as $location ) { 
+        $location_list[] = $location->name; }
+        echo implode(', ', $location_list); ?>
+</p>
+<?php } ?>
+
 </article>

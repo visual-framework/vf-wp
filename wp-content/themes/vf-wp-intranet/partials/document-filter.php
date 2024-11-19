@@ -27,8 +27,15 @@ $embl_location_terms = get_terms(
       <input id="location-all" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="location" data-or="location"
         value="all"
-        data-id="location-all" class="vf-form__checkbox">
-      <label for="location-all" class="vf-form__label">All EMBL sites</label>
+        data-id="location-all" class="vf-form__checkbox checkboxLive inputLive">
+      <label for="location-all" class="vf-form__label">All EMBL sites &nbsp;<span 
+      data-jplist-control="counter"
+      data-group="data-group-1"
+      data-format="({count})"
+      data-path=".location-all"
+      data-mode="static"
+      data-name="counter-category-all"
+      data-filter-type="path"></span></label>
     </div>
     <p class="vf-form__helper">Specific to:</p>
     <?php
@@ -38,8 +45,15 @@ $embl_location_terms = get_terms(
       <input id="location-<?php echo $counter; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
         data-path=".location" data-group="data-group-1" data-name="location" data-or="location"
         value="<?php echo esc_attr($term->slug); ?>"
-        data-id="location<?php echo $counter; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox">
-      <label for="location-<?php echo $counter; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?></label>
+        data-id="location<?php echo $counter; ?>-<?php echo esc_attr($term->slug); ?>" class="vf-form__checkbox checkboxLive inputLive">
+      <label for="location-<?php echo $counter; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>&nbsp;<span 
+      data-jplist-control="counter"
+      data-group="data-group-1"
+      data-format="({count})"
+      data-path=".location-<?php echo esc_attr($term->slug); ?>"
+      data-mode="static"
+      data-name="counter-location-<?php echo esc_attr($term->slug); ?>"
+      data-filter-type="path"></span></label>
     </div>
     <?php
       $counter++;
