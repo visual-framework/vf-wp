@@ -970,7 +970,7 @@ function vfGaLogMessage(eventCategory, eventAction, eventLabel, lastGaEventTime,
  * @param {boolean} [activateDeepLinkOnLoad] - if deep linked tabs should be activated on page load, defaults to true
  * @example vfTabs(document.querySelectorAll('.vf-component__container')[0]);
  */
-function vfTabs(scope, activateDeepLinkOnLoad) {
+function vfTabs(scope) {
   /* eslint-disable no-redeclare */
   var scope = scope || document;
   var activateDeepLinkOnLoad = activateDeepLinkOnLoad || true;
@@ -1002,7 +1002,6 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
     tab.removeAttribute("aria-selected");
     tab.setAttribute("tabindex", "-1");
     tab.classList.remove("is-active");
-
     // Handle clicking of tabs for mouse users
     tab.addEventListener("click", function (e) {
       e.preventDefault();
@@ -1054,6 +1053,16 @@ function vfTabs(scope, activateDeepLinkOnLoad) {
   // activate any deeplinks to a specific tab
   if (activateDeepLinkOnLoad) {
     vfTabsDeepLinkOnLoad(tabs, panels);
+    Array.prototype.forEach.call(panels, function (panel) {
+      var links = panel.querySelectorAll("[href*='vf-tabs__section']");
+      links.forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          var href = e.currentTarget.getAttribute("href");
+          vfTabsDeepLinkOnLoad(tabs, panels, href);
+        });
+      });
+    });
   }
 }
 
@@ -1062,23 +1071,25 @@ var vfTabsSwitch = function vfTabsSwitch(newTab, panels) {
   // Update url based on tab id
   var data = newTab.getAttribute("id");
   var url = "#" + data;
-  window.history.replaceState(data, null, url);
+  // var url = window.location.origin + window.location.pathname + window.location.search;
+  // url += url.endsWith("/") ? "#" + data : "/#" + data;
+  window.history.pushState(data, null, url);
 
   // get the parent ul of the clicked tab
-  var parentTabSet = newTab.closest(".vf-tabs__list");
-  var oldTab = parentTabSet.querySelector("[aria-selected]");
-  if (oldTab) {
-    oldTab.removeAttribute("aria-selected");
-    oldTab.setAttribute("tabindex", "-1");
-    oldTab.classList.remove("is-active");
-    for (var item = 0; item < panels.length; item++) {
-      var panel = panels[item];
-      if (panel.id === oldTab.id) {
-        panel.hidden = true;
-        break;
-      }
+  var parentTabSet = newTab.closest(".vf-tabs");
+  var tabs = parentTabSet.querySelectorAll("[data-vf-js-tabs] .vf-tabs__link");
+  tabs.forEach(function (tab) {
+    if (tab.getAttribute("aria-selected")) {
+      tab.removeAttribute("aria-selected");
+      tab.setAttribute("tabindex", "-1");
+      tab.classList.remove("is-active");
+      panels.forEach(function (panel) {
+        if (panel.id === tab.id) {
+          panel.hidden = true;
+        }
+      });
     }
-  }
+  });
   newTab.focus({
     preventScroll: true
   });
@@ -1089,18 +1100,19 @@ var vfTabsSwitch = function vfTabsSwitch(newTab, panels) {
   newTab.classList.add("is-active");
   // Get the indices of the new tab to find the correct
   // tab panel to show
-  for (var _item = 0; _item < panels.length; _item++) {
-    var _panel = panels[_item];
-    if (_panel.id === newTab.id) {
-      _panel.hidden = false;
-      break;
+  panels.forEach(function (panel) {
+    if (panel.id === newTab.id) {
+      panel.hidden = false;
     }
-  }
+  });
 };
-function vfTabsDeepLinkOnLoad(tabs, panels) {
+function vfTabsDeepLinkOnLoad(tabs, panels, href) {
+  var hash;
   // 1. See if there is a `#vf-tabs__section--88888`
   if (window.location.hash) {
-    var hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+    hash = window.location.hash.substring(1); //Puts hash in variable, and removes the # character
+  } else if (href) {
+    hash = href.substring(href.indexOf("#") + 1);
   } else {
     // No hash found
     return false;
@@ -2489,7 +2501,7 @@ function emblBreadcrumbAppend(breadcrumbTarget, termName, facet, type) {
       // console.warn('embl-js-breadcrumbs-lookup: No matching breadcrumb found for `' + termName + '`; Will formulate a URL.');
       if (facet == "who") {
         // fallback for people: search people directory
-        termObject.url = "https://www.embl.org/search/?searchQuery=" + termName.replace(/[\W_]+/g, " ").replace(/\s+/g, "-").toLowerCase() + "&activeFacet=People%20directory&origin=breadcrumbTermNotFound";
+        termObject.url = "https://www.embl.org/search/#stq=" + termName.replace(/[\W_]+/g, " ").replace(/\s+/g, "-").toLowerCase() + "&activeFacet=People%20directory&origin=breadcrumbTermNotFound";
       } else {
         // otherwise try and search
         termObject.url = "https://www.embl.org/search/#stq=" + termName + "&taxonomyFacet=" + facet + "&origin=breadcrumbTermNotFound"; // if no link specified, do a search
