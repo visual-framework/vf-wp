@@ -61,7 +61,7 @@ $title = $vf_theme->get_title();
       </div>
       <div>
         <div class="vf-u-background-color-ui--off-white">
-          <div class="vf-content vf-u-padding--200">
+          <div class="vf-content vf-u-padding--400">
             <p class="vf-text-body vf-text-body--3" style="margin-bottom: 6px;"><a
             href="https://www.embl.org/internal-information/updates">Updates and announcements</a></p>
             <p class="vf-text-body vf-text-body--5">Internal announcements and important updates</p>
@@ -72,7 +72,7 @@ $title = $vf_theme->get_title();
             <hr class="vf-divider | vf-u-margin__bottom--400">
             <p class="vf-text-body vf-text-body--3" style="margin-bottom: 6px;"><a
             href="https://www.embl.org/news/">EMBL News</a></p>
-            <p class="vf-text-body vf-text-body--5">Latest updates from EMBL's six sites.</p>
+            <p class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--0">Latest updates from EMBL's six sites.</p>
           </div>
         </div>
 

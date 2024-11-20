@@ -53,31 +53,32 @@ $event_topics_terms = get_terms(
   <?php
 foreach ($event_topics_terms as $term) {
   $term_posts_query = new WP_Query([
-      'post_type' => 'events',
-      'tax_query' => [
-          [
-              'taxonomy' => 'events-topic',
-              'field'    => 'slug',
-              'terms'    => $term->slug,
-          ],
-      ],
-      'meta_query' => [
-          'relation' => 'OR',
-          [
-              'key'     => 'vf_event_internal_start_date',
-              'value'   => date('Ymd'), // Current date in Ymd format
-              'compare' => '>=',
-              'type'    => 'numeric',
-          ],
-          [
-              'key'     => 'vf_event_internal_end_date',
-              'value'   => date('Ymd'), // Current date in Ymd format
-              'compare' => '>=',
-              'type'    => 'numeric',
-          ],
-      ],
-  ]);
-  $term_count = $term_posts_query->found_posts;
+    'post_type' => 'events', 
+    'tax_query' => [
+        [
+            'taxonomy' => 'events-topic',
+            'field'    => 'slug',
+            'terms'    => $term->slug,
+        ],
+    ],
+    'meta_key' => 'vf_event_internal_start_date',
+    'orderby'  => 'meta_value_num',
+    'meta_query' => [
+        [
+            'key'     => 'vf_event_internal_start_date',
+            'value'   => $current_date,
+            'compare' => '<',
+            'type'    => 'numeric',
+        ],
+        [
+            'key'     => 'vf_event_internal_start_date',
+            'value'   => date('Ymd', strtotime('now')),
+            'compare' => '<',
+            'type'    => 'numeric',
+        ],
+    ],
+]);
+$term_count = $term_posts_query->found_posts;
 
   // Output the option with the count
   ?>

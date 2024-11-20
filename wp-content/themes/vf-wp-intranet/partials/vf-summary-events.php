@@ -13,8 +13,8 @@ $locations = get_field('vf_event_internal_location',$post_id);
 $event_type = get_field('vf_event_internal_event_type'); 
 $venue = get_field('vf_event_internal_venue'); 
 $has_page = get_field('vf_event_internal_has_page'); 
-$customDateSorting = DateTime::createFromFormat('Ymd', $start_time);
-$event_topic = get_field('vf_event_internal_events_topic',$post_id);
+$customDateSorting = DateTime::createFromFormat('Ymd', $start_date);
+$topic_terms = get_field('vf_event_internal_events_topic',$post_id);
 
 if (!empty($start_time)) {
   $calendar_start_time = 'T' . $start_time_format->format('Hi') . '00';
@@ -41,9 +41,9 @@ else {
 }
 ?>
 
-<article class="vf-summary vf-summary--event newsItem" data-jplist-item>
+<article class="vf-summary vf-summary--event newsItem articleBottomBorder vf-u-padding__bottom--800" data-jplist-item>
   <?php if ( ! empty($start_date)) { ?>
-  <p class="vf-summary__date" data-eventtime="<?php echo $customDateSorting; ?>">
+  <p class="vf-summary__date" data-eventtime="<?php echo $start->format('Ymd'); ?>">
     <?php       // Event dates
         if ($end_date) { 
           if ($start->format('M') == $end->format('M')) {
@@ -57,11 +57,14 @@ else {
         } 
         
      ?>
-    &nbsp;&nbsp;
-    <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">
-      <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:"
-        target="_blank" rel="nofollow">Add to calendar</a>
-    </span>
+    
+    <?php if (is_page_template('template-past-events.php')): ?>
+  <span class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--100" style="text-transform: none;">&nbsp;|&nbsp;
+    <a href="http://www.google.com/calendar/render?action=TEMPLATE&text=<?php the_title(); ?>&dates=<?php echo $start->format('Ymd') . $calendar_start_time; ?><?php echo $calendar_end_date . $calendar_end_time; ?>&sprop=name:"
+      target="_blank" rel="nofollow">Add to calendar</a>
+  </span>
+<?php endif; ?>
+
   </p>
   <?php } ?>
   <h3 class="vf-summary__title | vf-u-margin__bottom--200">
@@ -76,26 +79,29 @@ else {
   <?php if (is_post_type_archive('events')) { ?>
   <p class="vf-summary__text" style="margin-bottom: 1rem !important;"><?php echo get_the_excerpt(); ?></p>
   <?php } ?>
-
-  <?php 
-   if (($event_topic)) { ?>
-  <p class="vf-text-body vf-text-body--5 vf-u-margin__bottom--0">
-    <?php $event_topic_list = [];
-        foreach( $event_topic as $topic ) { 
-          $event_topic_list[] = "<a class='vf-link " . $topic->slug . "' style='color: #707372;' href='" . get_term_link( $topic ) . "'>" . strtoupper($topic->name) . "</a>"; }
-          echo implode(', ', $event_topic_list); ?>
+  <?php if (($topic_terms)) { ?>
+  <p class="vf-summary__meta | vf-u-margin__bottom--200">
+    <span class="topic">
+      <?php 
+        if( $topic_terms ) {
+          $topics_list = array(); 
+          foreach( $topic_terms as $term ) {
+            $topics_list[] = '<a class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue ' . esc_attr( $term->slug ) . '"style="color: #373a36; text-decoration: none;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</a>'; }
+            echo implode('', $topics_list); }?>
+    </span>
   </p>
   <?php } ?>
-  <?php 
+  <p class="vf-summary__meta vf-u-margin__bottom--600">Location:
+    <?php 
 if (($locations)) { ?>
-<p class="vf-text-body vf-text-body--5
- location vf-u-margin__top--0 
- <?php foreach($locations as $location) { echo 'location-' . $location->slug . ' '; } ?>">
-    <?php $location_list = [];
+    <span class="vf-u-text-color--grey | vf-u-margin__right--600
+  location vf-u-margin__top--0 
+  <?php foreach($locations as $location) { echo 'location-' . $location->slug . ' '; } ?>">
+      <?php $location_list = [];
     foreach( $locations as $location ) { 
-        $location_list[] = $location->name; }
-        echo implode(', ', $location_list); ?>
-</p>
-<?php } ?>
-
+      $location_list[] = $location->name; }
+      echo implode(', ', $location_list); ?>
+    </span>&nbsp;&nbsp;
+    <?php }?>
+  </p>
 </article>

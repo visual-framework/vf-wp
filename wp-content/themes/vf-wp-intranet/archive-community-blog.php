@@ -101,13 +101,13 @@ if (!empty($sticky_posts)) {
   </div>
   <div>
         <div class="vf-u-background-color-ui--off-white">
-          <div class="vf-content vf-u-padding--200">
+          <div class="vf-content vf-u-padding--400">
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
             href="https://www.embl.org/internal-information/news/">Internal news</a></p>
         <hr class="vf-divider | vf-u-margin__bottom--400">
         <p class="vf-text-body vf-text-body--3" style="margin-bottom: 6px;"><a
         href="https://www.embl.org/internal-information/communications/how-to-updates/">About this section</a></p>
-        <p class="vf-text-body vf-text-body--5">Learn more and publish your updates and announcements.</p>
+        <p class="vf-text-body vf-text-body--5 | vf-u-margin__bottom--0">Learn more and publish your updates and announcements.</p>
       </div>
   </div>
   </div>

@@ -6,7 +6,7 @@ $start_date = get_the_date('Ymd'); // Retrieve the post's publishing date in Ymd
 $start = DateTime::createFromFormat('Ymd', $start_date);
 ?>
 <article class="vf-summary vf-summary--has-image newsItem vf-u-margin__bottom--800 articleBottomBorder" data-jplist-item>
-  <span class="vf-summary__date" data-eventtime="<?php echo $start->format('Ymd'); ?>"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
+  <span class="vf-summary__date | vf-u-margin__bottom--100" data-eventtime="<?php echo $start->format('Ymd'); ?>"><time class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0;"
       title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
   <?php the_post_thumbnail( 'full', array( 'class' => 'vf-summary__image', 'style' => 'height: auto;' ) ); ?>

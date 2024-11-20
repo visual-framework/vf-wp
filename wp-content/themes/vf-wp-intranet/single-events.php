@@ -1,15 +1,10 @@
 <?php
-
+get_header();
 $title = get_the_title();
 $start_date = get_field('vf_event_internal_start_date');
 $start_time = get_field('vf_event_internal_start_time');
-$start = DateTime::createFromFormat('j M Y', $start_date);
-$start_time_format = DateTime::createFromFormat('H:i', $start_time);
 $end_date = get_field('vf_event_internal_end_date');
 $end_time = get_field('vf_event_internal_end_time');
-$end_time_format = DateTime::createFromFormat('H:i', $end_time);
-$end = DateTime::createFromFormat('j M Y', $end_date);
-$end_date_format = DateTime::createFromFormat('j M Y', $end_date);
 $locations = get_field('vf_event_internal_location');
 $other_location = get_field('vf_event_internal_other_location');
 $venue = get_field('vf_event_internal_venue');
@@ -23,9 +18,23 @@ $register_button = ucfirst(strtolower($register_button));
 $info_text = get_field('vf_event_internal_info_text');
 $registration_type = get_field('vf_event_internal_registration_type');
 $now = new DateTime();
-$application_date = new DateTime($application_closing);
-$registration_date = new DateTime($registration_closing);get_header();
-$customDateSorting = DateTime::createFromFormat('Ymd', $start_time);
+$topic_terms = get_field('vf_event_internal_events_topic');
+
+// Safely parse dates and times
+$start = $start_date ? DateTime::createFromFormat('j M Y', $start_date) : null;
+$start_time_format = $start_time ? DateTime::createFromFormat('H:i', $start_time) : null;
+$end = $end_date ? DateTime::createFromFormat('j M Y', $end_date) : null;
+$end_time_format = $end_time ? DateTime::createFromFormat('H:i', $end_time) : null;
+$application_date = $application_closing ? new DateTime($application_closing) : null;
+$registration_date = $registration_closing ? new DateTime($registration_closing) : null;
+
+// Custom sorting date check
+$customDateSorting = $start_date ? DateTime::createFromFormat('Ymd', $start_date) : null;
+
+// Check for null values where necessary
+if ($start === false || $end === false) {
+    error_log("Invalid date format detected for start or end dates.");
+}
 if (!empty($start_time)) {
   $calendar_start_time = 'T' . $start_time_format->format('Hi') . '00';
 }
@@ -56,6 +65,18 @@ display_latest_editor_for_admin(get_the_ID());
 <div class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800 | vf-content">
   <div class="vf-grid__col--span-2">
     <div>
+    <?php if (($topic_terms)) { ?>
+      <p class="vf-meta__topics | vf-u-margin__bottom--0">
+    <span class="topic">
+      <?php 
+        if( $topic_terms ) {
+          $topics_list = array(); 
+          foreach( $topic_terms as $term ) {
+            $topics_list[] = '<a class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue ' . esc_attr( $term->slug ) . '"style="color: #373a36; text-decoration: none;" href="' . esc_url(get_term_link( $term )) . '">' . strtoupper(esc_html( $term->name )) . '</a>'; }
+            echo implode('', $topics_list); }?>
+    </span>
+  </p>
+  <?php } ?>
       <h1><?php the_title(); ?></h1>
     </div>
   </div>
@@ -121,6 +142,7 @@ display_latest_editor_for_admin(get_the_ID());
     <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">Venue:</span> <span
         class="vf-u-text-color--grey"><?php echo esc_html($venue); ?></span></p>
     <?php } ?>
+
     <?php 
     // Registration dates
     if ( ! empty($registration_closing)) { ?>

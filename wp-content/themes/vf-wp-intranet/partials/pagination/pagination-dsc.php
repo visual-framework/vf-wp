@@ -248,7 +248,7 @@
       var bEventTime = b.querySelector("[data-eventtime]");
 
       if (aEventTime && bEventTime) {
-        return +bEventTime.dataset.eventtime - aEventTime.dataset.eventtime;
+        return +aEventTime.dataset.eventtime - bEventTime.dataset.eventtime;
       } else {
         // Handle the case where one or both elements don't have the expected data-eventtime attribute.
         return 0; // You can return 0 or another value as needed.

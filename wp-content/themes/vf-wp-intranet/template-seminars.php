@@ -180,7 +180,7 @@ get_header();
     </fieldset>
     <div>
         <div class="vf-u-background-color-ui--off-white">
-          <div class="vf-content vf-u-padding--200">
+          <div class="vf-content vf-u-padding--400">
             <p class="vf-text-body vf-text-body--3" style="margin-bottom: 6px;"><a
             href="https://www.embl.org/internal-information/seminars/how-to/">About this sectios</a></p>
             <p class="vf-text-body vf-text-body--5">Learn how to upload your Scientific Events and Seminars to this page.</p>
@@ -195,7 +195,7 @@ get_header();
             <p class="vf-text-body vf-text-body--3"><a
             href="https://www.embl.org/internal-information/events/">Internal events</a></p>
             <hr class="vf-divider | vf-u-margin__bottom--400">
-            <p class="vf-text-body vf-text-body--3"><a
+            <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--0"><a
             href="https://www.embl.org/events">Courses and conferences</a></p>
           </div>
         </div>

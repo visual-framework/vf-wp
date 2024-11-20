@@ -20,7 +20,7 @@ if ($emergency === 'red') {
 }
 ?>
 <article class="vf-summary vf-summary--news | vf-u-margin__bottom--800 vf-u-padding--200 newsItem articleBottomBorder" data-jplist-item style="<?php echo $backgroundColor ? "background-color: $backgroundColor; color: $textColor;" : ''; ?>">
-  <span class="vf-summary__date" <?php if ($emergency !== 'red') { echo 'data-eventtime="' . $start->format('Ymd') . '"'; } ?>><time
+  <span class="vf-summary__date | vf-u-margin__bottom--100" <?php if ($emergency !== 'red') { echo 'data-eventtime="' . $start->format('Ymd') . '"'; } ?>><time
       class="vf-summary__date vf-u-text-color--grey" style="margin-left: 0; color: <?php echo $textColor; ?>;" title="<?php the_time('c'); ?>"
       datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></span>
   <?php 
@@ -49,10 +49,10 @@ if ($emergency === 'red') {
     </span>
   </p>
 <?php } ?>
-  <p class="vf-summary__meta vf-u-margin__bottom--600">EMBL site: 
+  <p class="vf-summary__meta vf-u-margin__bottom--600" style="color: <?php echo $textColor; ?>;">EMBL site: 
   <?php 
 if (($locations)) { ?>
-  <span class="vf-u-text-color--grey | vf-u-margin__right--600
+  <span style="color: <?php echo $textColor; ?>;" class="vf-u-text-color--grey | vf-u-margin__right--600
   location vf-u-margin__top--0 
   <?php foreach($locations as $location) { echo 'location-' . $location->slug . ' '; } ?>">
   <?php $location_list = [];
