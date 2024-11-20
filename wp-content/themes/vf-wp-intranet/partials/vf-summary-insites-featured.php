@@ -22,9 +22,9 @@ $locations = get_field('embl_location');
     </span>
   </p>
   <?php } ?>
-  <p class="vf-summary__meta vf-u-margin__bottom--600">EMBL site:
-    <?php 
+  <?php 
 if (($locations)) { ?>
+  <p class="vf-summary__meta vf-u-margin__bottom--600">EMBL site:
     <span class="vf-u-text-color--grey | vf-u-margin__right--600
   location vf-u-margin__top--0 
   <?php foreach($locations as $location) { echo 'location-' . $location->slug . ' '; } ?>">
@@ -33,6 +33,6 @@ if (($locations)) { ?>
       $location_list[] = $location->name; }
       echo implode(', ', $location_list); ?>
     </span>&nbsp;&nbsp;
-    <?php }?>
   </p>
+    <?php }?>
 </article>
