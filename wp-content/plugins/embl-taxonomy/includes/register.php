@@ -726,7 +726,7 @@ foreach ($wp_taxonomy as $wp_term) {
 
     // Set the WordPress taxonomy slug
     foreach ($terms as $i => $term) {
-        $terms[$i]['slug'] = sanitize_title($term['description']);
+        $terms[$i]['slug'] = sanitize_title($term['name']);
         $terms[$i]['description'] = $term['description'];
     }
 }
