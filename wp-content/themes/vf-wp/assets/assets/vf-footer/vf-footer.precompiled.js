@@ -48,7 +48,11 @@ output += "\" class=\"vf-list__link\">Entry</a>\n        </li>\n        <li clas
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "footer__url"), env.opts.autoescape);
 output += "\" class=\"vf-list__link\">Entry</a>\n        </li>\n        <li class=\"vf-list__item\">\n          <a href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "footer__url"), env.opts.autoescape);
-output += "\" class=\"vf-list__link\">Entry</a>\n        </li>\n      </ul>\n      <p class=\"vf-footer__legal-text\">Copyright © Your Organisation.</p>\n      <p class=\"vf-footer__legal-text\">Maybe an address too, 5555, Somewhere, Earth.</p>\n      <p class=\"vf-footer__legal-text\">Tel: +49 00 000 000.</p>\n      <a class=\"vf-footer__link\" href=\"";
+output += "\" class=\"vf-list__link\">Entry</a>\n        </li>\n      </ul>\n      <p class=\"vf-footer__legal-text\">Copyright © Your Organisation.</p>\n      <a class=\"vf-footer__link\" href=\"";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "footer__url"), env.opts.autoescape);
+output += "\">Maybe an address too, 5555, Somewhere, Earth.</a>\n      <a class=\"vf-footer__link\" href=\"";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "footer__url"), env.opts.autoescape);
+output += "\">Tel: +49 00 000 000.</a>\n      <a class=\"vf-footer__link\" href=\"";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "footer__url"), env.opts.autoescape);
 output += "\">Another entry</a>\n    </section>\n  </div>\n</footer>\n";
 if(parentTemplate) {

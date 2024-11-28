@@ -17,6 +17,23 @@
 .wp-list-table .column-description {
   display: none;
 }
+.statusActive  {
+  width: fit-content;
+  padding: 2px 5px;
+  background-color: #D0DEBB;
+}
+.statusDeprecated  {
+  width: fit-content;
+  padding: 2px 5px;
+  background-color: #E58F9E;
+}
+.statusHidden  {
+  width: fit-content;
+  padding: 2px 5px;
+  background-color: #D0D0CE;
+}
+
+
 
 /* If you wish to hide the term slug column */
 /* .wp-list-table .column-slug {

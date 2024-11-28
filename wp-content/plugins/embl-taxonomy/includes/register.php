@@ -20,13 +20,12 @@ class EMBL_Taxonomy_Register {
   protected $labels;
 
   public function __construct() {
-
     $this->labels = array(
-      'name'              => __('EMBL Taxonomy', 'embl'),
-      'singular_name'     => __('EMBL Taxonomy Term', 'embl'),
-      'search_items'      => __('Search EMBL Taxonomy', 'embl'),
-      'all_items'         => __('All EMBL Taxonomy Terms', 'embl'),
-      'add_new_item'      => __('Add New EMBL Taxonomy Term', 'embl')
+        'name'              => __('EMBL Taxonomy', 'embl'),
+        'singular_name'     => __('EMBL Taxonomy Term', 'embl'),
+        'search_items'      => __('Search EMBL Taxonomy', 'embl'),
+        'all_items'         => __('All EMBL Taxonomy Terms', 'embl'),
+        'add_new_item'      => __('Add New EMBL Taxonomy Term', 'embl')
     );
 
     add_action('init', array($this, 'register_taxonomy'));
@@ -36,51 +35,84 @@ class EMBL_Taxonomy_Register {
     add_filter(EMBL_Taxonomy::TAXONOMY_NAME . '_name', array($this, 'filter_term_name'), 10, 3);
 
     if (is_admin()) {
-      add_action('admin_notices', array($this, 'action_admin_notices'));
-      add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
+        add_action('admin_notices', array($this, 'action_admin_notices'));
+        add_action('admin_enqueue_scripts', array($this, 'action_admin_enqueue'));
+        add_action('pre_get_terms', array($this, 'filter_admin_terms'));
     }
 
-    // Add column for term UUID
-    // http://wpthemecraft.com/code-snippets/add-custom-columns-to-taxonomy-list-table/
-
-    /*
-     * filter pattern: manage_edit-{taxonomy}_columns
-     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
-     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
-     */
-    add_filter( 'manage_edit-embl_taxonomy_columns' , 'wptc_embl_taxonomy_columns' );
-    function wptc_embl_taxonomy_columns( $columns ) {
-      $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
-      return $columns;
-    }
-
-    /*
-     * filter pattern: manage_{taxonomy}_custom_column
-     * where {taxonomy} is the name of taxonomy e.g; 'embl_taxonomy'
-     * codex ref: https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
-     */
-    add_filter( 'manage_embl_taxonomy_custom_column', 'wptc_embl_taxonomy_column_content', 10, 3 );
-    function wptc_embl_taxonomy_column_content( $content, $column_name, $term_id ) {
-      // get the term object
-      $term = get_term( $term_id, 'embl_taxonomy' );
-      // check if column is our custom column
-      if ( 'embl_taxonomy_term_uuid' == $column_name ) {
-        $full_term = embl_taxonomy_get_term($term->term_id);
-        // Eventually we should link back to the contenHub, however we don't currently
-        // have a good way to search by UUID
-        // https://dev.content.embl.org/api/v1/pattern.html?filter-content-type=profiles&filter-uuid=2a270b68-46c3-4b3f-92c5-0a65eb896c86&pattern=node-display-title
-        // the above query depends on knowing the conent type
-        $content = '<code>'.end($full_term->meta['embl_taxonomy_ids']).'</code>';
-      }
-      return $content;
-    }
+    // Add columns for term meta
+    add_filter('manage_edit-embl_taxonomy_columns', array($this, 'embl_taxonomy_columns'));
+    add_filter('manage_embl_taxonomy_custom_column', array($this, 'embl_taxonomy_column_content'), 10, 3);
 
     $this->set_read_only();
+}
+
+
+  public function embl_taxonomy_columns($columns) {
+    $columns['embl_taxonomy_meta_description'] = __('Parent terms', 'embl');
+    // $columns['embl_taxonomy_meta_ids'] = __('Meta IDs', 'embl');
+    // $columns['embl_taxonomy_meta_name'] = __('Meta Name', 'embl');
+    $columns['embl_taxonomy_meta_deprecated'] = __('Status', 'embl');
+    $columns['embl_taxonomy_term_uuid'] = __('EMBL Term UUID', 'embl');
+
+       // Unset the slug column to hide it
+       if (isset($columns['slug'])) {
+        unset($columns['slug']);
+    }
+
+    return $columns;
   }
 
-  /**
-   * Use a global option to manage the read-only state
-   */
+  
+  public function filter_admin_terms($query) {
+    if (is_admin() && isset($_GET['taxonomy']) && $_GET['taxonomy'] === EMBL_Taxonomy::TAXONOMY_NAME) {
+        // Check if the 'filter=deprecated' parameter is set
+        if (isset($_GET['filter']) && $_GET['filter'] === 'deprecated') {
+            $query->query_vars['meta_key'] = EMBL_Taxonomy::META_DEPRECATED;
+            $query->query_vars['meta_value'] = '1';
+        }
+    }
+}
+
+  public function embl_taxonomy_column_content($content, $column_name, $term_id) {
+    $term = get_term($term_id, 'embl_taxonomy');
+    $full_term = embl_taxonomy_get_term($term->term_id);
+
+    if ($column_name === 'embl_taxonomy_meta_description') {
+      $content = esc_html($term->description);
+    } elseif ($column_name === 'embl_taxonomy_term_uuid') {
+      $content = '<code>' . end($full_term->meta['embl_taxonomy_ids']) . '</code>';
+    // } elseif ($column_name === 'embl_taxonomy_meta_ids') {
+    //   $meta_ids = get_term_meta($term_id, EMBL_Taxonomy::META_IDS, true);
+
+    //   if (is_array($meta_ids)) {
+    //     $content = '<code>' . json_encode($meta_ids) . '</code>';
+    // } else {
+    //     $content = '<code>' . $meta_ids . '</code>';
+    // }
+
+    // } elseif ($column_name === 'embl_taxonomy_meta_name') {
+    //   $content = '<code>' . get_term_meta($term_id, EMBL_Taxonomy::META_NAME, true) . '</code>';
+    } elseif ($column_name === 'embl_taxonomy_meta_deprecated') {
+      $deprecatedValue = get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true);
+      $hiddenValue = get_field('field_embl_taxonomy_hidden', "term_{$term_id}");
+
+  
+      if ($hiddenValue == '1') {
+          $statusClass = 'statusHidden';
+          $statusText = 'Hidden';
+      } else {
+          $statusClass = $deprecatedValue == '1' ? 'statusDeprecated' : 'statusActive';
+          $statusText = $deprecatedValue == '1' ? 'Deprecated' : 'Active';
+      }
+      
+      $content = '<p class="' . $statusClass . '">' . $statusText . '</p>';
+  }
+  
+
+    return $content;
+  }
+
   public function is_read_only() {
     $name = EMBL_Taxonomy::TAXONOMY_NAME;
     return get_option("vf__{$name}_locked", true);
@@ -91,34 +123,41 @@ class EMBL_Taxonomy_Register {
     return update_option("vf__{$name}_locked", boolval($locked));
   }
 
+
   /**
    * Action `init`
    * https://codex.wordpress.org/Function_Reference/register_taxonomy
    */
   public function register_taxonomy() {
-    /**
-     * Register the EMBL Taxnonomy
-     * Because the taxonomy is auto-synced with the contentHub API the
-     * "edit" and "delete" capabilities are not assigned to any user
-     */
+    $active_theme = wp_get_theme();
+    $is_news_theme = ($active_theme->get('Name') === 'VF-WP News');
+
+    // Define common capabilities
+    $user_capabilities = array(
+      'manage_terms' => 'manage_options',
+      'edit_terms'   => 'manage_options',
+      'delete_terms' => 'manage_options',
+      'assign_terms' => 'manage_options'
+  );
+
     register_taxonomy(
       EMBL_Taxonomy::TAXONOMY_NAME,
       EMBL_Taxonomy::TAXONOMY_TYPES,
       array(
         'labels'            => $this->labels,
         'hierarchical'      => false,
-        'public'            => false,
+        'public'            => $is_news_theme,  // true only for the news theme
         'show_ui'           => true,
+        'meta_box_cb'       => false,
         'show_in_menu'      => true,
         'show_admin_column' => true,
         'show_in_rest'      => true,
-        'capabilities'      => array(
-          'manage_terms' => 'manage_categories',
-          'edit_terms'   => EMBL_Taxonomy::TAXONOMY_NAME . 'edit_terms',
-          'delete_terms' => EMBL_Taxonomy::TAXONOMY_NAME . 'delete_terms',
-          'assign_terms' => 'edit_posts'
+        'capabilities'      => $user_capabilities,
+        'rewrite'           => array(
+            'slug' => $is_news_theme ? 'embl-taxonomy' : EMBL_Taxonomy::TAXONOMY_NAME,  // Conditional slug
+            'with_front' => false
         )
-      )
+    )
     );
 
     register_term_meta(
@@ -149,12 +188,20 @@ class EMBL_Taxonomy_Register {
     register_rest_route(EMBL_Taxonomy::TAXONOMY_NAME . '/v1', '/sync/', array(
       'methods' => 'POST',
       'callback' => array($this, 'sync_taxonomy'),
-      // Secure the API route
-      // Header token from `wp_localize_script` below is required
       'permission_callback' => function () {
-        return current_user_can('manage_categories');
+          return current_user_can('manage_categories');
       }
-    ));
+  ));
+
+  // Delete deprecated terms route
+  register_rest_route(EMBL_Taxonomy::TAXONOMY_NAME . '/v1', '/delete-deprecated/', array(
+      'methods' => 'POST',
+      'callback' => array($this, 'delete_deprecated_terms'),
+      'permission_callback' => function() {
+          return current_user_can('manage_categories');
+      }
+  ));
+
 
     // Add taxonomy terms assigned to posts as field for WP REST API
     register_rest_field(
@@ -174,7 +221,8 @@ class EMBL_Taxonomy_Register {
               'uuid'    => $id,
               'parents' => $ids,
               'name'    => $meta[EMBL_Taxonomy::META_NAME],
-              'slug'    => $wp_term->slug
+              'slug'    => $wp_term->slug,
+              'description'    => $wp_term->description
             );
             if (
               array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $meta)
@@ -215,6 +263,48 @@ class EMBL_Taxonomy_Register {
     }
     return $wp_taxonomy;
   }
+
+
+  
+  public function delete_deprecated_terms() {
+    // Get all deprecated terms
+    $terms = get_terms(array(
+        'taxonomy'   => EMBL_Taxonomy::TAXONOMY_NAME,
+        'meta_key'   => EMBL_Taxonomy::META_DEPRECATED,
+        'meta_value' => '1',
+        'fields'     => 'ids',
+        'hide_empty' => false, // Set to false to include terms without posts
+    ));
+    
+
+    // Check for errors or empty list
+    if (is_wp_error($terms)) {
+        return new WP_Error('term_query_error', __('Error querying terms: ' . $terms->get_error_message(), 'embl'), array('status' => 500));
+    }
+
+    if (empty($terms)) {
+        return rest_ensure_response(array(
+            'success' => true,
+            'message' => __('No deprecated terms found to delete.', 'embl')
+        ));
+    }
+
+    // Delete each deprecated term
+    $deleted_terms = [];
+    foreach ($terms as $term_id) {
+        $result = wp_delete_term($term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+        if (is_wp_error($result)) {
+            return new WP_Error('delete_error', __('Error deleting term ID ' . $term_id . ': ' . $result->get_error_message(), 'embl'), array('status' => 500));
+        } else {
+            $deleted_terms[] = $term_id; // Collect deleted term IDs
+        }
+    }
+
+    return rest_ensure_response(array(
+        'success' => true,
+        'message' => sprintf(__('Successfully deleted %d deprecated terms.', 'embl'), count($deleted_terms))
+    ));
+}
 
   /**
    * Read and parse the EMBL Taxonomy API as JSON
@@ -328,12 +418,13 @@ class EMBL_Taxonomy_Register {
       }
 
       // Ensure `name` and `slug` values are up-to-date
-      if ($wp_term->name !== $term['name'] || $wp_term->slug !== $term['slug']) {
+      if ($wp_term->name !== $term['name'] || $wp_term->slug !== $term['slug'] || $wp_term->description !== $term['description']) {
         wp_update_term(
           $wp_term->term_id,
           EMBL_Taxonomy::TAXONOMY_NAME,
           array(
             'name' => $term['name'],
+            'description' => $term['description'],
             'slug' => $term['slug']
           )
         );
@@ -353,39 +444,114 @@ class EMBL_Taxonomy_Register {
 
     }
 
-    // Handle deprecated terms
-    foreach ($wp_taxonomy as $wp_term) {
-      $is_deprecated = array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $wp_term->meta);
+    global $wpdb;
+   // Get terms selected in ACF fields
+   $acf_used_terms = array_map('intval', array_filter(array(
+    get_field('field_embl_taxonomy_term_who', 'option'),
+    get_field('field_embl_taxonomy_term_what', 'option'),
+    get_field('field_embl_taxonomy_term_where', 'option')
+)));
+    // Disable term cache to avoid issues with stale data
+    wp_defer_term_counting(true);
+    
+// Handle deprecated terms
+foreach ($wp_taxonomy as $wp_term) {
+  $is_deprecated = array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $wp_term->meta);
 
-      // Delete term if unassigned
-      if ($is_deprecated && $wp_term->count === 0) {
-        wp_delete_term($wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
-        continue;
-      }
+  // Check if the term is selected in ACF fields
+  $acf_selected = in_array($wp_term->term_id, $acf_used_terms, true);
 
-      if (array_key_exists('matched', $wp_term->meta)) {
-        // Reactivate an old term
-        if ($is_deprecated) {
-          delete_term_meta($wp_term->term_id, EMBL_Taxonomy::META_DEPRECATED);
+  // Ensure that the term is marked as deprecated if selected in ACF but not already deprecated
+  if ($acf_selected && !$is_deprecated) {
+      update_term_meta($wp_term->term_id, EMBL_Taxonomy::META_DEPRECATED, 1);
+      $is_deprecated = true;  // Update the flag for further checks below
+  }
+
+  // Avoid deleting terms selected in ACF fields even if they have no posts tagged
+  if ($is_deprecated && $wp_term->count === 0 && !$acf_selected) {
+      wp_delete_term($wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+      continue;
+  }
+
+  // Find a replacement term if the term is used in posts and is deprecated
+  if ($is_deprecated && $wp_term->count > 0) {
+    $replacement_term_id = null;
+    foreach ($wp_taxonomy as $potential_replacement) {
+        if ($potential_replacement->term_id !== $wp_term->term_id &&
+            array_key_exists(EMBL_Taxonomy::META_NAME, $potential_replacement->meta) &&
+            $potential_replacement->meta[EMBL_Taxonomy::META_NAME] === $wp_term->meta[EMBL_Taxonomy::META_NAME] &&
+            !array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $potential_replacement->meta)) {
+            $replacement_term_id = $potential_replacement->term_id;
+            break;
         }
-      } else if ( ! $is_deprecated) {
-        update_term_meta($wp_term->term_id, EMBL_Taxonomy::META_DEPRECATED, 1);
-      }
     }
 
+    if ($replacement_term_id) {
+        $post_ids = get_objects_in_term($wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+
+        foreach ($post_ids as $post_id) {
+            wp_add_object_terms($post_id, $replacement_term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+            // Optionally remove the deprecated term from the post
+            // wp_remove_object_terms($post_id, $wp_term->term_id, EMBL_Taxonomy::TAXONOMY_NAME);
+        }
+    }
+}
+
+
+  // Replace terms individually in ACF fields if selected and a non-deprecated equivalent exists
+  if ($acf_selected) {
+      $replacement_acf_term_id = null;
+      foreach ($wp_taxonomy as $potential_replacement) {
+          if ($potential_replacement->term_id !== $wp_term->term_id &&
+              array_key_exists(EMBL_Taxonomy::META_NAME, $potential_replacement->meta) &&
+              $potential_replacement->meta[EMBL_Taxonomy::META_NAME] === $wp_term->meta[EMBL_Taxonomy::META_NAME] &&
+              !array_key_exists(EMBL_Taxonomy::META_DEPRECATED, $potential_replacement->meta)) { // Exclude deprecated terms
+              $replacement_acf_term_id = $potential_replacement->term_id;
+              break;
+          }
+      }
+
+      // Update ACF fields individually if a non-deprecated replacement is found
+      if ($replacement_acf_term_id) {
+          if ($wp_term->term_id === get_field('field_embl_taxonomy_term_who', 'option')) {
+              update_field('field_embl_taxonomy_term_who', $replacement_acf_term_id, 'option');
+          }
+          if ($wp_term->term_id === get_field('field_embl_taxonomy_term_what', 'option')) {
+              update_field('field_embl_taxonomy_term_what', $replacement_acf_term_id, 'option');
+          }
+          if ($wp_term->term_id === get_field('field_embl_taxonomy_term_where', 'option')) {
+              update_field('field_embl_taxonomy_term_where', $replacement_acf_term_id, 'option');
+          }
+      }
+  }
+
+  // Continue with the existing logic for matched terms and reactivating deprecated terms
+  if (array_key_exists('matched', $wp_term->meta)) {
+      // Reactivate an old term if it was previously deprecated
+      if ($is_deprecated) {
+          delete_term_meta($wp_term->term_id, EMBL_Taxonomy::META_DEPRECATED);
+      }
+  } else if (!$is_deprecated) {
+      update_term_meta($wp_term->term_id, EMBL_Taxonomy::META_DEPRECATED, 1);
+  }
+}
+
+
+
+    // Re-enable term counting and recount terms
+    wp_defer_term_counting(false);
+    wp_update_term_count_now(array_column($wp_taxonomy, 'term_id'), EMBL_Taxonomy::TAXONOMY_NAME);
+
     $this->set_read_only(true);
-
     update_option(self::OPTION_MODIFIED, time());
-
     unlink($newpath);
     unlink($oldpath);
 
-    // Return success message
     return array(
       'success' => true,
       'terms'   => count($new_terms)
     );
-  }
+}
 
   /**
    * Request new taxonomy terms from the EMBL Taxonomy API
@@ -443,7 +609,7 @@ class EMBL_Taxonomy_Register {
       return false;
     }
     $new_terms = array();
-    $term_keys = array('uuid', 'name', 'parents');
+    $term_keys = array('uuid', 'name', 'parents', 'primary');
     // Format term objects as arrays and add meta keys
     foreach($json->terms as $key => $json_term) {
       $json_term = (array) $json_term;
@@ -487,57 +653,87 @@ class EMBL_Taxonomy_Register {
    * Generate an array of taxonomy terms from JSON
    * Add new term for each "Child > Parent" relationship
    */
-  static private function generate_terms(& $api_terms, & $terms, array $term = null, array $parent = null) {
+  static private function generate_terms(& $api_terms, & $terms) {
+    // Iterate over each base term
+    foreach ($api_terms as $uuid => $term) {
+        // Initialize prefix IDs with the term's own IDs
+        $prefix_ids = $term[EMBL_Taxonomy::META_IDS];
 
-    // If no term is specified start the recursion
-    if ( ! $term) {
-      // Iterate over each base term
-      foreach ($api_terms as $uuid => $term) {
-        self::generate_terms($api_terms, $terms, $term);
-      }
-      // Set the WordPress taxonomy slug
-      // use implode('-', $term[EMBL_Taxonomy::META_IDS]) if name is too long?
-      foreach ($terms as $i => $term) {
-        $terms[$i]['slug'] = sanitize_title($term['name']);
-      }
-      return;
-    }
+        // Initialize the prefix name with the primary term
+        $primary_term_name = ucfirst($term['primary']);
+        $prefix_name = $primary_term_name . EMBL_Taxonomy::TAXONOMY_SEPARATOR;
 
-    // Prefix IDs and name with parent(s)
-    if (is_array($parent)) {
-      $term['name'] .= EMBL_Taxonomy::TAXONOMY_SEPARATOR . $parent['name'];
-      $term[EMBL_Taxonomy::META_NAME] = $parent[EMBL_Taxonomy::META_NAME];
-      $term[EMBL_Taxonomy::META_IDS] = array_merge(
-        $term[EMBL_Taxonomy::META_IDS],
-        $parent[EMBL_Taxonomy::META_IDS]
-      );
-    }
-
-    // If this new term has multiple parents generate a unique term for
-    // the final hierarchy level, for example:
-    // Parent-1 > Term
-    // Parent-2 > Parent-1 > Term
-    if (is_array($term['parents']) && count($term['parents'])) {
-      // Iterate over parent term IDs and then all terms to find the parent
-      foreach ($term['parents'] as $parent_id) {
-
-        if (array_key_exists($parent_id, $api_terms)) {
-          $new_parent = $api_terms[$parent_id];
-          // Cannot generate terms that are a parent of itself
-          if ($term['uuid'] === $new_parent['uuid']) {
-            continue;
-          }
-          self::generate_terms($api_terms, $terms, $new_parent, $term);
+        // Add primary term ID to prefix IDs
+        switch ($term['primary']) {
+            case 'what':
+                array_unshift($prefix_ids, '302cfdf7-365b-462a-be65-82c7b783ebf7');
+                break;
+            case 'who':
+                array_unshift($prefix_ids, '4428d1fd-441a-4d6d-a1c5-5dcf5665f213');
+                break;
+            case 'where':
+                array_unshift($prefix_ids, 'b14d3f13-5670-44fb-8970-e54dfd9c921a');
+                break;
         }
+
+        // Check if the term has parents and retrieve the correct one based on the primary term
+        if (is_array($term['parents']) && !empty($term['parents'])) {
+          // Initialize a variable to track if a parent was found
+          $found_parent = false;
+      
+          // Loop through parents to find the one that corresponds to the primary term
+          foreach ($term['parents'] as $parent_id) {
+              if (array_key_exists($parent_id, $api_terms)) {
+                  $parent_term = $api_terms[$parent_id];
+      
+                  // Check if the parent term is of the same type as the primary
+                  if ($parent_term['primary'] === $term['primary']) {
+                      // Check if the prefix is different from the parent term name and if the parent name is different from the term name
+                      if ($prefix_name !== $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR 
+                          && $parent_term['name'] !== $term['name']) {
+                          // Append the parent's name to the prefix name
+                          $prefix_name .= $parent_term['name'] . EMBL_Taxonomy::TAXONOMY_SEPARATOR;
+                          // Insert the parent term's IDs in the second position of prefix_ids
+                          array_splice($prefix_ids, 1, 0, (array)$parent_term[EMBL_Taxonomy::META_IDS]);
+                      }
+                      $found_parent = true;
+                      break; // Stop after finding the first matching parent
+                  }
+              } else {
+                  error_log("Parent ID '$parent_id' not found in api_terms.");
+              }
+          }
+      
+          if (!$found_parent) {
+              error_log("No valid parent found for term '{$term['name']}' with primary '{$term['primary']}'.");
+          }
       }
-    // Otherwise add new term
-    } else {
-      // Ignore base level terms "Who", "What", "Where", etc
-      // if (count($term[EMBL_Taxonomy::META_IDS]) > 1) {
+      
+      
+      
+      
+
+        // Append the current term's name
+        $prefix_name .= $term['name'];
+
+        // Update the term with the prefixed name and IDs
+        $term['description'] = rtrim($prefix_name, EMBL_Taxonomy::TAXONOMY_SEPARATOR); // Remove trailing separator
+        $term[EMBL_Taxonomy::META_IDS] = $prefix_ids;
+
+        // Add the modified term to the terms array
         $terms[] = $term;
-      // }
     }
-  }
+
+    // Set the WordPress taxonomy slug
+    foreach ($terms as $i => $term) {
+        $terms[$i]['slug'] = sanitize_title($term['description']);
+        $terms[$i]['description'] = $term['description'];
+    }
+}
+
+
+
+
 
   /**
    * Sort taxonomy terms
@@ -589,20 +785,20 @@ class EMBL_Taxonomy_Register {
     }
 
     // Sync happened (all pages)
-    if (($now - $modified) <= 10) {
-      printf('<div class="%1$s"><p>%2$s</p></div>',
-        esc_attr('notice notice-success'),
-        esc_html(sprintf(
-          __('%1$s was recently synced.', 'embl'),
-          $this->labels['name']
-        ))
-      );
-      $notice = true;
-    }
+    // if (($now - $modified) <= 10) {
+    //   printf('<div class="%1$s"><p>%2$s</p></div>',
+    //     esc_attr('notice notice-success'),
+    //     esc_html(sprintf(
+    //       __('%1$s was recently synced.', 'embl'),
+    //       $this->labels['name']
+    //     ))
+    //   );
+    //   $notice = true;
+    // }
 
     // Manual sync notice (edit taxonomy page only)
     if ( current_user_can( 'administrator' ) ) {
-    if ( ! $notice && function_exists('get_current_screen')) {
+    if ( function_exists('get_current_screen')) {
       $screen = get_current_screen();
       if ($screen->id === 'edit-embl_taxonomy') {
         if (isset($_GET['synced']) && $_GET['synced'] === 'true') {
@@ -619,7 +815,7 @@ class EMBL_Taxonomy_Register {
             date('jS F Y H:i:s', $modified)
           )),
           sprintf(
-            '<button id="embl-taxonomy-sync" data-href="%1$s" class="button button-small">%2$s</button>',
+            '<button id="embl-taxonomy-sync" data-href="%1$s" class="button button-primary button-small">%2$s</button>',
             esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&sync=true'),
             esc_html(__('Sync now', 'embl'))
           )
@@ -627,7 +823,56 @@ class EMBL_Taxonomy_Register {
       }
     }
   }
+// Add notice for deleting or displaying deprecated terms (all pages for administrators)
+if (current_user_can('administrator')) {
+  $deprecated_count = $this->get_deprecated_terms_count(); // Assume this function returns count of deprecated terms
+  if ( function_exists('get_current_screen')) {
+    $screen = get_current_screen();
+    if ($screen->id === 'edit-embl_taxonomy') { 
+      if (isset($_GET['delete_deprecated']) && $_GET['delete_deprecated'] === 'true') {
+        printf('<div class="%1$s"><p>%2$s</p></div>',
+          esc_attr('notice notice-success'),
+          __('Deprecated terms have been deleted.', 'embl')
+        );
+      }
+  if ($deprecated_count > 0) {
+    printf('<div class="%1$s"><p><span>%2$s</span> %3$s %4$s</p></div>',
+      esc_attr('notice notice-warning'),
+      esc_html(sprintf(
+        __('There is/are %1$d deprecated terms that may need review.', 'embl'),
+        $deprecated_count
+      )),
+      sprintf(
+        '<button id="embl-taxonomy-show-deprecated" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
+        esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&filter=deprecated'),
+        esc_html(__('See all deprecated terms', 'embl'))
+      ),
+      sprintf(
+        '<button id="embl-taxonomy-delete-deprecated" type="button" data-href="%1$s" class="button button-small" style="color: #fff; border-color: #d41645; background: #d41645;">%2$s</button>',
+        esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&delete_deprecated=true'),
+        esc_html(__('Delete all deprecated terms', 'embl'))
+      )
+    );
+  }
 }
+}
+}
+
+
+
+
+}
+
+private function get_deprecated_terms_count() {
+  $terms = get_terms(array(
+    'taxonomy'   => EMBL_Taxonomy::TAXONOMY_NAME,
+    'meta_key'   => EMBL_Taxonomy::META_DEPRECATED,
+    'meta_value' => '1',
+    'hide_empty' => false, // Ensure all deprecated terms are counted
+  ));
+  return is_array($terms) ? count($terms) : 0;
+}
+
 
   /**
    * Filter `pre_insert_term`
@@ -657,7 +902,7 @@ class EMBL_Taxonomy_Register {
     if ($context === 'display') {
       $deprecated = get_term_meta($term_id, EMBL_Taxonomy::META_DEPRECATED, true);
       if (intval($deprecated) === 1) {
-        return "⚠️ {$value} (deprecated but retained as local content still tagged by term)";
+        return "⚠️ (Deprecated) {$value} ";
       }
     }
     return $value;
@@ -680,6 +925,8 @@ class EMBL_Taxonomy_Register {
     );
 
     wp_localize_script('embl-taxonomy', 'emblTaxonomySettings', array(
+      'adminUrl' => admin_url(),
+        'taxonomyName' => EMBL_Taxonomy::TAXONOMY_NAME,
       'data' => array(
         'syncing' => __('Syncing – please do not close this window.', 'embl'),
         'reload'  => __('This page will reload after the sync is done.', 'embl'),
@@ -687,6 +934,7 @@ class EMBL_Taxonomy_Register {
       ),
       'redirect' => esc_url_raw(admin_url('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&synced=true')),
       'path'     => esc_url_raw(rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/sync')),
+      'deletePath' => esc_url_raw(rest_url(EMBL_Taxonomy::TAXONOMY_NAME . '/v1/delete-deprecated')),
       'token'    => wp_create_nonce('wp_rest')
     ));
 

@@ -70,10 +70,7 @@ class VF_WP_Groups_Header extends VF_Plugin {
    */
   public function after_setup_theme() {
     add_image_size(
-      'vf-hero',
-      self::MAX_WIDTH,
-      self::MAX_HEIGHT,
-      array('center', 'center')
+      'vf-hero'
     );
   }
 
