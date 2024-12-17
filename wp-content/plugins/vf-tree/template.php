@@ -46,9 +46,12 @@ $current_url = home_url(add_query_arg(array(), $wp->request));
                 while (have_rows('vf_tree_sub_menu')) : the_row();
                   $subLink = get_sub_field('vf_tree_sub_menu_item');
                   $selectClass = '';
-                  $linkUrl2 = rtrim($subLink['url'], '/');
-                  if($current_url == $linkUrl2) {
-                    $selectClass = ' vf-tree__item--selected';
+                  $linkUrl2 = '';
+                  if(!empty($subLink['url'])) {
+                    $linkUrl2 = rtrim($subLink['url'], '/');
+                    if($current_url == $linkUrl2) {
+                      $selectClass = ' vf-tree__item--selected';
+                    }
                   }
                   ?>
           <li class="vf-tree__item vf-tree--collapsed <?php echo esc_attr($selectClass); ?>"
