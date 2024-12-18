@@ -21,7 +21,7 @@ stages:
 
 build:
   stage: build
-  image: ebiwd/docker-drush:3.18
+  image: ebiwd/docker-drush:3.20
   tags:
     - docker
   script:
