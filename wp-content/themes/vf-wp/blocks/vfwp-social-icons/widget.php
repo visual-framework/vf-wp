@@ -31,6 +31,7 @@ $select = get_field('vf_social_select', $widget_id);
 $twitter_link = get_field('vf_social_twitter', $widget_id);
 $facebook_link = get_field('vf_social_facebook', $widget_id);
 $instagram_link = get_field('vf_social_instagram', $widget_id);
+$bluesky_link = get_field('vf_social_bluesky', $widget_id);
 $youtube_link = get_field('vf_social_youtube', $widget_id);
 $linkedin_link = get_field('vf_social_linkedin', $widget_id);
 $choose = get_field('vf_social_choose', $widget_id);
@@ -98,6 +99,9 @@ return;
       <path xmlns="http://www.w3.org/2000/svg"
         d="M17.5,0H6.5A6.51,6.51,0,0,0,0,6.5v11A6.51,6.51,0,0,0,6.5,24h11A6.51,6.51,0,0,0,24,17.5V6.5A6.51,6.51,0,0,0,17.5,0ZM12,17.5A5.5,5.5,0,1,1,17.5,12,5.5,5.5,0,0,1,12,17.5Zm6.5-11A1.5,1.5,0,1,1,20,5,1.5,1.5,0,0,1,18.5,6.5Z" />
     </g>
+    <g id="vf-social--bluesky">
+      <path xmlns="http://www.w3.org/2000/svg" d="M12 10.8c-1.087 -2.114 -4.046 -6.053 -6.798 -7.995C2.566 0.944 1.561 1.266 0.902 1.565 0.139 1.908 0 3.08 0 3.768c0 0.69 0.378 5.65 0.624 6.479 0.815 2.736 3.713 3.66 6.383 3.364 0.136 -0.02 0.275 -0.039 0.415 -0.056 -0.138 0.022 -0.276 0.04 -0.415 0.056 -3.912 0.58 -7.387 2.005 -2.83 7.078 5.013 5.19 6.87 -1.113 7.823 -4.308 0.953 3.195 2.05 9.271 7.733 4.308 4.267 -4.308 1.172 -6.498 -2.74 -7.078a8.741 8.741 0 0 1 -0.415 -0.056c0.14 0.017 0.279 0.036 0.415 0.056 2.67 0.297 5.568 -0.628 6.383 -3.364 0.246 -0.828 0.624 -5.79 0.624 -6.478 0 -0.69 -0.139 -1.861 -0.902 -2.206 -0.659 -0.298 -1.664 -0.62 -4.3 1.24C16.046 4.748 13.087 8.687 12 10.8"></path>
+    </g>
   </defs>
 </svg>
 <div class="vf-social-links <?php echo $class;?> <?php echo $dark_mode;?>
@@ -110,13 +114,32 @@ return;
   if ($choose == 'follow') {
   
   ?>
-  <ul class="vf-social-links__list">
+ <ul class="vf-social-links__list">
+  <?php if (!empty($linkedin_link)) { ?>
+    <li class="vf-social-links__item">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($linkedin_link);?>" aria-label="Follow us on Linkedin">
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--linkedin">
+          </use>
+        </svg>
+      </a>
+    </li>
+    <?php } ?>
+    <?php if (!empty($bluesky_link)) { ?>
+    <li class="vf-social-links__item">
+      <a class="vf-social-links__link" target="_blank"  href="<?php echo esc_url($bluesky_link);?>" aria-label="Follow us on Bluesky">
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--bluesky" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--bluesky">
+          </use>
+        </svg>
+      </a>
+    </li>
+    <?php } ?>
     <?php if (!empty($twitter_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" target="_blank"  href="<?php echo esc_url($twitter_link);?>">
-        <span class="vf-u-sr-only">
-          twitter
-        </span>
+      <a class="vf-social-links__link" target="_blank"  href="<?php echo esc_url($twitter_link);?>" aria-label="Follow us on Twitter">
         <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
           <use xlink:href="#vf-social--twitter">
@@ -125,12 +148,20 @@ return;
       </a>
     </li>
     <?php } ?>
+    <?php if (!empty($youtube_link)) { ?>
+    <li class="vf-social-links__item">
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($youtube_link);?>" aria-label="Follow us on Youtube">
+        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--youtube" width="24" height="24"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+          <use xlink:href="#vf-social--youtube">
+          </use>
+        </svg>
+      </a>
+    </li>
+    <?php } ?>
     <?php if (!empty($facebook_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($facebook_link);?>">
-        <span class="vf-u-sr-only">
-          facebook
-        </span>
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($facebook_link);?>" aria-label="Follow us on Facebook">
         <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--facebook" width="24" height="24"
           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
           <use xlink:href="#vf-social--facebook">
@@ -141,41 +172,10 @@ return;
     <?php } ?>
     <?php if (!empty($instagram_link)) { ?>
     <li class="vf-social-links__item">
-      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($instagram_link);?>">
-        <span class="vf-u-sr-only">
-          instagram
-        </span>
+      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($instagram_link);?>" aria-label="Follow us on Instagram">
         <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--instagram" width="24" height="24"
           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
           <use xlink:href="#vf-social--instagram">
-          </use>
-        </svg>
-      </a>
-    </li>
-    <?php } ?>
-    <?php if (!empty($youtube_link)) { ?>
-    <li class="vf-social-links__item">
-      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($youtube_link);?>">
-        <span class="vf-u-sr-only">
-          youtube
-        </span>
-        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--youtube" width="24" height="24"
-          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-          <use xlink:href="#vf-social--youtube">
-          </use>
-        </svg>
-      </a>
-    </li>
-    <?php } ?>
-    <?php if (!empty($linkedin_link)) { ?>
-    <li class="vf-social-links__item">
-      <a class="vf-social-links__link" target="_blank" href="<?php echo esc_url($linkedin_link);?>">
-        <span class="vf-u-sr-only">
-          linkedin
-        </span>
-        <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
-          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-          <use xlink:href="#vf-social--linkedin">
           </use>
         </svg>
       </a>
@@ -185,18 +185,47 @@ return;
   <?php } 
   
   else if ($choose == 'share') { ?>
-  <ul class="vf-social-links__list">
+    <ul class="vf-social-links__list">
+  <?php if (($select && in_array('linkedin', $select)) || (!empty($linkedin_link))) { ?>
+      <li class="vf-social-links__item">
+            <a class="vf-social-links__link" target="_blank" aria-label="Share on Linkedin" 
+            <?php if ($custom == 'auto') { ?> 
+            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+            <?php } else if ($custom == 'custom') { ?> 
+              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?><?php if (!empty($custom_title)) { echo '&title=' . $custom_title; } else echo '';?>">
+            <?php } ?>  
+              <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+                <use xlink:href="#vf-social--linkedin">
+                </use>
+              </svg>
+            </a>
+          </li>
+    <?php } ?>
+    <?php if (($select && in_array('bluesky', $select)) || (!empty($bluesky_link))) { ?>
+      <li class="vf-social-links__item">
+            <a class="vf-social-links__link" target="_blank" aria-label="Share on Bluesky"
+            <?php if ($custom == 'auto') { ?>
+            href="https://bsky.app/intent/compose?text=<?php echo $title; ?>%20<?php echo $social_url; ?>">
+            <?php } else if ($custom == 'custom') { ?> 
+              href="https://bsky.app/intent/compose?text=<?php if (!empty($custom_title)) { echo $custom_title; } else echo ''; ?>%20<?php echo $custom_url; ?>">
+            <?php } ?>  
+              <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--bluesky" width="24" height="24"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+                <use xlink:href="#vf-social--bluesky">
+                </use>
+              </svg>
+            </a>
+          </li>
+    <?php } ?>
     <?php if (($select && in_array('twitter', $select)) || (!empty($twitter_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link" target="_blank"
+            <a class="vf-social-links__link" target="_blank" aria-label="Share on Twitter"
             <?php if ($custom == 'auto') { ?>
             href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
             <?php } else if ($custom == 'custom') { ?> 
               href="https://twitter.com/intent/tweet?url=<?php echo $custom_url; ?>&amp;via=embl<?php if (!empty($custom_title)) { echo '&text=' . $custom_title; } else echo ''; ?>">
             <?php } ?>  
-            <span class="vf-u-sr-only">
-                twitter
-              </span>
               <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
                 <use xlink:href="#vf-social--twitter">
@@ -207,15 +236,12 @@ return;
     <?php } ?>
     <?php if (($select && in_array('facebook', $select)) || (!empty($facebook_link))) { ?>
       <li class="vf-social-links__item">
-            <a class="vf-social-links__link" target="_blank"
+            <a class="vf-social-links__link" target="_blank" aria-label="Share on Facebook"
             <?php if ($custom == 'auto') { ?> 
             href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $social_url; ?>">
             <?php } else if ($custom == 'custom') { ?> 
               href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $custom_url; ?>">
             <?php } ?>  
-              <span class="vf-u-sr-only">
-                facebook
-              </span>
               <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--facebook" width="24" height="24"
                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
                 <use xlink:href="#vf-social--facebook">
@@ -224,27 +250,7 @@ return;
             </a>
           </li>
     <?php } ?>
-    <?php if (($select && in_array('linkedin', $select)) || (!empty($linkedin_link))) { ?>
-      <li class="vf-social-links__item">
-            <a class="vf-social-links__link" target="_blank" 
-            <?php if ($custom == 'auto') { ?> 
-            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
-            <?php } else if ($custom == 'custom') { ?> 
-              href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $custom_url; ?><?php if (!empty($custom_title)) { echo '&title=' . $custom_title; } else echo '';?>">
-            <?php } ?>  
-              <span class="vf-u-sr-only">
-                linkedin
-              </span>
-              <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
-                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-                <use xlink:href="#vf-social--linkedin">
-                </use>
-              </svg>
-            </a>
-          </li>
-    <?php } ?>
   </ul>
-
   <?php } ?>
 </div>
 

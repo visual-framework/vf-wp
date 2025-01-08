@@ -6,6 +6,7 @@
             "key": "field_5f522a6ef4c72",
             "label": "Heading",
             "name": "vf_social_heading",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_61137d6d0a1dd",
             "label": "",
             "name": "vf_social_choose",
+            "aria-label": "",
             "type": "radio",
             "instructions": "",
             "required": 0,
@@ -49,6 +51,7 @@
             "key": "field_6193b4166952b",
             "label": "",
             "name": "vf_social_custom",
+            "aria-label": "",
             "type": "radio",
             "instructions": "Use Custom URL field if adding icons in editorhub",
             "required": 0,
@@ -81,6 +84,7 @@
             "key": "field_5f522bcea7360",
             "label": "Twitter",
             "name": "vf_social_twitter",
+            "aria-label": "",
             "type": "url",
             "instructions": "",
             "required": 0,
@@ -102,9 +106,36 @@
             "placeholder": ""
         },
         {
+            "key": "field_677e60fd945a9",
+            "label": "Bluesky",
+            "name": "vf_social_bluesky",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_61137d6d0a1dd",
+                        "operator": "==",
+                        "value": "follow"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 1,
+            "placeholder": ""
+        },
+        {
             "key": "field_5f522bf7a7362",
             "label": "Facebook",
             "name": "vf_social_facebook",
+            "aria-label": "",
             "type": "url",
             "instructions": "",
             "required": 0,
@@ -129,6 +160,7 @@
             "key": "field_5f522c2ba7363",
             "label": "Instagram",
             "name": "vf_social_instagram",
+            "aria-label": "",
             "type": "url",
             "instructions": "",
             "required": 0,
@@ -153,6 +185,7 @@
             "key": "field_5f522c43a7364",
             "label": "Youtube",
             "name": "vf_social_youtube",
+            "aria-label": "",
             "type": "url",
             "instructions": "",
             "required": 0,
@@ -177,6 +210,7 @@
             "key": "field_5f522c59a7365",
             "label": "LinkedIn",
             "name": "vf_social_linkedin",
+            "aria-label": "",
             "type": "url",
             "instructions": "",
             "required": 0,
@@ -201,6 +235,7 @@
             "key": "field_61a61da234ff9",
             "label": "Custom share URL",
             "name": "vf_social_share_url",
+            "aria-label": "",
             "type": "url",
             "instructions": "",
             "required": 0,
@@ -225,6 +260,7 @@
             "key": "field_61a89b4bc145f",
             "label": "Custom share title",
             "name": "vf_social_share_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "(Optional)",
             "required": 0,
@@ -252,6 +288,7 @@
             "key": "field_611384e04dc48",
             "label": "Select",
             "name": "vf_social_select",
+            "aria-label": "",
             "type": "checkbox",
             "instructions": "",
             "required": 0,
@@ -278,6 +315,7 @@
             },
             "choices": {
                 "twitter": "Twitter",
+                "bluesky" : "Bluesky",
                 "facebook": "Facebook",
                 "linkedin": "LinkedIn"
             },
@@ -286,12 +324,14 @@
             "layout": "vertical",
             "toggle": 0,
             "return_format": "value",
-            "save_custom": 0
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
         },
         {
             "key": "field_5f522b3501de9",
             "label": "Colour",
             "name": "vf_social_color",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -317,6 +357,7 @@
             "key": "field_5f522b7001dea",
             "label": "Outline",
             "name": "vf_social_outline",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -357,5 +398,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1638440399
+    "show_in_rest": 0
 }
