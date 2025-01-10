@@ -25,9 +25,14 @@ $languages = get_field('languages');
   <div>
   </div>
   <div class="vf-form__item">
-          <input id="search" class="vf-form__input vf-form__input--filter" data-jplist-control="textbox-filter"
+          <input id="search" class="vf-form__input vf-form__input--filter inputLive" data-jplist-control="textbox-filter"
             data-group="news" data-name="my-filter-1" data-path=".vf-summary__title" type="text" value=""
             placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
+            <p class="vf-text-body vf-text-body--2 | vf-u-text-color--grey--darkest | vf-u-margin__bottom--0 vf-u-margin__top--600"
+              id="total-results-info">Showing <span id="start-counter" class="counter-highlight"></span><span
+                id="end-counter" class="counter-highlight"></span> results out of <span id="total-result"
+                class="counter-highlight"></span></p>
+
         </div>
         <button style="display: none;" type="button" id="name-clear-btn"
           class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
@@ -40,7 +45,7 @@ $languages = get_field('languages');
   <?php include(locate_template('partials/archive-filter.php', false, false)); ?>
   </div>
   <div>
-    <div data-jplist-group="news">
+    <div id="allPosts" data-jplist-group="news">
       
     <?php 
 
@@ -54,16 +59,17 @@ while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post(); ?>
 <?php endwhile;?>
 <?php wp_reset_postdata(); ?>
 
-      <!-- no results control -->
-      <article class="vf-summary vf-summary--event" data-jplist-control="no-results" data-group="news"
-        data-name="no-results">
-        <p class="vf-summary__text">
-          No matching posts found
-        </p>
-      </article>
-    </div>
+     <!-- no results control -->
+     <article class="vf-summary" data-jplist-control="no-results" data-group="news" data-name="no-results">
+            <p class="vf-summary__text">
+              No results found
+            </p>
+          </article>
+        </div>
+        <nav id="paging-data" class="vf-pagination" aria-label="Pagination">
+          <ul class="vf-pagination__list"></ul>
+        </nav>
 
-    <?php include(locate_template('partials/paging-controls.php', false, false)); ?>
 
   </div>
   <div>
@@ -78,6 +84,8 @@ while ($mainPostLoop->have_posts()) : $mainPostLoop->the_post(); ?>
 
 
 <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
+<?php  include(locate_template('partials/pagination.php', false, false)); ?>
+
 
 
 <?php get_footer(); ?>

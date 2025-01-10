@@ -9,6 +9,30 @@ Version:       1.0.0-beta.1
 Text Domain:	 vfwp
 */
 
+.articleBottomBorder {
+  border-bottom: 1px solid #d8d8d8 !important;
+ }
+ 
+ .customBadgeBlue {
+  background-color: #d1e3f6 !important;
+  border: 0 !important;
+  border-radius: 2px !important;
+  color: #373a36 !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
+
+
+.newsletter-container .vf-social-links__item {
+  border: 1px solid #fff;
+}
+.newsletter-container .vf-social-links__item:hover {
+  border: 1px solid #fff;
+  background-color: #fff !important;
+}
+.newsletter-container .vf-social-links__item:hover .vf-icon {
+  fill: #193f90 !important;
+}
 
 
 .archive-container a {
