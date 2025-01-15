@@ -44,21 +44,25 @@ $current_url = home_url(add_query_arg(array(), $wp->request));
           <?php
                 // Loop through rows (sub repeater)
                 while (have_rows('vf_tree_sub_menu')) : the_row();
-                  $subLink = get_sub_field('vf_tree_sub_menu_item');
-                  $selectClass = '';
-                  $linkUrl2 = '';
-                  if(!empty($subLink['url'])) {
-                    $linkUrl2 = rtrim($subLink['url'], '/');
-                    if($current_url == $linkUrl2) {
-                      $selectClass = ' vf-tree__item--selected';
-                    }
-                  }
-                  ?>
-          <li class="vf-tree__item vf-tree--collapsed <?php echo esc_attr($selectClass); ?>"
-            data-vf-js-tree--collapsed="true" data-vf-js-tree="" aria-role="treeitem" aria-expanded="false"><a
-              href="<?php echo esc_url($linkUrl2); ?>" class="vf-tree__link"><?php echo esc_html($subLink['title']); ?>
-          </li></a>
-          <?php  endwhile; ?>
+  $subLink = get_sub_field('vf_tree_sub_menu_item');
+  $selectClass = '';
+  $linkUrl2 = '';
+
+  // Check if $subLink is an array and contains the necessary keys
+  if (is_array($subLink) && !empty($subLink['url'])) {
+    $linkUrl2 = rtrim($subLink['url'], '/');
+    if ($current_url == $linkUrl2) {
+      $selectClass = ' vf-tree__item--selected';
+    }
+  }
+  
+  $subLinkTitle = is_array($subLink) && !empty($subLink['title']) ? $subLink['title'] : 'Untitled'; // Default title if not set
+  ?>
+  <li class="vf-tree__item vf-tree--collapsed <?php echo esc_attr($selectClass); ?>"
+      data-vf-js-tree--collapsed="true" data-vf-js-tree="" aria-role="treeitem" aria-expanded="false">
+    <a href="<?php echo esc_url($linkUrl2); ?>" class="vf-tree__link"><?php echo esc_html($subLinkTitle); ?></a>
+  </li>
+<?php endwhile; ?>
         </ul>
         <?php else : ?>
         </a>
