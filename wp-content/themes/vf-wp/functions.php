@@ -414,4 +414,98 @@ function custom_gutenberg_editor_styles() {
 }
 add_action('admin_head', 'custom_gutenberg_editor_styles');
 
+
+/* 
+ * Register custom REST API endpoint
+ */
+
+
+if ( class_exists('VF_Events') ) {
+
+  add_action('rest_api_init', function () {
+      register_rest_route('custom/v1', '/events', array(
+          'methods' => 'GET',
+          'callback' => 'get_events_posts',
+          'permission_callback' => '__return_true',
+      ));
+  });
+
+  // Callback function to handle the custom endpoint
+  function get_events_posts($request) {
+      // Get the value of cb_featured, site, and per_page parameters from the request
+      $per_page = $request->get_param('per_page');
+
+      // Default number of posts per page if 'per_page' parameter is not provided or invalid
+      $posts_per_page = !empty($per_page) && is_numeric($per_page) && $per_page > 0 ? intval($per_page) : -1;
+
+      // Get today's date for comparison
+      $today = date('Y-m-d'); // Format: YYYY-MM-DD
+
+      // Query arguments to retrieve posts from community-blog post type
+      $args = array(
+          'post_type' => 'vf_event',
+          'posts_per_page' => $posts_per_page,
+          'orderby' => 'meta_value', // Sort by start date
+          'order'   => 'ASC', // Show upcoming first (ascending order)
+          'meta_key' => 'vf_event_start_date', // Use start date for sorting
+          'meta_query' => array(
+              'relation' => 'OR', // Either one of the following conditions must be true
+              array(
+                  'key'     => 'vf_event_end_date',
+                  'value'   => $today,
+                  'compare' => '>=',
+                  'type'    => 'DATE',
+              ),
+              array(
+                  'key'     => 'vf_event_end_date',
+                  'compare' => 'NOT EXISTS', // Only check the start date if no end date exists
+                  'relation' => 'AND',
+                  array(
+                      'key'     => 'vf_event_start_date',
+                      'value'   => $today,
+                      'compare' => '>=',
+                      'type'    => 'DATE',
+                  ),
+              ),
+          ),
+      );
+
+      // Perform the query
+      $query = new WP_Query($args);
+
+      // Check if there are posts found
+      if ($query->have_posts()) {
+          // Create an array to store posts data
+          $posts_data = array();
+
+          // Loop through each post
+          while ($query->have_posts()) {
+              $query->the_post();
+
+              // Get post data
+              $post_data = array(
+                  'id' => get_the_ID(),
+                  'title' => get_the_title(),
+                  'start_date' => get_field('vf_event_start_date'), // Include the start date
+              );
+
+              // Add post data to the array
+              $posts_data[] = $post_data;
+          }
+
+          // Reset post data
+          wp_reset_postdata();
+
+          // Return the posts data as JSON response
+          return rest_ensure_response($posts_data);
+      } else {
+          // If no posts found, return empty array
+          return rest_ensure_response(array());
+      }
+  }
+}
+
+
+
+
 ?>
