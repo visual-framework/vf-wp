@@ -490,7 +490,7 @@ if ( class_exists('VF_Events') ) {
                   'event_type' => get_field('vf_event_event_type')['label'],  
                   'contact_name' => get_field('vf_event_contact_name'), 
                   'contact_email' => get_field('vf_event_contact'), 
-                  'custom_faq' => get_field('vf_event_custom_faq'), 
+                  'custom_faq' => html_entity_decode(wp_strip_all_tags(get_field('vf_event_custom_faq')))
               );
 
               // Add post data to the array
