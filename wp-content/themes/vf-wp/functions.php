@@ -484,9 +484,13 @@ if ( class_exists('VF_Events') ) {
 
               // Get post data
               $post_data = array(
-                  'id' => get_the_ID(),
                   'title' => get_the_title(),
-                  'start_date' => get_field('vf_event_start_date'), // Include the start date
+                  'url' => get_field('vf_event_more_information_link'), 
+                  'start_date' => get_field('vf_event_start_date'), 
+                  'event_type' => get_field('vf_event_event_type')['label'],  
+                  'contact_name' => get_field('vf_event_contact_name'), 
+                  'contact_email' => get_field('vf_event_contact'), 
+                  'custom_faq' => get_field('vf_event_custom_faq'), 
               );
 
               // Add post data to the array
