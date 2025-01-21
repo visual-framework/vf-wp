@@ -15,6 +15,7 @@ add_action( 'wp_enqueue_scripts', 'add_scripts' );
 
 
 require_once('functions/custom-taxonomies.php');
+require_once('functions/custom-endpoints.php');
 require_once('functions/cpt-register.php');
 require_once('functions/infoboard-news.php');
 require_once('functions/people.php');
@@ -147,79 +148,7 @@ function thumbnail_src( $object, $field_name, $request ) {
 }
 
 
-// Register custom REST API endpoint
-add_action('rest_api_init', function () {
-  register_rest_route('custom/v1', '/community-blog', array(
-      'methods' => 'GET',
-      'callback' => 'get_community_blog_posts',
-      'permission_callback' => '__return_true',
-  ));
-});
 
-// Callback function to handle the custom endpoint
-function get_community_blog_posts($request) {
-  // Get the value of cb_featured, site, and per_page parameters from the request
-  $cb_featured = $request->get_param('cb_featured');
-  $site = $request->get_param('site');
-  $per_page = $request->get_param('per_page');
-
-  // Default number of posts per page if 'per_page' parameter is not provided or invalid
-  $posts_per_page = !empty($per_page) && is_numeric($per_page) && $per_page > 0 ? intval($per_page) : -1;
-
-  // Query arguments to retrieve posts from community-blog post type
-  $args = array(
-      'post_type' => 'community-blog',
-      'posts_per_page' => $posts_per_page,
-      'meta_key'		=> 'cb_featured',
-      'meta_value'	=> $cb_featured,
-      'orderby' => 'date', // Sort by date
-      'order'   => 'DESC', // Show latest item first
-      // Taxonomy query to filter posts by 'location' taxonomy
-      'tax_query' => array(
-          array(
-              'taxonomy' => 'embl-location',
-              'field' => 'slug',
-              'terms' => $site,
-          ),
-      ),
-  );
-
-  // Perform the query
-  $query = new WP_Query($args);
-
-  // Check if there are posts found
-  if ($query->have_posts()) {
-      // Create an array to store posts data
-      $posts_data = array();
-
-      // Loop through each post
-      while ($query->have_posts()) {
-          $query->the_post();
-
-          // Get post data
-          $post_data = array(
-              'id' => get_the_ID(),
-              'title' => get_the_title(),
-              'date' => get_the_time('Y-m-d\TH:i:s'), // Exact date and time format
-              'excerpt' => get_the_excerpt(), // Excerpt
-              'featured_image_src' => get_the_post_thumbnail_url(get_the_ID(), 'full'), // Featured image source URL
-              // Add more fields as needed
-          );
-
-          // Add post data to the array
-          $posts_data[] = $post_data;
-      }
-
-      // Reset post data
-      wp_reset_postdata();
-
-      // Return the posts data as JSON response
-      return rest_ensure_response($posts_data);
-  } else {
-      // If no posts found, return empty array
-      return rest_ensure_response(array());
-  }
-}
 
 
 function update_sticky_status_based_on_field() {

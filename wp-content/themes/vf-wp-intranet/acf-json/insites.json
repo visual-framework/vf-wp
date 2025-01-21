@@ -6,6 +6,7 @@
             "key": "field_5dd3ec01c4d1e",
             "label": "Article intro",
             "name": "article_intro",
+            "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_6038be645d08e",
             "label": "EMBL Location",
             "name": "embl_location",
+            "aria-label": "",
             "type": "taxonomy",
             "instructions": "",
             "required": 0,
@@ -41,12 +43,14 @@
             "load_terms": 1,
             "return_format": "object",
             "multiple": 0,
-            "allow_null": 0
+            "allow_null": 0,
+            "bidirectional_target": []
         },
         {
             "key": "field_600e79e442ad5",
             "label": "Topic",
             "name": "topic",
+            "aria-label": "",
             "type": "taxonomy",
             "instructions": "",
             "required": 0,
@@ -63,12 +67,14 @@
             "save_terms": 1,
             "load_terms": 1,
             "return_format": "object",
-            "multiple": 0
+            "multiple": 0,
+            "bidirectional_target": []
         },
         {
             "key": "field_5dd52ed0509fe",
             "label": "Featured post",
             "name": "featured",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "Toggle off to not highlight the article on the front page.",
             "required": 0,
@@ -88,6 +94,7 @@
             "key": "field_5ea15d527ecd1",
             "label": "Hide featured image in the article",
             "name": "show_featured_image",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "Toggle on to not display the featured image in the article",
             "required": 0,
@@ -107,6 +114,7 @@
             "key": "field_636cfd3f32f8f",
             "label": "Newcomers start date",
             "name": "newcomers_start_date",
+            "aria-label": "",
             "type": "date_picker",
             "instructions": "",
             "required": 0,
@@ -124,6 +132,7 @@
             "key": "field_636cfe718f756",
             "label": "Newcomers end date",
             "name": "newcomers_end_date",
+            "aria-label": "",
             "type": "date_picker",
             "instructions": "",
             "required": 0,
@@ -136,6 +145,27 @@
             "display_format": "d-M-Y",
             "return_format": "d-M-Y",
             "first_day": 1
+        },
+        {
+            "key": "field_678fa2f9a5c96",
+            "label": "Infoscreen",
+            "name": "infoscreen",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch to \"Yes\" if the article should be displayed on infoscreens",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "Yes",
+            "ui_off_text": "No",
+            "ui": 1
         }
     ],
     "location": [
@@ -154,5 +184,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "show_in_rest": 0
 }

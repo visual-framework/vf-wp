@@ -113,6 +113,27 @@
             "display_format": "d\/m\/Y",
             "return_format": "d\/m\/Y",
             "first_day": 1
+        },
+        {
+            "key": "field_678fa24b788d7",
+            "label": "Infoscreen",
+            "name": "cb_infoscreen",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Switch to \"Yes\" if the article should be displayed on infoscreens",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "allow_in_bindings": 0,
+            "ui_on_text": "Yes",
+            "ui_off_text": "No",
+            "ui": 1
         }
     ],
     "location": [
