@@ -78,13 +78,13 @@ function get_community_blog_posts($request) {
         // Loop through each post
         while ($query->have_posts()) {
             $query->the_post();
-
+            remove_all_filters('get_the_excerpt');
             // Get post data
             $post_data = array(
                 'id'                => get_the_ID(),
                 'title'             => get_the_title(),
                 'date'              => get_the_time('Y-m-d\TH:i:s'), // Exact date and time format
-                'excerpt'           => get_the_excerpt(), // Excerpt
+                'excerpt'           => get_the_excerpt() ?: wp_trim_words(get_post_field('post_content', get_the_ID()), 50, ''),
                 'featured_image_src'=> get_the_post_thumbnail_url(get_the_ID(), 'full'), // Featured image source URL
                 'infoscreen'        => get_field('cb_infoscreen'), // Fetch ACF field
                 'emergency'        => get_field('cb_emergency_notification')
