@@ -6,7 +6,8 @@
       "mode": "preview"
     },
     "supports": {
-      "jsx": true
+      "jsx": true,
+      "multiple": true
     },
     "vfwp": {
       "containerable": true
