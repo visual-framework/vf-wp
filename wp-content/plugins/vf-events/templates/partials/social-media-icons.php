@@ -75,5 +75,9 @@
         </li>
 
       </ul>
+
+      <?php if ( ! empty($hashtag) && $event_organiser == "cco_hd") { ?>
+        <p class="vf-text-body vf-text-body--2 vf-u-text-color--grey"> <?php echo esc_html($hashtag); ?> </p>
+        <?php } ?>
     </div>
 
