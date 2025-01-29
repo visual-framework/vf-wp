@@ -6,7 +6,7 @@
 add_filter( 'cron_schedules', 'vfwp_intranet_add_cron_interval' );
 function vfwp_intranet_add_cron_interval( $schedules ) {
   $schedules['every_six_hours'] = array(
-    'interval' => 21600, // Every 6 hours
+    'interval' => 3600, // Every 6 hours
     'display'  => __( 'Every 6 hours' ),
   );
   return $schedules;
@@ -230,62 +230,133 @@ function insert_people_posts_from_json($people_json_feed_api_endpoint, $page_num
   }
 }
 
-// adds settings to run cron and sync people data manually
 
-add_action('admin_menu', 'sync_people_menu');
+/*
+ * Add admin notice to the People posts page
+ */
+function vfwp_enqueue_people_admin_scripts($hook) {
+  // Load only on the 'edit-people' screen
+  if ($hook !== 'edit.php' || !isset($_GET['post_type']) || $_GET['post_type'] !== 'people') {
+      return;
+  }
 
-function sync_people_menu(){
-  add_submenu_page('edit.php?post_type=people', 'People settings', 'Sync', 'manage_options', 'sync-people-slug', 'sync_people_admin_page');
+  // Enqueue the JavaScript file
+  wp_enqueue_script(
+      'vfwp-people-admin',
+      get_theme_file_uri('/scripts/people/people-admin.js'),
+      array('jquery'),
+      filemtime(get_theme_file_path('/scripts/people/people-admin.js')),
+      true
+  );
+
+  // Localize script with necessary data
+  wp_localize_script('vfwp-people-admin', 'vfwpPeopleSettings', array(
+      'adminUrl' => admin_url(),
+      'syncPath' => esc_url_raw(rest_url('vfwp/v1/sync-people')),
+      'deletePath' => esc_url_raw(rest_url('vfwp/v1/delete-people')),
+      'token' => wp_create_nonce('wp_rest'),
+      'messages' => array(
+          'syncing' => __('Syncing – please do not close this window.', 'vfwp'),
+          'deleting' => __('Deleting – please do not close this window.', 'vfwp'),
+          'reload' => __('This page will reload after the action is done.', 'vfwp'),
+          'error' => __('There was an error processing your request.', 'vfwp'),
+      ),
+  ));
+}
+add_action('admin_enqueue_scripts', 'vfwp_enqueue_people_admin_scripts');
+
+
+
+function vfwp_people_admin_notices() {
+  // Check if we're on the 'edit-people' screen
+  $screen = get_current_screen();
+  if ($screen->id !== 'edit-people') {
+      return;
+  }
+
+  
+  // Get the last sync time in UTC
+  $last_sync_time_utc = get_option('vfwp_last_sync_time', 'Never');
+  
+  // Convert to CET
+  if ($last_sync_time_utc !== 'Never') {
+    $datetime = new DateTime($last_sync_time_utc, new DateTimeZone('UTC'));
+    $datetime->setTimezone(new DateTimeZone('Europe/Berlin')); // CET/CEST timezone
+    $last_sync_time = $datetime->format('d/m/Y H:i:s');
+  } else {
+    $last_sync_time = 'Never';
+  }
+  
+  
+  // Display the notice with buttons
+echo '<div class="notice notice-info" style="padding-bottom: 12px;">
+    <p>
+        <span>' . sprintf(__('Last synced: %s', 'vfwp'), esc_html($last_sync_time)) . '</span></p>
+        <button id="vfwp-sync-people" class="button button-primary">' . __('Sync people data', 'vfwp') . '</button>
+        <button id="vfwp-delete-people" class="button button-danger" style="color: #fff; border-color: #d41645; background: #d41645;">' . __('Delete all posts', 'vfwp') . '</button>
+    
+</div>';
+
+  // Display last sync time if available
+  $last_sync_time = get_option('vfwp_last_sync_time');
+
+}
+add_action('admin_notices', 'vfwp_people_admin_notices');
+
+
+
+function vfwp_register_people_rest_routes() {
+  error_log('Registering custom REST routes...'); // Debugging line
+  register_rest_route('vfwp/v1', '/sync-people', array(
+      'methods' => 'POST',
+      'callback' => 'vfwp_sync_people_data',
+      'permission_callback' => function () {
+          return current_user_can('manage_options');
+      },
+  ));
+
+  register_rest_route('vfwp/v1', '/delete-people', array(
+      'methods' => 'POST',
+      'callback' => 'vfwp_delete_people_data',
+      'permission_callback' => function () {
+          return current_user_can('manage_options');
+      },
+  ));
+}
+add_action('rest_api_init', 'vfwp_register_people_rest_routes');
+
+
+function vfwp_sync_people_data() {
+  // Call your sync function
+  vfwp_intranet_cron_process_people_data();
+
+  // Update the last sync time *only when sync is successful*
+  update_option('vfwp_last_sync_time', current_time('mysql', true));
+  
+  return array('success' => true, 'message' => __('People data synced successfully.', 'vfwp'));
 }
 
-function sync_people_admin_page() {
-  if (!current_user_can('manage_options'))  {
-    wp_die( __('You do not have sufficient pilchards to access this page.')    );
-  }
-  // Start building the page
-  echo '<div class="wrap">';
-  echo '<h2>Sync people data</h2>';
-  // Check whether the button has been pressed AND also check the nonce
-  if (isset($_POST['sync_people']) && check_admin_referer('sync_people_clicked')) {
-    // the button has been pressed AND we've passed the security check
-    vfwp_intranet_cron_process_people_data();
-  }
-  echo '<form action="edit.php?post_type=people&page=sync-people-slug" method="post">';
-  // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
-  wp_nonce_field('sync_people_clicked');
-  echo '<input type="hidden" value="true" name="sync_people" />';
-  submit_button('Sync');
-  echo '</form>';
-  echo '</div>';
+function vfwp_delete_people_data() {
+  // Get all posts of the 'people' post type
+  $query = new WP_Query(array(
+      'post_type'      => 'people',
+      'posts_per_page' => -1,
+      'fields'         => 'ids', // Only retrieve the IDs
+      'post_status'    => 'any', // Include drafts, published, etc.
+  ));
 
+  // Check if there are posts to delete
+  if (!$query->have_posts()) {
+      return array('success' => false, 'message' => __('No people data found to delete.', 'vfwp'));
+  }
+
+  // Delete each post
+  foreach ($query->posts as $post_id) {
+      $deleted = wp_delete_post($post_id, true); // true for force delete
+      if (!$deleted) {
+          return array('success' => false, 'message' => __('Failed to delete some people data.', 'vfwp'));
+      }
+  }
+
+  return array('success' => true, 'message' => __('All people data deleted successfully.', 'vfwp'));
 }
-
-add_action('admin_menu', 'delete_people_menu');
-
-function delete_people_menu(){
-  add_submenu_page('edit.php?post_type=people', 'People settings', 'Delete', 'manage_options', 'delete-people-slug', 'delete_people_admin_page');
-}
-
-function delete_people_admin_page() {
-  if (!current_user_can('manage_options'))  {
-    wp_die( __('You do not have sufficient pilchards to access this page.')    );
-  }
-  // Start building the page
-  echo '<div class="wrap">';
-  echo '<h2>Delete all people posts</h2>';
-  // Check whether the button has been pressed AND also check the nonce
-  if (isset($_POST['delete_people']) && check_admin_referer('delete_people_clicked')) {
-    // the button has been pressed AND we've passed the security check
-    delete_all_people_posts();
-  }
-  echo '<form action="edit.php?post_type=people&page=delete-people-slug" method="post">';
-  // this is a WordPress security feature - see: https://codex.wordpress.org/WordPress_Nonces
-  wp_nonce_field('delete_people_clicked');
-  echo '<input type="hidden" value="true" name="delete_people" />';
-  submit_button('Delete');
-  echo '</form>';
-  echo '</div>';
-
-}
-
-?>
