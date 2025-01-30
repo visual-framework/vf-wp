@@ -5,22 +5,24 @@
 
 add_filter( 'cron_schedules', 'vfwp_intranet_add_cron_interval' );
 function vfwp_intranet_add_cron_interval( $schedules ) {
-  $schedules['every_six_hours'] = array(
-    'interval' => 3600, // Every 6 hours
-    'display'  => __( 'Every 6 hours' ),
+  $schedules['every_hour'] = array(
+    'interval' => 3600, // Every 1h
+    'display'  => __( 'Every 1h' ),
   );
   return $schedules;
 }
 
 // Check if cron scheduled or not.
 if ( ! wp_next_scheduled( 'vfwp_intranet_cron_process' ) ) {
-  wp_schedule_event( time(), 'every_six_hours', 'vfwp_intranet_cron_process' );
+  wp_schedule_event( time(), 'every_hour', 'vfwp_intranet_cron_process' );
 }
 
 add_action('vfwp_intranet_cron_process', 'vfwp_intranet_cron_process_people_data');
 
 // Function to start process people data.
 function vfwp_intranet_cron_process_people_data() {
+  update_option('vfwp_last_sync_time', current_time('mysql', true));
+
 
   // Get all existing posts with their BDR IDs
   $existing_posts = get_posts(array(
@@ -331,7 +333,6 @@ function vfwp_sync_people_data() {
   vfwp_intranet_cron_process_people_data();
 
   // Update the last sync time *only when sync is successful*
-  update_option('vfwp_last_sync_time', current_time('mysql', true));
   
   return array('success' => true, 'message' => __('People data synced successfully.', 'vfwp'));
 }
