@@ -36,7 +36,7 @@
             "name": "wprest_api_1",
             "aria-label": "",
             "type": "url",
-            "instructions": "Example:\r\nhttps:\/\/www.embl.org\/news\/wp-json\/wp\/v2\/posts?embl_taxonomy=1514&per_page=4",
+            "instructions": "Example:\r\nhttps:\/\/www.embl.org\/news\/wp-json\/wp\/v2\/posts?embl_taxonomy=5154&per_page=4",
             "required": 0,
             "conditional_logic": [
                 [
@@ -59,10 +59,10 @@
         {
             "key": "field_679e2b3b2681c",
             "label": "WP REST API 2",
-            "name": "wprest_api_1",
+            "name": "wprest_api_2",
             "aria-label": "",
             "type": "url",
-            "instructions": "Example:\r\nhttps:\/\/www.embl.org\/news\/wp-json\/custom\/v1\/awards?award_site=grenoble&award_unit=molecular-systems-biology",
+            "instructions": "Example:\r\nhttps:\/\/www.embl.org\/news\/wp-json\/custom\/v1\/awards?award_site=grenoble&award_unit=molecular%20systems%20biology",
             "required": 0,
             "conditional_logic": [
                 [
@@ -434,9 +434,9 @@
         {
             "key": "field_67a09b7de6cb9",
             "label": "Section header",
-            "name": "section_header",
+            "name": "section_header_text",
             "aria-label": "",
-            "type": "link",
+            "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -453,8 +453,38 @@
                 "class": "",
                 "id": ""
             },
-            "return_format": "array",
-            "allow_in_bindings": 0
+            "default_value": "Latest news",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_67a1d5d158acc",
+            "label": "Section header URL",
+            "name": "section_header_url",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_679e43a8ff272",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "https:\/\/www.embl.org\/news\/",
+            "allow_in_bindings": 0,
+            "placeholder": ""
         }
     ],
     "location": [

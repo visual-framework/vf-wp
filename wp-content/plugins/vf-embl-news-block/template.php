@@ -31,7 +31,6 @@ $tags = explode(',', $tags ?? '');
 $tags = array_map('trim', $tags);
 
 
-
 if ($fetch == 'default' || empty($fetch)) {
 
 if (is_int($embl_terms)) {
@@ -147,18 +146,9 @@ if (empty(get_field('wprest_api_1')) && empty(get_field('wprest_api_2'))) {
 
 <div id="vf-news-container"></div>
 <?php
-$section_header = get_field('section_header'); // Fetch the section header from ACF
-// Extract the values from the link array (url, title, target)
-if ($section_header) {
-  $section_header_url = $section_header['url'];
-} else {
-  $section_header_title = 'Latest news'; // Fallback title if no value is found
-}
 
-add_filter(
-  'vf/theme/content/is_block_wrapped/name=acf/vf-embl-news-block',
-  '__return_false'
-);
+
+
 
 
 $fetchPosts = '<script>
@@ -166,6 +156,8 @@ document.addEventListener("DOMContentLoaded", async function() {
   async function fetchAndDisplayLatestProjects() {
     const endpoint1 = "' . esc_js(get_field('wprest_api_1')) . '";
     const endpoint2 = "' . esc_js(get_field('wprest_api_2')) . '";
+    const header = "' . esc_js(get_field('section_header_text')) . '";
+    const headerURL = "' . esc_js(get_field('section_header_url')) . '";
     
     console.log("Fetching from:", endpoint1, endpoint2); // Debugging
     
@@ -214,9 +206,12 @@ document.addEventListener("DOMContentLoaded", async function() {
                           
                           container.innerHTML = `
                           <section class="vf-news-container vf-news-container--featured | vf-stack">
-                          <div class="vf-section-header">
-                          <h2 class="vf-section-header__heading">Latest news</h2>
+                           <div class="vf-section-header">
+                            <h2 class="vf-section-header__heading vf-section-header__heading--is-link" id="section-link"><a href="${headerURL}">${header}</a><svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+                            </svg></h2>
                           </div>
+                     
                           <div class="vf-news-container__content | vf-grid vf-grid__col-4">
                           ${latestPosts.map(post => `
                           <article class="vf-summary vf-summary--news">
@@ -236,8 +231,11 @@ document.addEventListener("DOMContentLoaded", async function() {
                           </script>';
                           
                           echo $fetchPosts;
+                          // Re-add wrappers after content
 
                         }
+
+
 else if($fetch == 'contenthub') {
   if ($is_preview) { ?>
 <div class="vf-banner vf-banner--alert vf-banner--info">
@@ -253,5 +251,5 @@ else if($fetch == 'contenthub') {
   $contenthubHTML = get_field('contenthub_data_fetch');
   echo $contenthubHTML; }
 
-
+// Re-add wrappers after content
 ?>
