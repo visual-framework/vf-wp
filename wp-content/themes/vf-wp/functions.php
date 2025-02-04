@@ -513,18 +513,30 @@ if ( class_exists('VF_Events') ) {
 Register the custom REST API route to get all posts
 */
 
+// /wp-json/custom/v1/all-posts/?per_page=5
+
 add_action('rest_api_init', function () {
   register_rest_route('custom/v1', '/all-posts/', array(
       'methods' => 'GET',
       'callback' => 'custom_api_get_all_posts',
+      'args' => array(
+          'per_page' => array(
+              'validate_callback' => function($param, $request, $key) {
+                  return is_numeric($param) && $param > 0;
+              },
+              'default' => 10, // Default value if not provided
+          ),
+      ),
   ));
 });
 
 // Callback function to fetch all posts
 function custom_api_get_all_posts($request) {
+  $per_page = isset($request['per_page']) ? intval($request['per_page']) : 10;
+
   $args = array(
       'post_type'      => 'post',
-      'posts_per_page' => -1, // Fetch all posts
+      'posts_per_page' => $per_page, // Use per_page parameter
       'post_status'    => 'publish',
   );
 
@@ -535,11 +547,11 @@ function custom_api_get_all_posts($request) {
       while ($query->have_posts()) {
           $query->the_post();
           $posts[] = array(
-              'title'   => get_the_title(),
-              'excerpt' => get_the_excerpt(),
-              'date'    => get_the_date(),
-              'link'    => get_permalink(),
-              'featured_image_src'    => get_the_post_thumbnail_url(get_the_ID(), 'full')
+              'title'             => get_the_title(),
+              'excerpt'           => get_the_excerpt(),
+              'date'              => get_the_date(),
+              'link'              => get_permalink(),
+              'featured_image_src'=> get_the_post_thumbnail_url(get_the_ID(), 'full')
           );
       }
       wp_reset_postdata();
@@ -547,7 +559,6 @@ function custom_api_get_all_posts($request) {
 
   return rest_ensure_response($posts);
 }
-
 
 
 
