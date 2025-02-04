@@ -140,26 +140,38 @@ class VFWP_Block {
     }
 
     // Setup render callback using VF Gutenberg plugin or fallback
-    $callback = function() {
-      $args = func_get_args();
-      $template = $this->config['acf']['renderTemplate'];
-      // Render block in iFrame by default if plugin exists
-      $is_iframe = class_exists('VF_Gutenberg');
-      // Disable iFrame render if specified
-      if ($this->conf(['vfwp', 'iframeRender']) === false) {
-        $is_iframe = false;
-      }
-      if ($this->conf(['supports', 'jsx']) === true) {
-        $is_iframe = false;
-      }
-      if ($is_iframe) {
-        VF_Gutenberg::acf_render_template($args, $template);
-      } else {
-        $block = $args[0];
-        $is_preview = $args[2];
-        include($template);
-      }
-    };
+    
+  $callback = function() {
+  $args = func_get_args();
+  $template = $this->config['acf']['renderTemplate'];
+  // Render block in iFrame by default if plugin exists
+  $is_iframe = class_exists('VF_Gutenberg');
+  // Disable iFrame render if specified
+  if ($this->conf(['vfwp', 'iframeRender']) === false) {
+    $is_iframe = false;
+  }
+  if ($this->conf(['supports', 'jsx']) === true) {
+    $is_iframe = false;
+  }
+  if ($is_iframe) {
+    VF_Gutenberg::acf_render_template($args, $template);
+  } else {
+    $block = $args[0];
+    $is_preview = $args[2];
+
+    // Add wrapper to disable link clicks in Gutenberg editor preview
+    if ($is_preview) {
+      echo '<div style="pointer-events: none;">';
+    }
+
+    include($template);
+
+    if ($is_preview) {
+      echo '</div>';
+    }
+  }
+};
+
 
     if ($json) {
 
