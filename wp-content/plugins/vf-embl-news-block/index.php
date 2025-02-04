@@ -32,6 +32,7 @@ class VF_EMBL_News_Block {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
+
   }
 
   /**
