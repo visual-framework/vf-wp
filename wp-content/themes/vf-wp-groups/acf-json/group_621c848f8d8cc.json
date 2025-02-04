@@ -6,6 +6,7 @@
             "key": "field_621c849c2ad18",
             "label": "Custom template",
             "name": "vf_groups_custom_blog_template",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -20,6 +21,78 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_67a1dcd7dc54b",
+            "label": "WP REST API 1",
+            "name": "wp_rest_api_1",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_67a1dcf6dc54c",
+            "label": "WP REST API 2",
+            "name": "wp_rest_api_2",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 1,
+            "placeholder": ""
+        },
+        {
+            "key": "field_67a1dcfcdc54d",
+            "label": "WP REST API 3",
+            "name": "wp_rest_api_3",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "allow_in_bindings": 1,
+            "placeholder": ""
+        },
+        {
+            "key": "field_67a1dd710c148",
+            "label": "Custom endpoints",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Use the field below to customize the blogs feed",
+            "new_lines": "wpautop",
+            "esc_html": 0
         }
     ],
     "location": [
@@ -39,6 +112,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "modified": 1646037185
-
+    "show_in_rest": 0
 }
