@@ -768,21 +768,21 @@ foreach ($wp_taxonomy as $wp_term) {
     $notice = false;
 
     // Sync required (all pages)
-    if (($now - $modified) >= EMBL_Taxonomy::MAX_AGE) {
-      printf('<div class="%1$s"><p><span>%2$s</span> %3$s</p></div>',
-        esc_attr('notice notice-warning'),
-        esc_html(sprintf(
-          __('The %1$s may be outdated and should be synced', 'embl'),
-          $this->labels['name']
-        )),
-        sprintf(
-          '<button id="embl-taxonomy-sync" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
-          esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&sync=true'),
-          esc_html(__('Sync now', 'embl'))
-        )
-      );
-      $notice = true;
-    }
+    // if (($now - $modified) >= EMBL_Taxonomy::MAX_AGE) {
+    //   printf('<div class="%1$s"><p><span>%2$s</span> %3$s</p></div>',
+    //     esc_attr('notice notice-warning'),
+    //     esc_html(sprintf(
+    //       __('The %1$s may be outdated and should be synced', 'embl'),
+    //       $this->labels['name']
+    //     )),
+    //     sprintf(
+    //       '<button id="embl-taxonomy-sync" type="button" data-href="%1$s" class="button button-small">%2$s</button>',
+    //       esc_attr('edit-tags.php?taxonomy=' . EMBL_Taxonomy::TAXONOMY_NAME . '&sync=true'),
+    //       esc_html(__('Sync now', 'embl'))
+    //     )
+    //   );
+    //   $notice = true;
+    // }
 
     // Sync happened (all pages)
     // if (($now - $modified) <= 10) {
