@@ -36,7 +36,7 @@
             "name": "wprest_api_1",
             "aria-label": "",
             "type": "url",
-            "instructions": "Example:\r\nhttps:\/\/www.embl.org\/news\/wp-json\/wp\/v2\/posts?embl_taxonomy=5154&per_page=4",
+            "instructions": "Example:\r\nhttps:\/\/www.embl.org\/news\/wp-json\/custom\/v1\/posts?taxonomy_slug=alumni-relations",
             "required": 0,
             "conditional_logic": [
                 [
