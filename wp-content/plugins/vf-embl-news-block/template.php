@@ -153,82 +153,89 @@ if (empty(get_field('wprest_api_1')) && empty(get_field('wprest_api_2'))) {
 
 $fetchPosts = '<script>
 document.addEventListener("DOMContentLoaded", async function() {
+  let cachedPosts = null;
+
   async function fetchAndDisplayLatestProjects() {
-    const endpoint1 = "' . esc_js(get_field('wprest_api_1')) . '";
-    const endpoint2 = "' . esc_js(get_field('wprest_api_2')) . '";
+    if (cachedPosts) {
+      renderPosts(cachedPosts);
+      return;
+    }
+
+    const endpoints = [
+      "' . esc_js(get_field('wprest_api_1')) . '",
+      "' . esc_js(get_field('wprest_api_2')) . '"
+    ].filter(Boolean);
+
     const header = "' . esc_js(get_field('section_header_text')) . '";
     const headerURL = "' . esc_js(get_field('section_header_url')) . '";
-    
-    console.log("Fetching from:", endpoint1, endpoint2); // Debugging
-    
-    const endpoints = [endpoint1, endpoint2].filter(Boolean); // Filter out empty endpoints
-    let mergedPosts = [];
-    
-        for (const endpoint of endpoints) {
-            try {
-              const response = await fetch(endpoint);
-              if (!response.ok) throw new Error("Network response was not ok: " + response.statusText);
-              const data = await response.json();
-              console.log("Data from", endpoint, data); // Debugging
-              
-              if (Array.isArray(data)) {
-                mergedPosts = mergedPosts.concat(data);
-                } else if (Array.isArray(data.posts)) {
-                  mergedPosts = mergedPosts.concat(data.posts);
-                  }
-                  } catch (error) {
-                    console.error("Error fetching data from", endpoint, error);
-                    }
-                    }
-                    
-                    if (mergedPosts.length === 0) {
-                      console.warn("No posts found.");
-                      return;
-                      }
-                      
-                      const normalizedPosts = mergedPosts.map(post => ({
-                        id: post.id,
-                        title: post.title?.rendered || post.title || "No title",
-                        date: post.date || new Date().toISOString(),
-                        excerpt: post.excerpt?.rendered ? post.excerpt.rendered.replace(/<[^>]+>/g, "") : (post.excerpt || ""),
-                        image: post.featured_image_src,
-                        url: post.link || post.url || "#"
-                        }));
-                        
-                        normalizedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-                        const latestPosts = normalizedPosts.slice(0, 4);
-                        
-                        const container = document.querySelector("#vf-news-container");
-                        if (!container) {
-                          console.error("Container with ID #vf-news-container not found.");
-                          return;
-                          }
-                          
-                          container.innerHTML = `
-                          <section class="vf-news-container vf-news-container--featured | vf-stack">
-                           <div class="vf-section-header">
-                            <h2 class="vf-section-header__heading vf-section-header__heading--is-link" id="section-link"><a href="${headerURL}">${header}</a><svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
-                            </svg></h2>
-                          </div>
-                     
-                          <div class="vf-news-container__content | vf-grid vf-grid__col-4">
-                          ${latestPosts.map(post => `
-                          <article class="vf-summary vf-summary--news">
-                          <span class="vf-summary__date">${new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</span>
-                          <img class="vf-summary__image" src="${post.image}" alt="${post.title}" loading="lazy">
-                          <h3 class="vf-summary__title" style="margin-bottom: 1rem;"><a class="vf-summary__link" href="${post.url}" target="_blank" rel="noopener noreferrer">${post.title}</a></h3>
-                          </article>
-                          `).join("")}
-                          </div>
-                          </section>
-                          `;
-                          }
-                          
-                          fetchAndDisplayLatestProjects();
-                          });
-                          
-                          </script>';
+    console.log("Fetching from:", endpoints);
+
+    try {
+      const responses = await Promise.all(endpoints.map(endpoint => fetch(endpoint)));
+      const data = await Promise.all(responses.map(response => response.ok ? response.json() : Promise.reject(response.statusText)));
+
+      let mergedPosts = data.flatMap(item => Array.isArray(item) ? item : (Array.isArray(item.posts) ? item.posts : []));
+      if (mergedPosts.length === 0) {
+        console.warn("No posts found.");
+        return;
+      }
+
+      cachedPosts = mergedPosts.map(post => ({
+        id: post.id,
+        title: post.title?.rendered || post.title || "No title",
+        date: post.date || new Date().toISOString(),
+        excerpt: post.excerpt?.rendered ? post.excerpt.rendered.replace(/<[^>]+>/g, "") : (post.excerpt || ""),
+        image: post.featured_image_src,
+        url: post.link || post.url || "#"
+      })).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      cachedPosts = cachedPosts.slice(0, 4);
+      renderPosts(cachedPosts, header, headerURL);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  function renderPosts(posts, header, headerURL) {
+    const container = document.querySelector("#vf-news-container");
+    if (!container) {
+      console.error("Container with ID #vf-news-container not found.");
+      return;
+    }
+
+    const htmlContent = `
+      <section class="vf-news-container vf-news-container--featured | vf-stack">
+        <div class="vf-section-header">
+          <h2 class="vf-section-header__heading vf-section-header__heading--is-link" id="section-link">
+            <a href="${headerURL}">${header}</a>
+            <svg aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z" fill="" fill-rule="nonzero"></path>
+            </svg>
+          </h2>
+        </div>
+
+        <div class="vf-news-container__content | vf-grid vf-grid__col-4">
+          ${posts.map(post => `
+            <article class="vf-summary vf-summary--news">
+              <span class="vf-summary__date">
+                ${new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+              </span>
+              <img class="vf-summary__image" src="${post.image}" alt="${post.title}" loading="lazy">
+              <h3 class="vf-summary__title" style="margin-bottom: 1rem;">
+                <a class="vf-summary__link" href="${post.url}" target="_blank" rel="noopener noreferrer">${post.title}</a>
+              </h3>
+            </article>
+          `).join("")}
+        </div>
+      </section>
+    `;
+    container.innerHTML = htmlContent;
+  }
+
+  fetchAndDisplayLatestProjects();
+});
+</script>
+';
                           
                           echo $fetchPosts;
                           // Re-add wrappers after content
