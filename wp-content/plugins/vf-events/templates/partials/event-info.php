@@ -181,7 +181,12 @@ if (is_array($poster_image)) {
         Registration<?php if (!empty($registration_closing)) {echo ' (On-site)';} ?>:
         <?php } else if ($registration_type == 'application'){ ?>
         Application:
-        <?php  } ?>
+        <?php  }
+        else { 
+          if ($event_organiser == 'public_engagement') {
+          echo 'Registration:'; 
+          }
+          } ?>
       </span> <span class="vf-u-text-color--grey">
         <?php if ($registration_date_formated_on_site >= $current_date) {
           echo esc_html($registration_closing_on_site);

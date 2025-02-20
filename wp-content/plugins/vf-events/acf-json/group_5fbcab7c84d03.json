@@ -20,13 +20,15 @@
                 "default": "Default",
                 "cco_hd": "CCO Heidelberg",
                 "science_society": "Science and Society",
-                "trec_event": "TREC Events"
+                "trec_event": "TREC Events",
+                "public_engagement": "Public Engagement"
             },
             "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 0,
             "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 0,
             "ajax": 0,
             "placeholder": ""
         },
@@ -183,8 +185,15 @@
                 [
                     {
                         "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "default"
                     }
                 ]
             ],
@@ -206,11 +215,12 @@
                 "98": "Other"
             },
             "default_value": [],
-            "allow_null": 0,
+            "return_format": "label",
             "multiple": 1,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
             "ui": 1,
             "ajax": 0,
-            "return_format": "label",
             "placeholder": ""
         },
         {
@@ -263,6 +273,46 @@
             "ui": 1,
             "ajax": 0,
             "return_format": "label",
+            "placeholder": ""
+        },
+        {
+            "key": "field_67b5c45853102",
+            "label": "Location",
+            "name": "vf_event_pb_location",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "public_engagement"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Barcelona": "Barcelona",
+                "EBI (Hinxton)": "EBI (Hinxton)",
+                "Grenoble": "Grenoble",
+                "Hamburg": "Hamburg",
+                "Heidelberg": "Heidelberg",
+                "Rome": "Rome",
+                "Other": "Other"
+            },
+            "default_value": false,
+            "return_format": "label",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 1,
+            "ajax": 0,
             "placeholder": ""
         },
         {
@@ -359,18 +409,8 @@
                 [
                     {
                         "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "science_society"
-                    },
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "default"
-                    },
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
+                        "operator": "==",
+                        "value": "cco_hd"
                     }
                 ]
             ],
@@ -388,11 +428,12 @@
                 "other": "Other"
             },
             "default_value": false,
-            "allow_null": 0,
+            "return_format": "array",
             "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
             "ui": 1,
             "ajax": 0,
-            "return_format": "array",
             "placeholder": ""
         },
         {
@@ -551,25 +592,18 @@
             "type": "text",
             "instructions": "If empty the event type will be displayed",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "50",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_5e9850b053db2",
@@ -645,7 +679,7 @@
         },
         {
             "key": "field_63fc9b7bb133a",
-            "label": "Registration TREC",
+            "label": "Registration link",
             "name": "vf_event_trec_registration",
             "aria-label": "",
             "type": "url",
@@ -666,6 +700,7 @@
                 "id": ""
             },
             "default_value": "",
+            "allow_in_bindings": 1,
             "placeholder": ""
         },
         {
@@ -735,6 +770,13 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "public_engagement"
+                    }
                 ]
             ],
             "wrapper": {
@@ -744,7 +786,8 @@
             },
             "display_format": "j M Y",
             "return_format": "j M Y",
-            "first_day": 1
+            "first_day": 1,
+            "allow_in_bindings": 1
         },
         {
             "key": "field_61713b68f4311",
@@ -761,6 +804,13 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "public_engagement"
+                    }
                 ]
             ],
             "wrapper": {
@@ -769,10 +819,11 @@
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_61713b75f4312",
@@ -789,6 +840,13 @@
                         "operator": "==",
                         "value": "cco_hd"
                     }
+                ],
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "public_engagement"
+                    }
                 ]
             ],
             "wrapper": {
@@ -797,10 +855,11 @@
                 "id": ""
             },
             "default_value": "Register",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_61713d2a583ec",
@@ -966,10 +1025,11 @@
                 "id": ""
             },
             "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
             "placeholder": "",
             "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "append": ""
         },
         {
             "key": "field_5e98502253db0",
@@ -1869,7 +1929,15 @@
             "type": "tab",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5fbcab958038b",
+                        "operator": "==",
+                        "value": "cco_hd"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -1885,7 +1953,7 @@
             "name": "vf_event_custom_faq",
             "aria-label": "",
             "type": "wysiwyg",
-            "instructions": "Leave 'empty' if there is no additional information to be added to the FAQ",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1893,7 +1961,7 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "empty",
+            "default_value": "",
             "allow_in_bindings": 0,
             "tabs": "all",
             "toolbar": "full",

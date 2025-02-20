@@ -509,6 +509,48 @@ if ( class_exists('VF_Events') ) {
   }
 }
 
+/*
+Register the custom REST API route to get all posts
+*/
+
+// /wp-json/custom/v1/all-posts/
+
+add_action('rest_api_init', function () {
+  register_rest_route('custom/v1', '/all-posts/', array(
+      'methods' => 'GET',
+      'callback' => 'custom_api_get_all_posts',
+  ));
+});
+
+// Callback function to fetch all posts
+function custom_api_get_all_posts($request) {
+  $args = array(
+      'post_type'      => 'post',
+      'posts_per_page' => -1, // Fetch all posts
+      'post_status'    => 'publish',
+  );
+
+  $query = new WP_Query($args);
+  $posts = array();
+
+  if ($query->have_posts()) {
+      while ($query->have_posts()) {
+          $query->the_post();
+          $posts[] = array(
+              'title'   => get_the_title(),
+              'excerpt' => get_the_excerpt(),
+              'date'    => get_the_date(),
+              'link'    => get_permalink(),
+              'featured_image_src'    => get_the_post_thumbnail_url(get_the_ID(), 'full')
+          );
+      }
+      wp_reset_postdata();
+  }
+
+  return rest_ensure_response($posts);
+}
+
+
 
 
 

@@ -140,6 +140,7 @@ class VFWP_Block {
     }
 
     // Setup render callback using VF Gutenberg plugin or fallback
+    
     $callback = function() {
       $args = func_get_args();
       $template = $this->config['acf']['renderTemplate'];
@@ -157,9 +158,23 @@ class VFWP_Block {
       } else {
         $block = $args[0];
         $is_preview = $args[2];
+    
+        // Check if the block is 'acf/vfwp-card'
+        $is_vfwp_card = isset($block['name']) && $block['name'] === 'acf/vfwp-card';
+    
+        // Add wrapper to disable link clicks only for 'acf/vfwp-card' in preview
+        if ($is_preview && $is_vfwp_card) {
+          echo '<div style="pointer-events: none;">';
+        }
+    
         include($template);
+    
+        if ($is_preview && $is_vfwp_card) {
+          echo '</div>';
+        }
       }
     };
+
 
     if ($json) {
 
