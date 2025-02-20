@@ -62,160 +62,115 @@ if ($custom_template) {echo '<br>';}
       }  }
       else {
         $fetchPosts = '<script>
-        document.addEventListener("DOMContentLoaded", async function() {
-          const postsPerPage = 10; 
-          let currentPage = 1; 
-      
-          const container = document.querySelector("#vf-blog-container");
-          const loadingSpinner = document.createElement("div");
-          loadingSpinner.classList.add("loader");
-      
-          window.changePage = function(page) {
-            currentPage = page;
-            fetchAndDisplayLatestProjects(currentPage);
-          }
-      
-          async function fetchAndDisplayLatestProjects(page) {
-            loadingSpinner.style.display = "inline-block";
-            container.innerHTML = ""; 
-            container.appendChild(loadingSpinner);
-      
-            const endpoints = [
+  document.addEventListener("DOMContentLoaded", async function () {
+    const postsPerPage = 10;
+    let currentPage = 1;
+    let cachedPosts = null;
+
+    const container = document.querySelector("#vf-blog-container");
+    const loadingSpinner = document.createElement("div");
+    loadingSpinner.classList.add("loader");
+
+    window.changePage = function (page) {
+      currentPage = page;
+      fetchAndDisplayLatestProjects(currentPage);
+       window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+
+    async function fetchAndDisplayLatestProjects(page) {
+      if (!cachedPosts) {
+        container.innerHTML = "";
+        container.appendChild(loadingSpinner);
+
+        const endpoints = [
               "' . esc_js(get_field('wp_rest_api_1',  $page_for_posts_id)) . '",
               "' . esc_js(get_field('wp_rest_api_2',  $page_for_posts_id)) . '",
               "' . esc_js(get_field('wp_rest_api_3',  $page_for_posts_id)) . '"
             ].filter(Boolean);
-      
-            let mergedPosts = [];
-      
-            for (const endpoint of endpoints) {
-              try {
-                const response = await fetch(endpoint);
-                if (!response.ok) throw new Error("Network error: " + response.statusText);
-                const data = await response.json();
-                if (Array.isArray(data)) {
-                  mergedPosts = mergedPosts.concat(data);
-                } else if (Array.isArray(data.posts)) {
-                  mergedPosts = mergedPosts.concat(data.posts);
-                }
-              } catch (error) {
-                console.error("Fetch error:", error);
-              }
-            }
-      
-            if (mergedPosts.length === 0) {
-              loadingSpinner.style.display = "none";
-              return;
-            }
-      
-            const normalizedPosts = mergedPosts.map(post => ({
-              id: post.id,
-              title: post.title?.rendered || post.title || "No title",
-              date: post.date || new Date().toISOString(),
-              excerpt: post.excerpt?.rendered ? post.excerpt.rendered.replace(/<[^>]+>/g, "") : (post.excerpt || ""),
-              image: post.featured_image_src,
-              url: post.link || post.url || "#"
-            }));
-      
-            normalizedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
-      
-            const paginatedPosts = normalizedPosts.slice((page - 1) * postsPerPage, page * postsPerPage);
-            const totalPages = Math.ceil(normalizedPosts.length / postsPerPage);
-      
-            container.innerHTML = `
-              ${paginatedPosts.map(post => `
-                <article class="vf-summary vf-summary--news">
-                  ${post.image ? `
-                    <span class="vf-summary__meta | vf-u-margin__bottom--200">
-                      <time class="vf-summary__date" datetime="${new Date(post.date).toISOString()}">
-                        ${new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
-                      </time>
-                    </span>
-                    <img class="vf-summary__image" src="${post.image}" alt="${post.title}" style="height: auto;" loading="lazy">
-                  ` : `
-                    <span class="vf-summary__meta | vf-u-margin__bottom--200" style="grid-column: 2/-1;">
-                      <time class="vf-summary__date" datetime="${new Date(post.date).toISOString()}">
-                        ${new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
-                      </time>
-                    </span>
-                  `}
-                  <h2 class="vf-summary__title">
-                    <a href="${post.url}" class="vf-summary__link" target="_blank" rel="noopener noreferrer">${post.title}</a>
-                  </h2>
-                  <p class="vf-summary__text">${post.excerpt}</p>
-                </article>
-              `).join("")}
-      
-              ${generatePagination(totalPages, page)}
-            `;
-      
-            loadingSpinner.style.display = "none";
-          }
-      
-          function generatePagination(totalPages, currentPage) {
-            let paginationHTML = `<nav class="vf-pagination" aria-label="Pagination"><ul class="vf-pagination__list">`;
-      
-            // Previous Button
-            if (currentPage > 1) {
-              paginationHTML += `
-                <li class="vf-pagination__item vf-pagination__item--previous-page">
-                  <a href="javascript:void(0);" class="vf-pagination__link" onclick="changePage(${currentPage - 1})">
-                    Previous<span class="vf-u-sr-only"> page</span>
-                  </a>
-                </li>`;
-            }
-      
-            const pagesToShow = [];
-            pagesToShow.push(1, 2); // Always show first two pages
-      
-            // Add pages around current page
-            for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-              if (i > 2 && i < totalPages - 1) pagesToShow.push(i);
-            }
-      
-            pagesToShow.push(totalPages - 1, totalPages); // Always show last two pages
-      
-            const uniquePages = [...new Set(pagesToShow)].filter(page => page >= 1 && page <= totalPages).sort((a, b) => a - b);
-      
-            uniquePages.forEach((page, index) => {
-              if (index > 0 && uniquePages[index] - uniquePages[index - 1] > 1) {
-                paginationHTML += `<li class="vf-pagination__item"><span class="vf-pagination__label">...</span></li>`;
-              }
-      
-              if (page === currentPage) {
-                paginationHTML += `
-                  <li class="vf-pagination__item vf-pagination__item--is-active">
-                    <span class="vf-pagination__label" aria-current="page">
-                      <span class="vf-u-sr-only">Page </span>${page}
-                    </span>
-                  </li>`;
-              } else {
-                paginationHTML += `
-                  <li class="vf-pagination__item">
-                    <a href="javascript:void(0);" class="vf-pagination__link" onclick="changePage(${page})">
-                      ${page}<span class="vf-u-sr-only"> page</span>
-                    </a>
-                  </li>`;
-              }
-            });
-      
-            // Next Button
-            if (currentPage < totalPages) {
-              paginationHTML += `
-                <li class="vf-pagination__item vf-pagination__item--next-page">
-                  <a href="javascript:void(0);" class="vf-pagination__link" onclick="changePage(${currentPage + 1})">
-                    Next<span class="vf-u-sr-only"> page</span>
-                  </a>
-                </li>`;
-            }
-      
-            paginationHTML += `</ul></nav>`;
-            return paginationHTML;
-          }
-      
-          fetchAndDisplayLatestProjects(currentPage);
-        });
-      </script>';
+
+        try {
+          const responses = await Promise.all(
+            endpoints.map((endpoint) => fetch(endpoint).then((res) => res.json()))
+          );
+
+          cachedPosts = responses.flatMap((data) => (Array.isArray(data) ? data : data.posts || []));
+          cachedPosts = cachedPosts.map((post) => ({
+            id: post.id,
+            title: post.title?.rendered || post.title || "No title",
+            date: post.date || new Date().toISOString(),
+            excerpt: post.excerpt?.rendered?.replace(/<[^>]+>/g, "") || post.excerpt || "",
+            image: post.featured_image_src,
+            url: post.link || post.url || "#"
+          })).sort((a, b) => new Date(b.date) - new Date(a.date));
+        } catch (error) {
+          console.error("Fetch error:", error);
+          loadingSpinner.style.display = "none";
+          return;
+        }
+      }
+
+      const paginatedPosts = cachedPosts.slice((page - 1) * postsPerPage, page * postsPerPage);
+      const totalPages = Math.ceil(cachedPosts.length / postsPerPage);
+
+      const postsHTML = paginatedPosts
+        .map(
+          (post) => `
+            <article class="vf-summary vf-summary--news">
+              ${post.image ? `
+                <span class="vf-summary__meta | vf-u-margin__bottom--200">
+                  <time class="vf-summary__date" datetime="${new Date(post.date).toISOString()}">
+                    ${new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+                  </time>
+                </span>
+                <img class="vf-summary__image" src="${post.image}" alt="${post.title}" style="height: auto;" loading="lazy">
+              ` : `
+                <span class="vf-summary__meta | vf-u-margin__bottom--200" style="grid-column: 2/-1;">
+                  <time class="vf-summary__date" datetime="${new Date(post.date).toISOString()}">
+                    ${new Date(post.date).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+                  </time>
+                </span>
+              `}
+              <h2 class="vf-summary__title">
+                <a href="${post.url}" class="vf-summary__link" target="_blank" rel="noopener noreferrer">${post.title}</a>
+              </h2>
+              <p class="vf-summary__text">${post.excerpt}</p>
+            </article>
+          `
+        )
+        .join("");
+
+      container.innerHTML = postsHTML + generatePagination(totalPages, page);
+    }
+
+    function generatePagination(totalPages, currentPage) {
+      let paginationHTML = `<nav class="vf-pagination" aria-label="Pagination"><ul class="vf-pagination__list">`;
+      if (currentPage > 1) {
+        paginationHTML += `
+          <li class="vf-pagination__item vf-pagination__item--previous-page">
+            <a href="javascript:void(0);" class="vf-pagination__link" onclick="changePage(${currentPage - 1})">Previous</a>
+          </li>`;
+      }
+      for (let i = 1; i <= totalPages; i++) {
+        if (i === currentPage) {
+          paginationHTML += `<li class="vf-pagination__item vf-pagination__item--is-active"><span class="vf-pagination__label">${i}</span></li>`;
+        } else {
+          paginationHTML += `<li class="vf-pagination__item"><a href="javascript:void(0);" class="vf-pagination__link" onclick="changePage(${i})">${i}</a></li>`;
+        }
+      }
+      if (currentPage < totalPages) {
+        paginationHTML += `
+          <li class="vf-pagination__item vf-pagination__item--next-page">
+            <a href="javascript:void(0);" class="vf-pagination__link" onclick="changePage(${currentPage + 1})">Next</a>
+          </li>`;
+      }
+      paginationHTML += `</ul></nav>`;
+      return paginationHTML;
+    }
+
+    fetchAndDisplayLatestProjects(currentPage);
+  });
+</script>
+';
       
       echo $fetchPosts;
       
