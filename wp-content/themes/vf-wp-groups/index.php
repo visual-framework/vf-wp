@@ -178,7 +178,9 @@ if ($custom_template) {echo '<br>';}
       }?>
       </div>
       <?php
+       if (empty($endpoint1) && empty($endpoint2) && empty($endpoint3)) {
       vf_pagination();
+       }
       ?>
     </div>
     <?php if (is_active_sidebar('sidebar-blog')) { ?>
