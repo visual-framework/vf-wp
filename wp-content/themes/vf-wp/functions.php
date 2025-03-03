@@ -101,7 +101,6 @@ function vf_wp_theme__acf_settings_load_json($paths) {
 }
 
 
-
 // Search filter
 function search_filter($query) {
 	if(!is_admin()) {
