@@ -7,7 +7,7 @@ $category_terms = get_terms(
     array(
       'taxonomy'   => 'category',
       'hide_empty' => false,
-      'include' => '5,4,3,2'
+      'include' => '17591, 17593, 17595, 17597, 3'
     )
   );
  ?>

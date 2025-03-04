@@ -2,7 +2,7 @@
 // global categories array
 function categories_global() {
     global $categories_embl;
-    $categories_embl = 'science,lab-matters,events,alumni';
+    $categories_embl = 'science-technology, people-perspectives, connections, embl-announcements, lab-matters';
 }
 add_action( 'init', 'categories_global' );
 

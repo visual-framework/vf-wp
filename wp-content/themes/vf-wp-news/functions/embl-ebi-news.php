@@ -63,35 +63,52 @@ function get_rest_featured_image( $object, $field_name, $request ) {
 /// YOAST SEO overwrite canonical url for EBI news
 
 function ebi_news_canonical_url( $canonical ) {
-  global $post;
-  if(class_exists('WPSEO_Primary_Term')) {
-  $wpseo_primary_term = new WPSEO_Primary_Term( 'category', $post->ID );
-  $wpseo_primary_term = $wpseo_primary_term->get_primary_term();
-  $the_primary_term = get_term( $wpseo_primary_term );
-  $categories_ebi = array('perspectives', 'announcements', 'research-highlights', 'technology-and-innovation');
-  if ( (in_array($the_primary_term->slug, $categories_ebi, true)) ) {
-    $canonical = 'https://www.ebi.ac.uk/about/news/'. strtolower($the_primary_term->slug) . '/' . $post->post_name;
+    global $post;
+    
+    // Check if $post is set and is an object
+    if ( isset($post) && is_object($post) ) {
+      if ( class_exists('WPSEO_Primary_Term') ) {
+        $wpseo_primary_term = new WPSEO_Primary_Term('category', $post->ID);
+        $wpseo_primary_term = $wpseo_primary_term->get_primary_term();
+        $the_primary_term = get_term($wpseo_primary_term);
+        
+        $categories_ebi = array('perspectives', 'announcements', 'research-highlights', 'technology-and-innovation');
+        
+        // Check if $the_primary_term is an object and has a slug property
+        if ( is_object($the_primary_term) && in_array($the_primary_term->slug, $categories_ebi, true) ) {
+          $canonical = 'https://www.ebi.ac.uk/about/news/' . strtolower($the_primary_term->slug) . '/' . $post->post_name;
+        }
+      }
     }
-  return $canonical;
-   }
+  
+    return $canonical;
   }
 
 add_filter( 'wpseo_canonical', 'ebi_news_canonical_url', 20 );
 
 
-function ebi_news_opengraph_url( $url ) {
+function ebi_news_opengraph_url($url) {
   global $post;
-  if(class_exists('WPSEO_Primary_Term')) {
-  $wpseo_primary_term = new WPSEO_Primary_Term( 'category', $post->ID );
-  $wpseo_primary_term = $wpseo_primary_term->get_primary_term();
-  $the_primary_term = get_term( $wpseo_primary_term );
-  $categories_ebi = array('perspectives', 'announcements', 'research-highlights', 'technology-and-innovation');
-  if ( (in_array($the_primary_term->slug, $categories_ebi, true)) ) {
-    $url = 'https://www.ebi.ac.uk/about/news/'. strtolower($the_primary_term->slug) . '/' . $post->post_name;
-    }
-  return $url;
-   }
+
+  if (!$post || !class_exists('WPSEO_Primary_Term')) {
+      return $url;
   }
+  $wpseo_primary_term = new WPSEO_Primary_Term('category', $post->ID);
+  $primary_term_id = $wpseo_primary_term->get_primary_term();
+  if (!$primary_term_id) {
+      return $url;
+  }
+  $the_primary_term = get_term($primary_term_id);
+  if (is_wp_error($the_primary_term) || !$the_primary_term) {
+      return $url;
+  }
+  $categories_ebi = array('perspectives', 'announcements', 'research-highlights', 'technology-and-innovation');
+  if (in_array($the_primary_term->slug, $categories_ebi, true)) {
+      $url = 'https://www.ebi.ac.uk/about/news/' . strtolower($the_primary_term->slug) . '/' . $post->post_name;
+  }
+  return $url;
+}
+
   add_filter( 'wpseo_opengraph_url', 'ebi_news_opengraph_url', 20 );
 
 
@@ -156,39 +173,44 @@ function redirect_to_ebi(){
  * @see https://gitlab.ebi.ac.uk/emblorg/backlog/-/issues/652
  */
 function trigger_ebi_news_build_process($post_id) {
-    $slug = 'post';
-    if ( $slug != $_POST['post_type'] ) {
+  $slug = 'post';
+
+  // Check if 'post_type' key exists in the $_POST array and compare its value
+  if (!isset($_POST['post_type']) || $_POST['post_type'] != $slug) {
       return;
-    }
-  
-    if ((strpos($_SERVER['SERVER_NAME'], "wwwdev") !== false) || (strpos($_SERVER['SERVER_NAME'], "localhost") !== false)){
-      $branch_ref = "develop";
-    }
-    else {
-      $branch_ref = "master";
-    }
-
-    // get post object
-    $post = get_post($post_id);
-
-    // proceed further with deploy process only if the post is published
-    if ($post->post_status == 'publish') {
-      $display = get_field('field_target_display', $post_id);
-      // CHeck if display is ebi or both
-      if ($display == 'embl-ebi' || $display == 'both') {
-        // Trigger CI build to update EBI news
-        $updated_post_id = "emblorg-" . $post_id;
-        $response = wp_remote_post( 'https://gitlab.ebi.ac.uk/api/v4/projects/3488/trigger/pipeline', array("body" => array(
-            'token' => '7ee8e6f2bb44cf9a094a7a66e6b9a3',
-            'ref' => $branch_ref,
-            'variables[FETCH_NEWS]' => 'INCREMENTAL',
-            'variables[UPDATED_NEWS_ID]' => $updated_post_id
-        )));
-        if ( is_wp_error( $response ) ) {
-          $error_message = $response->get_error_message();
-          echo "Something went wrong with CI trigger: $error_message";
-        }
-      }
-    }
   }
-  add_action( 'save_post', 'trigger_ebi_news_build_process' );
+
+  if ((strpos($_SERVER['SERVER_NAME'], "wwwdev") !== false) || (strpos($_SERVER['SERVER_NAME'], "localhost") !== false)) {
+      $branch_ref = "develop";
+  } else {
+      $branch_ref = "master";
+  }
+
+  // Get post object
+  $post = get_post($post_id);
+
+  // Proceed further with deploy process only if the post is published
+  if ($post && $post->post_status == 'publish') {
+      $display = get_field('field_target_display', $post_id);
+
+      // Check if display is ebi or both
+      if ($display == 'embl-ebi' || $display == 'both') {
+          // Trigger CI build to update EBI news
+          $updated_post_id = "emblorg-" . $post_id;
+          $response = wp_remote_post('https://gitlab.ebi.ac.uk/api/v4/projects/3488/trigger/pipeline', array(
+              "body" => array(
+                  'token' => '7ee8e6f2bb44cf9a094a7a66e6b9a3',
+                  'ref' => $branch_ref,
+                  'variables[FETCH_NEWS]' => 'INCREMENTAL',
+                  'variables[UPDATED_NEWS_ID]' => $updated_post_id
+              )
+          ));
+
+          if (is_wp_error($response)) {
+              $error_message = $response->get_error_message();
+              echo "Something went wrong with CI trigger: $error_message";
+          }
+      }
+  }
+}
+add_action( 'save_post', 'trigger_ebi_news_build_process' );

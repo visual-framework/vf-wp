@@ -31,7 +31,17 @@ the_post();
       <div class="vf-meta__details">
         <p class="vf-meta__date"><time title="<?php the_time('c'); ?>"
             datetime="<?php the_time('c'); ?>"><?php the_time(get_option('date_format')); ?></time></p>
-        <p class="vf-meta__topics"><?php echo get_the_category_list(' '); ?></p>
+        <p class="vf-meta__topics">
+        <?php 
+$allowed_categories = array(17591, 17593, 17595, 17597, 3); // Array of allowed category IDs
+
+foreach(get_the_category() as $category) {
+    if (in_array($category->term_id, $allowed_categories)) { // Check if category ID is in allowed list
+        echo $category->name;
+    }
+}
+?>
+        </p>
       </div>
       <?php
   // custom switcher
@@ -244,6 +254,17 @@ if ($tags) {
       <ul class="vf-social-links__list">
         <li class="vf-social-links__item">
           <a class="vf-social-links__link"
+            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
+            <span class="vf-u-sr-only">linkedin</span>
+
+            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
+              <use xlink:href="#vf-social--linkedin"></use>
+            </svg>
+          </a>
+        </li>
+        <li class="vf-social-links__item">
+          <a class="vf-social-links__link"
             href="https://twitter.com/intent/tweet?text=<?php echo $title; ?>&amp;url=<?php echo $social_url; ?>&amp;via=embl">
             <span class="vf-u-sr-only">twitter</span>
 
@@ -267,17 +288,6 @@ if ($tags) {
           </a>
         </li>
 
-        <li class="vf-social-links__item">
-          <a class="vf-social-links__link"
-            href="https://www.linkedin.com/sharing/share-offsite/?url=<?php echo $social_url; ?>&title=<?php echo $title; ?>">
-            <span class="vf-u-sr-only">linkedin</span>
-
-            <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--linkedin" width="24" height="24"
-              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-              <use xlink:href="#vf-social--linkedin"></use>
-            </svg>
-          </a>
-        </li>
       </ul>
     </div>
     <?php

@@ -21,7 +21,14 @@ $languages = get_field('languages');
    if( get_post_type() == 'embletc' ) {
     echo 'EMBLetc';
     } else {
-    echo get_the_category_list(', '); } ?>
+      $allowed_categories = array(17591, 17593, 17595, 17597, 3); // Array of allowed category IDs
+
+      foreach (get_the_category() as $category) {
+          if (in_array($category->term_id, $allowed_categories)) { // Check if category ID is in allowed list
+              echo $category->name; // Display the category name
+          }
+      }
+    } ?>
     </span>
   <?php echo get_the_excerpt(); ?></p>
   <div class="vf-u-display-none">

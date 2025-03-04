@@ -2,6 +2,7 @@
 require_once('functions/embl-ebi-news.php');
 require_once('functions/globals.php');
 require_once('functions/gravatar.php');
+require_once('functions/taxonomies.php');
 require_once('functions/post-types.php');
 require_once('functions/widgets.php');
 require_once('functions/wpml-settings.php');
@@ -286,5 +287,31 @@ add_filter( 'the_posts', function( $posts, \WP_Query $query )
     }
     return $posts;
 }, 10, 2 );
+
+//Add featured image to WP REST API
+
+add_action( 'rest_api_init', 'add_thumbnail_source_to_JSON' );
+
+function add_thumbnail_source_to_JSON() {
+register_rest_field( 
+    array ('post'), 
+    'featured_image_src', 
+    array(
+        'get_callback'    => 'get_image_src',
+        'update_callback' => null,
+        'schema'          => null,
+         )
+    );
+}
+
+function get_thumbnail_src( $object, $field_name, $request ) {
+  $feat_img_array = wp_get_attachment_thumbnail_src(
+    $object['featured_media'], // thumbnail attachment ID
+    'full',  // Size.  Ex. "thumbnail", "large", "full", etc..
+    true // Whether the thumbnail should be treated as an icon.
+  );
+  return $feat_img_array[0];
+}
+
 
 ?>

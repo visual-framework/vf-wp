@@ -1,8 +1,7 @@
 {
     "key": "group_5dd3ebd716b68",
     "title": "Additional article information",
-    "fields": [
-        {
+    "fields": [{
             "key": "field_60a376e9a4e2c",
             "label": "General",
             "name": "",
@@ -178,8 +177,7 @@
             "max": 10,
             "layout": "table",
             "button_label": "Add link",
-            "sub_fields": [
-                {
+            "sub_fields": [{
                     "key": "field_60a376e9ae776",
                     "label": "Description",
                     "name": "link_description",
@@ -250,8 +248,7 @@
             "max": 12,
             "layout": "table",
             "button_label": "Add source",
-            "sub_fields": [
-                {
+            "sub_fields": [{
                     "key": "field_60a376e9b5298",
                     "label": "Publication title",
                     "name": "publication_title",
@@ -397,8 +394,7 @@
             "max": 0,
             "layout": "table",
             "button_label": "Add anchor",
-            "sub_fields": [
-                {
+            "sub_fields": [{
                     "key": "field_60a376e9c0435",
                     "label": "Heading",
                     "name": "heading_description",
@@ -498,8 +494,7 @@
             "max": 0,
             "layout": "table",
             "button_label": "",
-            "sub_fields": [
-                {
+            "sub_fields": [{
                     "key": "field_60a376e9c77e0",
                     "label": "Language",
                     "name": "translation_language",
@@ -513,11 +508,26 @@
                         "id": ""
                     },
                     "choices": {
+                        "English": "English",
+                        "Български": "Български",
                         "Catalan": "Catalan",
-                        "Français": "Français",
+                        "Čeština": "Čeština",
+                        "Dansk": "Dansk",
                         "Deutsch": "Deutsch",
+                        "Español": "Español",
+                        "Ελληνικά": "Ελληνικά",
+                        "Français": "Français",
                         "Italiano": "Italiano",
-                        "Español": "Español"
+                        "Lietuvių": "Lietuvių",
+                        "Magyar": "Magyar",
+                        "Nederlands": "Nederlands",
+                        "Polski": "Polski",
+                        "Português": "Português",
+                        "Română": "Română",
+                        "Slovenčina": "Slovenčina",
+                        "Slovenščina": "Slovenščina",
+                        "Suomi": "Suomi",
+                        "Svenska": "Svenska"
                     },
                     "default_value": false,
                     "allow_null": 0,
@@ -593,20 +603,16 @@
         }
     ],
     "location": [
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "post"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "embletc"
-            }
-        ]
+        [{
+            "param": "post_type",
+            "operator": "==",
+            "value": "post"
+        }],
+        [{
+            "param": "post_type",
+            "operator": "==",
+            "value": "embletc"
+        }]
     ],
     "menu_order": 1,
     "position": "normal",
