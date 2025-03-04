@@ -22,6 +22,7 @@ $attachment_id = wp_get_attachment_url();
 </section>
 
 
+
 <?php
 
 get_footer();
