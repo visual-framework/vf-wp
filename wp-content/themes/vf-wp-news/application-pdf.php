@@ -21,6 +21,7 @@ $attachment_id = wp_get_attachment_url();
   <?php include(locate_template('partials/newsletter-container.php', false, false)); ?>
 </section>
 
+
 <?php
 
 get_footer();
