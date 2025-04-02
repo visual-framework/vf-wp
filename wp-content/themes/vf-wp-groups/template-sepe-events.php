@@ -17,7 +17,6 @@ $current_date = date('Ymd');
         <?php the_title(); ?>
       </h2>
       <h3>EMBL organises and takes part in public engagement and outreach events across Europe.</h3>
-      <p>Select the location to see details of all the events that happened there.</p>
     </div>
 
     <div class="vf-tabs">
