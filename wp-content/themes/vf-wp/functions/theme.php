@@ -390,7 +390,7 @@ class VF_Theme {
   public function wp_head() {
     // IE11 polyfill
     // https://github.com/visual-framework/vf-wp/issues/238
-    echo '<script nomodule src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>';
+    echo '<script nomodule src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=default"></script>';
     // Inline scripts
     $path = untrailingslashit(get_template_directory());
     $path = "{$path}/assets/scripts/head.js";
