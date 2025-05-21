@@ -21,7 +21,7 @@ function register_embl_site_taxonomy() {
                 'update_item'       => 'Update EMBL site',
                 'add_new_item'      => 'Add New EMBL site',
                 'new_item_name'     => 'New EMBL site Name',
-                'menu_name'         => 'EMBL sites',
+                'menu_name'         => 'EMBL site',
             ),
             'public'            => true,
             'hierarchical'      => true, // Like categories (true) or tags (false)
@@ -106,7 +106,7 @@ function register_label_taxonomy() {
         'update_count_callback' => '_update_post_term_count',
         'query_var'             => true,
         'rewrite'               => array('slug' => 'label'),
-        'show_in_rest'          => true,
+        'show_in_rest'          => false,
         'public'                => true,
     ));
 }
@@ -158,7 +158,7 @@ add_filter('parse_query', 'label_filter_query');
 
 /*
 Auto assign embl site based on the template selected
-*/
+
 
 
 function auto_assign_embl_site_term_by_template($post_id) {
@@ -189,7 +189,50 @@ function auto_assign_embl_site_term_by_template($post_id) {
     }
 }
 add_action('save_post', 'auto_assign_embl_site_term_by_template');
+*/
+
+function auto_set_template_from_embl_site_term($post_id) {
+    // Skip on autosave, revisions, or wrong post type
+    if (
+        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ||
+        wp_is_post_revision($post_id) ||
+        get_post_type($post_id) !== 'page'
+    ) {
+        return;
+    }
+
+    // Define term → template mapping
+    $term_template_map = [
+        'embl-ebi' => 'vf_template_embl-ebi-template.php',
+        'embl'     => 'vf_template_embl-template.php',
+    ];
+
+    // Get assigned terms in embl-site
+    $terms = wp_get_object_terms($post_id, 'embl-site', ['fields' => 'slugs']);
+
+    if (!empty($terms) && is_array($terms)) {
+        foreach ($terms as $term_slug) {
+            if (isset($term_template_map[$term_slug])) {
+                // Set the page template
+                update_post_meta($post_id, '_wp_page_template', $term_template_map[$term_slug]);
+                break; // Stop after first matched term
+            }
+        }
+    }
+}
+add_action('save_post', 'auto_set_template_from_embl_site_term');
 
 
 
+
+
+
+
+/**
+ * Load ACF JSON from theme
+ */
+function vf_wp_groups_theme__acf_settings_load_json($paths) {
+    $paths[] = get_stylesheet_directory() . '/acf-json';
+    return $paths;
+  }
 ?>
