@@ -4,7 +4,7 @@
  *
  */
 import { useEffect } from "react";
-import { vfBanner } from "../node_modules/@visual-framework/vf-banner/vf-banner";
+import { vfBanner } from "@visual-framework/vf-banner/vf-banner";
 
 function VfBanner({
   banner__type = "basic",
@@ -45,7 +45,7 @@ function VfBanner({
   switch (banner__type) {
   case "basic":
     return (
-      <div className={bannerclass}>
+      <div role="alert" className={bannerclass}>
         <div className="vf-banner__content">
           <p
             className="vf-banner__text"
