@@ -1916,10 +1916,10 @@
     "@frctl/fractal" "1.5.15"
     "@frctl/nunjucks" "2.0.15"
 
-"@visual-framework/vf-config@1.0.1-alpha.0":
-  version "1.0.1-alpha.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1-alpha.0.tgz#2dda99f7d2766c32cb46b321560ec15c8a3d55fe"
-  integrity sha512-T5XSohedN4OKxqA0n44V8xvpDMAz1zAW0TGa+2a1B3lMpAWAt5WVpG2tdOQknHDQQpq/K/YRxFySSXk+G7f8Ew==
+"@visual-framework/vf-config@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1.tgz#d11bdd1a9eae73e49fedfe3e2e8fd8d34c748684"
+  integrity sha512-ZlHMvVGmGxSmgCCcZ59PdaPdif0cZyX99T2LYtjodwvu52Vhri/JxrAFsT46NSVl1bKYyJI+tEXAXBFLBwpt7A==
 
 "@visual-framework/vf-content@1.6.17":
   version "1.6.17"
