@@ -173,7 +173,7 @@
 
 /*!
  * Component: @visual-framework/vf-badge
- * Version: 3.0.3
+ * Version: 3.0.5
  * Location: components/vf-core-components/vf-badge
  */
 .vf-badge {
@@ -1058,7 +1058,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-figure
- * Version: 2.0.1
+ * Version: 2.0.2
  * Location: components/vf-core-components/vf-figure
  */
 .vf-figure {
@@ -1208,7 +1208,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-blockquote
- * Version: 1.2.8
+ * Version: 1.2.14
  * Location: components/vf-core-components/vf-blockquote
  */
 .vf-blockquote {
@@ -1530,7 +1530,7 @@ a.vf-button:hover, a.vf-button:focus {
 
 /*!
  * Component: @visual-framework/vf-content
- * Version: 1.6.17
+ * Version: 1.6.20
  * Location: components/vf-core-components/vf-content
  */
 .vf-content h1:not([class*=vf-]) {

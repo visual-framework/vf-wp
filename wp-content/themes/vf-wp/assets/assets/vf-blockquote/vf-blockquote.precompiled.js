@@ -91,15 +91,12 @@ output += "\"";
 ;
 }
 output += " class=\"\n";
-if(runtime.contextOrFrameLookup(context, frame, "modifier") == "default") {
-output += "vf-blockquote";
-;
-}
-else {
-if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+if(runtime.contextOrFrameLookup(context, frame, "modifier") && runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
 output += "vf-blockquote-small";
 ;
 }
+else {
+output += "vf-blockquote";
 ;
 }
 if(runtime.contextOrFrameLookup(context, frame, "override_class")) {
@@ -110,7 +107,7 @@ output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "ov
 output += "\"\n>\n\n";
 if((runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"))) {
 output += "    <img class=\"vf-profile__image\n";
-if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+if(runtime.contextOrFrameLookup(context, frame, "modifier") && runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
 output += "vf-profile--medium";
 ;
 }
