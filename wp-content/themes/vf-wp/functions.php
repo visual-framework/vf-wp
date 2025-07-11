@@ -519,6 +519,7 @@ add_action('rest_api_init', function () {
   register_rest_route('custom/v1', '/all-posts/', array(
       'methods' => 'GET',
       'callback' => 'custom_api_get_all_posts',
+      'permission_callback' => '__return_true',
   ));
 });
 
