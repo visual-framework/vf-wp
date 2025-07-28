@@ -42,7 +42,11 @@ class VF_Person {
       'category' => $category,
       'supports' => array(
         'align'           => false,
-        'customClassName' => false
+        'customClassName' => false,
+        'multiple'        => true
+      ),
+      'vfwp' => array(
+        'iframeRender' => false
       )
     );
   }

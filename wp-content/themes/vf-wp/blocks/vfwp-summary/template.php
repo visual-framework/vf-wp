@@ -15,7 +15,13 @@ $title = get_field('title');
 $title = trim($title);
 
 $link = get_field('link');
-$link_target = is_array($link) && isset($link['target']) ? $link['target'] : '_self';
+$link_url = '';
+$link_target = '_self';
+
+if (is_array($link)) {
+  $link_url = isset($link['url']) ? $link['url'] : '';
+  $link_target = isset($link['target']) ? $link['target'] : '_self';
+}
 $text = get_field('text', false, false);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-summary__text">', $text);
@@ -96,7 +102,10 @@ if ($type === 'post') {
 
   ?>
   <h3 class="vf-summary__title">
-  <a href="<?php echo esc_url($link['url']); ?>" class="vf-summary__link">
+  <?php if (!empty($link_url)) { ?>
+  <a href="<?php echo esc_url($link_url); ?>" class="vf-summary__link" target="<?php echo esc_attr($link_target); ?>">
+<?php } ?>
+
   <?php echo esc_html($title); ?>
     </a>
   </h3>
