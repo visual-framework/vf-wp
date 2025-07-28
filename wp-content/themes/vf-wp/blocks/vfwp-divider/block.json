@@ -1,11 +1,15 @@
 {
   "name": "vfwp-divider",
   "title": "Divider",
-  "apiVersion": 3,
+  "apiVersion": 3,  
   "acf": {
     "mode": "preview"
   },
+  "supports": {
+    "multiple": true
+  },
   "vfwp": {
+    "iframeRender": false,
     "containerable": true
   }
 }
