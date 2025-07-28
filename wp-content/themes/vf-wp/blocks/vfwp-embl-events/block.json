@@ -4,5 +4,11 @@
   "apiVersion": 3,
   "acf": {
     "mode": "preview"
+  },
+  "supports": {
+    "multiple": true
+  },
+  "vfwp": {
+    "iframeRender": false
   }
 }

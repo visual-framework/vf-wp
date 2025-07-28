@@ -5,7 +5,11 @@
   "acf": {
     "mode": "preview"
   },
+  "supports": {
+    "multiple": true
+  },
   "vfwp": {
+    "iframeRender": false,
     "containerable": true
   }
 }
