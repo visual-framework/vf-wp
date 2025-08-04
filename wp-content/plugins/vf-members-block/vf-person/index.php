@@ -40,6 +40,10 @@ class VF_Person {
       'name'     => $this->get_name(),
       'title'    => __('Person', 'vfwp'),
       'category' => $category,
+      'apiVersion' => 3,
+      'acf' => array(
+        'mode' => 'preview'
+      ),
       'supports' => array(
         'align'           => false,
         'customClassName' => false,
@@ -48,7 +52,7 @@ class VF_Person {
       'vfwp' => array(
         'iframeRender' => false
       )
-    );
+    );    
   }
 
   /**
