@@ -266,10 +266,10 @@ if (is_array($poster_image)) {
     <?php }} ?>
 
     <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($registration_closing_on_site) || ($info_text) || ($registration_link_on_site))) { ?>
+      <?php } ?>
+      <hr class="vf-divider | vf-u-margin__bottom--400">
+    <p class="vf-text-body vf-text-body--3"><a href="https://www.embl.org/internal-information/eicat/course-and-conference-office/embl-staff-registration/">EMBL staff registration</a></p>
     <hr class="vf-divider | vf-u-margin__bottom--400">
-    <?php } ?>
-
-
     <?php
     // Organisers
     if( have_rows('vf_event_organisers_event_template') ): ?>
