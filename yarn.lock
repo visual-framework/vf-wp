@@ -1949,10 +1949,10 @@
     highlight.js "^11.0.0"
     marked "13.0.3"
 
-"@visual-framework/vf-design-tokens@3.6.4":
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-3.6.4.tgz#ca1c6b499cdc6a01b5ffb6b79634f82095a1d4db"
-  integrity sha512-uOC74NGwYscjvPewpX6VzJNUlG3bEdcyVW/KHro1ZD62B1M34LKgWiF4Ps97fwE7f90csUGXmAsM1SvzxFUCkQ==
+"@visual-framework/vf-design-tokens@3.6.5":
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-3.6.5.tgz#0464c4da5be9d76c10132b3f514150148b75b594"
+  integrity sha512-wQPsITRwr1uW/H59shBuFhPkKpLD6R7F/satVBHgaWMBSSYcTFk4dkU1bJ4fHaXsGPwdM/TBUeIF4sm2Nl6dcw==
 
 "@visual-framework/vf-details@1.2.0":
   version "1.2.0"
