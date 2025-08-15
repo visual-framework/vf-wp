@@ -1954,10 +1954,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-design-tokens/-/vf-design-tokens-3.6.5.tgz#0464c4da5be9d76c10132b3f514150148b75b594"
   integrity sha512-wQPsITRwr1uW/H59shBuFhPkKpLD6R7F/satVBHgaWMBSSYcTFk4dkU1bJ4fHaXsGPwdM/TBUeIF4sm2Nl6dcw==
 
-"@visual-framework/vf-details@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-details/-/vf-details-1.2.0.tgz#f5811f3d81ef999f3884bc283e0f4ed305714cf6"
-  integrity sha512-iWT15cMha3p/TlJTpW6vVqTHQHoyPCCTUt03AK9fL1xvEwPCDZi3hSvwhLruSk0asJBSp0nOF3giP+TrIp4GPA==
+"@visual-framework/vf-details@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-details/-/vf-details-1.2.1.tgz#8c5204c1ccb920ac9ea065c54879f1b04c173824"
+  integrity sha512-HaCQ87BQzPeB/6LfwT0THLBUghvRYRGFqEnOb+wGYbFmaylMQ8bIT+KEjxJAC1qk72knJrqNWqYG2c2rEh7Fsw==
 
 "@visual-framework/vf-discussion@1.0.1":
   version "1.0.1"
