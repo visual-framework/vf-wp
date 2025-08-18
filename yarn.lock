@@ -1959,10 +1959,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-details/-/vf-details-1.2.1.tgz#8c5204c1ccb920ac9ea065c54879f1b04c173824"
   integrity sha512-HaCQ87BQzPeB/6LfwT0THLBUghvRYRGFqEnOb+wGYbFmaylMQ8bIT+KEjxJAC1qk72knJrqNWqYG2c2rEh7Fsw==
 
-"@visual-framework/vf-discussion@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-discussion/-/vf-discussion-1.0.1.tgz#c5c18f4a9d0db72ef98e1c2932622fa539d82d1e"
-  integrity sha512-ywUAGYRxjsX/iXHnghHPN9dzM2GA1yeFzagfI9WW490mV4kgeflZXHOj/mY+bPFYl/orAWJmOru0j6Jun1d57Q==
+"@visual-framework/vf-discussion@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-discussion/-/vf-discussion-1.0.2.tgz#c3c8bf9b52d79235d5ce968305b2676781b9ccb8"
+  integrity sha512-UXgVxqFZbs2nXkyIhwSwQQ+J8DRsM9fgm80hZrFuuSQTSRechfexjKe4LFrEuakfKaq30I885HESaI7CZ54zhQ==
 
 "@visual-framework/vf-divider@2.0.1", "@visual-framework/vf-divider@^2.0.1":
   version "2.0.1"
