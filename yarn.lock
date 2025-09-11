@@ -2056,15 +2056,15 @@
     "@visual-framework/vf-form__select" "^3.0.0"
     "@visual-framework/vf-form__textarea" "^3.0.0"
 
-"@visual-framework/vf-form__checkbox@3.0.0-alpha.0", "@visual-framework/vf-form__checkbox@^3.0.0-alpha.0":
-  version "3.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-3.0.0-alpha.0.tgz#9a4153573ad369d9a616ae3596ea0809f01912be"
-  integrity sha512-ZOqwzXCUfHSw3U+2bIba2+NsTXFC99+5VcFmIlvZiKLlwTJnykJ/rGuIp2NMk3C2a6ratBs3vrqnGO0QzQcoXQ==
-
-"@visual-framework/vf-form__checkbox@^3.0.0":
+"@visual-framework/vf-form__checkbox@3.0.0", "@visual-framework/vf-form__checkbox@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-3.0.0.tgz#3a4fa68f6419f729367c99222588f302765a69ec"
   integrity sha512-btNZ0z57Hy/UgpXQZqLlMXwx2BgacAxs8+p1wZtSyk8Lgv3jULvi6i4fJyuVFrkaj8MjXFbSkB8uUUroxKRE3g==
+
+"@visual-framework/vf-form__checkbox@^3.0.0-alpha.0":
+  version "3.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-form__checkbox/-/vf-form__checkbox-3.0.0-alpha.0.tgz#9a4153573ad369d9a616ae3596ea0809f01912be"
+  integrity sha512-ZOqwzXCUfHSw3U+2bIba2+NsTXFC99+5VcFmIlvZiKLlwTJnykJ/rGuIp2NMk3C2a6ratBs3vrqnGO0QzQcoXQ==
 
 "@visual-framework/vf-form__fieldset@2.0.0-alpha.0", "@visual-framework/vf-form__fieldset@^2.0.0-alpha.0":
   version "2.0.0-alpha.0"
