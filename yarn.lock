@@ -2210,10 +2210,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-list/-/vf-list-1.1.2.tgz#cbff05e30532d55522ed7a1234278712180b60c7"
   integrity sha512-Fq39MqHFeLX1FftwOKaoPUfBxH986hRCcyANeQUzbsLQTAnUzoJGBrcd+NxxjVVu2Fo+4iPtFhDeWyJcou3o2w==
 
-"@visual-framework/vf-location-nearest@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-location-nearest/-/vf-location-nearest-1.0.2.tgz#57ab23e28be88953940a280a5bfef4be3b2e74d5"
-  integrity sha512-l+JfsoJMQvCb3P/okcP4MdFDKqpIA4//v8ajLx9GfU596SWJ496GSMflDcDdyEjxkKS7whHK4d5Jk61WxyfvRg==
+"@visual-framework/vf-location-nearest@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-location-nearest/-/vf-location-nearest-1.0.3.tgz#bbd88f2fbcf8a50b8c80b5083c9d09a9ca038b31"
+  integrity sha512-syOShmG5hOuaE869KERWULgNF5QcVK3lY4RggbF9NYizjiBKx8CYFL+Kb7zoEcxmOLM4IpOJIDvPFl1jQKX7xw==
 
 "@visual-framework/vf-masthead@3.0.1":
   version "3.0.1"
