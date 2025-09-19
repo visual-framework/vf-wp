@@ -2225,10 +2225,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-mega-menu/-/vf-mega-menu-1.0.2.tgz#39d772e329986274001c51d4131abc8215e4d745"
   integrity sha512-GTEWXUFXZmIJvrEpRHRsP7EdbdwtSg5M26I6ZepzIpxa9rpM3WT2fLgYr+ufiomJk+ugNzvChbB/AWZnDuBfcw==
 
-"@visual-framework/vf-navigation@5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-navigation/-/vf-navigation-5.0.3.tgz#8f5e6ac4d4fe58c33929b92d7dba9299e1e494d9"
-  integrity sha512-h7b/445H0msG27Qt4xKxX6HGSfJrYW7FFEsuqTkgrUD7rzE4+wxn9CUxZC1M72qBHwKKs3b44CfhGuRTUeUw4A==
+"@visual-framework/vf-navigation@5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-navigation/-/vf-navigation-5.0.4.tgz#94d9385fdd7e620fed9c8c13ef627749cda17a66"
+  integrity sha512-7fA8bV4hW7VZXEG0SyVDwiauG0DgM7ghjTXgGsJ6wE7SCbWdW+WjSwwfYwoPhvRDHfU6eWy8FgENhHv0NU9tmQ==
 
 "@visual-framework/vf-news-container@1.1.1":
   version "1.1.1"
