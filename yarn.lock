@@ -2250,12 +2250,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-pagination/-/vf-pagination-1.1.2.tgz#67dc79e1a8a06295c52afc04cfaa3b2c0dca20a2"
   integrity sha512-vo4QLoROaNtnpIiLdoS2dyuwpqXoEFu4X3MjATCTF4l6ReIAS1aPBbmdNlHt/QupBLseMrsl36kv9L1nTCFttQ==
 
-"@visual-framework/vf-profile@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-profile/-/vf-profile-1.4.0.tgz#9ce2bcbc3c3d395c0ad5643c7351e4d2ea840ea4"
-  integrity sha512-7K7VkwF1NwLUr6mfFM7mxdtOAH5Ym8oQsGsF55iuSkNWvsEhLw4cHvgDH/SlRIgUkH1+CJ5y7DkSX4NMcIXaAw==
-
-"@visual-framework/vf-profile@^1.4.1":
+"@visual-framework/vf-profile@1.4.1", "@visual-framework/vf-profile@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-profile/-/vf-profile-1.4.1.tgz#cb93d1762211d8c97908023c64054f4c3bf68730"
   integrity sha512-0C/4I0lFp6P8XfIZR+mhJR17p9tKC1lAQu38RWkqZgMFmIZn9BnDwc1jCIXOkuF2zlUtsIWnPZmjlOEbBS1iPQ==
