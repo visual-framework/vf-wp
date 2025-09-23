@@ -2306,10 +2306,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-sidebar/-/vf-sidebar-1.0.0-alpha.2.tgz#7904d0cfab3d83c4b1caad5cbfe31c6e718c99bf"
   integrity sha512-O/CPAmWVw6Ix4p1OGX3fudJQk4OiLKbgB1fAU+KwsJEdUZigK4/uM3hjRsKDDU2KI3tX5wrCuyPpY17RDFLe4w==
 
-"@visual-framework/vf-social-links@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-social-links/-/vf-social-links-0.0.6.tgz#80643a3dd2a45e0db6b37efb5bca7ba3cba275f9"
-  integrity sha512-gRsq5bHXjx6QgYCI+RUYn42b5j/PEX8tjH5FAZDVqYKKXIVRDXOzYiTVXIG42Z/9nHT/6xzJYl1gdAsO1d47uQ==
+"@visual-framework/vf-social-links@0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-social-links/-/vf-social-links-0.0.7.tgz#ccfe7d8efa83e2eec11bb6c9123293a3fdd01479"
+  integrity sha512-PTN0k7tviKlzVhnYGbPvHsCy63kn9Adiy1R4wdOlN7dQfI0H3txVrEPjqcbK4lsUpTPDXxtgarv8yKqBY66yNg==
 
 "@visual-framework/vf-stack@3.0.0":
   version "3.0.0"
