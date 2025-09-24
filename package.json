@@ -119,7 +119,7 @@
     "@visual-framework/vf-stack": "3.0.1",
     "@visual-framework/vf-summary": "1.6.1",
     "@visual-framework/vf-table": "1.2.3",
-    "@visual-framework/vf-tabs": "2.1.9",
+    "@visual-framework/vf-tabs": "2.1.11",
     "@visual-framework/vf-text": "1.1.1",
     "@visual-framework/vf-tree": "^2.0.0-alpha.1",
     "@visual-framework/vf-u-fullbleed": "1.2.2",
