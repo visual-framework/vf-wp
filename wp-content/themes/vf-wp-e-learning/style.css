@@ -1,0 +1,48 @@
+/*
+Theme Name:   VF-WP e-learning
+Theme URI:    https://github.com/visual-framework/vf-wp/
+Description:  Visual Framework WordPress Theme for e-learning
+Author:       EMBL
+Template:     vf-wp
+Version:      1.0.0-beta.5
+Text Domain:  vfwp
+*/
+ul li ul.children li {
+    list-style: none;
+   }
+
+   .tag-cloud-link { 
+    font-size:16px !important;
+    }
+    .tag-cloud-link {
+        text-decoration:none;
+        background-color:#fff;
+    }
+
+    .counter-highlight {
+        font-weight: 700; 
+        color: #111;
+      }
+    
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #FFF;
+        border-bottom-color: rgb(59, 111, 182);
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+    
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+    
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    
+  
