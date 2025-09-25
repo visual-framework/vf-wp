@@ -30,13 +30,13 @@
         'supports'            => array('title', 'editor', 'revisions', 'page-attributes', 'excerpt', 'thumbnail'),
         'has_archive'         => true,
         'rewrite'             => array(
-          'slug' => 'training-catalogue'
+          'slug' => 'training'
         ),
         'query_var'           => false,
         'can_export'          => true,
         'delete_with_user'    => false,
         'taxonomies'          => array(
-          'training-type',
+          'training-organiser',
     
         ),
       ));

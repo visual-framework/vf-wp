@@ -1,6 +1,8 @@
 <?php
 require_once('functions/custom-taxonomies.php');
 require_once('functions/custom-post-types.php');
+require_once('functions/training.php');
+require_once('functions/training-on-demand-feed.php');
 
 
 /* Adds scripts */
