@@ -5,23 +5,8 @@ global $vf_theme;
 $today_date = date('Ymd');
 ?>
 
-<section class="vf-intro | vf-u-margin__bottom--600">
-  <div>
-    <!-- empty -->
-  </div>
-  <div class="vf-stack">
-    <h1 class="vf-intro__heading | vf-u-margin__bottom--400">
-      Training catalogue
-    </h1>
-    <p class="vf-intro__text">Browse all <b>live</b> and <b>on-demand</b> training available for EMBL staff and fellows;
-      continue your professional development, improve your skills in data science or complete workplace related courses
-      and activities.
-    </p>
-  </div>
-</section>
 
-
-    <div class="embl-grid embl-grid--has-centered-content vf-u-padding__bottom--800 | vf-content">
+    <div class="embl-grid embl-grid--has-centered-content vf-u-padding__bottom--800 vf-u-padding__top--800 | vf-content">
       <div></div>
       <div class="vf-content">
 
@@ -32,7 +17,7 @@ $today_date = date('Ymd');
               <label class="vf-form__label vf-u-sr-only | vf-search__label" for="search">Search</label>
               <input id="search-od" class="vf-form__input vf-form__input--filter | inputOnDemand" data-jplist-control="textbox-filter"
                 data-group="data-group-2" data-name="my-filter-2" data-path=".search-data-od" type="text" value=""
-                placeholder="Search within on-demand training" data-clear-btn-id="name-clear-btn">
+                placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
             </div>
             <button style="display: none;" type="button" id="name-clear-btn"
               class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
@@ -58,8 +43,7 @@ $today_date = date('Ymd');
           'post_type' => 'training',
           'posts_per_page' => -1,
           'post_status' => 'publish',
-          'orderby' => 'title',
-          'order'   => 'ASC',
+
         ));
         $temp_query = $wp_query;
         $wp_query   = NULL;
@@ -81,19 +65,18 @@ $today_date = date('Ymd');
         </nav>
       </main>
       <div class="vf-content">
-        <h3 class="vf-text vf-text-heading--5">Other training and development opportunities</h3>
+        <h3 class="vf-text vf-text-heading--5">Training providers</h3>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a
-        href="https://www.embl.org/internal-information/human-resources/language-courses/">Language courses</a></p>
+        href="#">EMBL-EBI training</a></p>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
-        href="https://www.embl.org/internal-information/eicat/embl-fellows-career-service/events-and-workshops/#events">Career
-        webinars</a></p>
+        href="#">EMBL external training</a></p>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
-             href="https://www.embl.org/about/info/alumni/resources/mentorship-progamme/">Mentorship programme</a></p>
+             href="#">EMBL internal training</a></p>
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
-            href="https://www.embl.org/internal-information/entrepreneurship-training-and-events/">Entrepreneurship training & events</a></p>
+            href="#">Science Education and Public Engagement (SEPE)</a></p>
         <hr class="vf-divider | vf-u-margin__bottom--400">
         <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom-400"><a
-        href="https://app.smartsheet.eu/b/form/572da589f818438f967f218736f3a18b">Provide your feedback</a></p>
+        href="#">Provide your feedback</a></p>
       </div>
 
     </div>

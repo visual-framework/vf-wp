@@ -59,6 +59,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
         $url = basename($training_on_demand_ebi['fields']['url'][0]);
         $permalink = $training_on_demand_ebi['fields']['url'][0];
         $od_type = $training_on_demand_ebi['fields']['type'][0];
+        $category = 'Data science';
         $provider = 'embl-ebi-training';
         $keywords = $training_on_demand_ebi['fields']['tags'];
         $keywords = implode(", ", $keywords);
@@ -84,7 +85,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
             add_post_meta($post_id, 'vf-wp-training-url', $permalink);
             add_post_meta($post_id, 'vf-wp-training-category', $category);
             add_post_meta($post_id, 'vf-wp-training-info', $overview);
-            add_post_meta($post_id, 'keyword', $keywords);
+            add_post_meta($post_id, 'vf-wp-training-keywords', $keywords);
             add_post_meta($post_id, 'vf-wp-training-on_demand_type', $od_type);
 
             // Check if the term exists before setting it
@@ -104,7 +105,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
             update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
             update_post_meta($existing_post_id, 'vf-wp-training-category', $category);
             update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
-            update_post_meta($existing_post_id, 'keyword', $keywords);
+            update_post_meta($existing_post_id, 'vf-wp-training-keywords', $keywords);
             update_post_meta($existing_post_id, 'vf-wp-training-on_demand_type', $od_type);
        
             if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {

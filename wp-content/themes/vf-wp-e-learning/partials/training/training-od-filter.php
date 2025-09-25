@@ -10,7 +10,7 @@ $provider_terms = get_terms(
 
 
 $category_terms = ['Data science', 'Professional development', 'Workplace'];
-$type_terms = ['Course materials', 'Recorded webinar', 'Online tutorial', 'Collection'];
+$type_terms = ['Course materials', 'Recorded webinar', 'Webinar series', 'Online tutorial', 'Collection'];
 
 
 $counterCat = 1;
@@ -20,6 +20,36 @@ $counterPro = 1;
 ?>
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--800">
+<div class="vf-form__item vf-stack">
+  <legend class="vf-form__legend">Sort by</legend>
+  <select class="vf-form__select" 
+          id="vf-form__select" 
+          data-jplist-control="select-sort" 
+          data-group="data-group-2"
+          data-name="sort-control">
+
+    <!-- Recently Added (published date) -->
+    <option value="1" data-path=".added" data-order="desc" data-type="datetime" selected>
+      Recently added
+    </option>
+
+    <!-- Recently Updated (modified date) -->
+    <option value="2" data-path=".update" data-order="desc" data-type="datetime">
+      Recently updated
+    </option>
+
+    <!-- Alphabetical by visible title (anchor text) -->
+    <option value="3" data-path=".post-title" data-order="asc" data-type="text">
+      Alphabetical (A–Z)
+    </option>
+    <option value="4" data-path=".post-title" data-order="desc" data-type="text">
+      Alphabetical (Z–A)
+    </option>
+  </select>
+</div>
+
+
+
   <?php
   /*
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-category-od">

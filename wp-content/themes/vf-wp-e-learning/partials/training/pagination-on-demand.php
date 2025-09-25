@@ -13,6 +13,17 @@
     });
   });
 
+  // Add event listener for sort dropdown
+const sortSelectOnDemand = document.getElementById("vf-form__select");
+if (sortSelectOnDemand) {
+  sortSelectOnDemand.addEventListener("change", () => {
+    // Reset to first page when sorting changes
+    currentPageOnDemand = 1;
+    updatePaginationLinksOnDemand();
+    showPageOnDemand(currentPageOnDemand);
+  });
+}
+
   const itemsPerPageOnDemand = 20;
   let currentPageOnDemand = 1;
 

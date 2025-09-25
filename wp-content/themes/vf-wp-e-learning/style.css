@@ -7,42 +7,64 @@ Template:     vf-wp
 Version:      1.0.0-beta.5
 Text Domain:  vfwp
 */
-ul li ul.children li {
-    list-style: none;
-   }
+#trainingMeta .vf-badge--primary {
+    background-color: #f3f3f3;
+    border-color: #f3f3f3;
+    color: #373A36;
+}
+#trainingMeta .vf-badge {
+    font-size: 14px;
+    font-weight: 500;
+}
 
-   .tag-cloud-link { 
-    font-size:16px !important;
-    }
-    .tag-cloud-link {
-        text-decoration:none;
-        background-color:#fff;
-    }
+#typeTraining .vf-tabs__section {
+    padding: 0px
+}
 
-    .counter-highlight {
-        font-weight: 700; 
-        color: #111;
-      }
-    
-      .loader {
-        width: 48px;
-        height: 48px;
-        border: 5px solid #FFF;
-        border-bottom-color: rgb(59, 111, 182);
-        border-radius: 50%;
-        display: inline-block;
-        box-sizing: border-box;
-        animation: rotation 1s linear infinite;
-      }
-    
-      @keyframes rotation {
-        0% {
-          transform: rotate(0deg);
-        }
-    
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    
-  
+.customBadgeBlue {
+    background-color: #d1e3f6 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+.customBadgeDarkBlue {
+    background-color: #3b6fb6 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+
+.customBadgeGrey {
+    background-color: #d0d0ce !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+.customBadgeGreen {
+    background-color: #D0DEBB !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
+
+.customFormat {
+    font-size: 14px !important;
+    margin-bottom: 0.5rem;
+}
+
+.counter-highlight {
+    font-weight: 700; 
+    color: #111;
+  }
+
+ .articleBottomBorder {
+ border-bottom: 1px solid #d8d8d8 !important;
+}
