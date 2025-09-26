@@ -2337,9 +2337,9 @@
   integrity sha512-+qu9it2IsLPeQmHwR8YE7EksmpCMVCAldgT8VNEA4lp4kPVWy2K1GnwZR7Wcv8PA4UvHdEBkXItcecPwwyimhQ==
 
 "@visual-framework/vf-tree@^2.0.0-alpha.1":
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-tree/-/vf-tree-2.0.0-alpha.1.tgz#334e908bb4429d04ef7b4bb6708c0a07e75efeae"
-  integrity sha512-bhKtQBxN4UbtvYzoPcLr4hEnKGbEsnD9LhAiTx/06j1ijI7CMooVYxrCxUY2W1AL/iIFxZjaYaFwiswVEP8q1A==
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-tree/-/vf-tree-2.0.0.tgz#7ae0bfd040effcdf97286cdca545ff2b019a3017"
+  integrity sha512-2u/Lo5sh8HSjhiZwh+D5Ya/KwvDoiUz4i4RWiuKaCg7oEmw5N1Ar8o2ZVLlToZztaOJJoCxHcAwJOlgipQ4Klw==
 
 "@visual-framework/vf-u-fullbleed@1.2.2":
   version "1.2.2"
