@@ -2361,10 +2361,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-video-teaser/-/vf-video-teaser-2.0.0.tgz#99bafd2a2fe760405c937e8b276e89d70485d230"
   integrity sha512-b1JzM24S2XjvMtt0AieyiwlAwV6MxZyBouqJJJiTyxl0Fj2SGvQfbmPv4kvN646VEZOgdbMO0srIM0aERJBlKw==
 
-"@visual-framework/vf-video@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-video/-/vf-video-1.0.2.tgz#c66fd28e9969dfd224ae4d7d2cf2b69859cdfad2"
-  integrity sha512-PXPYIkB2GJRsF9izbCWkC+jMGKtfxCfcwZGrRVwA0LN8+ilcVcQWC1kjRcv+YqDaGMTFmzkkt+d/ruWJe8s3AA==
+"@visual-framework/vf-video@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-video/-/vf-video-1.0.3.tgz#9e3e23e558bd0540998d030bead1e162ee78c608"
+  integrity sha512-iErdQoQjbgDZMds0c+exxvpcvRkntH+Qzzzv23sracVlLr9cN+hpvZfOQbE7N0WSEJsf9RYmeAkBuIwZACi2Lw==
 
 "@yeoman/namespace@^1.0.0":
   version "1.0.1"
