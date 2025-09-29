@@ -125,7 +125,7 @@
     "@visual-framework/vf-u-fullbleed": "1.2.3",
     "@visual-framework/vf-utility-classes": "2.0.0",
     "@visual-framework/vf-video": "1.0.3",
-    "@visual-framework/vf-video-container": "1.0.2",
+    "@visual-framework/vf-video-container": "1.0.3",
     "@visual-framework/vf-video-teaser": "2.0.0",
     "chalk": "4.1.2",
     "core-js": "3.39.0",
