@@ -21,7 +21,7 @@ add_action('vfwp_intranet_cron_process', 'vfwp_intranet_cron_process_training_on
 
 // Function to start process training_on_demand data.
 function vfwp_intranet_cron_process_training_on_demand_data() {
-    $training_on_demand_json_feed_api_endpoint = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_online?format=json&query=domain_source:ebiweb_training_online&start=0&size=500&fieldurl=true&fields=title,subtitle,description,type,training_type,url,venue,timeframe,slug,tags&facetcount=50&sort=title&facets=";
+    $training_on_demand_json_feed_api_endpoint = "https://www.ebi.ac.uk/ebisearch/ws/rest/ebiweb_training_online?format=json&query=domain_source:ebiweb_training_online&start=0&size=500&fieldurl=true&fields=title,subtitle,description,type,training_type,url,venue,timeframe,slug,tags,duration&facetcount=50&sort=title&facets=";
   
     // Fetch API content and decode it
     $training_on_demand_feed_content = file_get_contents($training_on_demand_json_feed_api_endpoint);
@@ -61,6 +61,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
         $od_type = $training_on_demand_ebi['fields']['type'][0];
         $category = 'Data science';
         $provider = 'embl-ebi-training';
+        $duration = $training_on_demand_ebi['fields']['duration'][0];
         $keywords = $training_on_demand_ebi['fields']['tags'];
         $keywords = implode(", ", $keywords);
         $overview = $training_on_demand_ebi['fields']['description'][0];
@@ -87,6 +88,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
             add_post_meta($post_id, 'vf-wp-training-info', $overview);
             add_post_meta($post_id, 'vf-wp-training-keywords', $keywords);
             add_post_meta($post_id, 'vf-wp-training-on_demand_type', $od_type);
+            add_post_meta($post_id, 'vf-wp-training-duration', $duration);
 
             // Check if the term exists before setting it
             $provider_term_exists = term_exists(strtolower($provider), 'training-organiser');
@@ -107,6 +109,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
             update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
             update_post_meta($existing_post_id, 'vf-wp-training-keywords', $keywords);
             update_post_meta($existing_post_id, 'vf-wp-training-on_demand_type', $od_type);
+            update_post_meta($existing_post_id, 'vf-wp-training-duration', $duration);
        
             if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {
             add_post_meta($post_id, 'post_title', $title);

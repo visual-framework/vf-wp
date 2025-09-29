@@ -88,14 +88,14 @@
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_68d4eeb6ae153",
+                            "field": "field_68d4eeb6b200c",
                             "operator": "==",
                             "value": "live"
                         }
                     ],
                     [
                         {
-                            "field": "field_68d4eeb6ae153",
+                            "field": "field_68d4eeb6b200c",
                             "operator": "==",
                             "value": "on-demand"
                         }
@@ -106,7 +106,6 @@
                     "class": "",
                     "id": ""
                 },
-                "relevanssi_exclude": 0,
                 "choices": {
                     "data_science": "Data science",
                     "professional_development": "Professional development",
@@ -116,6 +115,7 @@
                 "return_format": "label",
                 "multiple": 0,
                 "allow_null": 0,
+                "allow_in_bindings": 1,
                 "ui": 0,
                 "ajax": 0,
                 "placeholder": "",
@@ -150,45 +150,6 @@
                     "recorded_webinar": "Recorded webinar",
                     "online_tutorial": "Online tutorial",
                     "collection": "Collection"
-                },
-                "default_value": false,
-                "return_format": "label",
-                "multiple": 0,
-                "allow_null": 0,
-                "ui": 0,
-                "ajax": 0,
-                "placeholder": "",
-                "create_options": 0,
-                "save_options": 0
-            },
-            {
-                "key": "field_68d4eeb6b2bbf",
-                "label": "Format",
-                "name": "vf-wp-training-format",
-                "aria-label": "",
-                "type": "select",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_68d4eeb6ae153",
-                            "operator": "==",
-                            "value": "live"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "25",
-                    "class": "",
-                    "id": ""
-                },
-                "relevanssi_exclude": 0,
-                "choices": {
-                    "in-person": "In-person",
-                    "hybrid": "Hybrid",
-                    "webinar": "Webinar",
-                    "virtual": "Virtual"
                 },
                 "default_value": false,
                 "return_format": "label",
@@ -241,7 +202,7 @@
                 "label": "Audience",
                 "name": "vf-wp-training-audience",
                 "aria-label": "",
-                "type": "text",
+                "type": "select",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -250,11 +211,22 @@
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "maxlength": "",
+                "choices": {
+                    "scientists_academia": "Scientists in Academia",
+                    "scientists_industry": "Scientists in Industry",
+                    "science_educators": "Science Educators",
+                    "pre_postdoctoral_researchers": "Pre- and Postdoctoral Researchers"
+                },
+                "default_value": false,
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ajax": 0,
                 "placeholder": "",
-                "prepend": "",
-                "append": ""
+                "create_options": 0,
+                "save_options": 0
             },
             {
                 "key": "field_68d4eeb6b3f4f",
@@ -402,7 +374,7 @@
             },
             {
                 "key": "field_68d502c02783b",
-                "label": "Keywords",
+                "label": "Search keywords",
                 "name": "vf-wp-training-keywords",
                 "aria-label": "",
                 "type": "text",
@@ -420,6 +392,120 @@
                 "placeholder": "",
                 "prepend": "",
                 "append": ""
+            },
+            {
+                "key": "field_68da511d49eba",
+                "label": "Tags",
+                "name": "vf-wp-training-tags",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_68da4f4e774a0",
+                "label": "Featured",
+                "name": "vf-wp-training-featured",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "allow_in_bindings": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_68da4fac774a1",
+                "label": "Recently updated",
+                "name": "vf-wp-training-updated",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "allow_in_bindings": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_68da4fc9774a2",
+                "label": "Certificate",
+                "name": "vf-wp-training-certificate",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "allow_in_bindings": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_68da698878897",
+                "label": "Duration",
+                "name": "vf-wp-training-duration",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "less-than-1-hour": "less than 1 hour",
+                    "1-to-3-hours": "1 to 3 hours",
+                    "more-than-3-hours": "more than 3 hours"
+                },
+                "default_value": false,
+                "return_format": "label",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
             }
         ],
         "location": [

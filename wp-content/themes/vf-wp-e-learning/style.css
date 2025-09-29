@@ -55,9 +55,30 @@ Text Domain:  vfwp
     font-size: 12px !important;
 }
 
+.customBadgeGreenDark {
+    background-color: #18974C !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    font-size: 14px !important;
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: row;     /* stack children vertically */
+  justify-content: space-between; /* distribute space between them */
+  margin-bottom: 0.5rem;
+}
+
+.trainingOnDemand {
+  padding: 1rem 0;
+}
+
 .customFormat {
     font-size: 14px !important;
     margin-bottom: 0.5rem;
+    margin-top: 0px;
 }
 
 .counter-highlight {
@@ -66,5 +87,6 @@ Text Domain:  vfwp
   }
 
  .articleBottomBorder {
+ margin-top: 0.5rem;
  border-bottom: 1px solid #d8d8d8 !important;
 }

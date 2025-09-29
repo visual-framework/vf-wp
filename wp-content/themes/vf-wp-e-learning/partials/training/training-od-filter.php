@@ -10,17 +10,28 @@ $provider_terms = get_terms(
 
 
 $category_terms = ['Data science', 'Professional development', 'Workplace'];
-$type_terms = ['Course materials', 'Recorded webinar', 'Webinar series', 'Online tutorial', 'Collection'];
+$duration_terms = ['less than 1 hour', '1 to 3 hours', 'more than 3 hours'];
+$duration_terms = ['less than 1 hour', '1 to 3 hours', 'more than 3 hours'];
+$type_terms = ['Course materials', 'Recorded webinar', 'Online tutorial', 'Collection'];
+$certificate_terms = ['Certificate provided'];
+$audience_terms = [
+  'Scientists in Academia',
+  'Scientists in Industry',
+  'Science Educators',
+  'Pre- and Postdoctoral Researchers'
+];
 
 
-$counterCat = 1;
+$counterDur = 1;
 $counterTyp = 1;
 $counterPro = 1;
+$counterAud = 1;
+$counterCer = 1;
   
 ?>
 
 <form class="vf-stack vf-stack-400 | vf-u-margin__bottom--800">
-<div class="vf-form__item vf-stack">
+<div class="vf-form__item vf-stack vf-u-margin__bottom--800">
   <legend class="vf-form__legend">Sort by</legend>
   <select class="vf-form__select" 
           id="vf-form__select" 
@@ -29,12 +40,17 @@ $counterPro = 1;
           data-name="sort-control">
 
     <!-- Recently Added (published date) -->
-    <option value="1" data-path=".added" data-order="desc" data-type="datetime" selected>
+    <option value="0" data-path=".featured" data-order="desc" data-type="number" selected>
+      Featured
+    </option>
+
+    <!-- Recently Added (published date) -->
+    <option value="1" data-path=".added" data-order="desc" data-type="datetime" >
       Recently added
     </option>
 
     <!-- Recently Updated (modified date) -->
-    <option value="2" data-path=".update" data-order="desc" data-type="datetime">
+    <option value="2" data-path=".updated" data-order="desc" data-type="datetime">
       Recently updated
     </option>
 
@@ -49,37 +65,6 @@ $counterPro = 1;
 </div>
 
 
-
-  <?php
-  /*
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-category-od">
-    <legend class="vf-form__legend">Category</legend>
-    <?php
-    foreach($category_terms as $cat) {
-      $catSlug = strtolower(str_replace(' ', '_', $cat));
-      ?>
-    <div class="vf-form__item vf-form__item--checkbox">
-      <input id="category-od-<?php echo $catSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".category-od-<?php echo $catSlug; ?>" data-group="data-group-2" data-name="category-od" data-or="category-od"
-        value="<?php echo esc_attr($cat); ?>"
-        data-id="category-od-<?php echo esc_attr($catSlug); ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
-      <label for="category-od-<?php echo $catSlug; ?>" class="vf-form__label"><?php echo esc_html($cat); ?>
-      &nbsp;<span 
-      data-jplist-control="counter"
-      data-group="data-group-2"
-      data-format="({count})"
-      data-path=".category-od-<?php echo esc_attr($catSlug); ?>"
-      data-mode="static"
-      data-name="counter-category-od-<?php echo esc_attr($catSlug); ?>"
-      data-filter-type="path"></span>
-    </label>
-    </div>
-    <?php
-      $counterCat++;
-    }
-      */
-    ?>
-  </fieldset>
 
   <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-type">
     <legend class="vf-form__legend">Type</legend>
@@ -108,39 +93,92 @@ $counterPro = 1;
     }
     ?>
   </fieldset>
-  <?php
-  /*
-  <fieldset class="vf-form__fieldset vf-stack vf-stack--400" id="checkbox-filter-provider-od">
-    <legend class="vf-form__legend">Provider</legend>
+
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-audience">
+    <legend class="vf-form__legend">Audience</legend>
     <?php
-    foreach($provider_terms as $term) {
-      if ($term->slug === 'fellows-complementary-skills') {
-        continue;
-      }
+    foreach($audience_terms as $aud) {
+      $audSlug = strtolower(str_replace(' ', '_', $aud));
       ?>
     <div class="vf-form__item vf-form__item--checkbox">
-      <input id="provider-od-<?php echo$term->slug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".provider-od-<?php echo$term->slug; ?>" data-group="data-group-2" data-name="provider-od" data-or="provider-od"
-        value="<?php echo esc_attr($term->name); ?>"
-        data-id="provider-od-<?php echo$term->slug; ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
-      <label for="provider-od-<?php echo$term->slug; ?>" class="vf-form__label"><?php echo esc_html($term->name); ?>
+      <input id="audience-<?php echo $audSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".audience-<?php echo $audSlug; ?>" data-group="data-group-2" data-name="audience" data-or="audience"
+        value="<?php echo esc_attr($aud); ?>"
+        data-id="audience-<?php echo esc_attr($audSlug); ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
+      <label for="audience-<?php echo $audSlug; ?>" class="vf-form__label"><?php echo esc_html($aud); ?>
       &nbsp;<span style="flex-basis: 20%;"
       data-jplist-control="counter"
       data-group="data-group-2"
       data-format="({count})"
-      data-path=".provider-od-<?php echo esc_attr($term->slug); ?>"
+      data-path=".audience-<?php echo esc_attr($audSlug); ?>"
       data-mode="static"
-      data-name="counter-provider-od-<?php echo esc_attr($term->slug); ?>"
+      data-name="counter-audience-<?php echo esc_attr($audSlug); ?>"
       data-filter-type="path"></span>
     </label>
     </div>
     <?php
-      $counterPro++;
+      $counterAud++;
     }
+      
     ?>
   </fieldset>
-      */
+
+    <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-duration">
+    <legend class="vf-form__legend">Duration</legend>
+    <?php
+    foreach($duration_terms as $dur) {
+      $durSlug = strtolower(str_replace(' ', '_', $dur));
+      ?>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="duration-<?php echo $durSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".duration-<?php echo $durSlug; ?>" data-group="data-group-2" data-name="duration" data-or="duration"
+        value="<?php echo esc_attr($dur); ?>"
+        data-id="duration-<?php echo esc_attr($durSlug); ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
+      <label for="duration-<?php echo $durSlug; ?>" class="vf-form__label"><?php echo esc_html($dur); ?>
+      &nbsp;<span 
+      data-jplist-control="counter"
+      data-group="data-group-2"
+      data-format="({count})"
+      data-path=".duration-<?php echo esc_attr($durSlug); ?>"
+      data-mode="static"
+      data-name="counter-duration-<?php echo esc_attr($durSlug); ?>"
+      data-filter-type="path"></span>
+    </label>
+    </div>
+    <?php
+      $counterDur++;
+    }
+      
     ?>
+  </fieldset>
+
+<fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-certificate">
+  <legend class="vf-form__legend">Certificate</legend>
+
+  <div class="vf-form__item vf-form__item--checkbox">
+    <input id="certificate-1" type="checkbox"
+           data-jplist-control="checkbox-text-filter"
+           data-path=".certificate-1"
+           data-group="data-group-2"
+           data-name="certificate"
+           value="certificate-1"
+           class="vf-form__checkbox checkboxOnDemand inputOnDemand">
+    <label for="certificate-1" class="vf-form__label">
+      Certificate provided
+      &nbsp;<span 
+        data-jplist-control="counter"
+        data-group="data-group-2"
+        data-format="({count})"
+        data-path=".certificate-1"
+        data-mode="static"
+        data-name="counter-certificate-1"
+        data-filter-type="path">
+      </span>
+    </label>
+  </div>
+</fieldset>
+
+
 </form>
 <style>
   .vf-form__label {

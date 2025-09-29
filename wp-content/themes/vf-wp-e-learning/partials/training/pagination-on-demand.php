@@ -9,6 +9,7 @@
     checkbox.addEventListener("click", () => {
       // Reset the current page to 1 when a 'lolo' checkbox is clicked
       currentPageOnDemand = 1;
+      sortEvents();
       updatePaginationLinksOnDemand();
     });
   });
@@ -19,6 +20,7 @@ if (sortSelectOnDemand) {
   sortSelectOnDemand.addEventListener("change", () => {
     // Reset to first page when sorting changes
     currentPageOnDemand = 1;
+    sortEvents();
     updatePaginationLinksOnDemand();
     showPageOnDemand(currentPageOnDemand);
   });
@@ -27,38 +29,28 @@ if (sortSelectOnDemand) {
   const itemsPerPageOnDemand = 20;
   let currentPageOnDemand = 1;
 
-  function showPageOnDemand(page) {
-    let articles = document.querySelectorAll(".trainingOnDemand");
-    articles.forEach((article, index) => {
-      if (index >= (page - 1) * itemsPerPageOnDemand && index < page * itemsPerPageOnDemand) {
-        article.classList.remove('vf-u-display-none'); // Remove the class to display the article
-      } else {
-        article.classList.add('vf-u-display-none'); // Add the class to hide the article
-      }
-    });
-
-    // Count all articles on the page
-    let totalArticleCountOnDemand = articles.length;
-
-    // Count the visible articles without the 'vf-u-display-none' class
-    const visibleArticles = document.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)");
-
-    // console.log(`Total Articles: ${totalArticleCountOnDemand}`);
-
-    // Add the condition to hide the element with id "paging-data" if totalArticleCountOnDemand is lower than itemsPerPageOnDemand
-    const pagingDataElement = document.getElementById("paging-data2");
-    if (totalArticleCountOnDemand < itemsPerPageOnDemand) {
-      pagingDataElement.style.display = "none";
+function showPageOnDemand(page) {
+  // Only get items that are visible after filtering
+  let articles = document.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)");
+  articles.forEach((article, index) => {
+    if (index >= (page - 1) * itemsPerPageOnDemand && index < page * itemsPerPageOnDemand) {
+      article.classList.remove('vf-u-display-none-page'); // new class for pagination hiding
     } else {
-      pagingDataElement.style.display = "block";
+      article.classList.add('vf-u-display-none-page');
     }
-  }
+  });
+
+  // Hide/show pagination only based on filtered items
+  let totalArticleCountOnDemand = articles.length;
+  const pagingDataElement = document.getElementById("paging-data2");
+  pagingDataElement.style.display = totalArticleCountOnDemand <= itemsPerPageOnDemand ? "none" : "block";
+}
+
 
   function updatePaginationLinksOnDemand() {
-  let articleTotal = document.querySelectorAll(".trainingOnDemand");
+   let articleTotal = document.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)");
   const pageNumbers = document.querySelector(".paginationListOnDemand");
 
-  // Calculate the total number of pages
   const totalPages = Math.ceil(articleTotal.length / itemsPerPageOnDemand);
   const maxPageLinks = 5; // Maximum number of pagination links to display
 
@@ -210,11 +202,11 @@ if (sortSelectOnDemand) {
   nextPageItem.appendChild(nextPageLink);
   pageNumbers.appendChild(nextPageItem);
 
-  // Page range display
+// Page range display
   var rangeTotalPages = articleTotal.length;
   var numberOfPages = Math.ceil(rangeTotalPages / itemsPerPageOnDemand),
-    start = ((currentPageOnDemand - 1) * itemsPerPageOnDemand + 1) + ' - ',
-    end = Math.min(currentPageOnDemand * itemsPerPageOnDemand, rangeTotalPages);
+      start = ((currentPageOnDemand - 1) * itemsPerPageOnDemand + 1) + ' - ',
+      end = Math.min(currentPageOnDemand * itemsPerPageOnDemand, rangeTotalPages);
 
   if (rangeTotalPages <= itemsPerPageOnDemand) {
     start = "";
@@ -244,19 +236,49 @@ if (sortSelectOnDemand) {
     });
   });
 
+function sortEvents() {
+  var eventsContainer = document.getElementById("on-demand-events");
+  var events = eventsContainer.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)"); 
+  var eventsArr = Array.from(events);
 
-  var inputs = document.querySelectorAll('.inputOnDemand');
+  var sortSelect = document.querySelector('[data-jplist-control="select-sort"][data-group="data-group-2"]');
+  var selectedOption = sortSelect.options[sortSelect.selectedIndex];
 
-  inputs.forEach(function (item) {
-    item.addEventListener('keyup', function (e) {
-      updatePaginationLinksOnDemand();
-      showPageOnDemand(currentPageOnDemand);
-    });
-    item.addEventListener("change", function (e) {
-      updatePaginationLinksOnDemand();
-      showPageOnDemand(currentPageOnDemand);
-    });
+  var dataPath = selectedOption.getAttribute("data-path");
+  var order = selectedOption.getAttribute("data-order");
+  var type = selectedOption.getAttribute("data-type");
+
+  eventsArr.sort(function (a, b) {
+    var aVal, bVal;
+
+    if (type === "number") {
+      aVal = parseFloat(a.querySelector(dataPath)?.textContent.trim() || 0);
+      bVal = parseFloat(b.querySelector(dataPath)?.textContent.trim() || 0);
+    } else if (type === "datetime") {
+      aVal = new Date(a.querySelector(dataPath)?.textContent.trim() || 0);
+      bVal = new Date(b.querySelector(dataPath)?.textContent.trim() || 0);
+    } else {
+      aVal = a.querySelector(dataPath)?.textContent.trim().toLowerCase() || "";
+      bVal = b.querySelector(dataPath)?.textContent.trim().toLowerCase() || "";
+    }
+
+    // Primary sort
+    let result = order === "asc" ? (aVal > bVal ? 1 : aVal < bVal ? -1 : 0)
+                                 : (aVal < bVal ? 1 : aVal > bVal ? -1 : 0);
+
+    // Secondary sort to mix items with same primary value (use title)
+    if (result === 0) {
+      const aTitle = a.querySelector(".post-title")?.textContent.trim().toLowerCase() || "";
+      const bTitle = b.querySelector(".post-title")?.textContent.trim().toLowerCase() || "";
+      result = aTitle.localeCompare(bTitle);
+    }
+
+    return result;
   });
 
+  eventsArr.forEach(event => eventsContainer.appendChild(event));
+}
+
+var inputs = document.querySelectorAll('.inputOnDemand'); inputs.forEach(function (item) { item.addEventListener('keyup', function (e) { updatePaginationLinksOnDemand(); sortEvents(); showPageOnDemand(currentPageOnDemand); }); item.addEventListener("change", function (e) { updatePaginationLinksOnDemand(); sortEvents(); showPageOnDemand(currentPageOnDemand); }); });
 
 </script>

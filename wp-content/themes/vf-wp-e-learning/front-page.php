@@ -4,7 +4,72 @@ get_header();
 global $vf_theme;
 $today_date = date('Ymd');
 ?>
+<style>
+    .vf-card__heading {
+        font-size: 21px;
+    }
+    .card {    flex-direction: column;
+    display: flex
+;
+}
+</style>
+<section style="display: none;" class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
+  <div class="vf-card-container__inner">
+    <div class="vf-section-header">
+      <h2 class="vf-section-header__heading">Featured courses</h2>
+    </div>
 
+<article class="vf-card vf-card--brand vf-card--bordered">
+    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">EMBL-EBI Training</span></p>
+    <article class="">
+      <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/EMBL_Services_EDIT_COVID-PORTAL_CMYK-m.jpg" alt="" class="vf-card__image" loading="lazy">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">A guide to sequence similarity search for biomolecular sequences 
+          </a></h3>
+        <p class="vf-card__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.  </p>
+      </div>
+    </article>
+</article>
+
+<article class="vf-card vf-card--brand vf-card--bordered">
+    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">EMBL External Training</span></p>
+    <article class="">
+
+      <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/Metabolomics_31-m.jpg" alt="" class="vf-card__image" loading="lazy">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">UniProt and Alzheimer’s Disease: Linking molecular defects to disease phenotype 
+          </a></h3>
+        <p class="vf-card__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      </div>
+    </article>
+</article>
+
+<article class="vf-card vf-card--brand vf-card--bordered">
+    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">EMBL Internal Training</span></p>
+    <article class="">
+
+      <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/EES18-01DSC_5740-l-1.jpg" alt="" class="vf-card__image" loading="lazy">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Working with sensitive data 
+          </a></h3>
+        <p class="vf-card__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+      </div>
+    </article>
+    </article>
+    <article class="vf-card vf-card--brand vf-card--bordered">
+    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">SEPE</span></p>
+    <article class="">
+
+      <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/ELLS-container_training_150ppi.png" alt="" class="vf-card__image" loading="lazy">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link" href="JavaScript:Void(0);">Supercomputer-based modelling and simulation for advanced biomedical applications 
+          </a></h3>
+        <p class="vf-card__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+      </div>
+    </article>
+    </article>
+  </div>
+</section>
 
     <div class="embl-grid embl-grid--has-centered-content vf-u-padding__bottom--800 vf-u-padding__top--800 | vf-content">
       <div></div>
@@ -39,12 +104,14 @@ $today_date = date('Ymd');
       <main>
         <div id="on-demand-events" data-jplist-group="data-group-2">
           <?php
-         $onDemandLoop = new WP_Query(array(
-          'post_type' => 'training',
-          'posts_per_page' => -1,
-          'post_status' => 'publish',
+  $onDemandLoop = new WP_Query(array(
+  'post_type'      => 'training',
+  'posts_per_page' => -1,
+  'post_status'    => 'publish',
+  'orderby'        => 'title',   // order by post title
+  'order'          => 'ASC'      // ascending = A → Z
+));
 
-        ));
         $temp_query = $wp_query;
         $wp_query   = NULL;
         $wp_query   = $onDemandLoop;
