@@ -11,7 +11,6 @@ $provider_terms = get_terms(
 
 $category_terms = ['Data science', 'Professional development', 'Workplace'];
 $duration_terms = ['less than 1 hour', '1 to 3 hours', 'more than 3 hours'];
-$duration_terms = ['less than 1 hour', '1 to 3 hours', 'more than 3 hours'];
 $type_terms = ['Course materials', 'Recorded webinar', 'Online tutorial', 'Collection'];
 $certificate_terms = ['Certificate provided'];
 $audience_terms = [
