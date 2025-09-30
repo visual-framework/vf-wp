@@ -11,11 +11,12 @@ $provider_terms = get_terms(
 
 $category_terms = ['Data science', 'Professional development', 'Workplace'];
 $duration_terms = ['less than 1 hour', '1 to 3 hours', 'more than 3 hours'];
-$type_terms = ['Course materials', 'Recorded webinar', 'Online tutorial', 'Collection'];
+$type_terms = ['Course materials', 'Recorded webinar', 'Online course'];
+$subtype_terms = ['Tutorial', 'Collection'];
 $certificate_terms = ['Certificate provided'];
 $audience_terms = [
-  'Scientists in Academia',
-  'Scientists in Industry',
+  'Life science researchers',
+  'Data scientists',
   'Science Educators',
   'Pre- and Postdoctoral Researchers'
 ];
@@ -26,6 +27,7 @@ $counterTyp = 1;
 $counterPro = 1;
 $counterAud = 1;
 $counterCer = 1;
+$counterSub = 1;
   
 ?>
 
@@ -93,33 +95,83 @@ $counterCer = 1;
     ?>
   </fieldset>
 
-    <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-audience">
-    <legend class="vf-form__legend">Audience</legend>
-    <?php
-    foreach($audience_terms as $aud) {
-      $audSlug = strtolower(str_replace(' ', '_', $aud));
-      ?>
+<fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800"
+          id="checkbox-filter-subtype"
+          style="display: none; padding-left: 2rem;">
+  <?php foreach ($subtype_terms as $sub) : 
+    $subSlug = strtolower(str_replace(' ', '_', $sub)); ?>
     <div class="vf-form__item vf-form__item--checkbox">
-      <input id="audience-<?php echo $audSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".audience-<?php echo $audSlug; ?>" data-group="data-group-2" data-name="audience" data-or="audience"
-        value="<?php echo esc_attr($aud); ?>"
-        data-id="audience-<?php echo esc_attr($audSlug); ?>" class="vf-form__checkbox checkboxOnDemand inputOnDemand">
-      <label for="audience-<?php echo $audSlug; ?>" class="vf-form__label"><?php echo esc_html($aud); ?>
-      &nbsp;<span style="flex-basis: 20%;"
-      data-jplist-control="counter"
-      data-group="data-group-2"
-      data-format="({count})"
-      data-path=".audience-<?php echo esc_attr($audSlug); ?>"
-      data-mode="static"
-      data-name="counter-audience-<?php echo esc_attr($audSlug); ?>"
-      data-filter-type="path"></span>
-    </label>
+      <input id="subtype-<?php echo $subSlug; ?>" 
+             type="checkbox" 
+             data-jplist-control="checkbox-text-filter"
+             data-path=".subtype-<?php echo esc_attr($subSlug); ?>"
+             data-group="data-group-2" 
+             data-name="subtype" 
+             data-or="subtype"
+             value="<?php echo esc_attr($sub); ?>"
+             data-id="subtype-<?php echo esc_attr($subSlug); ?>"
+             class="vf-form__checkbox checkboxOnDemand inputOnDemand">
+      <label for="subtype-<?php echo $subSlug; ?>" class="vf-form__label">
+        <?php echo esc_html($sub); ?>
+        &nbsp;<span 
+          data-jplist-control="counter"
+          data-group="data-group-2"
+          data-format="({count})"
+          data-path=".subtype-<?php echo esc_attr($subSlug); ?>"
+          data-mode="static"
+          data-name="counter-subtype-<?php echo esc_attr($subSlug); ?>"
+          data-filter-type="path">
+        </span>
+      </label>
+    </div>
+  <?php 
+    $counterSub++;
+  endforeach; ?>
+</fieldset>
+
+
+<fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-audience">
+  <legend class="vf-form__legend">Audience</legend>
+  <?php
+  $totalAud = count($audience_terms);
+  $indexAud = 1;
+
+  foreach ($audience_terms as $aud) {
+    $audSlug = strtolower(str_replace(' ', '_', $aud));
+    $isLast  = ($indexAud === $totalAud);
+    ?>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="audience-<?php echo $audSlug; ?>" 
+             type="checkbox" 
+             data-jplist-control="checkbox-text-filter"
+             data-path=".audience-<?php echo $audSlug; ?>" 
+             data-group="data-group-2" 
+             data-name="audience" 
+             data-or="audience"
+             value="<?php echo esc_attr($aud); ?>"
+             data-id="audience-<?php echo esc_attr($audSlug); ?>" 
+             class="vf-form__checkbox checkboxOnDemand inputOnDemand">
+      <label for="audience-<?php echo $audSlug; ?>" class="vf-form__label">
+        <?php echo esc_html($aud); ?>
+        &nbsp;<span 
+          <?php echo $isLast ? 'style="flex-basis:40%;"' : ''; ?>
+          data-jplist-control="counter"
+          data-group="data-group-2"
+          data-format="({count})"
+          data-path=".audience-<?php echo esc_attr($audSlug); ?>"
+          data-mode="static"
+          data-name="counter-audience-<?php echo esc_attr($audSlug); ?>"
+          data-filter-type="path">
+        </span>
+      </label>
     </div>
     <?php
-      $counterAud++;
-    }
-      
-    ?>
+    $counterAud++;
+    $indexAud++;
+  }
+  ?>
+</fieldset>
+
   </fieldset>
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-duration">

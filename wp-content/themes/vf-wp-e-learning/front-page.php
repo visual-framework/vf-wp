@@ -161,6 +161,26 @@ $today_date = date('Ymd');
   });
 
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const onlineCourseCheckbox = document.getElementById('type-online_course');
+  const subtypeFieldset = document.getElementById('checkbox-filter-subtype');
+  const typeFieldset = document.getElementById('checkbox-filter-type');
+
+  if (onlineCourseCheckbox && subtypeFieldset) {
+    onlineCourseCheckbox.addEventListener('change', function () {
+      if (this.checked) {
+        subtypeFieldset.style.display = 'block';
+        typeFieldset.style.marginBottom = '0';
+      } else {
+        subtypeFieldset.style.display = 'none';
+        typeFieldset.style.marginBottom = '2rem';
+      }
+    });
+  }
+});
+</script>
+
 
 
 <script>

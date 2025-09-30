@@ -59,6 +59,18 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
         $url = basename($training_on_demand_ebi['fields']['url'][0]);
         $permalink = $training_on_demand_ebi['fields']['url'][0];
         $od_type = $training_on_demand_ebi['fields']['type'][0];
+// Determine main type
+if (in_array($od_type, ['Collection', 'Online tutorial'], true)) {
+    $od_type = 'Online course';
+}
+
+// Determine subtype
+$od_subtype = '';
+if ($training_on_demand_ebi['fields']['type'][0] === 'Collection') {
+    $od_subtype = 'Collection';
+} elseif ($training_on_demand_ebi['fields']['type'][0] === 'Online tutorial') {
+    $od_subtype = 'Tutorial';
+}
         $category = 'Data science';
         $provider = 'embl-ebi-training';
         $duration = $training_on_demand_ebi['fields']['duration'][0];
@@ -88,6 +100,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
             add_post_meta($post_id, 'vf-wp-training-info', $overview);
             add_post_meta($post_id, 'vf-wp-training-keywords', $keywords);
             add_post_meta($post_id, 'vf-wp-training-on_demand_type', $od_type);
+            add_post_meta($post_id, 'vf-wp-training-course_type', $od_subtype);
             add_post_meta($post_id, 'vf-wp-training-duration', $duration);
 
             // Check if the term exists before setting it
@@ -109,6 +122,7 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
             update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
             update_post_meta($existing_post_id, 'vf-wp-training-keywords', $keywords);
             update_post_meta($existing_post_id, 'vf-wp-training-on_demand_type', $od_type);
+            update_post_meta($existing_post_id, 'vf-wp-training-course_type', $od_subtype);
             update_post_meta($existing_post_id, 'vf-wp-training-duration', $duration);
        
             if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {

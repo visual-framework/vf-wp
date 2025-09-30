@@ -5,6 +5,7 @@ $current_date  = $now->format('Ymd');
 $organiser     = get_the_terms($post->ID, 'training-organiser');
 
 $odType        = get_field('vf-wp-training-on_demand_type', $post_id);
+$odSubType     = get_field('vf-wp-training-course_type', $post_id);
 $category      = get_field('vf-wp-training-category', $post_id);
 $duration      = get_field('vf-wp-training-duration', $post_id);
 $additionalInfo= get_field('vf-wp-training-info', $post_id, false, false);
@@ -117,6 +118,9 @@ $org_list_text = esc_html(implode(', ', $org_list_upper));
   <div class="vf-u-display-none">
     <span class="type-<?php echo esc_attr(strtolower(str_replace(' ', '_', $odType))); ?>">
       <?php echo esc_html($odType); ?>
+    </span>
+    <span class="subtype-<?php echo esc_attr(strtolower(str_replace(' ', '_', $odSubType))); ?>">
+      <?php echo esc_html($odSubType); ?>
     </span>
 
     <span class="duration-<?php echo esc_attr($durationSlug); ?>">

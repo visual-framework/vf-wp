@@ -124,7 +124,7 @@
             },
             {
                 "key": "field_68d4eeb6b27de",
-                "label": "On demand type",
+                "label": "Type",
                 "name": "vf-wp-training-on_demand_type",
                 "aria-label": "",
                 "type": "select",
@@ -133,7 +133,7 @@
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_68d4eeb6ae153",
+                            "field": "field_68d4eeb6b200c",
                             "operator": "==",
                             "value": "on-demand"
                         }
@@ -144,17 +144,53 @@
                     "class": "",
                     "id": ""
                 },
-                "relevanssi_exclude": 0,
                 "choices": {
                     "course_materials": "Course materials",
                     "recorded_webinar": "Recorded webinar",
-                    "online_tutorial": "Online tutorial",
+                    "online_course": "Online course"
+                },
+                "default_value": false,
+                "return_format": "label",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_68db9ea8080e2",
+                "label": "Online course type",
+                "name": "vf-wp-training-course_type",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_68d4eeb6b27de",
+                            "operator": "==",
+                            "value": "online_course"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "tutorial": "Tutorial",
                     "collection": "Collection"
                 },
                 "default_value": false,
                 "return_format": "label",
                 "multiple": 0,
                 "allow_null": 0,
+                "allow_in_bindings": 1,
                 "ui": 0,
                 "ajax": 0,
                 "placeholder": "",
@@ -215,7 +251,7 @@
                     "scientists_academia": "Scientists in Academia",
                     "scientists_industry": "Scientists in Industry",
                     "science_educators": "Science Educators",
-                    "pre_postdoctoral_researchers": "Pre- and Postdoctoral Researchers"
+                    "pre_postdoctoral_researchers": "Pre- & Postdoctoral Researchers"
                 },
                 "default_value": false,
                 "return_format": "value",
