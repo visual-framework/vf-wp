@@ -2356,10 +2356,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-video-container/-/vf-video-container-1.0.3.tgz#5329c0c49d36fedb2ae5f8de040798ad6c020664"
   integrity sha512-Sri8ps6PN3ZILO1jjw7wB8wYvqqdDHM5a+eu/JmwtrRN9JgGVUr/o1CxHsfKdEqiKrlFA9vbhdvdfFkfV4vbcQ==
 
-"@visual-framework/vf-video-teaser@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-video-teaser/-/vf-video-teaser-2.0.0.tgz#99bafd2a2fe760405c937e8b276e89d70485d230"
-  integrity sha512-b1JzM24S2XjvMtt0AieyiwlAwV6MxZyBouqJJJiTyxl0Fj2SGvQfbmPv4kvN646VEZOgdbMO0srIM0aERJBlKw==
+"@visual-framework/vf-video-teaser@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-video-teaser/-/vf-video-teaser-2.0.1.tgz#8ba9a65d3f1afa79eeefdacb09563baf5abc31db"
+  integrity sha512-eCe9qDYNnpw1CJtVJ/8YDdqwpJXmi/gFx1WZJJ2BOo/TCepNd+eeGeOSoyOGmZgaDlsx9J5DHOMF/Xj4Dcj/pQ==
 
 "@visual-framework/vf-video@1.0.3":
   version "1.0.3"
