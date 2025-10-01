@@ -90,3 +90,7 @@ Text Domain:  vfwp
  margin-top: 0.5rem;
  border-bottom: 1px solid #d8d8d8 !important;
 }
+
+.vf-u-display-none-page {
+  display: none !important;
+}

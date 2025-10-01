@@ -1,284 +1,285 @@
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
+
+    const itemsPerPageOnDemand = 20;
+    let currentPageOnDemand = 1;
+
+    // Unified function to run on any change
+    function runUpdates() {
+        sortEvents();
+        updatePaginationLinksOnDemand();
+        showPageOnDemand(currentPageOnDemand);
+    }
+
+    // Initial display
     showPageOnDemand(currentPageOnDemand);
     updatePaginationLinksOnDemand();
-  });
-  // Add event listeners to checkboxesOnDemand
-  const checkboxesOnDemand = document.querySelectorAll(".checkboxOnDemand");
-  checkboxesOnDemand.forEach((checkbox) => {
-    checkbox.addEventListener("click", () => {
-      // Reset the current page to 1 when a 'lolo' checkbox is clicked
-      currentPageOnDemand = 1;
-      sortEvents();
-      updatePaginationLinksOnDemand();
+
+    // --------------------------
+    // Event listeners for checkboxes
+    // --------------------------
+    const checkboxesOnDemand = document.querySelectorAll(".checkboxOnDemand");
+    checkboxesOnDemand.forEach((checkbox) => {
+        checkbox.addEventListener("click", () => {
+            currentPageOnDemand = 1;
+            runUpdates();
+        });
     });
-  });
 
-  // Add event listener for sort dropdown
-const sortSelectOnDemand = document.getElementById("vf-form__select");
-if (sortSelectOnDemand) {
-  sortSelectOnDemand.addEventListener("change", () => {
-    // Reset to first page when sorting changes
-    currentPageOnDemand = 1;
-    sortEvents();
-    updatePaginationLinksOnDemand();
-    showPageOnDemand(currentPageOnDemand);
-  });
-}
-
-  const itemsPerPageOnDemand = 20;
-  let currentPageOnDemand = 1;
-
-function showPageOnDemand(page) {
-  // Only get items that are visible after filtering
-  let articles = document.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)");
-  articles.forEach((article, index) => {
-    if (index >= (page - 1) * itemsPerPageOnDemand && index < page * itemsPerPageOnDemand) {
-      article.classList.remove('vf-u-display-none-page'); // new class for pagination hiding
-    } else {
-      article.classList.add('vf-u-display-none-page');
-    }
-  });
-
-  // Hide/show pagination only based on filtered items
-  let totalArticleCountOnDemand = articles.length;
-  const pagingDataElement = document.getElementById("paging-data2");
-  pagingDataElement.style.display = totalArticleCountOnDemand <= itemsPerPageOnDemand ? "none" : "block";
-}
-
-
-  function updatePaginationLinksOnDemand() {
-   let articleTotal = document.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)");
-  const pageNumbers = document.querySelector(".paginationListOnDemand");
-
-  const totalPages = Math.ceil(articleTotal.length / itemsPerPageOnDemand);
-  const maxPageLinks = 5; // Maximum number of pagination links to display
-
-  // Calculate the start and end page numbers to display
-  let startPage = 1;
-  let endPage = totalPages;
-
-  if (totalPages > maxPageLinks) {
-    const offset = Math.floor(maxPageLinks / 2);
-    startPage = Math.max(1, currentPageOnDemand - offset);
-    endPage = Math.min(totalPages, startPage + maxPageLinks - 1);
-
-    if (currentPageOnDemand - offset > 1) {
-      startPage++;
+    // --------------------------
+    // Event listener for sort dropdown
+    // --------------------------
+    const sortSelectOnDemand = document.getElementById("vf-form__select");
+    if (sortSelectOnDemand) {
+        sortSelectOnDemand.addEventListener("change", () => {
+            currentPageOnDemand = 1;
+            runUpdates();
+        });
     }
 
-    if (currentPageOnDemand + offset < totalPages) {
-      endPage--;
-    }
-  }
+// --------------------------
+// Event listeners for input fields (all types)
+// --------------------------
+const inputs = document.querySelectorAll('.inputOnDemand');
 
-  // Clear existing pagination links
-  pageNumbers.innerHTML = "";
+inputs.forEach(function(item) {
+    const events = [
+        'input',        // typing, pasting, autofill, drag-drop
+        'keyup',        // key release
+        'keydown',      // key press
+        'keypress',     // key press (older, sometimes used)
+        'change',       // blur after change
+        'mousedown',    // mouse click
+        'mouseup',      // mouse release
+        'focus',        // field gains focus
+        'blur',         // field loses focus
+        'paste',        // content pasted
+        'cut',          // content cut
+        'drop',         // text dropped
+        'compositionend'// for IME / complex input
+    ];
 
-  // Add "Previous" link
-  const prevPageItem = document.createElement("li");
-  prevPageItem.classList.add("vf-pagination__item");
-  prevPageItem.classList.add("vf-pagination__item--previous-page");
-  const prevPageLink = document.createElement("a");
-  if (currentPageOnDemand > 1) {
-    prevPageLink.textContent = "Previous";
-    prevPageLink.href = "#"; // Set the href attribute as needed
-    prevPageLink.classList.add("vf-pagination__link");
-    prevPageLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      if (currentPageOnDemand > 1) {
-        currentPageOnDemand--;
-        showPageOnDemand(currentPageOnDemand);
-        updatePaginationLinksOnDemand();
-      }
+    events.forEach(function(evt) {
+        item.addEventListener(evt, runUpdates);
     });
-  } else {
-    prevPageLink.textContent = "Previous";
-    prevPageItem.classList.add("disabled");
-  }
-  prevPageItem.appendChild(prevPageLink);
-  pageNumbers.appendChild(prevPageItem);
-
-  // Add first page
-  if (startPage > 1) {
-    const firstPageItem = document.createElement("li");
-    const firstPageLink = document.createElement("a");
-    firstPageLink.textContent = "1";
-    firstPageLink.href = "#"; // Set the href attribute as needed
-    firstPageLink.classList.add("vf-pagination__link");
-    firstPageLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      currentPageOnDemand = 1;
-      showPageOnDemand(currentPageOnDemand);
-      updatePaginationLinksOnDemand();
-    });
-    firstPageItem.appendChild(firstPageLink);
-    firstPageItem.classList.add("vf-pagination__item");
-    pageNumbers.appendChild(firstPageItem);
-
-    if (startPage > 2) {
-      // Add '...' if there are more pages before the first page
-      const ellipsisItem = document.createElement("li");
-      ellipsisItem.textContent = "...";
-      ellipsisItem.classList.add("vf-pagination__item");
-      pageNumbers.appendChild(ellipsisItem);
-    }
-  }
-
-  // Create and display page numbers as list items
-  for (let i = startPage; i <= endPage; i++) {
-    const pageNumberItem = document.createElement("li");
-    const pageNumberLink = document.createElement("a");
-    if (i === currentPageOnDemand) {
-      const pageNumberSpan = document.createElement("span");
-      pageNumberSpan.classList.add("vf-pagination__label");
-      pageNumberItem.classList.add("vf-pagination__item--is-active");
-      pageNumberSpan.setAttribute("aria-current", "page");
-      pageNumberSpan.textContent = i;
-      pageNumberItem.appendChild(pageNumberSpan);
-    } else {
-      pageNumberLink.textContent = i;
-      pageNumberLink.href = "#"; // Set the href attribute as needed
-      pageNumberLink.classList.add("vf-pagination__link");
-      pageNumberLink.addEventListener("click", (event) => {
-        event.preventDefault();
-        currentPageOnDemand = i;
-        showPageOnDemand(currentPageOnDemand);
-        updatePaginationLinksOnDemand();
-      });
-      pageNumberItem.appendChild(pageNumberLink);
-    }
-    pageNumberItem.classList.add("vf-pagination__item");
-    pageNumbers.appendChild(pageNumberItem);
-  }
-
-  // Add last page
-  if (endPage < totalPages) {
-    if (endPage < totalPages - 1) {
-      // Add '...' if there are more pages after the last page
-      const ellipsisItem = document.createElement("li");
-      ellipsisItem.textContent = "...";
-      ellipsisItem.classList.add("vf-pagination__item");
-      pageNumbers.appendChild(ellipsisItem);
-    }
-
-    const lastPageItem = document.createElement("li");
-    const lastPageLink = document.createElement("a");
-    lastPageLink.textContent = totalPages;
-    lastPageLink.href = "#"; // Set the href attribute as needed
-    lastPageLink.classList.add("vf-pagination__link");
-    lastPageLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      currentPageOnDemand = totalPages;
-      showPageOnDemand(currentPageOnDemand);
-      updatePaginationLinksOnDemand();
-    });
-    lastPageItem.appendChild(lastPageLink);
-    lastPageItem.classList.add("vf-pagination__item");
-    pageNumbers.appendChild(lastPageItem);
-  }
-
-  // Add "Next" link
-  const nextPageItem = document.createElement("li");
-  nextPageItem.classList.add("vf-pagination__item");
-  nextPageItem.classList.add("vf-pagination__item--next-page");
-  const nextPageLink = document.createElement("a");
-  if (currentPageOnDemand < totalPages) {
-    nextPageLink.textContent = "Next";
-    nextPageLink.href = "#"; // Set the href attribute as needed
-    nextPageLink.classList.add("vf-pagination__link");
-    nextPageLink.addEventListener("click", (event) => {
-      event.preventDefault();
-      if (currentPageOnDemand < totalPages) {
-        currentPageOnDemand++;
-        showPageOnDemand(currentPageOnDemand);
-        updatePaginationLinksOnDemand();
-      }
-    });
-  } else {
-    nextPageLink.textContent = "Next";
-    nextPageItem.classList.add("disabled");
-  }
-  nextPageItem.appendChild(nextPageLink);
-  pageNumbers.appendChild(nextPageItem);
-
-// Page range display
-  var rangeTotalPages = articleTotal.length;
-  var numberOfPages = Math.ceil(rangeTotalPages / itemsPerPageOnDemand),
-      start = ((currentPageOnDemand - 1) * itemsPerPageOnDemand + 1) + ' - ',
-      end = Math.min(currentPageOnDemand * itemsPerPageOnDemand, rangeTotalPages);
-
-  if (rangeTotalPages <= itemsPerPageOnDemand) {
-    start = "";
-  }
-
-  document.querySelector('#start-counter-od').textContent = start;
-  document.querySelector('#total-result-od').textContent = rangeTotalPages;
-  document.querySelector('#end-counter-od').textContent = end;
-}
+});
 
 
-  // scroll to top after clicking on a pagination element
-  document.addEventListener("DOMContentLoaded", function () {
-    // Get the pagination element
+
+
+
+
+
+
+
+
+    // --------------------------
+    // Pagination scroll to top
+    // --------------------------
     const pagination = document.getElementById("paging-data2");
-
-    // Add a click event listener to the pagination element
-    pagination.addEventListener("click", function (event) {
-      // Prevent the default link behavior
-      event.preventDefault();
-
-      // Scroll to the element with the ID 'lolo'
-      const targetElement = document.getElementById("vf-tabs__section--on-demand-training");
-      targetElement.scrollIntoView({
-        behavior: "smooth"
-      });
-    });
-  });
-
-function sortEvents() {
-  var eventsContainer = document.getElementById("on-demand-events");
-  var events = eventsContainer.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)"); 
-  var eventsArr = Array.from(events);
-
-  var sortSelect = document.querySelector('[data-jplist-control="select-sort"][data-group="data-group-2"]');
-  var selectedOption = sortSelect.options[sortSelect.selectedIndex];
-
-  var dataPath = selectedOption.getAttribute("data-path");
-  var order = selectedOption.getAttribute("data-order");
-  var type = selectedOption.getAttribute("data-type");
-
-  eventsArr.sort(function (a, b) {
-    var aVal, bVal;
-
-    if (type === "number") {
-      aVal = parseFloat(a.querySelector(dataPath)?.textContent.trim() || 0);
-      bVal = parseFloat(b.querySelector(dataPath)?.textContent.trim() || 0);
-    } else if (type === "datetime") {
-      aVal = new Date(a.querySelector(dataPath)?.textContent.trim() || 0);
-      bVal = new Date(b.querySelector(dataPath)?.textContent.trim() || 0);
-    } else {
-      aVal = a.querySelector(dataPath)?.textContent.trim().toLowerCase() || "";
-      bVal = b.querySelector(dataPath)?.textContent.trim().toLowerCase() || "";
+    if (pagination) {
+        pagination.addEventListener("click", function (event) {
+            event.preventDefault();
+            const targetElement = document.getElementById("vf-tabs__section--on-demand-training");
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: "smooth" });
+            }
+        });
     }
 
-    // Primary sort
-    let result = order === "asc" ? (aVal > bVal ? 1 : aVal < bVal ? -1 : 0)
-                                 : (aVal < bVal ? 1 : aVal > bVal ? -1 : 0);
+    // --------------------------
+    // Show page function
+    // --------------------------
+    function showPageOnDemand(page) {
+        let articles = document.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)");
+        articles.forEach((article, index) => {
+            if (index >= (page - 1) * itemsPerPageOnDemand && index < page * itemsPerPageOnDemand) {
+                article.classList.remove('vf-u-display-none-page');
+            } else {
+                article.classList.add('vf-u-display-none-page');
+            }
+        });
 
-    // Secondary sort to mix items with same primary value (use title)
-    if (result === 0) {
-      const aTitle = a.querySelector(".post-title")?.textContent.trim().toLowerCase() || "";
-      const bTitle = b.querySelector(".post-title")?.textContent.trim().toLowerCase() || "";
-      result = aTitle.localeCompare(bTitle);
+        let totalArticleCountOnDemand = articles.length;
+        const pagingDataElement = document.getElementById("paging-data2");
+        if (pagingDataElement) {
+            pagingDataElement.style.display = totalArticleCountOnDemand <= itemsPerPageOnDemand ? "none" : "block";
+        }
     }
 
-    return result;
-  });
+    // --------------------------
+    // Update pagination links
+    // --------------------------
+    function updatePaginationLinksOnDemand() {
+        let articleTotal = document.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)");
+        const pageNumbers = document.querySelector(".paginationListOnDemand");
+        if (!pageNumbers) return;
 
-  eventsArr.forEach(event => eventsContainer.appendChild(event));
-}
+        const totalPages = Math.ceil(articleTotal.length / itemsPerPageOnDemand);
+        const maxPageLinks = 5;
+        let startPage = 1;
+        let endPage = totalPages;
 
-var inputs = document.querySelectorAll('.inputOnDemand'); inputs.forEach(function (item) { item.addEventListener('keyup', function (e) { updatePaginationLinksOnDemand(); sortEvents(); showPageOnDemand(currentPageOnDemand); }); item.addEventListener("change", function (e) { updatePaginationLinksOnDemand(); sortEvents(); showPageOnDemand(currentPageOnDemand); }); });
+        if (totalPages > maxPageLinks) {
+            const offset = Math.floor(maxPageLinks / 2);
+            startPage = Math.max(1, currentPageOnDemand - offset);
+            endPage = Math.min(totalPages, startPage + maxPageLinks - 1);
+            if (currentPageOnDemand - offset > 1) startPage++;
+            if (currentPageOnDemand + offset < totalPages) endPage--;
+        }
 
+        pageNumbers.innerHTML = "";
+
+        // Previous
+        const prevPageItem = document.createElement("li");
+        prevPageItem.classList.add("vf-pagination__item", "vf-pagination__item--previous-page");
+        const prevPageLink = document.createElement("a");
+        prevPageLink.classList.add("vf-pagination__link");
+        prevPageLink.textContent = "Previous";
+        if (currentPageOnDemand > 1) {
+            prevPageLink.href = "#";
+            prevPageLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentPageOnDemand--;
+                showPageOnDemand(currentPageOnDemand);
+                updatePaginationLinksOnDemand();
+            });
+        } else prevPageItem.classList.add("disabled");
+        prevPageItem.appendChild(prevPageLink);
+        pageNumbers.appendChild(prevPageItem);
+
+        // First page + ellipsis
+        if (startPage > 1) {
+            const firstPageItem = document.createElement("li");
+            firstPageItem.classList.add("vf-pagination__item");
+            const firstPageLink = document.createElement("a");
+            firstPageLink.classList.add("vf-pagination__link");
+            firstPageLink.href = "#";
+            firstPageLink.textContent = "1";
+            firstPageLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentPageOnDemand = 1;
+                showPageOnDemand(currentPageOnDemand);
+                updatePaginationLinksOnDemand();
+            });
+            firstPageItem.appendChild(firstPageLink);
+            pageNumbers.appendChild(firstPageItem);
+            if (startPage > 2) {
+                const ellipsis = document.createElement("li");
+                ellipsis.classList.add("vf-pagination__item");
+                ellipsis.textContent = "...";
+                pageNumbers.appendChild(ellipsis);
+            }
+        }
+
+        // Page numbers
+        for (let i = startPage; i <= endPage; i++) {
+            const pageNumberItem = document.createElement("li");
+            pageNumberItem.classList.add("vf-pagination__item");
+            if (i === currentPageOnDemand) {
+                const span = document.createElement("span");
+                span.classList.add("vf-pagination__label");
+                span.setAttribute("aria-current", "page");
+                span.textContent = i;
+                pageNumberItem.classList.add("vf-pagination__item--is-active");
+                pageNumberItem.appendChild(span);
+            } else {
+                const link = document.createElement("a");
+                link.classList.add("vf-pagination__link");
+                link.href = "#";
+                link.textContent = i;
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    currentPageOnDemand = i;
+                    showPageOnDemand(currentPageOnDemand);
+                    updatePaginationLinksOnDemand();
+                });
+                pageNumberItem.appendChild(link);
+            }
+            pageNumbers.appendChild(pageNumberItem);
+        }
+
+        // Last page + ellipsis
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                const ellipsis = document.createElement("li");
+                ellipsis.classList.add("vf-pagination__item");
+                ellipsis.textContent = "...";
+                pageNumbers.appendChild(ellipsis);
+            }
+            const lastPageItem = document.createElement("li");
+            lastPageItem.classList.add("vf-pagination__item");
+            const lastPageLink = document.createElement("a");
+            lastPageLink.classList.add("vf-pagination__link");
+            lastPageLink.href = "#";
+            lastPageLink.textContent = totalPages;
+            lastPageLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentPageOnDemand = totalPages;
+                showPageOnDemand(currentPageOnDemand);
+                updatePaginationLinksOnDemand();
+            });
+            lastPageItem.appendChild(lastPageLink);
+            pageNumbers.appendChild(lastPageItem);
+        }
+
+        // Page range counters
+        let rangeTotalPages = articleTotal.length;
+        let start = ((currentPageOnDemand - 1) * itemsPerPageOnDemand + 1) + ' - ';
+        let end = Math.min(currentPageOnDemand * itemsPerPageOnDemand, rangeTotalPages);
+        if (rangeTotalPages <= itemsPerPageOnDemand) start = "";
+
+        document.querySelector('#start-counter-od').textContent = start;
+        document.querySelector('#total-result-od').textContent = rangeTotalPages;
+        document.querySelector('#end-counter-od').textContent = end;
+    }
+
+    // --------------------------
+    // Sorting function
+    // --------------------------
+    function sortEvents() {
+      console.log("sorted");
+        var eventsContainer = document.getElementById("on-demand-events");
+        if (!eventsContainer) return;
+        var events = eventsContainer.querySelectorAll(".trainingOnDemand:not(.vf-u-display-none)"); 
+        var eventsArr = Array.from(events);
+
+        var sortSelect = document.querySelector('[data-jplist-control="select-sort"][data-group="data-group-2"]');
+        if (!sortSelect) return;
+
+        var selectedOption = sortSelect.options[sortSelect.selectedIndex];
+        var dataPath = selectedOption.getAttribute("data-path");
+        var order = selectedOption.getAttribute("data-order");
+        var type = selectedOption.getAttribute("data-type");
+
+        eventsArr.sort(function (a, b) {
+            var aVal, bVal;
+
+            if (type === "number") {
+                aVal = parseFloat(a.querySelector(dataPath)?.textContent.trim() || 0);
+                bVal = parseFloat(b.querySelector(dataPath)?.textContent.trim() || 0);
+            } else if (type === "datetime") {
+                aVal = new Date(a.querySelector(dataPath)?.textContent.trim() || 0);
+                bVal = new Date(b.querySelector(dataPath)?.textContent.trim() || 0);
+            } else {
+                aVal = a.querySelector(dataPath)?.textContent.trim().toLowerCase() || "";
+                bVal = b.querySelector(dataPath)?.textContent.trim().toLowerCase() || "";
+            }
+
+            let result = order === "asc" ? (aVal > bVal ? 1 : aVal < bVal ? -1 : 0)
+                                         : (aVal < bVal ? 1 : aVal > bVal ? -1 : 0);
+
+            if (result === 0) {
+                const aTitle = a.querySelector(".post-title")?.textContent.trim().toLowerCase() || "";
+                const bTitle = b.querySelector(".post-title")?.textContent.trim().toLowerCase() || "";
+                result = aTitle.localeCompare(bTitle);
+            }
+
+            return result;
+        });
+
+        eventsArr.forEach(event => eventsContainer.appendChild(event));
+    }
+
+});
 </script>

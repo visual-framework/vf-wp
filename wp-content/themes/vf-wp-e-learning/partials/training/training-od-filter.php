@@ -9,16 +9,25 @@ $provider_terms = get_terms(
 );
 
 
-$category_terms = ['Data science', 'Professional development', 'Workplace'];
-$duration_terms = ['less than 1 hour', '1 to 3 hours', 'more than 3 hours'];
-$type_terms = ['Course materials', 'Recorded webinar', 'Online course'];
+$category_terms = [
+    'Bioinformatics',
+    'Databases and Online Tools',
+    'Genome Biology',
+    'Health and Disease',
+    'Image Analysis',
+    'Professional development',
+    'Science education',
+    'Structural Biology'
+];
+$duration_terms = ['less than 1 hour', '1 to 3 hours', '3 to 9 hours', 'more than 9 hours'];
+$type_terms = ['Course materials', 'Recorded webinar', 'Online course', 'Online course collection'];
 $subtype_terms = ['Tutorial', 'Collection'];
 $certificate_terms = ['Certificate provided'];
 $audience_terms = [
   'Life science researchers',
   'Data scientists',
   'Science Educators',
-  'Pre- and Postdoctoral Researchers'
+  'Early career researchers'
 ];
 
 
@@ -28,6 +37,7 @@ $counterPro = 1;
 $counterAud = 1;
 $counterCer = 1;
 $counterSub = 1;
+$counterCat = 1;
   
 ?>
 
@@ -129,6 +139,35 @@ $counterSub = 1;
   endforeach; ?>
 </fieldset>
 
+  <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-category">
+    <legend class="vf-form__legend">Topic</legend>
+    <?php
+    foreach($category_terms as $cat) {
+      $catSlug = strtolower(str_replace(' ', '_', $cat));
+      ?>
+    <div class="vf-form__item vf-form__item--checkbox">
+      <input id="category-<?php echo $catSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
+        data-path=".category-<?php echo $catSlug; ?>" data-group="data-group-1" data-name="category" data-or="category"
+        value="<?php echo esc_attr($cat); ?>"
+        data-id="category-<?php echo esc_attr($catSlug); ?>" class="vf-form__checkbox checkboxLive inputLive">
+      <label for="category-<?php echo $catSlug; ?>" class="vf-form__label"><?php echo esc_html($cat); ?>
+      &nbsp;<span 
+      data-jplist-control="counter"
+      data-group="data-group-2"
+      data-format="({count})"
+      data-path=".category-<?php echo esc_attr($catSlug); ?>"
+      data-mode="static"
+      data-name="counter-category-<?php echo esc_attr($catSlug); ?>"
+      data-filter-type="path"></span>
+    </label>
+    </div>
+    <?php
+      $counterCat++;
+    }
+    ?>
+  </fieldset>
+
+
 
 <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-audience">
   <legend class="vf-form__legend">Audience</legend>
@@ -137,7 +176,7 @@ $counterSub = 1;
   $indexAud = 1;
 
   foreach ($audience_terms as $aud) {
-    $audSlug = strtolower(str_replace(' ', '_', $aud));
+    $audSlug = strtolower(str_replace(' ', '-', $aud));
     $isLast  = ($indexAud === $totalAud);
     ?>
     <div class="vf-form__item vf-form__item--checkbox">
@@ -154,7 +193,7 @@ $counterSub = 1;
       <label for="audience-<?php echo $audSlug; ?>" class="vf-form__label">
         <?php echo esc_html($aud); ?>
         &nbsp;<span 
-          <?php echo $isLast ? 'style="flex-basis:40%;"' : ''; ?>
+          <?php echo $isLast ? 'style=""' : ''; ?>
           data-jplist-control="counter"
           data-group="data-group-2"
           data-format="({count})"

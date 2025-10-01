@@ -1,4 +1,4 @@
-   {
+  {
         "key": "group_68d4eeb6acfa0",
         "title": "Training information",
         "fields": [
@@ -79,8 +79,8 @@
             },
             {
                 "key": "field_68d4eeb6b23ec",
-                "label": "Category",
-                "name": "vf-wp-training-category",
+                "label": "Topic",
+                "name": "vf-wp-training-topic",
                 "aria-label": "",
                 "type": "select",
                 "instructions": "",
@@ -107,9 +107,14 @@
                     "id": ""
                 },
                 "choices": {
-                    "data_science": "Data science",
+                    "bioinformatics": "Bioinformatics",
+                    "databases_and_online_tools": "Databases and Online Tools",
+                    "genome_biology": "Genome Biology",
+                    "health_and_disease": "Health and Disease",
+                    "image_analysis": "Image Analysis",
                     "professional_development": "Professional development",
-                    "workplace": "Workplace"
+                    "science_education": "Science education",
+                    "structural_biology": "Structural Biology"
                 },
                 "default_value": false,
                 "return_format": "label",
@@ -248,21 +253,21 @@
                     "id": ""
                 },
                 "choices": {
-                    "scientists_academia": "Scientists in Academia",
-                    "scientists_industry": "Scientists in Industry",
+                    "data_scientists": "Data scientists",
+                    "life_science_researchers": "Life science researchers",
                     "science_educators": "Science Educators",
-                    "pre_postdoctoral_researchers": "Pre- & Postdoctoral Researchers"
+                    "early_career_researchers": "Early career researchers"
                 },
-                "default_value": false,
-                "return_format": "value",
-                "multiple": 0,
+                "default_value": [],
+                "return_format": "label",
+                "multiple": 1,
                 "allow_null": 0,
                 "allow_in_bindings": 0,
-                "ui": 0,
+                "ui": 1,
                 "ajax": 0,
                 "placeholder": "",
-                "create_options": 0,
-                "save_options": 0
+                "create_options": 1,
+                "save_options": 1
             },
             {
                 "key": "field_68d4eeb6b3f4f",
@@ -530,7 +535,8 @@
                 "choices": {
                     "less-than-1-hour": "less than 1 hour",
                     "1-to-3-hours": "1 to 3 hours",
-                    "more-than-3-hours": "more than 3 hours"
+                    "3-to-9-hours": "3 to 9 hours",
+                    "more-than-9-hours": "more than 9 hours"
                 },
                 "default_value": false,
                 "return_format": "label",

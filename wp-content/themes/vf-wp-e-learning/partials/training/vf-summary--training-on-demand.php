@@ -6,7 +6,7 @@ $organiser     = get_the_terms($post->ID, 'training-organiser');
 
 $odType        = get_field('vf-wp-training-on_demand_type', $post_id);
 $odSubType     = get_field('vf-wp-training-course_type', $post_id);
-$category      = get_field('vf-wp-training-category', $post_id);
+$category      = get_field('vf-wp-training-topic', $post_id);
 $duration      = get_field('vf-wp-training-duration', $post_id);
 $additionalInfo= get_field('vf-wp-training-info', $post_id, false, false);
 $audience      = get_field('vf-wp-training-audience', $post_id);
@@ -129,10 +129,16 @@ $org_list_text = esc_html(implode(', ', $org_list_upper));
 
     <!-- publish date -->
     <span class="added"><?php echo esc_html($publish_date); ?></span>
-
+<?php if ($audience && is_array($audience)) {
+    foreach ($audience as $aud) {
+        // Convert to lowercase and replace spaces with hyphens
+        $class = 'audience-' . sanitize_title($aud); 
+        echo '<span class="' . esc_attr($class) . '">' . esc_html($aud) . '</span> ';
+    }
+} ?>
     <!-- featured -->
     <span class="featured"><?php echo $featured ? '1' : '0'; ?></span>
-
+<span class="category-<?php echo $categorySlug; ?>"><?php echo $category; ?></span>
     <!-- certificate -->
     <span class="<?php echo $certificate ? 'certificate-1' : 'certificate-0'; ?>">
       <?php echo $certificate ? 'certificate-1' : 'certificate-0'; ?>

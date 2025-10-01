@@ -60,8 +60,11 @@ function insert_training_on_demand_posts_from_json($training_on_demand_data) {
         $permalink = $training_on_demand_ebi['fields']['url'][0];
         $od_type = $training_on_demand_ebi['fields']['type'][0];
 // Determine main type
-if (in_array($od_type, ['Collection', 'Online tutorial'], true)) {
+if (in_array($od_type, ['Online tutorial'], true)) {
     $od_type = 'Online course';
+}
+elseif (in_array($od_type, ['Collection'], true)) {
+    $od_type = 'Online course collection';
 }
 
 // Determine subtype
@@ -71,9 +74,13 @@ if ($training_on_demand_ebi['fields']['type'][0] === 'Collection') {
 } elseif ($training_on_demand_ebi['fields']['type'][0] === 'Online tutorial') {
     $od_subtype = 'Tutorial';
 }
-        $category = 'Data science';
+        $category = 'Bioinformatics';
+        $audience = ['Data scientists', 'Life science researchers'];
         $provider = 'embl-ebi-training';
         $duration = $training_on_demand_ebi['fields']['duration'][0];
+        if ($training_on_demand_ebi['fields']['duration'][0] === 'More than 3 hours') {
+        $duration = '3 to 9 hours';
+}
         $keywords = $training_on_demand_ebi['fields']['tags'];
         $keywords = implode(", ", $keywords);
         $overview = $training_on_demand_ebi['fields']['description'][0];
@@ -96,13 +103,17 @@ if ($training_on_demand_ebi['fields']['type'][0] === 'Collection') {
             $post_id = wp_insert_post($new_post);
             add_post_meta($post_id, 'post_title', $title);
             add_post_meta($post_id, 'vf-wp-training-url', $permalink);
-            add_post_meta($post_id, 'vf-wp-training-category', $category);
+            add_post_meta($post_id, 'vf-wp-training-topic', $category);
             add_post_meta($post_id, 'vf-wp-training-info', $overview);
             add_post_meta($post_id, 'vf-wp-training-keywords', $keywords);
             add_post_meta($post_id, 'vf-wp-training-on_demand_type', $od_type);
             add_post_meta($post_id, 'vf-wp-training-course_type', $od_subtype);
             add_post_meta($post_id, 'vf-wp-training-duration', $duration);
 
+            // ACF multiple select field
+                if (function_exists('update_field')) {
+                    update_field('field_68d4eeb6b377c', $audience, $post_id);
+                }
             // Check if the term exists before setting it
             $provider_term_exists = term_exists(strtolower($provider), 'training-organiser');
             if ($provider_term_exists !== 0 && $provider_term_exists !== null) {
@@ -118,12 +129,18 @@ if ($training_on_demand_ebi['fields']['type'][0] === 'Collection') {
             $existing_post_id = $get_post->ID;
             update_post_meta($existing_post_id, 'post_title', $title);
             update_post_meta($existing_post_id, 'vf-wp-training-url', $permalink);
-            update_post_meta($existing_post_id, 'vf-wp-training-category', $category);
+            update_post_meta($existing_post_id, 'vf-wp-training-topic', $category);
             update_post_meta($existing_post_id, 'vf-wp-training-info', $overview);
             update_post_meta($existing_post_id, 'vf-wp-training-keywords', $keywords);
             update_post_meta($existing_post_id, 'vf-wp-training-on_demand_type', $od_type);
             update_post_meta($existing_post_id, 'vf-wp-training-course_type', $od_subtype);
             update_post_meta($existing_post_id, 'vf-wp-training-duration', $duration);
+
+            // ACF multiple select field
+                if (function_exists('update_field')) {
+                    update_field('field_68d4eeb6b377c', $audience, $existing_post_id);
+                }
+
        
             if (!(metadata_exists( 'post', $existing_post_id, 'post_title'))) {
             add_post_meta($post_id, 'post_title', $title);

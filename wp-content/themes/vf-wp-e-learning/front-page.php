@@ -161,7 +161,7 @@ $today_date = date('Ymd');
   });
 
 </script>
-<script>
+<script> /*
 document.addEventListener('DOMContentLoaded', function () {
   const onlineCourseCheckbox = document.getElementById('type-online_course');
   const subtypeFieldset = document.getElementById('checkbox-filter-subtype');
@@ -178,16 +178,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
-});
+}); */
 </script>
 
-
-
-<script>
-function resetInputs() {
-  // to be added
-}
-</script>
 <?php  include(locate_template('partials/training/pagination-on-demand.php', false, false)); ?>
 
 <?php
