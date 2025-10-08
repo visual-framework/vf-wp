@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+
     // --------------------------
     // Event listener for sort dropdown
     // --------------------------
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
             runUpdates();
         });
     }
+
 
 // --------------------------
 // Event listeners for input fields (all types)
@@ -281,5 +283,110 @@ inputs.forEach(function(item) {
         eventsArr.forEach(event => eventsContainer.appendChild(event));
     }
 
+
+
+
+
+/*
+  const input = document.getElementById("search-od");
+  if (!input) return;
+
+  const parent = input.parentNode;
+  if (getComputedStyle(parent).position === "static") {
+    parent.style.position = "relative";
+  }
+
+  const container = document.createElement("div");
+  container.className = "autocomplete-container";
+  parent.appendChild(container);
+
+  let currentFocus = -1;
+
+  function triggerInputEvents(el) {
+    ["input", "change", "keyup"].forEach(type =>
+      el.dispatchEvent(new Event(type, { bubbles: true }))
+    );
+  }
+
+  function closeAllLists() {
+    container.innerHTML = "";
+    currentFocus = -1;
+  }
+
+  function selectKeyword(keyword) {
+    input.value = keyword;
+    triggerInputEvents(input);
+    closeAllLists();
+  }
+
+  input.addEventListener("input", function () {
+    const val = this.value.trim();
+    const valLower = val.toLowerCase();
+    closeAllLists();
+    if (!val) return;
+
+    const matches = (window.trainingKeywords || [])
+      .filter(kw => kw.toLowerCase().includes(valLower))
+      .slice(0, 8);
+
+    matches.forEach(match => {
+      const item = document.createElement("div");
+      item.className = "autocomplete-item";
+
+      // Highlight typed text in bold
+      const regex = new RegExp(`(${val})`, "gi");
+      item.innerHTML = match.replace(regex, "<strong>$1</strong>");
+
+      // Mouse selection
+      item.addEventListener("mousedown", e => {
+        e.preventDefault();
+        selectKeyword(match);
+      });
+
+      container.appendChild(item);
+    });
+  });
+
+  input.addEventListener("keydown", function (e) {
+    let items = container.querySelectorAll(".autocomplete-item");
+    if (!items.length) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      currentFocus++;
+      if (currentFocus >= items.length) currentFocus = 0;
+      highlight(items, currentFocus);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      currentFocus--;
+      if (currentFocus < 0) currentFocus = items.length - 1;
+      highlight(items, currentFocus);
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      if (currentFocus > -1) {
+        selectKeyword(items[currentFocus].textContent.trim());
+      }
+    } else if (e.key === "Tab") {
+      if (currentFocus > -1) {
+        selectKeyword(items[currentFocus].textContent.trim());
+      }
+      closeAllLists();
+    } else if (e.key === "Escape") {
+      closeAllLists();
+    }
+  });
+
+  function highlight(items, index) {
+    items.forEach(i => i.classList.remove("autocomplete-active"));
+    if (items[index]) {
+      items[index].classList.add("autocomplete-active");
+    }
+  }
+
+  document.addEventListener("click", e => {
+    if (!parent.contains(e.target)) closeAllLists();
+  });
+});
+*/
 });
 </script>

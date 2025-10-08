@@ -11,13 +11,13 @@ $provider_terms = get_terms(
 
 $category_terms = [
     'Bioinformatics',
-    'Databases and Online Tools',
-    'Genome Biology',
-    'Health and Disease',
-    'Image Analysis',
+    'Databases and online tools',
+    'Genome biology',
+    'Health and disease',
+    'Image analysis',
     'Professional development',
     'Science education',
-    'Structural Biology'
+    'Structural biology'
 ];
 $duration_terms = ['less than 1 hour', '1 to 3 hours', '3 to 9 hours', 'more than 9 hours'];
 $type_terms = ['Course materials', 'Recorded webinar', 'Online course', 'Online course collection'];
@@ -26,7 +26,7 @@ $certificate_terms = ['Certificate provided'];
 $audience_terms = [
   'Life science researchers',
   'Data scientists',
-  'Science Educators',
+  'Science educators',
   'Early career researchers'
 ];
 
@@ -147,9 +147,9 @@ $counterCat = 1;
       ?>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="category-<?php echo $catSlug; ?>" type="checkbox" data-jplist-control="checkbox-text-filter"
-        data-path=".category-<?php echo $catSlug; ?>" data-group="data-group-1" data-name="category" data-or="category"
+        data-path=".category-<?php echo $catSlug; ?>" data-group="data-group-2" data-name="category" data-or="category"
         value="<?php echo esc_attr($cat); ?>"
-        data-id="category-<?php echo esc_attr($catSlug); ?>" class="vf-form__checkbox checkboxLive inputLive">
+        data-id="category-<?php echo esc_attr($catSlug); ?>"  class="vf-form__checkbox checkboxOnDemand inputOnDemand">
       <label for="category-<?php echo $catSlug; ?>" class="vf-form__label"><?php echo esc_html($cat); ?>
       &nbsp;<span 
       data-jplist-control="counter"
@@ -211,7 +211,6 @@ $counterCat = 1;
   ?>
 </fieldset>
 
-  </fieldset>
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400 | vf-u-margin__bottom--800" id="checkbox-filter-duration">
     <legend class="vf-form__legend">Duration</legend>
@@ -254,7 +253,7 @@ $counterCat = 1;
            value="certificate-1"
            class="vf-form__checkbox checkboxOnDemand inputOnDemand">
     <label for="certificate-1" class="vf-form__label">
-      Certificate provided
+      Certificate available
       &nbsp;<span 
         data-jplist-control="counter"
         data-group="data-group-2"

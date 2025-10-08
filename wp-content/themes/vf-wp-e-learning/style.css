@@ -94,3 +94,25 @@ Text Domain:  vfwp
 .vf-u-display-none-page {
   display: none !important;
 }
+
+.autocomplete-container {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  z-index: 9999;
+}
+
+.autocomplete-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.autocomplete-item:hover,
+.autocomplete-active {
+  background-color: #007bff;
+  color: #fff;
+}

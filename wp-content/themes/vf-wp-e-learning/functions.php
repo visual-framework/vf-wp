@@ -31,18 +31,7 @@ function vf_enqueue_jquery_ui() {
         false // load in head (false) to match your jQuery
     );
 
-// Custom autocomplete JS (runs after jQuery UI)
-// Custom autocomplete JS (runs after jQuery UI)
-wp_add_inline_script('jquery-ui-js', <<<JS
-jQuery(document).ready(function($) {
-  $("#search-od").autocomplete({
-    source: trainingKeywords,
-    minLength: 1, // start suggesting after 1 character
 
-  });
-});
-JS
-);
 
 
 }

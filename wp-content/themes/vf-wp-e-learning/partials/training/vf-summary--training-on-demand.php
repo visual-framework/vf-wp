@@ -18,6 +18,7 @@ $updated       = get_field('vf-wp-training-updated', $post_id);
 $certificate   = get_field('vf-wp-training-certificate', $post_id);
 
 $categorySlug  = !empty($category) ? strtolower(str_replace(' ', '_', $category)) : '';
+// $audienceSlug  = !empty($audience) ? strtolower(str_replace(' ', '_', $category)) : '';
 $durationSlug  = !empty($duration) ? strtolower(str_replace(' ', '_', $duration)) : '';
 
 $publish_date  = get_the_date('Y-m-d H:i:s');
@@ -54,7 +55,7 @@ $org_list_text = esc_html(implode(', ', $org_list_upper));
     </div>
 
     <div>
-  <?php if ($publish_timestamp >= $two_days_ago) : ?>
+  <?php if ($publish_timestamp >= $two_days_ago && $featured == 0) : ?>
     <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeDarkBlue">
       New
     </span>
@@ -105,6 +106,18 @@ $org_list_text = esc_html(implode(', ', $org_list_upper));
         <?php endforeach; ?>
       </p>
     <?php endif; ?>
+    <div style="display: flex; gap: 2rem;">
+    <?php
+
+if (!empty($audience)) :
+    // If $audience is an array (multiple select fields return arrays)
+    $audience_list = is_array($audience) ? implode(', ', $audience) : $audience;
+?>
+  <p class="vf-summary__meta | vf-u-margin__top--200">
+    <span>Audience:</span>&nbsp;
+    <span class="vf-u-text-color--grey"><?php echo esc_html($audience_list); ?></span>
+  </p>
+<?php endif; ?>
 
     <?php if (!empty($duration)) : ?>
       <p class="vf-summary__meta | vf-u-margin__top--200">
@@ -112,6 +125,7 @@ $org_list_text = esc_html(implode(', ', $org_list_upper));
         <span class="vf-u-text-color--grey"><?php echo esc_html($duration); ?></span>
       </p>
     <?php endif; ?>
+    </div>
   </div>
 
   <!-- Hidden values used by jPList -->
@@ -129,6 +143,7 @@ $org_list_text = esc_html(implode(', ', $org_list_upper));
 
     <!-- publish date -->
     <span class="added"><?php echo esc_html($publish_date); ?></span>
+
 <?php if ($audience && is_array($audience)) {
     foreach ($audience as $aud) {
         // Convert to lowercase and replace spaces with hyphens
@@ -138,7 +153,18 @@ $org_list_text = esc_html(implode(', ', $org_list_upper));
 } ?>
     <!-- featured -->
     <span class="featured"><?php echo $featured ? '1' : '0'; ?></span>
-<span class="category-<?php echo $categorySlug; ?>"><?php echo $category; ?></span>
+
+<?php
+if (!empty($category)) {
+    // Handle both array and string cases
+    $categories = is_array($category) ? $category : [$category];
+    foreach ($categories as $cat) {
+        $slug = strtolower(str_replace(' ', '_', $cat));
+        echo '<span class="category-' . esc_attr($slug) . '">' . esc_html($cat) . '</span> ';
+    }
+}
+?>
+
     <!-- certificate -->
     <span class="<?php echo $certificate ? 'certificate-1' : 'certificate-0'; ?>">
       <?php echo $certificate ? 'certificate-1' : 'certificate-0'; ?>

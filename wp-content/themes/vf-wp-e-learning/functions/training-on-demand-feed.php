@@ -82,6 +82,7 @@ if ($training_on_demand_ebi['fields']['type'][0] === 'Collection') {
         $duration = '3 to 9 hours';
 }
         $keywords = $training_on_demand_ebi['fields']['tags'];
+        $tags = implode(", ", array_slice($keywords, 0, 3)); // temporary
         $keywords = implode(", ", $keywords);
         $overview = $training_on_demand_ebi['fields']['description'][0];
         $overview = strip_tags($overview);
@@ -109,10 +110,11 @@ if ($training_on_demand_ebi['fields']['type'][0] === 'Collection') {
             add_post_meta($post_id, 'vf-wp-training-on_demand_type', $od_type);
             add_post_meta($post_id, 'vf-wp-training-course_type', $od_subtype);
             add_post_meta($post_id, 'vf-wp-training-duration', $duration);
+            add_post_meta($post_id, 'vf-wp-training-tags', $tags);
 
             // ACF multiple select field
                 if (function_exists('update_field')) {
-                    update_field('field_68d4eeb6b377c', $audience, $post_id);
+                    update_field('vf-wp-training-audience', $audience, $post_id);
                 }
             // Check if the term exists before setting it
             $provider_term_exists = term_exists(strtolower($provider), 'training-organiser');
@@ -135,10 +137,10 @@ if ($training_on_demand_ebi['fields']['type'][0] === 'Collection') {
             update_post_meta($existing_post_id, 'vf-wp-training-on_demand_type', $od_type);
             update_post_meta($existing_post_id, 'vf-wp-training-course_type', $od_subtype);
             update_post_meta($existing_post_id, 'vf-wp-training-duration', $duration);
-
+            update_post_meta($existing_post_id, 'vf-wp-training-tags', $tags);
             // ACF multiple select field
                 if (function_exists('update_field')) {
-                    update_field('field_68d4eeb6b377c', $audience, $existing_post_id);
+                    update_field('vf-wp-training-audience', $audience, $existing_post_id);
                 }
 
        

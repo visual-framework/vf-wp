@@ -13,14 +13,13 @@ $today_date = date('Ymd');
 ;
 }
 </style>
-<section style="display: none;" class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
+<section style="display:none;" class="vf-card-container vf-card-container__col-4 | vf-u-background-color-ui--white vf-u-fullbleed" style="--vf-card__image--aspect-ratio: 16 / 9;">
   <div class="vf-card-container__inner">
     <div class="vf-section-header">
       <h2 class="vf-section-header__heading">Featured courses</h2>
     </div>
 
 <article class="vf-card vf-card--brand vf-card--bordered">
-    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">EMBL-EBI Training</span></p>
     <article class="">
       <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/EMBL_Services_EDIT_COVID-PORTAL_CMYK-m.jpg" alt="" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
@@ -32,7 +31,6 @@ $today_date = date('Ymd');
 </article>
 
 <article class="vf-card vf-card--brand vf-card--bordered">
-    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">EMBL External Training</span></p>
     <article class="">
 
       <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/Metabolomics_31-m.jpg" alt="" class="vf-card__image" loading="lazy">
@@ -45,7 +43,6 @@ $today_date = date('Ymd');
 </article>
 
 <article class="vf-card vf-card--brand vf-card--bordered">
-    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">EMBL Internal Training</span></p>
     <article class="">
 
       <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/EES18-01DSC_5740-l-1.jpg" alt="" class="vf-card__image" loading="lazy">
@@ -57,7 +54,6 @@ $today_date = date('Ymd');
     </article>
     </article>
     <article class="vf-card vf-card--brand vf-card--bordered">
-    <p class="vf-u-margin__top--0 vf-u-margin__bottom--0"><span class="vf-badge vf-badge--primary customBadgeGreenDark | search-data-od">SEPE</span></p>
     <article class="">
 
       <img src="https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/ELLS-container_training_150ppi.png" alt="" class="vf-card__image" loading="lazy">
@@ -84,10 +80,6 @@ $today_date = date('Ymd');
                 data-group="data-group-2" data-name="my-filter-2" data-path=".search-data-od" type="text" value=""
                 placeholder="Enter your search term" data-clear-btn-id="name-clear-btn">
             </div>
-            <button style="display: none;" type="button" id="name-clear-btn"
-              class="vf-search__button | vf-button vf-button--tertiary vf-button--sm">
-              <span class="vf-button__text">Reset</span>
-            </button>
           </div>
         </form>
         <p class="vf-text-body vf-text-body--2 | vf-u-text-color--grey--darkest | vf-u-margin__bottom--0 vf-u-margin__top--600"
@@ -181,7 +173,15 @@ document.addEventListener('DOMContentLoaded', function () {
 }); */
 </script>
 
+
+
+
 <?php  include(locate_template('partials/training/pagination-on-demand.php', false, false)); ?>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+});
+</script>
 
 <?php
 
