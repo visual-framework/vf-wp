@@ -7,15 +7,19 @@ $text = get_field('text', false, false);
 $author = get_field('citation', false, false);
 $author_link = get_field('author_link');
 $author_image = get_field('author_image');
+$blockquote_type = get_field('blockquote_type');
 if ( ! is_array($author_image)) {
   $author_image = null;
 } else {
 $author_image = wp_get_attachment_image($author_image['ID'], 'medium', false, array(
-  'class'    => 'vf-profile__image vf-u-margin__right--600',
+  'class'    => ($blockquote_type === 'small') ? 'vf-profile__image vf-profile--medium vf-u-margin__right--600' : 'vf-profile__image vf-u-margin__right--600',
   'loading'  => 'lazy',
   'itemprop' => 'image',
 )); }
 $other_details = get_field('other_details');
+
+// Determine blockquote class based on type
+$blockquote_class = ($blockquote_type === 'small') ? 'vf-blockquote-small' : 'vf-blockquote';
 
 // Function to output a banner message in the Gutenberg editor only
 $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
@@ -42,11 +46,11 @@ if (
 }
 ?>
 
-<blockquote class="vf-blockquote vf-u-margin__left--800 | vf-u-margin__bottom--600 vf-u-margin__top--600">
+<blockquote class="<?php echo $blockquote_class; ?> | vf-u-margin__bottom--600 vf-u-margin__top--600">
 <?php if (! empty($author_image)) { 
   echo $author_image;
 } ?>
-  <div>
+  <div<?php echo (!empty($author_image)) ? ' class="vf-blockquote-has-image"' : ''; ?>>
     <div>
       <?php echo ($text); ?>
     </div>
@@ -57,7 +61,7 @@ if (
         <a href="<?php echo ($author_link); ?>" class="vf-blockquote_author__link">
       <?php } ?>
 
-      <div>
+      <div class="vf-blockquote_author">
         <?php echo ($author); ?>
       </div>
 
@@ -65,7 +69,7 @@ if (
         </a>
       <?php } ?>
 
-      <div class="vf-text-body--2"><?php echo ($other_details); ?></div>
+      <div class="vf-blockquote_author__details"><?php echo ($other_details); ?></div>
     </footer>
     <?php } ?>
   </div>
