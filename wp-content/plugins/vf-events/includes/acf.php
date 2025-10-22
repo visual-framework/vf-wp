@@ -305,7 +305,12 @@ class VF_Events_ACF {
       'vf_event_subjects_training',
       'vf_event_registration_closing_on-site',
       'vf_event_registration_link_on-site',
-      'vf_event_other_location'
+      'vf_event_other_location',
+      'vf_event_qrcode',
+      'vf_event_custom_overview',
+      'vf_event_hashtag',
+      'vf_event_logo',
+      'vf_event_hero'
 
 
     );
