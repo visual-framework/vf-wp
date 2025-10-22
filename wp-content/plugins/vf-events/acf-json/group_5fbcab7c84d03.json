@@ -1,1990 +1,2471 @@
-{
-    "key": "group_5f1ab076bf18b",
-    "title": "Event Information",
-    "fields": [
-        {
-            "key": "field_5fbcab958038b",
-            "label": "Event organiser",
-            "name": "vf_event_organiser",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "default": "Default",
-                "cco_hd": "CCO Heidelberg",
-                "science_society": "Science and Society",
-                "trec_event": "TREC Events",
-                "public_engagement": "Public Engagement"
-            },
-            "default_value": false,
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 1,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f1ab0871a640",
-            "label": "Date & Time",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_5f1ab076c4202",
-            "label": "Start Date",
-            "name": "vf_event_start_date",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5f1ab076c429f",
-            "label": "End Date",
-            "name": "vf_event_end_date",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "Optional for multi-day events.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5e9852baec0f0",
-            "label": "Start Time",
-            "name": "vf_event_start_time",
-            "aria-label": "",
-            "type": "time_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "H:i",
-            "return_format": "H:i"
-        },
-        {
-            "key": "field_5e9852f0ec0f1",
-            "label": "End Time",
-            "name": "vf_event_end_time",
-            "aria-label": "",
-            "type": "time_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "H:i",
-            "return_format": "H:i"
-        },
-        {
-            "key": "field_5ed74d4c8c0cf",
-            "label": "Time Zone",
-            "name": "vf_event_time_zone",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "europe\/berlin": "Europe\/Berlin",
-                "europe\/london": "Europe\/London",
-                "america\/new_york": "America\/New York"
-            },
-            "default_value": "europe\/london",
-            "allow_null": 1,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "label",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f1ab70d800dc",
-            "label": "Type & Location",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_5e958b24aa2e0",
-            "label": "Location",
-            "name": "vf_event_location",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
+   {
+        "key": "group_68d4eeb6acfa0",
+        "title": "Training information",
+        "fields": [
+            {
+                "key": "field_68d4eeb6b200c",
+                "label": "Provider",
+                "name": "vf-wp-training-organiser",
+                "aria-label": "",
+                "type": "taxonomy",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_68d4eeb6ae153",
+                            "operator": "==",
+                            "value": "live"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_68d4eeb6ae153",
+                            "operator": "==",
+                            "value": "on-demand"
+                        }
+                    ]
                 ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "default"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "68": "EMBL Barcelona",
-                "71": "EMBL Grenoble",
-                "70": "EMBL Hamburg",
-                "67": "EMBL Heidelberg",
-                "69": "EMBL Rome",
-                "66": "EMBL-EBI",
-                "76": "EMBL-EM",
-                "353": "EMBO",
-                "364": "Virtual",
-                "98": "Other"
-            },
-            "default_value": [],
-            "return_format": "label",
-            "multiple": 1,
-            "allow_null": 0,
-            "allow_in_bindings": 1,
-            "ui": 1,
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_63fc98afb1339",
-            "label": "Location TREC",
-            "name": "vf_event_trec_location",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "Belgium": "Belgium",
-                "Croatia": "Croatia",
-                "Denmark": "Denmark",
-                "England": "England",
-                "Estonia": "Estonia",
-                "Finland": "Finland",
-                "France": "France",
-                "Germany": "Germany",
-                "Greece": "Greece",
-                "Ireland": "Ireland",
-                "Italy": "Italy",
-                "Latvia": "Latvia",
-                "Lithuania": "Lithuania",
-                "Montenegro": "Montenegro",
-                "Norway": "Norway",
-                "Poland": "Poland",
-                "Portugal": "Portugal",
-                "Spain": "Spain",
-                "Sweden": "Sweden",
-                "The Netherlands": "The Netherlands"
-            },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "label",
-            "placeholder": ""
-        },
-        {
-            "key": "field_67b5c45853102",
-            "label": "Location",
-            "name": "vf_event_pb_location",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "public_engagement"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "Barcelona": "Barcelona",
-                "EBI (Hinxton)": "EBI (Hinxton)",
-                "Grenoble": "Grenoble",
-                "Hamburg": "Hamburg",
-                "Heidelberg": "Heidelberg",
-                "Rome": "Rome",
-                "Other": "Other"
-            },
-            "default_value": false,
-            "return_format": "label",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 1,
-            "ui": 1,
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_63fcbb7c22389",
-            "label": "City TREC",
-            "name": "vf_event_trec_city",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "Aarhus": "Aarhus",
-                "Athens": "Athens",
-                "Barcelona": "Barcelona",
-                "Bergen": "Bergen",
-                "Bilbao": "Bilbao",
-                "Galway": "Galway",
-                "Kotor": "Kotor",
-                "Kristineberg": "Kristineberg",
-                "Liepaja": "Liepaja",
-                "Lorient": "Lorient",
-                "Mallorca": "Mallorca",
-                "Naples": "Naples",
-                "Oostende": "Oostende",
-                "Pisa": "Pisa",
-                "Porto": "Porto",
-                "Roscoff": "Roscoff",
-                "Sopot": "Sopot",
-                "Southampton": "Southampton",
-                "Split": "Split",
-                "Tallinn": "Tallinn",
-                "Texel": "Texel",
-                "Turku": "Turku"
-            },
-            "default_value": false,
-            "allow_null": 0,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "label",
-            "placeholder": ""
-        },
-        {
-            "key": "field_614447e7bda3d",
-            "label": "Other location",
-            "name": "vf_event_other_location",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "98"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5e9868ea11ada",
-            "label": "Event type",
-            "name": "vf_event_event_type",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "conference": "Conference",
-                "course": "Course",
-                "webinar": "Webinar",
-                "public_event": "Public event",
-                "internal_event": "Internal event",
-                "other": "Other"
-            },
-            "default_value": false,
-            "return_format": "array",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 1,
-            "ui": 1,
-            "ajax": 0,
-            "placeholder": ""
-        },
-        {
-            "key": "field_5fd9c1f1dda86",
-            "label": "S&S event subtype",
-            "name": "vf_event_ss_subtype",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "science_society"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "ss_conference": "Science and Society Conference",
-                "ss_seminar": "Science and Society Seminar",
-                "ss_symposia": "Science and Society Symposium",
-                "ss_hd_forum": "Science and Society Heidelberg Forum"
-            },
-            "default_value": false,
-            "allow_null": 1,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "array",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5feaf203f0f18",
-            "label": "EMBO event subtype",
-            "name": "vf_event_embo_subtype",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "67"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "364"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "71"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "70"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "68"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "69"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    },
-                    {
-                        "field": "field_5e958b24aa2e0",
-                        "operator": "==",
-                        "value": "98"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "embo_workshop": "EMBO Workshop",
-                "embo_course": "EMBO Practical Course",
-                "embo_embl_symposium": "EMBO | EMBL Symposium"
-            },
-            "default_value": false,
-            "allow_null": 1,
-            "multiple": 0,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "array",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5fd0aa67af779",
-            "label": "Displayed as",
-            "name": "vf_event_displayed",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "If empty the event type will be displayed",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_5e9850b053db2",
-            "label": "Venue",
-            "name": "vf_event_venue",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5feaecc9e922d",
-            "label": "Registration",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_5fd0b4897af8f",
-            "label": "Registration type",
-            "name": "vf_event_registration_type",
-            "aria-label": "",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "registration": "Registration",
-                "application": "Application",
-                "register_interest": "Register interest"
-            },
-            "allow_null": 1,
-            "other_choice": 0,
-            "default_value": "",
-            "layout": "horizontal",
-            "return_format": "value",
-            "save_other_choice": 0
-        },
-        {
-            "key": "field_63fc9b7bb133a",
-            "label": "Registration link",
-            "name": "vf_event_trec_registration",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "allow_in_bindings": 1,
-            "placeholder": ""
-        },
-        {
-            "key": "field_61713d4e583ed",
-            "label": "On-site registration",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_61713b31f430f",
-            "label": "Opening date (on-site)",
-            "name": "vf_event_registration_opening_on-site",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_61713b58f4310",
-            "label": "Closing date (on-site)",
-            "name": "vf_event_registration_closing_on-site",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "public_engagement"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1,
-            "allow_in_bindings": 1
-        },
-        {
-            "key": "field_61713b68f4311",
-            "label": "Registration\/Application link (on-site)",
-            "name": "vf_event_registration_link_on-site",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "public_engagement"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_61713b75f4312",
-            "label": "Registration\/Application button text (on-site)",
-            "name": "vf_event_registration_button_text_on-site",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "public_engagement"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Register",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_61713d2a583ec",
-            "label": "Virtual registration",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
-            "key": "field_5e984858010ed",
-            "label": "Opening date (virtual)",
-            "name": "vf_event_registration_opening",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5e9848d6010ee",
-            "label": "Closing date (virtual)",
-            "name": "vf_event_registration_closing",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5e9851f4f52eb",
-            "label": "Registration\/Application link (virtual)",
-            "name": "vf_event_registration_link",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f7473f59e83d",
-            "label": "Registration\/Application button text (virtual)",
-            "name": "vf_event_registration_button_text",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Register",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_6005734043e1e",
-            "label": "Registration\/Application info text",
-            "name": "vf_event_info_text",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_5e98502253db0",
-            "label": "Registration fee",
-            "name": "vf_event_registration_fee",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f1ab40dc7e6d",
-            "label": "Abstract",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_5e98496f8b8e9",
-            "label": "Opening date",
-            "name": "vf_event_submission_opening",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5e98496f8b97a",
-            "label": "Closing date",
-            "name": "vf_event_submission_closing",
-            "aria-label": "",
-            "type": "date_picker",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "j M Y",
-            "return_format": "j M Y",
-            "first_day": 1
-        },
-        {
-            "key": "field_5f743a6cb08c0",
-            "label": "Abstract submission link",
-            "name": "vf_event_abstract_link",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5f74740d9e83e",
-            "label": "Abstract submission button text",
-            "name": "vf_event_abstract_submission_button_text",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "Submit abstract",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f1ab4f9a6a57",
-            "label": "Additional information",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "default"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_5e9851a5a1afe",
-            "label": "Event URL",
-            "name": "vf_event_more_information_link",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": ""
-        },
-        {
-            "key": "field_602a73339f0df",
-            "label": "Featured event",
-            "name": "vf_event_featured",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 0,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_5f3f7042eb5fe",
-            "label": "Event subject",
-            "name": "vf_event_subjects_training",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "cbb": "Cell Biology and Biophysics",
-                "dab": "Data Analysis and Bioinformatics",
-                "dbe": "Developmental Biology and Evolution",
-                "gbtt": "Genome Biology, Transcription and Translation",
-                "mi": "Microbiology and Immunology",
-                "mmc": "Molecular Medicine and Cancer",
-                "neur": "Neurobiology",
-                "sb": "Structural Biology",
-                "tim": "Technology, Imaging and Methods",
-                "sispd": "Science in Society and Professional Development"
-            },
-            "default_value": [],
-            "allow_null": 1,
-            "multiple": 1,
-            "ui": 1,
-            "ajax": 0,
-            "return_format": "array",
-            "placeholder": ""
-        },
-        {
-            "key": "field_5e984617574e1",
-            "label": "Summary",
-            "name": "vf_event_summary",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
-        },
-        {
-            "key": "field_5e984a8536343",
-            "label": "Additional Information",
-            "name": "vf_event_additional_info",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "default"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
-        },
-        {
-            "key": "field_5e98505453db1",
-            "label": "Cancelled",
-            "name": "vf_event_canceled",
-            "aria-label": "",
-            "type": "radio",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "yes": "Yes",
-                "no": "No",
-                "postponed": "Postponed"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "default_value": "no",
-            "layout": "vertical",
-            "return_format": "value",
-            "save_other_choice": 0
-        },
-        {
-            "key": "field_61139af02668a",
-            "label": "Banner text",
-            "name": "vf_event_banner_text",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5e98505453db1",
-                        "operator": "!=",
-                        "value": "yes"
-                    },
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5e98505453db1",
-                        "operator": "!=",
-                        "value": "postponed"
-                    },
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5e98505453db1",
-                        "operator": "==empty"
-                    },
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_63fdd146a1327",
-            "label": "Partners TREC",
-            "name": "vf_event_trec_partners",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5e9850ee53db3",
-            "label": "Unique Identifier",
-            "name": "vf_event_unique_identifier",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "embl_ebi_training"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f1fd24325b7c",
-            "label": "Template",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "!=",
-                        "value": "trec_event"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_5f295f13979f9",
-            "label": "Hero image",
-            "name": "vf_event_hero",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "Recommended size: 1200 x 400 px",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
-            "key": "field_5f1fd25c25b7d",
-            "label": "Event logo",
-            "name": "vf_event_logo",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "Max height: 95px",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "default"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
-            "key": "field_607d26ef78df4",
-            "label": "Organisers (events listing)",
-            "name": "vf_event_organisers_listing",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Free text for events listing on embl.org\/events. Example: John Doe, Michael Smith, Britney Spears",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_607d288178df5",
-            "label": "Organisers (event template)",
-            "name": "vf_event_organisers_event_template",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "Add organiser",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_607d28c278df6",
-                    "label": "Name",
-                    "name": "vf_event_organisers_name",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": "",
-                    "parent_repeater": "field_607d288178df5"
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
                 },
+                "relevanssi_exclude": 0,
+                "taxonomy": "training-organiser",
+                "add_term": 1,
+                "save_terms": 1,
+                "load_terms": 1,
+                "return_format": "id",
+                "field_type": "select",
+                "allow_null": 0,
+                "bidirectional": 0,
+                "multiple": 0,
+                "bidirectional_target": []
+            },
+            {
+                "key": "field_68d4eeb6b27de",
+                "label": "Type",
+                "name": "vf-wp-training-on_demand_type",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "course_materials": "Course materials",
+                    "recorded_webinar": "Recorded webinar",
+                    "online_course": "Online course"
+                },
+                "default_value": false,
+                "return_format": "label",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_68db9ea8080e2",
+                "label": "Online course type",
+                "name": "vf-wp-training-course_type",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_68d4eeb6b27de",
+                            "operator": "==",
+                            "value": "online_course"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "tutorial": "Tutorial",
+                    "collection": "Collection"
+                },
+                "default_value": false,
+                "return_format": "label",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_68d4eeb6b23ec",
+                "label": "Topic",
+                "name": "vf-wp-training-topic",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "bioinformatics": "Bioinformatics",
+                    "databases_and_online_tools": "Databases and Online Tools",
+                    "genome_biology": "Genome Biology",
+                    "health_and_disease": "Health and Disease",
+                    "image_analysis": "Image Analysis",
+                    "professional_development": "Professional development",
+                    "science_education": "Science education",
+                    "structural_biology": "Structural Biology"
+                },
+                "default_value": false,
+                "return_format": "label",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_68d4eeb6b377c",
+                "label": "Audience",
+                "name": "vf-wp-training-audience",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "data_scientists": "Data scientists",
+                    "life_science_researchers": "Life science researchers",
+                    "science_educators": "Science Educators",
+                    "early_career_researchers": "Early career researchers"
+                },
+                "default_value": [],
+                "return_format": "value",
+                "multiple": 1,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 1,
+                "ajax": 0,
+                "create_options": 0,
+                "placeholder": "",
+                "save_options": 0
+            },
+            {
+                "key": "field_68da698878897",
+                "label": "Duration",
+                "name": "vf-wp-training-duration",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "less-than-1-hour": "less than 1 hour",
+                    "1-to-3-hours": "1 to 3 hours",
+                    "3-to-9-hours": "3 to 9 hours",
+                    "more-than-9-hours": "more than 9 hours"
+                },
+                "default_value": false,
+                "return_format": "label",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_68da511d49eba",
+                "label": "Tags",
+                "name": "vf-wp-training-tags",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "37.5",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_68d502c02783b",
+                "label": "Search keywords",
+                "name": "vf-wp-training-keywords",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "37.5",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_68da4f4e774a0",
+                "label": "Featured",
+                "name": "vf-wp-training-featured",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "allow_in_bindings": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_68da4fac774a1",
+                "label": "Recently updated",
+                "name": "vf-wp-training-updated",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "allow_in_bindings": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_68da4fc9774a2",
+                "label": "Certificate",
+                "name": "vf-wp-training-certificate",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "allow_in_bindings": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_68d4eeb6b3f4f",
+                "label": "Redirect",
+                "name": "vf-wp-training-url",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "Use this field to redirect the course page",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 1,
+                "placeholder": ""
+            },
+            {
+                "key": "field_68d4eeb6b3392",
+                "label": "One line overview of course",
+                "name": "vf-wp-training-info",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_68d4eeb6ae153",
+                            "operator": "==",
+                            "value": "live"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_68d4eeb6ae153",
+                            "operator": "==",
+                            "value": "on-demand"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "relevanssi_exclude": 0,
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "basic",
+                "media_upload": 0,
+                "delay": 0
+            }
+        ],
+        "location": [
+            [
                 {
-                    "key": "field_607d293878df7",
-                    "label": "Affiliation",
-                    "name": "vf_event_organisers_affiliation",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "maxlength": "",
-                    "parent_repeater": "field_607d288178df5"
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "training"
                 }
             ]
-        },
-        {
-            "key": "field_5ff84c2d7239b",
-            "label": "Contact name",
-            "name": "vf_event_contact_name",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f743c13b08c1",
-            "label": "Contact email",
-            "name": "vf_event_contact",
-            "aria-label": "",
-            "type": "email",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_5f743c25b08c2",
-            "label": "Event hashtag",
-            "name": "vf_event_hashtag",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
-            "key": "field_5f743c39b08c3",
-            "label": "Event poster",
-            "name": "vf_event_poster",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "default"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "preview_size": "medium",
-            "library": "all",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
-            "key": "field_5f743cb1b08c4",
-            "label": "Poster download file",
-            "name": "vf_event_poster_file",
-            "aria-label": "",
-            "type": "file",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ],
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "default"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "library": "all",
-            "min_size": "",
-            "max_size": "",
-            "mime_types": ""
-        },
-        {
-            "key": "field_5f296040979fb",
-            "label": "CPP container",
-            "name": "vf_event_cpp_container",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_5f969dbec23ab",
-            "label": "Social Media container",
-            "name": "vf_event_social_media",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
-            "key": "field_678e1a5a5678f",
-            "label": "Custom FAQ",
-            "name": "",
-            "aria-label": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5fbcab958038b",
-                        "operator": "==",
-                        "value": "cco_hd"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0,
-            "selected": 0
-        },
-        {
-            "key": "field_678e1a6f56790",
-            "label": "Custom FAQ",
-            "name": "vf_event_custom_faq",
-            "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "allow_in_bindings": 0,
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 0,
-            "delay": 0
-        }
-    ],
-    "location": [
-        [
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "seamless",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "group_5f1ab076bf18b",
+        "title": "Event Information",
+        "fields": [
             {
-                "param": "post_type",
-                "operator": "==",
-                "value": "vf_event"
+                "key": "field_5fbcab958038b",
+                "label": "Event organiser",
+                "name": "vf_event_organiser",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "25",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "default": "Default",
+                    "cco_hd": "CCO Heidelberg",
+                    "science_society": "Science and Society",
+                    "trec_event": "TREC Events",
+                    "public_engagement": "Public Engagement"
+                },
+                "default_value": false,
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_5f1ab0871a640",
+                "label": "Date & Time",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_5f1ab076c4202",
+                "label": "Start Date",
+                "name": "vf_event_start_date",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1
+            },
+            {
+                "key": "field_5f1ab076c429f",
+                "label": "End Date",
+                "name": "vf_event_end_date",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "Optional for multi-day events.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1
+            },
+            {
+                "key": "field_5e9852baec0f0",
+                "label": "Start Time",
+                "name": "vf_event_start_time",
+                "aria-label": "",
+                "type": "time_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "H:i",
+                "return_format": "H:i"
+            },
+            {
+                "key": "field_5e9852f0ec0f1",
+                "label": "End Time",
+                "name": "vf_event_end_time",
+                "aria-label": "",
+                "type": "time_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "H:i",
+                "return_format": "H:i"
+            },
+            {
+                "key": "field_5ed74d4c8c0cf",
+                "label": "Time Zone",
+                "name": "vf_event_time_zone",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "europe\/berlin": "Europe\/Berlin",
+                    "europe\/london": "Europe\/London",
+                    "america\/new_york": "America\/New York"
+                },
+                "default_value": "europe\/london",
+                "allow_null": 1,
+                "multiple": 0,
+                "ui": 1,
+                "ajax": 0,
+                "return_format": "label",
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_5f1ab70d800dc",
+                "label": "Type & Location",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_5e958b24aa2e0",
+                "label": "Location",
+                "name": "vf_event_location",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "default"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "68": "EMBL Barcelona",
+                    "71": "EMBL Grenoble",
+                    "70": "EMBL Hamburg",
+                    "67": "EMBL Heidelberg",
+                    "69": "EMBL Rome",
+                    "66": "EMBL-EBI",
+                    "76": "EMBL-EM",
+                    "353": "EMBO",
+                    "364": "Virtual",
+                    "98": "Other"
+                },
+                "default_value": [],
+                "return_format": "label",
+                "multiple": 1,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 1,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_63fc98afb1339",
+                "label": "Location TREC",
+                "name": "vf_event_trec_location",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "Belgium": "Belgium",
+                    "Croatia": "Croatia",
+                    "Denmark": "Denmark",
+                    "England": "England",
+                    "Estonia": "Estonia",
+                    "Finland": "Finland",
+                    "France": "France",
+                    "Germany": "Germany",
+                    "Greece": "Greece",
+                    "Ireland": "Ireland",
+                    "Italy": "Italy",
+                    "Latvia": "Latvia",
+                    "Lithuania": "Lithuania",
+                    "Montenegro": "Montenegro",
+                    "Norway": "Norway",
+                    "Poland": "Poland",
+                    "Portugal": "Portugal",
+                    "Spain": "Spain",
+                    "Sweden": "Sweden",
+                    "The Netherlands": "The Netherlands"
+                },
+                "default_value": false,
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 1,
+                "ajax": 0,
+                "return_format": "label",
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_67b5c45853102",
+                "label": "Location",
+                "name": "vf_event_pb_location",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "public_engagement"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "Barcelona": "Barcelona",
+                    "EBI (Hinxton)": "EBI (Hinxton)",
+                    "Grenoble": "Grenoble",
+                    "Hamburg": "Hamburg",
+                    "Heidelberg": "Heidelberg",
+                    "Rome": "Rome",
+                    "Other": "Other"
+                },
+                "default_value": false,
+                "return_format": "label",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 1,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_63fcbb7c22389",
+                "label": "City TREC",
+                "name": "vf_event_trec_city",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "Aarhus": "Aarhus",
+                    "Athens": "Athens",
+                    "Barcelona": "Barcelona",
+                    "Bergen": "Bergen",
+                    "Bilbao": "Bilbao",
+                    "Galway": "Galway",
+                    "Kotor": "Kotor",
+                    "Kristineberg": "Kristineberg",
+                    "Liepaja": "Liepaja",
+                    "Lorient": "Lorient",
+                    "Mallorca": "Mallorca",
+                    "Naples": "Naples",
+                    "Oostende": "Oostende",
+                    "Pisa": "Pisa",
+                    "Porto": "Porto",
+                    "Roscoff": "Roscoff",
+                    "Sopot": "Sopot",
+                    "Southampton": "Southampton",
+                    "Split": "Split",
+                    "Tallinn": "Tallinn",
+                    "Texel": "Texel",
+                    "Turku": "Turku"
+                },
+                "default_value": false,
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 1,
+                "ajax": 0,
+                "return_format": "label",
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_614447e7bda3d",
+                "label": "Other location",
+                "name": "vf_event_other_location",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "98"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5e9868ea11ada",
+                "label": "Event type",
+                "name": "vf_event_event_type",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "conference": "Conference",
+                    "course": "Course",
+                    "webinar": "Webinar",
+                    "public_event": "Public event",
+                    "internal_event": "Internal event",
+                    "other": "Other"
+                },
+                "default_value": false,
+                "return_format": "array",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 1,
+                "ui": 1,
+                "ajax": 0,
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_5fd9c1f1dda86",
+                "label": "S&S event subtype",
+                "name": "vf_event_ss_subtype",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "science_society"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "ss_conference": "Science and Society Conference",
+                    "ss_seminar": "Science and Society Seminar",
+                    "ss_symposia": "Science and Society Symposium",
+                    "ss_hd_forum": "Science and Society Heidelberg Forum"
+                },
+                "default_value": false,
+                "allow_null": 1,
+                "multiple": 0,
+                "ui": 1,
+                "ajax": 0,
+                "return_format": "array",
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_5feaf203f0f18",
+                "label": "EMBO event subtype",
+                "name": "vf_event_embo_subtype",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        },
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "67"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        },
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "364"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        },
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "71"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        },
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "70"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        },
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "68"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        },
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "69"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        },
+                        {
+                            "field": "field_5e958b24aa2e0",
+                            "operator": "==",
+                            "value": "98"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "embo_workshop": "EMBO Workshop",
+                    "embo_course": "EMBO Practical Course",
+                    "embo_embl_symposium": "EMBO | EMBL Symposium"
+                },
+                "default_value": false,
+                "allow_null": 1,
+                "multiple": 0,
+                "ui": 1,
+                "ajax": 0,
+                "return_format": "array",
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_5fd0aa67af779",
+                "label": "Displayed as",
+                "name": "vf_event_displayed",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "If empty the event type will be displayed",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_5e9850b053db2",
+                "label": "Venue",
+                "name": "vf_event_venue",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5feaecc9e922d",
+                "label": "Registration",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_5fd0b4897af8f",
+                "label": "Registration type",
+                "name": "vf_event_registration_type",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "registration": "Registration",
+                    "application": "Application",
+                    "register_interest": "Register interest"
+                },
+                "allow_null": 1,
+                "other_choice": 0,
+                "default_value": "",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_63fc9b7bb133a",
+                "label": "Registration link",
+                "name": "vf_event_trec_registration",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 1,
+                "placeholder": ""
+            },
+            {
+                "key": "field_61713d4e583ed",
+                "label": "On-site registration",
+                "name": "",
+                "aria-label": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_61713b31f430f",
+                "label": "Opening date (on-site)",
+                "name": "vf_event_registration_opening_on-site",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1
+            },
+            {
+                "key": "field_61713b58f4310",
+                "label": "Closing date (on-site)",
+                "name": "vf_event_registration_closing_on-site",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "public_engagement"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1,
+                "allow_in_bindings": 1
+            },
+            {
+                "key": "field_61713b68f4311",
+                "label": "Registration\/Application link (on-site)",
+                "name": "vf_event_registration_link_on-site",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "public_engagement"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_61713b75f4312",
+                "label": "Registration\/Application button text (on-site)",
+                "name": "vf_event_registration_button_text_on-site",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "public_engagement"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "Register",
+                "maxlength": "",
+                "allow_in_bindings": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_61713d2a583ec",
+                "label": "Virtual registration",
+                "name": "",
+                "aria-label": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_5e984858010ed",
+                "label": "Opening date (virtual)",
+                "name": "vf_event_registration_opening",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1
+            },
+            {
+                "key": "field_5e9848d6010ee",
+                "label": "Closing date (virtual)",
+                "name": "vf_event_registration_closing",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1
+            },
+            {
+                "key": "field_5e9851f4f52eb",
+                "label": "Registration\/Application link (virtual)",
+                "name": "vf_event_registration_link",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5f7473f59e83d",
+                "label": "Registration\/Application button text (virtual)",
+                "name": "vf_event_registration_button_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "Register",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_6005734043e1e",
+                "label": "Registration\/Application info text",
+                "name": "vf_event_info_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_5e98502253db0",
+                "label": "Registration fee",
+                "name": "vf_event_registration_fee",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "embl_ebi_training"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5f1ab40dc7e6d",
+                "label": "Abstract",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "embl_ebi_training"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_5e98496f8b8e9",
+                "label": "Opening date",
+                "name": "vf_event_submission_opening",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1
+            },
+            {
+                "key": "field_5e98496f8b97a",
+                "label": "Closing date",
+                "name": "vf_event_submission_closing",
+                "aria-label": "",
+                "type": "date_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "display_format": "j M Y",
+                "return_format": "j M Y",
+                "first_day": 1
+            },
+            {
+                "key": "field_5f743a6cb08c0",
+                "label": "Abstract submission link",
+                "name": "vf_event_abstract_link",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "embl_ebi_training"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_5f74740d9e83e",
+                "label": "Abstract submission button text",
+                "name": "vf_event_abstract_submission_button_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "embl_ebi_training"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "Submit abstract",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5f1ab4f9a6a57",
+                "label": "Additional information",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "default"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_5e9851a5a1afe",
+                "label": "Event URL",
+                "name": "vf_event_more_information_link",
+                "aria-label": "",
+                "type": "url",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_602a73339f0df",
+                "label": "Featured event",
+                "name": "vf_event_featured",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_5f3f7042eb5fe",
+                "label": "Event subject",
+                "name": "vf_event_subjects_training",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "embl_ebi_training"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "cbb": "Cell Biology and Biophysics",
+                    "dab": "Data Analysis and Bioinformatics",
+                    "dbe": "Developmental Biology and Evolution",
+                    "gbtt": "Genome Biology, Transcription and Translation",
+                    "mi": "Microbiology and Immunology",
+                    "mmc": "Molecular Medicine and Cancer",
+                    "neur": "Neurobiology",
+                    "sb": "Structural Biology",
+                    "tim": "Technology, Imaging and Methods",
+                    "sispd": "Science in Society and Professional Development"
+                },
+                "default_value": [],
+                "allow_null": 1,
+                "multiple": 1,
+                "ui": 1,
+                "ajax": 0,
+                "return_format": "array",
+                "placeholder": "",
+                "create_options": 0,
+                "save_options": 0
+            },
+            {
+                "key": "field_5e984617574e1",
+                "label": "Summary",
+                "name": "vf_event_summary",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "basic",
+                "media_upload": 0,
+                "delay": 0
+            },
+            {
+                "key": "field_5e984a8536343",
+                "label": "Additional Information",
+                "name": "vf_event_additional_info",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "default"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "basic",
+                "media_upload": 0,
+                "delay": 0
+            },
+            {
+                "key": "field_5e98505453db1",
+                "label": "Cancelled",
+                "name": "vf_event_canceled",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "yes": "Yes",
+                    "no": "No",
+                    "postponed": "Postponed"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "no",
+                "layout": "vertical",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_61139af02668a",
+                "label": "Banner text",
+                "name": "vf_event_banner_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5e98505453db1",
+                            "operator": "!=",
+                            "value": "yes"
+                        },
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "trec_event"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5e98505453db1",
+                            "operator": "!=",
+                            "value": "postponed"
+                        },
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "trec_event"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5e98505453db1",
+                            "operator": "==empty"
+                        },
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_63fdd146a1327",
+                "label": "Partners TREC",
+                "name": "vf_event_trec_partners",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5e9850ee53db3",
+                "label": "Unique Identifier",
+                "name": "vf_event_unique_identifier",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "embl_ebi_training"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5f1fd24325b7c",
+                "label": "Template",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "!=",
+                            "value": "trec_event"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_5f295f13979f9",
+                "label": "Hero image",
+                "name": "vf_event_hero",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "Recommended size: 1200 x 400 px",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_5f1fd25c25b7d",
+                "label": "Event logo",
+                "name": "vf_event_logo",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "Max height: 95px",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "default"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_607d26ef78df4",
+                "label": "Organisers (events listing)",
+                "name": "vf_event_organisers_listing",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "Free text for events listing on embl.org\/events. Example: John Doe, Michael Smith, Britney Spears",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_607d288178df5",
+                "label": "Organisers (event template)",
+                "name": "vf_event_organisers_event_template",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "Add organiser",
+                "rows_per_page": 20,
+                "sub_fields": [
+                    {
+                        "key": "field_607d28c278df6",
+                        "label": "Name",
+                        "name": "vf_event_organisers_name",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": "",
+                        "parent_repeater": "field_607d288178df5"
+                    },
+                    {
+                        "key": "field_607d293878df7",
+                        "label": "Affiliation",
+                        "name": "vf_event_organisers_affiliation",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": "",
+                        "parent_repeater": "field_607d288178df5"
+                    }
+                ]
+            },
+            {
+                "key": "field_5ff84c2d7239b",
+                "label": "Contact name",
+                "name": "vf_event_contact_name",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5f743c13b08c1",
+                "label": "Contact email",
+                "name": "vf_event_contact",
+                "aria-label": "",
+                "type": "email",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_5f743c25b08c2",
+                "label": "Event hashtag",
+                "name": "vf_event_hashtag",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_5f743c39b08c3",
+                "label": "Event poster",
+                "name": "vf_event_poster",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "default"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_5f743cb1b08c4",
+                "label": "Poster download file",
+                "name": "vf_event_poster_file",
+                "aria-label": "",
+                "type": "file",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "default"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_size": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_5f296040979fb",
+                "label": "CPP container",
+                "name": "vf_event_cpp_container",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 1,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_5f969dbec23ab",
+                "label": "Social Media container",
+                "name": "vf_event_social_media",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 1,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_678e1a5a5678f",
+                "label": "Custom FAQ",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_678e1a6f56790",
+                "label": "Custom FAQ",
+                "name": "vf_event_custom_faq",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "allow_in_bindings": 0,
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 0,
+                "delay": 0
+            },
+            {
+                "key": "field_68f88a6c51387",
+                "label": "Screens",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_5fbcab958038b",
+                            "operator": "==",
+                            "value": "cco_hd"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_68f88a4351386",
+                "label": "Overview",
+                "name": "vf_event_custom_overview",
+                "aria-label": "",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "rows": "",
+                "placeholder": "",
+                "new_lines": ""
+            },
+            {
+                "key": "field_68f88a9351388",
+                "label": "QR code",
+                "name": "vf_event_qrcode",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "size: 500 x 500 px",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "",
+                "allow_in_bindings": 1,
+                "preview_size": "medium"
             }
-        ]
-    ],
-    "menu_order": 1,
-    "position": "normal",
-    "style": "seamless",
-    "label_placement": "left",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "`vf_event` post type",
-    "show_in_rest": 0
-}
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "vf_event"
+                }
+            ]
+        ],
+        "menu_order": 1,
+        "position": "normal",
+        "style": "seamless",
+        "label_placement": "left",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "`vf_event` post type",
+        "show_in_rest": 0
+    }

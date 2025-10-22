@@ -265,11 +265,14 @@ if (is_array($poster_image)) {
     </div>
     <?php }} ?>
 
-    <?php if ( ! empty(($abstract_closing) || ($application_closing) || ($registration_closing) || ($registration_closing_on_site) || ($info_text) || ($registration_link_on_site))) { ?>
+<?php if (
+    (empty($event_type['label']) || $event_type['label'] != 'Course') &&
+    (empty($embo_event_name['label']) || $embo_event_name['label'] != 'EMBO Practical Course')
+) { ?>
+      <hr class="vf-divider | vf-u-margin__bottom--400">
+      <p class="vf-text-body vf-text-body--3"><a href="https://www.embl.org/internal-information/eicat/course-and-conference-office/embl-staff-registration/">EMBL staff registration</a></p>
       <?php } ?>
       <hr class="vf-divider | vf-u-margin__bottom--400">
-    <p class="vf-text-body vf-text-body--3"><a href="https://www.embl.org/internal-information/eicat/course-and-conference-office/embl-staff-registration/">EMBL staff registration</a></p>
-    <hr class="vf-divider | vf-u-margin__bottom--400">
     <?php
     // Organisers
     if( have_rows('vf_event_organisers_event_template') ): ?>
