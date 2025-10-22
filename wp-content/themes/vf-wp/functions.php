@@ -176,6 +176,8 @@ function allowed_block_types($allowed_blocks) {
     'core/block',
 		'core/image',
 		'core/paragraph',
+		'core/calendar',
+		'core/rss',
 		'core/heading',
 		'core/list',
 		'core/list-item',
