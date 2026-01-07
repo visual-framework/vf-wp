@@ -93,7 +93,7 @@ if ($style !== 'normal') {
   <?php if (! empty($heading)) { ?>
     <h3 class="vf-box__heading">
       <?php } if ($link) { ?>
-        <a class="vf-box__link" target="<?php echo $link['target']; ?>" href="<?php echo esc_url($link['url']); ?>">
+        <a class="vf-box__link" target="<?php echo !empty($link['target']) ? $link['target'] : '_self'; ?>" href="<?php echo esc_url($link['url']); ?>">
           <?php } ?>
           <?php echo esc_html($heading); ?>
         <?php if ($link) { ?>
