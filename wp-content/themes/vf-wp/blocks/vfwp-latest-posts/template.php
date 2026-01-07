@@ -79,8 +79,7 @@ else {
 
 <div class="embl-grid <?php echo ($embl_grid); ?> | vf-content">
   <?php if ( ! empty($heading_singular)) { ?>
-  <div class="vf-section-header"><h2 class="vf-section-header__heading"><a class="vf-section-header__heading vf-section-header__heading--is-link"
-      href="<?php echo esc_url($heading_link); ?>"> <?php echo ($heading_singular); ?> <svg
+  <div class="vf-section-header"><h2 class="vf-section-header__heading"><a class="vf-section-header__heading vf-section-header__heading--is-link" target="<?php echo $heading_url['target']; ?>" href="<?php echo esc_url($heading_link); ?>"> <?php echo ($heading_singular); ?> <svg
         aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
         <path
@@ -95,8 +94,7 @@ else {
         if ((get_field('grid') == 'vf-grid')) { ?>
 
   <?php if ( ! empty($heading_singular)) { ?>
-  <div class="vf-section-header"><h2 class="vf-section-header__heading"><a class="vf-section-header__heading vf-section-header__heading--is-link"
-      href="<?php echo esc_url($heading_link); ?>"> <?php echo ($heading_singular); ?> <svg
+  <div class="vf-section-header"><h2 class="vf-section-header__heading"><a class="vf-section-header__heading vf-section-header__heading--is-link" target="<?php echo $heading_url['target']; ?>" href="<?php echo esc_url($heading_link); ?>"> <?php echo ($heading_singular); ?> <svg
         aria-hidden="true" class="vf-section-header__icon | vf-icon vf-icon-arrow--inline-end" width="24" height="24"
         xmlns="http://www.w3.org/2000/svg">
         <path
