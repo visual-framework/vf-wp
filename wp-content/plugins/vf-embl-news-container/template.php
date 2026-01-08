@@ -81,7 +81,7 @@ if ($enable_sidebar == 1) {
   <section class="<?php echo $embl_grid; ?>">
     <div class="vf-section-header">
     <h2 class="vf-section-header__heading">
-      <a class="vf-section-header__heading vf-section-header__heading--is-link" href="
+      <a class="vf-section-header__heading vf-section-header__heading--is-link" target="<?php echo !empty($link['target']) ? $link['target'] : '_self'; ?>" href="
       <?php 
       if (! empty($link)){
         echo esc_url($link); }
