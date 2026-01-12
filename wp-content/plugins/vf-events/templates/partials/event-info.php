@@ -265,13 +265,26 @@ if (is_array($poster_image)) {
     </div>
     <?php }} ?>
 
-<?php if (
-    (empty($event_type['label']) || $event_type['label'] != 'Course') &&
-    (empty($embo_event_name['label']) || $embo_event_name['label'] != 'EMBO Practical Course')
-) { ?>
-      <hr class="vf-divider | vf-u-margin__bottom--400">
-      <p class="vf-text-body vf-text-body--3"><a href="https://www.embl.org/internal-information/eicat/course-and-conference-office/embl-staff-registration/">EMBL staff registration</a></p>
-      <?php } ?>
+<?php
+// Check if URL contains "course-and-conference-office"
+if (strpos($_SERVER['REQUEST_URI'], 'course-and-conference-office') !== false) {
+
+    if (
+        (empty($event_type['label']) || $event_type['label'] != 'Course') &&
+        (empty($embo_event_name['label']) || $embo_event_name['label'] != 'EMBO Practical Course')
+    ) {
+        ?>
+        <hr class="vf-divider | vf-u-margin__bottom--400">
+        <p class="vf-text-body vf-text-body--3">
+            <a href="https://www.embl.org/internal-information/eicat/course-and-conference-office/embl-staff-registration/">
+                EMBL staff registration
+            </a>
+        </p>
+        <?php
+    }
+}
+?>
+
       <hr class="vf-divider | vf-u-margin__bottom--400">
     <?php
     // Organisers
