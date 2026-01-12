@@ -197,6 +197,14 @@ if (is_array($poster_image)) {
       </span></p>
     <?php } ?>
 
+        <?php // Registration invitation only
+     if ( $registration_type == 'invitation_only') { ?>
+    <p class="vf-text-body vf-text-body--3"><span style="font-weight: 600;">
+        Registration:</span> <span class="vf-u-text-color--grey">
+        Invitation only
+      </span></p>
+    <?php } ?>
+
 
     <?php
       // Register interest button
@@ -274,8 +282,8 @@ if (strpos($_SERVER['REQUEST_URI'], 'course-and-conference-office') !== false) {
         (empty($embo_event_name['label']) || $embo_event_name['label'] != 'EMBO Practical Course')
     ) {
         ?>
-        <hr class="vf-divider | vf-u-margin__bottom--400">
-        <p class="vf-text-body vf-text-body--3">
+        <hr class="vf-divider | vf-u-margin__bottom--400 staff-registration-link">
+        <p class="vf-text-body vf-text-body--3 staff-registration-link">
             <a href="https://www.embl.org/internal-information/eicat/course-and-conference-office/embl-staff-registration/">
                 EMBL staff registration
             </a>

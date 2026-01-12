@@ -686,7 +686,8 @@
                 "choices": {
                     "registration": "Registration",
                     "application": "Application",
-                    "register_interest": "Register interest"
+                    "register_interest": "Register interest",
+                    "invitation_only": "Invitation only"
                 },
                 "allow_null": 1,
                 "other_choice": 0,
