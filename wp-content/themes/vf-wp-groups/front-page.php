@@ -1,4 +1,5 @@
 <?php
+get_header();
 
 // Use blog index template if no page is set for homepage
 if (get_option('show_on_front') !== 'page') {
@@ -8,7 +9,6 @@ if (get_option('show_on_front') !== 'page') {
 
 <?php
 
-get_header();
 
 global $post;
 setup_postdata($post);

@@ -1,4 +1,5 @@
 <?php
+get_header();
 
 if (class_exists('VF_Global_Header')) {
   VF_Plugin::render(VF_Global_Header::get_plugin('vf_global_header'));
@@ -9,7 +10,6 @@ if (class_exists('VF_EBI_Global_Header')) {
 if (class_exists('VF_Breadcrumbs')) {
   VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
 }
-get_header();
 
 global $post;
 setup_postdata($post);
