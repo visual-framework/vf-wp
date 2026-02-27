@@ -72,7 +72,7 @@ if (count($latest_posts)) {
 
     if ($layout === 'columns') {
         $embl_grid = null;
-        $vf_grid = 'class="vf-grid vf-grid__col-' . esc_attr($limit) . ' | vf-content"';
+        $vf_grid = 'class="vf-grid vf-grid__col-3 | vf-content"';
     } else {
         $embl_grid = 'embl-grid--has-centered-content';
     }
