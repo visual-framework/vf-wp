@@ -1,0 +1,24 @@
+{
+  "routes": [
+    {
+      "id": "ensembl",
+      "title": "Ensembl"
+    },
+    {
+      "id": "uniprot",
+      "title": "UniProt"
+    },
+    {
+      "id": "pfam",
+      "title": "Pfam"
+    },
+    {
+      "id": "interpro",
+      "title": "InterPro"
+    },
+    {
+      "id": "chembl",
+      "title": "ChEMBL"
+    }
+  ]
+}

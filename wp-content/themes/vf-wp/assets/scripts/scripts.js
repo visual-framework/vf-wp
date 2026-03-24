@@ -6,6 +6,25 @@
  * Clear the cooke. This is mostly a development tool.
  */
 /* eslint-disable no-unused-vars */
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function vfBannerReset(vfBannerCookieNameAndVersion) {
   vfBannerSetCookie(vfBannerCookieNameAndVersion, false);
 }
@@ -1114,6 +1133,3641 @@ function vfTabsDeepLinkOnLoad(tabs, panels) {
       vfTabsSwitch(tab, panels);
     }
   });
+}
+
+// vf-chatbot-fab
+
+function VFChatbotFab(element) {
+  this.el = element;
+  this.chatIcon = this.el.querySelector(".vf-chatbot-fab__icon--chat");
+  this.init();
+}
+VFChatbotFab.prototype = {
+  init: function init() {
+    this.addEventListeners();
+  },
+  addEventListeners: function addEventListeners() {
+    var _this = this;
+    this.el.addEventListener("click", function () {
+      _this.toggleState();
+    });
+  },
+  toggleState: function toggleState() {
+    this.el.classList.toggle("vf-chatbot-fab--inactive");
+
+    // Dispatch event for parent chatbot component
+    this.el.dispatchEvent(new CustomEvent("vf-chatbot-fab:toggle", {
+      bubbles: true,
+      detail: {
+        isActive: this.el.classList.contains("vf-chatbot-fab--inactive")
+      }
+    }));
+  }
+};
+function initVFChatbotFab() {
+  var elements = document.querySelectorAll("[data-vf-js-chatbot-fab]");
+  for (var i = 0; i < elements.length; i++) {
+    new VFChatbotFab(elements[i]);
+  }
+}
+
+// Global exposure
+if (typeof window !== "undefined") {
+  window.VFChatbotFab = VFChatbotFab;
+  window.initVFChatbotFab = initVFChatbotFab;
+}
+function VFChatbotSources(element) {
+  this.el = element;
+}
+function initVFChatbotSources(sourceHTML) {
+  if (!sourceHTML) {
+    console.error("Message is required for VFChatbotSources");
+    return null;
+  }
+  var el = document.createElement("div");
+  el.className = "vf-chatbot-sources-toggle";
+  el.innerHTML = "\n    <button class=\"vf-chatbot-sources__toggle-link vf-link\" data-vf-js-chatbot-sources-toggle>\n      View sources\n      <span class=\"vf-chatbot-sources__toggle-chevron\">\n        <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n        <g clip-path=\"url(#clip0_3576_2094)\">\n        <path d=\"M6.00026 9.44814C5.80432 9.44849 5.61025 9.41007 5.42922 9.33511C5.24819 9.26014 5.08378 9.15011 4.94545 9.01134L0.247452 4.07094C0.165606 3.9853 0.101468 3.88435 0.0587149 3.77387C0.0159622 3.6634 -0.00456422 3.54557 -0.00168768 3.42714C0.00118887 3.30871 0.0274118 3.19202 0.0754778 3.08375C0.123544 2.97548 0.192508 2.87776 0.278415 2.7962C0.364323 2.71463 0.465485 2.65082 0.576101 2.60843C0.686718 2.56604 0.804614 2.54591 0.92303 2.54917C1.04145 2.55244 1.15805 2.57904 1.26617 2.62746C1.37428 2.67588 1.47177 2.74517 1.55305 2.83134L5.78306 7.28574C5.81098 7.3153 5.84465 7.33885 5.882 7.35495C5.91935 7.37104 5.95959 7.37934 6.00026 7.37934C6.04092 7.37934 6.08116 7.37104 6.11851 7.35495C6.15586 7.33885 6.18953 7.3153 6.21745 7.28574L10.4475 2.83134C10.5287 2.74517 10.6262 2.67588 10.7343 2.62746C10.8425 2.57904 10.9591 2.55244 11.0775 2.54917C11.1959 2.54591 11.3138 2.56604 11.4244 2.60843C11.535 2.65082 11.6362 2.71463 11.7221 2.7962C11.808 2.87776 11.877 2.97548 11.925 3.08375C11.9731 3.19202 11.9993 3.30871 12.0022 3.42714C12.0051 3.54557 11.9845 3.6634 11.9418 3.77387C11.899 3.88435 11.8349 3.9853 11.7531 4.07094L7.08026 8.99934C6.9387 9.14163 6.77041 9.25453 6.58506 9.33155C6.39971 9.40857 6.20097 9.4482 6.00026 9.44814Z\" fill=\"#193F90\"/>\n        </g>\n        <defs>\n        <clipPath id=\"clip0_3576_2094\">\n        <rect width=\"12\" height=\"12\" fill=\"white\"/>\n        </clipPath>\n        </defs>\n        </svg>\n      </span>\n    </button>\n    <div class=\"vf-chatbot-sources vf-chatbot-sources--collapsed\" data-vf-js-chatbot-sources>\n      <div class=\"vf-chatbot-sources__header\">\n        <button class=\"vf-chatbot-sources__hide-link vf-link\" data-vf-js-chatbot-sources-hide>\n          Hide sources\n          <span class=\"vf-chatbot-sources__hide-chevron\">\n            <svg width=\"12\" height=\"12\" viewBox=\"0 0 12 12\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n            <g clip-path=\"url(#clip0_3576_5110)\">\n            <path d=\"M6.00026 2.55186C5.80432 2.55151 5.61025 2.58993 5.42922 2.66489C5.24819 2.73986 5.08378 2.84989 4.94545 2.98866L0.247452 7.92906C0.165606 8.0147 0.101468 8.11565 0.0587149 8.22613C0.0159622 8.3366 -0.00456422 8.45443 -0.00168768 8.57286C0.00118887 8.69129 0.0274118 8.80798 0.0754778 8.91625C0.123544 9.02452 0.192508 9.12224 0.278415 9.2038C0.364323 9.28537 0.465485 9.34918 0.576101 9.39157C0.686718 9.43396 0.804614 9.45409 0.92303 9.45083C1.04145 9.44756 1.15805 9.42096 1.26617 9.37254C1.37428 9.32412 1.47177 9.25483 1.55305 9.16866L5.78306 4.71426C5.81098 4.6847 5.84465 4.66115 5.882 4.64505C5.91935 4.62896 5.95959 4.62066 6.00026 4.62066C6.04092 4.62066 6.08116 4.62896 6.11851 4.64505C6.15586 4.66115 6.18953 4.6847 6.21745 4.71426L10.4475 9.16866C10.5287 9.25483 10.6262 9.32412 10.7343 9.37254C10.8425 9.42096 10.9591 9.44756 11.0775 9.45083C11.1959 9.45409 11.3138 9.43396 11.4244 9.39157C11.535 9.34918 11.6362 9.28537 11.7221 9.2038C11.808 9.12224 11.877 9.02452 11.925 8.91625C11.9731 8.80798 11.9993 8.69129 12.0022 8.57286C12.0051 8.45443 11.9845 8.3366 11.9418 8.22613C11.899 8.11565 11.8349 8.0147 11.7531 7.92906L7.08026 3.00066C6.9387 2.85837 6.77041 2.74547 6.58506 2.66845C6.39971 2.59143 6.20097 2.5518 6.00026 2.55186Z\" fill=\"#193F90\"/>\n            </g>\n            <defs>\n            <clipPath id=\"clip0_3576_5110\">\n            <rect width=\"12\" height=\"12\" fill=\"white\" transform=\"matrix(1 0 0 -1 0 12)\"/>\n            </clipPath>\n            </defs>\n            </svg>\n          </span>\n        </button>\n      </div>\n      <ul class=\"vf-chatbot-sources__list\">".concat(sourceHTML, "</ul>\n    </div>\n  ");
+
+  // Toggle logic
+  var toggleBtn = el.querySelector("[data-vf-js-chatbot-sources-toggle]");
+  var sourcesDiv = el.querySelector("[data-vf-js-chatbot-sources]");
+  var hideBtn = el.querySelector("[data-vf-js-chatbot-sources-hide]");
+  toggleBtn.addEventListener("click", function () {
+    sourcesDiv.classList.remove("vf-chatbot-sources--collapsed");
+    toggleBtn.style.display = "none";
+    // Scroll the sources div into view
+    sourcesDiv.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  });
+  hideBtn.addEventListener("click", function () {
+    sourcesDiv.classList.add("vf-chatbot-sources--collapsed");
+    toggleBtn.style.display = "";
+  });
+  return new VFChatbotSources(el);
+}
+var VFChatbotFeedback = /*#__PURE__*/function () {
+  function VFChatbotFeedback(container, messageId) {
+    var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    _classCallCheck(this, VFChatbotFeedback);
+    this.container = container;
+    this.messageId = messageId;
+    this.config = _objectSpread({
+      enable_instant_feedback: false,
+      api_endpoint: null
+    }, config);
+    this.positiveTemplate = document.querySelector("#feedback-positive-template");
+    this.negativeTemplate = document.querySelector("#feedback-negative-template");
+    this.positiveOptions = config.positiveOptions || [{
+      id: "accurate",
+      label: "Accurate answer"
+    }, {
+      id: "easy",
+      label: "Easy to understand"
+    }, {
+      id: "formatted",
+      label: "Well formatted"
+    }, {
+      id: "helpful",
+      label: "Helpful"
+    }];
+    this.negativeOptions = config.negativeOptions || [{
+      id: "inaccurate",
+      label: "Inaccurate answer"
+    }, {
+      id: "nocontext",
+      label: "Did not use context"
+    }, {
+      id: "poorformat",
+      label: "Poorly formatted"
+    }, {
+      id: "nothelpful",
+      label: "Not helpful"
+    }];
+    this.renderInitialState();
+    this.selectedThumb = "";
+  }
+  return _createClass(VFChatbotFeedback, [{
+    key: "renderInitialState",
+    value: function renderInitialState() {
+      this.container.innerHTML = "\n      <div class=\"vf-chatbot-feedback__actions\">\n        <button class=\"vf-chatbot-feedback__thumb\" data-vf-js-feedback-thumb=\"up\" aria-label=\"Good response\">\n          <svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M7.99997 19.9997H17.1919C17.9865 19.9997 18.7058 19.5293 19.0243 18.8013L21.8323 12.383C21.9429 12.1302 22 11.8573 22 11.5813V10.9997C22 9.89518 21.1045 8.99975 20 8.99975H13.5L14.7066 4.57545C14.8772 3.94998 14.5826 3.29105 14.0027 3.00111C13.4204 2.70995 12.7134 2.87231 12.3164 3.38835L8.41472 8.46057C8.14579 8.81019 7.99997 9.2389 7.99997 9.67999V19.9997ZM7.99997 19.9997H2V9.99975H7.99997V19.9997Z\" stroke=\"black\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n          </svg>\n        </button>\n        <button class=\"vf-chatbot-feedback__thumb\" data-vf-js-feedback-thumb=\"down\" aria-label=\"Bad response\">\n        <svg width=\"24\" height=\"24\" viewBox=\"10 10 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <path d=\"M18 14H27.1919C27.9865 14 28.7058 14.4704 29.0243 15.1984L31.8323 21.6167C31.9429 21.8695 32 22.1424 32 22.4184V23C32 24.1046 31.1045 25 30 25H23.5L24.7066 29.4243C24.8772 30.0498 24.5826 30.7087 24.0027 30.9986C23.4204 31.2898 22.7134 31.1274 22.3164 30.6114L18.4147 25.5392C18.1458 25.1896 18 24.7608 18 24.3198V24M18 14H12V24H18M18 14V24\" stroke=\"black\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n        </svg>\n        </button>\n      </div>\n      <div class=\"vf-chatbot-feedback__form-container\"></div>\n    ";
+      this.bindThumbEvents();
+    }
+  }, {
+    key: "bindThumbEvents",
+    value: function bindThumbEvents() {
+      var _this2 = this;
+      var upThumb = this.container.querySelector("[data-vf-js-feedback-thumb='up']");
+      var downThumb = this.container.querySelector("[data-vf-js-feedback-thumb='down']");
+      var formContainer = this.container.querySelector(".vf-chatbot-feedback__form-container");
+      upThumb === null || upThumb === void 0 || upThumb.addEventListener("click", function () {
+        upThumb.classList.add("vf-chatbot-feedback__thumb--solid");
+        downThumb.classList.remove("vf-chatbot-feedback__thumb--solid");
+        if (_this2.config.enable_instant_feedback) {
+          // Submit feedback immediately without showing form
+          _this2.submitInstantFeedback("positive");
+          _this2.showSuccessBanner();
+        } else {
+          // Traditional flow - show feedback form
+          _this2.showForm("positive", formContainer);
+        }
+      });
+      downThumb === null || downThumb === void 0 || downThumb.addEventListener("click", function () {
+        downThumb.classList.add("vf-chatbot-feedback__thumb--solid");
+        upThumb.classList.remove("vf-chatbot-feedback__thumb--solid");
+        if (_this2.config.enable_instant_feedback) {
+          // Submit feedback immediately without showing form
+          _this2.submitInstantFeedback("negative");
+          _this2.showSuccessBanner();
+        } else {
+          // Traditional flow - show feedback form
+          _this2.showForm("negative", formContainer);
+        }
+      });
+    }
+  }, {
+    key: "submitInstantFeedback",
+    value: function submitInstantFeedback(feedbackType) {
+      var feedbackData = {
+        messageId: this.messageId,
+        feedbackType: feedbackType,
+        feedbackText: "",
+        // Empty for instant feedback
+        feedbackComment: "",
+        // Empty for instant feedback
+        timestamp: Date.now()
+      };
+
+      // Emit event for parent component to handle
+      this.emitFeedbackEvent(feedbackData);
+
+      // Send to API if configured
+      if (this.config.api_endpoint) {
+        this.sendFeedbackToAPI(feedbackData);
+      }
+      console.log("Instant feedback submitted:", feedbackData);
+    }
+  }, {
+    key: "showSuccessBanner",
+    value: function showSuccessBanner() {
+      var formContainer = this.container.querySelector(".vf-chatbot-feedback__form-container");
+
+      // Show thank you message using vf-banner (dismissible)
+      formContainer.innerHTML = "\n      <div class=\"vf-banner\" aria-label=\"Thank you\" data-vf-js-banner>\n        <div class=\"vf-banner__content\">\n          <p class=\"vf-banner__text\">Thank you for your feedback!</p>\n          <button role=\"button\" aria-label=\"close notification banner\" class=\"vf-button vf-button--icon vf-button--dismiss | vf-banner__button\">\n            <svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\">\n              <title>dismiss banner</title>\n              <path d=\"M14.3,12.179a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.442L12.177,9.7a.25.25,0,0,1-.354,0L2.561.442A1.5,1.5,0,0,0,.439,2.563L9.7,11.825a.25.25,0,0,1,0,.354L.439,21.442a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,0,0,2.122-2.121Z\" />\n            </svg>\n          </button>\n        </div>\n      </div>\n    ";
+
+      // Hide the unselected thumb and disable the selected one
+      var upThumb = this.container.querySelector("[data-vf-js-feedback-thumb='up']");
+      var downThumb = this.container.querySelector("[data-vf-js-feedback-thumb='down']");
+      if (upThumb.classList.contains("vf-chatbot-feedback__thumb--solid")) {
+        downThumb.style.display = "none";
+        upThumb.disabled = true; // Disable the clicked thumb
+      } else if (downThumb.classList.contains("vf-chatbot-feedback__thumb--solid")) {
+        upThumb.style.display = "none";
+        downThumb.disabled = true; // Disable the clicked thumb
+      }
+
+      // Add dismiss functionality
+      var banner = formContainer.querySelector("[data-vf-js-banner]");
+      var closeBtn = formContainer.querySelector(".vf-button--dismiss");
+      if (banner && closeBtn) {
+        closeBtn.addEventListener("click", function () {
+          banner.remove();
+        });
+      }
+    }
+  }, {
+    key: "emitFeedbackEvent",
+    value: function emitFeedbackEvent(feedbackData) {
+      var event = new CustomEvent("vf-chatbot-feedback:submit", {
+        bubbles: true,
+        detail: feedbackData
+      });
+      this.container.dispatchEvent(event);
+    }
+  }, {
+    key: "sendFeedbackToAPI",
+    value: function () {
+      var _sendFeedbackToAPI = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(feedbackData) {
+        var response, _t;
+        return _regenerator().w(function (_context) {
+          while (1) switch (_context.p = _context.n) {
+            case 0:
+              _context.p = 0;
+              _context.n = 1;
+              return fetch(this.config.api_endpoint, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify(feedbackData)
+              });
+            case 1:
+              response = _context.v;
+              if (response.ok) {
+                _context.n = 2;
+                break;
+              }
+              throw new Error("HTTP error! status: ".concat(response.status));
+            case 2:
+              _context.n = 4;
+              break;
+            case 3:
+              _context.p = 3;
+              _t = _context.v;
+              console.error("Failed to send feedback to API:", _t);
+            case 4:
+              return _context.a(2);
+          }
+        }, _callee, this, [[0, 3]]);
+      }));
+      function sendFeedbackToAPI(_x) {
+        return _sendFeedbackToAPI.apply(this, arguments);
+      }
+      return sendFeedbackToAPI;
+    }()
+  }, {
+    key: "showForm",
+    value: function showForm(type, formContainer) {
+      if (!formContainer) {
+        formContainer = this.container.querySelector(".vf-chatbot-feedback__form-container");
+      }
+      formContainer.innerHTML = "";
+      var template = type === "positive" ? this.positiveTemplate : this.negativeTemplate;
+      if (template) {
+        var formContent = template.content.cloneNode(true);
+        formContent.children[0].style.display = "block";
+        formContainer.appendChild(formContent);
+        this.bindFormEvents(formContainer);
+
+        // Bring the feedback form into view
+        formContainer.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+    }
+  }, {
+    key: "bindFormEvents",
+    value: function bindFormEvents(formContainer) {
+      var _this3 = this;
+      // Option button selection logic (if needed)
+      var optionButtons = formContainer.querySelectorAll(".vf-chatbot-feedback__option");
+      optionButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          optionButtons.forEach(function (b) {
+            return b.classList.remove("vf-chatbot-feedback__option--selected");
+          });
+          btn.classList.add("vf-chatbot-feedback__option--selected");
+        });
+      });
+
+      // Submit button logic
+      var submitBtn = formContainer.querySelector("[data-vf-js-feedback-submit]");
+      submitBtn === null || submitBtn === void 0 || submitBtn.addEventListener("click", function () {
+        return _this3.submitFeedback(formContainer);
+      });
+
+      // Close icon logic
+      var closeBtn = formContainer.querySelector("[data-vf-js-feedback-form-close]");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", function () {
+          // Remove the feedback form
+          formContainer.innerHTML = "";
+
+          // Remove solid class from both thumbs
+          var upThumb = _this3.container.querySelector("[data-vf-js-feedback-thumb='up']");
+          var downThumb = _this3.container.querySelector("[data-vf-js-feedback-thumb='down']");
+          upThumb === null || upThumb === void 0 || upThumb.classList.remove("vf-chatbot-feedback__thumb--solid");
+          downThumb === null || downThumb === void 0 || downThumb.classList.remove("vf-chatbot-feedback__thumb--solid");
+        });
+      }
+    }
+  }, {
+    key: "submitFeedback",
+    value: function submitFeedback(formContainer) {
+      var _this$container$query;
+      // Collect form data for traditional feedback
+      var selectedOptions = formContainer.querySelectorAll(".vf-chatbot-feedback__option--selected");
+      var feedbackText = Array.from(selectedOptions).map(function (option) {
+        return option.textContent.trim();
+      }).join(", ");
+      var feedbackType = (_this$container$query = this.container.querySelector("[data-vf-js-feedback-thumb='up']")) !== null && _this$container$query !== void 0 && _this$container$query.classList.contains("vf-chatbot-feedback__thumb--solid") ? "positive" : "negative";
+      var feedbackComment = formContainer.querySelector(".vf-chatbot-feedback__comment").value || "";
+      var feedbackData = {
+        messageId: this.messageId,
+        feedbackType: feedbackType,
+        feedbackText: feedbackText,
+        feedbackComment: feedbackComment,
+        timestamp: Date.now()
+      };
+
+      // Emit event for parent component to handle
+      this.emitFeedbackEvent(feedbackData);
+
+      // Send to API if configured
+      if (this.config.api_endpoint) {
+        this.sendFeedbackToAPI(feedbackData);
+      }
+
+      // Show success banner (reuse existing logic)
+      this.showSuccessBanner();
+    }
+  }]);
+}(); // Add this function at the end of the file:
+function initVFChatbotFeedback(container) {
+  var messageId = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var config = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  if (!container) return;
+  // Prevent double-initialization
+  if (container.__vfChatbotFeedbackInstance) return container.__vfChatbotFeedbackInstance;
+  var instance = new VFChatbotFeedback(container, messageId, config);
+  container.__vfChatbotFeedbackInstance = instance;
+  return instance;
+}
+var VFChatbotSelector = /*#__PURE__*/function () {
+  function VFChatbotSelector(element) {
+    _classCallCheck(this, VFChatbotSelector);
+    if (!element) {
+      console.error("Selector element is required");
+      return;
+    }
+    this.el = element;
+    this.isMultiselect = this.el.getAttribute("data-multiselect") === "true";
+    this.maxMultiSelect = parseInt(this.el.getAttribute("data-max-multiselect") || "3", 10);
+    this.selectedItems = new Set();
+    // this.allServicesSelected = true; // Track "All services" state
+
+    this.showAllServices = this.el.getAttribute("data-show-all-services") === "true";
+    this.showAllServicesSelected = this.el.getAttribute("data-show-all-services-selected") === "true";
+    this.init();
+    this.loadRoutes();
+  }
+  return _createClass(VFChatbotSelector, [{
+    key: "loadRoutes",
+    value: function () {
+      var _loadRoutes = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
+        var routesPath, response, data, _t2;
+        return _regenerator().w(function (_context2) {
+          while (1) switch (_context2.p = _context2.n) {
+            case 0:
+              _context2.p = 0;
+              routesPath = this.el.getAttribute("data-routes-path");
+              if (routesPath) {
+                _context2.n = 1;
+                break;
+              }
+              return _context2.a(2);
+            case 1:
+              _context2.n = 2;
+              return fetch(routesPath);
+            case 2:
+              response = _context2.v;
+              _context2.n = 3;
+              return response.json();
+            case 3:
+              data = _context2.v;
+              // Update routes and refresh UI
+              this.routes = data.routes;
+              this.updateRoutesList();
+              _context2.n = 5;
+              break;
+            case 4:
+              _context2.p = 4;
+              _t2 = _context2.v;
+              console.error("Failed to load routes:", _t2);
+            case 5:
+              return _context2.a(2);
+          }
+        }, _callee2, this, [[0, 4]]);
+      }));
+      function loadRoutes() {
+        return _loadRoutes.apply(this, arguments);
+      }
+      return loadRoutes;
+    }()
+  }, {
+    key: "init",
+    value: function init() {
+      var _this4 = this;
+      // Ensure element exists before querying
+      if (!this.el) return;
+
+      // Get DOM elements
+      this.titleEl = this.el.querySelector("[data-vf-js-selector-toggle]");
+      this.dropdownEl = this.el.querySelector("[data-vf-js-selector-dropdown]");
+      this.searchEl = this.el.querySelector("[data-vf-js-selector-search]");
+      this.clearEl = this.el.querySelector("[data-vf-js-selector-clear]");
+      this.listItems = this.el.querySelectorAll("[data-vf-js-selector-item]");
+      this.allServicesItem = this.el.querySelector("[data-route-id='all']");
+
+      // Initialize dropdown as closed
+      if (this.dropdownEl) {
+        this.dropdownEl.style.display = "none";
+      }
+
+      // Bind events
+      this.bindEvents();
+
+      // Check if any items are pre-selected (not including "All services")
+      var hasPreSelectedItems = false;
+      this.listItems.forEach(function (item) {
+        var itemId = item.getAttribute("data-route-id");
+        if (item.classList.contains("vf-chatbot-selector__item--selected")) {
+          if (itemId !== "all") {
+            // Only count non-"All services" items as pre-selected
+            _this4.selectedItems.add(itemId);
+            hasPreSelectedItems = true;
+          }
+        }
+      });
+
+      // If no items are pre-selected, default to "All services"
+      if (!hasPreSelectedItems && this.showAllServices) {
+        this.selectAllServices();
+      } else if (!hasPreSelectedItems && !this.showAllServices) {
+        // If no "All services" option and no pre-selection, select first item for single-select
+        if (!this.isMultiselect && this.listItems.length > 0) {
+          var firstItem = this.listItems[0];
+          var firstItemId = firstItem.getAttribute("data-route-id");
+          this.selectedItems.add(firstItemId);
+          firstItem.classList.add("vf-chatbot-selector__item--selected");
+        }
+      } else if (hasPreSelectedItems) {
+        // If items are pre-selected, ensure "All services" is not selected
+        this.allServicesSelected = false;
+        if (this.allServicesItem) {
+          this.allServicesItem.classList.remove("vf-chatbot-selector__item--selected");
+        }
+      }
+
+      // Update display after initial selection
+      this.updateSelectionDisplay();
+      this.updateClearButton();
+    }
+  }, {
+    key: "updateRoutesList",
+    value: function updateRoutesList() {
+      var listEl = this.el.querySelector("[data-vf-js-chatbot-selector-list]");
+      if (!listEl || !this.routes) return;
+
+      // Clear existing list
+      listEl.innerHTML = "";
+
+      // Check if any routes have pre-selected state
+      var hasPreSelectedRoutes = this.routes.some(function (route) {
+        return route.selected;
+      });
+
+      // Add "All services" option if enabled
+      if (this.showAllServices) {
+        var allServicesItem = document.createElement("li");
+        allServicesItem.className = "vf-chatbot-selector__item";
+        allServicesItem.setAttribute("data-vf-js-selector-item", "");
+        allServicesItem.setAttribute("data-route-id", "all");
+        allServicesItem.setAttribute("data-title", "All services");
+        allServicesItem.setAttribute("role", "button");
+        allServicesItem.setAttribute("tabindex", "0");
+        allServicesItem.setAttribute("aria-label", "Select all services");
+        if (!hasPreSelectedRoutes && this.showAllServicesSelected) {
+          allServicesItem.className += " vf-chatbot-selector__item--selected";
+          allServicesItem.setAttribute("data-selected", "true");
+        }
+        allServicesItem.innerHTML = "<div class=\"vf-chatbot-selector__item-content\">\n          <div class=\"vf-chatbot-selector__item-title\">All services</div>\n          <div class=\"vf-chatbot-selector__item-description\">This would select all services</div>\n        </div>\n        <span class=\"vf-chatbot-selector__tick\">\n          <svg width=\"24\" height=\"20\" viewBox=\"0 0 24 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <path d=\"M6.8478 19.4278C6.33162 19.4208 5.82376 19.2967 5.36257 19.0647C4.90137 18.8328 4.49889 18.4991 4.18551 18.0889L0.426086 13.8152C0.149005 13.4712 0.0154068 13.0335 0.0531476 12.5934C0.0908883 12.1533 0.297055 11.7447 0.62866 11.4529C0.960265 11.1611 1.39171 11.0085 1.83304 11.0271C2.27438 11.0456 2.69152 11.2338 2.99751 11.5523L6.52037 15.562C6.55956 15.6066 6.60755 15.6425 6.66133 15.6675C6.71511 15.6925 6.77349 15.7061 6.83279 15.7074C6.89209 15.7087 6.95101 15.6976 7.00582 15.675C7.06063 15.6523 7.11015 15.6185 7.15123 15.5758L21.0369 1.10375C21.1921 0.940538 21.3778 0.809473 21.5836 0.71804C21.7893 0.626608 22.0111 0.576599 22.2362 0.570868C22.4613 0.565137 22.6853 0.603797 22.8954 0.684641C23.1056 0.765484 23.2977 0.886928 23.4609 1.04204C23.6242 1.19715 23.7552 1.38289 23.8467 1.58865C23.9381 1.79441 23.9881 2.01617 23.9938 2.24126C23.9996 2.46635 23.9609 2.69036 23.8801 2.90051C23.7992 3.11066 23.6778 3.30282 23.5227 3.46604L9.46209 18.2655C9.1402 18.6414 8.7385 18.9409 8.28624 19.1419C7.83398 19.343 7.34257 19.4406 6.8478 19.4278Z\" fill=\"#54585A\"/>\n          </svg>\n        </span>";
+        listEl.appendChild(allServicesItem);
+      }
+
+      // Add route items
+      this.routes.forEach(function (route) {
+        var item = document.createElement("li");
+        item.className = "vf-chatbot-selector__item";
+        if (route.selected) {
+          item.className += " vf-chatbot-selector__item--selected";
+        }
+        item.setAttribute("data-vf-js-selector-item", "");
+        item.setAttribute("data-route-id", route.id);
+        item.setAttribute("data-title", route.title);
+        item.setAttribute("role", "button");
+        item.setAttribute("tabindex", "0");
+        item.setAttribute("aria-label", "Select ".concat(route.title));
+        item.innerHTML = "\n        <div class=\"vf-chatbot-selector__item-content\">\n          <div class=\"vf-chatbot-selector__item-title\">".concat(route.title, "</div>\n  ").concat(route.description ? "<div class=\"vf-chatbot-selector__item-description\">".concat(route.description, "</div>") : "", "\n        </div>\n        <span class=\"vf-chatbot-selector__tick\">\n          <svg width=\"24\" height=\"20\" viewBox=\"0 0 24 20\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n          <path d=\"M6.8478 19.4278C6.33162 19.4208 5.82376 19.2967 5.36257 19.0647C4.90137 18.8328 4.49889 18.4991 4.18551 18.0889L0.426086 13.8152C0.149005 13.4712 0.0154068 13.0335 0.0531476 12.5934C0.0908883 12.1533 0.297055 11.7447 0.62866 11.4529C0.960265 11.1611 1.39171 11.0085 1.83304 11.0271C2.27438 11.0456 2.69152 11.2338 2.99751 11.5523L6.52037 15.562C6.55956 15.6066 6.60755 15.6425 6.66133 15.6675C6.71511 15.6925 6.77349 15.7061 6.83279 15.7074C6.89209 15.7087 6.95101 15.6976 7.00582 15.675C7.06063 15.6523 7.11015 15.6185 7.15123 15.5758L21.0369 1.10375C21.1921 0.940538 21.3778 0.809473 21.5836 0.71804C21.7893 0.626608 22.0111 0.576599 22.2362 0.570868C22.4613 0.565137 22.6853 0.603797 22.8954 0.684641C23.1056 0.765484 23.2977 0.886928 23.4609 1.04204C23.6242 1.19715 23.7552 1.38289 23.8467 1.58865C23.9381 1.79441 23.9881 2.01617 23.9938 2.24126C23.9996 2.46635 23.9609 2.69036 23.8801 2.90051C23.7992 3.11066 23.6778 3.30282 23.5227 3.46604L9.46209 18.2655C9.1402 18.6414 8.7385 18.9409 8.28624 19.1419C7.83398 19.343 7.34257 19.4406 6.8478 19.4278Z\" fill=\"#54585A\"/>\n          </svg>\n        </span>");
+        listEl.appendChild(item);
+      });
+
+      // Update references and re-bind events ONCE
+      this.listItems = this.el.querySelectorAll("[data-vf-js-selector-item]");
+      this.allServicesItem = this.el.querySelector("[data-route-id='all']");
+
+      // Only bind list item events (don't call full bindEvents or init)
+      this.bindListItemEvents();
+
+      // Handle initial selections for loaded routes
+      this.handleInitialSelections();
+
+      // Dispatch event to signal routes are loaded and UI is ready
+      this.el.dispatchEvent(new CustomEvent("routesloaded"));
+    }
+
+    // New method to bind only list item events
+  }, {
+    key: "bindListItemEvents",
+    value: function bindListItemEvents() {
+      var _this5 = this;
+      this.listItems.forEach(function (item) {
+        // Remove any existing listeners first
+        item.removeEventListener("click", _this5.itemClickHandler);
+        item.removeEventListener("keydown", _this5.itemKeydownHandler);
+
+        // Create bound handlers
+        _this5.itemClickHandler = function (e) {
+          e.stopPropagation();
+          _this5.handleItemSelection(item);
+        };
+        _this5.itemKeydownHandler = function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            e.stopPropagation();
+            _this5.handleItemSelection(item);
+          }
+        };
+
+        // Add new listeners
+        item.addEventListener("click", _this5.itemClickHandler);
+        item.addEventListener("keydown", _this5.itemKeydownHandler);
+      });
+    }
+
+    // New method to handle initial selections without re-binding events
+  }, {
+    key: "handleInitialSelections",
+    value: function handleInitialSelections() {
+      var _this6 = this;
+      // Don't reset the selectedItems Set here - it may already have pre-selected items
+      var hasPreSelectedItems = this.selectedItems.size > 0; // Check existing selectedItems first
+
+      // Also check DOM for any additional pre-selected items
+      this.listItems.forEach(function (item) {
+        var itemId = item.getAttribute("data-route-id");
+        if (item.classList.contains("vf-chatbot-selector__item--selected")) {
+          if (itemId !== "all") {
+            _this6.selectedItems.add(itemId);
+            hasPreSelectedItems = true;
+          }
+        }
+      });
+
+      // Set default selections only if no items are pre-selected
+      if (!hasPreSelectedItems && this.showAllServices && this.showAllServicesSelected) {
+        this.selectAllServices();
+      } else if (hasPreSelectedItems) {
+        // If items are pre-selected, ensure "All services" is not selected
+        this.allServicesSelected = false;
+        if (this.allServicesItem) {
+          this.allServicesItem.classList.remove("vf-chatbot-selector__item--selected");
+        }
+      }
+
+      // Update display
+      this.updateSelectionDisplay();
+      this.updateClearButton();
+    }
+
+    // Update bindEvents to store handlers for cleanup
+  }, {
+    key: "bindEvents",
+    value: function bindEvents() {
+      var _this7 = this;
+      // Toggle dropdown
+      if (this.titleEl) {
+        this.titleEl.removeEventListener("click", this.toggleDropdownHandler);
+        this.toggleDropdownHandler = function (e) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          _this7.toggleDropdown();
+        };
+        this.titleEl.addEventListener("click", this.toggleDropdownHandler);
+      }
+
+      // Search functionality
+      if (this.searchEl) {
+        this.searchEl.removeEventListener("input", this.searchHandler);
+        this.searchHandler = function (e) {
+          e.stopPropagation();
+          _this7.handleSearch(e.target.value);
+        };
+        this.searchEl.addEventListener("input", this.searchHandler);
+      }
+
+      // Clear all selections
+      if (this.clearEl) {
+        this.clearEl.removeEventListener("click", this.clearHandler);
+        this.clearHandler = function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          _this7.clearAllSelections();
+        };
+        this.clearEl.addEventListener("click", this.clearHandler);
+      }
+
+      // Bind list items
+      this.bindListItemEvents();
+
+      // Document click handler (only add once)
+      if (!this.documentClickHandler) {
+        this.documentClickHandler = function (e) {
+          if (!_this7.el.contains(e.target)) {
+            _this7.closeDropdown();
+          }
+        };
+        document.addEventListener("click", this.documentClickHandler);
+      }
+
+      // Dropdown click handler
+      if (this.dropdownEl) {
+        this.dropdownEl.removeEventListener("click", this.dropdownClickHandler);
+        this.dropdownClickHandler = function (e) {
+          return e.stopPropagation();
+        };
+        this.dropdownEl.addEventListener("click", this.dropdownClickHandler);
+      }
+    }
+  }, {
+    key: "toggleDropdown",
+    value: function toggleDropdown() {
+      var isExpanded = this.dropdownEl.style.display === "block";
+      if (isExpanded) {
+        this.closeDropdown();
+      } else {
+        this.openDropdown();
+      }
+    }
+  }, {
+    key: "openDropdown",
+    value: function openDropdown() {
+      this.dropdownEl.style.display = "block";
+      this.titleEl.classList.add("vf-chatbot-selector__title--expanded");
+    }
+  }, {
+    key: "closeDropdown",
+    value: function closeDropdown() {
+      if (this.dropdownEl) {
+        this.dropdownEl.style.display = "none";
+      }
+      if (this.titleEl) {
+        this.titleEl.classList.remove("vf-chatbot-selector__title--expanded");
+      }
+    }
+  }, {
+    key: "handleSearch",
+    value: function handleSearch(query) {
+      var searchQuery = query.toLowerCase();
+      this.listItems.forEach(function (item) {
+        var title = item.querySelector(".vf-chatbot-selector__item-title").textContent.toLowerCase();
+        var descriptionEl = item.querySelector(".vf-chatbot-selector__item-description");
+        var description = descriptionEl ? descriptionEl.textContent.toLowerCase() : "";
+        var matches = title.includes(searchQuery) || description.includes(searchQuery);
+        item.style.display = matches ? "flex" : "none";
+      });
+    }
+  }, {
+    key: "handleItemSelection",
+    value: function handleItemSelection(item) {
+      var itemId = item.getAttribute("data-route-id");
+      var isAllServices = itemId === "all";
+      if (this.isMultiselect) {
+        if (isAllServices) {
+          // If "All services" is clicked, deselect everything else
+          this.selectAllServices();
+        } else {
+          // If other service is clicked
+          if (this.selectedItems.has(itemId)) {
+            // Deselect the item
+            this.selectedItems.delete(itemId);
+            item.classList.remove("vf-chatbot-selector__item--selected");
+
+            // If nothing else is selected, select "All services"
+            if (this.selectedItems.size === 0) {
+              this.selectAllServices();
+            }
+          } else {
+            // Select the item and deselect "All services"
+            if (this.allServicesSelected) {
+              var _this$allServicesItem;
+              (_this$allServicesItem = this.allServicesItem) === null || _this$allServicesItem === void 0 || _this$allServicesItem.classList.remove("vf-chatbot-selector__item--selected");
+              this.allServicesSelected = false;
+            }
+            if (this.selectedItems.size < this.maxMultiSelect) {
+              this.selectedItems.add(itemId);
+              item.classList.add("vf-chatbot-selector__item--selected");
+            }
+          }
+        }
+      } else {
+        // Single select mode
+        this.listItems.forEach(function (listItem) {
+          listItem.classList.remove("vf-chatbot-selector__item--selected");
+        });
+        this.selectedItems.clear();
+        this.selectedItems.add(itemId);
+        item.classList.add("vf-chatbot-selector__item--selected");
+
+        // Update title text immediately
+        var title = item.querySelector(".vf-chatbot-selector__item-title").textContent;
+        var titleText = this.el.querySelector(".vf-chatbot-selector__title-text");
+        if (titleText) {
+          titleText.textContent = title;
+        }
+        this.closeDropdown();
+      }
+      this.updateSelectionDisplay();
+      this.updateClearButton();
+      this.dispatchSelectionEvent();
+    }
+  }, {
+    key: "handleItemClick",
+    value: function handleItemClick(item) {
+      var itemId = item.getAttribute("data-route-id");
+      if (itemId === "all") {
+        // Handle "All services" selection
+        this.selectAllServices();
+      } else {
+        // Handle individual item selection
+        if (this.isMultiselect) {
+          // Multi-select logic
+          if (this.selectedItems.has(itemId)) {
+            // Deselect item
+            this.selectedItems.delete(itemId);
+            item.classList.remove("vf-chatbot-selector__item--selected");
+          } else {
+            // Select item and ensure we don't exceed max selection
+            if (this.selectedItems.size < this.maxMultiSelect) {
+              this.selectedItems.add(itemId);
+              item.classList.add("vf-chatbot-selector__item--selected");
+            }
+          }
+
+          // If we deselected all individual items, select "All services"
+          if (this.selectedItems.size === 0 && this.showAllServices) {
+            this.selectAllServices();
+          } else {
+            // Deselect "All services" when individual items are selected
+            this.allServicesSelected = false;
+            if (this.allServicesItem) {
+              this.allServicesItem.classList.remove("vf-chatbot-selector__item--selected");
+            }
+          }
+        } else {
+          // Single-select logic
+          // Clear all previous selections
+          this.selectedItems.clear();
+          this.listItems.forEach(function (li) {
+            li.classList.remove("vf-chatbot-selector__item--selected");
+          });
+
+          // Select the clicked item
+          this.selectedItems.add(itemId);
+          item.classList.add("vf-chatbot-selector__item--selected");
+
+          // Deselect "All services"
+          this.allServicesSelected = false;
+
+          // Close dropdown for single-select
+          this.closeDropdown();
+        }
+      }
+
+      // Update display and clear button
+      this.updateSelectionDisplay();
+      this.updateClearButton();
+    }
+  }, {
+    key: "setSelection",
+    value: function setSelection(selectedItems) {
+      var _this8 = this;
+      // Deselect all first
+      this.selectedItems.clear();
+      this.listItems.forEach(function (item) {
+        item.classList.remove("vf-chatbot-selector__item--selected");
+      });
+
+      // If "all" is selected
+      if (selectedItems.includes("all")) {
+        this.selectAllServices();
+      } else {
+        selectedItems.forEach(function (id) {
+          var item = _this8.el.querySelector("[data-route-id=\"".concat(id, "\"]"));
+          if (item) {
+            item.classList.add("vf-chatbot-selector__item--selected");
+            _this8.selectedItems.add(id);
+          }
+        });
+        this.allServicesSelected = false;
+        if (this.allServicesItem) {
+          this.allServicesItem.classList.remove("vf-chatbot-selector__item--selected");
+        }
+      }
+      this.updateSelectionDisplay();
+      this.updateClearButton();
+      this.dispatchSelectionEvent();
+    }
+  }, {
+    key: "selectAllServices",
+    value: function selectAllServices() {
+      if (!this.showAllServices) return;
+
+      // Clear individual selections
+      this.selectedItems.clear();
+
+      // Remove selected class from all individual items
+      this.listItems.forEach(function (item) {
+        var itemId = item.getAttribute("data-route-id");
+        if (itemId !== "all") {
+          item.classList.remove("vf-chatbot-selector__item--selected");
+        }
+      });
+
+      // Select "All services"
+      this.allServicesSelected = true;
+      if (this.allServicesItem) {
+        this.allServicesItem.classList.add("vf-chatbot-selector__item--selected");
+      }
+    }
+  }, {
+    key: "clearAllSelections",
+    value: function clearAllSelections() {
+      // Clear everything and select "All services"
+      this.selectAllServices();
+      this.updateSelectionDisplay();
+      this.updateClearButton();
+      this.dispatchSelectionEvent();
+    }
+  }, {
+    key: "updateSelectionDisplay",
+    value: function updateSelectionDisplay() {
+      var titleText = this.el.querySelector(".vf-chatbot-selector__title-text");
+      if (!titleText) return;
+      if (this.allServicesSelected) {
+        titleText.textContent = "All services";
+      } else if (this.selectedItems.size === 0) {
+        titleText.textContent = "Select services";
+      } else if (!this.isMultiselect) {
+        var selectedId = Array.from(this.selectedItems)[0];
+        var selectedItem = this.el.querySelector("[data-route-id=\"".concat(selectedId, "\"]"));
+        if (selectedItem) {
+          var title = selectedItem.querySelector(".vf-chatbot-selector__item-title").textContent;
+          titleText.textContent = title;
+        }
+      } else {
+        titleText.textContent = "".concat(this.selectedItems.size, " service").concat(this.selectedItems.size > 1 ? "s" : "", " selected");
+      }
+    }
+  }, {
+    key: "dispatchSelectionEvent",
+    value: function dispatchSelectionEvent() {
+      this.el.dispatchEvent(new CustomEvent("routeselection", {
+        detail: {
+          selectedItems: this.allServicesSelected ? ["all"] : Array.from(this.selectedItems),
+          isMultiselect: this.isMultiselect,
+          isAllServices: this.allServicesSelected
+        }
+      }));
+    }
+  }, {
+    key: "updateClearButton",
+    value: function updateClearButton() {
+      if (this.clearEl) {
+        if (this.selectedItems.size > 0) {
+          this.clearEl.classList.add("vf-chatbot-selector__clear--active");
+        } else {
+          this.clearEl.classList.remove("vf-chatbot-selector__clear--active");
+        }
+      }
+    }
+  }]);
+}(); // Function to initialize the component
+function initVFChatbotSelector(element) {
+  return new VFChatbotSelector(element);
+}
+
+// vf-chatbot-welcome.js
+var VFChatbotWelcome = /*#__PURE__*/function () {
+  function VFChatbotWelcome(element) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    _classCallCheck(this, VFChatbotWelcome);
+    this.el = element;
+    this.suggestionsGrid = this.el.querySelector("[data-vf-js-chatbot-welcome-suggestions-grid]");
+    this.qaData = null;
+    this.predefinedQA = null;
+    this.fallbackResponses = null;
+    this.boundHandleSuggestionClick = this.handleSuggestionClick.bind(this);
+
+    // Configuration from data attributes with fallbacks
+    this.config = {
+      welcome_max_suggestions: options.welcome_max_suggestions || parseInt(this.el.dataset.maxQuestions, 10) || 4,
+      enable_qa_data_loading: options.enable_qa_data_loading !== undefined ? options.enable_qa_data_loading : this.el.dataset.enableQaDataLoading !== "false",
+      enable_predefined_qa: options.enable_predefined_qa !== undefined ? options.enable_predefined_qa : this.el.dataset.enablePredefinedQa !== "false",
+      enable_fallback_responses: options.enable_fallback_responses !== undefined ? options.enable_fallback_responses : this.el.dataset.enableFallbackResponses !== "false",
+      qa_data_url: this.el.dataset.qaDataUrl
+    };
+    this.init();
+  }
+  return _createClass(VFChatbotWelcome, [{
+    key: "init",
+    value: function () {
+      var _init = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
+        var _t3;
+        return _regenerator().w(function (_context3) {
+          while (1) switch (_context3.p = _context3.n) {
+            case 0:
+              _context3.p = 0;
+              _context3.n = 1;
+              return this.loadQAData();
+            case 1:
+              this.populateSuggestions();
+              this.bindEvents();
+              return _context3.a(2, Promise.resolve());
+            case 2:
+              _context3.p = 2;
+              _t3 = _context3.v;
+              console.error("Failed to initialize welcome component:", _t3);
+              return _context3.a(2, Promise.reject(_t3));
+          }
+        }, _callee3, this, [[0, 2]]);
+      }));
+      function init() {
+        return _init.apply(this, arguments);
+      }
+      return init;
+    }()
+  }, {
+    key: "loadQAData",
+    value: function () {
+      var _loadQAData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
+        var response, data, _t4;
+        return _regenerator().w(function (_context4) {
+          while (1) switch (_context4.p = _context4.n) {
+            case 0:
+              if (this.config.enable_qa_data_loading) {
+                _context4.n = 1;
+                break;
+              }
+              console.log("Q&A data loading disabled for welcome component");
+              return _context4.a(2);
+            case 1:
+              if (this.config.qa_data_url) {
+                _context4.n = 2;
+                break;
+              }
+              console.warn("No Q&A data URL provided for welcome component");
+              return _context4.a(2);
+            case 2:
+              _context4.p = 2;
+              console.log("Loading Q&A data from: ".concat(this.config.qa_data_url));
+              _context4.n = 3;
+              return fetch(this.config.qa_data_url);
+            case 3:
+              response = _context4.v;
+              if (response.ok) {
+                _context4.n = 4;
+                break;
+              }
+              throw new Error("Failed to fetch Q&A data: ".concat(response.status, " ").concat(response.statusText));
+            case 4:
+              _context4.n = 5;
+              return response.json();
+            case 5:
+              data = _context4.v;
+              this.qaData = data;
+
+              // Store predefined Q&A if enabled
+              if (this.config.enable_predefined_qa && data.predefinedQA) {
+                this.predefinedQA = data.predefinedQA;
+                console.log("Predefined Q&A loaded successfully");
+              }
+
+              // Store fallback responses if enabled
+              if (this.config.enable_fallback_responses && data.fallbackResponses && data.fallbackResponses.length > 0) {
+                this.fallbackResponses = data.fallbackResponses;
+                console.log("Fallback responses loaded successfully");
+              }
+              _context4.n = 7;
+              break;
+            case 6:
+              _context4.p = 6;
+              _t4 = _context4.v;
+              console.error("Failed to load Q&A data:", _t4);
+              // Provide default fallback responses if loading fails
+              this.setDefaultFallbackResponses();
+            case 7:
+              return _context4.a(2);
+          }
+        }, _callee4, this, [[2, 6]]);
+      }));
+      function loadQAData() {
+        return _loadQAData.apply(this, arguments);
+      }
+      return loadQAData;
+    }()
+  }, {
+    key: "setDefaultFallbackResponses",
+    value: function setDefaultFallbackResponses() {
+      if (this.config.enable_fallback_responses) {
+        this.fallbackResponses = [{
+          answer: "I'm here to help with your questions. Please try asking about our services or general information.",
+          sources: [],
+          prompts: ["What services do you offer?", "How can I get started?", "Tell me more about your organization"]
+        }, {
+          answer: "I'm an AI assistant designed to help with information and basic inquiries. How can I assist you today?",
+          sources: [],
+          prompts: ["What can you help me with?", "How do I contact support?", "Where can I find more information?"]
+        }];
+        console.log("Using default fallback responses for welcome component");
+      }
+    }
+  }, {
+    key: "populateSuggestions",
+    value: function populateSuggestions() {
+      var _this9 = this;
+      if (!this.suggestionsGrid) return;
+
+      // Clear existing suggestions
+      this.suggestionsGrid.innerHTML = "";
+      var questionsToShow = [];
+
+      // Try to get questions from predefined Q&A first
+      if (this.config.enable_predefined_qa && this.predefinedQA) {
+        questionsToShow = Object.keys(this.predefinedQA);
+      }
+      // If no predefined Q&A, try to get prompts from fallback responses
+      else if (this.config.enable_fallback_responses && this.fallbackResponses) {
+        questionsToShow = this.fallbackResponses.filter(function (response) {
+          return response.prompts && response.prompts.length > 0;
+        }).flatMap(function (response) {
+          return response.prompts;
+        });
+      }
+
+      // If we still don't have questions, show a default message
+      if (questionsToShow.length === 0) {
+        console.log("No questions available for welcome suggestions");
+        return;
+      }
+
+      // Get random questions
+      var randomQuestions = questionsToShow.sort(function () {
+        return 0.5 - Math.random();
+      }).slice(0, this.config.welcome_max_suggestions);
+
+      // Create suggestion elements using template-based rendering
+      randomQuestions.forEach(function (question) {
+        var suggestionTemplate = document.querySelector("#welcome-suggestion-template");
+        if (suggestionTemplate) {
+          var suggestionEl = suggestionTemplate.content.cloneNode(true);
+          var link = suggestionEl.querySelector(".vf-chatbot-action-prompt__link");
+          var wrapper = suggestionEl.querySelector(".vf-chatbot-action-prompt");
+          if (link && wrapper) {
+            link.textContent = question;
+            wrapper.setAttribute("data-vf-js-chatbot-welcome-suggestion", question);
+            _this9.suggestionsGrid.appendChild(suggestionEl);
+          }
+        } else {
+          console.warn("Welcome suggestion template not found");
+        }
+      });
+    }
+  }, {
+    key: "bindEvents",
+    value: function bindEvents() {
+      var _this$suggestionsGrid, _this$suggestionsGrid2;
+      // Remove existing event listener if any
+      (_this$suggestionsGrid = this.suggestionsGrid) === null || _this$suggestionsGrid === void 0 || _this$suggestionsGrid.removeEventListener("click", this.boundHandleSuggestionClick);
+
+      // Add single event listener using event delegation
+      (_this$suggestionsGrid2 = this.suggestionsGrid) === null || _this$suggestionsGrid2 === void 0 || _this$suggestionsGrid2.addEventListener("click", this.boundHandleSuggestionClick);
+    }
+  }, {
+    key: "handleSuggestionClick",
+    value: function handleSuggestionClick(e) {
+      e.preventDefault();
+      var suggestionEl = e.target.closest("[data-vf-js-chatbot-welcome-suggestion]");
+      if (!suggestionEl) return;
+      var question = suggestionEl.getAttribute("data-vf-js-chatbot-welcome-suggestion");
+      if (!question) return;
+
+      // Get answer data from predefined Q&A or fallback responses
+      var answerData = null;
+
+      // First try predefined Q&A
+      if (this.config.enable_predefined_qa && this.predefinedQA && this.predefinedQA[question]) {
+        answerData = this.predefinedQA[question];
+      }
+      // If not found in predefined Q&A, try to find in fallback responses
+      else if (this.config.enable_fallback_responses && this.fallbackResponses) {
+        var fallbackResponse = this.fallbackResponses.find(function (response) {
+          return response.prompts && response.prompts.includes(question);
+        });
+        if (fallbackResponse) {
+          answerData = fallbackResponse;
+        }
+      }
+
+      // If still no answer data, provide a default response
+      if (!answerData) {
+        answerData = {
+          answer: "I'm here to help with your questions. Please try asking about our services or general information.",
+          sources: [],
+          prompts: ["What services do you offer?", "How can I get started?", "Tell me more about your organization"]
+        };
+      }
+
+      // Dispatch event only once
+      this.el.dispatchEvent(new CustomEvent("vf-chatbot-welcome:suggestion-click", {
+        bubbles: true,
+        detail: {
+          question: question,
+          answer: answerData.answer || "",
+          sources: answerData.sources || [],
+          prompts: answerData.prompts || []
+        }
+      }));
+    }
+  }]);
+}(); // Initialize
+function initVFChatbotWelcome(element) {
+  return new VFChatbotWelcome(element);
+}
+var VFChatbotDialog = /*#__PURE__*/function () {
+  function VFChatbotDialog(element) {
+    _classCallCheck(this, VFChatbotDialog);
+    this.el = element;
+    this.cancelBtn = this.el.querySelector("[data-vf-js-dialog-cancel]");
+    this.confirmBtn = this.el.querySelector("[data-vf-js-dialog-confirm]");
+    this.closeBtn = this.el.querySelector("[data-vf-js-dialog-close]");
+    this.bindEvents();
+  }
+  return _createClass(VFChatbotDialog, [{
+    key: "bindEvents",
+    value: function bindEvents() {
+      var _this$cancelBtn,
+        _this0 = this,
+        _this$confirmBtn,
+        _this$closeBtn;
+      (_this$cancelBtn = this.cancelBtn) === null || _this$cancelBtn === void 0 || _this$cancelBtn.addEventListener("click", function () {
+        _this0.hide();
+        _this0.el.dispatchEvent(new CustomEvent("vf-chatbot-dialog:cancel"));
+      });
+      (_this$confirmBtn = this.confirmBtn) === null || _this$confirmBtn === void 0 || _this$confirmBtn.addEventListener("click", function () {
+        _this0.hide();
+        _this0.el.dispatchEvent(new CustomEvent("vf-chatbot-dialog:confirm"));
+      });
+      (_this$closeBtn = this.closeBtn) === null || _this$closeBtn === void 0 || _this$closeBtn.addEventListener("click", function () {
+        _this0.hide();
+        _this0.el.dispatchEvent(new CustomEvent("vf-chatbot-dialog:cancel"));
+      });
+    }
+  }, {
+    key: "show",
+    value: function show() {
+      this.el.style.display = "flex";
+    }
+  }, {
+    key: "hide",
+    value: function hide() {
+      this.el.style.display = "none";
+    }
+  }]);
+}();
+function initVFChatbotDialog(element) {
+  return new VFChatbotDialog(element);
+}
+
+// vf-chatbot-modal.js
+var VFChatbotModal = /*#__PURE__*/function () {
+  function VFChatbotModal(element) {
+    var customConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    _classCallCheck(this, VFChatbotModal);
+    this.container = element;
+    this.loadConfiguration(customConfig);
+    this.setupDOMElements();
+    this.setupState();
+    this.setupEventHandlers();
+    this.init();
+  }
+  return _createClass(VFChatbotModal, [{
+    key: "loadConfiguration",
+    value: function loadConfiguration(customConfig) {
+      // Get config from data-vf-chatbot-config attribute
+      var dataConfig = {};
+      var attr = this.container.getAttribute("data-vf-chatbot-config");
+      if (attr) {
+        try {
+          dataConfig = JSON.parse(attr);
+        } catch (e) {
+          console.warn("Invalid JSON in data-vf-chatbot-config:", e);
+        }
+      }
+
+      // Default configuration
+      var defaultConfig = {
+        type: "modal",
+        title: "AI Assistant",
+        welcome_logo: true,
+        welcome_message: "Welcome! I'm here to help",
+        welcome_logo_alt: "AI Assistant",
+        welcome_suggestions_title: "Try asking me:",
+        input_placeholder: "Ask me ...",
+        welcome_max_suggestions: 4,
+        disclaimer: 'Disclaimer: This chatbot is designed to assist you with general information and basic inquiries. See our <a class="vf-banner__link" target="_blank" rel="noopener noreferrer" aria-label="disclaimer notes (opens in new tab)" href="https://www.ebi.ac.uk/data-protection/privacy-notice/embl-ebi-public-website/">disclaimer notes</a>.',
+        footnote: 'Review AI generated content for accuracy. <a class="vf-link" target="_blank" rel="noopener noreferrer" aria-label="Leave feedback (opens in new tab)" href="https://embl.service-now.com/esc?id=sc_cat_item&sys_id=5eeb8eb91b92e650b376da88b04bcbc1">Leave feedback</a>.',
+        icons: {
+          assistant_avatar: "../../assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg",
+          user_avatar: "../../assets/vf-chatbot/assets/vf-chatbot--avatar-user.svg",
+          send_button: "../../assets/vf-chatbot/assets/vf-chatbot--icon-send.svg",
+          main_logo_url: "../../assets/vf-chatbot/assets/vf-chatbot--icon-32x32-dark-green.svg",
+          minimize: "../../assets/vf-chatbot/assets/vf-chatbot--icon-minimize.svg",
+          close: "../../assets/vf-chatbot/assets/vf-chatbot--icon-close.svg"
+        },
+        api: {
+          chat_endpoint: false,
+          //"/api/chat", // Disabled to use fallback responses
+          feedback_endpoint: false,
+          //"/api/feedback",
+          qa_data_url: "../../assets/vf-chatbot/assets/vf-chatbot-qa.json",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer your-token"
+          },
+          timeout: 10000
+        },
+        features: {
+          enable_welcome: true,
+          enable_feedback: true,
+          enable_sources: true,
+          enable_sources_custom_format: false,
+          enable_welcome_suggestions: true,
+          enable_typing_indicator: true,
+          enable_disclaimer: true,
+          enable_predefined_qa: true,
+          enable_fallback_responses: true,
+          enable_qa_data_loading: true,
+          enable_instant_feedback: false
+        },
+        behavior: {
+          auto_scroll: true,
+          typing_delay: 800,
+          show_scrollbar: false
+        },
+        selectorContext: {
+          chatbotRoutes: {
+            multiSelect: true,
+            maxMultiSelect: 3,
+            showSearch: true,
+            showSearchThreshold: 5,
+            showAllServices: true,
+            showAllServicesSelected: true,
+            routes: "../../assets/vf-chatbot/assets/vf-chatbot-selector-services.json",
+            placeholder: "Select services",
+            title: "Services",
+            selector_logo_url: "../../assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg",
+            selector_logo_title: "AI Assistant"
+          }
+        },
+        handlers: {
+          on_message_send: "handleMessageSend",
+          on_response_receive: "handleResponseReceive",
+          on_feedback_submit: "handleFeedbackSubmit",
+          on_suggestion_click: "handleSuggestionClick",
+          on_error: "handleError",
+          on_conversation_start: "handleConversationStart",
+          on_conversation_end: "handleConversationEnd",
+          on_fab_click: "handleFabClick",
+          on_dialog_confirm: "handleDialogConfirm",
+          on_dialog_cancel: "handleDialogCancel",
+          on_minimize: "handleMinimize"
+        },
+        feedback_options: {
+          positive: [{
+            id: "accurate",
+            label: "Accurate"
+          }, {
+            id: "easy",
+            label: "Easy to understand"
+          }, {
+            id: "formatted",
+            label: "Well formatted"
+          }],
+          negative: [{
+            id: "inaccurate",
+            label: "Inaccurate answer"
+          }, {
+            id: "nocontext",
+            label: "Did not use context"
+          }, {
+            id: "poorformat",
+            label: "Poorly formatted"
+          }]
+        },
+        enable_session_persistence: true,
+        restore_minimized_state: true // If true, restore minimized state after navigation
+      };
+
+      // Merge configurations: default < data-attribute < custom
+      this.config = this.deepMerge(defaultConfig, dataConfig, customConfig);
+      console.log("Final merged config:", this.config);
+    }
+  }, {
+    key: "deepMerge",
+    value: function deepMerge() {
+      var _this1 = this;
+      for (var _len = arguments.length, objects = new Array(_len), _key = 0; _key < _len; _key++) {
+        objects[_key] = arguments[_key];
+      }
+      return objects.reduce(function (prev, obj) {
+        // ✅ FIX: Skip null/undefined objects
+        if (!obj || _typeof(obj) !== "object") {
+          return prev;
+        }
+        Object.keys(obj).forEach(function (key) {
+          var pVal = prev[key];
+          var oVal = obj[key];
+
+          // ✅ FIX: Skip undefined values to maintain priority
+          if (oVal === undefined) {
+            return;
+          }
+          if (Array.isArray(pVal) && Array.isArray(oVal)) {
+            prev[key] = pVal.concat.apply(pVal, _toConsumableArray(oVal));
+          } else if (pVal && oVal && _typeof(pVal) === "object" && _typeof(oVal) === "object" && !Array.isArray(pVal) && !Array.isArray(oVal)) {
+            prev[key] = _this1.deepMerge(pVal, oVal);
+          } else {
+            // ✅ FIX: Only assign if oVal is not null/undefined
+            if (oVal !== null && oVal !== undefined) {
+              prev[key] = oVal;
+            }
+          }
+        });
+        return prev;
+      }, {});
+    }
+  }, {
+    key: "setupDOMElements",
+    value: function setupDOMElements() {
+      var _this$disclaimer;
+      this.fab = document.querySelector("[data-vf-js-chatbot-fab]");
+      this.minimizeBtn = this.container.querySelector("[data-vf-js-chatbot-modal-minimize]");
+      this.closeBtn = this.container.querySelector("[data-vf-js-chatbot-modal-close]");
+      this.welcomeScreen = this.container.querySelector("[data-vf-js-chatbot-welcome]");
+      this.messagesContainer = this.container.querySelector("[data-vf-js-chatbot-modal-messages]");
+      this.input = this.container.querySelector("[data-vf-js-chatbot-modal-input]");
+      this.sendBtn = this.container.querySelector("[data-vf-js-chatbot-modal-send]");
+      this.disclaimer = this.container.querySelector("[data-vf-js-chatbot-modal-disclaimer]");
+      this.disclaimerCloseBtn = (_this$disclaimer = this.disclaimer) === null || _this$disclaimer === void 0 ? void 0 : _this$disclaimer.querySelector(".vf-button--dismiss");
+      this.selectorEl = this.container.querySelector("[data-vf-js-chatbot-selector]");
+
+      // Templates
+      this.userTemplate = this.container.querySelector("#user-message-template");
+      this.assistantTemplate = this.container.querySelector("#assistant-message-template");
+      this.loadingTemplate = this.container.querySelector("#loading-indicator-template");
+      this.actionPromptsTemplate = this.container.querySelector("#action-prompts-template");
+      this.singlePromptTemplate = this.container.querySelector("#single-action-prompt-template");
+      this.dialog = this.container.querySelector("[data-vf-js-chatbot-dialog]");
+      // Apply configuration to DOM elements
+      this.applyConfigurationToDOM();
+    }
+  }, {
+    key: "applyConfigurationToDOM",
+    value: function applyConfigurationToDOM() {
+      // Update input placeholder
+      if (this.input) {
+        this.input.placeholder = this.config.input_placeholder;
+        // Initialize textarea height
+        this.autoResizeTextarea();
+      }
+
+      // Update auto-scroll behavior
+      if (this.messagesContainer) {
+        this.messagesContainer.dataset.autoScroll = this.config.behavior.auto_scroll;
+      }
+    }
+  }, {
+    key: "setupState",
+    value: function setupState() {
+      var _this10 = this;
+      this.currentAssistant = "";
+      this.conversationId = this.generateConversationId();
+      this.messageHistory = [];
+      this.loadingIndicator = null;
+      this.apiResponseListener = null;
+
+      // Load Q&A data if using fallback responses
+      this.loadQADataAndPopulateSuggestions();
+
+      // Restore conversation HTML from sessionStorage
+      var persistedHTML = this.loadConversationHTML();
+      if (persistedHTML && this.messagesContainer) {
+        this.messagesContainer.innerHTML = persistedHTML;
+        if (this.welcomeScreen) {
+          this.welcomeScreen.style.display = "none";
+        }
+        this.messagesContainer.style.display = "flex";
+        // Hide disclaimer if present
+        if (this.disclaimer) {
+          this.disclaimer.classList.add("vf-u-display-none");
+        }
+        // Hide all loading indicator divs
+        var loadingDivs = this.messagesContainer.querySelectorAll(".vf-chatbot-message--loading");
+        loadingDivs.forEach(function (div) {
+          div.style.display = "none";
+        });
+        // Hide all feedback response banners
+        var feedbackBanners = this.messagesContainer.querySelectorAll(".vf-chatbot-feedback__form-container");
+        feedbackBanners.forEach(function (div) {
+          div.style.display = "none";
+        });
+        // Re-initialize feedback thumbs
+        var feedbackContainers = this.messagesContainer.querySelectorAll("[data-vf-js-chatbot-feedback]");
+        var feedbackState = JSON.parse(sessionStorage.getItem("chatbotModalFeedbackState") || "{}");
+        feedbackContainers.forEach(function (container) {
+          var messageId = container.dataset.messageId;
+          var feedbackType = feedbackState[messageId];
+          if (feedbackType) {
+            // Find thumb icons and set solid/active state
+            var positiveThumb = container.querySelector("[data-vf-js-feedback-thumb='up']");
+            var negativeThumb = container.querySelector("[data-vf-js-feedback-thumb='down']");
+            if (positiveThumb && feedbackType === "positive") {
+              positiveThumb.classList.add("vf-chatbot-feedback__thumb--solid");
+              if (negativeThumb) {
+                negativeThumb.classList.remove("vf-chatbot-feedback__thumb--solid");
+                negativeThumb.style.display = "none";
+              }
+            }
+            if (negativeThumb && feedbackType === "negative") {
+              negativeThumb.classList.add("vf-chatbot-feedback__thumb--solid");
+              if (positiveThumb) {
+                positiveThumb.classList.remove("vf-chatbot-feedback__thumb--solid");
+                positiveThumb.style.display = "none";
+              }
+            }
+          } else {
+            var _this10$config$feedba, _this10$config$feedba2;
+            new VFChatbotFeedback(container, messageId, {
+              enable_instant_feedback: _this10.config.features.enable_instant_feedback,
+              api_endpoint: _this10.config.api.feedback_endpoint,
+              positiveOptions: (_this10$config$feedba = _this10.config.feedback_options) === null || _this10$config$feedba === void 0 ? void 0 : _this10$config$feedba.positive,
+              negativeOptions: (_this10$config$feedba2 = _this10.config.feedback_options) === null || _this10$config$feedba2 === void 0 ? void 0 : _this10$config$feedba2.negative
+            });
+          }
+        });
+        // Re-initialize 'View sources' event listeners
+        var sourcesContainers = this.messagesContainer.querySelectorAll(".vf-chatbot-sources-toggle");
+        if (sourcesContainers) {
+          sourcesContainers.forEach(function (sourcesContainer) {
+            var toggleBtn = sourcesContainer.querySelector("[data-vf-js-chatbot-sources-toggle]");
+            var sourcesDiv = sourcesContainer.querySelector("[data-vf-js-chatbot-sources]");
+            var hideBtn = sourcesContainer.querySelector("[data-vf-js-chatbot-sources-hide]");
+            toggleBtn.addEventListener("click", function () {
+              sourcesDiv.classList.remove("vf-chatbot-sources--collapsed");
+              toggleBtn.style.display = "none";
+              // Scroll the sources div into view
+              // sourcesDiv.scrollIntoView({ behavior: "smooth", block: "center" });
+            });
+            hideBtn.addEventListener("click", function () {
+              sourcesDiv.classList.add("vf-chatbot-sources--collapsed");
+              toggleBtn.style.display = "";
+            });
+            hideBtn.click();
+          });
+        }
+        // Keep chatbot open if there is persistedHTML
+        if (this.container) {
+          this.fab.classList.add("vf-chatbot-fab--inactive");
+          this.container.classList.remove("vf-chatbot-modal-container--inactive");
+          this.container.classList.add("vf-chatbot-modal-container--active");
+          this.container.setAttribute("aria-modal", true);
+
+          // Focus on input if it exists
+          var input = this.container.querySelector("[data-vf-js-chatbot-modal-input]");
+          if (input) {
+            setTimeout(function () {
+              return input.focus();
+            }, 300);
+          }
+        }
+        var wasMinimized = sessionStorage.getItem("chatbotModalMinimized") === "true";
+        if (this.container) {
+          if (this.config.restore_minimized_state && !wasMinimized) {
+            this.fab.classList.add("vf-chatbot-fab--inactive");
+            this.container.classList.remove("vf-chatbot-modal-container--inactive");
+            this.container.classList.add("vf-chatbot-modal-container--active");
+            this.container.setAttribute("aria-modal", true);
+          } else {
+            this.fab.classList.remove("vf-chatbot-fab--inactive");
+            this.container.classList.remove("vf-chatbot-modal-container--active");
+            this.container.classList.add("vf-chatbot-modal-container--inactive");
+            this.container.setAttribute("aria-modal", false);
+            // Focus input if needed
+          }
+        }
+        return; // Skip history-based rendering if HTML is present
+      }
+    }
+  }, {
+    key: "setupEventHandlers",
+    value: function setupEventHandlers() {
+      // Setup global event handlers for custom functions
+      this.setupCustomEventHandlers();
+
+      // Bind internal events
+      this.bindEvents();
+    }
+  }, {
+    key: "setupCustomEventHandlers",
+    value: function setupCustomEventHandlers() {
+      var _this11 = this;
+      // Create wrapper functions that call user-defined handlers and emit events
+      var handlers = this.config.handlers;
+
+      // Message send handler
+      this.onMessageSend = function (message) {
+        var eventData = {
+          message: message,
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot:message-send", eventData);
+        if (handlers.on_message_send && typeof window[handlers.on_message_send] === "function") {
+          window[handlers.on_message_send](eventData);
+        }
+      };
+
+      // Response receive handler
+      this.onResponseReceive = function (response, sources, prompts) {
+        var eventData = {
+          response: response,
+          sources: sources,
+          prompts: prompts,
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot:response-receive", eventData);
+        if (handlers.on_response_receive && typeof window[handlers.on_response_receive] === "function") {
+          window[handlers.on_response_receive](eventData);
+        }
+      };
+
+      // Feedback submit handler
+      this.onFeedbackSubmit = function (messageId, feedbackType) {
+        var feedbackText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+        var feedbackComment = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+        var eventData = {
+          messageId: messageId,
+          feedbackType: feedbackType,
+          feedbackText: feedbackText,
+          feedbackComment: feedbackComment,
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot:feedback-submit", eventData);
+
+        // Call API if configured
+        if (_this11.config.api.feedback_endpoint) {
+          _this11.submitFeedbackToAPI(eventData);
+        }
+
+        // Update local storage feedback state
+        if (_this11.config.enable_session_persistence) {
+          var feedbackState = JSON.parse(sessionStorage.getItem("chatbotModalFeedbackState") || "{}");
+          feedbackState[messageId] = feedbackType; // e.g., "positive" or "negative"
+          sessionStorage.setItem("chatbotModalFeedbackState", JSON.stringify(feedbackState));
+        }
+        if (handlers.on_feedback_submit && typeof window[handlers.on_feedback_submit] === "function") {
+          window[handlers.on_feedback_submit](eventData);
+        }
+      };
+
+      // Suggestion click handler
+      this.onSuggestionClick = function (suggestion) {
+        var eventData = {
+          suggestion: suggestion,
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot:suggestion-click", eventData);
+        if (handlers.on_suggestion_click && typeof window[handlers.on_suggestion_click] === "function") {
+          window[handlers.on_suggestion_click](eventData);
+        }
+      };
+
+      // Error handler
+      this.onError = function (error, context) {
+        var eventData = {
+          error: error,
+          context: context,
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot:error", eventData);
+        if (handlers.on_error && typeof window[handlers.on_error] === "function") {
+          window[handlers.on_error](eventData);
+        }
+      };
+
+      // Conversation start handler
+      this.onConversationStart = function () {
+        var eventData = {
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot:conversation-start", eventData);
+        if (handlers.on_conversation_start && typeof window[handlers.on_conversation_start] === "function") {
+          window[handlers.on_conversation_start](eventData);
+        }
+      };
+
+      // Conversation end handler
+      this.onConversationEnd = function () {
+        var eventData = {
+          conversationId: _this11.conversationId,
+          messageCount: _this11.messageHistory.length,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot:conversation-end", eventData);
+        if (handlers.on_conversation_end && typeof window[handlers.on_conversation_end] === "function") {
+          window[handlers.on_conversation_end](eventData);
+        }
+      };
+
+      // FAB click handler
+      this.onFabClick = function () {
+        var eventData = {
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot-fab:click", eventData);
+        if (handlers.on_fab_click && typeof window[handlers.on_fab_click] === "function") {
+          window[handlers.on_fab_click](eventData);
+        }
+      };
+
+      // Dialog confirm handler
+      this.onDialogConfirm = function () {
+        var eventData = {
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot-dialog:confirm", eventData);
+        if (handlers.on_dialog_confirm && typeof window[handlers.on_dialog_confirm] === "function") {
+          window[handlers.on_dialog_confirm](eventData);
+        }
+      };
+
+      // Dialog cancel handler
+      this.onDialogCancel = function () {
+        var eventData = {
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot-dialog:cancel", eventData);
+        if (handlers.on_dialog_cancel && typeof window[handlers.on_dialog_cancel] === "function") {
+          window[handlers.on_dialog_cancel](eventData);
+        }
+      };
+
+      // Minimize handler
+      this.onMinimize = function () {
+        var eventData = {
+          conversationId: _this11.conversationId,
+          timestamp: Date.now()
+        };
+        _this11.emitEvent("vf-chatbot-modal:minimize", eventData);
+        if (handlers.on_minimize && typeof window[handlers.on_minimize] === "function") {
+          window[handlers.on_minimize](eventData);
+        }
+      };
+    }
+  }, {
+    key: "emitEvent",
+    value: function emitEvent(eventName, data) {
+      var event = new CustomEvent(eventName, {
+        bubbles: true,
+        detail: data
+      });
+      this.container.dispatchEvent(event);
+    }
+  }, {
+    key: "generateConversationId",
+    value: function generateConversationId() {
+      return "conv_".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9));
+    }
+  }, {
+    key: "init",
+    value: function () {
+      var _init2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+        var _this12 = this;
+        var selector, existingListeners;
+        return _regenerator().w(function (_context5) {
+          while (1) switch (_context5.n) {
+            case 0:
+              // Initialize selector if present
+              if (this.selectorEl) {
+                selector = initVFChatbotSelector(this.selectorEl);
+                this.selectorEl.addEventListener("routeselection", function (e) {
+                  _this12.handleRouteSelection(e.detail);
+                  // Save selection on change
+                  if (_this12.config.enable_session_persistence) {
+                    sessionStorage.setItem("vfChatbotSelectorSelection", JSON.stringify(e.detail.selectedItems));
+                  }
+                });
+
+                // Restore selection only after routes are loaded/rendered
+                this.selectorEl.addEventListener("routesloaded", function () {
+                  if (_this12.config.enable_session_persistence) {
+                    _this12.savedSelection = sessionStorage.getItem("vfChatbotSelectorSelection");
+                    if (_this12.savedSelection) {
+                      var selectedItems = JSON.parse(_this12.savedSelection);
+                      selector.setSelection(selectedItems);
+                    }
+                  }
+                });
+              }
+
+              // Initialize welcome component
+              if (this.welcomeScreen && this.config.features.enable_welcome_suggestions) {
+                try {
+                  initVFChatbotWelcome(this.welcomeScreen);
+
+                  // Only add the event listener if not already present
+                  existingListeners = this.welcomeScreen._hasSuggestionClickListener;
+                  if (!existingListeners) {
+                    this.welcomeScreen.addEventListener("vf-chatbot-welcome:suggestion-click", function (event) {
+                      var question = event.detail.question;
+                      _this12.onSuggestionClick(question);
+                      _this12.showChatInterface();
+                      _this12.sendUserMessage(question);
+                    });
+                    // Mark that the listener has been added
+                    this.welcomeScreen._hasSuggestionClickListener = true;
+                  }
+                  this.welcomeScreen.scrollTop = this.welcomeScreen.scrollHeight;
+                } catch (error) {
+                  console.error("Failed to initialize welcome component:", error);
+                  this.onError(error, "welcome_component_init");
+                }
+              }
+
+              // Trigger conversation start
+              this.onConversationStart();
+              console.log("Modal chatbot initialized successfully");
+            case 1:
+              return _context5.a(2);
+          }
+        }, _callee5, this);
+      }));
+      function init() {
+        return _init2.apply(this, arguments);
+      }
+      return init;
+    }()
+  }, {
+    key: "loadQADataAndPopulateSuggestions",
+    value: function () {
+      var _loadQADataAndPopulateSuggestions = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+        var response, data, _t5;
+        return _regenerator().w(function (_context6) {
+          while (1) switch (_context6.p = _context6.n) {
+            case 0:
+              if (this.config.features.enable_qa_data_loading) {
+                _context6.n = 1;
+                break;
+              }
+              console.log("Q&A data loading is disabled");
+              return _context6.a(2);
+            case 1:
+              if (this.config.api.qa_data_url) {
+                _context6.n = 2;
+                break;
+              }
+              console.log("No Q&A data URL configured");
+              return _context6.a(2);
+            case 2:
+              _context6.p = 2;
+              _context6.n = 3;
+              return fetch(this.config.api.qa_data_url);
+            case 3:
+              response = _context6.v;
+              if (response.ok) {
+                _context6.n = 4;
+                break;
+              }
+              throw new Error("HTTP ".concat(response.status, ": ").concat(response.statusText));
+            case 4:
+              _context6.n = 5;
+              return response.json();
+            case 5:
+              data = _context6.v;
+              // Load predefined Q&A if enabled
+              if (this.config.features.enable_predefined_qa && data.predefinedQA) {
+                this.qaData = data.predefinedQA;
+              } else {
+                console.log("Predefined Q&A loading is disabled or no data available");
+              }
+
+              // Load fallback responses if enabled
+              if (this.config.features.enable_fallback_responses && data.fallbackResponses && data.fallbackResponses.length > 0) {
+                this.fallbackResponses = data.fallbackResponses;
+              } else {
+                console.log("Using default fallback responses");
+              }
+              _context6.n = 7;
+              break;
+            case 6:
+              _context6.p = 6;
+              _t5 = _context6.v;
+              console.error("Failed to load Q&A data:", _t5);
+              this.onError(_t5, "qa_data_load");
+            case 7:
+              return _context6.a(2);
+          }
+        }, _callee6, this, [[2, 6]]);
+      }));
+      function loadQADataAndPopulateSuggestions() {
+        return _loadQADataAndPopulateSuggestions.apply(this, arguments);
+      }
+      return loadQADataAndPopulateSuggestions;
+    }()
+  }, {
+    key: "handleRouteSelection",
+    value: function handleRouteSelection(detail) {
+      var selectedItems = detail.selectedItems;
+      if (selectedItems && selectedItems.length > 0) {
+        this.currentAssistant = selectedItems.join(", ");
+        console.log("Switched to ".concat(this.currentAssistant, " assistant"));
+        this.emitEvent("vf-chatbot:assistant-change", {
+          selectedAssistants: this.currentAssistant,
+          conversationId: this.conversationId
+        });
+      }
+    }
+  }, {
+    key: "bindEvents",
+    value: function bindEvents() {
+      var _this$minimizeBtn,
+        _this13 = this,
+        _this$closeBtn2,
+        _this$sendBtn,
+        _this$input,
+        _this$input2,
+        _this$input3,
+        _this$fab,
+        _this$dialog,
+        _this$dialog2;
+      (_this$minimizeBtn = this.minimizeBtn) === null || _this$minimizeBtn === void 0 || _this$minimizeBtn.addEventListener("click", function () {
+        _this13.onMinimize();
+        _this13.minimize();
+      });
+      (_this$closeBtn2 = this.closeBtn) === null || _this$closeBtn2 === void 0 || _this$closeBtn2.addEventListener("click", function () {
+        return _this13.showCloseDialog();
+      });
+
+      // Send message events
+      (_this$sendBtn = this.sendBtn) === null || _this$sendBtn === void 0 || _this$sendBtn.addEventListener("click", function () {
+        return _this13.sendMessage();
+      });
+      (_this$input = this.input) === null || _this$input === void 0 || _this$input.addEventListener("keypress", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          _this13.sendMessage();
+        }
+      });
+
+      // Auto-resize textarea functionality
+      (_this$input2 = this.input) === null || _this$input2 === void 0 || _this$input2.addEventListener("input", function () {
+        return _this13.autoResizeTextarea();
+      });
+      (_this$input3 = this.input) === null || _this$input3 === void 0 || _this$input3.addEventListener("paste", function () {
+        // Use setTimeout to ensure the pasted content is processed
+        setTimeout(function () {
+          return _this13.autoResizeTextarea();
+        }, 0);
+      });
+
+      // Disclaimer close
+      if (this.disclaimer && this.disclaimerCloseBtn) {
+        this.disclaimerCloseBtn.addEventListener("click", function () {
+          _this13.disclaimer.classList.add("vf-u-display-none");
+        });
+      }
+
+      // Global feedback event listener
+      this.container.addEventListener("vf-chatbot-feedback:submit", function (event) {
+        var _event$detail = event.detail,
+          messageId = _event$detail.messageId,
+          feedbackType = _event$detail.feedbackType,
+          feedbackText = _event$detail.feedbackText,
+          feedbackComment = _event$detail.feedbackComment;
+        _this13.onFeedbackSubmit(messageId, feedbackType, feedbackText, feedbackComment);
+      });
+
+      // Action prompt click listener
+      this.container.addEventListener("vf-chatbot-action-prompt:click", function (event) {
+        var text = event.detail.text;
+        _this13.sendUserMessage(text);
+      });
+      (_this$fab = this.fab) === null || _this$fab === void 0 || _this$fab.addEventListener("click", this.onFabClick);
+      (_this$dialog = this.dialog) === null || _this$dialog === void 0 || _this$dialog.addEventListener("vf-chatbot-dialog:confirm", this.onDialogConfirm);
+      (_this$dialog2 = this.dialog) === null || _this$dialog2 === void 0 || _this$dialog2.addEventListener("vf-chatbot-dialog:cancel", this.onDialogCancel);
+    }
+  }, {
+    key: "sendMessage",
+    value: function sendMessage() {
+      if (!this.input || !this.input.value.trim()) return;
+      var text = this.input.value.trim();
+      this.showChatInterface();
+      this.sendUserMessage(text);
+    }
+  }, {
+    key: "autoResizeTextarea",
+    value: function autoResizeTextarea() {
+      if (!this.input) return;
+
+      // Reset height to auto to get the actual scroll height
+      // this.input.style.height = 'auto';
+      // Get computed styles
+      var computedStyle = window.getComputedStyle(this.input);
+      var lineHeight = parseFloat(computedStyle.lineHeight) || 24;
+      var paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+      var paddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
+      var borderTop = parseFloat(computedStyle.borderTopWidth) || 0;
+      var borderBottom = parseFloat(computedStyle.borderBottomWidth) || 0;
+
+      // Calculate heights more accurately
+      var extraHeight = paddingTop + paddingBottom + borderTop + borderBottom;
+      var minHeight = lineHeight + extraHeight; // Height for 1 row
+      var maxHeight = lineHeight * 5 + extraHeight; // Height for 5 rows
+
+      // Get the scroll height (content height)
+      var scrollHeight = this.input.scrollHeight;
+
+      // Calculate the new height, constrained by min and max
+      var newHeight = Math.max(minHeight, scrollHeight);
+      if (newHeight >= maxHeight) {
+        // If content exceeds 5 rows, set to max height and enable scrolling
+        newHeight = maxHeight;
+        this.input.classList.add("vf-chatbot-modal__input--scrollable");
+      } else {
+        // Remove scrollable class if content fits within 5 rows
+        this.input.classList.remove("vf-chatbot-modal__input--scrollable");
+      }
+
+      // Apply the new height
+      this.input.style.height = newHeight + "px";
+    }
+  }, {
+    key: "showChatInterface",
+    value: function showChatInterface() {
+      if (this.welcomeScreen) {
+        this.welcomeScreen.style.display = "none";
+      }
+      if (this.messagesContainer) {
+        this.messagesContainer.style.display = "flex";
+      }
+      if (this.input) {
+        this.input.focus();
+      }
+    }
+  }, {
+    key: "sendUserMessage",
+    value: function sendUserMessage(text) {
+      if (!text || !this.messagesContainer) return;
+
+      // Add to message history
+      this.messageHistory.push({
+        type: "user",
+        content: text,
+        timestamp: Date.now()
+      });
+
+      // Trigger message send event
+      this.onMessageSend(text);
+
+      // Create user message element
+      var userMessage = this.userTemplate.content.cloneNode(true);
+      var content = userMessage.querySelector(".vf-chatbot-message__content-prompt");
+      content.textContent = text;
+
+      // Update avatar if configured
+      var avatar = userMessage.querySelector("img");
+      if (avatar) {
+        avatar.src = this.config.icons.user_avatar;
+      }
+      this.messagesContainer.appendChild(userMessage);
+      this.saveConversationHTML(this.messagesContainer.innerHTML);
+
+      // Clear input
+      if (this.input) {
+        this.input.value = "";
+        this.input.style.height = "auto";
+        // Reset textarea to minimum height and remove scrollable class
+        this.input.classList.remove("vf-chatbot-modal__input--scrollable");
+        this.autoResizeTextarea();
+      }
+      this.scrollToBottom();
+      this.processUserMessage(text);
+    }
+  }, {
+    key: "processUserMessage",
+    value: function () {
+      var _processUserMessage = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(text) {
+        var _this14 = this;
+        var response, _t6;
+        return _regenerator().w(function (_context7) {
+          while (1) switch (_context7.p = _context7.n) {
+            case 0:
+              this.setLoadingState(true);
+              _context7.p = 1;
+              if (!(this.qaData && this.qaData[text])) {
+                _context7.n = 2;
+                break;
+              }
+              setTimeout(function () {
+                var answer = _this14.qaData[text];
+                _this14.addAssistantResponse(answer.answer || answer.html, answer.sources || [], answer.prompts || []);
+                _this14.setLoadingState(false);
+              }, this.config.behavior.typing_delay);
+              return _context7.a(2);
+            case 2:
+              if (!this.config.api.chat_endpoint) {
+                _context7.n = 4;
+                break;
+              }
+              _context7.n = 3;
+              return this.callChatAPI(text);
+            case 3:
+              response = _context7.v;
+              this.addAssistantResponse(response.response, response.sources || [], response.prompts || []);
+              this.setLoadingState(false);
+              _context7.n = 5;
+              break;
+            case 4:
+              // Use fallback response
+              setTimeout(function () {
+                var fallbackResponse;
+                if (_this14.fallbackResponses && _this14.fallbackResponses.length > 0) {
+                  fallbackResponse = _this14.fallbackResponses[Math.floor(Math.random() * _this14.fallbackResponses.length)];
+                  _this14.addAssistantResponse(fallbackResponse.answer, [], fallbackResponse.prompts || []);
+                }
+                _this14.setLoadingState(false);
+              }, this.config.behavior.typing_delay);
+            case 5:
+              _context7.n = 7;
+              break;
+            case 6:
+              _context7.p = 6;
+              _t6 = _context7.v;
+              console.error("Error processing message:", _t6);
+              this.onError(_t6, "message_processing");
+              this.setLoadingState(false);
+              // this.showErrorMessage();
+            case 7:
+              return _context7.a(2);
+          }
+        }, _callee7, this, [[1, 6]]);
+      }));
+      function processUserMessage(_x2) {
+        return _processUserMessage.apply(this, arguments);
+      }
+      return processUserMessage;
+    }()
+  }, {
+    key: "callChatAPI",
+    value: function () {
+      var _callChatAPI = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(message) {
+        var requestData, response;
+        return _regenerator().w(function (_context8) {
+          while (1) switch (_context8.n) {
+            case 0:
+              requestData = {
+                message: message,
+                assistant: this.currentAssistant,
+                conversationId: this.conversationId,
+                messageHistory: this.config.features.enable_conversation_history ? this.messageHistory : []
+              };
+              _context8.n = 1;
+              return fetch(this.config.api.chat_endpoint, {
+                method: "POST",
+                headers: this.config.api.headers,
+                body: JSON.stringify(requestData),
+                signal: AbortSignal.timeout(this.config.api.timeout)
+              });
+            case 1:
+              response = _context8.v;
+              if (response.ok) {
+                _context8.n = 2;
+                break;
+              }
+              throw new Error("API call failed: ".concat(response.status, " ").concat(response.statusText));
+            case 2:
+              _context8.n = 3;
+              return response.json();
+            case 3:
+              return _context8.a(2, _context8.v);
+          }
+        }, _callee8, this);
+      }));
+      function callChatAPI(_x3) {
+        return _callChatAPI.apply(this, arguments);
+      }
+      return callChatAPI;
+    }()
+  }, {
+    key: "submitFeedbackToAPI",
+    value: function () {
+      var _submitFeedbackToAPI = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9(feedbackData) {
+        var _t7;
+        return _regenerator().w(function (_context9) {
+          while (1) switch (_context9.p = _context9.n) {
+            case 0:
+              _context9.p = 0;
+              _context9.n = 1;
+              return fetch(this.config.api.feedback_endpoint, {
+                method: "POST",
+                headers: this.config.api.headers,
+                body: JSON.stringify(feedbackData)
+              });
+            case 1:
+              _context9.n = 3;
+              break;
+            case 2:
+              _context9.p = 2;
+              _t7 = _context9.v;
+              console.error("Failed to submit feedback:", _t7);
+              this.onError(_t7, "feedback_submission");
+            case 3:
+              return _context9.a(2);
+          }
+        }, _callee9, this, [[0, 2]]);
+      }));
+      function submitFeedbackToAPI(_x4) {
+        return _submitFeedbackToAPI.apply(this, arguments);
+      }
+      return submitFeedbackToAPI;
+    }()
+  }, {
+    key: "addAssistantResponse",
+    value: function addAssistantResponse(text) {
+      var sources = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var prompts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+      if (!this.assistantTemplate || !this.messagesContainer) return;
+      var messageId = "msg_".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9));
+
+      // Add to message history
+      this.messageHistory.push({
+        type: "assistant",
+        content: text,
+        sources: sources,
+        prompts: prompts,
+        messageId: messageId,
+        timestamp: Date.now()
+      });
+
+      // Trigger response receive event
+      this.onResponseReceive(text, sources, prompts);
+      var assistantMessage = this.assistantTemplate.content.cloneNode(true);
+      var content = assistantMessage.querySelector(".vf-chatbot-message__content-prompt");
+      content.innerHTML = text;
+
+      // Update avatar if configured
+      var avatar = assistantMessage.querySelector("img");
+      if (avatar) {
+        avatar.src = this.config.icons.assistant_avatar;
+      }
+
+      // Initialize feedback if enabled
+      if (this.config.features.enable_feedback) {
+        var feedbackContainer = assistantMessage.querySelector("[data-vf-js-chatbot-feedback]");
+        if (feedbackContainer) {
+          var _this$config$feedback, _this$config$feedback2;
+          feedbackContainer.dataset.messageId = messageId;
+
+          // Pass configuration to VFChatbotFeedback component
+          new VFChatbotFeedback(feedbackContainer, messageId, {
+            enable_instant_feedback: this.config.features.enable_instant_feedback,
+            api_endpoint: this.config.api.feedback_endpoint,
+            positiveOptions: (_this$config$feedback = this.config.feedback_options) === null || _this$config$feedback === void 0 ? void 0 : _this$config$feedback.positive,
+            negativeOptions: (_this$config$feedback2 = this.config.feedback_options) === null || _this$config$feedback2 === void 0 ? void 0 : _this$config$feedback2.negative
+          });
+        }
+      }
+
+      // Add sources if enabled and present
+      if (this.config.features.enable_sources && sources && (sources.length > 0 || sources != "")) {
+        var _feedbackContainer = assistantMessage.querySelector("[data-vf-js-chatbot-feedback]");
+        var sourceHTML = "";
+        if (!this.config.features.enable_sources_custom_format && sources.length > 0) {
+          sourceHTML = sources.map(function (message) {
+            return "\n          <li class=\"vf-chatbot-sources__item\">\n            <div class=\"vf-chatbot-sources__label\">".concat(message.domain, "</div>\n            <a class=\"vf-link vf-chatbot-sources__link\" href=\"").concat(message.url, "\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"").concat(message.title, " (opens in new tab)\">\n              ").concat(message.title, "\n            </a>\n            <div class=\"vf-chatbot-sources__description\">").concat(message.description, "</div>\n          </li>\n        ");
+          }).join("");
+        } else if (this.config.features.enable_sources_custom_format && sources != "") {
+          sourceHTML = sources;
+        }
+        if (sourceHTML != "") {
+          var sourcesEl = initVFChatbotSources(sourceHTML);
+          assistantMessage.insertBefore(sourcesEl.el, _feedbackContainer);
+        }
+      }
+
+      // Add prompts if present
+      if (prompts && prompts.length > 0) {
+        this.addActionPrompts(assistantMessage, prompts, content);
+      }
+      this.messagesContainer.appendChild(assistantMessage);
+      this.saveConversationHTML(this.messagesContainer.innerHTML);
+      this.scrollToBottom();
+      return messageId;
+    }
+  }, {
+    key: "addActionPrompts",
+    value: function addActionPrompts(assistantMessage, prompts, contentElement) {
+      var _this15 = this;
+      if (!this.actionPromptsTemplate || !this.singlePromptTemplate) return;
+      var promptsContainer = this.actionPromptsTemplate.content.cloneNode(true);
+      var promptsList = promptsContainer.querySelector("[data-vf-js-action-prompts-list]");
+      prompts.forEach(function (prompt) {
+        var promptEl = _this15.singlePromptTemplate.content.cloneNode(true);
+        var link = promptEl.querySelector(".vf-chatbot-action-prompt__link");
+        if (link) {
+          var _prompt$action_url;
+          link.href = prompt.action_url || "#";
+          link.textContent = prompt.action_text;
+
+          // Set target and add accessibility attributes
+          if ((_prompt$action_url = prompt.action_url) !== null && _prompt$action_url !== void 0 && _prompt$action_url.startsWith("tel:")) {
+            link.target = "_self";
+          } else if (prompt.action_url) {
+            link.target = "_blank";
+            // Add aria-label for screen readers to indicate it opens in a new tab
+            link.setAttribute("aria-label", "".concat(prompt.action_text, " (opens in new tab)"));
+            // Add rel="noopener noreferrer" for security
+            link.rel = "noopener noreferrer";
+          }
+          if (!prompt.action_url) {
+            link.addEventListener("click", function (e) {
+              e.preventDefault();
+              _this15.emitEvent("vf-chatbot-action-prompt:click", {
+                text: prompt.action_text
+              });
+            });
+          }
+        }
+        promptsList.appendChild(promptEl);
+      });
+      contentElement.appendChild(promptsContainer);
+    }
+  }, {
+    key: "setLoadingState",
+    value: function setLoadingState(isLoading) {
+      if (!this.config.features.enable_typing_indicator) return;
+      if (isLoading) {
+        if (!this.loadingIndicator && this.loadingTemplate) {
+          var loadingContent = this.loadingTemplate.content.cloneNode(true);
+          this.loadingIndicator = loadingContent.firstElementChild;
+
+          // Update avatar
+          var avatar = this.loadingIndicator.querySelector("img");
+          if (avatar) {
+            avatar.src = this.config.icons.assistant_avatar;
+          }
+          this.messagesContainer.appendChild(this.loadingIndicator);
+        } else if (this.loadingIndicator && !this.loadingIndicator.parentNode) {
+          // Re-append if it was removed from DOM
+          this.messagesContainer.appendChild(this.loadingIndicator);
+        }
+        if (this.loadingIndicator) {
+          this.loadingIndicator.style.display = "block";
+        }
+      } else {
+        if (this.loadingIndicator) {
+          this.loadingIndicator.style.display = "none";
+          this.messagesContainer.removeChild(this.loadingIndicator);
+        }
+      }
+
+      // Disable/enable controls
+      if (this.sendBtn) this.sendBtn.disabled = isLoading;
+      // if (this.input) this.input.disabled = isLoading;
+
+      this.scrollToBottom();
+    }
+  }, {
+    key: "scrollToBottom",
+    value: function scrollToBottom() {
+      if (this.config.behavior.auto_scroll && this.messagesContainer) {
+        this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+      }
+    }
+
+    // Public API methods
+  }, {
+    key: "resetConversation",
+    value: function resetConversation() {
+      this.messageHistory = [];
+      this.conversationId = this.generateConversationId();
+      if (this.messagesContainer) {
+        this.messagesContainer.innerHTML = "";
+        if (this.config.enable_session_persistence) {
+          sessionStorage.removeItem("chatbotModalConversationHTML");
+          sessionStorage.removeItem("chatbotModalFeedbackState");
+          sessionStorage.removeItem("chatbotModalMinimized");
+        }
+      }
+      if (this.savedSelection && this.config.enable_session_persistence) {
+        sessionStorage.removeItem("vfChatbotSelectorSelection");
+      }
+      if (this.welcomeScreen && this.config.features.enable_welcome_suggestions) {
+        this.welcomeScreen.style.display = "flex";
+      }
+      this.onConversationStart();
+    }
+  }, {
+    key: "updateConfiguration",
+    value: function updateConfiguration(newConfig) {
+      this.config = this.deepMerge(this.config, newConfig);
+      this.applyConfigurationToDOM();
+      // this.applyTheme();
+    }
+  }, {
+    key: "getConfiguration",
+    value: function getConfiguration() {
+      return _objectSpread({}, this.config);
+    }
+  }, {
+    key: "getConversationHistory",
+    value: function getConversationHistory() {
+      return _toConsumableArray(this.messageHistory);
+    }
+  }, {
+    key: "minimize",
+    value: function minimize() {
+      var event = new Event("vf-chatbot-modal-container:close", {
+        bubbles: true
+      });
+      this.container.dispatchEvent(event);
+    }
+  }, {
+    key: "showCloseDialog",
+    value: function showCloseDialog() {
+      var _this16 = this;
+      if (this.dialog) {
+        // Initialize and show the dialog
+        initVFChatbotDialog(this.dialog);
+        this.dialog.style.display = "flex";
+
+        // Listen for dialog events
+        var _onConfirm = function onConfirm() {
+          _this16.resetConversation(); // <-- Reset to original state
+          _this16.dialog.removeEventListener("vf-chatbot-dialog:confirm", _onConfirm);
+          _this16.minimize();
+        };
+        this.dialog.addEventListener("vf-chatbot-dialog:confirm", _onConfirm);
+      }
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      var _this$sendBtn2, _this$input4;
+      this.onConversationEnd();
+
+      // Remove event listeners
+      (_this$sendBtn2 = this.sendBtn) === null || _this$sendBtn2 === void 0 || _this$sendBtn2.removeEventListener("click", this.sendMessage);
+      (_this$input4 = this.input) === null || _this$input4 === void 0 || _this$input4.removeEventListener("keypress", this.handleKeyPress);
+
+      // Clean up API response listener
+      if (this.apiResponseListener) {
+        this.container.removeEventListener("vf-chatbot:api-response", this.apiResponseListener);
+      }
+    }
+
+    // Helper functions for conversation persistence
+  }, {
+    key: "saveConversationHTML",
+    value: function saveConversationHTML(html) {
+      if (this.config.enable_session_persistence) {
+        sessionStorage.setItem("chatbotModalConversationHTML", html);
+      }
+    }
+  }, {
+    key: "loadConversationHTML",
+    value: function loadConversationHTML() {
+      if (this.config.enable_session_persistence) {
+        return sessionStorage.getItem("chatbotModalConversationHTML") || "";
+      }
+      return "";
+    }
+  }]);
+}(); // Global initialization function with configuration support
+function initVFChatbotModal() {
+  var customConfig = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  console.log("Looking for modal chatbot elements...");
+  var chatbotElements = document.querySelectorAll("[data-vf-js-chatbot-modal-container]");
+  if (chatbotElements.length === 0) {
+    console.warn("No modal chatbot elements found on page");
+    return [];
+  }
+  var instances = [];
+  chatbotElements.forEach(function (element) {
+    instances.push(new VFChatbotModal(element, customConfig));
+  });
+  return instances;
+}
+
+// Global exposure
+if (typeof window !== "undefined") {
+  window.VFChatbotModal = VFChatbotModal;
+  window.initVFChatbotModal = initVFChatbotModal;
+}
+
+// vf-chatbot-standalone.js
+var VFChatbotStandalone = /*#__PURE__*/function () {
+  function VFChatbotStandalone(element) {
+    var customConfig = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    _classCallCheck(this, VFChatbotStandalone);
+    this.container = element;
+    this.loadConfiguration(customConfig);
+    this.setupDOMElements();
+    this.setupState();
+    this.setupEventHandlers();
+    this.init();
+  }
+  return _createClass(VFChatbotStandalone, [{
+    key: "loadConfiguration",
+    value: function loadConfiguration(customConfig) {
+      // Get config from data-vf-chatbot-config attribute
+      var dataConfig = {};
+      var attr = this.container.getAttribute("data-vf-chatbot-config");
+      if (attr) {
+        try {
+          dataConfig = JSON.parse(attr);
+        } catch (e) {
+          console.warn("Invalid JSON in data-vf-chatbot-config:", e);
+        }
+      }
+
+      // Default configuration
+      var defaultConfig = {
+        type: "standalone",
+        title: "AI Assistant",
+        welcome_logo: true,
+        welcome_message: "Welcome! I'm here to help",
+        welcome_logo_alt: "AI Assistant",
+        welcome_suggestions_title: "Try asking me:",
+        input_placeholder: "Ask me ...",
+        welcome_max_suggestions: 4,
+        disclaimer: 'Disclaimer: This chatbot is designed to assist you with general information and basic inquiries. See our <a class="vf-banner__link" target="_blank" rel="noopener noreferrer" aria-label="disclaimer notes (opens in new tab)" href="https://www.ebi.ac.uk/data-protection/privacy-notice/embl-ebi-public-website/">disclaimer notes</a>.',
+        footnote: 'Review AI generated content for accuracy. <a class="vf-link" target="_blank" rel="noopener noreferrer" aria-label="Leave feedback (opens in new tab)" href="https://embl.service-now.com/esc?id=sc_cat_item&sys_id=5eeb8eb91b92e650b376da88b04bcbc1">Leave feedback</a>.',
+        icons: {
+          assistant_avatar: "../../assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg",
+          user_avatar: "../../assets/vf-chatbot/assets/vf-chatbot--avatar-user.svg",
+          send_button: "../../assets/vf-chatbot/assets/vf-chatbot--icon-send.svg",
+          main_logo_url: "../../assets/vf-chatbot/assets/vf-chatbot--icon-32x32-dark-green.svg"
+        },
+        api: {
+          chat_endpoint: false,
+          //"/api/chat", // Disabled to use fallback responses
+          feedback_endpoint: false,
+          //"/api/feedback",
+          qa_data_url: "../../assets/vf-chatbot/assets/vf-chatbot-qa.json",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer your-token"
+          },
+          timeout: 10000
+        },
+        features: {
+          enable_welcome: true,
+          enable_feedback: true,
+          enable_sources: true,
+          enable_sources_custom_format: false,
+          enable_welcome_suggestions: true,
+          enable_typing_indicator: true,
+          enable_disclaimer: true,
+          enable_predefined_qa: true,
+          enable_fallback_responses: true,
+          enable_qa_data_loading: true,
+          enable_instant_feedback: false
+        },
+        behavior: {
+          auto_scroll: true,
+          typing_delay: 800,
+          show_scrollbar: false
+        },
+        selectorContext: {
+          chatbotRoutes: {
+            multiSelect: true,
+            maxMultiSelect: 3,
+            showSearch: true,
+            showSearchThreshold: 5,
+            showAllServices: true,
+            showAllServicesSelected: true,
+            routes: "../../assets/vf-chatbot/assets/vf-chatbot-selector-services.json",
+            placeholder: "Select services",
+            title: "Services",
+            selector_logo_url: "../../assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg",
+            selector_logo_title: "AI Assistant"
+          }
+        },
+        handlers: {
+          on_message_send: "handleMessageSend",
+          on_response_receive: "handleResponseReceive",
+          on_feedback_submit: "handleFeedbackSubmit",
+          on_suggestion_click: "handleSuggestionClick",
+          on_error: "handleError",
+          on_conversation_start: "handleConversationStart",
+          on_conversation_end: "handleConversationEnd"
+        },
+        feedback_options: {
+          positive: [{
+            id: "accurate",
+            label: "Accurate"
+          }, {
+            id: "easy",
+            label: "Easy to understand"
+          }, {
+            id: "formatted",
+            label: "Well formatted"
+          }],
+          negative: [{
+            id: "inaccurate",
+            label: "Inaccurate answer"
+          }, {
+            id: "nocontext",
+            label: "Did not use context"
+          }, {
+            id: "poorformat",
+            label: "Poorly formatted"
+          }]
+        }
+      };
+
+      // Merge configurations: default < data-attribute < custom
+      this.config = this.deepMerge(defaultConfig, dataConfig, customConfig);
+      console.log("Final merged config:", this.config);
+    }
+  }, {
+    key: "deepMerge",
+    value: function deepMerge() {
+      var _this17 = this;
+      for (var _len2 = arguments.length, objects = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        objects[_key2] = arguments[_key2];
+      }
+      return objects.reduce(function (prev, obj) {
+        // ✅ FIX: Skip null/undefined objects
+        if (!obj || _typeof(obj) !== "object") {
+          return prev;
+        }
+        Object.keys(obj).forEach(function (key) {
+          var pVal = prev[key];
+          var oVal = obj[key];
+
+          // ✅ FIX: Skip undefined values to maintain priority
+          if (oVal === undefined) {
+            return;
+          }
+          if (Array.isArray(pVal) && Array.isArray(oVal)) {
+            prev[key] = pVal.concat.apply(pVal, _toConsumableArray(oVal));
+          } else if (pVal && oVal && _typeof(pVal) === "object" && _typeof(oVal) === "object" && !Array.isArray(pVal) && !Array.isArray(oVal)) {
+            prev[key] = _this17.deepMerge(pVal, oVal);
+          } else {
+            // ✅ FIX: Only assign if oVal is not null/undefined
+            if (oVal !== null && oVal !== undefined) {
+              prev[key] = oVal;
+            }
+          }
+        });
+        return prev;
+      }, {});
+    }
+  }, {
+    key: "setupDOMElements",
+    value: function setupDOMElements() {
+      var _this$disclaimer2;
+      this.welcomeScreen = this.container.querySelector("[data-vf-js-chatbot-welcome]");
+      this.messagesContainer = this.container.querySelector("[data-vf-js-chatbot-standalone-messages]");
+      this.input = this.container.querySelector("[data-vf-js-chatbot-standalone-input]");
+      this.sendBtn = this.container.querySelector("[data-vf-js-chatbot-standalone-send]");
+      this.disclaimer = this.container.querySelector("[data-vf-js-chatbot-standalone-disclaimer]");
+      this.disclaimerCloseBtn = (_this$disclaimer2 = this.disclaimer) === null || _this$disclaimer2 === void 0 ? void 0 : _this$disclaimer2.querySelector(".vf-button--dismiss");
+      this.selectorEl = this.container.querySelector("[data-vf-js-chatbot-selector]");
+
+      // Templates
+      this.userTemplate = this.container.querySelector("#user-message-template");
+      this.assistantTemplate = this.container.querySelector("#assistant-message-template");
+      this.loadingTemplate = this.container.querySelector("#loading-indicator-template");
+      this.actionPromptsTemplate = this.container.querySelector("#action-prompts-template");
+      this.singlePromptTemplate = this.container.querySelector("#single-action-prompt-template");
+
+      // Apply configuration to DOM elements
+      this.applyConfigurationToDOM();
+    }
+  }, {
+    key: "applyConfigurationToDOM",
+    value: function applyConfigurationToDOM() {
+      // Update input placeholder
+      if (this.input) {
+        this.input.placeholder = this.config.input_placeholder;
+        // Initialize textarea height
+        this.autoResizeTextarea();
+      }
+
+      // Update auto-scroll behavior
+      if (this.messagesContainer) {
+        this.messagesContainer.dataset.autoScroll = this.config.behavior.auto_scroll;
+      }
+    }
+  }, {
+    key: "setupState",
+    value: function setupState() {
+      this.currentAssistant = "";
+      this.conversationId = this.generateConversationId();
+      this.messageHistory = [];
+      this.loadingIndicator = null;
+      this.apiResponseListener = null;
+
+      // Load Q&A data if using fallback responses
+      this.loadQADataAndPopulateSuggestions();
+    }
+  }, {
+    key: "setupEventHandlers",
+    value: function setupEventHandlers() {
+      // Setup global event handlers for custom functions
+      this.setupCustomEventHandlers();
+
+      // Bind internal events
+      this.bindEvents();
+    }
+  }, {
+    key: "setupCustomEventHandlers",
+    value: function setupCustomEventHandlers() {
+      var _this18 = this;
+      // Create wrapper functions that call user-defined handlers and emit events
+      var handlers = this.config.handlers;
+
+      // Message send handler
+      this.onMessageSend = function (message) {
+        var eventData = {
+          message: message,
+          conversationId: _this18.conversationId,
+          timestamp: Date.now()
+        };
+        _this18.emitEvent("vf-chatbot:message-send", eventData);
+        if (handlers.on_message_send && typeof window[handlers.on_message_send] === "function") {
+          window[handlers.on_message_send](eventData);
+        }
+      };
+
+      // Response receive handler
+      this.onResponseReceive = function (response, sources, prompts) {
+        var eventData = {
+          response: response,
+          sources: sources,
+          prompts: prompts,
+          conversationId: _this18.conversationId,
+          timestamp: Date.now()
+        };
+        _this18.emitEvent("vf-chatbot:response-receive", eventData);
+        if (handlers.on_response_receive && typeof window[handlers.on_response_receive] === "function") {
+          window[handlers.on_response_receive](eventData);
+        }
+      };
+
+      // Feedback submit handler
+      this.onFeedbackSubmit = function (messageId, feedbackType) {
+        var feedbackText = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : "";
+        var feedbackComment = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+        var eventData = {
+          messageId: messageId,
+          feedbackType: feedbackType,
+          feedbackText: feedbackText,
+          feedbackComment: feedbackComment,
+          conversationId: _this18.conversationId,
+          timestamp: Date.now()
+        };
+        _this18.emitEvent("vf-chatbot:feedback-submit", eventData);
+
+        // Call API if configured
+        if (_this18.config.api.feedback_endpoint) {
+          _this18.submitFeedbackToAPI(eventData);
+        }
+        if (handlers.on_feedback_submit && typeof window[handlers.on_feedback_submit] === "function") {
+          window[handlers.on_feedback_submit](eventData);
+        }
+      };
+
+      // Suggestion click handler
+      this.onSuggestionClick = function (suggestion) {
+        var eventData = {
+          suggestion: suggestion,
+          conversationId: _this18.conversationId,
+          timestamp: Date.now()
+        };
+        _this18.emitEvent("vf-chatbot:suggestion-click", eventData);
+        if (handlers.on_suggestion_click && typeof window[handlers.on_suggestion_click] === "function") {
+          window[handlers.on_suggestion_click](eventData);
+        }
+      };
+
+      // Error handler
+      this.onError = function (error, context) {
+        var eventData = {
+          error: error,
+          context: context,
+          conversationId: _this18.conversationId,
+          timestamp: Date.now()
+        };
+        _this18.emitEvent("vf-chatbot:error", eventData);
+        if (handlers.on_error && typeof window[handlers.on_error] === "function") {
+          window[handlers.on_error](eventData);
+        }
+      };
+
+      // Conversation start handler
+      this.onConversationStart = function () {
+        var eventData = {
+          conversationId: _this18.conversationId,
+          timestamp: Date.now()
+        };
+        _this18.emitEvent("vf-chatbot:conversation-start", eventData);
+        if (handlers.on_conversation_start && typeof window[handlers.on_conversation_start] === "function") {
+          window[handlers.on_conversation_start](eventData);
+        }
+      };
+
+      // Conversation end handler
+      this.onConversationEnd = function () {
+        var eventData = {
+          conversationId: _this18.conversationId,
+          messageCount: _this18.messageHistory.length,
+          timestamp: Date.now()
+        };
+        _this18.emitEvent("vf-chatbot:conversation-end", eventData);
+        if (handlers.on_conversation_end && typeof window[handlers.on_conversation_end] === "function") {
+          window[handlers.on_conversation_end](eventData);
+        }
+      };
+    }
+  }, {
+    key: "emitEvent",
+    value: function emitEvent(eventName, data) {
+      var event = new CustomEvent(eventName, {
+        bubbles: true,
+        detail: data
+      });
+      this.container.dispatchEvent(event);
+    }
+  }, {
+    key: "generateConversationId",
+    value: function generateConversationId() {
+      return "conv_".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9));
+    }
+  }, {
+    key: "init",
+    value: function () {
+      var _init3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0() {
+        var _this19 = this;
+        return _regenerator().w(function (_context0) {
+          while (1) switch (_context0.n) {
+            case 0:
+              // Initialize selector if present
+              if (this.selectorEl) {
+                initVFChatbotSelector(this.selectorEl);
+                this.selectorEl.addEventListener("routeselection", function (e) {
+                  _this19.handleRouteSelection(e.detail);
+                });
+              }
+              if (this.welcomeScreen && this.config.features.enable_welcome_suggestions) {
+                try {
+                  initVFChatbotWelcome(this.welcomeScreen);
+                  // await this.welcomeComponent.init();
+                  this.welcomeScreen.addEventListener("vf-chatbot-welcome:suggestion-click", function (event) {
+                    var question = event.detail.question;
+                    _this19.onSuggestionClick(question);
+                    _this19.showChatInterface();
+                    _this19.sendUserMessage(question);
+                  });
+                  this.welcomeScreen.scrollTop = this.welcomeScreen.scrollHeight;
+                } catch (error) {
+                  console.error("Failed to initialize welcome component:", error);
+                  this.onError(error, "welcome_component_init");
+                }
+              }
+              // }
+
+              // Trigger conversation start
+              this.onConversationStart();
+              console.log("Standalone chatbot initialized successfully");
+            case 1:
+              return _context0.a(2);
+          }
+        }, _callee0, this);
+      }));
+      function init() {
+        return _init3.apply(this, arguments);
+      }
+      return init;
+    }()
+  }, {
+    key: "loadQADataAndPopulateSuggestions",
+    value: function () {
+      var _loadQADataAndPopulateSuggestions2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1() {
+        var response, data, _t8;
+        return _regenerator().w(function (_context1) {
+          while (1) switch (_context1.p = _context1.n) {
+            case 0:
+              if (this.config.features.enable_qa_data_loading) {
+                _context1.n = 1;
+                break;
+              }
+              console.log("Q&A data loading is disabled");
+              return _context1.a(2);
+            case 1:
+              if (this.config.api.qa_data_url) {
+                _context1.n = 2;
+                break;
+              }
+              console.log("No Q&A data URL configured");
+              return _context1.a(2);
+            case 2:
+              _context1.p = 2;
+              _context1.n = 3;
+              return fetch(this.config.api.qa_data_url);
+            case 3:
+              response = _context1.v;
+              if (response.ok) {
+                _context1.n = 4;
+                break;
+              }
+              throw new Error("HTTP ".concat(response.status, ": ").concat(response.statusText));
+            case 4:
+              _context1.n = 5;
+              return response.json();
+            case 5:
+              data = _context1.v;
+              // Load predefined Q&A if enabled
+              if (this.config.features.enable_predefined_qa && data.predefinedQA) {
+                this.qaData = data.predefinedQA;
+              } else {
+                console.log("Predefined Q&A loading is disabled or no data available");
+              }
+
+              // Load fallback responses if enabled
+              if (this.config.features.enable_fallback_responses && data.fallbackResponses && data.fallbackResponses.length > 0) {
+                this.fallbackResponses = data.fallbackResponses;
+              } else {
+                console.log("Using default fallback responses");
+              }
+              _context1.n = 7;
+              break;
+            case 6:
+              _context1.p = 6;
+              _t8 = _context1.v;
+              console.error("Failed to load Q&A data:", _t8);
+              this.onError(_t8, "qa_data_load");
+            case 7:
+              return _context1.a(2);
+          }
+        }, _callee1, this, [[2, 6]]);
+      }));
+      function loadQADataAndPopulateSuggestions() {
+        return _loadQADataAndPopulateSuggestions2.apply(this, arguments);
+      }
+      return loadQADataAndPopulateSuggestions;
+    }()
+  }, {
+    key: "handleRouteSelection",
+    value: function handleRouteSelection(detail) {
+      var selectedItems = detail.selectedItems;
+      if (selectedItems && selectedItems.length > 0) {
+        this.currentAssistant = selectedItems.join(", ");
+        console.log("Switched to ".concat(this.currentAssistant, " assistant"));
+        this.emitEvent("vf-chatbot:assistant-change", {
+          selectedAssistants: this.currentAssistant,
+          conversationId: this.conversationId
+        });
+      }
+    }
+  }, {
+    key: "bindEvents",
+    value: function bindEvents() {
+      var _this$sendBtn3,
+        _this20 = this,
+        _this$input5,
+        _this$input6,
+        _this$input7;
+      // Send message events
+      (_this$sendBtn3 = this.sendBtn) === null || _this$sendBtn3 === void 0 || _this$sendBtn3.addEventListener("click", function () {
+        return _this20.sendMessage();
+      });
+      (_this$input5 = this.input) === null || _this$input5 === void 0 || _this$input5.addEventListener("keypress", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          _this20.sendMessage();
+        }
+      });
+
+      // Auto-resize textarea functionality
+      (_this$input6 = this.input) === null || _this$input6 === void 0 || _this$input6.addEventListener("input", function () {
+        return _this20.autoResizeTextarea();
+      });
+      (_this$input7 = this.input) === null || _this$input7 === void 0 || _this$input7.addEventListener("paste", function () {
+        // Use setTimeout to ensure the pasted content is processed
+        setTimeout(function () {
+          return _this20.autoResizeTextarea();
+        }, 0);
+      });
+
+      // Disclaimer close
+      if (this.disclaimer && this.disclaimerCloseBtn) {
+        this.disclaimerCloseBtn.addEventListener("click", function () {
+          _this20.disclaimer.classList.add("vf-u-display-none");
+        });
+      }
+
+      // Global feedback event listener
+      this.container.addEventListener("vf-chatbot-feedback:submit", function (event) {
+        var _event$detail2 = event.detail,
+          messageId = _event$detail2.messageId,
+          feedbackType = _event$detail2.feedbackType,
+          feedbackText = _event$detail2.feedbackText,
+          feedbackComment = _event$detail2.feedbackComment;
+        _this20.onFeedbackSubmit(messageId, feedbackType, feedbackText, feedbackComment);
+      });
+
+      // Action prompt click listener
+      this.container.addEventListener("vf-chatbot-action-prompt:click", function (event) {
+        var text = event.detail.text;
+        _this20.sendUserMessage(text);
+      });
+    }
+  }, {
+    key: "sendMessage",
+    value: function sendMessage() {
+      if (!this.input || !this.input.value.trim()) return;
+      var text = this.input.value.trim();
+      this.showChatInterface();
+      this.sendUserMessage(text);
+    }
+  }, {
+    key: "autoResizeTextarea",
+    value: function autoResizeTextarea() {
+      if (!this.input) return;
+
+      // Reset height to auto to get the actual scroll height
+      // this.input.style.height = 'auto';
+      // Get computed styles
+      var computedStyle = window.getComputedStyle(this.input);
+      var lineHeight = parseFloat(computedStyle.lineHeight) || 24;
+      var paddingTop = parseFloat(computedStyle.paddingTop) || 0;
+      var paddingBottom = parseFloat(computedStyle.paddingBottom) || 0;
+      var borderTop = parseFloat(computedStyle.borderTopWidth) || 0;
+      var borderBottom = parseFloat(computedStyle.borderBottomWidth) || 0;
+
+      // Calculate heights more accurately
+      var extraHeight = paddingTop + paddingBottom + borderTop + borderBottom;
+      var minHeight = lineHeight + extraHeight; // Height for 1 row
+      var maxHeight = lineHeight * 5 + extraHeight; // Height for 5 rows
+
+      // Get the scroll height (content height)
+      var scrollHeight = this.input.scrollHeight;
+
+      // Calculate the new height, constrained by min and max
+      var newHeight = Math.max(minHeight, scrollHeight);
+      if (newHeight >= maxHeight) {
+        // If content exceeds 5 rows, set to max height and enable scrolling
+        newHeight = maxHeight;
+        this.input.classList.add("vf-chatbot-standalone__input--scrollable");
+      } else {
+        // Remove scrollable class if content fits within 5 rows
+        this.input.classList.remove("vf-chatbot-standalone__input--scrollable");
+      }
+
+      // Apply the new height
+      this.input.style.height = newHeight + "px";
+    }
+  }, {
+    key: "showChatInterface",
+    value: function showChatInterface() {
+      if (this.welcomeScreen) {
+        this.welcomeScreen.style.display = "none";
+      }
+      if (this.messagesContainer) {
+        this.messagesContainer.style.display = "flex";
+      }
+      if (this.input) {
+        this.input.focus();
+      }
+    }
+  }, {
+    key: "sendUserMessage",
+    value: function sendUserMessage(text) {
+      if (!text || !this.messagesContainer) return;
+
+      // Add to message history
+      this.messageHistory.push({
+        type: "user",
+        content: text,
+        timestamp: Date.now()
+      });
+
+      // Trigger message send event
+      this.onMessageSend(text);
+
+      // Create user message element
+      var userMessage = this.userTemplate.content.cloneNode(true);
+      var content = userMessage.querySelector(".vf-chatbot-message__content-prompt");
+      content.textContent = text;
+
+      // Update avatar if configured
+      var avatar = userMessage.querySelector("img");
+      if (avatar) {
+        avatar.src = this.config.icons.user_avatar;
+      }
+      this.messagesContainer.appendChild(userMessage);
+
+      // Clear input
+      if (this.input) {
+        this.input.value = "";
+        this.input.style.height = "auto";
+        // Reset textarea to minimum height and remove scrollable class
+        this.input.classList.remove("vf-chatbot-standalone__input--scrollable");
+        this.autoResizeTextarea();
+      }
+      this.scrollToBottom();
+      this.processUserMessage(text);
+    }
+  }, {
+    key: "processUserMessage",
+    value: function () {
+      var _processUserMessage2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(text) {
+        var _this21 = this;
+        var response, _t9;
+        return _regenerator().w(function (_context10) {
+          while (1) switch (_context10.p = _context10.n) {
+            case 0:
+              this.setLoadingState(true);
+              _context10.p = 1;
+              if (!(this.qaData && this.qaData[text])) {
+                _context10.n = 2;
+                break;
+              }
+              setTimeout(function () {
+                var answer = _this21.qaData[text];
+                _this21.addAssistantResponse(answer.answer || answer.html, answer.sources || [], answer.prompts || []);
+                _this21.setLoadingState(false);
+              }, this.config.behavior.typing_delay);
+              return _context10.a(2);
+            case 2:
+              if (!this.config.api.chat_endpoint) {
+                _context10.n = 4;
+                break;
+              }
+              _context10.n = 3;
+              return this.callChatAPI(text);
+            case 3:
+              response = _context10.v;
+              this.addAssistantResponse(response.response, response.sources || [], response.prompts || []);
+              this.setLoadingState(false);
+              _context10.n = 5;
+              break;
+            case 4:
+              // Use fallback response
+              setTimeout(function () {
+                var fallbackResponse;
+                if (_this21.fallbackResponses && _this21.fallbackResponses.length > 0) {
+                  fallbackResponse = _this21.fallbackResponses[Math.floor(Math.random() * _this21.fallbackResponses.length)];
+                  _this21.addAssistantResponse(fallbackResponse.answer, [], fallbackResponse.prompts || []);
+                }
+                _this21.setLoadingState(false);
+              }, this.config.behavior.typing_delay);
+            case 5:
+              _context10.n = 7;
+              break;
+            case 6:
+              _context10.p = 6;
+              _t9 = _context10.v;
+              console.error("Error processing message:", _t9);
+              this.onError(_t9, "message_processing");
+              this.setLoadingState(false);
+              // this.showErrorMessage();
+            case 7:
+              return _context10.a(2);
+          }
+        }, _callee10, this, [[1, 6]]);
+      }));
+      function processUserMessage(_x5) {
+        return _processUserMessage2.apply(this, arguments);
+      }
+      return processUserMessage;
+    }()
+  }, {
+    key: "callChatAPI",
+    value: function () {
+      var _callChatAPI2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11(message) {
+        var requestData, response;
+        return _regenerator().w(function (_context11) {
+          while (1) switch (_context11.n) {
+            case 0:
+              requestData = {
+                message: message,
+                assistant: this.currentAssistant,
+                conversationId: this.conversationId,
+                messageHistory: this.config.features.enable_conversation_history ? this.messageHistory : []
+              };
+              _context11.n = 1;
+              return fetch(this.config.api.chat_endpoint, {
+                method: "POST",
+                headers: this.config.api.headers,
+                body: JSON.stringify(requestData),
+                signal: AbortSignal.timeout(this.config.api.timeout)
+              });
+            case 1:
+              response = _context11.v;
+              if (response.ok) {
+                _context11.n = 2;
+                break;
+              }
+              throw new Error("API call failed: ".concat(response.status, " ").concat(response.statusText));
+            case 2:
+              _context11.n = 3;
+              return response.json();
+            case 3:
+              return _context11.a(2, _context11.v);
+          }
+        }, _callee11, this);
+      }));
+      function callChatAPI(_x6) {
+        return _callChatAPI2.apply(this, arguments);
+      }
+      return callChatAPI;
+    }()
+  }, {
+    key: "submitFeedbackToAPI",
+    value: function () {
+      var _submitFeedbackToAPI2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12(feedbackData) {
+        var _t0;
+        return _regenerator().w(function (_context12) {
+          while (1) switch (_context12.p = _context12.n) {
+            case 0:
+              _context12.p = 0;
+              _context12.n = 1;
+              return fetch(this.config.api.feedback_endpoint, {
+                method: "POST",
+                headers: this.config.api.headers,
+                body: JSON.stringify(feedbackData)
+              });
+            case 1:
+              _context12.n = 3;
+              break;
+            case 2:
+              _context12.p = 2;
+              _t0 = _context12.v;
+              console.error("Failed to submit feedback:", _t0);
+              this.onError(_t0, "feedback_submission");
+            case 3:
+              return _context12.a(2);
+          }
+        }, _callee12, this, [[0, 2]]);
+      }));
+      function submitFeedbackToAPI(_x7) {
+        return _submitFeedbackToAPI2.apply(this, arguments);
+      }
+      return submitFeedbackToAPI;
+    }()
+  }, {
+    key: "addAssistantResponse",
+    value: function addAssistantResponse(text) {
+      var sources = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+      var prompts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+      if (!this.assistantTemplate || !this.messagesContainer) return;
+      var messageId = "msg_".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9));
+
+      // Add to message history
+      this.messageHistory.push({
+        type: "assistant",
+        content: text,
+        sources: sources,
+        prompts: prompts,
+        messageId: messageId,
+        timestamp: Date.now()
+      });
+
+      // Trigger response receive event
+      this.onResponseReceive(text, sources, prompts);
+      var assistantMessage = this.assistantTemplate.content.cloneNode(true);
+      var content = assistantMessage.querySelector(".vf-chatbot-message__content-prompt");
+      content.innerHTML = text;
+
+      // Update avatar if configured
+      var avatar = assistantMessage.querySelector("img");
+      if (avatar) {
+        avatar.src = this.config.icons.assistant_avatar;
+      }
+
+      // Initialize feedback if enabled
+      if (this.config.features.enable_feedback) {
+        var feedbackContainer = assistantMessage.querySelector("[data-vf-js-chatbot-feedback]");
+        if (feedbackContainer) {
+          var _this$config$feedback3, _this$config$feedback4;
+          feedbackContainer.dataset.messageId = messageId;
+
+          // Pass configuration to VFChatbotFeedback component
+          new VFChatbotFeedback(feedbackContainer, messageId, {
+            enable_instant_feedback: this.config.features.enable_instant_feedback,
+            api_endpoint: this.config.api.feedback_endpoint,
+            positiveOptions: (_this$config$feedback3 = this.config.feedback_options) === null || _this$config$feedback3 === void 0 ? void 0 : _this$config$feedback3.positive,
+            negativeOptions: (_this$config$feedback4 = this.config.feedback_options) === null || _this$config$feedback4 === void 0 ? void 0 : _this$config$feedback4.negative
+          });
+        }
+      }
+
+      // Add sources if enabled and present
+      if (this.config.features.enable_sources && sources && (sources.length > 0 || sources != "")) {
+        var _feedbackContainer2 = assistantMessage.querySelector("[data-vf-js-chatbot-feedback]");
+        var sourceHTML = "";
+        if (!this.config.features.enable_sources_custom_format && sources.length > 0) {
+          sourceHTML = sources.map(function (message) {
+            return "\n          <li class=\"vf-chatbot-sources__item\">\n            <div class=\"vf-chatbot-sources__label\">".concat(message.domain, "</div>\n            <a class=\"vf-link vf-chatbot-sources__link\" href=\"").concat(message.url, "\" target=\"_blank\" rel=\"noopener noreferrer\" aria-label=\"").concat(message.title, " (opens in new tab)\">\n              ").concat(message.title, "\n            </a>\n            <div class=\"vf-chatbot-sources__description\">").concat(message.description, "</div>\n          </li>\n        ");
+          }).join("");
+        } else if (this.config.features.enable_sources_custom_format && sources != "") {
+          sourceHTML = sources;
+        }
+        if (sourceHTML != "") {
+          var sourcesEl = initVFChatbotSources(sourceHTML);
+          assistantMessage.insertBefore(sourcesEl.el, _feedbackContainer2);
+        }
+      }
+
+      // Add prompts if present
+      if (prompts && prompts.length > 0) {
+        this.addActionPrompts(assistantMessage, prompts, content);
+      }
+      this.messagesContainer.appendChild(assistantMessage);
+      this.scrollToBottom();
+      return messageId;
+    }
+  }, {
+    key: "addActionPrompts",
+    value: function addActionPrompts(assistantMessage, prompts, contentElement) {
+      var _this22 = this;
+      if (!this.actionPromptsTemplate || !this.singlePromptTemplate) return;
+      var promptsContainer = this.actionPromptsTemplate.content.cloneNode(true);
+      var promptsList = promptsContainer.querySelector("[data-vf-js-action-prompts-list]");
+      prompts.forEach(function (prompt) {
+        var promptEl = _this22.singlePromptTemplate.content.cloneNode(true);
+        var link = promptEl.querySelector(".vf-chatbot-action-prompt__link");
+        if (link) {
+          var _prompt$action_url2;
+          link.href = prompt.action_url || "#";
+          link.textContent = prompt.action_text;
+
+          // Set target and add accessibility attributes
+          if ((_prompt$action_url2 = prompt.action_url) !== null && _prompt$action_url2 !== void 0 && _prompt$action_url2.startsWith("tel:")) {
+            link.target = "_self";
+          } else if (prompt.action_url) {
+            link.target = "_blank";
+            // Add aria-label for screen readers to indicate it opens in a new tab
+            link.setAttribute("aria-label", "".concat(prompt.action_text, " (opens in new tab)"));
+            // Add rel="noopener noreferrer" for security
+            link.rel = "noopener noreferrer";
+          }
+          if (!prompt.action_url) {
+            link.addEventListener("click", function (e) {
+              e.preventDefault();
+              _this22.emitEvent("vf-chatbot-action-prompt:click", {
+                text: prompt.action_text
+              });
+            });
+          }
+        }
+        promptsList.appendChild(promptEl);
+      });
+      contentElement.appendChild(promptsContainer);
+    }
+  }, {
+    key: "setLoadingState",
+    value: function setLoadingState(isLoading) {
+      if (!this.config.features.enable_typing_indicator) return;
+      if (isLoading) {
+        if (!this.loadingIndicator && this.loadingTemplate) {
+          var loadingContent = this.loadingTemplate.content.cloneNode(true);
+          this.loadingIndicator = loadingContent.firstElementChild;
+
+          // Update avatar
+          var avatar = this.loadingIndicator.querySelector("img");
+          if (avatar) {
+            avatar.src = this.config.icons.assistant_avatar;
+          }
+          this.messagesContainer.appendChild(this.loadingIndicator);
+        } else if (this.loadingIndicator && !this.loadingIndicator.parentNode) {
+          // Re-append if it was removed from DOM
+          this.messagesContainer.appendChild(this.loadingIndicator);
+        }
+        if (this.loadingIndicator) {
+          this.loadingIndicator.style.display = "block";
+        }
+      } else {
+        if (this.loadingIndicator) {
+          this.loadingIndicator.style.display = "none";
+          this.messagesContainer.removeChild(this.loadingIndicator);
+        }
+      }
+
+      // Disable/enable controls
+      if (this.sendBtn) this.sendBtn.disabled = isLoading;
+      // if (this.input) this.input.disabled = isLoading;
+
+      this.scrollToBottom();
+    }
+  }, {
+    key: "scrollToBottom",
+    value: function scrollToBottom() {
+      if (this.config.behavior.auto_scroll && this.messagesContainer) {
+        this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+      }
+    }
+
+    // Public API methods
+  }, {
+    key: "resetConversation",
+    value: function resetConversation() {
+      this.messageHistory = [];
+      this.conversationId = this.generateConversationId();
+      if (this.messagesContainer) {
+        this.messagesContainer.innerHTML = "";
+      }
+      if (this.welcomeScreen && this.config.features.enable_welcome_suggestions) {
+        this.welcomeScreen.style.display = "block";
+        this.messagesContainer.style.display = "none";
+      }
+      this.onConversationStart();
+    }
+  }, {
+    key: "updateConfiguration",
+    value: function updateConfiguration(newConfig) {
+      this.config = this.deepMerge(this.config, newConfig);
+      this.applyConfigurationToDOM();
+      // this.applyTheme();
+    }
+  }, {
+    key: "getConfiguration",
+    value: function getConfiguration() {
+      return _objectSpread({}, this.config);
+    }
+  }, {
+    key: "getConversationHistory",
+    value: function getConversationHistory() {
+      return _toConsumableArray(this.messageHistory);
+    }
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      var _this$sendBtn4, _this$input8;
+      this.onConversationEnd();
+
+      // Remove event listeners
+      (_this$sendBtn4 = this.sendBtn) === null || _this$sendBtn4 === void 0 || _this$sendBtn4.removeEventListener("click", this.sendMessage);
+      (_this$input8 = this.input) === null || _this$input8 === void 0 || _this$input8.removeEventListener("keypress", this.handleKeyPress);
+
+      // Clean up API response listener
+      if (this.apiResponseListener) {
+        this.container.removeEventListener("vf-chatbot:api-response", this.apiResponseListener);
+      }
+    }
+  }]);
+}(); // Global initialization function with configuration support
+function initVFChatbotStandalone() {
+  var customConfig = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  console.log("Looking for standalone chatbot elements...");
+  var chatbotElements = document.querySelectorAll("[data-vf-js-chatbot-standalone-container]");
+  if (chatbotElements.length === 0) {
+    console.warn("No standalone chatbot elements found on page");
+    return [];
+  }
+  var instances = [];
+  chatbotElements.forEach(function (element) {
+    instances.push(new VFChatbotStandalone(element, customConfig));
+  });
+  return instances;
+}
+
+// Global exposure
+if (typeof window !== "undefined") {
+  window.VFChatbotStandalone = VFChatbotStandalone;
+  window.initVFChatbotStandalone = initVFChatbotStandalone;
+}
+
+// import { initVFChatbotFab } from "@visual-framework/vf-chatbot-fab/vf-chatbot-fab.js";
+// Accessibility helpers
+var previouslyFocusedElement = null;
+var focusTrapHandler = null;
+var escapeHandler = null;
+
+// vf-chatbot
+function VFChatbot(element) {
+  this.el = element;
+  this.fab = this.el.querySelector("[data-vf-js-chatbot-fab]");
+  this.modal = this.el.querySelector("[data-vf-js-chatbot-modal-container]");
+  this.init();
+}
+VFChatbot.prototype = {
+  init: function init() {
+    var _this23 = this;
+    if (!this.fab || !this.modal) return;
+
+    // Handle FAB toggle event
+    this.el.addEventListener("vf-chatbot-fab:toggle", function (e) {
+      e.stopPropagation();
+      _this23.openChat();
+    });
+
+    // Handle modal events
+    this.modal.addEventListener("vf-chatbot-modal-container:close", function () {
+      _this23.closeChat();
+    });
+
+    // Handle escape key (handled in focus trap for accessibility)
+    // document.addEventListener("keydown", e => {
+    //   if (
+    //     e.key === "Escape" &&
+    //     !this.modal.classList.contains("vf-chatbot-modal-container--inactive")
+    //   ) {
+    //     this.closeChat();
+    //   }
+    // });
+  },
+  enableFocusTrap: function enableFocusTrap() {
+    var _this24 = this;
+    var modal = this.modal;
+    var focusableSelectors = ["a[href]", "area[href]", "input:not([disabled])", "select:not([disabled])", "textarea:not([disabled])", "button:not([disabled])", "[tabindex]:not([tabindex='-1'])"];
+    var getFocusable = function getFocusable() {
+      return Array.from(modal.querySelectorAll(focusableSelectors.join(","))).filter(function (el) {
+        return el.offsetParent !== null;
+      });
+    };
+
+    // Focus first focusable element or modal itself
+    var focusables = getFocusable();
+    // Try to focus the input first
+    var input = modal.querySelector("[data-vf-js-chatbot-modal-input]");
+    if (input) {
+      input.focus();
+    } else if (focusables.length) {
+      focusables[0].focus();
+    } else {
+      modal.setAttribute("tabindex", "-1");
+      modal.focus();
+    }
+
+    // Trap focus
+    focusTrapHandler = function focusTrapHandler(e) {
+      if (!modal.classList.contains("vf-chatbot-modal-container--active")) return;
+      if (e.key !== "Tab") return;
+      var focusables = getFocusable();
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    // Escape closes modal
+    escapeHandler = function escapeHandler(e) {
+      if (!modal.classList.contains("vf-chatbot-modal-container--active")) return;
+      if (e.key === "Escape") {
+        e.preventDefault();
+        _this24.closeChat();
+      }
+    };
+    document.addEventListener("keydown", focusTrapHandler);
+    document.addEventListener("keydown", escapeHandler);
+  },
+  disableFocusTrap: function disableFocusTrap() {
+    document.removeEventListener("keydown", focusTrapHandler);
+    document.removeEventListener("keydown", escapeHandler);
+  },
+  openChat: function openChat() {
+    this.fab.classList.add("vf-chatbot-fab--inactive");
+    this.modal.classList.remove("vf-chatbot-modal-container--inactive");
+    this.modal.classList.add("vf-chatbot-modal-container--active");
+    this.modal.setAttribute("aria-modal", true);
+
+    // Accessibility: store and trap focus
+    previouslyFocusedElement = document.activeElement;
+    this.enableFocusTrap();
+
+    // Focus on input if it exists
+    var input = this.modal.querySelector("[data-vf-js-chatbot-modal-input]");
+    if (input) {
+      setTimeout(function () {
+        return input.focus();
+      }, 300);
+
+      // Enter to send message (unless Shift+Enter)
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && !e.shiftKey) {
+          e.preventDefault();
+          // You may want to call your send message logic here
+          var sendBtn = input.parentElement.querySelector("[data-vf-js-chatbot-modal-send]");
+          if (sendBtn) sendBtn.click();
+        }
+      });
+    }
+    sessionStorage.setItem("chatbotModalMinimized", "false");
+  },
+  closeChat: function closeChat() {
+    this.fab.classList.remove("vf-chatbot-fab--inactive");
+    this.modal.classList.remove("vf-chatbot-modal-container--active");
+    this.modal.classList.add("vf-chatbot-modal-container--inactive");
+    this.modal.setAttribute("aria-modal", false);
+
+    // Accessibility: restore focus and remove trap
+    this.disableFocusTrap();
+    if (previouslyFocusedElement && previouslyFocusedElement.focus) {
+      previouslyFocusedElement.focus();
+    }
+    sessionStorage.setItem("chatbotModalMinimized", "true");
+  }
+};
+
+// Utility to update bottom/right margin for all chatbots
+function updateChatbotBottomMargin() {
+  var bottomMarginPx = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  var rightMarginPx = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  document.querySelectorAll("[data-vf-js-chatbot]").forEach(function (element) {
+    element.style.setProperty("--vf-chatbot-modal-bottom-margin", "".concat(bottomMarginPx, "px"));
+    element.style.setProperty("--vf-chatbot-modal-right-margin", "".concat(rightMarginPx, "px"));
+  });
+}
+function getChatbotBottomMargin(userSuppliedMargin) {
+  // If user provided a margin, use it
+  if (typeof userSuppliedMargin === "number") return userSuppliedMargin;
+
+  // Find all visible banners with .vf-banner--bottom
+  var banners = Array.from(document.querySelectorAll(".vf-banner--bottom")).filter(function (banner) {
+    // Only consider banners that are displayed (not display: none)
+    return !!(banner.offsetParent || window.getComputedStyle(banner).display !== "none" && banner.offsetHeight > 0);
+  });
+
+  // Get the tallest banner's offsetHeight
+  var maxHeight = 0;
+  banners.forEach(function (banner) {
+    // Listen for close events to update margin
+    banner.addEventListener("vf-banner:close", function () {
+      updateChatbotBottomMargin(0, 0);
+    });
+    var closeBtn = banner.querySelector("[data-vf-js-banner-close]");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", function () {
+        updateChatbotBottomMargin(0, 0);
+      });
+    }
+    if (banner.offsetHeight > maxHeight) {
+      maxHeight = banner.offsetHeight;
+    }
+  });
+  return [maxHeight, 0];
+}
+function initVFChatbot() {
+  var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  if (config && config.type == "modal") {
+    var elements = document.querySelectorAll("[data-vf-js-chatbot]");
+    var chatbotBottomMargin = getChatbotBottomMargin(config.chatbotBottomMargin) || [0, 0];
+    var modalInstances = [];
+    elements.forEach(function (element) {
+      // Set CSS variable for FAB and modal margin
+      element.style.setProperty("--vf-chatbot-modal-bottom-margin", "".concat(chatbotBottomMargin[0], "px"));
+      element.style.setProperty("--vf-chatbot-modal-right-margin", "".concat(chatbotBottomMargin[1], "px"));
+      new VFChatbot(element);
+      initVFChatbotFab();
+      modalInstances = modalInstances.concat(initVFChatbotModal(config));
+    });
+    return modalInstances;
+  } else if (config && config.type == "standalone") {
+    return initVFChatbotStandalone(config);
+  }
+}
+
+// Global exposure
+if (typeof window !== "undefined") {
+  window.VFChatbot = VFChatbot;
+  window.initVFChatbot = initVFChatbot;
 }
 
 // vf-navigation
@@ -2721,6 +6375,9 @@ var vfGaTrackOptions = {
 };
 vfGaIndicateLoaded(vfGaTrackOptions);
 vfTabs();
+window.addEventListener("load", function () {
+  initVFChatbot(config);
+});
 vfNavigationOnThisPage();
 vfTree();
 emblContentHub();

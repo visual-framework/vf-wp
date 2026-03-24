@@ -635,7 +635,7 @@
   var NATIVE_BIND$3 = functionBindNative;
 
   var call$5 = Function.prototype.call;
-
+  // eslint-disable-next-line es/no-function-prototype-bind -- safe
   var functionCall = NATIVE_BIND$3 ? call$5.bind(call$5) : function () {
     return call$5.apply(call$5, arguments);
   };
@@ -669,6 +669,7 @@
 
   var FunctionPrototype$2 = Function.prototype;
   var call$4 = FunctionPrototype$2.call;
+  // eslint-disable-next-line es/no-function-prototype-bind -- safe
   var uncurryThisWithBind = NATIVE_BIND$2 && FunctionPrototype$2.bind.bind(call$4, call$4);
 
   var functionUncurryThis = NATIVE_BIND$2 ? uncurryThisWithBind : function (fn) {
@@ -904,10 +905,10 @@
   var store$3 = sharedStore.exports = globalThis$b[SHARED] || defineGlobalProperty$2(SHARED, {});
 
   (store$3.versions || (store$3.versions = [])).push({
-    version: '3.39.0',
+    version: '3.48.0',
     mode: 'global',
-    copyright: '© 2014-2024 Denis Pushkarev (zloirock.ru)',
-    license: 'https://github.com/zloirock/core-js/blob/v3.39.0/LICENSE',
+    copyright: '© 2013–2025 Denis Pushkarev (zloirock.ru), 2025–2026 CoreJS Company (core-js.io). All rights reserved.',
+    license: 'https://github.com/zloirock/core-js/blob/v3.48.0/LICENSE',
     source: 'https://github.com/zloirock/core-js'
   });
 
@@ -943,7 +944,7 @@
 
   var id = 0;
   var postfix = Math.random();
-  var toString = uncurryThis$7(1.0.toString);
+  var toString = uncurryThis$7(1.1.toString);
 
   var uid$2 = function (key) {
     return 'Symbol(' + (key === undefined ? '' : key) + ')_' + toString(++id + postfix, 36);
@@ -1592,7 +1593,7 @@
   var apply$2 = FunctionPrototype.apply;
   var call = FunctionPrototype.call;
 
-  // eslint-disable-next-line es/no-reflect -- safe
+  // eslint-disable-next-line es/no-function-prototype-bind, es/no-reflect -- safe
   var functionApply = typeof Reflect == 'object' && Reflect.apply || (NATIVE_BIND$1 ? call.bind(apply$2) : function () {
     return call.apply(apply$2, arguments);
   });
@@ -5817,15 +5818,12 @@ if (ResizeObserver) {
   ;
   }
   output += " class=\"\n";
-  if(runtime.contextOrFrameLookup(context, frame, "modifier") == "default") {
-  output += "vf-blockquote";
-  ;
-  }
-  else {
-  if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+  if(runtime.contextOrFrameLookup(context, frame, "modifier") && runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
   output += "vf-blockquote-small";
   ;
   }
+  else {
+  output += "vf-blockquote";
   ;
   }
   if(runtime.contextOrFrameLookup(context, frame, "override_class")) {
@@ -5836,7 +5834,7 @@ if (ResizeObserver) {
   output += "\"\n>\n\n";
   if((runtime.contextOrFrameLookup(context, frame, "blockquote_author_imageurl"))) {
   output += "    <img class=\"vf-profile__image\n";
-  if(runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
+  if(runtime.contextOrFrameLookup(context, frame, "modifier") && runtime.contextOrFrameLookup(context, frame, "modifier") == "small") {
   output += "vf-profile--medium";
   ;
   }

@@ -1,0 +1,37 @@
+{
+  "routes": [
+    {
+      "id": "gpt4-turbo",
+      "title": "GPT-4 Turbo",
+      "selected": true
+    },
+    {
+      "id": "claude3-opus",
+      "title": "Claude 3 Opus"
+    },
+    {
+      "id": "gemini-ultra",
+      "title": "Gemini Ultra"
+    },
+    {
+      "id": "llama3",
+      "title": "LLaMA 3"
+    },
+    {
+      "id": "mixtral",
+      "title": "Mixtral 8x7B"
+    },
+    {
+      "id": "palm3",
+      "title": "PaLM 3"
+    },
+    {
+      "id": "gpt4-vision",
+      "title": "GPT-4 Vision"
+    },
+    {
+      "id": "claude3-sonnet",
+      "title": "Claude 3 Sonnet"
+    }
+  ]
+}
