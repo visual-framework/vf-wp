@@ -974,7 +974,7 @@ class VFChatbotModal {
   }
 
   async callChatAPI(message) {
-    const requestData = {
+    const requestContext = {
       message,
       assistant: this.currentAssistant,
       conversationId: this.conversationId,
@@ -982,6 +982,21 @@ class VFChatbotModal {
         ? this.messageHistory
         : []
     };
+    const requestBodyBuilder = this.config.api.request_body_builder;
+    let requestData = requestContext;
+
+    if (typeof requestBodyBuilder === "function") {
+      requestData = requestBodyBuilder(requestContext);
+    } else if (
+      typeof requestBodyBuilder === "string" &&
+      typeof window[requestBodyBuilder] === "function"
+    ) {
+      requestData = window[requestBodyBuilder](requestContext);
+    }
+
+    if (!requestData || typeof requestData !== "object") {
+      requestData = requestContext;
+    }
 
     const response = await fetch(this.config.api.chat_endpoint, {
       method: "POST",
@@ -1014,6 +1029,8 @@ class VFChatbotModal {
 
   addAssistantResponse(text, sources = [], prompts = []) {
     if (!this.assistantTemplate || !this.messagesContainer) return;
+    const responseFormatter = this.config.api.response_formatter;
+    let renderedText = text;
 
     const messageId = `msg_${Date.now()}_${Math.random()
       .toString(36)
@@ -1036,7 +1053,21 @@ class VFChatbotModal {
     const content = assistantMessage.querySelector(
       ".vf-chatbot-message__content-prompt"
     );
-    content.innerHTML = text;
+
+    if (typeof responseFormatter === "function") {
+      renderedText = responseFormatter(text, { sources, prompts });
+    } else if (
+      typeof responseFormatter === "string" &&
+      typeof window[responseFormatter] === "function"
+    ) {
+      renderedText = window[responseFormatter](text, { sources, prompts });
+    }
+
+    if (renderedText === undefined || renderedText === null) {
+      renderedText = text;
+    }
+
+    content.innerHTML = renderedText;
 
     // Update avatar if configured
     const avatar = assistantMessage.querySelector("img");

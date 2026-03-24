@@ -3242,16 +3242,26 @@ var VFChatbotModal = /*#__PURE__*/function () {
     key: "callChatAPI",
     value: function () {
       var _callChatAPI = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(message) {
-        var requestData, response;
+        var requestContext, requestBodyBuilder, requestData, response;
         return _regenerator().w(function (_context8) {
           while (1) switch (_context8.n) {
             case 0:
-              requestData = {
+              requestContext = {
                 message: message,
                 assistant: this.currentAssistant,
                 conversationId: this.conversationId,
                 messageHistory: this.config.features.enable_conversation_history ? this.messageHistory : []
               };
+              requestBodyBuilder = this.config.api.request_body_builder;
+              requestData = requestContext;
+              if (typeof requestBodyBuilder === "function") {
+                requestData = requestBodyBuilder(requestContext);
+              } else if (typeof requestBodyBuilder === "string" && typeof window[requestBodyBuilder] === "function") {
+                requestData = window[requestBodyBuilder](requestContext);
+              }
+              if (!requestData || _typeof(requestData) !== "object") {
+                requestData = requestContext;
+              }
               _context8.n = 1;
               return fetch(this.config.api.chat_endpoint, {
                 method: "POST",
@@ -3318,6 +3328,8 @@ var VFChatbotModal = /*#__PURE__*/function () {
       var sources = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
       var prompts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
       if (!this.assistantTemplate || !this.messagesContainer) return;
+      var responseFormatter = this.config.api.response_formatter;
+      var renderedText = text;
       var messageId = "msg_".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9));
 
       // Add to message history
@@ -3334,7 +3346,21 @@ var VFChatbotModal = /*#__PURE__*/function () {
       this.onResponseReceive(text, sources, prompts);
       var assistantMessage = this.assistantTemplate.content.cloneNode(true);
       var content = assistantMessage.querySelector(".vf-chatbot-message__content-prompt");
-      content.innerHTML = text;
+      if (typeof responseFormatter === "function") {
+        renderedText = responseFormatter(text, {
+          sources: sources,
+          prompts: prompts
+        });
+      } else if (typeof responseFormatter === "string" && typeof window[responseFormatter] === "function") {
+        renderedText = window[responseFormatter](text, {
+          sources: sources,
+          prompts: prompts
+        });
+      }
+      if (renderedText === undefined || renderedText === null) {
+        renderedText = text;
+      }
+      content.innerHTML = renderedText;
 
       // Update avatar if configured
       var avatar = assistantMessage.querySelector("img");
@@ -4271,16 +4297,26 @@ var VFChatbotStandalone = /*#__PURE__*/function () {
     key: "callChatAPI",
     value: function () {
       var _callChatAPI2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11(message) {
-        var requestData, response;
+        var requestContext, requestBodyBuilder, requestData, response;
         return _regenerator().w(function (_context11) {
           while (1) switch (_context11.n) {
             case 0:
-              requestData = {
+              requestContext = {
                 message: message,
                 assistant: this.currentAssistant,
                 conversationId: this.conversationId,
                 messageHistory: this.config.features.enable_conversation_history ? this.messageHistory : []
               };
+              requestBodyBuilder = this.config.api.request_body_builder;
+              requestData = requestContext;
+              if (typeof requestBodyBuilder === "function") {
+                requestData = requestBodyBuilder(requestContext);
+              } else if (typeof requestBodyBuilder === "string" && typeof window[requestBodyBuilder] === "function") {
+                requestData = window[requestBodyBuilder](requestContext);
+              }
+              if (!requestData || _typeof(requestData) !== "object") {
+                requestData = requestContext;
+              }
               _context11.n = 1;
               return fetch(this.config.api.chat_endpoint, {
                 method: "POST",
@@ -4347,6 +4383,8 @@ var VFChatbotStandalone = /*#__PURE__*/function () {
       var sources = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
       var prompts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
       if (!this.assistantTemplate || !this.messagesContainer) return;
+      var responseFormatter = this.config.api.response_formatter;
+      var renderedText = text;
       var messageId = "msg_".concat(Date.now(), "_").concat(Math.random().toString(36).substr(2, 9));
 
       // Add to message history
@@ -4363,7 +4401,21 @@ var VFChatbotStandalone = /*#__PURE__*/function () {
       this.onResponseReceive(text, sources, prompts);
       var assistantMessage = this.assistantTemplate.content.cloneNode(true);
       var content = assistantMessage.querySelector(".vf-chatbot-message__content-prompt");
-      content.innerHTML = text;
+      if (typeof responseFormatter === "function") {
+        renderedText = responseFormatter(text, {
+          sources: sources,
+          prompts: prompts
+        });
+      } else if (typeof responseFormatter === "string" && typeof window[responseFormatter] === "function") {
+        renderedText = window[responseFormatter](text, {
+          sources: sources,
+          prompts: prompts
+        });
+      }
+      if (renderedText === undefined || renderedText === null) {
+        renderedText = text;
+      }
+      content.innerHTML = renderedText;
 
       // Update avatar if configured
       var avatar = assistantMessage.querySelector("img");

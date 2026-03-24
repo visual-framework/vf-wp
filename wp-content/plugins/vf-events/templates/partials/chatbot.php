@@ -1,4 +1,24 @@
-<div class="vf-chatbot" data-vf-js-chatbot>
+<?php
+$chatbot_event_post_id = !empty($post->post_parent) ? $post->post_parent : get_the_ID();
+$chatbot_event_id = get_field('vf_event_unique_identifier', $chatbot_event_post_id);
+$chatbot_event_type = get_field('vf_event_event_type', $chatbot_event_post_id);
+$chatbot_event_type_value = '';
+
+if (empty($chatbot_event_id)) {
+  $chatbot_event_id = get_post_field('post_name', $chatbot_event_post_id);
+}
+
+if (is_array($chatbot_event_type)) {
+  if (!empty($chatbot_event_type['value'])) {
+    $chatbot_event_type_value = $chatbot_event_type['value'];
+  } elseif (!empty($chatbot_event_type['label'])) {
+    $chatbot_event_type_value = sanitize_title($chatbot_event_type['label']);
+  }
+} elseif (is_string($chatbot_event_type)) {
+  $chatbot_event_type_value = $chatbot_event_type;
+}
+?>
+<div class="vf-chatbot" data-vf-js-chatbot data-event-id="<?php echo esc_attr($chatbot_event_id); ?>" data-event-type="<?php echo esc_attr(strtolower($chatbot_event_type_value)); ?>">
   <button class="vf-chatbot-fab" aria-label="Open chat" data-vf-js-chatbot-fab type="button">
     <svg class="vf-chatbot-fab__icon vf-chatbot-fab__icon--chat" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#vf-chatbot-fab-clip)">
@@ -236,8 +256,7 @@
 <script>
   (function () {
     var assetBase = "/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets";
-    var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
-
+var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
     window.hideEventInfo = function () {
       var eventInfo = document.getElementById("eventInfo");
       if (eventInfo) {
@@ -268,6 +287,93 @@
       window.showEventInfo();
     };
 
+    window.formatEventChatbotResponseHtml = function (rawHtml) {
+      var normalizedHtml = (rawHtml || "").trim();
+      var blocks;
+
+      if (
+        normalizedHtml.indexOf("**") === -1 &&
+        normalizedHtml.indexOf("\n- ") === -1 &&
+        normalizedHtml.indexOf("](") === -1
+      ) {
+        return normalizedHtml;
+      }
+
+      normalizedHtml = normalizedHtml
+        .replace(/<\/?p>/gi, "")
+        .replace(/\r\n/g, "\n")
+        .trim();
+
+      normalizedHtml = normalizedHtml.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      normalizedHtml = normalizedHtml.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+      blocks = normalizedHtml.split(/\n\s*\n/).filter(Boolean);
+
+      return blocks.map(function (block) {
+        var lines = block.split("\n").map(function (line) {
+          return line.trim();
+        }).filter(Boolean);
+        var bulletLines = [];
+        var introLines = [];
+        var bulletStartIndex = -1;
+
+        lines.forEach(function (line, index) {
+          if (bulletStartIndex === -1 && line.indexOf("- ") === 0) {
+            bulletStartIndex = index;
+          }
+        });
+
+        if (bulletStartIndex === 0) {
+          bulletLines = lines;
+        } else if (bulletStartIndex > 0) {
+          introLines = lines.slice(0, bulletStartIndex);
+          bulletLines = lines.slice(bulletStartIndex);
+        }
+
+        if (bulletLines.length > 0) {
+          var introHtml = introLines.length ? "<p>" + introLines.join("<br>") + "</p>" : "";
+          var listHtml = "<ul>" + bulletLines.map(function (line) {
+            return "<li>" + line.replace(/^- /, "") + "</li>";
+          }).join("") + "</ul>";
+
+          return introHtml + listHtml;
+        }
+
+        return "<p>" + lines.join("<br>") + "</p>";
+      }).join("");
+    };
+
+    window.buildEventChatbotRequestBody = function (context) {
+      var chatbot = document.querySelector("[data-vf-js-chatbot]");
+      var eventId = chatbot ? chatbot.getAttribute("data-event-id") : "";
+      var type = chatbot ? chatbot.getAttribute("data-event-type") : "";
+      var heroKicker;
+      var kickerText;
+
+      if (!eventId) {
+        eventId = window.location.pathname.split("/").filter(Boolean).pop() || "";
+      }
+
+      if (!type) {
+        heroKicker = document.querySelector(".vf-hero__kicker");
+        kickerText = heroKicker ? heroKicker.textContent.toLowerCase() : "";
+
+        if (kickerText.indexOf("course") !== -1) {
+          type = "course";
+        } else if (kickerText.indexOf("conference") !== -1) {
+          type = "conference";
+        } else if (kickerText.indexOf("webinar") !== -1) {
+          type = "webinar";
+        }
+      }
+
+      return {
+        question: context.message,
+        eventId: eventId,
+        type: type || "event"
+      };
+    };
+
     window.vfEventChatbotConfig = {
       type: "modal",
       title: "Event Assistant",
@@ -286,13 +392,15 @@
         close: assetBase + "/vf-chatbot--icon-close.svg"
       },
       api: {
-        chat_endpoint: false,
+        chat_endpoint: "https://8jtt848211.execute-api.eu-west-2.amazonaws.com/message",
         feedback_endpoint: false,
         qa_data_url: assetBaseCustom + "/qa.json",
+        request_body_builder: "buildEventChatbotRequestBody",
+        response_formatter: "formatEventChatbotResponseHtml",
         headers: {
           "Content-Type": "application/json"
         },
-        timeout: 10000
+        timeout: 15000
       },
       features: {
         enable_welcome: true,
@@ -343,4 +451,7 @@
     .vf-chatbot-modal {
         justify-content: space-between;
             }
+    .vf-chatbot-message__content-prompt p, li {
+        font-size: 16px !important;
+    }
 </style>
