@@ -45,6 +45,8 @@ if ($social_media_container == 1 && $event_organiser == "cco_hd") {
 include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); 
 }
 
+include( plugin_dir_path( __FILE__ ) . 'partials/chatbot.php');
+
 // Global Footer
 if (class_exists('VF_Global_Footer')) {
   VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));
