@@ -484,14 +484,23 @@ if ( class_exists('VF_Events') ) {
           while ($query->have_posts()) {
               $query->the_post();
 
+              $hero_image = get_field('vf_event_hero');
+              if (is_array($hero_image)) {
+                  $hero_image = !empty($hero_image['url']) ? $hero_image['url'] : '';
+              } elseif (is_numeric($hero_image)) {
+                  $hero_image = wp_get_attachment_url((int) $hero_image);
+              }
+
               // Get post data
               $post_data = array(
                   'title' => get_the_title(),
                   'url' => get_field('vf_event_more_information_link'), 
                   'start_date' => get_field('vf_event_start_date'), 
+                  'end_date' => get_field('vf_event_end_date'),
                   'event_type' => get_field('vf_event_event_type')['label'],  
                   'contact_name' => get_field('vf_event_contact_name'), 
                   'contact_email' => get_field('vf_event_contact'), 
+                  'hero_image' => $hero_image,
                   'custom_faq' => html_entity_decode(wp_strip_all_tags(get_field('vf_event_custom_faq')))
               );
 

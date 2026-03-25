@@ -404,6 +404,7 @@ if (!empty($chatbot_other_location)) {
 <style>
     .vf-chatbot-modal .vf-chatbot-welcome__content {
     min-height: 25dvh;
+    margin-bottom: 1rem;
 }
 
     .vf-chatbot-modal-container,
