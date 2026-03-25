@@ -18,6 +18,11 @@ export class VFChatbotSelector {
       this.el.getAttribute("data-show-all-services") === "true";
     this.showAllServicesSelected =
       this.el.getAttribute("data-show-all-services-selected") === "true";
+    this.excludeRouteId = this.el.getAttribute("data-exclude-route-id") || "";
+    this.lockTitleText =
+      this.el.getAttribute("data-lock-title-text") === "true";
+    this.emptyLabel =
+      this.el.getAttribute("data-empty-label") || "Select services";
 
     this.init();
     this.loadRoutes();
@@ -100,13 +105,16 @@ export class VFChatbotSelector {
 
   updateRoutesList() {
     const listEl = this.el.querySelector("[data-vf-js-chatbot-selector-list]");
-    if (!listEl || !this.routes) return;
+    const visibleRoutes = this.routes
+      ? this.routes.filter(route => route.id !== this.excludeRouteId)
+      : null;
+    if (!listEl || !visibleRoutes) return;
 
     // Clear existing list
     listEl.innerHTML = "";
 
     // Check if any routes have pre-selected state
-    const hasPreSelectedRoutes = this.routes.some(route => route.selected);
+    const hasPreSelectedRoutes = visibleRoutes.some(route => route.selected);
 
     // Add "All services" option if enabled
     if (this.showAllServices) {
@@ -137,7 +145,7 @@ export class VFChatbotSelector {
     }
 
     // Add route items
-    this.routes.forEach(route => {
+    visibleRoutes.forEach(route => {
       const item = document.createElement("li");
       item.className = "vf-chatbot-selector__item";
 
@@ -390,12 +398,12 @@ export class VFChatbotSelector {
       item.classList.add("vf-chatbot-selector__item--selected");
 
       // Update title text immediately
-      const title = item.querySelector(".vf-chatbot-selector__item-title")
-        .textContent;
       const titleText = this.el.querySelector(
         ".vf-chatbot-selector__title-text"
       );
-      if (titleText) {
+      if (titleText && !this.lockTitleText) {
+        const title = item.querySelector(".vf-chatbot-selector__item-title")
+          .textContent;
         titleText.textContent = title;
       }
 
@@ -527,10 +535,15 @@ export class VFChatbotSelector {
     const titleText = this.el.querySelector(".vf-chatbot-selector__title-text");
     if (!titleText) return;
 
+    if (this.lockTitleText) {
+      titleText.textContent = this.emptyLabel;
+      return;
+    }
+
     if (this.allServicesSelected) {
       titleText.textContent = "All services";
     } else if (this.selectedItems.size === 0) {
-      titleText.textContent = "Select services";
+      titleText.textContent = this.emptyLabel;
     } else if (!this.isMultiselect) {
       const selectedId = Array.from(this.selectedItems)[0];
       const selectedItem = this.el.querySelector(

@@ -1500,6 +1500,9 @@ var VFChatbotSelector = /*#__PURE__*/function () {
 
     this.showAllServices = this.el.getAttribute("data-show-all-services") === "true";
     this.showAllServicesSelected = this.el.getAttribute("data-show-all-services-selected") === "true";
+    this.excludeRouteId = this.el.getAttribute("data-exclude-route-id") || "";
+    this.lockTitleText = this.el.getAttribute("data-lock-title-text") === "true";
+    this.emptyLabel = this.el.getAttribute("data-empty-label") || "Select services";
     this.init();
     this.loadRoutes();
   }
@@ -1609,13 +1612,16 @@ var VFChatbotSelector = /*#__PURE__*/function () {
     key: "updateRoutesList",
     value: function updateRoutesList() {
       var listEl = this.el.querySelector("[data-vf-js-chatbot-selector-list]");
-      if (!listEl || !this.routes) return;
+      var visibleRoutes = this.routes ? this.routes.filter(function (route) {
+        return route.id !== this.excludeRouteId;
+      }, this) : null;
+      if (!listEl || !visibleRoutes) return;
 
       // Clear existing list
       listEl.innerHTML = "";
 
       // Check if any routes have pre-selected state
-      var hasPreSelectedRoutes = this.routes.some(function (route) {
+      var hasPreSelectedRoutes = visibleRoutes.some(function (route) {
         return route.selected;
       });
 
@@ -1638,7 +1644,7 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       }
 
       // Add route items
-      this.routes.forEach(function (route) {
+      visibleRoutes.forEach(function (route) {
         var item = document.createElement("li");
         item.className = "vf-chatbot-selector__item";
         if (route.selected) {
@@ -1872,9 +1878,9 @@ var VFChatbotSelector = /*#__PURE__*/function () {
         item.classList.add("vf-chatbot-selector__item--selected");
 
         // Update title text immediately
-        var title = item.querySelector(".vf-chatbot-selector__item-title").textContent;
         var titleText = this.el.querySelector(".vf-chatbot-selector__title-text");
-        if (titleText) {
+        if (titleText && !this.lockTitleText) {
+          var title = item.querySelector(".vf-chatbot-selector__item-title").textContent;
           titleText.textContent = title;
         }
         this.closeDropdown();
@@ -2006,10 +2012,14 @@ var VFChatbotSelector = /*#__PURE__*/function () {
     value: function updateSelectionDisplay() {
       var titleText = this.el.querySelector(".vf-chatbot-selector__title-text");
       if (!titleText) return;
+      if (this.lockTitleText) {
+        titleText.textContent = this.emptyLabel;
+        return;
+      }
       if (this.allServicesSelected) {
         titleText.textContent = "All services";
       } else if (this.selectedItems.size === 0) {
-        titleText.textContent = "Select services";
+        titleText.textContent = this.emptyLabel;
       } else if (!this.isMultiselect) {
         var selectedId = Array.from(this.selectedItems)[0];
         var selectedItem = this.el.querySelector("[data-route-id=\"".concat(selectedId, "\"]"));

@@ -9,6 +9,10 @@ $chatbot_end_date = get_field('vf_event_end_date', $chatbot_event_post_id);
 $chatbot_location = get_field('vf_event_location', $chatbot_event_post_id);
 $chatbot_other_location = get_field('vf_event_other_location', $chatbot_event_post_id);
 $chatbot_hero_image = get_field('vf_event_hero', $chatbot_event_post_id);
+$chatbot_event_id = get_post_field('post_name', $chatbot_event_post_id);
+$chatbot_routes_url = function_exists('custom_get_event_chatbot_routes_url')
+  ? custom_get_event_chatbot_routes_url()
+  : get_stylesheet_directory_uri() . '/assets/assets/chatbot/events-routes.json';
 $chatbot_event_type_value = '';
 $chatbot_event_type_label = '';
 $chatbot_event_date_label = '';
@@ -69,7 +73,7 @@ if (!empty($chatbot_other_location)) {
     : $chatbot_location;
 }
 ?>
-<div class="vf-chatbot" data-vf-js-chatbot data-event-type="<?php echo esc_attr(strtolower($chatbot_event_type_value)); ?>">
+<div class="vf-chatbot" data-vf-js-chatbot data-event-id="<?php echo esc_attr($chatbot_event_id); ?>" data-event-type="<?php echo esc_attr(strtolower($chatbot_event_type_value)); ?>">
   <button class="vf-chatbot-fab" aria-label="Open chat" data-vf-js-chatbot-fab type="button">
     <svg class="vf-chatbot-fab__icon vf-chatbot-fab__icon--chat" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#vf-chatbot-fab-clip)">
@@ -87,13 +91,32 @@ if (!empty($chatbot_other_location)) {
   <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="Event Assistant chatbot" data-vf-js-chatbot-modal-container>
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
-        <div class="vf-chatbot-selector">
-          <div class="vf-chatbot-selector__title">
+        <div class="vf-chatbot-selector" data-vf-js-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-multiselect="false" data-max-multiselect="1" data-show-search="true" data-empty-label="Select other event" data-lock-title-text="true" data-exclude-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
+          <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
             <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg" alt="Event Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
               <span class="vf-chatbot-selector__main-text">Event Assistant</span>
-              <span class="vf-chatbot-selector__title-text">Custom text</span>
+              <span class="vf-chatbot-selector__title-text">Select other event</span>
             </div>
+            <span class="vf-chatbot-selector__chevron">
+              <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#chatbot-selector-chevron)">
+                  <path d="M15.999 19.0975C15.7378 19.098 15.479 19.0468 15.2377 18.9468C14.9963 18.8469 14.7771 18.7001 14.5926 18.5151L8.32863 11.9279C8.21951 11.8137 8.13399 11.6791 8.07698 11.5318C8.01998 11.3845 7.99261 11.2274 7.99645 11.0695C8.00028 10.9116 8.03525 10.756 8.09934 10.6117C8.16342 10.4673 8.25537 10.337 8.36992 10.2283C8.48446 10.1195 8.61934 10.0344 8.76683 9.97791C8.91432 9.92139 9.07152 9.89454 9.2294 9.89889C9.38729 9.90325 9.54277 9.93872 9.68692 10.0033C9.83107 10.0678 9.96106 10.1602 10.0694 10.2751L15.7094 16.2143C15.7467 16.2537 15.7916 16.2851 15.8414 16.3066C15.8912 16.3281 15.9448 16.3391 15.999 16.3391C16.0533 16.3391 16.1069 16.3281 16.1567 16.3066C16.2065 16.2851 16.2514 16.2537 16.2886 16.2143L21.9286 10.2751C22.037 10.1602 22.167 10.0678 22.3112 10.0033C22.4553 9.93872 22.6108 9.90325 22.7687 9.89889C22.9266 9.89454 23.0838 9.92139 23.2312 9.97791C23.3787 10.0344 23.5136 10.1195 23.6282 10.2283C23.7427 10.337 23.8347 10.4673 23.8987 10.6117C23.9628 10.756 23.9978 10.9116 24.0016 11.0695C24.0055 11.2274 23.9781 11.3845 23.9211 11.5318C23.8641 11.6791 23.7786 11.8137 23.6694 11.9279L17.439 18.4991C17.2503 18.6888 17.0259 18.8394 16.7788 18.9421C16.5316 19.0448 16.2667 19.0976 15.999 19.0975Z" fill="#707372"/>
+                </g>
+                <defs>
+                  <clipPath id="chatbot-selector-chevron">
+                    <rect width="16" height="16" fill="white" transform="translate(8 6.5)"/>
+                  </clipPath>
+                </defs>
+              </svg>
+            </span>
+          </button>
+          <div class="vf-chatbot-selector__dropdown" data-vf-js-selector-dropdown>
+            <div class="vf-chatbot-selector__search">
+              <label class="vf-u-sr-only" id="vf-chatbot-selector-search-label" for="vf-chatbot-selector-search">Type to search</label>
+              <input type="text" id="vf-chatbot-selector-search" aria-labelledby="vf-chatbot-selector-search-label" placeholder="Search events..." data-vf-js-selector-search>
+            </div>
+            <ul class="vf-chatbot-selector__list" data-vf-js-chatbot-selector-list></ul>
           </div>
         </div>
       </div>
@@ -117,13 +140,13 @@ if (!empty($chatbot_other_location)) {
           >
             <div class="vf-events-chatbot-event-card">
               <?php if (!empty($chatbot_event_date_label)) { ?>
-                <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"><?php echo esc_html($chatbot_event_date_label); ?></p>
+                <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge" data-vf-js-chatbot-event-date><?php echo esc_html($chatbot_event_date_label); ?></p>
               <?php } ?>
               <?php if (!empty($chatbot_event_type_label)) { ?>
-                <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"><?php echo esc_html($chatbot_event_type_label); ?></p>
+                <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge" data-vf-js-chatbot-event-type><?php echo esc_html($chatbot_event_type_label); ?></p>
               <?php } ?>
               <?php if (!empty($chatbot_title)) { ?>
-                <h3 class="event-card-title"><?php echo esc_html($chatbot_title); ?></h3>
+                <h3 class="event-card-title" data-vf-js-chatbot-event-title><?php echo esc_html($chatbot_title); ?></h3>
               <?php } ?>
               <p style="display: none;" class="event-card-location"><?php echo esc_html($chatbot_event_location_label); ?></p>
             </div>
@@ -394,8 +417,8 @@ if (!empty($chatbot_other_location)) {
       },
       disclaimer: "Disclaimer: This chatbot is designed to assist you with general information and basic inquiries. Review generated content for accuracy.",
       footnote: "Review AI generated content for accuracy.",
-      enable_session_persistence: true,
-      restore_minimized_state: true
+      enable_session_persistence: false,
+      restore_minimized_state: false
     };
 
     window.config = window.vfEventChatbotConfig;
