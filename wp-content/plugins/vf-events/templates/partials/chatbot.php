@@ -1,11 +1,24 @@
 <?php
 $chatbot_event_post_id = !empty($post->post_parent) ? $post->post_parent : get_the_ID();
-$chatbot_event_id = get_field('vf_event_unique_identifier', $chatbot_event_post_id);
+$chatbot_title = get_the_title($chatbot_event_post_id);
 $chatbot_event_type = get_field('vf_event_event_type', $chatbot_event_post_id);
+$chatbot_embo_event_name = get_field('vf_event_embo_subtype', $chatbot_event_post_id);
+$chatbot_displayed = get_field('vf_event_displayed', $chatbot_event_post_id);
+$chatbot_start_date = get_field('vf_event_start_date', $chatbot_event_post_id);
+$chatbot_end_date = get_field('vf_event_end_date', $chatbot_event_post_id);
+$chatbot_location = get_field('vf_event_location', $chatbot_event_post_id);
+$chatbot_other_location = get_field('vf_event_other_location', $chatbot_event_post_id);
+$chatbot_hero_image = get_field('vf_event_hero', $chatbot_event_post_id);
 $chatbot_event_type_value = '';
+$chatbot_event_type_label = '';
+$chatbot_event_date_label = '';
+$chatbot_event_location_label = '';
 
-if (empty($chatbot_event_id)) {
-  $chatbot_event_id = get_post_field('post_name', $chatbot_event_post_id);
+if (is_array($chatbot_hero_image) && !empty($chatbot_hero_image['ID'])) {
+  $chatbot_hero_image = wp_get_attachment_url($chatbot_hero_image['ID'], 'medium', false, array(
+    'loading'  => 'lazy',
+    'itemprop' => 'image',
+  ));
 }
 
 if (is_array($chatbot_event_type)) {
@@ -14,11 +27,49 @@ if (is_array($chatbot_event_type)) {
   } elseif (!empty($chatbot_event_type['label'])) {
     $chatbot_event_type_value = sanitize_title($chatbot_event_type['label']);
   }
+
+  if (!empty($chatbot_event_type['label'])) {
+    $chatbot_event_type_label = $chatbot_event_type['label'];
+  }
 } elseif (is_string($chatbot_event_type)) {
   $chatbot_event_type_value = $chatbot_event_type;
+  $chatbot_event_type_label = $chatbot_event_type;
+}
+
+if (!empty($chatbot_displayed)) {
+  $chatbot_event_type_label = $chatbot_displayed;
+} elseif (is_array($chatbot_embo_event_name) && !empty($chatbot_embo_event_name['label'])) {
+  $chatbot_event_type_label = $chatbot_embo_event_name['label'];
+}
+
+if (!empty($chatbot_start_date)) {
+  $chatbot_start = DateTime::createFromFormat('j M Y', $chatbot_start_date);
+  $chatbot_end = !empty($chatbot_end_date)
+    ? DateTime::createFromFormat('j M Y', $chatbot_end_date)
+    : false;
+
+  if ($chatbot_start instanceof DateTime) {
+    if ($chatbot_end instanceof DateTime) {
+      if ($chatbot_start->format('M') === $chatbot_end->format('M')) {
+        $chatbot_event_date_label = $chatbot_start->format('j') . ' – ' . $chatbot_end->format('j M Y');
+      } else {
+        $chatbot_event_date_label = $chatbot_start->format('j M') . ' – ' . $chatbot_end->format('j M Y');
+      }
+    } else {
+      $chatbot_event_date_label = $chatbot_start->format('j M Y');
+    }
+  }
+}
+
+if (!empty($chatbot_other_location)) {
+  $chatbot_event_location_label = $chatbot_other_location;
+} elseif (!empty($chatbot_location)) {
+  $chatbot_event_location_label = is_array($chatbot_location)
+    ? implode(' and ', $chatbot_location)
+    : $chatbot_location;
 }
 ?>
-<div class="vf-chatbot" data-vf-js-chatbot data-event-id="<?php echo esc_attr($chatbot_event_id); ?>" data-event-type="<?php echo esc_attr(strtolower($chatbot_event_type_value)); ?>">
+<div class="vf-chatbot" data-vf-js-chatbot data-event-type="<?php echo esc_attr(strtolower($chatbot_event_type_value)); ?>">
   <button class="vf-chatbot-fab" aria-label="Open chat" data-vf-js-chatbot-fab type="button">
     <svg class="vf-chatbot-fab__icon vf-chatbot-fab__icon--chat" width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clip-path="url(#vf-chatbot-fab-clip)">
@@ -57,7 +108,26 @@ if (is_array($chatbot_event_type)) {
     </div>
 
     <div class="vf-chatbot-modal | vf-u-background-color-ui--grey--light" data-vf-js-chatbot-modal>
-         <div id="eventInfo"><div style="zoom: 75%;height: 150px;background-image: url(&quot;https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/CEL22-01_Hero_banner_3000x1000px_3-scaled-e1689061566403.jpg&quot;);background-position: 73% 46%; /* or 98% 50% */background-size: auto;background-repeat: no-repeat;z-index: 0;"></div></div>
+                  <div
+            id="eventInfo"
+            class="vf-events-chatbot-event-hero"
+            <?php if (!empty($chatbot_hero_image)) { ?>
+             style="background: url('<?php echo esc_url($chatbot_hero_image); ?>') no-repeat 73% 46%; background-size: auto; margin: 6px 6px 1rem 6px;"
+            <?php } ?>
+          >
+            <div class="vf-events-chatbot-event-card">
+              <?php if (!empty($chatbot_event_date_label)) { ?>
+                <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"><?php echo esc_html($chatbot_event_date_label); ?></p>
+              <?php } ?>
+              <?php if (!empty($chatbot_event_type_label)) { ?>
+                <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"><?php echo esc_html($chatbot_event_type_label); ?></p>
+              <?php } ?>
+              <?php if (!empty($chatbot_title)) { ?>
+                <h3 class="event-card-title"><?php echo esc_html($chatbot_title); ?></h3>
+              <?php } ?>
+              <p style="display: none;" class="event-card-location"><?php echo esc_html($chatbot_event_location_label); ?></p>
+            </div>
+          </div>
       <div class="vf-chatbot-modal__content" data-vf-js-chatbot-modal-content>
         <div
           role="region"
@@ -70,13 +140,14 @@ if (is_array($chatbot_event_type)) {
           data-enable-fallback-responses="true"
           data-qa-data-url="/wp-content/themes/vf-wp/assets/assets/chatbot/qa.json"
         >
+
           <div class="vf-chatbot-welcome__content">
             <div class="vf-chatbot-welcome__logo">
               <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-32x32-dark-green.svg" alt="Event Assistant">
             </div>
             <h1 class="vf-chatbot-welcome__title">Event Assistant</h1>
             <div class="vf-chatbot-welcome__message">
-              Ask about this event, event logistics, or related EMBL resources.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam cursus quis risus a egestas.
             </div>
           </div>
           <div class="vf-chatbot-welcome__suggestions">
@@ -104,8 +175,8 @@ if (is_array($chatbot_event_type)) {
               </button>
             </div>
           </div>
+          </div>
         </div>
-      </div>
 
       <div role="region" aria-label="Chat message input" class="vf-chatbot-modal__input-container">
         <div class="vf-chatbot-modal__input-wrapper">
@@ -253,126 +324,11 @@ if (is_array($chatbot_event_type)) {
   </div>
 </div>
 
+<script src="/wp-content/plugins/vf-events/assets/vf-events-chatbot.js"></script>
 <script>
   (function () {
     var assetBase = "/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets";
-var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
-    window.hideEventInfo = function () {
-      var eventInfo = document.getElementById("eventInfo");
-      if (eventInfo) {
-        eventInfo.style.display = "none";
-      }
-    };
-
-    window.showEventInfo = function () {
-      var eventInfo = document.getElementById("eventInfo");
-      if (eventInfo) {
-        eventInfo.style.display = "";
-      }
-    };
-
-    window.handleMessageSend = function () {
-      window.hideEventInfo();
-    };
-
-    window.handleSuggestionClick = function () {
-      window.hideEventInfo();
-    };
-
-    window.handleFabClick = function () {
-      window.showEventInfo();
-    };
-
-    window.handleDialogConfirm = function () {
-      window.showEventInfo();
-    };
-
-    window.formatEventChatbotResponseHtml = function (rawHtml) {
-      var normalizedHtml = (rawHtml || "").trim();
-      var blocks;
-
-      if (
-        normalizedHtml.indexOf("**") === -1 &&
-        normalizedHtml.indexOf("\n- ") === -1 &&
-        normalizedHtml.indexOf("](") === -1
-      ) {
-        return normalizedHtml;
-      }
-
-      normalizedHtml = normalizedHtml
-        .replace(/<\/?p>/gi, "")
-        .replace(/\r\n/g, "\n")
-        .trim();
-
-      normalizedHtml = normalizedHtml.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-      normalizedHtml = normalizedHtml.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-
-      blocks = normalizedHtml.split(/\n\s*\n/).filter(Boolean);
-
-      return blocks.map(function (block) {
-        var lines = block.split("\n").map(function (line) {
-          return line.trim();
-        }).filter(Boolean);
-        var bulletLines = [];
-        var introLines = [];
-        var bulletStartIndex = -1;
-
-        lines.forEach(function (line, index) {
-          if (bulletStartIndex === -1 && line.indexOf("- ") === 0) {
-            bulletStartIndex = index;
-          }
-        });
-
-        if (bulletStartIndex === 0) {
-          bulletLines = lines;
-        } else if (bulletStartIndex > 0) {
-          introLines = lines.slice(0, bulletStartIndex);
-          bulletLines = lines.slice(bulletStartIndex);
-        }
-
-        if (bulletLines.length > 0) {
-          var introHtml = introLines.length ? "<p>" + introLines.join("<br>") + "</p>" : "";
-          var listHtml = "<ul>" + bulletLines.map(function (line) {
-            return "<li>" + line.replace(/^- /, "") + "</li>";
-          }).join("") + "</ul>";
-
-          return introHtml + listHtml;
-        }
-
-        return "<p>" + lines.join("<br>") + "</p>";
-      }).join("");
-    };
-
-    window.buildEventChatbotRequestBody = function (context) {
-      var chatbot = document.querySelector("[data-vf-js-chatbot]");
-      var eventId = chatbot ? chatbot.getAttribute("data-event-id") : "";
-      var type = chatbot ? chatbot.getAttribute("data-event-type") : "";
-      var heroKicker;
-      var kickerText;
-
-      if (!eventId) {
-        eventId = window.location.pathname.split("/").filter(Boolean).pop() || "";
-      }
-
-      if (!type) {
-        heroKicker = document.querySelector(".vf-hero__kicker");
-        kickerText = heroKicker ? heroKicker.textContent.toLowerCase() : "";
-
-        if (kickerText.indexOf("course") !== -1) {
-          type = "course";
-        } else if (kickerText.indexOf("conference") !== -1) {
-          type = "conference";
-        } else if (kickerText.indexOf("webinar") !== -1) {
-          type = "webinar";
-        }
-      }
-
-      return {
-        question: context.message,
-        eventId: eventId,
-        type: type || "event"
-      };
-    };
+    var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
 
     window.vfEventChatbotConfig = {
       type: "modal",
@@ -395,8 +351,6 @@ var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
         chat_endpoint: "https://8jtt848211.execute-api.eu-west-2.amazonaws.com/message",
         feedback_endpoint: false,
         qa_data_url: assetBaseCustom + "/qa.json",
-        request_body_builder: "buildEventChatbotRequestBody",
-        response_formatter: "formatEventChatbotResponseHtml",
         headers: {
           "Content-Type": "application/json"
         },
@@ -421,10 +375,10 @@ var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
         show_scrollbar: false
       },
       handlers: {
-        on_message_send: "handleMessageSend",
-        on_suggestion_click: "handleSuggestionClick",
-        on_fab_click: "handleFabClick",
-        on_dialog_confirm: "handleDialogConfirm"
+        on_message_send: "vfEventsHandleChatbotMessageSend",
+        on_suggestion_click: "vfEventsHandleChatbotSuggestionClick",
+        on_fab_click: "vfEventsHandleChatbotFabClick",
+        on_dialog_confirm: "vfEventsHandleChatbotDialogConfirm"
       },
       feedback_options: {
         positive: [
@@ -448,10 +402,95 @@ var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
   })();
 </script>
 <style>
+    .vf-chatbot-modal .vf-chatbot-welcome__content {
+    min-height: 25dvh;
+}
+
+    .vf-chatbot-modal-container,
+    .vf-chatbot-modal,
+    .vf-chatbot-modal__content,
+    .vf-chatbot-modal__messages-no-scrollbar,
+    .vf-chatbot-welcome {
+        overscroll-behavior: contain;
+    }
     .vf-chatbot-modal {
         justify-content: space-between;
-            }
+        overflow: hidden;
+    }
+
+    .vf-events-chatbot-event-hero {
+        display: block;
+        position: relative;
+        transition: background-size 220ms ease, background-position 220ms ease, box-shadow 220ms ease;
+    }
+    .vf-chatbot-welcome__content {
+        position: relative;
+        padding-top: 0.5rem;
+    }
+    .vf-chatbot-modal__content {
+        background: transparent;
+    }
+    .vf-events-chatbot-event-card {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-end;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(360deg, rgba(0, 0, 0, 0.6) 18%, rgba(0, 0, 0, 0) 75%);
+        box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, .55);
+        transition: padding 220ms ease, background 220ms ease, box-shadow 220ms ease;
+    }
+    .vf-events-chatbot-badge {
+        margin-right: 1rem;
+        margin-bottom: 0.75rem;
+        transform-origin: top left;
+        transition: transform 220ms ease, margin 220ms ease, padding 220ms ease, font-size 220ms ease, line-height 220ms ease;
+        max-height: 3rem;
+        overflow: hidden;
+    }
     .vf-chatbot-message__content-prompt p, li {
         font-size: 16px !important;
     }
+    .vf-chatbot-message__content-prompt h1, h2, h3 {
+        font-size: 18px !important;
+    }
+
+    .customBadgePurple {
+    background-color: #007B53 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #fff !important;
+    font-weight: 500 !important;
+    font-size: 11px !important;
+    margin-bottom: 0;
+}
+
+.event-card-title {
+    width: 100%;
+    margin: 0.5rem 0 !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #fff !important;
+    transition: font-size 220ms ease, margin 220ms ease, line-height 220ms ease;
+}
+.vf-events-chatbot-event-hero--compact .vf-events-chatbot-event-card {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    background: linear-gradient(360deg, rgba(0, 0, 0, 0.72) 18%, rgba(0, 0, 0, 0.15) 100%);
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .35);
+}
+.vf-events-chatbot-event-hero--compact .vf-events-chatbot-badge {
+    transform: scale(0.92);
+    margin-top: 0;
+    margin-right: 0.5rem;
+    margin-bottom: 0.35rem;
+    font-size: 10px !important;
+    line-height: 1.1;
+}
+.vf-events-chatbot-event-hero--compact .event-card-title {
+    margin: 0 !important;
+    font-size: 15px !important;
+    line-height: 1.3;
+}
 </style>
