@@ -10,11 +10,13 @@ if (class_exists('VF_Breadcrumbs')) {
 
 
 global $post;
+$event_post_id = !empty($post->post_parent) ? $post->post_parent : get_the_ID();
 
 $event_organiser = get_field('vf_event_organiser');
 $social_media_container = get_field('vf_event_social_media', $post->post_parent);
 $cpp_container = get_field('vf_event_cpp_container', $post->post_parent);
 $cancelled = get_field('vf_event_canceled');
+$event_custom_faq = get_field('vf_event_custom_faq', $event_post_id);
 
 ?>
 
@@ -45,7 +47,13 @@ if ($social_media_container == 1 && $event_organiser == "cco_hd") {
 include( plugin_dir_path( __FILE__ ) . 'partials/social-container.php'); 
 }
 
+if ( ! empty($event_custom_faq)) { ?>
+<div id="event-custom-faq" data-vf-event-custom-faq hidden><?php echo wp_kses_post($event_custom_faq); ?></div>
+<?php }
+
+if (VF_Events::is_chatbot_enabled()) {
 include( plugin_dir_path( __FILE__ ) . 'partials/chatbot.php');
+}
 
 // Global Footer
 if (class_exists('VF_Global_Footer')) {

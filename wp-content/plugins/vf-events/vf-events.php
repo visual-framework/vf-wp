@@ -107,32 +107,6 @@ class VF_Events {
       $plugin['Version'],
       'all'
     );
-
-    $screen = get_current_screen();
-    if ( ! $screen || $screen->id !== VF_Events::type() . '_page_vf-events-settings') {
-      return;
-    }
-
-    $settings = wp_enqueue_code_editor(array(
-      'type' => 'text/html',
-      'codemirror' => array(
-        'lineNumbers' => true,
-        'lineWrapping' => true,
-      ),
-    ));
-
-    if ( ! $settings) {
-      return;
-    }
-
-    wp_enqueue_script('code-editor');
-    wp_enqueue_style('code-editor');
-    wp_enqueue_script('wp-theme-plugin-editor');
-
-    wp_add_inline_script(
-      'code-editor',
-      'jQuery(function($){var editorSettings=' . wp_json_encode($settings) . ';var textarea=document.querySelector(\'textarea[name="acf[field_vf_events_chatbot_markup]"]\');if(!textarea||!window.wp||!wp.codeEditor){return;}wp.codeEditor.initialize(textarea, editorSettings);});'
-    );
   }
 
   /**
@@ -267,23 +241,6 @@ class VF_Events {
     }
 
     return (bool) $enabled;
-  }
-
-  /**
-   * Return the chatbot markup configured in settings.
-   */
-  static public function get_chatbot_markup() {
-    $markup = null;
-
-    if (function_exists('get_field')) {
-      $markup = get_field('vf_events_chatbot_markup', 'option');
-    }
-
-    if ($markup === null || $markup === false) {
-      $markup = get_option('options_vf_events_chatbot_markup', null);
-    }
-
-    return is_string($markup) ? $markup : '';
   }
 
   /**

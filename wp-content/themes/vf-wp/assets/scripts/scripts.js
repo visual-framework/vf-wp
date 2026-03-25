@@ -6376,7 +6376,11 @@ var vfGaTrackOptions = {
 vfGaIndicateLoaded(vfGaTrackOptions);
 vfTabs();
 window.addEventListener("load", function () {
-  initVFChatbot(config);
+  var hasChatbot = document.querySelector("[data-vf-js-chatbot]") || document.querySelector("[data-vf-js-chatbot-standalone-container]");
+  if (!hasChatbot || typeof window.config === "undefined" || !window.config) {
+    return;
+  }
+  initVFChatbot(window.config);
 });
 vfNavigationOnThisPage();
 vfTree();

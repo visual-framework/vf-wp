@@ -15,10 +15,6 @@ class VF_Events_Template {
     add_filter('template_include',
       array($this, 'template_include')
     );
-    add_action('wp_footer',
-      array($this, 'render_chatbot_modal'),
-      100
-    );
   }
 
   /**
@@ -72,21 +68,6 @@ class VF_Events_Template {
     }
     return $template;
   }
-
-  /**
-   * Action: `wp_footer`
-   */
-  public function render_chatbot_modal() {
-    if ( ! is_singular(VF_Events::type())) {
-      return;
-    }
-    if ( ! VF_Events::is_chatbot_enabled()) {
-      return;
-    }
-
-    include $this->get_template('partials/chatbot-modal.php');
-  }
-
 } // VF_Events_Template
 
 endif;

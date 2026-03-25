@@ -175,10 +175,10 @@ class VF_Events_ACF {
       'fields' => array(
         array(
           'key' => 'field_vf_events_enable_chatbot',
-          'label' => __('Enable chatbot on event pages', 'vfwp'),
+          'label' => __('Enable an AI assistant event pages', 'vfwp'),
           'name' => 'vf_events_enable_chatbot',
           'type' => 'true_false',
-          'instructions' => __('Display the AI Assistant chatbot on event pages.', 'vfwp'),
+          'instructions' => __('Only for events added by Course and Conference Office', 'vfwp'),
           'required' => 0,
           'conditional_logic' => 0,
           'wrapper' => array(
@@ -191,31 +191,6 @@ class VF_Events_ACF {
           'ui' => 1,
           'ui_on_text' => __('Enabled', 'vfwp'),
           'ui_off_text' => __('Disabled', 'vfwp'),
-        ),
-        array(
-          'key' => 'field_vf_events_chatbot_markup',
-          'label' => __('Chatbot modal markup', 'vfwp'),
-          'name' => 'vf_events_chatbot_markup',
-          'type' => 'textarea',
-          'instructions' => __('Edit the HTML injected before the closing body tag on event pages.', 'vfwp'),
-          'required' => 0,
-          'conditional_logic' => array(
-            array(
-              array(
-                'field' => 'field_vf_events_enable_chatbot',
-                'operator' => '==',
-                'value' => '1',
-              ),
-            ),
-          ),
-          'wrapper' => array(
-            'width' => '',
-            'class' => 'vf-events-code-editor',
-            'id' => '',
-          ),
-          'default_value' => '',
-          'rows' => 24,
-          'new_lines' => '',
         ),
       ),
       'location' => array(
