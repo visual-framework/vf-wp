@@ -378,7 +378,7 @@ if (!empty($chatbot_other_location)) {
       input_placeholder: "Ask about this event",
       welcome_max_suggestions: 3,
       icons: {
-        Assistant_avatar: assetBase + "/vf-chatbot--icon-16x16-dark-green.svg",
+        assistant_avatar: assetBase + "/vf-chatbot--icon-16x16-dark-green.svg",
         user_avatar: assetBase + "/vf-chatbot--avatar-user.svg",
         send_button: assetBase + "/vf-chatbot--icon-send.svg",
         main_logo_url: assetBase + "/vf-chatbot--icon-32x32-dark-green.svg",
