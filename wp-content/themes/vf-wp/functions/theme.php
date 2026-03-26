@@ -67,6 +67,11 @@ class VF_Theme {
       array($this, 'after_setup_theme')
     );
     add_action(
+      'init',
+      array($this, 'init_textdomain'),
+      0
+    );
+    add_action(
       'wp_head',
       array($this, 'wp_head'),
       5
@@ -95,6 +100,17 @@ class VF_Theme {
     // Hook for child themes to use the `VF_Theme` class
     // Child `functions.php` runs before the parent theme
     VF_Theme::do_action('vf/theme/init');
+  }
+
+  /**
+   * Action: `init`
+   * Load translations once WordPress has initialized.
+   */
+  public function init_textdomain() {
+    $theme = wp_get_theme();
+    $this->domain = $theme->get('TextDomain');
+    $dir = untrailingslashit(get_template_directory());
+    load_theme_textdomain($this->domain, "{$dir}/languages");
   }
 
   /**
@@ -193,14 +209,11 @@ class VF_Theme {
    * Setup theme
    */
   public function after_setup_theme() {
-    // Setup theme translation domain
     $theme = wp_get_theme();
     $this->domain = $theme->get('TextDomain');
-    $dir = untrailingslashit(get_template_directory());
-    load_theme_textdomain($this->domain, "{$dir}/languages");
 
-    register_nav_menu('primary', __('Primary', $this->domain));
-    register_nav_menu('secondary', __('Secondary', $this->domain));
+    register_nav_menu('primary', 'Primary');
+    register_nav_menu('secondary', 'Secondary');
 
     /**
      * Setup default theme supports
@@ -268,19 +281,19 @@ class VF_Theme {
   public function editor_color_palette($supports) {
     $theme = wp_get_theme();
     if ( 'VF-WP SIS' == $theme->name) {
-    $color_palette = array(
+      $color_palette = array(
       array(
-        'name' => __('SiS Green', $this->domain),
+        'name' => 'SiS Green',
         'slug' => 'sis_green',
         'color' => '#748f2e',
       ),
       array(
-        'name' => __('SiS Orange', $this->domain),
+        'name' => 'SiS Orange',
         'slug' => 'sis_orange',
         'color' => '#eb9d28',
       ),
       array(
-        'name' => __('SiS Blue', $this->domain),
+        'name' => 'SiS Blue',
         'slug' => 'sis_blue',
         'color' => '#256ec1',
       ),
@@ -289,22 +302,22 @@ class VF_Theme {
     else {
       $color_palette = array(
         array(
-          'name' => __('EMBL Grey', $this->domain),
+          'name' => 'EMBL Grey',
           'slug' => 'grey',
           'color' => '#707372',
         ),
         array(
-          'name' => __('EMBL Green', $this->domain),
+          'name' => 'EMBL Green',
           'slug' => 'green',
           'color' => '#009f4d',
         ),
         array(
-          'name' => __('EMBL Blue', $this->domain),
+          'name' => 'EMBL Blue',
           'slug' => 'blue',
           'color' => '#307fe2',
         ),
         array(
-          'name' => __('EMBL Red', $this->domain),
+          'name' => 'EMBL Red',
           'slug' => 'red',
           'color' => '#e40046',
         ),
@@ -341,32 +354,32 @@ class VF_Theme {
   public function editor_font_sizes($supports) {
     $font_sizes = array(
       array(
-        'name' => __('Extra Small', $this->domain),
-        'shortName' => __('XS', $this->domain),
+        'name' => 'Extra Small',
+        'shortName' => 'XS',
         'size' => 13.99,
         'slug' => 'extra-small'
       ),
       array(
-        'name' => __('Small', $this->domain),
-        'shortName' => __('S', $this->domain),
+        'name' => 'Small',
+        'shortName' => 'S',
         'size' => 14,
         'slug' => 'small'
       ),
       array(
-        'name' => __('Regular', $this->domain),
-        'shortName' => __('R', $this->domain),
+        'name' => 'Regular',
+        'shortName' => 'R',
         'size' => 16,
         'slug' => 'regular'
       ),
       array(
-        'name' => __('Large', $this->domain),
-        'shortName' => __('L', $this->domain),
+        'name' => 'Large',
+        'shortName' => 'L',
         'size' => 19,
         'slug' => 'large'
       ),
       array(
-        'name' => __('Extra Large', $this->domain),
-        'shortName' => __('XL', $this->domain),
+        'name' => 'Extra Large',
+        'shortName' => 'XL',
         'size' => 32,
         'slug' => 'extra-large'
       ),
