@@ -1,4 +1,6 @@
 (function () {
+  var DEFAULT_EVENT_HERO_IMAGE =
+    "https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/EES26-07_WebHero_SexDifferencesAndDiseases-scaled.jpg";
   var eventRoutesPromise = null;
   var eventRoutesById = {};
   var activeEventState = {
@@ -151,6 +153,18 @@
       eventId: getActiveEventId(chatbotRoot, instance),
       type: getActiveEventType(chatbotRoot, instance)
     };
+  }
+
+  function applyEventInfoBackground(eventInfo, backgroundImage) {
+    if (!eventInfo) {
+      return;
+    }
+
+    eventInfo.style.backgroundImage =
+      "url('" + (backgroundImage || DEFAULT_EVENT_HERO_IMAGE) + "')";
+    eventInfo.style.backgroundRepeat = "no-repeat";
+    eventInfo.style.backgroundPosition = "73% 46%";
+    eventInfo.style.backgroundSize = "auto";
   }
 
   function normalizeRoutesPayload(data) {
@@ -536,10 +550,7 @@
     eventInfo.style.display = "";
 
     if (activeRoute && activeRoute.hero_image) {
-      eventInfo.style.backgroundImage = "url('" + activeRoute.hero_image + "')";
-      eventInfo.style.backgroundRepeat = "no-repeat";
-      eventInfo.style.backgroundPosition = "73% 46%";
-      eventInfo.style.backgroundSize = "auto";
+      applyEventInfoBackground(eventInfo, activeRoute.hero_image);
       return;
     }
 
@@ -555,7 +566,13 @@
 
     if (heroBackground && heroBackground !== "none") {
       eventInfo.style.backgroundImage = heroBackground;
+      eventInfo.style.backgroundRepeat = "no-repeat";
+      eventInfo.style.backgroundPosition = "73% 46%";
+      eventInfo.style.backgroundSize = "auto";
+      return;
     }
+
+    applyEventInfoBackground(eventInfo);
   }
 
   function updateEventInfoCard(route) {
@@ -614,14 +631,7 @@
     }
 
     if (eventInfo) {
-      if (route.hero_image) {
-        eventInfo.style.backgroundImage = "url('" + route.hero_image + "')";
-        eventInfo.style.backgroundRepeat = "no-repeat";
-        eventInfo.style.backgroundPosition = "73% 46%";
-        eventInfo.style.backgroundSize = "auto";
-      } else {
-        eventInfo.style.backgroundImage = "";
-      }
+      applyEventInfoBackground(eventInfo, route.hero_image);
     }
   }
 
@@ -717,6 +727,7 @@
         return;
       }
 
+      console.log("Selected event code:", route.id || selectedRouteId);
       updateEventInfoCard(route);
       resetEventInfo();
       resetConversationForEventSwitch(getChatbotInstance());
@@ -844,6 +855,7 @@
       var requestBody = JSON.stringify(requestData);
       var response;
 
+      console.log("Event chatbot payload:", requestData);
       console.log("Event chatbot POST body:", requestBody);
 
       response = await fetch(this.config.api.chat_endpoint, {

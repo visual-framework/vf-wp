@@ -9,6 +9,7 @@ $chatbot_end_date = get_field('vf_event_end_date', $chatbot_event_post_id);
 $chatbot_location = get_field('vf_event_location', $chatbot_event_post_id);
 $chatbot_other_location = get_field('vf_event_other_location', $chatbot_event_post_id);
 $chatbot_hero_image = get_field('vf_event_hero', $chatbot_event_post_id);
+$chatbot_default_hero_image = 'https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Screenshot-2026-02-27-at-11.10.02.png';
 $chatbot_event_id = get_post_field('post_name', $chatbot_event_post_id);
 $chatbot_routes_url = function_exists('custom_get_event_chatbot_routes_url')
   ? custom_get_event_chatbot_routes_url()
@@ -23,6 +24,10 @@ if (is_array($chatbot_hero_image) && !empty($chatbot_hero_image['ID'])) {
     'loading'  => 'lazy',
     'itemprop' => 'image',
   ));
+}
+
+if (empty($chatbot_hero_image)) {
+  $chatbot_hero_image = $chatbot_default_hero_image;
 }
 
 if (is_array($chatbot_event_type)) {
@@ -88,14 +93,14 @@ if (!empty($chatbot_other_location)) {
     </svg>
   </button>
 
-  <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="Event Assistant chatbot" data-vf-js-chatbot-modal-container>
+  <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="AI Event Assistant chatbot" data-vf-js-chatbot-modal-container>
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
         <div class="vf-chatbot-selector" data-vf-js-events-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-empty-label="Select other event" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
           <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg" alt="Event Assistant">
+            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg" alt="AI Event Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
-              <span class="vf-chatbot-selector__main-text">Event Assistant</span>
+              <span class="vf-chatbot-selector__main-text">AI Event Assistant</span>
               <span class="vf-chatbot-selector__title-text">Select other event</span>
             </div>
             <span class="vf-chatbot-selector__chevron">
@@ -143,13 +148,13 @@ if (!empty($chatbot_other_location)) {
                 <div class="vf-chatbot-welcome__content" style="
 ">
             
-<div style="
-    border: 1px solid black;
-    padding: 1rem 0;
-    background-color: white;
-    border-radius: 6px;
-">
-            <h1 class="vf-chatbot-welcome__title">Event Assistant</h1>
+<div class="infoWrapper">
+            <div class="vf-events-chatbot-welcome__header">
+              <div class="vf-chatbot-welcome__logo">
+                <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-32x32-dark-green.svg" alt="AI Assistant">
+              </div>
+              <h1 class="vf-chatbot-welcome__title">AI Event Assistant</h1>
+            </div>
             <div class="vf-chatbot-welcome__message">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </div>
@@ -313,11 +318,11 @@ if (!empty($chatbot_other_location)) {
         </div>
       </template>
 
-      <template id="assistant-message-template">
-        <div class="vf-chatbot-message vf-chatbot-message--assistant vf-u-margin__top--400">
+      <template id="Assistant-message-template">
+        <div class="vf-chatbot-message vf-chatbot-message--Assistant vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg" alt="Event Assistant">
-            <span class="vf-chatbot-message__avatar-name">Event Assistant</span>
+            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg" alt="AI Event Assistant">
+            <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
             <div class="vf-chatbot-message__content-prompt vf-u-padding__left--200 vf-u-padding__right--200">How can I help you?</div>
@@ -327,10 +332,10 @@ if (!empty($chatbot_other_location)) {
       </template>
 
       <template id="loading-indicator-template">
-        <div class="vf-chatbot-message vf-chatbot-message--assistant vf-chatbot-message--loading vf-u-margin__top--400">
+        <div class="vf-chatbot-message vf-chatbot-message--Assistant vf-chatbot-message--loading vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg" alt="Event Assistant">
-            <span class="vf-chatbot-message__avatar-name">Event Assistant</span>
+            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg" alt="AI Event Assistant">
+            <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
             <div class="vf-chatbot-message__content-loading-dots" aria-label="Loading" role="status">
@@ -365,15 +370,15 @@ if (!empty($chatbot_other_location)) {
 
     window.vfEventChatbotConfig = {
       type: "modal",
-      title: "Event Assistant",
+      title: "AI Event Assistant",
       welcome_logo: true,
       welcome_message: "Ask about this event, event logistics, or related EMBL resources.",
-      welcome_logo_alt: "Event Assistant",
+      welcome_logo_alt: "AI Event Assistant",
       welcome_suggestions_title: "Try asking me:",
       input_placeholder: "Ask about this event",
       welcome_max_suggestions: 3,
       icons: {
-        assistant_avatar: assetBase + "/vf-chatbot--icon-16x16-dark-green.svg",
+        Assistant_avatar: assetBase + "/vf-chatbot--icon-16x16-dark-green.svg",
         user_avatar: assetBase + "/vf-chatbot--avatar-user.svg",
         send_button: assetBase + "/vf-chatbot--icon-send.svg",
         main_logo_url: assetBase + "/vf-chatbot--icon-32x32-dark-green.svg",
@@ -476,6 +481,25 @@ if (!empty($chatbot_other_location)) {
     .vf-chatbot-welcome__content {
         position: relative;
         padding-top: 0.5rem;
+    }
+    .vf-events-chatbot-welcome__header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .vf-events-chatbot-welcome__header .vf-chatbot-welcome__logo {
+        display: flex;
+        align-items: center;
+        flex: 0 0 auto;
+    }
+    .vf-events-chatbot-welcome__header .vf-chatbot-welcome__logo img {
+        width: 1.25rem;
+        height: 1.25rem;
+        max-width: 100%;
+        object-fit: contain;
+    }
+    .vf-events-chatbot-welcome__header .vf-chatbot-welcome__title {
+        margin-bottom: 0;
     }
     .vf-chatbot-modal .vf-chatbot-welcome__content.vf-chatbot-welcome__content--faded {
         opacity: 0 !important;
@@ -594,5 +618,15 @@ if (!empty($chatbot_other_location)) {
     margin: 0 !important;
     font-size: 15px !important;
     line-height: 1.3;
+}
+
+.infoWrapper {
+    flex-direction: column;
+    display: flex;
+    border: 1px solid black;
+    padding: 1rem 0;
+    background-color: white;
+    border-radius: 6px;
+    align-items: center;
 }
 </style>
