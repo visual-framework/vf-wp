@@ -13,10 +13,7 @@ $chatbot_default_hero_image = 'https://www.embl.org/about/info/course-and-confer
 $chatbot_event_id = get_post_field('post_name', $chatbot_event_post_id);
 $chatbot_plugin_base_url = plugin_dir_url(dirname(dirname(dirname(__FILE__))) . '/vf-events.php');
 $chatbot_asset_base = untrailingslashit(get_theme_file_uri('assets/assets/vf-chatbot/assets'));
-$chatbot_asset_base_custom = untrailingslashit(get_template_directory_uri() . '/assets/assets/chatbot');
-$chatbot_routes_payload = class_exists('VF_Events')
-  ? VF_Events::get_chatbot_routes_payload()
-  : array('routes' => array());
+$chatbot_qa_data_url = $chatbot_plugin_base_url . 'assets/qa.json';
 $chatbot_routes_url = class_exists('VF_Events')
   ? VF_Events::get_chatbot_routes_url()
   : rest_url('vf-events/v1/chatbot-routes');
@@ -103,7 +100,6 @@ if (!empty($chatbot_other_location)) {
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
         <div class="vf-chatbot-selector" data-vf-js-events-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-empty-label="Select other event" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
-          <script type="application/json" data-vf-js-events-chatbot-routes-payload><?php echo wp_json_encode($chatbot_routes_payload, JSON_UNESCAPED_SLASHES); ?></script>
           <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
             <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-24x24-dark-green.svg'); ?>" alt="AI Event Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
@@ -148,7 +144,7 @@ if (!empty($chatbot_other_location)) {
             id="eventInfo"
             class="vf-events-chatbot-event-hero"
             <?php if (!empty($chatbot_hero_image)) { ?>
-             style="background: url('<?php echo esc_url($chatbot_hero_image); ?>') no-repeat 73% 46%; background-size: auto; margin: 1.5rem 1.5rem 2rem 1.5rem; border-radius: 2px;"
+             style="background: url('<?php echo esc_url($chatbot_hero_image); ?>') no-repeat 73% 46%; background-size: auto; margin: 0.5rem 0.5rem 2rem; border-radius: 2px;"
             <?php } ?>
           >
             <div class="vf-events-chatbot-event-card">
@@ -191,7 +187,7 @@ if (!empty($chatbot_other_location)) {
           data-enable-qa-data-loading="true"
           data-enable-predefined-qa="true"
           data-enable-fallback-responses="true"
-          data-qa-data-url="<?php echo esc_url($chatbot_asset_base_custom . '/qa.json'); ?>"
+          data-qa-data-url="<?php echo esc_url($chatbot_qa_data_url); ?>"
         >
 
 
@@ -373,7 +369,7 @@ if (!empty($chatbot_other_location)) {
 <script>
   (function () {
     var assetBase = "<?php echo esc_js($chatbot_asset_base); ?>";
-    var assetBaseCustom = "<?php echo esc_js($chatbot_asset_base_custom); ?>";
+    var qaDataUrl = "<?php echo esc_js($chatbot_qa_data_url); ?>";
 
     window.vfEventChatbotConfig = {
       type: "modal",
@@ -395,7 +391,7 @@ if (!empty($chatbot_other_location)) {
       api: {
         chat_endpoint: "https://8jtt848211.execute-api.eu-west-2.amazonaws.com/message",
         feedback_endpoint: false,
-        qa_data_url: assetBaseCustom + "/qa.json",
+        qa_data_url: qaDataUrl,
         headers: {
           "Content-Type": "application/json"
         },

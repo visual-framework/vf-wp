@@ -429,11 +429,6 @@ if ( class_exists('VF_Events') ) {
           'callback' => 'get_events_posts',
           'permission_callback' => '__return_true',
       ));
-      register_rest_route('custom/v1', '/event-routes', array(
-          'methods' => 'GET',
-          'callback' => 'get_events_selector_routes',
-          'permission_callback' => '__return_true',
-      ));
   });
 
   function custom_get_event_hero_image_url($hero_image) {
@@ -577,81 +572,12 @@ if ( class_exists('VF_Events') ) {
       return $posts_data;
   }
 
-  function custom_get_event_chatbot_routes_payload($posts_per_page = 100) {
-      $events = custom_get_events_posts_data($posts_per_page);
-      $routes = custom_get_event_chatbot_routes_from_events($events);
-
-      return array(
-          'routes' => $routes,
-      );
-  }
-
-  function custom_get_event_chatbot_routes_from_events($events) {
-      $routes = array();
-
-      foreach ($events as $event) {
-          $routes[] = array(
-              'id' => $event['id'],
-              'title' => $event['title'],
-              'start_date' => $event['start_date'],
-              'end_date' => $event['end_date'],
-              'date_label' => $event['date_label'],
-              'event_type' => $event['event_type'],
-              'event_type_value' => $event['event_type_value'],
-              'hero_image' => $event['hero_image'],
-              'post_id' => $event['post_id'],
-          );
-      }
-
-      return $routes;
-  }
-
-  function custom_get_event_chatbot_routes_payload_from_api($posts_per_page = 100) {
-      $endpoint = add_query_arg(
-          'per_page',
-          (string) $posts_per_page,
-          rest_url('custom/v1/events')
-      );
-      $response = wp_remote_get($endpoint, array(
-          'timeout' => 20,
-      ));
-
-      if (is_wp_error($response)) {
-          return false;
-      }
-
-      if ((int) wp_remote_retrieve_response_code($response) !== 200) {
-          return false;
-      }
-
-      $events = json_decode(wp_remote_retrieve_body($response), true);
-
-      if (!is_array($events)) {
-          return false;
-      }
-
-      return array(
-          'routes' => custom_get_event_chatbot_routes_from_events($events),
-      );
-  }
-
   // Callback function to handle the custom endpoint
   function get_events_posts($request) {
       $per_page = $request->get_param('per_page');
       $posts_per_page = !empty($per_page) && is_numeric($per_page) && $per_page > 0 ? intval($per_page) : -1;
 
       return rest_ensure_response(custom_get_events_posts_data($posts_per_page));
-  }
-
-  function get_events_selector_routes($request) {
-      if (class_exists('VF_Events')) {
-          return rest_ensure_response(VF_Events::get_chatbot_routes_payload(true));
-      }
-
-      $per_page = $request->get_param('per_page');
-      $posts_per_page = !empty($per_page) && is_numeric($per_page) && $per_page > 0 ? intval($per_page) : 100;
-
-      return rest_ensure_response(custom_get_event_chatbot_routes_payload($posts_per_page));
   }
 }
 

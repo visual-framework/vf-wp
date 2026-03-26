@@ -52,22 +52,35 @@ class VF_Groups_Customize {
       array($this, 'wp_head')
     );
     */
-    // Setup defaults
-    $this->themes = VF_Theme::apply_filters(
-      'vf/admin/customize/themes',
-      array()
-    );
-    $this->theme_layouts = VF_Theme::apply_filters(
-      'vf/admin/customize/theme_layouts',
-      array()
-    );
+  }
+
+  /**
+   * Build customize choices lazily so translations run after init.
+   */
+  private function setup_defaults() {
+    if ($this->themes === null) {
+      $this->themes = VF_Theme::apply_filters(
+        'vf/admin/customize/themes',
+        array()
+      );
+    }
+
+    if ($this->theme_layouts === null) {
+      $this->theme_layouts = VF_Theme::apply_filters(
+        'vf/admin/customize/theme_layouts',
+        array()
+      );
+    }
+
     /**
      * @deprecated https://github.com/visual-framework/vf-wp/issues/141
      *
-    $this->theme_colors = VF_Theme::apply_filters(
-      'vf/admin/customize/theme_colors',
-      array()
-    );
+    if ($this->theme_colors === null) {
+      $this->theme_colors = VF_Theme::apply_filters(
+        'vf/admin/customize/theme_colors',
+        array()
+      );
+    }
     */
   }
 
@@ -119,6 +132,8 @@ class VF_Groups_Customize {
    * Action: `vf/admin/customize`
    */
   public function admin_customize($wp_customize) {
+    $this->setup_defaults();
+
     // Global theme
     $wp_customize->add_setting('vf_theme', array(
       'default'           => array_keys($this->themes)[0],

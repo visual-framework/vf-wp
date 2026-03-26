@@ -63,11 +63,8 @@ The global options are:
 | vf_event_past_title | [TEXT] |
 | vf_events_per_page | [NUMBER] |
 | vf_events_enable_chatbot | [BOOLEAN] |
-| vf_events_chatbot_routes_payload | [JSON TEXTAREA] |
 
 † If the date format is `custom` the custom text string is used.
-
-The chatbot routes payload is stored directly in the Events settings page, refreshed automatically once a day, refreshed whenever an event is saved, and can also be refreshed manually with the button on that screen.
 
 See the ACF JSON file for default values.
 

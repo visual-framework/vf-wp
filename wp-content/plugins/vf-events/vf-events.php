@@ -267,13 +267,6 @@ class VF_Events {
   }
 
   /**
-   * Option name for chatbot routes refresh timestamp.
-   */
-  static public function chatbot_routes_updated_at_option_name() {
-    return 'options_vf_events_chatbot_routes_updated_at';
-  }
-
-  /**
    * Cron hook for refreshing chatbot routes.
    */
   static public function chatbot_routes_refresh_hook() {
@@ -292,22 +285,6 @@ class VF_Events {
    */
   static public function get_chatbot_routes_url() {
     return rest_url(self::chatbot_routes_rest_path());
-  }
-
-  /**
-   * Admin URL for the Events settings page.
-   */
-  static public function get_settings_url() {
-    return admin_url(
-      'edit.php?post_type=' . self::type() . '&page=vf-events-settings'
-    );
-  }
-
-  /**
-   * Last refresh timestamp for stored routes payload.
-   */
-  static public function get_chatbot_routes_updated_at() {
-    return (int) get_option(self::chatbot_routes_updated_at_option_name(), 0);
   }
 
   /**
@@ -397,7 +374,6 @@ class VF_Events {
     }
 
     update_option(self::chatbot_routes_option_name(), $json, false);
-    update_option(self::chatbot_routes_updated_at_option_name(), time(), false);
 
     return $payload;
   }
