@@ -131,7 +131,7 @@ if (!empty($chatbot_other_location)) {
     </div>
 
     <div class="vf-chatbot-modal | vf-u-background-color-ui--grey--light" data-vf-js-chatbot-modal>
-        <div style="overflow: hidden;">
+        <div class="vf-events-chatbot-modal__body">
                   <div
             id="eventInfo"
             class="vf-events-chatbot-event-hero"
@@ -194,23 +194,23 @@ if (!empty($chatbot_other_location)) {
           </template>
         </div>
 
-        <div role="region" aria-label="Chat messages" class="vf-chatbot-modal__messages-no-scrollbar vf-u-margin__bottom--400" data-vf-js-chatbot-modal-messages data-auto-scroll="true"></div>
+        <div role="region" aria-label="Chat messages" class="vf-chatbot-modal__messages vf-u-margin__bottom--400" data-vf-js-chatbot-modal-messages data-auto-scroll="true"></div>
 
-        <div role="region" aria-label="Disclaimer banner" class="vf-chatbot-modal__disclaimer" data-vf-js-chatbot-modal-disclaimer>
-          <div class="vf-banner vf-banner--alert vf-banner--info">
-            <div class="vf-banner__content">
-              <p class="vf-banner__text">Disclaimer: This chatbot is designed to assist you with general information and basic inquiries. Review generated content for accuracy.</p>
-              <button role="button" aria-label="Close notification banner" class="vf-button vf-button--icon vf-button--dismiss | vf-banner__button" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                  <title>Dismiss banner</title>
-                  <path d="M14.3,12.179a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.442L12.177,9.7a.25.25,0,0,1-.354,0L2.561.442A1.5,1.5,0,0,0,.439,2.563L9.7,11.825a.25.25,0,0,1,0,.354L.439,21.442a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,0,0,2.122-2.121Z"/>
-                </svg>
-              </button>
-            </div>
-          </div>
-          </div>
         </div>
 </div>
+      <div role="region" aria-label="Disclaimer banner" class="vf-chatbot-modal__disclaimer" data-vf-js-chatbot-modal-disclaimer>
+        <div class="vf-banner vf-banner--alert vf-banner--info">
+          <div class="vf-banner__content">
+            <p class="vf-banner__text">Disclaimer: This chatbot is designed to assist you with general information and basic inquiries. Review generated content for accuracy.</p>
+            <button role="button" aria-label="Close notification banner" class="vf-button vf-button--icon vf-button--dismiss | vf-banner__button" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <title>Dismiss banner</title>
+                <path d="M14.3,12.179a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.442L12.177,9.7a.25.25,0,0,1-.354,0L2.561.442A1.5,1.5,0,0,0,.439,2.563L9.7,11.825a.25.25,0,0,1,0,.354L.439,21.442a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,0,0,2.122-2.121Z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
       <div role="region" aria-label="Chat message input" class="vf-chatbot-modal__input-container">
         <div class="vf-chatbot-modal__input-wrapper">
           <label class="vf-u-sr-only" id="vf-chatbot-modal-input-label" for="vf-chatbot-modal-input">Ask me</label>
@@ -448,14 +448,24 @@ if (!empty($chatbot_other_location)) {
 
     .vf-chatbot-modal-container,
     .vf-chatbot-modal,
+    .vf-events-chatbot-modal__body,
     .vf-chatbot-modal__content,
+    .vf-chatbot-modal__messages,
     .vf-chatbot-modal__messages-no-scrollbar,
     .vf-chatbot-welcome {
         overscroll-behavior: contain;
     }
     .vf-chatbot-modal {
-        justify-content: space-between;
-        /* overflow: hidden; */
+        justify-content: flex-start;
+        min-height: 0;
+        overflow: hidden;
+    }
+    .vf-events-chatbot-modal__body {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        min-height: 0;
+        overflow: hidden;
     }
 
     .vf-events-chatbot-event-hero {
@@ -483,6 +493,27 @@ if (!empty($chatbot_other_location)) {
     }
     .vf-chatbot-modal__content {
         background: transparent;
+        display: grid;
+        flex: 1 1 auto;
+        grid-template-rows: auto minmax(0, 1fr);
+        min-height: 0;
+        overflow: hidden;
+    }
+    .vf-chatbot-welcome {
+        min-height: 0;
+    }
+    .vf-chatbot-modal__messages,
+    .vf-chatbot-modal__messages-no-scrollbar {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        max-height: 100%;
+        margin-bottom: 0 !important;
+        overflow-y: auto;
+        padding-bottom: 1rem;
+    }
+    .vf-chatbot-modal__disclaimer {
+        flex: 0 0 auto;
     }
     .vf-events-chatbot-event-card {
         position: relative;
