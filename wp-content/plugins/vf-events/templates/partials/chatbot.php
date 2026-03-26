@@ -543,14 +543,16 @@ if (!empty($chatbot_other_location)) {
         flex: 0 0 auto;
     }
     .vf-events-chatbot-event-card {
+        border-radius: 4px;
         position: relative;
         z-index: 1;
         display: flex;
         flex-wrap: wrap;
         align-content: flex-end;
         padding: 0.5rem 1rem;
+         border: 1px solid #000 !important;
         background: linear-gradient(360deg, rgba(0, 0, 0, 0.6) 18%, rgba(0, 0, 0, 0) 75%);
-        box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, .4);
+        /* box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, .4); */
         transition: padding 720ms cubic-bezier(0.22, 1, 0.36, 1), background 720ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 720ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .vf-events-chatbot-badge {
@@ -604,7 +606,7 @@ if (!empty($chatbot_other_location)) {
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
     background: linear-gradient(360deg, rgba(0, 0, 0, 0.72) 18%, rgba(0, 0, 0, 0.15) 100%);
-    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .35);
+    /* box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .35); */
 }
 .vf-events-chatbot-event-hero--compact {
     margin: 6px 6px 1rem 6px !important;
@@ -631,5 +633,10 @@ if (!empty($chatbot_other_location)) {
     background-color: white;
     border-radius: 6px;
     align-items: center;
+}
+
+.vf-chatbot-action-prompt__link {
+    color: #000 !important;
+    border: 1px solid #000 !important;
 }
 </style>
