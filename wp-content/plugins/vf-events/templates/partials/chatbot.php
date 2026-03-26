@@ -91,7 +91,7 @@ if (!empty($chatbot_other_location)) {
   <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="Event Assistant chatbot" data-vf-js-chatbot-modal-container>
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
-        <div class="vf-chatbot-selector" data-vf-js-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-multiselect="false" data-max-multiselect="1" data-show-search="true" data-empty-label="Select other event" data-lock-title-text="true" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
+        <div class="vf-chatbot-selector" data-vf-js-events-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-empty-label="Select other event" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
           <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
             <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg" alt="Event Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
@@ -131,7 +131,7 @@ if (!empty($chatbot_other_location)) {
     </div>
 
     <div class="vf-chatbot-modal | vf-u-background-color-ui--grey--light" data-vf-js-chatbot-modal>
-        <div>
+        <div style="overflow: hidden;">
                   <div
             id="eventInfo"
             class="vf-events-chatbot-event-hero"
@@ -439,7 +439,7 @@ if (!empty($chatbot_other_location)) {
     min-height: 15dvh;
     margin-bottom: 1rem;
     max-height: 18rem;
-    overflow: hidden;
+    /* overflow: hidden; */
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
@@ -455,7 +455,7 @@ if (!empty($chatbot_other_location)) {
     }
     .vf-chatbot-modal {
         justify-content: space-between;
-        overflow: hidden;
+        /* overflow: hidden; */
     }
 
     .vf-events-chatbot-event-hero {

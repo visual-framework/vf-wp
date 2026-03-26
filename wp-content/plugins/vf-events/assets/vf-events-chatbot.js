@@ -17,13 +17,65 @@
   }
 
   function getSelectorElement() {
-    return document.querySelector("[data-vf-js-chatbot-selector]");
+    return document.querySelector("[data-vf-js-events-chatbot-selector]");
+  }
+
+  function getSelectorDropdown() {
+    var selector = getSelectorElement();
+
+    return selector ? selector.querySelector("[data-vf-js-selector-dropdown]") : null;
+  }
+
+  function getSelectorToggle() {
+    var selector = getSelectorElement();
+
+    return selector ? selector.querySelector("[data-vf-js-selector-toggle]") : null;
+  }
+
+  function getSelectorSearchInput() {
+    var selector = getSelectorElement();
+
+    return selector ? selector.querySelector("[data-vf-js-selector-search]") : null;
+  }
+
+  function getSelectorList() {
+    var selector = getSelectorElement();
+
+    return selector ? selector.querySelector("[data-vf-js-chatbot-selector-list]") : null;
+  }
+
+  function getSelectorTitleText() {
+    var selector = getSelectorElement();
+
+    return selector ? selector.querySelector(".vf-chatbot-selector__title-text") : null;
   }
 
   function getRoutesPath() {
     var selector = getSelectorElement();
 
     return selector ? selector.getAttribute("data-routes-path") : "";
+  }
+
+  function getSelectorEmptyLabel() {
+    var selector = getSelectorElement();
+
+    return selector ? selector.getAttribute("data-empty-label") || "Select other event" : "Select other event";
+  }
+
+  function getDefaultSelectorRouteId() {
+    var selector = getSelectorElement();
+
+    return selector ? selector.getAttribute("data-selected-route-id") || "" : "";
+  }
+
+  function sortRoutesAlphabetically(routes) {
+    return routes.slice().sort(function (routeA, routeB) {
+      return String(routeA.title || "").localeCompare(
+        String(routeB.title || ""),
+        undefined,
+        { sensitivity: "base" }
+      );
+    });
   }
 
   function sanitizeEventType(type) {
@@ -133,7 +185,7 @@
         return response.json();
       })
       .then(function (data) {
-        var routes = normalizeRoutesPayload(data);
+        var routes = sortRoutesAlphabetically(normalizeRoutesPayload(data));
 
         eventRoutesById = {};
         routes.forEach(function (route) {
@@ -293,36 +345,22 @@
     };
   }
 
-  function clearSelectorSelection() {
+  function updateSelectorTitle() {
+    var titleText = getSelectorTitleText();
+
+    if (titleText) {
+      titleText.textContent = getSelectorEmptyLabel();
+    }
+  }
+
+  function closeSelectorDropdown() {
     var selector = getSelectorElement();
-    var selectorInstance;
-    var dropdown;
-    var titleEl;
-    var titleText;
-    var searchEl;
-    var clearEl;
+    var dropdown = getSelectorDropdown();
+    var titleEl = getSelectorToggle();
 
     if (!selector) {
       return;
     }
-
-    selectorInstance = selector.__vfChatbotSelectorInstance;
-
-    if (selectorInstance && defaultEventState && defaultEventState.id) {
-      selectorInstance.setSelection([defaultEventState.id]);
-    }
-
-    selector
-      .querySelectorAll("[data-vf-js-selector-item]")
-      .forEach(function (item) {
-        item.style.display = "";
-      });
-
-    dropdown = selector.querySelector("[data-vf-js-selector-dropdown]");
-    titleEl = selector.querySelector("[data-vf-js-selector-toggle]");
-    titleText = selector.querySelector(".vf-chatbot-selector__title-text");
-    searchEl = selector.querySelector("[data-vf-js-selector-search]");
-    clearEl = selector.querySelector("[data-vf-js-selector-clear]");
 
     if (dropdown) {
       dropdown.style.display = "none";
@@ -332,18 +370,93 @@
       titleEl.classList.remove("vf-chatbot-selector__title--expanded");
     }
 
-    if (titleText) {
-      titleText.textContent =
-        selector.getAttribute("data-empty-label") || "Select other event";
+    updateSelectorTitle();
+  }
+
+  function openSelectorDropdown() {
+    var dropdown = getSelectorDropdown();
+    var titleEl = getSelectorToggle();
+
+    if (dropdown) {
+      dropdown.style.display = "block";
     }
 
-    if (searchEl) {
-      searchEl.value = "";
+    if (titleEl) {
+      titleEl.classList.add("vf-chatbot-selector__title--expanded");
+    }
+  }
+
+  function renderSelectorItems(searchQuery) {
+    var list = getSelectorList();
+    var selectedRouteId = getActiveEventId(getChatbotRoot()) || getDefaultSelectorRouteId();
+    var normalizedQuery = String(searchQuery || "").toLowerCase().trim();
+    var routes;
+
+    if (!list) {
+      return;
     }
 
-    if (clearEl) {
-      clearEl.classList.remove("vf-chatbot-selector__clear--active");
+    routes = Object.keys(eventRoutesById)
+      .map(function (routeId) {
+        return eventRoutesById[routeId];
+      })
+      .filter(Boolean);
+
+    routes = sortRoutesAlphabetically(routes);
+
+    if (selectedRouteId) {
+      routes.sort(function (routeA, routeB) {
+        if (routeA.id === selectedRouteId && routeB.id !== selectedRouteId) {
+          return -1;
+        }
+
+        if (routeB.id === selectedRouteId && routeA.id !== selectedRouteId) {
+          return 1;
+        }
+
+        return 0;
+      });
     }
+
+    if (normalizedQuery) {
+      routes = routes.filter(function (route) {
+        return String(route.title || "").toLowerCase().indexOf(normalizedQuery) !== -1;
+      });
+    }
+
+    list.innerHTML = "";
+
+    routes.forEach(function (route) {
+      var item = document.createElement("li");
+
+      item.className = "vf-chatbot-selector__item";
+      item.setAttribute("data-vf-js-selector-item", "");
+      item.setAttribute("data-route-id", route.id || "");
+      item.setAttribute("data-title", route.title || "");
+      item.setAttribute("role", "button");
+      item.setAttribute("tabindex", "0");
+      item.setAttribute("aria-label", "Select " + (route.title || "event"));
+
+      if (route.id === selectedRouteId) {
+        item.classList.add("vf-chatbot-selector__item--selected");
+      }
+
+      item.innerHTML =
+        '<div class="vf-chatbot-selector__item-content">' +
+        '<div class="vf-chatbot-selector__item-title">' +
+        (route.title || "") +
+        "</div>" +
+        "</div>" +
+        '<span class="vf-chatbot-selector__tick">' +
+        '<svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<path d="M6.8478 19.4278C6.33162 19.4208 5.82376 19.2967 5.36257 19.0647C4.90137 18.8328 4.49889 18.4991 4.18551 18.0889L0.426086 13.8152C0.149005 13.4712 0.0154068 13.0335 0.0531476 12.5934C0.0908883 12.1533 0.297055 11.7447 0.62866 11.4529C0.960265 11.1611 1.39171 11.0085 1.83304 11.0271C2.27438 11.0456 2.69152 11.2338 2.99751 11.5523L6.52037 15.562C6.55956 15.6066 6.60755 15.6425 6.66133 15.6675C6.71511 15.6925 6.77349 15.7061 6.83279 15.7074C6.89209 15.7087 6.95101 15.6976 7.00582 15.675C7.06063 15.6523 7.11015 15.6185 7.15123 15.5758L21.0369 1.10375C21.1921 0.940538 21.3778 0.809473 21.5836 0.71804C21.7893 0.626608 22.0111 0.576599 22.2362 0.570868C22.4613 0.565137 22.6853 0.603797 22.8954 0.684641C23.1056 0.765484 23.2977 0.886928 23.4609 1.04204C23.6242 1.19715 23.7552 1.38289 23.8467 1.58865C23.9381 1.79441 23.9881 2.01617 23.9938 2.24126C23.9996 2.46635 23.9609 2.69036 23.8801 2.90051C23.7992 3.11066 23.6778 3.30282 23.5227 3.46604L9.46209 18.2655C9.1402 18.6414 8.7385 18.9409 8.28624 19.1419C7.83398 19.343 7.34257 19.4406 6.8478 19.4278Z" fill="#54585A"/>' +
+        "</svg>" +
+        "</span>";
+
+      list.appendChild(item);
+    });
+
+    updateSelectorTitle();
   }
 
   function restoreDefaultEventState() {
@@ -401,7 +514,8 @@
       eventInfo.style.backgroundSize = defaultEventState.heroBackgroundSize || "";
     }
 
-    clearSelectorSelection();
+    renderSelectorItems("");
+    closeSelectorDropdown();
     resetEventInfo();
 
     if (!defaultEventState.heroBackgroundImage) {
@@ -582,11 +696,17 @@
     }
   }
 
-  function handleEventRouteSelection(detail) {
-    var selectedItems = detail && detail.selectedItems ? detail.selectedItems : [];
-    var selectedRouteId = selectedItems.length > 0 ? selectedItems[0] : "";
+  function handleEventRouteSelection(selectedRouteId) {
+    var searchInput = getSelectorSearchInput();
+    var currentRouteId = getActiveEventId(getChatbotRoot());
 
-    if (!selectedRouteId || selectedRouteId === "all") {
+    if (!selectedRouteId) {
+      return;
+    }
+
+    if (selectedRouteId === currentRouteId) {
+      renderSelectorItems(searchInput ? searchInput.value || "" : "");
+      closeSelectorDropdown();
       return;
     }
 
@@ -600,19 +720,93 @@
       updateEventInfoCard(route);
       resetEventInfo();
       resetConversationForEventSwitch(getChatbotInstance());
+      renderSelectorItems("");
+      closeSelectorDropdown();
+
+      if (searchInput) {
+        searchInput.value = "";
+      }
     });
   }
 
   function bindSelectorSelection() {
     var selector = getSelectorElement();
+    var toggle = getSelectorToggle();
+    var searchInput = getSelectorSearchInput();
+    var list = getSelectorList();
 
     if (!selector || selector.__vfEventsSelectionBound) {
       return;
     }
 
     selector.__vfEventsSelectionBound = true;
-    selector.addEventListener("routeselection", function (event) {
-      handleEventRouteSelection(event.detail);
+
+    if (toggle) {
+      toggle.addEventListener("click", function (event) {
+        var dropdown = getSelectorDropdown();
+        var isOpen = dropdown && dropdown.style.display === "block";
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (isOpen) {
+          closeSelectorDropdown();
+        } else {
+          openSelectorDropdown();
+        }
+      });
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener("input", function (event) {
+        renderSelectorItems(event.target.value || "");
+      });
+    }
+
+    if (list) {
+      list.addEventListener("click", function (event) {
+        var item = event.target.closest("[data-vf-js-selector-item]");
+
+        if (!item) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        handleEventRouteSelection(item.getAttribute("data-route-id") || "");
+      });
+
+      list.addEventListener("keydown", function (event) {
+        var item;
+
+        if (event.key !== "Enter" && event.key !== " ") {
+          return;
+        }
+
+        item = event.target.closest("[data-vf-js-selector-item]");
+
+        if (!item) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        handleEventRouteSelection(item.getAttribute("data-route-id") || "");
+      });
+    }
+
+    if (!selector.__vfEventsDocumentClickHandler) {
+      selector.__vfEventsDocumentClickHandler = function (event) {
+        if (!selector.contains(event.target)) {
+          closeSelectorDropdown();
+        }
+      };
+
+      document.addEventListener("click", selector.__vfEventsDocumentClickHandler);
+    }
+
+    loadEventRoutes().then(function () {
+      renderSelectorItems("");
     });
   }
 
@@ -831,6 +1025,7 @@
     loadEventRoutes();
     syncEventInfoHero();
     captureDefaultEventState();
+    updateSelectorTitle();
   }
 
   window.vfEventsHandleChatbotMessageSend = function () {

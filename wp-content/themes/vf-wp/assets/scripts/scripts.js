@@ -1499,11 +1499,7 @@ var VFChatbotSelector = /*#__PURE__*/function () {
     // this.allServicesSelected = true; // Track "All services" state
 
     this.showAllServices = this.el.getAttribute("data-show-all-services") === "true";
-      this.showAllServicesSelected = this.el.getAttribute("data-show-all-services-selected") === "true";
-      this.excludeRouteId = this.el.getAttribute("data-exclude-route-id") || "";
-      this.selectedRouteId = this.el.getAttribute("data-selected-route-id") || "";
-      this.lockTitleText = this.el.getAttribute("data-lock-title-text") === "true";
-      this.emptyLabel = this.el.getAttribute("data-empty-label") || "Select services";
+    this.showAllServicesSelected = this.el.getAttribute("data-show-all-services-selected") === "true";
     this.init();
     this.loadRoutes();
   }
@@ -1608,22 +1604,18 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       // Update display after initial selection
       this.updateSelectionDisplay();
       this.updateClearButton();
-      this.reorderRouteItems();
     }
   }, {
     key: "updateRoutesList",
     value: function updateRoutesList() {
       var listEl = this.el.querySelector("[data-vf-js-chatbot-selector-list]");
-      var visibleRoutes = this.routes ? this.sortRoutes(this.routes.filter(function (route) {
-        return route.id !== this.excludeRouteId;
-      }, this)) : null;
-      if (!listEl || !visibleRoutes) return;
+      if (!listEl || !this.routes) return;
 
       // Clear existing list
       listEl.innerHTML = "";
 
       // Check if any routes have pre-selected state
-      var hasPreSelectedRoutes = visibleRoutes.some(function (route) {
+      var hasPreSelectedRoutes = this.routes.some(function (route) {
         return route.selected;
       });
 
@@ -1646,7 +1638,7 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       }
 
       // Add route items
-      visibleRoutes.forEach(function (route) {
+      this.routes.forEach(function (route) {
         var item = document.createElement("li");
         item.className = "vf-chatbot-selector__item";
         if (route.selected) {
@@ -1678,79 +1670,30 @@ var VFChatbotSelector = /*#__PURE__*/function () {
 
     // New method to bind only list item events
   }, {
-    key: "sortRoutes",
-    value: function sortRoutes(routes) {
-      return routes.slice().sort(function (routeA, routeB) {
-        return String(routeA.title || "").localeCompare(String(routeB.title || ""), undefined, {
-          sensitivity: "base"
-        });
-      });
-    }
-  }, {
-    key: "reorderRouteItems",
-    value: function reorderRouteItems() {
-      var _this5 = this;
-      var listEl = this.el.querySelector("[data-vf-js-chatbot-selector-list]");
-      if (!listEl) return;
-      var items = Array.from(listEl.querySelectorAll("[data-vf-js-selector-item]"));
-      var allServicesItem = items.find(function (item) {
-        return item.getAttribute("data-route-id") === "all";
-      });
-      var routeItems = items.filter(function (item) {
-        return item.getAttribute("data-route-id") !== "all";
-      });
-      routeItems.sort(function (itemA, itemB) {
-        var itemAId = itemA.getAttribute("data-route-id");
-        var itemBId = itemB.getAttribute("data-route-id");
-        var itemASelected = _this5.selectedItems.has(itemAId);
-        var itemBSelected = _this5.selectedItems.has(itemBId);
-        if (itemASelected !== itemBSelected) {
-          return itemASelected ? -1 : 1;
-        }
-        return String(itemA.getAttribute("data-title") || "").localeCompare(String(itemB.getAttribute("data-title") || ""), undefined, {
-          sensitivity: "base"
-        });
-      });
-      listEl.innerHTML = "";
-      if (allServicesItem && this.allServicesSelected) {
-        listEl.appendChild(allServicesItem);
-      }
-      routeItems.forEach(function (item) {
-        listEl.appendChild(item);
-      });
-      if (allServicesItem && !this.allServicesSelected) {
-        listEl.appendChild(allServicesItem);
-      }
-      this.listItems = this.el.querySelectorAll("[data-vf-js-selector-item]");
-      this.allServicesItem = this.el.querySelector("[data-route-id='all']");
-    }
-
-    // New method to bind only list item events
-  }, {
     key: "bindListItemEvents",
     value: function bindListItemEvents() {
-      var _this6 = this;
+      var _this5 = this;
       this.listItems.forEach(function (item) {
         // Remove any existing listeners first
-        item.removeEventListener("click", _this6.itemClickHandler);
-        item.removeEventListener("keydown", _this6.itemKeydownHandler);
+        item.removeEventListener("click", _this5.itemClickHandler);
+        item.removeEventListener("keydown", _this5.itemKeydownHandler);
 
         // Create bound handlers
-        _this6.itemClickHandler = function (e) {
+        _this5.itemClickHandler = function (e) {
           e.stopPropagation();
-          _this6.handleItemSelection(item);
+          _this5.handleItemSelection(item);
         };
-        _this6.itemKeydownHandler = function (e) {
+        _this5.itemKeydownHandler = function (e) {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             e.stopPropagation();
-            _this6.handleItemSelection(item);
+            _this5.handleItemSelection(item);
           }
         };
 
         // Add new listeners
-        item.addEventListener("click", _this6.itemClickHandler);
-        item.addEventListener("keydown", _this6.itemKeydownHandler);
+        item.addEventListener("click", _this5.itemClickHandler);
+        item.addEventListener("keydown", _this5.itemKeydownHandler);
       });
     }
 
@@ -1758,30 +1701,20 @@ var VFChatbotSelector = /*#__PURE__*/function () {
   }, {
     key: "handleInitialSelections",
     value: function handleInitialSelections() {
-      var _this7 = this;
+      var _this6 = this;
       // Don't reset the selectedItems Set here - it may already have pre-selected items
       var hasPreSelectedItems = this.selectedItems.size > 0; // Check existing selectedItems first
-      var defaultSelectedItem = this.selectedRouteId ? this.el.querySelector("[data-route-id=\"".concat(this.selectedRouteId, "\"]")) : null;
 
       // Also check DOM for any additional pre-selected items
       this.listItems.forEach(function (item) {
         var itemId = item.getAttribute("data-route-id");
         if (item.classList.contains("vf-chatbot-selector__item--selected")) {
           if (itemId !== "all") {
-            _this7.selectedItems.add(itemId);
+            _this6.selectedItems.add(itemId);
             hasPreSelectedItems = true;
           }
         }
       });
-      if (!hasPreSelectedItems && defaultSelectedItem) {
-        defaultSelectedItem.classList.add("vf-chatbot-selector__item--selected");
-        this.selectedItems.add(this.selectedRouteId);
-        this.allServicesSelected = false;
-        if (this.allServicesItem) {
-          this.allServicesItem.classList.remove("vf-chatbot-selector__item--selected");
-        }
-        hasPreSelectedItems = true;
-      }
 
       // Set default selections only if no items are pre-selected
       if (!hasPreSelectedItems && this.showAllServices && this.showAllServicesSelected) {
@@ -1797,21 +1730,20 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       // Update display
       this.updateSelectionDisplay();
       this.updateClearButton();
-      this.reorderRouteItems();
     }
 
     // Update bindEvents to store handlers for cleanup
   }, {
     key: "bindEvents",
     value: function bindEvents() {
-      var _this8 = this;
+      var _this7 = this;
       // Toggle dropdown
       if (this.titleEl) {
         this.titleEl.removeEventListener("click", this.toggleDropdownHandler);
         this.toggleDropdownHandler = function (e) {
           e.preventDefault();
           e.stopImmediatePropagation();
-          _this8.toggleDropdown();
+          _this7.toggleDropdown();
         };
         this.titleEl.addEventListener("click", this.toggleDropdownHandler);
       }
@@ -1821,7 +1753,7 @@ var VFChatbotSelector = /*#__PURE__*/function () {
         this.searchEl.removeEventListener("input", this.searchHandler);
         this.searchHandler = function (e) {
           e.stopPropagation();
-          _this8.handleSearch(e.target.value);
+          _this7.handleSearch(e.target.value);
         };
         this.searchEl.addEventListener("input", this.searchHandler);
       }
@@ -1832,7 +1764,7 @@ var VFChatbotSelector = /*#__PURE__*/function () {
         this.clearHandler = function (e) {
           e.preventDefault();
           e.stopPropagation();
-          _this8.clearAllSelections();
+          _this7.clearAllSelections();
         };
         this.clearEl.addEventListener("click", this.clearHandler);
       }
@@ -1843,8 +1775,8 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       // Document click handler (only add once)
       if (!this.documentClickHandler) {
         this.documentClickHandler = function (e) {
-          if (!_this8.el.contains(e.target)) {
-            _this8.closeDropdown();
+          if (!_this7.el.contains(e.target)) {
+            _this7.closeDropdown();
           }
         };
         document.addEventListener("click", this.documentClickHandler);
@@ -1902,7 +1834,6 @@ var VFChatbotSelector = /*#__PURE__*/function () {
     value: function handleItemSelection(item) {
       var itemId = item.getAttribute("data-route-id");
       var isAllServices = itemId === "all";
-      this.selectedRouteId = isAllServices ? "" : itemId;
       if (this.isMultiselect) {
         if (isAllServices) {
           // If "All services" is clicked, deselect everything else
@@ -1941,16 +1872,15 @@ var VFChatbotSelector = /*#__PURE__*/function () {
         item.classList.add("vf-chatbot-selector__item--selected");
 
         // Update title text immediately
+        var title = item.querySelector(".vf-chatbot-selector__item-title").textContent;
         var titleText = this.el.querySelector(".vf-chatbot-selector__title-text");
-        if (titleText && !this.lockTitleText) {
-          var title = item.querySelector(".vf-chatbot-selector__item-title").textContent;
+        if (titleText) {
           titleText.textContent = title;
         }
         this.closeDropdown();
       }
       this.updateSelectionDisplay();
       this.updateClearButton();
-      this.reorderRouteItems();
       this.dispatchSelectionEvent();
     }
   }, {
@@ -2009,12 +1939,11 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       // Update display and clear button
       this.updateSelectionDisplay();
       this.updateClearButton();
-      this.reorderRouteItems();
     }
   }, {
     key: "setSelection",
     value: function setSelection(selectedItems) {
-      var _this9 = this;
+      var _this8 = this;
       // Deselect all first
       this.selectedItems.clear();
       this.listItems.forEach(function (item) {
@@ -2023,15 +1952,13 @@ var VFChatbotSelector = /*#__PURE__*/function () {
 
       // If "all" is selected
       if (selectedItems.includes("all")) {
-        this.selectedRouteId = "";
         this.selectAllServices();
       } else {
-        this.selectedRouteId = selectedItems[0] || "";
         selectedItems.forEach(function (id) {
-          var item = _this9.el.querySelector("[data-route-id=\"".concat(id, "\"]"));
+          var item = _this8.el.querySelector("[data-route-id=\"".concat(id, "\"]"));
           if (item) {
             item.classList.add("vf-chatbot-selector__item--selected");
-            _this9.selectedItems.add(id);
+            _this8.selectedItems.add(id);
           }
         });
         this.allServicesSelected = false;
@@ -2041,7 +1968,6 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       }
       this.updateSelectionDisplay();
       this.updateClearButton();
-      this.reorderRouteItems();
       this.dispatchSelectionEvent();
     }
   }, {
@@ -2051,7 +1977,6 @@ var VFChatbotSelector = /*#__PURE__*/function () {
 
       // Clear individual selections
       this.selectedItems.clear();
-      this.selectedRouteId = "";
 
       // Remove selected class from all individual items
       this.listItems.forEach(function (item) {
@@ -2074,7 +1999,6 @@ var VFChatbotSelector = /*#__PURE__*/function () {
       this.selectAllServices();
       this.updateSelectionDisplay();
       this.updateClearButton();
-      this.reorderRouteItems();
       this.dispatchSelectionEvent();
     }
   }, {
@@ -2082,14 +2006,10 @@ var VFChatbotSelector = /*#__PURE__*/function () {
     value: function updateSelectionDisplay() {
       var titleText = this.el.querySelector(".vf-chatbot-selector__title-text");
       if (!titleText) return;
-      if (this.lockTitleText) {
-        titleText.textContent = this.emptyLabel;
-        return;
-      }
       if (this.allServicesSelected) {
         titleText.textContent = "All services";
       } else if (this.selectedItems.size === 0) {
-        titleText.textContent = this.emptyLabel;
+        titleText.textContent = "Select services";
       } else if (!this.isMultiselect) {
         var selectedId = Array.from(this.selectedItems)[0];
         var selectedItem = this.el.querySelector("[data-route-id=\"".concat(selectedId, "\"]"));
@@ -2126,11 +2046,7 @@ var VFChatbotSelector = /*#__PURE__*/function () {
   }]);
 }(); // Function to initialize the component
 function initVFChatbotSelector(element) {
-  var instance = new VFChatbotSelector(element);
-  if (element) {
-    element.__vfChatbotSelectorInstance = instance;
-  }
-  return instance;
+  return new VFChatbotSelector(element);
 }
 
 // vf-chatbot-welcome.js
@@ -6460,11 +6376,7 @@ var vfGaTrackOptions = {
 vfGaIndicateLoaded(vfGaTrackOptions);
 vfTabs();
 window.addEventListener("load", function () {
-  var hasChatbot = document.querySelector("[data-vf-js-chatbot]") || document.querySelector("[data-vf-js-chatbot-standalone-container]");
-  if (!hasChatbot || typeof window.config === "undefined" || !window.config) {
-    return;
-  }
-  initVFChatbot(window.config);
+  initVFChatbot(config);
 });
 vfNavigationOnThisPage();
 vfTree();

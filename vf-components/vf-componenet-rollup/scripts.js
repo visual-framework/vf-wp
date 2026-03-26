@@ -29,15 +29,7 @@ vfTabs();
 
 import { initVFChatbot } from 'vf-chatbot/vf-chatbot.js';
 window.addEventListener("load", function() {
-  const hasChatbot =
-    document.querySelector("[data-vf-js-chatbot]") ||
-    document.querySelector("[data-vf-js-chatbot-standalone-container]");
-
-  if (!hasChatbot || typeof window.config === "undefined" || !window.config) {
-    return;
-  }
-
-  initVFChatbot(window.config);
+initVFChatbot(config);
 });
 
 import { vfNavigationOnThisPage } from 'vf-navigation/vf-navigation';
