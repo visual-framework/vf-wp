@@ -169,6 +169,49 @@ class VF_Events_ACF {
       'capability'  => 'manage_options'
     ));
 
+    acf_add_local_field_group(array(
+      'key' => 'group_vf_events_chatbot_settings',
+      'title' => __('Chatbot Settings', 'vfwp'),
+      'fields' => array(
+        array(
+          'key' => 'field_vf_events_enable_chatbot',
+          'label' => __('Enable an AI assistant event pages', 'vfwp'),
+          'name' => 'vf_events_enable_chatbot',
+          'type' => 'true_false',
+          'instructions' => __('Only for events added by Course and Conference Office', 'vfwp'),
+          'required' => 0,
+          'conditional_logic' => 0,
+          'wrapper' => array(
+            'width' => '',
+            'class' => '',
+            'id' => '',
+          ),
+          'message' => '',
+          'default_value' => 0,
+          'ui' => 1,
+          'ui_on_text' => __('Enabled', 'vfwp'),
+          'ui_off_text' => __('Disabled', 'vfwp'),
+        ),
+      ),
+      'location' => array(
+        array(
+          array(
+            'param' => 'options_page',
+            'operator' => '==',
+            'value' => 'vf-events-settings',
+          ),
+        ),
+      ),
+      'menu_order' => 10,
+      'position' => 'normal',
+      'style' => 'seamless',
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'hide_on_screen' => '',
+      'active' => true,
+      'description' => __('Chatbot settings for event pages.', 'vfwp'),
+    ));
+
     // Register "Events List" block
     $callback = function() {
       global $vf_events;

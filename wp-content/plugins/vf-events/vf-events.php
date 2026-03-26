@@ -227,6 +227,23 @@ class VF_Events {
   }
 
   /**
+   * Return true when the events chatbot is enabled in settings.
+   */
+  static public function is_chatbot_enabled() {
+    $enabled = null;
+
+    if (function_exists('get_field')) {
+      $enabled = get_field('vf_events_enable_chatbot', 'option');
+    }
+
+    if ($enabled === null) {
+      $enabled = get_option('options_vf_events_enable_chatbot');
+    }
+
+    return (bool) $enabled;
+  }
+
+  /**
    * Return the page title for archive templates
    */
   static public function get_archive_title($is_past = null) {

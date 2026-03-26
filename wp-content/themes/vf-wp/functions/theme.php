@@ -464,6 +464,11 @@ class VF_Theme {
       $theme->version,
       true
     );
+    wp_add_inline_script(
+      'vf-scripts',
+      'window.config = typeof window.config === "undefined" ? null : window.config;',
+      'before'
+    );
 
     // run only on the intranet theme
     $theme = wp_get_theme(); // gets the current theme

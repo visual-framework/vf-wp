@@ -1,0 +1,290 @@
+{
+    "routes": [
+        {
+            "id": "uex26-01",
+            "title": "Ultrastructure expansion microscopy: from cells to tissue",
+            "start_date": "20 April 2026",
+            "end_date": "24 April 2026",
+            "date_label": "20 \u2013 24 Apr 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2022/10/EIC23-02-banner-scaled.png",
+            "post_id": 221501
+        },
+        {
+            "id": "brg26-01",
+            "title": "Brain (epi)genome",
+            "start_date": "21 April 2026",
+            "end_date": "24 April 2026",
+            "date_label": "21 \u2013 24 Apr 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 222821
+        },
+        {
+            "id": "ees26-07",
+            "title": "Sex differences in health and disease",
+            "start_date": "27 April 2026",
+            "end_date": "30 April 2026",
+            "date_label": "27 \u2013 30 Apr 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2024/07/Copy-of-IMG_0015.jpg",
+            "post_id": 174623
+        },
+        {
+            "id": "pro26-01",
+            "title": "Analysis and integration of transcriptome and proteome data",
+            "start_date": "3 May 2026",
+            "end_date": "8 May 2026",
+            "date_label": "3 \u2013 8 May 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 221099
+        },
+        {
+            "id": "evb26-01",
+            "title": "Building networks: engineering in vascular biology",
+            "start_date": "13 May 2026",
+            "end_date": "15 May 2026",
+            "date_label": "13 \u2013 15 May 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2021/05/EVB22-01_herobanner_3000x1000px_new-scaled-1.jpg",
+            "post_id": 220353
+        },
+        {
+            "id": "eva26-01",
+            "title": "Advanced fluorescence imaging techniques",
+            "start_date": "17 May 2026",
+            "end_date": "22 May 2026",
+            "date_label": "17 \u2013 22 May 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 223259
+        },
+        {
+            "id": "ees26-08",
+            "title": "Cellular mechanisms driven by phase separation",
+            "start_date": "19 May 2026",
+            "end_date": "22 May 2026",
+            "date_label": "19 \u2013 22 May 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2021/05/EES22-04_banner_3000x1000px-scaled-1.jpg",
+            "post_id": 208265
+        },
+        {
+            "id": "bmp26-01",
+            "title": "BioMalPar XXII: biology and pathology of the malaria parasite",
+            "start_date": "27 May 2026",
+            "end_date": "29 May 2026",
+            "date_label": "27 \u2013 29 May 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 216623
+        },
+        {
+            "id": "dat26-01",
+            "title": "Whole transcriptome data analysis",
+            "start_date": "7 June 2026",
+            "end_date": "12 June 2026",
+            "date_label": "7 \u2013 12 Jun 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2021/05/2022_CCO_Hero_banner_3000x1000px2-scaled-1.jpg",
+            "post_id": 221341
+        },
+        {
+            "id": "ees26-06",
+            "title": "Mechanobiology across the tree of life",
+            "start_date": "9 June 2026",
+            "end_date": "12 June 2026",
+            "date_label": "9 \u2013 12 Jun 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 174619
+        },
+        {
+            "id": "sdp26-01",
+            "title": "Hands-on course for sample preparation and data analysis in proteomics",
+            "start_date": "16 June 2026",
+            "end_date": "19 June 2026",
+            "date_label": "16 \u2013 19 Jun 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 221515
+        },
+        {
+            "id": "ees26-09",
+            "title": "Microtubules: from atoms to complex systems",
+            "start_date": "17 June 2026",
+            "end_date": "20 June 2026",
+            "date_label": "17 \u2013 20 Jun 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2021/06/EES22-06_Hero_banner_3000x1000px-scaled-1.jpg",
+            "post_id": 204681
+        },
+        {
+            "id": "syn26-01",
+            "title": "Synthetic biology in action: maturing tools and their potential",
+            "start_date": "30 June 2026",
+            "end_date": "6 July 2026",
+            "date_label": "30 Jun \u2013 6 Jul 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 222511
+        },
+        {
+            "id": "ser26-01",
+            "title": "Time-resolved macromolecular serial crystallography",
+            "start_date": "6 July 2026",
+            "end_date": "10 July 2026",
+            "date_label": "6 \u2013 10 Jul 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 221531
+        },
+        {
+            "id": "ees26-11",
+            "title": "Metabolic interactions shape ecosystems",
+            "start_date": "21 July 2026",
+            "end_date": "24 July 2026",
+            "date_label": "21 \u2013 24 Jul 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 160079
+        },
+        {
+            "id": "cry26-01",
+            "title": "Advances in cryo-electron microscopy and 3D image processing",
+            "start_date": "17 August 2026",
+            "end_date": "25 August 2026",
+            "date_label": "17 \u2013 25 Aug 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 182005
+        },
+        {
+            "id": "trm26-01",
+            "title": "Transcription and chromatin",
+            "start_date": "25 August 2026",
+            "end_date": "28 August 2026",
+            "date_label": "25 \u2013 28 Aug 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2021/05/TRM22-01_Hero_banner_3000x1000px-scaled-1.jpg",
+            "post_id": 220625
+        },
+        {
+            "id": "pgo26-01",
+            "title": "A new view of plankton in the global ocean: celebrating 10 years of Tara Oceans",
+            "start_date": "1 September 2026",
+            "end_date": "4 September 2026",
+            "date_label": "1 \u2013 4 Sep 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2025/04/MIC25-01_MS-Main-hero_banner_template_3000x1000-scaled-1.jpg",
+            "post_id": 210559
+        },
+        {
+            "id": "gee26-01",
+            "title": "Genome engineering: CRISPR/Cas in cells and mice",
+            "start_date": "6 September 2026",
+            "end_date": "11 September 2026",
+            "date_label": "6 \u2013 11 Sep 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 223297
+        },
+        {
+            "id": "chb26-01",
+            "title": "Chemical biology",
+            "start_date": "8 September 2026",
+            "end_date": "11 September 2026",
+            "date_label": "8 \u2013 11 Sep 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 215833
+        },
+        {
+            "id": "ees26-10",
+            "title": "Reconstructing the human past: using ancient and modern genomics",
+            "start_date": "15 September 2026",
+            "end_date": "18 September 2026",
+            "date_label": "15 \u2013 18 Sep 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2021/06/EES22-09-2-scaled-1.jpg",
+            "post_id": 208263
+        },
+        {
+            "id": "ees26-12",
+            "title": "The complex life of RNA",
+            "start_date": "13 October 2026",
+            "end_date": "16 October 2026",
+            "date_label": "13 \u2013 16 Oct 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "http://emblebivfwp.docker.localhost:60099/wp-content/uploads/2023/03/EES24-11_RNA_hero-banner_3000x1000px-scaled-1.jpg",
+            "post_id": 208269
+        },
+        {
+            "id": "ees26-13",
+            "title": "DNA replication and genome maintenance: from basic biology to human health",
+            "start_date": "20 October 2026",
+            "end_date": "23 October 2026",
+            "date_label": "20 \u2013 23 Oct 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 204989
+        },
+        {
+            "id": "sbx26-01",
+            "title": "Introduction to SBX and advanced NGS for genomic research",
+            "start_date": "9 November 2026",
+            "end_date": "13 November 2026",
+            "date_label": "9 \u2013 13 Nov 2026",
+            "event_type": "Course",
+            "event_type_value": "course",
+            "hero_image": "",
+            "post_id": 223303
+        },
+        {
+            "id": "ees26-05",
+            "title": "Defining and defeating metastasis: from plasticity to immune evasion to therapy resistance",
+            "start_date": "10 November 2026",
+            "end_date": "13 November 2026",
+            "date_label": "10 \u2013 13 Nov 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 202805
+        },
+        {
+            "id": "omx26-01",
+            "title": "Quantitative biology to molecular mechanisms",
+            "start_date": "17 November 2026",
+            "end_date": "20 November 2026",
+            "date_label": "17 \u2013 20 Nov 2026",
+            "event_type": "Conference",
+            "event_type_value": "conference",
+            "hero_image": "",
+            "post_id": 222621
+        }
+    ]
+}

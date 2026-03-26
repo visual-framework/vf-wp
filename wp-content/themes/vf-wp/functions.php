@@ -416,6 +416,23 @@ function custom_gutenberg_editor_styles() {
 }
 add_action('admin_head', 'custom_gutenberg_editor_styles');
 
+function custom_manage_event_chatbot_routes_schedule() {
+  $hook = 'custom_refresh_event_chatbot_routes_daily';
+  $scheduled = wp_next_scheduled($hook);
+
+  if (class_exists('VF_Events')) {
+      if (!$scheduled) {
+          wp_schedule_event(time(), 'daily', $hook);
+      }
+      return;
+  }
+
+  if ($scheduled) {
+      wp_clear_scheduled_hook($hook);
+  }
+}
+add_action('init', 'custom_manage_event_chatbot_routes_schedule');
+
 
 /* 
  * Register custom REST API endpoint
@@ -430,28 +447,85 @@ if ( class_exists('VF_Events') ) {
           'callback' => 'get_events_posts',
           'permission_callback' => '__return_true',
       ));
+      register_rest_route('custom/v1', '/event-routes', array(
+          'methods' => 'GET',
+          'callback' => 'get_events_selector_routes',
+          'permission_callback' => '__return_true',
+      ));
   });
 
-  // Callback function to handle the custom endpoint
-  function get_events_posts($request) {
-      // Get the value of cb_featured, site, and per_page parameters from the request
-      $per_page = $request->get_param('per_page');
+  function custom_get_event_hero_image_url($hero_image) {
+      if (is_array($hero_image)) {
+          return !empty($hero_image['url']) ? $hero_image['url'] : '';
+      }
 
-      // Default number of posts per page if 'per_page' parameter is not provided or invalid
-      $posts_per_page = !empty($per_page) && is_numeric($per_page) && $per_page > 0 ? intval($per_page) : -1;
+      if (is_numeric($hero_image)) {
+          $hero_image = wp_get_attachment_url((int) $hero_image);
+      }
 
-      // Get today's date for comparison
-      $today = date('Y-m-d'); // Format: YYYY-MM-DD
+      return is_string($hero_image) ? $hero_image : '';
+  }
 
-      // Query arguments to retrieve posts from community-blog post type
+  function custom_get_event_type_details($event_type) {
+      $event_type_value = '';
+      $event_type_label = '';
+
+      if (is_array($event_type)) {
+          if (!empty($event_type['value'])) {
+              $event_type_value = $event_type['value'];
+          } elseif (!empty($event_type['label'])) {
+              $event_type_value = sanitize_title($event_type['label']);
+          }
+
+          if (!empty($event_type['label'])) {
+              $event_type_label = $event_type['label'];
+          }
+      } elseif (is_string($event_type)) {
+          $event_type_value = $event_type;
+          $event_type_label = $event_type;
+      }
+
+      return array(
+          'value' => $event_type_value,
+          'label' => $event_type_label,
+      );
+  }
+
+  function custom_get_event_date_label($start_date, $end_date) {
+      if (empty($start_date)) {
+          return '';
+      }
+
+      $start = DateTime::createFromFormat('j M Y', $start_date);
+      $end = !empty($end_date)
+          ? DateTime::createFromFormat('j M Y', $end_date)
+          : false;
+
+      if (!$start instanceof DateTime) {
+          return $start_date;
+      }
+
+      if ($end instanceof DateTime) {
+          if ($start->format('M') === $end->format('M')) {
+              return $start->format('j') . ' – ' . $end->format('j M Y');
+          }
+
+          return $start->format('j M') . ' – ' . $end->format('j M Y');
+      }
+
+      return $start->format('j M Y');
+  }
+
+  function custom_get_events_posts_data($posts_per_page = -1) {
+      $today = date('Y-m-d');
       $args = array(
           'post_type' => 'vf_event',
           'posts_per_page' => $posts_per_page,
-          'orderby' => 'meta_value', // Sort by start date
-          'order'   => 'ASC', // Show upcoming first (ascending order)
-          'meta_key' => 'vf_event_start_date', // Use start date for sorting
+          'orderby' => 'meta_value',
+          'order'   => 'ASC',
+          'meta_key' => 'vf_event_start_date',
           'meta_query' => array(
-              'relation' => 'OR', // Either one of the following conditions must be true
+              'relation' => 'OR',
               array(
                   'key'     => 'vf_event_end_date',
                   'value'   => $today,
@@ -460,7 +534,7 @@ if ( class_exists('VF_Events') ) {
               ),
               array(
                   'key'     => 'vf_event_end_date',
-                  'compare' => 'NOT EXISTS', // Only check the start date if no end date exists
+                  'compare' => 'NOT EXISTS',
                   'relation' => 'AND',
                   array(
                       'key'     => 'vf_event_start_date',
@@ -472,42 +546,167 @@ if ( class_exists('VF_Events') ) {
           ),
       );
 
-      // Perform the query
       $query = new WP_Query($args);
+      $posts_data = array();
 
-      // Check if there are posts found
-      if ($query->have_posts()) {
-          // Create an array to store posts data
-          $posts_data = array();
-
-          // Loop through each post
-          while ($query->have_posts()) {
-              $query->the_post();
-
-              // Get post data
-              $post_data = array(
-                  'title' => get_the_title(),
-                  'url' => get_field('vf_event_more_information_link'), 
-                  'start_date' => get_field('vf_event_start_date'), 
-                  'event_type' => get_field('vf_event_event_type')['label'],  
-                  'contact_name' => get_field('vf_event_contact_name'), 
-                  'contact_email' => get_field('vf_event_contact'), 
-                  'custom_faq' => html_entity_decode(wp_strip_all_tags(get_field('vf_event_custom_faq')))
-              );
-
-              // Add post data to the array
-              $posts_data[] = $post_data;
-          }
-
-          // Reset post data
-          wp_reset_postdata();
-
-          // Return the posts data as JSON response
-          return rest_ensure_response($posts_data);
-      } else {
-          // If no posts found, return empty array
-          return rest_ensure_response(array());
+      if (!$query->have_posts()) {
+          return $posts_data;
       }
+
+      while ($query->have_posts()) {
+          $query->the_post();
+
+          $start_date = get_field('vf_event_start_date');
+          $end_date = get_field('vf_event_end_date');
+          $event_type = custom_get_event_type_details(get_field('vf_event_event_type'));
+
+          $posts_data[] = array(
+              'id' => get_post_field('post_name', get_the_ID()),
+              'post_id' => get_the_ID(),
+              'title' => get_the_title(),
+              'url' => get_field('vf_event_more_information_link'),
+              'start_date' => $start_date,
+              'end_date' => $end_date,
+              'date_label' => custom_get_event_date_label($start_date, $end_date),
+              'event_type' => $event_type['label'],
+              'event_type_value' => $event_type['value'],
+              'contact_name' => get_field('vf_event_contact_name'),
+              'contact_email' => get_field('vf_event_contact'),
+              'hero_image' => custom_get_event_hero_image_url(get_field('vf_event_hero')),
+              'custom_faq' => html_entity_decode(wp_strip_all_tags(get_field('vf_event_custom_faq'))),
+          );
+      }
+
+      wp_reset_postdata();
+
+      return $posts_data;
+  }
+
+  function custom_get_event_chatbot_routes_payload($posts_per_page = 100) {
+      $events = custom_get_events_posts_data($posts_per_page);
+      $routes = custom_get_event_chatbot_routes_from_events($events);
+
+      return array(
+          'routes' => $routes,
+      );
+  }
+
+  function custom_get_event_chatbot_routes_from_events($events) {
+      $routes = array();
+
+      foreach ($events as $event) {
+          $routes[] = array(
+              'id' => $event['id'],
+              'title' => $event['title'],
+              'start_date' => $event['start_date'],
+              'end_date' => $event['end_date'],
+              'date_label' => $event['date_label'],
+              'event_type' => $event['event_type'],
+              'event_type_value' => $event['event_type_value'],
+              'hero_image' => $event['hero_image'],
+              'post_id' => $event['post_id'],
+          );
+      }
+
+      return $routes;
+  }
+
+  function custom_get_event_chatbot_routes_payload_from_api($posts_per_page = 100) {
+      $endpoint = add_query_arg(
+          'per_page',
+          (string) $posts_per_page,
+          rest_url('custom/v1/events')
+      );
+      $response = wp_remote_get($endpoint, array(
+          'timeout' => 20,
+      ));
+
+      if (is_wp_error($response)) {
+          return false;
+      }
+
+      if ((int) wp_remote_retrieve_response_code($response) !== 200) {
+          return false;
+      }
+
+      $events = json_decode(wp_remote_retrieve_body($response), true);
+
+      if (!is_array($events)) {
+          return false;
+      }
+
+      return array(
+          'routes' => custom_get_event_chatbot_routes_from_events($events),
+      );
+  }
+
+  function custom_generate_event_chatbot_routes_file($force = false) {
+      $file_path = get_stylesheet_directory() . '/assets/assets/chatbot/events-routes.json';
+      $file_dir = dirname($file_path);
+
+      if (!is_dir($file_dir)) {
+          wp_mkdir_p($file_dir);
+      }
+
+      $payload = custom_get_event_chatbot_routes_payload_from_api(100);
+      if ($payload === false) {
+          $payload = custom_get_event_chatbot_routes_payload(100);
+      }
+
+      $json = wp_json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+
+      if (!is_string($json)) {
+          return false;
+      }
+
+      return file_put_contents($file_path, $json) !== false;
+  }
+
+  function custom_get_event_chatbot_routes_url() {
+      $file_path = get_stylesheet_directory() . '/assets/assets/chatbot/events-routes.json';
+      $file_url = get_stylesheet_directory_uri() . '/assets/assets/chatbot/events-routes.json';
+      $fallback_url = add_query_arg('per_page', '100', rest_url('custom/v1/event-routes'));
+
+      if (!custom_generate_event_chatbot_routes_file()) {
+          return $fallback_url;
+      }
+
+      if (file_exists($file_path)) {
+          return add_query_arg('ver', (string) filemtime($file_path), $file_url);
+      }
+
+      return $fallback_url;
+  }
+
+  function custom_refresh_event_chatbot_routes_file_on_save($post_id) {
+      if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+          return;
+      }
+
+      custom_generate_event_chatbot_routes_file(true);
+  }
+
+  add_action('save_post_vf_event', 'custom_refresh_event_chatbot_routes_file_on_save');
+
+  function custom_refresh_event_chatbot_routes_daily() {
+      custom_generate_event_chatbot_routes_file(true);
+  }
+
+  add_action('custom_refresh_event_chatbot_routes_daily', 'custom_refresh_event_chatbot_routes_daily');
+
+  // Callback function to handle the custom endpoint
+  function get_events_posts($request) {
+      $per_page = $request->get_param('per_page');
+      $posts_per_page = !empty($per_page) && is_numeric($per_page) && $per_page > 0 ? intval($per_page) : -1;
+
+      return rest_ensure_response(custom_get_events_posts_data($posts_per_page));
+  }
+
+  function get_events_selector_routes($request) {
+      $per_page = $request->get_param('per_page');
+      $posts_per_page = !empty($per_page) && is_numeric($per_page) && $per_page > 0 ? intval($per_page) : 100;
+
+      return rest_ensure_response(custom_get_event_chatbot_routes_payload($posts_per_page));
   }
 }
 

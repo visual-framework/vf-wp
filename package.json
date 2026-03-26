@@ -39,6 +39,9 @@
   },
   "dependencies": {
     "@visual-framework/vf-button": "3.0.4",
+    "@visual-framework/vf-chatbot": "^1.0.0-beta.4",
+    "@visual-framework/vf-chatbot-modal": "^1.0.0-beta.5",
+    "@visual-framework/vf-chatbot-standalone": "^1.0.0-beta.4",
     "@visual-framework/vf-flag": "1.0.0",
     "@visual-framework/vf-form": "2.0.3",
     "@visual-framework/vf-form__fieldset": "2.0.0",

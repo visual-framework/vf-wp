@@ -68,7 +68,6 @@ class VF_Events_Template {
     }
     return $template;
   }
-
 } // VF_Events_Template
 
 endif;

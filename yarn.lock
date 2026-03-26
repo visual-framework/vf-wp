@@ -2578,6 +2578,77 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-card/-/vf-card-2.7.2.tgz#2e0e4af207a43acafcd9d9993bbfa77f282452ab"
   integrity sha512-jSPQc5O9ipUhRqdd39qg/ZtC/RtKJ87/R/A8hjiCq8aYplpWhC/hPqI6saBgPFKVXUbIxTLmxnP1VjTh2pX+pw==
 
+"@visual-framework/vf-chatbot-action-prompt@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-action-prompt/-/vf-chatbot-action-prompt-1.0.0-beta.3.tgz#372e7da370c647a381fd056f2b38e896380fabb6"
+  integrity sha512-RjcBpFfJwHJ4BvI30DpqApy5swuuqlygyQxhc/83fYH8dFcq3Dmdk06ouLLTL9b8EweFQK84d/laIO9+ffiRKg==
+
+"@visual-framework/vf-chatbot-dialog@^1.0.0-beta.1":
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-dialog/-/vf-chatbot-dialog-1.0.0-beta.1.tgz#468047162a1dd18db635823437c6d8b0dd6ef433"
+  integrity sha512-0mIvUS4wpgQey7O50DzNtOOt+E0A4a6nlJpGges3KrXsZCKU44sgItopqIHrQ1r3JOd4wO/LMu09Ai5EZ4HcLA==
+
+"@visual-framework/vf-chatbot-fab@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-fab/-/vf-chatbot-fab-1.0.0-beta.3.tgz#6a404875be00b8d01e77f279371b876ccf02fdf0"
+  integrity sha512-Iw9IRnvxk0GooOF4ooGXBjHodh//J+P3KdWYfwNa1J2MHm92Hv4QEAPVeVV+bXsV/CGF3TjaAZMGvO2RTt8fbg==
+
+"@visual-framework/vf-chatbot-feedback@^1.0.0-beta.4":
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-feedback/-/vf-chatbot-feedback-1.0.0-beta.4.tgz#8e80817045205773a6bd8a046bcec49298625d22"
+  integrity sha512-WSZgQ+kwYsxG96DhSgKPBurG7v/aaxdpdp2plLdUzYoTY95JuHV1UGtAgp/MeOu1akJoIz6pElQhTBWNxjy6qg==
+
+"@visual-framework/vf-chatbot-modal@^1.0.0-beta.5":
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-modal/-/vf-chatbot-modal-1.0.0-beta.5.tgz#9db085dc392cd39da9f16f9dbad3cb9da0e3039f"
+  integrity sha512-u2K2fZkvTk4ChvEsgTTsa8UkI0RKK+58f7+yFhcOJM5kg4tXSZ0Iafnno6DrOWC75YXkP3Q8HUmf69lumdlJvA==
+  dependencies:
+    "@visual-framework/vf-chatbot-action-prompt" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-dialog" "^1.0.0-beta.1"
+    "@visual-framework/vf-chatbot-fab" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-feedback" "^1.0.0-beta.4"
+    "@visual-framework/vf-chatbot-prompt" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-selector" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-sources" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-welcome" "^1.0.0-beta.3"
+
+"@visual-framework/vf-chatbot-prompt@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-prompt/-/vf-chatbot-prompt-1.0.0-beta.3.tgz#6fda56b965d8e300d4af2c908b4c42b997e7f7a8"
+  integrity sha512-CC1YmKJIzFURg/eXAyniY+mtKyQ8HYgSBOUtXc7CLD9sdpNzPXmdFVt/EWJIUJ4xdxVP+1bpKL3HWa6g3tZxxg==
+
+"@visual-framework/vf-chatbot-selector@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-selector/-/vf-chatbot-selector-1.0.0-beta.3.tgz#5c9028800832d7a12887968ee44f578f22f83273"
+  integrity sha512-kVM/bU1SXlgGn49B8+e2Bz47YH+miNMUP0bZp4puZ+luHqPNYPVtUqXODWtJiESiiV7t6aB4Zm7C/Lvatb5gtg==
+
+"@visual-framework/vf-chatbot-sources@^1.0.0-beta.3":
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-sources/-/vf-chatbot-sources-1.0.0-beta.3.tgz#c238beaa30618a5decdef25e9901ae4c8c6d9a86"
+  integrity sha512-C07dC85WFSQqLrzGNrxIhRl75oO8U3kztKYE9HXYANmJbjZ8RtjTf4AIhv+fXOgYX6rbiKENZuNGikGK//y6tw==
+
+"@visual-framework/vf-chatbot-standalone@^1.0.0-beta.4":
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-standalone/-/vf-chatbot-standalone-1.0.0-beta.4.tgz#958f30c9393e518c2b9897e52d01277040edc35d"
+  integrity sha512-EIq67Wzohmy5MmbUMqCK3FE9khXIWHcPvVceXUc5IkqmK+kzJ8lBhwPSGocfWHHlKromotzlpLJLCZDFDfl92g==
+  dependencies:
+    "@visual-framework/vf-chatbot-action-prompt" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-feedback" "^1.0.0-beta.4"
+    "@visual-framework/vf-chatbot-prompt" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-selector" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-sources" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-welcome" "^1.0.0-beta.3"
+
+"@visual-framework/vf-chatbot-welcome@^1.0.0-beta.3":
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-welcome/-/vf-chatbot-welcome-1.0.0-beta.4.tgz#7d04d6c2b134971dd68852985032b987d1be691b"
+  integrity sha512-skZasRpHXMt+hM4ZFiXvjo/9cCm9myElK6O9UGAT0ePXJ5NjCm90T6As2Cf7Zw7n2EKeKPStsYv5j3rNnYMB9w==
+
+"@visual-framework/vf-chatbot@^1.0.0-beta.4":
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot/-/vf-chatbot-1.0.0-beta.4.tgz#1e699080cfeea8b7515e50c5e0c3ac5418e72cad"
+  integrity sha512-fXsHQsrKjmII9B3Ifwzugwmy3DYjZczxVflrM0iRT20ItIw6lZKkfNWXgqe9yrFaH2J9UiuJMCBzqMy5w5iBfQ==
+
 "@visual-framework/vf-cluster@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-cluster/-/vf-cluster-1.0.3.tgz#7caa4e4b005eda324de292a6e2ff7d0a68da95ae"
@@ -11203,7 +11274,7 @@ streamx@^2.12.5:
   optionalDependencies:
     bare-events "^2.2.0"
 
-"string-width-cjs@npm:string-width@^4.2.0":
+"string-width-cjs@npm:string-width@^4.2.0", string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
@@ -11237,15 +11308,6 @@ string-width@^3.0.0:
     emoji-regex "^7.0.1"
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^5.1.0"
-
-string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.2, string-width@^4.2.3:
-  version "4.2.3"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
-  integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
-  dependencies:
-    emoji-regex "^8.0.0"
-    is-fullwidth-code-point "^3.0.0"
-    strip-ansi "^6.0.1"
 
 string-width@^5.0.1, string-width@^5.1.2:
   version "5.1.2"
@@ -11294,7 +11356,7 @@ stringify-entities@^1.0.1:
     is-alphanumerical "^1.0.0"
     is-hexadecimal "^1.0.0"
 
-"strip-ansi-cjs@npm:strip-ansi@^6.0.1":
+"strip-ansi-cjs@npm:strip-ansi@^6.0.1", strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -11321,13 +11383,6 @@ strip-ansi@^5.1.0, strip-ansi@^5.2.0:
   integrity sha512-DuRs1gKbBqsMKIZlrffwlug8MHkcnpjs5VPmL1PAh+mA30U0DTotfDZ0d2UUsXpPmPmMMJ6W773MaA3J+lbiWA==
   dependencies:
     ansi-regex "^4.1.0"
-
-strip-ansi@^6.0.0, strip-ansi@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
-  integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
-  dependencies:
-    ansi-regex "^5.0.1"
 
 strip-ansi@^7.0.1, strip-ansi@^7.1.0:
   version "7.1.0"
@@ -12464,7 +12519,7 @@ wordwrap@^1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
-"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0":
+"wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
@@ -12485,15 +12540,6 @@ wrap-ansi@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-6.2.0.tgz#e9393ba07102e6c91a3b221478f0257cd2856e53"
   integrity sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==
-  dependencies:
-    ansi-styles "^4.0.0"
-    string-width "^4.1.0"
-    strip-ansi "^6.0.0"
-
-wrap-ansi@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
-  integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
   dependencies:
     ansi-styles "^4.0.0"
     string-width "^4.1.0"

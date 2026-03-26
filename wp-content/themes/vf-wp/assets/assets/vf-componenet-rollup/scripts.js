@@ -27,6 +27,11 @@ vfGaIndicateLoaded(vfGaTrackOptions);
 import { vfTabs } from 'vf-tabs/vf-tabs';
 vfTabs();
 
+import { initVFChatbot } from 'vf-chatbot/vf-chatbot.js';
+window.addEventListener("load", function() {
+initVFChatbot(config);
+});
+
 import { vfNavigationOnThisPage } from 'vf-navigation/vf-navigation';
 vfNavigationOnThisPage();
 
