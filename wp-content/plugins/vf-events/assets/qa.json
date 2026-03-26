@@ -1,0 +1,36 @@
+{
+  "predefinedQA": {
+    "How can I register?": {
+      "answer": "Answer 1 here"
+    },
+    "Who is the contact person for this event?": {
+      "answer": "Answer 2 here"
+    },
+    "Where is the event taking place?": {
+      "answer": "Answer 3 here",
+      "sources": [
+        {
+          "domain": "ebi.ac.uk",
+          "title": "EMBL-EBI Training",
+          "url": "https://www.ebi.ac.uk/training/",
+          "description": "Delivering world-class training in data-driven life sciences."
+        }
+      ]
+    }
+  },
+  "fallbackResponses": [
+    {
+      "answer": "I'm sorry, I'm having trouble connecting to my knowledge base right now. Could you try again in a moment?",
+      "prompts": [
+        {
+          "action_text": "Contact support team",
+          "action_url": "tel:+44 1223 494 444"
+        },
+        {
+          "action_text": "Submit a support request",
+          "action_url": "https://www.ebi.ac.uk/about/contact/support/"
+        }
+      ]
+    }
+  ]
+}
