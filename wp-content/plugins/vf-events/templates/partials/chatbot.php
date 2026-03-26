@@ -91,7 +91,7 @@ if (!empty($chatbot_other_location)) {
   <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="Event Assistant chatbot" data-vf-js-chatbot-modal-container>
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
-        <div class="vf-chatbot-selector" data-vf-js-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-multiselect="false" data-max-multiselect="1" data-show-search="true" data-empty-label="Select other event" data-lock-title-text="true" data-exclude-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
+        <div class="vf-chatbot-selector" data-vf-js-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-multiselect="false" data-max-multiselect="1" data-show-search="true" data-empty-label="Select other event" data-lock-title-text="true" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
           <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
             <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg" alt="Event Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
@@ -497,6 +497,20 @@ if (!empty($chatbot_other_location)) {
     font-weight: 600 !important;
     color: #fff !important;
     transition: font-size 220ms ease, margin 220ms ease, line-height 220ms ease;
+}
+.vf-chatbot-selector__item {
+    transition: background-color 250ms ease;
+}
+.vf-chatbot-selector__item:hover,
+.vf-chatbot-selector__item:focus {
+    background-color: #c7e2ffa8;
+}
+.vf-chatbot-selector__item--selected {
+    background-color: #c7e2ff;
+}
+.vf-chatbot-selector__item--selected:hover,
+.vf-chatbot-selector__item--selected:focus {
+    background-color: #c7e2ffa8;
 }
 .vf-events-chatbot-event-hero--compact .vf-events-chatbot-event-card {
     padding-top: 0.75rem;

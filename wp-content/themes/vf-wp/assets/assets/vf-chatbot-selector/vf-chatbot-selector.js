@@ -19,6 +19,8 @@ export class VFChatbotSelector {
     this.showAllServicesSelected =
       this.el.getAttribute("data-show-all-services-selected") === "true";
     this.excludeRouteId = this.el.getAttribute("data-exclude-route-id") || "";
+    this.selectedRouteId =
+      this.el.getAttribute("data-selected-route-id") || "";
     this.lockTitleText =
       this.el.getAttribute("data-lock-title-text") === "true";
     this.emptyLabel =
@@ -101,12 +103,15 @@ export class VFChatbotSelector {
     // Update display after initial selection
     this.updateSelectionDisplay();
     this.updateClearButton();
+    this.reorderRouteItems();
   }
 
   updateRoutesList() {
     const listEl = this.el.querySelector("[data-vf-js-chatbot-selector-list]");
     const visibleRoutes = this.routes
-      ? this.routes.filter(route => route.id !== this.excludeRouteId)
+      ? this.sortRoutes(
+          this.routes.filter(route => route.id !== this.excludeRouteId)
+        )
       : null;
     if (!listEl || !visibleRoutes) return;
 
@@ -192,6 +197,63 @@ export class VFChatbotSelector {
     this.el.dispatchEvent(new CustomEvent("routesloaded"));
   }
 
+  sortRoutes(routes) {
+    return routes.slice().sort((routeA, routeB) =>
+      String(routeA.title || "").localeCompare(
+        String(routeB.title || ""),
+        undefined,
+        { sensitivity: "base" }
+      )
+    );
+  }
+
+  reorderRouteItems() {
+    const listEl = this.el.querySelector("[data-vf-js-chatbot-selector-list]");
+    if (!listEl) return;
+
+    const items = Array.from(listEl.querySelectorAll("[data-vf-js-selector-item]"));
+    const allServicesItem = items.find(
+      item => item.getAttribute("data-route-id") === "all"
+    );
+    const routeItems = items.filter(
+      item => item.getAttribute("data-route-id") !== "all"
+    );
+
+    routeItems.sort((itemA, itemB) => {
+      const itemAId = itemA.getAttribute("data-route-id");
+      const itemBId = itemB.getAttribute("data-route-id");
+      const itemASelected = this.selectedItems.has(itemAId);
+      const itemBSelected = this.selectedItems.has(itemBId);
+
+      if (itemASelected !== itemBSelected) {
+        return itemASelected ? -1 : 1;
+      }
+
+      return String(itemA.getAttribute("data-title") || "").localeCompare(
+        String(itemB.getAttribute("data-title") || ""),
+        undefined,
+        { sensitivity: "base" }
+      );
+    });
+
+    listEl.innerHTML = "";
+
+    if (allServicesItem && this.allServicesSelected) {
+      listEl.appendChild(allServicesItem);
+    }
+
+    routeItems.forEach(item => {
+      listEl.appendChild(item);
+    });
+
+    if (allServicesItem && !this.allServicesSelected) {
+      listEl.appendChild(allServicesItem);
+    }
+
+    this.listItems = this.el.querySelectorAll("[data-vf-js-selector-item]");
+    this.allServicesItem = this.el.querySelector("[data-route-id='all']");
+  }
+
   // New method to bind only list item events
   bindListItemEvents() {
     this.listItems.forEach(item => {
@@ -223,6 +285,9 @@ export class VFChatbotSelector {
   handleInitialSelections() {
     // Don't reset the selectedItems Set here - it may already have pre-selected items
     let hasPreSelectedItems = this.selectedItems.size > 0; // Check existing selectedItems first
+    const defaultSelectedItem = this.selectedRouteId
+      ? this.el.querySelector(`[data-route-id="${this.selectedRouteId}"]`)
+      : null;
 
     // Also check DOM for any additional pre-selected items
     this.listItems.forEach(item => {
@@ -234,6 +299,20 @@ export class VFChatbotSelector {
         }
       }
     });
+
+    if (!hasPreSelectedItems && defaultSelectedItem) {
+      defaultSelectedItem.classList.add("vf-chatbot-selector__item--selected");
+      this.selectedItems.add(this.selectedRouteId);
+      this.allServicesSelected = false;
+
+      if (this.allServicesItem) {
+        this.allServicesItem.classList.remove(
+          "vf-chatbot-selector__item--selected"
+        );
+      }
+
+      hasPreSelectedItems = true;
+    }
 
     // Set default selections only if no items are pre-selected
     if (
@@ -255,6 +334,7 @@ export class VFChatbotSelector {
     // Update display
     this.updateSelectionDisplay();
     this.updateClearButton();
+    this.reorderRouteItems();
   }
 
   // Update bindEvents to store handlers for cleanup
@@ -358,6 +438,7 @@ export class VFChatbotSelector {
   handleItemSelection(item) {
     const itemId = item.getAttribute("data-route-id");
     const isAllServices = itemId === "all";
+    this.selectedRouteId = isAllServices ? "" : itemId;
 
     if (this.isMultiselect) {
       if (isAllServices) {
@@ -412,6 +493,7 @@ export class VFChatbotSelector {
 
     this.updateSelectionDisplay();
     this.updateClearButton();
+    this.reorderRouteItems();
     this.dispatchSelectionEvent();
   }
 
@@ -472,6 +554,7 @@ export class VFChatbotSelector {
     // Update display and clear button
     this.updateSelectionDisplay();
     this.updateClearButton();
+    this.reorderRouteItems();
   }
 
   setSelection(selectedItems) {
@@ -483,8 +566,10 @@ export class VFChatbotSelector {
 
     // If "all" is selected
     if (selectedItems.includes("all")) {
+      this.selectedRouteId = "";
       this.selectAllServices();
     } else {
+      this.selectedRouteId = selectedItems[0] || "";
       selectedItems.forEach(id => {
         const item = this.el.querySelector(`[data-route-id="${id}"]`);
         if (item) {
@@ -499,6 +584,7 @@ export class VFChatbotSelector {
     }
     this.updateSelectionDisplay();
     this.updateClearButton();
+    this.reorderRouteItems();
     this.dispatchSelectionEvent();
   }
 
@@ -507,6 +593,7 @@ export class VFChatbotSelector {
 
     // Clear individual selections
     this.selectedItems.clear();
+    this.selectedRouteId = "";
 
     // Remove selected class from all individual items
     this.listItems.forEach(item => {
@@ -528,6 +615,7 @@ export class VFChatbotSelector {
     this.selectAllServices();
     this.updateSelectionDisplay();
     this.updateClearButton();
+    this.reorderRouteItems();
     this.dispatchSelectionEvent();
   }
 
@@ -589,5 +677,11 @@ export class VFChatbotSelector {
 
 // Function to initialize the component
 export function initVFChatbotSelector(element) {
-  return new VFChatbotSelector(element);
+  const instance = new VFChatbotSelector(element);
+
+  if (element) {
+    element.__vfChatbotSelectorInstance = instance;
+  }
+
+  return instance;
 }

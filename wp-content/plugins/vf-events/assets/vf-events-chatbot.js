@@ -256,6 +256,7 @@
 
   function clearSelectorSelection() {
     var selector = getSelectorElement();
+    var selectorInstance;
     var dropdown;
     var titleEl;
     var titleText;
@@ -266,10 +267,15 @@
       return;
     }
 
+    selectorInstance = selector.__vfChatbotSelectorInstance;
+
+    if (selectorInstance && defaultEventState && defaultEventState.id) {
+      selectorInstance.setSelection([defaultEventState.id]);
+    }
+
     selector
       .querySelectorAll("[data-vf-js-selector-item]")
       .forEach(function (item) {
-        item.classList.remove("vf-chatbot-selector__item--selected");
         item.style.display = "";
       });
 
