@@ -144,7 +144,7 @@ if (!empty($chatbot_other_location)) {
             id="eventInfo"
             class="vf-events-chatbot-event-hero"
             <?php if (!empty($chatbot_hero_image)) { ?>
-             style="background: url('<?php echo esc_url($chatbot_hero_image); ?>') no-repeat 73% 46%; background-size: auto; margin: 1.5rem 1.5rem 2rem 1.5rem; border-radius: 2px;"
+             style="background: url('<?php echo esc_url($chatbot_hero_image); ?>') no-repeat 73% 46%; background-size: auto; margin: 0.5rem 0.5rem 2rem; border-radius: 2px;"
             <?php } ?>
           >
             <div class="vf-events-chatbot-event-card">
