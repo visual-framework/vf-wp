@@ -6,6 +6,7 @@
     type: ""
   };
   var defaultEventState = null;
+  var welcomeContentCollapseTimeout = null;
 
   function getChatbotRoot(instance) {
     if (instance && instance.container && instance.container.closest) {
@@ -213,12 +214,48 @@
     return startDate + " – " + endDate;
   }
 
+  function getWelcomeContent() {
+    return document.querySelector(".vf-chatbot-welcome__content");
+  }
+
+  function setWelcomeContentCollapsed(collapsed) {
+    var welcomeContent = getWelcomeContent();
+
+    if (!welcomeContent) {
+      return;
+    }
+
+    if (welcomeContentCollapseTimeout) {
+      window.clearTimeout(welcomeContentCollapseTimeout);
+      welcomeContentCollapseTimeout = null;
+    }
+
+    if (collapsed) {
+      welcomeContent.classList.add("vf-chatbot-welcome__content--faded");
+      welcomeContentCollapseTimeout = window.setTimeout(function () {
+        welcomeContent.classList.add("vf-chatbot-welcome__content--collapsed");
+        welcomeContentCollapseTimeout = null;
+      }, 220);
+      return;
+    }
+
+    welcomeContent.classList.remove("vf-chatbot-welcome__content--collapsed");
+
+    window.requestAnimationFrame(function () {
+      window.requestAnimationFrame(function () {
+        welcomeContent.classList.remove("vf-chatbot-welcome__content--faded");
+      });
+    });
+  }
+
   function compactEventInfo() {
     var eventInfo = getEventInfo();
 
     if (eventInfo) {
       eventInfo.classList.add("vf-events-chatbot-event-hero--compact");
     }
+
+    setWelcomeContentCollapsed(true);
   }
 
   function resetEventInfo() {
@@ -228,6 +265,8 @@
       eventInfo.classList.remove("vf-events-chatbot-event-hero--compact");
       eventInfo.style.display = "";
     }
+
+    setWelcomeContentCollapsed(false);
   }
 
   function captureDefaultEventState() {

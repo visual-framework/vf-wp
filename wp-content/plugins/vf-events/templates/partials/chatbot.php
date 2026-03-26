@@ -131,14 +131,31 @@ if (!empty($chatbot_other_location)) {
     </div>
 
     <div class="vf-chatbot-modal | vf-u-background-color-ui--grey--light" data-vf-js-chatbot-modal>
+        <div>
                   <div
             id="eventInfo"
             class="vf-events-chatbot-event-hero"
             <?php if (!empty($chatbot_hero_image)) { ?>
-             style="background: url('<?php echo esc_url($chatbot_hero_image); ?>') no-repeat 73% 46%; background-size: auto; margin: 6px 6px 1rem 6px; border-radius: 2px;"
+             style="background: url('<?php echo esc_url($chatbot_hero_image); ?>') no-repeat 73% 46%; background-size: auto; margin: 1.5rem 1.5rem 2rem 1.5rem; border-radius: 2px;"
             <?php } ?>
           >
             <div class="vf-events-chatbot-event-card">
+                <div class="vf-chatbot-welcome__content" style="
+">
+            
+<div style="
+    border: 1px solid black;
+    padding: 1rem 0;
+    background-color: white;
+    border-radius: 6px;
+">
+            <h1 class="vf-chatbot-welcome__title">Event Assistant</h1>
+            <div class="vf-chatbot-welcome__message">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            </div>
+ </div>
+          </div>
+          <div>
               <?php if (!empty($chatbot_event_date_label)) { ?>
                 <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge" data-vf-js-chatbot-event-date><?php echo esc_html($chatbot_event_date_label); ?></p>
               <?php } ?>
@@ -149,6 +166,7 @@ if (!empty($chatbot_other_location)) {
                 <h3 class="event-card-title" data-vf-js-chatbot-event-title><?php echo esc_html($chatbot_title); ?></h3>
               <?php } ?>
               <p style="display: none;" class="event-card-location"><?php echo esc_html($chatbot_event_location_label); ?></p>
+            </div>
             </div>
           </div>
       <div class="vf-chatbot-modal__content" data-vf-js-chatbot-modal-content>
@@ -164,15 +182,7 @@ if (!empty($chatbot_other_location)) {
           data-qa-data-url="/wp-content/themes/vf-wp/assets/assets/chatbot/qa.json"
         >
 
-          <div class="vf-chatbot-welcome__content">
-            <div class="vf-chatbot-welcome__logo">
-              <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-32x32-dark-green.svg" alt="Event Assistant">
-            </div>
-            <h1 class="vf-chatbot-welcome__title">Event Assistant</h1>
-            <div class="vf-chatbot-welcome__message">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam cursus quis risus a egestas.
-            </div>
-          </div>
+
           <div class="vf-chatbot-welcome__suggestions">
             <p class="vf-chatbot-welcome__suggestions-title vf-u-margin__bottom--200">Try asking me:</p>
             <div class="vf-chatbot-welcome__suggestions-grid" data-vf-js-chatbot-welcome-suggestions-grid></div>
@@ -200,7 +210,7 @@ if (!empty($chatbot_other_location)) {
           </div>
           </div>
         </div>
-
+</div>
       <div role="region" aria-label="Chat message input" class="vf-chatbot-modal__input-container">
         <div class="vf-chatbot-modal__input-wrapper">
           <label class="vf-u-sr-only" id="vf-chatbot-modal-input-label" for="vf-chatbot-modal-input">Ask me</label>
@@ -426,8 +436,14 @@ if (!empty($chatbot_other_location)) {
 </script>
 <style>
     .vf-chatbot-modal .vf-chatbot-welcome__content {
-    min-height: 25dvh;
+    min-height: 15dvh;
     margin-bottom: 1rem;
+    max-height: 18rem;
+    overflow: hidden;
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition: max-height 780ms cubic-bezier(0.22, 1, 0.36, 1), opacity 220ms ease, transform 220ms ease, margin-bottom 780ms cubic-bezier(0.22, 1, 0.36, 1), padding-top 780ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0s;
 }
 
     .vf-chatbot-modal-container,
@@ -445,11 +461,25 @@ if (!empty($chatbot_other_location)) {
     .vf-events-chatbot-event-hero {
         display: block;
         position: relative;
-        transition: background-size 220ms ease, background-position 220ms ease, box-shadow 220ms ease;
+        transition: margin 720ms cubic-bezier(0.22, 1, 0.36, 1), background-size 720ms cubic-bezier(0.22, 1, 0.36, 1), background-position 720ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 720ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .vf-chatbot-welcome__content {
         position: relative;
         padding-top: 0.5rem;
+    }
+    .vf-chatbot-modal .vf-chatbot-welcome__content.vf-chatbot-welcome__content--faded {
+        opacity: 0 !important;
+        transform: translateY(-10px);
+        pointer-events: none;
+    }
+    .vf-chatbot-modal .vf-chatbot-welcome__content.vf-chatbot-welcome__content--collapsed {
+        min-height: 0 !important;
+        max-height: 0 !important;
+        margin-bottom: 0 !important;
+        padding-top: 0 !important;
+        overflow: hidden !important;
+        visibility: hidden;
+        pointer-events: none;
     }
     .vf-chatbot-modal__content {
         background: transparent;
@@ -462,14 +492,14 @@ if (!empty($chatbot_other_location)) {
         align-content: flex-end;
         padding: 0.5rem 1rem;
         background: linear-gradient(360deg, rgba(0, 0, 0, 0.6) 18%, rgba(0, 0, 0, 0) 75%);
-        box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, .55);
-        transition: padding 220ms ease, background 220ms ease, box-shadow 220ms ease;
+        box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, .4);
+        transition: padding 720ms cubic-bezier(0.22, 1, 0.36, 1), background 720ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 720ms cubic-bezier(0.22, 1, 0.36, 1);
     }
     .vf-events-chatbot-badge {
         margin-right: 1rem;
         margin-bottom: 0.75rem;
         transform-origin: top left;
-        transition: transform 220ms ease, margin 220ms ease, padding 220ms ease, font-size 220ms ease, line-height 220ms ease;
+        transition: transform 720ms cubic-bezier(0.22, 1, 0.36, 1), margin 720ms cubic-bezier(0.22, 1, 0.36, 1), padding 720ms cubic-bezier(0.22, 1, 0.36, 1), font-size 720ms cubic-bezier(0.22, 1, 0.36, 1), line-height 720ms cubic-bezier(0.22, 1, 0.36, 1);
         max-height: 3rem;
         overflow: hidden;
     }
@@ -496,7 +526,7 @@ if (!empty($chatbot_other_location)) {
     font-size: 18px !important;
     font-weight: 600 !important;
     color: #fff !important;
-    transition: font-size 220ms ease, margin 220ms ease, line-height 220ms ease;
+    transition: font-size 720ms cubic-bezier(0.22, 1, 0.36, 1), margin 720ms cubic-bezier(0.22, 1, 0.36, 1), line-height 720ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .vf-chatbot-selector__item {
     transition: background-color 250ms ease;
@@ -517,6 +547,9 @@ if (!empty($chatbot_other_location)) {
     padding-bottom: 0.75rem;
     background: linear-gradient(360deg, rgba(0, 0, 0, 0.72) 18%, rgba(0, 0, 0, 0.15) 100%);
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, .35);
+}
+.vf-events-chatbot-event-hero--compact {
+    margin: 6px 6px 1rem 6px !important;
 }
 .vf-events-chatbot-event-hero--compact .vf-events-chatbot-badge {
     transform: scale(0.92);
