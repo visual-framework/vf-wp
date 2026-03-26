@@ -11,9 +11,15 @@ $chatbot_other_location = get_field('vf_event_other_location', $chatbot_event_po
 $chatbot_hero_image = get_field('vf_event_hero', $chatbot_event_post_id);
 $chatbot_default_hero_image = 'https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Screenshot-2026-02-27-at-11.10.02.png';
 $chatbot_event_id = get_post_field('post_name', $chatbot_event_post_id);
-$chatbot_routes_url = function_exists('custom_get_event_chatbot_routes_url')
-  ? custom_get_event_chatbot_routes_url()
-  : get_stylesheet_directory_uri() . '/assets/assets/chatbot/events-routes.json';
+$chatbot_plugin_base_url = plugin_dir_url(dirname(dirname(dirname(__FILE__))) . '/vf-events.php');
+$chatbot_asset_base = untrailingslashit(get_theme_file_uri('assets/assets/vf-chatbot/assets'));
+$chatbot_asset_base_custom = untrailingslashit(get_template_directory_uri() . '/assets/assets/chatbot');
+$chatbot_routes_payload = class_exists('VF_Events')
+  ? VF_Events::get_chatbot_routes_payload()
+  : array('routes' => array());
+$chatbot_routes_url = class_exists('VF_Events')
+  ? VF_Events::get_chatbot_routes_url()
+  : rest_url('vf-events/v1/chatbot-routes');
 $chatbot_event_type_value = '';
 $chatbot_event_type_label = '';
 $chatbot_event_date_label = '';
@@ -97,8 +103,9 @@ if (!empty($chatbot_other_location)) {
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
         <div class="vf-chatbot-selector" data-vf-js-events-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-empty-label="Select other event" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
+          <script type="application/json" data-vf-js-events-chatbot-routes-payload><?php echo wp_json_encode($chatbot_routes_payload, JSON_UNESCAPED_SLASHES); ?></script>
           <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-24x24-dark-green.svg" alt="AI Event Assistant">
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-24x24-dark-green.svg'); ?>" alt="AI Event Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
               <span class="vf-chatbot-selector__main-text">AI Event Assistant</span>
               <span class="vf-chatbot-selector__title-text">Select other event</span>
@@ -127,10 +134,10 @@ if (!empty($chatbot_other_location)) {
       </div>
       <div class="vf-chatbot-modal__header-right">
         <button class="vf-chatbot-modal__minimize" aria-label="Minimize chatbot" data-vf-js-chatbot-modal-minimize type="button">
-          <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-minimize.svg" alt="Minimize chatbot">
+          <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-minimize.svg'); ?>" alt="Minimize chatbot">
         </button>
         <button class="vf-chatbot-modal__close" aria-label="Close chatbot" data-vf-js-chatbot-modal-close type="button">
-          <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-close.svg" alt="Close chatbot">
+          <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-close.svg'); ?>" alt="Close chatbot">
         </button>
       </div>
     </div>
@@ -151,7 +158,7 @@ if (!empty($chatbot_other_location)) {
 <div class="infoWrapper">
             <div class="vf-events-chatbot-welcome__header">
               <div class="vf-chatbot-welcome__logo">
-                <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-32x32-dark-green.svg" alt="AI Assistant">
+                <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-32x32-dark-green.svg'); ?>" alt="AI Assistant">
               </div>
               <h1 class="vf-chatbot-welcome__title">AI Event Assistant</h1>
             </div>
@@ -184,7 +191,7 @@ if (!empty($chatbot_other_location)) {
           data-enable-qa-data-loading="true"
           data-enable-predefined-qa="true"
           data-enable-fallback-responses="true"
-          data-qa-data-url="/wp-content/themes/vf-wp/assets/assets/chatbot/qa.json"
+          data-qa-data-url="<?php echo esc_url($chatbot_asset_base_custom . '/qa.json'); ?>"
         >
 
 
@@ -221,7 +228,7 @@ if (!empty($chatbot_other_location)) {
           <label class="vf-u-sr-only" id="vf-chatbot-modal-input-label" for="vf-chatbot-modal-input">Ask me</label>
           <textarea id="vf-chatbot-modal-input" aria-labelledby="vf-chatbot-modal-input-label" class="vf-chatbot-modal__input vf-form__textarea vf-u-padding__left--400" placeholder="Ask about this event ..." rows="1" data-vf-js-chatbot-modal-input></textarea>
           <button class="vf-chatbot-modal__send-button" aria-label="Send message" data-vf-js-chatbot-modal-send type="button">
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-send.svg" alt="Send">
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-send.svg'); ?>" alt="Send">
           </button>
         </div>
 
@@ -310,7 +317,7 @@ if (!empty($chatbot_other_location)) {
         <div class="vf-chatbot-message vf-chatbot-message--user vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
             <span class="vf-chatbot-message__avatar-name">You</span>
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--avatar-user.svg" alt="Your avatar">
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--avatar-user.svg'); ?>" alt="Your avatar">
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
             <div class="vf-chatbot-message__content-prompt vf-u-padding__left--200 vf-u-padding__right--200">Hello!</div>
@@ -318,10 +325,10 @@ if (!empty($chatbot_other_location)) {
         </div>
       </template>
 
-      <template id="Assistant-message-template">
-        <div class="vf-chatbot-message vf-chatbot-message--Assistant vf-u-margin__top--400">
+      <template id="assistant-message-template">
+        <div class="vf-chatbot-message vf-chatbot-message--assistant vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg" alt="AI Event Assistant">
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="AI Event Assistant">
             <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
@@ -332,9 +339,9 @@ if (!empty($chatbot_other_location)) {
       </template>
 
       <template id="loading-indicator-template">
-        <div class="vf-chatbot-message vf-chatbot-message--Assistant vf-chatbot-message--loading vf-u-margin__top--400">
+        <div class="vf-chatbot-message vf-chatbot-message--assistant vf-chatbot-message--loading vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets/vf-chatbot--icon-16x16-dark-green.svg" alt="AI Event Assistant">
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="AI Event Assistant">
             <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
@@ -362,11 +369,11 @@ if (!empty($chatbot_other_location)) {
   </div>
 </div>
 
-<script src="/wp-content/plugins/vf-events/assets/vf-events-chatbot.js"></script>
+<script src="<?php echo esc_url($chatbot_plugin_base_url . 'assets/vf-events-chatbot.js'); ?>"></script>
 <script>
   (function () {
-    var assetBase = "/wp-content/themes/vf-wp/assets/assets/vf-chatbot/assets";
-    var assetBaseCustom = "/wp-content/themes/vf-wp/assets/assets/chatbot";
+    var assetBase = "<?php echo esc_js($chatbot_asset_base); ?>";
+    var assetBaseCustom = "<?php echo esc_js($chatbot_asset_base_custom); ?>";
 
     window.vfEventChatbotConfig = {
       type: "modal",

@@ -58,6 +58,14 @@
     return selector ? selector.getAttribute("data-routes-path") : "";
   }
 
+  function getRoutesPayloadElement() {
+    var selector = getSelectorElement();
+
+    return selector
+      ? selector.querySelector("[data-vf-js-events-chatbot-routes-payload]")
+      : null;
+  }
+
   function getSelectorEmptyLabel() {
     var selector = getSelectorElement();
 
@@ -181,13 +189,42 @@
 
   function loadEventRoutes() {
     var routesPath = getRoutesPath();
-
-    if (!routesPath) {
-      return Promise.resolve([]);
-    }
+    var routesPayloadElement = getRoutesPayloadElement();
 
     if (eventRoutesPromise) {
       return eventRoutesPromise;
+    }
+
+    if (routesPayloadElement) {
+      eventRoutesPromise = Promise.resolve()
+        .then(function () {
+          var payloadText = routesPayloadElement.textContent || "";
+          var parsedPayload = payloadText ? JSON.parse(payloadText) : { routes: [] };
+          var routes = sortRoutesAlphabetically(
+            normalizeRoutesPayload(parsedPayload)
+          );
+
+          eventRoutesById = {};
+          routes.forEach(function (route) {
+            if (route && route.id) {
+              eventRoutesById[route.id] = route;
+            }
+          });
+
+          return routes;
+        })
+        .catch(function (error) {
+          console.error("Unable to parse inline event routes payload:", error);
+          eventRoutesById = {};
+          eventRoutesPromise = null;
+          return [];
+        });
+
+      return eventRoutesPromise;
+    }
+
+    if (!routesPath) {
+      return Promise.resolve([]);
     }
 
     eventRoutesPromise = fetch(routesPath)

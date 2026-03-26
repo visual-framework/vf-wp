@@ -53,6 +53,23 @@ class VF_Events_ACF {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
+    add_filter(
+      'acf/prepare_field/name=vf_events_chatbot_routes_payload_actions',
+      array($this, 'acf_prepare_field_vf_events_chatbot_routes_payload_actions')
+    );
+    add_action(
+      'admin_post_vf_events_refresh_chatbot_routes',
+      array($this, 'handle_manual_chatbot_routes_refresh')
+    );
+    add_action(
+      VF_Events::chatbot_routes_refresh_hook(),
+      array($this, 'refresh_chatbot_routes_payload')
+    );
+    add_action(
+      "save_post_{$post_type}",
+      array($this, 'refresh_chatbot_routes_payload_on_save'),
+      20
+    );
   }
 
   /**
@@ -191,6 +208,35 @@ class VF_Events_ACF {
           'ui' => 1,
           'ui_on_text' => __('Enabled', 'vfwp'),
           'ui_off_text' => __('Disabled', 'vfwp'),
+        ),
+        array(
+          'key' => 'field_vf_events_chatbot_routes_payload',
+          'label' => __('Chatbot routes payload', 'vfwp'),
+          'name' => 'vf_events_chatbot_routes_payload',
+          'type' => 'textarea',
+          'instructions' => __(
+            'Stored JSON payload used by the event chatbot selector. It is refreshed automatically once a day and whenever an event is saved.',
+            'vfwp'
+          ),
+          'required' => 0,
+          'conditional_logic' => 0,
+          'wrapper' => array(
+            'width' => '',
+            'class' => '',
+            'id' => '',
+          ),
+          'default_value' => '',
+          'rows' => 18,
+          'new_lines' => '',
+        ),
+        array(
+          'key' => 'field_vf_events_chatbot_routes_payload_actions',
+          'label' => __('Refresh chatbot routes payload', 'vfwp'),
+          'name' => 'vf_events_chatbot_routes_payload_actions',
+          'type' => 'message',
+          'message' => '',
+          'new_lines' => 'wpautop',
+          'esc_html' => 0,
         ),
       ),
       'location' => array(
@@ -368,6 +414,94 @@ class VF_Events_ACF {
           'get_callback' => $callback
       ));
     }
+
+    register_rest_route('vf-events/v1', '/chatbot-routes', array(
+      'methods' => 'GET',
+      'callback' => array($this, 'get_chatbot_routes_rest_response'),
+      'permission_callback' => '__return_true',
+    ));
+  }
+
+  /**
+   * Prepare the actions field for chatbot routes payload refresh.
+   */
+  public function acf_prepare_field_vf_events_chatbot_routes_payload_actions($field) {
+    $refresh_url = wp_nonce_url(
+      admin_url('admin-post.php?action=vf_events_refresh_chatbot_routes'),
+      'vf_events_refresh_chatbot_routes'
+    );
+    $updated_at = VF_Events::get_chatbot_routes_updated_at();
+    $status_message = $updated_at
+      ? sprintf(
+          __('Last refreshed: %s', 'vfwp'),
+          wp_date(get_option('date_format') . ' ' . get_option('time_format'), $updated_at)
+        )
+      : __('The chatbot routes payload has not been generated yet.', 'vfwp');
+
+    if (isset($_GET['vf_events_chatbot_routes_refreshed'])) {
+      if ($_GET['vf_events_chatbot_routes_refreshed'] === '1') {
+        $status_message = __('The chatbot routes payload was refreshed successfully.', 'vfwp') . ' ' . $status_message;
+      } elseif ($_GET['vf_events_chatbot_routes_refreshed'] === '0') {
+        $status_message = __('The chatbot routes payload could not be refreshed.', 'vfwp') . ' ' . $status_message;
+      }
+    }
+
+    $field['message'] = sprintf(
+      '<p>%1$s</p><p><a class="button button-secondary" href="%2$s">%3$s</a></p>',
+      esc_html($status_message),
+      esc_url($refresh_url),
+      esc_html__('Refresh now', 'vfwp')
+    );
+
+    return $field;
+  }
+
+  /**
+   * Return the stored chatbot routes payload via REST.
+   */
+  public function get_chatbot_routes_rest_response() {
+    return rest_ensure_response(
+      VF_Events::get_chatbot_routes_payload(true)
+    );
+  }
+
+  /**
+   * Refresh the stored chatbot routes payload.
+   */
+  public function refresh_chatbot_routes_payload() {
+    return VF_Events::refresh_chatbot_routes_payload() !== false;
+  }
+
+  /**
+   * Refresh routes payload after saving an event.
+   */
+  public function refresh_chatbot_routes_payload_on_save($post_id) {
+    if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+      return;
+    }
+
+    $this->refresh_chatbot_routes_payload();
+  }
+
+  /**
+   * Handle manual chatbot routes refresh from the Events settings page.
+   */
+  public function handle_manual_chatbot_routes_refresh() {
+    if (!current_user_can('manage_options')) {
+      wp_die(__('You are not allowed to refresh chatbot routes.', 'vfwp'));
+    }
+
+    check_admin_referer('vf_events_refresh_chatbot_routes');
+
+    $refreshed = $this->refresh_chatbot_routes_payload();
+    $redirect_url = add_query_arg(
+      'vf_events_chatbot_routes_refreshed',
+      $refreshed ? '1' : '0',
+      VF_Events::get_settings_url()
+    );
+
+    wp_safe_redirect($redirect_url);
+    exit;
   }
 
   /**
