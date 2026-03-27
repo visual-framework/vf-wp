@@ -1,7 +1,21 @@
 services:
+  traefik:
+    image: traefik:v2.11
+    container_name: "${PROJECT_NAME_SANITISED}_traefik"
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=true
+      - --entrypoints.web.address=:80
+      - --api.dashboard=true
+    ports:
+      - "0:80" # Dynamically bind to an available port on the host
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   mysql:
     image: wodby/mariadb:${MARIADB_TAG}
-    container_name: "${PROJECT_NAME}_mariadb"
+    container_name: "${PROJECT_NAME_SANITISED}_mariadb"
     stop_grace_period: 30s
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -10,29 +24,31 @@ services:
       MYSQL_PASSWORD: ${DOCKER_DATABASE_PASS}
       MYSQL_INNODB_LOG_BUFFER_SIZE: 50M
       MYSQL_INNODB_LOG_FILE_SIZE: 2047M
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
     volumes:
-      - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDUMP_SRC}:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
-      - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDATA_SRC}:/var/lib/mysql # I want to manage volumes manually.
+      - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDUMP_SRC}:/docker-entrypoint-initdb.d
+      - ${LOCAL_CORE_PATH}/${RELATIVE_SQLDATA_SRC}:/var/lib/mysql
 
   php:
+    image: wodby/wordpress-php:${PHP_TAG}
+    container_name: "${PROJECT_NAME_SANITISED}_php"
     depends_on:
       - mysql
-    image: wodby/wordpress-php:${PHP_TAG}
-    container_name: "${PROJECT_NAME}_php"
     environment:
       PHP_SENDMAIL_PATH: '"/usr/bin/dos2unix -u | /usr/sbin/ssmtp -t -f"'
       SSMTP_MAILHUB: mailhog:1025
-      DB_HOST: 'mysql'
+      DB_HOST: mysql
       DB_USER: ${DOCKER_DATABASE_USER}
       DB_PASSWORD: ${DOCKER_DATABASE_PASS}
       DB_NAME: ${DOCKER_DATABASE}
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
     volumes:
       - ${LOCAL_CORE_PATH}/:${VM_CORE_PATH}
       - ./bin/conf.d/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
 
   apache:
     image: wodby/apache:${APACHE_TAG}
-    container_name: "${PROJECT_NAME}_apache"
+    container_name: "${PROJECT_NAME_SANITISED}_apache"
     depends_on:
       - php
     environment:
@@ -41,24 +57,33 @@ services:
       APACHE_VHOST_PRESET: php
       APACHE_DOCUMENT_ROOT: ${VM_CORE_PATH}/${RELATIVE_DOCUMENT_ROOT}
       APACHE_SERVER_ROOT: ${VM_CORE_PATH}/${RELATIVE_DOCUMENT_ROOT}
+      ENVIRONMENT: ${ENVIRONMENT:-dev}
     volumes:
       - ${LOCAL_CORE_PATH}/:${VM_CORE_PATH}
     labels:
-      - 'traefik.backend=apache'
-      - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:${PROJECT_NAME}.docker.localhost'
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME}_apache.rule=Host(`${PROJECT_NAME_SANITISED}.docker.localhost`)"
 
   mailhog:
     image: mailhog/mailhog
-    container_name: "${PROJECT_NAME}_mailhog"
+    container_name: "${PROJECT_NAME_SANITISED}_mailhog"
     labels:
-      - 'traefik.backend=${PROJECT_NAME}_mailhog'
-      - 'traefik.port=8025'
-      - 'traefik.frontend.rule=Host:mailhog.${PROJECT_NAME}.docker.localhost'
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME_SANITISED}_mailhog.rule=Host(`mailhog.${PROJECT_NAME_SANITISED}.docker.localhost`)"
+      - "traefik.http.routers.${PROJECT_NAME_SANITISED}_mailhog.entrypoints=web"
+      - "traefik.http.services.${PROJECT_NAME_SANITISED}_mailhog.loadbalancer.server.port=8025"
 
   pma:
     image: phpmyadmin/phpmyadmin
-    container_name: "${PROJECT_NAME}_pma"
+    container_name: "${PROJECT_NAME_SANITISED}_pma"
+    command:
+      - /bin/sh
+      - -c
+      - >
+        rm -f /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini 2>/dev/null || true;
+        rm -f /usr/local/lib/php/extensions/*/opcache.so 2>/dev/null || true;
+        echo 'ServerName 127.0.0.1' >> /etc/apache2/apache2.conf &&
+        apache2-foreground
     environment:
       PMA_HOST: mysql
       PMA_USER: root
@@ -66,27 +91,23 @@ services:
       PHP_UPLOAD_MAX_FILESIZE: 1G
       PHP_MAX_INPUT_VARS: 1G
     labels:
-      - 'traefik.backend=pma'
-      - 'traefik.port=80'
-      - 'traefik.frontend.rule=Host:pma.${PROJECT_NAME}.docker.localhost'
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME_SANITISED}_pma.rule=Host(`pma.${PROJECT_NAME_SANITISED}.docker.localhost`)"
+      - "traefik.http.routers.${PROJECT_NAME_SANITISED}_pma.entrypoints=web"
+      - "traefik.http.services.${PROJECT_NAME_SANITISED}_pma.loadbalancer.server.port=80"
 
   portainer:
-    image: portainer/portainer-ce
-    container_name: "${PROJECT_NAME}_portainer"
-    command: --no-auth -H unix:///var/run/docker.sock
+    image: portainer/portainer-ce:latest
+    container_name: "${PROJECT_NAME_SANITISED}_portainer"
+    command: -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
     labels:
-      - 'traefik.backend=portainer'
-      - 'traefik.port=9000'
-      - 'traefik.frontend.rule=Host:portainer.${PROJECT_NAME}.docker.localhost'
+      - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT_NAME_SANITISED}_portainer.rule=Host(`portainer.${PROJECT_NAME_SANITISED}.docker.localhost`)"
+      - "traefik.http.routers.${PROJECT_NAME_SANITISED}_portainer.entrypoints=web"
+      - "traefik.http.services.${PROJECT_NAME_SANITISED}_portainer.loadbalancer.server.port=9000"
 
-  traefik:
-    image: traefik:v1.7.34-alpine
-    container_name: "${PROJECT_NAME}_traefik"
-    command: -c /dev/null --web --docker --logLevel=INFO
-    ports:
-      - '80'
-      - '8080' # Dashboard
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  portainer_data:
