@@ -2,6 +2,12 @@
 /**
  * Template Name: Alumni
  */
+$alumni_endpoint = get_field('vf_wp_intranet_alumni_endpoint');
+
+if (empty($alumni_endpoint)) {
+  $alumni_endpoint = 'https://xs-db.embl.de/v3/alumni';
+}
+
 get_header();
 ?>
 
@@ -11,9 +17,20 @@ get_header();
     <h1 class="vf-intro__heading"><?php the_title(); ?></h1>
     <h2 class="vf-intro__subheading" style="margin-bottom: 2rem;">Find EMBL alumni</h2>
     <p class="vf-intro__text">
-      Search for an alumna/us by name, city, country, group, unit, organization, or work sector.
+     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pulvinar dignissim fermentum.
     </p>
-    <div id="total-results-info-od"></div>
+    <div class="alumni-results-toolbar">
+      <div class="alumni-results-info">
+        <div id="total-results-info-od" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <div class="alumni-sort-filter">
+        <label for="alumni-sort" class="vf-form__label" style="font-size: 16px; font-weight: 500; width: 100%;">Sort by</label>
+        <select id="alumni-sort" class="vf-form__select alumni-sort-select">
+          <option value="last_name" selected>Last name</option>
+          <option value="first_name">First name</option>
+        </select>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -25,23 +42,33 @@ get_header();
         <?php
         $render_search_filter = function ($key, $label, $all) {
           $inputId = "filter-" . $key;
+          $triggerId = $inputId . "-trigger";
+          $panelId = $inputId . "-panel";
+          $listId = $inputId . "-listbox";
           ?>
           <div class="filter-item" data-field="<?php echo $key; ?>">
             <p class="field-label vf-u-margin__bottom--200 vf-u-margin__top--0"><?php echo $label; ?></p>
 
             <div class="filter-anchor">
-              <div
+              <button
+                type="button"
+                id="<?php echo esc_attr($triggerId); ?>"
                 class="vf-form__select filter-trigger"
-                role="button"
-                tabindex="0"
                 aria-haspopup="listbox"
+                aria-controls="<?php echo esc_attr($panelId); ?>"
                 aria-expanded="false"
               >
-                <span class="filter-label" data-default="<?php echo $all; ?>"><?php echo $all; ?></span>
-              </div>
+                <span class="filter-label" data-default="<?php echo esc_attr($all); ?>"><?php echo esc_html($all); ?></span>
+              </button>
 
               <form action="#" class="vf-form vf-form--search vf-form--search--mini | vf-sidebar--end filter-search-form">
-                <div class="vf-sidebar__inner filter-panel">
+                <div
+                  id="<?php echo esc_attr($panelId); ?>"
+                  class="vf-sidebar__inner filter-panel"
+                  role="region"
+                  aria-labelledby="<?php echo esc_attr($triggerId); ?>"
+                  hidden
+                >
                   <div class="filter-panel-content">
                     <label for="<?php echo $inputId; ?>" class="visually-hidden">
                       Search alumni by <?php echo strtolower($label); ?>
@@ -55,6 +82,9 @@ get_header();
                         data-field="<?php echo $key; ?>"
                         placeholder="Search <?php echo $label; ?>"
                         autocomplete="off"
+                        aria-controls="<?php echo esc_attr($listId); ?>"
+                        aria-autocomplete="list"
+                        aria-expanded="false"
                       >
                       <div class="vf-search__button | search-button vf-button--primary" aria-hidden="true">
                         <span class="vf-button__text | vf-u-sr-only">Search</span>
@@ -72,9 +102,9 @@ get_header();
                           <span class="selection-hint"></span>
                           <span class="selected-hint">0 selected</span>
                         </div>
-                        <button type="button" class="field-clear-btn" disabled aria-label="Clear selected options">Clear all</button>
+                        <button type="button" class="field-clear-btn" disabled aria-label="Clear selected <?php echo esc_attr(strtolower($label)); ?> options">Clear all</button>
                       </div>
-                      <ul class="autocomplete-list" role="listbox" aria-multiselectable="true"></ul>
+                      <ul id="<?php echo esc_attr($listId); ?>" class="autocomplete-list" role="listbox" aria-multiselectable="true"></ul>
                     </div>
                   </div>
                 </div>
@@ -89,22 +119,33 @@ get_header();
         };
 
         $render_list_filter = function ($key, $label, $all) {
+          $inputId = "filter-" . $key;
+          $triggerId = $inputId . "-trigger";
+          $panelId = $inputId . "-panel";
+          $listId = $inputId . "-listbox";
           ?>
           <div class="filter-item" data-field="<?php echo $key; ?>">
             <p class="field-label vf-u-margin__bottom--200 vf-u-margin__top--0"><?php echo $label; ?></p>
 
             <div class="filter-anchor">
-              <div
+              <button
+                type="button"
+                id="<?php echo esc_attr($triggerId); ?>"
                 class="vf-form__select filter-trigger"
-                role="button"
-                tabindex="0"
                 aria-haspopup="listbox"
+                aria-controls="<?php echo esc_attr($panelId); ?>"
                 aria-expanded="false"
               >
-                <span class="filter-label" data-default="<?php echo $all; ?>"><?php echo $all; ?></span>
-              </div>
+                <span class="filter-label" data-default="<?php echo esc_attr($all); ?>"><?php echo esc_html($all); ?></span>
+              </button>
 
-              <div class="vf-sidebar__inner filter-panel list-only-panel">
+              <div
+                id="<?php echo esc_attr($panelId); ?>"
+                class="vf-sidebar__inner filter-panel list-only-panel"
+                role="region"
+                aria-labelledby="<?php echo esc_attr($triggerId); ?>"
+                hidden
+              >
                 <div class="filter-panel-content">
                   <div class="autocomplete-shell">
                     <div class="autocomplete-topbar">
@@ -112,9 +153,9 @@ get_header();
                         <span class="selection-hint"></span>
                         <span class="selected-hint">0 selected</span>
                       </div>
-                      <button type="button" class="field-clear-btn" disabled aria-label="Clear selected options">Clear all</button>
+                      <button type="button" class="field-clear-btn" disabled aria-label="Clear selected <?php echo esc_attr(strtolower($label)); ?> options">Clear all</button>
                     </div>
-                    <ul class="autocomplete-list list-only-options" role="listbox" aria-multiselectable="true"></ul>
+                    <ul id="<?php echo esc_attr($listId); ?>" class="autocomplete-list list-only-options" role="listbox" aria-multiselectable="true"></ul>
                   </div>
                 </div>
               </div>
@@ -141,6 +182,7 @@ get_header();
                 placeholder="Search by alumni name"
                 autocomplete="off"
                 aria-controls="name-autocomplete-list"
+                aria-haspopup="listbox"
                 aria-autocomplete="list"
                 aria-expanded="false"
               >
@@ -194,24 +236,29 @@ get_header();
         </div>
       </div>
 
-      <a href="#" id="clearAll" class="vf-link">Clear all filters</a>
+      <button type="button" id="clearAll" class="vf-link clear-all-button">Clear all filters</button>
     </div>
 
     <div>
-      <div id="alumni-results-container" class="vf-u-margin__top--600"></div>
+      <h2 id="alumni-results-heading" class="visually-hidden">Alumni search results</h2>
+      <div id="alumni-results-container" class="vf-u-margin__top--600" role="region" aria-labelledby="alumni-results-heading" aria-busy="true"></div>
       <nav class="vf-pagination" aria-label="Results pages">
         <ul class="vf-pagination__list paginationListOnDemand"></ul>
       </nav>
     </div>
 
-    <div></div>
+    <div>
+      <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="/internal-information/past-training/#">Link 1</a></p>
+      <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="/internal-information/past-training/#">Link 2</a></p>
+      <p class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400"><a href="/internal-information/past-training/#">Link 3</a></p>
+    </div>
   </div>
 </section>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const DATA_URL = "https://xs-db.embl.de/v3/alumni";
-  const ITEMS_PER_PAGE = 10;
+  const DATA_URL = <?php echo wp_json_encode(esc_url_raw($alumni_endpoint)); ?>;
+  const ITEMS_PER_PAGE = 15;
   const MAX_MULTI_SELECT = 5;
 
   const SEARCH_FIELDS = ["city", "country", "organization", "groupName", "unitName"];
@@ -280,13 +327,15 @@ document.addEventListener("DOMContentLoaded", () => {
     resultsContainer: document.getElementById("alumni-results-container"),
     paginationList: document.querySelector(".paginationListOnDemand"),
     clearAll: document.getElementById("clearAll"),
-    infoBlocks: Array.from(document.querySelectorAll("#total-results-info-od"))
+    infoBlocks: Array.from(document.querySelectorAll("#total-results-info-od")),
+    sortSelect: document.getElementById("alumni-sort")
   };
 
   const state = {
     allData: [],
     filtered: [],
     currentPage: 1,
+    sortBy: "last_name",
     filters: {
       name: [],
       city: [],
@@ -318,6 +367,28 @@ document.addEventListener("DOMContentLoaded", () => {
     return (v || "").toString().trim();
   }
 
+  /* Returns a normalized sort key for name-based ordering. */
+  function getSortValue(person, sortBy) {
+    if (sortBy === "first_name") {
+      return cleanString(person.firstName);
+    }
+
+    return cleanString(person.lastName);
+  }
+
+  /* Sorts alumni records by the active name preference with a stable fallback. */
+  function sortAlumniData(data) {
+    return data.sort((a, b) => {
+      const primaryCompare = getSortValue(a, state.sortBy).localeCompare(getSortValue(b, state.sortBy), undefined, { sensitivity: "base" });
+      if (primaryCompare !== 0) return primaryCompare;
+
+      const secondaryCompare = cleanString(a.firstName).localeCompare(cleanString(b.firstName), undefined, { sensitivity: "base" });
+      if (secondaryCompare !== 0) return secondaryCompare;
+
+      return cleanString(a.lastName).localeCompare(cleanString(b.lastName), undefined, { sensitivity: "base" });
+    });
+  }
+
   /* Checks if a field value should be considered meaningful content. */
   function isValid(v) {
     const n = normalize(v);
@@ -341,22 +412,30 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace(/'/g, "&#039;");
   }
 
-  /* Formats rich text blocks safely and preserves line breaks. */
+  /* Formats rich text blocks safely into paragraphs. */
   function formatOptionalText(value, fallback = "") {
     const text = cleanString(value);
     const safe = text || fallback;
-    return escapeHtml(safe).replace(/\n/g, "<br>");
+    if (!safe) return "";
+
+    return safe
+      .split(/\n\s*\n+/)
+      .map(paragraph => cleanString(paragraph))
+      .filter(Boolean)
+      .map(paragraph => `<p>${escapeHtml(paragraph).replace(/\n/g, "<br>")}</p>`)
+      .join("");
   }
 
-  /* Closes all open profile tab panels and resets their selected states. */
-  function closeAllProfileTabPanels() {
-    dom.resultsContainer.querySelectorAll(".profile-tab-content").forEach(panel => {
+  /* Closes open profile tab panels within a card or the whole results area. */
+  function closeProfileTabPanels(scope = dom.resultsContainer) {
+    scope.querySelectorAll(".profile-tab-content").forEach(panel => {
       panel.hidden = true;
       panel.setAttribute("aria-hidden", "true");
+      panel.removeAttribute("aria-labelledby");
       panel.innerHTML = "";
     });
 
-    dom.resultsContainer.querySelectorAll(".profile-tab-link").forEach(link => {
+    scope.querySelectorAll(".profile-tab-link").forEach(link => {
       link.classList.remove("is-active");
       link.setAttribute("aria-selected", "false");
     });
@@ -367,9 +446,15 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".filter-panel").forEach(panel => {
       if (panel !== exceptPanel) {
         panel.style.display = "none";
+        panel.hidden = true;
         const anchor = panel.closest(".filter-anchor");
         const trigger = anchor ? anchor.querySelector(".filter-trigger") : null;
+        const input = panel.querySelector(".multi-input");
         if (trigger) trigger.setAttribute("aria-expanded", "false");
+        if (input) {
+          input.setAttribute("aria-expanded", "false");
+          input.removeAttribute("aria-activedescendant");
+        }
       }
     });
   }
@@ -436,6 +521,14 @@ document.addEventListener("DOMContentLoaded", () => {
     return selected.some(v => n.includes(normalize(v)));
   }
 
+  /* Scrolls the page back to the search section after pagination changes. */
+  function scrollToSearchSection() {
+    const searchSection = document.getElementById("search");
+    if (searchSection) {
+      searchSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+
   /* Renders compact pagination with previous/next and nearby page links. */
   function renderPagination(totalPages) {
     const list = dom.paginationList;
@@ -450,11 +543,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return li;
     };
 
-    const mkLink = (text, onClick) => {
+    const mkLink = (text, onClick, ariaLabel = "") => {
       const a = document.createElement("a");
-      a.href = "#";
+      a.href = "#search";
       a.className = "vf-pagination__link";
       a.textContent = text;
+      if (ariaLabel) a.setAttribute("aria-label", ariaLabel);
       a.addEventListener("click", e => {
         e.preventDefault();
         onClick();
@@ -464,20 +558,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const prev = document.createElement("li");
     prev.className = "vf-pagination__item vf-pagination__item--previous-page";
-    const prevA = document.createElement("a");
-    prevA.textContent = "Previous";
     if (state.currentPage > 1) {
-      prevA.href = "#";
+      const prevA = document.createElement("a");
+      prevA.textContent = "Previous";
+      prevA.href = "#search";
       prevA.className = "vf-pagination__link";
+      prevA.setAttribute("aria-label", `Go to previous page, page ${state.currentPage - 1}`);
       prevA.addEventListener("click", e => {
         e.preventDefault();
         state.currentPage--;
         renderResults();
+        scrollToSearchSection();
       });
+      prev.appendChild(prevA);
     } else {
       prev.classList.add("disabled");
+      const prevSpan = document.createElement("span");
+      prevSpan.className = "vf-pagination__label";
+      prevSpan.textContent = "Previous";
+      prev.appendChild(prevSpan);
     }
-    prev.appendChild(prevA);
     list.appendChild(prev);
 
     const pages = new Set([1, totalPages, state.currentPage - 1, state.currentPage, state.currentPage + 1]);
@@ -502,7 +602,8 @@ document.addEventListener("DOMContentLoaded", () => {
         list.appendChild(mkItem(mkLink(String(p), () => {
           state.currentPage = p;
           renderResults();
-        })));
+          scrollToSearchSection();
+        }, `Go to page ${p}`)));
       }
 
       last = p;
@@ -510,20 +611,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const next = document.createElement("li");
     next.className = "vf-pagination__item vf-pagination__item--next-page";
-    const nextA = document.createElement("a");
-    nextA.textContent = "Next";
     if (state.currentPage < totalPages) {
-      nextA.href = "#";
+      const nextA = document.createElement("a");
+      nextA.textContent = "Next";
+      nextA.href = "#search";
       nextA.className = "vf-pagination__link";
+      nextA.setAttribute("aria-label", `Go to next page, page ${state.currentPage + 1}`);
       nextA.addEventListener("click", e => {
         e.preventDefault();
         state.currentPage++;
         renderResults();
+        scrollToSearchSection();
       });
+      next.appendChild(nextA);
     } else {
       next.classList.add("disabled");
+      const nextSpan = document.createElement("span");
+      nextSpan.className = "vf-pagination__label";
+      nextSpan.textContent = "Next";
+      next.appendChild(nextSpan);
     }
-    next.appendChild(nextA);
     list.appendChild(next);
   }
 
@@ -532,6 +639,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const total = state.filtered.length;
     if (!total) {
       dom.resultsContainer.innerHTML = "<p>No results found.</p>";
+      dom.resultsContainer.setAttribute("aria-busy", "false");
       dom.paginationList.innerHTML = "";
       dom.infoBlocks.forEach(el => (el.textContent = ""));
       return;
@@ -547,7 +655,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const tabBioId = `profile-tab-bio-${profileIndex}`;
       const tabResearchId = `profile-tab-research-${profileIndex}`;
 
-      const fullName = escapeHtml(`${p.firstName || ""} ${p.lastName || ""}`.trim());
+      const firstName = escapeHtml(cleanString(p.firstName));
+      const lastName = escapeHtml(cleanString(p.lastName));
+      const fullName = [firstName, lastName].filter(Boolean).join(" ");
+      const profileNameHtml = `
+        <span class="alumni-name-first">${firstName}</span>${firstName && lastName ? " " : ""}<span class="alumni-name-last">${lastName}</span>
+      `;
       const city = escapeHtml(p.city || "");
       const country = escapeHtml(p.country || "");
       const cityCountry = [city, country].filter(Boolean).join(", ");
@@ -569,14 +682,44 @@ document.addEventListener("DOMContentLoaded", () => {
         cleanString(p.unitName)
       ].filter(isValid).map(escapeHtml).join(", ");
 
-      const biographyHtml = formatOptionalText(p.biography, "No biography available.");
-      const researchFocusHtml = formatOptionalText(p.research_focus, "No research focus available.");
+      const hasBiography = isValid(p.biography);
+      const hasResearchFocus = isValid(p.research_focus);
+      const biographyHtml = hasBiography ? formatOptionalText(p.biography) : "";
+      const researchFocusHtml = hasResearchFocus ? formatOptionalText(p.research_focus) : "";
+      const profileTabLinks = [
+        hasBiography ? `
+            <button
+              type="button"
+              id="${tabBioId}"
+              class="vf-link profile-tab-link"
+              role="tab"
+              aria-selected="false"
+              aria-controls="${tabPanelId}"
+              data-tab="biography"
+            >Biography</button>
+          ` : "",
+        hasResearchFocus ? `
+            <button
+              type="button"
+              id="${tabResearchId}"
+              class="vf-link profile-tab-link"
+              role="tab"
+              aria-selected="false"
+              aria-controls="${tabPanelId}"
+              data-tab="research_focus"
+            >Research focus</button>
+          ` : ""
+      ].join("");
+      const profileTabSources = [
+        hasBiography ? `<div data-tab="biography">${biographyHtml}</div>` : "",
+        hasResearchFocus ? `<div data-tab="research_focus">${researchFocusHtml}</div>` : ""
+      ].join("");
 
       return `
-        <div class="vf-profile vf-profile--medium vf-profile--inline alumni-profile-card | vf-u-margin__bottom--800 vf-u-margin__top--800" data-profile-index="${profileIndex}">
+        <div class="vf-profile vf-profile--medium vf-profile--inline alumni-profile-card | vf-u-margin__bottom--800 ${idx === 0 ? "" : "vf-u-margin__top--800"}" data-profile-index="${profileIndex}">
           <img class="vf-profile__image" src="https://content.embl.org/sites/default/files/default_images/vf-icon--avatar.png" alt="" loading="lazy">
           <h3 class="vf-profile__title">
-            ${profileUrl ? `<a href="${escapeHtml(profileUrl)}" class="vf-link" target="_blank" rel="noopener noreferrer">${fullName}</a>` : fullName}
+            ${profileUrl ? `<a href="${escapeHtml(profileUrl)}" class="vf-link" target="_blank" rel="noopener noreferrer">${profileNameHtml}</a>` : profileNameHtml}
           </h3>
           ${titleParts.length ? `<p class="vf-profile__job-title">${titleParts.join(", ")}</p>` : ""}
           <p class="vf-profile__text vf-u-margin__bottom--100">${cityCountry}</p>
@@ -593,45 +736,30 @@ document.addEventListener("DOMContentLoaded", () => {
             </p>
           ` : ""}
 
-          <div class="profile-tab-links vf-u-margin__top--200" role="tablist" aria-label="Profile details">
-            <a
-              href="#"
-              id="${tabBioId}"
-              class="vf-link profile-tab-link"
-              role="tab"
-              aria-selected="false"
-              aria-controls="${tabPanelId}"
-              data-tab="biography"
-            >Biography</a>
-            <a
-              href="#"
-              id="${tabResearchId}"
-              class="vf-link profile-tab-link"
-              role="tab"
-              aria-selected="false"
-              aria-controls="${tabPanelId}"
-              data-tab="research_focus"
-            >Research focus</a>
-          </div>
+          ${profileTabSources ? `
+            <div class="profile-tab-links vf-u-margin__top--200" role="tablist" aria-label="Profile details for ${fullName}">
+              ${profileTabLinks}
+            </div>
 
-          <div id="${tabPanelId}" class="profile-tab-content vf-u-margin__top--200" role="tabpanel" aria-hidden="true" hidden></div>
+            <div id="${tabPanelId}" class="profile-tab-content vf-u-margin__top--200" role="tabpanel" aria-hidden="true" tabindex="-1" hidden></div>
 
-          <div class="profile-tab-source" hidden>
-            <div data-tab="biography">${biographyHtml}</div>
-            <div data-tab="research_focus">${researchFocusHtml}</div>
-          </div>
+            <div class="profile-tab-source" hidden aria-hidden="true">
+              ${profileTabSources}
+            </div>
+          ` : ""}
         </div>
         <hr class="vf-divider">
       `;
     }).join("");
 
     const infoHTML = `
-      <p class="vf-text-body vf-text-body--2 | vf-u-text-color--grey--darkest | vf-u-margin__bottom--0 vf-u-margin__top--600" aria-live="polite">
+      <p class="vf-text-body vf-text-body--2 | vf-u-text-color--grey--darkest | vf-u-margin__bottom--0" aria-live="polite">
         Showing <span class="counter-highlight">${start + 1} - </span><span class="counter-highlight">${end}</span>
         results out of <span class="counter-highlight">${total}</span>
       </p>
     `;
     dom.infoBlocks.forEach(el => (el.innerHTML = infoHTML));
+    dom.resultsContainer.setAttribute("aria-busy", "false");
 
     renderPagination(Math.ceil(total / ITEMS_PER_PAGE));
   }
@@ -652,6 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (state.filters.isMentor.length && !isTruthy(p.isMentor)) return false;
       return true;
     });
+    sortAlumniData(state.filtered);
 
     state.currentPage = 1;
     renderResults();
@@ -668,9 +797,12 @@ document.addEventListener("DOMContentLoaded", () => {
     badges.innerHTML = "";
 
     state.filters[field].forEach(value => {
-      const badge = document.createElement("span");
+      const badge = document.createElement("button");
+      const fieldLabel = filterItem.querySelector(".field-label, .vf-form__legend");
       badge.className = "filter-badge vf-badge vf-badge--primary customBadgeDarkBlue";
+      badge.type = "button";
       badge.textContent = `${value} ✕`;
+      badge.setAttribute("aria-label", `Remove ${value} from ${fieldLabel ? fieldLabel.textContent.trim() : field}`);
       badge.addEventListener("click", () => {
         state.filters[field] = state.filters[field].filter(v => normalize(v) !== normalize(value));
         updateFilterUI(field);
@@ -757,11 +889,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const isSelected = selectedSet.has(key);
       return `
         <li
+          id="${field}-option-${index}"
           data-index="${index}"
           data-key="${escapeHtml(key)}"
           class="${isSelected ? "is-selected" : ""}"
           role="option"
           aria-selected="${isSelected ? "true" : "false"}"
+          tabindex="-1"
         >
           <span class="item-label">${escapeHtml(value)}</span>
           <span class="item-check">${isSelected ? "✓" : ""}</span>
@@ -782,6 +916,7 @@ document.addEventListener("DOMContentLoaded", () => {
       options = values;
       focus = -1;
       list.innerHTML = "";
+      input.removeAttribute("aria-activedescendant");
       renderHints(false);
 
       if (!incremental || values.length <= INITIAL_OPEN_LIMIT) {
@@ -876,18 +1011,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const openPanel = () => {
       closeAllFilterPanels(panel);
       panel.style.display = "block";
+      panel.hidden = false;
       trigger.setAttribute("aria-expanded", "true");
+      input.setAttribute("aria-expanded", "true");
       try { input.focus({ preventScroll: true }); } catch (err) { input.focus(); }
       requestAnimationFrame(refresh);
     };
 
     trigger.addEventListener("click", openPanel);
-    trigger.addEventListener("keydown", e => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openPanel();
-      }
-    });
 
     form.addEventListener("submit", e => {
       e.preventDefault();
@@ -906,6 +1037,10 @@ document.addEventListener("DOMContentLoaded", () => {
         focus = (focus + 1) % items.length;
         items.forEach(el => el.classList.remove("active"));
         items[focus]?.classList.add("active");
+        if (items[focus]) {
+          input.setAttribute("aria-activedescendant", items[focus].id);
+          items[focus].scrollIntoView({ block: "nearest" });
+        }
         return;
       }
 
@@ -915,6 +1050,10 @@ document.addEventListener("DOMContentLoaded", () => {
         focus = (focus - 1 + items.length) % items.length;
         items.forEach(el => el.classList.remove("active"));
         items[focus]?.classList.add("active");
+        if (items[focus]) {
+          input.setAttribute("aria-activedescendant", items[focus].id);
+          items[focus].scrollIntoView({ block: "nearest" });
+        }
         return;
       }
 
@@ -924,6 +1063,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!selected) return;
         const activeLi = focus > -1 ? list.querySelector(`li[data-index="${focus}"]`) : null;
         toggleValue(selected, activeLi || null);
+        input.removeAttribute("aria-activedescendant");
+      }
+
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeAllFilterPanels();
+        trigger.focus();
       }
     });
 
@@ -1015,11 +1161,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const isSelected = selectedSet.has(key);
         return `
           <li
+            id="${field}-option-${index}"
             data-index="${index}"
             data-key="${escapeHtml(key)}"
             class="${isSelected ? "is-selected" : ""}"
             role="option"
             aria-selected="${isSelected ? "true" : "false"}"
+            tabindex="0"
           >
             <span class="item-label">${escapeHtml(value)}</span>
             <span class="item-check">${isSelected ? "✓" : ""}</span>
@@ -1063,19 +1211,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const openPanel = () => {
       closeAllFilterPanels(panel);
       panel.style.display = "block";
+      panel.hidden = false;
       trigger.setAttribute("aria-expanded", "true");
       renderList();
     };
 
     trigger.addEventListener("click", openPanel);
-    trigger.addEventListener("keydown", e => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openPanel();
-      }
-    });
 
     panel.addEventListener("click", e => e.stopPropagation());
+
+    panel.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeAllFilterPanels();
+        trigger.focus();
+      }
+    });
 
     list.addEventListener("click", e => {
       e.preventDefault();
@@ -1088,6 +1239,24 @@ document.addEventListener("DOMContentLoaded", () => {
       if (Number.isNaN(index) || !options[index]) return;
 
       toggleValue(options[index], li);
+    });
+
+    list.addEventListener("keydown", e => {
+      const li = e.target.closest("li");
+      if (!li) return;
+
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        const index = Number(li.dataset.index);
+        if (Number.isNaN(index) || !options[index]) return;
+        toggleValue(options[index], li);
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        li.nextElementSibling?.focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        li.previousElementSibling?.focus();
+      }
     });
 
     clearBtn.addEventListener("click", e => {
@@ -1151,6 +1320,7 @@ document.addEventListener("DOMContentLoaded", () => {
       options = values;
       focus = -1;
       nameList.innerHTML = "";
+      nameInput.removeAttribute("aria-activedescendant");
       setNameExpanded(values.length > 0);
 
       const appendChunk = (start, size) => {
@@ -1159,7 +1329,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let html = "";
         for (let i = start; i < end; i++) {
-          html += `<li data-index="${i}" role="option">${escapeHtml(options[i])}</li>`;
+          html += `<li id="filter-name-option-${i}" data-index="${i}" role="option" aria-selected="false">${escapeHtml(options[i])}</li>`;
         }
         nameList.insertAdjacentHTML("beforeend", html);
 
@@ -1177,6 +1347,7 @@ document.addEventListener("DOMContentLoaded", () => {
       applyNameFilter(selected, true);
       nameList.innerHTML = "";
       setNameExpanded(false);
+      nameInput.removeAttribute("aria-activedescendant");
     };
 
     nameInput.addEventListener("focus", () => renderNameList(true));
@@ -1202,11 +1373,13 @@ document.addEventListener("DOMContentLoaded", () => {
         focus = (focus + 1) % items.length;
         items.forEach(el => el.classList.remove("active"));
         items[focus]?.classList.add("active");
+        if (items[focus]) nameInput.setAttribute("aria-activedescendant", items[focus].id);
       } else if (e.key === "ArrowUp") {
         e.preventDefault();
         focus = (focus - 1 + items.length) % items.length;
         items.forEach(el => el.classList.remove("active"));
         items[focus]?.classList.add("active");
+        if (items[focus]) nameInput.setAttribute("aria-activedescendant", items[focus].id);
       } else if (e.key === "Enter") {
         e.preventDefault();
         const selected = (focus > -1 && options[focus]) ? options[focus] : nameInput.value;
@@ -1214,6 +1387,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (e.key === "Escape") {
         nameList.innerHTML = "";
         setNameExpanded(false);
+        nameInput.removeAttribute("aria-activedescendant");
       }
     });
 
@@ -1253,7 +1427,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* Clears all filter states, resets UI elements, and re-renders full results. */
   function clearAllFilters(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     Object.keys(state.filters).forEach(k => { state.filters[k] = []; });
 
@@ -1278,7 +1452,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    closeAllProfileTabPanels();
+    closeProfileTabPanels();
 
     state.currentPage = 1;
     applyFilters();
@@ -1287,10 +1461,10 @@ document.addEventListener("DOMContentLoaded", () => {
   /* Initializes all data, UI controls, event handlers, and first render. */
   async function init() {
     try {
+      dom.resultsContainer.setAttribute("aria-busy", "true");
       const res = await fetch(DATA_URL);
       state.allData = await res.json();
-
-      state.allData.sort((a, b) => (a.lastName || "").localeCompare(b.lastName || ""));
+      sortAlumniData(state.allData);
       state.filtered = [...state.allData];
 
       ["name", ...SEARCH_FIELDS].forEach(field => {
@@ -1327,6 +1501,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
+      if (dom.sortSelect) {
+        dom.sortSelect.addEventListener("change", () => {
+          state.sortBy = dom.sortSelect.value === "first_name" ? "first_name" : "last_name";
+          applyFilters();
+        });
+      }
+
       dom.clearAll.addEventListener("click", clearAllFilters);
 
       document.addEventListener("click", e => {
@@ -1340,12 +1521,11 @@ document.addEventListener("DOMContentLoaded", () => {
           if (nameList) {
             nameList.innerHTML = "";
             const nameInput = document.getElementById("filter-name");
-            if (nameInput) nameInput.setAttribute("aria-expanded", "false");
+            if (nameInput) {
+              nameInput.setAttribute("aria-expanded", "false");
+              nameInput.removeAttribute("aria-activedescendant");
+            }
           }
-        }
-
-        if (!e.target.closest(".alumni-profile-card")) {
-          closeAllProfileTabPanels();
         }
       });
 
@@ -1363,13 +1543,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const source = profileCard.querySelector(`.profile-tab-source [data-tab="${tab}"]`);
         const isAlreadyOpen = tabLink.classList.contains("is-active") && panel && !panel.hidden;
 
-        closeAllProfileTabPanels();
-        if (isAlreadyOpen) return;
+        if (isAlreadyOpen) {
+          closeProfileTabPanels(profileCard);
+          return;
+        }
+
+        closeProfileTabPanels(profileCard);
 
         if (panel && source) {
           panel.innerHTML = source.innerHTML;
           panel.hidden = false;
           panel.setAttribute("aria-hidden", "false");
+          panel.setAttribute("aria-labelledby", tabLink.id);
           tabLink.classList.add("is-active");
           tabLink.setAttribute("aria-selected", "true");
         }
@@ -1378,15 +1563,36 @@ document.addEventListener("DOMContentLoaded", () => {
       dom.resultsContainer.addEventListener("keydown", e => {
         const tabLink = e.target.closest(".profile-tab-link");
         if (!tabLink) return;
-        if (e.key === " ") {
-          e.preventDefault();
-          tabLink.click();
+
+        const tabList = tabLink.closest('[role="tablist"]');
+        if (!tabList) return;
+
+        const tabs = Array.from(tabList.querySelectorAll(".profile-tab-link"));
+        const currentIndex = tabs.indexOf(tabLink);
+        if (currentIndex === -1) return;
+
+        let targetIndex = -1;
+
+        if (e.key === "ArrowRight") {
+          targetIndex = (currentIndex + 1) % tabs.length;
+        } else if (e.key === "ArrowLeft") {
+          targetIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+        } else if (e.key === "Home") {
+          targetIndex = 0;
+        } else if (e.key === "End") {
+          targetIndex = tabs.length - 1;
         }
+
+        if (targetIndex === -1) return;
+
+        e.preventDefault();
+        tabs[targetIndex].focus();
       });
 
       renderResults();
     } catch (err) {
-      dom.resultsContainer.innerHTML = "<p>Could not load alumni data.</p>";
+      dom.resultsContainer.innerHTML = "<p role=\"alert\">Could not load alumni data.</p>";
+      dom.resultsContainer.setAttribute("aria-busy", "false");
       console.error(err);
     }
   }
@@ -1396,6 +1602,43 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <style>
+.alumni-results-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.alumni-results-info {
+  flex: 1 1 18rem;
+}
+
+.alumni-sort-filter {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+}
+
+.alumni-sort-filter .vf-form__label {
+  margin-bottom: 0;
+}
+
+.alumni-sort-select {
+  min-width: 8rem;
+}
+
+.alumni-name-first {
+  font-weight: 400;
+}
+
+.alumni-name-last {
+  font-weight: 600;
+}
+
 .filters-layout {
   display: flex;
   flex-direction: column;
@@ -1424,6 +1667,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .filter-badge {
   cursor: pointer;
+  border: 0;
 }
 
 .filter-badge:hover {
@@ -1442,11 +1686,13 @@ document.addEventListener("DOMContentLoaded", () => {
   position: relative;
 }
 
-.filter-trigger[role="button"] {
+.filter-trigger {
   cursor: pointer;
+  text-align: left;
+  width: 100%;
 }
 
-.filter-trigger[role="button"]:focus-visible {
+.filter-trigger:focus-visible {
   outline: 2px solid #2f6fb7;
   outline-offset: 2px;
 }
@@ -1675,6 +1921,15 @@ document.addEventListener("DOMContentLoaded", () => {
   gap: 1rem;
 }
 
+.profile-tab-link,
+.clear-all-button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
 .profile-tab-link.is-active {
   text-decoration: underline;
   font-weight: 600;
@@ -1685,10 +1940,27 @@ document.addEventListener("DOMContentLoaded", () => {
   outline-offset: 2px;
 }
 
+.clear-all-button:focus-visible,
+.filter-badge:focus-visible {
+  outline: 2px solid #2f6fb7;
+  outline-offset: 2px;
+}
+
 .profile-tab-content {
-  border: 1px solid #d5d5d5;
   background: #fafafa;
   padding: 0.75rem;
+}
+
+.profile-tab-content p {
+  margin: 0 0 1.5rem;
+}
+
+.profile-tab-content p:last-child {
+  margin-bottom: 0;
+}
+
+.vf-profile--medium .vf-profile__job-title {
+  font-size: 19px !important;
 }
 </style>
 
