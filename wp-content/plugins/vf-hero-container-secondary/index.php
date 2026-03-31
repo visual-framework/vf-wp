@@ -36,6 +36,10 @@ class VF_WP_Hero_Secondary extends VF_Plugin {
       'acf/settings/load_json',
       array($this, 'acf_settings_load_json')
     );
+    add_filter(
+      'acf/load_field/name=vf_navigation_menu',
+      array($this, 'acf_load_navigation_menu')
+    );
   }
 
   // public function template_callback($block, $content, $is_preview = false, $acf_id) {
@@ -48,6 +52,17 @@ class VF_WP_Hero_Secondary extends VF_Plugin {
   public function acf_settings_load_json($paths) {
     $paths[] = plugin_dir_path(__FILE__);
     return $paths;
+  }
+
+  public function acf_load_navigation_menu($field) {
+    $field['choices'] = class_exists('VF_Navigation')
+      ? VF_Navigation::get_navigation_menu_choices()
+      : array();
+    $field['default_value'] = class_exists('VF_Navigation')
+      ? VF_Navigation::get_primary_menu_source()
+      : '';
+
+    return $field;
   }
 
 } // VF_WP_Hero_Secondary

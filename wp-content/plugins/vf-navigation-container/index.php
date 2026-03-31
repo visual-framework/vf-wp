@@ -16,6 +16,8 @@ require_once($path);
 
 class VF_Navigation extends VF_Plugin {
 
+  protected static $menu_source_override = null;
+
   protected $file = __FILE__;
 
   protected $config = array(
@@ -42,11 +44,97 @@ class VF_Navigation extends VF_Plugin {
 
   }
 
+  public static function get_navigation_menu_choices() {
+    $choices = array();
+    $labels = array();
+    $menus = wp_get_nav_menus();
+
+    if (is_array($menus)) {
+      foreach ($menus as $menu) {
+        if ( ! $menu instanceof WP_Term) {
+          continue;
+        }
+
+        $label = $menu->name;
+
+        if (in_array($label, $labels, true)) {
+          $label = sprintf(__('%s (menu)', 'vfwp'), $menu->name);
+        }
+
+        if (in_array($label, $labels, true)) {
+          $label = sprintf(__('%s (menu #%d)', 'vfwp'), $menu->name, $menu->term_id);
+        }
+
+        $choices["menu:{$menu->term_id}"] = $label;
+        $labels[] = $label;
+      }
+    }
+
+    return $choices;
+  }
+
+  public static function get_primary_menu_source() {
+    $locations = get_nav_menu_locations();
+    if (is_array($locations) && ! empty($locations['primary'])) {
+      return "menu:{$locations['primary']}";
+    }
+
+    $menus = wp_get_nav_menus();
+    if (is_array($menus)) {
+      foreach ($menus as $menu) {
+        if (
+          $menu instanceof WP_Term &&
+          in_array(strtolower($menu->name), array('primary', 'primary menu'), true)
+        ) {
+          return "menu:{$menu->term_id}";
+        }
+      }
+    }
+
+    return 'location:primary';
+  }
+
+  public static function resolve_menu_source($menu_source = '') {
+    if (
+      is_string($menu_source) &&
+      preg_match('#^(menu|location):.+$#', $menu_source)
+    ) {
+      return $menu_source;
+    }
+
+    return self::get_primary_menu_source();
+  }
+
+  public static function get_render_menu_source() {
+    if (
+      is_string(self::$menu_source_override) &&
+      self::$menu_source_override !== ''
+    ) {
+      return self::resolve_menu_source(self::$menu_source_override);
+    }
+
+    return self::resolve_menu_source(get_field('vf_navigation_menu_source'));
+  }
+
+  public static function render_menu($menu_source = '') {
+    $previous_menu_source = self::$menu_source_override;
+    self::$menu_source_override = self::resolve_menu_source($menu_source);
+
+    VF_Plugin::render(self::get_plugin('vf_navigation'));
+
+    self::$menu_source_override = $previous_menu_source;
+  }
+
   /**
    * Add VF class to primary menu items
    */
   public function nav_menu_css_class($classes, $item, $args, $depth) {
-    if (in_array($args->theme_location, array('primary', 'secondary'))) {
+    $theme_location = isset($args->theme_location) ? $args->theme_location : '';
+
+    if (
+      in_array($theme_location, array('primary', 'secondary')) ||
+      ! empty($args->vf_navigation)
+    ) {
       $classes[] = 'vf-navigation__item';
     }
     return $classes;
@@ -56,7 +144,12 @@ class VF_Navigation extends VF_Plugin {
    * Add VF class to primary menu items
    */
   public function nav_menu_link_attributes($atts, $item, $args, $depth) {
-    if (in_array($args->theme_location, array('primary', 'secondary'))) {
+    $theme_location = isset($args->theme_location) ? $args->theme_location : '';
+
+    if (
+      in_array($theme_location, array('primary', 'secondary')) ||
+      ! empty($args->vf_navigation)
+    ) {
       $atts['class'] = 'vf-navigation__link';
     }
     return $atts;

@@ -24,9 +24,7 @@ if ($custom_template) {
   if (class_exists('VF_WP_Hero_Blog')) {
     VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_wp_hero_blog'));
   }
-  if (class_exists('VF_Navigation')) {
-    VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
-  } }
+}
 else {
   if (class_exists('VF_WP_Groups_Header')) {
     VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_wp_groups_header'));

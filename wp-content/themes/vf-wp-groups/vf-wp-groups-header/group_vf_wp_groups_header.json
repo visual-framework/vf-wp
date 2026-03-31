@@ -170,6 +170,44 @@
             "return_format": "value",
             "ajax": 0,
             "placeholder": ""
+        },
+        {
+            "key": "field_67ea9901b0a04",
+            "label": "Navigation",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_67ea9901b0a05",
+            "label": "Navigation menu",
+            "name": "vf_navigation_menu",
+            "type": "select",
+            "instructions": "Choose which menu to display in the header navigation.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {},
+            "default_value": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -189,5 +227,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-WP Groups theme global container.",
-    "modified": 1618817224
+    "modified": 1774955400
 }

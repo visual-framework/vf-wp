@@ -10,6 +10,10 @@ $hero_text = get_field('vf_hero_text', false, false);
 $hero_subheading = get_field('vf_hero_subheading');
 $hero_heading = get_field('vf_hero_heading');
 $search = get_field('vf_hero_search');
+$navigation_enable = get_field('vf_navigation_enable');
+$navigation_menu_source = class_exists('VF_Navigation')
+  ? VF_Navigation::resolve_menu_source(get_field('vf_navigation_menu'))
+  : 'location:primary';
 $theme = wp_get_theme();
 $spacing = get_field('vf_hero_spacing');
 $spacing_class = "| vf-hero--";
@@ -171,3 +175,8 @@ $spacing_class .= "{$spacing}";
   </div>
 </section>
 <!--/vf-hero-->
+<?php
+if ($navigation_enable && class_exists('VF_Navigation')) {
+  VF_Navigation::render_menu($navigation_menu_source);
+}
+?>

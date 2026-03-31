@@ -50,6 +50,10 @@ class VF_WP_Groups_Header extends VF_Plugin {
       array($this, 'filter_hero_text_cleanup'),
       8, 1
     );
+    add_filter(
+      'acf/load_field/name=vf_navigation_menu',
+      array($this, 'acf_load_navigation_menu')
+    );
     /**
      * @deprecated
     add_filter(
@@ -218,6 +222,17 @@ class VF_WP_Groups_Header extends VF_Plugin {
       ));
     }
     return $text;
+  }
+
+  public function acf_load_navigation_menu($field) {
+    $field['choices'] = class_exists('VF_Navigation')
+      ? VF_Navigation::get_navigation_menu_choices()
+      : array();
+    $field['default_value'] = class_exists('VF_Navigation')
+      ? VF_Navigation::get_primary_menu_source()
+      : '';
+
+    return $field;
   }
 
   /**

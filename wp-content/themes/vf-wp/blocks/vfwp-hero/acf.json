@@ -207,6 +207,36 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_67ea8f31c1f01",
+            "label": "Navigation menu",
+            "name": "vf_hero_navigation_menu",
+            "type": "select",
+            "instructions": "Choose which menu to display when navigation is enabled.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6200faa5d21b0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {},
+            "default_value": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -226,5 +256,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-Hero block",
-    "modified": 1644232111
+    "modified": 1774953600
 }

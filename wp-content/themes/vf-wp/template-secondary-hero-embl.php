@@ -30,10 +30,6 @@ if (class_exists('VF_WP_Hero_Secondary')) {
   VF_Plugin::render(VF_WP_Hero_Secondary::get_plugin('vf_wp_hero_secondary'));
 }
 
-if (class_exists('VF_Navigation')) {
-  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
-}
-
 
 $open_wrap = function($html, $block_name) {
   $html = '

@@ -207,6 +207,36 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_67ea9901b0a03",
+            "label": "Navigation menu",
+            "name": "vf_navigation_menu",
+            "type": "select",
+            "instructions": "Choose which menu to display when navigation is enabled.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_621c9cc1c7da0",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {},
+            "default_value": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_621c9cc1c7e36",
             "label": "Heading link",
             "name": "vf_hero_url",
@@ -239,5 +269,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-Hero container for blog pages",
-    "modified": 1646044300
+    "modified": 1774955400
 }

@@ -20,32 +20,42 @@ if ($is_preview) {
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+$menu_source = class_exists('VF_Navigation')
+  ? VF_Navigation::get_render_menu_source()
+  : 'location:primary';
+
+$menu_args = array(
+  'depth'         => 1,
+  'container'     => false,
+  'items_wrap'    => '%3$s',
+  'fallback_cb'   => '__return_empty_string',
+  'vf_navigation' => true,
+);
+
+if (is_string($menu_source) && strpos($menu_source, 'menu:') === 0) {
+  $menu_id = (int) substr($menu_source, 5);
+  if ($menu_id > 0) {
+    $menu_args['menu'] = $menu_id;
+  }
+} elseif (is_string($menu_source) && strpos($menu_source, 'location:') === 0) {
+  $location = substr($menu_source, 9);
+  if ($location) {
+    $menu_args['theme_location'] = $location;
+  }
+}
+
+if (empty($menu_args['menu']) && empty($menu_args['theme_location'])) {
+  $menu_args['theme_location'] = 'primary';
+}
+
 ?>
 <nav class="vf-navigation vf-navigation--main | vf-cluster | vf-u-padding__top--0" style="margin-bottom: 1rem !important;">
   <ul class="vf-navigation__list | vf-list | vf-cluster__inner">
 <?php
 
-if (has_nav_menu('primary')) {
-  wp_nav_menu(array(
-    'theme_location' => 'primary',
-    'depth'          => 1,
-    'container'      => false,
-    'items_wrap'     => '%3$s'
-
-  ));
-}
-
-if (has_nav_menu('secondary')) {
-  wp_nav_menu(array(
-    'theme_location' => 'secondary',
-    'depth'          => 1,
-    'container'      => false,
-    'items_wrap'     => '%3$s'
-  ));
-}
+wp_nav_menu($menu_args);
 
 ?>
   </ul>
 </nav>
 <!--/vf-navigation-->
-
