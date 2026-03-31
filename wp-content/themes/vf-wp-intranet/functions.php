@@ -68,6 +68,44 @@ function tags_support_query($wp_query) {
 add_action('init', 'tags_support_all');
 add_action('pre_get_posts', 'tags_support_query');
 
+// limit admin page search to titles only on the Pages list screen
+function vf_wp_intranet_limit_admin_page_search_to_titles($search, $wp_query) {
+	global $pagenow, $wpdb;
+
+	if (!is_admin() || 'edit.php' !== $pagenow || !$wp_query->is_main_query()) {
+		return $search;
+	}
+
+	if ($wp_query->get('post_type') !== 'page') {
+		return $search;
+	}
+
+	$search_terms = $wp_query->get('search_terms');
+	if (!is_array($search_terms) || empty($search_terms)) {
+		$raw_search = $wp_query->get('s');
+		if (!is_string($raw_search) || $raw_search === '') {
+			return $search;
+		}
+		$search_terms = array($raw_search);
+	}
+
+	$title_conditions = array();
+	foreach ($search_terms as $term) {
+		$term = trim((string) $term);
+		if ($term === '') {
+			continue;
+		}
+		$title_conditions[] = $wpdb->prepare("{$wpdb->posts}.post_title LIKE %s", '%' . $wpdb->esc_like($term) . '%');
+	}
+
+	if (empty($title_conditions)) {
+		return $search;
+	}
+
+	return ' AND (' . implode(' AND ', $title_conditions) . ') ';
+}
+add_filter('posts_search', 'vf_wp_intranet_limit_admin_page_search_to_titles', 10, 2);
+
 // count all the publishes documents
 function get_all_documents_posts() {
 	$count_posts = wp_count_posts('documents');

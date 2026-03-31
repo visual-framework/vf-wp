@@ -209,7 +209,7 @@ get_header();
         </div>
 
         <div class="filter-group">
-          <h2 class="vf-form__legend">EMBL History</h2>
+          <h2 class="vf-form__legend">EMBL history</h2>
           <div class="group-filter-grid">
             <?php $render_search_filter("groupName", "EMBL group", "All EMBL groups"); ?>
             <?php $render_search_filter("unitName", "EMBL unit", "All EMBL units"); ?>
@@ -241,7 +241,12 @@ get_header();
 
     <div>
       <h2 id="alumni-results-heading" class="visually-hidden">Alumni search results</h2>
-      <div id="alumni-results-container" class="vf-u-margin__top--600" role="region" aria-labelledby="alumni-results-heading" aria-busy="true"></div>
+      <div id="alumni-results-container" class="vf-u-margin__top--600" role="region" aria-labelledby="alumni-results-heading" aria-busy="true">
+        <div class="alumni-loading" role="status" aria-live="polite" aria-label="Loading alumni records">
+          <span class="alumni-loading-spinner" aria-hidden="true"></span>
+          <span class="alumni-loading-text">Loading alumni records...</span>
+        </div>
+      </div>
       <nav class="vf-pagination" aria-label="Results pages">
         <ul class="vf-pagination__list paginationListOnDemand"></ul>
       </nav>
@@ -365,6 +370,54 @@ document.addEventListener("DOMContentLoaded", () => {
   /* Trims values safely to a clean string. */
   function cleanString(v) {
     return (v || "").toString().trim();
+  }
+
+  /* Normalizes API field names so variants like camelCase and lowercase can be matched. */
+  function normalizeApiFieldName(v) {
+    return cleanString(v).toLowerCase().replace(/[^a-z0-9]/g, "");
+  }
+
+  /* Reads the first matching field value from an alumni record. */
+  function getAlumniField(record, fieldNames, fallback = "") {
+    if (!record || typeof record !== "object") return fallback;
+
+    const candidates = Array.isArray(fieldNames) ? fieldNames : [fieldNames];
+
+    for (const fieldName of candidates) {
+      if (Object.prototype.hasOwnProperty.call(record, fieldName) && record[fieldName] != null) {
+        return record[fieldName];
+      }
+    }
+
+    const normalizedFields = Object.keys(record).reduce((acc, key) => {
+      acc[normalizeApiFieldName(key)] = record[key];
+      return acc;
+    }, {});
+
+    for (const fieldName of candidates) {
+      const matchedValue = normalizedFields[normalizeApiFieldName(fieldName)];
+      if (matchedValue != null) {
+        return matchedValue;
+      }
+    }
+
+    return fallback;
+  }
+
+  /* Maps incoming alumni records to the field names this template expects. */
+  function normalizeAlumniRecord(record) {
+    const researchFocus = getAlumniField(record, ["researchfocus", "research_focus", "researchFocus", "researchinterests"], "");
+
+    return {
+      ...record,
+      groupName: getAlumniField(record, ["groupName", "groupname"], ""),
+      unitName: getAlumniField(record, ["unitName", "unitname"], ""),
+      current_career_level: getAlumniField(record, ["current_career_level", "currentcareerlevel", "currentCareerLevel"], ""),
+      staff_category: getAlumniField(record, ["staff_category", "staffcategory", "staffCategory"], ""),
+      researchfocus: researchFocus,
+      research_focus: researchFocus,
+      biography: getAlumniField(record, ["biography"], "")
+    };
   }
 
   /* Returns a normalized sort key for name-based ordering. */
@@ -683,9 +736,9 @@ document.addEventListener("DOMContentLoaded", () => {
       ].filter(isValid).map(escapeHtml).join(", ");
 
       const hasBiography = isValid(p.biography);
-      const hasResearchFocus = isValid(p.research_focus);
+      const hasResearchFocus = isValid(p.researchfocus);
       const biographyHtml = hasBiography ? formatOptionalText(p.biography) : "";
-      const researchFocusHtml = hasResearchFocus ? formatOptionalText(p.research_focus) : "";
+      const researchFocusHtml = hasResearchFocus ? formatOptionalText(p.researchfocus) : "";
       const profileTabLinks = [
         hasBiography ? `
             <button
@@ -726,13 +779,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
           ${currentLevelAndSector ? `
             <p class="vf-summary__meta vf-u-margin__bottom--100">
-              <span>Current Level and Sector:</span>&nbsp;<span class="vf-u-text-color--grey">${currentLevelAndSector}</span>
+              <span>Current level and sector:</span>&nbsp;<span class="vf-u-text-color--grey">${currentLevelAndSector}</span>
             </p>
           ` : ""}
 
           ${emblHistory ? `
             <p class="vf-summary__meta vf-u-margin__bottom--100">
-              <span>EMBL History -</span>&nbsp;<span class="vf-u-text-color--grey">${emblHistory}</span>
+              <span>EMBL history -</span>&nbsp;<span class="vf-u-text-color--grey">${emblHistory}</span>
             </p>
           ` : ""}
 
@@ -1463,7 +1516,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       dom.resultsContainer.setAttribute("aria-busy", "true");
       const res = await fetch(DATA_URL);
-      state.allData = await res.json();
+      state.allData = (await res.json()).map(normalizeAlumniRecord);
       sortAlumniData(state.allData);
       state.filtered = [...state.allData];
 
@@ -1637,6 +1690,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
 .alumni-name-last {
   font-weight: 600;
+}
+
+.alumni-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 8rem;
+  color: #54585a;
+}
+
+.alumni-loading-spinner {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid #d9d9d9;
+  border-top-color: #2f6fb7;
+  border-radius: 50%;
+  animation: alumni-spinner-rotate 0.8s linear infinite;
+}
+
+.alumni-loading-text {
+  font-size: 0.95rem;
+}
+
+@keyframes alumni-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .filters-layout {
