@@ -12,6 +12,20 @@ $hero_heading = get_field('vf_hero_heading');
 $hero_url = get_field('vf_hero_url');
 $hero_id = get_field('vf_hero_id');
 $hero_navigation = get_field('vf_hero_navigation');
+$hero_navigation_menu = get_field('vf_hero_navigation_menu');
+$hero_navigation_menu_source = $hero_navigation_menu;
+
+if (empty($hero_navigation_menu_source)) {
+  $locations = get_nav_menu_locations();
+  if (
+    is_array($locations) &&
+    ! empty($locations['primary'])
+  ) {
+    $hero_navigation_menu_source = "menu:{$locations['primary']}";
+  } else {
+    $hero_navigation_menu_source = 'location:primary';
+  }
+}
 
 $spacing = get_field('vf_hero_spacing');
 $spacing_class = "| vf-hero--";
@@ -98,10 +112,9 @@ if (!empty($hero_url)) {
 <?php
 if ($hero_navigation) {
 if (class_exists('VF_Navigation')) {
-  VF_Plugin::render(VF_Navigation::get_plugin('vf_navigation'));
+  VF_Navigation::render_menu($hero_navigation_menu_source);
 } }
 else {
   echo '';
 }
 ?>
-

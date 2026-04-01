@@ -1,12 +1,23 @@
 (() => {
   const waitForSelector = (selector, parent, callback) => {
+    const existing = parent.querySelector(selector);
+    if (existing) {
+      callback(existing);
+      return;
+    }
+
     const observer = new MutationObserver((records, observer) => {
       for (const record of records) {
         for (const node of record.addedNodes) {
-          if (node instanceof HTMLElement) {
+          if (node instanceof Element) {
+            if (node.matches(selector)) {
+              callback(node);
+              return;
+            }
             const target = node.querySelector(selector);
             if (target) {
               callback(target);
+              return;
             }
           }
         }
@@ -56,11 +67,27 @@
 
   const iframes = new WeakMap();
 
+  const getPreviewRoot = (node) => {
+    return [...node.querySelectorAll('.vf-block')].find((preview) => {
+      return preview.closest('.wp-block[data-type^="acf/vf"]') === node;
+    });
+  };
+
+  const getDirectChild = (node, tagName) => {
+    return [...node.children].find((child) => child.tagName === tagName) || null;
+  };
+
   const renderBlock = (node) => {
-    if (node.querySelector('.vf-block > iframe')) {
+    const block = getPreviewRoot(node);
+    if (!block) {
       return;
     }
-    const template = node.querySelector(`.vf-block > template`);
+
+    if (getDirectChild(block, 'IFRAME')) {
+      return;
+    }
+
+    const template = getDirectChild(block, 'TEMPLATE');
     if (!template) {
       requestAnimationFrame(() => {
         renderBlock(node);
@@ -89,7 +116,7 @@
       {once: true}
     );
 
-    node.querySelector(`.vf-block`).appendChild(iframe);
+    block.appendChild(iframe);
     iframes.set(node, iframe);
 
     if (template.hasAttribute('data-is-container')) {

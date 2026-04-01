@@ -303,6 +303,7 @@ class VF_Gutenberg {
     $block = $args[0];
     $is_preview = $args[2];
     $is_jsx = isset($block['supports']['jsx']) && $block['supports']['jsx'];
+    $is_plugin = isset($block['data']['is_plugin']) && (bool) $block['data']['is_plugin'];
     if ( ! $acf_id) {
       $acf_id = $block['id'];
     }
@@ -336,6 +337,33 @@ class VF_Gutenberg {
       return;
     }
 
+    $is_inline_preview = false;
+    if ( ! $is_plugin) {
+      $template_path = is_string($template)
+        ? wp_normalize_path($template)
+        : '';
+      $plugin_dir = wp_normalize_path(WP_PLUGIN_DIR) . '/';
+
+      if (
+        is_callable($template)
+        || (
+          ! empty($template_path)
+          && strpos($template_path, $plugin_dir) === 0
+        )
+      ) {
+        $is_inline_preview = true;
+      }
+    }
+
+    if ($is_inline_preview) {
+?>
+  <div class="vf-block vf-block-preview" data-editing="false" data-loading="false">
+    <?php echo $html; ?>
+  </div>
+<?php
+      return;
+    }
+
     // Render iframe for admin preview
     $is_container = (bool) get_field('is_container', $acf_id);
 
@@ -353,7 +381,6 @@ class VF_Gutenberg {
     );
 
     // Render using React if block is from a plugin
-    $is_plugin = isset($block['data']['is_plugin']) && (bool) $block['data']['is_plugin'];
     if ($is_plugin) {
       VF_Gutenberg::acf_render_template__deprecated($block, $template);
       return;

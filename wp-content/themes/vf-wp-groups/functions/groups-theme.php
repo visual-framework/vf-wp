@@ -157,7 +157,12 @@ class VF_Groups_Theme {
    * Add VF class to primary menu items
    */
   public function nav_menu_css_class($classes, $item, $args, $depth) {
-    if (in_array($args->theme_location, array('primary', 'secondary'))) {
+    $theme_location = isset($args->theme_location) ? $args->theme_location : '';
+
+    if (
+      in_array($theme_location, array('primary', 'secondary')) ||
+      ! empty($args->vf_navigation)
+    ) {
       return ['vf-navigation__item'];
     }
     return $classes;
@@ -167,7 +172,12 @@ class VF_Groups_Theme {
    * Add VF class to primary menu items
    */
   public function nav_menu_link_attributes($atts, $item, $args, $depth) {
-    if (in_array($args->theme_location, array('primary', 'secondary'))) {
+    $theme_location = isset($args->theme_location) ? $args->theme_location : '';
+
+    if (
+      in_array($theme_location, array('primary', 'secondary')) ||
+      ! empty($args->vf_navigation)
+    ) {
       $atts['class'] = 'vf-navigation__link';
     }
     return $atts;

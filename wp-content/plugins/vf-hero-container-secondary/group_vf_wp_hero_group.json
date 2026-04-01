@@ -220,6 +220,36 @@
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
+        },
+        {
+            "key": "field_67ea9901b0a02",
+            "label": "Navigation menu",
+            "name": "vf_navigation_menu",
+            "type": "select",
+            "instructions": "Choose which menu to display when navigation is enabled.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_614326ab47614",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {},
+            "default_value": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
         }
     ],
     "location": [
@@ -239,5 +269,5 @@
     "hide_on_screen": "",
     "active": true,
     "description": "VF-Hero container",
-    "modified": 1642150579
+    "modified": 1774955400
 }
