@@ -12,12 +12,16 @@ global $vf_theme;
   <div></div>
   <div>
   <?php
-  while (have_posts()) {
-    the_post();
-    get_template_part('partials/vf-summary--article');
-    if ( ! $vf_theme->is_last_post()) {
-      echo '<hr class="vf-divider">';
+  if (have_posts()) {
+    while (have_posts()) {
+      the_post();
+      get_template_part('partials/vf-summary--article');
+      if ( ! $vf_theme->is_last_post()) {
+        echo '<hr class="vf-divider">';
+      }
     }
+  } else {
+    echo '<p>', __('No posts found', 'vfwp'), '</p>';
   }
   vf_pagination();
   ?>

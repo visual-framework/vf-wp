@@ -51,13 +51,18 @@ if ($custom_template) {echo '<br>';}
       <?php
 
       if (empty($endpoint1) && empty($endpoint2) && empty($endpoint3)) {
-      while (have_posts()) {
-        the_post();
-        get_template_part('partials/vf-summary--article');
-        if ( ! $vf_theme->is_last_post()) {
-          echo '<hr class="vf-divider">';
+        if (have_posts()) {
+          while (have_posts()) {
+            the_post();
+            get_template_part('partials/vf-summary--article');
+            if ( ! $vf_theme->is_last_post()) {
+              echo '<hr class="vf-divider">';
+            }
+          }
+        } else {
+          echo '<p class="vf-text vf-text-body--2">No posts found.</p>';
         }
-      }  }
+      }
       else {
         $fetchPosts = '<script>
   document.addEventListener("DOMContentLoaded", async function () {
@@ -102,9 +107,14 @@ if ($custom_template) {echo '<br>';}
           })).sort((a, b) => new Date(b.date) - new Date(a.date));
         } catch (error) {
           console.error("Fetch error:", error);
-          loadingSpinner.style.display = "none";
+          container.innerHTML = `<p class="vf-text vf-text-body--2">No posts found.</p>`;
           return;
         }
+      }
+
+      if (!cachedPosts.length) {
+        container.innerHTML = `<p class="vf-text vf-text-body--2">No posts found.</p>`;
+        return;
       }
 
       const paginatedPosts = cachedPosts.slice((page - 1) * postsPerPage, page * postsPerPage);
