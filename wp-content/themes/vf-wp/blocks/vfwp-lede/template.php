@@ -3,6 +3,11 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $lede = get_field('lede', false, false);
+if (!empty($lede)) {
+  $lede = wpautop($lede);
+  $lede = str_replace('<p>', '<p class="vf-lede">', $lede);
+  $lede = wp_kses_post($lede);
+}
 
 // Function to output a banner message in the Gutenberg editor only
 $admin_banner = function($message, $modifier = 'info') use ($is_preview) {
@@ -28,6 +33,5 @@ if (
   return;
 } ?>
 
-<p class="vf-lede"><?php echo ($lede) ?></p>
+<?php echo $lede; ?>
 <!--/vf-lede-->
-

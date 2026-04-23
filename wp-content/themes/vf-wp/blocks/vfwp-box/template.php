@@ -7,6 +7,7 @@ $heading = get_field('heading');
 $text = get_field('text');
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-box__text">', $text);
+$text = wp_kses_post($text);
 $link = get_field('link');
 
 $style = get_field('style');

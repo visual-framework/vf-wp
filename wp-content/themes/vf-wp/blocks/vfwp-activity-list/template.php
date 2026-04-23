@@ -41,6 +41,9 @@ if (
     while (have_rows('list_items')) {
       the_row();
       $text = get_sub_field('text', false, false);
+      if (!empty($text)) {
+        $text = wp_kses_post(wpautop($text));
+      }
       $additional_text = get_sub_field('additional_text');
       
     ?>
@@ -49,11 +52,11 @@ if (
       <?php echo ($text); ?>
       <?php if( ! empty ($additional_text)) { ?>
         <blockquote class="vf-activity__blockquote | vf-blockquote"><?php echo esc_html($additional_text); ?></blockquote>      
-      <?php } }?>
-
+      <?php } ?>
     </li>
     <!--/vf-list-item-->
       <?php } ?>
   </ul>
+  <?php } ?>
 </div>
 <!--/vf-activity-list-->

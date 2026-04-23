@@ -4,6 +4,9 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $text = get_field('text', false, false);
+if (!empty($text)) {
+  $text = wp_kses_post(wpautop($text));
+}
 $author = get_field('citation', false, false);
 $author_link = get_field('author_link');
 $author_image = get_field('author_image');

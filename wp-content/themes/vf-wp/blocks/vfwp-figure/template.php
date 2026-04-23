@@ -4,6 +4,9 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $caption = get_field('caption', false, false);
+if (!empty($caption)) {
+  $caption = wp_kses_post(wpautop($caption));
+}
 $image = get_field('image');
 $link = get_field('link');
 

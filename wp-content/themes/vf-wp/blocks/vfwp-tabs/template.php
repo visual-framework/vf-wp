@@ -47,11 +47,14 @@ if (
     <div class="vf-tabs-content" data-vf-js-tabs-content>
       <?php while( have_rows('tabs') ): the_row(); 
       $title = get_sub_field('title');
-      $text = get_sub_field('text', false, false); ?>
+      $text = get_sub_field('text', false, false);
+      if (!empty($text)) {
+        $text = wp_kses_post(wpautop($text));
+      } ?>
       <section class="vf-tabs__section" id="vf-tabs__section--<?php echo get_row_index();?>">
         <h2><?php echo ($title); ?></h2>
         <?php if (! empty ($text)) { ?>
-          <p><?php echo wpautop($text); ?></p>
+          <?php echo $text; ?>
         <?php } ?>
 
         <!-- Nested tabs-->
@@ -73,10 +76,15 @@ if (
         <div class="vf-tabs-content" data-vf-js-tabs-content>
           <?php while( have_rows('nested_tabs') ): the_row(); 
           $nested_title = get_sub_field('nested_title');
-          $nested_text = get_sub_field('nested_text', false, false); ?>
+          $nested_text = get_sub_field('nested_text', false, false);
+          if (!empty($nested_text)) {
+            $nested_text = wp_kses_post(wpautop($nested_text));
+          } ?>
           <section class="vf-tabs__section" id="vf-tabs__section--<?php echo get_row_index();?>">
             <h2><?php echo ($nested_title); ?></h2>
-            <p><?php echo wpautop($nested_text); ?></p>
+            <?php if (!empty($nested_text)) { ?>
+              <?php echo $nested_text; ?>
+            <?php } ?>
           </section>
           <?php endwhile; ?>
         </div>
