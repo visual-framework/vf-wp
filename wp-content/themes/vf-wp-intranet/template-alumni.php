@@ -224,6 +224,7 @@ get_header();
             <?php $render_search_filter("organization", "Organisation", "All organisations"); ?>
             <?php $render_list_filter("sector", "Work sector", "All sectors"); ?>
             <?php $render_list_filter("jobCategory", "Job category", "All job categories"); ?>
+            <?php $render_search_filter("position", "Job title", "All job titles"); ?>
           </div>
         </div>
 
@@ -266,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const ITEMS_PER_PAGE = 15;
   const MAX_MULTI_SELECT = 5;
 
-  const SEARCH_FIELDS = ["city", "country", "organization", "groupName", "unitName"];
+  const SEARCH_FIELDS = ["city", "country", "organization", "groupName", "unitName", "position"];
   const LIST_ONLY_FIELDS = ["sector", "current_career_level", "jobCategory", "staff_category"];
   const MULTI_FIELDS = [...SEARCH_FIELDS, ...LIST_ONLY_FIELDS];
 
@@ -276,6 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
     organization: { plural: "organisations", search: "Search organisations" },
     groupName: { plural: "EMBL groups", search: "Search EMBL groups" },
     unitName: { plural: "EMBL units", search: "Search EMBL units" },
+    position: { plural: "job titles", search: "Search job titles" },
     sector: { plural: "sectors", search: "" },
     current_career_level: { plural: "career levels", search: "" },
     jobCategory: { plural: "job categories", search: "" },
@@ -348,6 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
       organization: [],
       groupName: [],
       unitName: [],
+      position: [],
       sector: [],
       current_career_level: [],
       jobCategory: [],
@@ -448,6 +451,12 @@ document.addEventListener("DOMContentLoaded", () => {
     return !!n && n !== "n/a" && n !== "na";
   }
 
+  /* Excludes placeholder filter values such as "." or "-". */
+  function isValidFilterOption(v) {
+    const clean = cleanString(v);
+    return isValid(clean) && /[a-z0-9]/i.test(clean);
+  }
+
   /* Converts known truthy API values into boolean true. */
   function isTruthy(v) {
     if (v === true) return true;
@@ -518,7 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const out = [];
     values.forEach(v => {
       const clean = cleanString(v);
-      if (!clean) return;
+      if (!isValidFilterOption(clean)) return;
       const key = normalize(clean);
       if (seen.has(key)) return;
       seen.add(key);
@@ -826,6 +835,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!matchesMulti(p.organization, state.filters.organization)) return false;
       if (!matchesMulti(p.groupName, state.filters.groupName)) return false;
       if (!matchesMulti(p.unitName, state.filters.unitName)) return false;
+      if (!matchesMulti(p.position, state.filters.position)) return false;
       if (!matchesMulti(p.sector, state.filters.sector)) return false;
       if (!matchesMulti(p.current_career_level, state.filters.current_career_level)) return false;
       if (!matchesMulti(p.jobCategory, state.filters.jobCategory)) return false;
