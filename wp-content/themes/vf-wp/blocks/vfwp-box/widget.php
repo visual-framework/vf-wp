@@ -26,6 +26,7 @@ $heading = get_field('heading', $widget_id);
 $text = get_field('text', $widget_id);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-box__text">', $text);
+$text = wp_kses_post($text);
 $link = get_field('link', $widget_id);
 
 

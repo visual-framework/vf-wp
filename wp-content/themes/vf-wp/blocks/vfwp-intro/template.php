@@ -10,8 +10,10 @@ $heading = get_field('heading', false, false);
 $subheading = get_field('subheading', false, false);
 $lede = get_field('lede');
 $lede = str_replace('<p>', '<p class="vf-lede">', $lede);
+$lede = wp_kses_post($lede);
 $text = get_field('intro_text');
 $text = wpautop($text);
+$text = wp_kses_post($text);
 $badge_link = get_field('badge_link');
 $badge_style = get_field('badge_style');
 

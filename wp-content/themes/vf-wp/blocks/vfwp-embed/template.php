@@ -4,6 +4,9 @@
 $is_preview = isset($is_preview) && $is_preview;
 
 $caption = get_field('caption', false, false);
+if (!empty($caption)) {
+  $caption = wp_kses_post(wpautop($caption));
+}
 $url = get_field('url');
 $ratio = get_field('ratio');
 
@@ -57,4 +60,3 @@ if ($ratio === '16 x 9 max width') {
 <figcaption class="vf-figure__caption vf-u-margin__top--200"><?php echo ($caption); ?></figcaption>
 
 <?php } ?>
-

@@ -2,6 +2,11 @@
 
 $variant = get_field('banner_variant');
 $text = get_field('text', false, false);
+if (!empty($text)) {
+  $text = wpautop($text);
+  $text = str_replace('<p>', '<p class="vf-banner__text">', $text);
+  $text = wp_kses_post($text);
+}
 
 // Block preview in Gutenberg editor
 $is_preview = isset($is_preview) && $is_preview;
@@ -39,7 +44,7 @@ if (
 
 <div class="vf-banner vf-banner--alert vf-banner--<?php echo ($variant); ?>">
     <div class="vf-banner__content">
-        <p class="vf-banner__text"><?php echo ($text); ?></p>
+        <?php echo $text; ?>
     </div>
 </div>                                                                                
 

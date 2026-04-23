@@ -29,6 +29,7 @@ if (!empty($link) && is_array($link)) {
 $text = get_field('text', false, false);
 $text = wpautop($text);
 $text = str_replace('<p>', '<p class="vf-summary__text">', $text);
+$text = wp_kses_post($text);
 
 $image = get_field('image');
 if (!is_array($image)) {

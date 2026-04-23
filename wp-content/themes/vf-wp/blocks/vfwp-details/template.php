@@ -40,7 +40,7 @@ if (
 <?php
 // Keep old WYSIWYG field for backwards compatibility
 if ( ! empty($summary)) {
-  echo wpautop($summary);
+  echo wp_kses_post(wpautop($summary));
 }
 ?>
 <InnerBlocks />

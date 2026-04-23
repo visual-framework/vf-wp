@@ -16,6 +16,9 @@ $phone = get_field('profile_phone');
 $layout = get_field('layout');
 $size = get_field('size');
 $text_editor = get_field('text_editor', false, false);
+if (!empty($text_editor)) {
+    $text_editor = wp_kses_post(wpautop($text_editor));
+}
 $text_input = get_field('text_input');
 
 // Safe default for layout

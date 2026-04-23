@@ -6,7 +6,12 @@ $is_preview = isset($is_preview) && $is_preview;
 $title = get_field('title');
 $link = get_field('link'); // could be string or array
 $text = get_field('text', false, false);
-$text = str_replace('<a', '<a class="vf-card_link"', $text);
+if (!empty($text)) {
+  $text = wpautop($text);
+  $text = str_replace('<p>', '<p class="vf-card__text">', $text);
+  $text = preg_replace('/<a\b(?![^>]*\bclass=)/', '<a class="vf-card__link"', $text);
+  $text = wp_kses_post($text);
+}
 $subheading = get_field('subheading');
 $image = get_field('image');
 $image_url = get_field('image_url');
@@ -106,7 +111,7 @@ if ($style) $classes .= " vf-card--{$style}";
     <?php endif; ?>
 
     <?php if (!empty($text)) : ?>
-      <p class="vf-card__text"><?php echo $text; ?></p>
+      <?php echo $text; ?>
     <?php endif; ?>
   </div>
 </article>
