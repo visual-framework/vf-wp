@@ -7,6 +7,11 @@ $hero_link = get_field('vf_hero_link');
 $add_heading_1 = get_field('vf_hero_additional_heading_1');
 $add_heading_2 = get_field('vf_hero_additional_heading_2');
 $hero_text = get_field('vf_hero_text', false, false);
+if (!empty($hero_text)) {
+  $hero_text = wpautop($hero_text);
+  $hero_text = str_replace('<p>', '<p class="vf-hero__text">', $hero_text);
+  $hero_text = wp_kses_post($hero_text);
+}
 $hero_subheading = get_field('vf_hero_subheading');
 $hero_heading = get_field('vf_hero_heading');
 $search = get_field('vf_hero_search');
@@ -74,7 +79,7 @@ $spacing_class .= "{$spacing}";
     <?php } ?>
 
     <?php if ($hero_text) {?>
-    <p class="vf-hero__text"><?php echo ($hero_text); ?></p>
+    <?php echo $hero_text; ?>
     <?php } ?>
 
     <?php if ($search == 1) { 
