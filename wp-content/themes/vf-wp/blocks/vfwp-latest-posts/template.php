@@ -55,8 +55,19 @@ $embl_grid = '';
 $has_outer_container = $is_container && ( ( 'list' === $layout && $show_heading ) || 'embl-grid' === $grid );
 
 if ( 'columns' === $layout ) {
+  $column_count = absint( $limit );
+
+  if ( $column_count < 1 ) {
+    $column_count = 1;
+  } elseif ( $column_count > 4 ) {
+    $column_count = 4;
+  }
+
   $embl_grid = null;
-  $vf_grid = 'class="vf-grid vf-grid__col-4 | vf-content"';
+  $vf_grid = sprintf(
+    'class="vf-grid vf-grid__col-%d | vf-content"',
+    $column_count
+  );
 } else {
   $embl_grid = 'embl-grid--has-centered-content';
 }
