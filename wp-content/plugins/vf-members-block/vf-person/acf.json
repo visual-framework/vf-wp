@@ -33,8 +33,8 @@
             "key": "field_5ea93bf243754",
             "label": "Full Name",
             "name": "full_name",
-            "type": "text",
-            "instructions": "Find person by name, e.g. \"Ken Hawkins\".",
+            "type": "select",
+            "instructions": "Select a person by name.",
             "required": 0,
             "conditional_logic": [
                 [
@@ -47,14 +47,16 @@
             ],
             "wrapper": {
                 "width": "",
-                "class": "",
+                "class": "vf-person-record-select vf-person-scope-public",
                 "id": ""
             },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "choices": {},
+            "default_value": false,
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_5ea93bfb43755",
