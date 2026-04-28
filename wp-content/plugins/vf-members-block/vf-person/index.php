@@ -2,6 +2,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+require_once dirname( __DIR__ ) . '/includes/class-vf-person-autocomplete.php';
+VF_Person_Autocomplete::boot();
+
 if ( ! class_exists('VF_Person') ) :
 
 class VF_Person {
