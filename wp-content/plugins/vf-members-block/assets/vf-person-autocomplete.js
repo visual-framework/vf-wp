@@ -70,8 +70,32 @@
     $field.attr('data-vf-person-record-select-ready', '1');
   }
 
+  function getRoot(context) {
+    if (!context) {
+      return document;
+    }
+
+    if (context.nodeType && typeof context.querySelectorAll === 'function') {
+      return context;
+    }
+
+    if (context.jquery && context[0] && typeof context[0].querySelectorAll === 'function') {
+      return context[0];
+    }
+
+    if (context.el && typeof context.el.querySelectorAll === 'function') {
+      return context.el;
+    }
+
+    if (context.$el && context.$el[0] && typeof context.$el[0].querySelectorAll === 'function') {
+      return context.$el[0];
+    }
+
+    return document;
+  }
+
   function init(context) {
-    var root = context && context[0] ? context[0] : document;
+    var root = getRoot(context);
 
     root
       .querySelectorAll('.acf-field[data-name="full_name"].vf-person-record-select')
