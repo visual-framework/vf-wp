@@ -28,6 +28,7 @@ get_header();
         <select id="alumni-sort" class="vf-form__select alumni-sort-select">
           <option value="last_name" selected>Last name</option>
           <option value="first_name">First name</option>
+          <option value="leaving_date">Leaving date</option>
         </select>
       </div>
     </div>
@@ -215,6 +216,10 @@ get_header();
             <?php $render_search_filter("unitName", "EMBL unit", "All EMBL units"); ?>
             <?php $render_list_filter("staff_category", "Staff category", "All staff categories"); ?>
           </div>
+          <div class="vf-form__item vf-form__item--checkbox vf-u-margin__top--400">
+            <input type="checkbox" name="isFellow" value="true" id="filter-fellow" class="vf-form__checkbox">
+            <label for="filter-fellow" class="vf-form__label">Show Fellows only</label>
+          </div>
         </div>
 
         <div class="filter-group">
@@ -235,6 +240,7 @@ get_header();
             <label for="filter-mentor" class="vf-form__label">Open to mentoring</label>
           </div>
         </div>
+
       </div>
 
       <button type="button" id="clearAll" class="vf-link clear-all-button">Clear all filters</button>
@@ -355,7 +361,8 @@ document.addEventListener("DOMContentLoaded", () => {
       current_career_level: [],
       jobCategory: [],
       staff_category: [],
-      isMentor: []
+      isMentor: [],
+      isFellow: []
     },
     unique: {},
     uniqueNormalized: {}
@@ -410,21 +417,58 @@ document.addEventListener("DOMContentLoaded", () => {
   /* Maps incoming alumni records to the field names this template expects. */
   function normalizeAlumniRecord(record) {
     const researchFocus = getAlumniField(record, ["researchfocus", "research_focus", "researchFocus", "researchinterests"], "");
+    const emblEndDate = getAlumniField(record, ["emblenddate", "embl_end_date", "emblEndDate"], "");
 
     return {
       ...record,
       groupName: getAlumniField(record, ["groupName", "groupname"], ""),
       unitName: getAlumniField(record, ["unitName", "unitname"], ""),
+      embljobfunction: getAlumniField(record, ["embljobfunction", "embl_job_function", "emblJobFunction"], ""),
       current_career_level: getAlumniField(record, ["current_career_level", "currentcareerlevel", "currentCareerLevel"], ""),
       staff_category: getAlumniField(record, ["staff_category", "staffcategory", "staffCategory"], ""),
       researchfocus: researchFocus,
       research_focus: researchFocus,
-      biography: getAlumniField(record, ["biography"], "")
+      biography: getAlumniField(record, ["biography"], ""),
+      emblenddate: emblEndDate,
+      leavingYear: getLeavingYear(emblEndDate),
+      leavingDateSortValue: getLeavingDateSortValue(emblEndDate)
     };
+  }
+
+  /* Extracts a 4-digit year from the alumni end-date field. */
+  function getLeavingYear(value) {
+    const match = String(value || "").match(/\b(19|20)\d{2}\b/);
+    return match ? match[0] : "";
+  }
+
+  /* Converts the alumni end-date into a sortable timestamp when possible. */
+  function getLeavingDateSortValue(value) {
+    const rawValue = String(value || "").trim();
+    if (!rawValue) return null;
+
+    const parsedTimestamp = Date.parse(rawValue);
+    if (!Number.isNaN(parsedTimestamp)) return parsedTimestamp;
+
+    const normalizedValue = rawValue.replace(/[./]/g, "-");
+    let match = normalizedValue.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+    if (match) return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+
+    match = normalizedValue.match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+    if (match) return Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1]));
+
+    match = normalizedValue.match(/^(\d{4})-(\d{1,2})$/);
+    if (match) return Date.UTC(Number(match[1]), Number(match[2]) - 1, 1);
+
+    const leavingYear = getLeavingYear(rawValue);
+    return leavingYear ? Date.UTC(Number(leavingYear), 0, 1) : null;
   }
 
   /* Returns a normalized sort key for name-based ordering. */
   function getSortValue(person, sortBy) {
+    if (sortBy === "leaving_date") {
+      return person.leavingDateSortValue ?? null;
+    }
+
     if (sortBy === "first_name") {
       return cleanString(person.firstName);
     }
@@ -432,11 +476,22 @@ document.addEventListener("DOMContentLoaded", () => {
     return cleanString(person.lastName);
   }
 
-  /* Sorts alumni records by the active name preference with a stable fallback. */
+  /* Sorts alumni records by the active preference with a stable fallback. */
   function sortAlumniData(data) {
     return data.sort((a, b) => {
-      const primaryCompare = getSortValue(a, state.sortBy).localeCompare(getSortValue(b, state.sortBy), undefined, { sensitivity: "base" });
-      if (primaryCompare !== 0) return primaryCompare;
+      if (state.sortBy === "leaving_date") {
+        const aLeavingDate = getSortValue(a, state.sortBy);
+        const bLeavingDate = getSortValue(b, state.sortBy);
+
+        if (aLeavingDate == null && bLeavingDate != null) return 1;
+        if (aLeavingDate != null && bLeavingDate == null) return -1;
+        if (aLeavingDate != null && bLeavingDate != null && aLeavingDate !== bLeavingDate) {
+          return bLeavingDate - aLeavingDate;
+        }
+      } else {
+        const primaryCompare = getSortValue(a, state.sortBy).localeCompare(getSortValue(b, state.sortBy), undefined, { sensitivity: "base" });
+        if (primaryCompare !== 0) return primaryCompare;
+      }
 
       const secondaryCompare = cleanString(a.firstName).localeCompare(cleanString(b.firstName), undefined, { sensitivity: "base" });
       if (secondaryCompare !== 0) return secondaryCompare;
@@ -462,6 +517,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (v === true) return true;
     const n = normalize(v);
     return n === "true" || n === "1" || n === "yes";
+  }
+
+  /* Checks whether the EMBL job function contains Fellow. */
+  function isFellow(v) {
+    return normalize(v).includes("fellow");
   }
 
   /* Escapes user/content strings before injecting into HTML. */
@@ -738,11 +798,15 @@ document.addEventListener("DOMContentLoaded", () => {
         cleanString(p.sector)
       ].filter(isValid).map(escapeHtml).join(", ");
 
+      const leavingYear = cleanString(p.leavingYear);
       const emblHistory = [
         cleanString(p.staff_category),
         cleanString(p.groupName),
         cleanString(p.unitName)
       ].filter(isValid).map(escapeHtml).join(", ");
+      const emblHistoryWithLeavingYear = leavingYear
+        ? `${emblHistory ? `${emblHistory}, ` : ""}(${escapeHtml(leavingYear)})`
+        : emblHistory;
 
       const hasBiography = isValid(p.biography);
       const hasResearchFocus = isValid(p.researchfocus);
@@ -792,9 +856,9 @@ document.addEventListener("DOMContentLoaded", () => {
             </p>
           ` : ""}
 
-          ${emblHistory ? `
+          ${emblHistoryWithLeavingYear ? `
             <p class="vf-summary__meta vf-u-margin__bottom--100">
-              <span>EMBL history -</span>&nbsp;<span class="vf-u-text-color--grey">${emblHistory}</span>
+              <span>EMBL history -</span>&nbsp;<span class="vf-u-text-color--grey">${emblHistoryWithLeavingYear}</span>
             </p>
           ` : ""}
 
@@ -841,6 +905,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!matchesMulti(p.jobCategory, state.filters.jobCategory)) return false;
       if (!matchesMulti(p.staff_category, state.filters.staff_category)) return false;
       if (state.filters.isMentor.length && !isTruthy(p.isMentor)) return false;
+      if (state.filters.isFellow.length && !isFellow(p.embljobfunction)) return false;
       return true;
     });
     sortAlumniData(state.filtered);
@@ -1507,6 +1572,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const mentorCheckbox = document.getElementById("filter-mentor");
     if (mentorCheckbox) mentorCheckbox.checked = false;
 
+    const fellowCheckbox = document.getElementById("filter-fellow");
+    if (fellowCheckbox) fellowCheckbox.checked = false;
+
     filterItems.forEach(item => {
       const field = item.dataset.field;
       updateFilterUI(field);
@@ -1564,9 +1632,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       }
 
+      const fellowCheckbox = document.getElementById("filter-fellow");
+      if (fellowCheckbox) {
+        fellowCheckbox.addEventListener("change", () => {
+          state.filters.isFellow = fellowCheckbox.checked ? ["true"] : [];
+          applyFilters();
+        });
+      }
+
       if (dom.sortSelect) {
         dom.sortSelect.addEventListener("change", () => {
-          state.sortBy = dom.sortSelect.value === "first_name" ? "first_name" : "last_name";
+          state.sortBy = ["first_name", "last_name", "leaving_date"].includes(dom.sortSelect.value)
+            ? dom.sortSelect.value
+            : "last_name";
           applyFilters();
         });
       }
