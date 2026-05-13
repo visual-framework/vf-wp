@@ -481,6 +481,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  /* Normalizes and safeguards incoming payload rows before they enter UI state. */
+  function buildAlumniDataset(rawData) {
+    const arrayData = Array.isArray(rawData) ? rawData : [];
+    const mappedData = arrayData.map(normalizeAlumniRecord);
+    const idDedupedData = dedupeAlumniRecords(mappedData);
+    const profileDedupedData = dedupeByProfileSignature(idDedupedData);
+
+    if (profileDedupedData.length !== arrayData.length) {
+      console.warn("[Alumni] Duplicate-like rows collapsed during load", {
+        fetched: arrayData.length,
+        afterIdDedupe: idDedupedData.length,
+        afterProfileDedupe: profileDedupedData.length,
+        removed: arrayData.length - profileDedupedData.length
+      });
+    }
+
+    return profileDedupedData;
+  }
+
   /* Extracts a 4-digit year from the alumni end-date field. */
   function getLeavingYear(value) {
     const match = String(value || "").match(/\b(19|20)\d{2}\b/);
@@ -1641,9 +1660,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dom.resultsContainer.setAttribute("aria-busy", "true");
       const res = await fetch(DATA_URL);
       const rawData = await res.json();
-      const mappedData = (Array.isArray(rawData) ? rawData : []).map(normalizeAlumniRecord);
-      const idDedupedData = dedupeAlumniRecords(mappedData);
-      state.allData = dedupeByProfileSignature(idDedupedData);
+      state.allData = buildAlumniDataset(rawData);
       sortAlumniData(state.allData);
       state.filtered = [...state.allData];
 
