@@ -424,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
       groupName: getAlumniField(record, ["groupName", "groupname"], ""),
       unitName: getAlumniField(record, ["unitName", "unitname"], ""),
       embljobfunction: getAlumniField(record, ["embljobfunction", "embl_job_function", "emblJobFunction"], ""),
+      isMentor: getAlumniField(record, ["isMentor", "ismentor", "mentor"], false),
       current_career_level: getAlumniField(record, ["current_career_level", "currentcareerlevel", "currentCareerLevel"], ""),
       staff_category: getAlumniField(record, ["staff_category", "staffcategory", "staffCategory"], ""),
       researchfocus: researchFocus,
