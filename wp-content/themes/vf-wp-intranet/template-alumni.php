@@ -418,9 +418,17 @@ document.addEventListener("DOMContentLoaded", () => {
   function normalizeAlumniRecord(record) {
     const researchFocus = getAlumniField(record, ["researchfocus", "research_focus", "researchFocus", "researchinterests"], "");
     const emblEndDate = getAlumniField(record, ["emblenddate", "embl_end_date", "emblEndDate"], "");
+    const firstName = record && Object.prototype.hasOwnProperty.call(record, "firstName")
+      ? record.firstName
+      : getAlumniField(record, ["firstName", "firstname", "first_name"], "");
+    const lastName = record && Object.prototype.hasOwnProperty.call(record, "lastName")
+      ? record.lastName
+      : getAlumniField(record, ["lastName", "lastname", "last_name"], "");
 
     return {
       ...record,
+      firstName,
+      lastName,
       groupName: getAlumniField(record, ["groupName", "groupname"], ""),
       unitName: getAlumniField(record, ["unitName", "unitname"], ""),
       embljobfunction: getAlumniField(record, ["embljobfunction", "embl_job_function", "emblJobFunction"], ""),
@@ -434,6 +442,43 @@ document.addEventListener("DOMContentLoaded", () => {
       leavingYear: getLeavingYear(emblEndDate),
       leavingDateSortValue: getLeavingDateSortValue(emblEndDate)
     };
+  }
+
+  /* Removes duplicated alumni rows by stable record identifiers. */
+  function dedupeAlumniRecords(records) {
+    const seen = new Set();
+    return records.filter(record => {
+      const key = cleanString(record._id || record.oid || record.id);
+      if (!key) return true;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  /* Removes duplicate visible profiles even when backend identifiers differ. */
+  function dedupeByProfileSignature(records) {
+    const seen = new Set();
+
+    return records.filter(record => {
+      const signature = [
+        cleanString(record.firstName),
+        cleanString(record.lastName),
+        cleanString(record.position),
+        cleanString(record.organization),
+        cleanString(record.city),
+        cleanString(record.country),
+        cleanString(record.groupName),
+        cleanString(record.unitName),
+        cleanString(record.staff_category),
+        cleanString(record.emblenddate)
+      ].map(normalize).join("|");
+
+      if (!signature.replace(/\|/g, "")) return true;
+      if (seen.has(signature)) return false;
+      seen.add(signature);
+      return true;
+    });
   }
 
   /* Extracts a 4-digit year from the alumni end-date field. */
@@ -1595,7 +1640,10 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       dom.resultsContainer.setAttribute("aria-busy", "true");
       const res = await fetch(DATA_URL);
-      state.allData = (await res.json()).map(normalizeAlumniRecord);
+      const rawData = await res.json();
+      const mappedData = (Array.isArray(rawData) ? rawData : []).map(normalizeAlumniRecord);
+      const idDedupedData = dedupeAlumniRecords(mappedData);
+      state.allData = dedupeByProfileSignature(idDedupedData);
       sortAlumniData(state.allData);
       state.filtered = [...state.allData];
 
