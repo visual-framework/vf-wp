@@ -138,7 +138,7 @@
       const haystack = [
         item.searchText,
         item.title,
-        item.html
+        item.excerpt
       ].filter(Boolean).join(" ");
 
       return normalize(haystack).includes(normalize(state.search));

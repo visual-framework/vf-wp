@@ -251,13 +251,12 @@ function vf_wp_ells_archive_browser_items($args) {
     $search_text = implode(' ', array(
       get_the_title($archive_post),
       get_the_excerpt($archive_post),
-      $archive_post->post_content,
-      wp_strip_all_tags($summary_html),
     ));
 
     $items[] = array(
       'id'    => $archive_post->ID,
       'title' => get_the_title($archive_post),
+      'excerpt' => get_the_excerpt($archive_post),
       'date'  => get_the_date('c', $archive_post),
       'html'  => $summary_html,
       'searchText' => wp_strip_all_tags($search_text),
