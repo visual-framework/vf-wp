@@ -1,0 +1,150 @@
+/*
+Theme Name:		 VF-WP ELLS
+Theme URI:		 https://github.com/visual-framework/vf-wp/tree/master/wp-content/themes/vf-wp-ells/
+Description:	 Visual Framework WordPress Theme for ELLS
+Author:        Szymon Kasprzyk
+Template:      vf-wp
+Version:       1.0.0-beta.1
+Text Domain:	 vfwp
+*/
+
+.vf-u-fullbleed::before {
+  grid-column: unset !important;
+}
+
+.vf-social-links__link .vf-icon--social {
+  fill: #fff !important;
+}
+
+.vf-social-links--outline .vf-social-links__item {
+  border: 1px solid #fff !important;
+}
+.social-media-block .vf-icon {
+  fill: #000 !important;
+}
+
+.social-media-block .vf-social-links__item {
+  background: #fff;
+}
+
+/* .resources-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-01.png);
+  background-position: 50%;
+  background-size: cover;
+}
+.training-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-02.png);
+  background-position: 50%;
+  background-size: cover;
+}
+.experience-container {
+  background:url(https://acxngcvroo.cloudimg.io/v7/https://www.embl.org/files/wp-content/uploads/20210301_ELLS_background_containers-03.png);
+  background-position: 50%;
+  background-size: cover;
+} */
+.resources-container .vf-section-header__heading--is-link,
+.resources-container .vf-section-header__heading--is-link:visited,
+.resources-container .vf-section-header__subheading {
+  color: #fff;
+}
+
+#footer-ells {
+    margin-bottom: -1rem !important;
+  }
+
+#footer-ells .ells-links a {
+  color: #fff !important;
+}
+
+.vf-summary .vf-summary__image {
+  border: 1px solid #d0d0ce;
+  height: 120px !important;
+  max-width: none !important;
+  object-fit: cover;
+  object-position: center;
+  width: 180px !important;
+}
+
+.ells-archive-browser .ells-results-toolbar {
+  margin-bottom: 1.5rem;
+}
+
+.ells-archive-browser .ells-results-info {
+  min-height: 2.5rem;
+}
+
+.ells-archive-browser .filter-item--select {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.ells-archive-browser .ells-filter-form {
+  align-content: start;
+}
+
+.ells-archive-browser .filter-item {
+  border: 0;
+  margin: 0 0 1.5rem;
+  min-width: 0;
+  padding: 0;
+}
+
+.ells-archive-browser .filter-item .vf-form__legend,
+.ells-archive-browser .filter-item--select .vf-form__label {
+  font-size: 21px;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.ells-archive-browser .vf-form__label {
+  font-size: 16px !important;
+}
+
+.ells-archive-browser .vf-form__select {
+  font-size: 16px !important;
+}
+
+.ells-archive-browser .filter-item .vf-form__item {
+  margin-bottom: 0.5rem;
+}
+
+.ells-archive-browser .vf-form__select {
+  max-width: 100%;
+  width: 100%;
+}
+
+.ells-archive-browser .clear-all-button {
+  background: transparent;
+  border: 0;
+  color: #3b6fb6;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  padding: 0;
+}
+
+.ells-archive-browser .clear-all-button:focus-visible {
+  outline: 3px solid #3b6fb6;
+  outline-offset: 2px;
+}
+
+.ells-archive-browser .counter-highlight {
+  font-weight: 600;
+}
+
+.ells-archive-browser .ells-filter-count {
+  color: inherit;
+  font-weight: 400;
+  margin-left: 0.35rem;
+}
+
+.ells-archive-browser .vf-pagination {
+  margin-top: 2rem;
+}
+
+vf-summary__date {
+  color: #000 !important;
+  font-weight: 500 !important;
+}
+
+
+  
