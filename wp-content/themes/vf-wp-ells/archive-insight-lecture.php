@@ -58,6 +58,7 @@ $summary = get_field('il_summary');
     'summary_template' => 'partials/vf-summary-lecture.php',
     'items_per_page' => 10,
     'result_label' => 'lectures',
+    'enable_search' => false,
     'filters' => array(
       array(
         'key' => 'topic-area',

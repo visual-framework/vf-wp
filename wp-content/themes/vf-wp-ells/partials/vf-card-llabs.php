@@ -38,11 +38,13 @@ $type = get_field('labs_type');
 </h3>
 <p class="vf-card__text" style="margin-bottom: 10px !important;">
   <?php echo get_the_excerpt(); ?></p>
-<div>
-        <p class="vf-u-margin__top--0 vf-u-margin__bottom--800"><span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue">Professional development</span>
-                  <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGrey">
-       <?php echo ($type->name); ?></span>
-                  <span class="customFormat">In-person</span></p>
-        </div>
+  <?php if ($type) { ?>
+  <p class="vf-summary__meta | vf-u-margin__bottom--100">
+    <?php if ($type) { ?>
+    <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
+    <?php } }
+    if ($type) { ?>
+  </p>
+  <?php }?>
   </div>
 </article>

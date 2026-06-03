@@ -87,7 +87,6 @@ wp_reset_postdata();
   );
   include(locate_template('partials/archive-browser.php', false, false));
   ?>
-  <p><a href="https://www.embl.org/ells/past-ells-learninglabs/">See the list of past Teacher training courses</a></p>
 </section>
 
 <?php include(locate_template('partials/ells-footer.php', false, false)); ?>

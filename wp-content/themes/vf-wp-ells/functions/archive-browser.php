@@ -2,11 +2,13 @@
 
 function vf_wp_ells_archive_browser_enqueue_assets() {
   if ( is_post_type_archive(array('learninglab', 'teachingbase', 'insight-lecture', 'ambassadors')) ) {
+    $script_path = get_stylesheet_directory() . '/scripts/archive-browser.js';
+
     wp_enqueue_script(
       'vf-wp-ells-archive-browser',
       get_stylesheet_directory_uri() . '/scripts/archive-browser.js',
       array(),
-      wp_get_theme()->get('Version'),
+      file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version'),
       true
     );
   }
@@ -202,11 +204,22 @@ function vf_wp_ells_archive_browser_items($args) {
       $key = $filter['key'];
 
       if ( ! empty($filter['taxonomy']) ) {
-        $filters[$key] = vf_wp_ells_item_terms(
+        $term_values = vf_wp_ells_item_terms(
           $archive_post->ID,
           $filter['taxonomy'],
           isset($filter['acf_field']) ? $filter['acf_field'] : ''
         );
+
+        if ( ! empty($filter['all_selected_value']) && ! empty($filter['all_selected_option_values']) ) {
+          $all_selected_value = (string) $filter['all_selected_value'];
+          $required_values = array_filter(array_map('strval', $filter['all_selected_option_values']));
+
+          if ( ! empty($required_values) && empty(array_diff($required_values, array_map('strval', $term_values))) ) {
+            $term_values[] = $all_selected_value;
+          }
+        }
+
+        $filters[$key] = array_values(array_unique($term_values));
         continue;
       }
 
@@ -234,11 +247,20 @@ function vf_wp_ells_archive_browser_items($args) {
       }
     }
 
+    $summary_html = vf_wp_ells_render_summary_html($args['summary_template'], $archive_post);
+    $search_text = implode(' ', array(
+      get_the_title($archive_post),
+      get_the_excerpt($archive_post),
+      $archive_post->post_content,
+      wp_strip_all_tags($summary_html),
+    ));
+
     $items[] = array(
       'id'    => $archive_post->ID,
       'title' => get_the_title($archive_post),
       'date'  => get_the_date('c', $archive_post),
-      'html'  => vf_wp_ells_render_summary_html($args['summary_template'], $archive_post),
+      'html'  => $summary_html,
+      'searchText' => wp_strip_all_tags($search_text),
       'filters' => $filters,
     );
   }

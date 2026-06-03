@@ -104,7 +104,7 @@ $archive = home_url('/?post_type=insight-lecture');
     </fieldset>
 
     <fieldset class="vf-form__fieldset vf-stack vf-stack--400">
-      <label class="vf-form__label">Year</label>
+      <label class="vf-form__legend">Year</label>
 
       <?php if ( ! empty($date_options)) { ?>
       <select class='vf-form__select' id='vf-form__select' name="m" style="padding: 3px 4px; width: 243px;">

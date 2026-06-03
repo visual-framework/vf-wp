@@ -34,6 +34,7 @@
 
     const config = JSON.parse(configEl.textContent || "{}");
     const filters = Array.isArray(config.filters) ? config.filters : [];
+    const enableSearch = config.enableSearch !== false;
     const itemOptions = Object.fromEntries(filters.map(filter => [filter.key, filter.options || []]));
     const itemsPerPage = Number(config.itemsPerPage) || 10;
 
@@ -42,11 +43,13 @@
       results: root.querySelector(".ells-results-container"),
       pagination: root.querySelector(".ells-pagination-list"),
       info: root.querySelector(".ells-results-info"),
-      clearAll: root.querySelector(".ells-clear-all-button")
+      clearAll: root.querySelector(".ells-clear-all-button"),
+      search: enableSearch ? root.querySelector(".ells-filter-search") : null
     };
 
     const state = {
       filters: Object.fromEntries(filters.map(filter => [filter.key, []])),
+      search: "",
       currentPage: 1,
       filtered: []
     };
@@ -62,6 +65,7 @@
         });
       });
       url.searchParams.delete("m");
+      url.searchParams.delete("search");
       url.searchParams.delete("results-page");
 
       filters.forEach(filter => {
@@ -73,6 +77,10 @@
 
       if (state.currentPage > 1) {
         url.searchParams.set("results-page", String(state.currentPage));
+      }
+
+      if (state.search) {
+        url.searchParams.set("search", state.search);
       }
 
       window.history.replaceState({}, "", url.toString());
@@ -89,9 +97,14 @@
 
       const page = Number(params.get("results-page") || params.get("paged") || params.get("page") || 1);
       state.currentPage = page > 0 ? page : 1;
+      state.search = enableSearch ? clean(params.get("search") || "") : "";
     }
 
     function syncControls() {
+      if (dom.search) {
+        dom.search.value = state.search;
+      }
+
       filters.forEach(filter => {
         const selected = new Set((state.filters[filter.key] || []).map(normalize));
 
@@ -119,7 +132,21 @@
       return selected.some(value => itemValues.includes(normalize(value)));
     }
 
+    function matchesSearch(item) {
+      if (!enableSearch || !state.search) return true;
+
+      const haystack = [
+        item.searchText,
+        item.title,
+        item.html
+      ].filter(Boolean).join(" ");
+
+      return normalize(haystack).includes(normalize(state.search));
+    }
+
     function itemMatchesOtherFilters(item, excludedField) {
+      if (!matchesSearch(item)) return false;
+
       return filters.every(filter => {
         if (filter.key === excludedField) return true;
         return matchesFilter(item, filter.key);
@@ -274,7 +301,7 @@
 
     function applyFilters() {
       state.filtered = (config.items || []).filter(item => {
-        return filters.every(filter => matchesFilter(item, filter.key));
+        return matchesSearch(item) && filters.every(filter => matchesFilter(item, filter.key));
       });
       updateFilterCounts();
       renderResults();
@@ -287,11 +314,18 @@
       applyFilters();
     }
 
+    function setSearch(value) {
+      state.search = clean(value);
+      state.currentPage = 1;
+      applyFilters();
+    }
+
     hydrateFromUrl();
     syncControls();
 
     if (dom.form) {
       dom.form.addEventListener("submit", event => event.preventDefault());
+
       dom.form.addEventListener("change", event => {
         const target = event.target;
 
@@ -306,6 +340,21 @@
           setFilter(field, target.value ? [target.value] : []);
         }
       });
+
+      dom.form.addEventListener("input", event => {
+        const target = event.target;
+        if (target.classList.contains("ells-filter-search")) {
+          setSearch(target.value);
+        }
+      });
+    }
+
+    if (dom.search) {
+      const handleSearch = () => setSearch(dom.search.value);
+
+      ["input", "keyup", "search", "change"].forEach(eventName => {
+        dom.search.addEventListener(eventName, handleSearch);
+      });
     }
 
     if (dom.clearAll) {
@@ -313,6 +362,7 @@
         filters.forEach(filter => {
           state.filters[filter.key] = [];
         });
+        state.search = "";
         state.currentPage = 1;
         syncControls();
         applyFilters();

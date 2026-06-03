@@ -8,39 +8,7 @@ global $vf_theme;
 <div class="vf-u-display-none | used-for-search-index" data-swiftype-name="page-description" data-swiftype-type="text">
   <?php echo swiftype_metadata_description(); ?>
 </div>
-<!-- SEARCH -->
 
-<section
-  class="vf-summary-container | vf-grid vf-grid__col-4 | vf-u-fullbleed | vf-u-background-color-ui--off-white | vf-u-padding__top--500 vf-u-padding__bottom--500 vf-u-margin__bottom--500">
-  <div>
-  </div>
-
-  <div class="vf-section-content | vf-grid__col--span-2">
-    <div>
-      <form role="search" method="get" class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar"
-        action="https://www.embl.org/ells/">
-        <div class="vf-form__item">
-          <div class="vf-form__item | vf-search__item">
-            <input type="search" class="vf-form__input | vf-search__input" value="" name="s"
-              placeholder="Search EMBL science education">
-          </div>
-          <div class="vf-form__item | vf-search__item">
-            <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
-            <select class="vf-form__select" id="vf-form__select" name="post_type" value="post_type">
-              <option value="all" selected="">Everything</option>
-              <option value="page" name="post_type[]">Pages</option>
-              <option value="post" name="post_type[]">News</option>
-              <option value="teachingbase" name="post_type[]">TeachingBASE</option>
-              <option value="insight-lecture" name="post_type[]">Insight Lecture</option>
-              <option value="learninglab" name="post_type[]">Teacher training</option>
-            </select>
-          </div>
-          <input type="submit" class="vf-search__button | vf-button vf-button--primary vf-button--sm" value="Search">
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
 
 <!-- NEWS -->
 
@@ -206,50 +174,63 @@ global $vf_theme;
       <h2 class="vf-section-header__heading">Teacher training</h2>
     </div>
 
-    <article class="vf-card vf-card--brand vf-card--bordered">
+    <article class="vf-card vf-card--brand vf-card--striped">
       <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/ON-SITE-LEARNING-LABS-©-EMBL-ELLS.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="<?php echo esc_url(home_url('/teacher-training/?type=ells-learninglab')); ?>">On-site
-           courses<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
+            href="<?php echo esc_url(home_url('/teacher-training/?type=train-the-trainer-course')); ?>">Train-the-Trainer Courses<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
               width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
                 fill="currentColor" fill-rule="nonzero"></path>
             </svg></a></h3>
         <p class="vf-card__text">
-          Face-to-face professional development courses for European school science teachers
+          Intensive, in-person professional development courses to become an EMBL Teacher Ambassador
 
         </p>
       </div>
     </article>
 
-    <article class="vf-card vf-card--brand vf-card--bordered">
-      <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/VIRTUAL-LEARNING-LABS-©-ELLS.jpg"
+    <article class="vf-card vf-card--brand vf-card--striped">
+      <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/VIRTUAL-LEARNING-LABS-%C2%A9-ELLS.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="<?php echo esc_url(home_url('/teacher-training/?type=ells-virtual-learninglab')); ?>">Virtual
-            courses<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
+            href="<?php echo esc_url(home_url('/teacher-training/?type=ells-virtual-learninglab')); ?>">Virtual LearningLABs<svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
               width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
                 fill="currentColor" fill-rule="nonzero"></path>
             </svg></a></h3>
         <p class="vf-card__text">
-          Virtual professional development courses for international school science teachers
+          Virtual professional development courses for educators across the world
 
         </p>
       </div>
     </article>
 
-    <article class="vf-card vf-card--brand vf-card--bordered">
+    <article class="vf-card vf-card--brand vf-card--striped">
+      <img src="https://www.embl.org/ells/wp-content/uploads/2024/10/Screenshot-2024-10-17-at-16.31.09.png"
+        alt="Image alt text" class="vf-card__image" loading="lazy">
+      <div class="vf-card__content | vf-stack vf-stack--400">
+        <h3 class="vf-card__heading"><a class="vf-card__link"
+            href="<?php echo esc_url(home_url('/teacher-training/?location=online')); ?>">Online Courses
+            <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
+              width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
+                fill="currentColor" fill-rule="nonzero"></path>
+            </svg></a></h3>
+        <p class="vf-card__text">Flexible online courses that educators can complete based on their interests</p>
+      </div>
+    </article>
+    <article class="vf-card vf-card--brand vf-card--striped">
       <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/CONNECT-LEARNING-LABS-©-ELLS-1.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="<?php echo esc_url(home_url('/teacher-training/?type=ellsconnect-learninglab')); ?>">EMBLconnect courses
+            href="<?php echo esc_url(home_url('/teacher-training/?type=ellsconnect-learninglab')); ?>">EMBLconnect Courses
             <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
               width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -258,21 +239,6 @@ global $vf_theme;
             </svg></a></h3>
         <p class="vf-card__text">Local professional development courses for school science teachers run by European
           partners in their language</p>
-      </div>
-    </article>
-    <article class="vf-card vf-card--brand vf-card--bordered">
-      <img src="https://www.embl.org/ells/wp-content/uploads/2024/10/Screenshot-2024-10-17-at-16.31.09.png"
-        alt="Image alt text" class="vf-card__image" loading="lazy">
-      <div class="vf-card__content | vf-stack vf-stack--400">
-        <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="<?php echo esc_url(home_url('/teacher-training/?type=self-paced-course')); ?>">Self-paced courses
-            <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
-              width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M0 12c0 6.627 5.373 12 12 12s12-5.373 12-12S18.627 0 12 0C5.376.008.008 5.376 0 12zm13.707-5.209l4.5 4.5a1 1 0 010 1.414l-4.5 4.5a1 1 0 01-1.414-1.414l2.366-2.367a.25.25 0 00-.177-.424H6a1 1 0 010-2h8.482a.25.25 0 00.177-.427l-2.366-2.368a1 1 0 011.414-1.414z"
-                fill="currentColor" fill-rule="nonzero"></path>
-            </svg></a></h3>
-        <p class="vf-card__text">Flexible online learning that educators can complete at their own pace</p>
       </div>
     </article>
   </div>

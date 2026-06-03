@@ -17,6 +17,8 @@ get_header();
 <section class="vf-content">
   <h3>Browse or filter all resources</h3>
   <?php
+  $age_group_options = vf_wp_ells_term_options('age-group');
+
   $teachingbase_filters = array(
     array(
       'key' => 'age-group',
@@ -24,7 +26,15 @@ get_header();
       'all_label' => 'All age groups',
       'taxonomy' => 'age-group',
       'acf_field' => 'tb_age_group',
-      'options' => vf_wp_ells_term_options('age-group'),
+      'options' => array_merge(
+        $age_group_options,
+        array(array(
+          'value' => 'all',
+          'label' => 'All',
+        ))
+      ),
+      'all_selected_value' => 'all',
+      'all_selected_option_values' => wp_list_pluck($age_group_options, 'value'),
     ),
     array(
       'key' => 'topic-area',

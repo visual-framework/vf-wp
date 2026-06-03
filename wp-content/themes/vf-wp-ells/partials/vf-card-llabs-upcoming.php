@@ -7,7 +7,47 @@ $title = esc_html(get_the_title());
 $author_url = get_author_posts_url(get_the_author_meta('ID'));
 $user_id = get_the_author_meta('ID');
 $type = get_field('labs_type');
+$format = get_field('labs_format');
 
+$term_names = function($value, $taxonomy = '') {
+  if ( empty($value) ) {
+    return array();
+  }
+
+  if ( ! is_array($value) ) {
+    $value = array($value);
+  }
+
+  $names = array();
+  foreach ( $value as $item ) {
+    if ( is_numeric($item) ) {
+      $item = get_term((int) $item, $taxonomy);
+    }
+
+    if ( is_wp_error($item) || empty($item) ) {
+      continue;
+    }
+
+    if ( is_object($item) && ! empty($item->name) ) {
+      $names[] = $item->name;
+      continue;
+    }
+
+    if ( is_array($item) && ! empty($item['name']) ) {
+      $names[] = $item['name'];
+      continue;
+    }
+
+    if ( is_string($item) ) {
+      $names[] = $item;
+    }
+  }
+
+  return array_filter(array_unique($names));
+};
+
+$type_names = $term_names($type, 'llabs-type');
+$format_names = $term_names($format, 'llabs-format');
 
 ?>
 <article class="vf-card vf-card--brand vf-card--bordered">
@@ -36,13 +76,15 @@ $type = get_field('labs_type');
     </svg>
   </a>
 </h3>
-<?php if ($type) { ?>
-<p class="vf-summary__meta | vf-u-margin__bottom--100">
-  <?php if ($type) { ?>
-  <span class="vf-u-text-color--grey"><?php echo ($type->name); ?></span>&nbsp;&nbsp;
-  <?php } }
-  if ($type) { ?>
+<?php if ( ! empty($type_names) || ! empty($format_names) ) { ?>
+<p class="vf-u-margin__top--0 vf-u-margin__bottom--100">
+  <?php foreach ( $type_names as $type_name ) { ?>
+    <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue"><?php echo esc_html($type_name); ?></span>
+  <?php } ?>
+  <?php foreach ( $format_names as $format_name ) { ?>
+    <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGreen"><?php echo esc_html($format_name); ?></span>
+  <?php } ?>
 </p>
-<?php }?>
+<?php } ?>
   </div>
 </article>

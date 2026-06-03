@@ -92,8 +92,30 @@ Text Domain:	 vfwp
 .ells-archive-browser .filter-item .vf-form__legend,
 .ells-archive-browser .filter-item--select .vf-form__label {
   font-size: 21px;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 0.25rem;
+}
+
+.ells-archive-browser .filter-input-row {
+  display: grid;
+  grid-template-columns: 1fr 44px;
+}
+
+.ells-archive-browser .filter-input-row .vf-form__input {
+  min-width: 0;
+}
+
+.ells-archive-browser .search-button {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
+  background-color: #3b6fb6;
+}
+
+.ells-archive-browser .search-button .vf-icon {
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
 .ells-archive-browser .vf-form__label {
@@ -105,7 +127,28 @@ Text Domain:	 vfwp
 }
 
 .ells-archive-browser .filter-item .vf-form__item {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.ells-archive-browser .vf-form__checkbox {
+  flex: 0 0 auto;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.ells-archive-browser .vf-form__item--checkbox .vf-form__label {
+  align-items: center;
+  display: inline-flex;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+.ells-archive-browser .vf-form__checkbox + .vf-form__label::before {
+  flex: 0 0 1rem;
+  top: 0 !important;
 }
 
 .ells-archive-browser .vf-form__select {
@@ -141,10 +184,25 @@ Text Domain:	 vfwp
   margin-top: 2rem;
 }
 
-vf-summary__date {
+.vf-summary__date {
   color: #000 !important;
   font-weight: 500 !important;
 }
 
+.customBadgeBlue {
+    background-color: #d1e3f6 !important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
 
-  
+  .customBadgeGreen {
+    background-color: #D0DEBB!important;
+    border: 0 !important;
+    border-radius: 2px !important;
+    color: #373a36 !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+}
