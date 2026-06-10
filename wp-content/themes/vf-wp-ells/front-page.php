@@ -12,7 +12,7 @@ global $vf_theme;
 
 <!-- NEWS -->
 
-<section class="vf-news-container vf-news-container--featured">
+<section class="vf-news-container vf-news-container--featured ells-front-page-news">
   <div class="vf-section-header">
     <a href="<?php echo get_permalink( get_option( 'page_for_posts' ) ); ?>"
       class="vf-section-header__heading vf-section-header__heading--is-link">Latest updates<svg

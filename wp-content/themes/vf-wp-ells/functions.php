@@ -61,24 +61,41 @@ if(1 < count($languages)){ echo __(' <div class="vf-banner vf-banner--alert vf-b
   }
   
 
-  // Show linked WPML posts in a loop
-function wpml_post_languages_in_loop() {
+function wpml_post_languages_markup($inline = false) {
   $thispostid = get_the_ID();
   $post_trid = apply_filters('wpml_element_trid', NULL, get_the_ID(), 'post_' . get_post_type());
   $languages = apply_filters( 'wpml_active_languages', NULL, 'skip_missing=0&orderby=code' );
   if (empty($post_trid))
-      return;
+      return '';
   $translation = apply_filters('wpml_get_element_translations', NULL, $post_trid, 'post_' . get_post_type());
-  if (1 < count($translation)) {
-    echo '<p class="vf-summary__meta">Other language(s): &nbsp;&nbsp;';
-      foreach ($translation as $l) {
-          if ($l->element_id != $thispostid) {
-              $langs[] = '<a href="' . apply_filters('wpml_permalink', ( get_permalink($l->element_id)), $l->language_code) . '"><img class="wpml-ls-flag iclflag" src="'.$languages[$l->language_code]['country_flag_url'].'" />' . '</a>';
-              }
-      }
-      echo join(' &nbsp; ', $langs);
-      echo '</p>';
+  if ( ! is_array($translation) || 1 >= count($translation) ) {
+    return '';
   }
+
+  $langs = array();
+  foreach ($translation as $l) {
+      if ($l->element_id != $thispostid) {
+          $language_code = $l->language_code;
+          $flag_url = isset($languages[$language_code]['country_flag_url']) ? $languages[$language_code]['country_flag_url'] : '';
+          $language_name = isset($languages[$language_code]['native_name']) ? $languages[$language_code]['native_name'] : $language_code;
+          $langs[] = '<a class="teachingbase-language-link" href="' . esc_url(apply_filters('wpml_permalink', ( get_permalink($l->element_id)), $language_code)) . '"><img class="wpml-ls-flag iclflag" src="' . esc_url($flag_url) . '" alt="' . esc_attr($language_name) . '" /></a>';
+          }
+  }
+
+  if ( empty($langs) ) {
+    return '';
+  }
+
+  if ( $inline ) {
+    return '<span class="teachingbase-language-links"><span class="teachingbase-language-label">Other language(s):</span> ' . join(' ', $langs) . '</span>';
+  }
+
+  return '<p class="vf-summary__meta">Other language(s): &nbsp;&nbsp;' . join(' &nbsp; ', $langs) . '</p>';
+}
+
+  // Show linked WPML posts in a loop
+function wpml_post_languages_in_loop($inline = false) {
+  echo wpml_post_languages_markup($inline);
 }
 
 // modifies the teachingbase loop to not show child posts

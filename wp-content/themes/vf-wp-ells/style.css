@@ -65,6 +65,13 @@ Text Domain:	 vfwp
   width: 180px !important;
 }
 
+.ells-front-page-news .vf-summary .vf-summary__image {
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: initial;
+  width: auto !important;
+}
+
 .ells-archive-browser .ells-results-toolbar {
   margin-bottom: 1.5rem;
 }
@@ -205,4 +212,27 @@ Text Domain:	 vfwp
     color: #373a36 !important;
     font-weight: 500 !important;
     font-size: 12px !important;
+}
+
+.teachingbase-language-links {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+  margin-left: 0.25rem;
+  vertical-align: middle;
+}
+
+.teachingbase-language-label {
+  color: #373a36;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.teachingbase-language-link {
+  align-items: center;
+  display: inline-flex;
+}
+
+.teachingbase-language-link .wpml-ls-flag {
+  display: block;
 }

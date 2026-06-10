@@ -86,6 +86,8 @@ $all_age_group_slugs = wp_list_pluck(vf_wp_ells_term_options('age-group'), 'valu
 if ( ! empty($all_age_group_slugs) && empty(array_diff($all_age_group_slugs, $age_group_slugs)) ) {
   $age_group_names = array('All');
 }
+
+$language_links = function_exists('wpml_post_languages_markup') ? wpml_post_languages_markup(true) : '';
 ?>
 
 <article class="vf-summary vf-summary--news">
@@ -104,7 +106,7 @@ if ( ! empty($all_age_group_slugs) && empty(array_diff($all_age_group_slugs, $ag
     <?php echo get_the_excerpt(); ?>
   </p>
   <div>
-    <?php if ( ! empty($topic_area_names) || ! empty($age_group_names) ) { ?>
+    <?php if ( ! empty($topic_area_names) || ! empty($age_group_names) || ! empty($language_links) ) { ?>
     <p class="vf-u-margin__top--0 vf-u-margin__bottom--200">
       <?php foreach ( $topic_area_names as $topic_area_name ) { ?>
         <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeBlue"><?php echo esc_html($topic_area_name); ?></span>
@@ -112,8 +114,8 @@ if ( ! empty($all_age_group_slugs) && empty(array_diff($all_age_group_slugs, $ag
       <?php foreach ( $age_group_names as $age_group_name ) { ?>
         <span class="vf-badge vf-badge--primary vf-u-margin__right--200 customBadgeGreen"><?php echo esc_html($age_group_name); ?></span>
       <?php } ?>
+      <?php echo $language_links; ?>
     </p>
     <?php }?>
-    <?php wpml_post_languages_in_loop(); ?>
   </div>
 </article>
