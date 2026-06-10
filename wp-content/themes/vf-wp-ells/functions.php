@@ -6,6 +6,7 @@ require_once('functions/teachingbase-post.php');
 require_once('functions/insight-lecture-post.php');
 require_once('functions/ambassadors-post.php');
 require_once('functions/archive-browser.php');
+require_once('functions/ells-templates.php');
 
 // enable featured image
 add_theme_support( 'post-thumbnails' );

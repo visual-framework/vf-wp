@@ -174,7 +174,7 @@ global $vf_theme;
       <h2 class="vf-section-header__heading">Teacher training</h2>
     </div>
 
-    <article class="vf-card vf-card--brand vf-card--striped">
+    <article class="vf-card vf-card--brand vf-card--bordered">
       <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/ON-SITE-LEARNING-LABS-©-EMBL-ELLS.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
@@ -192,7 +192,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--brand vf-card--striped">
+    <article class="vf-card vf-card--brand vf-card--bordered">
       <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/VIRTUAL-LEARNING-LABS-%C2%A9-ELLS.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
@@ -210,7 +210,7 @@ global $vf_theme;
       </div>
     </article>
 
-    <article class="vf-card vf-card--brand vf-card--striped">
+    <article class="vf-card vf-card--brand vf-card--bordered">
       <img src="https://www.embl.org/ells/wp-content/uploads/2024/10/Screenshot-2024-10-17-at-16.31.09.png"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
@@ -225,7 +225,7 @@ global $vf_theme;
         <p class="vf-card__text">Flexible online courses that educators can complete based on their interests</p>
       </div>
     </article>
-    <article class="vf-card vf-card--brand vf-card--striped">
+    <article class="vf-card vf-card--brand vf-card--bordered">
       <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/CONNECT-LEARNING-LABS-©-ELLS-1.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
