@@ -17,7 +17,7 @@ $location_terms = get_terms(
 );
 unset($location_terms[5]);
 
-$category_terms = ['Data science', 'Professional development', 'Workplace'];
+$category_terms = ['Data science', 'Professional development', 'Public engagement', 'Workplace'];
 $fee_terms = ['Paid', 'Free'];
 $status_terms = ['Open', 'Closed'];
 

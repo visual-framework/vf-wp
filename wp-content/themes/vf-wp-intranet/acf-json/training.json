@@ -532,6 +532,7 @@
             "choices": {
                 "data_science": "Data science",
                 "professional_development": "Professional development",
+                "public_engagement": "Public engagement",
                 "workplace": "Workplace"
             },
             "default_value": false,
@@ -657,7 +658,7 @@
             "label": "One line overview of course",
             "name": "vf-wp-training-info",
             "aria-label": "",
-            "type": "wysiwyg",
+            "type": "textarea",
             "instructions": "",
             "required": 0,
             "conditional_logic": [
@@ -683,10 +684,10 @@
             },
             "relevanssi_exclude": 0,
             "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 0
+            "maxlength": "",
+            "placeholder": "",
+            "rows": "",
+            "new_lines": "br"
         },
         {
             "key": "field_65127ea323b78",

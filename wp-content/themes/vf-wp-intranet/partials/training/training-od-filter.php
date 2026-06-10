@@ -9,7 +9,7 @@ $provider_terms = get_terms(
 );
 
 
-$category_terms = ['Data science', 'Professional development', 'Workplace'];
+$category_terms = ['Data science', 'Professional development', 'Public engagement', 'Workplace'];
 $type_terms = ['Course materials', 'Recorded webinar', 'Online tutorial', 'Collection'];
 
 
