@@ -21,6 +21,11 @@ class VF_Events_ACF {
       'pre_get_posts',
       array($this, 'pre_get_posts')
     );
+    add_filter(
+      'posts_search',
+      array($this, 'posts_search'),
+      10, 2
+    );
     add_action('acf/init',
       array($this, 'acf_init')
     );
@@ -108,6 +113,42 @@ class VF_Events_ACF {
   }
 
   /**
+   * Filter: `posts_search`
+   *
+   * Limit the Events admin list search box to post titles only.
+   */
+  public function posts_search($search, $query) {
+    global $wpdb;
+
+    if (
+      ! is_admin() ||
+      ! $query->is_main_query() ||
+      $query->get('post_type') !== VF_Events::type() ||
+      $query->get('s') === ''
+    ) {
+      return $search;
+    }
+
+    $terms = preg_split('/\s+/', trim((string) $query->get('s')));
+    $terms = array_filter($terms, 'strlen');
+
+    if (empty($terms)) {
+      return $search;
+    }
+
+    $title_search = array();
+
+    foreach ($terms as $term) {
+      $title_search[] = $wpdb->prepare(
+        "{$wpdb->posts}.post_title LIKE %s",
+        '%' . $wpdb->esc_like($term) . '%'
+      );
+    }
+
+    return ' AND (' . implode(' AND ', $title_search) . ')';
+  }
+
+  /**
    * Main query for events archive template
    */
   private function pre_get_posts_archive($query) {
@@ -184,15 +225,15 @@ class VF_Events_ACF {
       'fields' => array(
         array(
           'key' => 'field_vf_events_enable_chatbot',
-          'label' => __('Enable an AI assistant event pages', 'vfwp'),
+          'label' => __('Enable an AI assistant', 'vfwp'),
           'name' => 'vf_events_enable_chatbot',
           'type' => 'true_false',
-          'instructions' => __('Only for events added by Course and Conference Office', 'vfwp'),
+          'instructions' => __('*Only for events added by Course and Conference Office.', 'vfwp'),
           'required' => 0,
           'conditional_logic' => 0,
           'wrapper' => array(
             'width' => '',
-            'class' => '',
+            'class' => 'vf-events-settings-box',
             'id' => '',
           ),
           'message' => '',
@@ -287,6 +328,8 @@ class VF_Events_ACF {
    * Filter: `manage_{$post_type}_posts_columns`
    */
   public function posts_columns($columns) {
+    unset($columns['taxonomy-embl_taxonomy']);
+
     // Insert date columns after title
     $offset = array_search('title', array_keys($columns));
     $columns = array_merge(
@@ -304,12 +347,12 @@ class VF_Events_ACF {
    * Action: `manage_{$post_type}_posts_custom_column`
    */
   public function posts_custom_column($column, $post_id) {
-    if (strpos($column, 'vf_') !== 0) {
+    if ( ! in_array($column, array('vf_event_start_date', 'vf_event_end_date'), true)) {
       return;
     }
     // Get meta value
     $value = get_field($column, $post_id);
-    $value = trim($value);
+    $value = trim((string) $value);
     echo esc_html($value);
   }
 

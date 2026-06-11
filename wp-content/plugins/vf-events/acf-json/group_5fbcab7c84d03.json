@@ -1990,6 +1990,64 @@
                 "delay": 0
             },
             {
+                "key": "field_vf_event_thank_you_tab",
+                "label": "Thank you",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0,
+                "selected": 0
+            },
+            {
+                "key": "field_vf_event_include_thank_you_page",
+                "label": "Include thank you page",
+                "name": "vf_event_include_thank_you_page",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "When thank you pages are enabled in Events Settings, publishing this event will create a thank you page.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "Included",
+                "ui_off_text": "Not included"
+            },
+            {
+                "key": "field_vf_event_thank_you_content",
+                "label": "Thank you content",
+                "name": "vf_event_thank_you_content",
+                "aria-label": "",
+                "type": "wysiwyg",
+                "instructions": "Appears below the Thank you heading on the generated thank you page.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "tabs": "all",
+                "toolbar": "full",
+                "media_upload": 0,
+                "delay": 0
+            },
+            {
                 "key": "field_68f88a6c51387",
                 "label": "Screens",
                 "name": "",

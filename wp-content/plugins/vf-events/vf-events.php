@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 require_once(plugin_dir_path(__FILE__) . 'includes/acf.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/register.php');
 require_once(plugin_dir_path(__FILE__) . 'includes/template.php');
+require_once(plugin_dir_path(__FILE__) . 'includes/thank-you.php');
 
 if ( ! class_exists('VF_Events') ) :
 
@@ -21,6 +22,7 @@ class VF_Events {
   private $acf;
   private $register;
   private $template;
+  private $thank_you;
 
   function __construct() {
     // Do nothing...
@@ -40,6 +42,7 @@ class VF_Events {
     $this->acf = new VF_Events_ACF(__FILE__);
     $this->register = new VF_Events_Register(__FILE__);
     $this->template = new VF_Events_Template(__FILE__);
+    $this->thank_you = new VF_Events_Thank_You(__FILE__);
     // Add hooks
     register_activation_hook(
       __FILE__,
@@ -70,6 +73,7 @@ class VF_Events {
   public function activate() {
     // Ensure custom post type is registered then flush permalinks
     $this->register->init_register();
+    VF_Events_Thank_You::maybe_schedule_cleanup_event();
     VF_Events::maybe_schedule_chatbot_routes_refresh();
     VF_Events::refresh_chatbot_routes_payload();
     flush_rewrite_rules();
@@ -79,6 +83,7 @@ class VF_Events {
    * Action: `register_deactivation_hook`
    */
   public function deactivate() {
+    VF_Events_Thank_You::clear_cleanup_schedule();
     VF_Events::clear_chatbot_routes_refresh_schedule();
     flush_rewrite_rules();
   }
@@ -207,6 +212,14 @@ class VF_Events {
       'posts_per_page' => $args['posts_per_page'],
       'order'          => (bool) $args['is_past'] ? 'DESC' : 'ASC'
     );
+    if (class_exists('VF_Events_Thank_You')) {
+      $args['meta_query'] = array(
+        array(
+          'key' => VF_Events_Thank_You::META_IS_THANK_YOU_PAGE,
+          'compare' => 'NOT EXISTS',
+        ),
+      );
+    }
     $query = new WP_Query($args);
     $query->set('is_archive', false);
     return $query;
