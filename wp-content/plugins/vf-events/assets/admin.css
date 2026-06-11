@@ -76,3 +76,60 @@
   max-width: 500px;
 }
 
+.vf-events-button--danger {
+  background: #b32d2e !important;
+  border-color: #8a2424 !important;
+  color: #fff !important;
+}
+
+.vf-events-button--danger:hover,
+.vf-events-button--danger:focus {
+  background: #8a2424 !important;
+  border-color: #691c1c !important;
+  color: #fff !important;
+}
+
+.vf-events-thank-you-builder__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.vf-events-thank-you-default-content__actions {
+  margin: 12px 0 0;
+}
+
+.vf-events-thank-you-settings-box,
+.acf-field.vf-events-settings-box {
+  background: #f6f7f7;
+  border: 1px solid #8c8f94;
+  border-radius: 0;
+  margin: 12px 0 20px;
+  padding: 16px;
+}
+
+.acf-field.vf-events-settings-box {
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 1px #8c8f94;
+}
+
+.vf-events-thank-you-settings-box > .acf-field {
+  background: transparent;
+  border-top: 1px solid #c3c4c7;
+  margin: 0;
+  padding: 16px 0;
+}
+
+.vf-events-thank-you-settings-box > .acf-field:first-child {
+  border-top: 0;
+}
+
+.vf-events-thank-you-settings-box .notice.inline {
+  margin: 12px 0;
+}
+
+.vf-events-thank-you-option--disabled {
+  color: #8c8f94 !important;
+  cursor: not-allowed !important;
+  opacity: 0.65;
+}

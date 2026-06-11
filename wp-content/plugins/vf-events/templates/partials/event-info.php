@@ -1,12 +1,15 @@
 <?php
 
 $title = get_the_title();
+$event_organiser = isset($event_organiser) ? $event_organiser : '';
+$event_type_label = isset($event_type_label) ? $event_type_label : (isset($event_type) && is_array($event_type) && !empty($event_type['label']) ? $event_type['label'] : '');
+$embo_event_label = isset($embo_event_label) ? $embo_event_label : (isset($embo_event_name) && is_array($embo_event_name) && !empty($embo_event_name['label']) ? $embo_event_name['label'] : '');
 
 $start_date = get_field('vf_event_start_date');
-$start = DateTime::createFromFormat('j M Y', $start_date);
+$start = !empty($start_date) ? DateTime::createFromFormat('j M Y', $start_date) : false;
 
 $end_date = get_field('vf_event_end_date');
-$end = DateTime::createFromFormat('j M Y', $end_date);
+$end = !empty($end_date) ? DateTime::createFromFormat('j M Y', $end_date) : false;
 
 $location = get_field('vf_event_location');
 $other_location = get_field('vf_event_other_location');
@@ -19,6 +22,11 @@ $registration_closing = get_field('vf_event_registration_closing');
 $registration_closing_on_site = get_field('vf_event_registration_closing_on-site');
 
 $now = new DateTime();
+$application_date_formated = '';
+$registration_date_formated = '';
+$registration_date_formated_on_site = '';
+$abstract_date_formated = '';
+
 if ($application_closing) {
   $application_date = new DateTime($application_closing);
   $application_date_formated = $application_date->format('Y-m-d');
@@ -32,10 +40,11 @@ if ($registration_closing_on_site) {
   $registration_date_formated_on_site = $registration_date_on_site->format('Y-m-d');
 }
 
-$abstract_date = new DateTime($abstract_closing);
 $current_date = $now->format('Y-m-d');
-
-$abstract_date_formated = $abstract_date->format('Y-m-d');
+if ($abstract_closing) {
+  $abstract_date = new DateTime($abstract_closing);
+  $abstract_date_formated = $abstract_date->format('Y-m-d');
+}
 
 $event_topic = get_field('vf_event_event_topic');
 
@@ -47,11 +56,11 @@ $hashtag = get_field('vf_event_hashtag');
 $abstract_link = get_field('vf_event_abstract_link');
 $poster_file = get_field('vf_event_poster_file');
 $abstract_button = get_field('vf_event_abstract_submission_button_text');
-$abstract_button = ucfirst(strtolower($abstract_button));
+$abstract_button = ucfirst(strtolower((string) $abstract_button));
 $register_button = get_field('vf_event_registration_button_text');
 $register_button_on_site = get_field('vf_event_registration_button_text_on-site');
-$register_button = ucfirst(strtolower($register_button));
-$register_button_on_site = ucfirst(strtolower($register_button_on_site));
+$register_button = ucfirst(strtolower((string) $register_button));
+$register_button_on_site = ucfirst(strtolower((string) $register_button_on_site));
 $info_text = get_field('vf_event_info_text');
 $registration_type = get_field('vf_event_registration_type');
 $social_url = get_the_permalink();
@@ -89,8 +98,8 @@ if (is_array($poster_image)) {
       <span class="vf-u-text-color--grey">
         <?php
       // Event dates
-      if ( ! empty($start_date)) {
-        if ($end_date) {
+      if ( ! empty($start_date) && $start instanceof DateTime) {
+        if ($end_date && $end instanceof DateTime) {
           if ($start->format('M') == $end->format('M')) {
             echo $start->format('j'); ?> - <?php echo $end->format('j M Y'); }
           else {
@@ -134,7 +143,7 @@ if (is_array($poster_image)) {
     <?php } ?>
 
     <?php if ( ! empty($abstract_closing)) { ?>
-    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if ($abstract_date_formated >= $current_date) {
+    <p class="vf-text-body vf-text-body--3"><span>Abstract submission:</span> <span class="vf-u-text-color--grey"> <?php if (!empty($abstract_date_formated) && $abstract_date_formated >= $current_date) {
     echo esc_html($abstract_closing);
      }
     else {
@@ -167,7 +176,7 @@ if (is_array($poster_image)) {
     <?php
     // Buttons abstract
     if ( ! empty($abstract_link)) {
-                if (($abstract_date_formated >= $current_date)) {?>
+                if (!empty($abstract_date_formated) && ($abstract_date_formated >= $current_date)) {?>
     <div style="display: inline-block;">
       <a href="<?php echo esc_url($abstract_link); ?>" target="_blank"><button
           class="vf-button vf-button--tertiary vf-button--sm vf-u-margin__bottom--600"><?php echo($abstract_button); ?></button></a>
@@ -188,7 +197,7 @@ if (is_array($poster_image)) {
           }
           } ?>
       </span> <span class="vf-u-text-color--grey">
-        <?php if ($registration_date_formated_on_site >= $current_date) {
+        <?php if (!empty($registration_date_formated_on_site) && $registration_date_formated_on_site >= $current_date) {
           echo esc_html($registration_closing_on_site);
         }
         else {
@@ -219,9 +228,9 @@ if (is_array($poster_image)) {
       // Buttons on site
       if ( !empty($registration_link_on_site)) {
             if (
-              (($registration_date_formated_on_site >= $current_date))
+              (!empty($registration_date_formated_on_site) && ($registration_date_formated_on_site >= $current_date))
               ||
-              (($application_closing) && ($application_date_formated >= $current_date))) { ?>
+              (($application_closing) && !empty($application_date_formated) && ($application_date_formated >= $current_date))) { ?>
     <div style="display: inline-block;" data-vf-google-analytics-region="registration-onsite">
       <a href="<?php echo esc_url($registration_link_on_site); ?>" target="_blank"><button
           class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button_on_site); ?></button></a>
@@ -239,7 +248,7 @@ if (is_array($poster_image)) {
         Application:
         <?php  } ?>
       </span> <span class="vf-u-text-color--grey">
-        <?php if ($registration_date_formated >= $current_date) {
+        <?php if (!empty($registration_date_formated) && $registration_date_formated >= $current_date) {
       echo esc_html($registration_closing);
     }
     else {
@@ -264,9 +273,9 @@ if (is_array($poster_image)) {
   // Buttons virtual
   if ( !empty($registration_link)) {
         if (
-          (($registration_date_formated >= $current_date))
+          (!empty($registration_date_formated) && ($registration_date_formated >= $current_date))
           ||
-          (($application_closing) && ($application_date_formated >= $current_date))) { ?>
+          (($application_closing) && !empty($application_date_formated) && ($application_date_formated >= $current_date))) { ?>
     <div style="display: inline-block;" data-vf-google-analytics-region="registration-virtual">
       <a href="<?php echo esc_url($registration_link); ?>" target="_blank"><button
           class="vf-button vf-button--primary vf-button--sm vf-u-margin__bottom--600"><?php echo($register_button); ?></button></a>
@@ -278,8 +287,8 @@ if (is_array($poster_image)) {
 if (strpos($_SERVER['REQUEST_URI'], 'course-and-conference-office') !== false) {
 
     if (
-        (empty($event_type['label']) || $event_type['label'] != 'Course') &&
-        (empty($embo_event_name['label']) || $embo_event_name['label'] != 'EMBO Practical Course')
+        ($event_type_label != 'Course') &&
+        ($embo_event_label != 'EMBO Practical Course')
     ) {
         ?>
         <hr class="vf-divider | vf-u-margin__bottom--400 staff-registration-link">
