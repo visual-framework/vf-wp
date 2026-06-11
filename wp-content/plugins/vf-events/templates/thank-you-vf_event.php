@@ -12,7 +12,7 @@ if (class_exists('VF_Breadcrumbs')) {
 global $post;
 $event_post_id = VF_Events_Thank_You::get_parent_event_id();
 $event_organiser = get_field('vf_event_organiser', $event_post_id);
-$thank_you_content = get_field('vf_event_thank_you_content', $event_post_id);
+$thank_you_content = VF_Events_Thank_You::get_event_thank_you_content($event_post_id);
 $event_start_date = get_field('vf_event_start_date', $event_post_id);
 $event_end_date = get_field('vf_event_end_date', $event_post_id);
 $event_location = get_field('vf_event_location', $event_post_id);

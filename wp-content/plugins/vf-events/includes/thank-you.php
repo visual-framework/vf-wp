@@ -8,6 +8,7 @@ class VF_Events_Thank_You {
 
   const META_IS_THANK_YOU_PAGE = '_vf_event_thank_you_page';
   const FIELD_ENABLE_SETTING = 'vf_events_enable_thank_you_pages';
+  const FIELD_DEFAULT_CONTENT_SETTING = 'vf_events_default_thank_you_content';
   const FIELD_BUILDER_EVENTS = 'vf_events_thank_you_selected_events';
   const FIELD_INCLUDE_EVENT = 'vf_event_include_thank_you_page';
   const FIELD_CONTENT_EVENT = 'vf_event_thank_you_content';
@@ -44,6 +45,10 @@ class VF_Events_Thank_You {
     add_action(
       'wp_ajax_vf_events_ajax_build_thank_you_pages',
       array($this, 'ajax_build_thank_you_pages')
+    );
+    add_action(
+      'wp_ajax_vf_events_ajax_save_default_thank_you_content',
+      array($this, 'ajax_save_default_thank_you_content')
     );
     add_action(
       'wp_ajax_vf_events_ajax_delete_all_thank_you_pages',
@@ -128,6 +133,33 @@ class VF_Events_Thank_You {
           'ui' => 1,
           'ui_on_text' => __('Enabled', 'vfwp'),
           'ui_off_text' => __('Disabled', 'vfwp'),
+        ),
+        array(
+          'key' => 'field_vf_events_default_thank_you_content',
+          'label' => __('Default thank you content', 'vfwp'),
+          'name' => self::FIELD_DEFAULT_CONTENT_SETTING,
+          'type' => 'wysiwyg',
+          'instructions' => __('Used on generated thank you pages when an event does not have its own thank you content.', 'vfwp'),
+          'required' => 0,
+          'conditional_logic' => array(
+            array(
+              array(
+                'field' => 'field_vf_events_enable_thank_you_pages',
+                'operator' => '==',
+                'value' => '1',
+              ),
+            ),
+          ),
+          'wrapper' => array(
+            'width' => '',
+            'class' => 'vf-events-thank-you-settings-field',
+            'id' => '',
+          ),
+          'default_value' => '',
+          'tabs' => 'all',
+          'toolbar' => 'full',
+          'media_upload' => 0,
+          'delay' => 0,
         ),
         array(
           'key' => 'field_vf_events_thank_you_selected_events',
@@ -330,6 +362,7 @@ class VF_Events_Thank_You {
         'confirm' => __('Disabling thank you pages will remove all existing thank you pages. Do you want to continue?', 'vfwp'),
         'deleteAllFailed' => __('The thank you pages could not be removed.', 'vfwp'),
         'alreadyBuiltLabel' => __('Already has a thank you page', 'vfwp'),
+        'saveDefaultContentLabel' => __('Save', 'vfwp'),
         'availableEvents' => self::get_available_builder_event_choices(),
         'unavailableEventIds' => self::get_unavailable_builder_event_ids(),
       )
@@ -444,6 +477,7 @@ class VF_Events_Thank_You {
       ), 400);
     }
 
+    $this->maybe_update_default_thank_you_content_from_post();
     $built = $this->build_selected_events();
     $this->clear_builder_selection();
 
@@ -461,6 +495,32 @@ class VF_Events_Thank_You {
       'tableHtml' => $this->get_existing_pages_table_markup(),
       'availableEvents' => self::get_available_builder_event_choices(),
       'unavailableEventIds' => self::get_unavailable_builder_event_ids(),
+    ));
+  }
+
+  public function ajax_save_default_thank_you_content() {
+    if ( ! current_user_can('manage_options')) {
+      wp_send_json_error(array(
+        'message' => __('You are not allowed to update thank you page settings.', 'vfwp'),
+      ), 403);
+    }
+
+    if (
+      empty($_POST['vf_events_thank_you_nonce']) ||
+      ! wp_verify_nonce(
+        sanitize_text_field(wp_unslash($_POST['vf_events_thank_you_nonce'])),
+        'vf_events_build_thank_you_pages'
+      )
+    ) {
+      wp_send_json_error(array(
+        'message' => __('The save request could not be verified.', 'vfwp'),
+      ), 400);
+    }
+
+    $this->maybe_update_default_thank_you_content_from_post();
+
+    wp_send_json_success(array(
+      'message' => __('Saved default thank you content.', 'vfwp'),
     ));
   }
 
@@ -793,6 +853,21 @@ class VF_Events_Thank_You {
     }
 
     return self::delete_all_thank_you_pages();
+  }
+
+  private function maybe_update_default_thank_you_content_from_post() {
+    if ( ! isset($_POST['vf_events_default_thank_you_content'])) {
+      return;
+    }
+
+    $content = wp_kses_post(wp_unslash($_POST['vf_events_default_thank_you_content']));
+
+    if (function_exists('update_field')) {
+      update_field('field_vf_events_default_thank_you_content', $content, 'option');
+    } else {
+      update_option('options_' . self::FIELD_DEFAULT_CONTENT_SETTING, $content, false);
+      update_option('_options_' . self::FIELD_DEFAULT_CONTENT_SETTING, 'field_vf_events_default_thank_you_content', false);
+    }
   }
 
   static public function delete_all_thank_you_pages() {
@@ -1266,6 +1341,44 @@ class VF_Events_Thank_You {
       update_option('options_' . self::FIELD_ENABLE_SETTING, $value, false);
       update_option('_options_' . self::FIELD_ENABLE_SETTING, 'field_vf_events_enable_thank_you_pages', false);
     }
+  }
+
+  static public function get_event_thank_you_content($event_id) {
+    $content = function_exists('get_field')
+      ? get_field(self::FIELD_CONTENT_EVENT, $event_id)
+      : get_post_meta($event_id, self::FIELD_CONTENT_EVENT, true);
+
+    if (self::has_rich_text_content($content)) {
+      return $content;
+    }
+
+    return self::get_default_thank_you_content();
+  }
+
+  static public function get_default_thank_you_content() {
+    $content = null;
+
+    if (function_exists('get_field')) {
+      $content = get_field(self::FIELD_DEFAULT_CONTENT_SETTING, 'option');
+    }
+
+    if ($content === null) {
+      $content = get_option('options_' . self::FIELD_DEFAULT_CONTENT_SETTING);
+    }
+
+    return $content;
+  }
+
+  static private function has_rich_text_content($content) {
+    if ( ! is_string($content) || trim($content) === '') {
+      return false;
+    }
+
+    if (trim(wp_strip_all_tags($content)) !== '') {
+      return true;
+    }
+
+    return (bool) preg_match('/<(img|iframe|video|audio|table|ul|ol|blockquote)\b/i', $content);
   }
 
   static public function event_includes_thank_you_page($event_id) {

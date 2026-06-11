@@ -95,6 +95,10 @@
   gap: 8px;
 }
 
+.vf-events-thank-you-default-content__actions {
+  margin: 12px 0 0;
+}
+
 .vf-events-thank-you-settings-box,
 .acf-field.vf-events-settings-box {
   background: #f6f7f7;
