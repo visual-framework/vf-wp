@@ -19,6 +19,39 @@ function get_display_api_field($post) {
     return get_field('field_target_display', $post['id']);
 }
 
+function exclude_ebi_posts_from_rest_posts_api($args, $request) {
+    if ($request->get_route() !== '/wp/v2/posts') {
+        return $args;
+    }
+
+    $existing_meta_query = isset($args['meta_query']) ? $args['meta_query'] : array();
+
+    $args['meta_query'] = array(
+        'relation' => 'AND',
+    );
+
+    if (!empty($existing_meta_query)) {
+        $args['meta_query'][] = $existing_meta_query;
+    }
+
+    $args['meta_query'][] = array(
+        'relation' => 'OR',
+        array(
+            'key' => 'field_target_display',
+            'compare' => 'NOT EXISTS',
+        ),
+        array(
+            'key' => 'field_target_display',
+            'value' => 'embl-ebi',
+            'compare' => '!=',
+        ),
+    );
+
+    return $args;
+}
+
+add_filter('rest_post_query', 'exclude_ebi_posts_from_rest_posts_api', 10, 2);
+
 // language
 function register_language_api_field() {
     register_rest_field('post', 'field_article_language',
@@ -52,7 +85,9 @@ function register_rest_images(){
 function get_rest_featured_image( $object, $field_name, $request ) {
     if( $object['featured_media'] ){
         $img = wp_get_attachment_image_src( $object['featured_media'], 'app-thumb' );
-        return $img[0];
+        if( $img ){
+            return $img[0];
+        }
     }
     return false;
 }
