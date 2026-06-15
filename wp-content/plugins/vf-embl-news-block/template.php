@@ -2,18 +2,25 @@
 
 // Block preview in Gutenberg editor
 $is_preview = isset($is_preview) && $is_preview;
+$acf_id = isset($acf_id) ? $acf_id : false;
 
 // Get search values
-$limit = get_field('limit');
-$variant = get_field('variant');
-$type = get_field('type');
-$embl_terms = get_field('embl_terms');
-$keyword = get_field('keyword');
-$ids = get_field('ids');
-$tags = get_field('tags');
-$display = get_field('display_publication');
-$fetch = get_field('news_fetch');
+$limit = get_field('limit', $acf_id);
+$variant = get_field('variant', $acf_id);
+$type = get_field('type', $acf_id);
+$embl_terms = get_field('embl_terms', $acf_id);
+$keyword = get_field('keyword', $acf_id);
+$ids = get_field('ids', $acf_id);
+$tags = get_field('tags', $acf_id);
+$display = get_field('display_publication', $acf_id);
+$fetch = get_field('news_fetch', $acf_id);
 
+if (empty($fetch) || ! in_array($fetch, array('default', 'custom', 'contenthub'), true)) {
+  $fetch = 'default';
+}
+if (empty($type) || ! in_array($type, array('latest', 'taxonomy', 'keyword', 'ids', 'tags'), true)) {
+  $type = 'latest';
+}
 if (empty($display)) {
   $display = 'embl';
 }
@@ -131,7 +138,7 @@ echo $content;
 
 else if($fetch == 'custom') {
 // Show default preview instruction
-if (empty(get_field('wprest_api_1')) && empty(get_field('wprest_api_2'))) {
+  if (empty(get_field('wprest_api_1', $acf_id)) && empty(get_field('wprest_api_2', $acf_id))) {
   if ($is_preview) { ?>
 <div class="vf-banner vf-banner--alert vf-banner--info">
   <div class="vf-banner__content">
@@ -152,7 +159,7 @@ if (empty(get_field('wprest_api_1')) && empty(get_field('wprest_api_2'))) {
 
 
 $fetchPosts = '<script>
-document.addEventListener("DOMContentLoaded", async function() {
+(function() {
   let cachedPosts = null;
 
   async function fetchAndDisplayLatestProjects() {
@@ -162,12 +169,12 @@ document.addEventListener("DOMContentLoaded", async function() {
     }
 
     const endpoints = [
-      "' . esc_js(get_field('wprest_api_1')) . '",
-      "' . esc_js(get_field('wprest_api_2')) . '"
+      "' . esc_js(get_field('wprest_api_1', $acf_id)) . '",
+      "' . esc_js(get_field('wprest_api_2', $acf_id)) . '"
     ].filter(Boolean);
 
-    const header = "' . esc_js(get_field('section_header_text')) . '";
-    const headerURL = "' . esc_js(get_field('section_header_url')) . '";
+    const header = "' . esc_js(get_field('section_header_text', $acf_id)) . '";
+    const headerURL = "' . esc_js(get_field('section_header_url', $acf_id)) . '";
     console.log("Fetching from:", endpoints);
 
     try {
@@ -232,8 +239,12 @@ document.addEventListener("DOMContentLoaded", async function() {
     container.innerHTML = htmlContent;
   }
 
-  fetchAndDisplayLatestProjects();
-});
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", fetchAndDisplayLatestProjects);
+  } else {
+    fetchAndDisplayLatestProjects();
+  }
+})();
 </script>
 ';
                           
@@ -255,7 +266,7 @@ else if($fetch == 'contenthub') {
 
 <?php }
 
-  $contenthubHTML = get_field('contenthub_data_fetch');
+  $contenthubHTML = get_field('contenthub_data_fetch', $acf_id);
   echo $contenthubHTML; }
 
 // Re-add wrappers after content

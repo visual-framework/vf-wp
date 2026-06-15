@@ -26,16 +26,21 @@ const Edit = (props) => {
   const [render, setRender] = useState('');
   const [script, setScript] = useState(null);
   const ref = useRef(null);
+  const messageWindowRef = useRef(null);
 
   const {clientId} = props;
 
   const onMessage = useCallback(
     (ev) => {
+      if (ev.data !== Object(ev.data)) {
+        return;
+      }
       const {id} = ev.data;
       if (id && id.includes(acfId)) {
-        clearTimeout(window[`${id}_onMessage`]);
-        window[`${id}_onMessage`] = setTimeout(() => {
-          window.removeEventListener('message', onMessage);
+        const targetWindow = ev.currentTarget || window;
+        clearTimeout(targetWindow[`${id}_onMessage`]);
+        targetWindow[`${id}_onMessage`] = targetWindow.setTimeout(() => {
+          targetWindow.removeEventListener('message', onMessage);
           setLoading(false);
         }, 100);
       }
@@ -46,8 +51,13 @@ const Edit = (props) => {
   useEffect(() => {
     setLoading(true);
     setFetching(true);
-    window.removeEventListener('message', onMessage);
-    window.addEventListener('message', onMessage);
+    const targetWindow = ref.current?.ownerDocument?.defaultView || window;
+    if (messageWindowRef.current) {
+      messageWindowRef.current.removeEventListener('message', onMessage);
+    }
+    targetWindow.removeEventListener('message', onMessage);
+    targetWindow.addEventListener('message', onMessage);
+    messageWindowRef.current = targetWindow;
 
     const fetch = async () => {
       let render;
@@ -88,6 +98,10 @@ const Edit = (props) => {
       }
     };
     fetch();
+
+    return () => {
+      targetWindow.removeEventListener('message', onMessage);
+    };
   }, [clientId, props.attributes.__acfUpdate]);
 
   useEffect(() => {
@@ -95,11 +109,15 @@ const Edit = (props) => {
       return;
     }
     ref.current.innerHTML = render;
+    const targetWindow = ref.current?.ownerDocument?.defaultView || window;
     if (script) {
-      const el = document.createElement('script');
+      const el = ref.current.ownerDocument.createElement('script');
       el.type = 'text/javascript';
       el.innerHTML = script;
       ref.current.appendChild(el);
+      targetWindow.setTimeout(() => setLoading(false), 1500);
+    } else {
+      setLoading(false);
     }
   }, [isFetching]);
 

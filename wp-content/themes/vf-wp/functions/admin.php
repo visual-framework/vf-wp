@@ -34,6 +34,10 @@ class VF_Admin {
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
     );
+    add_action(
+      'enqueue_block_assets',
+      array($this, 'enqueue_block_assets')
+    );
     add_filter(
       'update_footer',
       array($this, 'update_footer'),
@@ -70,6 +74,25 @@ class VF_Admin {
    * Enqueue WP Admin CSS and JavaScript
    */
   public function admin_enqueue_scripts() {
+    if ($this->is_block_editor_screen()) {
+      return;
+    }
+
+    $this->enqueue_admin_style();
+  }
+
+  /**
+   * Enqueue editor canvas CSS through the block assets pipeline.
+   */
+  public function enqueue_block_assets() {
+    if ( ! is_admin()) {
+      return;
+    }
+
+    $this->enqueue_admin_style();
+  }
+
+  private function enqueue_admin_style() {
     $theme = wp_get_theme();
     $dir = untrailingslashit(get_template_directory_uri());
     wp_enqueue_style(
@@ -79,6 +102,19 @@ class VF_Admin {
       $theme->version,
       'all'
     );
+  }
+
+  private function is_block_editor_screen() {
+    if ( ! function_exists('get_current_screen')) {
+      return false;
+    }
+
+    $screen = get_current_screen();
+    if ( ! $screen || ! method_exists($screen, 'is_block_editor')) {
+      return false;
+    }
+
+    return $screen->is_block_editor();
   }
 
   /**
