@@ -1,6 +1,6 @@
 {
   "name": "vfwp-profile",
-  "title": "Profile",
+  "title": "Custom profile",
   "apiVersion": 3,
   "acf": {
     "mode": "preview"

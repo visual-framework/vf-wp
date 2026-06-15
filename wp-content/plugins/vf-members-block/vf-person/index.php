@@ -41,9 +41,12 @@ class VF_Person {
     }
     return array(
       'name'     => $this->get_name(),
-      'title'    => __('Person', 'vfwp'),
+      'title'    => __('Staff Member profile', 'vfwp'),
       'category' => $category,
       'apiVersion' => 3,
+      'keywords' => array(
+        __('Person', 'vfwp')
+      ),
       'acf' => array(
         'mode' => 'preview'
       ),
