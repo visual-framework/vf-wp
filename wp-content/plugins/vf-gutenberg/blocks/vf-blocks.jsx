@@ -64,15 +64,49 @@ registerBlockType('vf/plugin', vfPlugin);
 
 // Handle iframe preview resizing globally
 // TODO: remove necessity from `useVFIFrame`
-window.addEventListener('message', ({data}) => {
+const editorIframeSelector = [
+  'iframe[name="editor-canvas"]',
+  'iframe.block-editor-iframe__html',
+  'iframe[title="Editor canvas"]',
+  'iframe[title="Editor Canvas"]'
+].join(',');
+
+const resizePreviewIframe = (doc, data) => {
   if (data !== Object(data) || !/^vfwp_/.test(data.id)) {
     return;
   }
-  const iframe = document.getElementById(data.id);
+  const iframe = doc.getElementById(data.id);
   if (!iframe || !iframe.vfActive) {
     return;
   }
-  window.requestAnimationFrame(() => {
+  const targetWindow = doc.defaultView || window;
+  targetWindow.requestAnimationFrame(() => {
     iframe.style.height = `${data.height}px`;
   });
+};
+
+const resizeMessageWindows = new WeakSet();
+const listenForResizeMessages = (win, doc) => {
+  if (!win || !doc || resizeMessageWindows.has(win)) {
+    return;
+  }
+  resizeMessageWindows.add(win);
+  win.addEventListener('message', ({data}) => resizePreviewIframe(doc, data));
+};
+
+const initResizeMessages = () => {
+  listenForResizeMessages(window, document);
+  document.querySelectorAll(editorIframeSelector).forEach((iframe) => {
+    try {
+      listenForResizeMessages(iframe.contentWindow, iframe.contentDocument);
+    } catch (err) {
+      // Ignore editor iframes that are not ready yet.
+    }
+  });
+};
+
+initResizeMessages();
+new MutationObserver(initResizeMessages).observe(document, {
+  childList: true,
+  subtree: true
 });

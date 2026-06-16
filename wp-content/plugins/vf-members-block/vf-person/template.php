@@ -14,14 +14,18 @@ by EMBL CP-ID:
 
 // Block preview in Gutenberg editor
 $is_preview = isset($is_preview) && $is_preview;
+$acf_id = isset($acf_id) ? $acf_id : false;
 
 // Get search field and value (default `full_name`)
-$field = get_field('field');
-$value = get_field('full_name');
-if ($field === 'embl_id') {
-  $value = get_field('embl_id');
+$field = get_field('field', $acf_id);
+if (empty($field) || ! in_array($field, array('full_name', 'embl_id'), true)) {
+  $field = 'full_name';
 }
-$value = trim($value);
+$value = get_field('full_name', $acf_id);
+if ($field === 'embl_id') {
+  $value = get_field('embl_id', $acf_id);
+}
+$value = trim((string) $value);
 
 // Show default preview instruction
 if (empty($value)) {
@@ -41,14 +45,14 @@ if (empty($value)) {
 }
 
 // Get pattern variation
-$variation = get_field('variation');
+$variation = get_field('variation', $acf_id);
 $suffix = '';
 if ( ! empty($variation)) {
   $suffix = "-{$variation}";
 }
 
 // Hide selected fields
-$hide_fields = get_field('hide_fields');
+$hide_fields = get_field('hide_fields', $acf_id);
 $values = array();
 if( $hide_fields ): 
  foreach( $hide_fields as $hide_field ): 

@@ -9,7 +9,8 @@ const useVFIFrame = (iframe, iframeHTML, onHeight) => {
     if (data !== Object(data) || data.id !== iframe.id) {
       return;
     }
-    window.requestAnimationFrame(() => {
+    const targetWindow = iframe.ownerDocument.defaultView || window;
+    targetWindow.requestAnimationFrame(() => {
       // TODO: now handled by global
       // iframe.style.height = `${data.height}px`;
       onHeight(data.height);
@@ -17,8 +18,9 @@ const useVFIFrame = (iframe, iframeHTML, onHeight) => {
   };
 
   const onLoad = () => {
+    const targetWindow = iframe.ownerDocument.defaultView || window;
     if (!iframe.vfActive) {
-      window.addEventListener('message', onMessage);
+      targetWindow.addEventListener('message', onMessage);
     }
     iframe.vfActive = true;
 
@@ -30,7 +32,7 @@ const useVFIFrame = (iframe, iframeHTML, onHeight) => {
 
     // create and append script to handle automatic iframe resize
     // this cannot be inline of `html` for browser security
-    const script = document.createElement('script');
+    const script = iframe.contentWindow.document.createElement('script');
     script.type = 'text/javascript';
     script.innerHTML = `
 if (ResizeObserver) {
@@ -62,7 +64,8 @@ if (ResizeObserver) {
 
   // cleanup function for dismount
   const onUnload = () => {
-    window.removeEventListener('message', onMessage);
+    const targetWindow = iframe.ownerDocument.defaultView || window;
+    targetWindow.removeEventListener('message', onMessage);
     iframe.vfActive = false;
   };
 

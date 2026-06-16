@@ -5375,15 +5375,17 @@
       if (data !== Object(data) || data.id !== iframe.id) {
         return;
       }
-      window.requestAnimationFrame(() => {
+      const targetWindow = iframe.ownerDocument.defaultView || window;
+      targetWindow.requestAnimationFrame(() => {
         // TODO: now handled by global
         // iframe.style.height = `${data.height}px`;
         onHeight(data.height);
       });
     };
     const onLoad = () => {
+      const targetWindow = iframe.ownerDocument.defaultView || window;
       if (!iframe.vfActive) {
-        window.addEventListener('message', onMessage);
+        targetWindow.addEventListener('message', onMessage);
       }
       iframe.vfActive = true;
 
@@ -5395,7 +5397,7 @@
 
       // create and append script to handle automatic iframe resize
       // this cannot be inline of `html` for browser security
-      const script = document.createElement('script');
+      const script = iframe.contentWindow.document.createElement('script');
       script.type = 'text/javascript';
       script.innerHTML = `
 if (ResizeObserver) {
@@ -5427,7 +5429,8 @@ if (ResizeObserver) {
 
     // cleanup function for dismount
     const onUnload = () => {
-      window.removeEventListener('message', onMessage);
+      const targetWindow = iframe.ownerDocument.defaultView || window;
+      targetWindow.removeEventListener('message', onMessage);
       iframe.vfActive = false;
     };
     return {
@@ -8604,17 +8607,22 @@ if (ResizeObserver) {
     const [render, setRender] = React.useState('');
     const [script, setScript] = React.useState(null);
     const ref = React.useRef(null);
+    const messageWindowRef = React.useRef(null);
     const {
       clientId
     } = props;
     const onMessage = React.useCallback(ev => {
+      if (ev.data !== Object(ev.data)) {
+        return;
+      }
       const {
         id
       } = ev.data;
       if (id && id.includes(acfId)) {
-        clearTimeout(window[`${id}_onMessage`]);
-        window[`${id}_onMessage`] = setTimeout(() => {
-          window.removeEventListener('message', onMessage);
+        const targetWindow = ev.currentTarget || window;
+        clearTimeout(targetWindow[`${id}_onMessage`]);
+        targetWindow[`${id}_onMessage`] = targetWindow.setTimeout(() => {
+          targetWindow.removeEventListener('message', onMessage);
           setLoading(false);
         }, 100);
       }
@@ -8622,8 +8630,13 @@ if (ResizeObserver) {
     React.useEffect(() => {
       setLoading(true);
       setFetching(true);
-      window.removeEventListener('message', onMessage);
-      window.addEventListener('message', onMessage);
+      const targetWindow = ref.current?.ownerDocument?.defaultView || window;
+      if (messageWindowRef.current) {
+        messageWindowRef.current.removeEventListener('message', onMessage);
+      }
+      targetWindow.removeEventListener('message', onMessage);
+      targetWindow.addEventListener('message', onMessage);
+      messageWindowRef.current = targetWindow;
       const fetch = async () => {
         let render;
         const fields = {
@@ -8664,17 +8677,24 @@ if (ResizeObserver) {
         }
       };
       fetch();
+      return () => {
+        targetWindow.removeEventListener('message', onMessage);
+      };
     }, [clientId, props.attributes.__acfUpdate]);
     React.useEffect(() => {
       if (isFetching) {
         return;
       }
       ref.current.innerHTML = render;
+      const targetWindow = ref.current?.ownerDocument?.defaultView || window;
       if (script) {
-        const el = document.createElement('script');
+        const el = ref.current.ownerDocument.createElement('script');
         el.type = 'text/javascript';
         el.innerHTML = script;
         ref.current.appendChild(el);
+        targetWindow.setTimeout(() => setLoading(false), 1500);
+      } else {
+        setLoading(false);
       }
     }, [isFetching]);
 
@@ -8777,19 +8797,44 @@ if (ResizeObserver) {
 
   // Handle iframe preview resizing globally
   // TODO: remove necessity from `useVFIFrame`
-  window.addEventListener('message', ({
-    data
-  }) => {
+  const editorIframeSelector = ['iframe[name="editor-canvas"]', 'iframe.block-editor-iframe__html', 'iframe[title="Editor canvas"]', 'iframe[title="Editor Canvas"]'].join(',');
+  const resizePreviewIframe = (doc, data) => {
     if (data !== Object(data) || !/^vfwp_/.test(data.id)) {
       return;
     }
-    const iframe = document.getElementById(data.id);
+    const iframe = doc.getElementById(data.id);
     if (!iframe || !iframe.vfActive) {
       return;
     }
-    window.requestAnimationFrame(() => {
+    const targetWindow = doc.defaultView || window;
+    targetWindow.requestAnimationFrame(() => {
       iframe.style.height = `${data.height}px`;
     });
+  };
+  const resizeMessageWindows = new WeakSet();
+  const listenForResizeMessages = (win, doc) => {
+    if (!win || !doc || resizeMessageWindows.has(win)) {
+      return;
+    }
+    resizeMessageWindows.add(win);
+    win.addEventListener('message', ({
+      data
+    }) => resizePreviewIframe(doc, data));
+  };
+  const initResizeMessages = () => {
+    listenForResizeMessages(window, document);
+    document.querySelectorAll(editorIframeSelector).forEach(iframe => {
+      try {
+        listenForResizeMessages(iframe.contentWindow, iframe.contentDocument);
+      } catch (err) {
+        // Ignore editor iframes that are not ready yet.
+      }
+    });
+  };
+  initResizeMessages();
+  new MutationObserver(initResizeMessages).observe(document, {
+    childList: true,
+    subtree: true
   });
 
 }));

@@ -134,7 +134,7 @@ $spacing_class .= "{$spacing}";
     <p><span class="vf-text-body vf-text-body--3 | vf-u-margin__right--100">Directories:</span>  
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/people">People</a></span>    
       <span><a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100 | intranet-directory-badge" href="/internal-information/documents">Documents</a></span>    
-      <span><a class="vf-badge vf-badge--tertiary | intranet-directory-badge" href="https://hd-tqportal.embl.de/EMBL_LIVE_thankQ_Web/public/network/results.aspx">Alumni</a></span></p>
+      <span><a class="vf-badge vf-badge--tertiary | intranet-directory-badge" href="https://www.embl.org/internal-information/alumni">Alumni</a></span></p>
 
     <?php }
        else { ?>
@@ -181,7 +181,11 @@ $spacing_class .= "{$spacing}";
 </section>
 <!--/vf-hero-->
 <?php
-if ($navigation_enable && class_exists('VF_Navigation')) {
+if (
+  $navigation_enable &&
+  class_exists('VF_Navigation') &&
+  ! VF_Navigation::has_explicit_navigation_container()
+) {
   VF_Navigation::render_menu($navigation_menu_source);
 }
 ?>

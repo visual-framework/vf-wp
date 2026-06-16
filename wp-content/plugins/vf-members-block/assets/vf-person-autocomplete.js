@@ -56,6 +56,44 @@
     $helper.show();
   }
 
+  function dispatchNativeEvent(element, eventName) {
+    if (!element) {
+      return;
+    }
+
+    var event;
+
+    if (typeof window.Event === 'function') {
+      event = new window.Event(eventName, { bubbles: true });
+    } else {
+      event = document.createEvent('Event');
+      event.initEvent(eventName, true, true);
+    }
+
+    element.dispatchEvent(event);
+  }
+
+  function notifyFieldChanged($field, $select) {
+    var select = $select[0];
+
+    dispatchNativeEvent(select, 'input');
+    dispatchNativeEvent(select, 'change');
+    $select.trigger('input');
+    $select.trigger('change');
+
+    if (typeof window.acf.getField === 'function') {
+      try {
+        var acfField = window.acf.getField($field);
+
+        if (acfField && typeof acfField.trigger === 'function') {
+          acfField.trigger('change');
+        }
+      } catch (error) {
+        // The native events above cover the editor refresh in supported ACF versions.
+      }
+    }
+  }
+
   function setupField(field) {
     var $field = $(field);
     var $select = $field.find('select');
@@ -126,6 +164,12 @@
 
     $select.on('select2:close.vfPersonAutocomplete change.vfPersonAutocomplete', function() {
       updateHelper($field, false);
+    });
+
+    $select.on('select2:select.vfPersonAutocomplete select2:clear.vfPersonAutocomplete', function() {
+      window.setTimeout(function() {
+        notifyFieldChanged($field, $select);
+      }, 0);
     });
 
     $select.attr('data-placeholder', 'Search for a person');

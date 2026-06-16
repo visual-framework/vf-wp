@@ -52,6 +52,10 @@ class VF_Gutenberg {
       'enqueue_block_editor_assets',
       array($this, 'enqueue_block_editor_assets')
     );
+    add_action(
+      'enqueue_block_assets',
+      array($this, 'enqueue_block_assets')
+    );
     add_filter(
       'wp_ajax_vf/gutenberg/fetch_terms',
       array($this, 'ajax_fetch_terms')
@@ -164,9 +168,13 @@ class VF_Gutenberg {
   }
 
   /**
-   * Enqueue WP Admin CSS and JavaScript
+   * Enqueue block editor canvas styles
    */
-  function enqueue_block_editor_assets() {
+  function enqueue_block_assets() {
+    if ( ! is_admin()) {
+      return;
+    }
+
     $vfwp_blocks = get_template_directory_uri()
       . '/assets/assets/vfwp-gutenberg-blocks/vfwp-gutenberg-blocks.css';
     wp_enqueue_style(
@@ -176,6 +184,12 @@ class VF_Gutenberg {
       false,
       'all'
     );
+  }
+
+  /**
+   * Enqueue WP Admin JavaScript
+   */
+  function enqueue_block_editor_assets() {
     wp_register_script(
       'vf-blocks',
       plugins_url(

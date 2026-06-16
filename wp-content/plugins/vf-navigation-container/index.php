@@ -116,6 +116,109 @@ class VF_Navigation extends VF_Plugin {
     return self::resolve_menu_source(get_field('vf_navigation_menu_source'));
   }
 
+  public static function has_explicit_navigation_container() {
+    return (
+      self::current_template_has_navigation_container() ||
+      self::queried_post_has_navigation_container()
+    );
+  }
+
+  protected static function current_template_has_navigation_container() {
+    global $vf_templates;
+
+    if (
+      ! class_exists('VF_Templates') ||
+      ! ($vf_templates instanceof VF_Templates)
+    ) {
+      return false;
+    }
+
+    $template = $vf_templates->get_template_post('default');
+    $queried = get_queried_object();
+
+    if ($queried instanceof WP_Post) {
+      $template_slug = get_page_template_slug($queried);
+      if (
+        preg_match(
+          '#^' . preg_quote(VF_Templates::type()) .  '_(.*?)\.php#',
+          $template_slug,
+          $matches
+        ) === 1
+      ) {
+        $alternate = $vf_templates->get_template_post($matches[1]);
+        if ($alternate) {
+          $template = $alternate;
+        }
+      }
+    }
+
+    return in_array(
+      'vf_navigation',
+      $vf_templates->get_template_plugins($template),
+      true
+    );
+  }
+
+  protected static function queried_post_has_navigation_container() {
+    $queried = get_queried_object();
+
+    if (
+      ! ($queried instanceof WP_Post) ||
+      ! has_blocks($queried)
+    ) {
+      return false;
+    }
+
+    return self::blocks_have_navigation_container(
+      parse_blocks($queried->post_content)
+    );
+  }
+
+  protected static function blocks_have_navigation_container($blocks) {
+    if ( ! is_array($blocks)) {
+      return false;
+    }
+
+    foreach ($blocks as $block) {
+      if ( ! is_array($block)) {
+        continue;
+      }
+
+      $block_name = isset($block['blockName']) ? $block['blockName'] : '';
+      if (self::is_navigation_container_block($block_name)) {
+        return true;
+      }
+
+      if (
+        ! empty($block['innerBlocks']) &&
+        self::blocks_have_navigation_container($block['innerBlocks'])
+      ) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  protected static function is_navigation_container_block($block_name) {
+    if ( ! is_string($block_name) || $block_name === '') {
+      return false;
+    }
+
+    if (
+      class_exists('VF_Containers') &&
+      VF_Containers::name_block_to_post($block_name) === 'vf_navigation'
+    ) {
+      return true;
+    }
+
+    return in_array(
+      $block_name,
+      array('acf/vf-container-navigation', 'vf/container-navigation'),
+      true
+    );
+  }
+
   public static function render_menu($menu_source = '') {
     $previous_menu_source = self::$menu_source_override;
     self::$menu_source_override = self::resolve_menu_source($menu_source);
