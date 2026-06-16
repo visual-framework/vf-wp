@@ -181,7 +181,11 @@ $spacing_class .= "{$spacing}";
 </section>
 <!--/vf-hero-->
 <?php
-if ($navigation_enable && class_exists('VF_Navigation')) {
+if (
+  $navigation_enable &&
+  class_exists('VF_Navigation') &&
+  ! VF_Navigation::has_explicit_navigation_container()
+) {
   VF_Navigation::render_menu($navigation_menu_source);
 }
 ?>

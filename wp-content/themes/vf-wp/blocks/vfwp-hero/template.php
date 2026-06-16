@@ -115,11 +115,11 @@ if (!empty($hero_url)) {
 </section>
 <!--/vf-hero-->
 <?php
-if ($hero_navigation) {
-if (class_exists('VF_Navigation')) {
+if (
+  $hero_navigation &&
+  class_exists('VF_Navigation') &&
+  ! VF_Navigation::has_explicit_navigation_container()
+) {
   VF_Navigation::render_menu($hero_navigation_menu_source);
-} }
-else {
-  echo '';
 }
 ?>
