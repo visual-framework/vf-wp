@@ -2560,10 +2560,10 @@
     "@visual-framework/vf-stack" "^3.0.1"
     "@visual-framework/vf-u-fullbleed" "^1.2.3"
 
-"@visual-framework/vf-banner@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-banner/-/vf-banner-2.0.5.tgz#af10e4071c3d9d548642efa36787b5d0462883f7"
-  integrity sha512-gAECGiCpNypnxoCyxo2H5vBHFuXtmPEPbLr0ts6+N4qts/YE4NMniBPE96op81YttD2nCM5favZK7+UomV5xBA==
+"@visual-framework/vf-banner@2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-banner/-/vf-banner-2.0.6.tgz#6d95650fba1103cf13d0ffe669a3746f9887fe5c"
+  integrity sha512-Sy6kFdd2wA1op7xm4Mjspc3D3ZsT1MebRP2EaGLjJFwlNcxY77AdVYCTeEVWKXTN4QXM+1in6GEPebpyWylE5g==
   dependencies:
     "@visual-framework/vf-box" "^2.4.0"
     "@visual-framework/vf-button" "3.0.2"
