@@ -2652,26 +2652,21 @@
   integrity sha512-C07dC85WFSQqLrzGNrxIhRl75oO8U3kztKYE9HXYANmJbjZ8RtjTf4AIhv+fXOgYX6rbiKENZuNGikGK//y6tw==
 
 "@visual-framework/vf-chatbot-standalone@^1.0.0-beta.4":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-standalone/-/vf-chatbot-standalone-1.0.0-beta.4.tgz#958f30c9393e518c2b9897e52d01277040edc35d"
-  integrity sha512-EIq67Wzohmy5MmbUMqCK3FE9khXIWHcPvVceXUc5IkqmK+kzJ8lBhwPSGocfWHHlKromotzlpLJLCZDFDfl92g==
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-standalone/-/vf-chatbot-standalone-1.0.0.tgz#7db001902d7b4ade801fcfb13cf4065d6889a62b"
+  integrity sha512-5o3PVnmYRvncpSzeYy1PIYggst5hCqk/hQ32CYOd4GdR94JP15KcruuHYkTPvS9Y1H6kzjjRKQWrggY2P7VL4Q==
   dependencies:
     "@visual-framework/vf-chatbot-action-prompt" "^1.0.0-beta.3"
     "@visual-framework/vf-chatbot-feedback" "^1.0.0-beta.4"
     "@visual-framework/vf-chatbot-prompt" "^1.0.0-beta.3"
     "@visual-framework/vf-chatbot-selector" "^1.0.0-beta.3"
     "@visual-framework/vf-chatbot-sources" "^1.0.0-beta.3"
-    "@visual-framework/vf-chatbot-welcome" "^1.0.0-beta.3"
+    "@visual-framework/vf-chatbot-welcome" "^1.0.0"
 
 "@visual-framework/vf-chatbot-welcome@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-welcome/-/vf-chatbot-welcome-1.0.0.tgz#4a966a1bbfe7ff1c892d6615c47f17e700d021ff"
   integrity sha512-XoguF4MJ3/BnekhCI/cZ4d/0WJXfJ5mZpk8n3EDsdwwS+/j8bXngVPGbdptNRq+KKAMtATPN9PaHP4VhGvO6mA==
-
-"@visual-framework/vf-chatbot-welcome@^1.0.0-beta.3":
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-welcome/-/vf-chatbot-welcome-1.0.0-beta.4.tgz#7d04d6c2b134971dd68852985032b987d1be691b"
-  integrity sha512-skZasRpHXMt+hM4ZFiXvjo/9cCm9myElK6O9UGAT0ePXJ5NjCm90T6As2Cf7Zw7n2EKeKPStsYv5j3rNnYMB9w==
 
 "@visual-framework/vf-chatbot@^1.0.0-beta.4":
   version "1.0.0"
