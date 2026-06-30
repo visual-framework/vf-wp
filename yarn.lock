@@ -2792,10 +2792,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-font-plex-sans/-/vf-font-plex-sans-1.1.4.tgz#048278b36233c827081b0b01a8a4304ce791b957"
   integrity sha512-PjKdAlqk6uJsbKXb4C5UP+2FiSU4GXdry/hbPKsxeF37tJFHGvy1hijRgLxZebXtTOXvPlYYuuFhg+Y/mmqibQ==
 
-"@visual-framework/vf-footer@1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.2.1.tgz#048391943abafaae4334251e317c90baf2b3ccce"
-  integrity sha512-c9NXNIUxHOWNS1Nk9VpufE8eCjD+gq4ViN76rbVGZHVcDCRD8n7RsRgF1CCQRUvUHF4CfDiXGvRxwQeg4mWiAQ==
+"@visual-framework/vf-footer@1.2.3":
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-footer/-/vf-footer-1.2.3.tgz#3c5fa23955d950eddb24cb73b7f801d919ad6c16"
+  integrity sha512-aCP8WADH2Osd4tNPmewzrqxH8MieLUbTPEOkmVSyAr799DLpOsT+cyTIgjvK0S0nsAjGcSPv0a/zM3MfG9eNQQ==
 
 "@visual-framework/vf-form@2.0.3", "@visual-framework/vf-form@^2.0.3":
   version "2.0.3"
