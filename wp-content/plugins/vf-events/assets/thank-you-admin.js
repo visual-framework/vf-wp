@@ -48,7 +48,6 @@
 
     fields = [
       firstField,
-      document.querySelector('.acf-field[data-name="vf_events_default_thank_you_content"]'),
       document.querySelector('.acf-field[data-name="vf_events_thank_you_selected_events"]'),
       document.querySelector('.acf-field[data-name="vf_events_thank_you_builder"]')
     ].filter(function(field, index, items) {
@@ -67,34 +66,6 @@
     fields.forEach(function(field) {
       box.appendChild(field);
     });
-  }
-
-  function addDefaultContentSaveButton() {
-    var field = document.querySelector('.acf-field[data-name="vf_events_default_thank_you_content"]');
-    var input = field ? field.querySelector('.acf-input') : null;
-    var actions;
-    var button;
-    var notices;
-
-    if (!field || !input || field.querySelector('[data-vf-events-save-default-thank-you-content]')) {
-      return;
-    }
-
-    actions = document.createElement('p');
-    actions.className = 'vf-events-thank-you-default-content__actions';
-
-    button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'button button-primary';
-    button.setAttribute('data-vf-events-save-default-thank-you-content', '');
-    button.textContent = config.saveDefaultContentLabel || 'Save';
-
-    notices = document.createElement('div');
-    notices.setAttribute('data-vf-events-default-content-notices', '');
-
-    actions.appendChild(button);
-    input.appendChild(actions);
-    input.appendChild(notices);
   }
 
   function getWarning(toggle) {
@@ -353,20 +324,6 @@
     refreshBuilderPicker(form);
   }
 
-  function syncRichTextEditors() {
-    if (window.tinyMCE && typeof window.tinyMCE.triggerSave === 'function') {
-      window.tinyMCE.triggerSave();
-    }
-  }
-
-  function getDefaultThankYouContent(form) {
-    var field = form.querySelector(
-      '[name="acf[field_vf_events_default_thank_you_content]"]'
-    );
-
-    return field ? field.value : '';
-  }
-
   function getBuilderRoot(form) {
     return form.querySelector('[data-vf-events-thank-you-builder]');
   }
@@ -374,22 +331,6 @@
   function showBuildNotice(form, message, type) {
     var root = getBuilderRoot(form);
     var notices = root ? root.querySelector('[data-vf-events-thank-you-notices]') : null;
-    var notice = document.createElement('div');
-    var paragraph = document.createElement('p');
-
-    if (!notices) {
-      return;
-    }
-
-    notice.className = 'notice notice-' + type + ' inline is-dismissible';
-    paragraph.textContent = message || '';
-    notice.appendChild(paragraph);
-    notices.innerHTML = '';
-    notices.appendChild(notice);
-  }
-
-  function showDefaultContentNotice(form, message, type) {
-    var notices = form.querySelector('[data-vf-events-default-content-notices]');
     var notice = document.createElement('div');
     var paragraph = document.createElement('p');
 
@@ -413,15 +354,6 @@
     }
   }
 
-  function updateBuildTable(form, html) {
-    var root = getBuilderRoot(form);
-    var table = root ? root.querySelector('[data-vf-events-thank-you-table]') : null;
-
-    if (table && html) {
-      table.innerHTML = html;
-    }
-  }
-
   function setButtonBusy(button, busy) {
     if (!button) {
       return;
@@ -434,13 +366,10 @@
   function submitBuild(form, ids, button) {
     var data = new window.FormData();
 
-    syncRichTextEditors();
     clearBuilderEventFields(form);
 
     data.append('action', 'vf_events_ajax_build_thank_you_pages');
     data.append('vf_events_thank_you_nonce', config.buildNonce || '');
-    data.append('vf_events_default_thank_you_content', getDefaultThankYouContent(form));
-
     ids.forEach(function(id) {
       data.append('vf_events_thank_you_event_ids[]', id);
     });
@@ -465,50 +394,11 @@
         }
 
         showBuildNotice(form, response.data.message, 'success');
-        updateBuildTable(form, response.data.tableHtml);
         setBuilderMetadata(response.data);
         refreshBuilderPicker(form);
       })
       .catch(function(error) {
         showBuildNotice(form, error.message, 'error');
-      })
-      .finally(function() {
-        setButtonBusy(button, false);
-      });
-  }
-
-  function submitDefaultContentSave(form, button) {
-    var data = new window.FormData();
-
-    syncRichTextEditors();
-
-    data.append('action', 'vf_events_ajax_save_default_thank_you_content');
-    data.append('vf_events_thank_you_nonce', config.buildNonce || '');
-    data.append('vf_events_default_thank_you_content', getDefaultThankYouContent(form));
-
-    setButtonBusy(button, true);
-
-    window.fetch(config.ajaxUrl || '', {
-      method: 'POST',
-      credentials: 'same-origin',
-      body: data
-    })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(response) {
-        if (!response || !response.success) {
-          throw new Error(
-            response && response.data && response.data.message
-              ? response.data.message
-              : 'Save failed.'
-          );
-        }
-
-        showDefaultContentNotice(form, response.data.message, 'success');
-      })
-      .catch(function(error) {
-        showDefaultContentNotice(form, error.message, 'error');
       })
       .finally(function() {
         setButtonBusy(button, false);
@@ -540,7 +430,6 @@
 
         showToggleNotice(toggle, response.data.message, 'error');
         clearBuildNotice(form);
-        updateBuildTable(form, response.data.tableHtml);
         config.enabled = '0';
         setBuilderMetadata(response.data);
         refreshBuilderPicker(form);
@@ -582,7 +471,6 @@
         }
 
         showBuildNotice(form, response.data.message, 'error');
-        updateBuildTable(form, response.data.tableHtml);
         setBuilderMetadata(response.data);
         refreshBuilderPicker(form);
       })
@@ -756,13 +644,6 @@
       return false;
     }
 
-    if (button.hasAttribute('data-vf-events-save-default-thank-you-content')) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      submitDefaultContentSave(button.form, button);
-      return false;
-    }
-
     if (button.name === 'vf_events_build_thank_you_pages') {
       var ids = getBuilderEventIds(button.form);
 
@@ -864,6 +745,5 @@
   bindSelect2Guards();
   observeSelect2Results();
   wrapSettingsFields();
-  addDefaultContentSaveButton();
   refreshBuilderPicker(document);
 })();

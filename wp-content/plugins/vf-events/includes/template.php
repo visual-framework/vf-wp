@@ -53,6 +53,13 @@ class VF_Events_Template {
    */
   public function template_include($template) {
     $post_type = VF_Events::type();
+    if (
+      class_exists('VF_Events_Thank_You') &&
+      is_singular(VF_Events_Thank_You::type())
+    ) {
+      return $this->get_template("thank-you-{$post_type}.php");
+    }
+
     if (VF_Events::is_query_events()) {
       // Choose archive template
       if (is_tax("{$post_type}_type", 'embo-embl-symposia')) {
@@ -63,9 +70,6 @@ class VF_Events_Template {
       }
       // Choose single template
       if (is_singular()) {
-        if (class_exists('VF_Events_Thank_You') && VF_Events_Thank_You::is_thank_you_page()) {
-          return $this->get_template("thank-you-{$post_type}.php");
-        }
         return $this->get_template("single-{$post_type}.php");
       }
     }

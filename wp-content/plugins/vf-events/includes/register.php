@@ -58,6 +58,52 @@ class VF_Events_Register {
         'event_topic'
       ),
     ));
+
+    $thank_you_enabled = (
+      class_exists('VF_Events_Thank_You') &&
+      VF_Events_Thank_You::is_enabled()
+    );
+
+    register_post_type(VF_Events_Thank_You::type(), array(
+      'labels'              => array(
+        'name'               => __('Thank you pages', 'vfwp'),
+        'singular_name'      => __('Thank you page', 'vfwp'),
+        'menu_name'          => __('Thank you pages', 'vfwp'),
+        'all_items'          => __('Thank you pages', 'vfwp'),
+        'edit_item'          => __('Edit thank you page', 'vfwp'),
+        'view_item'          => __('View thank you page', 'vfwp'),
+        'search_items'       => __('Search thank you pages', 'vfwp'),
+        'not_found'          => __('No thank you pages found.', 'vfwp'),
+        'not_found_in_trash' => __('No thank you pages found in Trash.', 'vfwp'),
+      ),
+      'description'         => __('Generated event thank you pages', 'vfwp'),
+      'public'              => true,
+      'hierarchical'        => false,
+      'exclude_from_search' => true,
+      'publicly_queryable'  => true,
+      'show_ui'             => $thank_you_enabled,
+      'show_in_menu'        => $thank_you_enabled
+        ? 'edit.php?post_type=' . $event_type
+        : false,
+      'show_in_nav_menus'   => false,
+      'show_in_admin_bar'   => false,
+      'show_in_rest'        => true,
+      'rest_base'           => 'event-thank-you-pages',
+      'capability_type'     => 'page',
+      'map_meta_cap'       => true,
+      'capabilities'       => array(
+        'create_posts' => 'do_not_allow',
+      ),
+      'supports'            => array('title', 'editor', 'revisions'),
+      'has_archive'         => false,
+      'rewrite'             => array(
+        'slug' => 'thank-you',
+        'with_front' => false,
+      ),
+      'query_var'           => true,
+      'can_export'          => true,
+      'delete_with_user'    => false,
+    ));
 /*
     register_taxonomy("{$event_type}_type", array($event_type), array(
       'labels'             => $this->get_type_labels(),
