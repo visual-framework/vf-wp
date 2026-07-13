@@ -112,6 +112,7 @@ class VF_Events_Thank_You {
       10, 4
     );
     add_filter('wp_robots', array($this, 'wp_robots'));
+    add_filter('wp_sitemaps_post_types', array($this, 'wp_sitemaps_post_types'));
     add_action('wp_head', array($this, 'wp_head'), 1);
     add_action('init', array($this, 'add_rewrite_rules'), 20);
     add_action('init', array($this, 'migrate_legacy_thank_you_pages'), 30);
@@ -1633,6 +1634,12 @@ class VF_Events_Thank_You {
     }
 
     return $robots;
+  }
+
+  public function wp_sitemaps_post_types($post_types) {
+    unset($post_types[self::POST_TYPE]);
+
+    return $post_types;
   }
 
   public function wp_head() {
