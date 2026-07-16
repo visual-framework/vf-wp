@@ -89,12 +89,6 @@
   color: #fff !important;
 }
 
-.vf-events-thank-you-builder__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
 .vf-events-thank-you-settings-box,
 .acf-field.vf-events-settings-box {
   background: #f6f7f7;

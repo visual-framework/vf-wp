@@ -9,7 +9,6 @@ class VF_Events_Thank_You {
   const POST_TYPE = 'vf_thank_you';
   const META_IS_THANK_YOU_PAGE = '_vf_event_thank_you_page';
   const FIELD_ENABLE_SETTING = 'vf_events_enable_thank_you_pages';
-  const FIELD_BUILDER_EVENTS = 'vf_events_thank_you_selected_events';
   const FIELD_INCLUDE_EVENT = 'vf_event_include_thank_you_page';
   const CLEANUP_HOOK = 'vf_events_cleanup_expired_thank_you_pages_daily';
   const REWRITE_VERSION = '20260709_1';
@@ -22,28 +21,12 @@ class VF_Events_Thank_You {
 
     add_action('acf/init', array($this, 'acf_init'));
     add_filter(
-      'acf/prepare_field/name=vf_events_thank_you_builder',
-      array($this, 'prepare_builder_field')
-    );
-    add_filter(
       'acf/prepare_field/key=field_vf_event_thank_you_tab',
       array($this, 'prepare_event_field')
     );
     add_filter(
       'acf/prepare_field/key=field_vf_event_include_thank_you_page',
       array($this, 'prepare_event_field')
-    );
-    add_action(
-      'admin_post_vf_events_build_thank_you_pages',
-      array($this, 'admin_post_build_thank_you_pages')
-    );
-    add_action(
-      'wp_ajax_vf_events_ajax_build_thank_you_pages',
-      array($this, 'ajax_build_thank_you_pages')
-    );
-    add_action(
-      'wp_ajax_vf_events_ajax_delete_all_thank_you_pages',
-      array($this, 'ajax_delete_all_thank_you_pages')
     );
     add_action(
       'wp_ajax_vf_events_ajax_delete_thank_you_page',
@@ -78,6 +61,15 @@ class VF_Events_Thank_You {
       10, 2
     );
     add_filter(
+      'bulk_actions-edit-' . VF_Events::type(),
+      array($this, 'event_bulk_actions')
+    );
+    add_filter(
+      'handle_bulk_actions-edit-' . VF_Events::type(),
+      array($this, 'handle_event_bulk_actions'),
+      10, 3
+    );
+    add_filter(
       'manage_' . self::POST_TYPE . '_posts_columns',
       array($this, 'thank_you_posts_columns')
     );
@@ -100,16 +92,6 @@ class VF_Events_Thank_You {
       'save_post_' . self::POST_TYPE,
       array($this, 'sync_thank_you_post_to_event'),
       20, 3
-    );
-    add_filter(
-      'acf/fields/post_object/query/name=' . self::FIELD_BUILDER_EVENTS,
-      array($this, 'acf_query_builder_events'),
-      10, 3
-    );
-    add_filter(
-      'acf/fields/post_object/result/name=' . self::FIELD_BUILDER_EVENTS,
-      array($this, 'acf_result_builder_events'),
-      10, 4
     );
     add_filter('wp_robots', array($this, 'wp_robots'));
     add_filter('wp_sitemaps_post_types', array($this, 'wp_sitemaps_post_types'));
@@ -154,59 +136,6 @@ class VF_Events_Thank_You {
           'ui_on_text' => __('Enabled', 'vfwp'),
           'ui_off_text' => __('Disabled', 'vfwp'),
         ),
-        array(
-          'key' => 'field_vf_events_thank_you_selected_events',
-          'label' => __('Select events', 'vfwp'),
-          'name' => self::FIELD_BUILDER_EVENTS,
-          'type' => 'post_object',
-          'instructions' => __('Choose published events to build thank you pages for.', 'vfwp'),
-          'required' => 0,
-          'conditional_logic' => array(
-            array(
-              array(
-                'field' => 'field_vf_events_enable_thank_you_pages',
-                'operator' => '==',
-                'value' => '1',
-              ),
-            ),
-          ),
-          'wrapper' => array(
-            'width' => '',
-            'class' => 'vf-events-thank-you-settings-field',
-            'id' => '',
-          ),
-          'post_type' => array(VF_Events::type()),
-          'taxonomy' => '',
-          'allow_null' => 0,
-          'multiple' => 1,
-          'return_format' => 'id',
-          'ui' => 1,
-        ),
-        array(
-          'key' => 'field_vf_events_thank_you_builder',
-          'label' => __('Build thank you pages', 'vfwp'),
-          'name' => 'vf_events_thank_you_builder',
-          'type' => 'message',
-          'instructions' => '',
-          'required' => 0,
-          'conditional_logic' => array(
-            array(
-              array(
-                'field' => 'field_vf_events_enable_thank_you_pages',
-                'operator' => '==',
-                'value' => '1',
-              ),
-            ),
-          ),
-          'wrapper' => array(
-            'width' => '',
-            'class' => 'vf-events-thank-you-settings-field',
-            'id' => '',
-          ),
-          'message' => '',
-          'new_lines' => '',
-          'esc_html' => 0,
-        ),
       ),
       'location' => array(
         array(
@@ -228,46 +157,12 @@ class VF_Events_Thank_You {
     ));
   }
 
-  public function prepare_builder_field($field) {
-    $field['message'] = $this->get_builder_field_markup();
-    return $field;
-  }
-
   public function prepare_event_field($field) {
     if ( ! self::is_enabled()) {
       return false;
     }
 
     return $field;
-  }
-
-  private function get_builder_field_markup() {
-    ob_start();
-    ?>
-    <div class="vf-events-thank-you-builder" data-vf-events-thank-you-builder>
-    <?php wp_nonce_field('vf_events_build_thank_you_pages', 'vf_events_thank_you_nonce'); ?>
-    <?php wp_nonce_field('vf_events_delete_thank_you_page', 'vf_events_delete_thank_you_nonce'); ?>
-    <input type="hidden" name="vf_events_thank_you_action" value="">
-    <input type="hidden" name="vf_events_thank_you_page_id" value="">
-    <input type="hidden" name="vf_events_thank_you_was_enabled" value="<?php echo esc_attr(self::is_enabled() ? '1' : '0'); ?>">
-    <input type="hidden" name="vf_events_disable_thank_you_confirmed" value="">
-    <p class="vf-events-thank-you-builder__actions">
-      <button
-        type="button"
-        class="button"
-        data-vf-events-thank-you-select-all
-      ><?php esc_html_e('Select all available events', 'vfwp'); ?></button>
-      <button
-        type="submit"
-        name="vf_events_build_thank_you_pages"
-        value="1"
-        class="button button-primary"
-      ><?php esc_html_e('Build', 'vfwp'); ?></button>
-    </p>
-    <div data-vf-events-thank-you-notices></div>
-    </div>
-    <?php
-    return ob_get_clean();
   }
 
   public function admin_enqueue_scripts() {
@@ -294,14 +189,7 @@ class VF_Events_Thank_You {
       array(
         'ajaxUrl' => admin_url('admin-ajax.php'),
         'buildNonce' => wp_create_nonce('vf_events_build_thank_you_pages'),
-        'deleteNonce' => wp_create_nonce('vf_events_delete_thank_you_page'),
         'enabled' => self::is_enabled() ? '1' : '0',
-        'warning' => __('Disabling thank you pages will remove all existing thank you pages.', 'vfwp'),
-        'confirm' => __('Disabling thank you pages will remove all existing thank you pages. Do you want to continue?', 'vfwp'),
-        'deleteAllFailed' => __('The thank you pages could not be removed.', 'vfwp'),
-        'alreadyBuiltLabel' => __('Already has a thank you page', 'vfwp'),
-        'availableEvents' => self::get_available_builder_event_choices(),
-        'unavailableEventIds' => self::get_unavailable_builder_event_ids(),
       )
     );
   }
@@ -311,106 +199,6 @@ class VF_Events_Thank_You {
       flush_rewrite_rules(false);
       update_option('vf_events_thank_you_rewrite_version', self::REWRITE_VERSION, false);
     }
-  }
-
-  public function admin_post_build_thank_you_pages() {
-    if ( ! current_user_can('manage_options')) {
-      wp_die(esc_html__('You are not allowed to build thank you pages.', 'vfwp'));
-    }
-
-    check_admin_referer('vf_events_build_thank_you_pages', 'vf_events_thank_you_nonce');
-
-    if ( ! self::is_enabled()) {
-      $this->redirect_to_settings('disabled');
-    }
-
-    $built = $this->build_selected_events();
-    $this->clear_builder_selection();
-
-    $this->redirect_to_settings('built', $built);
-  }
-
-  public function ajax_build_thank_you_pages() {
-    if ( ! current_user_can('manage_options')) {
-      wp_send_json_error(array(
-        'message' => __('You are not allowed to build thank you pages.', 'vfwp'),
-      ), 403);
-    }
-
-    if (
-      empty($_POST['vf_events_thank_you_nonce']) ||
-      ! wp_verify_nonce(
-        sanitize_text_field(wp_unslash($_POST['vf_events_thank_you_nonce'])),
-        'vf_events_build_thank_you_pages'
-      )
-    ) {
-      wp_send_json_error(array(
-        'message' => __('The build request could not be verified.', 'vfwp'),
-      ), 400);
-    }
-
-    if ( ! self::is_enabled()) {
-      wp_send_json_error(array(
-        'message' => __('Thank you pages are disabled in Events Settings.', 'vfwp'),
-      ), 400);
-    }
-
-    $built = $this->build_selected_events();
-    $this->clear_builder_selection();
-
-    wp_send_json_success(array(
-      'built' => $built,
-      'message' => sprintf(
-        _n(
-          'Built %d thank you page.',
-          'Built %d thank you pages.',
-          $built,
-          'vfwp'
-        ),
-        $built
-      ),
-      'availableEvents' => self::get_available_builder_event_choices(),
-      'unavailableEventIds' => self::get_unavailable_builder_event_ids(),
-    ));
-  }
-
-  public function ajax_delete_all_thank_you_pages() {
-    if ( ! current_user_can('manage_options')) {
-      wp_send_json_error(array(
-        'message' => __('You are not allowed to delete thank you pages.', 'vfwp'),
-      ), 403);
-    }
-
-    if (
-      empty($_POST['vf_events_delete_thank_you_nonce']) ||
-      ! wp_verify_nonce(
-        sanitize_text_field(wp_unslash($_POST['vf_events_delete_thank_you_nonce'])),
-        'vf_events_delete_thank_you_page'
-      )
-    ) {
-      wp_send_json_error(array(
-        'message' => __('The delete request could not be verified.', 'vfwp'),
-      ), 400);
-    }
-
-    $deleted = self::delete_all_thank_you_pages();
-    self::set_enabled(false);
-    $this->clear_builder_selection();
-
-    wp_send_json_success(array(
-      'deleted' => $deleted,
-      'message' => sprintf(
-        _n(
-          'Deleted %d existing thank you page.',
-          'Deleted %d existing thank you pages.',
-          $deleted,
-          'vfwp'
-        ),
-        $deleted
-      ),
-      'availableEvents' => self::get_available_builder_event_choices(),
-      'unavailableEventIds' => self::get_unavailable_builder_event_ids(),
-    ));
   }
 
   public function ajax_delete_thank_you_page() {
@@ -430,8 +218,6 @@ class VF_Events_Thank_You {
 
     wp_send_json_success(array(
       'message' => __('Deleted the thank you page and updated the event toggle.', 'vfwp'),
-      'availableEvents' => self::get_available_builder_event_choices(),
-      'unavailableEventIds' => self::get_unavailable_builder_event_ids(),
     ));
   }
 
@@ -459,9 +245,7 @@ class VF_Events_Thank_You {
 
     wp_send_json_success(array(
         'enabled' => $enabled ? '1' : '0',
-        'message' => $enabled
-        ? ''
-        : __('Thank you pages are disabled.', 'vfwp'),
+        'message' => '',
     ));
   }
 
@@ -518,6 +302,43 @@ class VF_Events_Thank_You {
     }
 
     if (
+      $screen &&
+      $screen->post_type === VF_Events::type() &&
+      isset($_GET['vf_events_thank_you_bulk_status'])
+    ) {
+      $status = sanitize_key($_GET['vf_events_thank_you_bulk_status']);
+
+      if ($status === 'built') {
+        $built = isset($_GET['vf_events_thank_you_bulk_built'])
+          ? max(0, intval($_GET['vf_events_thank_you_bulk_built']))
+          : 0;
+
+        printf(
+          '<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+          esc_html(sprintf(
+            _n(
+              'Built %d thank you page.',
+              'Built %d thank you pages.',
+              $built,
+              'vfwp'
+            ),
+            $built
+          ))
+        );
+      } elseif ($status === 'disabled') {
+        printf(
+          '<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+          esc_html__('Thank you pages are disabled in Events Settings.', 'vfwp')
+        );
+      } elseif ($status === 'forbidden') {
+        printf(
+          '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+          esc_html__('You are not allowed to build thank you pages.', 'vfwp')
+        );
+      }
+    }
+
+    if (
       empty($_GET['page']) ||
       $_GET['page'] !== 'vf-events-settings'
     ) {
@@ -527,7 +348,6 @@ class VF_Events_Thank_You {
     if (empty($_GET['vf_events_thank_you_status'])) {
       $last_build_count = get_option('vf_events_thank_you_last_build_count', null);
       $last_delete_status = get_option('vf_events_thank_you_last_delete_status', null);
-      $last_delete_all_count = get_option('vf_events_thank_you_last_delete_all_count', null);
 
       if ($last_build_count !== null) {
         delete_option('vf_events_thank_you_last_build_count');
@@ -554,22 +374,6 @@ class VF_Events_Thank_You {
               ? __('Deleted the thank you page and updated the event toggle.', 'vfwp')
               : __('The thank you page could not be deleted.', 'vfwp')
           )
-        );
-      }
-
-      if ($last_delete_all_count !== null) {
-        delete_option('vf_events_thank_you_last_delete_all_count');
-        printf(
-          '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
-          esc_html(sprintf(
-            _n(
-              'Deleted %d existing thank you page.',
-              'Deleted %d existing thank you pages.',
-              (int) $last_delete_all_count,
-              'vfwp'
-            ),
-            (int) $last_delete_all_count
-          ))
         );
       }
 
@@ -630,22 +434,6 @@ class VF_Events_Thank_You {
     exit;
   }
 
-  private function get_builder_event_ids_from_post() {
-    $event_ids = array();
-
-    if (isset($_POST['vf_events_thank_you_event_ids'])) {
-      $event_ids = (array) $_POST['vf_events_thank_you_event_ids'];
-    } elseif (isset($_POST['acf']['field_vf_events_thank_you_selected_events'])) {
-      $event_ids = (array) $_POST['acf']['field_vf_events_thank_you_selected_events'];
-    }
-
-    if (empty($event_ids) && function_exists('get_field')) {
-      $event_ids = (array) get_field(self::FIELD_BUILDER_EVENTS, 'option', false);
-    }
-
-    return array_values(array_unique(array_filter(array_map('intval', $event_ids))));
-  }
-
   private function get_delete_thank_you_page_id_from_post() {
     if (isset($_POST['vf_events_thank_you_page_id'])) {
       return intval($_POST['vf_events_thank_you_page_id']);
@@ -700,54 +488,12 @@ class VF_Events_Thank_You {
     return true;
   }
 
-  private function delete_all_thank_you_pages_from_settings() {
-    if ( ! current_user_can('manage_options')) {
-      return 0;
-    }
-    if (
-      empty($_POST['vf_events_delete_thank_you_nonce']) ||
-      ! wp_verify_nonce(
-        sanitize_text_field(wp_unslash($_POST['vf_events_delete_thank_you_nonce'])),
-        'vf_events_delete_thank_you_page'
-      )
-    ) {
-      return 0;
-    }
-    if (empty($_POST['vf_events_disable_thank_you_confirmed'])) {
-      return 0;
-    }
-
-    return self::delete_all_thank_you_pages();
-  }
-
-  static public function delete_all_thank_you_pages() {
-    $thank_you_pages = self::get_existing_thank_you_page_ids();
-    $deleted = 0;
-
-    foreach ($thank_you_pages as $thank_you_id) {
-      if (get_post_type($thank_you_id) !== self::POST_TYPE) {
-        continue;
-      }
-
-      $event_id = self::get_parent_event_id($thank_you_id);
-
-      if (wp_trash_post($thank_you_id)) {
-        $deleted++;
-
-        if ($event_id) {
-          self::set_event_include_thank_you_page($event_id, false);
-        }
-      }
-    }
-
-    return $deleted;
-  }
-
-  private function build_selected_events() {
-    $event_ids = $this->get_builder_event_ids_from_post();
+  private function build_event_ids($event_ids) {
     $built = 0;
 
     foreach ($event_ids as $event_id) {
+      $event_id = (int) $event_id;
+
       if (get_post_type($event_id) !== VF_Events::type()) {
         continue;
       }
@@ -768,28 +514,37 @@ class VF_Events_Thank_You {
     return $built;
   }
 
-  private function clear_builder_selection() {
-    if (function_exists('update_field')) {
-      update_field('field_vf_events_thank_you_selected_events', false, 'option');
-    } else {
-      update_option('options_' . self::FIELD_BUILDER_EVENTS, false, false);
-      update_option('_options_' . self::FIELD_BUILDER_EVENTS, 'field_vf_events_thank_you_selected_events', false);
+  public function event_bulk_actions($actions) {
+    if (self::is_enabled()) {
+      $actions['vf_events_build_thank_you_pages'] = __('Build thank you pages', 'vfwp');
     }
 
-    if (isset($_POST['acf']['field_vf_events_thank_you_selected_events'])) {
-      $_POST['acf']['field_vf_events_thank_you_selected_events'] = false;
+    return $actions;
+  }
+
+  public function handle_event_bulk_actions($redirect_to, $doaction, $post_ids) {
+    if ($doaction !== 'vf_events_build_thank_you_pages') {
+      return $redirect_to;
     }
+
+    if ( ! current_user_can('edit_pages')) {
+      return add_query_arg('vf_events_thank_you_bulk_status', 'forbidden', $redirect_to);
+    }
+
+    if ( ! self::is_enabled()) {
+      return add_query_arg('vf_events_thank_you_bulk_status', 'disabled', $redirect_to);
+    }
+
+    $built = $this->build_event_ids((array) $post_ids);
+
+    return add_query_arg(array(
+      'vf_events_thank_you_bulk_status' => 'built',
+      'vf_events_thank_you_bulk_built' => $built,
+    ), $redirect_to);
   }
 
   public function acf_save_post($post_id) {
     if ($this->is_settings_save($post_id)) {
-      if ($this->get_posted_action() === 'disable') {
-        $deleted = $this->delete_all_thank_you_pages_from_settings();
-        update_option('vf_events_thank_you_last_delete_all_count', $deleted, false);
-        $this->clear_builder_selection();
-        return;
-      }
-
       if (
         $this->get_posted_action() === 'delete' ||
         isset($_POST['vf_events_delete_thank_you_page']) ||
@@ -804,7 +559,6 @@ class VF_Events_Thank_You {
         return;
       }
 
-      $this->maybe_build_on_settings_save();
       return;
     }
 
@@ -830,62 +584,6 @@ class VF_Events_Thank_You {
       is_admin() &&
       isset($_GET['page']) &&
       $_GET['page'] === 'vf-events-settings'
-    );
-  }
-
-  private function maybe_build_on_settings_save() {
-    if (
-      $this->get_posted_action() !== 'build' &&
-      empty($_POST['vf_events_build_thank_you_pages'])
-    ) {
-      return;
-    }
-
-    if ( ! current_user_can('manage_options') || ! self::is_enabled()) {
-      return;
-    }
-    if (
-      empty($_POST['vf_events_thank_you_nonce']) ||
-      ! wp_verify_nonce(
-        sanitize_text_field(wp_unslash($_POST['vf_events_thank_you_nonce'])),
-        'vf_events_build_thank_you_pages'
-      )
-    ) {
-      return;
-    }
-
-    $built = $this->build_selected_events();
-
-    update_option('vf_events_thank_you_last_build_count', $built, false);
-    $this->clear_builder_selection();
-  }
-
-  public function acf_query_builder_events($args, $field, $post_id) {
-    $event_ids = self::get_upcoming_event_ids_for_picker();
-
-    $args['post_status'] = 'publish';
-    $args['post__in'] = empty($event_ids) ? array(0) : $event_ids;
-    $args['orderby'] = 'post__in';
-    unset($args['nopaging']);
-    unset($args['meta_key']);
-    unset($args['meta_query']);
-
-    return $args;
-  }
-
-  public function acf_result_builder_events($title, $post, $field, $post_id) {
-    if ( ! $post || empty($post->ID)) {
-      return $title;
-    }
-
-    if ( ! self::event_has_thank_you_page($post->ID)) {
-      return $title;
-    }
-
-    return sprintf(
-      '%1$s (%2$s)',
-      $title,
-      __('Already has a thank you page', 'vfwp')
     );
   }
 
@@ -965,68 +663,6 @@ class VF_Events_Thank_You {
     return array_map(function($post) {
       return (int) $post->ID;
     }, self::get_existing_thank_you_pages());
-  }
-
-  static private function get_upcoming_event_ids_for_picker() {
-    $event_ids = get_posts(array(
-      'post_type' => VF_Events::type(),
-      'post_status' => 'publish',
-      'posts_per_page' => -1,
-      'fields' => 'ids',
-      'orderby' => 'title',
-      'order' => 'ASC',
-    ));
-
-    $event_ids = array_values(array_filter(array_map('intval', $event_ids), function($event_id) {
-      return self::is_event_upcoming_for_picker($event_id);
-    }));
-
-    usort($event_ids, function($a, $b) {
-      $a_timestamp = self::get_event_start_timestamp($a);
-      $b_timestamp = self::get_event_start_timestamp($b);
-
-      if ($a_timestamp === $b_timestamp) {
-        return strcasecmp(get_the_title($a), get_the_title($b));
-      }
-
-      if ( ! $a_timestamp) {
-        return 1;
-      }
-
-      if ( ! $b_timestamp) {
-        return -1;
-      }
-
-      return $a_timestamp < $b_timestamp ? -1 : 1;
-    });
-
-    return $event_ids;
-  }
-
-  static private function get_available_builder_event_choices() {
-    $choices = array();
-
-    foreach (self::get_upcoming_event_ids_for_picker() as $event_id) {
-      if (self::event_has_thank_you_page($event_id)) {
-        continue;
-      }
-
-      $choices[] = array(
-        'id' => (string) $event_id,
-        'text' => html_entity_decode(get_the_title($event_id), ENT_QUOTES, get_bloginfo('charset')),
-      );
-    }
-
-    return $choices;
-  }
-
-  static private function get_unavailable_builder_event_ids() {
-    return array_values(array_map('strval', array_filter(
-      self::get_upcoming_event_ids_for_picker(),
-      function($event_id) {
-        return self::event_has_thank_you_page($event_id);
-      }
-    )));
   }
 
   static private function event_has_thank_you_page($event_id) {
@@ -1267,18 +903,6 @@ class VF_Events_Thank_You {
     }
 
     return current_time('timestamp') > $event_timestamp;
-  }
-
-  static private function is_event_upcoming_for_picker($event_id) {
-    $today = strtotime('today', current_time('timestamp'));
-    $start_timestamp = self::get_event_start_timestamp($event_id);
-    $end_timestamp = self::get_event_end_timestamp($event_id);
-
-    if ($end_timestamp) {
-      return $end_timestamp >= $today;
-    }
-
-    return $start_timestamp ? $start_timestamp >= $today : false;
   }
 
   static private function get_event_start_timestamp($event_id) {
