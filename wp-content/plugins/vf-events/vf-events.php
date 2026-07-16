@@ -73,7 +73,7 @@ class VF_Events {
   public function activate() {
     // Ensure custom post type is registered then flush permalinks
     $this->register->init_register();
-    VF_Events_Thank_You::maybe_schedule_cleanup_event();
+    VF_Events_Thank_You::clear_cleanup_schedule();
     VF_Events::maybe_schedule_chatbot_routes_refresh();
     VF_Events::refresh_chatbot_routes_payload();
     flush_rewrite_rules();
@@ -212,14 +212,6 @@ class VF_Events {
       'posts_per_page' => $args['posts_per_page'],
       'order'          => (bool) $args['is_past'] ? 'DESC' : 'ASC'
     );
-    if (class_exists('VF_Events_Thank_You')) {
-      $args['meta_query'] = array(
-        array(
-          'key' => VF_Events_Thank_You::META_IS_THANK_YOU_PAGE,
-          'compare' => 'NOT EXISTS',
-        ),
-      );
-    }
     $query = new WP_Query($args);
     $query->set('is_archive', false);
     return $query;

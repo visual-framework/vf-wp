@@ -1,18 +1,9 @@
 <?php
 get_header();
 
-// Global Header
-if (class_exists('VF_Global_Header')) {
-  VF_Plugin::render(VF_Global_Header::get_plugin('vf_global_header'));
-}
-if (class_exists('VF_Breadcrumbs')) {
-  VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
-}
-
 global $post;
 $event_post_id = VF_Events_Thank_You::get_parent_event_id();
 $event_organiser = get_field('vf_event_organiser', $event_post_id);
-$thank_you_content = VF_Events_Thank_You::get_event_thank_you_content($event_post_id);
 $event_start_date = get_field('vf_event_start_date', $event_post_id);
 $event_end_date = get_field('vf_event_end_date', $event_post_id);
 $event_location = get_field('vf_event_location', $event_post_id);
@@ -88,10 +79,7 @@ include(plugin_dir_path(__FILE__) . 'partials/hero.php');
 
 <section class="vf-grid vf-grid__col-3 | vf-u-grid-gap--800" style="margin-bottom: 4rem;">
   <div class="vf-grid__col--span-2 | vf-content">
-    <h2><?php esc_html_e('Thank you for registering!', 'vfwp'); ?></h2>
-    <?php if ( ! empty($thank_you_content)) { ?>
-      <?php echo wp_kses_post($thank_you_content); ?>
-    <?php } ?>
+    <?php the_content(); ?>
   </div>
   <div class="vf-content">
     <article class="vf-card vf-card--brand vf-card--bordered">
@@ -109,12 +97,6 @@ include(plugin_dir_path(__FILE__) . 'partials/hero.php');
   </div>
 </section>
 
-<?php
-// Global Footer
-if (class_exists('VF_Global_Footer')) {
-  VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));
-}
-
-get_footer();
+<?php get_footer();
 
 ?>

@@ -2028,26 +2028,6 @@
                 "ui_off_text": "Not included"
             },
             {
-                "key": "field_vf_event_thank_you_content",
-                "label": "Thank you content",
-                "name": "vf_event_thank_you_content",
-                "aria-label": "",
-                "type": "wysiwyg",
-                "instructions": "Appears below the Thank you heading on the generated thank you page.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "tabs": "all",
-                "toolbar": "full",
-                "media_upload": 0,
-                "delay": 0
-            },
-            {
                 "key": "field_68f88a6c51387",
                 "label": "Screens",
                 "name": "",
