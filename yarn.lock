@@ -2587,7 +2587,12 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.2.tgz#11bd9a65ee4909cc28d48531f7f2e0ef892c0578"
   integrity sha512-IULZ42+4avu9R9Gnf9bN+w46joPXa4ntzVzRzVgGg5Xuzd9RJKiDQTIjnTuOjsbChsWC0TtMYac5vgZSkCc3pA==
 
-"@visual-framework/vf-button@3.0.4", "@visual-framework/vf-button@^3.0.4":
+"@visual-framework/vf-button@3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.5.tgz#12577d7fff3b58d0ef05d3c230375d48cce78ca7"
+  integrity sha512-kyL2RXeAMAh3gaS49IrZfMtKQPLnExeT8InsMFVYDDE2LXL6SBLiBdZJEZdTPpB6nqwXpgftblPJQ2FmTlZrpQ==
+
+"@visual-framework/vf-button@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.4.tgz#a3292244d7c51645eb2e4851b3b3ff71109e073f"
   integrity sha512-1VRgUyrjVLyBSl8XnfWtwhJp2KmQ8XDHr41GlxvxwjMec8ZunSwSCPXScKBKjKolISVTc+P+wiCs8s1WSUNNcw==
