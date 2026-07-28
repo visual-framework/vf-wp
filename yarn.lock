@@ -2602,10 +2602,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-card-container/-/vf-card-container-3.2.4.tgz#ff992ea62dc90544668f2fc17e618d785eb30582"
   integrity sha512-uogSkxFeep6NTT0FRJ0iszf6/nMQxAbqyMfulJlJrELH/NwDEZ0kZ+6Vo8twY9ge92r17s8mQpEmhVJra1P7Lw==
 
-"@visual-framework/vf-card@2.7.2":
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-card/-/vf-card-2.7.2.tgz#2e0e4af207a43acafcd9d9993bbfa77f282452ab"
-  integrity sha512-jSPQc5O9ipUhRqdd39qg/ZtC/RtKJ87/R/A8hjiCq8aYplpWhC/hPqI6saBgPFKVXUbIxTLmxnP1VjTh2pX+pw==
+"@visual-framework/vf-card@2.7.3":
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-card/-/vf-card-2.7.3.tgz#7ec97c5479613a331de3c640b71286e29e5782e0"
+  integrity sha512-cce8zK1xLXhZjyOrMXuOnigFE/88m3K1XIOadmb/zYDgw/ac84EiSlJUK2/iR+g0AV2X/lcA9GUoCJS70lymJw==
 
 "@visual-framework/vf-chatbot-action-prompt@^1.0.0-beta.3":
   version "1.0.0-beta.3"
