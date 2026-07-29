@@ -2587,15 +2587,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.2.tgz#11bd9a65ee4909cc28d48531f7f2e0ef892c0578"
   integrity sha512-IULZ42+4avu9R9Gnf9bN+w46joPXa4ntzVzRzVgGg5Xuzd9RJKiDQTIjnTuOjsbChsWC0TtMYac5vgZSkCc3pA==
 
-"@visual-framework/vf-button@3.0.5":
+"@visual-framework/vf-button@3.0.5", "@visual-framework/vf-button@^3.0.5":
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.5.tgz#12577d7fff3b58d0ef05d3c230375d48cce78ca7"
   integrity sha512-kyL2RXeAMAh3gaS49IrZfMtKQPLnExeT8InsMFVYDDE2LXL6SBLiBdZJEZdTPpB6nqwXpgftblPJQ2FmTlZrpQ==
-
-"@visual-framework/vf-button@^3.0.4":
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-button/-/vf-button-3.0.4.tgz#a3292244d7c51645eb2e4851b3b3ff71109e073f"
-  integrity sha512-1VRgUyrjVLyBSl8XnfWtwhJp2KmQ8XDHr41GlxvxwjMec8ZunSwSCPXScKBKjKolISVTc+P+wiCs8s1WSUNNcw==
 
 "@visual-framework/vf-card-container@3.2.4":
   version "3.2.4"
@@ -2710,15 +2705,15 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-config/-/vf-config-1.0.1.tgz#d11bdd1a9eae73e49fedfe3e2e8fd8d34c748684"
   integrity sha512-ZlHMvVGmGxSmgCCcZ59PdaPdif0cZyX99T2LYtjodwvu52Vhri/JxrAFsT46NSVl1bKYyJI+tEXAXBFLBwpt7A==
 
-"@visual-framework/vf-content@1.6.20":
-  version "1.6.20"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.20.tgz#b8c5b8a8544a09ea4cf9b6cd496538f81d297a05"
-  integrity sha512-0EG8UPJnRNNnNKUPoWjJ8SBWxzgpozDx825lvEJxrCFey1BAurxCm2F/QnFJxXv03r6tpm7dYZFZ6xbxfCQc9A==
+"@visual-framework/vf-content@1.6.21":
+  version "1.6.21"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-content/-/vf-content-1.6.21.tgz#cb85812d0298177630e7812698bf4b5152055289"
+  integrity sha512-SUOXoaaxRU16YV4U1vI2iTijp5FNWbe50eCTMMijEHuJi2UBuJh5VOSagsom3SA6ShT607QStAULgYSncwcyFQ==
   dependencies:
     "@visual-framework/vf-badge" "^3.0.5"
     "@visual-framework/vf-blockquote" "^1.2.14"
     "@visual-framework/vf-box" "^2.4.0"
-    "@visual-framework/vf-button" "^3.0.4"
+    "@visual-framework/vf-button" "^3.0.5"
     "@visual-framework/vf-divider" "^2.0.1"
     "@visual-framework/vf-figure" "^2.0.2"
     "@visual-framework/vf-form" "^2.0.3"
