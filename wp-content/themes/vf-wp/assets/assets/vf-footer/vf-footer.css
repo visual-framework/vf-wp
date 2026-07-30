@@ -95,7 +95,7 @@
 /* stylelint-enable */
 /*!
  * Component: @visual-framework/vf-footer
- * Version: 1.2.3
+ * Version: 1.2.4
  * Location: components/vf-core-components/vf-footer
  */
 .vf-footer {
@@ -130,11 +130,6 @@
   margin-bottom: 0;
   padding-left: 0;
   padding-right: 0;
-}
-@media (min-width: 1280px) {
-  .vf-footer {
-    padding: 24px 16px 32px 16px;
-  }
 }
 
 .vf-footer__legal {
