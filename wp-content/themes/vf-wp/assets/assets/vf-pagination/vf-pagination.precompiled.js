@@ -30,12 +30,45 @@ output += runtime.suppressValue(runtime.memberLookup((t_4),"item_modifier"), env
 ;
 }
 output += "\">\n";
-if(runtime.memberLookup((t_4),"page_href")) {
-output += "      <a\n      href=\"";
+if(runtime.memberLookup((t_4),"item_modifier") == "vf-pagination__item--jump-back") {
+output += "      <a href=\"";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"page_href"), env.opts.autoescape);
-output += "\"\n      class=\"vf-pagination__link\">\n        ";
+output += "\" class=\"vf-pagination__link\"  aria-label=\"First page\">\n        <span class=\"vf-pagination__icon\" aria-hidden=\"true\" onclick=\"window.scrollTo(0,100)\">\n          <svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M13.5 5.5L8.5 10.5L13.5 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n            <path d=\"M9.5 5.5L4.5 10.5L9.5 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n          </svg>\n        </span>\n        <span class=\"vf-u-sr-only\">First page</span>\n      </a>\n";
+;
+}
+else {
+if(runtime.memberLookup((t_4),"item_modifier") == "vf-pagination__item--previous-page") {
+output += "      <a href=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"page_href"), env.opts.autoescape);
+output += "\" class=\"vf-pagination__link\"  aria-label=\"Previous page\">\n        <span class=\"vf-pagination__icon\" aria-hidden=\"true\" onclick=\"window.scrollTo(0,100)\">\n          <svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M11.5 5.5L6.5 10.5L11.5 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n          </svg>\n        </span>\n        <span class=\"vf-u-sr-only\">Previous page</span>\n      </a>\n";
+;
+}
+else {
+if(runtime.memberLookup((t_4),"item_modifier") == "vf-pagination__item--next-page") {
+output += "      <a href=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"page_href"), env.opts.autoescape);
+output += "\" class=\"vf-pagination__link\" aria-label=\"Next page\">\n        <span class=\"vf-pagination__icon\" aria-hidden=\"true\" onclick=\"window.scrollTo(0,100)\">\n          <svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M8.5 5.5L13.5 10.5L8.5 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n          </svg>\n        </span>\n        <span class=\"vf-u-sr-only\">Next page</span>\n      </a>\n";
+;
+}
+else {
+if(runtime.memberLookup((t_4),"item_modifier") == "vf-pagination__item--jump-forward") {
+output += "      <a href=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"page_href"), env.opts.autoescape);
+output += "\" class=\"vf-pagination__link\"  aria-label=\"Last page\">\n        <span class=\"vf-pagination__icon\" aria-hidden=\"true\" onclick=\"window.scrollTo(0,100)\">\n          <svg width=\"16\" height=\"16\" viewBox=\"0 0 20 20\" focusable=\"false\" xmlns=\"http://www.w3.org/2000/svg\">\n            <path d=\"M6.5 5.5L11.5 10.5L6.5 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n            <path d=\"M10.5 5.5L15.5 10.5L10.5 15.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></path>\n          </svg>\n        </span>\n        <span class=\"vf-u-sr-only\">Last page</span>\n      </a>\n";
+;
+}
+else {
+if(runtime.memberLookup((t_4),"page_href")) {
+output += "      <a href=\"";
+output += runtime.suppressValue(runtime.memberLookup((t_4),"page_href"), env.opts.autoescape);
+output += "\" class=\"vf-pagination__link";
+if(runtime.memberLookup((t_4),"item_modifier") == "vf-pagination__link--visited") {
+output += " vf-pagination__link--visited";
+;
+}
+output += "\" onclick=\"window.scrollTo(0,100)\">\n        <span class=\"vf-u-sr-only\">Page </span>";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"page_number"), env.opts.autoescape);
-output += "<span class=\"vf-u-sr-only\"> page</span>\n      </a>\n";
+output += "\n      </a>\n";
 ;
 }
 else {
@@ -49,6 +82,14 @@ else {
 output += "      <span class=\"vf-pagination__label\">";
 output += runtime.suppressValue(runtime.memberLookup((t_4),"page_number"), env.opts.autoescape);
 output += "</span>\n";
+;
+}
+;
+}
+;
+}
+;
+}
 ;
 }
 ;
