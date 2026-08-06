@@ -134,7 +134,7 @@
     "core-js": "3.49.0",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "next",
-    "rollup": "2.80.0",
+    "rollup": "4.62.4",
     "rollup-plugin-terser": "7.0.2"
   }
 }
