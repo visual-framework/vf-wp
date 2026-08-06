@@ -3028,10 +3028,10 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-stack/-/vf-stack-3.0.1.tgz#9781cb81270643e508f06b0202f0529cdcf9df18"
   integrity sha512-QtLe3p7w5reXWnjw4il/OIzIxll7oW6DOKgtrKxjldNmp5INNfP8mMrS3Y0qwhvScz0bhPydROBl5sglH6uU1g==
 
-"@visual-framework/vf-summary@1.6.1":
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.6.1.tgz#99ba657dd9ee44564388a9cf6811347c60655e7c"
-  integrity sha512-mrxjBNxp0/B4f5D93OtJocjF1iy7UMqoryaZchjEuJ6iBZmYRbdI0LBEHF3WFu7QNKJYU3O70tb8XN4BWXOAUg==
+"@visual-framework/vf-summary@1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@visual-framework/vf-summary/-/vf-summary-1.6.2.tgz#4e5dd4799ae9ae257a8be22eba429abf04b56753"
+  integrity sha512-P1W7lyLKbbPcdGYRhsgmMJDvCDLl8q03ahzmQmv5gPAxY+FKRe2B6RbToNGEJM4sWQAqa+Bsa8UpmtYs9g9aLg==
 
 "@visual-framework/vf-table@1.2.3":
   version "1.2.3"
