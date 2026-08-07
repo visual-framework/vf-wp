@@ -94,6 +94,30 @@ class VFWP_Block {
   }
 
   /**
+   * Return true when a block render callback is running for the editor preview.
+   */
+  private function is_preview_render($args) {
+    if (isset($args[2]) && $args[2] === true) {
+      return true;
+    }
+
+    if (
+      defined('REST_REQUEST') &&
+      REST_REQUEST &&
+      isset($_REQUEST['context']) &&
+      $_REQUEST['context'] === 'edit'
+    ) {
+      return true;
+    }
+
+    if (function_exists('wp_doing_ajax') && wp_doing_ajax() && is_admin()) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * Action: `acf/init`
    */
   public function acf_init() {
@@ -144,6 +168,9 @@ class VFWP_Block {
     $callback = function() {
       $args = func_get_args();
       $template = $this->config['acf']['renderTemplate'];
+      $is_preview = $this->is_preview_render($args);
+      $args[2] = $is_preview;
+
       // Render block in iFrame by default if plugin exists
       $is_iframe = class_exists('VF_Gutenberg');
       // Disable iFrame render if specified
@@ -157,10 +184,9 @@ class VFWP_Block {
         VF_Gutenberg::acf_render_template($args, $template);
       } else {
         $block = $args[0];
-        $is_preview = $args[2];
     
         // Check if the block is 'acf/vfwp-card'
-        $is_vfwp_card = isset($block['name']) && $block['name'] === 'acf/vfwp-card';
+        $is_vfwp_card = is_array($block) && isset($block['name']) && $block['name'] === 'acf/vfwp-card';
     
         // Add wrapper to disable link clicks only for 'acf/vfwp-card' in preview
         if ($is_preview && $is_vfwp_card) {
