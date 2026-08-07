@@ -1,5 +1,12 @@
 <?php
 get_header();
+// Global Header
+if (class_exists('VF_Global_Header')) {
+  VF_Plugin::render(VF_Global_Header::get_plugin('vf_global_header'));
+}
+if (class_exists('VF_Breadcrumbs')) {
+  VF_Plugin::render(VF_Breadcrumbs::get_plugin('vf_breadcrumbs'));
+}
 
 global $post;
 $event_post_id = VF_Events_Thank_You::get_parent_event_id();
@@ -97,6 +104,13 @@ include(plugin_dir_path(__FILE__) . 'partials/hero.php');
   </div>
 </section>
 
-<?php get_footer();
+<?php 
+// Global Footer
+if (class_exists('VF_Global_Footer')) {
+  VF_Plugin::render(VF_Global_Footer::get_plugin('vf_global_footer'));
+}
+
+get_footer();
+
 
 ?>

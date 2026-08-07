@@ -1,5 +1,4 @@
 import {select} from '@wordpress/data';
-import {addAction, hasAction} from '@wordpress/hooks';
 import {useStyleName} from './';
 
 /**

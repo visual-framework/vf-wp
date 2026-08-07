@@ -373,13 +373,11 @@ class VF_Plugin {
       $is_merge = isset($fields['__merge_fields']);
       foreach ($fields as $field_name => $field_value) {
         acf_flush_value_cache($acf_id, $field_name);
-        if ($is_merge) {
-          acf_get_store('values')->set("$acf_id:$field_name", $field_value);
-        }
       }
-      if ( ! $is_merge) {
-        acf_setup_meta($fields, $acf_id, true);
+      if ($is_merge) {
+        unset($fields['__merge_fields']);
       }
+      acf_setup_meta($fields, $acf_id, true);
     }
 
     // Before actions

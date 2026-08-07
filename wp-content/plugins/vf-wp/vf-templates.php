@@ -36,7 +36,7 @@ class VF_Templates {
     if ( ! empty($post_name) &&  $post->post_name !== $post_name) {
       return false;
     }
-    if (is_singular( 'vf_event' )) {
+    if (is_singular( 'vf_event' ) || is_singular( 'vf_thank_you' )) {
       return false;
     }
     if (($theme->name == 'VF-WP Industry')) { 

@@ -36,9 +36,20 @@ function vf_log($log)  {
  * Return true if a string is empty (including empty HTML)
  */
 function vf_html_empty($str) {
-  if ( ! empty($str)) {
-    return preg_match('#\S#', strip_tags($str)) !== 1;
+  if (is_array($str)) {
+    foreach ($str as $value) {
+      if ( ! vf_html_empty($value)) {
+        return false;
+      }
+    }
+    return true;
   }
+
+  if ($str === null || $str === false || $str === '') {
+    return true;
+  }
+
+  return preg_match('#\S#', strip_tags((string) $str)) !== 1;
 }
 
 /**

@@ -10,14 +10,11 @@ Notes:
   */
 import React, {Fragment, useCallback, useEffect, useRef, useState} from 'react';
 import {Spinner} from '@wordpress/components';
-import {addAction, hasAction} from '@wordpress/hooks';
+import {addAction, removeAction} from '@wordpress/hooks';
 import {__} from '@wordpress/i18n';
-import {useHashsum} from '../hooks';
 import useVFDefaults from '../hooks/use-vf-defaults';
 
 const defaults = useVFDefaults();
-
-const renderStore = {};
 
 const Edit = (props) => {
   const [acfId] = useState(acf.uniqid('block_'));
@@ -27,6 +24,7 @@ const Edit = (props) => {
   const [script, setScript] = useState(null);
   const ref = useRef(null);
   const messageWindowRef = useRef(null);
+  const latestRequestRef = useRef(0);
 
   const {clientId} = props;
 
@@ -58,18 +56,12 @@ const Edit = (props) => {
     targetWindow.removeEventListener('message', onMessage);
     targetWindow.addEventListener('message', onMessage);
     messageWindowRef.current = targetWindow;
+    const requestId = latestRequestRef.current + 1;
+    latestRequestRef.current = requestId;
 
     const fetch = async () => {
-      let render;
       const fields = {is_plugin: 1, ...props.transient.fields};
-      const renderHash = useHashsum(fields);
-      if (renderStore.hasOwnProperty(renderHash)) {
-        render = await new Promise((resolve) =>
-          setTimeout(() => {
-            resolve(renderStore[renderHash]);
-          }, 1)
-        );
-      } else {
+      try {
         const response = await wp.ajax.post('acf/ajax/fetch-block', {
           query: {
             preview: true
@@ -84,17 +76,25 @@ const Edit = (props) => {
             mode: 'preview'
           })
         });
-        if (response && response.preview) {
-          render = response.preview;
-          renderStore[renderHash] = render;
+        if (latestRequestRef.current !== requestId) {
+          return;
         }
-      }
-      if (render) {
-        const html = render.split(/<script[^>]*?>/)[0];
-        const script = render.match(/<script[^>]*?>(.*)<\/script>/ms);
-        setScript(Array.isArray(script) ? script[1] : null);
-        setRender(html);
-        setFetching(false);
+        if (response && response.preview) {
+          const html = response.preview.split(/<script[^>]*?>/)[0];
+          const script = response.preview.match(
+            /<script[^>]*?>(.*)<\/script>/ms
+          );
+          setScript(Array.isArray(script) ? script[1] : null);
+          setRender(html);
+          setFetching(false);
+        } else {
+          setLoading(false);
+        }
+      } catch (err) {
+        if (latestRequestRef.current !== requestId) {
+          return;
+        }
+        setLoading(false);
       }
     };
     fetch();
@@ -102,7 +102,7 @@ const Edit = (props) => {
     return () => {
       targetWindow.removeEventListener('message', onMessage);
     };
-  }, [clientId, props.attributes.__acfUpdate]);
+  }, [clientId, props.attributes.ref, props.transient.acfUpdate]);
 
   useEffect(() => {
     if (isFetching) {
@@ -149,23 +149,51 @@ const Edit = (props) => {
 };
 
 export const withACFUpdates = (Edit) => {
-  const transient = {fields: {}};
   return (props) => {
     const {clientId} = props;
+    const fieldsRef = useRef({});
+    const updateTimeoutRef = useRef(null);
+    const [previewState, setPreviewState] = useState({
+      fields: {},
+      acfUpdate: 0
+    });
+
     useEffect(() => {
-      if (hasAction('vf_plugin_acf_update', 'vf_plugin')) {
-        return;
-      }
-      addAction('vf_plugin_acf_update', 'vf_plugin', (data) => {
-        transient.fields[data.name] = data.value;
-        props.setAttributes({__acfUpdate: Date.now()});
+      const namespace = `vf_plugin/${clientId}`;
+      addAction('vf_plugin_acf_update', namespace, (data) => {
+        if (data.fields && data.fields === Object(data.fields)) {
+          fieldsRef.current = {
+            ...fieldsRef.current,
+            ...data.fields
+          };
+        } else {
+          fieldsRef.current = {
+            ...fieldsRef.current,
+            [data.name]: data.value
+          };
+        }
+
+        clearTimeout(updateTimeoutRef.current);
+        updateTimeoutRef.current = setTimeout(() => {
+          setPreviewState((state) => ({
+            fields: {...fieldsRef.current},
+            acfUpdate: state.acfUpdate + 1
+          }));
+        }, 150);
       });
+
+      return () => {
+        clearTimeout(updateTimeoutRef.current);
+        removeAction('vf_plugin_acf_update', namespace);
+      };
     }, [clientId]);
+
     return Edit({
       ...props,
       transient: {
         ...(props.transient || {}),
-        ...transient
+        fields: previewState.fields,
+        acfUpdate: previewState.acfUpdate
       }
     });
   };

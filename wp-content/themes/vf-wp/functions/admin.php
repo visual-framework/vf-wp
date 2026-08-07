@@ -38,6 +38,10 @@ class VF_Admin {
       'enqueue_block_assets',
       array($this, 'enqueue_block_assets')
     );
+    add_action(
+      'enqueue_block_editor_assets',
+      array($this, 'enqueue_block_editor_assets')
+    );
     add_filter(
       'update_footer',
       array($this, 'update_footer'),
@@ -92,14 +96,26 @@ class VF_Admin {
     $this->enqueue_admin_style();
   }
 
+  /**
+   * Enqueue parent editor CSS needed to keep VF plugin previews visible.
+   */
+  public function enqueue_block_editor_assets() {
+    if ( ! $this->is_vf_plugin_editor_screen()) {
+      return;
+    }
+
+    $this->enqueue_admin_style();
+  }
+
   private function enqueue_admin_style() {
-    $theme = wp_get_theme();
+    $path = get_template_directory()
+      . '/assets/assets/vfwp-admin/vfwp-admin.css';
     $dir = untrailingslashit(get_template_directory_uri());
     wp_enqueue_style(
       'vf_admin',
       $dir . '/assets/assets/vfwp-admin/vfwp-admin.css',
       array(),
-      $theme->version,
+      file_exists($path) ? filemtime($path) : wp_get_theme()->version,
       'all'
     );
   }
@@ -115,6 +131,23 @@ class VF_Admin {
     }
 
     return $screen->is_block_editor();
+  }
+
+  private function is_vf_plugin_editor_screen() {
+    if ( ! $this->is_block_editor_screen()) {
+      return false;
+    }
+
+    $screen = get_current_screen();
+    if ( ! $screen || empty($screen->post_type)) {
+      return false;
+    }
+
+    return in_array(
+      $screen->post_type,
+      array('vf_block', 'vf_container'),
+      true
+    );
   }
 
   /**

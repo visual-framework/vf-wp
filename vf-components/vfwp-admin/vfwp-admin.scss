@@ -31,25 +31,54 @@
 
 .post-type-vf_block,
 .post-type-vf_container {
-  // Auto-shrink Gutenberg editor
+  .interface-interface-skeleton__content {
+    overflow-y: auto;
+  }
+
+  .edit-post-layout,
+  .edit-post-layout__content {
+    min-height: 100%;
+  }
+
+  // Keep the locked preview block visible above the ACF meta boxes.
   .edit-post-visual-editor {
     flex-basis: auto;
-    flex-grow: 0;
-    flex-shrink: 1;
-  }
-
-  // Ensure some visual spacing
-  .editor-block-list__layout {
-    min-height: 10px;
-  }
-
-  // Auto-grow the post meta boxes below
-  .edit-post-layout__metaboxes {
     flex-grow: 1;
+    flex-shrink: 0;
+    min-height: 260px;
+  }
+
+  // Ensure visual spacing across older and newer block editor markup.
+  .editor-block-list__layout,
+  .block-editor-block-list__layout {
+    min-height: 120px;
+  }
+
+  // Keep meta boxes below the preview instead of letting them collapse it.
+  .edit-post-layout__metaboxes,
+  .edit-post-meta-boxes-area {
+    box-sizing: border-box;
+    flex-grow: 0;
+    flex-shrink: 0;
+    max-height: calc(100vh - 360px);
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 120px;
+    -webkit-overflow-scrolling: touch;
 
     &:empty {
       flex-grow: 0;
+      max-height: none;
+      padding-bottom: 0;
     }
+  }
+
+  .edit-post-layout__metaboxes .metabox-location-normal,
+  .edit-post-meta-boxes-area .metabox-location-normal,
+  .edit-post-meta-boxes-area__container {
+    min-height: 0;
   }
 }
 
