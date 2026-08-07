@@ -440,31 +440,69 @@
   width: 10%;
 }
 
+.post-type-vf_block .interface-interface-skeleton__content,
+.post-type-vf_container .interface-interface-skeleton__content {
+  overflow-y: auto;
+}
+.post-type-vf_block .edit-post-layout,
+.post-type-vf_block .edit-post-layout__content,
+.post-type-vf_container .edit-post-layout,
+.post-type-vf_container .edit-post-layout__content {
+  min-height: 100%;
+}
 .post-type-vf_block .edit-post-visual-editor,
 .post-type-vf_container .edit-post-visual-editor {
   -ms-flex-preferred-size: auto;
       flex-basis: auto;
-  -webkit-box-flex: 0;
-      -ms-flex-positive: 0;
-          flex-grow: 0;
-  -ms-flex-negative: 1;
-      flex-shrink: 1;
-}
-.post-type-vf_block .editor-block-list__layout,
-.post-type-vf_container .editor-block-list__layout {
-  min-height: 10px;
-}
-.post-type-vf_block .edit-post-layout__metaboxes,
-.post-type-vf_container .edit-post-layout__metaboxes {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  min-height: 260px;
 }
-.post-type-vf_block .edit-post-layout__metaboxes:empty,
-.post-type-vf_container .edit-post-layout__metaboxes:empty {
+.post-type-vf_block .editor-block-list__layout,
+.post-type-vf_block .block-editor-block-list__layout,
+.post-type-vf_container .editor-block-list__layout,
+.post-type-vf_container .block-editor-block-list__layout {
+  min-height: 120px;
+}
+.post-type-vf_block .edit-post-layout__metaboxes,
+.post-type-vf_block .edit-post-meta-boxes-area,
+.post-type-vf_container .edit-post-layout__metaboxes,
+.post-type-vf_container .edit-post-meta-boxes-area {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   -webkit-box-flex: 0;
       -ms-flex-positive: 0;
           flex-grow: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  max-height: calc(100vh - 360px);
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 120px;
+  -webkit-overflow-scrolling: touch;
+}
+.post-type-vf_block .edit-post-layout__metaboxes:empty,
+.post-type-vf_block .edit-post-meta-boxes-area:empty,
+.post-type-vf_container .edit-post-layout__metaboxes:empty,
+.post-type-vf_container .edit-post-meta-boxes-area:empty {
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  max-height: none;
+  padding-bottom: 0;
+}
+.post-type-vf_block .edit-post-layout__metaboxes .metabox-location-normal,
+.post-type-vf_block .edit-post-meta-boxes-area .metabox-location-normal,
+.post-type-vf_block .edit-post-meta-boxes-area__container,
+.post-type-vf_container .edit-post-layout__metaboxes .metabox-location-normal,
+.post-type-vf_container .edit-post-meta-boxes-area .metabox-location-normal,
+.post-type-vf_container .edit-post-meta-boxes-area__container {
+  min-height: 0;
 }
 
 .editor-post-title__block {

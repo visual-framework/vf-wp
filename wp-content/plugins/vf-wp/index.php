@@ -91,6 +91,10 @@ class VF_WP {
       'enqueue_block_editor_assets',
       array($this, 'enqueue_block_editor_assets')
     );
+    add_action(
+      'wp_ajax_vf/plugin/preview_fields',
+      array($this, 'ajax_plugin_preview_fields')
+    );
 
     add_action(
       'admin_menu',
@@ -195,6 +199,23 @@ class VF_WP {
 
     // If editing plugin post
     $plugin = $post ? VF_Plugin::get_plugin($post->post_name) : null;
+    $post_id = $post instanceof WP_Post ? $post->ID : 0;
+    $script_path = plugin_dir_path(__FILE__) . 'assets/vf-plugin.js';
+    $preview_ref = null;
+
+    if ($post instanceof WP_Post) {
+      if (
+        class_exists('VF_Blocks') &&
+        $post->post_type === VF_Blocks::post_type()
+      ) {
+        $preview_ref = VF_Blocks::name_post_to_block($post->post_name);
+      } elseif (
+        class_exists('VF_Containers') &&
+        $post->post_type === VF_Containers::post_type()
+      ) {
+        $preview_ref = VF_Containers::name_post_to_block($post->post_name);
+      }
+    }
 
     wp_register_script(
       'vf-plugin',
@@ -202,15 +223,63 @@ class VF_WP {
         '/assets/vf-plugin.js',
         __FILE__
       ),
-      array('wp-editor', 'wp-blocks'),
-      false,
+      array('wp-editor', 'wp-blocks', 'wp-data', 'wp-block-editor'),
+      file_exists($script_path) ? filemtime($script_path) : false,
       true
     );
     wp_localize_script('vf-plugin', 'vfPlugin', array(
       'plugin' => $plugin ? $plugin->config() : null,
-      'post_type' => get_post_type()
+      'post_type' => get_post_type(),
+      'post_id' => $post_id,
+      'preview_ref' => $preview_ref,
+      'preview_nonce' => wp_create_nonce("vf_plugin_preview_{$post_id}")
     ));
     wp_enqueue_script('vf-plugin');
+  }
+
+  /**
+   * Store unsaved ACF field values so the new-tab preview can render them.
+   */
+  function ajax_plugin_preview_fields() {
+    $post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
+    $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+
+    if (
+      ! $post_id ||
+      ! wp_verify_nonce($nonce, "vf_plugin_preview_{$post_id}") ||
+      ! current_user_can('edit_post', $post_id)
+    ) {
+      wp_send_json_error();
+    }
+
+    $post_type = get_post_type($post_id);
+    if ( ! in_array($post_type, array('vf_block', 'vf_container'), true)) {
+      wp_send_json_error();
+    }
+
+    $fields = isset($_POST['fields']) && is_array($_POST['fields'])
+      ? wp_unslash($_POST['fields'])
+      : array();
+
+    set_transient(
+      self::plugin_preview_fields_key($post_id),
+      $fields,
+      15 * MINUTE_IN_SECONDS
+    );
+
+    wp_send_json_success();
+  }
+
+  static public function plugin_preview_fields_key($post_id, $user_id = 0) {
+    if ( ! $user_id) {
+      $user_id = get_current_user_id();
+    }
+    return "vf_plugin_preview_fields_{$user_id}_{$post_id}";
+  }
+
+  static public function get_plugin_preview_fields($post_id) {
+    $fields = get_transient(self::plugin_preview_fields_key($post_id));
+    return is_array($fields) ? $fields : null;
   }
 
   /**

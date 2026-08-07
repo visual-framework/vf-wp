@@ -306,17 +306,20 @@ foreach ($vf_plugins as $key => $config) {
    * Effectively disabling the editor.
    */
   public function allowed_block_types($allowed, $editor_context) {
-    if ( ! empty( $editor_context->post ) ) {
-    if ($editor_context->post === $this->post_type) {
+    if (
+      ! empty($editor_context->post) &&
+      $editor_context->post instanceof WP_Post &&
+      $editor_context->post->post_type === $this->post_type
+    ) {
       // Check if plugin supports editor preview
-      $plugin = VF_Plugin::get_plugin($editor_context->post_name);
+      $plugin = VF_Plugin::get_plugin($editor_context->post->post_name);
       if ($plugin) {
         return array(
           'vf/plugin'
         );
       }
       return false;
-    } }
+    }
     return $allowed;
   }
 

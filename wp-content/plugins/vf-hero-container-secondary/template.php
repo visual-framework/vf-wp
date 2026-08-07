@@ -6,6 +6,9 @@ $image = get_field('vf_hero_image');
 $hero_link = get_field('vf_hero_link');
 $add_heading_1 = get_field('vf_hero_additional_heading_1');
 $add_heading_2 = get_field('vf_hero_additional_heading_2');
+$has_hero_link = function($link) {
+  return is_array($link) && ! empty($link['url']) && ! empty($link['title']);
+};
 $hero_text = get_field('vf_hero_text', false, false);
 if (!empty($hero_text)) {
   $hero_text = wpautop($hero_text);
@@ -37,7 +40,7 @@ $spacing_class .= "{$spacing}";
  }
 
 $headink_link =''; 
-if (!empty($hero_url)) {
+if ($has_hero_link($hero_url)) {
   $headink_link = $hero_url['url'];
 }
 else {
@@ -64,13 +67,14 @@ else {
   <div class="vf-hero__content | vf-box | vf-stack vf-stack--200">
     <?php
   //Additional headings
-  if (!empty ($add_heading_1)) { ?>
+  if ($has_hero_link($add_heading_1)) { ?>
     <p class="vf-hero__kicker">
       <a href="<?php echo esc_url($add_heading_1['url']); ?>"><?php echo esc_html($add_heading_1['title']); ?></a>
-      <?php if (!empty ($add_heading_2)) { ?>
+      <?php if ($has_hero_link($add_heading_2)) { ?>
       | <a href="<?php echo esc_url($add_heading_2['url']); ?>"><?php echo esc_html($add_heading_2['title']); ?></a>
+      <?php } ?>
     </p>
-    <?php } }?>
+    <?php } ?>
     <h1 class="vf-hero__heading">
       <a class="vf-hero__heading_link | heading_link" href="<?php echo esc_url($headink_link); ?>">
         <?php echo ($hero_heading); ?>
@@ -87,7 +91,7 @@ else {
 
     <?php
  // Hero link
- if (!empty ($hero_link)) { ?>
+ if ($has_hero_link($hero_link)) { ?>
     <a class="vf-hero__link"
       href="<?php echo esc_url($hero_link['url']); ?>"><?php echo esc_html($hero_link['title']); ?><svg width="24"
         height="24" xmlns="http://www.w3.org/2000/svg">

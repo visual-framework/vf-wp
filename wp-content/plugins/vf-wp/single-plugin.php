@@ -18,7 +18,14 @@ setup_postdata($post);
 if (class_exists('VF_Plugin')) {
   $vf_plugin = VF_Plugin::get_plugin($post->post_name);
   if ($vf_plugin instanceof VF_Plugin) {
-    VF_Plugin::render($vf_plugin);
+    $fields = null;
+    if (is_preview() && class_exists('VF_WP')) {
+      $fields = VF_WP::get_plugin_preview_fields($post->ID);
+      if (is_array($fields)) {
+        $fields['__merge_fields'] = true;
+      }
+    }
+    VF_Plugin::render($vf_plugin, $fields);
   }
 }
 
