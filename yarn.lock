@@ -2052,7 +2052,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-article-meta-information/-/vf-article-meta-information-1.1.3.tgz#5e0ec4436105687c9dabe37e6911a38b27fa1051"
   integrity sha512-KNosPxPItig4g1le0dThetC0+XE4DBPwXAf+32yhH8dy8Md5/hcRiRlYB3PgkoWt/Zzu4rVlCvwKSuUeE2LRfA==
 
-"@visual-framework/vf-back-to-top@^1.0.2":
+"@visual-framework/vf-back-to-top@^1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-back-to-top/-/vf-back-to-top-1.0.9.tgz#9deba36324dd8a8fdc3dc77644edf0e544f84221"
   integrity sha512-6ahjoDW/Qd6D3bsmEi0L3Pd/XRqrM4jlJKUtfaldYu09PPIoIHFdIis3i4gLfvpfqEmjpWi2BJurrcDrYo3uiA==
@@ -2140,7 +2140,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-feedback/-/vf-chatbot-feedback-1.0.0-beta.4.tgz#8e80817045205773a6bd8a046bcec49298625d22"
   integrity sha512-WSZgQ+kwYsxG96DhSgKPBurG7v/aaxdpdp2plLdUzYoTY95JuHV1UGtAgp/MeOu1akJoIz6pElQhTBWNxjy6qg==
 
-"@visual-framework/vf-chatbot-modal@^1.0.0-beta.5":
+"@visual-framework/vf-chatbot-modal@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-modal/-/vf-chatbot-modal-1.0.0.tgz#4960c9546b25d88404d089ec0471fc3be14a0d6f"
   integrity sha512-N6N6o1tqyXvkuW/e/KHpy2SyMkbJYwtNiQKsQJKzsBzqjUoZLgtrmHHIGU+Nv/ZEdq9Fgj1PEgAb8hgUR8y34Q==
@@ -2169,7 +2169,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-sources/-/vf-chatbot-sources-1.0.0-beta.3.tgz#c238beaa30618a5decdef25e9901ae4c8c6d9a86"
   integrity sha512-C07dC85WFSQqLrzGNrxIhRl75oO8U3kztKYE9HXYANmJbjZ8RtjTf4AIhv+fXOgYX6rbiKENZuNGikGK//y6tw==
 
-"@visual-framework/vf-chatbot-standalone@^1.0.0-beta.4":
+"@visual-framework/vf-chatbot-standalone@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-standalone/-/vf-chatbot-standalone-1.0.0.tgz#7db001902d7b4ade801fcfb13cf4065d6889a62b"
   integrity sha512-5o3PVnmYRvncpSzeYy1PIYggst5hCqk/hQ32CYOd4GdR94JP15KcruuHYkTPvS9Y1H6kzjjRKQWrggY2P7VL4Q==
@@ -2186,7 +2186,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot-welcome/-/vf-chatbot-welcome-1.0.0.tgz#4a966a1bbfe7ff1c892d6615c47f17e700d021ff"
   integrity sha512-XoguF4MJ3/BnekhCI/cZ4d/0WJXfJ5mZpk8n3EDsdwwS+/j8bXngVPGbdptNRq+KKAMtATPN9PaHP4VhGvO6mA==
 
-"@visual-framework/vf-chatbot@^1.0.0-beta.4":
+"@visual-framework/vf-chatbot@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-chatbot/-/vf-chatbot-1.0.0.tgz#a73feceb4c9f13bbb8bb6fc00033c773afd2adf9"
   integrity sha512-QZNpWFejw1lUqMjjbc26SrZRV2jJkdfwuREjIIFAmnFpgIe9B8Gm2Ba1XoZQLwcZZghHgdyPNouU4SsVuw41rg==
@@ -2567,7 +2567,7 @@
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-text/-/vf-text-1.1.1.tgz#228ab655aea248ef338cd1879094bfa2fca81f96"
   integrity sha512-+qu9it2IsLPeQmHwR8YE7EksmpCMVCAldgT8VNEA4lp4kPVWy2K1GnwZR7Wcv8PA4UvHdEBkXItcecPwwyimhQ==
 
-"@visual-framework/vf-tree@^2.0.0-alpha.1":
+"@visual-framework/vf-tree@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@visual-framework/vf-tree/-/vf-tree-2.0.0.tgz#7ae0bfd040effcdf97286cdca545ff2b019a3017"
   integrity sha512-2u/Lo5sh8HSjhiZwh+D5Ya/KwvDoiUz4i4RWiuKaCg7oEmw5N1Ar8o2ZVLlToZztaOJJoCxHcAwJOlgipQ4Klw==
@@ -2988,7 +2988,7 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-autoprefixer@^10.4.16:
+autoprefixer@^10.2.6, autoprefixer@^10.4.16:
   version "10.5.4"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-10.5.4.tgz#3b7dd848b4155514a95ad1f6ce598844bea09697"
   integrity sha512-MaU0U/za7N3r6brxD4YB/l4NSrFzLPlANv6wEuQVaIPlD3L4W9rFcQPbL/EilY9BHhHvhfcz3gInDLrEtWT4EA==
@@ -4031,10 +4031,10 @@ core-js-compat@^3.43.0:
   dependencies:
     browserslist "^4.26.3"
 
-core-js@3.49.0:
-  version "3.49.0"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.49.0.tgz#8b4d520ac034311fa21aa616f017ada0e0dbbddd"
-  integrity sha512-es1U2+YTtzpwkxVLwAFdSpaIMyQaq0PBgm3YD1W3Qpsn1NAmO3KSgZfu+oGSWVu6NvLHoHCV/aYcsE5wiB7ALg==
+core-js@3.50.0:
+  version "3.50.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.50.0.tgz#a18646fcb0097650189b4504c803e887bcae4c0a"
+  integrity sha512-BRWgOLKkFeCgRudR6zrs8p9XJZcE14grzKMMssoYrk6krtuEZ7MTKPIY5RzOnqsEKIR9kst7wNzphttraT+Yqw==
 
 core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.12"
@@ -6111,6 +6111,18 @@ gray-matter@^4.0.3:
     kind-of "^6.0.2"
     section-matter "^1.0.0"
     strip-bom-string "^1.0.0"
+
+gulp-autoprefixer@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-autoprefixer/-/gulp-autoprefixer-8.0.0.tgz#ee2413d6cb9f7cc2f01b7d9835b46e58e326b88d"
+  integrity sha512-sVR++PIaXpa81p52dmmA/jt50bw0egmylK5mjagfgOJ8uLDGaF9tHyzvetkY9Uo0gBZUS5sVqN3kX/GlUKOyog==
+  dependencies:
+    autoprefixer "^10.2.6"
+    fancy-log "^1.3.3"
+    plugin-error "^1.0.1"
+    postcss "^8.3.0"
+    through2 "^4.0.2"
+    vinyl-sourcemaps-apply "^0.2.1"
 
 gulp-autoprefixer@^9.0.0:
   version "9.0.0"
@@ -8247,6 +8259,11 @@ nanoid@^3.3.16:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.16.tgz#a04d8ec4b1f10009d2d533947aefe4293737816c"
   integrity sha512-bzlKTyNJ7+LdGIIwy8ijFpIqEQIvafahV7eYykJ8Cvh42EdJeODoJ6gUJXpQJvej1BddH8OqTXZNE/KfbWAu8Q==
 
+nanoid@^3.3.17:
+  version "3.3.18"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.18.tgz#f66a2de1199ffde0fcf21c8a5f13106b1c081913"
+  integrity sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==
+
 nanoid@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.7.tgz#d0c301a691bc8d54efa0a2226ccf3fe2fd656bd8"
@@ -9080,6 +9097,15 @@ postcss@^6.0.14, postcss@^6.0.17, postcss@^6.0.23, postcss@^6.0.6, postcss@^6.0.
     source-map "^0.6.1"
     supports-color "^5.4.0"
 
+postcss@^8.3.0:
+  version "8.5.26"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.26.tgz#6e75135780c7e10df3433bf2266c552d35c8c620"
+  integrity sha512-u82N74LFzG8ca+dD8puPnplTXoGH4fTPpVGuIbt36G3qvNlkvfD0lEAZSxaly3KX8TS/L1A1gsCEmvKmBcVbkQ==
+  dependencies:
+    nanoid "^3.3.17"
+    picocolors "^1.1.1"
+    source-map-js "^1.2.1"
+
 postcss@^8.4.31, postcss@^8.5.6:
   version "8.5.24"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.5.24.tgz#01d8b032451e1b9ec41ae66eaf02843f42a720d2"
@@ -9359,7 +9385,7 @@ read-pkg@^9.0.0:
     type-fest "^4.6.0"
     unicorn-magic "^0.1.0"
 
-"readable-stream@2 || 3", readable-stream@^3.1.1, readable-stream@^3.4.0, readable-stream@^3.6.0:
+"readable-stream@2 || 3", readable-stream@3, readable-stream@^3.1.1, readable-stream@^3.4.0, readable-stream@^3.6.0:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.6.2.tgz#56a9b36ea965c00c5a93ef31eb111a0f11056967"
   integrity sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==
@@ -10999,6 +11025,13 @@ through2@^3.0.1:
   dependencies:
     inherits "^2.0.4"
     readable-stream "2 || 3"
+
+through2@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/through2/-/through2-4.0.2.tgz#a7ce3ac2a7a8b0b966c80e7c49f0484c3b239764"
+  integrity sha512-iOqSav00cVxEEICeD7TjLB1sueEL+81Wpzp2bY17uZjZN0pWZPuo4suZ/61VujxmqSGFfgOcNuTZ85QJwNZQpw==
+  dependencies:
+    readable-stream "3"
 
 through@2, through@^2.3.6, through@~2.3, through@~2.3.1:
   version "2.3.8"
