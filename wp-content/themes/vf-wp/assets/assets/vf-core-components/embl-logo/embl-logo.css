@@ -99,7 +99,7 @@
  * Location: components/vf-core-components/embl-logo
  */
 .embl-logo {
-  background-image: url("https://assets.emblstatic.net/vf/v2.5.29/assets/embl-logo/assets/logo.svg");
+  background-image: url("../assets/embl-logo/assets/logo-medium.svg");
   background-repeat: no-repeat;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -112,7 +112,7 @@
 }
 @media (min-width: 1025px) {
   .embl-logo {
-    background-image: url("https://assets.emblstatic.net/vf/v2.5.29/assets/embl-logo/assets/logo.svg");
+    background-image: url("../assets/embl-logo/assets/logo.svg");
     height: 3rem;
   }
 }
