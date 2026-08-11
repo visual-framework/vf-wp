@@ -61,7 +61,7 @@
  * Component: @visual-framework/embl-logo
  * Version: 1.2.0
  * Location: components/vf-core-components/embl-logo
- */.embl-logo{background-image:url("../assets/embl-logo/assets/logo-medium.svg");background-repeat:no-repeat;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1;flex:1;height:2rem;text-decoration:none}@media(min-width: 1025px){.embl-logo{background-image:url("../assets/embl-logo/assets/logo.svg");height:3rem}}/*!
+ */.embl-logo{background-image:url("https://assets.emblstatic.net/vf/v2.5.29/assets/embl-logo/assets/logo.svg");background-repeat:no-repeat;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex:1;flex:1;height:2rem;text-decoration:none}@media(min-width: 1025px){.embl-logo{background-image:url("https://assets.emblstatic.net/vf/v2.5.29/assets/embl-logo/assets/logo.svg");height:3rem}}/*!
  * Component: @visual-framework/vf-form
  * Version: 2.0.3
  * Location: components/vf-core-components/vf-form
