@@ -44,7 +44,6 @@ build:
       - data_sync/
   only:
     # only match on develop branch, or specific tag patterns
-    - develop
     - master
     - /^v\d+\.\d+\.\d+$/
     - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/
@@ -62,7 +61,7 @@ deploy-dev-aws:
     - bin/deploy-aws
   only:
     # only match on develop branch, or specific tag patterns
-    - develop
+    - master
     - /^v\d+\.\d+\.\d+$/
     - /^v\d+\.\d+\.\d+-(alpha|beta|rc)\.\d+$/
 
