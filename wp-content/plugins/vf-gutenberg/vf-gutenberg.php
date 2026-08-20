@@ -353,18 +353,7 @@ class VF_Gutenberg {
 
     $is_inline_preview = false;
     if ( ! $is_plugin) {
-      $template_path = is_string($template)
-        ? wp_normalize_path($template)
-        : '';
-      $plugin_dir = wp_normalize_path(WP_PLUGIN_DIR) . '/';
-
-      if (
-        is_callable($template)
-        || (
-          ! empty($template_path)
-          && strpos($template_path, $plugin_dir) === 0
-        )
-      ) {
+      if (is_callable($template)) {
         $is_inline_preview = true;
       }
     }
@@ -432,15 +421,50 @@ class VF_Gutenberg {
 </div>
 <script>
 (function() {
+  const iframeId = <?php echo wp_json_encode($id); ?>;
   const parent = document.querySelector('.vf-block-preview[data-id="<?php echo esc_attr($acf_id); ?>"]');
+  if (!parent) {
+    return;
+  }
+
+  window.vfResizeHandlers = window.vfResizeHandlers || {};
+  if (window.vfResizeHandlers[iframeId]) {
+    window.removeEventListener('message', window.vfResizeHandlers[iframeId]);
+  }
+
+  Array.prototype.forEach.call(parent.children, function(child) {
+    if (
+      child.tagName === 'IFRAME' &&
+      child.classList.contains('vf-block__iframe')
+    ) {
+      child.remove();
+    }
+  });
+
   const iframe = document.createElement('iframe');
-    iframe.id = '<?php echo $id; ?>';
-    iframe.classList.add('vf-block__iframe');
-    iframe.style.overflow = 'hidden';
-    iframe.scrolling = 'no';
-    iframe.srcdoc = <?php echo json_encode($html); ?>;
-    iframe.vfActive = true;
-    parent.insertBefore(iframe, parent.firstChild);
+  iframe.id = iframeId;
+  iframe.classList.add('vf-block__iframe');
+  iframe.style.overflow = 'hidden';
+  iframe.scrolling = 'no';
+  iframe.srcdoc = <?php echo wp_json_encode($html); ?>;
+  iframe.vfActive = true;
+
+  window.vfResizeHandlers[iframeId] = function(event) {
+    const data = event.data;
+    if (data !== Object(data) || data.id !== iframeId) {
+      return;
+    }
+
+    const height = Number(data.height);
+    if (!height || !isFinite(height)) {
+      return;
+    }
+
+    iframe.style.height = Math.ceil(height) + 'px';
+  };
+  window.addEventListener('message', window.vfResizeHandlers[iframeId]);
+
+  parent.insertBefore(iframe, parent.firstChild);
 })();
 </script>
 <?php
