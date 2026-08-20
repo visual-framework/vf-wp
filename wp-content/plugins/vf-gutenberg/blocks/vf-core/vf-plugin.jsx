@@ -20,6 +20,7 @@ const Edit = (props) => {
   const [acfId] = useState(acf.uniqid('block_'));
   const [isFetching, setFetching] = useState(true);
   const [isLoading, setLoading] = useState(true);
+  const [previewHeight, setPreviewHeight] = useState(0);
   const [render, setRender] = useState('');
   const [script, setScript] = useState(null);
   const ref = useRef(null);
@@ -35,10 +36,13 @@ const Edit = (props) => {
       }
       const {id} = ev.data;
       if (id && id.includes(acfId)) {
+        const height = Number(ev.data.height);
+        if (height && isFinite(height)) {
+          setPreviewHeight(Math.ceil(height));
+        }
         const targetWindow = ev.currentTarget || window;
         clearTimeout(targetWindow[`${id}_onMessage`]);
         targetWindow[`${id}_onMessage`] = targetWindow.setTimeout(() => {
-          targetWindow.removeEventListener('message', onMessage);
           setLoading(false);
         }, 100);
       }
@@ -134,10 +138,16 @@ const Edit = (props) => {
   if (isLoading) {
     rootAttrs.style.minHeight = '100px';
   }
+  if (previewHeight) {
+    rootAttrs.style.minHeight = `${previewHeight}px`;
+  }
 
   const viewStyle = {};
   if (isLoading) {
     viewStyle.visibility = 'hidden';
+  }
+  if (previewHeight) {
+    viewStyle.minHeight = `${previewHeight}px`;
   }
 
   return (

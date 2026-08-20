@@ -106,7 +106,7 @@
   };
 
   const handleResizeMessage = (doc, data) => {
-    if (data !== Object(data) || !/^vfblock_/.test(data.id)) {
+    if (data !== Object(data) || !/^(vfblock_|vfwp_)/.test(data.id)) {
       return;
     }
     const iframe = doc.getElementById(data.id);
@@ -171,7 +171,8 @@
 
     if (
       existingIframe &&
-      existingIframe.dataset.srcdoc === template.innerHTML
+      existingIframe.dataset.srcdoc === template.innerHTML &&
+      existingIframe.vfActive
     ) {
       return;
     }
@@ -185,25 +186,87 @@
     iframe.classList.add('vf-block__iframe');
     iframe.style.overflow = 'hidden';
     iframe.scrolling = 'no';
-    iframe.srcdoc = template.innerHTML;
     iframe.dataset.srcdoc = template.innerHTML;
 
-    iframe.addEventListener(
-      'load',
-      () => {
-        const doc = iframe.contentWindow.document;
-        const render = doc.createElement('div');
-        render.id = iframe.id;
-        render.classList.add('vf-block-render');
-        render.innerHTML = doc.body.innerHTML;
-        doc.body.innerHTML = '';
-        doc.body.appendChild(render);
-        iframe.vfActive = true;
-      },
-      {once: true}
-    );
+    const resizeIframeToContent = () => {
+      const doc = iframe.contentWindow && iframe.contentWindow.document;
+      const render = doc && doc.getElementById(iframe.id);
+      if (!render) {
+        return;
+      }
+
+      const renderRect = render.getBoundingClientRect();
+      let height = Math.max(
+        renderRect.height,
+        render.scrollHeight,
+        render.offsetHeight
+      );
+
+      // Include positioned or floated children that do not increase the
+      // wrapper's normal-flow height.
+      Array.prototype.forEach.call(render.children, (child) => {
+        const childRect = child.getBoundingClientRect();
+        height = Math.max(height, childRect.bottom - renderRect.top);
+      });
+
+      if (height > 0) {
+        iframe.style.height = `${Math.ceil(height)}px`;
+      }
+    };
+
+    const observeIframeContent = (render) => {
+      const iframeWindow = iframe.contentWindow;
+      if (iframeWindow && 'ResizeObserver' in iframeWindow) {
+        const resizeObserver = new iframeWindow.ResizeObserver(
+          resizeIframeToContent
+        );
+        resizeObserver.observe(render);
+        Array.prototype.forEach.call(render.children, (child) => {
+          resizeObserver.observe(child);
+        });
+        iframe.vfResizeObserver = resizeObserver;
+      }
+
+      Array.prototype.forEach.call(render.querySelectorAll('img'), (image) => {
+        if (!image.complete) {
+          image.addEventListener('load', resizeIframeToContent, {once: true});
+          image.addEventListener('error', resizeIframeToContent, {once: true});
+        }
+      });
+
+      resizeIframeToContent();
+      [50, 100, 500, 1000, 2000].forEach((delay) => {
+        iframeWindow.setTimeout(resizeIframeToContent, delay);
+      });
+      if (iframeWindow.document.fonts && iframeWindow.document.fonts.ready) {
+        iframeWindow.document.fonts.ready.then(resizeIframeToContent);
+      }
+    };
+
+    const prepareIframeRender = () => {
+      const doc = iframe.contentWindow && iframe.contentWindow.document;
+      if (!doc || !doc.body || iframe.vfActive) {
+        return;
+      }
+      if (!doc.getElementById('vf-block-render-js')) {
+        return;
+      }
+
+      const render = doc.createElement('div');
+      render.id = iframe.id;
+      render.classList.add('vf-block-render');
+      render.innerHTML = doc.body.innerHTML;
+      doc.body.innerHTML = '';
+      doc.body.appendChild(render);
+      iframe.vfActive = true;
+      observeIframeContent(render);
+    };
+
+    iframe.addEventListener('load', prepareIframeRender);
+    iframe.srcdoc = template.innerHTML;
 
     block.appendChild(iframe);
+    requestAnimationFrame(prepareIframeRender);
     iframes.set(node, iframe);
 
     if (template.hasAttribute('data-is-container')) {

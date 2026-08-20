@@ -396,17 +396,19 @@
   var store$3 = sharedStore.exports = globalThis$b[SHARED] || defineGlobalProperty$2(SHARED, {});
 
   (store$3.versions || (store$3.versions = [])).push({
-    version: '3.49.0',
+    version: '3.50.0',
     mode: 'global',
     copyright: '© 2013–2025 Denis Pushkarev (zloirock.ru), 2025–2026 CoreJS Company (core-js.io). All rights reserved.',
-    license: 'https://github.com/zloirock/core-js/blob/v3.49.0/LICENSE',
+    license: 'https://github.com/zloirock/core-js/blob/v3.50.0/LICENSE',
     source: 'https://github.com/zloirock/core-js'
   });
 
   var store$2 = sharedStore.exports;
+  // eslint-disable-next-line es/no-object-create -- safe
+  var create$1 = Object.create || Object;
 
   var shared$3 = function (key, value) {
-    return store$2[key] || (store$2[key] = value || {});
+    return store$2[key] || (store$2[key] = value || create$1(null));
   };
 
   var requireObjectCoercible = requireObjectCoercible$2;
@@ -8748,6 +8750,7 @@ if (ResizeObserver) {
     const [acfId] = React.useState(acf.uniqid('block_'));
     const [isFetching, setFetching] = React.useState(true);
     const [isLoading, setLoading] = React.useState(true);
+    const [previewHeight, setPreviewHeight] = React.useState(0);
     const [render, setRender] = React.useState('');
     const [script, setScript] = React.useState(null);
     const ref = React.useRef(null);
@@ -8764,10 +8767,13 @@ if (ResizeObserver) {
         id
       } = ev.data;
       if (id && id.includes(acfId)) {
+        const height = Number(ev.data.height);
+        if (height && isFinite(height)) {
+          setPreviewHeight(Math.ceil(height));
+        }
         const targetWindow = ev.currentTarget || window;
         clearTimeout(targetWindow[`${id}_onMessage`]);
         targetWindow[`${id}_onMessage`] = targetWindow.setTimeout(() => {
-          targetWindow.removeEventListener('message', onMessage);
           setLoading(false);
         }, 100);
       }
@@ -8857,9 +8863,15 @@ if (ResizeObserver) {
     if (isLoading) {
       rootAttrs.style.minHeight = '100px';
     }
+    if (previewHeight) {
+      rootAttrs.style.minHeight = `${previewHeight}px`;
+    }
     const viewStyle = {};
     if (isLoading) {
       viewStyle.visibility = 'hidden';
+    }
+    if (previewHeight) {
+      viewStyle.minHeight = `${previewHeight}px`;
     }
     return wp.element.createElement("div", rootAttrs, isLoading && wp.element.createElement(components.Spinner, null), wp.element.createElement("div", {
       ref: ref,
