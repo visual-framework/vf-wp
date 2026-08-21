@@ -96,14 +96,14 @@ if (!empty($chatbot_other_location)) {
     </svg>
   </button>
 
-  <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="AI Event Assistant chatbot" data-vf-js-chatbot-modal-container>
+  <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="EMBL Events Assistant chatbot" data-vf-js-chatbot-modal-container>
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
         <div class="vf-chatbot-selector" data-vf-js-events-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-empty-label="Select other event" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
           <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
-            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-24x24-dark-green.svg'); ?>" alt="AI Event Assistant">
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-24x24-dark-green.svg'); ?>" alt="EMBL Events Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
-              <span class="vf-chatbot-selector__main-text">AI Event Assistant</span>
+              <span class="vf-chatbot-selector__main-text">EMBL Events Assistant</span>
               <span class="vf-chatbot-selector__title-text">Select other event</span>
             </div>
             <span class="vf-chatbot-selector__chevron">
@@ -156,10 +156,11 @@ if (!empty($chatbot_other_location)) {
               <div class="vf-chatbot-welcome__logo">
                 <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-32x32-dark-green.svg'); ?>" alt="AI Assistant">
               </div>
-              <h1 class="vf-chatbot-welcome__title">AI Event Assistant</h1>
+              <h1 class="vf-chatbot-welcome__title">EMBL Events Assistant</h1>
             </div>
             <div class="vf-chatbot-welcome__message">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              <p style="font-size: 14px; font-weight: 500; margin-bottom: 0.5rem;">How can I help with your event today? </p>
+              <p style="font-size: 14px; margin-bottom: 0;">Ask me about registration, abstract submission, or other event-related questions.</p>
             </div>
  </div>
           </div>
@@ -324,8 +325,8 @@ if (!empty($chatbot_other_location)) {
       <template id="assistant-message-template">
         <div class="vf-chatbot-message vf-chatbot-message--assistant vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="AI Event Assistant">
-            <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="EMBL Events Assistant">
+            <span class="vf-chatbot-message__avatar-name">EMBL Events Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
             <div class="vf-chatbot-message__content-prompt vf-u-padding__left--200 vf-u-padding__right--200">How can I help you?</div>
@@ -337,8 +338,8 @@ if (!empty($chatbot_other_location)) {
       <template id="loading-indicator-template">
         <div class="vf-chatbot-message vf-chatbot-message--assistant vf-chatbot-message--loading vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="AI Event Assistant">
-            <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="EMBL Events Assistant">
+            <span class="vf-chatbot-message__avatar-name">EMBL Events Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
             <div class="vf-chatbot-message__content-loading-dots" aria-label="Loading" role="status">
@@ -373,10 +374,10 @@ if (!empty($chatbot_other_location)) {
 
     window.vfEventChatbotConfig = {
       type: "modal",
-      title: "AI Event Assistant",
+      title: "EMBL Events Assistant",
       welcome_logo: true,
       welcome_message: "Ask about this event, event logistics, or related EMBL resources.",
-      welcome_logo_alt: "AI Event Assistant",
+      welcome_logo_alt: "EMBL Events Assistant",
       welcome_suggestions_title: "Try asking me:",
       input_placeholder: "Ask about this event",
       welcome_max_suggestions: 3,
@@ -433,7 +434,7 @@ if (!empty($chatbot_other_location)) {
           { id: "poorformat", label: "Poorly formatted" }
         ]
       },
-      disclaimer: "Disclaimer: This chatbot is designed to assist you with general information and basic inquiries. Review generated content for accuracy.",
+      disclaimer: "Disclaimer: this chatbot provides general guidance and may make mistakes. We encourage you to double-check important information before making decisions or committing to any expenses.",
       footnote: "Review AI generated content for accuracy.",
       enable_session_persistence: false,
       restore_minimized_state: false
@@ -583,7 +584,7 @@ if (!empty($chatbot_other_location)) {
 .event-card-title {
     width: 100%;
     margin: 0.5rem 0 !important;
-    font-size: 18px !important;
+    font-size: 20px !important;
     font-weight: 600 !important;
     color: #fff !important;
     transition: font-size 720ms cubic-bezier(0.22, 1, 0.36, 1), margin 720ms cubic-bezier(0.22, 1, 0.36, 1), line-height 720ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -628,8 +629,9 @@ if (!empty($chatbot_other_location)) {
 .infoWrapper {
     flex-direction: column;
     display: flex;
+    gap: 0.5rem;
     border: 1px solid black;
-    padding: 1rem 0;
+    padding: 1rem 0.5rem;
     background-color: white;
     border-radius: 6px;
     align-items: center;
@@ -638,5 +640,12 @@ if (!empty($chatbot_other_location)) {
 .vf-chatbot-action-prompt__link {
     color: #000 !important;
     border: 1px solid #000 !important;
+}
+
+.vf-chatbot-modal-container {
+max-height: 750px;
+}
+.vf-chatbot-welcome__suggestions {
+  display: none;
 }
 </style>
