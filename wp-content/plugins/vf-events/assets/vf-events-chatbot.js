@@ -1,6 +1,6 @@
 (function () {
   var DEFAULT_EVENT_HERO_IMAGE =
-    "https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/EES26-07_WebHero_SexDifferencesAndDiseases-scaled.jpg";
+    "https://www.embl.org/files/wp-content/uploads/chatbot-default-hero.png";
   var eventRoutesPromise = null;
   var eventRoutesById = {};
   var activeEventState = {
@@ -228,6 +228,12 @@
     return document.querySelector(".vf-events-chatbot-event-card");
   }
 
+  function getEventSummary() {
+    var card = getEventCard();
+
+    return card ? card.querySelector(".vf-events-chatbot-event-summary") || card : null;
+  }
+
   function getEventCardElement(selector) {
     var card = getEventCard();
 
@@ -236,7 +242,11 @@
 
   function ensureEventCardElement(selector, tagName, className) {
     var card = getEventCard();
+    var summary = getEventSummary();
     var element = card ? card.querySelector(selector) : null;
+    var dateBadge;
+    var locationBadge;
+    var typeBadge;
     var title;
 
     if (element || !card) {
@@ -248,21 +258,33 @@
 
     if (selector === "[data-vf-js-chatbot-event-title]") {
       element.setAttribute("data-vf-js-chatbot-event-title", "");
-      card.appendChild(element);
+      (summary || card).appendChild(element);
       return element;
     }
 
-    title = card.querySelector("[data-vf-js-chatbot-event-title]");
     if (selector === "[data-vf-js-chatbot-event-date]") {
       element.setAttribute("data-vf-js-chatbot-event-date", "");
+    } else if (selector === "[data-vf-js-chatbot-event-location]") {
+      element.setAttribute("data-vf-js-chatbot-event-location", "");
     } else if (selector === "[data-vf-js-chatbot-event-type]") {
       element.setAttribute("data-vf-js-chatbot-event-type", "");
     }
 
-    if (title) {
-      card.insertBefore(element, title);
+    title = (summary || card).querySelector("[data-vf-js-chatbot-event-title]");
+    dateBadge = (summary || card).querySelector("[data-vf-js-chatbot-event-date]");
+    locationBadge = (summary || card).querySelector("[data-vf-js-chatbot-event-location]");
+    typeBadge = (summary || card).querySelector("[data-vf-js-chatbot-event-type]");
+
+    if (selector === "[data-vf-js-chatbot-event-date]" && (locationBadge || typeBadge || title)) {
+      (summary || card).insertBefore(element, locationBadge || typeBadge || title);
+    } else if (selector === "[data-vf-js-chatbot-event-location]" && (typeBadge || title)) {
+      (summary || card).insertBefore(element, typeBadge || title);
+    } else if (selector === "[data-vf-js-chatbot-event-type]" && title) {
+      (summary || card).insertBefore(element, title);
+    } else if (title) {
+      (summary || card).insertBefore(element, title);
     } else {
-      card.appendChild(element);
+      (summary || card).appendChild(element);
     }
 
     return element;
@@ -339,6 +361,7 @@
     var chatbotRoot = getChatbotRoot();
     var eventInfo = getEventInfo();
     var dateBadge = getEventCardElement("[data-vf-js-chatbot-event-date]");
+    var locationBadge = getEventCardElement("[data-vf-js-chatbot-event-location]");
     var typeBadge = getEventCardElement("[data-vf-js-chatbot-event-type]");
     var title = getEventCardElement("[data-vf-js-chatbot-event-title]");
 
@@ -350,6 +373,7 @@
       id: chatbotRoot.getAttribute("data-event-id") || "",
       type: chatbotRoot.getAttribute("data-event-type") || "",
       dateLabel: dateBadge ? dateBadge.textContent : "",
+      locationLabel: locationBadge ? locationBadge.textContent : "",
       typeLabel: typeBadge ? typeBadge.textContent : "",
       title: title ? title.textContent : "",
       heroBackgroundImage: eventInfo ? eventInfo.style.backgroundImage || "" : "",
@@ -481,6 +505,11 @@
       "p",
       "vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"
     );
+    var locationBadge = ensureEventCardElement(
+      "[data-vf-js-chatbot-event-location]",
+      "p",
+      "vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"
+    );
     var typeBadge = ensureEventCardElement(
       "[data-vf-js-chatbot-event-type]",
       "p",
@@ -509,6 +538,11 @@
     if (dateBadge) {
       dateBadge.textContent = defaultEventState.dateLabel || "";
       dateBadge.style.display = defaultEventState.dateLabel ? "" : "none";
+    }
+
+    if (locationBadge) {
+      locationBadge.textContent = defaultEventState.locationLabel || "";
+      locationBadge.style.display = defaultEventState.locationLabel ? "" : "none";
     }
 
     if (typeBadge) {
@@ -583,6 +617,11 @@
       "p",
       "vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"
     );
+    var locationBadge = ensureEventCardElement(
+      "[data-vf-js-chatbot-event-location]",
+      "p",
+      "vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge"
+    );
     var typeBadge = ensureEventCardElement(
       "[data-vf-js-chatbot-event-type]",
       "p",
@@ -621,6 +660,11 @@
       dateBadge.style.display = dateLabel ? "" : "none";
     }
 
+    if (locationBadge) {
+      locationBadge.textContent = route.location_label || "";
+      locationBadge.style.display = route.location_label ? "" : "none";
+    }
+
     if (typeBadge) {
       typeBadge.textContent = route.event_type || "";
       typeBadge.style.display = route.event_type ? "" : "none";
@@ -646,6 +690,77 @@
         chatbotRoot.getAttribute("data-event-type") || ""
       );
     }
+  }
+
+  function addAutoWelcomeMessage(instance) {
+    var messageConfig =
+      instance && instance.config
+        ? instance.config.events_auto_welcome_message || ""
+        : "";
+    var messages = Array.isArray(messageConfig) ? messageConfig : [messageConfig];
+    var messageId;
+
+    if (
+      !messages.length ||
+      !instance ||
+      instance.__vfEventsAutoWelcomeAdded ||
+      typeof instance.addAssistantResponse !== "function"
+    ) {
+      return;
+    }
+
+    instance.__vfEventsAutoWelcomeAdded = true;
+
+    if (typeof instance.showChatInterface === "function") {
+      instance.showChatInterface();
+    }
+
+    compactEventInfo();
+    messages.forEach(function (message) {
+      if (message) {
+        messageId = instance.addAssistantResponse(message, [], []);
+
+        if (messageId) {
+          markMessageAsAutoWelcome(instance, messageId);
+          removeFeedbackForMessage(instance, messageId);
+        }
+      }
+    });
+  }
+
+  function markMessageAsAutoWelcome(instance, messageId) {
+    var feedbackContainer = getFeedbackContainerForMessage(instance, messageId);
+    var messageElement = feedbackContainer
+      ? feedbackContainer.previousElementSibling
+      : null;
+
+    if (messageElement) {
+      messageElement.classList.add("vf-chatbot-message--auto-welcome");
+    }
+  }
+
+  function removeFeedbackForMessage(instance, messageId) {
+    var feedbackContainer = getFeedbackContainerForMessage(instance, messageId);
+
+    if (feedbackContainer && feedbackContainer.parentNode) {
+      feedbackContainer.parentNode.removeChild(feedbackContainer);
+    }
+  }
+
+  function getFeedbackContainerForMessage(instance, messageId) {
+    var feedbackContainers =
+      instance && instance.messagesContainer
+        ? instance.messagesContainer.querySelectorAll("[data-vf-js-chatbot-feedback]")
+        : [];
+    var matchingFeedbackContainer = null;
+
+    Array.prototype.forEach.call(feedbackContainers, function (feedbackContainer) {
+      if (feedbackContainer.getAttribute("data-message-id") === messageId) {
+        matchingFeedbackContainer = feedbackContainer;
+      }
+    });
+
+    return matchingFeedbackContainer;
   }
 
   function getChatbotInstance() {
@@ -842,11 +957,13 @@
       if (result && typeof result.then === "function") {
         return result.then(function (value) {
           registerChatbotInstance(instance);
+          addAutoWelcomeMessage(instance);
           return value;
         });
       }
 
       registerChatbotInstance(instance);
+      addAutoWelcomeMessage(instance);
       return result;
     };
 

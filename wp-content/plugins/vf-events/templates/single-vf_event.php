@@ -51,7 +51,7 @@ if ( ! empty($event_custom_faq)) { ?>
 <div id="event-custom-faq" data-vf-event-custom-faq hidden><?php echo wp_kses_post($event_custom_faq); ?></div>
 <?php }
 
-if (VF_Events::is_chatbot_enabled()) {
+if (VF_Events::is_chatbot_enabled($event_post_id)) {
 include( plugin_dir_path( __FILE__ ) . 'partials/chatbot.php');
 }
 

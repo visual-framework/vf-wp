@@ -1944,7 +1944,7 @@
             },
             {
                 "key": "field_678e1a5a5678f",
-                "label": "Custom FAQ",
+                "label": "Chatbot",
                 "name": "",
                 "aria-label": "",
                 "type": "tab",
@@ -1967,6 +1967,27 @@
                 "placement": "top",
                 "endpoint": 0,
                 "selected": 0
+            },
+            {
+                "key": "field_vf_event_enable_chatbot",
+                "label": "Enable chatbot",
+                "name": "vf_event_enable_chatbot",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "allow_in_bindings": 0,
+                "ui": 1,
+                "ui_on_text": "Enabled",
+                "ui_off_text": "Disabled"
             },
             {
                 "key": "field_678e1a6f56790",
