@@ -248,10 +248,22 @@ class VF_Events {
   }
 
   /**
-   * Return true when the events chatbot is enabled in settings.
+   * Return true when the events chatbot is enabled.
    */
-  static public function is_chatbot_enabled() {
+  static public function is_chatbot_enabled($post_id = 0) {
     $enabled = null;
+
+    if (!empty($post_id)) {
+      if (function_exists('get_field')) {
+        $enabled = get_field('vf_event_enable_chatbot', $post_id);
+      }
+
+      if ($enabled === null) {
+        $enabled = get_post_meta($post_id, 'vf_event_enable_chatbot', true);
+      }
+
+      return (bool) $enabled;
+    }
 
     if (function_exists('get_field')) {
       $enabled = get_field('vf_events_enable_chatbot', 'option');
@@ -406,24 +418,32 @@ class VF_Events {
       'order' => 'ASC',
       'meta_key' => 'vf_event_start_date',
       'meta_query' => array(
-        'relation' => 'OR',
+        'relation' => 'AND',
         array(
-          'key' => 'vf_event_end_date',
-          'value' => $today,
-          'compare' => '>=',
-          'type' => 'DATE',
+          'key' => 'vf_event_enable_chatbot',
+          'value' => '1',
+          'compare' => '=',
         ),
         array(
-          'relation' => 'AND',
+          'relation' => 'OR',
           array(
             'key' => 'vf_event_end_date',
-            'compare' => 'NOT EXISTS',
-          ),
-          array(
-            'key' => 'vf_event_start_date',
             'value' => $today,
             'compare' => '>=',
             'type' => 'DATE',
+          ),
+          array(
+            'relation' => 'AND',
+            array(
+              'key' => 'vf_event_end_date',
+              'compare' => 'NOT EXISTS',
+            ),
+            array(
+              'key' => 'vf_event_start_date',
+              'value' => $today,
+              'compare' => '>=',
+              'type' => 'DATE',
+            ),
           ),
         ),
       ),
@@ -442,6 +462,10 @@ class VF_Events {
       $event_type = self::get_chatbot_event_type_details(
         get_field('vf_event_event_type')
       );
+      $location_label = self::get_chatbot_event_location_label(
+        get_field('vf_event_location'),
+        get_field('vf_event_other_location')
+      );
 
       $events[] = array(
         'id' => get_post_field('post_name', get_the_ID()),
@@ -450,6 +474,7 @@ class VF_Events {
         'start_date' => $start_date,
         'end_date' => $end_date,
         'date_label' => self::get_chatbot_event_date_label($start_date, $end_date),
+        'location_label' => $location_label,
         'event_type' => $event_type['label'],
         'event_type_value' => $event_type['value'],
         'hero_image' => self::get_chatbot_hero_image_url(get_field('vf_event_hero')),
@@ -474,6 +499,7 @@ class VF_Events {
         'start_date' => $event['start_date'],
         'end_date' => $event['end_date'],
         'date_label' => $event['date_label'],
+        'location_label' => $event['location_label'],
         'event_type' => $event['event_type'],
         'event_type_value' => $event['event_type_value'],
         'hero_image' => $event['hero_image'],
@@ -535,6 +561,23 @@ class VF_Events {
       'value' => $event_type_value,
       'label' => $event_type_label,
     );
+  }
+
+  /**
+   * Format the location label for chatbot routes.
+   */
+  static private function get_chatbot_event_location_label($location, $other_location) {
+    if (!empty($other_location)) {
+      return $other_location;
+    }
+
+    if (empty($location)) {
+      return '';
+    }
+
+    return is_array($location)
+      ? implode(' and ', $location)
+      : $location;
   }
 
   /**

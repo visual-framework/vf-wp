@@ -9,7 +9,7 @@ $chatbot_end_date = get_field('vf_event_end_date', $chatbot_event_post_id);
 $chatbot_location = get_field('vf_event_location', $chatbot_event_post_id);
 $chatbot_other_location = get_field('vf_event_other_location', $chatbot_event_post_id);
 $chatbot_hero_image = get_field('vf_event_hero', $chatbot_event_post_id);
-$chatbot_default_hero_image = 'https://www.embl.org/about/info/course-and-conference-office/wp-content/uploads/Screenshot-2026-02-27-at-11.10.02.png';
+$chatbot_default_hero_image = 'https://www.embl.org/files/wp-content/uploads/chatbot-default-hero.png';
 $chatbot_event_id = get_post_field('post_name', $chatbot_event_post_id);
 $chatbot_plugin_base_url = plugin_dir_url(dirname(dirname(dirname(__FILE__))) . '/vf-events.php');
 $chatbot_asset_base = untrailingslashit(get_theme_file_uri('assets/assets/vf-chatbot/assets'));
@@ -96,14 +96,14 @@ if (!empty($chatbot_other_location)) {
     </svg>
   </button>
 
-  <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="AI Event Assistant chatbot" data-vf-js-chatbot-modal-container>
+  <div class="vf-content vf-chatbot-modal-container vf-chatbot-modal-container--inactive" role="dialog" aria-label="EMBL Events Assistant chatbot" data-vf-js-chatbot-modal-container>
     <div role="region" aria-label="Chatbot header" class="vf-chatbot-modal__header">
       <div role="region" aria-label="Chatbot title" class="vf-chatbot-modal__header-left">
         <div class="vf-chatbot-selector" data-vf-js-events-chatbot-selector data-routes-path="<?php echo esc_url($chatbot_routes_url); ?>" data-empty-label="Select other event" data-selected-route-id="<?php echo esc_attr($chatbot_event_id); ?>">
           <button class="vf-chatbot-selector__title" data-vf-js-selector-toggle type="button">
-            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-24x24-dark-green.svg'); ?>" alt="AI Event Assistant">
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-24x24-dark-green.svg'); ?>" alt="EMBL Events Assistant">
             <div class="vf-chatbot-selector__title-content vf-u-margin__left--200">
-              <span class="vf-chatbot-selector__main-text">AI Event Assistant</span>
+              <span class="vf-chatbot-selector__main-text">EMBL Events Assistant</span>
               <span class="vf-chatbot-selector__title-text">Select other event</span>
             </div>
             <span class="vf-chatbot-selector__chevron">
@@ -148,24 +148,12 @@ if (!empty($chatbot_other_location)) {
             <?php } ?>
           >
             <div class="vf-events-chatbot-event-card">
-                <div class="vf-chatbot-welcome__content" style="
-">
-            
-<div class="infoWrapper">
-            <div class="vf-events-chatbot-welcome__header">
-              <div class="vf-chatbot-welcome__logo">
-                <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-32x32-dark-green.svg'); ?>" alt="AI Assistant">
-              </div>
-              <h1 class="vf-chatbot-welcome__title">AI Event Assistant</h1>
-            </div>
-            <div class="vf-chatbot-welcome__message">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </div>
- </div>
-          </div>
-          <div>
+          <div class="vf-events-chatbot-event-summary">
               <?php if (!empty($chatbot_event_date_label)) { ?>
                 <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge" data-vf-js-chatbot-event-date><?php echo esc_html($chatbot_event_date_label); ?></p>
+              <?php } ?>
+              <?php if (!empty($chatbot_event_location_label)) { ?>
+                <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge" data-vf-js-chatbot-event-location><?php echo esc_html($chatbot_event_location_label); ?></p>
               <?php } ?>
               <?php if (!empty($chatbot_event_type_label)) { ?>
                 <p class="vf-badge vf-badge--primary customBadgePurple vf-events-chatbot-badge" data-vf-js-chatbot-event-type><?php echo esc_html($chatbot_event_type_label); ?></p>
@@ -173,8 +161,22 @@ if (!empty($chatbot_other_location)) {
               <?php if (!empty($chatbot_title)) { ?>
                 <h3 class="event-card-title" data-vf-js-chatbot-event-title><?php echo esc_html($chatbot_title); ?></h3>
               <?php } ?>
-              <p style="display: none;" class="event-card-location"><?php echo esc_html($chatbot_event_location_label); ?></p>
             </div>
+                <div class="vf-chatbot-welcome__content">
+<div class="infoWrapper">
+            <div class="vf-events-chatbot-welcome__header">
+              <div class="vf-chatbot-welcome__logo">
+                <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-32x32-dark-green.svg'); ?>" alt="AI Assistant">
+              </div>
+              <h1 class="vf-chatbot-welcome__title">EMBL Events Assistant</h1>
+            </div>
+            <div class="vf-chatbot-welcome__message">
+              <p style="font-size: 16px; font-weight: 500; margin-bottom: 0.5rem;">How can I help with your event today? </p>
+              <p style="font-size: 16px; margin-bottom: 0;">Ask me about registration, abstract submission, or other event-related questions.</p>
+            </div>
+ </div>
+          </div>
+
             </div>
           </div>
       <div class="vf-chatbot-modal__content" data-vf-js-chatbot-modal-content>
@@ -324,8 +326,8 @@ if (!empty($chatbot_other_location)) {
       <template id="assistant-message-template">
         <div class="vf-chatbot-message vf-chatbot-message--assistant vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="AI Event Assistant">
-            <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="EMBL Events Assistant">
+            <span class="vf-chatbot-message__avatar-name">EMBL Events Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
             <div class="vf-chatbot-message__content-prompt vf-u-padding__left--200 vf-u-padding__right--200">How can I help you?</div>
@@ -337,8 +339,8 @@ if (!empty($chatbot_other_location)) {
       <template id="loading-indicator-template">
         <div class="vf-chatbot-message vf-chatbot-message--assistant vf-chatbot-message--loading vf-u-margin__top--400">
           <div class="vf-chatbot-message__avatar vf-u-margin__bottom--200">
-            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="AI Event Assistant">
-            <span class="vf-chatbot-message__avatar-name">AI Event Assistant</span>
+            <img src="<?php echo esc_url($chatbot_asset_base . '/vf-chatbot--icon-16x16-dark-green.svg'); ?>" alt="EMBL Events Assistant">
+            <span class="vf-chatbot-message__avatar-name">EMBL Events Assistant</span>
           </div>
           <div class="vf-chatbot-message__content vf-u-padding--200">
             <div class="vf-chatbot-message__content-loading-dots" aria-label="Loading" role="status">
@@ -373,10 +375,10 @@ if (!empty($chatbot_other_location)) {
 
     window.vfEventChatbotConfig = {
       type: "modal",
-      title: "AI Event Assistant",
+      title: "EMBL Events Assistant",
       welcome_logo: true,
       welcome_message: "Ask about this event, event logistics, or related EMBL resources.",
-      welcome_logo_alt: "AI Event Assistant",
+      welcome_logo_alt: "EMBL Events Assistant",
       welcome_suggestions_title: "Try asking me:",
       input_placeholder: "Ask about this event",
       welcome_max_suggestions: 3,
@@ -433,8 +435,9 @@ if (!empty($chatbot_other_location)) {
           { id: "poorformat", label: "Poorly formatted" }
         ]
       },
-      disclaimer: "Disclaimer: This chatbot is designed to assist you with general information and basic inquiries. Review generated content for accuracy.",
+      disclaimer: "Disclaimer: this chatbot provides general guidance and may make mistakes. We encourage you to double-check important information before making decisions or committing to any expenses.",
       footnote: "Review AI generated content for accuracy.",
+      events_auto_welcome_message: '<p><strong>Hi! How can I help with your event today?</strong></p><p>Ask me about registration, abstract submission, or other event-related questions.</p>',
       enable_session_persistence: false,
       restore_minimized_state: false
     };
@@ -444,7 +447,8 @@ if (!empty($chatbot_other_location)) {
 </script>
 <style>
     .vf-chatbot-modal .vf-chatbot-welcome__content {
-    min-height: 15dvh;
+      display: none;
+    min-height: 0;
     margin-bottom: 1rem;
     max-height: 18rem;
     /* overflow: hidden; */
@@ -484,6 +488,7 @@ if (!empty($chatbot_other_location)) {
     .vf-chatbot-welcome__content {
         position: relative;
         padding-top: 0.5rem;
+        width: 100%;
     }
     .vf-events-chatbot-welcome__header {
         display: flex;
@@ -503,6 +508,7 @@ if (!empty($chatbot_other_location)) {
     }
     .vf-events-chatbot-welcome__header .vf-chatbot-welcome__title {
         margin-bottom: 0;
+        font-size: 26px;
     }
     .vf-chatbot-modal .vf-chatbot-welcome__content.vf-chatbot-welcome__content--faded {
         opacity: 0 !important;
@@ -551,9 +557,12 @@ if (!empty($chatbot_other_location)) {
         align-content: flex-end;
         padding: 0.5rem 1rem;
          border: 1px solid #000 !important;
-        background: linear-gradient(360deg, rgba(0, 0, 0, 0.6) 18%, rgba(0, 0, 0, 0) 75%);
+        background: linear-gradient(360deg, rgba(0, 0, 0, 0.7) 55%, rgba(0, 0, 0, 0) 100%);
         /* box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, .4); */
         transition: padding 720ms cubic-bezier(0.22, 1, 0.36, 1), background 720ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 720ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .vf-events-chatbot-event-summary {
+        width: 100%;
     }
     .vf-events-chatbot-badge {
         margin-right: 1rem;
@@ -563,11 +572,24 @@ if (!empty($chatbot_other_location)) {
         max-height: 3rem;
         overflow: hidden;
     }
+    [data-vf-js-chatbot-event-location] {
+        display: none !important;
+    }
     .vf-chatbot-message__content-prompt p, li {
         font-size: 16px !important;
     }
     .vf-chatbot-message__content-prompt h1, h2, h3 {
         font-size: 18px !important;
+    }
+    .vf-chatbot-message--auto-welcome .vf-chatbot-message__content-prompt p {
+        font-size: 16px !important;
+        line-height: 1.45;
+    }
+    .vf-chatbot-message--auto-welcome .vf-chatbot-message__content-prompt p:first-child {
+        margin-top: 0.5rem;
+    }
+    .vf-chatbot-message--auto-welcome .vf-chatbot-message__content-prompt p:last-child {
+        margin-bottom: 0.5rem;
     }
 
     .customBadgePurple {
@@ -581,13 +603,15 @@ if (!empty($chatbot_other_location)) {
 }
 
 .event-card-title {
+  margin-bottom: 0;
     width: 100%;
     margin: 0.5rem 0 !important;
-    font-size: 18px !important;
+    font-size: 20px !important;
     font-weight: 600 !important;
     color: #fff !important;
     transition: font-size 720ms cubic-bezier(0.22, 1, 0.36, 1), margin 720ms cubic-bezier(0.22, 1, 0.36, 1), line-height 720ms cubic-bezier(0.22, 1, 0.36, 1);
 }
+
 .vf-chatbot-selector__item {
     transition: background-color 250ms ease;
 }
@@ -626,10 +650,12 @@ if (!empty($chatbot_other_location)) {
 }
 
 .infoWrapper {
+  margin-top: 3rem;
     flex-direction: column;
     display: flex;
+    gap: 0.5rem;
     border: 1px solid black;
-    padding: 1rem 0;
+    padding: 1rem 0.5rem;
     background-color: white;
     border-radius: 6px;
     align-items: center;
@@ -638,5 +664,12 @@ if (!empty($chatbot_other_location)) {
 .vf-chatbot-action-prompt__link {
     color: #000 !important;
     border: 1px solid #000 !important;
+}
+
+.vf-chatbot-modal-container {
+max-height: 750px;
+}
+.vf-chatbot-welcome__suggestions {
+  display: none;
 }
 </style>
