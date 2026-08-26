@@ -7,8 +7,12 @@ function include_jquery() {
 }
 add_action('wp_enqueue_scripts', 'include_jquery');
 
-//inlcude jplist
+// Include jPList on archive/listing screens that still depend on it.
 function add_scripts() {
+  if (is_search()) {
+    return;
+  }
+
   wp_enqueue_script('jplist', get_theme_file_uri( '/scripts/jplist.min.js'));
 }
 add_action( 'wp_enqueue_scripts', 'add_scripts' );
@@ -19,7 +23,8 @@ require_once('functions/custom-endpoints.php');
 require_once('functions/cpt-register.php');
 require_once('functions/infoboard-news.php');
 require_once('functions/people.php');
-require_once('functions/relevanssi.php');
+require_once('functions/admin-menu.php');
+require_once('functions/search/bootstrap.php');
 require_once('functions/training-ebi-feed.php');
 require_once('functions/bioit-feed.php');
 require_once('functions/training.php');

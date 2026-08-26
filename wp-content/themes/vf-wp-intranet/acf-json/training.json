@@ -16,7 +16,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "live": "Live",
                 "on-demand": "On-demand"
@@ -51,7 +50,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -77,7 +75,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "display_format": "j M Y",
             "return_format": "Ymd",
             "first_day": 1
@@ -104,7 +101,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "display_format": "j M Y",
             "return_format": "Ymd",
             "first_day": 1
@@ -131,7 +127,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "display_format": "H:i",
             "return_format": "H:i"
         },
@@ -157,7 +152,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "display_format": "H:i",
             "return_format": "H:i"
         },
@@ -183,7 +177,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -209,7 +202,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "taxonomy": "event-location",
             "add_term": 1,
             "save_terms": 1,
@@ -243,7 +235,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -272,7 +263,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -298,7 +288,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "display_format": "j M Y",
             "return_format": "j M Y",
             "first_day": 1
@@ -325,7 +314,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "not-open": "Not yet open",
                 "open": "Open",
@@ -363,7 +351,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "placeholder": ""
         },
@@ -389,7 +376,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -418,7 +404,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -454,7 +439,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "placement": "top",
             "endpoint": 0
         },
@@ -487,7 +471,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "taxonomy": "training-organiser",
             "add_term": 1,
             "save_terms": 1,
@@ -528,7 +511,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "data_science": "Data science",
                 "professional_development": "Professional development",
@@ -565,7 +547,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "course_materials": "Course materials",
                 "recorded_webinar": "Recorded webinar",
@@ -602,7 +583,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "in-person": "In-person",
                 "hybrid": "Hybrid",
@@ -646,7 +626,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "maxlength": "",
             "placeholder": "",
@@ -730,7 +709,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "free": "Free",
                 "paid": "Paid"
@@ -771,7 +749,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "placeholder": ""
         },
@@ -797,7 +774,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "placeholder": ""
         },
@@ -823,7 +799,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "default_value": "",
             "tabs": "all",
             "toolbar": "basic",
@@ -852,7 +827,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "post_type": [
                 "training"
             ],

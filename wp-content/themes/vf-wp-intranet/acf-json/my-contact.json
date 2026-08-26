@@ -16,7 +16,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 0,
             "choices": {
                 "hr": "Human Resources",
                 "finance": "Finance"
@@ -51,7 +50,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 1,
             "choices": {
                 "recruitment": "Recruitment",
                 "partnering": "Partnering",
@@ -92,7 +90,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 1,
             "choices": {
                 "barcelona": "Barcelona",
                 "grenoble": "Grenoble",
@@ -132,7 +129,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 1,
             "choices": {
                 "coo_office": "COO Office",
                 "omt": "OMT",
@@ -169,7 +165,6 @@
                 "class": "",
                 "id": ""
             },
-            "relevanssi_exclude": 1,
             "post_type": [
                 "people"
             ],

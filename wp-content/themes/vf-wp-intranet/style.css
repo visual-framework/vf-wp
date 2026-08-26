@@ -20,6 +20,22 @@ Text Domain:	 vfwp
 .vf-hero .vf-button {
     font-size: 14px !important;
 }
+.vf-search-filter__count {
+    color: #707372;
+    font-size: 0.875em;
+    margin-left: 0.25rem;
+}
+.vf-summary mark {
+    background-color: #f3f3f3;
+    color: inherit;
+}
+.vf-search-result__pdf-pill {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    margin-left: 0.35rem;
+    padding: 1px 4px !important;
+    vertical-align: middle;
+}
 #load {
     width: 48px;
     height: 48px;
@@ -39,10 +55,6 @@ Text Domain:	 vfwp
         transform: rotate(360deg);
     }
 } 
-
-#search-content {
-    display: none;
-}
 
 .intranet-directory-badge {
     font-weight: 600 !important;
