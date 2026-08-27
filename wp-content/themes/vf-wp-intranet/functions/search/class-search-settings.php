@@ -35,6 +35,7 @@ class VFWP_Intranet_Search_Settings {
 				'content'      => 1,
 			),
 			'post_types'      => array(),
+			'ranking_boosts'  => self::default_ranking_boosts(),
 			'acf_field_names' => array(),
 			'query_min_word_length' => 2,
 			'stopwords'       => self::default_stopwords(),
@@ -62,6 +63,13 @@ class VFWP_Intranet_Search_Settings {
 
 		$settings['field_weights'] = wp_parse_args($settings['field_weights'], self::defaults()['field_weights']);
 
+		if (!isset($settings['ranking_boosts']) || !is_array($settings['ranking_boosts'])) {
+			$settings['ranking_boosts'] = array();
+		}
+
+		$settings['ranking_boosts'] = wp_parse_args($settings['ranking_boosts'], self::default_ranking_boosts());
+		$settings['ranking_boosts'] = self::sanitize_ranking_boosts($settings['ranking_boosts']);
+
 		if (!is_array($settings['post_types'])) {
 			$settings['post_types'] = array();
 		}
@@ -81,6 +89,15 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	public static function get_field_weights() {
 		return self::get_settings()['field_weights'];
+	}
+
+	/**
+	 * Return configured ranking boost multipliers.
+	 *
+	 * @return array
+	 */
+	public static function get_ranking_boosts() {
+		return self::get_settings()['ranking_boosts'];
 	}
 
 	/**
@@ -354,29 +371,35 @@ class VFWP_Intranet_Search_Settings {
 
 		$old_settings = self::get_settings();
 		$input = is_array($input) ? wp_unslash($input) : array();
-		$sanitized = self::defaults();
+		$sanitized = $old_settings;
 
 		foreach ($sanitized['field_weights'] as $field => $default_weight) {
-			$value = isset($input['field_weights'][$field]) ? $input['field_weights'][$field] : $default_weight;
+			$value = isset($input['field_weights'][$field]) ? $input['field_weights'][$field] : $old_settings['field_weights'][$field];
 			$sanitized['field_weights'][$field] = $this->sanitize_weight($value);
 		}
 
-		$raw_acf_field_names = isset($input['acf_field_names']) ? $input['acf_field_names'] : '';
+		foreach (self::default_ranking_boosts() as $boost => $default_value) {
+			$value = isset($input['ranking_boosts'][$boost]) ? $input['ranking_boosts'][$boost] : $old_settings['ranking_boosts'][$boost];
+			$sanitized['ranking_boosts'][$boost] = $this->sanitize_weight($value);
+		}
+
+		$raw_acf_field_names = array_key_exists('acf_field_names', $input) ? $input['acf_field_names'] : $old_settings['acf_field_names'];
 		$sanitized['acf_field_names'] = self::parse_acf_field_names($raw_acf_field_names);
 		$sanitized['query_min_word_length'] = self::sanitize_min_word_length_value(
-			isset($input['query_min_word_length']) ? $input['query_min_word_length'] : self::defaults()['query_min_word_length']
+			array_key_exists('query_min_word_length', $input) ? $input['query_min_word_length'] : $old_settings['query_min_word_length']
 		);
-		$sanitized['stopwords'] = self::parse_stopwords(isset($input['stopwords']) ? $input['stopwords'] : self::default_stopwords());
-		$sanitized['exact_phrases'] = self::parse_exact_phrases(isset($input['exact_phrases']) ? $input['exact_phrases'] : array());
+		$sanitized['stopwords'] = self::parse_stopwords(array_key_exists('stopwords', $input) ? $input['stopwords'] : $old_settings['stopwords']);
+		$sanitized['exact_phrases'] = self::parse_exact_phrases(array_key_exists('exact_phrases', $input) ? $input['exact_phrases'] : $old_settings['exact_phrases']);
 
 		foreach (self::get_searchable_post_types() as $post_type => $post_type_object) {
+			$old_post_type = self::get_post_type_setting($post_type, $old_settings);
 			$post_type_input = isset($input['post_types'][$post_type]) && is_array($input['post_types'][$post_type])
 				? $input['post_types'][$post_type]
-				: array();
+				: null;
 
 			$sanitized['post_types'][$post_type] = array(
-				'include' => empty($post_type_input['include']) ? 0 : 1,
-				'weight'  => $this->sanitize_weight(isset($post_type_input['weight']) ? $post_type_input['weight'] : 1),
+				'include' => is_array($post_type_input) ? (empty($post_type_input['include']) ? 0 : 1) : (int) $old_post_type['include'],
+				'weight'  => $this->sanitize_weight(is_array($post_type_input) && isset($post_type_input['weight']) ? $post_type_input['weight'] : $old_post_type['weight']),
 			);
 		}
 
@@ -398,11 +421,13 @@ class VFWP_Intranet_Search_Settings {
 		}
 
 		$rebuild_status = get_option(self::REBUILD_REQUIRED_OPTION, array());
+		$current_tab = $this->get_current_tab();
 		?>
 		<div class="wrap">
 			<h1><?php echo esc_html__('Search', 'vfwp'); ?></h1>
 
 			<?php $this->render_index_action_notice(); ?>
+			<?php settings_errors('vfwp_intranet_search_settings'); ?>
 
 			<?php if (is_array($rebuild_status) && !empty($rebuild_status['required'])) : ?>
 				<div class="notice notice-warning">
@@ -413,16 +438,248 @@ class VFWP_Intranet_Search_Settings {
 				</div>
 			<?php endif; ?>
 
-			<?php $this->render_index_management(); ?>
-			<?php $this->render_pdf_extraction_issues(); ?>
+			<?php $this->render_tabs($current_tab); ?>
 
-			<form method="post" action="options.php">
-				<?php
-				settings_fields('vfwp_intranet_search_settings');
-				do_settings_sections('vfwp-intranet-search');
-				submit_button();
-				?>
-			</form>
+			<?php if ('index' === $current_tab) : ?>
+				<?php $this->render_index_management(); ?>
+				<?php $this->render_pdf_extraction_issues(); ?>
+			<?php else : ?>
+				<form method="post" action="options.php">
+					<?php settings_fields('vfwp_intranet_search_settings'); ?>
+					<?php $this->render_tab_content($current_tab); ?>
+					<?php submit_button(); ?>
+				</form>
+			<?php endif; ?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Return settings tabs.
+	 *
+	 * @return array
+	 */
+	private function get_tabs() {
+		return array(
+			'index'   => __('Index', 'vfwp'),
+			'ranking' => __('Ranking', 'vfwp'),
+			'content' => __('Content', 'vfwp'),
+			'query'   => __('Query parsing', 'vfwp'),
+		);
+	}
+
+	/**
+	 * Return the active settings tab.
+	 *
+	 * @return string
+	 */
+	private function get_current_tab() {
+		$tab = isset($_GET['tab']) ? sanitize_key(wp_unslash($_GET['tab'])) : 'index';
+		$tabs = $this->get_tabs();
+
+		return isset($tabs[$tab]) ? $tab : 'index';
+	}
+
+	/**
+	 * Render settings navigation tabs.
+	 *
+	 * @param string $current_tab Current tab.
+	 * @return void
+	 */
+	private function render_tabs($current_tab) {
+		$tabs = $this->get_tabs();
+		?>
+		<nav class="nav-tab-wrapper" aria-label="<?php echo esc_attr__('Search settings sections', 'vfwp'); ?>">
+			<?php foreach ($tabs as $tab => $label) : ?>
+				<a
+					href="<?php echo esc_url(add_query_arg(array('page' => 'vfwp-intranet-search', 'tab' => $tab), admin_url('options-general.php'))); ?>"
+					class="nav-tab <?php echo $tab === $current_tab ? 'nav-tab-active' : ''; ?>"
+				>
+					<?php echo esc_html($label); ?>
+				</a>
+			<?php endforeach; ?>
+		</nav>
+		<?php
+	}
+
+	/**
+	 * Render one settings tab.
+	 *
+	 * @param string $tab Current tab.
+	 * @return void
+	 */
+	private function render_tab_content($tab) {
+		if ('ranking' === $tab) {
+			$this->render_ranking_tab();
+			return;
+		}
+
+		if ('content' === $tab) {
+			$this->render_content_tab();
+			return;
+		}
+
+		$this->render_query_tab();
+	}
+
+	/**
+	 * Render ranking settings.
+	 *
+	 * @return void
+	 */
+	private function render_ranking_tab() {
+		?>
+		<h2><?php echo esc_html__('Ranking', 'vfwp'); ?></h2>
+		<?php $this->render_ranking_admin_styles(); ?>
+		<?php $this->render_ranking_overview(); ?>
+		<?php $this->render_calculated_ranking_summary(); ?>
+		<h3><?php echo esc_html__('Primary ranking controls', 'vfwp'); ?></h3>
+		<?php $this->render_field_weights_description(); ?>
+		<?php $this->render_field_weights(); ?>
+		<?php $this->render_post_type_description(); ?>
+		<?php $this->render_post_types(); ?>
+		<details class="vfwp-search-settings-panel">
+			<summary><?php echo esc_html__('Advanced boost tuning', 'vfwp'); ?></summary>
+			<?php $this->render_ranking_boosts(); ?>
+		</details>
+		<?php
+	}
+
+	/**
+	 * Render content/indexing settings.
+	 *
+	 * @return void
+	 */
+	private function render_content_tab() {
+		?>
+		<h2><?php echo esc_html__('Searchable Content', 'vfwp'); ?></h2>
+		<?php $this->render_acf_description(); ?>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><?php echo esc_html__('ACF field names', 'vfwp'); ?></th>
+				<td><?php $this->render_acf_field_names(); ?></td>
+			</tr>
+		</table>
+		<?php
+	}
+
+	/**
+	 * Render query parsing settings.
+	 *
+	 * @return void
+	 */
+	private function render_query_tab() {
+		?>
+		<h2><?php echo esc_html__('Query Parsing', 'vfwp'); ?></h2>
+		<?php $this->render_query_parsing_description(); ?>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><?php echo esc_html__('Minimum word length', 'vfwp'); ?></th>
+				<td><?php $this->render_query_min_word_length(); ?></td>
+			</tr>
+			<tr>
+				<th scope="row"><?php echo esc_html__('Stopwords', 'vfwp'); ?></th>
+				<td><?php $this->render_stopwords(); ?></td>
+			</tr>
+			<tr>
+				<th scope="row"><?php echo esc_html__('Exact phrase searches', 'vfwp'); ?></th>
+				<td><?php $this->render_exact_phrases(); ?></td>
+			</tr>
+		</table>
+		<?php
+	}
+
+	/**
+	 * Render lightweight admin styling for the ranking tab.
+	 *
+	 * @return void
+	 */
+	private function render_ranking_admin_styles() {
+		?>
+		<style>
+			.vfwp-search-settings-grid {
+				display: grid;
+				gap: 16px;
+				grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+				max-width: 920px;
+			}
+			.vfwp-search-settings-card {
+				background: #fff;
+				border: 1px solid #c3c4c7;
+				padding: 14px 16px;
+			}
+			.vfwp-search-settings-card h3,
+			.vfwp-search-settings-card h4 {
+				margin-top: 0;
+			}
+			.vfwp-search-settings-panel {
+				background: #fff;
+				border: 1px solid #c3c4c7;
+				margin-top: 18px;
+				max-width: 960px;
+				padding: 0;
+			}
+			.vfwp-search-settings-panel > summary {
+				cursor: pointer;
+				font-size: 1.1em;
+				font-weight: 600;
+				padding: 14px 16px;
+			}
+			.vfwp-search-settings-panel > *:not(summary) {
+				margin-left: 16px;
+				margin-right: 16px;
+			}
+			.vfwp-search-settings-panel table {
+				margin-bottom: 18px;
+			}
+			.vfwp-search-settings-kicker {
+				color: #646970;
+				display: block;
+				font-size: 12px;
+				font-weight: 600;
+				letter-spacing: .02em;
+				text-transform: uppercase;
+			}
+			.vfwp-search-settings-value {
+				display: block;
+				font-size: 22px;
+				font-weight: 700;
+				margin-top: 4px;
+			}
+		</style>
+		<?php
+	}
+
+	/**
+	 * Render a readable overview of the ranking model.
+	 *
+	 * @return void
+	 */
+	private function render_ranking_overview() {
+		$top_rows = $this->get_calculated_ranking_rows();
+		usort($top_rows, array($this, 'sort_calculated_rows_desc'));
+		$top_rows = array_slice($top_rows, 0, 3);
+		?>
+		<div class="vfwp-search-settings-grid">
+			<div class="vfwp-search-settings-card">
+				<h3><?php echo esc_html__('How ranking is decided', 'vfwp'); ?></h3>
+				<p><?php echo esc_html__('Search first finds matching indexed rows. Each result then earns points from matching signals such as exact title, phrase in title, exact ACF keyword, excerpt match, content/PDF match, and database FULLTEXT relevance.', 'vfwp'); ?></p>
+				<p><?php echo esc_html__('Those points are added together, multiplied by the post-type weight for web results, and then a small recent-content bonus may be added.', 'vfwp'); ?></p>
+			</div>
+			<div class="vfwp-search-settings-card">
+				<h3><?php echo esc_html__('Best place to tune first', 'vfwp'); ?></h3>
+				<p><?php echo esc_html__('Start with Field weights. They are the clearest controls: raise Title if titles should dominate, raise ACF keywords for curated keyword hits, raise Content if body/PDF text should matter more.', 'vfwp'); ?></p>
+				<p><?php echo esc_html__('Use Advanced boost tuning only when you need to change a specific signal, such as exact title matches or FULLTEXT content scoring.', 'vfwp'); ?></p>
+			</div>
+			<div class="vfwp-search-settings-card">
+				<h3><?php echo esc_html__('Top signals right now', 'vfwp'); ?></h3>
+				<?php foreach ($top_rows as $row) : ?>
+					<p>
+						<span class="vfwp-search-settings-kicker"><?php echo esc_html($row['signal']); ?></span>
+						<span class="vfwp-search-settings-value"><?php echo esc_html($this->format_decimal($row['value'])); ?></span>
+					</p>
+				<?php endforeach; ?>
+			</div>
 		</div>
 		<?php
 	}
@@ -664,24 +921,42 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	public function render_field_weights() {
 		$weights = self::get_field_weights();
-		$labels = array(
-			'title'        => __('Title', 'vfwp'),
-			'acf_keywords' => __('ACF keyword fields', 'vfwp'),
-			'excerpt'      => __('Excerpt', 'vfwp'),
-			'content'      => __('Main content', 'vfwp'),
+		$definitions = array(
+			'title'        => array(
+				'label'    => __('Title', 'vfwp'),
+				'role'     => __('Best for high-confidence matches. Usually this should stay highest.', 'vfwp'),
+				'guidance' => __('Increase when exact or partial page titles should win.', 'vfwp'),
+			),
+			'acf_keywords' => array(
+				'label'    => __('ACF keyword fields', 'vfwp'),
+				'role'     => __('Curated synonyms and admin-entered keywords. Strong when keyword governance is good.', 'vfwp'),
+				'guidance' => __('Increase when curated keyword matches should jump to the top.', 'vfwp'),
+			),
+			'excerpt'      => array(
+				'label'    => __('Excerpt', 'vfwp'),
+				'role'     => __('Short summaries. Useful when excerpts are hand-written and descriptive.', 'vfwp'),
+				'guidance' => __('Increase when summaries should matter more than body text.', 'vfwp'),
+			),
+			'content'      => array(
+				'label'    => __('Main content and PDF text', 'vfwp'),
+				'role'     => __('Body text and extracted PDF text. Broad, but can be noisy.', 'vfwp'),
+				'guidance' => __('Keep lower if long body/PDF matches are overpowering precise title or keyword matches.', 'vfwp'),
+			),
 		);
 		?>
-		<table class="widefat striped" style="max-width: 640px;">
+		<table class="widefat striped" style="max-width: 920px;">
 			<thead>
 				<tr>
 					<th scope="col"><?php echo esc_html__('Field', 'vfwp'); ?></th>
 					<th scope="col"><?php echo esc_html__('Weight', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Role', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('When to change', 'vfwp'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach ($labels as $field => $label) : ?>
+				<?php foreach ($definitions as $field => $definition) : ?>
 					<tr>
-						<th scope="row"><?php echo esc_html($label); ?></th>
+						<th scope="row"><?php echo esc_html($definition['label']); ?></th>
 						<td>
 							<input
 								type="number"
@@ -692,11 +967,211 @@ class VFWP_Intranet_Search_Settings {
 								class="small-text"
 							>
 						</td>
+						<td><?php echo esc_html($definition['role']); ?></td>
+						<td><?php echo esc_html($definition['guidance']); ?></td>
 					</tr>
 				<?php endforeach; ?>
 			</tbody>
 		</table>
 		<p class="description"><?php echo esc_html__('Changing these values takes effect immediately when the custom search query layer uses the index.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render ranking boost inputs.
+	 *
+	 * @return void
+	 */
+	public function render_ranking_boosts() {
+		$boosts = self::get_ranking_boosts();
+		$definitions = self::ranking_boost_definitions();
+		$groups = $this->get_ranking_boost_groups();
+		?>
+		<p><?php echo esc_html__('Boosts are advanced multipliers used by the scoring formula. Most tuning should happen with Field weights and Post-type weights first.', 'vfwp'); ?></p>
+		<?php foreach ($groups as $group) : ?>
+			<h3><?php echo esc_html($group['label']); ?></h3>
+			<p><?php echo esc_html($group['description']); ?></p>
+			<table class="widefat striped" style="max-width: 920px;">
+				<thead>
+					<tr>
+						<th scope="col"><?php echo esc_html__('Signal', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('Boost', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('Meaning', 'vfwp'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($group['boosts'] as $boost) : ?>
+						<?php if (!isset($definitions[$boost])) : ?>
+							<?php continue; ?>
+						<?php endif; ?>
+						<tr>
+							<th scope="row"><?php echo esc_html($definitions[$boost]['label']); ?></th>
+							<td>
+								<input
+									type="number"
+									min="0"
+									step="0.1"
+									name="<?php echo esc_attr(self::OPTION_NAME); ?>[ranking_boosts][<?php echo esc_attr($boost); ?>]"
+									value="<?php echo esc_attr($boosts[$boost]); ?>"
+									class="small-text"
+								>
+							</td>
+							<td><?php echo esc_html($definitions[$boost]['description']); ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php endforeach; ?>
+		<p class="description"><?php echo esc_html__('Changing these values takes effect immediately. No reindex is required.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
+	 * Return grouped advanced boost controls.
+	 *
+	 * @return array
+	 */
+	private function get_ranking_boost_groups() {
+		return array(
+			array(
+				'label'       => __('Strong exact and phrase matches', 'vfwp'),
+				'description' => __('Controls the signals that should usually create the strongest relevance jumps.', 'vfwp'),
+				'boosts'      => array('exact_title', 'title_phrase', 'acf_phrase', 'excerpt_phrase', 'content_phrase'),
+			),
+			array(
+				'label'       => __('Term coverage', 'vfwp'),
+				'description' => __('Controls how much individual query words matter once candidate rows have been found.', 'vfwp'),
+				'boosts'      => array('title_all_terms', 'title_term', 'acf_term', 'excerpt_term', 'content_term', 'all_terms', 'term_coverage'),
+			),
+			array(
+				'label'       => __('Database FULLTEXT relevance', 'vfwp'),
+				'description' => __('Controls the MySQL/MariaDB FULLTEXT score. These values usually fine-tune ranking after clearer phrase and term signals.', 'vfwp'),
+				'boosts'      => array('fulltext_title', 'fulltext_acf', 'fulltext_excerpt', 'fulltext_content'),
+			),
+			array(
+				'label'       => __('Recency', 'vfwp'),
+				'description' => __('Controls the small final bonus for content published in the last 30 days.', 'vfwp'),
+				'boosts'      => array('recency'),
+			),
+		);
+	}
+
+	/**
+	 * Render calculated ranking contributions.
+	 *
+	 * @return void
+	 */
+	private function render_calculated_ranking_summary() {
+		$rows = $this->get_calculated_ranking_rows();
+		usort($rows, array($this, 'sort_calculated_rows_desc'));
+		?>
+		<h3><?php echo esc_html__('Current effective priorities', 'vfwp'); ?></h3>
+		<p><?php echo esc_html__('This table translates your settings into the actual point values used by the scorer. It is sorted from strongest to weakest by default.', 'vfwp'); ?></p>
+		<div class="notice notice-info inline" style="max-width: 920px;">
+			<p>
+				<strong><?php echo esc_html__('Simple version', 'vfwp'); ?></strong>
+				<?php echo esc_html__('A result can earn points from several signals at once. Strong exact or curated matches should usually sit near the top. Broad body/PDF matches should usually sit lower unless you intentionally want content text to dominate.', 'vfwp'); ?>
+			</p>
+			<p>
+				<?php echo esc_html__('For example, FULLTEXT content/PDF score means the database gives a relevance number for how strongly the query matches body or PDF text. That database number is multiplied by the Content field weight and the FULLTEXT content boost.', 'vfwp'); ?>
+			</p>
+			<p>
+				<?php echo esc_html__('After these signal points are added, web results are multiplied by their post-type multiplier. Finally, the recent-content bonus is added for content published in the last 30 days.', 'vfwp'); ?>
+			</p>
+		</div>
+		<p>
+			<button type="button" class="button" data-vfwp-ranking-sort="desc"><?php echo esc_html__('Sort by value: high to low', 'vfwp'); ?></button>
+			<button type="button" class="button" data-vfwp-ranking-sort="asc"><?php echo esc_html__('Sort by value: low to high', 'vfwp'); ?></button>
+		</p>
+		<table id="vfwp-calculated-ranking-priorities" class="widefat striped" style="max-width: 920px;">
+			<thead>
+				<tr>
+					<th scope="col"><?php echo esc_html__('Signal', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Current value', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Plain meaning', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Formula', 'vfwp'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($rows as $row) : ?>
+					<tr data-sort-value="<?php echo esc_attr((string) (float) $row['value']); ?>">
+						<th scope="row"><?php echo esc_html($row['signal']); ?></th>
+						<td><strong><?php echo esc_html($this->format_decimal($row['value'])); ?></strong></td>
+						<td><?php echo esc_html($row['meaning']); ?></td>
+						<td><?php echo esc_html($row['formula']); ?></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				var table = document.getElementById('vfwp-calculated-ranking-priorities');
+
+				if (!table) {
+					return;
+				}
+
+				var tbody = table.querySelector('tbody');
+
+				if (!tbody) {
+					return;
+				}
+
+				document.querySelectorAll('[data-vfwp-ranking-sort]').forEach(function (button) {
+					button.addEventListener('click', function () {
+						var direction = button.getAttribute('data-vfwp-ranking-sort') === 'asc' ? 'asc' : 'desc';
+						var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+
+						rows.sort(function (a, b) {
+							var aValue = parseFloat(a.getAttribute('data-sort-value') || '0');
+							var bValue = parseFloat(b.getAttribute('data-sort-value') || '0');
+
+							return direction === 'asc' ? aValue - bValue : bValue - aValue;
+						});
+
+						rows.forEach(function (row) {
+							tbody.appendChild(row);
+						});
+					});
+				});
+			});
+		</script>
+		<?php $this->render_post_type_weight_summary(); ?>
+		<?php
+	}
+
+	/**
+	 * Render current post type multipliers.
+	 *
+	 * @return void
+	 */
+	private function render_post_type_weight_summary() {
+		$post_types = self::get_searchable_post_types();
+
+		if (empty($post_types)) {
+			return;
+		}
+		?>
+		<h3><?php echo esc_html__('Post-type multipliers', 'vfwp'); ?></h3>
+		<table class="widefat striped" style="max-width: 640px;">
+			<thead>
+				<tr>
+					<th scope="col"><?php echo esc_html__('Post type', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Included', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Multiplier', 'vfwp'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($post_types as $post_type => $post_type_object) : ?>
+					<?php $setting = self::get_post_type_setting($post_type); ?>
+					<tr>
+						<th scope="row"><?php echo esc_html($post_type_object->labels->singular_name); ?> <code><?php echo esc_html($post_type); ?></code></th>
+						<td><?php echo esc_html(!empty($setting['include']) ? __('Yes', 'vfwp') : __('No', 'vfwp')); ?></td>
+						<td><strong><?php echo esc_html($this->format_decimal($setting['weight'])); ?></strong></td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
 		<?php
 	}
 
@@ -767,6 +1242,136 @@ class VFWP_Intranet_Search_Settings {
 		</table>
 		<p class="description"><?php echo esc_html__('Include/exclude changes require a rebuild. Weight changes take effect at query time.', 'vfwp'); ?></p>
 		<?php
+	}
+
+	/**
+	 * Return calculated ranking rows for admin display.
+	 *
+	 * @return array
+	 */
+	private function get_calculated_ranking_rows() {
+		$weights = self::get_field_weights();
+		$boosts = self::get_ranking_boosts();
+
+		return array(
+			array(
+				'signal'  => __('Exact title match', 'vfwp'),
+				'formula' => __('Exact title boost', 'vfwp'),
+				'meaning' => __('The query exactly equals the title. This is usually the strongest title signal.', 'vfwp'),
+				'value'   => $boosts['exact_title'],
+			),
+			array(
+				'signal'  => __('Title phrase match', 'vfwp'),
+				'formula' => __('Title weight × title phrase boost', 'vfwp'),
+				'meaning' => __('The complete query phrase or protected phrase appears in the title.', 'vfwp'),
+				'value'   => $weights['title'] * $boosts['title_phrase'],
+			),
+			array(
+				'signal'  => __('All terms in title', 'vfwp'),
+				'formula' => __('Title weight × all-title-terms boost', 'vfwp'),
+				'meaning' => __('Every searchable query word appears in the title.', 'vfwp'),
+				'value'   => $weights['title'] * $boosts['title_all_terms'],
+			),
+			array(
+				'signal'  => __('Each title term', 'vfwp'),
+				'formula' => __('Title weight × title term boost', 'vfwp'),
+				'meaning' => __('Each individual query word found in the title adds points.', 'vfwp'),
+				'value'   => $weights['title'] * $boosts['title_term'],
+			),
+			array(
+				'signal'  => __('Exact ACF keyword entry', 'vfwp'),
+				'formula' => __('ACF keyword weight × ACF phrase boost', 'vfwp'),
+				'meaning' => __('The full query exactly matches one configured ACF keyword entry.', 'vfwp'),
+				'value'   => $weights['acf_keywords'] * $boosts['acf_phrase'],
+			),
+			array(
+				'signal'  => __('ACF keyword term match', 'vfwp'),
+				'formula' => __('ACF keyword weight × ACF term boost', 'vfwp'),
+				'meaning' => __('Extra points added per searchable query word when the full ACF keyword entry matches.', 'vfwp'),
+				'value'   => $weights['acf_keywords'] * $boosts['acf_term'],
+			),
+			array(
+				'signal'  => __('Excerpt phrase match', 'vfwp'),
+				'formula' => __('Excerpt weight × excerpt phrase boost', 'vfwp'),
+				'meaning' => __('The complete query phrase or protected phrase appears in the excerpt.', 'vfwp'),
+				'value'   => $weights['excerpt'] * $boosts['excerpt_phrase'],
+			),
+			array(
+				'signal'  => __('Each excerpt term', 'vfwp'),
+				'formula' => __('Excerpt weight × excerpt term boost', 'vfwp'),
+				'meaning' => __('Each individual query word found in the excerpt adds points.', 'vfwp'),
+				'value'   => $weights['excerpt'] * $boosts['excerpt_term'],
+			),
+			array(
+				'signal'  => __('Content/PDF phrase match', 'vfwp'),
+				'formula' => __('Content weight × content phrase boost', 'vfwp'),
+				'meaning' => __('The complete query phrase or protected phrase appears in body text or extracted PDF text.', 'vfwp'),
+				'value'   => $weights['content'] * $boosts['content_phrase'],
+			),
+			array(
+				'signal'  => __('Each content/PDF term', 'vfwp'),
+				'formula' => __('Content weight × content term boost', 'vfwp'),
+				'meaning' => __('Each individual query word found in body text or extracted PDF text adds points.', 'vfwp'),
+				'value'   => $weights['content'] * $boosts['content_term'],
+			),
+			array(
+				'signal'  => __('All terms anywhere', 'vfwp'),
+				'formula' => __('All-terms bonus', 'vfwp'),
+				'meaning' => __('All searchable query words appear somewhere across title, excerpt, or content.', 'vfwp'),
+				'value'   => $boosts['all_terms'],
+			),
+			array(
+				'signal'  => __('Term coverage', 'vfwp'),
+				'formula' => __('Matched terms ÷ query terms × coverage boost', 'vfwp'),
+				'meaning' => __('Rewards results that match a higher percentage of the query words.', 'vfwp'),
+				'value'   => $boosts['term_coverage'],
+			),
+			array(
+				'signal'  => __('FULLTEXT title score', 'vfwp'),
+				'formula' => __('Database score × title weight × FULLTEXT title boost', 'vfwp'),
+				'meaning' => __('Database relevance from title matches, scaled by title importance.', 'vfwp'),
+				'value'   => $weights['title'] * $boosts['fulltext_title'],
+			),
+			array(
+				'signal'  => __('FULLTEXT ACF score', 'vfwp'),
+				'formula' => __('Database score × ACF keyword weight × FULLTEXT ACF boost', 'vfwp'),
+				'meaning' => __('Database relevance from ACF keywords after an exact keyword entry match.', 'vfwp'),
+				'value'   => $weights['acf_keywords'] * $boosts['fulltext_acf'],
+			),
+			array(
+				'signal'  => __('FULLTEXT excerpt score', 'vfwp'),
+				'formula' => __('Database score × excerpt weight × FULLTEXT excerpt boost', 'vfwp'),
+				'meaning' => __('Database relevance from excerpt matches, scaled by excerpt importance.', 'vfwp'),
+				'value'   => $weights['excerpt'] * $boosts['fulltext_excerpt'],
+			),
+			array(
+				'signal'  => __('FULLTEXT content/PDF score', 'vfwp'),
+				'formula' => __('Database score × content weight × FULLTEXT content boost', 'vfwp'),
+				'meaning' => __('Database relevance from body or PDF text matches, scaled by content importance.', 'vfwp'),
+				'value'   => $weights['content'] * $boosts['fulltext_content'],
+			),
+			array(
+				'signal'  => __('Recent content', 'vfwp'),
+				'formula' => __('Recent-content boost', 'vfwp'),
+				'meaning' => __('Small final bonus for content published in the last 30 days.', 'vfwp'),
+				'value'   => $boosts['recency'],
+			),
+		);
+	}
+
+	/**
+	 * Sort calculated ranking rows from high to low.
+	 *
+	 * @param array $a First row.
+	 * @param array $b Second row.
+	 * @return int
+	 */
+	private function sort_calculated_rows_desc(array $a, array $b) {
+		if ((float) $a['value'] === (float) $b['value']) {
+			return 0;
+		}
+
+		return (float) $a['value'] < (float) $b['value'] ? 1 : -1;
 	}
 
 	/**
@@ -995,6 +1600,78 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
+	 * Default ranking boost multipliers used by the search scoring formula.
+	 *
+	 * @return array
+	 */
+	public static function default_ranking_boosts() {
+		return array(
+			'exact_title'      => 1000,
+			'title_phrase'     => 250,
+			'title_all_terms'  => 100,
+			'title_term'       => 20,
+			'acf_phrase'       => 500,
+			'acf_term'         => 20,
+			'excerpt_phrase'   => 80,
+			'excerpt_term'     => 8,
+			'content_phrase'   => 30,
+			'content_term'     => 4,
+			'all_terms'        => 160,
+			'term_coverage'    => 100,
+			'fulltext_title'   => 25,
+			'fulltext_acf'     => 18,
+			'fulltext_excerpt' => 10,
+			'fulltext_content' => 4,
+			'recency'          => 2,
+		);
+	}
+
+	/**
+	 * Return ranking boost labels and descriptions.
+	 *
+	 * @return array
+	 */
+	public static function ranking_boost_definitions() {
+		return array(
+			'exact_title'      => array('label' => __('Exact title match', 'vfwp'), 'description' => __('Query exactly equals the indexed title.', 'vfwp')),
+			'title_phrase'     => array('label' => __('Title phrase match', 'vfwp'), 'description' => __('Complete query phrase or protected phrase appears in the title.', 'vfwp')),
+			'title_all_terms'  => array('label' => __('All terms in title', 'vfwp'), 'description' => __('Every searchable term appears in the title.', 'vfwp')),
+			'title_term'       => array('label' => __('Title term match', 'vfwp'), 'description' => __('Each matched title term contributes this boost.', 'vfwp')),
+			'acf_phrase'       => array('label' => __('Exact ACF keyword entry', 'vfwp'), 'description' => __('The full query exactly matches one configured ACF keyword entry.', 'vfwp')),
+			'acf_term'         => array('label' => __('ACF keyword term boost', 'vfwp'), 'description' => __('Additional per-term boost when an exact ACF keyword entry matches.', 'vfwp')),
+			'excerpt_phrase'   => array('label' => __('Excerpt phrase match', 'vfwp'), 'description' => __('Complete query phrase or protected phrase appears in the excerpt.', 'vfwp')),
+			'excerpt_term'     => array('label' => __('Excerpt term match', 'vfwp'), 'description' => __('Each matched excerpt term contributes this boost.', 'vfwp')),
+			'content_phrase'   => array('label' => __('Content phrase match', 'vfwp'), 'description' => __('Complete query phrase or protected phrase appears in main/PDF content.', 'vfwp')),
+			'content_term'     => array('label' => __('Content term match', 'vfwp'), 'description' => __('Each matched content term contributes this boost.', 'vfwp')),
+			'all_terms'        => array('label' => __('All terms anywhere', 'vfwp'), 'description' => __('Bonus when every searchable term appears across title, excerpt or content.', 'vfwp')),
+			'term_coverage'    => array('label' => __('Term coverage', 'vfwp'), 'description' => __('Proportional bonus based on how many query terms matched.', 'vfwp')),
+			'fulltext_title'   => array('label' => __('FULLTEXT title score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from title.', 'vfwp')),
+			'fulltext_acf'     => array('label' => __('FULLTEXT ACF score', 'vfwp'), 'description' => __('Database FULLTEXT contribution from ACF keywords after an exact keyword entry match.', 'vfwp')),
+			'fulltext_excerpt' => array('label' => __('FULLTEXT excerpt score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from excerpt.', 'vfwp')),
+			'fulltext_content' => array('label' => __('FULLTEXT content score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from content/PDF text.', 'vfwp')),
+			'recency'          => array('label' => __('Recent content bonus', 'vfwp'), 'description' => __('Small final bonus for content published in the last 30 days.', 'vfwp')),
+		);
+	}
+
+	/**
+	 * Sanitize ranking boost settings.
+	 *
+	 * @param array $boosts Raw boosts.
+	 * @return array
+	 */
+	public static function sanitize_ranking_boosts(array $boosts) {
+		$sanitized = array();
+
+		foreach (self::default_ranking_boosts() as $boost => $default_value) {
+			$value = isset($boosts[$boost]) ? $boosts[$boost] : $default_value;
+			$value = (float) $value;
+			$sanitized[$boost] = round(max(0, $value), 2);
+		}
+
+		return $sanitized;
+	}
+
+	/**
 	 * Parse editable stopwords from text or array input.
 	 *
 	 * @param mixed $raw_value Raw input.
@@ -1151,6 +1828,16 @@ class VFWP_Intranet_Search_Settings {
 		}
 
 		return round($weight, 2);
+	}
+
+	/**
+	 * Format a ranking number for admin display.
+	 *
+	 * @param mixed $value Numeric value.
+	 * @return string
+	 */
+	private function format_decimal($value) {
+		return number_format_i18n((float) $value, 2);
 	}
 
 	/**

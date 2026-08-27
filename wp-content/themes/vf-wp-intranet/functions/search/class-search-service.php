@@ -225,26 +225,26 @@ class VFWP_Intranet_Search_Service {
 			SELECT scored.*,
 				(
 					(
-						(scored.exact_title_match * 1000)
-						+ (scored.title_phrase_hit * {$score_parts['weights']['title']} * 250)
-						+ (IF(scored.title_term_hits = {$score_parts['term_count']}, 1, 0) * {$score_parts['weights']['title']} * 100)
-						+ (scored.title_term_hits * {$score_parts['weights']['title']} * 20)
-						+ (scored.acf_phrase_hit * {$score_parts['weights']['acf_keywords']} * 500)
-						+ (scored.acf_term_hits * {$score_parts['weights']['acf_keywords']} * 20)
-						+ (scored.excerpt_phrase_hit * {$score_parts['weights']['excerpt']} * 80)
-						+ (scored.excerpt_term_hits * {$score_parts['weights']['excerpt']} * 8)
-						+ (scored.content_phrase_hit * {$score_parts['weights']['content']} * 30)
-						+ (scored.content_term_hits * {$score_parts['weights']['content']} * 4)
-						+ (IF(scored.all_field_term_hits = {$score_parts['term_count']}, 1, 0) * 160)
-						+ ((scored.all_field_term_hits / {$score_parts['term_count']}) * 100)
-						+ (scored.ft_title * {$score_parts['weights']['title']} * 25)
-						+ (scored.ft_acf_keywords * {$score_parts['weights']['acf_keywords']} * 18)
-						+ (scored.ft_excerpt * {$score_parts['weights']['excerpt']} * 10)
-						+ (scored.ft_content * {$score_parts['weights']['content']} * 4)
+						(scored.exact_title_match * {$score_parts['boosts']['exact_title']})
+						+ (scored.title_phrase_hit * {$score_parts['weights']['title']} * {$score_parts['boosts']['title_phrase']})
+						+ (IF(scored.title_term_hits = {$score_parts['term_count']}, 1, 0) * {$score_parts['weights']['title']} * {$score_parts['boosts']['title_all_terms']})
+						+ (scored.title_term_hits * {$score_parts['weights']['title']} * {$score_parts['boosts']['title_term']})
+						+ (scored.acf_phrase_hit * {$score_parts['weights']['acf_keywords']} * {$score_parts['boosts']['acf_phrase']})
+						+ (scored.acf_term_hits * {$score_parts['weights']['acf_keywords']} * {$score_parts['boosts']['acf_term']})
+						+ (scored.excerpt_phrase_hit * {$score_parts['weights']['excerpt']} * {$score_parts['boosts']['excerpt_phrase']})
+						+ (scored.excerpt_term_hits * {$score_parts['weights']['excerpt']} * {$score_parts['boosts']['excerpt_term']})
+						+ (scored.content_phrase_hit * {$score_parts['weights']['content']} * {$score_parts['boosts']['content_phrase']})
+						+ (scored.content_term_hits * {$score_parts['weights']['content']} * {$score_parts['boosts']['content_term']})
+						+ (IF(scored.all_field_term_hits = {$score_parts['term_count']}, 1, 0) * {$score_parts['boosts']['all_terms']})
+						+ ((scored.all_field_term_hits / {$score_parts['term_count']}) * {$score_parts['boosts']['term_coverage']})
+						+ (scored.ft_title * {$score_parts['weights']['title']} * {$score_parts['boosts']['fulltext_title']})
+						+ (scored.ft_acf_keywords * {$score_parts['weights']['acf_keywords']} * {$score_parts['boosts']['fulltext_acf']})
+						+ (scored.ft_excerpt * {$score_parts['weights']['excerpt']} * {$score_parts['boosts']['fulltext_excerpt']})
+						+ (scored.ft_content * {$score_parts['weights']['content']} * {$score_parts['boosts']['fulltext_content']})
 					)
 					* {$post_type_weight_sql}
 				)
-				+ IF(scored.published_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY), 2, 0) AS relevance
+				+ IF(scored.published_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY), {$score_parts['boosts']['recency']}, 0) AS relevance
 			FROM (
 				SELECT
 					id,
@@ -433,6 +433,7 @@ class VFWP_Intranet_Search_Service {
 			'params'      => $params,
 			'term_count'  => $term_count,
 			'weights'     => $weights,
+			'boosts'      => $this->get_sql_ranking_boosts(),
 		);
 	}
 
@@ -805,6 +806,22 @@ class VFWP_Intranet_Search_Service {
 			'excerpt'      => $this->sql_float($weights['excerpt']),
 			'content'      => $this->sql_float($weights['content']),
 		);
+	}
+
+	/**
+	 * Return escaped numeric ranking boosts for SQL interpolation.
+	 *
+	 * @return array
+	 */
+	private function get_sql_ranking_boosts() {
+		$boosts = VFWP_Intranet_Search_Settings::get_ranking_boosts();
+		$sql_boosts = array();
+
+		foreach (VFWP_Intranet_Search_Settings::default_ranking_boosts() as $boost => $default_value) {
+			$sql_boosts[$boost] = $this->sql_float(isset($boosts[$boost]) ? $boosts[$boost] : $default_value);
+		}
+
+		return $sql_boosts;
 	}
 
 	/**
