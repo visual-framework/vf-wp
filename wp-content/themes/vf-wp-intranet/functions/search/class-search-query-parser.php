@@ -18,7 +18,7 @@ class VFWP_Intranet_Search_Query_Parser {
 	 *
 	 * @var array
 	 */
-	private $stopwords = array(
+	private $default_stopwords = array(
 		'a',
 		'an',
 		'and',
@@ -33,7 +33,6 @@ class VFWP_Intranet_Search_Query_Parser {
 		'have',
 		'in',
 		'is',
-		'it',
 		'its',
 		'of',
 		'on',
@@ -60,35 +59,56 @@ class VFWP_Intranet_Search_Query_Parser {
 		$decoded_query = $this->decode($raw_query);
 		$quoted_phrases = $this->extract_quoted_phrases($decoded_query);
 		$normalized_query = $this->normalize_search_text($decoded_query);
+		$min_word_length = $this->get_min_word_length();
 		$all_terms = $this->extract_terms($normalized_query, false);
-		$terms = $this->extract_terms($normalized_query, true);
+		$protected_phrase_parts = $this->extract_protected_phrase_parts($normalized_query);
+		$protected_phrases = $protected_phrase_parts['phrases'];
+		$has_protected_phrases = !empty($protected_phrases);
+		$terms = $this->extract_terms($protected_phrase_parts['remaining_query'], true);
+		$protected_phrase_terms = array();
+
+		foreach ($protected_phrases as $protected_phrase) {
+			$protected_phrase_terms = array_merge($protected_phrase_terms, $this->extract_terms($protected_phrase, false));
+		}
+
+		$term_source = array_merge($terms, $protected_phrase_terms);
 		$fulltext_terms = array();
 		$ignored_terms = array();
 
-		foreach ($terms as $term) {
+		foreach ($term_source as $term) {
 			if ($this->string_length($term) >= self::MIN_FULLTEXT_TERM_LENGTH) {
-				$fulltext_terms[] = $term;
+				$fulltext_terms[$term] = $term;
 			} else {
-				$ignored_terms[] = $term;
+				$ignored_terms[$term] = $term;
 			}
 		}
 
-		$phrases = $this->build_phrases($normalized_query, $quoted_phrases, $fulltext_terms);
+		$phrases = array_merge(
+			$protected_phrases,
+			$this->build_phrases($protected_phrase_parts['remaining_query'], $quoted_phrases, $terms)
+		);
 		$boolean_query = $this->build_boolean_query($fulltext_terms);
 
 		return array(
 			'raw'              => $raw_query,
 			'normalized'       => $normalized_query,
+			'term_query'       => $protected_phrase_parts['remaining_query'],
 			'terms'            => $terms,
 			'all_terms'        => $all_terms,
-			'fulltext_terms'   => $fulltext_terms,
-			'ignored_terms'    => $ignored_terms,
+			'protected_phrase_terms' => array_values(array_unique($protected_phrase_terms)),
+			'fulltext_terms'   => array_values($fulltext_terms),
+			'ignored_terms'    => array_values($ignored_terms),
 			'phrases'          => $phrases,
 			'exact_phrase'     => isset($phrases[0]) ? $phrases[0] : '',
+			'protected_phrase' => isset($protected_phrases[0]) ? $protected_phrases[0] : '',
+			'protected_phrases' => $protected_phrases,
+			'is_exact_phrase_only' => $has_protected_phrases && empty($terms),
+			'has_protected_phrases' => $has_protected_phrases,
 			'boolean_query'    => $boolean_query,
 			'is_empty'         => $normalized_query === '',
-			'is_searchable'    => $boolean_query !== '',
-			'min_term_length'  => self::MIN_FULLTEXT_TERM_LENGTH,
+			'is_searchable'    => $boolean_query !== '' || $has_protected_phrases,
+			'min_term_length'  => $min_word_length,
+			'fulltext_min_term_length' => self::MIN_FULLTEXT_TERM_LENGTH,
 			'max_query_length' => self::MAX_QUERY_LENGTH,
 		);
 	}
@@ -142,9 +162,15 @@ class VFWP_Intranet_Search_Query_Parser {
 
 		preg_match_all('/[\p{L}\p{N}]+/u', $text, $matches);
 		$terms = array();
+		$stopwords = $this->get_stopwords();
+		$min_word_length = $this->get_min_word_length();
 
 		foreach ($matches[0] as $term) {
-			if ($remove_stopwords && in_array($term, $this->stopwords, true)) {
+			if ($remove_stopwords && $this->string_length($term) < $min_word_length) {
+				continue;
+			}
+
+			if ($remove_stopwords && in_array($term, $stopwords, true)) {
 				continue;
 			}
 
@@ -192,22 +218,21 @@ class VFWP_Intranet_Search_Query_Parser {
 	 *
 	 * @param string $normalized_query Normalized full query.
 	 * @param array  $quoted_phrases Quoted phrases.
-	 * @param array  $fulltext_terms Searchable fulltext terms.
+	 * @param array  $terms Query terms.
 	 * @return array
 	 */
-	private function build_phrases($normalized_query, array $quoted_phrases, array $fulltext_terms) {
+	private function build_phrases($normalized_query, array $quoted_phrases, array $terms) {
 		$phrases = array();
 
-		if (count($fulltext_terms) > 1) {
-			$whole_query_phrase = implode(' ', $fulltext_terms);
+		if (count($terms) > 1 && $this->contains_fulltext_term($terms)) {
+			$whole_query_phrase = implode(' ', $terms);
 			$phrases[$whole_query_phrase] = $whole_query_phrase;
 		}
 
 		foreach ($quoted_phrases as $phrase) {
 			$phrase_terms = $this->extract_terms($phrase, true);
-			$phrase_terms = array_filter($phrase_terms, array($this, 'is_fulltext_length'));
 
-			if (count($phrase_terms) > 1) {
+			if (count($phrase_terms) > 1 && $this->contains_fulltext_term($phrase_terms)) {
 				$normalized_phrase = implode(' ', $phrase_terms);
 				$phrases[$normalized_phrase] = $normalized_phrase;
 			}
@@ -286,5 +311,107 @@ class VFWP_Intranet_Search_Query_Parser {
 	 */
 	private function is_fulltext_length($term) {
 		return $this->string_length($term) >= self::MIN_FULLTEXT_TERM_LENGTH;
+	}
+
+	/**
+	 * Return configured minimum query word length.
+	 *
+	 * @return int
+	 */
+	private function get_min_word_length() {
+		if (class_exists('VFWP_Intranet_Search_Settings')) {
+			return VFWP_Intranet_Search_Settings::get_query_min_word_length();
+		}
+
+		return 2;
+	}
+
+	/**
+	 * Return configured stopwords.
+	 *
+	 * @return array
+	 */
+	private function get_stopwords() {
+		if (class_exists('VFWP_Intranet_Search_Settings')) {
+			return VFWP_Intranet_Search_Settings::get_stopwords();
+		}
+
+		return $this->default_stopwords;
+	}
+
+	/**
+	 * Extract configured exact phrases from a normalized query.
+	 *
+	 * @param string $normalized_query Normalized full query.
+	 * @return array
+	 */
+	private function extract_protected_phrase_parts($normalized_query) {
+		$normalized_query = trim((string) $normalized_query);
+
+		if ($normalized_query === '' || !class_exists('VFWP_Intranet_Search_Settings')) {
+			return array(
+				'phrases'         => array(),
+				'remaining_query' => $normalized_query,
+			);
+		}
+
+		$configured_phrases = VFWP_Intranet_Search_Settings::get_exact_phrases();
+
+		usort($configured_phrases, array($this, 'sort_strings_by_length_desc'));
+
+		$remaining_query = $normalized_query;
+		$protected_phrases = array();
+
+		foreach ($configured_phrases as $phrase) {
+			$phrase = trim((string) $phrase);
+
+			if ($phrase === '') {
+				continue;
+			}
+
+			$pattern = '/(^|\s)' . preg_quote($phrase, '/') . '(?=\s|$)/u';
+
+			if (preg_match($pattern, $remaining_query) !== 1) {
+				continue;
+			}
+
+			$protected_phrases[$phrase] = $phrase;
+			$remaining_query = preg_replace($pattern, ' ', $remaining_query);
+			$remaining_query = is_string($remaining_query)
+				? trim(preg_replace('/\s+/u', ' ', $remaining_query))
+				: '';
+		}
+
+		return array(
+			'phrases'         => array_values($protected_phrases),
+			'remaining_query' => $remaining_query,
+		);
+	}
+
+	/**
+	 * Sort strings from longest to shortest.
+	 *
+	 * @param string $a First value.
+	 * @param string $b Second value.
+	 * @return int
+	 */
+	private function sort_strings_by_length_desc($a, $b) {
+		return $this->string_length($b) - $this->string_length($a);
+	}
+
+	/**
+	 * Determine whether a term list includes at least one FULLTEXT-sized term.
+	 *
+	 * @param array $terms Terms.
+	 * @return bool
+	 */
+	private function contains_fulltext_term(array $terms) {
+		foreach ($terms as $term) {
+			if ($this->is_fulltext_length($term)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

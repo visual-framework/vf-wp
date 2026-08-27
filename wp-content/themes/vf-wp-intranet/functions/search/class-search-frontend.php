@@ -294,11 +294,6 @@ class VFWP_Intranet_Search_Frontend {
 	 */
 	public static function get_content_type_definitions() {
 		return array(
-			'all' => array(
-				'label'        => __('All', 'vfwp'),
-				'description'  => __('Web pages and PDF documents', 'vfwp'),
-				'object_types' => array('post', 'pdf'),
-			),
 			'web' => array(
 				'label'        => __('Web pages', 'vfwp'),
 				'description'  => __('Pages, posts and enabled custom post types', 'vfwp'),
@@ -315,17 +310,17 @@ class VFWP_Intranet_Search_Frontend {
 	/**
 	 * Return selected content-type filter.
 	 *
-	 * @return string all|web|pdf
+	 * @return string web|pdf
 	 */
 	public static function get_selected_content_type() {
 		if (empty($_GET[self::CONTENT_TYPE_PARAM])) {
-			return 'all';
+			return 'web';
 		}
 
 		$content_type = sanitize_key(wp_unslash($_GET[self::CONTENT_TYPE_PARAM]));
 		$definitions = self::get_content_type_definitions();
 
-		return isset($definitions[$content_type]) ? $content_type : 'all';
+		return isset($definitions[$content_type]) ? $content_type : 'web';
 	}
 
 	/**
@@ -382,9 +377,15 @@ class VFWP_Intranet_Search_Frontend {
 	public static function get_filter_definitions() {
 		return array(
 			'page'          => array(
-				'label'        => __('Page', 'vfwp'),
-				'query_value'  => 'Page',
-				'post_types'   => array('page', 'teams'),
+				'label'        => __('Pages', 'vfwp'),
+				'query_value'  => 'Pages',
+				'post_types'   => array('page'),
+				'object_types' => array('post'),
+			),
+			'teams'         => array(
+				'label'        => __('Teams', 'vfwp'),
+				'query_value'  => 'Teams',
+				'post_types'   => array('teams'),
 				'object_types' => array('post'),
 			),
 			'people'        => array(
@@ -487,12 +488,53 @@ class VFWP_Intranet_Search_Frontend {
 	}
 
 	/**
+	 * Return a result count summary with safe emphasis markup.
+	 *
+	 * @param array $pagination SearchService pagination data.
+	 * @param mixed $query Search query override.
+	 * @return string
+	 */
+	public static function get_result_count_html(array $pagination, $query = null) {
+		$total = isset($pagination['total']) ? (int) $pagination['total'] : 0;
+		$query = null === $query ? self::get_query() : (string) $query;
+		$query = trim($query);
+		$count_html = '<strong>' . esc_html(number_format_i18n($total)) . '</strong>';
+
+		if ($total < 1) {
+			if ($query !== '') {
+				return sprintf(
+					/* translators: %s: search query. */
+					__('No results for %s', 'vfwp'),
+					'<strong>"' . esc_html($query) . '"</strong>'
+				);
+			}
+
+			return esc_html__('No results found', 'vfwp');
+		}
+
+		if ($query !== '') {
+			return sprintf(
+				/* translators: 1: result count, 2: search query. */
+				_n('%1$s result for %2$s', '%1$s results for %2$s', $total, 'vfwp'),
+				$count_html,
+				'<strong>"' . esc_html($query) . '"</strong>'
+			);
+		}
+
+		return sprintf(
+			/* translators: %s: result count. */
+			_n('%s result', '%s results', $total, 'vfwp'),
+			$count_html
+		);
+	}
+
+	/**
 	 * Determine whether the current search has active filters.
 	 *
 	 * @return bool
 	 */
 	public static function has_active_filters() {
-		return self::get_selected_content_type() !== 'all' || !empty(self::get_selected_filter_slugs());
+		return self::get_selected_content_type() !== 'web' || !empty(self::get_selected_filter_slugs());
 	}
 
 	/**
@@ -505,7 +547,7 @@ class VFWP_Intranet_Search_Frontend {
 		$content_type = self::get_selected_content_type();
 		$content_type_definitions = self::get_content_type_definitions();
 
-		if ($content_type !== 'all' && isset($content_type_definitions[$content_type])) {
+		if ($content_type !== 'web' && isset($content_type_definitions[$content_type])) {
 			$active_filters[] = array(
 				'type'       => 'content_type',
 				'slug'       => $content_type,
@@ -544,17 +586,25 @@ class VFWP_Intranet_Search_Frontend {
 			return '';
 		}
 
-		$html = '<div class="vf-cluster | vf-u-margin__bottom--400" aria-label="' . esc_attr__('Active filters', 'vfwp') . '">';
-		$html .= '<span class="vf-text-body vf-text-body--5">' . esc_html__('Active filters:', 'vfwp') . '</span>';
+		$html = '<div class="vf-search-active-filters | vf-u-margin__bottom--400" aria-label="' . esc_attr__('Active filters', 'vfwp') . '">';
+		$html .= '<div class="vf-search-active-filters__list">';
 
 		foreach ($active_filters as $active_filter) {
-			$html .= '<a class="vf-badge vf-badge--tertiary | vf-u-margin__right--100" href="' . esc_url($active_filter['remove_url']) . '">';
-			$html .= esc_html($active_filter['label']) . ' <span aria-hidden="true">x</span>';
-			$html .= '<span class="vf-u-sr-only"> ' . esc_html__('Remove filter', 'vfwp') . '</span>';
+			$remove_label = sprintf(
+				/* translators: %s: active search filter label. */
+				__('Remove %s filter', 'vfwp'),
+				$active_filter['label']
+			);
+
+			$html .= '<span class="vf-badge vf-badge--secondary vf-search-active-filter">';
+			$html .= '<span class="vf-search-active-filter__label">' . esc_html($active_filter['label']) . '</span>';
+			$html .= '<a class="vf-search-active-filter__remove" href="' . esc_url($active_filter['remove_url']) . '" aria-label="' . esc_attr($remove_label) . '">';
+			$html .= '<span aria-hidden="true">x</span>';
 			$html .= '</a>';
+			$html .= '</span>';
 		}
 
-		$html .= '<a class="vf-link" href="' . esc_url(self::get_clear_filters_url()) . '">' . esc_html__('Clear filters', 'vfwp') . '</a>';
+		$html .= '</div>';
 		$html .= '</div>';
 
 		return $html;
@@ -568,7 +618,7 @@ class VFWP_Intranet_Search_Frontend {
 	public static function get_clear_filters_url() {
 		return self::build_search_url(
 			array(
-				self::CONTENT_TYPE_PARAM => 'all',
+				self::CONTENT_TYPE_PARAM => 'web',
 				self::FILTER_PARAM       => array(),
 			)
 		);
@@ -586,7 +636,7 @@ class VFWP_Intranet_Search_Frontend {
 		$selected_filters = self::get_selected_filter_slugs();
 
 		if ('content_type' === $filter_type) {
-			$content_type = 'all';
+			$content_type = 'web';
 		}
 
 		if ('search_type' === $filter_type) {
@@ -660,7 +710,17 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return string
 	 */
 	private static function normalize_filter_slug($raw_value) {
-		return sanitize_title((string) $raw_value);
+		$slug = sanitize_title((string) $raw_value);
+
+		if ('page' === $slug) {
+			return 'page';
+		}
+
+		if ('pages' === $slug) {
+			return 'page';
+		}
+
+		return $slug;
 	}
 
 	/**
@@ -670,10 +730,14 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return array
 	 */
 	private static function get_object_types_for_content_type($content_type) {
+		if ('all' === $content_type) {
+			return array('post', 'pdf');
+		}
+
 		$definitions = self::get_content_type_definitions();
 
 		if (!isset($definitions[$content_type])) {
-			$content_type = 'all';
+			$content_type = 'web';
 		}
 
 		return $definitions[$content_type]['object_types'];
@@ -694,7 +758,7 @@ class VFWP_Intranet_Search_Frontend {
 			? sanitize_key($overrides[self::CONTENT_TYPE_PARAM])
 			: self::get_selected_content_type();
 
-		if ($content_type !== 'all') {
+		if ($content_type !== 'web') {
 			$args[self::CONTENT_TYPE_PARAM] = $content_type;
 		}
 
@@ -744,7 +808,7 @@ class VFWP_Intranet_Search_Frontend {
 	private static function get_legacy_post_type_filter_map() {
 		return array(
 			'page'      => 'page',
-			'teams'     => 'page',
+			'teams'     => 'teams',
 			'people'    => 'people',
 			'documents' => 'documents',
 			'insites'   => 'news',

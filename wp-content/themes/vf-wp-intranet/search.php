@@ -23,6 +23,10 @@ $vfwp_selected_content_type = class_exists('VFWP_Intranet_Search_Frontend')
 $vfwp_active_search_filters = class_exists('VFWP_Intranet_Search_Frontend')
   ? VFWP_Intranet_Search_Frontend::get_active_filters()
   : array();
+$vfwp_indexed_search_total = isset($vfwp_indexed_search_pagination['total'])
+  ? (int) $vfwp_indexed_search_pagination['total']
+  : 0;
+$vfwp_search_show_clear_filters = !is_array($vfwp_indexed_search_response) || $vfwp_indexed_search_total > 0;
 
 get_header();
 
@@ -91,12 +95,12 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
   <div></div>
   <div>
     <form role="search" method="get"
-      class="vf-form vf-form--search | vf-sidebar vf-sidebar--end"
+      class="vf-form vf-form--search vf-form--search--responsive | vf-sidebar vf-sidebar--end"
       action="<?php echo esc_url(home_url('/')); ?>">
       <div class="vf-sidebar__inner">
-        <div class="vf-form__item | vf-search__item">
-          <label class="vf-form__label vf-u-sr-only | vf-search__label" for="search"><?php esc_html_e('Search the intranet', 'vfwp'); ?></label>
-          <input id="search" class="vf-form__input vf-form__input--filter" type="text" placeholder="Enter your search term"
+        <div class="vf-form__item">
+          <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem"><?php esc_html_e('Search', 'vfwp'); ?></label>
+          <input id="searchitem" class="vf-form__input" type="search" placeholder="<?php esc_attr_e('Enter your search terms', 'vfwp'); ?>"
             value="<?php echo esc_attr(get_search_query()); ?>" name="s"
             aria-describedby="search-result-count">
         </div>
@@ -120,6 +124,11 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
         <button type="submit" class="vf-search__button | vf-button vf-button--primary"
           value="<?php esc_attr_e('Search', 'vfwp'); ?>">
           <span class="vf-button__text">Search</span>
+          <svg class="vf-icon vf-icon--search-btn | vf-button__icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" viewBox="0 0 140 140" width="140" height="140">
+            <g transform="matrix(5.833333333333333,0,0,5.833333333333333,0,0)">
+              <path d="M23.414,20.591l-4.645-4.645a10.256,10.256,0,1,0-2.828,2.829l4.645,4.644a2.025,2.025,0,0,0,2.828,0A2,2,0,0,0,23.414,20.591ZM10.25,3.005A7.25,7.25,0,1,1,3,10.255,7.258,7.258,0,0,1,10.25,3.005Z" fill="#FFFFFF" stroke="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="0"></path>
+            </g>
+          </svg>
         </button>
       </div>
     </form>
@@ -135,12 +144,12 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
         <?php
         if (is_array($vfwp_indexed_search_response)) {
           if (!empty($vfwp_indexed_search_results)) {
-            if (class_exists('VFWP_Intranet_Search_Frontend')) {
-              echo '<p id="search-result-count" class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400" role="status">' . esc_html(VFWP_Intranet_Search_Frontend::get_result_count_text($vfwp_indexed_search_pagination, get_search_query(false))) . '</p>';
-            }
-
             if (!empty($vfwp_active_search_filters) && class_exists('VFWP_Intranet_Search_Frontend')) {
               echo VFWP_Intranet_Search_Frontend::render_active_filters();
+            }
+
+            if (class_exists('VFWP_Intranet_Search_Frontend')) {
+              echo '<p id="search-result-count" class="vf-text-body vf-text-body--3 | vf-u-margin__bottom--400" role="status">' . wp_kses(VFWP_Intranet_Search_Frontend::get_result_count_html($vfwp_indexed_search_pagination, get_search_query(false)), array('strong' => array())) . '</p>';
             }
 
             $vfwp_indexed_search_post_ids = array();
@@ -182,13 +191,13 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
             }
           } else {
             echo '<div class="vf-stack vf-stack--200" role="status" aria-live="polite">';
-            if (class_exists('VFWP_Intranet_Search_Frontend')) {
-              echo '<h2 class="vf-text-heading--3" id="search-result-count">' . esc_html(VFWP_Intranet_Search_Frontend::get_result_count_text($vfwp_indexed_search_pagination, get_search_query(false))) . '</h2>';
-            } else {
-              echo '<h2 class="vf-text-heading--3" id="search-result-count">' . esc_html__('No results found', 'vfwp') . '</h2>';
-            }
             if (!empty($vfwp_active_search_filters) && class_exists('VFWP_Intranet_Search_Frontend')) {
               echo VFWP_Intranet_Search_Frontend::render_active_filters();
+            }
+            if (class_exists('VFWP_Intranet_Search_Frontend')) {
+              echo '<h2 class="vf-text-heading--3" id="search-result-count">' . wp_kses(VFWP_Intranet_Search_Frontend::get_result_count_html($vfwp_indexed_search_pagination, get_search_query(false)), array('strong' => array())) . '</h2>';
+            } else {
+              echo '<h2 class="vf-text-heading--3" id="search-result-count">' . esc_html__('No results found', 'vfwp') . '</h2>';
             }
             echo '<p>' . esc_html__('Try checking the spelling, using fewer words, or searching for a broader term.', 'vfwp') . '</p>';
             echo '<ul class="vf-list">';
@@ -199,9 +208,6 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
               echo '<li class="vf-list__item">' . esc_html__('Remove filters to search more content.', 'vfwp') . '</li>';
             }
             echo '</ul>';
-            if (class_exists('VFWP_Intranet_Search_Frontend') && VFWP_Intranet_Search_Frontend::has_active_filters()) {
-              echo '<p><a class="vf-button vf-button--secondary" href="' . esc_url(VFWP_Intranet_Search_Frontend::get_clear_filters_url()) . '">' . esc_html__('Clear filters', 'vfwp') . '</a></p>';
-            }
             echo '</div>';
           }
         } elseif ( have_posts() ) {

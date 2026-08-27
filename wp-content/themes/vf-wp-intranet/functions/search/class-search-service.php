@@ -229,8 +229,8 @@ class VFWP_Intranet_Search_Service {
 						+ (scored.title_phrase_hit * {$score_parts['weights']['title']} * 250)
 						+ (IF(scored.title_term_hits = {$score_parts['term_count']}, 1, 0) * {$score_parts['weights']['title']} * 100)
 						+ (scored.title_term_hits * {$score_parts['weights']['title']} * 20)
-						+ (scored.acf_phrase_hit * {$score_parts['weights']['acf_keywords']} * 140)
-						+ (scored.acf_term_hits * {$score_parts['weights']['acf_keywords']} * 12)
+						+ (scored.acf_phrase_hit * {$score_parts['weights']['acf_keywords']} * 500)
+						+ (scored.acf_term_hits * {$score_parts['weights']['acf_keywords']} * 20)
 						+ (scored.excerpt_phrase_hit * {$score_parts['weights']['excerpt']} * 80)
 						+ (scored.excerpt_term_hits * {$score_parts['weights']['excerpt']} * 8)
 						+ (scored.content_phrase_hit * {$score_parts['weights']['content']} * 30)
@@ -288,15 +288,79 @@ class VFWP_Intranet_Search_Service {
 	 * @return array
 	 */
 	private function build_where_sql(array $parsed_query, array $filters) {
-		$table_name = VFWP_Intranet_Search_Schema::table_name();
 		$params = array();
 		$conditions = array(
 			'visibility = %s',
-			'MATCH(title,excerpt,content,acf_keywords) AGAINST (%s IN BOOLEAN MODE)',
 		);
 		$params[] = 'public';
-		$params[] = $parsed_query['boolean_query'];
 
+		if (!empty($parsed_query['has_protected_phrases'])) {
+			if ($parsed_query['boolean_query'] !== '') {
+				$normal_content_conditions = array(
+					'MATCH(title) AGAINST (%s IN BOOLEAN MODE)',
+					'MATCH(excerpt) AGAINST (%s IN BOOLEAN MODE)',
+					'MATCH(content) AGAINST (%s IN BOOLEAN MODE)',
+				);
+				$params[] = $parsed_query['boolean_query'];
+				$params[] = $parsed_query['boolean_query'];
+				$params[] = $parsed_query['boolean_query'];
+
+				$protected_phrase_match_sql = $this->build_all_exact_phrases_match_sql(
+					array('title', 'excerpt', 'content'),
+					isset($parsed_query['protected_phrases']) ? $parsed_query['protected_phrases'] : array(),
+					$params
+				);
+
+				$normal_content_candidate = '((' . implode(' OR ', $normal_content_conditions) . ') AND ' . $protected_phrase_match_sql . ')';
+			} else {
+				$protected_phrase_match_sql = $this->build_all_exact_phrases_match_sql(
+					array('title', 'excerpt', 'content'),
+					isset($parsed_query['protected_phrases']) ? $parsed_query['protected_phrases'] : array(),
+					$params
+				);
+
+				$normal_content_candidate = $protected_phrase_match_sql;
+			}
+
+			$all_query_terms_match_sql = $this->build_all_query_terms_match_sql(
+				"CONCAT_WS(' ', title, excerpt, content)",
+				isset($parsed_query['terms']) ? $parsed_query['terms'] : array(),
+				$params
+			);
+
+			if ($all_query_terms_match_sql !== '1') {
+				$normal_content_candidate = '(' . $normal_content_candidate . ' AND ' . $all_query_terms_match_sql . ')';
+			}
+		} else {
+			$normal_content_conditions = array(
+				'MATCH(title) AGAINST (%s IN BOOLEAN MODE)',
+				'MATCH(excerpt) AGAINST (%s IN BOOLEAN MODE)',
+				'MATCH(content) AGAINST (%s IN BOOLEAN MODE)',
+			);
+			$params[] = $parsed_query['boolean_query'];
+			$params[] = $parsed_query['boolean_query'];
+			$params[] = $parsed_query['boolean_query'];
+
+			$normal_content_candidate = '(' . implode(' OR ', $normal_content_conditions) . ')';
+			$all_query_terms_match_sql = $this->build_all_query_terms_match_sql(
+				"CONCAT_WS(' ', title, excerpt, content)",
+				isset($parsed_query['terms']) ? $parsed_query['terms'] : array(),
+				$params
+			);
+
+			if ($all_query_terms_match_sql !== '1') {
+				$normal_content_candidate = '(' . $normal_content_candidate . ' AND ' . $all_query_terms_match_sql . ')';
+			}
+		}
+
+		$candidate_conditions = array($normal_content_candidate);
+		$acf_exact_keyword_match_sql = $this->build_acf_exact_keyword_match_sql($parsed_query, $params);
+
+		if ($acf_exact_keyword_match_sql !== '0') {
+			$candidate_conditions[] = '(' . $acf_exact_keyword_match_sql . ')';
+		}
+
+		$conditions[] = '(' . implode(' OR ', $candidate_conditions) . ')';
 		$conditions[] = 'object_type IN (' . implode(',', array_fill(0, count($filters['object_types']), '%s')) . ')';
 		$params = array_merge($params, $filters['object_types']);
 
@@ -332,25 +396,37 @@ class VFWP_Intranet_Search_Service {
 		$select_parts = array(
 			'IF(title = %s, 1, 0) AS exact_title_match',
 			$this->build_phrase_hit_sql('title', $parsed_query['phrases'], $params) . ' AS title_phrase_hit',
-			$this->build_phrase_hit_sql('acf_keywords', $parsed_query['phrases'], $params) . ' AS acf_phrase_hit',
+			$this->build_acf_exact_keyword_match_sql($parsed_query, $params) . ' AS acf_phrase_hit',
 			$this->build_phrase_hit_sql('excerpt', $parsed_query['phrases'], $params) . ' AS excerpt_phrase_hit',
 			$this->build_phrase_hit_sql('content', $parsed_query['phrases'], $params) . ' AS content_phrase_hit',
 			$this->build_term_hit_sql('title', $parsed_query['fulltext_terms'], $params) . ' AS title_term_hits',
-			$this->build_term_hit_sql('acf_keywords', $parsed_query['fulltext_terms'], $params) . ' AS acf_term_hits',
+			'(' . $this->build_acf_exact_keyword_match_sql($parsed_query, $params) . ' * ' . $term_count . ') AS acf_term_hits',
 			$this->build_term_hit_sql('excerpt', $parsed_query['fulltext_terms'], $params) . ' AS excerpt_term_hits',
 			$this->build_term_hit_sql('content', $parsed_query['fulltext_terms'], $params) . ' AS content_term_hits',
-			$this->build_term_hit_sql("CONCAT_WS(' ', title, excerpt, content, acf_keywords)", $parsed_query['fulltext_terms'], $params) . ' AS all_field_term_hits',
-			'MATCH(title) AGAINST (%s IN BOOLEAN MODE) AS ft_title',
-			'MATCH(acf_keywords) AGAINST (%s IN BOOLEAN MODE) AS ft_acf_keywords',
-			'MATCH(excerpt) AGAINST (%s IN BOOLEAN MODE) AS ft_excerpt',
-			'MATCH(content) AGAINST (%s IN BOOLEAN MODE) AS ft_content',
+			$this->build_term_hit_sql("CONCAT_WS(' ', title, excerpt, content)", $parsed_query['fulltext_terms'], $params) . ' AS all_field_term_hits',
 		);
 
 		array_unshift($params, $parsed_query['normalized']);
-		$params[] = $parsed_query['boolean_query'];
-		$params[] = $parsed_query['boolean_query'];
-		$params[] = $parsed_query['boolean_query'];
-		$params[] = $parsed_query['boolean_query'];
+
+		if ($parsed_query['boolean_query'] !== '') {
+			$select_parts[] = 'MATCH(title) AGAINST (%s IN BOOLEAN MODE) AS ft_title';
+			$params[] = $parsed_query['boolean_query'];
+
+			$acf_fulltext_gate_sql = $this->build_acf_exact_keyword_match_sql($parsed_query, $params);
+			$select_parts[] = 'IF(' . $acf_fulltext_gate_sql . ', MATCH(acf_keywords) AGAINST (%s IN BOOLEAN MODE), 0) AS ft_acf_keywords';
+			$params[] = $parsed_query['boolean_query'];
+
+			$select_parts[] = 'MATCH(excerpt) AGAINST (%s IN BOOLEAN MODE) AS ft_excerpt';
+			$params[] = $parsed_query['boolean_query'];
+
+			$select_parts[] = 'MATCH(content) AGAINST (%s IN BOOLEAN MODE) AS ft_content';
+			$params[] = $parsed_query['boolean_query'];
+		} else {
+			$select_parts[] = '0 AS ft_title';
+			$select_parts[] = '0 AS ft_acf_keywords';
+			$select_parts[] = '0 AS ft_excerpt';
+			$select_parts[] = '0 AS ft_content';
+		}
 
 		return array(
 			'select_sql'  => implode(",\n\t\t\t\t\t", $select_parts),
@@ -358,6 +434,195 @@ class VFWP_Intranet_Search_Service {
 			'term_count'  => $term_count,
 			'weights'     => $weights,
 		);
+	}
+
+	/**
+	 * Build exact keyword-entry matching SQL for ACF keyword fields.
+	 *
+	 * @param array $parsed_query Parsed query.
+	 * @param array $params SQL params.
+	 * @return string
+	 */
+	private function build_acf_exact_keyword_match_sql(array $parsed_query, array &$params) {
+		$pattern = $this->build_acf_exact_keyword_regexp(isset($parsed_query['normalized']) ? $parsed_query['normalized'] : '');
+
+		if ($pattern === '') {
+			return '0';
+		}
+
+		$params[] = $pattern;
+
+		return 'LOWER(acf_keywords) REGEXP %s';
+	}
+
+	/**
+	 * Build a delimiter-aware regexp for an exact ACF keyword entry.
+	 *
+	 * @param string $keyword Normalized query.
+	 * @return string
+	 */
+	private function build_acf_exact_keyword_regexp($keyword) {
+		$keyword = trim((string) $keyword);
+
+		if ($keyword === '') {
+			return '';
+		}
+
+		$terms = preg_split('/\s+/u', $keyword);
+
+		if (!is_array($terms)) {
+			return '';
+		}
+
+		$terms = array_values(array_filter(array_map('trim', $terms)));
+
+		if (empty($terms)) {
+			return '';
+		}
+
+		$escaped_terms = array();
+
+		foreach ($terms as $term) {
+			$escaped_terms[] = preg_quote($term, '/');
+		}
+
+		return '(^|[,;\r\n|])[[:space:]]*' . implode('[[:space:]]+', $escaped_terms) . '[[:space:]]*($|[,;\r\n|])';
+	}
+
+	/**
+	 * Build SQL requiring every parsed query term to appear in normal content.
+	 *
+	 * @param string $field_sql Field SQL.
+	 * @param array  $terms Query terms.
+	 * @param array  $params SQL params.
+	 * @return string
+	 */
+	private function build_all_query_terms_match_sql($field_sql, array $terms, array &$params) {
+		$conditions = array();
+
+		foreach ($terms as $term) {
+			$pattern = $this->build_query_term_regexp($term);
+
+			if ($pattern === '') {
+				continue;
+			}
+
+			$conditions[] = "LOWER({$field_sql}) REGEXP %s";
+			$params[] = $pattern;
+		}
+
+		if (empty($conditions)) {
+			return '1';
+		}
+
+		return '(' . implode(' AND ', $conditions) . ')';
+	}
+
+	/**
+	 * Build SQL requiring an exact normalized phrase to appear in at least one field.
+	 *
+	 * @param array  $field_sqls Field SQL fragments.
+	 * @param string $phrase Exact phrase.
+	 * @param array  $params SQL params.
+	 * @return string
+	 */
+	private function build_exact_phrase_match_sql(array $field_sqls, $phrase, array &$params) {
+		$pattern = $this->build_exact_phrase_regexp($phrase);
+
+		if ($pattern === '') {
+			return '0';
+		}
+
+		$conditions = array();
+
+		foreach ($field_sqls as $field_sql) {
+			$conditions[] = "LOWER({$field_sql}) REGEXP %s";
+			$params[] = $pattern;
+		}
+
+		return '(' . implode(' OR ', $conditions) . ')';
+	}
+
+	/**
+	 * Build SQL requiring every protected phrase to appear in at least one field.
+	 *
+	 * @param array $field_sqls Field SQL fragments.
+	 * @param array $phrases Exact phrases.
+	 * @param array $params SQL params.
+	 * @return string
+	 */
+	private function build_all_exact_phrases_match_sql(array $field_sqls, array $phrases, array &$params) {
+		$conditions = array();
+
+		foreach ($phrases as $phrase) {
+			$condition = $this->build_exact_phrase_match_sql($field_sqls, $phrase, $params);
+
+			if ($condition !== '0') {
+				$conditions[] = $condition;
+			}
+		}
+
+		if (empty($conditions)) {
+			return '0';
+		}
+
+		return '(' . implode(' AND ', $conditions) . ')';
+	}
+
+	/**
+	 * Build a word-aware regexp for a normalized exact phrase.
+	 *
+	 * @param string $phrase Exact phrase.
+	 * @return string
+	 */
+	private function build_exact_phrase_regexp($phrase) {
+		$phrase = trim((string) $phrase);
+
+		if ($phrase === '') {
+			return '';
+		}
+
+		$terms = preg_split('/\s+/u', $phrase);
+
+		if (!is_array($terms)) {
+			return '';
+		}
+
+		$terms = array_values(array_filter(array_map('trim', $terms)));
+
+		if (empty($terms)) {
+			return '';
+		}
+
+		$escaped_terms = array();
+
+		foreach ($terms as $term) {
+			$escaped_terms[] = preg_quote($term, '/');
+		}
+
+		return '(^|[^[:alnum:]_])' . implode('[^[:alnum:]_]+', $escaped_terms) . '([^[:alnum:]_]|$)';
+	}
+
+	/**
+	 * Build a word-aware regexp for one query term.
+	 *
+	 * @param string $term Query term.
+	 * @return string
+	 */
+	private function build_query_term_regexp($term) {
+		$term = trim((string) $term);
+
+		if ($term === '') {
+			return '';
+		}
+
+		$escaped_term = preg_quote($term, '/');
+
+		if ($this->string_length($term) < 3) {
+			return '(^|[^[:alnum:]_])' . $escaped_term . '([^[:alnum:]_]|$)';
+		}
+
+		return '(^|[^[:alnum:]_])' . $escaped_term . '[[:alnum:]_]*';
 	}
 
 	/**
@@ -376,7 +641,7 @@ class VFWP_Intranet_Search_Service {
 		$conditions = array();
 
 		foreach ($phrases as $phrase) {
-			$conditions[] = "LOCATE(%s, {$field_sql}) > 0";
+			$conditions[] = "LOCATE(%s, LOWER({$field_sql})) > 0";
 			$params[] = $phrase;
 		}
 
@@ -399,11 +664,25 @@ class VFWP_Intranet_Search_Service {
 		$parts = array();
 
 		foreach ($terms as $term) {
-			$parts[] = "IF(LOCATE(%s, {$field_sql}) > 0, 1, 0)";
+			$parts[] = "IF(LOCATE(%s, LOWER({$field_sql})) > 0, 1, 0)";
 			$params[] = $term;
 		}
 
 		return '(' . implode(' + ', $parts) . ')';
+	}
+
+	/**
+	 * Return Unicode-aware string length.
+	 *
+	 * @param string $text Text.
+	 * @return int
+	 */
+	private function string_length($text) {
+		if (function_exists('mb_strlen')) {
+			return (int) mb_strlen($text, 'UTF-8');
+		}
+
+		return strlen($text);
 	}
 
 	/**

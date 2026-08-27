@@ -36,6 +36,9 @@ class VFWP_Intranet_Search_Settings {
 			),
 			'post_types'      => array(),
 			'acf_field_names' => array(),
+			'query_min_word_length' => 2,
+			'stopwords'       => self::default_stopwords(),
+			'exact_phrases'   => array(),
 		);
 	}
 
@@ -63,9 +66,10 @@ class VFWP_Intranet_Search_Settings {
 			$settings['post_types'] = array();
 		}
 
-		$settings['acf_field_names'] = is_array($settings['acf_field_names'])
-			? self::parse_acf_field_names(implode(',', $settings['acf_field_names']))
-			: self::parse_acf_field_names((string) $settings['acf_field_names']);
+		$settings['acf_field_names'] = self::parse_acf_field_names($settings['acf_field_names']);
+		$settings['query_min_word_length'] = self::sanitize_min_word_length_value($settings['query_min_word_length']);
+		$settings['stopwords'] = self::parse_stopwords($settings['stopwords']);
+		$settings['exact_phrases'] = self::parse_exact_phrases($settings['exact_phrases']);
 
 		return $settings;
 	}
@@ -86,6 +90,33 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	public static function get_acf_field_names() {
 		return self::get_settings()['acf_field_names'];
+	}
+
+	/**
+	 * Return minimum query word length for term matching.
+	 *
+	 * @return int
+	 */
+	public static function get_query_min_word_length() {
+		return (int) self::get_settings()['query_min_word_length'];
+	}
+
+	/**
+	 * Return configured query stopwords.
+	 *
+	 * @return array
+	 */
+	public static function get_stopwords() {
+		return self::get_settings()['stopwords'];
+	}
+
+	/**
+	 * Return configured exact phrase searches.
+	 *
+	 * @return array
+	 */
+	public static function get_exact_phrases() {
+		return self::get_settings()['exact_phrases'];
 	}
 
 	/**
@@ -262,6 +293,37 @@ class VFWP_Intranet_Search_Settings {
 			'vfwp-intranet-search',
 			'vfwp_intranet_search_acf'
 		);
+
+		add_settings_section(
+			'vfwp_intranet_search_query_parsing',
+			__('Query parsing', 'vfwp'),
+			array($this, 'render_query_parsing_description'),
+			'vfwp-intranet-search'
+		);
+
+		add_settings_field(
+			'vfwp_intranet_search_min_word_length',
+			__('Minimum word length', 'vfwp'),
+			array($this, 'render_query_min_word_length'),
+			'vfwp-intranet-search',
+			'vfwp_intranet_search_query_parsing'
+		);
+
+		add_settings_field(
+			'vfwp_intranet_search_stopwords',
+			__('Stopwords', 'vfwp'),
+			array($this, 'render_stopwords'),
+			'vfwp-intranet-search',
+			'vfwp_intranet_search_query_parsing'
+		);
+
+		add_settings_field(
+			'vfwp_intranet_search_exact_phrases',
+			__('Exact phrase searches', 'vfwp'),
+			array($this, 'render_exact_phrases'),
+			'vfwp-intranet-search',
+			'vfwp_intranet_search_query_parsing'
+		);
 	}
 
 	/**
@@ -299,8 +361,13 @@ class VFWP_Intranet_Search_Settings {
 			$sanitized['field_weights'][$field] = $this->sanitize_weight($value);
 		}
 
-		$raw_acf_field_names = isset($input['acf_field_names']) ? (string) $input['acf_field_names'] : '';
+		$raw_acf_field_names = isset($input['acf_field_names']) ? $input['acf_field_names'] : '';
 		$sanitized['acf_field_names'] = self::parse_acf_field_names($raw_acf_field_names);
+		$sanitized['query_min_word_length'] = self::sanitize_min_word_length_value(
+			isset($input['query_min_word_length']) ? $input['query_min_word_length'] : self::defaults()['query_min_word_length']
+		);
+		$sanitized['stopwords'] = self::parse_stopwords(isset($input['stopwords']) ? $input['stopwords'] : self::default_stopwords());
+		$sanitized['exact_phrases'] = self::parse_exact_phrases(isset($input['exact_phrases']) ? $input['exact_phrases'] : array());
 
 		foreach (self::get_searchable_post_types() as $post_type => $post_type_object) {
 			$post_type_input = isset($input['post_types'][$post_type]) && is_array($input['post_types'][$post_type])
@@ -481,7 +548,84 @@ class VFWP_Intranet_Search_Settings {
 			<?php $this->render_index_action_button('reindex_changed', __('Reindex changed content', 'vfwp'), 'secondary'); ?>
 			<?php $this->render_index_action_button('clear_recreate', __('Clear/recreate index', 'vfwp'), 'secondary'); ?>
 		</div>
-		<p class="description"><?php echo esc_html__('Index jobs run in safe batches through WP-Cron. Refresh this page to observe progress.', 'vfwp'); ?></p>
+		<p class="description"><?php echo esc_html__('Index jobs run in safe batches. Keep this page open after starting a rebuild to process batches immediately.', 'vfwp'); ?></p>
+		<div
+			id="vfwp-search-index-batch-runner"
+			class="description"
+			data-active="<?php echo esc_attr(!empty($status['active']) ? '1' : '0'); ?>"
+			data-nonce="<?php echo esc_attr(wp_create_nonce('vfwp_intranet_search_process_batch')); ?>"
+		></div>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				var runner = document.getElementById('vfwp-search-index-batch-runner');
+
+				if (!runner || runner.getAttribute('data-active') !== '1' || typeof ajaxurl === 'undefined') {
+					return;
+				}
+
+				var nonce = runner.getAttribute('data-nonce');
+				var isRunning = false;
+
+				function setRunnerText(message) {
+					runner.textContent = message;
+				}
+
+				function processBatch() {
+					if (isRunning) {
+						return;
+					}
+
+					isRunning = true;
+					setRunnerText('<?php echo esc_js(__('Processing search index batch...', 'vfwp')); ?>');
+
+					var body = new URLSearchParams();
+					body.set('action', 'vfwp_intranet_search_process_index_batch');
+					body.set('nonce', nonce);
+
+					fetch(ajaxurl, {
+						method: 'POST',
+						credentials: 'same-origin',
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+						},
+						body: body.toString()
+					})
+						.then(function (response) {
+							return response.json();
+						})
+						.then(function (response) {
+							var status = response && response.data && response.data.status ? response.data.status : null;
+
+							if (!response || !response.success || !status) {
+								setRunnerText('<?php echo esc_js(__('Search index batch processing failed. Refresh the page to inspect status.', 'vfwp')); ?>');
+								return;
+							}
+
+							setRunnerText(
+								(status.processed || 0) + ' / ' + (status.total_planned || 0) + ' <?php echo esc_js(__('items processed.', 'vfwp')); ?>'
+							);
+
+							if (status.active) {
+								isRunning = false;
+								window.setTimeout(processBatch, 300);
+								return;
+							}
+
+							window.setTimeout(function () {
+								window.location.reload();
+							}, 600);
+						})
+						.catch(function () {
+							setRunnerText('<?php echo esc_js(__('Search index batch processing failed. Refresh the page to inspect status.', 'vfwp')); ?>');
+						})
+						.finally(function () {
+							isRunning = false;
+						});
+				}
+
+				processBatch();
+			});
+		</script>
 		<?php
 	}
 
@@ -654,6 +798,73 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
+	 * Render query parsing section description.
+	 *
+	 * @return void
+	 */
+	public function render_query_parsing_description() {
+		echo '<p>' . esc_html__('These settings control how visitor search queries are split into searchable terms. Changes take effect immediately.', 'vfwp') . '</p>';
+	}
+
+	/**
+	 * Render minimum query word length input.
+	 *
+	 * @return void
+	 */
+	public function render_query_min_word_length() {
+		$settings = self::get_settings();
+		?>
+		<input
+			type="number"
+			min="1"
+			max="10"
+			step="1"
+			name="<?php echo esc_attr(self::OPTION_NAME); ?>[query_min_word_length]"
+			value="<?php echo esc_attr((int) $settings['query_min_word_length']); ?>"
+			class="small-text"
+		>
+		<p class="description"><?php echo esc_html__('Words shorter than this are ignored for term matching and highlighting. FULLTEXT candidate selection still depends on the database token length.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render stopwords textarea.
+	 *
+	 * @return void
+	 */
+	public function render_stopwords() {
+		$stopwords = implode("\n", self::get_stopwords());
+		?>
+		<textarea
+			name="<?php echo esc_attr(self::OPTION_NAME); ?>[stopwords]"
+			rows="10"
+			cols="50"
+			class="large-text code"
+		><?php echo esc_textarea($stopwords); ?></textarea>
+		<p class="description"><?php echo esc_html__('Enter one stopword per line, or separate words with commas. Stopwords are ignored as standalone query terms.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render exact phrase searches textarea.
+	 *
+	 * @return void
+	 */
+	public function render_exact_phrases() {
+		$phrases = implode("\n", self::get_exact_phrases());
+		?>
+		<textarea
+			name="<?php echo esc_attr(self::OPTION_NAME); ?>[exact_phrases]"
+			rows="6"
+			cols="50"
+			class="large-text code"
+			placeholder="<?php echo esc_attr__('it services, core facilities, data protection', 'vfwp'); ?>"
+		><?php echo esc_textarea($phrases); ?></textarea>
+		<p class="description"><?php echo esc_html__('Enter one phrase per line, or separate phrases with commas. When a visitor query contains one of these phrases, the search treats the phrase as one protected search unit, requires the complete phrase, and does not split its words into loose standalone terms.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render recent PDF extraction issues for administrators.
 	 *
 	 * @return void
@@ -708,22 +919,222 @@ class VFWP_Intranet_Search_Settings {
 	/**
 	 * Parse comma-separated ACF field names.
 	 *
-	 * @param string $raw_value Raw comma-separated input.
+	 * @param mixed $raw_value Raw comma-separated input.
 	 * @return array
 	 */
 	public static function parse_acf_field_names($raw_value) {
 		$field_names = array();
-		$parts = explode(',', (string) $raw_value);
+		$raw_values = array();
+
+		if (is_array($raw_value)) {
+			$pending_values = array_values($raw_value);
+
+			while (!empty($pending_values) && count($raw_values) < 100) {
+				$value = array_shift($pending_values);
+
+				if (is_array($value)) {
+					$pending_values = array_merge($pending_values, array_values($value));
+					continue;
+				}
+
+				if (is_scalar($value)) {
+					$raw_values[] = (string) $value;
+				}
+			}
+		} elseif (is_scalar($raw_value)) {
+			$raw_values[] = (string) $raw_value;
+		}
+
+		$parts = explode(',', implode(',', $raw_values));
 
 		foreach ($parts as $part) {
 			$field_name = sanitize_key(trim($part));
 
-			if ($field_name !== '') {
+			if ($field_name !== '' && $field_name !== 'array') {
 				$field_names[$field_name] = $field_name;
 			}
 		}
 
 		return array_values($field_names);
+	}
+
+	/**
+	 * Default English query stopwords.
+	 *
+	 * @return array
+	 */
+	public static function default_stopwords() {
+		return array(
+			'a',
+			'an',
+			'and',
+			'are',
+			'as',
+			'at',
+			'be',
+			'by',
+			'for',
+			'from',
+			'has',
+			'have',
+			'in',
+			'is',
+			'its',
+			'of',
+			'on',
+			'or',
+			'our',
+			'that',
+			'the',
+			'this',
+			'to',
+			'was',
+			'were',
+			'with',
+		);
+	}
+
+	/**
+	 * Parse editable stopwords from text or array input.
+	 *
+	 * @param mixed $raw_value Raw input.
+	 * @return array
+	 */
+	public static function parse_stopwords($raw_value) {
+		$stopwords = array();
+		$raw_values = array();
+
+		if (is_array($raw_value)) {
+			$pending_values = array_values($raw_value);
+
+			while (!empty($pending_values) && count($raw_values) < 500) {
+				$value = array_shift($pending_values);
+
+				if (is_array($value)) {
+					$pending_values = array_merge($pending_values, array_values($value));
+					continue;
+				}
+
+				if (is_scalar($value)) {
+					$raw_values[] = (string) $value;
+				}
+			}
+		} elseif (is_scalar($raw_value)) {
+			$raw_values[] = (string) $raw_value;
+		}
+
+		$parts = preg_split('/[\s,]+/u', implode("\n", $raw_values));
+
+		if (!is_array($parts)) {
+			return array();
+		}
+
+		foreach ($parts as $part) {
+			$stopword = sanitize_key(trim($part));
+
+			if ($stopword !== '') {
+				$stopwords[$stopword] = $stopword;
+			}
+		}
+
+		return array_values($stopwords);
+	}
+
+	/**
+	 * Parse exact phrase searches from text or array input.
+	 *
+	 * @param mixed $raw_value Raw input.
+	 * @return array
+	 */
+	public static function parse_exact_phrases($raw_value) {
+		$phrases = array();
+		$raw_values = array();
+
+		if (is_array($raw_value)) {
+			$pending_values = array_values($raw_value);
+
+			while (!empty($pending_values) && count($raw_values) < 100) {
+				$value = array_shift($pending_values);
+
+				if (is_array($value)) {
+					$pending_values = array_merge($pending_values, array_values($value));
+					continue;
+				}
+
+				if (is_scalar($value)) {
+					$raw_values[] = (string) $value;
+				}
+			}
+		} elseif (is_scalar($raw_value)) {
+			$raw_values[] = (string) $raw_value;
+		}
+
+		$parts = preg_split('/[\r\n,]+/u', implode("\n", $raw_values));
+
+		if (!is_array($parts)) {
+			return array();
+		}
+
+		foreach ($parts as $part) {
+			$phrase = self::normalize_exact_phrase($part);
+
+			if ($phrase !== '') {
+				$phrases[$phrase] = $phrase;
+			}
+
+			if (count($phrases) >= 100) {
+				break;
+			}
+		}
+
+		return array_values($phrases);
+	}
+
+	/**
+	 * Normalize an exact phrase using the same punctuation rules as visitor queries.
+	 *
+	 * @param mixed $value Raw phrase.
+	 * @return string
+	 */
+	private static function normalize_exact_phrase($value) {
+		if (!is_scalar($value)) {
+			return '';
+		}
+
+		$text = wp_strip_all_tags((string) $value, true);
+		$text = wp_specialchars_decode($text, ENT_QUOTES);
+		$text = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, get_bloginfo('charset'));
+		$text = str_replace(array('’', '‘', '‚', '`', '´'), "'", $text);
+		$text = str_replace(array('‐', '‑', '‒', '–', '—', '―'), '-', $text);
+
+		if (function_exists('remove_accents')) {
+			$text = remove_accents($text);
+		}
+
+		$text = str_replace(array("'", '-'), ' ', $text);
+		$text = preg_replace('/[^\p{L}\p{N}\s]+/u', ' ', $text);
+		$text = preg_replace('/\s+/u', ' ', is_string($text) ? $text : '');
+		$text = is_string($text) ? trim($text) : '';
+
+		if ($text === '') {
+			return '';
+		}
+
+		if (function_exists('mb_strtolower')) {
+			return mb_strtolower($text, 'UTF-8');
+		}
+
+		return strtolower($text);
+	}
+
+	/**
+	 * Sanitize minimum query word length.
+	 *
+	 * @param mixed $value Raw value.
+	 * @return int
+	 */
+	public static function sanitize_min_word_length_value($value) {
+		return min(10, max(1, absint($value)));
 	}
 
 	/**

@@ -20,6 +20,9 @@ $indexed_search_url = $has_indexed_search_result && !empty($vfwp_indexed_search_
   : '';
 $summary_link_url = $indexed_search_url !== '' ? $indexed_search_url : get_permalink();
 $redirect_url = '';
+$vfwp_result_type_label = '';
+$vfwp_result_meta_text = '';
+$vfwp_show_result_type_badge = false;
 $position = '';
 $outstation = '';
 $type = '';
@@ -114,6 +117,48 @@ if ($has_indexed_search_result && !empty($vfwp_indexed_search_result['snippet_hi
   }
 }
 
+$vfwp_result_type_labels = array(
+  'page'           => __('Page', 'vfwp'),
+  'teams'          => __('Team', 'vfwp'),
+  'people'         => __('Person', 'vfwp'),
+  'documents'      => __('Document', 'vfwp'),
+  'community-blog' => __('Announcement', 'vfwp'),
+  'insites'        => __('News', 'vfwp'),
+  'events'         => __('Event', 'vfwp'),
+  'vf_event'       => __('Event', 'vfwp'),
+  'training'       => __('Training', 'vfwp'),
+);
+
+if (isset($vfwp_result_type_labels[$post_type])) {
+  $vfwp_result_type_label = $vfwp_result_type_labels[$post_type];
+} else {
+  $post_type_object = get_post_type_object($post_type);
+  $vfwp_result_type_label = $post_type_object && !empty($post_type_object->labels->singular_name)
+    ? $post_type_object->labels->singular_name
+    : $post_type;
+}
+
+$vfwp_show_result_type_badge = $post_type !== 'page' && $vfwp_result_type_label !== '';
+
+if ($post_type === 'page') {
+  $vfwp_breadcrumb_titles = array();
+  $vfwp_ancestor_ids = array_reverse(get_post_ancestors($post));
+
+  foreach ($vfwp_ancestor_ids as $vfwp_ancestor_id) {
+    $vfwp_ancestor_title = trim(wp_strip_all_tags(get_the_title($vfwp_ancestor_id)));
+
+    if ($vfwp_ancestor_title !== '') {
+      $vfwp_breadcrumb_titles[] = $vfwp_ancestor_title;
+    }
+  }
+
+  if (empty($vfwp_breadcrumb_titles)) {
+    $vfwp_breadcrumb_titles[] = __('Home', 'vfwp');
+  }
+
+  $vfwp_result_meta_text = implode(' > ', $vfwp_breadcrumb_titles) . ' >';
+}
+
 $vfwp_is_search_result_context = is_search();
 
 ?>
@@ -121,45 +166,15 @@ $vfwp_is_search_result_context = is_search();
 
   <h2 class="vf-summary__title | search | search-counter" style="margin-bottom: 4px;">
     <a href="<?php echo esc_url($summary_link_url); ?>" class="vf-summary__link"><?php echo wp_kses($title, array('mark' => array())); ?></a>
+    <?php if ($vfwp_show_result_type_badge) : ?>
+      &nbsp;<span class="vf-badge vf-badge--tertiary vf-search-result__type-pill"><?php echo esc_html($vfwp_result_type_label); ?></span>
+    <?php endif; ?>
   </h2>
+  <?php if ($summary_text !== '') : ?>
   <p class="vf-summary__meta" style="margin-bottom: 8px;">
-    <?php
-    // display the post type
-    if ( $post_type ==  'people') {
-    echo '<b>People</b> | ' . $position . ' | ' . (isset($teamArray[0]['team']) ? $teamArray[0]['team'] : '') . ' | ' . $outstation;  
-  }
-
-  if ( $post_type ==  'insites') {
-    echo '<b>News</b>';  
-  }
-  if ( $post_type ==  'documents') {
-    echo '<b>Document</b>';  
-  }
-  if ( $post_type ==  'community-blog') {
-    echo '<b>Announcements and updates</b>';  
-  }
-  if ( $post_type ==  'events') {
-    echo '<b>Event</b>';  
-  }
-  if ( $post_type ==  'training') {
-    if ($type === 'live') {
-    echo '<b>Training</b> | ' . $training_category . ' | ' . implode(', ', $loc_list);
-    if ($training_date_formatted instanceof DateTime) {
-      echo ' | ' . $training_date_formatted->format('j F Y');
-    }
-    }
-    else if ($type === 'on-demand'){
-      echo '<b>Training</b> | ' . $training_category . ' | On-demand';
-    }
-  }
-  if (($post_type == 'page') || ($post_type == 'teams')) {
-    echo '<b>Page</b>';
-  }
-  if ($summary_text !== '') {
-    echo ' | ' . wp_kses($summary_text, array('mark' => array()));
-  }
-  ?>
+    <?php echo wp_kses($summary_text, array('mark' => array())); ?>
   </p>
+  <?php endif; ?>
 
   <?php if ($post_type === 'training' && $content_snippet !== '') : ?>
   <p class="vf-summary__meta" style="margin-bottom: 8px;">
@@ -167,16 +182,13 @@ $vfwp_is_search_result_context = is_search();
   </p>
   <?php endif; ?>
 
-  <?php 
-  if ( ($post_type == 'page') || ($post_type == 'teams')) {
-  if (!empty($redirect_url)) { ?>
-  <div class="vf-summary__meta"><p class="vf-summary__author"><?php echo esc_url($redirect_url); ?></p></div> 
-  <?php }
-  else { ?>    
-  <div class="vf-summary__meta"><?php 
-  $uri = $indexed_search_url !== '' ? wp_parse_url($indexed_search_url, PHP_URL_PATH) : get_page_uri();
-  echo '<p class="vf-summary__author | vf-u-margin__bottom--0">' . esc_html($uri) . '</p>'; ?></div>
-  <?php } }?>
+  <?php if ($post_type === 'page' && $vfwp_result_meta_text !== '') : ?>
+  <div class="vf-summary__meta">
+    <p class="vf-summary__author | vf-u-margin__bottom--0">
+      <span class="vf-search-result__breadcrumb"><?php echo esc_html($vfwp_result_meta_text); ?></span>
+    </p>
+  </div>
+  <?php endif; ?>
   <?php if (!$vfwp_is_search_result_context) : ?>
     <?php
     if (($post_type == 'page') || ($post_type == 'teams'))  {

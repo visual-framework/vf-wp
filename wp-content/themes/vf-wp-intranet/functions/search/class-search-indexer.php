@@ -251,13 +251,94 @@ class VFWP_Intranet_Search_Indexer {
 				$value = get_field($field_name, $post->ID, false);
 			}
 
-			$normalized_value = $this->normalizer->normalize_acf_value($value);
+			$keywords = array_merge($keywords, $this->extract_acf_keyword_entries($value));
+		}
 
-			if ($normalized_value !== '') {
-				$keywords[] = $normalized_value;
+		$keywords = array_values(array_unique(array_filter($keywords)));
+
+		return implode(', ', $keywords);
+	}
+
+	/**
+	 * Extract bounded keyword entries from configured ACF values.
+	 *
+	 * @param mixed $value Raw ACF value.
+	 * @param int   $depth Recursion depth.
+	 * @return array
+	 */
+	private function extract_acf_keyword_entries($value, $depth = 0) {
+		if ($depth > 4) {
+			return array();
+		}
+
+		if (is_string($value) || is_int($value) || is_float($value)) {
+			$text = $this->normalizer->normalize_text($value);
+
+			if ($text === '') {
+				return array();
+			}
+
+			$parts = preg_split('/[,;\r\n|]+/u', $text);
+
+			if (!is_array($parts)) {
+				$parts = array($text);
+			}
+
+			$entries = array();
+
+			foreach ($parts as $part) {
+				$entry = $this->normalizer->normalize_text($part);
+
+				if ($entry !== '') {
+					$entries[] = $entry;
+				}
+			}
+
+			return $entries;
+		}
+
+		if (!is_array($value)) {
+			return array();
+		}
+
+		$entries = array();
+
+		foreach ($value as $key => $child_value) {
+			if ($this->should_skip_acf_keyword_key($key)) {
+				continue;
+			}
+
+			$entries = array_merge($entries, $this->extract_acf_keyword_entries($child_value, $depth + 1));
+
+			if (count($entries) >= 100) {
+				break;
 			}
 		}
 
-		return $this->normalizer->normalize_text(implode(' ', $keywords));
+		return array_slice($entries, 0, 100);
+	}
+
+	/**
+	 * Avoid common non-keyword ACF metadata.
+	 *
+	 * @param mixed $key Array key.
+	 * @return bool
+	 */
+	private function should_skip_acf_keyword_key($key) {
+		if (is_int($key)) {
+			return false;
+		}
+
+		$key = strtolower((string) $key);
+
+		if ($key === '' || strpos($key, '_') === 0) {
+			return true;
+		}
+
+		return in_array(
+			$key,
+			array('id', 'url', 'uri', 'filename', 'filesize', 'mime_type', 'mime', 'type', 'subtype', 'icon', 'width', 'height', 'sizes'),
+			true
+		);
 	}
 }

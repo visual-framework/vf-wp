@@ -57,8 +57,8 @@ class VFWP_Intranet_Search_Snippet_Service {
 	 */
 	public function select_snippet(array $source, array $parsed_query, $object_type = 'post') {
 		$field_order = $object_type === 'pdf'
-			? array('content', 'excerpt', 'acf_keywords')
-			: array('excerpt', 'acf_keywords', 'content');
+			? array('content', 'excerpt')
+			: array('excerpt', 'content');
 		$best = null;
 
 		foreach ($field_order as $index => $field) {
@@ -283,6 +283,11 @@ class VFWP_Intranet_Search_Snippet_Service {
 				$start = (int) $folded['map'][$position];
 				$end = (int) $folded['map'][$position + $needle_length - 1] + 1;
 
+				if (empty($needle['is_phrase']) && $needle_length < 3 && !$this->is_whole_word_match($text, $start, $end)) {
+					$offset = $position + max(1, $needle_length);
+					continue;
+				}
+
 				if (!$this->overlaps_existing_match($matches, $start, $end)) {
 					$matches[] = array(
 						'start'     => $start,
@@ -443,6 +448,29 @@ class VFWP_Intranet_Search_Snippet_Service {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Determine whether a short term match is bounded by non-word characters.
+	 *
+	 * @param string $text Text.
+	 * @param int    $start Start offset.
+	 * @param int    $end End offset.
+	 * @return bool
+	 */
+	private function is_whole_word_match($text, $start, $end) {
+		$before = $start > 0 ? $this->substring($text, $start - 1, 1) : '';
+		$after = $end < $this->length($text) ? $this->substring($text, $end, 1) : '';
+
+		if ($before !== '' && preg_match('/[\p{L}\p{N}_]/u', $before)) {
+			return false;
+		}
+
+		if ($after !== '' && preg_match('/[\p{L}\p{N}_]/u', $after)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

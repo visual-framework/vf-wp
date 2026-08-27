@@ -35,6 +35,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	public function register_hooks() {
 		add_action(self::CRON_HOOK, array($this, 'process_batch'));
 		add_action('admin_post_vfwp_intranet_search_index_action', array($this, 'handle_admin_action'));
+		add_action('wp_ajax_vfwp_intranet_search_process_index_batch', array($this, 'handle_ajax_process_batch'));
 	}
 
 	/**
@@ -158,6 +159,15 @@ class VFWP_Intranet_Search_Index_Manager {
 			$result = $this->start_full_rebuild(true);
 		}
 
+		if (!empty($result['started'])) {
+			$status = $this->process_batch();
+			$result['status'] = $status;
+			$result['started'] = $status['status'] !== 'failed';
+			$result['message'] = empty($status['active'])
+				? $status['message']
+				: __('Search index rebuild started. Processing continues in batches while this page is open.', 'vfwp');
+		}
+
 		$redirect_url = add_query_arg(
 			array(
 				'page'                      => 'vfwp-intranet-search',
@@ -169,6 +179,33 @@ class VFWP_Intranet_Search_Index_Manager {
 
 		wp_safe_redirect($redirect_url);
 		exit;
+	}
+
+	/**
+	 * Process one batch from the Settings > Search page.
+	 *
+	 * @return void
+	 */
+	public function handle_ajax_process_batch() {
+		if (!current_user_can('manage_options')) {
+			wp_send_json_error(
+				array(
+					'message' => __('You do not have permission to manage the search index.', 'vfwp'),
+				),
+				403
+			);
+		}
+
+		check_ajax_referer('vfwp_intranet_search_process_batch', 'nonce');
+
+		$status = $this->process_batch();
+
+		wp_send_json_success(
+			array(
+				'status'    => $status,
+				'dashboard' => $this->get_dashboard_data(),
+			)
+		);
 	}
 
 	/**
@@ -254,7 +291,7 @@ class VFWP_Intranet_Search_Index_Manager {
 			'started_at'       => $now,
 			'last_activity_at' => $now,
 			'completed_at'     => '',
-			'message'          => $clear_first ? __('Search index cleared. Rebuild queued.', 'vfwp') : __('Search index rebuild queued.', 'vfwp'),
+			'message'          => $clear_first ? __('Search index cleared. Rebuild started.', 'vfwp') : __('Search index rebuild started.', 'vfwp'),
 		);
 
 		$this->save_status($status);
@@ -456,7 +493,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	 */
 	private function schedule_next_batch() {
 		if (!wp_next_scheduled(self::CRON_HOOK)) {
-			wp_schedule_single_event(time() + 5, self::CRON_HOOK);
+			wp_schedule_single_event(time() + 1, self::CRON_HOOK);
 		}
 	}
 
