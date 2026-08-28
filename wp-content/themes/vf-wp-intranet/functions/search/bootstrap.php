@@ -11,9 +11,8 @@ require_once get_stylesheet_directory() . '/functions/search/class-search-schema
 require_once get_stylesheet_directory() . '/functions/search/class-search-normalizer.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-settings.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-index-repository.php';
-require_once get_stylesheet_directory() . '/functions/search/class-search-indexer.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-pdf-extractor.php';
-require_once get_stylesheet_directory() . '/functions/search/class-search-pdf-indexer.php';
+require_once get_stylesheet_directory() . '/functions/search/class-search-indexer.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-query-parser.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-snippet-service.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-service.php';
@@ -26,7 +25,7 @@ add_action('init', array('VFWP_Intranet_Search_Schema', 'maybe_install'), 5);
 VFWP_Intranet_Search_Frontend::register_hooks();
 
 function vfwp_intranet_search_bootstrap() {
-	global $vfwp_intranet_search_indexer, $vfwp_intranet_search_pdf_indexer;
+	global $vfwp_intranet_search_indexer;
 
 	if ($vfwp_intranet_search_indexer instanceof VFWP_Intranet_Search_Indexer) {
 		return $vfwp_intranet_search_indexer;
@@ -34,10 +33,8 @@ function vfwp_intranet_search_bootstrap() {
 
 	$normalizer = new VFWP_Intranet_Search_Normalizer();
 	$repository = new VFWP_Intranet_Search_Index_Repository();
-	$vfwp_intranet_search_indexer = new VFWP_Intranet_Search_Indexer($repository, $normalizer);
+	$vfwp_intranet_search_indexer = new VFWP_Intranet_Search_Indexer($repository, $normalizer, new VFWP_Intranet_Search_PDF_Extractor());
 	$vfwp_intranet_search_indexer->register_hooks();
-	$vfwp_intranet_search_pdf_indexer = new VFWP_Intranet_Search_PDF_Indexer($repository, $normalizer, new VFWP_Intranet_Search_PDF_Extractor());
-	$vfwp_intranet_search_pdf_indexer->register_hooks();
 
 	return $vfwp_intranet_search_indexer;
 }
@@ -84,15 +81,10 @@ function vfwp_intranet_search_index_pdf($attachment_id, $force = false, $rebuild
 		return 'ignored';
 	}
 
-	vfwp_intranet_search_bootstrap();
+	$indexer = vfwp_intranet_search_bootstrap();
+	$indexer->reindex_documents_for_attachment((int) $attachment_id, (bool) $force);
 
-	global $vfwp_intranet_search_pdf_indexer;
-
-	if (!$vfwp_intranet_search_pdf_indexer instanceof VFWP_Intranet_Search_PDF_Indexer) {
-		return 'failed';
-	}
-
-	return $vfwp_intranet_search_pdf_indexer->index_attachment((int) $attachment_id, (bool) $force, (string) $rebuild_token);
+	return 'ignored';
 }
 
 /**

@@ -17,9 +17,6 @@ $vfwp_search_filter_definitions = class_exists('VFWP_Intranet_Search_Frontend')
 $vfwp_legacy_post_type = class_exists('VFWP_Intranet_Search_Frontend')
   ? VFWP_Intranet_Search_Frontend::get_legacy_post_type()
   : '';
-$vfwp_selected_content_type = class_exists('VFWP_Intranet_Search_Frontend')
-  ? VFWP_Intranet_Search_Frontend::get_selected_content_type()
-  : 'all';
 $vfwp_active_search_filters = class_exists('VFWP_Intranet_Search_Frontend')
   ? VFWP_Intranet_Search_Frontend::get_active_filters()
   : array();
@@ -120,7 +117,6 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
             <input type="hidden" name="<?php echo esc_attr(VFWP_Intranet_Search_Frontend::FILTER_PARAM); ?>[]" value="<?php echo esc_attr($vfwp_search_filter_definitions[$vfwp_selected_search_filter]['query_value']); ?>">
           <?php endif; ?>
         <?php endforeach; ?>
-        <input type="hidden" name="<?php echo esc_attr(VFWP_Intranet_Search_Frontend::CONTENT_TYPE_PARAM); ?>" value="<?php echo esc_attr($vfwp_selected_content_type); ?>">
         <button type="submit" class="vf-search__button | vf-button vf-button--primary"
           value="<?php esc_attr_e('Search', 'vfwp'); ?>">
           <span class="vf-button__text">Search</span>
@@ -166,11 +162,6 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
 
             foreach ($vfwp_indexed_search_results as $vfwp_indexed_search_result) {
               $GLOBALS['vfwp_indexed_search_result'] = $vfwp_indexed_search_result;
-
-              if (isset($vfwp_indexed_search_result['object_type']) && $vfwp_indexed_search_result['object_type'] === 'pdf') {
-                include(locate_template('partials/vf-summary--search-pdf.php', false, false));
-                continue;
-              }
 
               $vfwp_indexed_search_post = get_post((int) $vfwp_indexed_search_result['object_id']);
 

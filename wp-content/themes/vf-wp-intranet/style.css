@@ -26,9 +26,16 @@ Text Domain:	 vfwp
     line-height: inherit;
     margin-left: 0.25rem;
 }
-#vf-search-filters .vf-form__label {
+#vf-search-filters .vf-form__checkbox + .vf-form__label,
+#vf-search-filters .vf-form__radio + .vf-form__label {
     align-items: center;
     display: inline-flex;
+    line-height: 1.4;
+}
+#vf-search-filters .vf-form__checkbox + .vf-form__label::before,
+#vf-search-filters .vf-form__radio + .vf-form__label::before {
+    flex: 0 0 1rem;
+    top: 0;
 }
 #vf-search-filters #checkbox-container {
     margin-bottom: 2rem;
@@ -88,6 +95,9 @@ Text Domain:	 vfwp
     position: relative;
     top: -0.15em;
     vertical-align: middle;
+}
+.vf-search-result__breadcrumb {
+    font-style: normal;
 }
 #load {
     width: 48px;

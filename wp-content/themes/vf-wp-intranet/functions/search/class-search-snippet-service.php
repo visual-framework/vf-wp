@@ -34,8 +34,11 @@ class VFWP_Intranet_Search_Snippet_Service {
 		$source = isset($result['snippet_source']) && is_array($result['snippet_source']) ? $result['snippet_source'] : array();
 		$snippet = $this->select_snippet($source, $parsed_query, isset($result['object_type']) ? $result['object_type'] : 'post');
 		$title = isset($result['title']) ? (string) $result['title'] : '';
+		$excerpt = isset($source['excerpt']) ? (string) $source['excerpt'] : '';
 
 		$result['title_highlighted'] = $this->highlight_text($title, $parsed_query);
+		$result['excerpt_highlighted'] = $this->highlight_text($excerpt, $parsed_query);
+		$result['content_snippet_highlighted'] = $this->highlight_text($this->select_field_snippet($source, 'content', $parsed_query), $parsed_query);
 		$result['snippet'] = $snippet['text'];
 		$result['snippet_highlighted'] = $this->highlight_text($snippet['text'], $parsed_query);
 		$result['snippet_field'] = $snippet['field'];
@@ -45,6 +48,27 @@ class VFWP_Intranet_Search_Snippet_Service {
 		);
 
 		return $result;
+	}
+
+	/**
+	 * Select a snippet from one specific source field.
+	 *
+	 * @param array  $source Source fields.
+	 * @param string $field Field name.
+	 * @param array  $parsed_query Parsed query.
+	 * @return string
+	 */
+	private function select_field_snippet(array $source, $field, array $parsed_query) {
+		$text = isset($source[$field]) ? $this->clean_text($source[$field]) : '';
+
+		if ($text === '') {
+			return '';
+		}
+
+		$matches = $this->find_matches($text, $this->get_needles($parsed_query), self::MAX_HIGHLIGHTS);
+		$position = empty($matches) ? 0 : (int) $matches[0]['start'];
+
+		return $this->build_snippet($text, $position);
 	}
 
 	/**

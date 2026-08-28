@@ -715,10 +715,12 @@ class VFWP_Intranet_Search_Service {
 			$object_types = array_merge($object_types, (array) $filters['object_types']);
 		}
 
+		$requested_object_types = !empty($object_types);
 		$object_types = array_filter(array_map('sanitize_key', $object_types));
+		$object_types = array_values(array_intersect($object_types, array('post')));
 
 		if (empty($object_types)) {
-			$object_types = array('post', 'pdf');
+			$object_types = $requested_object_types ? array() : array('post');
 		}
 
 		return array(
@@ -753,7 +755,12 @@ class VFWP_Intranet_Search_Service {
 				'exact_title_match' => (int) $row['exact_title_match'],
 				'title_phrase_hit'  => (int) $row['title_phrase_hit'],
 				'title_term_hits'   => (int) $row['title_term_hits'],
+				'excerpt_phrase_hit' => (int) $row['excerpt_phrase_hit'],
+				'excerpt_term_hits' => (int) $row['excerpt_term_hits'],
+				'content_phrase_hit' => (int) $row['content_phrase_hit'],
+				'content_term_hits' => (int) $row['content_term_hits'],
 				'all_term_hits'     => (int) $row['all_field_term_hits'],
+				'term_count'        => max(1, count($parsed_query['fulltext_terms'])),
 			),
 		);
 

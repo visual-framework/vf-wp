@@ -93,29 +93,17 @@ class VFWP_Intranet_Search_Frontend {
 		}
 
 		$query = self::get_query();
-		$selected_filters = self::get_selected_filter_slugs();
-		$selected_content_type = self::get_selected_content_type();
 		$service = new VFWP_Intranet_Search_Service();
-		$content_type_groups = $service->count_groups($query, self::build_service_filters('all', $selected_filters));
-		$search_type_groups = $service->count_groups($query, self::build_service_filters($selected_content_type, array()));
+		$search_type_groups = $service->count_groups($query, self::build_service_filters('web', array()));
 		$filter_counts = array(
 			'content_type' => array(),
 			'search_type'  => array(),
 		);
 
-		foreach (self::get_content_type_definitions() as $content_type_slug => $definition) {
-			$filter_counts['content_type'][$content_type_slug] = self::sum_grouped_counts(
-				$content_type_groups,
-				$definition['object_types']
-			);
-		}
-
 		foreach (self::get_filter_definitions() as $filter_slug => $definition) {
-			$object_types = array_values(array_intersect($definition['object_types'], self::get_object_types_for_content_type($selected_content_type)));
-
 			$filter_counts['search_type'][$filter_slug] = self::sum_grouped_counts(
 				$search_type_groups,
-				$object_types,
+				$definition['object_types'],
 				$definition['post_types']
 			);
 		}
@@ -149,15 +137,10 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return array
 	 */
 	private static function build_service_filters($content_type, array $selected_filters) {
-		$content_type = sanitize_key($content_type);
 		$selected_filters = array_values(array_unique(array_filter(array_map('sanitize_key', $selected_filters))));
-		$allowed_object_types = self::get_object_types_for_content_type($content_type);
+		$allowed_object_types = array('post');
 
 		if (empty($selected_filters)) {
-			if ('all' === $content_type) {
-				return array();
-			}
-
 			return array(
 				'object_types' => $allowed_object_types,
 			);
@@ -293,18 +276,7 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return array
 	 */
 	public static function get_content_type_definitions() {
-		return array(
-			'web' => array(
-				'label'        => __('Web pages', 'vfwp'),
-				'description'  => __('Pages, posts and enabled custom post types', 'vfwp'),
-				'object_types' => array('post'),
-			),
-			'pdf' => array(
-				'label'        => __('PDF documents', 'vfwp'),
-				'description'  => __('Indexed PDF document text', 'vfwp'),
-				'object_types' => array('pdf'),
-			),
-		);
+		return array();
 	}
 
 	/**
@@ -313,14 +285,7 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return string web|pdf
 	 */
 	public static function get_selected_content_type() {
-		if (empty($_GET[self::CONTENT_TYPE_PARAM])) {
-			return 'web';
-		}
-
-		$content_type = sanitize_key(wp_unslash($_GET[self::CONTENT_TYPE_PARAM]));
-		$definitions = self::get_content_type_definitions();
-
-		return isset($definitions[$content_type]) ? $content_type : 'web';
+		return 'web';
 	}
 
 	/**
@@ -398,7 +363,7 @@ class VFWP_Intranet_Search_Frontend {
 				'label'        => __('Documents', 'vfwp'),
 				'query_value'  => 'Documents',
 				'post_types'   => array('documents'),
-				'object_types' => array('post', 'pdf'),
+				'object_types' => array('post'),
 			),
 			'announcements' => array(
 				'label'        => __('Announcements', 'vfwp'),
@@ -456,6 +421,8 @@ class VFWP_Intranet_Search_Frontend {
 	 */
 	public static function get_result_count_text(array $pagination, $query = null) {
 		$total = isset($pagination['total']) ? (int) $pagination['total'] : 0;
+		$page = isset($pagination['page']) ? max(1, (int) $pagination['page']) : 1;
+		$per_page = isset($pagination['per_page']) ? max(1, (int) $pagination['per_page']) : self::get_per_page();
 		$query = null === $query ? self::get_query() : (string) $query;
 		$query = trim($query);
 
@@ -471,19 +438,28 @@ class VFWP_Intranet_Search_Frontend {
 			return __('No results found', 'vfwp');
 		}
 
+		$range_start = min($total, (($page - 1) * $per_page) + 1);
+		$range_end = min($total, $range_start + $per_page - 1);
+		$range_text = $range_start === $range_end
+			? number_format_i18n($range_start)
+			: number_format_i18n($range_start) . '-' . number_format_i18n($range_end);
+		$total_text = number_format_i18n($total);
+
 		if ($query !== '') {
 			return sprintf(
-				/* translators: 1: result count, 2: search query. */
-				_n('%1$d result for "%2$s"', '%1$d results for "%2$s"', $total, 'vfwp'),
-				$total,
+				/* translators: 1: result range, 2: total result count, 3: search query. */
+				_n('Showing %1$s result out of %2$s for "%3$s"', 'Showing %1$s results out of %2$s for "%3$s"', $total, 'vfwp'),
+				$range_text,
+				$total_text,
 				$query
 			);
 		}
 
 		return sprintf(
-			/* translators: %d: result count. */
-			_n('%d result', '%d results', $total, 'vfwp'),
-			$total
+			/* translators: 1: result range, 2: total result count. */
+			_n('Showing %1$s result out of %2$s', 'Showing %1$s results out of %2$s', $total, 'vfwp'),
+			$range_text,
+			$total_text
 		);
 	}
 
@@ -496,9 +472,10 @@ class VFWP_Intranet_Search_Frontend {
 	 */
 	public static function get_result_count_html(array $pagination, $query = null) {
 		$total = isset($pagination['total']) ? (int) $pagination['total'] : 0;
+		$page = isset($pagination['page']) ? max(1, (int) $pagination['page']) : 1;
+		$per_page = isset($pagination['per_page']) ? max(1, (int) $pagination['per_page']) : self::get_per_page();
 		$query = null === $query ? self::get_query() : (string) $query;
 		$query = trim($query);
-		$count_html = '<strong>' . esc_html(number_format_i18n($total)) . '</strong>';
 
 		if ($total < 1) {
 			if ($query !== '') {
@@ -512,19 +489,29 @@ class VFWP_Intranet_Search_Frontend {
 			return esc_html__('No results found', 'vfwp');
 		}
 
+		$range_start = min($total, (($page - 1) * $per_page) + 1);
+		$range_end = min($total, $range_start + $per_page - 1);
+		$range_text = $range_start === $range_end
+			? number_format_i18n($range_start)
+			: number_format_i18n($range_start) . '-' . number_format_i18n($range_end);
+		$range_html = '<strong>' . esc_html($range_text) . '</strong>';
+		$total_html = '<strong>' . esc_html(number_format_i18n($total)) . '</strong>';
+
 		if ($query !== '') {
 			return sprintf(
-				/* translators: 1: result count, 2: search query. */
-				_n('%1$s result for %2$s', '%1$s results for %2$s', $total, 'vfwp'),
-				$count_html,
+				/* translators: 1: result range, 2: total result count, 3: search query. */
+				_n('Showing %1$s result out of %2$s for %3$s', 'Showing %1$s results out of %2$s for %3$s', $total, 'vfwp'),
+				$range_html,
+				$total_html,
 				'<strong>"' . esc_html($query) . '"</strong>'
 			);
 		}
 
 		return sprintf(
-			/* translators: %s: result count. */
-			_n('%s result', '%s results', $total, 'vfwp'),
-			$count_html
+			/* translators: 1: result range, 2: total result count. */
+			_n('Showing %1$s result out of %2$s', 'Showing %1$s results out of %2$s', $total, 'vfwp'),
+			$range_html,
+			$total_html
 		);
 	}
 
@@ -534,7 +521,7 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return bool
 	 */
 	public static function has_active_filters() {
-		return self::get_selected_content_type() !== 'web' || !empty(self::get_selected_filter_slugs());
+		return !empty(self::get_selected_filter_slugs());
 	}
 
 	/**
@@ -544,18 +531,6 @@ class VFWP_Intranet_Search_Frontend {
 	 */
 	public static function get_active_filters() {
 		$active_filters = array();
-		$content_type = self::get_selected_content_type();
-		$content_type_definitions = self::get_content_type_definitions();
-
-		if ($content_type !== 'web' && isset($content_type_definitions[$content_type])) {
-			$active_filters[] = array(
-				'type'       => 'content_type',
-				'slug'       => $content_type,
-				'label'      => $content_type_definitions[$content_type]['label'],
-				'remove_url' => self::get_remove_filter_url('content_type', $content_type),
-			);
-		}
-
 		$filter_definitions = self::get_filter_definitions();
 
 		foreach (self::get_selected_filter_slugs() as $filter_slug) {
@@ -618,7 +593,6 @@ class VFWP_Intranet_Search_Frontend {
 	public static function get_clear_filters_url() {
 		return self::build_search_url(
 			array(
-				self::CONTENT_TYPE_PARAM => 'web',
 				self::FILTER_PARAM       => array(),
 			)
 		);
@@ -632,12 +606,7 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return string
 	 */
 	public static function get_remove_filter_url($filter_type, $filter_slug) {
-		$content_type = self::get_selected_content_type();
 		$selected_filters = self::get_selected_filter_slugs();
-
-		if ('content_type' === $filter_type) {
-			$content_type = 'web';
-		}
 
 		if ('search_type' === $filter_type) {
 			$selected_filters = array_values(array_diff($selected_filters, array($filter_slug)));
@@ -645,7 +614,6 @@ class VFWP_Intranet_Search_Frontend {
 
 		return self::build_search_url(
 			array(
-				self::CONTENT_TYPE_PARAM => $content_type,
 				self::FILTER_PARAM       => $selected_filters,
 			)
 		);
@@ -696,7 +664,6 @@ class VFWP_Intranet_Search_Frontend {
 	public static function get_pagination_url($page) {
 		return self::build_search_url(
 			array(
-				self::CONTENT_TYPE_PARAM => self::get_selected_content_type(),
 				self::FILTER_PARAM       => self::get_selected_filter_slugs(),
 				'paged'                  => (int) $page,
 			)
@@ -730,17 +697,7 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return array
 	 */
 	private static function get_object_types_for_content_type($content_type) {
-		if ('all' === $content_type) {
-			return array('post', 'pdf');
-		}
-
-		$definitions = self::get_content_type_definitions();
-
-		if (!isset($definitions[$content_type])) {
-			$content_type = 'web';
-		}
-
-		return $definitions[$content_type]['object_types'];
+		return array('post');
 	}
 
 	/**
@@ -753,14 +710,6 @@ class VFWP_Intranet_Search_Frontend {
 		$args = array(
 			's' => self::get_query(),
 		);
-
-		$content_type = isset($overrides[self::CONTENT_TYPE_PARAM])
-			? sanitize_key($overrides[self::CONTENT_TYPE_PARAM])
-			: self::get_selected_content_type();
-
-		if ($content_type !== 'web') {
-			$args[self::CONTENT_TYPE_PARAM] = $content_type;
-		}
 
 		$selected_filters = array_key_exists(self::FILTER_PARAM, $overrides)
 			? (array) $overrides[self::FILTER_PARAM]

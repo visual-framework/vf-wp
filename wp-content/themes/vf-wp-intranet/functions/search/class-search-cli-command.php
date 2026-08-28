@@ -30,7 +30,7 @@ class VFWP_Intranet_Search_CLI_Command {
 		WP_CLI::line('Schema: ' . $data['installed_version'] . ' / ' . $data['schema_version']);
 		WP_CLI::line('Total indexed: ' . $counts['total']);
 		WP_CLI::line('Indexed web pages: ' . $counts['web']);
-		WP_CLI::line('Indexed PDFs: ' . $counts['pdf']);
+		WP_CLI::line('Indexed standalone PDFs: ' . $counts['pdf']);
 		WP_CLI::line('Processed: ' . $status['processed'] . ' / ' . $status['total_planned']);
 		WP_CLI::line('Pending: ' . max(0, (int) $status['total_planned'] - (int) $status['processed']));
 		WP_CLI::line('Failed: ' . $failed_items);

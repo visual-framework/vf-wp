@@ -742,7 +742,7 @@ class VFWP_Intranet_Search_Settings {
 					<td><?php echo esc_html(number_format_i18n((int) $counts['web'])); ?></td>
 				</tr>
 				<tr>
-					<th scope="row"><?php echo esc_html__('Indexed PDF documents', 'vfwp'); ?></th>
+					<th scope="row"><?php echo esc_html__('Indexed standalone PDF documents', 'vfwp'); ?></th>
 					<td><?php echo esc_html(number_format_i18n((int) $counts['pdf'])); ?></td>
 				</tr>
 				<tr>

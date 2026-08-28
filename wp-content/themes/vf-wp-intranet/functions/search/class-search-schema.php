@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Schema {
-	const VERSION = 4;
+	const VERSION = 6;
 	const OPTION_NAME = 'vfwp_intranet_search_schema_version';
 
 	/**

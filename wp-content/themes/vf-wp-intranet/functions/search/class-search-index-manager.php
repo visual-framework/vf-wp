@@ -85,7 +85,11 @@ class VFWP_Intranet_Search_Index_Manager {
 			if ($status['phase'] === 'posts') {
 				$status = $this->process_posts_batch($status);
 			} elseif ($status['phase'] === 'pdfs') {
-				$status = $this->process_pdfs_batch($status);
+				$status['phase'] = in_array($status['mode'], array('full', 'clear_rebuild'), true) ? 'prune' : 'complete';
+
+				if ($status['phase'] === 'complete') {
+					$status = $this->complete_job($status);
+				}
 			} elseif ($status['phase'] === 'prune') {
 				$status = $this->process_prune_phase($status);
 			}
@@ -314,7 +318,12 @@ class VFWP_Intranet_Search_Index_Manager {
 		$post_types = VFWP_Intranet_Search_Settings::get_enabled_post_types();
 
 		if (empty($post_types)) {
-			$status['phase'] = 'pdfs';
+			$status['phase'] = in_array($status['mode'], array('full', 'clear_rebuild'), true) ? 'prune' : 'complete';
+
+			if ($status['phase'] === 'complete') {
+				$status = $this->complete_job($status);
+			}
+
 			return $status;
 		}
 
@@ -333,7 +342,12 @@ class VFWP_Intranet_Search_Index_Manager {
 		));
 
 		if (empty($post_ids)) {
-			$status['phase'] = 'pdfs';
+			$status['phase'] = in_array($status['mode'], array('full', 'clear_rebuild'), true) ? 'prune' : 'complete';
+
+			if ($status['phase'] === 'complete') {
+				$status = $this->complete_job($status);
+			}
+
 			return $status;
 		}
 
@@ -355,42 +369,11 @@ class VFWP_Intranet_Search_Index_Manager {
 	 * @return array
 	 */
 	private function process_pdfs_batch(array $status) {
-		$pdf_ids = get_posts(array(
-			'post_type'              => 'attachment',
-			'post_status'            => array('inherit', 'publish'),
-			'post_mime_type'         => 'application/pdf',
-			'fields'                 => 'ids',
-			'posts_per_page'         => (int) $status['batch_size'],
-			'offset'                 => (int) $status['pdf_offset'],
-			'orderby'                => 'ID',
-			'order'                  => 'ASC',
-			'no_found_rows'          => true,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-		));
+		$status['phase'] = in_array($status['mode'], array('full', 'clear_rebuild'), true) ? 'prune' : 'complete';
 
-		if (empty($pdf_ids)) {
-			$status['phase'] = in_array($status['mode'], array('full', 'clear_rebuild'), true) ? 'prune' : 'complete';
-
-			if ($status['phase'] === 'complete') {
-				$status = $this->complete_job($status);
-			}
-
-			return $status;
+		if ($status['phase'] === 'complete') {
+			$status = $this->complete_job($status);
 		}
-
-		foreach ($pdf_ids as $pdf_id) {
-			$result = vfwp_intranet_search_index_pdf((int) $pdf_id, false, $this->get_active_rebuild_token($status));
-			$status = $this->record_result($status, $result);
-
-			$row = $this->repository->find((int) $pdf_id, 'pdf');
-			if (is_array($row) && !in_array($row['extraction_status'], array('', 'success', 'success_truncated'), true)) {
-				$status['failed']++;
-			}
-		}
-
-		$status['pdf_offset'] += count($pdf_ids);
-		$status['last_activity_at'] = current_time('mysql', true);
 
 		return $status;
 	}
@@ -475,15 +458,7 @@ class VFWP_Intranet_Search_Index_Manager {
 			$post_count = (int) $post_query->found_posts;
 		}
 
-		$pdf_query = new WP_Query(array(
-			'post_type'      => 'attachment',
-			'post_status'    => array('inherit', 'publish'),
-			'post_mime_type' => 'application/pdf',
-			'fields'         => 'ids',
-			'posts_per_page' => 1,
-		));
-
-		return $post_count + (int) $pdf_query->found_posts;
+		return $post_count;
 	}
 
 	/**

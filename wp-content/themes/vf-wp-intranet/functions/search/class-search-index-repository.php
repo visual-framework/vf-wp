@@ -271,7 +271,7 @@ class VFWP_Intranet_Search_Index_Repository {
 	public function count_pdf_extraction_issues() {
 		return (int) $this->wpdb->get_var(
 			"SELECT COUNT(*) FROM {$this->table_name}
-			WHERE object_type = 'pdf'
+			WHERE (object_type = 'pdf' OR (object_type = 'post' AND post_type = 'documents'))
 				AND extraction_status NOT IN ('', 'success', 'success_truncated')"
 		);
 	}
@@ -288,7 +288,7 @@ class VFWP_Intranet_Search_Index_Repository {
 			$this->wpdb->prepare(
 				"SELECT object_id, title, file_name, extraction_status, extraction_error, indexed_at
 				FROM {$this->table_name}
-				WHERE object_type = 'pdf'
+				WHERE (object_type = 'pdf' OR (object_type = 'post' AND post_type = 'documents'))
 					AND extraction_status NOT IN ('', 'success', 'success_truncated')
 				ORDER BY indexed_at DESC, object_id DESC
 				LIMIT %d",
