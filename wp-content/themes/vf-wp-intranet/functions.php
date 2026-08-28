@@ -23,6 +23,7 @@ require_once('functions/custom-endpoints.php');
 require_once('functions/cpt-register.php');
 require_once('functions/infoboard-news.php');
 require_once('functions/people.php');
+require_once('functions/teams-sync.php');
 require_once('functions/admin-menu.php');
 require_once('functions/search/bootstrap.php');
 require_once('functions/training-ebi-feed.php');
@@ -133,11 +134,18 @@ function remove_comments_menu_page() {
 
 add_action( 'template_redirect', 'redirect_externally' );
 function redirect_externally(){
-    $redirect = get_post_meta( get_the_ID(), 'vf_wp_intranet_redirect', true );
-    if (is_page() || is_singular('teams')) {
+    if (is_singular('teams')) {
+        $redirect = get_post_meta( get_the_ID(), 'team_url', true );
+    } elseif (is_page()) {
+        $redirect = get_post_meta( get_the_ID(), 'vf_wp_intranet_redirect', true );
+    } else {
+        $redirect = '';
+    }
+
     if( $redirect ){
-        wp_redirect( $redirect );
-    } }
+        wp_redirect( esc_url_raw( $redirect ) );
+        exit;
+    }
 }
 
 

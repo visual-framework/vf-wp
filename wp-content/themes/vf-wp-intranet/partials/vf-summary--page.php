@@ -119,6 +119,8 @@ $vfwp_result_type_label = '';
 $vfwp_result_meta_text = '';
 $vfwp_result_detail_meta = '';
 $vfwp_show_result_type_badge = false;
+$vfwp_result_is_external_team = false;
+$vfwp_result_external_domain_label = '';
 $position = '';
 $outstation = '';
 $email = '';
@@ -169,8 +171,27 @@ if ($post_type === 'people') {
   $training_category = get_field('vf-wp-training-category', $post->ID);
   $training_location = get_the_terms( $post->ID , 'event-location' );
   $training_overview = vfwp_intranet_search_summary_one_line(get_field('vf-wp-training-info', $post->ID, false, false));
-} elseif (($post_type === 'page') || ($post_type === 'teams')) {
+} elseif ($post_type === 'page') {
   $redirect_url = get_field('vf_wp_intranet_redirect');
+} elseif ($post_type === 'teams') {
+  $team_url = function_exists('get_field') ? get_field('team_url', $post->ID) : get_post_meta($post->ID, 'team_url', true);
+
+  if (is_scalar($team_url) && trim((string) $team_url) !== '') {
+    $summary_link_url = esc_url_raw((string) $team_url);
+    $vfwp_result_is_external_team = true;
+    $team_url_host = wp_parse_url($summary_link_url, PHP_URL_HOST);
+    $team_url_host = is_string($team_url_host) ? strtolower(preg_replace('/^www\./', '', $team_url_host)) : '';
+
+    if ($team_url_host !== '') {
+      if (strpos($team_url_host, 'embl.org') !== false) {
+        $vfwp_result_external_domain_label = 'embl.org';
+      } elseif (strpos($team_url_host, 'ebi.ac.uk') !== false) {
+        $vfwp_result_external_domain_label = 'ebi.ac.uk';
+      } else {
+        $vfwp_result_external_domain_label = strtolower($team_url_host);
+      }
+    }
+  }
 }
 
 $loc_list = [];
@@ -373,9 +394,19 @@ $vfwp_is_search_result_context = is_search();
 <article class="vf-summary"<?php echo $vfwp_is_search_result_context ? '' : ' data-jplist-item'; ?>>
 
   <h2 class="vf-summary__title | search | search-counter" style="margin-bottom: 4px;">
-    <a href="<?php echo esc_url($summary_link_url); ?>" class="vf-summary__link"><?php echo wp_kses($title, array('mark' => array())); ?></a>
+    <a href="<?php echo esc_url($summary_link_url); ?>" class="vf-summary__link"<?php echo $vfwp_result_is_external_team ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo wp_kses($title, array('mark' => array())); ?></a>
     <?php if ($vfwp_show_result_type_badge) : ?>
       &nbsp;<span class="vf-badge vf-badge--tertiary vf-search-result__type-pill"><?php echo esc_html($vfwp_result_type_label); ?></span>
+    <?php endif; ?>
+    <?php if ($vfwp_result_is_external_team && $vfwp_result_external_domain_label !== '') : ?>
+      <span class="vf-badge vf-badge--tertiary vf-search-result__external-pill" aria-label="<?php echo esc_attr(sprintf(__('External link to %s. Opens in a new tab.', 'vfwp'), $vfwp_result_external_domain_label)); ?>">
+        <?php echo esc_html($vfwp_result_external_domain_label); ?>
+        <svg class="vf-search-result__external-pill-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+          <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3Z"></path>
+          <path d="M5 5h6v2H7v10h10v-4h2v6H5V5Z"></path>
+        </svg>
+      </span>
+      <span class="vf-u-sr-only"><?php esc_html_e('Opens in a new tab on an external website', 'vfwp'); ?></span>
     <?php endif; ?>
   </h2>
   <?php if ($summary_text !== '') : ?>

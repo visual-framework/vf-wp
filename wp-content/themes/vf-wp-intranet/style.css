@@ -99,6 +99,29 @@ Text Domain:	 vfwp
 .vf-search-result__breadcrumb {
     font-style: normal;
 }
+.vf-summary__title .vf-search-result__external-pill {
+    align-items: center;
+    background: #f3f3f3 !important;
+    border-color: #f3f3f3 !important;
+    color: #54585a !important;
+    display: inline-flex;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    gap: 3px;
+    line-height: 1.1;
+    margin-left: 0.35rem;
+    padding: 1px 4px !important;
+    position: relative;
+    text-transform: lowercase !important;
+    top: -0.15em;
+    vertical-align: middle;
+}
+.vf-search-result__external-pill-icon {
+    fill: currentColor;
+    flex: 0 0 auto;
+    height: 0.9em;
+    width: 0.9em;
+}
 #load {
     width: 48px;
     height: 48px;

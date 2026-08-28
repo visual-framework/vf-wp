@@ -308,6 +308,10 @@ class VFWP_Intranet_Search_Indexer {
 			return false;
 		}
 
+		if ($post->post_type === 'teams' && $this->is_team_excluded_from_search((int) $post->ID)) {
+			return false;
+		}
+
 		return (bool) apply_filters('vfwp_intranet_search_is_indexable_post', true, $post);
 	}
 
@@ -345,7 +349,7 @@ class VFWP_Intranet_Search_Indexer {
 			$content = trim($content . "\n\n" . $document_pdf_index['content']);
 		}
 
-		$url = get_permalink($post);
+		$url = $this->get_index_url($post);
 
 		$data = array(
 			'object_id'         => (int) $post->ID,
@@ -395,7 +399,7 @@ class VFWP_Intranet_Search_Indexer {
 	 * @return string
 	 */
 	private function build_source_hash(WP_Post $post, $acf_keywords, array $document_pdf_source) {
-		$url = get_permalink($post);
+		$url = $this->get_index_url($post);
 
 		return $this->normalizer->hash(array(
 			'post_type'        => $post->post_type,
@@ -405,11 +409,61 @@ class VFWP_Intranet_Search_Indexer {
 			'content'          => $this->normalizer->normalize_content($post->post_content),
 			'acf_keywords'     => (string) $acf_keywords,
 			'url'              => is_string($url) ? $url : '',
+			'team_exclude_from_search' => $post->post_type === 'teams' ? $this->is_team_excluded_from_search((int) $post->ID) : false,
 			'document_pdf'     => $document_pdf_source,
 			'schema_version'   => VFWP_Intranet_Search_Schema::VERSION,
 			'extraction_class' => get_class($this->pdf_extractor),
 			'extraction_available' => $this->pdf_extractor->is_available(),
 		));
+	}
+
+	/**
+	 * Return the URL stored in the index for a post.
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return string
+	 */
+	private function get_index_url(WP_Post $post) {
+		if ($post->post_type === 'teams') {
+			$team_url = $this->get_scalar_post_meta((int) $post->ID, 'team_url');
+
+			if ($team_url !== '') {
+				return esc_url_raw($team_url);
+			}
+		}
+
+		$url = get_permalink($post);
+
+		return is_string($url) ? $url : '';
+	}
+
+	/**
+	 * Determine whether a Team should be excluded from indexed search.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return bool
+	 */
+	private function is_team_excluded_from_search($post_id) {
+		$value = $this->get_scalar_post_meta((int) $post_id, 'team_exclude_from_search');
+
+		return in_array(strtolower($value), array('1', 'true', 'yes', 'on'), true);
+	}
+
+	/**
+	 * Read a scalar post meta value, falling back to ACF when available.
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $meta_key Meta key.
+	 * @return string
+	 */
+	private function get_scalar_post_meta($post_id, $meta_key) {
+		$value = get_post_meta((int) $post_id, (string) $meta_key, true);
+
+		if (!is_scalar($value) && function_exists('get_field')) {
+			$value = get_field((string) $meta_key, (int) $post_id, false);
+		}
+
+		return is_scalar($value) ? trim((string) $value) : '';
 	}
 
 	/**
