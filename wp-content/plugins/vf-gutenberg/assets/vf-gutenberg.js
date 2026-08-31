@@ -171,8 +171,7 @@
 
     if (
       existingIframe &&
-      existingIframe.dataset.srcdoc === template.innerHTML &&
-      existingIframe.vfActive
+      existingIframe.dataset.srcdoc === template.innerHTML
     ) {
       return;
     }
@@ -279,6 +278,9 @@
     for (const record of records) {
       for (const node of record.addedNodes) {
         if (node.nodeType !== 1) {
+          continue;
+        }
+        if (node.matches('iframe.vf-block__iframe')) {
           continue;
         }
         const block = getRelatedBlock(node);
