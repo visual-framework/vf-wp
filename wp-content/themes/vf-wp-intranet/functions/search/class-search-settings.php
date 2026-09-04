@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
 class VFWP_Intranet_Search_Settings {
 	const OPTION_NAME = 'vfwp_intranet_search_settings';
 	const REBUILD_REQUIRED_OPTION = 'vfwp_intranet_search_rebuild_required';
+	const ADMIN_CAPABILITY = 'manage_options';
 
 	/**
 	 * Register admin hooks.
@@ -40,6 +41,13 @@ class VFWP_Intranet_Search_Settings {
 			'query_min_word_length' => 2,
 			'stopwords'       => self::default_stopwords(),
 			'exact_phrases'   => array(),
+			'synonyms'        => array(),
+			'analytics'       => array(
+				'enabled'        => 1,
+				'exclude_admins' => 0,
+				'track_user_email' => 0,
+				'retention_days' => 180,
+			),
 		);
 	}
 
@@ -78,6 +86,8 @@ class VFWP_Intranet_Search_Settings {
 		$settings['query_min_word_length'] = self::sanitize_min_word_length_value($settings['query_min_word_length']);
 		$settings['stopwords'] = self::parse_stopwords($settings['stopwords']);
 		$settings['exact_phrases'] = self::parse_exact_phrases($settings['exact_phrases']);
+		$settings['synonyms'] = self::parse_synonyms(isset($settings['synonyms']) ? $settings['synonyms'] : array());
+		$settings['analytics'] = self::sanitize_analytics_settings(isset($settings['analytics']) ? $settings['analytics'] : array());
 
 		return $settings;
 	}
@@ -134,6 +144,24 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	public static function get_exact_phrases() {
 		return self::get_settings()['exact_phrases'];
+	}
+
+	/**
+	 * Return configured directional query synonyms.
+	 *
+	 * @return array
+	 */
+	public static function get_synonyms() {
+		return self::get_settings()['synonyms'];
+	}
+
+	/**
+	 * Return analytics settings.
+	 *
+	 * @return array
+	 */
+	public static function get_analytics_settings() {
+		return self::get_settings()['analytics'];
 	}
 
 	/**
@@ -352,7 +380,7 @@ class VFWP_Intranet_Search_Settings {
 		add_options_page(
 			__('Search', 'vfwp'),
 			__('Search', 'vfwp'),
-			'manage_options',
+			self::ADMIN_CAPABILITY,
 			'vfwp-intranet-search',
 			array($this, 'render_page')
 		);
@@ -365,7 +393,7 @@ class VFWP_Intranet_Search_Settings {
 	 * @return array
 	 */
 	public function sanitize_settings($input) {
-		if (!current_user_can('manage_options')) {
+		if (!current_user_can(self::ADMIN_CAPABILITY)) {
 			return self::get_settings();
 		}
 
@@ -390,6 +418,8 @@ class VFWP_Intranet_Search_Settings {
 		);
 		$sanitized['stopwords'] = self::parse_stopwords(array_key_exists('stopwords', $input) ? $input['stopwords'] : $old_settings['stopwords']);
 		$sanitized['exact_phrases'] = self::parse_exact_phrases(array_key_exists('exact_phrases', $input) ? $input['exact_phrases'] : $old_settings['exact_phrases']);
+		$sanitized['synonyms'] = self::parse_synonyms(array_key_exists('synonyms', $input) ? $input['synonyms'] : $old_settings['synonyms']);
+		$sanitized['analytics'] = self::sanitize_analytics_settings(array_key_exists('analytics', $input) ? $input['analytics'] : $old_settings['analytics']);
 
 		foreach (self::get_searchable_post_types() as $post_type => $post_type_object) {
 			$old_post_type = self::get_post_type_setting($post_type, $old_settings);
@@ -416,7 +446,7 @@ class VFWP_Intranet_Search_Settings {
 	 * @return void
 	 */
 	public function render_page() {
-		if (!current_user_can('manage_options')) {
+		if (!current_user_can(self::ADMIN_CAPABILITY)) {
 			wp_die(esc_html__('You do not have permission to manage search settings.', 'vfwp'));
 		}
 
@@ -443,6 +473,8 @@ class VFWP_Intranet_Search_Settings {
 			<?php if ('index' === $current_tab) : ?>
 				<?php $this->render_index_management(); ?>
 				<?php $this->render_pdf_extraction_issues(); ?>
+			<?php elseif ('analytics' === $current_tab) : ?>
+				<?php $this->render_analytics_tab(); ?>
 			<?php else : ?>
 				<form method="post" action="options.php">
 					<?php settings_fields('vfwp_intranet_search_settings'); ?>
@@ -465,6 +497,7 @@ class VFWP_Intranet_Search_Settings {
 			'ranking' => __('Ranking', 'vfwp'),
 			'content' => __('Content', 'vfwp'),
 			'query'   => __('Query parsing', 'vfwp'),
+			'analytics' => __('Analytics', 'vfwp'),
 		);
 	}
 
@@ -585,8 +618,39 @@ class VFWP_Intranet_Search_Settings {
 				<th scope="row"><?php echo esc_html__('Exact phrase searches', 'vfwp'); ?></th>
 				<td><?php $this->render_exact_phrases(); ?></td>
 			</tr>
+			<tr>
+				<th scope="row"><?php echo esc_html__('Synonyms', 'vfwp'); ?></th>
+				<td><?php $this->render_synonyms(); ?></td>
+			</tr>
 		</table>
 		<?php
+	}
+
+	/**
+	 * Render analytics settings and reports.
+	 *
+	 * @return void
+	 */
+	private function render_analytics_tab() {
+		?>
+		<h2><?php echo esc_html__('Search Analytics', 'vfwp'); ?></h2>
+		<p><?php echo esc_html__('Analytics records frontend search queries and result counts so editors can find popular searches and searches that return nothing. It does not store IP addresses or user agents.', 'vfwp'); ?></p>
+		<form method="post" action="options.php">
+			<?php settings_fields('vfwp_intranet_search_settings'); ?>
+			<table class="form-table" role="presentation">
+				<tr>
+					<th scope="row"><?php echo esc_html__('Analytics settings', 'vfwp'); ?></th>
+					<td><?php $this->render_analytics_settings(); ?></td>
+				</tr>
+			</table>
+			<?php submit_button(); ?>
+		</form>
+		<?php
+
+		if (class_exists('VFWP_Intranet_Search_Analytics')) {
+			$analytics = new VFWP_Intranet_Search_Analytics();
+			$this->render_analytics_reports($analytics->get_dashboard_data());
+		}
 	}
 
 	/**
@@ -1470,6 +1534,228 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
+	 * Render synonym textarea.
+	 *
+	 * @return void
+	 */
+	public function render_synonyms() {
+		$lines = array();
+
+		foreach (self::get_synonyms() as $synonym) {
+			if (empty($synonym['from']) || empty($synonym['to'])) {
+				continue;
+			}
+
+			$lines[] = $synonym['from'] . ' = ' . $synonym['to'];
+		}
+		?>
+		<textarea
+			name="<?php echo esc_attr(self::OPTION_NAME); ?>[synonyms]"
+			rows="6"
+			cols="50"
+			class="large-text code"
+			placeholder="<?php echo esc_attr__('it members = it services members', 'vfwp'); ?>"
+		><?php echo esc_textarea(implode("\n", $lines)); ?></textarea>
+		<p class="description"><?php echo esc_html__('Enter one synonym per line using source = replacement. For example, searches for "it members" will be run as "it services members". Changes take effect immediately and do not require reindexing.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render analytics setting controls.
+	 *
+	 * @return void
+	 */
+	public function render_analytics_settings() {
+		$settings = self::get_analytics_settings();
+		?>
+		<fieldset>
+			<label>
+				<input
+					type="checkbox"
+					name="<?php echo esc_attr(self::OPTION_NAME); ?>[analytics][enabled]"
+					value="1"
+					<?php checked(1, (int) $settings['enabled']); ?>
+				>
+				<?php echo esc_html__('Record frontend searches', 'vfwp'); ?>
+			</label>
+			<p class="description"><?php echo esc_html__('Only real search result pages are logged. Autocomplete requests and pagination pages are not recorded.', 'vfwp'); ?></p>
+			<br>
+			<label>
+				<input
+					type="checkbox"
+					name="<?php echo esc_attr(self::OPTION_NAME); ?>[analytics][exclude_admins]"
+					value="1"
+					<?php checked(1, (int) $settings['exclude_admins']); ?>
+				>
+				<?php echo esc_html__('Do not record searches by administrators', 'vfwp'); ?>
+			</label>
+			<br>
+			<label>
+				<input
+					type="checkbox"
+					name="<?php echo esc_attr(self::OPTION_NAME); ?>[analytics][track_user_email]"
+					value="1"
+					<?php checked(1, (int) $settings['track_user_email']); ?>
+				>
+				<?php echo esc_html__('Store logged-in WordPress user email addresses', 'vfwp'); ?>
+			</label>
+			<p class="description"><?php echo esc_html__('Leave this off unless you have a clear operational need. IP addresses and browser user agents are never stored by this analytics layer.', 'vfwp'); ?></p>
+			<br>
+			<label>
+				<?php echo esc_html__('Retention period', 'vfwp'); ?>
+				<input
+					type="number"
+					min="7"
+					max="730"
+					step="1"
+					name="<?php echo esc_attr(self::OPTION_NAME); ?>[analytics][retention_days]"
+					value="<?php echo esc_attr((int) $settings['retention_days']); ?>"
+					class="small-text"
+				>
+				<?php echo esc_html__('days', 'vfwp'); ?>
+			</label>
+			<p class="description"><?php echo esc_html__('Old analytics rows are cleaned up automatically during search logging.', 'vfwp'); ?></p>
+		</fieldset>
+		<?php
+	}
+
+	/**
+	 * Render analytics report tables.
+	 *
+	 * @param array $data Analytics dashboard data.
+	 * @return void
+	 */
+	private function render_analytics_reports(array $data) {
+		$summary = isset($data['summary']) && is_array($data['summary']) ? $data['summary'] : array();
+		$top_queries = isset($data['top_queries']) && is_array($data['top_queries']) ? $data['top_queries'] : array();
+		$zero_results = isset($data['zero_results']) && is_array($data['zero_results']) ? $data['zero_results'] : array();
+		$recent = isset($data['recent']) && is_array($data['recent']) ? $data['recent'] : array();
+		?>
+		<h3><?php echo esc_html__('Analytics summary', 'vfwp'); ?></h3>
+		<table class="widefat striped" style="max-width: 920px;">
+			<tbody>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Total searches', 'vfwp'); ?></th>
+					<td><?php echo esc_html(number_format_i18n(isset($summary['total_searches']) ? (int) $summary['total_searches'] : 0)); ?></td>
+				</tr>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Zero-result searches', 'vfwp'); ?></th>
+					<td><?php echo esc_html(number_format_i18n(isset($summary['zero_result_searches']) ? (int) $summary['zero_result_searches'] : 0)); ?></td>
+				</tr>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Unique queries', 'vfwp'); ?></th>
+					<td><?php echo esc_html(number_format_i18n(isset($summary['unique_queries']) ? (int) $summary['unique_queries'] : 0)); ?></td>
+				</tr>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Last search recorded', 'vfwp'); ?></th>
+					<td><?php echo esc_html(!empty($summary['last_search_at']) ? $this->format_admin_datetime($summary['last_search_at']) : __('Never', 'vfwp')); ?></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<?php $this->render_grouped_analytics_table(__('Most searched queries', 'vfwp'), $top_queries, false); ?>
+		<?php $this->render_grouped_analytics_table(__('Queries with no results', 'vfwp'), $zero_results, true); ?>
+		<?php $this->render_recent_analytics_table($recent); ?>
+
+		<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top: 18px;">
+			<input type="hidden" name="action" value="<?php echo esc_attr(VFWP_Intranet_Search_Analytics::CLEAR_ACTION); ?>">
+			<?php wp_nonce_field(VFWP_Intranet_Search_Analytics::CLEAR_ACTION); ?>
+			<?php submit_button(__('Clear analytics data', 'vfwp'), 'delete', 'submit', false); ?>
+		</form>
+		<?php
+	}
+
+	/**
+	 * Render grouped query analytics table.
+	 *
+	 * @param string $heading Heading.
+	 * @param array  $rows Rows.
+	 * @param bool   $zero_only Whether rows are zero-result only.
+	 * @return void
+	 */
+	private function render_grouped_analytics_table($heading, array $rows, $zero_only) {
+		?>
+		<h3><?php echo esc_html($heading); ?></h3>
+		<?php if (empty($rows)) : ?>
+			<p><?php echo esc_html__('No analytics data recorded yet.', 'vfwp'); ?></p>
+		<?php else : ?>
+			<table class="widefat striped" style="max-width: 920px;">
+				<thead>
+					<tr>
+						<th scope="col"><?php echo esc_html__('Query', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('Searches', 'vfwp'); ?></th>
+						<?php if (!$zero_only) : ?>
+							<th scope="col"><?php echo esc_html__('No-result searches', 'vfwp'); ?></th>
+							<th scope="col"><?php echo esc_html__('Average results', 'vfwp'); ?></th>
+						<?php endif; ?>
+						<th scope="col"><?php echo esc_html__('Last searched', 'vfwp'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($rows as $row) : ?>
+						<?php $query = isset($row['display_query']) && $row['display_query'] !== '' ? (string) $row['display_query'] : (string) $row['normalized_query']; ?>
+						<tr>
+							<th scope="row">
+								<a href="<?php echo esc_url(add_query_arg(array('s' => $query), home_url('/'))); ?>">
+									<?php echo esc_html($query); ?>
+								</a>
+							</th>
+							<td><?php echo esc_html(number_format_i18n((int) $row['searches'])); ?></td>
+							<?php if (!$zero_only) : ?>
+								<td><?php echo esc_html(number_format_i18n((int) $row['zero_result_searches'])); ?></td>
+								<td><?php echo esc_html(number_format_i18n((float) $row['average_results'], 1)); ?></td>
+							<?php endif; ?>
+							<td><?php echo esc_html($this->format_admin_datetime($row['last_searched_at'])); ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+	}
+
+	/**
+	 * Render recent searches table.
+	 *
+	 * @param array $rows Rows.
+	 * @return void
+	 */
+	private function render_recent_analytics_table(array $rows) {
+		?>
+		<h3><?php echo esc_html__('Recent searches', 'vfwp'); ?></h3>
+		<?php if (empty($rows)) : ?>
+			<p><?php echo esc_html__('No recent searches recorded yet.', 'vfwp'); ?></p>
+		<?php else : ?>
+			<table class="widefat striped" style="max-width: 920px;">
+				<thead>
+					<tr>
+						<th scope="col"><?php echo esc_html__('Query', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('Results', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('User email', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('Searched', 'vfwp'); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($rows as $row) : ?>
+						<?php $query = isset($row['query_text']) ? (string) $row['query_text'] : ''; ?>
+						<tr>
+							<th scope="row">
+								<a href="<?php echo esc_url(add_query_arg(array('s' => $query), home_url('/'))); ?>">
+									<?php echo esc_html($query); ?>
+								</a>
+							</th>
+							<td><?php echo esc_html(number_format_i18n((int) $row['result_count'])); ?></td>
+							<td><?php echo esc_html(!empty($row['user_email']) ? (string) $row['user_email'] : __('Not stored', 'vfwp')); ?></td>
+							<td><?php echo esc_html($this->format_admin_datetime($row['searched_at'])); ?></td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		<?php endif; ?>
+		<?php
+	}
+
+	/**
 	 * Render recent PDF extraction issues for administrators.
 	 *
 	 * @return void
@@ -1672,6 +1958,24 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
+	 * Sanitize analytics settings.
+	 *
+	 * @param array $settings Raw analytics settings.
+	 * @return array
+	 */
+	public static function sanitize_analytics_settings($settings) {
+		$settings = is_array($settings) ? $settings : array();
+		$defaults = self::defaults()['analytics'];
+
+		return array(
+			'enabled'        => empty($settings['enabled']) ? 0 : 1,
+			'exclude_admins' => empty($settings['exclude_admins']) ? 0 : 1,
+			'track_user_email' => empty($settings['track_user_email']) ? 0 : 1,
+			'retention_days' => min(730, max(7, absint(isset($settings['retention_days']) ? $settings['retention_days'] : $defaults['retention_days']))),
+		);
+	}
+
+	/**
 	 * Parse editable stopwords from text or array input.
 	 *
 	 * @param mixed $raw_value Raw input.
@@ -1768,6 +2072,101 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
+	 * Parse directional query synonyms from source = replacement lines.
+	 *
+	 * @param mixed $raw_value Raw input.
+	 * @return array
+	 */
+	public static function parse_synonyms($raw_value) {
+		$synonyms = array();
+		$raw_values = array();
+
+		if (is_array($raw_value)) {
+			$pending_values = array_values($raw_value);
+
+			while (!empty($pending_values) && count($raw_values) < 100) {
+				$value = array_shift($pending_values);
+
+				if (is_array($value)) {
+					if (isset($value['from']) || isset($value['to'])) {
+						$from = isset($value['from']) ? $value['from'] : '';
+						$to = isset($value['to']) ? $value['to'] : '';
+						self::append_synonym($synonyms, $from, $to);
+						continue;
+					}
+
+					$pending_values = array_merge($pending_values, array_values($value));
+					continue;
+				}
+
+				if (is_scalar($value)) {
+					$raw_values[] = (string) $value;
+				}
+			}
+		} elseif (is_scalar($raw_value)) {
+			$raw_values[] = (string) $raw_value;
+		}
+
+		$lines = preg_split('/[\r\n]+/u', implode("\n", $raw_values));
+
+		if (!is_array($lines)) {
+			return array();
+		}
+
+		foreach ($lines as $line) {
+			if (strpos($line, '=') === false) {
+				continue;
+			}
+
+			list($from, $to) = array_map('trim', explode('=', $line, 2));
+			self::append_synonym($synonyms, $from, $to);
+
+			if (count($synonyms) >= 100) {
+				break;
+			}
+		}
+
+		$values = array_values($synonyms);
+
+		usort($values, array(__CLASS__, 'sort_synonyms_by_source_length_desc'));
+
+		return $values;
+	}
+
+	/**
+	 * Append one normalized synonym pair.
+	 *
+	 * @param array $synonyms Synonym store.
+	 * @param mixed $from Source phrase.
+	 * @param mixed $to Replacement phrase.
+	 * @return void
+	 */
+	private static function append_synonym(array &$synonyms, $from, $to) {
+		$from = self::normalize_exact_phrase($from);
+		$to = self::normalize_exact_phrase($to);
+
+		if ($from === '' || $to === '' || $from === $to) {
+			return;
+		}
+
+		$synonyms[$from] = array(
+			'from' => $from,
+			'to'   => $to,
+		);
+	}
+
+	/**
+	 * Sort synonyms from longest source phrase to shortest.
+	 *
+	 * @param array $a First synonym.
+	 * @param array $b Second synonym.
+	 * @return int
+	 */
+	private static function sort_synonyms_by_source_length_desc($a, $b) {
+		return strlen((string) $b['from']) - strlen((string) $a['from']);
+	}
+
+	/**
 	 * Normalize an exact phrase using the same punctuation rules as visitor queries.
 	 *
 	 * @param mixed $value Raw phrase.
@@ -1838,6 +2237,22 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	private function format_decimal($value) {
 		return number_format_i18n((float) $value, 2);
+	}
+
+	/**
+	 * Format a UTC datetime for admin display.
+	 *
+	 * @param string $datetime MySQL datetime.
+	 * @return string
+	 */
+	private function format_admin_datetime($datetime) {
+		$timestamp = strtotime((string) $datetime . ' UTC');
+
+		if (!$timestamp) {
+			return (string) $datetime;
+		}
+
+		return date_i18n(get_option('date_format') . ' ' . get_option('time_format'), $timestamp);
 	}
 
 	/**

@@ -58,7 +58,9 @@ class VFWP_Intranet_Search_Query_Parser {
 		$raw_query = $this->limit_string($raw_query, self::MAX_QUERY_LENGTH);
 		$decoded_query = $this->decode($raw_query);
 		$quoted_phrases = $this->extract_quoted_phrases($decoded_query);
-		$normalized_query = $this->normalize_search_text($decoded_query);
+		$original_normalized_query = $this->normalize_search_text($decoded_query);
+		$synonym_parts = $this->apply_synonyms($original_normalized_query);
+		$normalized_query = $synonym_parts['query'];
 		$min_word_length = $this->get_min_word_length();
 		$all_terms = $this->extract_terms($normalized_query, false);
 		$protected_phrase_parts = $this->extract_protected_phrase_parts($normalized_query);
@@ -91,7 +93,9 @@ class VFWP_Intranet_Search_Query_Parser {
 
 		return array(
 			'raw'              => $raw_query,
+			'original_normalized' => $original_normalized_query,
 			'normalized'       => $normalized_query,
+			'synonym_replacements' => $synonym_parts['replacements'],
 			'term_query'       => $protected_phrase_parts['remaining_query'],
 			'terms'            => $terms,
 			'all_terms'        => $all_terms,
@@ -337,6 +341,53 @@ class VFWP_Intranet_Search_Query_Parser {
 		}
 
 		return $this->default_stopwords;
+	}
+
+	/**
+	 * Apply configured directional synonyms to a normalized query.
+	 *
+	 * @param string $normalized_query Normalized query.
+	 * @return array
+	 */
+	private function apply_synonyms($normalized_query) {
+		$normalized_query = trim((string) $normalized_query);
+		$replacements = array();
+
+		if ($normalized_query === '' || !class_exists('VFWP_Intranet_Search_Settings')) {
+			return array(
+				'query'        => $normalized_query,
+				'replacements' => $replacements,
+			);
+		}
+
+		foreach (VFWP_Intranet_Search_Settings::get_synonyms() as $synonym) {
+			$from = isset($synonym['from']) ? trim((string) $synonym['from']) : '';
+			$to = isset($synonym['to']) ? trim((string) $synonym['to']) : '';
+
+			if ($from === '' || $to === '' || $from === $to) {
+				continue;
+			}
+
+			$pattern = '/(^|\s)' . preg_quote($from, '/') . '(?=\s|$)/u';
+
+			if (preg_match($pattern, $normalized_query) !== 1) {
+				continue;
+			}
+
+			$normalized_query = preg_replace($pattern, '$1' . $to, $normalized_query, 1);
+			$normalized_query = is_string($normalized_query)
+				? trim(preg_replace('/\s+/u', ' ', $normalized_query))
+				: '';
+			$replacements[] = array(
+				'from' => $from,
+				'to'   => $to,
+			);
+		}
+
+		return array(
+			'query'        => $normalized_query,
+			'replacements' => $replacements,
+		);
 	}
 
 	/**

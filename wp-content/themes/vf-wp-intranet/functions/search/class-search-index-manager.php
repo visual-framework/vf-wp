@@ -143,7 +143,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	 * @return void
 	 */
 	public function handle_admin_action() {
-		if (!current_user_can('manage_options')) {
+		if (!current_user_can(VFWP_Intranet_Search_Settings::ADMIN_CAPABILITY)) {
 			wp_die(esc_html__('You do not have permission to manage the search index.', 'vfwp'));
 		}
 
@@ -191,7 +191,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	 * @return void
 	 */
 	public function handle_ajax_process_batch() {
-		if (!current_user_can('manage_options')) {
+		if (!current_user_can(VFWP_Intranet_Search_Settings::ADMIN_CAPABILITY)) {
 			wp_send_json_error(
 				array(
 					'message' => __('You do not have permission to manage the search index.', 'vfwp'),

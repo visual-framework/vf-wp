@@ -28,12 +28,18 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return array
 	 */
 	public static function search_current_request() {
-		return vfwp_intranet_search(
-			self::get_query(),
-			self::get_filters_for_request(),
-			self::get_current_page(),
-			self::get_per_page()
-		);
+		$query = self::get_query();
+		$filters = self::get_filters_for_request();
+		$page = self::get_current_page();
+		$per_page = self::get_per_page();
+		$response = vfwp_intranet_search($query, $filters, $page, $per_page);
+
+		if (class_exists('VFWP_Intranet_Search_Analytics')) {
+			$analytics = new VFWP_Intranet_Search_Analytics();
+			$analytics->log_search($query, $filters, $page, $per_page, $response);
+		}
+
+		return $response;
 	}
 
 	/**
