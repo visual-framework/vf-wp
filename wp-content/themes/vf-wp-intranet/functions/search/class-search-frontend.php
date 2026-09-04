@@ -81,6 +81,27 @@ class VFWP_Intranet_Search_Frontend {
 	}
 
 	/**
+	 * Return SearchService filters for raw frontend filter values.
+	 *
+	 * @param array $raw_values Raw search_type values.
+	 * @return array
+	 */
+	public static function get_filters_for_raw_filter_values(array $raw_values) {
+		$definitions = self::get_filter_definitions();
+		$selected = array();
+
+		foreach ($raw_values as $raw_value) {
+			$slug = self::normalize_filter_slug($raw_value);
+
+			if (isset($definitions[$slug])) {
+				$selected[] = $slug;
+			}
+		}
+
+		return self::build_service_filters('web', array_values(array_unique($selected)));
+	}
+
+	/**
 	 * Return indexed result counts for all visible frontend filters.
 	 *
 	 * @return array
@@ -671,6 +692,21 @@ class VFWP_Intranet_Search_Frontend {
 	}
 
 	/**
+	 * Return a search URL for a replacement query while preserving filters.
+	 *
+	 * @param mixed $query Search query.
+	 * @return string
+	 */
+	public static function get_search_url($query) {
+		return self::build_search_url(
+			array(
+				's'                      => is_scalar($query) ? (string) $query : '',
+				self::FILTER_PARAM       => self::get_selected_filter_slugs(),
+			)
+		);
+	}
+
+	/**
 	 * Normalize a filter value from GET.
 	 *
 	 * @param mixed $raw_value Raw value.
@@ -708,7 +744,7 @@ class VFWP_Intranet_Search_Frontend {
 	 */
 	private static function build_search_url(array $overrides) {
 		$args = array(
-			's' => self::get_query(),
+			's' => array_key_exists('s', $overrides) ? (string) $overrides['s'] : self::get_query(),
 		);
 
 		$selected_filters = array_key_exists(self::FILTER_PARAM, $overrides)

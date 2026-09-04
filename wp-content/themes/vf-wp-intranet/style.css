@@ -78,6 +78,7 @@ Text Domain:	 vfwp
     outline-offset: 2px;
 }
 .vf-summary mark {
+    font-weight: 500;
     background-color: #f3f3f3;
     color: inherit;
 }
@@ -121,6 +122,94 @@ Text Domain:	 vfwp
     flex: 0 0 auto;
     height: 0.9em;
     width: 0.9em;
+}
+.vf-form--search .vf-form__item {
+    position: relative;
+}
+.vf-form--search__results-list {
+    --vf-stack-margin: 0;
+    background: #fff;
+    border: 1px solid #d0d0ce;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    left: 0;
+    list-style: none;
+    margin: 4px 0 0;
+    max-height: 18rem;
+    overflow-y: auto;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 20;
+}
+.vf-form--search__results-list[hidden] {
+    display: none;
+}
+.vf-form--search__results-list .vf-list__item {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    gap: 0.5rem;
+    justify-content: space-between;
+    line-height: 1.4;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+}
+.vf-form--search__results-list-item--search {
+    background: #f8f8f8;
+    font-weight: 600;
+}
+.vf-form--search__results-list-item--phrase {
+    font-weight: 600;
+}
+.vf-form--search__results-label {
+    min-width: 0;
+}
+.vf-form--search__results-badges {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 0.35rem;
+}
+.vf-form--search__results-badge {
+    background: #d1e3f6 !important;
+    border-color: #d1e3f6 !important;
+    color: #2a57a3 !important;
+    flex: 0 0 auto;
+    font-size: 11px !important;
+    line-height: 1.1;
+    margin-left: 0.25rem;
+    padding: 1px 4px !important;
+}
+.vf-form--search__results-external-pill {
+    align-items: center;
+    background: #f3f3f3 !important;
+    border-color: #f3f3f3 !important;
+    color: #54585a !important;
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    gap: 3px;
+    line-height: 1.1;
+    margin-left: 0 !important;
+    padding: 1px 4px !important;
+    text-transform: lowercase !important;
+}
+.vf-form--search__results-list-item--search .vf-form--search__results-badge {
+    background: #f3f3f3 !important;
+    border-color: #d0d0ce !important;
+    color: #54585a !important;
+}
+.vf-form--search__results-list .vf-list__item[aria-selected="true"],
+.vf-form--search__results-list .vf-list__item:hover {
+    background: #f3f3f3;
+}
+.vf-search-did-you-mean {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0.5rem 0 0;
 }
 #load {
     width: 48px;

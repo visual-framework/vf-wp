@@ -73,8 +73,10 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
     action="<?php echo esc_url(home_url('/')); ?>">
     <div class="vf-sidebar__inner">
       <div class="vf-form__item | vf-search__item">
-        <input type="search" class="vf-form__input | vf-search__input" placeholder="Enter your search term"
-          value="<?php echo esc_attr(get_search_query()); ?>" name="s">
+        <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem"><?php esc_html_e('Search', 'vfwp'); ?></label>
+        <input type="search" id="searchitem" class="vf-form__input | vf-search__input" placeholder="<?php esc_attr_e('Enter your search terms', 'vfwp'); ?>"
+          value="<?php echo esc_attr(get_search_query()); ?>" name="s" aria-owns="vf-form--search__results-list" aria-autocomplete="list" aria-expanded="false" autocomplete="off">
+        <ul id="vf-form--search__results-list" class="vf-list | vf-form--search__results-list | vf-stack vf-stack--custom" role="listbox" aria-labelledby="searchitem" hidden></ul>
       </div>
       <div class="vf-form__item | vf-search__item" style="display: none">
         <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>

@@ -17,12 +17,14 @@ require_once get_stylesheet_directory() . '/functions/search/class-search-query-
 require_once get_stylesheet_directory() . '/functions/search/class-search-snippet-service.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-service.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-frontend.php';
+require_once get_stylesheet_directory() . '/functions/search/class-search-suggestions.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-index-manager.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-cli-command.php';
 
 add_action('after_switch_theme', array('VFWP_Intranet_Search_Schema', 'install'));
 add_action('init', array('VFWP_Intranet_Search_Schema', 'maybe_install'), 5);
 VFWP_Intranet_Search_Frontend::register_hooks();
+VFWP_Intranet_Search_Suggestions::register_hooks();
 
 function vfwp_intranet_search_bootstrap() {
 	global $vfwp_intranet_search_indexer;

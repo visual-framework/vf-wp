@@ -24,6 +24,22 @@ $vfwp_indexed_search_total = isset($vfwp_indexed_search_pagination['total'])
   ? (int) $vfwp_indexed_search_pagination['total']
   : 0;
 $vfwp_search_show_clear_filters = !is_array($vfwp_indexed_search_response) || $vfwp_indexed_search_total > 0;
+$vfwp_search_did_you_mean = array();
+
+if (
+  is_array($vfwp_indexed_search_response)
+  && $vfwp_indexed_search_total < 1
+  && trim(get_search_query(false)) !== ''
+  && class_exists('VFWP_Intranet_Search_Suggestions')
+  && class_exists('VFWP_Intranet_Search_Frontend')
+) {
+  $vfwp_search_did_you_mean_service = new VFWP_Intranet_Search_Suggestions();
+  $vfwp_search_did_you_mean = $vfwp_search_did_you_mean_service->did_you_mean(
+    get_search_query(false),
+    VFWP_Intranet_Search_Frontend::get_filters_for_request(),
+    3
+  );
+}
 
 get_header();
 
@@ -99,7 +115,8 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="searchitem"><?php esc_html_e('Search', 'vfwp'); ?></label>
           <input id="searchitem" class="vf-form__input" type="search" placeholder="<?php esc_attr_e('Enter your search terms', 'vfwp'); ?>"
             value="<?php echo esc_attr(get_search_query()); ?>" name="s"
-            aria-describedby="search-result-count">
+            aria-describedby="search-result-count" aria-owns="vf-form--search__results-list" aria-autocomplete="list" aria-expanded="false" autocomplete="off">
+          <ul id="vf-form--search__results-list" class="vf-list | vf-form--search__results-list | vf-stack vf-stack--custom" role="listbox" aria-labelledby="searchitem" hidden></ul>
         </div>
         <div class="vf-form__item | vf-search__item" style="display: none">
           <label class="vf-form__label vf-u-sr-only | vf-search__label" for="vf-form__select">Category</label>
@@ -128,6 +145,28 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
         </button>
       </div>
     </form>
+    <?php if (!empty($vfwp_search_did_you_mean) && class_exists('VFWP_Intranet_Search_Frontend')) : ?>
+      <?php
+      $vfwp_search_did_you_mean_links = array();
+
+      foreach ($vfwp_search_did_you_mean as $vfwp_search_did_you_mean_item) {
+        $vfwp_search_did_you_mean_query = isset($vfwp_search_did_you_mean_item['query']) ? (string) $vfwp_search_did_you_mean_item['query'] : '';
+        $vfwp_search_did_you_mean_label = isset($vfwp_search_did_you_mean_item['label']) ? (string) $vfwp_search_did_you_mean_item['label'] : $vfwp_search_did_you_mean_query;
+
+        if ($vfwp_search_did_you_mean_query === '' || $vfwp_search_did_you_mean_label === '') {
+          continue;
+        }
+
+        $vfwp_search_did_you_mean_links[] = '<a class="vf-link" href="' . esc_url(VFWP_Intranet_Search_Frontend::get_search_url($vfwp_search_did_you_mean_query)) . '">' . esc_html($vfwp_search_did_you_mean_label) . '</a>';
+      }
+      ?>
+      <?php if (!empty($vfwp_search_did_you_mean_links)) : ?>
+      <p class="vf-search-did-you-mean">
+        <span><?php esc_html_e('Did you mean:', 'vfwp'); ?></span>
+        <?php echo implode(esc_html_x(', ', 'search correction separator', 'vfwp'), $vfwp_search_did_you_mean_links); ?>
+      </p>
+      <?php endif; ?>
+    <?php endif; ?>
   </div>
 </section>
 <div class="vf-stack vf-stack--400">
@@ -192,9 +231,6 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
             }
             echo '<p>' . esc_html__('Try checking the spelling, using fewer words, or searching for a broader term.', 'vfwp') . '</p>';
             echo '<ul class="vf-list">';
-            echo '<li class="vf-list__item">' . esc_html__('Check spelling.', 'vfwp') . '</li>';
-            echo '<li class="vf-list__item">' . esc_html__('Try fewer words.', 'vfwp') . '</li>';
-            echo '<li class="vf-list__item">' . esc_html__('Use a broader search term.', 'vfwp') . '</li>';
             if (class_exists('VFWP_Intranet_Search_Frontend') && VFWP_Intranet_Search_Frontend::has_active_filters()) {
               echo '<li class="vf-list__item">' . esc_html__('Remove filters to search more content.', 'vfwp') . '</li>';
             }
