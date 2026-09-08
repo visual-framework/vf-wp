@@ -11,11 +11,13 @@
         for (const node of record.addedNodes) {
           if (node.nodeType === 1) {
             if (node.matches(selector)) {
+              observer.disconnect();
               callback(node);
               return;
             }
             const target = node.querySelector(selector);
             if (target) {
+              observer.disconnect();
               callback(target);
               return;
             }
@@ -55,31 +57,22 @@
   };
 
   const editorDocumentMap = new WeakMap();
+  const editorIframeMap = new WeakMap();
   const wrapperMap = new WeakMap();
   const messageWindowMap = new WeakMap();
+  const editorIframeSelector = [
+    'iframe[name="editor-canvas"]',
+    'iframe.block-editor-iframe__html',
+    'iframe[title="Editor canvas"]',
+    'iframe[title="Editor Canvas"]'
+  ].join(',');
 
   const getEditorIframe = () => {
-    return document.querySelector(
-      [
-        'iframe[name="editor-canvas"]',
-        'iframe.block-editor-iframe__html',
-        'iframe[title="Editor canvas"]',
-        'iframe[title="Editor Canvas"]'
-      ].join(',')
-    );
+    return document.querySelector(editorIframeSelector);
   };
 
   const forEachEditorIframe = (callback) => {
-    document
-      .querySelectorAll(
-        [
-          'iframe[name="editor-canvas"]',
-          'iframe.block-editor-iframe__html',
-          'iframe[title="Editor canvas"]',
-          'iframe[title="Editor Canvas"]'
-        ].join(',')
-      )
-      .forEach(callback);
+    document.querySelectorAll(editorIframeSelector).forEach(callback);
   };
 
   const getEditorDocuments = () => {
@@ -360,9 +353,10 @@
   };
 
   const initEditorIframe = (iframe) => {
-    if (!iframe) {
+    if (!iframe || editorIframeMap.has(iframe)) {
       return;
     }
+    editorIframeMap.set(iframe, true);
 
     const init = () => {
       try {
@@ -383,7 +377,20 @@
 
   initAvailableEditors();
 
-  const editorIframeObserver = new MutationObserver(initAvailableEditors);
+  const editorIframeObserver = new MutationObserver((records) => {
+    records.forEach((record) => {
+      record.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1) {
+          return;
+        }
+        if (node.matches(editorIframeSelector)) {
+          initEditorIframe(node);
+          return;
+        }
+        node.querySelectorAll(editorIframeSelector).forEach(initEditorIframe);
+      });
+    });
+  });
   editorIframeObserver.observe(document, {
     childList: true,
     subtree: true
