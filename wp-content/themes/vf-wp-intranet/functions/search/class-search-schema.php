@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Schema {
-	const VERSION = 9;
+	const VERSION = 15;
 	const OPTION_NAME = 'vfwp_intranet_search_schema_version';
 
 	/**
@@ -146,7 +146,13 @@ class VFWP_Intranet_Search_Schema {
 	 * @return bool
 	 */
 	private static function schema_change_requires_rebuild($installed_version) {
-		return (int) $installed_version > 0 && (int) $installed_version < 7;
+		$installed_version = (int) $installed_version;
+
+		if ($installed_version <= 0) {
+			return false;
+		}
+
+		return $installed_version < 15;
 	}
 
 	/**

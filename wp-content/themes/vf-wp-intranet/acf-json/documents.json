@@ -22,6 +22,25 @@
             "mime_types": ""
         },
         {
+            "key": "field_vfwp_document_pdf_text",
+            "label": "PDF text",
+            "name": "pdf_text",
+            "type": "textarea",
+            "instructions": "Auto-generated from the uploaded PDF when the search indexer runs. Machine-readable PDFs only; scanned PDFs require OCR and will not be extracted automatically.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 10,
+            "new_lines": ""
+        },
+        {
             "key": "field_600e791cff812",
             "label": "EMBL site",
             "name": "embl_location",

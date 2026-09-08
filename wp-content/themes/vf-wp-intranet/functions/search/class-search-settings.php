@@ -841,6 +841,26 @@ class VFWP_Intranet_Search_Settings {
 					</td>
 				</tr>
 				<tr>
+					<th scope="row"><?php echo esc_html__('Document PDF extraction', 'vfwp'); ?></th>
+					<td>
+						<?php
+						echo esc_html(
+							sprintf(
+								__('%1$s successfully extracted of %2$s PDF documents planned. %3$s processed, %4$s failed.', 'vfwp'),
+								number_format_i18n((int) $status['document_pdf_extracted']),
+								number_format_i18n((int) $status['document_pdf_total']),
+								number_format_i18n((int) $status['document_pdf_processed']),
+								number_format_i18n((int) $status['document_pdf_failed'])
+							)
+						);
+						?>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Document PDF text fields updated', 'vfwp'); ?></th>
+					<td><?php echo esc_html(number_format_i18n((int) $status['document_pdf_text_updated'])); ?></td>
+				</tr>
+				<tr>
 					<th scope="row"><?php echo esc_html__('Pending items', 'vfwp'); ?></th>
 					<td><?php echo esc_html(number_format_i18n($pending)); ?></td>
 				</tr>
@@ -923,7 +943,9 @@ class VFWP_Intranet_Search_Settings {
 							}
 
 							setRunnerText(
-								(status.processed || 0) + ' / ' + (status.total_planned || 0) + ' <?php echo esc_js(__('items processed.', 'vfwp')); ?>'
+								(status.processed || 0) + ' / ' + (status.total_planned || 0) + ' <?php echo esc_js(__('items processed.', 'vfwp')); ?> '
+								+ (status.document_pdf_extracted || 0) + ' / ' + (status.document_pdf_total || 0) + ' <?php echo esc_js(__('PDFs extracted.', 'vfwp')); ?> '
+								+ (status.document_pdf_text_updated || 0) + ' <?php echo esc_js(__('Document PDF text fields updated.', 'vfwp')); ?>'
 							);
 
 							if (status.active) {

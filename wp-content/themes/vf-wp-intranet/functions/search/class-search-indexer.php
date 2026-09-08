@@ -269,6 +269,7 @@ class VFWP_Intranet_Search_Indexer {
 				&& hash_equals((string) $existing['source_hash'], $source_hash)
 				&& (int) $existing['schema_version'] === VFWP_Intranet_Search_Schema::VERSION
 			) {
+				$this->maybe_store_existing_document_pdf_text($post, $existing);
 				$this->repository->mark_rebuild_token($post_id, 'post', (string) $rebuild_token);
 				return 'skipped';
 			}
@@ -344,6 +345,7 @@ class VFWP_Intranet_Search_Indexer {
 		$document_pdf_index = $this->extract_document_pdf_index_data($document_pdf_source);
 
 		if ($post->post_type === 'documents') {
+			$this->store_document_pdf_text((int) $post->ID, (string) $document_pdf_index['raw_text']);
 			$content = !empty($document_pdf_index['content']) ? $document_pdf_index['content'] : '';
 		} elseif (!empty($document_pdf_index['content'])) {
 			$content = trim($content . "\n\n" . $document_pdf_index['content']);
@@ -413,6 +415,7 @@ class VFWP_Intranet_Search_Indexer {
 			'document_pdf'     => $document_pdf_source,
 			'schema_version'   => VFWP_Intranet_Search_Schema::VERSION,
 			'extraction_class' => get_class($this->pdf_extractor),
+			'extraction_version' => VFWP_Intranet_Search_PDF_Extractor::EXTRACTOR_VERSION,
 			'extraction_available' => $this->pdf_extractor->is_available(),
 		));
 	}
@@ -528,6 +531,7 @@ class VFWP_Intranet_Search_Indexer {
 	private function extract_document_pdf_index_data(array $document_pdf_source) {
 		$result = array(
 			'content'           => '',
+			'raw_text'          => '',
 			'extraction_status' => '',
 			'extraction_error'  => '',
 		);
@@ -538,11 +542,65 @@ class VFWP_Intranet_Search_Indexer {
 
 		$extraction = $this->pdf_extractor->extract((string) $document_pdf_source['file_path']);
 
-		$result['content'] = $this->normalizer->normalize_content(isset($extraction['text']) ? $extraction['text'] : '');
+		$result['raw_text'] = isset($extraction['text']) ? (string) $extraction['text'] : '';
+		$result['content'] = $this->normalizer->normalize_content($result['raw_text']);
 		$result['extraction_status'] = isset($extraction['status']) ? (string) $extraction['status'] : 'failed';
 		$result['extraction_error'] = isset($extraction['error']) ? (string) $extraction['error'] : '';
 
 		return $result;
+	}
+
+	/**
+	 * Store extracted PDF text on the Document post for editor visibility.
+	 *
+	 * @param int    $post_id Document post ID.
+	 * @param string $text Extracted text.
+	 * @return void
+	 */
+	private function store_document_pdf_text($post_id, $text) {
+		$post_id = (int) $post_id;
+		$text = (string) $text;
+
+		if ($post_id <= 0) {
+			return;
+		}
+
+		if ((string) get_post_meta($post_id, 'pdf_text', true) === $text) {
+			return;
+		}
+
+		if (function_exists('update_field')) {
+			update_field('field_vfwp_document_pdf_text', $text, $post_id);
+			update_field('pdf_text', $text, $post_id);
+		}
+
+		update_post_meta($post_id, 'pdf_text', $text);
+		update_post_meta($post_id, '_pdf_text', 'field_vfwp_document_pdf_text');
+	}
+
+	/**
+	 * Backfill visible Document PDF text when the search row is already current.
+	 *
+	 * @param WP_Post $post Existing post.
+	 * @param array   $existing Existing search row.
+	 * @return void
+	 */
+	private function maybe_store_existing_document_pdf_text(WP_Post $post, array $existing) {
+		if ($post->post_type !== 'documents') {
+			return;
+		}
+
+		$content = isset($existing['content']) ? (string) $existing['content'] : '';
+
+		if ($content === '') {
+			return;
+		}
+
+		if ((string) get_post_meta((int) $post->ID, 'pdf_text', true) === $content) {
+			return;
+		}
+
+		$this->store_document_pdf_text((int) $post->ID, $content);
 	}
 
 	/**

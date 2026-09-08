@@ -241,6 +241,11 @@ class VFWP_Intranet_Search_Index_Manager {
 				'deleted'          => 0,
 				'post_offset'      => 0,
 				'pdf_offset'       => 0,
+				'document_pdf_total' => 0,
+				'document_pdf_processed' => 0,
+				'document_pdf_extracted' => 0,
+				'document_pdf_failed' => 0,
+				'document_pdf_text_updated' => 0,
 				'started_at'       => '',
 				'last_activity_at' => '',
 				'completed_at'     => '',
@@ -292,6 +297,11 @@ class VFWP_Intranet_Search_Index_Manager {
 			'deleted'          => 0,
 			'post_offset'      => 0,
 			'pdf_offset'       => 0,
+			'document_pdf_total' => $this->count_planned_document_pdfs(),
+			'document_pdf_processed' => 0,
+			'document_pdf_extracted' => 0,
+			'document_pdf_failed' => 0,
+			'document_pdf_text_updated' => 0,
 			'started_at'       => $now,
 			'last_activity_at' => $now,
 			'completed_at'     => '',
@@ -352,8 +362,11 @@ class VFWP_Intranet_Search_Index_Manager {
 		}
 
 		foreach ($post_ids as $post_id) {
-			$result = vfwp_intranet_search_index_post((int) $post_id, false, $this->get_active_rebuild_token($status));
+			$force = in_array($status['mode'], array('full', 'clear_rebuild'), true);
+			$document_pdf_context = $this->get_document_pdf_context((int) $post_id);
+			$result = vfwp_intranet_search_index_post((int) $post_id, $force, $this->get_active_rebuild_token($status));
 			$status = $this->record_result($status, $result);
+			$status = $this->record_document_pdf_result($status, (int) $post_id, $document_pdf_context);
 		}
 
 		$status['post_offset'] += count($post_ids);
@@ -459,6 +472,165 @@ class VFWP_Intranet_Search_Index_Manager {
 		}
 
 		return $post_count;
+	}
+
+	/**
+	 * Count public Document posts that point to a PDF attachment.
+	 *
+	 * @return int
+	 */
+	private function count_planned_document_pdfs() {
+		$post_types = VFWP_Intranet_Search_Settings::get_enabled_post_types();
+
+		if (!in_array('documents', $post_types, true)) {
+			return 0;
+		}
+
+		$document_ids = get_posts(array(
+			'post_type'              => 'documents',
+			'post_status'            => 'publish',
+			'has_password'           => false,
+			'fields'                 => 'ids',
+			'posts_per_page'         => -1,
+			'orderby'                => 'ID',
+			'order'                  => 'ASC',
+			'no_found_rows'          => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'meta_query'             => array(
+				array(
+					'key'     => 'upload_file',
+					'compare' => 'EXISTS',
+				),
+			),
+		));
+
+		$count = 0;
+
+		foreach ($document_ids as $document_id) {
+			if ($this->document_has_pdf_attachment((int) $document_id)) {
+				$count++;
+			}
+		}
+
+		return $count;
+	}
+
+	/**
+	 * Return PDF context for a Document before it is indexed.
+	 *
+	 * @param int $post_id Post ID.
+	 * @return array
+	 */
+	private function get_document_pdf_context($post_id) {
+		$context = array(
+			'has_pdf'         => false,
+			'pdf_text_before' => '',
+		);
+
+		if (get_post_type((int) $post_id) !== 'documents') {
+			return $context;
+		}
+
+		if (!$this->document_has_pdf_attachment((int) $post_id)) {
+			return $context;
+		}
+
+		$context['has_pdf'] = true;
+		$context['pdf_text_before'] = (string) get_post_meta((int) $post_id, 'pdf_text', true);
+
+		return $context;
+	}
+
+	/**
+	 * Record PDF extraction and ACF field update progress for one Document.
+	 *
+	 * @param array $status Job status.
+	 * @param int   $post_id Post ID.
+	 * @param array $context Document PDF context.
+	 * @return array
+	 */
+	private function record_document_pdf_result(array $status, $post_id, array $context) {
+		if (empty($context['has_pdf'])) {
+			return $status;
+		}
+
+		$status['document_pdf_processed'] = isset($status['document_pdf_processed']) ? (int) $status['document_pdf_processed'] + 1 : 1;
+
+		$existing = $this->repository->find((int) $post_id, 'post');
+		$extraction_status = is_array($existing) && isset($existing['extraction_status']) ? (string) $existing['extraction_status'] : '';
+
+		if (in_array($extraction_status, array('success', 'success_truncated'), true)) {
+			$status['document_pdf_extracted'] = isset($status['document_pdf_extracted']) ? (int) $status['document_pdf_extracted'] + 1 : 1;
+		} elseif ($extraction_status !== '') {
+			$status['document_pdf_failed'] = isset($status['document_pdf_failed']) ? (int) $status['document_pdf_failed'] + 1 : 1;
+		}
+
+		$pdf_text_after = (string) get_post_meta((int) $post_id, 'pdf_text', true);
+
+		if ($pdf_text_after !== '' && $pdf_text_after !== (string) $context['pdf_text_before']) {
+			$status['document_pdf_text_updated'] = isset($status['document_pdf_text_updated']) ? (int) $status['document_pdf_text_updated'] + 1 : 1;
+		}
+
+		return $status;
+	}
+
+	/**
+	 * Determine whether a Document post points to a public PDF attachment.
+	 *
+	 * @param int $post_id Document post ID.
+	 * @return bool
+	 */
+	private function document_has_pdf_attachment($post_id) {
+		$attachment_id = $this->get_document_upload_file_attachment_id((int) $post_id);
+
+		if ($attachment_id <= 0) {
+			return false;
+		}
+
+		$attachment = get_post($attachment_id);
+
+		if (!$attachment instanceof WP_Post || $attachment->post_type !== 'attachment') {
+			return false;
+		}
+
+		if (in_array($attachment->post_status, array('trash', 'private', 'draft', 'auto-draft'), true) || !empty($attachment->post_password)) {
+			return false;
+		}
+
+		return get_post_mime_type($attachment) === 'application/pdf';
+	}
+
+	/**
+	 * Return the attachment ID stored by the Document upload_file ACF field.
+	 *
+	 * @param int $post_id Document post ID.
+	 * @return int
+	 */
+	private function get_document_upload_file_attachment_id($post_id) {
+		$value = get_post_meta((int) $post_id, 'upload_file', true);
+
+		if (is_numeric($value)) {
+			return (int) $value;
+		}
+
+		if (is_array($value) && isset($value['ID']) && is_numeric($value['ID'])) {
+			return (int) $value['ID'];
+		}
+
+		if (is_array($value) && isset($value['id']) && is_numeric($value['id'])) {
+			return (int) $value['id'];
+		}
+
+		if (function_exists('get_field')) {
+			$field_value = get_field('upload_file', (int) $post_id, false);
+
+			if (is_numeric($field_value)) {
+				return (int) $field_value;
+			}
+		}
+
+		return 0;
 	}
 
 	/**
