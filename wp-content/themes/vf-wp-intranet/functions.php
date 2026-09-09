@@ -25,6 +25,7 @@ require_once('functions/infoboard-news.php');
 require_once('functions/people.php');
 require_once('functions/teams-sync.php');
 require_once('functions/admin-menu.php');
+require_once('functions/user-status.php');
 require_once('functions/search/bootstrap.php');
 require_once('functions/training-ebi-feed.php');
 require_once('functions/bioit-feed.php');
