@@ -17,15 +17,22 @@ $vfwp_search_show_clear_filters = isset($vfwp_search_show_clear_filters)
   <fieldset id="checkbox-container" class="vf-form__fieldset vf-stack vf-stack--400">
     <legend class="vf-form__legend"><?php esc_html_e('Category', 'vfwp'); ?></legend>
     <?php foreach ($vfwp_search_filter_definitions as $vfwp_filter_slug => $vfwp_filter_definition) : ?>
+    <?php
+      $vfwp_filter_count = isset($vfwp_search_filter_counts['search_type'][$vfwp_filter_slug])
+        ? (int) $vfwp_search_filter_counts['search_type'][$vfwp_filter_slug]
+        : 0;
+      $vfwp_filter_selected = in_array($vfwp_filter_slug, $vfwp_selected_search_filters, true);
+      $vfwp_filter_disabled = $vfwp_filter_count < 1 && !$vfwp_filter_selected;
+    ?>
     <div class="vf-form__item vf-form__item--checkbox">
       <input id="<?php echo esc_attr($vfwp_filter_slug); ?>" type="checkbox"
         name="<?php echo esc_attr(VFWP_Intranet_Search_Frontend::FILTER_PARAM); ?>[]" value="<?php echo esc_attr($vfwp_filter_definition['query_value']); ?>"
-        data-id="<?php echo esc_attr($vfwp_filter_slug); ?>" class="vf-form__checkbox" <?php checked(in_array($vfwp_filter_slug, $vfwp_selected_search_filters, true)); ?>>
+        data-id="<?php echo esc_attr($vfwp_filter_slug); ?>" class="vf-form__checkbox" <?php checked($vfwp_filter_selected); ?> <?php disabled($vfwp_filter_disabled); ?>>
       <label for="<?php echo esc_attr($vfwp_filter_slug); ?>" class="vf-form__label">
         <?php echo esc_html($vfwp_filter_definition['label']); ?>
         <?php
         if (class_exists('VFWP_Intranet_Search_Frontend')) {
-          echo VFWP_Intranet_Search_Frontend::render_filter_count(isset($vfwp_search_filter_counts['search_type'][$vfwp_filter_slug]) ? $vfwp_search_filter_counts['search_type'][$vfwp_filter_slug] : 0);
+          echo VFWP_Intranet_Search_Frontend::render_filter_count($vfwp_filter_count);
         }
         ?>
       </label>

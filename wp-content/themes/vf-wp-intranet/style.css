@@ -55,6 +55,8 @@ Text Domain:	 vfwp
 }
 .vf-search-active-filter {
     align-items: center;
+    border-color: #54585a !important;
+    color: #54585a !important;
     display: inline-flex;
     font-size: 14px !important;
     gap: 0.35rem;
