@@ -1825,6 +1825,15 @@ class VFWP_Intranet_Search_Settings {
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+			<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin: 0 0 12px;">
+				<input type="hidden" name="action" value="vfwp_intranet_search_index_action">
+				<input type="hidden" name="search_index_action" value="clear_pdf_issues">
+				<?php wp_nonce_field('vfwp_intranet_search_index_action'); ?>
+				<?php submit_button(__('Clear PDF extraction issue notices', 'vfwp'), 'secondary', 'submit', false); ?>
+			</form>
+			<p class="description">
+				<?php echo esc_html__('This only clears stored issue notices from the search index. It does not delete media, posts, PDF text, or indexed content.', 'vfwp'); ?>
+			</p>
 		</div>
 		<?php
 	}

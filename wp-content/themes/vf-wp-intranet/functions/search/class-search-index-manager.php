@@ -161,6 +161,16 @@ class VFWP_Intranet_Search_Index_Manager {
 			$result = $this->start_changed_reindex();
 		} elseif ($action === 'clear_recreate') {
 			$result = $this->start_full_rebuild(true);
+		} elseif ($action === 'clear_pdf_issues') {
+			$cleared = $this->repository->clear_pdf_extraction_issues();
+			$result = array(
+				'started' => false,
+				'message' => sprintf(
+					/* translators: %d: number of cleared PDF extraction issue rows. */
+					_n('%d PDF extraction issue notice cleared.', '%d PDF extraction issue notices cleared.', $cleared, 'vfwp'),
+					$cleared
+				),
+			);
 		}
 
 		if (!empty($result['started'])) {
@@ -175,7 +185,7 @@ class VFWP_Intranet_Search_Index_Manager {
 		$redirect_url = add_query_arg(
 			array(
 				'page'                      => 'vfwp-intranet-search',
-				'vfwp_search_index_notice'  => $result['started'] ? 'started' : 'blocked',
+				'vfwp_search_index_notice'  => ($result['started'] || $action === 'clear_pdf_issues') ? 'started' : 'blocked',
 				'vfwp_search_index_message' => rawurlencode($result['message']),
 			),
 			admin_url('options-general.php')

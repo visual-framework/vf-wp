@@ -299,4 +299,20 @@ class VFWP_Intranet_Search_Index_Repository {
 
 		return is_array($rows) ? $rows : array();
 	}
+
+	/**
+	 * Clear stored PDF extraction issue statuses without deleting indexed content.
+	 *
+	 * @return int Number of rows updated.
+	 */
+	public function clear_pdf_extraction_issues() {
+		$result = $this->wpdb->query(
+			"UPDATE {$this->table_name}
+			SET extraction_status = '', extraction_error = ''
+			WHERE (object_type = 'pdf' OR (object_type = 'post' AND post_type = 'documents'))
+				AND extraction_status NOT IN ('', 'success', 'success_truncated')"
+		);
+
+		return false === $result ? 0 : (int) $result;
+	}
 }
