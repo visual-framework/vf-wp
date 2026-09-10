@@ -12,6 +12,9 @@ if (!defined('ABSPATH')) {
 
 define('VFWP_INTRANET_MEDIA_AUDIT_PAGE', 'vfwp-intranet-media-audit');
 define('VFWP_INTRANET_MEDIA_AUDIT_NONCE', 'vfwp_intranet_media_audit');
+define('VFWP_INTRANET_MEDIA_AUDIT_DEFAULT_PER_PAGE', 10);
+define('VFWP_INTRANET_MEDIA_AUDIT_MIN_PER_PAGE', 5);
+define('VFWP_INTRANET_MEDIA_AUDIT_MAX_PER_PAGE', 50);
 
 function vfwp_intranet_media_audit_admin_menu() {
 	add_management_page(
@@ -173,12 +176,14 @@ function vfwp_intranet_media_audit_ajax_scan() {
 	}
 
 	$paged = isset($_POST['paged']) ? max(1, (int) $_POST['paged']) : 1;
-	$per_page = isset($_POST['per_page']) ? min(200, max(20, (int) $_POST['per_page'])) : 50;
+	$per_page = vfwp_intranet_media_audit_get_per_page_from_request($_POST);
 	$safety_days = isset($_POST['safety_days']) ? min(365, max(1, (int) $_POST['safety_days'])) : 90;
 	$mime = isset($_POST['attachment_mime']) ? sanitize_text_field(wp_unslash($_POST['attachment_mime'])) : '';
 	$upload_order = vfwp_intranet_media_audit_get_upload_order_from_request($_POST);
 	$scan_duplicates = isset($_POST['scan_duplicates']);
 	$refresh_duplicates = isset($_POST['refresh_duplicates']);
+
+	register_shutdown_function('vfwp_intranet_media_audit_ajax_shutdown_handler');
 
 	ob_start();
 
@@ -211,8 +216,7 @@ function vfwp_intranet_media_audit_render_page() {
 	}
 
 	$paged = isset($_GET['paged']) ? max(1, (int) $_GET['paged']) : 1;
-	$per_page = isset($_GET['per_page']) ? (int) $_GET['per_page'] : 50;
-	$per_page = min(200, max(20, $per_page));
+	$per_page = vfwp_intranet_media_audit_get_per_page_from_request($_GET);
 	$safety_days = vfwp_intranet_media_audit_get_safety_days();
 	$mime = isset($_GET['attachment_mime']) ? sanitize_text_field(wp_unslash($_GET['attachment_mime'])) : '';
 	$upload_order = vfwp_intranet_media_audit_get_upload_order_from_request($_GET);
@@ -266,7 +270,7 @@ function vfwp_intranet_media_audit_render_page() {
 			</label>
 			<label>
 				<?php echo esc_html__('Rows per page', 'vfwp'); ?>
-				<input type="number" name="per_page" value="<?php echo esc_attr($per_page); ?>" min="20" max="200">
+				<input type="number" name="per_page" value="<?php echo esc_attr($per_page); ?>" min="<?php echo esc_attr(VFWP_INTRANET_MEDIA_AUDIT_MIN_PER_PAGE); ?>" max="<?php echo esc_attr(VFWP_INTRANET_MEDIA_AUDIT_MAX_PER_PAGE); ?>">
 			</label>
 			<label>
 				<?php echo esc_html__('Uploaded date', 'vfwp'); ?>
@@ -530,11 +534,28 @@ function vfwp_intranet_media_audit_render_page() {
 					body: data
 				})
 					.then(function (response) {
-						return response.json();
+						return response.text().then(function (text) {
+							return {
+								response: response,
+								text: text
+							};
+						});
 					})
-					.then(function (payload) {
+					.then(function (result) {
+						var payload;
+
+						try {
+							payload = JSON.parse(result.text);
+						} catch (error) {
+							throw new Error('<?php echo esc_js(__('The server returned HTML instead of JSON, usually because the request timed out or PHP hit a fatal error. Try a smaller Rows per page value, then check the server PHP error log for the exact failure.', 'vfwp')); ?>');
+						}
+
+						if (!result.response.ok && payload && payload.data && payload.data.message) {
+							throw new Error(payload.data.message);
+						}
+
 						if (!payload || !payload.success || !payload.data || typeof payload.data.html !== 'string') {
-							throw new Error('<?php echo esc_js(__('The media scan did not return usable results.', 'vfwp')); ?>');
+							throw new Error(payload && payload.data && payload.data.message ? payload.data.message : '<?php echo esc_js(__('The media scan did not return usable results.', 'vfwp')); ?>');
 						}
 
 						results.innerHTML = payload.data.html;
@@ -542,7 +563,14 @@ function vfwp_intranet_media_audit_render_page() {
 						bindBulkControls();
 					})
 					.catch(function (error) {
-						results.innerHTML = '<div class="notice notice-error inline"><p>' + error.message + '</p></div>';
+						var notice = document.createElement('div');
+						var paragraph = document.createElement('p');
+
+						notice.className = 'notice notice-error inline';
+						paragraph.appendChild(document.createTextNode(error.message));
+						notice.appendChild(paragraph);
+						results.innerHTML = '';
+						results.appendChild(notice);
 					})
 					.finally(function () {
 						setLoading(false);
@@ -609,6 +637,11 @@ function vfwp_intranet_media_audit_render_page() {
 function vfwp_intranet_media_audit_get_safety_days() {
 	$safety_days = isset($_GET['safety_days']) ? (int) $_GET['safety_days'] : 90;
 	return min(365, max(1, $safety_days));
+}
+
+function vfwp_intranet_media_audit_get_per_page_from_request($source) {
+	$per_page = isset($source['per_page']) ? (int) wp_unslash($source['per_page']) : VFWP_INTRANET_MEDIA_AUDIT_DEFAULT_PER_PAGE;
+	return min(VFWP_INTRANET_MEDIA_AUDIT_MAX_PER_PAGE, max(VFWP_INTRANET_MEDIA_AUDIT_MIN_PER_PAGE, $per_page));
 }
 
 function vfwp_intranet_media_audit_get_upload_order_from_request($source) {
@@ -787,11 +820,42 @@ function vfwp_intranet_media_audit_get_redirect_args_from_request() {
 	return array(
 		'page'            => VFWP_INTRANET_MEDIA_AUDIT_PAGE,
 		'paged'           => isset($source['paged']) ? max(1, (int) $source['paged']) : 1,
-		'per_page'        => isset($source['per_page']) ? min(200, max(20, (int) $source['per_page'])) : 50,
+		'per_page'        => vfwp_intranet_media_audit_get_per_page_from_request($source),
 		'safety_days'     => isset($source['safety_days']) ? min(365, max(1, (int) $source['safety_days'])) : 90,
 		'attachment_mime' => isset($source['attachment_mime']) ? sanitize_text_field(wp_unslash($source['attachment_mime'])) : '',
 		'upload_order'    => vfwp_intranet_media_audit_get_upload_order_from_request($source),
 	);
+}
+
+function vfwp_intranet_media_audit_ajax_shutdown_handler() {
+	if (!function_exists('wp_doing_ajax') || !wp_doing_ajax()) {
+		return;
+	}
+
+	$action = isset($_REQUEST['action']) ? sanitize_key(wp_unslash($_REQUEST['action'])) : '';
+	if ($action !== 'vfwp_intranet_media_audit_scan') {
+		return;
+	}
+
+	$error = error_get_last();
+	$fatal_types = array(E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR, E_RECOVERABLE_ERROR);
+
+	if (!$error || empty($error['type']) || !in_array($error['type'], $fatal_types, true) || headers_sent()) {
+		return;
+	}
+
+	while (ob_get_level() > 0) {
+		ob_end_clean();
+	}
+
+	wp_send_json_error(array(
+		'message' => sprintf(
+			__('The media scan stopped because PHP reported a fatal error: %1$s in %2$s on line %3$d. Try a smaller Rows per page value, then check the PHP error log.', 'vfwp'),
+			isset($error['message']) ? $error['message'] : __('Unknown error', 'vfwp'),
+			isset($error['file']) ? basename($error['file']) : __('unknown file', 'vfwp'),
+			isset($error['line']) ? (int) $error['line'] : 0
+		),
+	), 500);
 }
 
 function vfwp_intranet_media_audit_render_admin_notices() {
@@ -1253,43 +1317,55 @@ function vfwp_intranet_media_audit_prepare_sql($query, $args) {
 function vfwp_intranet_media_audit_find_theme_references($attachment_id) {
 	$evidence = array();
 	$needles = vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id);
+	static $theme_files = null;
 
 	if (empty($needles)) {
 		return $evidence;
 	}
 
-	$theme_dir = get_stylesheet_directory();
-	$extensions = array('php', 'css', 'js', 'json', 'html');
+	if ($theme_files === null) {
+		$theme_files = array();
+		$theme_dir = get_stylesheet_directory();
+		$extensions = array('php', 'css', 'js', 'json', 'html');
 
-	try {
-		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($theme_dir, FilesystemIterator::SKIP_DOTS));
-	} catch (Exception $exception) {
-		return $evidence;
+		try {
+			$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($theme_dir, FilesystemIterator::SKIP_DOTS));
+		} catch (Exception $exception) {
+			return $evidence;
+		}
+
+		foreach ($iterator as $file) {
+			if (!$file->isFile()) {
+				continue;
+			}
+
+			$extension = strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
+			if (!in_array($extension, $extensions, true) || $file->getSize() > 1048576) {
+				continue;
+			}
+
+			$contents = file_get_contents($file->getPathname());
+			if (!is_string($contents) || $contents === '') {
+				continue;
+			}
+
+			$theme_files[] = array(
+				'relative' => str_replace(trailingslashit($theme_dir), '', $file->getPathname()),
+				'contents' => $contents,
+			);
+		}
 	}
 
-	foreach ($iterator as $file) {
-		if (!$file->isFile()) {
-			continue;
-		}
-
-		$extension = strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
-		if (!in_array($extension, $extensions, true) || $file->getSize() > 1048576) {
-			continue;
-		}
-
-		$contents = file_get_contents($file->getPathname());
-		if (!is_string($contents) || $contents === '') {
-			continue;
-		}
-
+	foreach ($theme_files as $theme_file) {
 		foreach ($needles as $needle) {
-			if (strpos($contents, $needle) !== false) {
-				$relative = str_replace(trailingslashit($theme_dir), '', $file->getPathname());
-				$evidence[] = array(
-					'label' => sprintf(__('Theme file reference: %s', 'vfwp'), $relative),
-				);
-				break;
+			if (strpos($theme_file['contents'], $needle) === false) {
+				continue;
 			}
+
+			$evidence[] = array(
+				'label' => sprintf(__('Theme file reference: %s', 'vfwp'), $theme_file['relative']),
+			);
+			break;
 		}
 	}
 
@@ -1380,7 +1456,7 @@ function vfwp_intranet_media_audit_get_duplicate_groups($refresh) {
 		'fields'         => 'ids',
 	));
 
-	$hashes = array();
+	$size_groups = array();
 	foreach ($attachment_ids as $attachment_id) {
 		$attachment = get_post((int) $attachment_id);
 		if (!$attachment || $attachment->post_type !== 'attachment' || $attachment->post_status === 'trash') {
@@ -1398,24 +1474,43 @@ function vfwp_intranet_media_audit_get_duplicate_groups($refresh) {
 		}
 
 		$size = filesize($file_path);
-		$hash = sha1_file($file_path);
-		if (!is_string($hash) || $hash === '') {
-			continue;
+		if (!isset($size_groups[$size])) {
+			$size_groups[$size] = array();
 		}
 
-		if (!isset($hashes[$hash])) {
-			$hashes[$hash] = array(
-				'hash' => $hash,
-				'size' => $size,
-				'items' => array(),
-			);
-		}
-
-		$hashes[$hash]['items'][] = array(
+		$size_groups[$size][] = array(
 			'id' => (int) $attachment_id,
 			'title' => get_the_title((int) $attachment_id),
 			'file' => $relative_file,
+			'path' => $file_path,
 		);
+	}
+
+	$hashes = array();
+	foreach ($size_groups as $size => $items) {
+		if (count($items) < 2) {
+			continue;
+		}
+
+		foreach ($items as $item) {
+			$file_path = $item['path'];
+			unset($item['path']);
+
+			$hash = sha1_file($file_path);
+			if (!is_string($hash) || $hash === '') {
+				continue;
+			}
+
+			if (!isset($hashes[$hash])) {
+				$hashes[$hash] = array(
+					'hash' => $hash,
+					'size' => $size,
+					'items' => array(),
+				);
+			}
+
+			$hashes[$hash]['items'][] = $item;
+		}
 	}
 
 	$groups = array();
