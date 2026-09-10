@@ -974,7 +974,7 @@ function vfwp_intranet_media_audit_render_page() {
 				vfwp_intranet_media_audit_render_scan_pagination($query, $paged, $per_page, $safety_days, $mime, $upload_order, $uploaded_from, $uploaded_to, $status_filter);
 				?>
 			<?php else : ?>
-				<div class="notice notice-warning inline">
+				<div class="notice notice-warning inline is-dismissible">
 					<p><?php echo esc_html__('Set filters if needed, then click Scan. The media library is not scanned automatically when this page opens.', 'vfwp'); ?></p>
 				</div>
 			<?php endif; ?>
@@ -1322,6 +1322,28 @@ function vfwp_intranet_media_audit_render_page() {
 					});
 			}
 
+			function makeNoticeDismissible(notice) {
+				var button;
+
+				if (!notice || notice.querySelector('.notice-dismiss')) {
+					return;
+				}
+
+				notice.classList.add('is-dismissible');
+				button = document.createElement('button');
+				button.type = 'button';
+				button.className = 'notice-dismiss';
+				button.innerHTML = '<span class="screen-reader-text"><?php echo esc_js(__('Dismiss this notice.', 'vfwp')); ?></span>';
+				button.addEventListener('click', function () {
+					notice.remove();
+				});
+				notice.appendChild(button);
+			}
+
+			function bindDismissibleNotices() {
+				document.querySelectorAll('.vfwp-media-audit .notice.is-dismissible').forEach(makeNoticeDismissible);
+			}
+
 			function runAjaxScan(data) {
 				var displayData = cloneFormData(data);
 				var requestData = cloneFormData(data);
@@ -1344,15 +1366,17 @@ function vfwp_intranet_media_audit_render_page() {
 						results.innerHTML = payload.data.html;
 						updateUrlFromData(displayData);
 						bindBulkControls();
+						bindDismissibleNotices();
 						applyDisplayControls(true);
 					})
 					.catch(function (error) {
 						var notice = document.createElement('div');
 						var paragraph = document.createElement('p');
 
-						notice.className = 'notice notice-error inline';
+						notice.className = 'notice notice-error inline is-dismissible';
 						paragraph.appendChild(document.createTextNode(error.message));
 						notice.appendChild(paragraph);
+						makeNoticeDismissible(notice);
 						results.innerHTML = '';
 						results.appendChild(notice);
 					})
@@ -1438,9 +1462,10 @@ function vfwp_intranet_media_audit_render_page() {
 				var notice = document.createElement('div');
 				var paragraph = document.createElement('p');
 
-				notice.className = 'notice notice-' + (type || 'info') + ' inline';
+				notice.className = 'notice notice-' + (type || 'info') + ' inline is-dismissible';
 				paragraph.appendChild(document.createTextNode(message));
 				notice.appendChild(paragraph);
+				makeNoticeDismissible(notice);
 				results.insertBefore(notice, results.firstChild);
 			}
 
@@ -1890,6 +1915,7 @@ function vfwp_intranet_media_audit_render_page() {
 			});
 
 			bindBulkControls();
+			bindDismissibleNotices();
 			applyDisplayControls(true);
 		});
 	</script>
