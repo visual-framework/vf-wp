@@ -45,6 +45,7 @@ function vfwp_intranet_sync_teams_from_contenthub() {
         'created_titles' => array(),
         'updated_titles' => array(),
         'deleted_titles' => array(),
+        'delete_skipped_titles' => array(),
         'skipped_titles' => array(),
         'error_messages' => array(),
     );
@@ -147,19 +148,86 @@ function vfwp_intranet_sync_teams_from_contenthub() {
         $stats['created_titles'][] = $title;
     }
 
+    $api_team_ids = array_values(array_unique($api_team_ids));
+    $can_delete_missing_teams = vfwp_intranet_teams_sync_can_delete_missing_teams(
+        array_keys($existing_team_ids),
+        $api_team_ids,
+        $stats
+    );
+
     foreach ($existing_team_ids as $team_id => $post_id) {
         if (!in_array($team_id, $api_team_ids, true)) {
+            if (get_post_status($post_id) === 'trash') {
+                continue;
+            }
+
+            if (!$can_delete_missing_teams) {
+                $stats['delete_skipped_titles'][] = get_the_title($post_id);
+                continue;
+            }
+
+            $trashed = wp_trash_post($post_id);
+            if (!$trashed) {
+                $stats['error_messages'][] = sprintf(
+                    __('Could not trash missing ContentHub Team: %s', 'vfwp'),
+                    get_the_title($post_id)
+                );
+                continue;
+            }
+
             $stats['deleted_titles'][] = get_the_title($post_id);
-            wp_delete_post($post_id, true);
         }
     }
 
     update_option('vfwp_teams_sync_stats', $stats);
     update_option('vfwp_teams_last_sync_time', current_time('mysql', true));
-    delete_option('vfwp_teams_last_sync_error');
+    if (!empty($stats['error_messages'])) {
+        update_option('vfwp_teams_last_sync_error', implode(' ', array_slice($stats['error_messages'], 0, 3)));
+    } else {
+        delete_option('vfwp_teams_last_sync_error');
+    }
     delete_transient(VFWP_INTRANET_TEAMS_SYNC_LOCK);
 
     return $stats;
+}
+
+function vfwp_intranet_teams_sync_can_delete_missing_teams($existing_team_ids, $api_team_ids, &$stats) {
+    $existing_team_ids = array_values(array_unique(array_map('strval', is_array($existing_team_ids) ? $existing_team_ids : array())));
+    $api_team_ids = array_values(array_unique(array_map('strval', is_array($api_team_ids) ? $api_team_ids : array())));
+    $existing_count = count($existing_team_ids);
+    $api_count = count($api_team_ids);
+
+    if ($existing_count <= 0) {
+        return true;
+    }
+
+    if ($api_count <= 0) {
+        $stats['error_messages'][] = __('ContentHub teams sync skipped removals because the API response contained no valid team IDs.', 'vfwp');
+        return false;
+    }
+
+    $minimum_coverage = (float) apply_filters(
+        'vfwp_intranet_teams_sync_min_delete_coverage',
+        0.95,
+        $existing_count,
+        $api_count
+    );
+    $minimum_coverage = max(0, min(1, $minimum_coverage));
+    $coverage = $api_count / $existing_count;
+    $overlap_count = count(array_intersect($existing_team_ids, $api_team_ids));
+    $overlap_coverage = $overlap_count / min($existing_count, $api_count);
+
+    if ($coverage < $minimum_coverage || $overlap_coverage < $minimum_coverage) {
+        $stats['error_messages'][] = sprintf(
+            __('ContentHub teams sync skipped removals because the API response looked incomplete: %1$d valid team IDs were returned for %2$d existing ContentHub-managed Teams, with %3$d matching existing IDs.', 'vfwp'),
+            $api_count,
+            $existing_count,
+            $overlap_count
+        );
+        return false;
+    }
+
+    return true;
 }
 
 function vfwp_intranet_get_contenthub_teams() {
@@ -336,6 +404,7 @@ function vfwp_intranet_format_teams_sync_stats($stats) {
     $created_titles = isset($stats['created_titles']) && is_array($stats['created_titles']) ? $stats['created_titles'] : array();
     $updated_titles = isset($stats['updated_titles']) && is_array($stats['updated_titles']) ? $stats['updated_titles'] : array();
     $deleted_titles = isset($stats['deleted_titles']) && is_array($stats['deleted_titles']) ? $stats['deleted_titles'] : array();
+    $delete_skipped_titles = isset($stats['delete_skipped_titles']) && is_array($stats['delete_skipped_titles']) ? $stats['delete_skipped_titles'] : array();
     $skipped_titles = isset($stats['skipped_titles']) && is_array($stats['skipped_titles']) ? $stats['skipped_titles'] : array();
     $error_messages = isset($stats['error_messages']) && is_array($stats['error_messages']) ? $stats['error_messages'] : array();
 
@@ -343,10 +412,12 @@ function vfwp_intranet_format_teams_sync_stats($stats) {
         'created' => count($created_titles),
         'updated' => count($updated_titles),
         'deleted' => count($deleted_titles),
+        'delete_skipped' => count($delete_skipped_titles),
         'skipped' => count($skipped_titles),
         'created_titles' => $created_titles,
         'updated_titles' => $updated_titles,
         'deleted_titles' => $deleted_titles,
+        'delete_skipped_titles' => $delete_skipped_titles,
         'skipped_titles' => $skipped_titles,
         'error_messages' => $error_messages,
     );
@@ -392,7 +463,7 @@ function vfwp_intranet_render_teams_sync_notice() {
 
     echo '<div class="notice notice-info vfwp-teams-sync-notice" style="padding-bottom:12px;">';
     echo '<p><span>' . sprintf(__('Last ContentHub teams sync: %s', 'vfwp'), esc_html($last_sync)) . '</span></p>';
-    echo '<p>' . esc_html__('Only Teams marked as ContentHub-managed are updated or deleted by this sync. Manually-created Teams are left alone.', 'vfwp') . '</p>';
+    echo '<p>' . esc_html__('Only Teams marked as ContentHub-managed are updated by this sync. Missing ContentHub Teams are only trashed when the API response looks complete; manually-created Teams are left alone.', 'vfwp') . '</p>';
     if ($last_error) {
         echo '<p><strong>' . esc_html__('Last sync error:', 'vfwp') . '</strong> ' . esc_html($last_error) . '</p>';
     }

@@ -32,17 +32,19 @@
 
     const displayStats = (stats) => {
         const {
-            created,
-            updated,
-            deleted,
-            skipped,
-            created_titles,
-            updated_titles,
-            deleted_titles,
-            error_messages,
-        } = stats;
+            created = 0,
+            updated = 0,
+            deleted = 0,
+            delete_skipped = 0,
+            skipped = 0,
+            created_titles = [],
+            updated_titles = [],
+            deleted_titles = [],
+            delete_skipped_titles = [],
+            error_messages = [],
+        } = stats || {};
 
-        let html = `<p><strong>Teams data synced successfully.</strong> Created: <strong>${created}</strong>, Updated: <strong>${updated}</strong>, Deleted: <strong>${deleted}</strong>, Unchanged: <strong>${skipped}</strong></p>`;
+        let html = `<p><strong>Teams data synced successfully.</strong> Created: <strong>${created}</strong>, Updated: <strong>${updated}</strong>, Trashed: <strong>${deleted}</strong>, Removal skipped: <strong>${delete_skipped || 0}</strong>, Unchanged: <strong>${skipped}</strong></p>`;
         html += '<table style="width:100%;border-collapse:collapse;margin-top:5px;margin-bottom:10px;">';
 
         const renderRow = (label, values) => {
@@ -56,7 +58,8 @@
 
         html += renderRow('Created', created_titles);
         html += renderRow('Updated', updated_titles);
-        html += renderRow('Deleted', deleted_titles);
+        html += renderRow('Trashed', deleted_titles);
+        html += renderRow('Removal skipped', delete_skipped_titles);
         html += renderRow('Warnings', error_messages);
         html += '</table>';
 
