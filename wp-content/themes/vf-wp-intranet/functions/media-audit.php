@@ -20,6 +20,7 @@ define('VFWP_INTRANET_MEDIA_AUDIT_EXPORT_BATCH_SIZE', 100);
 define('VFWP_INTRANET_MEDIA_AUDIT_DEEP_EVIDENCE_LIMIT', 20);
 define('VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE', 500);
 define('VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNKS_PER_REQUEST', 4);
+define('VFWP_INTRANET_MEDIA_AUDIT_THEME_CACHE_TTL', 12 * HOUR_IN_SECONDS);
 
 function vfwp_intranet_media_audit_admin_menu() {
 	add_management_page(
@@ -64,6 +65,7 @@ function vfwp_intranet_media_audit_export_csv() {
 		'File',
 		'Mime type',
 		'Uploaded',
+		'Uploaded by',
 		'Size',
 		'Status',
 		'Evidence count',
@@ -108,6 +110,7 @@ function vfwp_intranet_media_audit_export_csv() {
 				$report['relative_file'],
 				$report['mime_type'],
 				$report['uploaded'],
+				$report['uploaded_by'],
 				$report['file_size_label'],
 				$report['status_label'],
 				count($report['evidence']),
@@ -247,7 +250,8 @@ function vfwp_intranet_media_audit_ajax_full_scan_batch() {
 	$upload_order = $filters['upload_order'];
 	$uploaded_from = $filters['uploaded_from'];
 	$uploaded_to = $filters['uploaded_to'];
-	$query = vfwp_intranet_media_audit_get_attachment_query($paged, $batch_size, $mime, $upload_order, $uploaded_from, $uploaded_to);
+	$known_total = isset($_POST['media_audit_total']) ? max(0, (int) $_POST['media_audit_total']) : 0;
+	$query = vfwp_intranet_media_audit_get_attachment_query($paged, $batch_size, $mime, $upload_order, $uploaded_from, $uploaded_to, $known_total > 0);
 
 	ob_start();
 	foreach ($query->posts as $attachment) {
@@ -256,7 +260,7 @@ function vfwp_intranet_media_audit_ajax_full_scan_batch() {
 	}
 	$rows_html = ob_get_clean();
 
-	$total = max(0, (int) $query->found_posts);
+	$total = $known_total > 0 ? $known_total : max(0, (int) $query->found_posts);
 	$processed = min($total, $paged * $batch_size);
 	$done = $total === 0 || $processed >= $total || empty($query->posts);
 
@@ -820,6 +824,24 @@ function vfwp_intranet_media_audit_render_page() {
 			margin-top: 8px;
 		}
 
+		.vfwp-media-audit__row-actions {
+			align-items: baseline;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 0 4px;
+		}
+
+		.vfwp-media-audit__delete-link {
+			color: #b32d2e;
+			min-height: 0;
+			padding: 0;
+		}
+
+		.vfwp-media-audit__delete-link:hover,
+		.vfwp-media-audit__delete-link:focus {
+			color: #8a2424;
+		}
+
 		.vfwp-media-audit__row--scanning {
 			opacity: 0.65;
 		}
@@ -1218,6 +1240,7 @@ function vfwp_intranet_media_audit_render_page() {
 						'<td class="manage-column column-cb check-column"><input type="checkbox" data-vfwp-media-audit-select-all></td>' +
 						'<th><?php echo esc_js(__('Media', 'vfwp')); ?></th>' +
 						'<th><?php echo esc_js(__('Uploaded', 'vfwp')); ?></th>' +
+						'<th><?php echo esc_js(__('Uploaded by', 'vfwp')); ?></th>' +
 						'<th><?php echo esc_js(__('Size', 'vfwp')); ?></th>' +
 						'<th><?php echo esc_js(__('Status', 'vfwp')); ?></th>' +
 						'<th><?php echo esc_js(__('Evidence', 'vfwp')); ?></th>' +
@@ -1306,7 +1329,7 @@ function vfwp_intranet_media_audit_render_page() {
 
 				emptyRow = document.createElement('tr');
 				emptyRow.setAttribute('data-vfwp-media-audit-empty', '');
-				emptyRow.innerHTML = '<td colspan="6">' + (hasRows
+				emptyRow.innerHTML = '<td colspan="7">' + (hasRows
 					? '<?php echo esc_js(__('No media match the current table filter.', 'vfwp')); ?>'
 					: '<?php echo esc_js(__('No media found for this filter.', 'vfwp')); ?>') + '</td>';
 				tbody.appendChild(emptyRow);
@@ -1367,6 +1390,38 @@ function vfwp_intranet_media_audit_render_page() {
 				syncBulkFormsWithDisplayControls();
 			}
 
+			function submitSingleDelete(trigger) {
+				var attachmentId = trigger.getAttribute('data-vfwp-media-audit-delete-id');
+				var deleteForm = document.createElement('form');
+				var sourceData = trigger.closest('[data-vfwp-media-audit-bulk-form]')
+					? new FormData(trigger.closest('[data-vfwp-media-audit-bulk-form]'))
+					: getDisplayData();
+
+				if (!attachmentId) {
+					return;
+				}
+
+				if (!window.confirm('<?php echo esc_js(__('Permanently delete this media item? This removes the attachment record and file and cannot be restored from WordPress.', 'vfwp')); ?>')) {
+					return;
+				}
+
+				deleteForm.method = 'post';
+				deleteForm.action = adminPostUrl;
+				deleteForm.hidden = true;
+
+				['page', 'paged', 'per_page', 'safety_days', 'attachment_mime', 'status_filter', 'upload_order', 'uploaded_from', 'uploaded_to'].forEach(function (name) {
+					appendHiddenInput(deleteForm, name, sourceData.get(name));
+				});
+
+				appendHiddenInput(deleteForm, 'action', 'vfwp_intranet_media_audit_bulk_action');
+				appendHiddenInput(deleteForm, 'bulk_action', 'delete');
+				appendHiddenInput(deleteForm, 'attachment_ids[]', attachmentId);
+				appendHiddenInput(deleteForm, '_wpnonce', nonce);
+
+				document.body.appendChild(deleteForm);
+				deleteForm.submit();
+			}
+
 			function runFullScan(data) {
 				var tbody = buildFullScanShell(data);
 				var requestData = cloneFormData(data);
@@ -1405,6 +1460,10 @@ function vfwp_intranet_media_audit_render_page() {
 								appendFullScanNotice('<?php echo esc_js(__('Media scan complete.', 'vfwp')); ?>', 'success');
 								bindBulkControls();
 								return;
+							}
+
+							if (payload.data.total) {
+								requestData.set('media_audit_total', String(payload.data.total));
 							}
 
 							requestData.set('paged', String(payload.data.next_paged || (parseInt(requestData.get('paged'), 10) + 1)));
@@ -1560,7 +1619,7 @@ function vfwp_intranet_media_audit_render_page() {
 								}
 
 								if (!tbody.children.length) {
-									tbody.innerHTML = '<tr><td colspan="6"><?php echo esc_js(__('No selected media items could be scanned.', 'vfwp')); ?></td></tr>';
+									tbody.innerHTML = '<tr><td colspan="7"><?php echo esc_js(__('No selected media items could be scanned.', 'vfwp')); ?></td></tr>';
 								}
 
 								appendFullScanNotice('<?php echo esc_js(__('Selected deep scan complete.', 'vfwp')); ?>', 'success');
@@ -1667,8 +1726,15 @@ function vfwp_intranet_media_audit_render_page() {
 			document.addEventListener('click', function (event) {
 				var pageLink = event.target.closest('[data-vfwp-media-audit-results] .tablenav-pages a');
 				var singleDeepScan = event.target.closest('[data-vfwp-media-audit-single-deep-scan]');
+				var singleDelete = event.target.closest('[data-vfwp-media-audit-delete-id]');
 
-				if (!pageLink && !singleDeepScan) {
+				if (!pageLink && !singleDeepScan && !singleDelete) {
+					return;
+				}
+
+				if (singleDelete) {
+					event.preventDefault();
+					submitSingleDelete(singleDelete);
 					return;
 				}
 
@@ -1789,7 +1855,7 @@ function vfwp_intranet_media_audit_get_uploaded_date_query($uploaded_from = '', 
 	return array($date_filter);
 }
 
-function vfwp_intranet_media_audit_get_attachment_query($paged, $per_page, $mime, $upload_order = 'DESC', $uploaded_from = '', $uploaded_to = '') {
+function vfwp_intranet_media_audit_get_attachment_query($paged, $per_page, $mime, $upload_order = 'DESC', $uploaded_from = '', $uploaded_to = '', $no_found_rows = false) {
 	$args = array(
 		'post_type'      => 'attachment',
 		'post_status'    => 'any',
@@ -1797,6 +1863,7 @@ function vfwp_intranet_media_audit_get_attachment_query($paged, $per_page, $mime
 		'paged'          => $paged,
 		'orderby'        => 'date',
 		'order'          => $upload_order,
+		'no_found_rows'  => (bool) $no_found_rows,
 	);
 
 	if ($mime !== '') {
@@ -1863,6 +1930,7 @@ function vfwp_intranet_media_audit_render_scan_results($reports, $query, $paged,
 					</td>
 					<th><?php echo esc_html__('Media', 'vfwp'); ?></th>
 					<th><?php echo esc_html__('Uploaded', 'vfwp'); ?></th>
+					<th><?php echo esc_html__('Uploaded by', 'vfwp'); ?></th>
 					<th><?php echo esc_html__('Size', 'vfwp'); ?></th>
 					<th><?php echo esc_html__('Status', 'vfwp'); ?></th>
 					<th><?php echo esc_html__('Evidence', 'vfwp'); ?></th>
@@ -1871,7 +1939,7 @@ function vfwp_intranet_media_audit_render_scan_results($reports, $query, $paged,
 			<tbody>
 				<?php if (empty($reports)) : ?>
 					<tr data-vfwp-media-audit-empty>
-						<td colspan="6"><?php echo esc_html__('No media found for this filter.', 'vfwp'); ?></td>
+						<td colspan="7"><?php echo esc_html__('No media found for this filter.', 'vfwp'); ?></td>
 					</tr>
 				<?php endif; ?>
 
@@ -1911,13 +1979,20 @@ function vfwp_intranet_media_audit_render_report_row($report) {
 			<br>
 			<code><?php echo esc_html($report['relative_file']); ?></code>
 			<br>
-			<a href="<?php echo esc_url($report['url']); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__('Open file', 'vfwp'); ?></a>
-			<?php if ($edit_url !== '') : ?>
-				<span aria-hidden="true"> | </span>
-				<a href="<?php echo esc_url($edit_url); ?>"><?php echo esc_html__('Edit media', 'vfwp'); ?></a>
-			<?php endif; ?>
+			<span class="vfwp-media-audit__row-actions">
+				<a href="<?php echo esc_url($report['url']); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__('Open file', 'vfwp'); ?></a>
+				<?php if ($edit_url !== '') : ?>
+					<span aria-hidden="true">|</span>
+					<a href="<?php echo esc_url($edit_url); ?>"><?php echo esc_html__('Edit media', 'vfwp'); ?></a>
+				<?php endif; ?>
+				<span aria-hidden="true">|</span>
+				<button type="button" class="button-link vfwp-media-audit__delete-link" data-vfwp-media-audit-delete-id="<?php echo esc_attr($report['id']); ?>">
+					<?php echo esc_html__('Delete file', 'vfwp'); ?>
+				</button>
+			</span>
 		</td>
 		<td><?php echo esc_html($report['uploaded']); ?></td>
+		<td><?php echo esc_html($report['uploaded_by']); ?></td>
 		<td><?php echo esc_html($report['file_size_label']); ?></td>
 		<td>
 			<span class="vfwp-media-audit__status vfwp-media-audit__status--<?php echo esc_attr($report['status']); ?>">
@@ -2124,17 +2199,19 @@ function vfwp_intranet_media_audit_render_reference_box() {
 }
 
 function vfwp_intranet_media_audit_build_attachment_report($attachment_id, $safety_days) {
-	$evidence = vfwp_intranet_media_audit_find_usage_evidence($attachment_id);
+	$context = vfwp_intranet_media_audit_get_attachment_context($attachment_id);
+	$evidence = vfwp_intranet_media_audit_find_usage_evidence($attachment_id, $context);
 
-	return vfwp_intranet_media_audit_build_attachment_report_from_evidence($attachment_id, $safety_days, 'fast', $evidence);
+	return vfwp_intranet_media_audit_build_attachment_report_from_evidence($attachment_id, $safety_days, 'fast', $evidence, $context);
 }
 
-function vfwp_intranet_media_audit_build_attachment_report_from_evidence($attachment_id, $safety_days, $evidence_mode, $evidence) {
-	$post = get_post($attachment_id);
-	$file = get_attached_file($attachment_id);
-	$url = wp_get_attachment_url($attachment_id);
-	$relative_file = get_post_meta($attachment_id, '_wp_attached_file', true);
-	$uploaded_time = $post ? strtotime($post->post_date_gmt . ' GMT') : false;
+function vfwp_intranet_media_audit_build_attachment_report_from_evidence($attachment_id, $safety_days, $evidence_mode, $evidence, $context = null) {
+	$context = is_array($context) ? $context : vfwp_intranet_media_audit_get_attachment_context($attachment_id);
+	$post = $context['post'];
+	$file = $context['file'];
+	$url = $context['url'];
+	$relative_file = $context['relative_file'];
+	$uploaded_time = $context['uploaded_time'];
 	$is_new = $uploaded_time ? $uploaded_time > strtotime('-' . (int) $safety_days . ' days') : true;
 
 	if (!empty($evidence)) {
@@ -2153,6 +2230,7 @@ function vfwp_intranet_media_audit_build_attachment_report_from_evidence($attach
 		'title'           => $post && $post->post_title !== '' ? $post->post_title : basename((string) $relative_file),
 		'mime_type'       => get_post_mime_type($attachment_id),
 		'uploaded'        => $post ? get_date_from_gmt($post->post_date_gmt, get_option('date_format')) : '',
+		'uploaded_by'     => $context['uploaded_by'],
 		'uploaded_time'   => $uploaded_time ? (int) $uploaded_time : 0,
 		'file_size_label' => $file && file_exists($file) ? size_format(filesize($file)) : __('Missing on disk', 'vfwp'),
 		'relative_file'   => $relative_file,
@@ -2164,9 +2242,57 @@ function vfwp_intranet_media_audit_build_attachment_report_from_evidence($attach
 	);
 }
 
-function vfwp_intranet_media_audit_find_usage_evidence($attachment_id) {
-	$evidence = array();
+function vfwp_intranet_media_audit_get_attachment_context($attachment_id) {
+	static $contexts = array();
+
+	$attachment_id = (int) $attachment_id;
+	if (isset($contexts[$attachment_id])) {
+		return $contexts[$attachment_id];
+	}
+
 	$post = get_post($attachment_id);
+	$file = get_attached_file($attachment_id);
+	$url = wp_get_attachment_url($attachment_id);
+	$relative_file = get_post_meta($attachment_id, '_wp_attached_file', true);
+	$uploaded_time = $post ? strtotime($post->post_date_gmt . ' GMT') : false;
+
+	$contexts[$attachment_id] = array(
+		'post' => $post,
+		'file' => $file,
+		'url' => is_string($url) ? $url : '',
+		'relative_file' => is_string($relative_file) ? $relative_file : '',
+		'uploaded_time' => $uploaded_time ? (int) $uploaded_time : 0,
+		'uploaded_by' => vfwp_intranet_media_audit_get_uploader_label($post),
+	);
+
+	return $contexts[$attachment_id];
+}
+
+function vfwp_intranet_media_audit_get_uploader_label($post) {
+	if (!$post || empty($post->post_author)) {
+		return __('Unknown', 'vfwp');
+	}
+
+	static $labels = array();
+	$user_id = (int) $post->post_author;
+	if (isset($labels[$user_id])) {
+		return $labels[$user_id];
+	}
+
+	$user = get_userdata($user_id);
+	if (!$user) {
+		return __('Unknown', 'vfwp');
+	}
+
+	$labels[$user_id] = $user->display_name !== '' ? $user->display_name : $user->user_login;
+
+	return $labels[$user_id];
+}
+
+function vfwp_intranet_media_audit_find_usage_evidence($attachment_id, $context = null) {
+	$evidence = array();
+	$context = is_array($context) ? $context : vfwp_intranet_media_audit_get_attachment_context($attachment_id);
+	$post = $context['post'];
 
 	if (!$post) {
 		return $evidence;
@@ -2182,14 +2308,21 @@ function vfwp_intranet_media_audit_find_usage_evidence($attachment_id) {
 		}
 	}
 
+	$needles = vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id, $context);
 	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_id_references($attachment_id));
-	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_post_content_url_references($attachment_id));
-	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_theme_references($attachment_id));
+	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_post_content_url_references($attachment_id, $needles, $context));
+	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_theme_references($attachment_id, $needles));
 
 	return vfwp_intranet_media_audit_unique_evidence($evidence);
 }
 
 function vfwp_intranet_media_audit_post_evidence($prefix, $post_id) {
+	static $post_evidence = array();
+
+	if (isset($post_evidence[$post_id][$prefix])) {
+		return $post_evidence[$post_id][$prefix];
+	}
+
 	$title = get_the_title($post_id);
 	if ($title === '') {
 		$title = sprintf(__('Post #%d', 'vfwp'), (int) $post_id);
@@ -2197,12 +2330,14 @@ function vfwp_intranet_media_audit_post_evidence($prefix, $post_id) {
 
 	$permalink = get_permalink($post_id);
 
-	return array(
+	$post_evidence[$post_id][$prefix] = array(
 		'label' => $prefix . $title,
 		'prefix' => $prefix,
 		'title' => $title,
 		'url'   => is_string($permalink) ? $permalink : '',
 	);
+
+	return $post_evidence[$post_id][$prefix];
 }
 
 function vfwp_intranet_media_audit_render_evidence($evidence) {
@@ -2265,44 +2400,90 @@ function vfwp_intranet_media_audit_find_id_references($attachment_id) {
 	return $evidence;
 }
 
-function vfwp_intranet_media_audit_find_post_content_url_references($attachment_id) {
+function vfwp_intranet_media_audit_find_post_content_url_references($attachment_id, $needles = null, $context = null) {
 	global $wpdb;
 
-	$needles = vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id);
+	$needles = is_array($needles) ? $needles : vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id);
+	$search_token = vfwp_intranet_media_audit_get_attachment_content_search_token($attachment_id, $needles, $context);
 	$evidence = array();
 
-	if (empty($needles)) {
+	if (empty($needles) || $search_token === '') {
 		return $evidence;
 	}
 
-	$conditions = array();
-	$args = array($attachment_id);
-	foreach ($needles as $needle) {
-		$like = '%' . $wpdb->esc_like($needle) . '%';
-		$conditions[] = '(post_content LIKE %s OR post_excerpt LIKE %s)';
-		$args[] = $like;
-		$args[] = $like;
-	}
+	$like = '%' . $wpdb->esc_like($search_token) . '%';
 
 	$post_rows = $wpdb->get_results(vfwp_intranet_media_audit_prepare_sql(
-		"SELECT ID, post_type
+		"SELECT ID, post_type, post_content, post_excerpt
 		FROM {$wpdb->posts}
 		WHERE ID <> %d
 			AND post_type <> 'attachment'
 			AND post_status <> 'trash'
-			AND (" . implode(' OR ', $conditions) . ")
-		LIMIT 20",
-		$args
+			AND (post_content <> '' OR post_excerpt <> '')
+			AND (post_content LIKE %s OR post_excerpt LIKE %s)
+		LIMIT 100",
+		array($attachment_id, $like, $like)
 	));
 
 	foreach ($post_rows as $row) {
+		if (!vfwp_intranet_media_audit_contains_any_needle($row->post_content . "\n" . $row->post_excerpt, $needles)) {
+			continue;
+		}
+
 		$evidence[] = vfwp_intranet_media_audit_post_evidence(
 			sprintf(__('Content URL reference in %1$s #%2$d: ', 'vfwp'), $row->post_type, (int) $row->ID),
 			(int) $row->ID
 		);
+
+		if (count($evidence) >= 20) {
+			break;
+		}
 	}
 
 	return $evidence;
+}
+
+function vfwp_intranet_media_audit_get_attachment_content_search_token($attachment_id, $needles, $context = null) {
+	$context = is_array($context) ? $context : vfwp_intranet_media_audit_get_attachment_context($attachment_id);
+	$relative_file = $context['relative_file'];
+	$candidates = array();
+
+	if (is_string($relative_file) && $relative_file !== '') {
+		$candidates[] = basename($relative_file);
+	}
+
+	foreach ($needles as $needle) {
+		$path = wp_parse_url($needle, PHP_URL_PATH);
+		$basename = basename(is_string($path) && $path !== '' ? $path : $needle);
+
+		if ($basename !== '' && $basename !== '.' && $basename !== '/') {
+			$candidates[] = $basename;
+		}
+	}
+
+	$candidates = array_values(array_unique(array_filter($candidates)));
+	usort($candidates, 'vfwp_intranet_media_audit_sort_longest_string_first');
+
+	foreach ($candidates as $candidate) {
+		$token = vfwp_intranet_media_audit_normalize_media_filename_token($candidate);
+		if (strlen($token) >= 12) {
+			return $token;
+		}
+	}
+
+	return isset($candidates[0]) && strlen($candidates[0]) >= 6 ? $candidates[0] : '';
+}
+
+function vfwp_intranet_media_audit_sort_longest_string_first($a, $b) {
+	return strlen($b) - strlen($a);
+}
+
+function vfwp_intranet_media_audit_normalize_media_filename_token($filename) {
+	$filename = preg_replace('/\.[^.]+$/', '', (string) $filename);
+	$filename = preg_replace('/-\d+x\d+$/', '', $filename);
+	$filename = preg_replace('/-scaled$/', '', $filename);
+
+	return is_string($filename) ? $filename : '';
 }
 
 function vfwp_intranet_media_audit_get_acf_media_meta_keys() {
@@ -2461,48 +2642,15 @@ function vfwp_intranet_media_audit_contains_any_needle($value, $needles) {
 	return false;
 }
 
-function vfwp_intranet_media_audit_find_theme_references($attachment_id) {
+function vfwp_intranet_media_audit_find_theme_references($attachment_id, $needles = null) {
 	$evidence = array();
-	$needles = vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id);
-	static $theme_files = null;
+	$needles = is_array($needles) ? $needles : vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id);
 
 	if (empty($needles)) {
 		return $evidence;
 	}
 
-	if ($theme_files === null) {
-		$theme_files = array();
-		$theme_dir = get_stylesheet_directory();
-		$extensions = array('php', 'css', 'js', 'json', 'html');
-
-		try {
-			$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($theme_dir, FilesystemIterator::SKIP_DOTS));
-		} catch (Exception $exception) {
-			return $evidence;
-		}
-
-		foreach ($iterator as $file) {
-			if (!$file->isFile()) {
-				continue;
-			}
-
-			$extension = strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
-			if (!in_array($extension, $extensions, true) || $file->getSize() > 1048576) {
-				continue;
-			}
-
-			$contents = file_get_contents($file->getPathname());
-			if (!is_string($contents) || $contents === '') {
-				continue;
-			}
-
-			$theme_files[] = array(
-				'relative' => str_replace(trailingslashit($theme_dir), '', $file->getPathname()),
-				'contents' => $contents,
-			);
-		}
-	}
-
+	$theme_files = vfwp_intranet_media_audit_get_theme_reference_files();
 	foreach ($theme_files as $theme_file) {
 		foreach ($needles as $needle) {
 			if (strpos($theme_file['contents'], $needle) === false) {
@@ -2519,10 +2667,94 @@ function vfwp_intranet_media_audit_find_theme_references($attachment_id) {
 	return $evidence;
 }
 
-function vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id) {
+function vfwp_intranet_media_audit_get_theme_reference_files() {
+	static $theme_files = null;
+
+	if ($theme_files !== null) {
+		return $theme_files;
+	}
+
+	$theme_manifest = vfwp_intranet_media_audit_get_theme_reference_manifest();
+	if (empty($theme_manifest['files'])) {
+		$theme_files = array();
+		return $theme_files;
+	}
+
+	$cache_key = 'vfwp_media_audit_theme_' . md5($theme_manifest['fingerprint']);
+	$cached = get_transient($cache_key);
+	if (is_array($cached)) {
+		$theme_files = $cached;
+		return $theme_files;
+	}
+
+	$theme_files = array();
+	foreach ($theme_manifest['files'] as $theme_file) {
+		$contents = file_get_contents($theme_file['path']);
+		if (!is_string($contents) || $contents === '') {
+			continue;
+		}
+
+		$theme_files[] = array(
+			'relative' => $theme_file['relative'],
+			'contents' => $contents,
+		);
+	}
+
+	set_transient($cache_key, $theme_files, VFWP_INTRANET_MEDIA_AUDIT_THEME_CACHE_TTL);
+
+	return $theme_files;
+}
+
+function vfwp_intranet_media_audit_get_theme_reference_manifest() {
+	$theme_dir = get_stylesheet_directory();
+	$extensions = array('php', 'css', 'js', 'json', 'html');
+	$files = array();
+	$fingerprint_parts = array();
+
+	try {
+		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($theme_dir, FilesystemIterator::SKIP_DOTS));
+	} catch (Exception $exception) {
+		return array('files' => array(), 'fingerprint' => '');
+	}
+
+	foreach ($iterator as $file) {
+		if (!$file->isFile()) {
+			continue;
+		}
+
+		$extension = strtolower(pathinfo($file->getFilename(), PATHINFO_EXTENSION));
+		if (!in_array($extension, $extensions, true) || $file->getSize() > 1048576) {
+			continue;
+		}
+
+		$relative = str_replace(trailingslashit($theme_dir), '', $file->getPathname());
+		$files[] = array(
+			'path' => $file->getPathname(),
+			'relative' => $relative,
+		);
+		$fingerprint_parts[] = $relative . ':' . $file->getMTime() . ':' . $file->getSize();
+	}
+
+	sort($fingerprint_parts);
+
+	return array(
+		'files' => $files,
+		'fingerprint' => $theme_dir . '|' . implode('|', $fingerprint_parts),
+	);
+}
+
+function vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id, $context = null) {
+	static $needles_by_attachment = array();
+
+	$attachment_id = (int) $attachment_id;
+	if (isset($needles_by_attachment[$attachment_id])) {
+		return $needles_by_attachment[$attachment_id];
+	}
+
+	$context = is_array($context) ? $context : vfwp_intranet_media_audit_get_attachment_context($attachment_id);
 	$needles = array();
-	$url = wp_get_attachment_url($attachment_id);
-	$relative_file = get_post_meta($attachment_id, '_wp_attached_file', true);
+	$url = $context['url'];
+	$relative_file = $context['relative_file'];
 	$uploads = wp_get_upload_dir();
 
 	if (is_string($url) && $url !== '') {
@@ -2565,7 +2797,9 @@ function vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id) {
 		}
 	}
 
-	return array_values(array_unique(array_filter($needles)));
+	$needles_by_attachment[$attachment_id] = array_values(array_unique(array_filter($needles)));
+
+	return $needles_by_attachment[$attachment_id];
 }
 
 function vfwp_intranet_media_audit_unique_evidence($evidence) {
