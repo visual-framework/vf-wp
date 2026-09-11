@@ -46,6 +46,7 @@ function vfwp_intranet_media_audit_export_csv() {
 	$filters = vfwp_intranet_media_audit_get_scan_filters_from_request($_GET);
 	$safety_days = $filters['safety_days'];
 	$mime = $filters['mime'];
+	$status_filter = $filters['status_filter'];
 	$upload_order = $filters['upload_order'];
 	$uploaded_from = $filters['uploaded_from'];
 	$uploaded_to = $filters['uploaded_to'];
@@ -431,7 +432,7 @@ function vfwp_intranet_media_audit_create_deep_attachment_scan_state($attachment
 
 	return array(
 		'attachment_id' => (int) $attachment_id,
-		'stage' => count($evidence) >= VFWP_INTRANET_MEDIA_AUDIT_DEEP_EVIDENCE_LIMIT ? 'done' : 'id_postmeta',
+		'stage' => count($evidence) >= VFWP_INTRANET_MEDIA_AUDIT_DEEP_EVIDENCE_LIMIT ? 'done' : 'acf_upload_postmeta',
 		'last_id' => 0,
 		'evidence' => vfwp_intranet_media_audit_unique_evidence($evidence),
 		'needles' => vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id),
@@ -448,32 +449,11 @@ function vfwp_intranet_media_audit_process_deep_attachment_scan_step($scan) {
 
 	$result = null;
 	switch ($scan['stage']) {
-		case 'id_postmeta':
-			$result = vfwp_intranet_media_audit_scan_selected_postmeta_chunk($scan, 'id');
+		case 'acf_upload_postmeta':
+			$result = vfwp_intranet_media_audit_scan_selected_postmeta_chunk($scan, 'acf_upload');
 			break;
-		case 'id_usermeta':
-			$result = vfwp_intranet_media_audit_scan_selected_usermeta_chunk($scan, 'id');
-			break;
-		case 'id_termmeta':
-			$result = vfwp_intranet_media_audit_scan_selected_termmeta_chunk($scan, 'id');
-			break;
-		case 'id_options':
-			$result = vfwp_intranet_media_audit_scan_selected_options_chunk($scan, 'id');
-			break;
-		case 'url_posts':
-			$result = vfwp_intranet_media_audit_scan_selected_posts_chunk($scan);
-			break;
-		case 'url_postmeta':
-			$result = vfwp_intranet_media_audit_scan_selected_postmeta_chunk($scan, 'url');
-			break;
-		case 'url_usermeta':
-			$result = vfwp_intranet_media_audit_scan_selected_usermeta_chunk($scan, 'url');
-			break;
-		case 'url_termmeta':
-			$result = vfwp_intranet_media_audit_scan_selected_termmeta_chunk($scan, 'url');
-			break;
-		case 'url_options':
-			$result = vfwp_intranet_media_audit_scan_selected_options_chunk($scan, 'url');
+		case 'acf_url_postmeta':
+			$result = vfwp_intranet_media_audit_scan_selected_postmeta_chunk($scan, 'acf_url');
 			break;
 	}
 
@@ -511,7 +491,7 @@ function vfwp_intranet_media_audit_get_next_deep_attachment_stage($stage, $scan)
 	}
 
 	for ($i = $index + 1; $i < count($stages); $i++) {
-		if (strpos($stages[$i], 'url_') === 0 && empty($scan['needles'])) {
+		if ($stages[$i] === 'acf_url_postmeta' && empty($scan['needles'])) {
 			continue;
 		}
 
@@ -523,15 +503,8 @@ function vfwp_intranet_media_audit_get_next_deep_attachment_stage($stage, $scan)
 
 function vfwp_intranet_media_audit_get_deep_attachment_scan_message($scan, $current_number, $total) {
 	$labels = array(
-		'id_postmeta' => __('checking broad post meta ID references', 'vfwp'),
-		'id_usermeta' => __('checking user meta ID references', 'vfwp'),
-		'id_termmeta' => __('checking term meta ID references', 'vfwp'),
-		'id_options' => __('checking option ID references', 'vfwp'),
-		'url_posts' => __('checking content URL references', 'vfwp'),
-		'url_postmeta' => __('checking post meta URL references', 'vfwp'),
-		'url_usermeta' => __('checking user meta URL references', 'vfwp'),
-		'url_termmeta' => __('checking term meta URL references', 'vfwp'),
-		'url_options' => __('checking option URL references', 'vfwp'),
+		'acf_upload_postmeta' => __('checking ACF upload fields', 'vfwp'),
+		'acf_url_postmeta' => __('checking ACF URL fields', 'vfwp'),
 		'done' => __('finishing item', 'vfwp'),
 	);
 	$stage = isset($scan['stage']) ? $scan['stage'] : 'done';
@@ -564,15 +537,8 @@ function vfwp_intranet_media_audit_get_selected_deep_scan_progress_percent($stat
 
 function vfwp_intranet_media_audit_get_deep_attachment_stage_order() {
 	return array(
-		'id_postmeta',
-		'id_usermeta',
-		'id_termmeta',
-		'id_options',
-		'url_posts',
-		'url_postmeta',
-		'url_usermeta',
-		'url_termmeta',
-		'url_options',
+		'acf_upload_postmeta',
+		'acf_url_postmeta',
 	);
 }
 
@@ -604,35 +570,9 @@ function vfwp_intranet_media_audit_get_deep_attachment_stage_max_id($stage) {
 	}
 
 	switch ($stage) {
-		case 'id_postmeta':
-		case 'url_postmeta':
+		case 'acf_upload_postmeta':
+		case 'acf_url_postmeta':
 			$max_ids[$stage] = (int) $wpdb->get_var("SELECT MAX(meta_id) FROM {$wpdb->postmeta}");
-			break;
-		case 'id_usermeta':
-		case 'url_usermeta':
-			$max_ids[$stage] = (int) $wpdb->get_var("SELECT MAX(umeta_id) FROM {$wpdb->usermeta}");
-			break;
-		case 'id_termmeta':
-		case 'url_termmeta':
-			$max_ids[$stage] = (int) $wpdb->get_var("SELECT MAX(meta_id) FROM {$wpdb->termmeta}");
-			break;
-		case 'id_options':
-		case 'url_options':
-			$max_ids[$stage] = (int) $wpdb->get_var(
-				"SELECT MAX(option_id)
-				FROM {$wpdb->options}
-				WHERE option_name NOT LIKE '\\_transient\\_%%'
-					AND option_name NOT LIKE '\\_site\\_transient\\_%%'
-					AND option_name NOT IN ('vfwp_people_sync_stats', 'vfwp_teams_sync_stats')"
-			);
-			break;
-		case 'url_posts':
-			$max_ids[$stage] = (int) $wpdb->get_var(
-				"SELECT MAX(ID)
-				FROM {$wpdb->posts}
-				WHERE post_type <> 'attachment'
-					AND post_status <> 'trash'"
-			);
 			break;
 		default:
 			$max_ids[$stage] = 0;
@@ -642,70 +582,38 @@ function vfwp_intranet_media_audit_get_deep_attachment_stage_max_id($stage) {
 	return $max_ids[$stage];
 }
 
-function vfwp_intranet_media_audit_scan_selected_posts_chunk($scan) {
-	global $wpdb;
-
-	$attachment_id = (int) $scan['attachment_id'];
-	$last_id = isset($scan['last_id']) ? (int) $scan['last_id'] : 0;
-	$needles = isset($scan['needles']) && is_array($scan['needles']) ? $scan['needles'] : array();
-	$evidence = array();
-	$rows = $wpdb->get_results($wpdb->prepare(
-		"SELECT ID, post_type, post_content, post_excerpt
-		FROM {$wpdb->posts}
-		WHERE ID > %d
-			AND ID <> %d
-			AND post_type <> 'attachment'
-			AND post_status <> 'trash'
-		ORDER BY ID ASC
-		LIMIT %d",
-		$last_id,
-		$attachment_id,
-		VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE
-	));
-
-	if (empty($rows)) {
-		return array('last_id' => $last_id, 'evidence' => $evidence, 'complete' => true);
-	}
-
-	foreach ($rows as $row) {
-		$last_id = (int) $row->ID;
-
-		if (!vfwp_intranet_media_audit_contains_any_needle($row->post_content . "\n" . $row->post_excerpt, $needles)) {
-			continue;
-		}
-
-		$evidence[] = vfwp_intranet_media_audit_post_evidence(
-			sprintf(__('Content URL reference in %1$s #%2$d: ', 'vfwp'), $row->post_type, (int) $row->ID),
-			(int) $row->ID
-		);
-	}
-
-	return array(
-		'last_id' => $last_id,
-		'evidence' => $evidence,
-		'complete' => count($rows) < VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE,
-	);
-}
-
 function vfwp_intranet_media_audit_scan_selected_postmeta_chunk($scan, $match_type) {
 	global $wpdb;
 
 	$attachment_id = (int) $scan['attachment_id'];
 	$last_id = isset($scan['last_id']) ? (int) $scan['last_id'] : 0;
-	$rows = $wpdb->get_results($wpdb->prepare(
+	$field_keys = vfwp_intranet_media_audit_get_acf_media_meta_keys();
+	$key_args = array();
+	$key_sql = $match_type === 'acf_upload'
+		? vfwp_intranet_media_audit_get_meta_key_conditions_sql($field_keys['upload_exact'], $field_keys['upload_like'], $key_args)
+		: vfwp_intranet_media_audit_get_meta_key_conditions_sql($field_keys['url_exact'], $field_keys['url_like'], $key_args);
+	$evidence = array();
+
+	if ($key_sql === '') {
+		return array('last_id' => $last_id, 'evidence' => $evidence, 'complete' => true);
+	}
+
+	$rows = $wpdb->get_results(vfwp_intranet_media_audit_prepare_sql(
 		"SELECT meta_id, post_id, meta_key, meta_value
 		FROM {$wpdb->postmeta}
 		WHERE meta_id > %d
 			AND post_id <> %d
 			AND meta_key NOT IN ('_wp_attachment_metadata', '_wp_attached_file')
+			AND {$key_sql}
 		ORDER BY meta_id ASC
 		LIMIT %d",
-		$last_id,
-		$attachment_id,
-		VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE
+		array_merge(
+			array($last_id, $attachment_id),
+			$key_args,
+			array(VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE)
+		)
 	));
 
-	$evidence = array();
 	if (empty($rows)) {
 		return array('last_id' => $last_id, 'evidence' => $evidence, 'complete' => true);
 	}
@@ -718,9 +626,9 @@ function vfwp_intranet_media_audit_scan_selected_postmeta_chunk($scan, $match_ty
 		}
 
 		$evidence[] = vfwp_intranet_media_audit_post_evidence(
-			$match_type === 'id'
-				? sprintf(__('Possible serialized post meta reference %1$s on #%2$d: ', 'vfwp'), $row->meta_key, (int) $row->post_id)
-				: sprintf(__('Post meta URL reference %1$s on #%2$d: ', 'vfwp'), $row->meta_key, (int) $row->post_id),
+			$match_type === 'acf_upload'
+				? sprintf(__('ACF upload field %1$s on #%2$d: ', 'vfwp'), $row->meta_key, (int) $row->post_id)
+				: sprintf(__('ACF URL field %1$s on #%2$d: ', 'vfwp'), $row->meta_key, (int) $row->post_id),
 			(int) $row->post_id
 		);
 	}
@@ -732,134 +640,9 @@ function vfwp_intranet_media_audit_scan_selected_postmeta_chunk($scan, $match_ty
 	);
 }
 
-function vfwp_intranet_media_audit_scan_selected_usermeta_chunk($scan, $match_type) {
-	global $wpdb;
-
-	$last_id = isset($scan['last_id']) ? (int) $scan['last_id'] : 0;
-	$rows = $wpdb->get_results($wpdb->prepare(
-		"SELECT umeta_id, user_id, meta_key, meta_value
-		FROM {$wpdb->usermeta}
-		WHERE umeta_id > %d
-		ORDER BY umeta_id ASC
-		LIMIT %d",
-		$last_id,
-		VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE
-	));
-
-	$evidence = array();
-	if (empty($rows)) {
-		return array('last_id' => $last_id, 'evidence' => $evidence, 'complete' => true);
-	}
-
-	foreach ($rows as $row) {
-		$last_id = (int) $row->umeta_id;
-
-		if (!vfwp_intranet_media_audit_selected_deep_value_matches($row->meta_value, $scan, $match_type)) {
-			continue;
-		}
-
-		$user = get_userdata((int) $row->user_id);
-		$evidence[] = array(
-			'label' => $match_type === 'id'
-				? sprintf(__('User meta %1$s on user #%2$d%3$s', 'vfwp'), $row->meta_key, (int) $row->user_id, $user ? ': ' . $user->display_name : '')
-				: sprintf(__('User meta URL reference %1$s on user #%2$d%3$s', 'vfwp'), $row->meta_key, (int) $row->user_id, $user ? ': ' . $user->display_name : ''),
-		);
-	}
-
-	return array(
-		'last_id' => $last_id,
-		'evidence' => $evidence,
-		'complete' => count($rows) < VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE,
-	);
-}
-
-function vfwp_intranet_media_audit_scan_selected_termmeta_chunk($scan, $match_type) {
-	global $wpdb;
-
-	$last_id = isset($scan['last_id']) ? (int) $scan['last_id'] : 0;
-	$rows = $wpdb->get_results($wpdb->prepare(
-		"SELECT meta_id, term_id, meta_key, meta_value
-		FROM {$wpdb->termmeta}
-		WHERE meta_id > %d
-		ORDER BY meta_id ASC
-		LIMIT %d",
-		$last_id,
-		VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE
-	));
-
-	$evidence = array();
-	if (empty($rows)) {
-		return array('last_id' => $last_id, 'evidence' => $evidence, 'complete' => true);
-	}
-
-	foreach ($rows as $row) {
-		$last_id = (int) $row->meta_id;
-
-		if (!vfwp_intranet_media_audit_selected_deep_value_matches($row->meta_value, $scan, $match_type)) {
-			continue;
-		}
-
-		$term = get_term((int) $row->term_id);
-		$evidence[] = array(
-			'label' => $match_type === 'id'
-				? sprintf(__('Term meta %1$s on term #%2$d%3$s', 'vfwp'), $row->meta_key, (int) $row->term_id, $term && !is_wp_error($term) ? ': ' . $term->name : '')
-				: sprintf(__('Term meta URL reference %1$s on term #%2$d%3$s', 'vfwp'), $row->meta_key, (int) $row->term_id, $term && !is_wp_error($term) ? ': ' . $term->name : ''),
-		);
-	}
-
-	return array(
-		'last_id' => $last_id,
-		'evidence' => $evidence,
-		'complete' => count($rows) < VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE,
-	);
-}
-
-function vfwp_intranet_media_audit_scan_selected_options_chunk($scan, $match_type) {
-	global $wpdb;
-
-	$last_id = isset($scan['last_id']) ? (int) $scan['last_id'] : 0;
-	$rows = $wpdb->get_results($wpdb->prepare(
-		"SELECT option_id, option_name, option_value
-		FROM {$wpdb->options}
-		WHERE option_id > %d
-			AND option_name NOT LIKE '\\_transient\\_%%'
-			AND option_name NOT LIKE '\\_site\\_transient\\_%%'
-			AND option_name NOT IN ('vfwp_people_sync_stats', 'vfwp_teams_sync_stats')
-		ORDER BY option_id ASC
-		LIMIT %d",
-		$last_id,
-		VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE
-	));
-
-	$evidence = array();
-	if (empty($rows)) {
-		return array('last_id' => $last_id, 'evidence' => $evidence, 'complete' => true);
-	}
-
-	foreach ($rows as $row) {
-		$last_id = (int) $row->option_id;
-
-		if (!vfwp_intranet_media_audit_selected_deep_value_matches($row->option_value, $scan, $match_type)) {
-			continue;
-		}
-
-		$evidence[] = array(
-			'label' => $match_type === 'id'
-				? sprintf(__('Option reference: %s', 'vfwp'), $row->option_name)
-				: sprintf(__('Option URL reference: %s', 'vfwp'), $row->option_name),
-		);
-	}
-
-	return array(
-		'last_id' => $last_id,
-		'evidence' => $evidence,
-		'complete' => count($rows) < VFWP_INTRANET_MEDIA_AUDIT_SELECTED_DEEP_CHUNK_SIZE,
-	);
-}
-
 function vfwp_intranet_media_audit_selected_deep_value_matches($value, $scan, $match_type) {
-	if ($match_type === 'id') {
-		return vfwp_intranet_media_audit_value_matches_attachment_id($value, (int) $scan['attachment_id']);
+	if ($match_type === 'acf_upload' && vfwp_intranet_media_audit_value_matches_attachment_id($value, (int) $scan['attachment_id'])) {
+		return true;
 	}
 
 	return vfwp_intranet_media_audit_contains_any_needle(
@@ -912,7 +695,7 @@ function vfwp_intranet_media_audit_render_page() {
 	<div class="wrap vfwp-media-audit">
 		<h1><?php echo esc_html__('Intranet Media Audit', 'vfwp'); ?></h1>
 		<p>
-			<?php echo esc_html__('This report finds media usage signals across post content, featured images, ACF/post meta, user meta, term meta, options, and this theme. Bulk deletion permanently removes selected media files.', 'vfwp'); ?>
+			<?php echo esc_html__('This report finds media usage signals across post content, featured images, ACF upload and URL fields, and this theme. Bulk deletion permanently removes selected media files.', 'vfwp'); ?>
 		</p>
 
 		<?php vfwp_intranet_media_audit_render_admin_notices(); ?>
@@ -2150,13 +1933,13 @@ function vfwp_intranet_media_audit_render_report_row($report) {
 				</ul>
 			<?php else : ?>
 				<?php if (!empty($report['evidence_mode']) && $report['evidence_mode'] === 'fast') : ?>
-					<?php echo esc_html__('No fast evidence found. Deep URL, broad meta, term, user, and option checks were skipped.', 'vfwp'); ?>
+					<?php echo esc_html__('No fast evidence found. Deep scan can recheck this item against ACF upload and URL fields from this theme.', 'vfwp'); ?>
 					<br>
 					<button type="button" class="button button-small vfwp-media-audit__single-action" data-vfwp-media-audit-single-deep-scan="<?php echo esc_attr($report['id']); ?>">
 						<?php echo esc_html__('Deep scan this file', 'vfwp'); ?>
 					</button>
 				<?php else : ?>
-					<?php echo esc_html__('No database, content, option, user, term, or theme reference found.', 'vfwp'); ?>
+					<?php echo esc_html__('No ACF upload or URL field reference found.', 'vfwp'); ?>
 				<?php endif; ?>
 			<?php endif; ?>
 		</td>
@@ -2293,15 +2076,15 @@ function vfwp_intranet_media_audit_render_reference_box() {
 		<h2><?php echo esc_html__('Status and Evidence Guide', 'vfwp'); ?></h2>
 
 		<h3><?php echo esc_html__('Bulk Actions', 'vfwp'); ?></h3>
-		<p><?php echo esc_html__('Deep scan selected reruns only the checked media items with broader checks, which is useful after the main scan returns Evidence not found rows. Delete permanently removes the selected attachment records and their files from the media library. This cannot be restored from WordPress.', 'vfwp'); ?></p>
+		<p><?php echo esc_html__('Deep scan selected reruns only the checked media items against ACF upload and URL fields discovered from this theme. Delete permanently removes the selected attachment records and their files from the media library. This cannot be restored from WordPress.', 'vfwp'); ?></p>
 
 		<h3><?php echo esc_html__('Evidence Search', 'vfwp'); ?></h3>
 		<dl>
 			<dt><?php echo esc_html__('Main scan', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('Uses fast checks such as attachment parent, known media fields, and theme references. It skips broad URL, generic serialized-meta, user, term, and option searches so it is safer for large live sites.', 'vfwp'); ?></dd>
+			<dd><?php echo esc_html__('Uses fast checks such as attachment parent, featured image, ACF upload/image/gallery fields from this theme ACF JSON, post content and excerpt URL references, and theme file references.', 'vfwp'); ?></dd>
 
 			<dt><?php echo esc_html__('Deep scan this file / Deep scan selected', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('Runs broader URL, serialized-meta, user, term, and option checks only for the media items you choose. The selected scan is chunked and resumable so it can inspect specific unresolved files without deep-scanning the whole library.', 'vfwp'); ?></dd>
+			<dd><?php echo esc_html__('Checks only ACF upload/image/gallery fields and ACF URL/link fields discovered from this theme ACF JSON. The selected scan is chunked and resumable so it can inspect specific unresolved files without broad database searches.', 'vfwp'); ?></dd>
 		</dl>
 
 		<h3><?php echo esc_html__('Statuses', 'vfwp'); ?></h3>
@@ -2322,34 +2105,16 @@ function vfwp_intranet_media_audit_render_reference_box() {
 			<dd><?php echo esc_html__('The attachment has a WordPress parent post. This is useful context, but it does not always prove the file is visible on the page.', 'vfwp'); ?></dd>
 
 			<dt><?php echo esc_html__('Post meta {field} on #{ID}: {title}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment ID was found in a known media-related field, such as a featured image, ACF document upload, annex file, or similar post meta field. The title is linked to the public page.', 'vfwp'); ?></dd>
-
-			<dt><?php echo esc_html__('Possible serialized post meta reference {field} on #{ID}: {title}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment ID was found inside serialized or JSON-like post meta that is not one of the known media fields. Review the linked page before deciding.', 'vfwp'); ?></dd>
+			<dd><?php echo esc_html__('The attachment ID was found in a featured image field or an ACF upload/image/gallery field discovered from this theme ACF JSON. The title is linked to the public page.', 'vfwp'); ?></dd>
 
 			<dt><?php echo esc_html__('Content URL reference in {post type} #{ID}: {title}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment URL, upload path, or generated image-size URL appears directly in post content or excerpt. The title is linked to the public page.', 'vfwp'); ?></dd>
+			<dd><?php echo esc_html__('The attachment URL, upload path, or generated image-size URL appears directly in post content or excerpt during the main scan. The title is linked to the public page.', 'vfwp'); ?></dd>
 
-			<dt><?php echo esc_html__('Post meta URL reference {field} on #{ID}: {title}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment URL or upload path appears inside post meta or ACF data. The title is linked to the public page.', 'vfwp'); ?></dd>
+			<dt><?php echo esc_html__('ACF upload field {field} on #{ID}: {title}', 'vfwp'); ?></dt>
+			<dd><?php echo esc_html__('The selected deep scan found the attachment ID, URL, upload path, or generated image-size URL in an ACF upload/image/gallery field discovered from this theme ACF JSON. The title is linked to the public page.', 'vfwp'); ?></dd>
 
-			<dt><?php echo esc_html__('User meta {field} on user #{ID}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment ID appears in user profile metadata, for example an avatar field.', 'vfwp'); ?></dd>
-
-			<dt><?php echo esc_html__('User meta URL reference {field} on user #{ID}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment URL or upload path appears in user profile metadata.', 'vfwp'); ?></dd>
-
-			<dt><?php echo esc_html__('Term meta {field} on term #{ID}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment ID appears in taxonomy term metadata.', 'vfwp'); ?></dd>
-
-			<dt><?php echo esc_html__('Term meta URL reference {field} on term #{ID}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment URL or upload path appears in taxonomy term metadata.', 'vfwp'); ?></dd>
-
-			<dt><?php echo esc_html__('Option reference: {option name}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment ID appears in a persistent WordPress option. Transients and the people/team sync stats caches are ignored because they are not reliable page-usage signals.', 'vfwp'); ?></dd>
-
-			<dt><?php echo esc_html__('Option URL reference: {option name}', 'vfwp'); ?></dt>
-			<dd><?php echo esc_html__('The attachment URL or upload path appears in a persistent WordPress option.', 'vfwp'); ?></dd>
+			<dt><?php echo esc_html__('ACF URL field {field} on #{ID}: {title}', 'vfwp'); ?></dt>
+			<dd><?php echo esc_html__('The selected deep scan found the attachment URL, upload path, or generated image-size URL in an ACF URL/link field discovered from this theme ACF JSON. The title is linked to the public page.', 'vfwp'); ?></dd>
 
 			<dt><?php echo esc_html__('Theme file reference: {file path}', 'vfwp'); ?></dt>
 			<dd><?php echo esc_html__('The attachment URL or upload path is hard-coded somewhere in the active intranet theme files.', 'vfwp'); ?></dd>
@@ -2418,6 +2183,7 @@ function vfwp_intranet_media_audit_find_usage_evidence($attachment_id) {
 	}
 
 	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_id_references($attachment_id));
+	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_post_content_url_references($attachment_id));
 	$evidence = array_merge($evidence, vfwp_intranet_media_audit_find_theme_references($attachment_id));
 
 	return vfwp_intranet_media_audit_unique_evidence($evidence);
@@ -2453,22 +2219,27 @@ function vfwp_intranet_media_audit_find_id_references($attachment_id) {
 	global $wpdb;
 
 	$evidence = array();
+	$field_keys = vfwp_intranet_media_audit_get_acf_media_meta_keys();
+	$key_args = array();
+	$key_sql = vfwp_intranet_media_audit_get_meta_key_conditions_sql(
+		array_merge(array('_thumbnail_id'), $field_keys['upload_exact']),
+		$field_keys['upload_like'],
+		$key_args
+	);
 	$id = (string) $attachment_id;
 	$serialized_int = '%i:' . $wpdb->esc_like($id) . ';%';
 	$serialized_string = '%:"' . $wpdb->esc_like($id) . '";%';
 	$json_id = '%"id":' . $wpdb->esc_like($id) . '%';
 
-	$postmeta_rows = $wpdb->get_results($wpdb->prepare(
+	if ($key_sql === '') {
+		return $evidence;
+	}
+
+	$postmeta_rows = $wpdb->get_results(vfwp_intranet_media_audit_prepare_sql(
 		"SELECT post_id, meta_key
 		FROM {$wpdb->postmeta}
 		WHERE post_id <> %d
-			AND (
-				meta_key = '_thumbnail_id'
-				OR meta_key = 'upload_file'
-				OR meta_key = 'file'
-				OR meta_key = 'vf_wp_avatar_image'
-				OR meta_key LIKE 'annexes\\_%%\\_file'
-			)
+			AND {$key_sql}
 			AND (
 				meta_value = %s
 				OR meta_value LIKE %s
@@ -2476,11 +2247,11 @@ function vfwp_intranet_media_audit_find_id_references($attachment_id) {
 				OR meta_value LIKE %s
 			)
 		LIMIT 20",
-		$attachment_id,
-		$id,
-		$serialized_int,
-		$serialized_string,
-		$json_id
+		array_merge(
+			array($attachment_id),
+			$key_args,
+			array($id, $serialized_int, $serialized_string, $json_id)
+		)
 	));
 
 	foreach ($postmeta_rows as $row) {
@@ -2492,6 +2263,156 @@ function vfwp_intranet_media_audit_find_id_references($attachment_id) {
 	}
 
 	return $evidence;
+}
+
+function vfwp_intranet_media_audit_find_post_content_url_references($attachment_id) {
+	global $wpdb;
+
+	$needles = vfwp_intranet_media_audit_get_attachment_url_needles($attachment_id);
+	$evidence = array();
+
+	if (empty($needles)) {
+		return $evidence;
+	}
+
+	$conditions = array();
+	$args = array($attachment_id);
+	foreach ($needles as $needle) {
+		$like = '%' . $wpdb->esc_like($needle) . '%';
+		$conditions[] = '(post_content LIKE %s OR post_excerpt LIKE %s)';
+		$args[] = $like;
+		$args[] = $like;
+	}
+
+	$post_rows = $wpdb->get_results(vfwp_intranet_media_audit_prepare_sql(
+		"SELECT ID, post_type
+		FROM {$wpdb->posts}
+		WHERE ID <> %d
+			AND post_type <> 'attachment'
+			AND post_status <> 'trash'
+			AND (" . implode(' OR ', $conditions) . ")
+		LIMIT 20",
+		$args
+	));
+
+	foreach ($post_rows as $row) {
+		$evidence[] = vfwp_intranet_media_audit_post_evidence(
+			sprintf(__('Content URL reference in %1$s #%2$d: ', 'vfwp'), $row->post_type, (int) $row->ID),
+			(int) $row->ID
+		);
+	}
+
+	return $evidence;
+}
+
+function vfwp_intranet_media_audit_get_acf_media_meta_keys() {
+	static $keys = null;
+
+	if ($keys !== null) {
+		return $keys;
+	}
+
+	$keys = array(
+		'upload_exact' => array(),
+		'upload_like' => array(),
+		'url_exact' => array(),
+		'url_like' => array(),
+	);
+	$acf_json_dir = trailingslashit(get_stylesheet_directory()) . 'acf-json';
+	$json_files = is_dir($acf_json_dir) ? glob(trailingslashit($acf_json_dir) . '*.json') : array();
+
+	if (empty($json_files)) {
+		return $keys;
+	}
+
+	foreach ($json_files as $json_file) {
+		$contents = file_get_contents($json_file);
+		$field_group = is_string($contents) ? json_decode($contents, true) : null;
+
+		if (!is_array($field_group) || empty($field_group['fields']) || !is_array($field_group['fields'])) {
+			continue;
+		}
+
+		vfwp_intranet_media_audit_collect_acf_media_meta_keys($field_group['fields'], '', '', false, $keys);
+	}
+
+	foreach ($keys as $group => $values) {
+		$keys[$group] = array_values(array_unique(array_filter($values)));
+	}
+
+	return $keys;
+}
+
+function vfwp_intranet_media_audit_collect_acf_media_meta_keys($fields, $exact_prefix, $like_prefix, $uses_like, &$keys) {
+	global $wpdb;
+
+	foreach ($fields as $field) {
+		if (empty($field['name']) || !is_string($field['name'])) {
+			continue;
+		}
+
+		$name = $field['name'];
+		$type = !empty($field['type']) && is_string($field['type']) ? $field['type'] : '';
+		$exact_key = $exact_prefix === '' ? $name : $exact_prefix . '_' . $name;
+		$like_key = $like_prefix === '' ? $wpdb->esc_like($name) : $like_prefix . '\\_' . $wpdb->esc_like($name);
+		$is_ignored = vfwp_intranet_media_audit_is_ignored_acf_media_meta_key($exact_key, $name);
+
+		if (!$is_ignored && in_array($type, array('file', 'image', 'gallery'), true)) {
+			$keys[$uses_like ? 'upload_like' : 'upload_exact'][] = $uses_like ? $like_key : $exact_key;
+		}
+
+		if (!$is_ignored && in_array($type, array('url', 'link'), true)) {
+			$keys[$uses_like ? 'url_like' : 'url_exact'][] = $uses_like ? $like_key : $exact_key;
+		}
+
+		if (!empty($field['sub_fields']) && is_array($field['sub_fields'])) {
+			if (in_array($type, array('repeater', 'flexible_content'), true)) {
+				vfwp_intranet_media_audit_collect_acf_media_meta_keys($field['sub_fields'], '', $like_key . '\\_%', true, $keys);
+			} else {
+				vfwp_intranet_media_audit_collect_acf_media_meta_keys($field['sub_fields'], $exact_key, $like_key, $uses_like, $keys);
+			}
+		}
+
+		if (!empty($field['layouts']) && is_array($field['layouts'])) {
+			foreach ($field['layouts'] as $layout) {
+				if (!empty($layout['sub_fields']) && is_array($layout['sub_fields'])) {
+					vfwp_intranet_media_audit_collect_acf_media_meta_keys($layout['sub_fields'], '', $like_key . '\\_%', true, $keys);
+				}
+			}
+		}
+	}
+}
+
+function vfwp_intranet_media_audit_is_ignored_acf_media_meta_key($exact_key, $name) {
+	$ignored_keys = array(
+		'vf_wp_avatar_image',
+		'team_url',
+		'photo',
+	);
+
+	return in_array($exact_key, $ignored_keys, true) || in_array($name, $ignored_keys, true);
+}
+
+function vfwp_intranet_media_audit_get_meta_key_conditions_sql($exact_keys, $like_patterns, &$args) {
+	$conditions = array();
+
+	if (!empty($exact_keys)) {
+		$conditions[] = 'meta_key IN (' . implode(', ', array_fill(0, count($exact_keys), '%s')) . ')';
+		$args = array_merge($args, array_values($exact_keys));
+	}
+
+	foreach ($like_patterns as $pattern) {
+		$conditions[] = 'meta_key LIKE %s';
+		$args[] = $pattern;
+	}
+
+	return empty($conditions) ? '' : '(' . implode(' OR ', $conditions) . ')';
+}
+
+function vfwp_intranet_media_audit_prepare_sql($query, $args) {
+	global $wpdb;
+
+	return call_user_func_array(array($wpdb, 'prepare'), array_merge(array($query), $args));
 }
 
 function vfwp_intranet_media_audit_value_matches_attachment_id($value, $attachment_id) {
@@ -2538,14 +2459,6 @@ function vfwp_intranet_media_audit_contains_any_needle($value, $needles) {
 	}
 
 	return false;
-}
-
-function vfwp_intranet_media_audit_is_ignored_option_name($option_name) {
-	$option_name = (string) $option_name;
-
-	return strpos($option_name, '_transient_') === 0
-		|| strpos($option_name, '_site_transient_') === 0
-		|| in_array($option_name, array('vfwp_people_sync_stats', 'vfwp_teams_sync_stats'), true);
 }
 
 function vfwp_intranet_media_audit_find_theme_references($attachment_id) {
