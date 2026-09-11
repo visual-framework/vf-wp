@@ -239,6 +239,7 @@ class VFWP_Intranet_Search_PDF_Indexer {
 			'file_mtime'       => $file_mtime,
 			'schema_version'   => VFWP_Intranet_Search_Schema::VERSION,
 			'extraction_class' => get_class($this->extractor),
+			'extraction_version' => VFWP_Intranet_Search_PDF_Extractor::EXTRACTOR_VERSION,
 		));
 	}
 

@@ -10,7 +10,14 @@ if (!defined('ABSPATH')) {
 class VFWP_Intranet_Search_PDF_Extractor {
 	const DEFAULT_MAX_FILE_SIZE = 52428800;
 	const DEFAULT_MAX_TEXT_BYTES = 1048576;
-	const EXTRACTOR_VERSION = 'pure_php_v5';
+	const EXTRACTOR_VERSION = 'pure_php_v6';
+
+	/**
+	 * Combined ToUnicode mappings discovered in the current PDF.
+	 *
+	 * @var array
+	 */
+	private $to_unicode_map = array();
 
 	/**
 	 * Determine whether PDF text extraction is available.
@@ -80,6 +87,7 @@ class VFWP_Intranet_Search_PDF_Extractor {
 	 */
 	private function extract_text_from_pdf($pdf) {
 		$text_parts = array();
+		$this->to_unicode_map = $this->extract_to_unicode_map($pdf);
 		$streams = $this->extract_streams($pdf);
 
 		foreach ($streams as $stream) {
@@ -99,6 +107,101 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		}
 
 		return implode("\n", $text_parts);
+	}
+
+	/**
+	 * Extract simple ToUnicode CMap mappings from decoded PDF streams.
+	 *
+	 * @param string $pdf PDF bytes.
+	 * @return array
+	 */
+	private function extract_to_unicode_map($pdf) {
+		$map = array();
+		$streams = $this->extract_streams($pdf);
+
+		foreach ($streams as $stream) {
+			if (strpos($stream, 'beginbfchar') === false && strpos($stream, 'beginbfrange') === false) {
+				continue;
+			}
+
+			$map = array_merge($map, $this->extract_bfchar_mappings($stream));
+			$map = array_merge($map, $this->extract_bfrange_mappings($stream));
+		}
+
+		return $map;
+	}
+
+	/**
+	 * Extract beginbfchar mappings from a CMap stream.
+	 *
+	 * @param string $stream Decoded stream.
+	 * @return array
+	 */
+	private function extract_bfchar_mappings($stream) {
+		$map = array();
+
+		if (!preg_match_all('/beginbfchar\s*(.*?)\s*endbfchar/s', $stream, $blocks)) {
+			return $map;
+		}
+
+		foreach ($blocks[1] as $block) {
+			if (!preg_match_all('/<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>/', $block, $matches, PREG_SET_ORDER)) {
+				continue;
+			}
+
+			foreach ($matches as $match) {
+				$source = strtoupper($match[1]);
+				$value = $this->unicode_hex_to_utf8($match[2]);
+
+				if ($source !== '' && $value !== '') {
+					$map[$source] = $value;
+				}
+			}
+		}
+
+		return $map;
+	}
+
+	/**
+	 * Extract sequential beginbfrange mappings from a CMap stream.
+	 *
+	 * @param string $stream Decoded stream.
+	 * @return array
+	 */
+	private function extract_bfrange_mappings($stream) {
+		$map = array();
+
+		if (!preg_match_all('/beginbfrange\s*(.*?)\s*endbfrange/s', $stream, $blocks)) {
+			return $map;
+		}
+
+		foreach ($blocks[1] as $block) {
+			if (!preg_match_all('/<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>/', $block, $matches, PREG_SET_ORDER)) {
+				continue;
+			}
+
+			foreach ($matches as $match) {
+				$start = hexdec($match[1]);
+				$end = hexdec($match[2]);
+				$target = hexdec($match[3]);
+				$source_width = strlen($match[1]);
+
+				if ($end < $start || $end - $start > 1024) {
+					continue;
+				}
+
+				for ($code = $start; $code <= $end; $code++) {
+					$source = strtoupper(str_pad(dechex($code), $source_width, '0', STR_PAD_LEFT));
+					$value = $this->codepoint_to_utf8($target + ($code - $start));
+
+					if ($value !== '') {
+						$map[$source] = $value;
+					}
+				}
+			}
+		}
+
+		return $map;
 	}
 
 	/**
@@ -306,7 +409,7 @@ class VFWP_Intranet_Search_PDF_Extractor {
 	 */
 	private function extract_text_from_content_stream($content) {
 		$tokens = $this->tokenize_content_stream($content);
-		$text = array();
+		$text = '';
 		$operands = array();
 
 		foreach ($tokens as $token) {
@@ -326,22 +429,28 @@ class VFWP_Intranet_Search_PDF_Extractor {
 				$string = $this->last_string_operand($operands);
 
 				if ($string !== '') {
-					$text[] = $string;
+					$text .= $string;
 				}
 			} elseif ('TJ' === $operator) {
 				$array_text = $this->last_array_text_operand($operands);
 
 				if ($array_text !== '') {
-					$text[] = $array_text;
+					$text .= $array_text;
 				}
-			} elseif ('Td' === $operator || 'TD' === $operator || 'T*' === $operator) {
-				$text[] = "\n";
+			} elseif ('Td' === $operator || 'TD' === $operator) {
+				$position = $this->last_numeric_operands($operands, 2);
+
+				if (isset($position[1]) && abs((float) $position[1]) > 0.001 && $text !== '') {
+					$text .= "\n";
+				}
+			} elseif ('T*' === $operator) {
+				$text .= "\n";
 			}
 
 			$operands = array();
 		}
 
-		return implode(' ', $text);
+		return $text;
 	}
 
 	/**
@@ -548,7 +657,79 @@ class VFWP_Intranet_Search_PDF_Extractor {
 
 		$bytes = @hex2bin($hex);
 
-		return is_string($bytes) ? $this->decode_pdf_string($bytes) : '';
+		if (!is_string($bytes)) {
+			return '';
+		}
+
+		$mapped = $this->decode_to_unicode_hex_string($hex);
+
+		return $mapped !== '' ? $mapped : $this->decode_pdf_string($bytes);
+	}
+
+	/**
+	 * Decode a PDF hex string through the current PDF's ToUnicode map.
+	 *
+	 * @param string $hex Hex string without angle brackets.
+	 * @return string
+	 */
+	private function decode_to_unicode_hex_string($hex) {
+		if (empty($this->to_unicode_map)) {
+			return '';
+		}
+
+		$hex = strtoupper(preg_replace('/\s+/', '', (string) $hex));
+
+		if (!is_string($hex) || $hex === '') {
+			return '';
+		}
+
+		$output = '';
+		$offset = 0;
+		$length = strlen($hex);
+		$code_lengths = $this->get_to_unicode_code_lengths();
+
+		while ($offset < $length) {
+			$matched = false;
+
+			foreach ($code_lengths as $code_length) {
+				if ($offset + $code_length > $length) {
+					continue;
+				}
+
+				$code = substr($hex, $offset, $code_length);
+
+				if (isset($this->to_unicode_map[$code])) {
+					$output .= $this->to_unicode_map[$code];
+					$offset += $code_length;
+					$matched = true;
+					break;
+				}
+			}
+
+			if (!$matched) {
+				$offset += 2;
+			}
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Return known ToUnicode source-code lengths, longest first.
+	 *
+	 * @return array
+	 */
+	private function get_to_unicode_code_lengths() {
+		$lengths = array();
+
+		foreach (array_keys($this->to_unicode_map) as $code) {
+			$lengths[strlen((string) $code)] = true;
+		}
+
+		$lengths = array_keys($lengths);
+		rsort($lengths, SORT_NUMERIC);
+
+		return $lengths;
 	}
 
 	/**
@@ -573,6 +754,70 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		}
 
 		return $bytes;
+	}
+
+	/**
+	 * Decode a UTF-16BE hex sequence from a CMap.
+	 *
+	 * @param string $hex Hex string.
+	 * @return string
+	 */
+	private function unicode_hex_to_utf8($hex) {
+		$bytes = @hex2bin((string) $hex);
+
+		if (!is_string($bytes) || $bytes === '') {
+			return '';
+		}
+
+		if (function_exists('mb_convert_encoding')) {
+			$utf8 = @mb_convert_encoding($bytes, 'UTF-8', 'UTF-16BE');
+
+			return is_string($utf8) ? $utf8 : '';
+		}
+
+		if (strlen($bytes) === 2) {
+			return $this->codepoint_to_utf8(hexdec($hex));
+		}
+
+		return '';
+	}
+
+	/**
+	 * Convert one Unicode codepoint to UTF-8.
+	 *
+	 * @param int $codepoint Codepoint.
+	 * @return string
+	 */
+	private function codepoint_to_utf8($codepoint) {
+		$codepoint = (int) $codepoint;
+
+		if ($codepoint <= 0) {
+			return '';
+		}
+
+		if (function_exists('mb_chr')) {
+			$char = @mb_chr($codepoint, 'UTF-8');
+
+			return is_string($char) ? $char : '';
+		}
+
+		if ($codepoint <= 0x7F) {
+			return chr($codepoint);
+		}
+
+		if ($codepoint <= 0x7FF) {
+			return chr(0xC0 | ($codepoint >> 6)) . chr(0x80 | ($codepoint & 0x3F));
+		}
+
+		if ($codepoint <= 0xFFFF) {
+			return chr(0xE0 | ($codepoint >> 12)) . chr(0x80 | (($codepoint >> 6) & 0x3F)) . chr(0x80 | ($codepoint & 0x3F));
+		}
+
+		if ($codepoint <= 0x10FFFF) {
+			return chr(0xF0 | ($codepoint >> 18)) . chr(0x80 | (($codepoint >> 12) & 0x3F)) . chr(0x80 | (($codepoint >> 6) & 0x3F)) . chr(0x80 | ($codepoint & 0x3F));
+		}
+
+		return '';
 	}
 
 	/**
@@ -615,6 +860,31 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		}
 
 		return '';
+	}
+
+	/**
+	 * Return the nearest numeric operands in their original order.
+	 *
+	 * @param array $operands Operands.
+	 * @param int   $count Number of operands needed.
+	 * @return array
+	 */
+	private function last_numeric_operands(array $operands, $count) {
+		$numbers = array();
+
+		for ($i = count($operands) - 1; $i >= 0; $i--) {
+			if (!isset($operands[$i]['value']) || !is_numeric($operands[$i]['value'])) {
+				continue;
+			}
+
+			array_unshift($numbers, (float) $operands[$i]['value']);
+
+			if (count($numbers) >= $count) {
+				break;
+			}
+		}
+
+		return $numbers;
 	}
 
 	/**
