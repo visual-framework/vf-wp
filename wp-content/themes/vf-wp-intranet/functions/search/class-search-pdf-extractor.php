@@ -10,6 +10,8 @@ if (!defined('ABSPATH')) {
 class VFWP_Intranet_Search_PDF_Extractor {
 	const DEFAULT_MAX_FILE_SIZE = 52428800;
 	const DEFAULT_MAX_TEXT_BYTES = 1048576;
+	const DEFAULT_MAX_STREAM_BYTES = 8388608;
+	const DEFAULT_MAX_EXTRACTION_SECONDS = 8;
 	const EXTRACTOR_VERSION = 'pure_php_v6';
 
 	/**
@@ -18,6 +20,20 @@ class VFWP_Intranet_Search_PDF_Extractor {
 	 * @var array
 	 */
 	private $to_unicode_map = array();
+
+	/**
+	 * Timestamp when the current extraction started.
+	 *
+	 * @var float
+	 */
+	private $extraction_started_at = 0.0;
+
+	/**
+	 * Whether the current extraction hit its time budget.
+	 *
+	 * @var bool
+	 */
+	private $extraction_timed_out = false;
 
 	/**
 	 * Determine whether PDF text extraction is available.
@@ -36,6 +52,9 @@ class VFWP_Intranet_Search_PDF_Extractor {
 	 */
 	public function extract($file_path) {
 		$file_path = (string) $file_path;
+		$this->to_unicode_map = array();
+		$this->extraction_started_at = microtime(true);
+		$this->extraction_timed_out = false;
 
 		if ($file_path === '' || !file_exists($file_path)) {
 			return $this->result('missing_file', '', __('PDF file is missing.', 'vfwp'));
@@ -70,13 +89,21 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		$text = $this->normalize_output_text($text);
 
 		if ($text === '') {
+			if ($this->extraction_timed_out) {
+				return $this->result('timeout', '', __('PDF extraction stopped because the per-file time limit was reached.', 'vfwp'));
+			}
+
 			return $this->result('no_text', '', __('No machine-readable text was found in this PDF. Scanned-image PDFs need OCR and are not extracted by this system.', 'vfwp'));
 		}
 
-		$status = $this->was_text_truncated($text) ? 'success_truncated' : 'success';
+		$status = $this->was_text_truncated($text) || $this->extraction_timed_out ? 'success_truncated' : 'success';
 		$text = $this->limit_text($text);
 
-		return $this->result($status, $text, '');
+		return $this->result(
+			$status,
+			$text,
+			$this->extraction_timed_out ? __('PDF extraction stopped after partial text was extracted because the per-file time limit was reached.', 'vfwp') : ''
+		);
 	}
 
 	/**
@@ -120,6 +147,10 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		$streams = $this->extract_streams($pdf);
 
 		foreach ($streams as $stream) {
+			if (!$this->has_extraction_time_remaining()) {
+				break;
+			}
+
 			if (strpos($stream, 'beginbfchar') === false && strpos($stream, 'beginbfrange') === false) {
 				continue;
 			}
@@ -218,6 +249,10 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		}
 
 		foreach ($matches as $match) {
+			if (!$this->has_extraction_time_remaining()) {
+				break;
+			}
+
 			$dictionary = isset($match[1]) ? (string) $match[1] : '';
 			$stream = isset($match[2]) ? (string) $match[2] : '';
 			$decoded = $this->decode_stream($stream, $dictionary);
@@ -240,8 +275,13 @@ class VFWP_Intranet_Search_PDF_Extractor {
 	private function decode_stream($stream, $dictionary) {
 		$filters = $this->get_stream_filters($dictionary);
 		$decoded = (string) $stream;
+		$max_stream_bytes = (int) apply_filters('vfwp_intranet_search_pdf_max_stream_bytes', self::DEFAULT_MAX_STREAM_BYTES);
 
 		foreach ($filters as $filter) {
+			if (!$this->has_extraction_time_remaining()) {
+				return '';
+			}
+
 			if ('FlateDecode' === $filter || 'Fl' === $filter) {
 				$decoded = $this->decode_flate($decoded);
 			} elseif ('ASCIIHexDecode' === $filter || 'AHx' === $filter) {
@@ -255,6 +295,14 @@ class VFWP_Intranet_Search_PDF_Extractor {
 			if ($decoded === '') {
 				return '';
 			}
+
+			if ($max_stream_bytes > 0 && strlen($decoded) > $max_stream_bytes) {
+				return '';
+			}
+		}
+
+		if ($max_stream_bytes > 0 && strlen($decoded) > $max_stream_bytes) {
+			return '';
 		}
 
 		return $decoded;
@@ -413,6 +461,10 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		$operands = array();
 
 		foreach ($tokens as $token) {
+			if (!$this->has_extraction_time_remaining()) {
+				break;
+			}
+
 			if ('operator' !== $token['type']) {
 				$operands[] = $token;
 
@@ -466,6 +518,10 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		$array_stack = array();
 
 		while ($i < $length) {
+			if ($i > 0 && $i % 2048 === 0 && !$this->has_extraction_time_remaining()) {
+				break;
+			}
+
 			$char = $content[$i];
 
 			if (ctype_space($char)) {
@@ -1234,6 +1290,30 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		$max_text_bytes = (int) apply_filters('vfwp_intranet_search_pdf_max_text_bytes', self::DEFAULT_MAX_TEXT_BYTES);
 
 		return substr((string) $text, 0, $max_text_bytes);
+	}
+
+	/**
+	 * Check the per-file extraction time budget.
+	 *
+	 * @return bool
+	 */
+	private function has_extraction_time_remaining() {
+		$max_seconds = (int) apply_filters(
+			'vfwp_intranet_search_pdf_max_extraction_seconds',
+			self::DEFAULT_MAX_EXTRACTION_SECONDS
+		);
+
+		if ($max_seconds <= 0 || $this->extraction_started_at <= 0) {
+			return true;
+		}
+
+		if (microtime(true) - $this->extraction_started_at < $max_seconds) {
+			return true;
+		}
+
+		$this->extraction_timed_out = true;
+
+		return false;
 	}
 
 	/**

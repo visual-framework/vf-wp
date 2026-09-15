@@ -12,8 +12,10 @@ class VFWP_Intranet_Search_Index_Manager {
 	const LAST_FULL_REBUILD_OPTION = 'vfwp_intranet_search_last_full_rebuild';
 	const CRON_HOOK = 'vfwp_intranet_search_process_index_batch';
 	const LOCK_TRANSIENT = 'vfwp_intranet_search_index_batch_lock';
-	const DEFAULT_BATCH_SIZE = 25;
-	const MAX_BATCH_SIZE = 100;
+	const DEFAULT_BATCH_SIZE = 10;
+	const MAX_BATCH_SIZE = 50;
+	const DEFAULT_BATCH_TIME_LIMIT = 20;
+	const DEFAULT_MEMORY_USAGE_LIMIT = 0.85;
 
 	/**
 	 * @var VFWP_Intranet_Search_Index_Repository
@@ -78,6 +80,10 @@ class VFWP_Intranet_Search_Index_Manager {
 		set_transient(self::LOCK_TRANSIENT, 1, 5 * MINUTE_IN_SECONDS);
 
 		try {
+			if (function_exists('set_time_limit')) {
+				@set_time_limit(max(30, self::DEFAULT_BATCH_TIME_LIMIT + 10));
+			}
+
 			$status['status'] = 'running';
 			$status['last_activity_at'] = current_time('mysql', true);
 			$this->save_status($status);
@@ -100,10 +106,11 @@ class VFWP_Intranet_Search_Index_Manager {
 
 			$this->save_status($status);
 			return $status;
-		} catch (Exception $exception) {
+		} catch (Throwable $exception) {
 			$status['active'] = 0;
 			$status['status'] = 'failed';
 			$status['message'] = sanitize_text_field($exception->getMessage());
+			$status['last_error'] = sanitize_text_field($exception->getMessage());
 			$status['last_activity_at'] = current_time('mysql', true);
 			$this->save_status($status);
 			$this->clear_scheduled_batches();
@@ -256,10 +263,13 @@ class VFWP_Intranet_Search_Index_Manager {
 				'document_pdf_extracted' => 0,
 				'document_pdf_failed' => 0,
 				'document_pdf_text_updated' => 0,
+				'batch_pauses'     => 0,
+				'error_messages'   => array(),
 				'started_at'       => '',
 				'last_activity_at' => '',
 				'completed_at'     => '',
 				'message'          => '',
+				'last_error'       => '',
 			)
 		);
 	}
@@ -312,10 +322,13 @@ class VFWP_Intranet_Search_Index_Manager {
 			'document_pdf_extracted' => 0,
 			'document_pdf_failed' => 0,
 			'document_pdf_text_updated' => 0,
+			'batch_pauses'     => 0,
+			'error_messages'   => array(),
 			'started_at'       => $now,
 			'last_activity_at' => $now,
 			'completed_at'     => '',
 			'message'          => $clear_first ? __('Search index cleared. Rebuild started.', 'vfwp') : __('Search index rebuild started.', 'vfwp'),
+			'last_error'       => '',
 		);
 
 		$this->save_status($status);
@@ -371,15 +384,32 @@ class VFWP_Intranet_Search_Index_Manager {
 			return $status;
 		}
 
+		$batch_started_at = microtime(true);
+		$processed_in_batch = 0;
+
 		foreach ($post_ids as $post_id) {
-			$force = in_array($status['mode'], array('full', 'clear_rebuild'), true);
+			if ($processed_in_batch > 0 && $this->should_pause_batch($batch_started_at)) {
+				$status['batch_pauses'] = isset($status['batch_pauses']) ? (int) $status['batch_pauses'] + 1 : 1;
+				$status['message'] = __('Search index batch paused to stay within server limits. Processing will continue in the next batch.', 'vfwp');
+				break;
+			}
+
 			$document_pdf_context = $this->get_document_pdf_context((int) $post_id);
-			$result = vfwp_intranet_search_index_post((int) $post_id, $force, $this->get_active_rebuild_token($status));
-			$status = $this->record_result($status, $result);
-			$status = $this->record_document_pdf_result($status, (int) $post_id, $document_pdf_context);
+
+			try {
+				$force = in_array($status['mode'], array('full', 'clear_rebuild'), true);
+				$result = vfwp_intranet_search_index_post((int) $post_id, $force, $this->get_active_rebuild_token($status));
+				$status = $this->record_result($status, $result);
+				$status = $this->record_document_pdf_result($status, (int) $post_id, $document_pdf_context);
+			} catch (Throwable $exception) {
+				$status = $this->record_index_exception($status, (int) $post_id, $exception);
+				$status = $this->record_document_pdf_failure($status, $document_pdf_context);
+			}
+
+			$processed_in_batch++;
 		}
 
-		$status['post_offset'] += count($post_ids);
+		$status['post_offset'] += $processed_in_batch;
 		$status['last_activity_at'] = current_time('mysql', true);
 
 		return $status;
@@ -459,6 +489,88 @@ class VFWP_Intranet_Search_Index_Manager {
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Record one item-level indexing exception without aborting the whole job.
+	 *
+	 * @param array     $status Status.
+	 * @param int       $post_id Post ID.
+	 * @param Throwable $exception Exception or error.
+	 * @return array
+	 */
+	private function record_index_exception(array $status, $post_id, Throwable $exception) {
+		$status['processed']++;
+		$status['failed']++;
+		$message = sprintf(
+			__('Post #%1$d failed during indexing: %2$s', 'vfwp'),
+			(int) $post_id,
+			$exception->getMessage()
+		);
+
+		$status['last_error'] = sanitize_text_field($message);
+		$status['error_messages'] = isset($status['error_messages']) && is_array($status['error_messages']) ? $status['error_messages'] : array();
+		$status['error_messages'][] = sanitize_text_field($message);
+		$status['error_messages'] = array_slice($status['error_messages'], -20);
+
+		return $status;
+	}
+
+	/**
+	 * Determine whether the current request should stop after the current item.
+	 *
+	 * @param float $batch_started_at Unix timestamp with microseconds.
+	 * @return bool
+	 */
+	private function should_pause_batch($batch_started_at) {
+		$time_limit = (int) apply_filters(
+			'vfwp_intranet_search_index_batch_time_limit',
+			self::DEFAULT_BATCH_TIME_LIMIT
+		);
+
+		if ($time_limit > 0 && microtime(true) - (float) $batch_started_at >= $time_limit) {
+			return true;
+		}
+
+		$memory_limit = $this->get_memory_limit_bytes();
+
+		if ($memory_limit <= 0) {
+			return false;
+		}
+
+		$memory_usage_limit = (float) apply_filters(
+			'vfwp_intranet_search_index_memory_usage_limit',
+			self::DEFAULT_MEMORY_USAGE_LIMIT
+		);
+		$memory_usage_limit = max(0.5, min(0.98, $memory_usage_limit));
+
+		return memory_get_usage(true) >= $memory_limit * $memory_usage_limit;
+	}
+
+	/**
+	 * Return PHP memory_limit in bytes.
+	 *
+	 * @return int
+	 */
+	private function get_memory_limit_bytes() {
+		$memory_limit = trim((string) ini_get('memory_limit'));
+
+		if ($memory_limit === '' || $memory_limit === '-1') {
+			return 0;
+		}
+
+		$unit = strtolower(substr($memory_limit, -1));
+		$value = (float) $memory_limit;
+
+		if ($unit === 'g') {
+			$value *= 1024 * 1024 * 1024;
+		} elseif ($unit === 'm') {
+			$value *= 1024 * 1024;
+		} elseif ($unit === 'k') {
+			$value *= 1024;
+		}
+
+		return (int) $value;
 	}
 
 	/**
@@ -581,6 +693,24 @@ class VFWP_Intranet_Search_Index_Manager {
 		if ($pdf_text_after !== '' && $pdf_text_after !== (string) $context['pdf_text_before']) {
 			$status['document_pdf_text_updated'] = isset($status['document_pdf_text_updated']) ? (int) $status['document_pdf_text_updated'] + 1 : 1;
 		}
+
+		return $status;
+	}
+
+	/**
+	 * Record a failed Document PDF attempt when indexing throws before a row is stored.
+	 *
+	 * @param array $status Job status.
+	 * @param array $context Document PDF context.
+	 * @return array
+	 */
+	private function record_document_pdf_failure(array $status, array $context) {
+		if (empty($context['has_pdf'])) {
+			return $status;
+		}
+
+		$status['document_pdf_processed'] = isset($status['document_pdf_processed']) ? (int) $status['document_pdf_processed'] + 1 : 1;
+		$status['document_pdf_failed'] = isset($status['document_pdf_failed']) ? (int) $status['document_pdf_failed'] + 1 : 1;
 
 		return $status;
 	}

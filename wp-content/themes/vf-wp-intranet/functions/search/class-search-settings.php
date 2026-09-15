@@ -864,18 +864,28 @@ class VFWP_Intranet_Search_Settings {
 					<th scope="row"><?php echo esc_html__('Pending items', 'vfwp'); ?></th>
 					<td><?php echo esc_html(number_format_i18n($pending)); ?></td>
 				</tr>
-				<tr>
-					<th scope="row"><?php echo esc_html__('Failed items', 'vfwp'); ?></th>
-					<td>
-						<?php echo esc_html(number_format_i18n($failed_items)); ?>
-						<?php if ((int) $data['pdf_issue_count'] > 0) : ?>
-							<?php echo esc_html(sprintf(__('(%s PDF extraction issues)', 'vfwp'), number_format_i18n((int) $data['pdf_issue_count']))); ?>
-						<?php endif; ?>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><?php echo esc_html__('Rebuild required', 'vfwp'); ?></th>
-					<td><?php echo esc_html($rebuild_required ? __('Yes', 'vfwp') : __('No', 'vfwp')); ?></td>
+					<tr>
+						<th scope="row"><?php echo esc_html__('Failed items', 'vfwp'); ?></th>
+						<td>
+							<?php echo esc_html(number_format_i18n($failed_items)); ?>
+							<?php if ((int) $data['pdf_issue_count'] > 0) : ?>
+								<?php echo esc_html(sprintf(__('(%s PDF extraction issues)', 'vfwp'), number_format_i18n((int) $data['pdf_issue_count']))); ?>
+							<?php endif; ?>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php echo esc_html__('Batch safety pauses', 'vfwp'); ?></th>
+						<td><?php echo esc_html(number_format_i18n(isset($status['batch_pauses']) ? (int) $status['batch_pauses'] : 0)); ?></td>
+					</tr>
+					<?php if (!empty($status['last_error'])) : ?>
+						<tr>
+							<th scope="row"><?php echo esc_html__('Last indexing error', 'vfwp'); ?></th>
+							<td><?php echo esc_html($status['last_error']); ?></td>
+						</tr>
+					<?php endif; ?>
+					<tr>
+						<th scope="row"><?php echo esc_html__('Rebuild required', 'vfwp'); ?></th>
+						<td><?php echo esc_html($rebuild_required ? __('Yes', 'vfwp') : __('No', 'vfwp')); ?></td>
 				</tr>
 				<tr>
 					<th scope="row"><?php echo esc_html__('Next scheduled batch', 'vfwp'); ?></th>
@@ -942,11 +952,13 @@ class VFWP_Intranet_Search_Settings {
 								return;
 							}
 
-							setRunnerText(
-								(status.processed || 0) + ' / ' + (status.total_planned || 0) + ' <?php echo esc_js(__('items processed.', 'vfwp')); ?> '
-								+ (status.document_pdf_extracted || 0) + ' / ' + (status.document_pdf_total || 0) + ' <?php echo esc_js(__('PDFs extracted.', 'vfwp')); ?> '
-								+ (status.document_pdf_text_updated || 0) + ' <?php echo esc_js(__('Document PDF text fields updated.', 'vfwp')); ?>'
-							);
+								setRunnerText(
+									(status.processed || 0) + ' / ' + (status.total_planned || 0) + ' <?php echo esc_js(__('items processed.', 'vfwp')); ?> '
+									+ (status.document_pdf_extracted || 0) + ' / ' + (status.document_pdf_total || 0) + ' <?php echo esc_js(__('PDFs extracted.', 'vfwp')); ?> '
+									+ (status.document_pdf_failed || 0) + ' <?php echo esc_js(__('PDFs failed.', 'vfwp')); ?> '
+									+ (status.document_pdf_text_updated || 0) + ' <?php echo esc_js(__('Document PDF text fields updated.', 'vfwp')); ?> '
+									+ (status.batch_pauses || 0) + ' <?php echo esc_js(__('safety pauses.', 'vfwp')); ?>'
+								);
 
 							if (status.active) {
 								isRunning = false;
