@@ -857,8 +857,8 @@ class VFWP_Intranet_Search_Settings {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php echo esc_html__('Document PDF text fields updated', 'vfwp'); ?></th>
-					<td><?php echo esc_html(number_format_i18n((int) $status['document_pdf_text_updated'])); ?></td>
+					<th scope="row"><?php echo esc_html__('Document PDF metadata updated', 'vfwp'); ?></th>
+					<td><?php echo esc_html(number_format_i18n(isset($status['document_pdf_metadata_updated']) ? (int) $status['document_pdf_metadata_updated'] : 0)); ?></td>
 				</tr>
 				<tr>
 					<th scope="row"><?php echo esc_html__('Pending items', 'vfwp'); ?></th>
@@ -956,7 +956,7 @@ class VFWP_Intranet_Search_Settings {
 									(status.processed || 0) + ' / ' + (status.total_planned || 0) + ' <?php echo esc_js(__('items processed.', 'vfwp')); ?> '
 									+ (status.document_pdf_extracted || 0) + ' / ' + (status.document_pdf_total || 0) + ' <?php echo esc_js(__('PDFs extracted.', 'vfwp')); ?> '
 									+ (status.document_pdf_failed || 0) + ' <?php echo esc_js(__('PDFs failed.', 'vfwp')); ?> '
-									+ (status.document_pdf_text_updated || 0) + ' <?php echo esc_js(__('Document PDF text fields updated.', 'vfwp')); ?> '
+									+ (status.document_pdf_metadata_updated || 0) + ' <?php echo esc_js(__('Document PDF metadata updated.', 'vfwp')); ?> '
 									+ (status.batch_pauses || 0) + ' <?php echo esc_js(__('safety pauses.', 'vfwp')); ?>'
 								);
 
@@ -1844,7 +1844,7 @@ class VFWP_Intranet_Search_Settings {
 				<?php submit_button(__('Clear PDF extraction issue notices', 'vfwp'), 'secondary', 'submit', false); ?>
 			</form>
 			<p class="description">
-				<?php echo esc_html__('This only clears stored issue notices from the search index. It does not delete media, posts, PDF text, or indexed content.', 'vfwp'); ?>
+				<?php echo esc_html__('This only clears stored issue notices from the search index. It does not delete media, posts, PDF metadata, or indexed content.', 'vfwp'); ?>
 			</p>
 		</div>
 		<?php

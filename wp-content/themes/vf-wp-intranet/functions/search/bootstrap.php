@@ -20,6 +20,7 @@ require_once get_stylesheet_directory() . '/functions/search/class-search-analyt
 require_once get_stylesheet_directory() . '/functions/search/class-search-frontend.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-suggestions.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-index-manager.php';
+require_once get_stylesheet_directory() . '/functions/search/class-search-document-index-status.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-cli-command.php';
 
 add_action('after_switch_theme', array('VFWP_Intranet_Search_Schema', 'install'));
@@ -50,6 +51,9 @@ $vfwp_intranet_search_index_manager->register_hooks();
 if (is_admin()) {
 	$vfwp_intranet_search_settings = new VFWP_Intranet_Search_Settings();
 	$vfwp_intranet_search_settings->register_hooks();
+
+	$vfwp_intranet_search_document_index_status = new VFWP_Intranet_Search_Document_Index_Status();
+	$vfwp_intranet_search_document_index_status->register_hooks();
 }
 
 if (defined('WP_CLI') && WP_CLI) {

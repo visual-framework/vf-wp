@@ -15,6 +15,7 @@ class VFWP_Intranet_Search_Suggestions {
 	const DID_YOU_MEAN_LIMIT = 3;
 	const DID_YOU_MEAN_CANDIDATE_ROWS = 1200;
 	const DID_YOU_MEAN_MAX_TERMS = 2500;
+	const CACHE_TTL = 120;
 
 	/**
 	 * @var wpdb
@@ -70,10 +71,14 @@ class VFWP_Intranet_Search_Suggestions {
 			$handle,
 			'vfwpSearchSuggestions',
 			array(
-				'ajaxUrl'   => admin_url('admin-ajax.php'),
-				'action'    => self::ACTION,
-				'nonce'     => wp_create_nonce(self::ACTION),
-				'minLength' => 2,
+				'ajaxUrl'         => admin_url('admin-ajax.php'),
+				'action'          => self::ACTION,
+				'nonce'           => wp_create_nonce(self::ACTION),
+				'minLength'       => 2,
+				'lookupMinLength' => 3,
+				'debounceMs'      => 120,
+				'cacheTtlMs'      => self::CACHE_TTL * 1000,
+				'searchForLabel'  => __('Search for "%s"', 'vfwp'),
 			)
 		);
 	}
@@ -127,7 +132,7 @@ class VFWP_Intranet_Search_Suggestions {
 			'limit'   => $limit,
 			'schema'  => VFWP_Intranet_Search_Schema::VERSION,
 		)));
-		$cached = wp_cache_get($cache_key, 'vfwp_intranet_search');
+		$cached = $this->get_cached_suggestions($cache_key);
 
 		if (is_array($cached)) {
 			return $cached;
@@ -138,15 +143,19 @@ class VFWP_Intranet_Search_Suggestions {
 
 		$this->append_suggestion($suggestions, $seen, $this->get_search_action_suggestion($parsed_query), $limit);
 
-		foreach ($this->get_title_suggestions($parsed_query, $filters, min(self::TITLE_LIMIT, $limit)) as $suggestion) {
+		if ($this->should_run_indexed_suggestion_lookup($parsed_query)) {
+			foreach ($this->get_title_suggestions($parsed_query, $filters, min(self::TITLE_LIMIT, $limit)) as $suggestion) {
+				$this->append_suggestion($suggestions, $seen, $suggestion, $limit);
+			}
+		}
+
+		$remaining_limit = $limit - count($suggestions);
+
+		foreach ($this->get_phrase_suggestions($parsed_query, $filters, $remaining_limit) as $suggestion) {
 			$this->append_suggestion($suggestions, $seen, $suggestion, $limit);
 		}
 
-		foreach ($this->get_phrase_suggestions($parsed_query, $filters, $limit) as $suggestion) {
-			$this->append_suggestion($suggestions, $seen, $suggestion, $limit);
-		}
-
-		wp_cache_set($cache_key, $suggestions, 'vfwp_intranet_search', 2 * MINUTE_IN_SECONDS);
+		$this->set_cached_suggestions($cache_key, $suggestions, self::CACHE_TTL);
 
 		return $suggestions;
 	}
@@ -199,6 +208,53 @@ class VFWP_Intranet_Search_Suggestions {
 	}
 
 	/**
+	 * Return cached autosuggestions from object cache.
+	 *
+	 * @param string $cache_key Cache key.
+	 * @return array|false
+	 */
+	private function get_cached_suggestions($cache_key) {
+		$cache_key = (string) $cache_key;
+		$cached = wp_cache_get($cache_key, 'vfwp_intranet_search');
+
+		if (is_array($cached)) {
+			return $cached;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Store autosuggestions in object cache.
+	 *
+	 * @param string $cache_key Cache key.
+	 * @param array  $suggestions Suggestions.
+	 * @param int    $ttl Time to live in seconds.
+	 * @return void
+	 */
+	private function set_cached_suggestions($cache_key, array $suggestions, $ttl) {
+		$ttl = max(30, (int) $ttl);
+
+		wp_cache_set((string) $cache_key, $suggestions, 'vfwp_intranet_search', $ttl);
+	}
+
+	/**
+	 * Determine whether typed input is selective enough for indexed lookup.
+	 *
+	 * @param array $parsed_query Parsed query.
+	 * @return bool
+	 */
+	private function should_run_indexed_suggestion_lookup(array $parsed_query) {
+		if (!empty($parsed_query['boolean_query'])) {
+			return true;
+		}
+
+		$normalized_query = isset($parsed_query['normalized']) ? trim((string) $parsed_query['normalized']) : '';
+
+		return $this->length($normalized_query) >= 3;
+	}
+
+	/**
 	 * Return the free-text search action shown at the top of the suggestion list.
 	 *
 	 * @param array $parsed_query Parsed query.
@@ -238,8 +294,8 @@ class VFWP_Intranet_Search_Suggestions {
 		$prefix = $this->wpdb->esc_like(strtolower($normalized_query)) . '%';
 		$score_parts = array('IF(LOWER(title) LIKE %s, 50, 0)');
 		$score_params = array($prefix);
-		$match_conditions = array('LOWER(title) LIKE %s');
-		$match_params = array($prefix);
+		$match_conditions = array();
+		$match_params = array();
 		$where_params = array('post', 'publish', 'public');
 
 		if (!empty($parsed_query['boolean_query'])) {
@@ -247,6 +303,10 @@ class VFWP_Intranet_Search_Suggestions {
 			$score_params[] = $parsed_query['boolean_query'];
 			$match_conditions[] = 'MATCH(title) AGAINST (%s IN BOOLEAN MODE)';
 			$match_params[] = $parsed_query['boolean_query'];
+		}
+
+		if (empty($match_conditions)) {
+			return array();
 		}
 
 		$where_sql = $this->build_base_where_sql($filters, $where_params);
@@ -302,6 +362,10 @@ class VFWP_Intranet_Search_Suggestions {
 	 * @return array
 	 */
 	private function get_phrase_suggestions(array $parsed_query, array $filters, $limit) {
+		if ($limit < 1) {
+			return array();
+		}
+
 		$phrases = array();
 
 		if (class_exists('VFWP_Intranet_Search_Settings')) {
@@ -310,8 +374,10 @@ class VFWP_Intranet_Search_Suggestions {
 			}
 		}
 
-		foreach ($this->get_indexed_keyword_phrase_candidates($parsed_query, $filters) as $phrase) {
-			$this->append_phrase_candidate($phrases, $phrase, $parsed_query);
+		if ($this->should_run_indexed_suggestion_lookup($parsed_query)) {
+			foreach ($this->get_indexed_keyword_phrase_candidates($parsed_query, $filters) as $phrase) {
+				$this->append_phrase_candidate($phrases, $phrase, $parsed_query);
+			}
 		}
 
 		usort($phrases, array($this, 'sort_phrase_suggestions'));

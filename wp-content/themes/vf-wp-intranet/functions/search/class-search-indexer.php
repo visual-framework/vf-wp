@@ -269,7 +269,7 @@ class VFWP_Intranet_Search_Indexer {
 				&& hash_equals((string) $existing['source_hash'], $source_hash)
 				&& (int) $existing['schema_version'] === VFWP_Intranet_Search_Schema::VERSION
 			) {
-				$this->maybe_store_existing_document_pdf_text($post, $existing);
+				$this->maybe_store_existing_document_pdf_metadata($post, $existing, $document_pdf_source);
 				$this->repository->mark_rebuild_token($post_id, 'post', (string) $rebuild_token);
 				return 'skipped';
 			}
@@ -345,7 +345,7 @@ class VFWP_Intranet_Search_Indexer {
 		$document_pdf_index = $this->extract_document_pdf_index_data($document_pdf_source);
 
 		if ($post->post_type === 'documents') {
-			$this->store_document_pdf_text((int) $post->ID, (string) $document_pdf_index['raw_text']);
+			$this->store_document_pdf_metadata((int) $post->ID, $document_pdf_source, $document_pdf_index);
 			$content = !empty($document_pdf_index['content']) ? $document_pdf_index['content'] : '';
 		} elseif (!empty($document_pdf_index['content'])) {
 			$content = trim($content . "\n\n" . $document_pdf_index['content']);
@@ -531,9 +531,9 @@ class VFWP_Intranet_Search_Indexer {
 	private function extract_document_pdf_index_data(array $document_pdf_source) {
 		$result = array(
 			'content'           => '',
-			'raw_text'          => '',
 			'extraction_status' => '',
 			'extraction_error'  => '',
+			'extracted_chars'   => 0,
 		);
 
 		if (empty($document_pdf_source['is_pdf'])) {
@@ -542,65 +542,113 @@ class VFWP_Intranet_Search_Indexer {
 
 		$extraction = $this->pdf_extractor->extract((string) $document_pdf_source['file_path']);
 
-		$result['raw_text'] = isset($extraction['text']) ? (string) $extraction['text'] : '';
-		$result['content'] = $this->normalizer->normalize_content($result['raw_text']);
+		$raw_text = isset($extraction['text']) ? (string) $extraction['text'] : '';
+		$result['content'] = $this->normalizer->normalize_content($raw_text);
 		$result['extraction_status'] = isset($extraction['status']) ? (string) $extraction['status'] : 'failed';
 		$result['extraction_error'] = isset($extraction['error']) ? (string) $extraction['error'] : '';
+		$result['extracted_chars'] = function_exists('mb_strlen') ? (int) mb_strlen($raw_text, 'UTF-8') : strlen($raw_text);
 
 		return $result;
 	}
 
 	/**
-	 * Store extracted PDF text on the Document post for editor visibility.
+	 * Store lightweight PDF extraction metadata on the Document post.
 	 *
-	 * @param int    $post_id Document post ID.
-	 * @param string $text Extracted text.
+	 * @param int   $post_id Document post ID.
+	 * @param array $document_pdf_source Document PDF source metadata.
+	 * @param array $document_pdf_index Document PDF index data.
 	 * @return void
 	 */
-	private function store_document_pdf_text($post_id, $text) {
+	private function store_document_pdf_metadata($post_id, array $document_pdf_source, array $document_pdf_index) {
 		$post_id = (int) $post_id;
-		$text = (string) $text;
 
 		if ($post_id <= 0) {
 			return;
 		}
 
-		if ((string) get_post_meta($post_id, 'pdf_text', true) === $text) {
+		$metadata = array(
+			'_vfwp_search_pdf_attachment_id' => (int) $document_pdf_source['attachment_id'],
+			'_vfwp_search_pdf_file_name' => sanitize_text_field((string) $document_pdf_source['file_name']),
+			'_vfwp_search_pdf_file_size' => max(0, (int) $document_pdf_source['file_size']),
+			'_vfwp_search_pdf_file_mtime' => max(0, (int) $document_pdf_source['file_mtime']),
+			'_vfwp_search_pdf_extraction_status' => sanitize_key((string) $document_pdf_index['extraction_status']),
+			'_vfwp_search_pdf_extraction_error' => sanitize_text_field((string) $document_pdf_index['extraction_error']),
+			'_vfwp_search_pdf_extracted_chars' => max(0, (int) $document_pdf_index['extracted_chars']),
+		);
+
+		if (!$this->document_pdf_metadata_has_changed($post_id, $metadata) && !$this->document_has_legacy_pdf_text_meta($post_id)) {
 			return;
 		}
 
-		if (function_exists('update_field')) {
-			update_field('field_vfwp_document_pdf_text', $text, $post_id);
-			update_field('pdf_text', $text, $post_id);
+		delete_post_meta($post_id, 'pdf_text');
+		delete_post_meta($post_id, '_pdf_text');
+
+		foreach ($metadata as $key => $value) {
+			update_post_meta($post_id, $key, $value);
 		}
 
-		update_post_meta($post_id, 'pdf_text', $text);
-		update_post_meta($post_id, '_pdf_text', 'field_vfwp_document_pdf_text');
+		update_post_meta($post_id, '_vfwp_search_pdf_indexed_at', current_time('mysql', true));
 	}
 
 	/**
-	 * Backfill visible Document PDF text when the search row is already current.
+	 * Determine if the lightweight Document PDF metadata changed.
+	 *
+	 * @param int   $post_id Document post ID.
+	 * @param array $metadata Metadata.
+	 * @return bool
+	 */
+	private function document_pdf_metadata_has_changed($post_id, array $metadata) {
+		foreach ($metadata as $key => $value) {
+			if ((string) get_post_meta((int) $post_id, (string) $key, true) !== (string) $value) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check for legacy PDF text without loading the large meta value.
+	 *
+	 * @param int $post_id Document post ID.
+	 * @return bool
+	 */
+	private function document_has_legacy_pdf_text_meta($post_id) {
+		global $wpdb;
+
+		$meta_id = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT meta_id FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s LIMIT 1",
+				(int) $post_id,
+				'pdf_text'
+			)
+		);
+
+		return !empty($meta_id);
+	}
+
+	/**
+	 * Backfill lightweight Document PDF metadata when the search row is already current.
 	 *
 	 * @param WP_Post $post Existing post.
 	 * @param array   $existing Existing search row.
+	 * @param array   $document_pdf_source Document PDF source metadata.
 	 * @return void
 	 */
-	private function maybe_store_existing_document_pdf_text(WP_Post $post, array $existing) {
+	private function maybe_store_existing_document_pdf_metadata(WP_Post $post, array $existing, array $document_pdf_source) {
 		if ($post->post_type !== 'documents') {
 			return;
 		}
 
-		$content = isset($existing['content']) ? (string) $existing['content'] : '';
-
-		if ($content === '') {
-			return;
-		}
-
-		if ((string) get_post_meta((int) $post->ID, 'pdf_text', true) === $content) {
-			return;
-		}
-
-		$this->store_document_pdf_text((int) $post->ID, $content);
+		$this->store_document_pdf_metadata(
+			(int) $post->ID,
+			$document_pdf_source,
+			array(
+				'extraction_status' => isset($existing['extraction_status']) ? (string) $existing['extraction_status'] : '',
+				'extraction_error'  => isset($existing['extraction_error']) ? (string) $existing['extraction_error'] : '',
+				'extracted_chars'   => isset($existing['content']) ? (function_exists('mb_strlen') ? (int) mb_strlen((string) $existing['content'], 'UTF-8') : strlen((string) $existing['content'])) : 0,
+			)
+		);
 	}
 
 	/**

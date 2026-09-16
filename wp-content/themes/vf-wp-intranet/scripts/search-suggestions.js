@@ -3,6 +3,49 @@
 
   var config = window.vfwpSearchSuggestions || {};
   var minLength = parseInt(config.minLength, 10) || 2;
+  var lookupMinLength = parseInt(config.lookupMinLength, 10) || minLength;
+  var debounceMs = parseInt(config.debounceMs, 10);
+  var cacheTtlMs = parseInt(config.cacheTtlMs, 10) || 120000;
+  var suggestionCache = {};
+  debounceMs = Number.isFinite(debounceMs) ? Math.max(80, debounceMs) : 120;
+
+  function getSearchForLabel(query) {
+    var template = config.searchForLabel || 'Search for "%s"';
+
+    return template.indexOf('%s') === -1 ? template + ' ' + query : template.replace('%s', query);
+  }
+
+  function getSearchActionSuggestion(query) {
+    return {
+      type: 'search',
+      label: getSearchForLabel(query),
+      value: query,
+      url: '',
+      is_primary: true
+    };
+  }
+
+  function getCachedSuggestions(cacheKey) {
+    var cached = suggestionCache[cacheKey];
+
+    if (!cached || Date.now() - cached.createdAt > cacheTtlMs) {
+      return null;
+    }
+
+    return cached.items;
+  }
+
+  function setCachedSuggestions(cacheKey, items) {
+    suggestionCache[cacheKey] = {
+      createdAt: Date.now(),
+      items: Array.isArray(items) ? items : []
+    };
+  }
+
+  function normalizeLookupQuery(query) {
+    return query.trim().replace(/\s+/g, ' ');
+  }
+
   var debounceTimer = null;
   var activeRequest = null;
   var requestId = 0;
@@ -175,8 +218,8 @@
       return config.ajaxUrl + '?' + params.toString();
     }
 
-    function requestSuggestions() {
-      var query = input.value.trim();
+    function requestSuggestions(query, requestUrl) {
+      query = normalizeLookupQuery(query || input.value);
       var currentRequestId;
 
       if (query.length < minLength) {
@@ -196,7 +239,7 @@
       currentRequestId = ++requestId;
       activeRequest = new AbortController();
 
-      fetch(buildRequestUrl(query), {
+      fetch(requestUrl || buildRequestUrl(query), {
         credentials: 'same-origin',
         signal: activeRequest.signal
       })
@@ -208,20 +251,52 @@
             return;
           }
 
-          render(payload.data && payload.data.suggestions ? payload.data.suggestions : []);
+          var items = payload.data && payload.data.suggestions ? payload.data.suggestions : [];
+          setCachedSuggestions(requestUrl || buildRequestUrl(query), items);
+          render(items);
         })
         .catch(function (error) {
           if (error && error.name === 'AbortError') {
             return;
           }
-
-          hideList();
         });
     }
 
     input.addEventListener('input', function () {
+      var query = normalizeLookupQuery(input.value);
+      var requestUrl;
+      var cachedSuggestions;
+
       window.clearTimeout(debounceTimer);
-      debounceTimer = window.setTimeout(requestSuggestions, 250);
+      requestId++;
+
+      if (activeRequest) {
+        activeRequest.abort();
+        activeRequest = null;
+      }
+
+      if (query.length < minLength) {
+        hideList();
+        return;
+      }
+
+      render([getSearchActionSuggestion(query)]);
+
+      if (query.length < lookupMinLength) {
+        return;
+      }
+
+      requestUrl = buildRequestUrl(query);
+      cachedSuggestions = getCachedSuggestions(requestUrl);
+
+      if (cachedSuggestions) {
+        render(cachedSuggestions);
+        return;
+      }
+
+      debounceTimer = window.setTimeout(function () {
+        requestSuggestions(query, requestUrl);
+      }, debounceMs);
     });
 
     input.addEventListener('keydown', function (event) {

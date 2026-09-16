@@ -262,7 +262,7 @@ class VFWP_Intranet_Search_Index_Manager {
 				'document_pdf_processed' => 0,
 				'document_pdf_extracted' => 0,
 				'document_pdf_failed' => 0,
-				'document_pdf_text_updated' => 0,
+				'document_pdf_metadata_updated' => 0,
 				'batch_pauses'     => 0,
 				'error_messages'   => array(),
 				'started_at'       => '',
@@ -321,7 +321,7 @@ class VFWP_Intranet_Search_Index_Manager {
 			'document_pdf_processed' => 0,
 			'document_pdf_extracted' => 0,
 			'document_pdf_failed' => 0,
-			'document_pdf_text_updated' => 0,
+			'document_pdf_metadata_updated' => 0,
 			'batch_pauses'     => 0,
 			'error_messages'   => array(),
 			'started_at'       => $now,
@@ -647,7 +647,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	private function get_document_pdf_context($post_id) {
 		$context = array(
 			'has_pdf'         => false,
-			'pdf_text_before' => '',
+			'pdf_meta_before' => '',
 		);
 
 		if (get_post_type((int) $post_id) !== 'documents') {
@@ -659,7 +659,7 @@ class VFWP_Intranet_Search_Index_Manager {
 		}
 
 		$context['has_pdf'] = true;
-		$context['pdf_text_before'] = (string) get_post_meta((int) $post_id, 'pdf_text', true);
+		$context['pdf_meta_before'] = $this->get_document_pdf_metadata_hash((int) $post_id);
 
 		return $context;
 	}
@@ -688,13 +688,52 @@ class VFWP_Intranet_Search_Index_Manager {
 			$status['document_pdf_failed'] = isset($status['document_pdf_failed']) ? (int) $status['document_pdf_failed'] + 1 : 1;
 		}
 
-		$pdf_text_after = (string) get_post_meta((int) $post_id, 'pdf_text', true);
+		$pdf_meta_after = $this->get_document_pdf_metadata_hash((int) $post_id);
 
-		if ($pdf_text_after !== '' && $pdf_text_after !== (string) $context['pdf_text_before']) {
-			$status['document_pdf_text_updated'] = isset($status['document_pdf_text_updated']) ? (int) $status['document_pdf_text_updated'] + 1 : 1;
+		if ($pdf_meta_after !== (string) $context['pdf_meta_before']) {
+			$status['document_pdf_metadata_updated'] = isset($status['document_pdf_metadata_updated']) ? (int) $status['document_pdf_metadata_updated'] + 1 : 1;
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Return a compact hash of lightweight PDF metadata stored on a Document.
+	 *
+	 * @param int $post_id Document post ID.
+	 * @return string
+	 */
+	private function get_document_pdf_metadata_hash($post_id) {
+		return md5(wp_json_encode(array(
+			get_post_meta((int) $post_id, '_vfwp_search_pdf_attachment_id', true),
+			get_post_meta((int) $post_id, '_vfwp_search_pdf_file_name', true),
+			get_post_meta((int) $post_id, '_vfwp_search_pdf_file_size', true),
+			get_post_meta((int) $post_id, '_vfwp_search_pdf_file_mtime', true),
+			get_post_meta((int) $post_id, '_vfwp_search_pdf_extraction_status', true),
+			get_post_meta((int) $post_id, '_vfwp_search_pdf_extraction_error', true),
+			get_post_meta((int) $post_id, '_vfwp_search_pdf_extracted_chars', true),
+			$this->document_has_legacy_pdf_text_meta((int) $post_id) ? 'legacy_pdf_text_present' : '',
+		)));
+	}
+
+	/**
+	 * Check for legacy PDF text without loading the large meta value.
+	 *
+	 * @param int $post_id Document post ID.
+	 * @return bool
+	 */
+	private function document_has_legacy_pdf_text_meta($post_id) {
+		global $wpdb;
+
+		$meta_id = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT meta_id FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s LIMIT 1",
+				(int) $post_id,
+				'pdf_text'
+			)
+		);
+
+		return !empty($meta_id);
 	}
 
 	/**
