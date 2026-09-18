@@ -97,6 +97,15 @@
       input.value = suggestion.value || suggestion.label || '';
 
       if (suggestion.type === 'result' && suggestion.url) {
+        if (suggestion.opens_in_new_tab) {
+          var newWindow = window.open(suggestion.url, '_blank', 'noopener,noreferrer');
+
+          if (newWindow) {
+            newWindow.opener = null;
+            return;
+          }
+        }
+
         window.location.assign(suggestion.url);
         return;
       }
@@ -152,22 +161,9 @@
 
         if (badgeGroup && externalDomainLabel) {
           var externalBadge = document.createElement('span');
-          var externalIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          var externalIconPathOne = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          var externalIconPathTwo = document.createElementNS('http://www.w3.org/2000/svg', 'path');
 
           externalBadge.className = 'vf-badge vf-badge--tertiary vf-search-result__external-pill vf-form--search__results-external-pill';
-          externalBadge.textContent = externalDomainLabel.toLowerCase();
-
-          externalIcon.setAttribute('class', 'vf-search-result__external-pill-icon');
-          externalIcon.setAttribute('viewBox', '0 0 24 24');
-          externalIcon.setAttribute('focusable', 'false');
-          externalIcon.setAttribute('aria-hidden', 'true');
-          externalIconPathOne.setAttribute('d', 'M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3Z');
-          externalIconPathTwo.setAttribute('d', 'M5 5h6v2H7v10h10v-4h2v6H5V5Z');
-          externalIcon.appendChild(externalIconPathOne);
-          externalIcon.appendChild(externalIconPathTwo);
-          externalBadge.appendChild(externalIcon);
+          externalBadge.textContent = externalDomainLabel;
           badgeGroup.appendChild(externalBadge);
           item.setAttribute('aria-label', label.textContent + ' ' + [badgeLabel, externalDomainLabel].filter(Boolean).join(' '));
         }

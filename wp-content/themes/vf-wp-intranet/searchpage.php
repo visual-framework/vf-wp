@@ -54,8 +54,9 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
     <!-- empty -->
   </div>
   <div class="vf-stack">
-    <h1 class="vf-intro__heading">
-      Intranet search
+  <h1 class="vf-intro__heading vf-intro__heading--has-tag">Intranet search
+
+      <a href="JavaScript:Void(0);" class="vf-badge vf-badge--primary vf-badge--phases">beta</a>
     </h1>
     <div class="vf-banner vf-banner--alert vf-banner--info">
       <div class="vf-banner__content">

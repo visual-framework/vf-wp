@@ -337,6 +337,8 @@ class VFWP_Intranet_Search_Suggestions {
 				continue;
 			}
 
+			$external_domain_label = $post_type === 'teams' ? $this->get_external_domain_label($url) : '';
+
 			$suggestions[] = array(
 				'type'        => 'result',
 				'label'       => $title,
@@ -346,7 +348,8 @@ class VFWP_Intranet_Search_Suggestions {
 				'object_type' => isset($row['object_type']) ? sanitize_key($row['object_type']) : 'post',
 				'post_type'   => $post_type,
 				'badge_label' => $this->get_post_type_label($post_type),
-				'external_domain_label' => $post_type === 'teams' ? $this->get_external_domain_label($url) : '',
+				'external_domain_label' => $external_domain_label,
+				'opens_in_new_tab'      => $external_domain_label !== '',
 			);
 		}
 
@@ -643,7 +646,7 @@ class VFWP_Intranet_Search_Suggestions {
 	}
 
 	/**
-	 * Return the external domain label used by team result pills.
+	 * Return the external website label used by team result pills.
 	 *
 	 * @param string $url URL.
 	 * @return string
@@ -655,17 +658,7 @@ class VFWP_Intranet_Search_Suggestions {
 			return '';
 		}
 
-		$host = strtolower(preg_replace('/^www\./', '', (string) $host));
-
-		if (strpos($host, 'embl.org') !== false) {
-			return 'embl.org';
-		}
-
-		if (strpos($host, 'ebi.ac.uk') !== false) {
-			return 'ebi.ac.uk';
-		}
-
-		return $host;
+		return __('External website', 'vfwp');
 	}
 
 	/**

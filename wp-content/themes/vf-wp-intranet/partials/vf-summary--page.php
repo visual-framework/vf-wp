@@ -183,13 +183,7 @@ if ($post_type === 'people') {
     $team_url_host = is_string($team_url_host) ? strtolower(preg_replace('/^www\./', '', $team_url_host)) : '';
 
     if ($team_url_host !== '') {
-      if (strpos($team_url_host, 'embl.org') !== false) {
-        $vfwp_result_external_domain_label = 'embl.org';
-      } elseif (strpos($team_url_host, 'ebi.ac.uk') !== false) {
-        $vfwp_result_external_domain_label = 'ebi.ac.uk';
-      } else {
-        $vfwp_result_external_domain_label = strtolower($team_url_host);
-      }
+      $vfwp_result_external_domain_label = __('External website', 'vfwp');
     }
   }
 }
@@ -399,12 +393,8 @@ $vfwp_is_search_result_context = is_search();
       &nbsp;<span class="vf-badge vf-badge--tertiary vf-search-result__type-pill"><?php echo esc_html($vfwp_result_type_label); ?></span>
     <?php endif; ?>
     <?php if ($vfwp_result_is_external_team && $vfwp_result_external_domain_label !== '') : ?>
-      <span class="vf-badge vf-badge--tertiary vf-search-result__external-pill" aria-label="<?php echo esc_attr(sprintf(__('External link to %s. Opens in a new tab.', 'vfwp'), $vfwp_result_external_domain_label)); ?>">
+      <span class="vf-badge vf-badge--tertiary vf-search-result__external-pill" aria-label="<?php esc_attr_e('External website. Opens in a new tab.', 'vfwp'); ?>">
         <?php echo esc_html($vfwp_result_external_domain_label); ?>
-        <svg class="vf-search-result__external-pill-icon" viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-          <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3Z"></path>
-          <path d="M5 5h6v2H7v10h10v-4h2v6H5V5Z"></path>
-        </svg>
       </span>
       <span class="vf-u-sr-only"><?php esc_html_e('Opens in a new tab on an external website', 'vfwp'); ?></span>
     <?php endif; ?>
