@@ -15,7 +15,7 @@ The intranet search helps people find content across the site, including:
 - Events
 - Training
 
-Documents can also be found by text inside an attached PDF, if the PDF contains readable text.
+Documents can also be found by text inside an attached PDF or DOCX file when the file contains readable text.
 
 ## How Search Finds Results
 
@@ -60,7 +60,7 @@ Each filter can show a count. The count tells users how many results are availab
 
 Filters with no results can be disabled so users do not click into an empty category.
 
-## Documents And PDFs
+## Documents And Attached Files
 
 Documents work slightly differently from normal pages.
 
@@ -70,9 +70,9 @@ For a Document post, the search checks:
 - The Document excerpt
 - The Document content
 - Configured search keywords
-- Text extracted from the attached PDF
+- Text extracted from the attached PDF or DOCX file
 
-This means a Document can appear when someone searches for words that are inside the uploaded PDF, even if those words are not in the Document title.
+This means a Document can appear when someone searches for words inside its uploaded PDF or DOCX file, even if those words are not in the Document title.
 
 ### Important PDF Limits
 
@@ -93,7 +93,9 @@ It does not work for:
 
 The system does not perform OCR. If a PDF is just an image scan, search cannot read the words inside it.
 
-## PDF Index Status Label
+DOCX files are read locally by the website. Legacy `.doc` files are not supported and should be converted to DOCX or PDF.
+
+## Document Index Status Label
 
 On Document edit screens, there is a simple search index label near the uploaded file.
 
@@ -102,6 +104,7 @@ Possible labels include:
 - Indexed
 - Needs reindex
 - PDF issue
+- DOCX issue
 - Not indexed
 - Not searchable
 
@@ -110,6 +113,7 @@ What they mean:
 - Indexed: The Document is in the search index.
 - Needs reindex: The Document or its attached file changed and search should be updated.
 - PDF issue: The Document may be indexed, but the attached PDF text could not be read.
+- DOCX issue: The Document may be indexed, but the attached DOCX text could not be read.
 - Not indexed: The Document is not currently in the search index.
 - Not searchable: The Document is not eligible for search, often because it is not published.
 
@@ -117,11 +121,11 @@ What they mean:
 
 Each search result can show a short text snippet.
 
-The snippet tries to show the most useful part of the content, not just the beginning of the page. If the match is inside a PDF, the snippet can come from the extracted PDF text.
+The snippet tries to show the most useful part of the content, not just the beginning of the page. If the match is inside a PDF or DOCX file, the snippet can come from the extracted file text.
 
 Matched words are highlighted with a light marker.
 
-Search does not change the original page, post, or PDF. Highlighting only appears in the search results.
+Search does not change the original page, post, or attached file. Highlighting only appears in the search results.
 
 ## Autocomplete Suggestions
 
@@ -203,7 +207,7 @@ In general, stronger matches appear higher:
 - Title matches are stronger than body text matches.
 - Configured keyword matches can be strong.
 - Excerpt matches are stronger than general content matches.
-- PDF text is searchable, but usually weighted like main content.
+- Extracted PDF and DOCX text is searchable, but usually weighted like main content.
 
 Administrators can adjust weights in Settings -> Search.
 
@@ -256,7 +260,7 @@ From this page, administrators can manage:
 - Ranking boosts
 - Search analytics
 - Index rebuilds
-- PDF extraction issue notices
+- Document extraction issue notices
 
 ## Rebuilding The Search Index
 
@@ -266,10 +270,10 @@ You may need to rebuild after:
 
 - Changing which post types are searchable
 - Changing configured ACF keyword field names
-- Changing PDF extraction behavior
+- Changing document extraction behavior
 - Importing or migrating lots of content
 - Seeing content that should appear but does not
-- Seeing stale Document PDF status labels
+- Seeing stale Document file status labels
 
 A full rebuild runs in batches. It should not try to process the entire site in one request.
 
@@ -284,9 +288,9 @@ If expected content does not appear in search, check:
 3. Is its post type enabled in Settings -> Search?
 4. Is the correct filter selected on the search page?
 5. Has the search index been rebuilt or updated?
-6. For Documents, is the uploaded file a PDF?
+6. For Documents, is the uploaded file a supported PDF or DOCX file?
 7. For PDFs, does the PDF contain selectable text?
-8. Does the Document show a PDF issue label?
+8. Does the Document show a PDF or DOCX issue label?
 9. Are the search terms too short or listed as stopwords?
 10. Is the expected phrase configured as an exact phrase or keyword if needed?
 
@@ -299,9 +303,9 @@ If results appear but the order feels wrong, check:
 - ACF keyword fields
 - Exact phrase settings
 - Synonym settings
-- Whether the matching text is in title, excerpt, keyword, content, or PDF text
+- Whether the matching text is in title, excerpt, keyword, content, or extracted document text
 
-Title and keyword matches are usually meant to rank higher than general body or PDF text matches.
+Title and keyword matches are usually meant to rank higher than general body or extracted document text matches.
 
 ## Relevanssi
 
@@ -315,8 +319,9 @@ Old Relevanssi database data should not be deleted casually. Treat that as a sep
 
 - Search uses a prepared index for speed.
 - Published public content can appear in results.
-- Documents can be found by text inside attached readable PDFs.
+- Documents can be found by text inside attached readable PDFs and DOCX files.
 - Scanned PDFs are not searchable unless OCR text already exists.
+- Older `.doc` files are not text-extracted; convert them to DOCX or PDF first.
 - Snippets and highlights are created only for search result display.
 - Autocomplete uses the same indexed search system.
 - Administrators manage search from Settings -> Search.

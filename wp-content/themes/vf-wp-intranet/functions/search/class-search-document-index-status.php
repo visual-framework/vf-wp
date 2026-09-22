@@ -1,6 +1,6 @@
 <?php
 /**
- * Admin indicators for Document PDF search indexing state.
+ * Admin indicators for Document file search indexing state.
  */
 
 if (!defined('ABSPATH')) {
@@ -132,7 +132,7 @@ class VFWP_Intranet_Search_Document_Index_Status {
 			return $status;
 		}
 
-		if (!$attachment['is_pdf']) {
+		if (!$attachment['is_extractable']) {
 			$status['state'] = 'indexed';
 			$status['label'] = __('Indexed', 'vfwp');
 
@@ -149,7 +149,7 @@ class VFWP_Intranet_Search_Document_Index_Status {
 			return $status;
 		}
 
-		if ($this->document_pdf_file_metadata_is_stale((int) $post->ID, $attachment)) {
+		if ($this->document_file_metadata_is_stale((int) $post->ID, $attachment)) {
 			$status['state'] = 'stale';
 			$status['label'] = __('Needs reindex', 'vfwp');
 
@@ -163,7 +163,7 @@ class VFWP_Intranet_Search_Document_Index_Status {
 			$status['label'] = __('Indexed', 'vfwp');
 		} else {
 			$status['state'] = 'issue';
-			$status['label'] = __('PDF issue', 'vfwp');
+			$status['label'] = $attachment['file_type'] === 'docx' ? __('DOCX issue', 'vfwp') : __('PDF issue', 'vfwp');
 		}
 
 		return $status;
@@ -180,6 +180,9 @@ class VFWP_Intranet_Search_Document_Index_Status {
 		$data = array(
 			'attachment_id' => $attachment_id,
 			'is_pdf'        => false,
+			'is_docx'       => false,
+			'is_extractable' => false,
+			'file_type'     => '',
 			'file_name'     => '',
 			'file_size'     => 0,
 			'file_mtime'    => 0,
@@ -194,8 +197,12 @@ class VFWP_Intranet_Search_Document_Index_Status {
 		$file_path = get_attached_file($attachment_id);
 
 		$data['mime_type'] = is_string($mime_type) ? $mime_type : '';
-		$data['is_pdf'] = 'application/pdf' === $data['mime_type'];
 		$data['file_name'] = is_string($file_path) && $file_path !== '' ? basename($file_path) : basename((string) get_the_title($attachment_id));
+		$file_extension = strtolower((string) pathinfo($data['file_name'], PATHINFO_EXTENSION));
+		$data['is_pdf'] = 'application/pdf' === $data['mime_type'] || $file_extension === 'pdf';
+		$data['is_docx'] = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' === $data['mime_type'] || $file_extension === 'docx';
+		$data['is_extractable'] = $data['is_pdf'] || $data['is_docx'];
+		$data['file_type'] = $data['is_pdf'] ? 'pdf' : ($data['is_docx'] ? 'docx' : '');
 		$data['file_size'] = is_string($file_path) && $file_path !== '' && file_exists($file_path) ? (int) filesize($file_path) : 0;
 		$data['file_mtime'] = is_string($file_path) && $file_path !== '' && file_exists($file_path) ? (int) filemtime($file_path) : 0;
 
@@ -203,15 +210,20 @@ class VFWP_Intranet_Search_Document_Index_Status {
 	}
 
 	/**
-	 * Determine whether stored PDF file metadata no longer matches the attachment.
+	 * Determine whether stored file metadata no longer matches the attachment.
 	 *
 	 * @param int   $post_id Document post ID.
 	 * @param array $attachment Attachment data.
 	 * @return bool
 	 */
-	private function document_pdf_file_metadata_is_stale($post_id, array $attachment) {
+	private function document_file_metadata_is_stale($post_id, array $attachment) {
+		$indexed_file_type = get_post_meta((int) $post_id, '_vfwp_search_file_type', true);
 		$indexed_file_size = get_post_meta((int) $post_id, '_vfwp_search_pdf_file_size', true);
 		$indexed_file_mtime = get_post_meta((int) $post_id, '_vfwp_search_pdf_file_mtime', true);
+
+		if ($indexed_file_type !== '' && (string) $indexed_file_type !== (string) $attachment['file_type']) {
+			return true;
+		}
 
 		if ($indexed_file_size !== '' && (int) $indexed_file_size !== (int) $attachment['file_size']) {
 			return true;

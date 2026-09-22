@@ -12,6 +12,7 @@ require_once get_stylesheet_directory() . '/functions/search/class-search-normal
 require_once get_stylesheet_directory() . '/functions/search/class-search-settings.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-index-repository.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-pdf-extractor.php';
+require_once get_stylesheet_directory() . '/functions/search/class-search-docx-extractor.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-indexer.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-query-parser.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-snippet-service.php';
@@ -38,7 +39,12 @@ function vfwp_intranet_search_bootstrap() {
 
 	$normalizer = new VFWP_Intranet_Search_Normalizer();
 	$repository = new VFWP_Intranet_Search_Index_Repository();
-	$vfwp_intranet_search_indexer = new VFWP_Intranet_Search_Indexer($repository, $normalizer, new VFWP_Intranet_Search_PDF_Extractor());
+	$vfwp_intranet_search_indexer = new VFWP_Intranet_Search_Indexer(
+		$repository,
+		$normalizer,
+		new VFWP_Intranet_Search_PDF_Extractor(),
+		new VFWP_Intranet_Search_DOCX_Extractor()
+	);
 	$vfwp_intranet_search_indexer->register_hooks();
 
 	return $vfwp_intranet_search_indexer;
@@ -78,13 +84,13 @@ function vfwp_intranet_search_index_post($post_id, $force = false, $rebuild_toke
 }
 
 /**
- * Index a single PDF attachment through the theme search subsystem.
+ * Re-index Documents that reference one supported attachment.
  *
  * @param int  $attachment_id Attachment ID.
  * @param bool $force Force extraction/indexing.
  * @return string
  */
-function vfwp_intranet_search_index_pdf($attachment_id, $force = false, $rebuild_token = '') {
+function vfwp_intranet_search_index_document_attachment($attachment_id, $force = false, $rebuild_token = '') {
 	if (!is_numeric($attachment_id)) {
 		return 'ignored';
 	}
@@ -93,6 +99,17 @@ function vfwp_intranet_search_index_pdf($attachment_id, $force = false, $rebuild
 	$indexer->reindex_documents_for_attachment((int) $attachment_id, (bool) $force);
 
 	return 'ignored';
+}
+
+/**
+ * Backward-compatible PDF attachment indexing helper.
+ *
+ * @param int  $attachment_id Attachment ID.
+ * @param bool $force Force extraction/indexing.
+ * @return string
+ */
+function vfwp_intranet_search_index_pdf($attachment_id, $force = false, $rebuild_token = '') {
+	return vfwp_intranet_search_index_document_attachment($attachment_id, $force, $rebuild_token);
 }
 
 /**

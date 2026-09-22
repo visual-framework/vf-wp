@@ -1,6 +1,6 @@
 # Theme Search System
 
-This directory contains the custom indexed search system for the `vf-wp-intranet` theme. It replaces application-level Relevanssi usage with a theme-owned database index, query service, snippets, highlighting, PDF text extraction for Document posts, autocomplete, analytics, admin settings, and batch index management.
+This directory contains the custom indexed search system for the `vf-wp-intranet` theme. It replaces application-level Relevanssi usage with a theme-owned database index, query service, snippets, highlighting, PDF and DOCX text extraction for Document posts, autocomplete, analytics, admin settings, and batch index management.
 
 The system lives in the active theme. It is not a plugin or MU plugin.
 
@@ -29,10 +29,13 @@ Frontend search results should not depend on Relevanssi being installed or enabl
   Handles low-level persistence for indexed rows, counts, rebuild token updates, issue clearing, and table truncation.
 
 - `class-search-indexer.php`
-  Indexes posts, pages, custom post types, ACF keyword fields, and Document PDF text. Registers post lifecycle hooks so saves, status changes, trashing, restoring, deletion, upload-file changes, and attachment-file changes update or remove index rows.
+  Indexes posts, pages, custom post types, ACF keyword fields, and text from Document PDF or DOCX attachments. Registers post lifecycle hooks so saves, status changes, trashing, restoring, deletion, upload-file changes, and attachment-file changes update or remove index rows.
 
 - `class-search-pdf-extractor.php`
   Dependency-free, pure PHP PDF text extraction. It extracts machine-readable PDF text only. It does not OCR scanned PDFs.
+
+- `class-search-docx-extractor.php`
+  Local DOCX extraction using PHP's ZIP and DOM extensions. It reads paragraphs, tables, headers, footers, footnotes, and endnotes with bounded file, decompressed XML, and output sizes.
 
 - `class-search-query-parser.php`
   Normalizes visitor queries, applies synonyms, handles exact phrase rules, stopwords, minimum word length, protected phrases, quoted phrases, and builds safe FULLTEXT boolean query terms.
@@ -50,7 +53,7 @@ Frontend search results should not depend on Relevanssi being installed or enabl
   Provides AJAX autocomplete suggestions from the index plus configured exact phrases. It also powers "Did you mean" suggestions for no-result states.
 
 - `class-search-settings.php`
-  Renders Settings -> Search, including weights, query parsing, synonyms, analytics, diagnostics, index management, and PDF issue reporting.
+  Renders Settings -> Search, including weights, query parsing, synonyms, analytics, diagnostics, index management, and document extraction issue reporting.
 
 - `class-search-index-manager.php`
   Runs full and changed-content rebuilds in safe batches, prevents overlapping rebuilds, tracks progress, and handles admin/AJAX rebuild actions.
@@ -62,7 +65,7 @@ Frontend search results should not depend on Relevanssi being installed or enabl
   Logs frontend search queries, result counts, zero-result queries, optional user email, and retention cleanup.
 
 - `class-search-document-index-status.php`
-  Adds a lightweight admin label for Document posts showing whether the attached PDF/search row is indexed, stale, not indexed, or has a PDF issue.
+  Adds a lightweight admin label for Document posts showing whether the attached PDF or DOCX/search row is indexed, stale, not indexed, or has an extraction issue.
 
 - `scripts/search-suggestions.js`
   Frontend autocomplete behavior: immediate "Search for ..." row, debounced AJAX lookup, request cancellation, stale-response protection, keyboard navigation, badges, external-link indicators, and browser-side cache.
@@ -120,7 +123,7 @@ The indexer only includes publicly searchable content:
 - Published pages
 - Enabled public custom post types from Settings -> Search
 - Documents post type when enabled
-- Document PDF text from the `upload_file` ACF field when the uploaded file is a PDF
+- Document attachment text from the `upload_file` ACF field when the uploaded file is a PDF or DOCX
 
 It excludes:
 
@@ -135,18 +138,19 @@ It excludes:
 
 Enabled post types and post-type weights are configured in Settings -> Search.
 
-## Document PDF Search
+## Document File Search
 
-PDF search is currently integrated into the `documents` post type, not returned as a separate standalone PDF content type.
+PDF and DOCX search are integrated into the `documents` post type and are not returned as separate attachment results.
 
 For a Document post:
 
 1. The indexer reads the `upload_file` ACF field.
-2. If the attachment is a PDF, `class-search-pdf-extractor.php` extracts machine-readable text during indexing.
+2. If the attachment is a PDF or DOCX, the matching local extractor reads its text during indexing.
 3. The extracted text is normalized and stored in the custom search index row's `content` field.
-4. The full extracted PDF text is not stored in an ACF field or duplicated into large postmeta rows.
+4. The full extracted file text is not stored in an ACF field or duplicated into large postmeta rows.
 5. Lightweight metadata is stored on the Document post for diagnostics:
    - `_vfwp_search_pdf_attachment_id`
+   - `_vfwp_search_file_type`
    - `_vfwp_search_pdf_file_name`
    - `_vfwp_search_pdf_file_size`
    - `_vfwp_search_pdf_file_mtime`
@@ -163,6 +167,8 @@ Limitations:
 - OCR is not performed.
 - Encrypted/password-protected PDFs are not extracted.
 - Very large PDFs may be skipped or truncated by configured safety limits.
+- DOCX extraction requires the PHP ZIP and DOM extensions and does not support legacy `.doc` files.
+- Very large or malformed DOCX packages may be skipped or truncated by configured safety limits.
 
 ## Indexing Lifecycle
 
@@ -175,9 +181,9 @@ Limitations:
 - `untrashed_post`
 - `before_delete_post`
 - `added_post_meta`, `updated_post_meta`, `deleted_post_meta` for Document `upload_file`
-- Attachment updates for PDFs referenced by Documents
+- Attachment updates for PDF or DOCX files referenced by Documents
 
-The indexer builds a `source_hash` before expensive PDF extraction. If searchable source data has not changed and the schema version is current, the row is skipped.
+The indexer builds a `source_hash` before file extraction. If searchable source data has not changed and the schema version is current, the row is skipped.
 
 The repository also stores `content_hash` to avoid unnecessary updates.
 
@@ -188,7 +194,7 @@ Settings -> Search includes controls for:
 - Full rebuild
 - Reindex changed content
 - Clear/recreate index
-- Clear PDF extraction issue notices
+- Clear document extraction issue notices
 
 Full rebuilds are batched. They should not process the whole site in one browser request.
 
@@ -269,7 +275,7 @@ Default field weights:
 - Title: `10`
 - ACF keyword fields: `7`
 - Excerpt: `4`
-- Main content/PDF text: `1`
+- Main content/extracted document text: `1`
 
 ACF keyword matching is delimiter-aware and exact-entry based. A keyword entry like `services prices` should not satisfy a search for `it services` unless `it services` is also a configured matching keyword or content/title match.
 
@@ -289,7 +295,7 @@ It returns:
 Snippet behavior:
 
 - For normal web content, excerpt is preferred before content.
-- For PDF-backed Document content, extracted PDF content can be used when it contains the match.
+- For Document file content, extracted PDF or DOCX content can be used when it contains the match.
 - Snippets are selected around the strongest matching passage rather than simply using the first characters.
 - Snippets are bounded to a concise length.
 - Fallbacks use excerpt/content/title when no matching passage exists.
@@ -343,7 +349,7 @@ Current filter categories:
 - Events
 - Training
 
-The current content type is fixed to web/document-post results. Document PDF text is searched through the Documents post type.
+The current content type is fixed to web/document-post results. Extracted PDF and DOCX text is searched through the Documents post type.
 
 ## Autocomplete
 
@@ -408,7 +414,7 @@ Main settings areas:
 - Synonyms
 - Ranking boosts
 - Index management
-- PDF extraction issue notices
+- Document extraction issue notices
 - Analytics
 - Diagnostics/ranking explanations
 
@@ -446,7 +452,7 @@ The search layer uses prepared SQL for user input. Rendered snippets and highlig
 
 Search indexing excludes private, draft, trashed, password-protected, revision, and autosave content. Administrators should still be careful that publicly searchable posts do not reference sensitive files.
 
-PDF extraction happens during indexing, not during visitor search requests. The current extractor is local pure PHP and does not send PDF files to an external service.
+PDF and DOCX extraction happen during indexing, not during visitor search requests. Both extractors run locally and do not send files to an external service.
 
 ## Performance Notes
 
@@ -460,7 +466,7 @@ Performance features:
 - Accurate counts from indexed rows
 - Source/content hashes to skip unchanged indexing
 - Batched rebuilds
-- No visitor-time PDF extraction
+- No visitor-time PDF or DOCX extraction
 - Browser-side autocomplete cache
 - Object-cache autocomplete cache
 
@@ -469,6 +475,7 @@ Known limits:
 - `VFWP_Intranet_Search_Service::MAX_PER_PAGE` is `50`.
 - `VFWP_Intranet_Search_Service::MAX_OFFSET` is `5000`.
 - PDF extraction is best effort and bounded by file size, stream size, text size, and time limits.
+- DOCX extraction is bounded by archive size, decompressed XML size, and extracted text size.
 
 ## Operational Checklist
 
@@ -476,9 +483,9 @@ After deploying search-related changes:
 
 1. Visit Settings -> Search and confirm schema/index status.
 2. Run a changed-content reindex, or a full rebuild when settings/schema/content extraction changed.
-3. Check PDF extraction issue notices.
+3. Check document extraction issue notices.
 4. Test a normal page query.
-5. Test a Document query that should match PDF text.
+5. Test a Document query that should match attached PDF or DOCX text.
 6. Test each visible filter.
 7. Test pagination.
 8. Test autocomplete.

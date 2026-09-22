@@ -405,6 +405,8 @@ class VFWP_Intranet_Search_Snippet_Service {
 
 		$text = html_entity_decode(wp_specialchars_decode((string) $text, ENT_QUOTES), ENT_QUOTES | ENT_HTML5, get_bloginfo('charset'));
 		$text = wp_strip_all_tags($text, true);
+		$text = preg_replace('/(?:[._=~\-\x{2013}\x{2014}\x{00B7}\x{2022}]\s*){4,}/u', ' ', $text);
+		$text = preg_replace('/(^|\s)([\p{L}\p{N}])(?:\s+\2){4,}(?=\s|$)/iu', '$1', is_string($text) ? $text : '');
 		$text = preg_replace('/\s+/u', ' ', $text);
 
 		return is_string($text) ? trim($text) : '';

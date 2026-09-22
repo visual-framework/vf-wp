@@ -727,12 +727,12 @@ class VFWP_Intranet_Search_Settings {
 		<div class="vfwp-search-settings-grid">
 			<div class="vfwp-search-settings-card">
 				<h3><?php echo esc_html__('How ranking is decided', 'vfwp'); ?></h3>
-				<p><?php echo esc_html__('Search first finds matching indexed rows. Each result then earns points from matching signals such as exact title, phrase in title, exact ACF keyword, excerpt match, content/PDF match, and database FULLTEXT relevance.', 'vfwp'); ?></p>
+				<p><?php echo esc_html__('Search first finds matching indexed rows. Each result then earns points from matching signals such as exact title, phrase in title, exact ACF keyword, excerpt match, body or document-file match, and database FULLTEXT relevance.', 'vfwp'); ?></p>
 				<p><?php echo esc_html__('Those points are added together, multiplied by the post-type weight for web results, and then a small recent-content bonus may be added.', 'vfwp'); ?></p>
 			</div>
 			<div class="vfwp-search-settings-card">
 				<h3><?php echo esc_html__('Best place to tune first', 'vfwp'); ?></h3>
-				<p><?php echo esc_html__('Start with Field weights. They are the clearest controls: raise Title if titles should dominate, raise ACF keywords for curated keyword hits, raise Content if body/PDF text should matter more.', 'vfwp'); ?></p>
+				<p><?php echo esc_html__('Start with Field weights. They are the clearest controls: raise Title if titles should dominate, raise ACF keywords for curated keyword hits, raise Content if body or extracted document text should matter more.', 'vfwp'); ?></p>
 				<p><?php echo esc_html__('Use Advanced boost tuning only when you need to change a specific signal, such as exact title matches or FULLTEXT content scoring.', 'vfwp'); ?></p>
 			</div>
 			<div class="vfwp-search-settings-card">
@@ -841,12 +841,12 @@ class VFWP_Intranet_Search_Settings {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php echo esc_html__('Document PDF extraction', 'vfwp'); ?></th>
+					<th scope="row"><?php echo esc_html__('Document file extraction', 'vfwp'); ?></th>
 					<td>
 						<?php
 						echo esc_html(
 							sprintf(
-								__('%1$s successfully extracted of %2$s PDF documents planned. %3$s processed, %4$s failed.', 'vfwp'),
+								__('%1$s successfully extracted of %2$s PDF or DOCX documents planned. %3$s processed, %4$s failed.', 'vfwp'),
 								number_format_i18n((int) $status['document_pdf_extracted']),
 								number_format_i18n((int) $status['document_pdf_total']),
 								number_format_i18n((int) $status['document_pdf_processed']),
@@ -857,7 +857,7 @@ class VFWP_Intranet_Search_Settings {
 					</td>
 				</tr>
 				<tr>
-					<th scope="row"><?php echo esc_html__('Document PDF metadata updated', 'vfwp'); ?></th>
+					<th scope="row"><?php echo esc_html__('Document file metadata updated', 'vfwp'); ?></th>
 					<td><?php echo esc_html(number_format_i18n(isset($status['document_pdf_metadata_updated']) ? (int) $status['document_pdf_metadata_updated'] : 0)); ?></td>
 				</tr>
 				<tr>
@@ -869,7 +869,7 @@ class VFWP_Intranet_Search_Settings {
 						<td>
 							<?php echo esc_html(number_format_i18n($failed_items)); ?>
 							<?php if ((int) $data['pdf_issue_count'] > 0) : ?>
-								<?php echo esc_html(sprintf(__('(%s PDF extraction issues)', 'vfwp'), number_format_i18n((int) $data['pdf_issue_count']))); ?>
+								<?php echo esc_html(sprintf(__('(%s document extraction issues)', 'vfwp'), number_format_i18n((int) $data['pdf_issue_count']))); ?>
 							<?php endif; ?>
 						</td>
 					</tr>
@@ -903,9 +903,30 @@ class VFWP_Intranet_Search_Settings {
 		<div
 			id="vfwp-search-index-batch-runner"
 			class="description"
+			role="status"
+			aria-live="polite"
+			aria-atomic="true"
+			style="min-height: 1.5em;"
 			data-active="<?php echo esc_attr(!empty($status['active']) ? '1' : '0'); ?>"
 			data-nonce="<?php echo esc_attr(wp_create_nonce('vfwp_intranet_search_process_batch')); ?>"
-		></div>
+		>
+			<?php if (!empty($status['active'])) : ?>
+				<?php
+				echo esc_html(
+					sprintf(
+						__('%1$s / %2$s items processed. %3$s / %4$s document files extracted. %5$s document files failed. %6$s Document file metadata updated. %7$s safety pauses.', 'vfwp'),
+						number_format_i18n((int) $status['processed']),
+						number_format_i18n((int) $status['total_planned']),
+						number_format_i18n((int) $status['document_pdf_extracted']),
+						number_format_i18n((int) $status['document_pdf_total']),
+						number_format_i18n((int) $status['document_pdf_failed']),
+						number_format_i18n((int) $status['document_pdf_metadata_updated']),
+						number_format_i18n((int) $status['batch_pauses'])
+					)
+				);
+				?>
+			<?php endif; ?>
+		</div>
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
 				var runner = document.getElementById('vfwp-search-index-batch-runner');
@@ -927,7 +948,7 @@ class VFWP_Intranet_Search_Settings {
 					}
 
 					isRunning = true;
-					setRunnerText('<?php echo esc_js(__('Processing search index batch...', 'vfwp')); ?>');
+					runner.setAttribute('aria-busy', 'true');
 
 					var body = new URLSearchParams();
 					body.set('action', 'vfwp_intranet_search_process_index_batch');
@@ -954,9 +975,9 @@ class VFWP_Intranet_Search_Settings {
 
 								setRunnerText(
 									(status.processed || 0) + ' / ' + (status.total_planned || 0) + ' <?php echo esc_js(__('items processed.', 'vfwp')); ?> '
-									+ (status.document_pdf_extracted || 0) + ' / ' + (status.document_pdf_total || 0) + ' <?php echo esc_js(__('PDFs extracted.', 'vfwp')); ?> '
-									+ (status.document_pdf_failed || 0) + ' <?php echo esc_js(__('PDFs failed.', 'vfwp')); ?> '
-									+ (status.document_pdf_metadata_updated || 0) + ' <?php echo esc_js(__('Document PDF metadata updated.', 'vfwp')); ?> '
+									+ (status.document_pdf_extracted || 0) + ' / ' + (status.document_pdf_total || 0) + ' <?php echo esc_js(__('document files extracted.', 'vfwp')); ?> '
+									+ (status.document_pdf_failed || 0) + ' <?php echo esc_js(__('document files failed.', 'vfwp')); ?> '
+									+ (status.document_pdf_metadata_updated || 0) + ' <?php echo esc_js(__('Document file metadata updated.', 'vfwp')); ?> '
 									+ (status.batch_pauses || 0) + ' <?php echo esc_js(__('safety pauses.', 'vfwp')); ?>'
 								);
 
@@ -974,6 +995,7 @@ class VFWP_Intranet_Search_Settings {
 							setRunnerText('<?php echo esc_js(__('Search index batch processing failed. Refresh the page to inspect status.', 'vfwp')); ?>');
 						})
 						.finally(function () {
+							runner.setAttribute('aria-busy', 'false');
 							isRunning = false;
 						});
 				}
@@ -1036,9 +1058,9 @@ class VFWP_Intranet_Search_Settings {
 				'guidance' => __('Increase when summaries should matter more than body text.', 'vfwp'),
 			),
 			'content'      => array(
-				'label'    => __('Main content and PDF text', 'vfwp'),
-				'role'     => __('Body text and extracted PDF text. Broad, but can be noisy.', 'vfwp'),
-				'guidance' => __('Keep lower if long body/PDF matches are overpowering precise title or keyword matches.', 'vfwp'),
+				'label'    => __('Main content and document text', 'vfwp'),
+				'role'     => __('Body text and extracted PDF or DOCX text. Broad, but can be noisy.', 'vfwp'),
+				'guidance' => __('Keep lower if long body or document matches are overpowering precise title or keyword matches.', 'vfwp'),
 			),
 		);
 		?>
@@ -1168,10 +1190,10 @@ class VFWP_Intranet_Search_Settings {
 		<div class="notice notice-info inline" style="max-width: 920px;">
 			<p>
 				<strong><?php echo esc_html__('Simple version', 'vfwp'); ?></strong>
-				<?php echo esc_html__('A result can earn points from several signals at once. Strong exact or curated matches should usually sit near the top. Broad body/PDF matches should usually sit lower unless you intentionally want content text to dominate.', 'vfwp'); ?>
+				<?php echo esc_html__('A result can earn points from several signals at once. Strong exact or curated matches should usually sit near the top. Broad body or document-file matches should usually sit lower unless you intentionally want content text to dominate.', 'vfwp'); ?>
 			</p>
 			<p>
-				<?php echo esc_html__('For example, FULLTEXT content/PDF score means the database gives a relevance number for how strongly the query matches body or PDF text. That database number is multiplied by the Content field weight and the FULLTEXT content boost.', 'vfwp'); ?>
+				<?php echo esc_html__('For example, FULLTEXT content score means the database gives a relevance number for how strongly the query matches body or extracted document text. That database number is multiplied by the Content field weight and the FULLTEXT content boost.', 'vfwp'); ?>
 			</p>
 			<p>
 				<?php echo esc_html__('After these signal points are added, web results are multiplied by their post-type multiplier. Finally, the recent-content bonus is added for content published in the last 30 days.', 'vfwp'); ?>
@@ -1401,15 +1423,15 @@ class VFWP_Intranet_Search_Settings {
 				'value'   => $weights['excerpt'] * $boosts['excerpt_term'],
 			),
 			array(
-				'signal'  => __('Content/PDF phrase match', 'vfwp'),
+				'signal'  => __('Content/document phrase match', 'vfwp'),
 				'formula' => __('Content weight × content phrase boost', 'vfwp'),
-				'meaning' => __('The complete query phrase or protected phrase appears in body text or extracted PDF text.', 'vfwp'),
+				'meaning' => __('The complete query phrase or protected phrase appears in body text or extracted PDF or DOCX text.', 'vfwp'),
 				'value'   => $weights['content'] * $boosts['content_phrase'],
 			),
 			array(
-				'signal'  => __('Each content/PDF term', 'vfwp'),
+				'signal'  => __('Each content/document term', 'vfwp'),
 				'formula' => __('Content weight × content term boost', 'vfwp'),
-				'meaning' => __('Each individual query word found in body text or extracted PDF text adds points.', 'vfwp'),
+				'meaning' => __('Each individual query word found in body text or extracted PDF or DOCX text adds points.', 'vfwp'),
 				'value'   => $weights['content'] * $boosts['content_term'],
 			),
 			array(
@@ -1443,9 +1465,9 @@ class VFWP_Intranet_Search_Settings {
 				'value'   => $weights['excerpt'] * $boosts['fulltext_excerpt'],
 			),
 			array(
-				'signal'  => __('FULLTEXT content/PDF score', 'vfwp'),
+				'signal'  => __('FULLTEXT content/document score', 'vfwp'),
 				'formula' => __('Database score × content weight × FULLTEXT content boost', 'vfwp'),
-				'meaning' => __('Database relevance from body or PDF text matches, scaled by content importance.', 'vfwp'),
+				'meaning' => __('Database relevance from body or extracted document text matches, scaled by content importance.', 'vfwp'),
 				'value'   => $weights['content'] * $boosts['fulltext_content'],
 			),
 			array(
@@ -1790,7 +1812,7 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
-	 * Render recent PDF extraction issues for administrators.
+	 * Render recent document extraction issues for administrators.
 	 *
 	 * @return void
 	 */
@@ -1810,8 +1832,8 @@ class VFWP_Intranet_Search_Settings {
 		?>
 		<div class="notice notice-warning">
 			<p>
-				<strong><?php echo esc_html__('PDF extraction issues detected.', 'vfwp'); ?></strong>
-				<?php echo esc_html(sprintf(_n('%d PDF has an extraction issue.', '%d PDFs have extraction issues.', $issue_count, 'vfwp'), $issue_count)); ?>
+				<strong><?php echo esc_html__('Document extraction issues detected.', 'vfwp'); ?></strong>
+				<?php echo esc_html(sprintf(_n('%d document has an extraction issue.', '%d documents have extraction issues.', $issue_count, 'vfwp'), $issue_count)); ?>
 			</p>
 			<table class="widefat striped" style="max-width: 920px; margin: 0 0 12px;">
 				<thead>
@@ -1841,10 +1863,10 @@ class VFWP_Intranet_Search_Settings {
 				<input type="hidden" name="action" value="vfwp_intranet_search_index_action">
 				<input type="hidden" name="search_index_action" value="clear_pdf_issues">
 				<?php wp_nonce_field('vfwp_intranet_search_index_action'); ?>
-				<?php submit_button(__('Clear PDF extraction issue notices', 'vfwp'), 'secondary', 'submit', false); ?>
+				<?php submit_button(__('Clear document extraction issue notices', 'vfwp'), 'secondary', 'submit', false); ?>
 			</form>
 			<p class="description">
-				<?php echo esc_html__('This only clears stored issue notices from the search index. It does not delete media, posts, PDF metadata, or indexed content.', 'vfwp'); ?>
+				<?php echo esc_html__('This only clears stored issue notices from the search index. It does not delete media, posts, file metadata, or indexed content.', 'vfwp'); ?>
 			</p>
 		</div>
 		<?php
@@ -1970,14 +1992,14 @@ class VFWP_Intranet_Search_Settings {
 			'acf_term'         => array('label' => __('ACF keyword term boost', 'vfwp'), 'description' => __('Additional per-term boost when an exact ACF keyword entry matches.', 'vfwp')),
 			'excerpt_phrase'   => array('label' => __('Excerpt phrase match', 'vfwp'), 'description' => __('Complete query phrase or protected phrase appears in the excerpt.', 'vfwp')),
 			'excerpt_term'     => array('label' => __('Excerpt term match', 'vfwp'), 'description' => __('Each matched excerpt term contributes this boost.', 'vfwp')),
-			'content_phrase'   => array('label' => __('Content phrase match', 'vfwp'), 'description' => __('Complete query phrase or protected phrase appears in main/PDF content.', 'vfwp')),
+			'content_phrase'   => array('label' => __('Content phrase match', 'vfwp'), 'description' => __('Complete query phrase or protected phrase appears in main content or extracted document text.', 'vfwp')),
 			'content_term'     => array('label' => __('Content term match', 'vfwp'), 'description' => __('Each matched content term contributes this boost.', 'vfwp')),
 			'all_terms'        => array('label' => __('All terms anywhere', 'vfwp'), 'description' => __('Bonus when every searchable term appears across title, excerpt or content.', 'vfwp')),
 			'term_coverage'    => array('label' => __('Term coverage', 'vfwp'), 'description' => __('Proportional bonus based on how many query terms matched.', 'vfwp')),
 			'fulltext_title'   => array('label' => __('FULLTEXT title score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from title.', 'vfwp')),
 			'fulltext_acf'     => array('label' => __('FULLTEXT ACF score', 'vfwp'), 'description' => __('Database FULLTEXT contribution from ACF keywords after an exact keyword entry match.', 'vfwp')),
 			'fulltext_excerpt' => array('label' => __('FULLTEXT excerpt score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from excerpt.', 'vfwp')),
-			'fulltext_content' => array('label' => __('FULLTEXT content score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from content/PDF text.', 'vfwp')),
+			'fulltext_content' => array('label' => __('FULLTEXT content score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from body or extracted document text.', 'vfwp')),
 			'recency'          => array('label' => __('Recent content bonus', 'vfwp'), 'description' => __('Small final bonus for content published in the last 30 days.', 'vfwp')),
 		);
 	}

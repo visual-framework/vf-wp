@@ -173,8 +173,8 @@ class VFWP_Intranet_Search_Index_Manager {
 			$result = array(
 				'started' => false,
 				'message' => sprintf(
-					/* translators: %d: number of cleared PDF extraction issue rows. */
-					_n('%d PDF extraction issue notice cleared.', '%d PDF extraction issue notices cleared.', $cleared, 'vfwp'),
+					/* translators: %d: number of cleared document extraction issue rows. */
+					_n('%d document extraction issue notice cleared.', '%d document extraction issue notices cleared.', $cleared, 'vfwp'),
 					$cleared
 				),
 			);
@@ -597,7 +597,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	}
 
 	/**
-	 * Count public Document posts that point to a PDF attachment.
+	 * Count public Document posts that point to an extractable attachment.
 	 *
 	 * @return int
 	 */
@@ -630,7 +630,7 @@ class VFWP_Intranet_Search_Index_Manager {
 		$count = 0;
 
 		foreach ($document_ids as $document_id) {
-			if ($this->document_has_pdf_attachment((int) $document_id)) {
+			if ($this->document_has_extractable_attachment((int) $document_id)) {
 				$count++;
 			}
 		}
@@ -639,7 +639,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	}
 
 	/**
-	 * Return PDF context for a Document before it is indexed.
+	 * Return file-extraction context for a Document before it is indexed.
 	 *
 	 * @param int $post_id Post ID.
 	 * @return array
@@ -654,7 +654,7 @@ class VFWP_Intranet_Search_Index_Manager {
 			return $context;
 		}
 
-		if (!$this->document_has_pdf_attachment((int) $post_id)) {
+		if (!$this->document_has_extractable_attachment((int) $post_id)) {
 			return $context;
 		}
 
@@ -706,6 +706,7 @@ class VFWP_Intranet_Search_Index_Manager {
 	private function get_document_pdf_metadata_hash($post_id) {
 		return md5(wp_json_encode(array(
 			get_post_meta((int) $post_id, '_vfwp_search_pdf_attachment_id', true),
+			get_post_meta((int) $post_id, '_vfwp_search_file_type', true),
 			get_post_meta((int) $post_id, '_vfwp_search_pdf_file_name', true),
 			get_post_meta((int) $post_id, '_vfwp_search_pdf_file_size', true),
 			get_post_meta((int) $post_id, '_vfwp_search_pdf_file_mtime', true),
@@ -755,12 +756,12 @@ class VFWP_Intranet_Search_Index_Manager {
 	}
 
 	/**
-	 * Determine whether a Document post points to a public PDF attachment.
+	 * Determine whether a Document post points to a public PDF or DOCX attachment.
 	 *
 	 * @param int $post_id Document post ID.
 	 * @return bool
 	 */
-	private function document_has_pdf_attachment($post_id) {
+	private function document_has_extractable_attachment($post_id) {
 		$attachment_id = $this->get_document_upload_file_attachment_id((int) $post_id);
 
 		if ($attachment_id <= 0) {
@@ -777,7 +778,15 @@ class VFWP_Intranet_Search_Index_Manager {
 			return false;
 		}
 
-		return get_post_mime_type($attachment) === 'application/pdf';
+		$mime_type = (string) get_post_mime_type($attachment);
+		$file_path = get_attached_file($attachment_id);
+		$file_extension = is_string($file_path) ? strtolower((string) pathinfo($file_path, PATHINFO_EXTENSION)) : '';
+
+		return in_array(
+			$mime_type,
+			array('application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+			true
+		) || in_array($file_extension, array('pdf', 'docx'), true);
 	}
 
 	/**

@@ -24,6 +24,11 @@ class VFWP_Intranet_Search_Indexer {
 	private $pdf_extractor;
 
 	/**
+	 * @var VFWP_Intranet_Search_DOCX_Extractor
+	 */
+	private $docx_extractor;
+
+	/**
 	 * Recursion guard by post ID.
 	 *
 	 * @var array
@@ -31,16 +36,27 @@ class VFWP_Intranet_Search_Indexer {
 	private $indexing = array();
 
 	/**
+	 * Posts being permanently removed during the current request.
+	 *
+	 * @var array
+	 */
+	private $removing = array();
+
+	/**
 	 * @param VFWP_Intranet_Search_Index_Repository $repository Repository.
 	 * @param VFWP_Intranet_Search_Normalizer       $normalizer Normalizer.
-	 * @param VFWP_Intranet_Search_PDF_Extractor|null $pdf_extractor PDF extractor.
+	 * @param VFWP_Intranet_Search_PDF_Extractor|null  $pdf_extractor PDF extractor.
+	 * @param VFWP_Intranet_Search_DOCX_Extractor|null $docx_extractor DOCX extractor.
 	 */
-	public function __construct(VFWP_Intranet_Search_Index_Repository $repository, VFWP_Intranet_Search_Normalizer $normalizer, $pdf_extractor = null) {
+	public function __construct(VFWP_Intranet_Search_Index_Repository $repository, VFWP_Intranet_Search_Normalizer $normalizer, $pdf_extractor = null, $docx_extractor = null) {
 		$this->repository = $repository;
 		$this->normalizer = $normalizer;
 		$this->pdf_extractor = $pdf_extractor instanceof VFWP_Intranet_Search_PDF_Extractor
 			? $pdf_extractor
 			: new VFWP_Intranet_Search_PDF_Extractor();
+		$this->docx_extractor = $docx_extractor instanceof VFWP_Intranet_Search_DOCX_Extractor
+			? $docx_extractor
+			: new VFWP_Intranet_Search_DOCX_Extractor();
 	}
 
 	/**
@@ -122,7 +138,9 @@ class VFWP_Intranet_Search_Indexer {
 	 * @return void
 	 */
 	public function handle_post_removed($post_id) {
-		$this->repository->delete((int) $post_id, 'post');
+		$post_id = (int) $post_id;
+		$this->removing[$post_id] = true;
+		$this->repository->delete($post_id, 'post');
 	}
 
 	/**
@@ -146,6 +164,10 @@ class VFWP_Intranet_Search_Indexer {
 	 */
 	public function handle_document_upload_meta_changed($meta_id, $object_id, $meta_key, $meta_value) {
 		if ($meta_key !== 'upload_file') {
+			return;
+		}
+
+		if (isset($this->removing[(int) $object_id])) {
 			return;
 		}
 
@@ -238,7 +260,7 @@ class VFWP_Intranet_Search_Indexer {
 	public function index_post($post_id, $force = false, $rebuild_token = '') {
 		$post_id = (int) $post_id;
 
-		if ($post_id <= 0 || isset($this->indexing[$post_id])) {
+		if ($post_id <= 0 || isset($this->indexing[$post_id]) || isset($this->removing[$post_id])) {
 			return 'ignored';
 		}
 
@@ -417,6 +439,9 @@ class VFWP_Intranet_Search_Indexer {
 			'extraction_class' => get_class($this->pdf_extractor),
 			'extraction_version' => VFWP_Intranet_Search_PDF_Extractor::EXTRACTOR_VERSION,
 			'extraction_available' => $this->pdf_extractor->is_available(),
+			'docx_extraction_class' => get_class($this->docx_extractor),
+			'docx_extraction_version' => VFWP_Intranet_Search_DOCX_Extractor::EXTRACTOR_VERSION,
+			'docx_extraction_available' => $this->docx_extractor->is_available(),
 		));
 	}
 
@@ -479,6 +504,8 @@ class VFWP_Intranet_Search_Indexer {
 		$source = array(
 			'attachment_id' => 0,
 			'is_pdf'        => false,
+			'is_docx'       => false,
+			'file_type'     => '',
 			'file_path'     => '',
 			'file_name'     => '',
 			'file_size'     => 0,
@@ -506,14 +533,20 @@ class VFWP_Intranet_Search_Indexer {
 			return $source;
 		}
 
-		if (get_post_mime_type($attachment) !== 'application/pdf') {
+		$mime_type = (string) get_post_mime_type($attachment);
+		$file_path = get_attached_file($attachment_id);
+		$file_path = is_string($file_path) ? $file_path : '';
+		$file_extension = strtolower((string) pathinfo($file_path, PATHINFO_EXTENSION));
+		$is_pdf = $mime_type === 'application/pdf' || $file_extension === 'pdf';
+		$is_docx = $mime_type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || $file_extension === 'docx';
+
+		if (!$is_pdf && !$is_docx) {
 			return $source;
 		}
 
-		$file_path = get_attached_file($attachment_id);
-		$file_path = is_string($file_path) ? $file_path : '';
-
-		$source['is_pdf'] = true;
+		$source['is_pdf'] = $is_pdf;
+		$source['is_docx'] = $is_docx;
+		$source['file_type'] = $is_pdf ? 'pdf' : 'docx';
 		$source['file_path'] = $file_path;
 		$source['file_name'] = $file_path !== '' ? basename($file_path) : '';
 		$source['file_size'] = $file_path !== '' && file_exists($file_path) ? (int) filesize($file_path) : 0;
@@ -536,11 +569,13 @@ class VFWP_Intranet_Search_Indexer {
 			'extracted_chars'   => 0,
 		);
 
-		if (empty($document_pdf_source['is_pdf'])) {
+		if (empty($document_pdf_source['is_pdf']) && empty($document_pdf_source['is_docx'])) {
 			return $result;
 		}
 
-		$extraction = $this->pdf_extractor->extract((string) $document_pdf_source['file_path']);
+		$extraction = !empty($document_pdf_source['is_docx'])
+			? $this->docx_extractor->extract((string) $document_pdf_source['file_path'])
+			: $this->pdf_extractor->extract((string) $document_pdf_source['file_path']);
 
 		$raw_text = isset($extraction['text']) ? (string) $extraction['text'] : '';
 		$result['content'] = $this->normalizer->normalize_content($raw_text);
@@ -568,6 +603,7 @@ class VFWP_Intranet_Search_Indexer {
 
 		$metadata = array(
 			'_vfwp_search_pdf_attachment_id' => (int) $document_pdf_source['attachment_id'],
+			'_vfwp_search_file_type' => sanitize_key((string) $document_pdf_source['file_type']),
 			'_vfwp_search_pdf_file_name' => sanitize_text_field((string) $document_pdf_source['file_name']),
 			'_vfwp_search_pdf_file_size' => max(0, (int) $document_pdf_source['file_size']),
 			'_vfwp_search_pdf_file_mtime' => max(0, (int) $document_pdf_source['file_mtime']),

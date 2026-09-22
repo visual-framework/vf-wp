@@ -12,7 +12,7 @@ class VFWP_Intranet_Search_PDF_Extractor {
 	const DEFAULT_MAX_TEXT_BYTES = 1048576;
 	const DEFAULT_MAX_STREAM_BYTES = 8388608;
 	const DEFAULT_MAX_EXTRACTION_SECONDS = 8;
-	const EXTRACTOR_VERSION = 'pure_php_v6';
+	const EXTRACTOR_VERSION = 'pure_php_v7';
 
 	/**
 	 * Combined ToUnicode mappings discovered in the current PDF.
@@ -955,7 +955,23 @@ class VFWP_Intranet_Search_PDF_Extractor {
 		$text = preg_replace('/[ \t]+/u', ' ', is_string($text) ? $text : '');
 		$text = preg_replace('/\s*\n\s*/u', "\n", is_string($text) ? $text : '');
 		$text = $this->remove_pdf_glyph_noise(is_string($text) ? $text : '');
+		$text = $this->remove_pdf_layout_artifacts(is_string($text) ? $text : '');
 		$text = preg_replace('/\n{3,}/u', "\n\n", is_string($text) ? $text : '');
+
+		return is_string($text) ? trim($text) : '';
+	}
+
+	/**
+	 * Remove visual form rules and repeated layout tokens with no search value.
+	 *
+	 * @param string $text Extracted text.
+	 * @return string
+	 */
+	private function remove_pdf_layout_artifacts($text) {
+		$text = preg_replace('/(?:[._=~\-\x{2013}\x{2014}\x{00B7}\x{2022}]\s*){4,}/u', ' ', (string) $text);
+		$text = preg_replace('/(^|\s)([\p{L}\p{N}])(?:\s+\2){4,}(?=\s|$)/iu', '$1', is_string($text) ? $text : '');
+		$text = preg_replace('/[ \t]+/u', ' ', is_string($text) ? $text : '');
+		$text = preg_replace('/ *\n */u', "\n", is_string($text) ? $text : '');
 
 		return is_string($text) ? trim($text) : '';
 	}
