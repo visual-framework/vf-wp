@@ -98,8 +98,9 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
     </h1>
     <div class="vf-banner vf-banner--alert vf-banner--info">
       <div class="vf-banner__content">
-        <p class="vf-banner__text">Can't find what you need on the intranet? It may be on the public website <a
-            class="vf-banner__link" href="https://www.embl.org/search">embl.org/search</a></p>
+        <p class="vf-banner__text">You&rsquo;re using the beta intranet search. <a
+            class="vf-banner__link" href="https://www.surveymonkey.com/r/intranetsurvey2026">Send feedback</a> or <a
+            class="vf-banner__link" href="https://www.embl.org/internal-information/help/how-to-use-intranet-search/">see what&rsquo;s new</a>.</p>
       </div>
     </div>
 </section>

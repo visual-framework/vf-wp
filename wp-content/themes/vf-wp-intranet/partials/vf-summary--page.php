@@ -405,6 +405,14 @@ $vfwp_is_search_result_context = is_search();
   </p>
   <?php endif; ?>
 
+  <?php if ($post_type === 'teams' && $vfwp_result_is_external_team && $summary_link_url !== '') : ?>
+  <div class="vf-summary__meta">
+    <p class="vf-summary__author | vf-u-margin__bottom--0">
+      <span class="vf-search-result__breadcrumb"><?php echo esc_html($summary_link_url); ?></span>
+    </p>
+  </div>
+  <?php endif; ?>
+
   <?php if ($post_type === 'training' && $content_snippet !== '') : ?>
   <p class="vf-summary__meta" style="margin-bottom: 8px;">
     <?php echo wp_kses($content_snippet, array('mark' => array())); ?>
