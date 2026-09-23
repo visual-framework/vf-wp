@@ -112,12 +112,14 @@ class VFWP_Intranet_Search_Analytics {
 				'per_page'         => max(1, (int) $per_page),
 				'searched_at'      => current_time('mysql', true),
 				'user_email'       => !empty($settings['track_user_email']) ? $this->get_current_user_email() : '',
-				'source'           => 'frontend',
-				'is_corrected'     => 0,
-				'corrected_to'     => '',
-			),
-			array('%s', '%s', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%d', '%s')
-		);
+					'source'           => 'frontend',
+					'is_corrected'     => 0,
+					'corrected_to'     => '',
+					'did_you_mean_shown' => 0,
+					'did_you_mean_suggestions' => '',
+				),
+				array('%s', '%s', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%d', '%s', '%d', '%s')
+			);
 
 		if (false !== $result) {
 			self::$last_logged_id = (int) $this->wpdb->insert_id;
@@ -149,6 +151,68 @@ class VFWP_Intranet_Search_Analytics {
 		return array(
 			'search_correction_id'  => $analytics_id,
 			'search_correction_sig' => wp_hash($analytics_id . '|' . $normalized_query, 'nonce'),
+		);
+	}
+
+	/**
+	 * Record the spelling suggestions actually rendered for the current search.
+	 *
+	 * @param array $suggestions Did-you-mean suggestion rows.
+	 * @return bool
+	 */
+	public static function record_did_you_mean_suggestions(array $suggestions) {
+		global $wpdb;
+
+		$analytics_id = (int) self::$last_logged_id;
+
+		if ($analytics_id <= 0 || empty($suggestions)) {
+			return false;
+		}
+
+		$stored = array();
+
+		foreach (array_slice($suggestions, 0, 3) as $suggestion) {
+			if (!is_array($suggestion) || empty($suggestion['query'])) {
+				continue;
+			}
+
+			$query = sanitize_text_field((string) $suggestion['query']);
+			$label = !empty($suggestion['label'])
+				? sanitize_text_field((string) $suggestion['label'])
+				: $query;
+
+			if ($query === '' || isset($stored[$query])) {
+				continue;
+			}
+
+			$stored[$query] = array(
+				'query' => self::limit_static_string($query, 240),
+				'label' => self::limit_static_string($label, 240),
+			);
+		}
+
+		if (empty($stored)) {
+			return false;
+		}
+
+		$encoded = wp_json_encode(array_values($stored));
+
+		if (!is_string($encoded)) {
+			return false;
+		}
+
+		return false !== $wpdb->update(
+			VFWP_Intranet_Search_Schema::analytics_table_name(),
+			array(
+				'did_you_mean_shown'       => 1,
+				'did_you_mean_suggestions' => $encoded,
+			),
+			array(
+				'id'           => $analytics_id,
+				'result_count' => 0,
+			),
+			array('%d', '%s'),
+			array('%d', '%d')
 		);
 	}
 
@@ -191,7 +255,11 @@ class VFWP_Intranet_Search_Analytics {
 	public function get_dashboard_data($recent_page = 1, array $report_pages = array()) {
 		$recent = $this->get_recent_searches($recent_page, self::RECENT_PER_PAGE);
 		$top_queries = $this->get_top_queries(isset($report_pages['top']) ? $report_pages['top'] : 1);
-		$zero_results = $this->get_zero_result_queries(isset($report_pages['zero']) ? $report_pages['zero'] : 1);
+		$zero_results = $this->get_zero_result_queries(
+			isset($report_pages['zero']) ? $report_pages['zero'] : 1,
+			isset($report_pages['zero_sort']) ? $report_pages['zero_sort'] : 'last_searched',
+			isset($report_pages['zero_order']) ? $report_pages['zero_order'] : 'desc'
+		);
 
 		return array(
 			'summary'                    => $this->get_summary(),
@@ -295,16 +363,24 @@ class VFWP_Intranet_Search_Analytics {
 	 * @return array
 	 */
 	private function get_top_queries($page) {
-		return $this->get_grouped_query_rows('', $page, self::ADMIN_ROWS_PER_PAGE);
+		return $this->get_grouped_query_rows('', $page, self::ADMIN_ROWS_PER_PAGE, 'searches', 'desc');
 	}
 
 	/**
 	 * Return most common zero-result queries.
 	 *
+	 * @param string $sort Sort field.
+	 * @param string $order Sort direction.
 	 * @return array
 	 */
-	private function get_zero_result_queries($page) {
-		return $this->get_grouped_query_rows('result_count = 0 AND is_corrected = 0', $page, self::ADMIN_ROWS_PER_PAGE);
+	private function get_zero_result_queries($page, $sort = 'last_searched', $order = 'desc') {
+		return $this->get_grouped_query_rows(
+			'result_count = 0 AND is_corrected = 0',
+			$page,
+			self::ADMIN_ROWS_PER_PAGE,
+			$sort,
+			$order
+		);
 	}
 
 	/**
@@ -313,12 +389,18 @@ class VFWP_Intranet_Search_Analytics {
 	 * @param string $extra_condition Safe additional condition SQL.
 	 * @param int    $page Current page.
 	 * @param int    $per_page Rows per page.
+	 * @param string $sort Sort field.
+	 * @param string $order Sort direction.
 	 * @return array
 	 */
-	private function get_grouped_query_rows($extra_condition, $page, $per_page) {
+	private function get_grouped_query_rows($extra_condition, $page, $per_page, $sort = 'searches', $order = 'desc') {
 		$settings = $this->get_settings();
 		$retention_days = max(1, (int) $settings['retention_days']);
 		$per_page = max(1, min(100, (int) $per_page));
+		$sort = 'last_searched' === $sort ? 'last_searched' : 'searches';
+		$order = 'asc' === strtolower((string) $order) ? 'asc' : 'desc';
+		$order_by_sql = 'last_searched' === $sort ? 'last_searched_at' : 'searches';
+		$secondary_order_sql = 'last_searched' === $sort ? 'searches DESC' : 'last_searched_at DESC';
 		$where_sql = 'WHERE searched_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)';
 
 		if ($extra_condition !== '') {
@@ -341,11 +423,23 @@ class VFWP_Intranet_Search_Analytics {
 				COUNT(*) AS searches,
 				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
 				ROUND(AVG(result_count), 1) AS average_results,
-				MAX(searched_at) AS last_searched_at
+					MAX(searched_at) AS last_searched_at
+					,MAX(did_you_mean_shown) AS did_you_mean_shown
+					,COALESCE(
+						SUBSTRING_INDEX(
+							GROUP_CONCAT(
+								CASE WHEN did_you_mean_shown = 1 THEN did_you_mean_suggestions ELSE NULL END
+								ORDER BY searched_at DESC, id DESC SEPARATOR '\n'
+							),
+							'\n',
+							1
+						),
+						''
+					) AS did_you_mean_suggestions
 			FROM {$this->table_name}
 			{$where_sql}
 			GROUP BY normalized_query
-			ORDER BY searches DESC, last_searched_at DESC
+			ORDER BY {$order_by_sql} " . strtoupper($order) . ", {$secondary_order_sql}, normalized_query ASC
 			LIMIT %d OFFSET %d
 		";
 		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $retention_days, $per_page, $offset), ARRAY_A);
@@ -355,9 +449,11 @@ class VFWP_Intranet_Search_Analytics {
 			'pagination' => array(
 				'page'        => $page,
 				'per_page'    => $per_page,
-				'total'       => $total,
-				'total_pages' => $total_pages,
-			),
+					'total'       => $total,
+					'total_pages' => $total_pages,
+					'sort'        => $sort,
+					'order'       => $order,
+				),
 		);
 	}
 
@@ -534,6 +630,19 @@ class VFWP_Intranet_Search_Analytics {
 		}
 
 		return sanitize_email($user->user_email);
+	}
+
+	/**
+	 * Limit a string from static analytics helpers.
+	 *
+	 * @param string $text Text.
+	 * @param int    $limit Character limit.
+	 * @return string
+	 */
+	private static function limit_static_string($text, $limit) {
+		return function_exists('mb_substr')
+			? (string) mb_substr((string) $text, 0, (int) $limit, 'UTF-8')
+			: substr((string) $text, 0, (int) $limit);
 	}
 
 	/**

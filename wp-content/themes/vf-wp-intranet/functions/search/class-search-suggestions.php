@@ -14,6 +14,7 @@ class VFWP_Intranet_Search_Suggestions {
 	const PHRASE_SCAN_LIMIT = 60;
 	const DID_YOU_MEAN_LIMIT = 3;
 	const CACHE_TTL = 120;
+	const SPELLING_ALGORITHM_VERSION = 2;
 
 	/**
 	 * @var wpdb
@@ -181,6 +182,7 @@ class VFWP_Intranet_Search_Suggestions {
 			'filters' => $filters,
 			'limit'   => $limit,
 			'schema'  => VFWP_Intranet_Search_Schema::VERSION,
+			'algorithm' => self::SPELLING_ALGORITHM_VERSION,
 		)));
 		$cached = wp_cache_get($cache_key, 'vfwp_intranet_search');
 
@@ -203,6 +205,85 @@ class VFWP_Intranet_Search_Suggestions {
 		wp_cache_set($cache_key, $suggestions, 'vfwp_intranet_search', 5 * MINUTE_IN_SECONDS);
 
 		return $suggestions;
+	}
+
+	/**
+	 * Return one validated, less restrictive query for a no-results search.
+	 *
+	 * The fallback removes one term only and validates that the resulting query
+	 * has an indexed result, keeping the broader search useful rather than
+	 * silently changing normal AND matching into OR matching.
+	 *
+	 * @param mixed $query Raw visitor query.
+	 * @param array $filters Search filters.
+	 * @return array
+	 */
+	public function get_broader_search($query, array $filters = array()) {
+		if (
+			!class_exists('VFWP_Intranet_Search_Settings')
+			|| !VFWP_Intranet_Search_Settings::is_broader_search_enabled()
+		) {
+			return array();
+		}
+
+		$parsed_query = $this->query_parser->parse($query);
+		$terms = !empty($parsed_query['all_terms']) ? array_values((array) $parsed_query['all_terms']) : array();
+
+		if (count($terms) < 2 || !empty($parsed_query['has_protected_phrases'])) {
+			return array();
+		}
+
+		$filters = $this->normalize_filters($filters);
+		$cache_key = 'broader_search_' . md5(wp_json_encode(array(
+			'query'   => isset($parsed_query['normalized']) ? (string) $parsed_query['normalized'] : '',
+			'filters' => $filters,
+			'schema'  => VFWP_Intranet_Search_Schema::VERSION,
+			'algorithm' => self::SPELLING_ALGORITHM_VERSION,
+		)));
+		$cached = wp_cache_get($cache_key, 'vfwp_intranet_search');
+
+		if (is_array($cached)) {
+			return $cached;
+		}
+
+		$labels = $this->get_original_term_labels($query, $terms);
+		$search_service = new VFWP_Intranet_Search_Service($this->wpdb, $this->query_parser);
+		$seen = array();
+		$result = array();
+
+		foreach ($terms as $index => $term) {
+			$candidate_terms = $terms;
+			unset($candidate_terms[$index]);
+			$candidate_terms = array_values(array_unique($candidate_terms));
+			$candidate_query = trim(implode(' ', $candidate_terms));
+
+			if ($candidate_query === '' || isset($seen[$candidate_query])) {
+				continue;
+			}
+
+			$seen[$candidate_query] = true;
+
+			if (!$search_service->has_results($candidate_query, $filters)) {
+				continue;
+			}
+
+			$candidate_labels = array();
+
+			foreach ($candidate_terms as $candidate_term) {
+				$candidate_labels[] = isset($labels[$candidate_term]) ? $labels[$candidate_term] : $candidate_term;
+			}
+
+			$result = array(
+				'query' => $candidate_query,
+				'label' => trim(implode(' ', $candidate_labels)),
+			);
+
+			break;
+		}
+
+		wp_cache_set($cache_key, $result, 'vfwp_intranet_search', 5 * MINUTE_IN_SECONDS);
+
+		return $result;
 	}
 
 	/**
@@ -827,6 +908,10 @@ class VFWP_Intranet_Search_Suggestions {
 
 		$corrected_terms = array();
 		$corrected_labels = array();
+		$original_labels = $this->get_original_term_labels(
+			isset($parsed_query['raw']) ? $parsed_query['raw'] : '',
+			$query_terms
+		);
 		$changed = false;
 
 		foreach ($query_terms as $query_term) {
@@ -834,7 +919,7 @@ class VFWP_Intranet_Search_Suggestions {
 
 			if ($this->length($query_term) < 3) {
 				$corrected_terms[] = $query_term;
-				$corrected_labels[] = $query_term;
+				$corrected_labels[] = isset($original_labels[$query_term]) ? $original_labels[$query_term] : $query_term;
 				continue;
 			}
 
@@ -848,7 +933,7 @@ class VFWP_Intranet_Search_Suggestions {
 			}
 
 			$corrected_terms[] = $query_term;
-			$corrected_labels[] = $query_term;
+			$corrected_labels[] = isset($original_labels[$query_term]) ? $original_labels[$query_term] : $query_term;
 		}
 
 		$corrected_query = trim(implode(' ', array_values(array_unique($corrected_terms))));
@@ -944,7 +1029,7 @@ class VFWP_Intranet_Search_Suggestions {
 
 		$search_service = new VFWP_Intranet_Search_Service($this->wpdb, $this->query_parser);
 
-		if ($search_service->count($query, $filters) < 1) {
+		if (!$search_service->has_results($query, $filters)) {
 			$seen[$key] = true;
 			return;
 		}
@@ -988,7 +1073,34 @@ class VFWP_Intranet_Search_Suggestions {
 			return 1;
 		}
 
-		return 2;
+		if ($length < 9) {
+			return 2;
+		}
+
+		return 3;
+	}
+
+	/**
+	 * Map normalized query terms to their original display capitalization.
+	 *
+	 * @param mixed $query Raw query.
+	 * @param array $terms Parsed normalized terms.
+	 * @return array
+	 */
+	private function get_original_term_labels($query, array $terms) {
+		$labels = array();
+		$raw_query = is_scalar($query) ? wp_strip_all_tags((string) $query) : '';
+		preg_match_all('/[\p{L}\p{N}]+/u', $raw_query, $matches);
+
+		foreach ((array) $matches[0] as $raw_term) {
+			$normalized = $this->query_parser->normalize_search_text($raw_term);
+
+			if ($normalized !== '' && in_array($normalized, $terms, true) && !isset($labels[$normalized])) {
+				$labels[$normalized] = $raw_term;
+			}
+		}
+
+		return $labels;
 	}
 
 	/**

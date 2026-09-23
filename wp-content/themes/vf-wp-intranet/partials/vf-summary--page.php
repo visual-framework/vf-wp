@@ -291,7 +291,6 @@ if (is_search() && $post_type === 'documents' && $has_indexed_search_result) {
     $summary_text = !empty($vfwp_indexed_search_result['content_snippet_highlighted'])
       ? $vfwp_indexed_search_result['content_snippet_highlighted']
       : '';
-    $vfwp_result_match_reason = __('Match in document text', 'vfwp');
   } elseif ($document_title_match) {
     $summary_text = $document_excerpt_highlighted;
     $vfwp_result_match_reason = __('Match in title', 'vfwp');

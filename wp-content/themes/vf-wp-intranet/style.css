@@ -201,9 +201,9 @@ Text Domain:	 vfwp
     background: #f3f3f3;
 }
 .vf-search-did-you-mean {
-    font-size: 20px;
+    font-size: 22px;
     line-height: 1.4;
-    margin: 0.5rem 0 0;
+    margin: 0.5rem 0 2rem !important;
 }
 #load {
     width: 48px;

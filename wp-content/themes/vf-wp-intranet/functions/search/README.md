@@ -297,6 +297,8 @@ ACF keyword matching is delimiter-aware and exact-entry based. A keyword entry l
 
 Post-type weights and ranking boosts are configurable in Settings -> Search. The admin UI also includes calculated ranking-priority information to explain how the final priority values are derived.
 
+The Ranking test tab runs a real query against the current index without adding it to Search Analytics. It shows query normalization, FULLTEXT terms, protected phrases, the top ten results, every raw ranking signal, the field weight and boost applied to it, the post-type multiplier, recency bonus, and final database score.
+
 ## Snippets and Highlighting
 
 `VFWP_Intranet_Search_Snippet_Service` adds display fields to each result.
@@ -396,7 +398,11 @@ Server behavior:
 
 The no-results state can show "Did you mean" links from `VFWP_Intranet_Search_Suggestions::did_you_mean()`.
 
-Term candidates come from the precomputed spelling dictionary; phrase candidates also use bounded indexed titles, ACF keywords, and configured exact phrases. Deletion-key lookup finds likely insertions, omissions, and transpositions before edit-distance scoring. Title terms rank above keyword-only terms, frequency breaks ties, and suggestions are only added if they lead to actual indexed results under the active filters.
+Term candidates come from the precomputed spelling dictionary; phrase candidates also use bounded indexed titles, ACF keywords, and configured exact phrases. Deletion-key lookup finds likely insertions, omissions, and transpositions before edit-distance scoring. Long words also use a bounded indexed-prefix lookup so plausible three-edit corrections can be considered without scanning the dictionary. Title terms rank above keyword-only terms, frequency breaks ties, and suggestions are only added if they lead to actual indexed results under the active filters.
+
+If strict AND matching returns no results and no reliable spelling correction exists, the no-results state can optionally offer one broader search. This behavior is disabled by default and can be enabled under Settings > Search > Query parsing. It removes a single query term, preserves active filters, and only displays the link after an indexed existence check confirms that the broader query has results. Normal search matching remains AND-based, and changing the toggle does not require reindexing.
+
+Strict term, phrase, and exact-keyword verification expands normalized Latin query letters to bounded accent-aware regular-expression classes. This keeps `rudiger` and `rüdiger` equivalent against stored display text such as `Rüdiger`, while preserving word boundaries and prefix behavior. The index retains original accents and no rebuild is required for this matching rule.
 
 Schema version 17 introduces the spelling tables. A full rebuild or changed-content reindex is required after deployment to populate the dictionary for all existing indexed content. Normal post saves then maintain it automatically.
 
@@ -423,6 +429,10 @@ Search settings tables are limited to 20 visible rows per page. Large database-b
 
 When a visitor clicks a server-rendered "Did you mean" link, a signed analytics event ID marks the originating no-result row as corrected. Corrected rows remain part of total search volume, count as successful journeys in the results percentage, and are excluded from no-result reports. Data retention is configurable.
 
+The "Queries with no results" report is ordered by the most recently searched query by default. Administrators can sort the paginated report by search count or last-searched time in either direction; sorting is performed by the database before pagination.
+
+Each no-results analytics event also records whether "Did you mean" suggestions were rendered and the suggestion text shown at that time. The grouped no-results report displays the most recently shown suggestion for each query; older analytics rows created before this field existed display "No".
+
 ## Admin Settings
 
 Settings -> Search is restricted to administrators via `manage_options`.
@@ -440,7 +450,7 @@ Main settings areas:
 - Index management
 - Document extraction issue notices
 - Analytics
-- Diagnostics/ranking explanations
+- Ranking test and per-result score explanations
 
 Settings that change indexed searchable content require a rebuild. Ranking-only settings usually take effect immediately because weights are applied at query time.
 

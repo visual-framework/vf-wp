@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Schema {
-	const VERSION = 17;
+	const VERSION = 18;
 	const OPTION_NAME = 'vfwp_intranet_search_schema_version';
 
 	/**
@@ -160,16 +160,19 @@ class VFWP_Intranet_Search_Schema {
 			searched_at datetime NOT NULL,
 			user_email varchar(191) NOT NULL DEFAULT '',
 			source varchar(32) NOT NULL DEFAULT 'frontend',
-			is_corrected tinyint(1) unsigned NOT NULL DEFAULT 0,
-			corrected_to varchar(191) NOT NULL DEFAULT '',
-			PRIMARY KEY  (id),
+				is_corrected tinyint(1) unsigned NOT NULL DEFAULT 0,
+				corrected_to varchar(191) NOT NULL DEFAULT '',
+				did_you_mean_shown tinyint(1) unsigned NOT NULL DEFAULT 0,
+				did_you_mean_suggestions text NOT NULL,
+				PRIMARY KEY  (id),
 			KEY searched_at (searched_at),
 			KEY normalized_query (normalized_query),
 			KEY result_count (result_count),
 			KEY filters_hash (filters_hash),
 			KEY user_email (user_email),
-			KEY source (source),
-			KEY is_corrected (is_corrected)
+				KEY source (source),
+				KEY is_corrected (is_corrected),
+				KEY did_you_mean_shown (did_you_mean_shown)
 		) {$charset_collate};";
 
 		dbDelta($analytics_sql);

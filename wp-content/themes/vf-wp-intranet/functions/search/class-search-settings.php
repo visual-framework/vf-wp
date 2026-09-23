@@ -72,6 +72,7 @@ class VFWP_Intranet_Search_Settings {
 			'stopwords'       => self::default_stopwords(),
 			'exact_phrases'   => array(),
 			'synonyms'        => array(),
+			'broader_search_enabled' => 0,
 			'analytics'       => array(
 				'enabled'        => 1,
 				'exclude_admins' => 0,
@@ -117,6 +118,7 @@ class VFWP_Intranet_Search_Settings {
 		$settings['stopwords'] = self::parse_stopwords($settings['stopwords']);
 		$settings['exact_phrases'] = self::parse_exact_phrases($settings['exact_phrases']);
 		$settings['synonyms'] = self::parse_synonyms(isset($settings['synonyms']) ? $settings['synonyms'] : array());
+		$settings['broader_search_enabled'] = empty($settings['broader_search_enabled']) ? 0 : 1;
 		$settings['analytics'] = self::sanitize_analytics_settings(isset($settings['analytics']) ? $settings['analytics'] : array());
 
 		return $settings;
@@ -183,6 +185,15 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	public static function get_synonyms() {
 		return self::get_settings()['synonyms'];
+	}
+
+	/**
+	 * Determine whether no-results broader-search links are enabled.
+	 *
+	 * @return bool
+	 */
+	public static function is_broader_search_enabled() {
+		return !empty(self::get_settings()['broader_search_enabled']);
 	}
 
 	/**
@@ -399,6 +410,14 @@ class VFWP_Intranet_Search_Settings {
 			'vfwp-intranet-search',
 			'vfwp_intranet_search_query_parsing'
 		);
+
+		add_settings_field(
+			'vfwp_intranet_search_broader_search',
+			__('Broader-search fallback', 'vfwp'),
+			array($this, 'render_broader_search_setting'),
+			'vfwp-intranet-search',
+			'vfwp_intranet_search_query_parsing'
+		);
 	}
 
 	/**
@@ -449,6 +468,9 @@ class VFWP_Intranet_Search_Settings {
 		$sanitized['stopwords'] = self::parse_stopwords(array_key_exists('stopwords', $input) ? $input['stopwords'] : $old_settings['stopwords']);
 		$sanitized['exact_phrases'] = self::parse_exact_phrases(array_key_exists('exact_phrases', $input) ? $input['exact_phrases'] : $old_settings['exact_phrases']);
 		$sanitized['synonyms'] = self::parse_synonyms(array_key_exists('synonyms', $input) ? $input['synonyms'] : $old_settings['synonyms']);
+		$sanitized['broader_search_enabled'] = array_key_exists('broader_search_enabled', $input)
+			? (empty($input['broader_search_enabled']) ? 0 : 1)
+			: (empty($old_settings['broader_search_enabled']) ? 0 : 1);
 		$sanitized['analytics'] = self::sanitize_analytics_settings(array_key_exists('analytics', $input) ? $input['analytics'] : $old_settings['analytics']);
 
 		foreach (self::get_searchable_post_types() as $post_type => $post_type_object) {
@@ -502,10 +524,12 @@ class VFWP_Intranet_Search_Settings {
 
 			<?php $this->render_tabs($current_tab); ?>
 
-			<?php if ('index' === $current_tab) : ?>
-				<?php $this->render_index_management(); ?>
-				<?php $this->render_pdf_extraction_issues(); ?>
-			<?php elseif ('analytics' === $current_tab) : ?>
+				<?php if ('index' === $current_tab) : ?>
+					<?php $this->render_index_management(); ?>
+					<?php $this->render_pdf_extraction_issues(); ?>
+				<?php elseif ('ranking-test' === $current_tab) : ?>
+					<?php $this->render_ranking_test_tab(); ?>
+				<?php elseif ('analytics' === $current_tab) : ?>
 				<?php $this->render_analytics_tab(); ?>
 			<?php else : ?>
 				<form method="post" action="options.php">
@@ -555,9 +579,10 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	private function get_tabs() {
 		return array(
-			'index'   => __('Index', 'vfwp'),
-			'ranking' => __('Ranking', 'vfwp'),
-			'content' => __('Content', 'vfwp'),
+				'index'   => __('Index', 'vfwp'),
+				'ranking' => __('Ranking', 'vfwp'),
+				'ranking-test' => __('Ranking test', 'vfwp'),
+				'content' => __('Content', 'vfwp'),
 			'query'   => __('Query parsing', 'vfwp'),
 			'analytics' => __('Analytics', 'vfwp'),
 		);
@@ -680,11 +705,15 @@ class VFWP_Intranet_Search_Settings {
 				<th scope="row"><?php echo esc_html__('Exact phrase searches', 'vfwp'); ?></th>
 				<td><?php $this->render_exact_phrases(); ?></td>
 			</tr>
-			<tr>
-				<th scope="row"><?php echo esc_html__('Synonyms', 'vfwp'); ?></th>
-				<td><?php $this->render_synonyms(); ?></td>
-			</tr>
-		</table>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Synonyms', 'vfwp'); ?></th>
+					<td><?php $this->render_synonyms(); ?></td>
+				</tr>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Broader-search fallback', 'vfwp'); ?></th>
+					<td><?php $this->render_broader_search_setting(); ?></td>
+				</tr>
+			</table>
 		<?php
 	}
 
@@ -709,16 +738,188 @@ class VFWP_Intranet_Search_Settings {
 		</form>
 		<?php
 
-		if (class_exists('VFWP_Intranet_Search_Analytics')) {
+			if (class_exists('VFWP_Intranet_Search_Analytics')) {
 			$analytics = new VFWP_Intranet_Search_Analytics();
 			$recent_page = isset($_GET['analytics_recent_page']) ? max(1, absint(wp_unslash($_GET['analytics_recent_page']))) : 1;
 			$report_pages = array(
 				'top'  => isset($_GET['analytics_top_page']) ? max(1, absint(wp_unslash($_GET['analytics_top_page']))) : 1,
 				'zero' => isset($_GET['analytics_zero_page']) ? max(1, absint(wp_unslash($_GET['analytics_zero_page']))) : 1,
+				'zero_sort' => isset($_GET['analytics_zero_sort']) && 'searches' === sanitize_key(wp_unslash($_GET['analytics_zero_sort'])) ? 'searches' : 'last_searched',
+				'zero_order' => isset($_GET['analytics_zero_order']) && 'asc' === sanitize_key(wp_unslash($_GET['analytics_zero_order'])) ? 'asc' : 'desc',
 			);
-			$this->render_analytics_reports($analytics->get_dashboard_data($recent_page, $report_pages));
+				$this->render_analytics_reports($analytics->get_dashboard_data($recent_page, $report_pages));
+			}
 		}
+
+	/**
+	 * Render an interactive, read-only ranking diagnostics search.
+	 *
+	 * @return void
+	 */
+	private function render_ranking_test_tab() {
+		$this->render_ranking_admin_styles();
+
+		$query = isset($_GET['ranking_test_query']) ? sanitize_text_field(wp_unslash($_GET['ranking_test_query'])) : '';
+		$query = function_exists('mb_substr')
+			? mb_substr($query, 0, VFWP_Intranet_Search_Query_Parser::MAX_QUERY_LENGTH, 'UTF-8')
+			: substr($query, 0, VFWP_Intranet_Search_Query_Parser::MAX_QUERY_LENGTH);
+		$post_type = isset($_GET['ranking_test_post_type']) ? sanitize_key(wp_unslash($_GET['ranking_test_post_type'])) : '';
+		$enabled_post_types = self::get_enabled_post_types();
+
+		if (!in_array($post_type, $enabled_post_types, true)) {
+			$post_type = '';
+		}
+
+		$nonce_is_valid = $query === '' || (
+			isset($_GET['ranking_test_nonce'])
+			&& wp_verify_nonce(sanitize_text_field(wp_unslash($_GET['ranking_test_nonce'])), 'vfwp_search_ranking_test')
+		);
+		?>
+		<h2><?php echo esc_html__('Ranking test', 'vfwp'); ?></h2>
+		<p><?php echo esc_html__('Run a search against the current index and inspect why each result received its position. Test searches from this page are not recorded in Search Analytics.', 'vfwp'); ?></p>
+		<form method="get" action="<?php echo esc_url(admin_url('options-general.php')); ?>" class="vfwp-search-ranking-test-form">
+			<input type="hidden" name="page" value="vfwp-intranet-search">
+			<input type="hidden" name="tab" value="ranking-test">
+			<?php wp_nonce_field('vfwp_search_ranking_test', 'ranking_test_nonce', false); ?>
+			<label for="vfwp-ranking-test-query"><strong><?php echo esc_html__('Test query', 'vfwp'); ?></strong></label><br>
+			<input
+				type="search"
+				id="vfwp-ranking-test-query"
+				name="ranking_test_query"
+				value="<?php echo esc_attr($query); ?>"
+				class="regular-text"
+				maxlength="<?php echo esc_attr(VFWP_Intranet_Search_Query_Parser::MAX_QUERY_LENGTH); ?>"
+				required
+			>
+			<label for="vfwp-ranking-test-post-type" class="screen-reader-text"><?php echo esc_html__('Limit to post type', 'vfwp'); ?></label>
+			<select id="vfwp-ranking-test-post-type" name="ranking_test_post_type">
+				<option value=""><?php echo esc_html__('All enabled post types', 'vfwp'); ?></option>
+				<?php foreach ($enabled_post_types as $enabled_post_type) : ?>
+					<?php $post_type_object = get_post_type_object($enabled_post_type); ?>
+					<option value="<?php echo esc_attr($enabled_post_type); ?>" <?php selected($post_type, $enabled_post_type); ?>>
+						<?php echo esc_html($post_type_object ? $post_type_object->labels->name : $enabled_post_type); ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+			<?php submit_button(__('Run ranking test', 'vfwp'), 'primary', '', false); ?>
+		</form>
+		<style>
+			.vfwp-search-ranking-test-form { margin: 18px 0 24px; }
+			.vfwp-search-ranking-test-form .regular-text { margin-right: 6px; max-width: 520px; width: min(100%, 520px); }
+			.vfwp-search-ranking-test-form select { margin-right: 6px; max-width: 240px; }
+			.vfwp-search-ranking-result { max-width: 1100px; }
+			.vfwp-search-ranking-result > summary { align-items: baseline; display: flex; gap: 12px; justify-content: space-between; }
+			.vfwp-search-ranking-result__score { white-space: nowrap; }
+			.vfwp-search-ranking-zero { color: #646970; }
+			.vfwp-search-ranking-total { font-size: 1.05em; }
+			@media (max-width: 782px) {
+				.vfwp-search-ranking-test-form .regular-text,
+				.vfwp-search-ranking-test-form select,
+				.vfwp-search-ranking-test-form .button { display: block; margin: 0 0 10px; width: 100%; }
+				.vfwp-search-ranking-result > summary { display: block; }
+			}
+		</style>
+		<?php
+
+		if ($query === '') {
+			return;
+		}
+
+		if (!$nonce_is_valid) {
+			echo '<div class="notice notice-error inline"><p>' . esc_html__('The ranking test request could not be verified. Please run the search again.', 'vfwp') . '</p></div>';
+			return;
+		}
+
+		$filters = $post_type !== '' ? array('post_types' => array($post_type)) : array();
+		$service = new VFWP_Intranet_Search_Service();
+		$response = $service->search_with_score_breakdown($query, $filters, 1, 10);
+		$this->render_ranking_test_response($response);
 	}
+
+	/**
+	 * Render parsed-query diagnostics and score tables.
+	 *
+	 * @param array $response Search response with score breakdowns.
+	 * @return void
+	 */
+	private function render_ranking_test_response(array $response) {
+		$parsed = isset($response['query']) && is_array($response['query']) ? $response['query'] : array();
+		$pagination = isset($response['pagination']) && is_array($response['pagination']) ? $response['pagination'] : array();
+		$total = isset($pagination['total']) ? (int) $pagination['total'] : 0;
+		$terms = isset($parsed['fulltext_terms']) ? implode(', ', (array) $parsed['fulltext_terms']) : '';
+		$phrases = isset($parsed['protected_phrases']) ? implode(', ', (array) $parsed['protected_phrases']) : '';
+		?>
+		<h3><?php echo esc_html__('Query interpretation', 'vfwp'); ?></h3>
+		<table class="widefat striped" style="max-width: 920px;">
+			<tbody>
+				<tr><th scope="row"><?php echo esc_html__('Normalized query', 'vfwp'); ?></th><td><code><?php echo esc_html(isset($parsed['normalized']) ? $parsed['normalized'] : ''); ?></code></td></tr>
+				<tr><th scope="row"><?php echo esc_html__('Searchable FULLTEXT terms', 'vfwp'); ?></th><td><?php echo esc_html($terms !== '' ? $terms : __('None', 'vfwp')); ?></td></tr>
+				<tr><th scope="row"><?php echo esc_html__('Protected exact phrases', 'vfwp'); ?></th><td><?php echo esc_html($phrases !== '' ? $phrases : __('None', 'vfwp')); ?></td></tr>
+				<tr><th scope="row"><?php echo esc_html__('Boolean database query', 'vfwp'); ?></th><td><code><?php echo esc_html(isset($parsed['boolean_query']) && $parsed['boolean_query'] !== '' ? $parsed['boolean_query'] : __('None', 'vfwp')); ?></code></td></tr>
+				<tr><th scope="row"><?php echo esc_html__('Matching indexed items', 'vfwp'); ?></th><td><strong><?php echo esc_html(number_format_i18n($total)); ?></strong></td></tr>
+			</tbody>
+		</table>
+		<?php
+
+		if (empty($response['results'])) {
+			$message = isset($response['status']) && $response['status'] === 'no_fulltext_terms'
+				? __('No searchable terms remain after applying minimum word length, stopwords, and exact-phrase rules.', 'vfwp')
+				: __('No indexed results matched this test query and filter.', 'vfwp');
+			echo '<div class="notice notice-warning inline" style="max-width: 880px;"><p>' . esc_html($message) . '</p></div>';
+			return;
+		}
+		?>
+		<h3><?php echo esc_html(sprintf(__('Top %d ranked results', 'vfwp'), count($response['results']))); ?></h3>
+		<p><?php echo esc_html__('Points from matching signals are added first, multiplied by the post-type weight, and then the recency bonus is added. Zero-point rows are retained so you can see which signals did not apply.', 'vfwp'); ?></p>
+		<?php foreach ($response['results'] as $index => $result) : ?>
+			<?php $breakdown = isset($result['score_breakdown']) ? $result['score_breakdown'] : array(); ?>
+			<details class="vfwp-search-settings-panel vfwp-search-ranking-result" <?php echo $index === 0 ? 'open' : ''; ?>>
+				<summary>
+					<span><?php echo esc_html(sprintf(__('#%1$d %2$s', 'vfwp'), $index + 1, $result['title'])); ?></span>
+					<strong class="vfwp-search-ranking-result__score"><?php echo esc_html(sprintf(__('%s points', 'vfwp'), $this->format_decimal($result['relevance']))); ?></strong>
+				</summary>
+				<p>
+					<?php
+					$post_type_object = get_post_type_object($result['post_type']);
+					echo esc_html($post_type_object ? $post_type_object->labels->singular_name : $result['post_type']);
+					?>
+					<?php if (!empty($result['url'])) : ?>
+						&middot; <a href="<?php echo esc_url($result['url']); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html__('Open result', 'vfwp'); ?></a>
+					<?php endif; ?>
+				</p>
+				<?php if (!empty($result['snippet_highlighted'])) : ?>
+					<p><?php echo wp_kses($result['snippet_highlighted'], array('mark' => array())); ?></p>
+				<?php endif; ?>
+				<table class="widefat striped">
+					<thead>
+						<tr>
+							<th scope="col"><?php echo esc_html__('Ranking signal', 'vfwp'); ?></th>
+							<th scope="col"><?php echo esc_html__('Observed value', 'vfwp'); ?></th>
+							<th scope="col"><?php echo esc_html__('Calculation', 'vfwp'); ?></th>
+							<th scope="col"><?php echo esc_html__('Points', 'vfwp'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ((array) $breakdown['components'] as $component) : ?>
+							<tr class="<?php echo (float) $component['points'] === 0.0 ? 'vfwp-search-ranking-zero' : ''; ?>">
+								<th scope="row"><?php echo esc_html($component['label']); ?></th>
+								<td><?php echo esc_html($this->format_decimal($component['signal_value'])); ?></td>
+								<td><code><?php echo esc_html(sprintf('%s × %s × %s', $this->format_decimal($component['signal_value']), $this->format_decimal($component['field_weight']), $this->format_decimal($component['boost']))); ?></code></td>
+								<td><strong><?php echo esc_html($this->format_decimal($component['points'])); ?></strong></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+					<tfoot>
+						<tr><th scope="row" colspan="3"><?php echo esc_html__('Signal subtotal', 'vfwp'); ?></th><td><?php echo esc_html($this->format_decimal($breakdown['base_score'])); ?></td></tr>
+						<tr><th scope="row" colspan="3"><?php echo esc_html(sprintf(__('Post-type multiplier × %s', 'vfwp'), $this->format_decimal($breakdown['post_type_weight']))); ?></th><td><?php echo esc_html($this->format_decimal($breakdown['weighted_score'])); ?></td></tr>
+						<tr><th scope="row" colspan="3"><?php echo esc_html__('Recent-content bonus', 'vfwp'); ?></th><td><?php echo esc_html($this->format_decimal($breakdown['recency_bonus'])); ?></td></tr>
+						<tr class="vfwp-search-ranking-total"><th scope="row" colspan="3"><?php echo esc_html__('Final ranking score', 'vfwp'); ?></th><td><strong><?php echo esc_html($this->format_decimal($breakdown['database_total'])); ?></strong></td></tr>
+					</tfoot>
+				</table>
+			</details>
+		<?php endforeach; ?>
+			<?php
+		}
 
 	/**
 	 * Render lightweight admin styling for the ranking tab.
@@ -1862,6 +2063,29 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
+	 * Render the no-results broader-search toggle.
+	 *
+	 * @return void
+	 */
+	public function render_broader_search_setting() {
+		$enabled = self::is_broader_search_enabled();
+		?>
+		<input type="hidden" name="<?php echo esc_attr(self::OPTION_NAME); ?>[broader_search_enabled]" value="0">
+		<label for="vfwp-intranet-search-broader-search-enabled">
+			<input
+				type="checkbox"
+				id="vfwp-intranet-search-broader-search-enabled"
+				name="<?php echo esc_attr(self::OPTION_NAME); ?>[broader_search_enabled]"
+				value="1"
+				<?php checked($enabled); ?>
+			>
+			<?php echo esc_html__('Offer a broader search when strict matching returns no results and no reliable spelling correction is available.', 'vfwp'); ?>
+		</label>
+		<p class="description"><?php echo esc_html__('The broader link removes one query term and is shown only when the resulting search has results. Disabled by default. Changes take effect immediately and do not require reindexing.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
 	 * Render analytics setting controls.
 	 *
 	 * @return void
@@ -2163,6 +2387,8 @@ class VFWP_Intranet_Search_Settings {
 	private function render_grouped_analytics_table($heading, array $rows, array $pagination, $zero_only, $page_arg) {
 		$page = isset($pagination['page']) ? max(1, (int) $pagination['page']) : 1;
 		$total_pages = isset($pagination['total_pages']) ? max(1, (int) $pagination['total_pages']) : 1;
+		$sort = isset($pagination['sort']) && 'last_searched' === $pagination['sort'] ? 'last_searched' : 'searches';
+		$order = isset($pagination['order']) && 'asc' === $pagination['order'] ? 'asc' : 'desc';
 		?>
 		<h3><?php echo esc_html($heading); ?></h3>
 		<?php if (empty($rows)) : ?>
@@ -2172,12 +2398,21 @@ class VFWP_Intranet_Search_Settings {
 				<thead>
 					<tr>
 						<th scope="col"><?php echo esc_html__('Query', 'vfwp'); ?></th>
-						<th scope="col"><?php echo esc_html__('Searches', 'vfwp'); ?></th>
+						<?php if ($zero_only) : ?>
+							<?php $this->render_zero_results_sort_header(__('Searches', 'vfwp'), 'searches', $sort, $order); ?>
+						<?php else : ?>
+							<th scope="col"><?php echo esc_html__('Searches', 'vfwp'); ?></th>
+						<?php endif; ?>
 						<?php if (!$zero_only) : ?>
 							<th scope="col"><?php echo esc_html__('No-result searches', 'vfwp'); ?></th>
 							<th scope="col"><?php echo esc_html__('Average results', 'vfwp'); ?></th>
 						<?php endif; ?>
-						<th scope="col"><?php echo esc_html__('Last searched', 'vfwp'); ?></th>
+						<?php if ($zero_only) : ?>
+							<?php $this->render_zero_results_sort_header(__('Last searched', 'vfwp'), 'last_searched', $sort, $order); ?>
+							<th scope="col"><?php echo esc_html__('Did you mean?', 'vfwp'); ?></th>
+						<?php else : ?>
+							<th scope="col"><?php echo esc_html__('Last searched', 'vfwp'); ?></th>
+						<?php endif; ?>
 					</tr>
 				</thead>
 				<tbody>
@@ -2195,6 +2430,9 @@ class VFWP_Intranet_Search_Settings {
 								<td><?php echo esc_html(number_format_i18n((float) $row['average_results'], 1)); ?></td>
 							<?php endif; ?>
 							<td><?php echo esc_html($this->format_admin_datetime($row['last_searched_at'])); ?></td>
+							<?php if ($zero_only) : ?>
+								<td><?php $this->render_did_you_mean_analytics_value($row); ?></td>
+							<?php endif; ?>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
@@ -2277,6 +2515,83 @@ class VFWP_Intranet_Search_Settings {
 			</table>
 			<?php $this->render_admin_pagination($page, $total_pages, 'analytics_recent_page', __('Recent searches pagination', 'vfwp'), 'analytics'); ?>
 		<?php endif; ?>
+			<?php
+		}
+
+	/**
+	 * Render the recorded suggestions for one grouped no-results query.
+	 *
+	 * @param array $row Grouped analytics row.
+	 * @return void
+	 */
+	private function render_did_you_mean_analytics_value(array $row) {
+		if (empty($row['did_you_mean_shown']) || empty($row['did_you_mean_suggestions'])) {
+			echo esc_html__('No', 'vfwp');
+			return;
+		}
+
+		$decoded = json_decode((string) $row['did_you_mean_suggestions'], true);
+		$labels = array();
+
+		foreach (is_array($decoded) ? $decoded : array() as $suggestion) {
+			if (!is_array($suggestion)) {
+				continue;
+			}
+
+			$label = !empty($suggestion['label']) ? (string) $suggestion['label'] : (isset($suggestion['query']) ? (string) $suggestion['query'] : '');
+
+			if ($label !== '') {
+				$labels[] = $label;
+			}
+		}
+
+		if (empty($labels)) {
+			echo esc_html__('Yes', 'vfwp');
+			return;
+		}
+
+		echo esc_html(sprintf(__('Yes: %s', 'vfwp'), implode(', ', array_unique($labels))));
+	}
+
+	/**
+	 * Render a sortable heading for the zero-results analytics table.
+	 *
+	 * @param string $label Column label.
+	 * @param string $column searches|last_searched.
+	 * @param string $current_sort Current sort field.
+	 * @param string $current_order Current sort direction.
+	 * @return void
+	 */
+	private function render_zero_results_sort_header($label, $column, $current_sort, $current_order) {
+		$is_current = $column === $current_sort;
+		$next_order = $is_current && 'desc' === $current_order ? 'asc' : 'desc';
+		$indicator = $is_current ? ('asc' === $current_order ? '↑' : '↓') : '';
+		$aria_sort = $is_current ? ('asc' === $current_order ? 'ascending' : 'descending') : 'none';
+		$url_args = array(
+			'page'                    => 'vfwp-intranet-search',
+			'tab'                     => 'analytics',
+			'analytics_zero_page'     => 1,
+			'analytics_zero_sort'     => $column,
+			'analytics_zero_order'    => $next_order,
+		);
+
+		foreach (array('analytics_top_page', 'analytics_recent_page') as $page_arg) {
+			if (isset($_GET[$page_arg])) {
+				$url_args[$page_arg] = max(1, absint(wp_unslash($_GET[$page_arg])));
+			}
+		}
+
+		$url = add_query_arg($url_args, admin_url('options-general.php'));
+		$action = $is_current && 'desc' === $current_order
+			? sprintf(__('Sort %s ascending', 'vfwp'), $label)
+			: sprintf(__('Sort %s descending', 'vfwp'), $label);
+		?>
+		<th scope="col" aria-sort="<?php echo esc_attr($aria_sort); ?>">
+			<a href="<?php echo esc_url($url); ?>" aria-label="<?php echo esc_attr($action); ?>">
+				<?php echo esc_html($label); ?>
+				<?php if ($indicator !== '') : ?><span aria-hidden="true"><?php echo esc_html($indicator); ?></span><?php endif; ?>
+			</a>
+		</th>
 		<?php
 	}
 
@@ -2305,6 +2620,13 @@ class VFWP_Intranet_Search_Settings {
 			if ($allowed_page_arg !== $page_arg && isset($_GET[$allowed_page_arg])) {
 				$url_args[$allowed_page_arg] = max(1, absint(wp_unslash($_GET[$allowed_page_arg])));
 			}
+		}
+
+		if ('analytics' === $tab) {
+			$zero_sort = isset($_GET['analytics_zero_sort']) && 'searches' === sanitize_key(wp_unslash($_GET['analytics_zero_sort'])) ? 'searches' : 'last_searched';
+			$zero_order = isset($_GET['analytics_zero_order']) && 'asc' === sanitize_key(wp_unslash($_GET['analytics_zero_order'])) ? 'asc' : 'desc';
+			$url_args['analytics_zero_sort'] = $zero_sort;
+			$url_args['analytics_zero_order'] = $zero_order;
 		}
 
 		$url_args[sanitize_key($page_arg)] = '%#%';

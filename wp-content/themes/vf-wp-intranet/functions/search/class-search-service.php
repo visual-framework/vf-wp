@@ -111,6 +111,26 @@ class VFWP_Intranet_Search_Service {
 	}
 
 	/**
+	 * Run a search and attach an administrator-friendly score explanation.
+	 *
+	 * @param mixed $query Raw query.
+	 * @param array $filters Filters.
+	 * @param int   $page Page number.
+	 * @param int   $per_page Results per page.
+	 * @return array
+	 */
+	public function search_with_score_breakdown($query, array $filters = array(), $page = 1, $per_page = self::DEFAULT_PER_PAGE) {
+		$response = $this->search($query, $filters, $page, $per_page);
+
+		foreach ($response['results'] as &$result) {
+			$result['score_breakdown'] = $this->build_score_breakdown($result);
+		}
+		unset($result);
+
+		return $response;
+	}
+
+	/**
 	 * Count indexed matches for a query and filter set without loading rows.
 	 *
 	 * @param mixed $query Raw query.
@@ -136,6 +156,37 @@ class VFWP_Intranet_Search_Service {
 		$count_sql = 'SELECT COUNT(*) FROM ' . VFWP_Intranet_Search_Schema::table_name() . ' ' . $count_sql_parts['where_sql'];
 
 		return (int) $this->wpdb->get_var($this->prepare_sql($count_sql, $count_sql_parts['params']));
+	}
+
+	/**
+	 * Determine whether an indexed query has at least one result.
+	 *
+	 * This avoids an exact COUNT(*) when a caller only needs to validate a
+	 * spelling correction or broader-query suggestion.
+	 *
+	 * @param mixed $query Raw query.
+	 * @param array $filters Filters.
+	 * @return bool
+	 */
+	public function has_results($query, array $filters = array()) {
+		$parsed_query = $this->query_parser->parse($query);
+		$normalized_filters = $this->normalize_filters($filters);
+
+		if ($parsed_query['is_empty'] || !$parsed_query['is_searchable']) {
+			return false;
+		}
+
+		if (
+			empty($normalized_filters['object_types'])
+			|| (in_array('post', $normalized_filters['object_types'], true) && empty($normalized_filters['post_types']))
+		) {
+			return false;
+		}
+
+		$sql_parts = $this->build_where_sql($parsed_query, $normalized_filters);
+		$sql = 'SELECT 1 FROM ' . VFWP_Intranet_Search_Schema::table_name() . ' ' . $sql_parts['where_sql'] . ' LIMIT 1';
+
+		return null !== $this->wpdb->get_var($this->prepare_sql($sql, $sql_parts['params']));
 	}
 
 	/**
@@ -223,6 +274,7 @@ class VFWP_Intranet_Search_Service {
 
 		$sql = "
 			SELECT scored.*,
+				IF(scored.published_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY), 1, 0) AS recent_content_hit,
 				(
 					(
 						(scored.exact_title_match * {$score_parts['boosts']['exact_title']})
@@ -484,7 +536,7 @@ class VFWP_Intranet_Search_Service {
 		$escaped_terms = array();
 
 		foreach ($terms as $term) {
-			$escaped_terms[] = preg_quote($term, '/');
+			$escaped_terms[] = $this->build_accent_aware_regexp_fragment($term);
 		}
 
 		return '(^|[,;\r\n|])[[:space:]]*' . implode('[[:space:]]+', $escaped_terms) . '[[:space:]]*($|[,;\r\n|])';
@@ -598,7 +650,7 @@ class VFWP_Intranet_Search_Service {
 		$escaped_terms = array();
 
 		foreach ($terms as $term) {
-			$escaped_terms[] = preg_quote($term, '/');
+			$escaped_terms[] = $this->build_accent_aware_regexp_fragment($term);
 		}
 
 		return '(^|[^[:alnum:]_])' . implode('[^[:alnum:]_]+', $escaped_terms) . '([^[:alnum:]_]|$)';
@@ -617,13 +669,60 @@ class VFWP_Intranet_Search_Service {
 			return '';
 		}
 
-		$escaped_term = preg_quote($term, '/');
+		$escaped_term = $this->build_accent_aware_regexp_fragment($term);
 
 		if ($this->string_length($term) < 3) {
 			return '(^|[^[:alnum:]_])' . $escaped_term . '([^[:alnum:]_]|$)';
 		}
 
 		return '(^|[^[:alnum:]_])' . $escaped_term . '[[:alnum:]_]*';
+	}
+
+	/**
+	 * Build a safe regexp fragment that treats folded Latin letters and their
+	 * accented forms as equivalent. Query parsing removes accents, while index
+	 * display fields deliberately retain them.
+	 *
+	 * @param string $text Normalized query text.
+	 * @return string
+	 */
+	private function build_accent_aware_regexp_fragment($text) {
+		$variants = array(
+			'a' => 'aàáâãäåāăąǎǟǡǻȁȃạảấầẩẫậắằẳẵặ',
+			'c' => 'cçćĉċč',
+			'd' => 'dďđð',
+			'e' => 'eèéêëēĕėęěȅȇẹẻẽếềểễệ',
+			'g' => 'gĝğġģǧ',
+			'h' => 'hĥħ',
+			'i' => 'iìíîïĩīĭįıǐȉȋịỉ',
+			'j' => 'jĵ',
+			'k' => 'kķ',
+			'l' => 'lĺļľŀł',
+			'n' => 'nñńņňŋ',
+			'o' => 'oòóôõöøōŏőǒǫǭǿȍȏọỏốồổỗộớờởỡợ',
+			'r' => 'rŕŗřȑȓ',
+			's' => 'sśŝşšș',
+			't' => 'tţťŧț',
+			'u' => 'uùúûüũūŭůűųǔǖǘǚǜȕȗụủứừửữự',
+			'w' => 'wŵ',
+			'y' => 'yýÿŷỳỵỷỹ',
+			'z' => 'zźżž',
+		);
+		$characters = preg_split('//u', (string) $text, -1, PREG_SPLIT_NO_EMPTY);
+
+		if (!is_array($characters)) {
+			return preg_quote((string) $text, '/');
+		}
+
+		$fragment = '';
+
+		foreach ($characters as $character) {
+			$fragment .= isset($variants[$character])
+				? '[' . $variants[$character] . ']'
+				: preg_quote($character, '/');
+		}
+
+		return $fragment;
 	}
 
 	/**
@@ -642,8 +741,18 @@ class VFWP_Intranet_Search_Service {
 		$conditions = array();
 
 		foreach ($phrases as $phrase) {
-			$conditions[] = "LOCATE(%s, LOWER({$field_sql})) > 0";
-			$params[] = $phrase;
+			$pattern = $this->build_exact_phrase_regexp($phrase);
+
+			if ($pattern === '') {
+				continue;
+			}
+
+			$conditions[] = "LOWER({$field_sql}) REGEXP %s";
+			$params[] = $pattern;
+		}
+
+		if (empty($conditions)) {
+			return '0';
 		}
 
 		return 'IF((' . implode(' OR ', $conditions) . '), 1, 0)';
@@ -665,8 +774,18 @@ class VFWP_Intranet_Search_Service {
 		$parts = array();
 
 		foreach ($terms as $term) {
-			$parts[] = "IF(LOCATE(%s, LOWER({$field_sql})) > 0, 1, 0)";
-			$params[] = $term;
+			$pattern = $this->build_query_term_regexp($term);
+
+			if ($pattern === '') {
+				continue;
+			}
+
+			$parts[] = "IF(LOWER({$field_sql}) REGEXP %s, 1, 0)";
+			$params[] = $pattern;
+		}
+
+		if (empty($parts)) {
+			return '0';
 		}
 
 		return '(' . implode(' + ', $parts) . ')';
@@ -760,13 +879,94 @@ class VFWP_Intranet_Search_Service {
 				'excerpt_phrase_hit' => (int) $row['excerpt_phrase_hit'],
 				'excerpt_term_hits' => (int) $row['excerpt_term_hits'],
 				'content_phrase_hit' => (int) $row['content_phrase_hit'],
-				'content_term_hits' => (int) $row['content_term_hits'],
-				'all_term_hits'     => (int) $row['all_field_term_hits'],
-				'term_count'        => max(1, count($parsed_query['fulltext_terms'])),
-			),
+					'content_term_hits' => (int) $row['content_term_hits'],
+					'all_term_hits'     => (int) $row['all_field_term_hits'],
+					'ft_title'         => (float) $row['ft_title'],
+					'ft_acf_keywords'  => (float) $row['ft_acf_keywords'],
+					'ft_excerpt'       => (float) $row['ft_excerpt'],
+					'ft_content'       => (float) $row['ft_content'],
+					'recent_content_hit' => isset($row['recent_content_hit']) ? (int) $row['recent_content_hit'] : 0,
+					'term_count'        => max(1, count($parsed_query['fulltext_terms'])),
+				),
 		);
 
 		return $this->snippet_service->add_display_fields($result, $parsed_query);
+	}
+
+	/**
+	 * Reproduce the SQL relevance formula as readable component rows.
+	 *
+	 * @param array $result Formatted result.
+	 * @return array
+	 */
+	private function build_score_breakdown(array $result) {
+		$signals = isset($result['signals']) && is_array($result['signals']) ? $result['signals'] : array();
+		$weights = VFWP_Intranet_Search_Settings::get_field_weights();
+		$boosts = VFWP_Intranet_Search_Settings::get_ranking_boosts();
+		$term_count = max(1, isset($signals['term_count']) ? (int) $signals['term_count'] : 1);
+		$all_term_hits = isset($signals['all_term_hits']) ? (int) $signals['all_term_hits'] : 0;
+		$title_term_hits = isset($signals['title_term_hits']) ? (int) $signals['title_term_hits'] : 0;
+		$components = array();
+
+		$components[] = $this->score_component('exact_title', __('Exact title match', 'vfwp'), (int) $signals['exact_title_match'], 1, $boosts['exact_title']);
+		$components[] = $this->score_component('title_phrase', __('Title phrase match', 'vfwp'), (int) $signals['title_phrase_hit'], $weights['title'], $boosts['title_phrase']);
+		$components[] = $this->score_component('title_all_terms', __('All query terms in title', 'vfwp'), $title_term_hits === $term_count ? 1 : 0, $weights['title'], $boosts['title_all_terms']);
+		$components[] = $this->score_component('title_terms', __('Individual title terms', 'vfwp'), $title_term_hits, $weights['title'], $boosts['title_term']);
+		$components[] = $this->score_component('acf_phrase', __('Exact ACF keyword entry', 'vfwp'), (int) $signals['acf_phrase_hit'], $weights['acf_keywords'], $boosts['acf_phrase']);
+		$components[] = $this->score_component('acf_terms', __('ACF keyword terms', 'vfwp'), (int) $signals['acf_term_hits'], $weights['acf_keywords'], $boosts['acf_term']);
+		$components[] = $this->score_component('excerpt_phrase', __('Excerpt phrase match', 'vfwp'), (int) $signals['excerpt_phrase_hit'], $weights['excerpt'], $boosts['excerpt_phrase']);
+		$components[] = $this->score_component('excerpt_terms', __('Individual excerpt terms', 'vfwp'), (int) $signals['excerpt_term_hits'], $weights['excerpt'], $boosts['excerpt_term']);
+		$components[] = $this->score_component('content_phrase', __('Content/document phrase match', 'vfwp'), (int) $signals['content_phrase_hit'], $weights['content'], $boosts['content_phrase']);
+		$components[] = $this->score_component('content_terms', __('Individual content/document terms', 'vfwp'), (int) $signals['content_term_hits'], $weights['content'], $boosts['content_term']);
+		$components[] = $this->score_component('all_terms', __('All query terms anywhere', 'vfwp'), $all_term_hits === $term_count ? 1 : 0, 1, $boosts['all_terms']);
+		$coverage = min(1, $all_term_hits / $term_count);
+		$components[] = $this->score_component('term_coverage', __('Query term coverage', 'vfwp'), $coverage, 1, $boosts['term_coverage']);
+		$components[] = $this->score_component('fulltext_title', __('FULLTEXT title relevance', 'vfwp'), (float) $signals['ft_title'], $weights['title'], $boosts['fulltext_title']);
+		$components[] = $this->score_component('fulltext_acf', __('FULLTEXT ACF relevance', 'vfwp'), (float) $signals['ft_acf_keywords'], $weights['acf_keywords'], $boosts['fulltext_acf']);
+		$components[] = $this->score_component('fulltext_excerpt', __('FULLTEXT excerpt relevance', 'vfwp'), (float) $signals['ft_excerpt'], $weights['excerpt'], $boosts['fulltext_excerpt']);
+		$components[] = $this->score_component('fulltext_content', __('FULLTEXT content/document relevance', 'vfwp'), (float) $signals['ft_content'], $weights['content'], $boosts['fulltext_content']);
+
+		$base_score = array_sum(array_column($components, 'points'));
+		$post_type_weight = VFWP_Intranet_Search_Settings::get_post_type_weight($result['post_type']);
+		$weighted_score = $base_score * $post_type_weight;
+		$recent_hit = !empty($signals['recent_content_hit']) ? 1 : 0;
+		$recency_bonus = $recent_hit * (float) $boosts['recency'];
+
+		return array(
+			'components'       => $components,
+			'base_score'       => $base_score,
+			'post_type_weight' => $post_type_weight,
+			'weighted_score'   => $weighted_score,
+			'recency_hit'      => $recent_hit,
+			'recency_bonus'    => $recency_bonus,
+			'calculated_total' => $weighted_score + $recency_bonus,
+			'database_total'   => (float) $result['relevance'],
+		);
+	}
+
+	/**
+	 * Build one readable score component.
+	 *
+	 * @param string $key Component key.
+	 * @param string $label Display label.
+	 * @param float  $signal Signal value.
+	 * @param float  $weight Field weight.
+	 * @param float  $boost Ranking boost.
+	 * @return array
+	 */
+	private function score_component($key, $label, $signal, $weight, $boost) {
+		$signal = (float) $signal;
+		$weight = (float) $weight;
+		$boost = (float) $boost;
+
+		return array(
+			'key'          => $key,
+			'label'        => $label,
+			'signal_value' => $signal,
+			'field_weight' => $weight,
+			'boost'        => $boost,
+			'points'       => $signal * $weight * $boost,
+		);
 	}
 
 	/**

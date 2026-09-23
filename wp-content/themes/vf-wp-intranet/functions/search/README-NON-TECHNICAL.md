@@ -147,6 +147,8 @@ If a search has no results, the site may show "Did you mean" suggestions.
 
 These suggestions are based on a spelling dictionary built from indexed titles and search keywords. It can recognize common missing, extra, or misplaced letters without scanning page and document text during the search. A suggestion is only shown when the corrected search is expected to return results.
 
+When enabled by an administrator, a search with no reliable spelling correction may offer a broader-search link with one word removed. This option is off by default. The link is only shown when that simpler search has results; the search does not silently replace the words entered by the user.
+
 ## Search Keywords
 
 Administrators can configure ACF field names that should be treated as search keyword fields.
@@ -223,6 +225,8 @@ Changing ranking weights usually affects results immediately.
 
 Changing what content is indexed usually requires rebuilding the index.
 
+Administrators can use the Ranking test tab to try a query and understand why each of the first ten results received its position. It shows which title, keyword, description, document-text, database relevance, post-type, and recent-content signals added points. Ranking tests are not included in Search Analytics.
+
 ## Search Analytics
 
 Search analytics can record what people searched for.
@@ -268,6 +272,7 @@ From this page, administrators can manage:
 - Exact phrase searches
 - Synonyms
 - Ranking boosts
+- Ranking tests with a score breakdown for each result
 - Search analytics
 - Index rebuilds
 - Document extraction issue notices

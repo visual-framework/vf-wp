@@ -185,8 +185,45 @@ class VFWP_Intranet_Search_Spelling_Repository {
 			LIMIT %d";
 		$params = array_merge($keys, array($min_length, $max_length, $limit));
 		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $params), ARRAY_A);
+		$rows = is_array($rows) ? $rows : array();
 
-		return is_array($rows) ? $rows : array();
+		// Long words can contain several substitutions without sharing a one-deletion key.
+		// Add a bounded, index-friendly prefix lookup so those candidates still reach
+		// the stricter edit-distance check in the suggestion service.
+		if ($this->length($query_term) >= 9 && count($rows) < $limit) {
+			$prefix = $this->limit_string($query_term, 4);
+			$remaining_limit = $limit - count($rows);
+			$prefix_sql = "SELECT t.term, t.display_term, t.document_frequency, t.title_frequency, t.keyword_frequency
+				FROM {$terms_table} t
+				WHERE t.term LIKE %s
+					AND CHAR_LENGTH(t.term) BETWEEN %d AND %d
+				ORDER BY t.title_frequency DESC, t.keyword_frequency DESC, t.document_frequency DESC, t.term ASC
+				LIMIT %d";
+			$prefix_rows = $this->wpdb->get_results(
+				$this->wpdb->prepare(
+					$prefix_sql,
+					$this->wpdb->esc_like($prefix) . '%',
+					$min_length,
+					$max_length,
+					$remaining_limit
+				),
+				ARRAY_A
+			);
+
+			if (is_array($prefix_rows)) {
+				$merged_rows = array();
+
+				foreach (array_merge($rows, $prefix_rows) as $row) {
+					if (!empty($row['term'])) {
+						$merged_rows[(string) $row['term']] = $row;
+					}
+				}
+
+				$rows = array_slice(array_values($merged_rows), 0, $limit);
+			}
+		}
+
+		return $rows;
 	}
 
 	/**

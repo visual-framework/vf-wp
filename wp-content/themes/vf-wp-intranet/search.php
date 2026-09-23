@@ -25,6 +25,8 @@ $vfwp_indexed_search_total = isset($vfwp_indexed_search_pagination['total'])
   : 0;
 $vfwp_search_show_clear_filters = !is_array($vfwp_indexed_search_response) || $vfwp_indexed_search_total > 0;
 $vfwp_search_did_you_mean = array();
+$vfwp_search_did_you_mean_links = array();
+$vfwp_search_broader_link = '';
 
 if (
   is_array($vfwp_indexed_search_response)
@@ -39,6 +41,58 @@ if (
     VFWP_Intranet_Search_Frontend::get_filters_for_request(),
     3
   );
+
+  if (!empty($vfwp_search_did_you_mean) && class_exists('VFWP_Intranet_Search_Analytics')) {
+    VFWP_Intranet_Search_Analytics::record_did_you_mean_suggestions($vfwp_search_did_you_mean);
+  }
+
+  foreach ($vfwp_search_did_you_mean as $vfwp_search_did_you_mean_item) {
+    $vfwp_search_did_you_mean_query = isset($vfwp_search_did_you_mean_item['query']) ? (string) $vfwp_search_did_you_mean_item['query'] : '';
+    $vfwp_search_did_you_mean_label = isset($vfwp_search_did_you_mean_item['label']) ? (string) $vfwp_search_did_you_mean_item['label'] : $vfwp_search_did_you_mean_query;
+
+    if ($vfwp_search_did_you_mean_query === '' || $vfwp_search_did_you_mean_label === '') {
+      continue;
+    }
+
+    $vfwp_search_did_you_mean_url = VFWP_Intranet_Search_Frontend::get_search_url($vfwp_search_did_you_mean_query);
+
+    if (class_exists('VFWP_Intranet_Search_Analytics')) {
+      $vfwp_search_correction_args = VFWP_Intranet_Search_Analytics::get_correction_tracking_args($vfwp_search_did_you_mean_query);
+
+      if (!empty($vfwp_search_correction_args)) {
+        $vfwp_search_did_you_mean_url = add_query_arg($vfwp_search_correction_args, $vfwp_search_did_you_mean_url);
+      }
+    }
+
+    $vfwp_search_did_you_mean_links[] = '<a class="vf-link" href="' . esc_url($vfwp_search_did_you_mean_url) . '">' . esc_html($vfwp_search_did_you_mean_label) . '</a>';
+  }
+
+  if (empty($vfwp_search_did_you_mean_links)) {
+    $vfwp_search_broader = $vfwp_search_did_you_mean_service->get_broader_search(
+      get_search_query(false),
+      VFWP_Intranet_Search_Frontend::get_filters_for_request()
+    );
+    $vfwp_search_broader_query = isset($vfwp_search_broader['query']) ? (string) $vfwp_search_broader['query'] : '';
+    $vfwp_search_broader_label = isset($vfwp_search_broader['label']) ? (string) $vfwp_search_broader['label'] : $vfwp_search_broader_query;
+
+    if ($vfwp_search_broader_query !== '' && $vfwp_search_broader_label !== '') {
+      $vfwp_search_broader_url = VFWP_Intranet_Search_Frontend::get_search_url($vfwp_search_broader_query);
+
+      if (class_exists('VFWP_Intranet_Search_Analytics')) {
+        $vfwp_search_broader_args = VFWP_Intranet_Search_Analytics::get_correction_tracking_args($vfwp_search_broader_query);
+
+        if (!empty($vfwp_search_broader_args)) {
+          $vfwp_search_broader_url = add_query_arg($vfwp_search_broader_args, $vfwp_search_broader_url);
+        }
+      }
+
+      $vfwp_search_broader_link = sprintf(
+        '<a class="vf-link" href="%1$s">%2$s</a>',
+        esc_url($vfwp_search_broader_url),
+        esc_html(sprintf(__('Search for “%s” instead', 'vfwp'), $vfwp_search_broader_label))
+      );
+    }
+  }
 }
 
 get_header();
@@ -147,38 +201,6 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
         </button>
       </div>
     </form>
-    <?php if (!empty($vfwp_search_did_you_mean) && class_exists('VFWP_Intranet_Search_Frontend')) : ?>
-      <?php
-      $vfwp_search_did_you_mean_links = array();
-
-      foreach ($vfwp_search_did_you_mean as $vfwp_search_did_you_mean_item) {
-        $vfwp_search_did_you_mean_query = isset($vfwp_search_did_you_mean_item['query']) ? (string) $vfwp_search_did_you_mean_item['query'] : '';
-        $vfwp_search_did_you_mean_label = isset($vfwp_search_did_you_mean_item['label']) ? (string) $vfwp_search_did_you_mean_item['label'] : $vfwp_search_did_you_mean_query;
-
-        if ($vfwp_search_did_you_mean_query === '' || $vfwp_search_did_you_mean_label === '') {
-          continue;
-        }
-
-        $vfwp_search_did_you_mean_url = VFWP_Intranet_Search_Frontend::get_search_url($vfwp_search_did_you_mean_query);
-
-        if (class_exists('VFWP_Intranet_Search_Analytics')) {
-          $vfwp_search_correction_args = VFWP_Intranet_Search_Analytics::get_correction_tracking_args($vfwp_search_did_you_mean_query);
-
-          if (!empty($vfwp_search_correction_args)) {
-            $vfwp_search_did_you_mean_url = add_query_arg($vfwp_search_correction_args, $vfwp_search_did_you_mean_url);
-          }
-        }
-
-        $vfwp_search_did_you_mean_links[] = '<a class="vf-link" href="' . esc_url($vfwp_search_did_you_mean_url) . '">' . esc_html($vfwp_search_did_you_mean_label) . '</a>';
-      }
-      ?>
-      <?php if (!empty($vfwp_search_did_you_mean_links)) : ?>
-      <p class="vf-search-did-you-mean">
-        <span><?php esc_html_e('Did you mean:', 'vfwp'); ?></span>
-        <?php echo implode(esc_html_x(', ', 'search correction separator', 'vfwp'), $vfwp_search_did_you_mean_links); ?>
-      </p>
-      <?php endif; ?>
-    <?php endif; ?>
   </div>
 </section>
 <div class="vf-stack vf-stack--400">
@@ -236,10 +258,18 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
             if (!empty($vfwp_active_search_filters) && class_exists('VFWP_Intranet_Search_Frontend')) {
               echo VFWP_Intranet_Search_Frontend::render_active_filters();
             }
+            if (!empty($vfwp_search_did_you_mean_links)) {
+              echo '<p class="vf-search-did-you-mean"><span>' . esc_html__('Did you mean:', 'vfwp') . '</span> ';
+              echo implode(esc_html_x(', ', 'search correction separator', 'vfwp'), $vfwp_search_did_you_mean_links);
+              echo '</p>';
+            }
             if (class_exists('VFWP_Intranet_Search_Frontend')) {
               echo '<h2 class="vf-text-heading--3" id="search-result-count">' . wp_kses(VFWP_Intranet_Search_Frontend::get_result_count_html($vfwp_indexed_search_pagination, get_search_query(false)), array('strong' => array())) . '</h2>';
             } else {
               echo '<h2 class="vf-text-heading--3" id="search-result-count">' . esc_html__('No results found', 'vfwp') . '</h2>';
+            }
+            if ($vfwp_search_broader_link !== '') {
+              echo '<p class="vf-search-broader-search">' . $vfwp_search_broader_link . '</p>';
             }
             echo '<p>' . esc_html__('Try checking the spelling, using fewer words, or searching for a broader term.', 'vfwp') . '</p>';
             echo '<ul class="vf-list">';
