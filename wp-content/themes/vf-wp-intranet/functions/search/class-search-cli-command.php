@@ -141,8 +141,23 @@ class VFWP_Intranet_Search_CLI_Command {
 		$this->assert_contains('<mark>gamma</mark>', $multi['display']['snippet'], 'multiple terms highlight second term');
 		$passed++;
 
+		$clustered_content = 'Alpha appears alone. ' . str_repeat('filler ', 45) . 'Useful passage contains alpha context and gamma together.';
+		$clustered = $this->build_snippet_test_result($parser, $snippet_service, 'alpha gamma', 'Clustered terms', '', $clustered_content, 'post');
+		$this->assert_contains('Useful passage', $clustered['display']['snippet'], 'snippet selects strongest multi-term passage');
+		$this->assert_contains('<mark>alpha</mark>', $clustered['display']['snippet'], 'strongest passage highlights first clustered term');
+		$this->assert_contains('<mark>gamma</mark>', $clustered['display']['snippet'], 'strongest passage highlights second clustered term');
+		$passed++;
+
 		$phrase = $this->build_snippet_test_result($parser, $snippet_service, '"alpha beta"', 'Phrase test', '', 'The alpha beta phrase appears here.', 'post');
 		$this->assert_contains('<mark>alpha beta</mark>', $phrase['display']['snippet'], 'phrase search highlights phrase');
+		$passed++;
+
+		$reference_query = 'Fin.Com./2017/14 Rev.1';
+		$parsed_reference = $parser->parse($reference_query);
+		$this->assert_equals('fin com 2017 14 rev 1', $parsed_reference['protected_phrase'], 'structured reference becomes a protected phrase');
+		$this->assert_equals(true, $parsed_reference['is_exact_phrase_only'], 'structured reference is exact phrase only');
+		$reference = $this->build_snippet_test_result($parser, $snippet_service, $reference_query, 'Reference ' . $reference_query, '', '', 'post');
+		$this->assert_contains('<mark>' . $reference_query . '</mark>', $reference['display']['title'], 'structured reference highlights as one phrase');
 		$passed++;
 
 		$parentheses = $this->build_snippet_test_result($parser, $snippet_service, 'alpha (beta)', 'Parentheses test', '', 'Alpha and beta are both present.', 'post');

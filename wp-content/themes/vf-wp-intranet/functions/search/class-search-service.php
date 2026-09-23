@@ -755,6 +755,8 @@ class VFWP_Intranet_Search_Service {
 				'exact_title_match' => (int) $row['exact_title_match'],
 				'title_phrase_hit'  => (int) $row['title_phrase_hit'],
 				'title_term_hits'   => (int) $row['title_term_hits'],
+				'acf_phrase_hit'    => (int) $row['acf_phrase_hit'],
+				'acf_term_hits'     => (int) $row['acf_term_hits'],
 				'excerpt_phrase_hit' => (int) $row['excerpt_phrase_hit'],
 				'excerpt_term_hits' => (int) $row['excerpt_term_hits'],
 				'content_phrase_hit' => (int) $row['content_phrase_hit'],

@@ -15,6 +15,7 @@ require_once get_stylesheet_directory() . '/functions/search/class-search-pdf-ex
 require_once get_stylesheet_directory() . '/functions/search/class-search-docx-extractor.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-indexer.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-query-parser.php';
+require_once get_stylesheet_directory() . '/functions/search/class-search-spelling-repository.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-snippet-service.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-service.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-analytics.php';

@@ -19,6 +19,11 @@ class VFWP_Intranet_Search_Index_Repository {
 	private $table_name;
 
 	/**
+	 * @var VFWP_Intranet_Search_Spelling_Repository|null
+	 */
+	private $spelling_repository;
+
+	/**
 	 * @param wpdb|null $db WordPress database object.
 	 */
 	public function __construct($db = null) {
@@ -108,12 +113,24 @@ class VFWP_Intranet_Search_Index_Repository {
 				array('%d', '%s')
 			);
 
-			return false === $result ? 'failed' : 'updated';
+			if (false === $result) {
+				return 'failed';
+			}
+
+			$this->sync_spelling_dictionary($row);
+
+			return 'updated';
 		}
 
 		$result = $this->wpdb->insert($this->table_name, $row, $formats);
 
-		return false === $result ? 'failed' : 'inserted';
+		if (false === $result) {
+			return 'failed';
+		}
+
+		$this->sync_spelling_dictionary($row);
+
+		return 'inserted';
 	}
 
 	/**
@@ -132,6 +149,10 @@ class VFWP_Intranet_Search_Index_Repository {
 			),
 			array('%d', '%s')
 		);
+
+		if (false !== $result) {
+			$this->get_spelling_repository()->delete_object((int) $object_id, (string) $object_type);
+		}
 
 		return false !== $result;
 	}
@@ -171,7 +192,13 @@ class VFWP_Intranet_Search_Index_Repository {
 	 * @return bool
 	 */
 	public function truncate() {
-		return false !== $this->wpdb->query("TRUNCATE TABLE {$this->table_name}");
+		$result = false !== $this->wpdb->query("TRUNCATE TABLE {$this->table_name}");
+
+		if ($result) {
+			$this->get_spelling_repository()->truncate();
+		}
+
+		return $result;
 	}
 
 	/**
@@ -224,7 +251,39 @@ class VFWP_Intranet_Search_Index_Repository {
 			)
 		);
 
+		if (false !== $result) {
+			$this->get_spelling_repository()->prune_missing_objects();
+		}
+
 		return false === $result ? 0 : (int) $result;
+	}
+
+	/**
+	 * Synchronize spelling terms after an index row changes.
+	 *
+	 * @param array $row Stored index row.
+	 * @return void
+	 */
+	private function sync_spelling_dictionary(array $row) {
+		$this->get_spelling_repository()->sync_object(
+			(int) $row['object_id'],
+			(string) $row['object_type'],
+			(string) $row['title'],
+			(string) $row['acf_keywords']
+		);
+	}
+
+	/**
+	 * Return the spelling repository lazily to keep repository construction cheap.
+	 *
+	 * @return VFWP_Intranet_Search_Spelling_Repository
+	 */
+	private function get_spelling_repository() {
+		if (!$this->spelling_repository instanceof VFWP_Intranet_Search_Spelling_Repository) {
+			$this->spelling_repository = new VFWP_Intranet_Search_Spelling_Repository($this->wpdb);
+		}
+
+		return $this->spelling_repository;
 	}
 
 	/**
@@ -280,10 +339,12 @@ class VFWP_Intranet_Search_Index_Repository {
 	 * Return recent PDF extraction issues for administrators.
 	 *
 	 * @param int $limit Maximum rows.
+	 * @param int $offset Row offset.
 	 * @return array
 	 */
-	public function get_pdf_extraction_issues($limit = 5) {
-		$limit = min(20, max(1, (int) $limit));
+	public function get_pdf_extraction_issues($limit = 20, $offset = 0) {
+		$limit = min(100, max(1, (int) $limit));
+		$offset = max(0, (int) $offset);
 		$rows = $this->wpdb->get_results(
 			$this->wpdb->prepare(
 				"SELECT object_id, title, file_name, extraction_status, extraction_error, indexed_at
@@ -291,8 +352,9 @@ class VFWP_Intranet_Search_Index_Repository {
 				WHERE (object_type = 'pdf' OR (object_type = 'post' AND post_type = 'documents'))
 					AND extraction_status NOT IN ('', 'success', 'success_truncated')
 				ORDER BY indexed_at DESC, object_id DESC
-				LIMIT %d",
-				$limit
+				LIMIT %d OFFSET %d",
+				$limit,
+				$offset
 			),
 			ARRAY_A
 		);

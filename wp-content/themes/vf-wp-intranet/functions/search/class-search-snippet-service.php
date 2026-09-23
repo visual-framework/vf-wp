@@ -66,7 +66,7 @@ class VFWP_Intranet_Search_Snippet_Service {
 		}
 
 		$matches = $this->find_matches($text, $this->get_needles($parsed_query), self::MAX_HIGHLIGHTS);
-		$position = empty($matches) ? 0 : (int) $matches[0]['start'];
+		$position = $this->select_best_match_position($text, $matches);
 
 		return $this->build_snippet($text, $position);
 	}
@@ -94,7 +94,7 @@ class VFWP_Intranet_Search_Snippet_Service {
 
 			$matches = $this->find_matches($text, $this->get_needles($parsed_query), self::MAX_HIGHLIGHTS);
 			$score = $this->score_passage($matches, $field, $index, $parsed_query);
-			$position = empty($matches) ? 0 : (int) $matches[0]['start'];
+			$position = $this->select_best_match_position($text, $matches);
 
 			if ($best === null || $score > $best['score']) {
 				$best = array(
@@ -205,6 +205,55 @@ class VFWP_Intranet_Search_Snippet_Service {
 	}
 
 	/**
+	 * Choose the passage window with the best term coverage and proximity.
+	 *
+	 * @param string $text Source text.
+	 * @param array  $matches Located phrase and term matches.
+	 * @return int
+	 */
+	private function select_best_match_position($text, array $matches) {
+		if (empty($matches)) {
+			return 0;
+		}
+
+		$text_length = $this->length($text);
+		$best_position = (int) $matches[0]['start'];
+		$best_score = null;
+
+		foreach ($matches as $anchor) {
+			$window_start = max(0, (int) $anchor['start'] - (int) floor(self::SNIPPET_LENGTH / 3));
+			$window_end = min($text_length, $window_start + self::SNIPPET_LENGTH);
+			$unique_needles = array();
+			$phrase_hits = 0;
+			$match_count = 0;
+			$first_match = null;
+			$last_match = null;
+
+			foreach ($matches as $match) {
+				if ((int) $match['end'] < $window_start || (int) $match['start'] > $window_end) {
+					continue;
+				}
+
+				$match_count++;
+				$unique_needles[(string) $match['needle']] = true;
+				$phrase_hits += !empty($match['is_phrase']) ? 1 : 0;
+				$first_match = $first_match === null ? (int) $match['start'] : min($first_match, (int) $match['start']);
+				$last_match = $last_match === null ? (int) $match['end'] : max($last_match, (int) $match['end']);
+			}
+
+			$span = $first_match === null || $last_match === null ? self::SNIPPET_LENGTH : max(0, $last_match - $first_match);
+			$score = ($phrase_hits * 1000) + (count($unique_needles) * 100) + ($match_count * 10) - min(self::SNIPPET_LENGTH, $span);
+
+			if ($best_score === null || $score > $best_score) {
+				$best_score = $score;
+				$best_position = (int) $anchor['start'];
+			}
+		}
+
+		return $best_position;
+	}
+
+	/**
 	 * Build a readable snippet around a match position.
 	 *
 	 * @param string $text Source text.
@@ -296,6 +345,30 @@ class VFWP_Intranet_Search_Snippet_Service {
 				continue;
 			}
 
+			if (!empty($needle['is_phrase'])) {
+				$phrase_matches = $this->find_flexible_phrase_matches(
+					$folded,
+					$folded_needle,
+					$limit - count($matches)
+				);
+
+				foreach ($phrase_matches as $phrase_match) {
+					if (!$this->overlaps_existing_match($matches, $phrase_match['start'], $phrase_match['end'])) {
+						$phrase_match['needle'] = $needle['value'];
+						$phrase_match['is_phrase'] = true;
+						$matches[] = $phrase_match;
+					}
+				}
+
+				if (!empty($phrase_matches)) {
+					if (count($matches) >= $limit) {
+						return $matches;
+					}
+
+					continue;
+				}
+			}
+
 			$offset = 0;
 			$needle_length = $this->length($folded_needle);
 
@@ -330,6 +403,76 @@ class VFWP_Intranet_Search_Snippet_Service {
 		}
 
 		usort($matches, array($this, 'sort_matches_by_position'));
+
+		return $matches;
+	}
+
+	/**
+	 * Match a normalized phrase while allowing punctuation between its terms.
+	 *
+	 * @param array  $folded Folded source text and original-character map.
+	 * @param string $folded_phrase Folded normalized phrase.
+	 * @param int    $limit Maximum matches.
+	 * @return array
+	 */
+	private function find_flexible_phrase_matches(array $folded, $folded_phrase, $limit) {
+		if ($limit <= 0 || empty($folded['text']) || empty($folded['map'])) {
+			return array();
+		}
+
+		$terms = preg_split('/\s+/u', trim((string) $folded_phrase));
+
+		if (!is_array($terms) || count($terms) < 2) {
+			return array();
+		}
+
+		$escaped_terms = array_map(
+			function ($term) {
+				return preg_quote($term, '/');
+			},
+			array_values(array_filter($terms, 'strlen'))
+		);
+
+		if (count($escaped_terms) < 2) {
+			return array();
+		}
+
+		$pattern = '/(?<![\p{L}\p{N}_])' . implode('[^\p{L}\p{N}_]+', $escaped_terms) . '(?![\p{L}\p{N}_])/u';
+		$match_count = preg_match_all($pattern, $folded['text'], $raw_matches, PREG_OFFSET_CAPTURE);
+
+		if (!is_int($match_count) || $match_count < 1 || empty($raw_matches[0])) {
+			return array();
+		}
+
+		$matches = array();
+
+		foreach ($raw_matches[0] as $raw_match) {
+			$matched_text = isset($raw_match[0]) ? (string) $raw_match[0] : '';
+			$byte_offset = isset($raw_match[1]) ? (int) $raw_match[1] : -1;
+
+			if ($matched_text === '' || $byte_offset < 0) {
+				continue;
+			}
+
+			$character_offset = function_exists('mb_strlen')
+				? mb_strlen(substr($folded['text'], 0, $byte_offset), 'UTF-8')
+				: $byte_offset;
+			$character_length = $this->length($matched_text);
+			$last_character = $character_offset + $character_length - 1;
+
+			if (!isset($folded['map'][$character_offset]) || !isset($folded['map'][$last_character])) {
+				continue;
+			}
+
+			$matches[] = array(
+				'start' => (int) $folded['map'][$character_offset],
+				'end'   => (int) $folded['map'][$last_character] + 1,
+			);
+
+			if (count($matches) >= $limit) {
+				break;
+			}
+		}
 
 		return $matches;
 	}

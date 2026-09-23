@@ -63,7 +63,8 @@ class VFWP_Intranet_Search_Query_Parser {
 		$normalized_query = $synonym_parts['query'];
 		$min_word_length = $this->get_min_word_length();
 		$all_terms = $this->extract_terms($normalized_query, false);
-		$protected_phrase_parts = $this->extract_protected_phrase_parts($normalized_query);
+		$automatic_protected_phrases = $this->detect_structured_identifier_phrases($decoded_query, $normalized_query);
+		$protected_phrase_parts = $this->extract_protected_phrase_parts($normalized_query, $automatic_protected_phrases);
 		$protected_phrases = $protected_phrase_parts['phrases'];
 		$has_protected_phrases = !empty($protected_phrases);
 		$terms = $this->extract_terms($protected_phrase_parts['remaining_query'], true);
@@ -106,6 +107,7 @@ class VFWP_Intranet_Search_Query_Parser {
 			'exact_phrase'     => isset($phrases[0]) ? $phrases[0] : '',
 			'protected_phrase' => isset($protected_phrases[0]) ? $protected_phrases[0] : '',
 			'protected_phrases' => $protected_phrases,
+			'automatic_protected_phrases' => $automatic_protected_phrases,
 			'is_exact_phrase_only' => $has_protected_phrases && empty($terms),
 			'has_protected_phrases' => $has_protected_phrases,
 			'boolean_query'    => $boolean_query,
@@ -396,17 +398,23 @@ class VFWP_Intranet_Search_Query_Parser {
 	 * @param string $normalized_query Normalized full query.
 	 * @return array
 	 */
-	private function extract_protected_phrase_parts($normalized_query) {
+	private function extract_protected_phrase_parts($normalized_query, array $automatic_phrases = array()) {
 		$normalized_query = trim((string) $normalized_query);
 
-		if ($normalized_query === '' || !class_exists('VFWP_Intranet_Search_Settings')) {
+		if ($normalized_query === '') {
 			return array(
 				'phrases'         => array(),
 				'remaining_query' => $normalized_query,
 			);
 		}
 
-		$configured_phrases = VFWP_Intranet_Search_Settings::get_exact_phrases();
+		$configured_phrases = array_merge(
+			$automatic_phrases,
+			class_exists('VFWP_Intranet_Search_Settings')
+				? VFWP_Intranet_Search_Settings::get_exact_phrases()
+				: array()
+		);
+		$configured_phrases = array_values(array_unique(array_filter(array_map('trim', $configured_phrases))));
 
 		usort($configured_phrases, array($this, 'sort_strings_by_length_desc'));
 
@@ -437,6 +445,45 @@ class VFWP_Intranet_Search_Query_Parser {
 			'phrases'         => array_values($protected_phrases),
 			'remaining_query' => $remaining_query,
 		);
+	}
+
+	/**
+	 * Detect reference-style queries that should be matched as one ordered phrase.
+	 *
+	 * Requiring letters, numbers, and at least two dot/slash separators avoids
+	 * changing normal prose searches or simple dates into exact phrase searches.
+	 *
+	 * @param string $decoded_query Raw decoded query.
+	 * @param string $normalized_query Normalized query.
+	 * @return array
+	 */
+	private function detect_structured_identifier_phrases($decoded_query, $normalized_query) {
+		$decoded_query = trim((string) $decoded_query, " \t\n\r\0\x0B\"'\xE2\x80\x9C\xE2\x80\x9D\xE2\x80\x98\xE2\x80\x99");
+		$normalized_query = trim((string) $normalized_query);
+
+		if ($decoded_query === '' || $normalized_query === '') {
+			return array();
+		}
+
+		if (
+			preg_match('/\p{L}/u', $decoded_query) !== 1
+			|| preg_match('/\p{N}/u', $decoded_query) !== 1
+			|| preg_match_all('/[.\/]/u', $decoded_query) < 2
+		) {
+			return array();
+		}
+
+		if (preg_match('/^[\p{L}\p{N}\s.\/_-]+$/u', $decoded_query) !== 1) {
+			return array();
+		}
+
+		$parts = preg_split('/\s+/u', $normalized_query);
+
+		if (!is_array($parts) || count($parts) < 2 || count($parts) > self::MAX_TERMS) {
+			return array();
+		}
+
+		return array($normalized_query);
 	}
 
 	/**

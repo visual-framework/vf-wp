@@ -118,6 +118,7 @@ $redirect_url = '';
 $vfwp_result_type_label = '';
 $vfwp_result_meta_text = '';
 $vfwp_result_detail_meta = '';
+$vfwp_result_match_reason = '';
 $vfwp_show_result_type_badge = false;
 $vfwp_result_is_external_team = false;
 $vfwp_result_external_domain_label = '';
@@ -268,32 +269,41 @@ if (is_search() && $post_type === 'documents' && $has_indexed_search_result) {
   $document_signals = isset($vfwp_indexed_search_result['signals']) && is_array($vfwp_indexed_search_result['signals'])
     ? $vfwp_indexed_search_result['signals']
     : array();
-  $document_term_count = isset($document_signals['term_count']) ? max(1, (int) $document_signals['term_count']) : 1;
   $document_pdf_match = !empty($document_signals['content_phrase_hit'])
-    || ($document_term_count === 1 && !empty($document_signals['content_term_hits']));
+    || !empty($document_signals['content_term_hits']);
   $document_title_match = !empty($document_signals['exact_title_match'])
     || !empty($document_signals['title_phrase_hit'])
     || !empty($document_signals['title_term_hits']);
+  $document_keyword_match = !empty($document_signals['acf_phrase_hit'])
+    || !empty($document_signals['acf_term_hits']);
+  $document_excerpt_match = !empty($document_signals['excerpt_phrase_hit'])
+    || !empty($document_signals['excerpt_term_hits']);
+  $document_excerpt = isset($vfwp_indexed_search_result['snippet_source']['excerpt'])
+    ? trim((string) $vfwp_indexed_search_result['snippet_source']['excerpt'])
+    : '';
+  $document_excerpt_highlighted = $document_excerpt !== ''
+    ? (!empty($vfwp_indexed_search_result['excerpt_highlighted'])
+      ? $vfwp_indexed_search_result['excerpt_highlighted']
+      : esc_html($document_excerpt))
+    : '';
 
   if ($document_pdf_match) {
     $summary_text = !empty($vfwp_indexed_search_result['content_snippet_highlighted'])
       ? $vfwp_indexed_search_result['content_snippet_highlighted']
       : '';
+    $vfwp_result_match_reason = __('Match in document text', 'vfwp');
   } elseif ($document_title_match) {
-    $document_excerpt = isset($vfwp_indexed_search_result['snippet_source']['excerpt'])
-      ? trim((string) $vfwp_indexed_search_result['snippet_source']['excerpt'])
-      : '';
-
-    if ($document_excerpt !== '') {
-      $document_excerpt_highlighted = !empty($vfwp_indexed_search_result['excerpt_highlighted'])
-        ? $vfwp_indexed_search_result['excerpt_highlighted']
-        : esc_html($document_excerpt);
-      $summary_text = $title . ' | ' . $document_excerpt_highlighted;
-    } else {
-      $summary_text = '';
-    }
+    $summary_text = $document_excerpt_highlighted;
+    $vfwp_result_match_reason = __('Match in title', 'vfwp');
+  } elseif ($document_keyword_match) {
+    $summary_text = $document_excerpt_highlighted;
+    $vfwp_result_match_reason = __('Matched by search keyword', 'vfwp');
+  } elseif ($document_excerpt_match) {
+    $summary_text = $document_excerpt_highlighted;
+    $vfwp_result_match_reason = __('Match in description', 'vfwp');
   } else {
     $summary_text = '';
+    $vfwp_result_match_reason = __('Matched indexed document content', 'vfwp');
   }
 }
 
@@ -304,9 +314,10 @@ if (is_search()) {
     $vfwp_result_detail_meta = vfwp_intranet_search_summary_format_date(get_field('vf_event_internal_start_date', $post->ID));
   } elseif ($post_type === 'documents') {
     $document_updated_date = function_exists('get_field') ? vfwp_intranet_search_summary_format_date(get_field('latest_update', $post->ID)) : '';
-    $vfwp_result_detail_meta = $document_updated_date !== ''
+    $document_display_date = $document_updated_date !== ''
       ? $document_updated_date
       : get_the_date(get_option('date_format'), $post);
+    $vfwp_result_detail_meta = implode(' | ', array_filter(array($document_display_date, $vfwp_result_match_reason)));
   } elseif ($post_type === 'training') {
     if ($training_overview !== '') {
       $summary_text = esc_html($training_overview);

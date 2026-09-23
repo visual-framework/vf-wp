@@ -49,6 +49,26 @@
             "maxlength": ""
         },
         {
+            "key": "field_66d08fb2manual_override",
+            "label": "Manual text override",
+            "name": "team_manual_override",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Turn this on to preserve the team strapline, team long description, excerpt and body content during ContentHub syncs.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "On",
+            "ui_off_text": "Off"
+        },
+        {
             "key": "field_66d08fb2name",
             "label": "Team name",
             "name": "team_name",

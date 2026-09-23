@@ -111,15 +111,17 @@ function vfwp_intranet_sync_teams_from_contenthub() {
 
         if ($post_id) {
             $is_trashed = get_post_status($post_id) === 'trash';
-            $changed = vfwp_intranet_team_post_has_changes($post_id, $fields, $title, $post_name);
+            $manual_override = vfwp_intranet_team_manual_override_enabled($post_id);
+            $changed = vfwp_intranet_team_post_has_changes($post_id, $fields, $title, $post_name, $manual_override);
 
             if ($changed || $is_trashed) {
+                $post = get_post($post_id);
                 $post_data = array(
                     'ID' => $post_id,
                     'post_title' => $title,
                     'post_name' => $post_name,
-                    'post_excerpt' => $fields['team_strapline'],
-                    'post_content' => $fields['team_long_description'],
+                    'post_excerpt' => $manual_override && $post ? $post->post_excerpt : $fields['team_strapline'],
+                    'post_content' => $manual_override && $post ? $post->post_content : $fields['team_long_description'],
                 );
 
                 if ($is_trashed) {
@@ -133,7 +135,7 @@ function vfwp_intranet_sync_teams_from_contenthub() {
                     continue;
                 }
 
-                vfwp_intranet_update_team_meta($post_id, $fields);
+                vfwp_intranet_update_team_meta($post_id, vfwp_intranet_prepare_team_meta_for_update($post_id, $fields, $manual_override));
                 if ($is_trashed) {
                     $stats['restored_titles'][] = $title;
                 } else {
@@ -363,18 +365,51 @@ function vfwp_intranet_get_team_slug($team_url, $fallback_title) {
     return sanitize_title($slug);
 }
 
-function vfwp_intranet_team_post_has_changes($post_id, $fields, $title, $post_name) {
+function vfwp_intranet_team_manual_override_enabled($post_id) {
+    return (bool) get_post_meta($post_id, 'team_manual_override', true);
+}
+
+function vfwp_intranet_team_protected_manual_override_fields() {
+    return array(
+        'team_strapline',
+        'team_long_description',
+    );
+}
+
+function vfwp_intranet_prepare_team_meta_for_update($post_id, $fields, $manual_override = false) {
+    if (!$manual_override) {
+        return $fields;
+    }
+
+    foreach (vfwp_intranet_team_protected_manual_override_fields() as $field_key) {
+        $fields[$field_key] = get_post_meta($post_id, $field_key, true);
+    }
+
+    return $fields;
+}
+
+function vfwp_intranet_team_post_has_changes($post_id, $fields, $title, $post_name, $manual_override = false) {
     $post = get_post($post_id);
     if (!$post) {
         return true;
     }
 
-    if ($post->post_title !== $title || $post->post_name !== $post_name || $post->post_excerpt !== $fields['team_strapline'] || $post->post_content !== $fields['team_long_description']) {
+    if ($post->post_title !== $title || $post->post_name !== $post_name) {
         return true;
     }
 
+    if (!$manual_override && ($post->post_excerpt !== $fields['team_strapline'] || $post->post_content !== $fields['team_long_description'])) {
+        return true;
+    }
+
+    $protected_fields = $manual_override ? vfwp_intranet_team_protected_manual_override_fields() : array();
+
     foreach ($fields as $key => $value) {
         if ($key === 'team_last_synced') {
+            continue;
+        }
+
+        if (in_array($key, $protected_fields, true)) {
             continue;
         }
 

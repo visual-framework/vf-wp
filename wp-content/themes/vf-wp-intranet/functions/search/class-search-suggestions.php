@@ -13,8 +13,6 @@ class VFWP_Intranet_Search_Suggestions {
 	const TITLE_LIMIT = 5;
 	const PHRASE_SCAN_LIMIT = 60;
 	const DID_YOU_MEAN_LIMIT = 3;
-	const DID_YOU_MEAN_CANDIDATE_ROWS = 1200;
-	const DID_YOU_MEAN_MAX_TERMS = 2500;
 	const CACHE_TTL = 120;
 
 	/**
@@ -190,7 +188,7 @@ class VFWP_Intranet_Search_Suggestions {
 			return $cached;
 		}
 
-		$candidates = $this->get_did_you_mean_candidates($filters, $parsed_query);
+		$candidates = $this->get_did_you_mean_candidates($parsed_query);
 		$suggestions = array();
 		$seen = array();
 
@@ -662,15 +660,15 @@ class VFWP_Intranet_Search_Suggestions {
 	}
 
 	/**
-	 * Return bounded title and keyword candidates for no-results spelling suggestions.
+	 * Return dictionary and configured phrase candidates for no-results suggestions.
 	 *
-	 * @param array $filters Normalized filters.
+	 * @param array $parsed_query Parsed query.
 	 * @return array
 	 */
-	private function get_did_you_mean_candidates(array $filters, array $parsed_query) {
+	private function get_did_you_mean_candidates(array $parsed_query) {
 		$candidates = array(
-			'terms'   => array(),
-			'phrases' => array(),
+			'terms'       => array(),
+			'phrases'     => array(),
 		);
 
 		if (class_exists('VFWP_Intranet_Search_Settings')) {
@@ -679,39 +677,22 @@ class VFWP_Intranet_Search_Suggestions {
 			}
 		}
 
-		$table_name = VFWP_Intranet_Search_Schema::table_name();
-		$where_params = array('post', 'publish', 'public');
-		$where_sql = $this->build_base_where_sql($filters, $where_params);
-		$term_conditions = $this->get_candidate_term_conditions($parsed_query, $where_params);
+		if (class_exists('VFWP_Intranet_Search_Spelling_Repository')) {
+			$spelling_repository = new VFWP_Intranet_Search_Spelling_Repository($this->wpdb, $this->query_parser);
+			$query_terms = !empty($parsed_query['all_terms']) ? (array) $parsed_query['all_terms'] : array();
 
-		if (!empty($term_conditions)) {
-			$where_sql .= ' AND (' . implode(' OR ', $term_conditions) . ')';
-		}
-
-		$sql = "
-			SELECT title, acf_keywords
-			FROM {$table_name}
-			{$where_sql}
-				AND (title <> '' OR acf_keywords <> '')
-			ORDER BY updated_at DESC, id DESC
-			LIMIT %d
-		";
-		$params = array_merge($where_params, array((int) self::DID_YOU_MEAN_CANDIDATE_ROWS));
-		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $params), ARRAY_A);
-
-		if (!is_array($rows)) {
-			return $candidates;
-		}
-
-		foreach ($rows as $row) {
-			$this->append_did_you_mean_text($candidates, isset($row['title']) ? $row['title'] : '', true);
-
-			foreach (preg_split('/[,;\r\n|]+/u', isset($row['acf_keywords']) ? (string) $row['acf_keywords'] : '') as $phrase) {
-				$this->append_did_you_mean_text($candidates, $phrase, true);
-			}
-
-			if (count($candidates['terms']) >= self::DID_YOU_MEAN_MAX_TERMS) {
-				break;
+			foreach ($query_terms as $query_term) {
+				foreach ($spelling_repository->find_candidates((string) $query_term) as $candidate) {
+					$frequency = (int) $candidate['document_frequency']
+						+ ((int) $candidate['title_frequency'] * 4)
+						+ ((int) $candidate['keyword_frequency'] * 3);
+					$this->append_did_you_mean_term(
+						$candidates['terms'],
+						isset($candidate['term']) ? $candidate['term'] : '',
+						isset($candidate['display_term']) ? $candidate['display_term'] : '',
+						max(1, $frequency)
+					);
+				}
 			}
 		}
 
@@ -753,55 +734,44 @@ class VFWP_Intranet_Search_Suggestions {
 		preg_match_all('/[\p{L}\p{N}]+/u', $normalized, $matches);
 
 		foreach ($matches[0] as $term) {
-			if ($this->length($term) < 3 || count($candidates['terms']) >= self::DID_YOU_MEAN_MAX_TERMS) {
-				continue;
-			}
-
-			if (!isset($candidates['terms'][$term])) {
-				$candidates['terms'][$term] = 0;
-			}
-
-			$candidates['terms'][$term]++;
-		}
-	}
-
-	/**
-	 * Build bounded title/keyword candidate conditions from typed term prefixes.
-	 *
-	 * @param array $parsed_query Parsed query.
-	 * @param array $params SQL params.
-	 * @return array
-	 */
-	private function get_candidate_term_conditions(array $parsed_query, array &$params) {
-		$terms = !empty($parsed_query['all_terms']) ? (array) $parsed_query['all_terms'] : array();
-		$conditions = array();
-		$seen = array();
-
-		foreach ($terms as $term) {
-			$term = (string) $term;
-
 			if ($this->length($term) < 3) {
 				continue;
 			}
 
-			$stem = $this->substring($term, 0, 3);
+			$this->append_did_you_mean_term($candidates['terms'], $term, $term, 1);
+		}
+	}
 
-			if ($stem === '' || isset($seen[$stem])) {
-				continue;
-			}
+	/**
+	 * Add or strengthen one normalized term candidate.
+	 *
+	 * @param array  $terms Candidate terms.
+	 * @param mixed  $term Normalized term.
+	 * @param mixed  $label Display label.
+	 * @param int    $frequency Frequency score.
+	 * @return void
+	 */
+	private function append_did_you_mean_term(array &$terms, $term, $label, $frequency) {
+		$term = $this->query_parser->normalize_search_text(is_scalar($term) ? (string) $term : '');
 
-			$seen[$stem] = true;
-			$like = '%' . $this->wpdb->esc_like($stem) . '%';
-			$conditions[] = '(LOWER(title) LIKE %s OR LOWER(acf_keywords) LIKE %s)';
-			$params[] = $like;
-			$params[] = $like;
-
-			if (count($conditions) >= 4) {
-				break;
-			}
+		if ($term === '' || strpos($term, ' ') !== false || $this->length($term) < 3) {
+			return;
 		}
 
-		return $conditions;
+		$label = is_scalar($label) ? trim((string) $label) : '';
+
+		if (!isset($terms[$term])) {
+			$terms[$term] = array(
+				'frequency' => 0,
+				'label'     => $label !== '' ? $label : $term,
+			);
+		}
+
+		$terms[$term]['frequency'] += max(1, (int) $frequency);
+
+		if ($terms[$term]['label'] === $term && $label !== '') {
+			$terms[$term]['label'] = $label;
+		}
 	}
 
 	/**
@@ -856,6 +826,7 @@ class VFWP_Intranet_Search_Suggestions {
 		}
 
 		$corrected_terms = array();
+		$corrected_labels = array();
 		$changed = false;
 
 		foreach ($query_terms as $query_term) {
@@ -863,6 +834,7 @@ class VFWP_Intranet_Search_Suggestions {
 
 			if ($this->length($query_term) < 3) {
 				$corrected_terms[] = $query_term;
+				$corrected_labels[] = $query_term;
 				continue;
 			}
 
@@ -870,14 +842,17 @@ class VFWP_Intranet_Search_Suggestions {
 
 			if ($best_match && $best_match['term'] !== $query_term) {
 				$corrected_terms[] = $best_match['term'];
+				$corrected_labels[] = $best_match['label'];
 				$changed = true;
 				continue;
 			}
 
 			$corrected_terms[] = $query_term;
+			$corrected_labels[] = $query_term;
 		}
 
 		$corrected_query = trim(implode(' ', array_values(array_unique($corrected_terms))));
+		$corrected_label = trim(implode(' ', $corrected_labels));
 
 		if (!$changed || $corrected_query === '' || $corrected_query === (string) $parsed_query['normalized']) {
 			return array();
@@ -886,7 +861,7 @@ class VFWP_Intranet_Search_Suggestions {
 		return array(
 			array(
 				'query'    => $corrected_query,
-				'label'    => $corrected_query,
+				'label'    => $corrected_label !== '' ? $corrected_label : $corrected_query,
 				'distance' => 0,
 				'length'   => $this->length($corrected_query),
 			),
@@ -904,20 +879,20 @@ class VFWP_Intranet_Search_Suggestions {
 		$best = null;
 		$query_length = $this->length($query_term);
 
-		foreach ($terms as $term => $frequency) {
+		foreach ($terms as $term => $term_data) {
+			$frequency = is_array($term_data) && isset($term_data['frequency']) ? (int) $term_data['frequency'] : (int) $term_data;
+			$label = is_array($term_data) && !empty($term_data['label']) ? (string) $term_data['label'] : $term;
+
 			if ($term === $query_term) {
 				return array(
 					'term'      => $term,
+					'label'     => $label,
 					'distance'  => 0,
 					'frequency' => (int) $frequency,
 				);
 			}
 
 			if (abs($this->length($term) - $query_length) > 2) {
-				continue;
-			}
-
-			if (substr($term, 0, 1) !== substr($query_term, 0, 1)) {
 				continue;
 			}
 
@@ -935,6 +910,7 @@ class VFWP_Intranet_Search_Suggestions {
 			) {
 				$best = array(
 					'term'      => $term,
+					'label'     => $label,
 					'distance'  => $distance,
 					'frequency' => (int) $frequency,
 				);
@@ -1046,15 +1022,4 @@ class VFWP_Intranet_Search_Suggestions {
 		return function_exists('mb_strlen') ? (int) mb_strlen((string) $text, 'UTF-8') : strlen((string) $text);
 	}
 
-	/**
-	 * Unicode-aware substring.
-	 *
-	 * @param string $text Text.
-	 * @param int    $start Start offset.
-	 * @param int    $length Length.
-	 * @return string
-	 */
-	private function substring($text, $start, $length) {
-		return function_exists('mb_substr') ? (string) mb_substr((string) $text, (int) $start, (int) $length, 'UTF-8') : substr((string) $text, (int) $start, (int) $length);
-	}
 }

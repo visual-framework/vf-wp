@@ -129,11 +129,15 @@ class VFWP_Intranet_Search_Index_Manager {
 	public function get_dashboard_data() {
 		$status = $this->get_status();
 		$counts = $this->repository->get_counts();
+		$spelling_counts = class_exists('VFWP_Intranet_Search_Spelling_Repository')
+			? (new VFWP_Intranet_Search_Spelling_Repository())->get_counts()
+			: array('terms' => 0, 'deletion_keys' => 0, 'objects' => 0);
 		$pdf_issue_count = $this->repository->count_pdf_extraction_issues();
 		$rebuild_required = get_option(VFWP_Intranet_Search_Settings::REBUILD_REQUIRED_OPTION, array());
 
 		return array(
 			'counts'                => $counts,
+			'spelling_counts'       => $spelling_counts,
 			'pdf_issue_count'       => $pdf_issue_count,
 			'status'                => $status,
 			'schema_version'        => VFWP_Intranet_Search_Schema::VERSION,
