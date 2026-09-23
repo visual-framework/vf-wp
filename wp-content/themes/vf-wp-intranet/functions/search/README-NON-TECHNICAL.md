@@ -145,7 +145,7 @@ The suggestion list is designed to appear quickly. It first shows the basic sear
 
 If a search has no results, the site may show "Did you mean" suggestions.
 
-These suggestions are based on similar indexed words, titles, keywords, and phrases. They are only shown when the suggested search is expected to return results.
+These suggestions are based on a spelling dictionary built from indexed titles and search keywords. It can recognize common missing, extra, or misplaced letters without scanning page and document text during the search. A suggestion is only shown when the corrected search is expected to return results.
 
 ## Search Keywords
 
@@ -233,7 +233,17 @@ Analytics can show:
 - Popular searches
 - Searches with no results
 - Total searches
+- Percentage of searches with results
 - Unique queries
+- Daily activity for the last 30 days
+- Weekly activity for the last 12 weeks
+- Monthly activity for the last 12 months
+
+Analytics tables show 20 entries at a time. Their page controls let administrators review all searches still inside the chosen retention period.
+
+The Index tab shows document extraction issues in a separate table below Index management. It also shows 20 entries at a time. Search index notices can be dismissed; a rebuild warning appears again if a later settings change creates a new rebuild requirement.
+
+If someone gets no results and clicks a "Did you mean" suggestion, the original search is treated as a successful correction instead of remaining in the no-results report.
 
 Depending on settings, analytics may also store the logged-in user's email address. This should be used thoughtfully and only when needed.
 

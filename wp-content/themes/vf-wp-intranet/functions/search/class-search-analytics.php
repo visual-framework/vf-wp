@@ -10,7 +10,15 @@ if (!defined('ABSPATH')) {
 class VFWP_Intranet_Search_Analytics {
 	const CLEAR_ACTION = 'vfwp_intranet_search_clear_analytics';
 	const CLEANUP_TRANSIENT = 'vfwp_intranet_search_analytics_cleanup';
-	const MAX_ADMIN_ROWS = 20;
+	const ADMIN_ROWS_PER_PAGE = 20;
+	const RECENT_PER_PAGE = 20;
+
+	/**
+	 * Analytics row created for the current frontend request.
+	 *
+	 * @var int
+	 */
+	private static $last_logged_id = 0;
 
 	/**
 	 * @var wpdb
@@ -77,6 +85,8 @@ class VFWP_Intranet_Search_Analytics {
 			return false;
 		}
 
+		$this->maybe_record_correction_click($normalized_query);
+
 		$result_count = isset($response['pagination']['total']) ? max(0, (int) $response['pagination']['total']) : 0;
 		$filters = $this->sanitize_filters($filters);
 		$filters_json = wp_json_encode($filters);
@@ -103,11 +113,43 @@ class VFWP_Intranet_Search_Analytics {
 				'searched_at'      => current_time('mysql', true),
 				'user_email'       => !empty($settings['track_user_email']) ? $this->get_current_user_email() : '',
 				'source'           => 'frontend',
+				'is_corrected'     => 0,
+				'corrected_to'     => '',
 			),
-			array('%s', '%s', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s')
+			array('%s', '%s', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%d', '%s')
 		);
 
+		if (false !== $result) {
+			self::$last_logged_id = (int) $this->wpdb->insert_id;
+		}
+
 		return false !== $result;
+	}
+
+	/**
+	 * Return signed URL parameters for tracking a clicked spelling correction.
+	 *
+	 * @param mixed $corrected_query Corrected search query.
+	 * @return array
+	 */
+	public static function get_correction_tracking_args($corrected_query) {
+		$analytics_id = (int) self::$last_logged_id;
+
+		if ($analytics_id <= 0 || !class_exists('VFWP_Intranet_Search_Query_Parser')) {
+			return array();
+		}
+
+		$parsed = (new VFWP_Intranet_Search_Query_Parser())->parse($corrected_query);
+		$normalized_query = isset($parsed['normalized']) ? trim((string) $parsed['normalized']) : '';
+
+		if ($normalized_query === '') {
+			return array();
+		}
+
+		return array(
+			'search_correction_id'  => $analytics_id,
+			'search_correction_sig' => wp_hash($analytics_id . '|' . $normalized_query, 'nonce'),
+		);
 	}
 
 	/**
@@ -142,14 +184,28 @@ class VFWP_Intranet_Search_Analytics {
 	/**
 	 * Return dashboard data for admin rendering.
 	 *
+	 * @param int   $recent_page Recent-search event-log page.
+	 * @param array $report_pages Other analytics report pages.
 	 * @return array
 	 */
-	public function get_dashboard_data() {
+	public function get_dashboard_data($recent_page = 1, array $report_pages = array()) {
+		$recent = $this->get_recent_searches($recent_page, self::RECENT_PER_PAGE);
+		$top_queries = $this->get_top_queries(isset($report_pages['top']) ? $report_pages['top'] : 1);
+		$zero_results = $this->get_zero_result_queries(isset($report_pages['zero']) ? $report_pages['zero'] : 1);
+
 		return array(
-			'summary'      => $this->get_summary(),
-			'top_queries'  => $this->get_top_queries(),
-			'zero_results' => $this->get_zero_result_queries(),
-			'recent'       => $this->get_recent_searches(),
+			'summary'                    => $this->get_summary(),
+			'trends'                     => array(
+				'daily'   => $this->get_trend_data('daily', 30),
+				'weekly'  => $this->get_trend_data('weekly', 12),
+				'monthly' => $this->get_trend_data('monthly', 12),
+			),
+			'top_queries'                => $top_queries['rows'],
+			'top_queries_pagination' => $top_queries['pagination'],
+			'zero_results'               => $zero_results['rows'],
+			'zero_results_pagination' => $zero_results['pagination'],
+			'recent'                     => $recent['rows'],
+			'recent_pagination'          => $recent['pagination'],
 		);
 	}
 
@@ -206,7 +262,9 @@ class VFWP_Intranet_Search_Analytics {
 		$row = $this->wpdb->get_row(
 			"SELECT
 				COUNT(*) AS total_searches,
-				SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
+				SUM(CASE WHEN result_count > 0 OR is_corrected = 1 THEN 1 ELSE 0 END) AS searches_with_results,
+				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
+				SUM(CASE WHEN is_corrected = 1 THEN 1 ELSE 0 END) AS corrected_searches,
 				COUNT(DISTINCT normalized_query) AS unique_queries,
 				MAX(searched_at) AS last_search_at
 			FROM {$this->table_name}",
@@ -217,9 +275,15 @@ class VFWP_Intranet_Search_Analytics {
 			$row = array();
 		}
 
+		$total_searches = isset($row['total_searches']) ? (int) $row['total_searches'] : 0;
+		$searches_with_results = isset($row['searches_with_results']) ? (int) $row['searches_with_results'] : 0;
+
 		return array(
-			'total_searches'      => isset($row['total_searches']) ? (int) $row['total_searches'] : 0,
+			'total_searches'      => $total_searches,
+			'searches_with_results' => $searches_with_results,
+			'results_rate'        => $total_searches > 0 ? round(($searches_with_results / $total_searches) * 100, 1) : 0,
 			'zero_result_searches' => isset($row['zero_result_searches']) ? (int) $row['zero_result_searches'] : 0,
+			'corrected_searches'  => isset($row['corrected_searches']) ? (int) $row['corrected_searches'] : 0,
 			'unique_queries'      => isset($row['unique_queries']) ? (int) $row['unique_queries'] : 0,
 			'last_search_at'      => !empty($row['last_search_at']) ? (string) $row['last_search_at'] : '',
 		);
@@ -230,8 +294,8 @@ class VFWP_Intranet_Search_Analytics {
 	 *
 	 * @return array
 	 */
-	private function get_top_queries() {
-		return $this->get_grouped_query_rows('', self::MAX_ADMIN_ROWS);
+	private function get_top_queries($page) {
+		return $this->get_grouped_query_rows('', $page, self::ADMIN_ROWS_PER_PAGE);
 	}
 
 	/**
@@ -239,52 +303,208 @@ class VFWP_Intranet_Search_Analytics {
 	 *
 	 * @return array
 	 */
-	private function get_zero_result_queries() {
-		return $this->get_grouped_query_rows('WHERE result_count = 0', self::MAX_ADMIN_ROWS);
+	private function get_zero_result_queries($page) {
+		return $this->get_grouped_query_rows('result_count = 0 AND is_corrected = 0', $page, self::ADMIN_ROWS_PER_PAGE);
 	}
 
 	/**
 	 * Return grouped query analytics.
 	 *
-	 * @param string $where_sql Safe WHERE SQL.
-	 * @param int    $limit Limit.
+	 * @param string $extra_condition Safe additional condition SQL.
+	 * @param int    $page Current page.
+	 * @param int    $per_page Rows per page.
 	 * @return array
 	 */
-	private function get_grouped_query_rows($where_sql, $limit) {
+	private function get_grouped_query_rows($extra_condition, $page, $per_page) {
+		$settings = $this->get_settings();
+		$retention_days = max(1, (int) $settings['retention_days']);
+		$per_page = max(1, min(100, (int) $per_page));
+		$where_sql = 'WHERE searched_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)';
+
+		if ($extra_condition !== '') {
+			$where_sql .= ' AND ' . $extra_condition;
+		}
+
+		$total = (int) $this->wpdb->get_var(
+			$this->wpdb->prepare(
+				"SELECT COUNT(DISTINCT normalized_query) FROM {$this->table_name} {$where_sql}",
+				$retention_days
+			)
+		);
+		$total_pages = $total > 0 ? (int) ceil($total / $per_page) : 1;
+		$page = min($total_pages, max(1, (int) $page));
+		$offset = ($page - 1) * $per_page;
 		$sql = "
 			SELECT
 				normalized_query,
 				MIN(query_text) AS display_query,
 				COUNT(*) AS searches,
-				SUM(CASE WHEN result_count = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
+				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
 				ROUND(AVG(result_count), 1) AS average_results,
 				MAX(searched_at) AS last_searched_at
 			FROM {$this->table_name}
 			{$where_sql}
 			GROUP BY normalized_query
 			ORDER BY searches DESC, last_searched_at DESC
-			LIMIT %d
+			LIMIT %d OFFSET %d
 		";
-		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, max(1, (int) $limit)), ARRAY_A);
+		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $retention_days, $per_page, $offset), ARRAY_A);
 
-		return is_array($rows) ? $rows : array();
+		return array(
+			'rows'       => is_array($rows) ? $rows : array(),
+			'pagination' => array(
+				'page'        => $page,
+				'per_page'    => $per_page,
+				'total'       => $total,
+				'total_pages' => $total_pages,
+			),
+		);
 	}
 
 	/**
 	 * Return recent searches.
 	 *
+	 * @param int $page Current page.
+	 * @param int $per_page Rows per page.
 	 * @return array
 	 */
-	private function get_recent_searches() {
+	private function get_recent_searches($page, $per_page) {
+		$settings = $this->get_settings();
+		$retention_days = max(1, (int) $settings['retention_days']);
+		$per_page = max(1, min(100, (int) $per_page));
+		$total = (int) $this->wpdb->get_var(
+			$this->wpdb->prepare(
+				"SELECT COUNT(*)
+				FROM {$this->table_name}
+				WHERE searched_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)",
+				$retention_days
+			)
+		);
+		$total_pages = $total > 0 ? (int) ceil($total / $per_page) : 1;
+		$page = min($total_pages, max(1, (int) $page));
+		$offset = ($page - 1) * $per_page;
 		$sql = "
-			SELECT query_text, normalized_query, result_count, searched_at, user_email
+			SELECT query_text, normalized_query, result_count, searched_at, user_email, is_corrected, corrected_to
 			FROM {$this->table_name}
+			WHERE searched_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)
 			ORDER BY searched_at DESC, id DESC
-			LIMIT %d
+			LIMIT %d OFFSET %d
 		";
-		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, self::MAX_ADMIN_ROWS), ARRAY_A);
+		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $retention_days, $per_page, $offset), ARRAY_A);
 
-		return is_array($rows) ? $rows : array();
+		return array(
+			'rows'       => is_array($rows) ? $rows : array(),
+			'pagination' => array(
+				'page'        => $page,
+				'per_page'    => $per_page,
+				'total'       => $total,
+				'total_pages' => $total_pages,
+			),
+		);
+	}
+
+	/**
+	 * Return continuous daily, weekly, or monthly analytics buckets.
+	 *
+	 * @param string $period daily|weekly|monthly.
+	 * @param int    $bucket_count Number of buckets.
+	 * @return array
+	 */
+	private function get_trend_data($period, $bucket_count) {
+		$period = in_array($period, array('daily', 'weekly', 'monthly'), true) ? $period : 'daily';
+		$bucket_count = max(1, min(60, (int) $bucket_count));
+		$timezone = new DateTimeZone('UTC');
+
+		if ($period === 'weekly') {
+			$current = new DateTimeImmutable('monday this week', $timezone);
+			$start = $current->modify('-' . ($bucket_count - 1) . ' weeks');
+			$bucket_sql = 'DATE_SUB(DATE(searched_at), INTERVAL WEEKDAY(searched_at) DAY)';
+			$step = '+1 week';
+			$label_format = 'j M';
+		} elseif ($period === 'monthly') {
+			$current = new DateTimeImmutable('first day of this month 00:00:00', $timezone);
+			$start = $current->modify('-' . ($bucket_count - 1) . ' months');
+			$bucket_sql = "DATE_FORMAT(searched_at, '%Y-%m-01')";
+			$step = '+1 month';
+			$label_format = 'M Y';
+		} else {
+			$current = new DateTimeImmutable('today', $timezone);
+			$start = $current->modify('-' . ($bucket_count - 1) . ' days');
+			$bucket_sql = 'DATE(searched_at)';
+			$step = '+1 day';
+			$label_format = 'j M';
+		}
+
+		$sql = "SELECT
+				{$bucket_sql} AS bucket_start,
+				COUNT(*) AS total_searches,
+				SUM(CASE WHEN result_count > 0 OR is_corrected = 1 THEN 1 ELSE 0 END) AS searches_with_results,
+				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches
+			FROM {$this->table_name}
+			WHERE searched_at >= %s
+			GROUP BY bucket_start
+			ORDER BY bucket_start ASC";
+		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $start->format('Y-m-d H:i:s')), ARRAY_A);
+		$rows_by_date = array();
+
+		foreach ((array) $rows as $row) {
+			if (!empty($row['bucket_start'])) {
+				$rows_by_date[(string) $row['bucket_start']] = $row;
+			}
+		}
+
+		$buckets = array();
+		$cursor = $start;
+
+		for ($index = 0; $index < $bucket_count; $index++) {
+			$key = $cursor->format('Y-m-d');
+			$row = isset($rows_by_date[$key]) ? $rows_by_date[$key] : array();
+			$total = isset($row['total_searches']) ? (int) $row['total_searches'] : 0;
+			$with_results = isset($row['searches_with_results']) ? (int) $row['searches_with_results'] : 0;
+
+			$buckets[] = array(
+				'key'                 => $key,
+				'label'               => wp_date($label_format, $cursor->getTimestamp(), $timezone),
+				'total_searches'      => $total,
+				'searches_with_results' => $with_results,
+				'zero_result_searches' => isset($row['zero_result_searches']) ? (int) $row['zero_result_searches'] : 0,
+				'results_rate'        => $total > 0 ? round(($with_results / $total) * 100, 1) : 0,
+			);
+			$cursor = $cursor->modify($step);
+		}
+
+		return $buckets;
+	}
+
+	/**
+	 * Mark the originating no-result event when its signed correction is clicked.
+	 *
+	 * @param string $normalized_query Corrected normalized query.
+	 * @return void
+	 */
+	private function maybe_record_correction_click($normalized_query) {
+		$analytics_id = isset($_GET['search_correction_id']) ? absint(wp_unslash($_GET['search_correction_id'])) : 0;
+		$signature = isset($_GET['search_correction_sig']) ? sanitize_text_field(wp_unslash($_GET['search_correction_sig'])) : '';
+
+		if ($analytics_id <= 0 || $signature === '') {
+			return;
+		}
+
+		$expected_signature = wp_hash($analytics_id . '|' . (string) $normalized_query, 'nonce');
+
+		if (!hash_equals($expected_signature, $signature)) {
+			return;
+		}
+
+		$this->wpdb->query(
+			$this->wpdb->prepare(
+				"UPDATE {$this->table_name}
+				SET is_corrected = 1, corrected_to = %s
+				WHERE id = %d AND result_count = 0 AND is_corrected = 0",
+				$this->limit_string($normalized_query, 191),
+				$analytics_id
+			)
+		);
 	}
 
 	/**

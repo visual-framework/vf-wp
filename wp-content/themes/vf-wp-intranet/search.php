@@ -159,7 +159,17 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
           continue;
         }
 
-        $vfwp_search_did_you_mean_links[] = '<a class="vf-link" href="' . esc_url(VFWP_Intranet_Search_Frontend::get_search_url($vfwp_search_did_you_mean_query)) . '">' . esc_html($vfwp_search_did_you_mean_label) . '</a>';
+        $vfwp_search_did_you_mean_url = VFWP_Intranet_Search_Frontend::get_search_url($vfwp_search_did_you_mean_query);
+
+        if (class_exists('VFWP_Intranet_Search_Analytics')) {
+          $vfwp_search_correction_args = VFWP_Intranet_Search_Analytics::get_correction_tracking_args($vfwp_search_did_you_mean_query);
+
+          if (!empty($vfwp_search_correction_args)) {
+            $vfwp_search_did_you_mean_url = add_query_arg($vfwp_search_correction_args, $vfwp_search_did_you_mean_url);
+          }
+        }
+
+        $vfwp_search_did_you_mean_links[] = '<a class="vf-link" href="' . esc_url($vfwp_search_did_you_mean_url) . '">' . esc_html($vfwp_search_did_you_mean_label) . '</a>';
       }
       ?>
       <?php if (!empty($vfwp_search_did_you_mean_links)) : ?>

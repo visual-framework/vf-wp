@@ -23,7 +23,7 @@ Frontend search results should not depend on Relevanssi being installed or enabl
   Loads the subsystem, registers schema setup, frontend integration, suggestions, analytics, index manager, admin settings, admin document indicators, and WP-CLI commands.
 
 - `class-search-schema.php`
-  Creates the custom index table and analytics table. The index table uses normal indexes plus FULLTEXT indexes for title, excerpt, content, ACF keywords, and combined text.
+  Creates the custom index, analytics, and spelling-dictionary tables. The index table uses normal indexes plus FULLTEXT indexes for title, excerpt, content, ACF keywords, and combined text.
 
 - `class-search-index-repository.php`
   Handles low-level persistence for indexed rows, counts, rebuild token updates, issue clearing, and table truncation.
@@ -39,6 +39,9 @@ Frontend search results should not depend on Relevanssi being installed or enabl
 
 - `class-search-query-parser.php`
   Normalizes visitor queries, applies synonyms, handles exact phrase rules, stopwords, minimum word length, protected phrases, quoted phrases, and builds safe FULLTEXT boolean query terms.
+
+- `class-search-spelling-repository.php`
+  Maintains the precomputed title/ACF-keyword spelling dictionary, indexed deletion keys, source frequencies, and object mappings used by "Did you mean".
 
 - `class-search-service.php`
   Runs searches against the custom index, applies filters, computes relevance, paginates efficiently, and returns structured result data.
@@ -108,6 +111,16 @@ Important indexes:
 - Post/status/visibility indexes
 - Rebuild and hash indexes
 - FULLTEXT indexes on `title`, `excerpt`, `content`, `acf_keywords`, and combined fields
+
+### Spelling dictionary
+
+Tables:
+
+- `{prefix}vf_search_spelling_terms`
+- `{prefix}vf_search_spelling_deletions`
+- `{prefix}vf_search_spelling_objects`
+
+The dictionary stores bounded unique words from indexed titles and configured ACF keyword fields. It does not ingest body text, excerpts, or extracted PDF/DOCX text. Each term stores exact and one-character deletion keys, allowing misspellings to be retrieved with indexed equality lookups rather than wildcard content scans. Object mappings keep frequencies accurate when indexed content changes or is removed.
 
 ### Analytics
 
@@ -233,6 +246,7 @@ wp theme-search index test_snippets
 - Minimum word length
 - Quoted phrases
 - Exact phrase search rules from settings
+- Automatic exact matching for structured references containing letters, numbers, and repeated dot/slash separators
 - Synonyms from settings
 - Boolean FULLTEXT query construction
 
@@ -244,6 +258,8 @@ Settings that affect parsing:
 - Synonyms
 
 Exact phrase entries are treated as protected phrases. For example, if `it services` is configured as an exact phrase, a query containing that phrase keeps it together instead of treating `it` and `services` as independent weak terms.
+
+Reference-style queries such as `Fin.Com./2017/14 Rev.1` are automatically protected. Punctuation is normalized for comparison, but all identifier parts must occur together and in order; a page that merely contains `Fin` and the other parts separately is not a match.
 
 Synonyms are directional replacements. Example:
 
@@ -380,7 +396,9 @@ Server behavior:
 
 The no-results state can show "Did you mean" links from `VFWP_Intranet_Search_Suggestions::did_you_mean()`.
 
-Candidates are derived from bounded indexed titles, ACF keywords, configured exact phrases, and term/phrase edit-distance checks. Suggestions are only added if they lead to actual indexed results.
+Term candidates come from the precomputed spelling dictionary; phrase candidates also use bounded indexed titles, ACF keywords, and configured exact phrases. Deletion-key lookup finds likely insertions, omissions, and transpositions before edit-distance scoring. Title terms rank above keyword-only terms, frequency breaks ties, and suggestions are only added if they lead to actual indexed results under the active filters.
+
+Schema version 17 introduces the spelling tables. A full rebuild or changed-content reindex is required after deployment to populate the dictionary for all existing indexed content. Normal post saves then maintain it automatically.
 
 ## Search Analytics
 
@@ -396,8 +414,14 @@ Logged data can include:
 - Search timestamp
 - Optional user email
 - Source
+- Whether a no-result query led to a clicked spelling correction
+- The corrected normalized query
 
-Analytics intentionally logs only page 1 frontend searches. It includes reports for top queries, zero-result queries, recent searches, and summary counts. Data retention is configurable.
+Analytics intentionally logs only page 1 frontend searches. It includes reports for top queries, zero-result queries, recent searches, summary counts, and daily, weekly, and monthly trends. Trend charts compare total search volume with the percentage of searches that produced results. The top-query, zero-result, and Recent searches reports include every retained row and use database pagination at 20 rows per page. Their count and page queries are restricted to the configured retention period in SQL.
+
+Search settings tables are limited to 20 visible rows per page. Large database-backed reports, including document extraction issues, use SQL `LIMIT` and `OFFSET`; bounded configuration and chart-detail tables are paginated in the admin page without discarding form fields. Index action notices are dismissible, and dismissal of the current rebuild-required warning is stored per administrator until a new rebuild requirement is created.
+
+When a visitor clicks a server-rendered "Did you mean" link, a signed analytics event ID marks the originating no-result row as corrected. Corrected rows remain part of total search volume, count as successful journeys in the results percentage, and are excluded from no-result reports. Data retention is configurable.
 
 ## Admin Settings
 

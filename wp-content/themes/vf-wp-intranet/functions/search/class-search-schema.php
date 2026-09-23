@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Schema {
-	const VERSION = 15;
+	const VERSION = 17;
 	const OPTION_NAME = 'vfwp_intranet_search_schema_version';
 
 	/**
@@ -31,6 +31,39 @@ class VFWP_Intranet_Search_Schema {
 		global $wpdb;
 
 		return $wpdb->prefix . 'vf_search_analytics';
+	}
+
+	/**
+	 * Return the spelling dictionary terms table name.
+	 *
+	 * @return string
+	 */
+	public static function spelling_terms_table_name() {
+		global $wpdb;
+
+		return $wpdb->prefix . 'vf_search_spelling_terms';
+	}
+
+	/**
+	 * Return the spelling dictionary deletion-key table name.
+	 *
+	 * @return string
+	 */
+	public static function spelling_deletions_table_name() {
+		global $wpdb;
+
+		return $wpdb->prefix . 'vf_search_spelling_deletions';
+	}
+
+	/**
+	 * Return the spelling dictionary object-mapping table name.
+	 *
+	 * @return string
+	 */
+	public static function spelling_objects_table_name() {
+		global $wpdb;
+
+		return $wpdb->prefix . 'vf_search_spelling_objects';
 	}
 
 	/**
@@ -66,6 +99,9 @@ class VFWP_Intranet_Search_Schema {
 
 		$table_name = self::table_name();
 		$analytics_table_name = self::analytics_table_name();
+		$spelling_terms_table_name = self::spelling_terms_table_name();
+		$spelling_deletions_table_name = self::spelling_deletions_table_name();
+		$spelling_objects_table_name = self::spelling_objects_table_name();
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE {$table_name} (
@@ -124,16 +160,56 @@ class VFWP_Intranet_Search_Schema {
 			searched_at datetime NOT NULL,
 			user_email varchar(191) NOT NULL DEFAULT '',
 			source varchar(32) NOT NULL DEFAULT 'frontend',
+			is_corrected tinyint(1) unsigned NOT NULL DEFAULT 0,
+			corrected_to varchar(191) NOT NULL DEFAULT '',
 			PRIMARY KEY  (id),
 			KEY searched_at (searched_at),
 			KEY normalized_query (normalized_query),
 			KEY result_count (result_count),
 			KEY filters_hash (filters_hash),
 			KEY user_email (user_email),
-			KEY source (source)
+			KEY source (source),
+			KEY is_corrected (is_corrected)
 		) {$charset_collate};";
 
 		dbDelta($analytics_sql);
+
+		$spelling_terms_sql = "CREATE TABLE {$spelling_terms_table_name} (
+			id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+			term varchar(64) NOT NULL,
+			display_term varchar(100) NOT NULL DEFAULT '',
+			display_priority tinyint(3) unsigned NOT NULL DEFAULT 0,
+			document_frequency bigint(20) unsigned NOT NULL DEFAULT 0,
+			title_frequency bigint(20) unsigned NOT NULL DEFAULT 0,
+			keyword_frequency bigint(20) unsigned NOT NULL DEFAULT 0,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (id),
+			UNIQUE KEY term (term),
+			KEY title_frequency (title_frequency),
+			KEY keyword_frequency (keyword_frequency),
+			KEY document_frequency (document_frequency)
+		) {$charset_collate};";
+
+		$spelling_deletions_sql = "CREATE TABLE {$spelling_deletions_table_name} (
+			deletion_key varchar(64) NOT NULL,
+			term_id bigint(20) unsigned NOT NULL,
+			PRIMARY KEY  (deletion_key,term_id),
+			KEY term_id (term_id)
+		) {$charset_collate};";
+
+		$spelling_objects_sql = "CREATE TABLE {$spelling_objects_table_name} (
+			object_type varchar(32) NOT NULL,
+			object_id bigint(20) unsigned NOT NULL,
+			term_id bigint(20) unsigned NOT NULL,
+			source tinyint(3) unsigned NOT NULL DEFAULT 0,
+			PRIMARY KEY  (object_type,object_id,term_id),
+			KEY object_lookup (object_type,object_id),
+			KEY term_id (term_id)
+		) {$charset_collate};";
+
+		dbDelta($spelling_terms_sql);
+		dbDelta($spelling_deletions_sql);
+		dbDelta($spelling_objects_sql);
 		self::ensure_fulltext_indexes();
 
 		update_option(self::OPTION_NAME, self::VERSION, false);
@@ -152,7 +228,7 @@ class VFWP_Intranet_Search_Schema {
 			return false;
 		}
 
-		return $installed_version < 15;
+		return $installed_version < 17;
 	}
 
 	/**

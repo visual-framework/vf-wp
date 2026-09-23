@@ -11,6 +11,8 @@ class VFWP_Intranet_Search_Settings {
 	const OPTION_NAME = 'vfwp_intranet_search_settings';
 	const REBUILD_REQUIRED_OPTION = 'vfwp_intranet_search_rebuild_required';
 	const ADMIN_CAPABILITY = 'manage_options';
+	const DISMISSED_REBUILD_META = 'vfwp_intranet_search_dismissed_rebuild_notice';
+	const ADMIN_TABLE_ROWS_PER_PAGE = 20;
 
 	/**
 	 * Register admin hooks.
@@ -20,6 +22,34 @@ class VFWP_Intranet_Search_Settings {
 	public function register_hooks() {
 		add_action('admin_menu', array($this, 'add_settings_page'));
 		add_action('admin_init', array($this, 'register_settings'));
+		add_action('wp_ajax_vfwp_intranet_search_dismiss_notice', array($this, 'handle_dismiss_notice'));
+	}
+
+	/**
+	 * Remember dismissal of the current rebuild-required notice for one administrator.
+	 *
+	 * @return void
+	 */
+	public function handle_dismiss_notice() {
+		if (!current_user_can(self::ADMIN_CAPABILITY)) {
+			wp_send_json_error(array('message' => __('Permission denied.', 'vfwp')), 403);
+		}
+
+		check_ajax_referer('vfwp_intranet_search_dismiss_notice', 'nonce');
+
+		$notice = isset($_POST['notice']) ? sanitize_key(wp_unslash($_POST['notice'])) : '';
+
+		if ('rebuild_required' !== $notice) {
+			wp_send_json_error(array('message' => __('Unknown notice.', 'vfwp')), 400);
+		}
+
+		$rebuild_status = get_option(self::REBUILD_REQUIRED_OPTION, array());
+
+		if (is_array($rebuild_status) && !empty($rebuild_status['required'])) {
+			update_user_meta(get_current_user_id(), self::DISMISSED_REBUILD_META, $this->get_rebuild_notice_fingerprint($rebuild_status));
+		}
+
+		wp_send_json_success();
 	}
 
 	/**
@@ -459,14 +489,16 @@ class VFWP_Intranet_Search_Settings {
 			<?php $this->render_index_action_notice(); ?>
 			<?php settings_errors('vfwp_intranet_search_settings'); ?>
 
-			<?php if (is_array($rebuild_status) && !empty($rebuild_status['required'])) : ?>
-				<div class="notice notice-warning">
+			<?php if ($this->should_render_rebuild_notice($rebuild_status)) : ?>
+				<div class="notice notice-warning is-dismissible" data-vfwp-search-notice="rebuild_required">
 					<p>
 						<strong><?php echo esc_html__('Search index rebuild required.', 'vfwp'); ?></strong>
 						<?php echo esc_html(isset($rebuild_status['reason']) ? $rebuild_status['reason'] : ''); ?>
 					</p>
 				</div>
 			<?php endif; ?>
+
+			<?php $this->render_notice_dismissal_script(); ?>
 
 			<?php $this->render_tabs($current_tab); ?>
 
@@ -483,7 +515,37 @@ class VFWP_Intranet_Search_Settings {
 				</form>
 			<?php endif; ?>
 		</div>
+		<?php $this->render_client_table_pagination(); ?>
 		<?php
+	}
+
+	/**
+	 * Determine whether the current rebuild-required notice is still visible to this user.
+	 *
+	 * @param mixed $rebuild_status Stored rebuild status.
+	 * @return bool
+	 */
+	private function should_render_rebuild_notice($rebuild_status) {
+		if (!is_array($rebuild_status) || empty($rebuild_status['required'])) {
+			return false;
+		}
+
+		$dismissed = (string) get_user_meta(get_current_user_id(), self::DISMISSED_REBUILD_META, true);
+
+		return $dismissed === '' || !hash_equals($this->get_rebuild_notice_fingerprint($rebuild_status), $dismissed);
+	}
+
+	/**
+	 * Build a stable identifier for one rebuild requirement.
+	 *
+	 * @param array $rebuild_status Stored rebuild status.
+	 * @return string
+	 */
+	private function get_rebuild_notice_fingerprint(array $rebuild_status) {
+		return hash('sha256', wp_json_encode(array(
+			'reason'    => isset($rebuild_status['reason']) ? (string) $rebuild_status['reason'] : '',
+			'marked_at' => isset($rebuild_status['marked_at']) ? (string) $rebuild_status['marked_at'] : '',
+		)));
 	}
 
 	/**
@@ -649,7 +711,12 @@ class VFWP_Intranet_Search_Settings {
 
 		if (class_exists('VFWP_Intranet_Search_Analytics')) {
 			$analytics = new VFWP_Intranet_Search_Analytics();
-			$this->render_analytics_reports($analytics->get_dashboard_data());
+			$recent_page = isset($_GET['analytics_recent_page']) ? max(1, absint(wp_unslash($_GET['analytics_recent_page']))) : 1;
+			$report_pages = array(
+				'top'  => isset($_GET['analytics_top_page']) ? max(1, absint(wp_unslash($_GET['analytics_top_page']))) : 1,
+				'zero' => isset($_GET['analytics_zero_page']) ? max(1, absint(wp_unslash($_GET['analytics_zero_page']))) : 1,
+			);
+			$this->render_analytics_reports($analytics->get_dashboard_data($recent_page, $report_pages));
 		}
 	}
 
@@ -769,9 +836,169 @@ class VFWP_Intranet_Search_Settings {
 
 		$class = $notice_type === 'started' ? 'notice notice-success' : 'notice notice-error';
 		?>
-		<div class="<?php echo esc_attr($class); ?>">
+		<div class="<?php echo esc_attr($class . ' is-dismissible'); ?>" data-vfwp-search-notice="index_action">
 			<p><?php echo esc_html($message); ?></p>
 		</div>
+		<?php
+	}
+
+	/**
+	 * Render dismissal behavior for Search settings notices.
+	 *
+	 * @return void
+	 */
+	private function render_notice_dismissal_script() {
+		?>
+		<script>
+			document.addEventListener('click', function (event) {
+				var target = event.target instanceof Element ? event.target : event.target.parentElement;
+				var button = target ? target.closest('.notice-dismiss') : null;
+
+				if (!button) {
+					return;
+				}
+
+				var notice = button.closest('[data-vfwp-search-notice]');
+
+				if (!notice) {
+					return;
+				}
+
+				var noticeKey = notice.getAttribute('data-vfwp-search-notice');
+
+				if (noticeKey === 'index_action' && window.history && window.history.replaceState) {
+					var url = new URL(window.location.href);
+					url.searchParams.delete('vfwp_search_index_notice');
+					url.searchParams.delete('vfwp_search_index_message');
+					window.history.replaceState({}, '', url.toString());
+				}
+
+				if (noticeKey !== 'rebuild_required' || typeof ajaxurl === 'undefined') {
+					return;
+				}
+
+				var body = new URLSearchParams();
+				body.set('action', 'vfwp_intranet_search_dismiss_notice');
+				body.set('notice', noticeKey);
+				body.set('nonce', '<?php echo esc_js(wp_create_nonce('vfwp_intranet_search_dismiss_notice')); ?>');
+
+				fetch(ajaxurl, {
+					method: 'POST',
+					credentials: 'same-origin',
+					headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'},
+					body: body.toString()
+				});
+			}, true);
+		</script>
+		<?php
+	}
+
+	/**
+	 * Add pagination to bounded settings tables whose rows are already rendered.
+	 *
+	 * Large database-backed reports use server-side pagination instead.
+	 *
+	 * @return void
+	 */
+	private function render_client_table_pagination() {
+		?>
+		<style>
+			.vfwp-search-table-pagination {
+				box-sizing: border-box;
+				clear: both;
+				height: auto;
+				margin: 8px 0 16px;
+				max-width: 920px;
+				padding: 0;
+				width: 100%;
+			}
+			.vfwp-search-table-pagination .tablenav-pages {
+				float: none;
+				margin: 0;
+				text-align: left;
+			}
+			.vfwp-search-table-pagination ul.page-numbers {
+				align-items: center;
+				display: flex;
+				flex-wrap: wrap;
+				gap: 4px;
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+			.vfwp-search-table-pagination ul.page-numbers > li {
+				display: inline-flex;
+				margin: 0;
+			}
+		</style>
+		<script>
+			document.addEventListener('DOMContentLoaded', function () {
+				var pageSize = <?php echo esc_js((string) self::ADMIN_TABLE_ROWS_PER_PAGE); ?>;
+
+				document.querySelectorAll('.wrap table.widefat:not([data-vfwp-server-paginated])').forEach(function (table) {
+					var tbody = table.tBodies.length ? table.tBodies[0] : null;
+					var rows = tbody ? Array.prototype.slice.call(tbody.rows) : [];
+
+					if (rows.length <= pageSize) {
+						return;
+					}
+
+					var currentPage = 1;
+					var totalPages = Math.ceil(rows.length / pageSize);
+					var nav = document.createElement('nav');
+					var controls = document.createElement('div');
+					nav.className = 'tablenav vfwp-search-table-pagination';
+					nav.setAttribute('aria-label', '<?php echo esc_js(__('Table pagination', 'vfwp')); ?>');
+					controls.className = 'tablenav-pages';
+					nav.appendChild(controls);
+					table.insertAdjacentElement('afterend', nav);
+
+					function makeButton(label, page, disabled, current) {
+						var button = document.createElement('button');
+						button.type = 'button';
+						button.className = 'button' + (current ? ' button-primary' : '');
+						button.textContent = label;
+						button.disabled = disabled;
+						button.style.marginLeft = '4px';
+						button.addEventListener('click', function () {
+							currentPage = page;
+							render();
+						});
+						return button;
+					}
+
+					function render() {
+						rows = Array.prototype.slice.call(tbody.rows);
+						totalPages = Math.ceil(rows.length / pageSize);
+						currentPage = Math.min(totalPages, Math.max(1, currentPage));
+
+						rows.forEach(function (row, index) {
+							row.hidden = index < (currentPage - 1) * pageSize || index >= currentPage * pageSize;
+						});
+
+						controls.textContent = '';
+						controls.appendChild(makeButton('<?php echo esc_js(__('Previous', 'vfwp')); ?>', currentPage - 1, currentPage === 1, false));
+
+						for (var page = 1; page <= totalPages; page++) {
+							controls.appendChild(makeButton(String(page), page, page === currentPage, page === currentPage));
+						}
+
+						controls.appendChild(makeButton('<?php echo esc_js(__('Next', 'vfwp')); ?>', currentPage + 1, currentPage === totalPages, false));
+					}
+
+					render();
+
+					document.querySelectorAll('[data-vfwp-ranking-sort]').forEach(function (sortButton) {
+						sortButton.addEventListener('click', function () {
+							window.setTimeout(function () {
+								currentPage = 1;
+								render();
+							}, 0);
+						});
+					});
+				});
+			});
+		</script>
 		<?php
 	}
 
@@ -789,6 +1016,9 @@ class VFWP_Intranet_Search_Settings {
 		$data = $manager->get_dashboard_data();
 		$status = $data['status'];
 		$counts = $data['counts'];
+		$spelling_counts = isset($data['spelling_counts']) && is_array($data['spelling_counts'])
+			? $data['spelling_counts']
+			: array('terms' => 0, 'deletion_keys' => 0, 'objects' => 0);
 		$pending = max(0, (int) $status['total_planned'] - (int) $status['processed']);
 		$failed_items = max((int) $status['failed'], (int) $data['pdf_issue_count']);
 		$rebuild_required = !empty($data['rebuild_required']['required']);
@@ -808,6 +1038,21 @@ class VFWP_Intranet_Search_Settings {
 				<tr>
 					<th scope="row"><?php echo esc_html__('Indexed standalone PDF documents', 'vfwp'); ?></th>
 					<td><?php echo esc_html(number_format_i18n((int) $counts['pdf'])); ?></td>
+				</tr>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Spelling dictionary', 'vfwp'); ?></th>
+					<td>
+						<?php
+						echo esc_html(
+							sprintf(
+								__('%1$s terms from %2$s indexed items; %3$s typo lookup keys.', 'vfwp'),
+								number_format_i18n((int) $spelling_counts['terms']),
+								number_format_i18n((int) $spelling_counts['objects']),
+								number_format_i18n((int) $spelling_counts['deletion_keys'])
+							)
+						);
+						?>
+					</td>
 				</tr>
 				<tr>
 					<th scope="row"><?php echo esc_html__('Index/schema version', 'vfwp'); ?></th>
@@ -1683,9 +1928,13 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	private function render_analytics_reports(array $data) {
 		$summary = isset($data['summary']) && is_array($data['summary']) ? $data['summary'] : array();
+		$trends = isset($data['trends']) && is_array($data['trends']) ? $data['trends'] : array();
 		$top_queries = isset($data['top_queries']) && is_array($data['top_queries']) ? $data['top_queries'] : array();
+		$top_queries_pagination = isset($data['top_queries_pagination']) && is_array($data['top_queries_pagination']) ? $data['top_queries_pagination'] : array();
 		$zero_results = isset($data['zero_results']) && is_array($data['zero_results']) ? $data['zero_results'] : array();
+		$zero_results_pagination = isset($data['zero_results_pagination']) && is_array($data['zero_results_pagination']) ? $data['zero_results_pagination'] : array();
 		$recent = isset($data['recent']) && is_array($data['recent']) ? $data['recent'] : array();
+		$recent_pagination = isset($data['recent_pagination']) && is_array($data['recent_pagination']) ? $data['recent_pagination'] : array();
 		?>
 		<h3><?php echo esc_html__('Analytics summary', 'vfwp'); ?></h3>
 		<table class="widefat striped" style="max-width: 920px;">
@@ -1695,8 +1944,19 @@ class VFWP_Intranet_Search_Settings {
 					<td><?php echo esc_html(number_format_i18n(isset($summary['total_searches']) ? (int) $summary['total_searches'] : 0)); ?></td>
 				</tr>
 				<tr>
+					<th scope="row"><?php echo esc_html__('Searches with results', 'vfwp'); ?></th>
+					<td>
+						<?php echo esc_html(number_format_i18n(isset($summary['searches_with_results']) ? (int) $summary['searches_with_results'] : 0)); ?>
+						(<?php echo esc_html(number_format_i18n(isset($summary['results_rate']) ? (float) $summary['results_rate'] : 0, 1)); ?>%)
+					</td>
+				</tr>
+				<tr>
 					<th scope="row"><?php echo esc_html__('Zero-result searches', 'vfwp'); ?></th>
 					<td><?php echo esc_html(number_format_i18n(isset($summary['zero_result_searches']) ? (int) $summary['zero_result_searches'] : 0)); ?></td>
+				</tr>
+				<tr>
+					<th scope="row"><?php echo esc_html__('Successful spelling corrections', 'vfwp'); ?></th>
+					<td><?php echo esc_html(number_format_i18n(isset($summary['corrected_searches']) ? (int) $summary['corrected_searches'] : 0)); ?></td>
 				</tr>
 				<tr>
 					<th scope="row"><?php echo esc_html__('Unique queries', 'vfwp'); ?></th>
@@ -1708,10 +1968,61 @@ class VFWP_Intranet_Search_Settings {
 				</tr>
 			</tbody>
 		</table>
+		<p class="description" style="max-width: 920px;">
+			<?php echo esc_html__('A no-result query is counted as successful when the user clicks one of its Did you mean suggestions. It remains in total search volume but is removed from the no-results count.', 'vfwp'); ?>
+		</p>
 
-		<?php $this->render_grouped_analytics_table(__('Most searched queries', 'vfwp'), $top_queries, false); ?>
-		<?php $this->render_grouped_analytics_table(__('Queries with no results', 'vfwp'), $zero_results, true); ?>
-		<?php $this->render_recent_analytics_table($recent); ?>
+		<h3><?php echo esc_html__('Search trends', 'vfwp'); ?></h3>
+		<div class="vfwp-search-analytics-charts">
+			<?php $this->render_analytics_trend_chart(__('Daily activity', 'vfwp'), __('Last 30 days', 'vfwp'), isset($trends['daily']) ? (array) $trends['daily'] : array(), 5); ?>
+			<?php $this->render_analytics_trend_chart(__('Weekly activity', 'vfwp'), __('Last 12 weeks', 'vfwp'), isset($trends['weekly']) ? (array) $trends['weekly'] : array(), 2); ?>
+			<?php $this->render_analytics_trend_chart(__('Monthly activity', 'vfwp'), __('Last 12 months', 'vfwp'), isset($trends['monthly']) ? (array) $trends['monthly'] : array(), 2); ?>
+		</div>
+		<style>
+			.vfwp-search-analytics-charts {
+				display: grid;
+				gap: 24px;
+				max-width: 920px;
+			}
+			.vfwp-search-analytics-chart {
+				background: #fff;
+				border: 1px solid #c3c4c7;
+				margin: 0;
+				padding: 16px;
+			}
+			.vfwp-search-analytics-chart h4 {
+				font-size: 15px;
+				margin: 0 0 2px;
+			}
+			.vfwp-search-analytics-chart svg {
+				display: block;
+				height: auto;
+				margin-top: 12px;
+				max-width: 100%;
+				width: 100%;
+			}
+			.vfwp-search-analytics-legend {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px 20px;
+				margin-top: 8px;
+			}
+			.vfwp-search-analytics-legend span::before {
+				content: '';
+				display: inline-block;
+				height: 10px;
+				margin-right: 6px;
+				vertical-align: -1px;
+				width: 18px;
+			}
+			.vfwp-search-analytics-legend__volume::before { background: #d1e3f6; }
+			.vfwp-search-analytics-legend__success::before { background: #2a57a3; height: 3px !important; vertical-align: 3px !important; }
+			.vfwp-search-analytics-chart details { margin-top: 12px; }
+		</style>
+
+		<?php $this->render_grouped_analytics_table(__('Most searched queries', 'vfwp'), $top_queries, $top_queries_pagination, false, 'analytics_top_page'); ?>
+		<?php $this->render_grouped_analytics_table(__('Queries with no results', 'vfwp'), $zero_results, $zero_results_pagination, true, 'analytics_zero_page'); ?>
+		<?php $this->render_recent_analytics_table($recent, $recent_pagination); ?>
 
 		<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top: 18px;">
 			<input type="hidden" name="action" value="<?php echo esc_attr(VFWP_Intranet_Search_Analytics::CLEAR_ACTION); ?>">
@@ -1722,20 +2033,142 @@ class VFWP_Intranet_Search_Settings {
 	}
 
 	/**
+	 * Render one responsive SVG trend chart and an accessible values table.
+	 *
+	 * @param string $heading Chart heading.
+	 * @param string $description Chart date-range description.
+	 * @param array  $rows Analytics buckets.
+	 * @param int    $label_every X-axis label interval.
+	 * @return void
+	 */
+	private function render_analytics_trend_chart($heading, $description, array $rows, $label_every) {
+		$width = 920;
+		$height = 290;
+		$left = 50;
+		$right = 50;
+		$top = 18;
+		$bottom = 46;
+		$plot_width = $width - $left - $right;
+		$plot_height = $height - $top - $bottom;
+		$count = count($rows);
+		$max_total = 0;
+
+		foreach ($rows as $row) {
+			$max_total = max($max_total, isset($row['total_searches']) ? (int) $row['total_searches'] : 0);
+		}
+
+		$slot_width = $count > 0 ? $plot_width / $count : $plot_width;
+		$bar_width = max(3, $slot_width * 0.58);
+		$segments = array();
+		$current_segment = array();
+		?>
+		<figure class="vfwp-search-analytics-chart">
+			<figcaption>
+				<h4><?php echo esc_html($heading); ?></h4>
+				<span class="description"><?php echo esc_html($description); ?></span>
+			</figcaption>
+			<svg viewBox="0 0 <?php echo esc_attr($width); ?> <?php echo esc_attr($height); ?>" role="img" aria-labelledby="<?php echo esc_attr(sanitize_title($heading)); ?>-chart-title <?php echo esc_attr(sanitize_title($heading)); ?>-chart-desc">
+				<title id="<?php echo esc_attr(sanitize_title($heading)); ?>-chart-title"><?php echo esc_html($heading); ?></title>
+				<desc id="<?php echo esc_attr(sanitize_title($heading)); ?>-chart-desc"><?php echo esc_html__('Bars show total searches. The line shows the percentage of searches with results, including clicked spelling corrections.', 'vfwp'); ?></desc>
+				<?php foreach (array(0, 50, 100) as $percentage) : ?>
+					<?php
+					$guide_y = $top + $plot_height - (($percentage / 100) * $plot_height);
+					$volume_value = (int) round(($percentage / 100) * $max_total);
+					?>
+					<line x1="<?php echo esc_attr($left); ?>" y1="<?php echo esc_attr($guide_y); ?>" x2="<?php echo esc_attr($left + $plot_width); ?>" y2="<?php echo esc_attr($guide_y); ?>" stroke="#dcdcde" stroke-width="1" />
+					<text x="<?php echo esc_attr($left - 8); ?>" y="<?php echo esc_attr($guide_y + 4); ?>" font-size="11" fill="#50575e" text-anchor="end"><?php echo esc_html(number_format_i18n($volume_value)); ?></text>
+					<text x="<?php echo esc_attr($left + $plot_width + 8); ?>" y="<?php echo esc_attr($guide_y + 4); ?>" font-size="11" fill="#50575e"><?php echo esc_html($percentage . '%'); ?></text>
+				<?php endforeach; ?>
+				<?php foreach ($rows as $index => $row) : ?>
+					<?php
+					$total = isset($row['total_searches']) ? max(0, (int) $row['total_searches']) : 0;
+					$rate = isset($row['results_rate']) ? max(0, min(100, (float) $row['results_rate'])) : 0;
+					$x_center = $left + ($slot_width * $index) + ($slot_width / 2);
+					$bar_height = ($total / max(1, $max_total)) * $plot_height;
+					$bar_x = $x_center - ($bar_width / 2);
+					$bar_y = $top + $plot_height - $bar_height;
+					$point_y = $top + $plot_height - (($rate / 100) * $plot_height);
+					$tooltip = sprintf(
+						__('%1$s: %2$s searches, %3$s%% with results', 'vfwp'),
+						isset($row['label']) ? (string) $row['label'] : '',
+						number_format_i18n($total),
+						number_format_i18n($rate, 1)
+					);
+
+					if ($total > 0) {
+						$current_segment[] = round($x_center, 2) . ',' . round($point_y, 2);
+					} elseif (!empty($current_segment)) {
+						$segments[] = $current_segment;
+						$current_segment = array();
+					}
+					?>
+					<rect x="<?php echo esc_attr(round($bar_x, 2)); ?>" y="<?php echo esc_attr(round($bar_y, 2)); ?>" width="<?php echo esc_attr(round($bar_width, 2)); ?>" height="<?php echo esc_attr(round($bar_height, 2)); ?>" fill="#d1e3f6">
+						<title><?php echo esc_html($tooltip); ?></title>
+					</rect>
+					<?php if ($index % max(1, (int) $label_every) === 0 || $index === $count - 1) : ?>
+						<text x="<?php echo esc_attr(round($x_center, 2)); ?>" y="<?php echo esc_attr($height - 18); ?>" font-size="10" fill="#50575e" text-anchor="middle"><?php echo esc_html(isset($row['label']) ? $row['label'] : ''); ?></text>
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<?php if (!empty($current_segment)) { $segments[] = $current_segment; } ?>
+				<?php foreach ($segments as $segment) : ?>
+					<?php if (count($segment) > 1) : ?>
+						<polyline points="<?php echo esc_attr(implode(' ', $segment)); ?>" fill="none" stroke="#2a57a3" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" />
+					<?php endif; ?>
+				<?php endforeach; ?>
+				<?php foreach ($rows as $index => $row) : ?>
+					<?php if (empty($row['total_searches'])) { continue; } ?>
+					<?php
+					$x_center = $left + ($slot_width * $index) + ($slot_width / 2);
+					$rate = max(0, min(100, (float) $row['results_rate']));
+					$point_y = $top + $plot_height - (($rate / 100) * $plot_height);
+					?>
+					<circle cx="<?php echo esc_attr(round($x_center, 2)); ?>" cy="<?php echo esc_attr(round($point_y, 2)); ?>" r="4" fill="#2a57a3" />
+				<?php endforeach; ?>
+			</svg>
+			<div class="vfwp-search-analytics-legend" aria-hidden="true">
+				<span class="vfwp-search-analytics-legend__volume"><?php echo esc_html__('Total searches', 'vfwp'); ?></span>
+				<span class="vfwp-search-analytics-legend__success"><?php echo esc_html__('% with results', 'vfwp'); ?></span>
+			</div>
+			<details>
+				<summary><?php echo esc_html__('View chart data', 'vfwp'); ?></summary>
+				<table class="widefat striped">
+					<thead><tr><th><?php echo esc_html__('Period', 'vfwp'); ?></th><th><?php echo esc_html__('Total searches', 'vfwp'); ?></th><th><?php echo esc_html__('With results', 'vfwp'); ?></th><th><?php echo esc_html__('% with results', 'vfwp'); ?></th><th><?php echo esc_html__('No results', 'vfwp'); ?></th></tr></thead>
+					<tbody>
+						<?php foreach ($rows as $row) : ?>
+							<tr>
+								<th scope="row"><?php echo esc_html(isset($row['label']) ? $row['label'] : ''); ?></th>
+								<td><?php echo esc_html(number_format_i18n((int) $row['total_searches'])); ?></td>
+								<td><?php echo esc_html(number_format_i18n((int) $row['searches_with_results'])); ?></td>
+								<td><?php echo esc_html(number_format_i18n((float) $row['results_rate'], 1) . '%'); ?></td>
+								<td><?php echo esc_html(number_format_i18n((int) $row['zero_result_searches'])); ?></td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</details>
+		</figure>
+		<?php
+	}
+
+	/**
 	 * Render grouped query analytics table.
 	 *
 	 * @param string $heading Heading.
 	 * @param array  $rows Rows.
+	 * @param array  $pagination Pagination data.
 	 * @param bool   $zero_only Whether rows are zero-result only.
+	 * @param string $page_arg Pagination query argument.
 	 * @return void
 	 */
-	private function render_grouped_analytics_table($heading, array $rows, $zero_only) {
+	private function render_grouped_analytics_table($heading, array $rows, array $pagination, $zero_only, $page_arg) {
+		$page = isset($pagination['page']) ? max(1, (int) $pagination['page']) : 1;
+		$total_pages = isset($pagination['total_pages']) ? max(1, (int) $pagination['total_pages']) : 1;
 		?>
 		<h3><?php echo esc_html($heading); ?></h3>
 		<?php if (empty($rows)) : ?>
 			<p><?php echo esc_html__('No analytics data recorded yet.', 'vfwp'); ?></p>
 		<?php else : ?>
-			<table class="widefat striped" style="max-width: 920px;">
+			<table class="widefat striped" style="max-width: 920px;" data-vfwp-server-paginated="true">
 				<thead>
 					<tr>
 						<th scope="col"><?php echo esc_html__('Query', 'vfwp'); ?></th>
@@ -1766,6 +2199,7 @@ class VFWP_Intranet_Search_Settings {
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+			<?php $this->render_admin_pagination($page, $total_pages, $page_arg, sprintf(__('%s pagination', 'vfwp'), $heading), 'analytics'); ?>
 		<?php endif; ?>
 		<?php
 	}
@@ -1774,15 +2208,36 @@ class VFWP_Intranet_Search_Settings {
 	 * Render recent searches table.
 	 *
 	 * @param array $rows Rows.
+	 * @param array $pagination Pagination data.
 	 * @return void
 	 */
-	private function render_recent_analytics_table(array $rows) {
+	private function render_recent_analytics_table(array $rows, array $pagination) {
+		$page = isset($pagination['page']) ? max(1, (int) $pagination['page']) : 1;
+		$per_page = isset($pagination['per_page']) ? max(1, (int) $pagination['per_page']) : VFWP_Intranet_Search_Analytics::RECENT_PER_PAGE;
+		$total = isset($pagination['total']) ? max(0, (int) $pagination['total']) : count($rows);
+		$total_pages = isset($pagination['total_pages']) ? max(1, (int) $pagination['total_pages']) : 1;
+		$range_start = $total > 0 ? (($page - 1) * $per_page) + 1 : 0;
+		$range_end = $total > 0 ? min($total, $range_start + count($rows) - 1) : 0;
 		?>
 		<h3><?php echo esc_html__('Recent searches', 'vfwp'); ?></h3>
+		<?php if ($total > 0) : ?>
+			<p class="description">
+				<?php
+				echo esc_html(
+					sprintf(
+						__('Showing %1$s–%2$s of %3$s searches within the retention period.', 'vfwp'),
+						number_format_i18n($range_start),
+						number_format_i18n($range_end),
+						number_format_i18n($total)
+					)
+				);
+				?>
+			</p>
+		<?php endif; ?>
 		<?php if (empty($rows)) : ?>
 			<p><?php echo esc_html__('No recent searches recorded yet.', 'vfwp'); ?></p>
 		<?php else : ?>
-			<table class="widefat striped" style="max-width: 920px;">
+			<table class="widefat striped" style="max-width: 920px;" data-vfwp-server-paginated="true">
 				<thead>
 					<tr>
 						<th scope="col"><?php echo esc_html__('Query', 'vfwp'); ?></th>
@@ -1800,14 +2255,83 @@ class VFWP_Intranet_Search_Settings {
 									<?php echo esc_html($query); ?>
 								</a>
 							</th>
-							<td><?php echo esc_html(number_format_i18n((int) $row['result_count'])); ?></td>
+							<td>
+								<?php if (!empty($row['is_corrected'])) : ?>
+									<?php
+									echo esc_html(
+										sprintf(
+											__('Corrected to “%s”', 'vfwp'),
+											isset($row['corrected_to']) ? (string) $row['corrected_to'] : ''
+										)
+									);
+									?>
+								<?php else : ?>
+									<?php echo esc_html(number_format_i18n((int) $row['result_count'])); ?>
+								<?php endif; ?>
+							</td>
 							<td><?php echo esc_html(!empty($row['user_email']) ? (string) $row['user_email'] : __('Not stored', 'vfwp')); ?></td>
 							<td><?php echo esc_html($this->format_admin_datetime($row['searched_at'])); ?></td>
 						</tr>
 					<?php endforeach; ?>
 				</tbody>
 			</table>
+			<?php $this->render_admin_pagination($page, $total_pages, 'analytics_recent_page', __('Recent searches pagination', 'vfwp'), 'analytics'); ?>
 		<?php endif; ?>
+		<?php
+	}
+
+	/**
+	 * Render pagination for a Search settings report table.
+	 *
+	 * @param int $page Current page.
+	 * @param int $total_pages Total pages.
+	 * @param string $page_arg Query argument containing the page.
+	 * @param string $aria_label Accessible pagination label.
+	 * @param string $tab Search settings tab.
+	 * @return void
+	 */
+	private function render_admin_pagination($page, $total_pages, $page_arg, $aria_label, $tab) {
+		if ((int) $total_pages <= 1) {
+			return;
+		}
+
+		$allowed_page_args = array('analytics_top_page', 'analytics_zero_page', 'analytics_recent_page', 'document_issues_page');
+		$url_args = array(
+			'page' => 'vfwp-intranet-search',
+			'tab'  => sanitize_key($tab),
+		);
+
+		foreach ($allowed_page_args as $allowed_page_arg) {
+			if ($allowed_page_arg !== $page_arg && isset($_GET[$allowed_page_arg])) {
+				$url_args[$allowed_page_arg] = max(1, absint(wp_unslash($_GET[$allowed_page_arg])));
+			}
+		}
+
+		$url_args[sanitize_key($page_arg)] = '%#%';
+		$base_url = add_query_arg(
+			$url_args,
+			admin_url('options-general.php')
+		);
+		$base_url = str_replace('%25%23%25', '%#%', $base_url);
+		$links = paginate_links(array(
+			'base'      => $base_url,
+			'format'    => '',
+			'current'   => max(1, (int) $page),
+			'total'     => max(1, (int) $total_pages),
+			'mid_size'  => 2,
+			'end_size'  => 1,
+			'prev_text' => __('Previous', 'vfwp'),
+			'next_text' => __('Next', 'vfwp'),
+			'type'      => 'list',
+		));
+
+		if (!is_string($links) || $links === '') {
+			return;
+		}
+		?>
+		<nav class="tablenav vfwp-search-table-pagination" aria-label="<?php echo esc_attr($aria_label); ?>">
+			<div class="tablenav-pages"><?php echo wp_kses_post($links); ?></div>
+		</nav>
 		<?php
 	}
 
@@ -1828,17 +2352,22 @@ class VFWP_Intranet_Search_Settings {
 			return;
 		}
 
-		$issues = $repository->get_pdf_extraction_issues(5);
+		$per_page = self::ADMIN_TABLE_ROWS_PER_PAGE;
+		$total_pages = (int) ceil($issue_count / $per_page);
+		$page = isset($_GET['document_issues_page']) ? max(1, absint(wp_unslash($_GET['document_issues_page']))) : 1;
+		$page = min(max(1, $total_pages), $page);
+		$issues = $repository->get_pdf_extraction_issues($per_page, ($page - 1) * $per_page);
 		?>
-		<div class="notice notice-warning">
+		<section aria-labelledby="vfwp-document-extraction-issues" style="margin-top: 28px; max-width: 920px;">
+			<h2 id="vfwp-document-extraction-issues"><?php echo esc_html__('Document extraction issues', 'vfwp'); ?></h2>
 			<p>
 				<strong><?php echo esc_html__('Document extraction issues detected.', 'vfwp'); ?></strong>
 				<?php echo esc_html(sprintf(_n('%d document has an extraction issue.', '%d documents have extraction issues.', $issue_count, 'vfwp'), $issue_count)); ?>
 			</p>
-			<table class="widefat striped" style="max-width: 920px; margin: 0 0 12px;">
+			<table class="widefat striped" data-vfwp-server-paginated="true">
 				<thead>
 					<tr>
-						<th scope="col"><?php echo esc_html__('Attachment', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('Document', 'vfwp'); ?></th>
 						<th scope="col"><?php echo esc_html__('Status', 'vfwp'); ?></th>
 						<th scope="col"><?php echo esc_html__('Message', 'vfwp'); ?></th>
 						<th scope="col"><?php echo esc_html__('Indexed', 'vfwp'); ?></th>
@@ -1859,7 +2388,8 @@ class VFWP_Intranet_Search_Settings {
 					<?php endforeach; ?>
 				</tbody>
 			</table>
-			<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin: 0 0 12px;">
+			<?php $this->render_admin_pagination($page, $total_pages, 'document_issues_page', __('Document extraction issues pagination', 'vfwp'), 'index'); ?>
+			<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin: 16px 0 12px;">
 				<input type="hidden" name="action" value="vfwp_intranet_search_index_action">
 				<input type="hidden" name="search_index_action" value="clear_pdf_issues">
 				<?php wp_nonce_field('vfwp_intranet_search_index_action'); ?>
@@ -1868,7 +2398,7 @@ class VFWP_Intranet_Search_Settings {
 			<p class="description">
 				<?php echo esc_html__('This only clears stored issue notices from the search index. It does not delete media, posts, file metadata, or indexed content.', 'vfwp'); ?>
 			</p>
-		</div>
+		</section>
 		<?php
 	}
 
