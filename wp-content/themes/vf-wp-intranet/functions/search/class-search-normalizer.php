@@ -45,7 +45,23 @@ class VFWP_Intranet_Search_Normalizer {
 	 * @return string
 	 */
 	public function normalize_content($content) {
-		return $this->normalize_text($content);
+		$content = is_scalar($content) ? (string) $content : '';
+		$pieces = array();
+		$visible_content = $this->normalize_text($content);
+
+		if ($visible_content !== '') {
+			$pieces[] = $visible_content;
+		}
+
+		if (strpos($content, '<!-- wp:acf/') !== false && function_exists('parse_blocks')) {
+			$blocks = parse_blocks($content);
+
+			if (is_array($blocks)) {
+				$this->collect_acf_block_text($blocks, $pieces);
+			}
+		}
+
+		return $this->normalize_text(implode("\n", array_values(array_unique($pieces))));
 	}
 
 	/**
@@ -106,6 +122,71 @@ class VFWP_Intranet_Search_Normalizer {
 			}
 
 			$this->collect_text_values($child_value, $pieces, $depth + 1);
+
+			if (count($pieces) >= 100) {
+				return;
+			}
+		}
+	}
+
+	/**
+	 * Collect bounded text stored in dynamic ACF block attributes.
+	 *
+	 * Dynamic ACF blocks are commonly self-closing, so their visible values live
+	 * in the block comment JSON and are removed by normal HTML normalization.
+	 *
+	 * @param array $blocks Parsed Gutenberg blocks.
+	 * @param array $pieces Collected text pieces.
+	 * @param int   $depth Current block nesting depth.
+	 * @return void
+	 */
+	private function collect_acf_block_text(array $blocks, array &$pieces, $depth = 0) {
+		if ($depth > 8 || count($pieces) >= 100) {
+			return;
+		}
+
+		foreach ($blocks as $block) {
+			if (!is_array($block)) {
+				continue;
+			}
+
+			$block_name = isset($block['blockName']) ? (string) $block['blockName'] : '';
+			$attributes = isset($block['attrs']) && is_array($block['attrs']) ? $block['attrs'] : array();
+
+			if (strpos($block_name, 'acf/') === 0 && isset($attributes['data']) && is_array($attributes['data'])) {
+				$this->collect_acf_block_data($attributes['data'], $pieces);
+			}
+
+			if (!empty($block['innerBlocks']) && is_array($block['innerBlocks'])) {
+				$this->collect_acf_block_text($block['innerBlocks'], $pieces, $depth + 1);
+			}
+
+			if (count($pieces) >= 100) {
+				return;
+			}
+		}
+	}
+
+	/**
+	 * Extract user-facing text fields without indexing ACF block configuration.
+	 *
+	 * @param array $data ACF block data.
+	 * @param array $pieces Collected text pieces.
+	 * @return void
+	 */
+	private function collect_acf_block_data(array $data, array &$pieces) {
+		foreach ($data as $key => $value) {
+			$key = strtolower((string) $key);
+
+			if (
+				$key === ''
+				|| strpos($key, '_') === 0
+				|| preg_match('/(^|_)(title|heading|subheading|lede|text|content|description|summary|caption|quote|label|name|overview|intro)(_|$)/', $key) !== 1
+			) {
+				continue;
+			}
+
+			$this->collect_text_values($value, $pieces);
 
 			if (count($pieces) >= 100) {
 				return;

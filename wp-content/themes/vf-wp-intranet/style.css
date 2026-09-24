@@ -141,6 +141,10 @@ Text Domain:	 vfwp
     top: 100%;
     z-index: 20;
 }
+.vf-hero .vf-form--search__results-list {
+    right: auto;
+    width: min(30rem, calc(100vw - 2rem));
+}
 .vf-form--search__results-list[hidden] {
     display: none;
 }

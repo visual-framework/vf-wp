@@ -47,6 +47,7 @@ class VFWP_Intranet_Search_Suggestions {
 	 */
 	public static function register_hooks() {
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_assets'));
+		add_action('vf/plugin/before_render/vf_wp_hero_group', array(__CLASS__, 'enable_for_hero_plugin'));
 		add_filter('render_block', array(__CLASS__, 'enable_for_hero_search'), 20, 2);
 		add_action('wp_ajax_' . self::ACTION, array(__CLASS__, 'handle_ajax_request'));
 		add_action('wp_ajax_nopriv_' . self::ACTION, array(__CLASS__, 'handle_ajax_request'));
@@ -58,10 +59,6 @@ class VFWP_Intranet_Search_Suggestions {
 	 * @return void
 	 */
 	public static function enqueue_assets() {
-		if (!is_search() && !is_page_template('searchpage.php')) {
-			return;
-		}
-
 		self::enqueue_script();
 	}
 
@@ -86,6 +83,29 @@ class VFWP_Intranet_Search_Suggestions {
 		self::enqueue_script();
 
 		return $block_content;
+	}
+
+	/**
+	 * Enable autocomplete for the legacy VF Hero container renderer.
+	 *
+	 * VF containers are included directly by VF_Plugin::render(), so their HTML
+	 * does not pass through WordPress's render_block filter.
+	 *
+	 * @param mixed $plugin VF Hero plugin instance.
+	 * @return void
+	 */
+	public static function enable_for_hero_plugin($plugin) {
+		if (is_admin() || !is_object($plugin) || !method_exists($plugin, 'post') || !function_exists('get_field')) {
+			return;
+		}
+
+		$post = $plugin->post();
+
+		if (!$post instanceof WP_Post || !get_field('vf_hero_search', $post->ID)) {
+			return;
+		}
+
+		self::enqueue_script();
 	}
 
 	/**

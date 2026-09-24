@@ -539,7 +539,13 @@ class VFWP_Intranet_Search_Service {
 			$escaped_terms[] = $this->build_accent_aware_regexp_fragment($term);
 		}
 
-		return '(^|[,;\r\n|])[[:space:]]*' . implode('[[:space:]]+', $escaped_terms) . '[[:space:]]*($|[,;\r\n|])';
+		// Query normalization removes punctuation, while indexed keyword entries
+		// retain it. Allow punctuation inside one entry, but never cross a keyword
+		// delimiter; this keeps exact-entry matching strict for comma-separated lists.
+		$entry_spacing = '[^[:alnum:],;|]*';
+		$term_spacing = '[^[:alnum:],;|]+';
+
+		return '(^|[,;\r\n|])' . $entry_spacing . implode($term_spacing, $escaped_terms) . $entry_spacing . '($|[,;\r\n|])';
 	}
 
 	/**
