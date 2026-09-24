@@ -9,6 +9,7 @@ if (!defined('ABSPATH')) {
 
 class VFWP_Intranet_Search_Analytics {
 	const CLEAR_ACTION = 'vfwp_intranet_search_clear_analytics';
+	const AUTOCOMPLETE_ACTION = 'vfwp_intranet_search_track_autocomplete';
 	const CLEANUP_TRANSIENT = 'vfwp_intranet_search_analytics_cleanup';
 	const ADMIN_ROWS_PER_PAGE = 20;
 	const RECENT_PER_PAGE = 20;
@@ -47,6 +48,37 @@ class VFWP_Intranet_Search_Analytics {
 	 */
 	public static function register_hooks() {
 		add_action('admin_post_' . self::CLEAR_ACTION, array(__CLASS__, 'handle_clear_action'));
+		add_action('wp_ajax_' . self::AUTOCOMPLETE_ACTION, array(__CLASS__, 'handle_autocomplete_selection'));
+		add_action('wp_ajax_nopriv_' . self::AUTOCOMPLETE_ACTION, array(__CLASS__, 'handle_autocomplete_selection'));
+	}
+
+	/**
+	 * Record a deliberate indexed-result selection from autocomplete.
+	 *
+	 * Lookup requests are intentionally ignored; only a selected result reaches
+	 * this endpoint and counts as a successful search.
+	 *
+	 * @return void
+	 */
+	public static function handle_autocomplete_selection() {
+		$nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+
+		if ($nonce === '' || !wp_verify_nonce($nonce, self::AUTOCOMPLETE_ACTION)) {
+			wp_send_json_error(array('message' => __('Invalid autocomplete analytics request.', 'vfwp')), 403);
+		}
+
+		$query = isset($_POST['query']) ? wp_unslash($_POST['query']) : '';
+		$object_id = isset($_POST['object_id']) ? absint(wp_unslash($_POST['object_id'])) : 0;
+		$object_type = isset($_POST['object_type']) ? sanitize_key(wp_unslash($_POST['object_type'])) : 'post';
+		$selected_filters = isset($_POST[VFWP_Intranet_Search_Frontend::FILTER_PARAM])
+			? (array) wp_unslash($_POST[VFWP_Intranet_Search_Frontend::FILTER_PARAM])
+			: array();
+		$filters = VFWP_Intranet_Search_Frontend::get_filters_for_raw_filter_values($selected_filters);
+		$analytics = new self();
+
+		wp_send_json_success(array(
+			'recorded' => $analytics->log_autocomplete_selection($query, $filters, $object_id, $object_type),
+		));
 	}
 
 	/**
@@ -124,6 +156,87 @@ class VFWP_Intranet_Search_Analytics {
 		if (false !== $result) {
 			self::$last_logged_id = (int) $this->wpdb->insert_id;
 		}
+
+		return false !== $result;
+	}
+
+	/**
+	 * Log one selected autocomplete result as a successful search.
+	 *
+	 * @param mixed  $query Typed search query before the suggestion was selected.
+	 * @param array  $filters Active search filters.
+	 * @param int    $object_id Selected indexed object ID.
+	 * @param string $object_type Selected indexed object type.
+	 * @return bool
+	 */
+	public function log_autocomplete_selection($query, array $filters, $object_id, $object_type = 'post') {
+		$settings = $this->get_settings();
+
+		if (empty($settings['enabled'])) {
+			return false;
+		}
+
+		if (!empty($settings['exclude_admins']) && current_user_can(VFWP_Intranet_Search_Settings::ADMIN_CAPABILITY)) {
+			return false;
+		}
+
+		$query_text = trim(is_scalar($query) ? (string) $query : '');
+		$parsed_query = (new VFWP_Intranet_Search_Query_Parser())->parse($query_text);
+		$normalized_query = isset($parsed_query['normalized']) ? trim((string) $parsed_query['normalized']) : '';
+		$object_id = max(0, (int) $object_id);
+		$object_type = sanitize_key($object_type);
+
+		if ($query_text === '' || $normalized_query === '' || $object_id <= 0 || $object_type === '') {
+			return false;
+		}
+
+		$index_table = VFWP_Intranet_Search_Schema::table_name();
+		$selected_object = $this->wpdb->get_row(
+			$this->wpdb->prepare(
+				"SELECT object_id, object_type, post_type, title, url FROM {$index_table}
+				WHERE object_id = %d AND object_type = %s
+					AND post_status = 'publish' AND visibility = 'public'
+				LIMIT 1",
+				$object_id,
+				$object_type
+			),
+			ARRAY_A
+		);
+
+		if (!is_array($selected_object)) {
+			return false;
+		}
+
+		$filters = $this->sanitize_filters($filters);
+		$filters_json = wp_json_encode($filters);
+		$filters_hash = md5((string) $filters_json);
+		$this->maybe_cleanup();
+
+		$result = $this->wpdb->insert(
+			$this->table_name,
+			array(
+				'query_text'              => $this->limit_string($query_text, 240),
+				'normalized_query'        => $this->limit_string($normalized_query, 191),
+				'result_count'            => 1,
+				'filters_hash'            => $filters_hash,
+				'filters_json'            => is_string($filters_json) ? $filters_json : '{}',
+				'page_number'             => 1,
+				'per_page'                => 1,
+				'searched_at'             => current_time('mysql', true),
+				'user_email'              => !empty($settings['track_user_email']) ? $this->get_current_user_email() : '',
+				'source'                  => 'autocomplete',
+				'selected_object_id'      => (int) $selected_object['object_id'],
+				'selected_object_type'    => sanitize_key($selected_object['object_type']),
+				'selected_post_type'      => sanitize_key($selected_object['post_type']),
+				'selected_title'          => $this->limit_string(wp_strip_all_tags((string) $selected_object['title']), 240),
+				'selected_url'            => $this->limit_string(esc_url_raw((string) $selected_object['url']), 2048),
+				'is_corrected'            => 0,
+				'corrected_to'            => '',
+				'did_you_mean_shown'      => 0,
+				'did_you_mean_suggestions' => '',
+			),
+			array('%s', '%s', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%s', '%d', '%s')
+		);
 
 		return false !== $result;
 	}
@@ -480,7 +593,9 @@ class VFWP_Intranet_Search_Analytics {
 		$page = min($total_pages, max(1, (int) $page));
 		$offset = ($page - 1) * $per_page;
 		$sql = "
-			SELECT query_text, normalized_query, result_count, searched_at, user_email, is_corrected, corrected_to
+			SELECT query_text, normalized_query, result_count, searched_at, user_email, source,
+				selected_object_id, selected_object_type, selected_post_type, selected_title, selected_url,
+				is_corrected, corrected_to
 			FROM {$this->table_name}
 			WHERE searched_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)
 			ORDER BY searched_at DESC, id DESC

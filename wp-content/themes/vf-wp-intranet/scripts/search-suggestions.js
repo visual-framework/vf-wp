@@ -89,14 +89,60 @@
       }
     }
 
+    function trackResultSelection(query, suggestion) {
+      var data;
+      var filterInputs;
+      var sent = false;
+
+      if (!config.analyticsAction || !config.analyticsNonce || !suggestion || !suggestion.object_id) {
+        return;
+      }
+
+      data = new FormData();
+      data.append('action', config.analyticsAction);
+      data.append('nonce', config.analyticsNonce);
+      data.append('query', query);
+      data.append('object_id', suggestion.object_id);
+      data.append('object_type', suggestion.object_type || 'post');
+
+      filterInputs = form.querySelectorAll('input[name="search_type[]"]');
+      filterInputs.forEach(function (filterInput) {
+        if ((filterInput.type === 'checkbox' || filterInput.type === 'radio') && !filterInput.checked) {
+          return;
+        }
+
+        if (filterInput.value) {
+          data.append('search_type[]', filterInput.value);
+        }
+      });
+
+      if (navigator.sendBeacon) {
+        sent = navigator.sendBeacon(config.ajaxUrl, data);
+      }
+
+      if (!sent && window.fetch) {
+        fetch(config.ajaxUrl, {
+          method: 'POST',
+          body: data,
+          credentials: 'same-origin',
+          keepalive: true
+        }).catch(function () {});
+      }
+    }
+
     function selectSuggestion(suggestion) {
+      var typedQuery;
+
       if (!suggestion) {
         return;
       }
 
+      typedQuery = normalizeLookupQuery(input.value);
       input.value = suggestion.value || suggestion.label || '';
 
       if (suggestion.type === 'result' && suggestion.url) {
+        trackResultSelection(typedQuery, suggestion);
+
         if (suggestion.opens_in_new_tab) {
           var newWindow = window.open(suggestion.url, '_blank', 'noopener,noreferrer');
 

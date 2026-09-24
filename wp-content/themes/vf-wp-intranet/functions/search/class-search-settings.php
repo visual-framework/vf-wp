@@ -2103,7 +2103,7 @@ class VFWP_Intranet_Search_Settings {
 				>
 				<?php echo esc_html__('Record frontend searches', 'vfwp'); ?>
 			</label>
-			<p class="description"><?php echo esc_html__('Only real search result pages are logged. Autocomplete requests and pagination pages are not recorded.', 'vfwp'); ?></p>
+			<p class="description"><?php echo esc_html__('Search result pages and selected autocomplete results are recorded. Autocomplete lookup requests and pagination pages are not recorded.', 'vfwp'); ?></p>
 			<br>
 			<label>
 				<input
@@ -2159,6 +2159,22 @@ class VFWP_Intranet_Search_Settings {
 		$zero_results_pagination = isset($data['zero_results_pagination']) && is_array($data['zero_results_pagination']) ? $data['zero_results_pagination'] : array();
 		$recent = isset($data['recent']) && is_array($data['recent']) ? $data['recent'] : array();
 		$recent_pagination = isset($data['recent_pagination']) && is_array($data['recent_pagination']) ? $data['recent_pagination'] : array();
+		$trend_view = isset($_GET['analytics_trend_view']) ? sanitize_key(wp_unslash($_GET['analytics_trend_view'])) : 'daily';
+		$query_view = isset($_GET['analytics_query_view']) ? sanitize_key(wp_unslash($_GET['analytics_query_view'])) : '';
+
+		if (!in_array($trend_view, array('daily', 'weekly', 'monthly'), true)) {
+			$trend_view = 'daily';
+		}
+
+		if (!in_array($query_view, array('top', 'zero', 'recent'), true)) {
+			if (isset($_GET['analytics_zero_page']) || isset($_GET['analytics_zero_sort'])) {
+				$query_view = 'zero';
+			} elseif (isset($_GET['analytics_recent_page'])) {
+				$query_view = 'recent';
+			} else {
+				$query_view = 'recent';
+			}
+		}
 		?>
 		<h3><?php echo esc_html__('Analytics summary', 'vfwp'); ?></h3>
 		<table class="widefat striped" style="max-width: 920px;">
@@ -2197,17 +2213,29 @@ class VFWP_Intranet_Search_Settings {
 		</p>
 
 		<h3><?php echo esc_html__('Search trends', 'vfwp'); ?></h3>
-		<div class="vfwp-search-analytics-charts">
-			<?php $this->render_analytics_trend_chart(__('Daily activity', 'vfwp'), __('Last 30 days', 'vfwp'), isset($trends['daily']) ? (array) $trends['daily'] : array(), 5); ?>
-			<?php $this->render_analytics_trend_chart(__('Weekly activity', 'vfwp'), __('Last 12 weeks', 'vfwp'), isset($trends['weekly']) ? (array) $trends['weekly'] : array(), 2); ?>
-			<?php $this->render_analytics_trend_chart(__('Monthly activity', 'vfwp'), __('Last 12 months', 'vfwp'), isset($trends['monthly']) ? (array) $trends['monthly'] : array(), 2); ?>
+		<div class="vfwp-search-analytics-tabset" data-vfwp-analytics-tabs data-url-param="analytics_trend_view" data-active-tab="<?php echo esc_attr($trend_view); ?>">
+			<div class="nav-tab-wrapper vfwp-search-analytics-tablist" role="tablist" aria-label="<?php echo esc_attr__('Search trend period', 'vfwp'); ?>">
+				<button type="button" id="vfwp-trend-tab-daily" class="nav-tab<?php echo 'daily' === $trend_view ? ' nav-tab-active' : ''; ?>" role="tab" aria-selected="<?php echo 'daily' === $trend_view ? 'true' : 'false'; ?>" aria-controls="vfwp-trend-panel-daily" data-tab-value="daily" tabindex="<?php echo 'daily' === $trend_view ? '0' : '-1'; ?>"><?php echo esc_html__('Daily', 'vfwp'); ?></button>
+				<button type="button" id="vfwp-trend-tab-weekly" class="nav-tab<?php echo 'weekly' === $trend_view ? ' nav-tab-active' : ''; ?>" role="tab" aria-selected="<?php echo 'weekly' === $trend_view ? 'true' : 'false'; ?>" aria-controls="vfwp-trend-panel-weekly" data-tab-value="weekly" tabindex="<?php echo 'weekly' === $trend_view ? '0' : '-1'; ?>"><?php echo esc_html__('Weekly', 'vfwp'); ?></button>
+				<button type="button" id="vfwp-trend-tab-monthly" class="nav-tab<?php echo 'monthly' === $trend_view ? ' nav-tab-active' : ''; ?>" role="tab" aria-selected="<?php echo 'monthly' === $trend_view ? 'true' : 'false'; ?>" aria-controls="vfwp-trend-panel-monthly" data-tab-value="monthly" tabindex="<?php echo 'monthly' === $trend_view ? '0' : '-1'; ?>"><?php echo esc_html__('Monthly', 'vfwp'); ?></button>
+			</div>
+			<div id="vfwp-trend-panel-daily" class="vfwp-search-analytics-tabpanel" role="tabpanel" aria-labelledby="vfwp-trend-tab-daily"<?php echo 'daily' === $trend_view ? '' : ' hidden'; ?>>
+				<?php $this->render_analytics_trend_chart(__('Daily activity', 'vfwp'), __('Last 30 days', 'vfwp'), isset($trends['daily']) ? (array) $trends['daily'] : array(), 5); ?>
+			</div>
+			<div id="vfwp-trend-panel-weekly" class="vfwp-search-analytics-tabpanel" role="tabpanel" aria-labelledby="vfwp-trend-tab-weekly"<?php echo 'weekly' === $trend_view ? '' : ' hidden'; ?>>
+				<?php $this->render_analytics_trend_chart(__('Weekly activity', 'vfwp'), __('Last 12 weeks', 'vfwp'), isset($trends['weekly']) ? (array) $trends['weekly'] : array(), 2); ?>
+			</div>
+			<div id="vfwp-trend-panel-monthly" class="vfwp-search-analytics-tabpanel" role="tabpanel" aria-labelledby="vfwp-trend-tab-monthly"<?php echo 'monthly' === $trend_view ? '' : ' hidden'; ?>>
+				<?php $this->render_analytics_trend_chart(__('Monthly activity', 'vfwp'), __('Last 12 months', 'vfwp'), isset($trends['monthly']) ? (array) $trends['monthly'] : array(), 2); ?>
+			</div>
 		</div>
 		<style>
-			.vfwp-search-analytics-charts {
-				display: grid;
-				gap: 24px;
+			.vfwp-search-analytics-tabset {
 				max-width: 920px;
 			}
+			.vfwp-search-analytics-tablist { margin-bottom: 16px; }
+			.vfwp-search-analytics-tablist .nav-tab { cursor: pointer; }
+			.vfwp-search-analytics-tabpanel[hidden] { display: none !important; }
 			.vfwp-search-analytics-chart {
 				background: #fff;
 				border: 1px solid #c3c4c7;
@@ -2242,11 +2270,105 @@ class VFWP_Intranet_Search_Settings {
 			.vfwp-search-analytics-legend__volume::before { background: #d1e3f6; }
 			.vfwp-search-analytics-legend__success::before { background: #2a57a3; height: 3px !important; vertical-align: 3px !important; }
 			.vfwp-search-analytics-chart details { margin-top: 12px; }
+			.vfwp-search-analytics-source-badge {
+				background: #f0f0f1;
+				border: 1px solid #c3c4c7;
+				border-radius: 2px;
+				display: inline-block;
+				font-size: 11px;
+				font-weight: 600;
+				line-height: 1.5;
+				margin-right: 6px;
+				padding: 1px 5px;
+				text-transform: uppercase;
+			}
 		</style>
 
-		<?php $this->render_grouped_analytics_table(__('Most searched queries', 'vfwp'), $top_queries, $top_queries_pagination, false, 'analytics_top_page'); ?>
-		<?php $this->render_grouped_analytics_table(__('Queries with no results', 'vfwp'), $zero_results, $zero_results_pagination, true, 'analytics_zero_page'); ?>
-		<?php $this->render_recent_analytics_table($recent, $recent_pagination); ?>
+		<h3><?php echo esc_html__('Search queries', 'vfwp'); ?></h3>
+		<div class="vfwp-search-analytics-tabset" data-vfwp-analytics-tabs data-url-param="analytics_query_view" data-active-tab="<?php echo esc_attr($query_view); ?>">
+			<div class="nav-tab-wrapper vfwp-search-analytics-tablist" role="tablist" aria-label="<?php echo esc_attr__('Search query reports', 'vfwp'); ?>">
+				<button type="button" id="vfwp-query-tab-recent" class="nav-tab<?php echo 'recent' === $query_view ? ' nav-tab-active' : ''; ?>" role="tab" aria-selected="<?php echo 'recent' === $query_view ? 'true' : 'false'; ?>" aria-controls="vfwp-query-panel-recent" data-tab-value="recent" tabindex="<?php echo 'recent' === $query_view ? '0' : '-1'; ?>"><?php echo esc_html__('Recent', 'vfwp'); ?></button>
+				<button type="button" id="vfwp-query-tab-zero" class="nav-tab<?php echo 'zero' === $query_view ? ' nav-tab-active' : ''; ?>" role="tab" aria-selected="<?php echo 'zero' === $query_view ? 'true' : 'false'; ?>" aria-controls="vfwp-query-panel-zero" data-tab-value="zero" tabindex="<?php echo 'zero' === $query_view ? '0' : '-1'; ?>"><?php echo esc_html__('No results', 'vfwp'); ?></button>
+				<button type="button" id="vfwp-query-tab-top" class="nav-tab<?php echo 'top' === $query_view ? ' nav-tab-active' : ''; ?>" role="tab" aria-selected="<?php echo 'top' === $query_view ? 'true' : 'false'; ?>" aria-controls="vfwp-query-panel-top" data-tab-value="top" tabindex="<?php echo 'top' === $query_view ? '0' : '-1'; ?>"><?php echo esc_html__('Most searched', 'vfwp'); ?></button>
+			</div>
+			<div id="vfwp-query-panel-recent" class="vfwp-search-analytics-tabpanel" role="tabpanel" aria-labelledby="vfwp-query-tab-recent"<?php echo 'recent' === $query_view ? '' : ' hidden'; ?>>
+				<?php $this->render_recent_analytics_table($recent, $recent_pagination); ?>
+			</div>
+			<div id="vfwp-query-panel-zero" class="vfwp-search-analytics-tabpanel" role="tabpanel" aria-labelledby="vfwp-query-tab-zero"<?php echo 'zero' === $query_view ? '' : ' hidden'; ?>>
+				<?php $this->render_grouped_analytics_table(__('Queries with no results', 'vfwp'), $zero_results, $zero_results_pagination, true, 'analytics_zero_page'); ?>
+			</div>
+			<div id="vfwp-query-panel-top" class="vfwp-search-analytics-tabpanel" role="tabpanel" aria-labelledby="vfwp-query-tab-top"<?php echo 'top' === $query_view ? '' : ' hidden'; ?>>
+				<?php $this->render_grouped_analytics_table(__('Most searched queries', 'vfwp'), $top_queries, $top_queries_pagination, false, 'analytics_top_page'); ?>
+			</div>
+		</div>
+		<script>
+		(function () {
+			'use strict';
+
+			document.querySelectorAll('[data-vfwp-analytics-tabs]').forEach(function (tabset) {
+				var tabs = Array.prototype.slice.call(tabset.querySelectorAll('[role="tab"]'));
+				var parameter = tabset.getAttribute('data-url-param');
+
+				function activateTab(tab, moveFocus) {
+					var url;
+
+					tabs.forEach(function (candidate) {
+						var active = candidate === tab;
+						var panel = document.getElementById(candidate.getAttribute('aria-controls'));
+
+						candidate.classList.toggle('nav-tab-active', active);
+						candidate.setAttribute('aria-selected', active ? 'true' : 'false');
+						candidate.tabIndex = active ? 0 : -1;
+
+						if (panel) {
+							panel.hidden = !active;
+						}
+					});
+
+					if (moveFocus) {
+						tab.focus();
+					}
+
+					if (parameter && window.history && window.history.replaceState) {
+						url = new URL(window.location.href);
+						url.searchParams.set(parameter, tab.getAttribute('data-tab-value'));
+						window.history.replaceState({}, '', url.toString());
+
+						document.querySelectorAll('a[href*="page=vfwp-intranet-search"][href*="tab=analytics"]').forEach(function (link) {
+							var linkUrl = new URL(link.href, window.location.href);
+
+							linkUrl.searchParams.set(parameter, tab.getAttribute('data-tab-value'));
+							link.href = linkUrl.toString();
+						});
+					}
+				}
+
+				tabs.forEach(function (tab, index) {
+					tab.addEventListener('click', function () {
+						activateTab(tab, false);
+					});
+					tab.addEventListener('keydown', function (event) {
+						var nextIndex = index;
+
+						if (event.key === 'ArrowRight') {
+							nextIndex = (index + 1) % tabs.length;
+						} else if (event.key === 'ArrowLeft') {
+							nextIndex = (index - 1 + tabs.length) % tabs.length;
+						} else if (event.key === 'Home') {
+							nextIndex = 0;
+						} else if (event.key === 'End') {
+							nextIndex = tabs.length - 1;
+						} else {
+							return;
+						}
+
+						event.preventDefault();
+						activateTab(tabs[nextIndex], true);
+					});
+				});
+			});
+		}());
+		</script>
 
 		<form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin-top: 18px;">
 			<input type="hidden" name="action" value="<?php echo esc_attr(VFWP_Intranet_Search_Analytics::CLEAR_ACTION); ?>">
@@ -2494,7 +2616,9 @@ class VFWP_Intranet_Search_Settings {
 								</a>
 							</th>
 							<td>
-								<?php if (!empty($row['is_corrected'])) : ?>
+								<?php if (isset($row['source']) && 'autocomplete' === $row['source']) : ?>
+									<?php $this->render_autocomplete_analytics_value($row); ?>
+								<?php elseif (!empty($row['is_corrected'])) : ?>
 									<?php
 									echo esc_html(
 										sprintf(
@@ -2515,8 +2639,29 @@ class VFWP_Intranet_Search_Settings {
 			</table>
 			<?php $this->render_admin_pagination($page, $total_pages, 'analytics_recent_page', __('Recent searches pagination', 'vfwp'), 'analytics'); ?>
 		<?php endif; ?>
-			<?php
+		<?php
 		}
+
+	/**
+	 * Render the result selected from autocomplete for one analytics event.
+	 *
+	 * @param array $row Analytics row.
+	 * @return void
+	 */
+	private function render_autocomplete_analytics_value(array $row) {
+		$title = isset($row['selected_title']) ? trim((string) $row['selected_title']) : '';
+		$url = isset($row['selected_url']) ? esc_url((string) $row['selected_url']) : '';
+		?>
+		<span class="vfwp-search-analytics-source-badge"><?php echo esc_html__('Autocomplete', 'vfwp'); ?></span>
+		<?php if ($title !== '' && $url !== '') : ?>
+			<a href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html($title); ?></a>
+		<?php elseif ($title !== '') : ?>
+			<?php echo esc_html($title); ?>
+		<?php else : ?>
+			<span class="description"><?php echo esc_html__('Selected result details were not recorded.', 'vfwp'); ?></span>
+		<?php endif; ?>
+		<?php
+	}
 
 	/**
 	 * Render the recorded suggestions for one grouped no-results query.
@@ -2570,10 +2715,15 @@ class VFWP_Intranet_Search_Settings {
 		$url_args = array(
 			'page'                    => 'vfwp-intranet-search',
 			'tab'                     => 'analytics',
+			'analytics_query_view'    => 'zero',
 			'analytics_zero_page'     => 1,
 			'analytics_zero_sort'     => $column,
 			'analytics_zero_order'    => $next_order,
 		);
+
+		if (isset($_GET['analytics_trend_view']) && in_array(sanitize_key(wp_unslash($_GET['analytics_trend_view'])), array('daily', 'weekly', 'monthly'), true)) {
+			$url_args['analytics_trend_view'] = sanitize_key(wp_unslash($_GET['analytics_trend_view']));
+		}
 
 		foreach (array('analytics_top_page', 'analytics_recent_page') as $page_arg) {
 			if (isset($_GET[$page_arg])) {
@@ -2625,8 +2775,21 @@ class VFWP_Intranet_Search_Settings {
 		if ('analytics' === $tab) {
 			$zero_sort = isset($_GET['analytics_zero_sort']) && 'searches' === sanitize_key(wp_unslash($_GET['analytics_zero_sort'])) ? 'searches' : 'last_searched';
 			$zero_order = isset($_GET['analytics_zero_order']) && 'asc' === sanitize_key(wp_unslash($_GET['analytics_zero_order'])) ? 'asc' : 'desc';
+			$query_view_by_page = array(
+				'analytics_top_page'    => 'top',
+				'analytics_zero_page'   => 'zero',
+				'analytics_recent_page' => 'recent',
+			);
 			$url_args['analytics_zero_sort'] = $zero_sort;
 			$url_args['analytics_zero_order'] = $zero_order;
+
+			if (isset($query_view_by_page[$page_arg])) {
+				$url_args['analytics_query_view'] = $query_view_by_page[$page_arg];
+			}
+
+			if (isset($_GET['analytics_trend_view']) && in_array(sanitize_key(wp_unslash($_GET['analytics_trend_view'])), array('daily', 'weekly', 'monthly'), true)) {
+				$url_args['analytics_trend_view'] = sanitize_key(wp_unslash($_GET['analytics_trend_view']));
+			}
 		}
 
 		$url_args[sanitize_key($page_arg)] = '%#%';

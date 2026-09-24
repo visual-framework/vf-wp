@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Schema {
-	const VERSION = 19;
+	const VERSION = 20;
 	const OPTION_NAME = 'vfwp_intranet_search_schema_version';
 
 	/**
@@ -174,6 +174,11 @@ class VFWP_Intranet_Search_Schema {
 			searched_at datetime NOT NULL,
 			user_email varchar(191) NOT NULL DEFAULT '',
 			source varchar(32) NOT NULL DEFAULT 'frontend',
+			selected_object_id bigint(20) unsigned NOT NULL DEFAULT 0,
+			selected_object_type varchar(32) NOT NULL DEFAULT '',
+			selected_post_type varchar(64) NOT NULL DEFAULT '',
+			selected_title varchar(240) NOT NULL DEFAULT '',
+			selected_url varchar(2048) NOT NULL DEFAULT '',
 			is_corrected tinyint(1) unsigned NOT NULL DEFAULT 0,
 			corrected_to varchar(191) NOT NULL DEFAULT '',
 			did_you_mean_shown tinyint(1) unsigned NOT NULL DEFAULT 0,

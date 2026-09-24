@@ -231,6 +231,8 @@ Administrators can use the Ranking test tab to try a query and understand why ea
 
 Search analytics can record what people searched for.
 
+When someone selects a Page, Person, Document, or another result directly from autocomplete, the words they typed are recorded as a successful search. Recent searches show an Autocomplete label and the title that was selected. Simply typing or viewing autocomplete suggestions is not recorded.
+
 Analytics can show:
 
 - Recent searches
@@ -244,6 +246,8 @@ Analytics can show:
 - Monthly activity for the last 12 months
 
 Analytics tables show 20 entries at a time. Their page controls let administrators review all searches still inside the chosen retention period.
+
+Daily, weekly, and monthly charts are organized in separate tabs. Recent searches, searches with no results, and most searched queries also have their own tabs.
 
 The Index tab shows document extraction issues in a separate table below Index management. It also shows 20 entries at a time. Search index notices can be dismissed; a rebuild warning appears again if a later settings change creates a new rebuild requirement.
 

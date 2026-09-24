@@ -424,10 +424,13 @@ Logged data can include:
 - Search timestamp
 - Optional user email
 - Source
+- Selected result ID, type, title, and URL for autocomplete selections
 - Whether a no-result query led to a clicked spelling correction
 - The corrected normalized query
 
-Analytics intentionally logs only page 1 frontend searches. It includes reports for top queries, zero-result queries, recent searches, summary counts, and daily, weekly, and monthly trends. Trend charts compare total search volume with the percentage of searches that produced results. The top-query, zero-result, and Recent searches reports include every retained row and use database pagination at 20 rows per page. Their count and page queries are restricted to the configured retention period in SQL.
+Analytics logs page 1 frontend searches and deliberate indexed-result selections from autocomplete. Autocomplete lookup requests, incomplete keystrokes, and pagination requests are not logged. A selected autocomplete result records the visitor's typed query, the selected result metadata, source `autocomplete`, and a positive result count, so it contributes to total searches and successful-search metrics. The Recent searches table displays an Autocomplete indicator and the selected title. The selected object must still exist as a public, published index row or the event is rejected.
+
+Reports include top queries, zero-result queries, recent searches, summary counts, and daily, weekly, and monthly trends. Daily, weekly, and monthly charts use separate accessible tabs; recent, no-results, and most-searched query tables use a second tab group. The selected tabs are represented in the admin URL so refreshes, sorting, and pagination preserve the active reports. Trend charts compare total search volume with the percentage of searches that produced results. The top-query, zero-result, and Recent searches reports include every retained row and use database pagination at 20 rows per page. Their count and page queries are restricted to the configured retention period in SQL.
 
 Search settings tables are limited to 20 visible rows per page. Large database-backed reports, including document extraction issues, use SQL `LIMIT` and `OFFSET`; bounded configuration and chart-detail tables are paginated in the admin page without discarding form fields. Index action notices are dismissible, and dismissal of the current rebuild-required warning is stored per administrator until a new rebuild requirement is created.
 

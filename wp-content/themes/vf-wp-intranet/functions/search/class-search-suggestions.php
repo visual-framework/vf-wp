@@ -59,11 +59,13 @@ class VFWP_Intranet_Search_Suggestions {
 		}
 
 		$handle = 'vfwp-intranet-search-suggestions';
+		$script_path = get_stylesheet_directory() . '/scripts/search-suggestions.js';
+		$script_version = file_exists($script_path) ? filemtime($script_path) : wp_get_theme()->get('Version');
 		wp_enqueue_script(
 			$handle,
 			get_stylesheet_directory_uri() . '/scripts/search-suggestions.js',
 			array(),
-			wp_get_theme()->get('Version'),
+			$script_version,
 			true
 		);
 		wp_localize_script(
@@ -73,6 +75,8 @@ class VFWP_Intranet_Search_Suggestions {
 				'ajaxUrl'         => admin_url('admin-ajax.php'),
 				'action'          => self::ACTION,
 				'nonce'           => wp_create_nonce(self::ACTION),
+				'analyticsAction' => VFWP_Intranet_Search_Analytics::AUTOCOMPLETE_ACTION,
+				'analyticsNonce'  => wp_create_nonce(VFWP_Intranet_Search_Analytics::AUTOCOMPLETE_ACTION),
 				'minLength'       => 2,
 				'lookupMinLength' => 3,
 				'debounceMs'      => 120,
