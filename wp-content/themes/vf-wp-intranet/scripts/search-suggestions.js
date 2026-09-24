@@ -46,16 +46,47 @@
     return query.trim().replace(/\s+/g, ' ');
   }
 
-  var debounceTimer = null;
-  var activeRequest = null;
-  var requestId = 0;
+  function initForm(form, formIndex) {
+    var input = form.querySelector('input[type="search"][name="s"]');
+    var list = form.querySelector('.vf-form--search__results-list');
+    var formItem;
+    var instanceId = 'vfwp-search-autocomplete-' + String(formIndex + 1);
+    var debounceTimer = null;
+    var activeRequest = null;
+    var requestId = 0;
 
-  function initForm(form) {
-    var input = form.querySelector('#searchitem');
-    var list = form.querySelector('#vf-form--search__results-list');
-
-    if (!input || !list || !config.ajaxUrl || !config.action) {
+    if (!input || !config.ajaxUrl || !config.action) {
       return;
+    }
+
+    formItem = input.closest('.vf-form__item') || input.parentNode;
+
+    if (!list && formItem) {
+      list = document.createElement('ul');
+      list.className = 'vf-list | vf-form--search__results-list | vf-stack vf-stack--custom';
+      list.setAttribute('role', 'listbox');
+      list.hidden = true;
+      formItem.appendChild(list);
+    }
+
+    if (!list) {
+      return;
+    }
+
+    if (!input.id) {
+      input.id = instanceId + '-input';
+    }
+
+    list.id = instanceId + '-results';
+    list.setAttribute('aria-labelledby', input.id);
+    input.setAttribute('aria-owns', list.id);
+    input.setAttribute('aria-controls', list.id);
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-expanded', 'false');
+    input.setAttribute('autocomplete', 'off');
+
+    if (!input.getAttribute('aria-label') && !form.querySelector('label[for="' + input.id + '"]')) {
+      input.setAttribute('aria-label', config.searchInputLabel || 'Search');
     }
 
     var suggestions = [];
@@ -175,7 +206,7 @@
         var externalDomainLabel = suggestion.external_domain_label || '';
         var badgeGroup = null;
 
-        item.id = 'vf-form--search__results-list--' + String(index + 1).padStart(2, '0');
+        item.id = list.id + '--' + String(index + 1).padStart(2, '0');
         item.className = 'vf-list__item';
         if (suggestion.is_primary) {
           item.className += ' vf-form--search__results-list-item--search';

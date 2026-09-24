@@ -129,7 +129,7 @@ Search does not change the original page, post, or attached file. Highlighting o
 
 ## Autocomplete Suggestions
 
-When users type in the search box, the site can show suggestions.
+When users type in the main search box or the search bar in the intranet hero, the site can show the same suggestions.
 
 Suggestions may include:
 

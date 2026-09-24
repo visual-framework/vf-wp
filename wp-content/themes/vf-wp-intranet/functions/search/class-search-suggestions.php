@@ -16,6 +16,9 @@ class VFWP_Intranet_Search_Suggestions {
 	const CACHE_TTL = 120;
 	const SPELLING_ALGORITHM_VERSION = 6;
 
+	/** @var bool */
+	private static $assets_enqueued = false;
+
 	/**
 	 * @var wpdb
 	 */
@@ -44,6 +47,7 @@ class VFWP_Intranet_Search_Suggestions {
 	 */
 	public static function register_hooks() {
 		add_action('wp_enqueue_scripts', array(__CLASS__, 'enqueue_assets'));
+		add_filter('render_block', array(__CLASS__, 'enable_for_hero_search'), 20, 2);
 		add_action('wp_ajax_' . self::ACTION, array(__CLASS__, 'handle_ajax_request'));
 		add_action('wp_ajax_nopriv_' . self::ACTION, array(__CLASS__, 'handle_ajax_request'));
 	}
@@ -57,6 +61,44 @@ class VFWP_Intranet_Search_Suggestions {
 		if (!is_search() && !is_page_template('searchpage.php')) {
 			return;
 		}
+
+		self::enqueue_script();
+	}
+
+	/**
+	 * Enable autocomplete when a rendered VF Hero contains its optional search form.
+	 *
+	 * @param string $block_content Rendered block HTML.
+	 * @param array  $block Block data.
+	 * @return string
+	 */
+	public static function enable_for_hero_search($block_content, $block) {
+		if (
+			is_admin()
+			|| !is_string($block_content)
+			|| strpos($block_content, 'vf-hero') === false
+			|| strpos($block_content, 'vf-form--search') === false
+			|| !preg_match('/<input\b[^>]*\bname=["\']s["\']/i', $block_content)
+		) {
+			return $block_content;
+		}
+
+		self::enqueue_script();
+
+		return $block_content;
+	}
+
+	/**
+	 * Enqueue and configure the shared autocomplete script once per request.
+	 *
+	 * @return void
+	 */
+	private static function enqueue_script() {
+		if (self::$assets_enqueued) {
+			return;
+		}
+
+		self::$assets_enqueued = true;
 
 		$handle = 'vfwp-intranet-search-suggestions';
 		$script_path = get_stylesheet_directory() . '/scripts/search-suggestions.js';
@@ -82,6 +124,7 @@ class VFWP_Intranet_Search_Suggestions {
 				'debounceMs'      => 120,
 				'cacheTtlMs'      => self::CACHE_TTL * 1000,
 				'searchForLabel'  => __('Search for "%s"', 'vfwp'),
+				'searchInputLabel' => __('Search', 'vfwp'),
 			)
 		);
 	}

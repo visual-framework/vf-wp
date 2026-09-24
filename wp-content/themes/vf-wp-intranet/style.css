@@ -121,11 +121,15 @@ Text Domain:	 vfwp
 .vf-form--search .vf-form__item {
     position: relative;
 }
+.vf-form--search.vf-sidebar {
+    overflow: visible;
+}
 .vf-form--search__results-list {
     --vf-stack-margin: 0;
     background: #fff;
     border: 1px solid #d0d0ce;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    color: #1a1a1a;
     left: 0;
     list-style: none;
     margin: 4px 0 0;

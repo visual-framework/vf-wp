@@ -12,7 +12,7 @@ The system lives in the active theme. It is not a plugin or MU plugin.
 4. `VFWP_Intranet_Search_Service` queries the custom index for frontend searches.
 5. `VFWP_Intranet_Search_Snippet_Service` chooses snippets and highlights terms.
 6. `VFWP_Intranet_Search_Frontend` adapts existing search templates, filters, counters, and pagination to the custom service.
-7. `VFWP_Intranet_Search_Suggestions` powers autocomplete.
+7. `VFWP_Intranet_Search_Suggestions` powers autocomplete on the search page and the optional VF Hero search form.
 8. `VFWP_Intranet_Search_Index_Manager` manages rebuilds from Settings -> Search and WP-CLI.
 
 Frontend search results should not depend on Relevanssi being installed or enabled.
@@ -71,7 +71,7 @@ Frontend search results should not depend on Relevanssi being installed or enabl
   Adds a lightweight admin label for Document posts showing whether the attached PDF or DOCX/search row is indexed, stale, not indexed, or has an extraction issue.
 
 - `scripts/search-suggestions.js`
-  Frontend autocomplete behavior: immediate "Search for ..." row, debounced AJAX lookup, request cancellation, stale-response protection, keyboard navigation, badges, external-link indicators, and browser-side cache.
+  Frontend autocomplete behavior: immediate "Search for ..." row, debounced AJAX lookup, request cancellation, stale-response protection, keyboard navigation, badges, external-link indicators, and browser-side cache. The same form-scoped initializer supports both the main search page and the optional search bar rendered by the VF Hero container. Hero pages enqueue the script only when the rendered hero actually contains a search form.
 
 ## Database Tables
 
