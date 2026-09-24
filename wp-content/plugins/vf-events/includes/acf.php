@@ -63,6 +63,11 @@ class VF_Events_ACF {
       array($this, 'refresh_chatbot_routes_payload')
     );
     add_action(
+      'acf/save_post',
+      array($this, 'refresh_chatbot_routes_payload_on_save'),
+      20
+    );
+    add_action(
       "save_post_{$post_type}",
       array($this, 'refresh_chatbot_routes_payload_on_save'),
       20
@@ -449,6 +454,10 @@ class VF_Events_ACF {
    */
   public function refresh_chatbot_routes_payload_on_save($post_id) {
     if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
+      return;
+    }
+
+    if (get_post_type($post_id) !== VF_Events::type()) {
       return;
     }
 

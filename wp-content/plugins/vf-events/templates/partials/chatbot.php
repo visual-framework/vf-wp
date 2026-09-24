@@ -615,6 +615,12 @@ if (!empty($chatbot_other_location)) {
 .vf-chatbot-selector__item {
     transition: background-color 250ms ease;
 }
+.vf-chatbot-selector__item-date {
+    color: #54585A;
+    font-size: 13px;
+    line-height: 1.35;
+    margin-top: 0.25rem;
+}
 .vf-chatbot-selector__item:hover,
 .vf-chatbot-selector__item:focus {
     background-color: #c7e2ffa8;

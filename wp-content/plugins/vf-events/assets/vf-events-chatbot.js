@@ -9,6 +9,7 @@
   };
   var defaultEventState = null;
   var welcomeContentCollapseTimeout = null;
+  var isAddingAutoWelcomeMessage = false;
 
   function getChatbotRoot(instance) {
     if (instance && instance.container && instance.container.closest) {
@@ -70,8 +71,50 @@
     return selector ? selector.getAttribute("data-selected-route-id") || "" : "";
   }
 
-  function sortRoutesAlphabetically(routes) {
+  function parseRouteStartDate(route) {
+    var dateParts;
+    var monthIndex;
+    var months = {
+      jan: 0,
+      feb: 1,
+      mar: 2,
+      apr: 3,
+      may: 4,
+      jun: 5,
+      jul: 6,
+      aug: 7,
+      sep: 8,
+      oct: 9,
+      nov: 10,
+      dec: 11
+    };
+    var startDate = String(route && route.start_date ? route.start_date : "").trim();
+
+    dateParts = startDate.match(/^(\d{1,2})\s+([A-Za-z]{3,})\s+(\d{4})$/);
+
+    if (dateParts) {
+      monthIndex = months[dateParts[2].slice(0, 3).toLowerCase()];
+
+      if (typeof monthIndex === "number") {
+        return new Date(
+          Number(dateParts[3]),
+          monthIndex,
+          Number(dateParts[1])
+        ).getTime();
+      }
+    }
+
+    return Date.parse(startDate) || Number.MAX_SAFE_INTEGER;
+  }
+
+  function sortRoutesByDate(routes) {
     return routes.slice().sort(function (routeA, routeB) {
+      var dateDifference = parseRouteStartDate(routeA) - parseRouteStartDate(routeB);
+
+      if (dateDifference !== 0) {
+        return dateDifference;
+      }
+
       return String(routeA.title || "").localeCompare(
         String(routeB.title || ""),
         undefined,
@@ -179,6 +222,16 @@
     return [];
   }
 
+  function isRouteChatbotEnabled(route) {
+    return (
+      route &&
+      (route.chatbot_enabled === true ||
+        route.chatbot_enabled === 1 ||
+        route.chatbot_enabled === "1" ||
+        route.chatbot_enabled === "true")
+    );
+  }
+
   function loadEventRoutes() {
     var routesPath = getRoutesPath();
 
@@ -199,7 +252,9 @@
         return response.json();
       })
       .then(function (data) {
-        var routes = sortRoutesAlphabetically(normalizeRoutesPayload(data));
+        var routes = sortRoutesByDate(
+          normalizeRoutesPayload(data).filter(isRouteChatbotEnabled)
+        );
 
         eventRoutesById = {};
         routes.forEach(function (route) {
@@ -302,6 +357,24 @@
     return startDate + " – " + endDate;
   }
 
+  function getRouteMetaLabel(route) {
+    var dateLabel = route.date_label || createEventDateLabel(route.start_date, route.end_date);
+    var eventType = route.event_type || "";
+
+    if (dateLabel && eventType) {
+      return dateLabel + " • " + eventType;
+    }
+
+    return dateLabel || eventType;
+  }
+
+  function escapeHtml(value) {
+    var div = document.createElement("div");
+
+    div.textContent = value || "";
+    return div.innerHTML;
+  }
+
   function getWelcomeContent() {
     return document.querySelector(".vf-chatbot-welcome__content");
   }
@@ -355,6 +428,16 @@
     }
 
     setWelcomeContentCollapsed(false);
+  }
+
+  function addAssistantResponseWithoutTopScroll(instance, message) {
+    isAddingAutoWelcomeMessage = true;
+
+    try {
+      return instance.addAssistantResponse(message, [], []);
+    } finally {
+      isAddingAutoWelcomeMessage = false;
+    }
   }
 
   function captureDefaultEventState() {
@@ -438,23 +521,9 @@
       .map(function (routeId) {
         return eventRoutesById[routeId];
       })
-      .filter(Boolean);
+      .filter(isRouteChatbotEnabled);
 
-    routes = sortRoutesAlphabetically(routes);
-
-    if (selectedRouteId) {
-      routes.sort(function (routeA, routeB) {
-        if (routeA.id === selectedRouteId && routeB.id !== selectedRouteId) {
-          return -1;
-        }
-
-        if (routeB.id === selectedRouteId && routeA.id !== selectedRouteId) {
-          return 1;
-        }
-
-        return 0;
-      });
-    }
+    routes = sortRoutesByDate(routes);
 
     if (normalizedQuery) {
       routes = routes.filter(function (route) {
@@ -482,7 +551,10 @@
       item.innerHTML =
         '<div class="vf-chatbot-selector__item-content">' +
         '<div class="vf-chatbot-selector__item-title">' +
-        (route.title || "") +
+        escapeHtml(route.title || "") +
+        "</div>" +
+        '<div class="vf-chatbot-selector__item-date">' +
+        escapeHtml(getRouteMetaLabel(route)) +
         "</div>" +
         "</div>" +
         '<span class="vf-chatbot-selector__tick">' +
@@ -692,7 +764,7 @@
     }
   }
 
-  function addAutoWelcomeMessage(instance) {
+  function addAutoWelcomeMessage(instance, force) {
     var messageConfig =
       instance && instance.config
         ? instance.config.events_auto_welcome_message || ""
@@ -703,7 +775,7 @@
     if (
       !messages.length ||
       !instance ||
-      instance.__vfEventsAutoWelcomeAdded ||
+      (!force && instance.__vfEventsAutoWelcomeAdded) ||
       typeof instance.addAssistantResponse !== "function"
     ) {
       return;
@@ -715,10 +787,9 @@
       instance.showChatInterface();
     }
 
-    compactEventInfo();
     messages.forEach(function (message) {
       if (message) {
-        messageId = instance.addAssistantResponse(message, [], []);
+        messageId = addAssistantResponseWithoutTopScroll(instance, message);
 
         if (messageId) {
           markMessageAsAutoWelcome(instance, messageId);
@@ -761,6 +832,49 @@
     });
 
     return matchingFeedbackContainer;
+  }
+
+  function getAssistantMessageForMessageId(instance, messageId) {
+    var feedbackContainer = getFeedbackContainerForMessage(instance, messageId);
+    var messageElement = feedbackContainer
+      ? feedbackContainer.previousElementSibling
+      : null;
+
+    while (
+      messageElement &&
+      !messageElement.classList.contains("vf-chatbot-message--assistant")
+    ) {
+      messageElement = messageElement.previousElementSibling;
+    }
+
+    if (messageElement) {
+      return messageElement;
+    }
+
+    return instance && instance.messagesContainer
+      ? instance.messagesContainer.querySelector(".vf-chatbot-message--assistant:last-of-type")
+      : null;
+  }
+
+  function scrollAssistantMessageToTop(instance, messageId) {
+    var messageElement = getAssistantMessageForMessageId(instance, messageId);
+    var container = instance ? instance.messagesContainer : null;
+
+    if (
+      !container ||
+      !messageElement ||
+      !instance.config ||
+      !instance.config.behavior ||
+      !instance.config.behavior.auto_scroll
+    ) {
+      return;
+    }
+
+    window.requestAnimationFrame(function () {
+      container.scrollTop +=
+        messageElement.getBoundingClientRect().top -
+        container.getBoundingClientRect().top;
+    });
   }
 
   function getChatbotInstance() {
@@ -836,6 +950,7 @@
     }
 
     loadEventRoutes().then(function () {
+      var chatbotInstance = getChatbotInstance();
       var route = eventRoutesById[selectedRouteId];
 
       if (!route) {
@@ -845,7 +960,8 @@
       console.log("Selected event code:", route.id || selectedRouteId);
       updateEventInfoCard(route);
       resetEventInfo();
-      resetConversationForEventSwitch(getChatbotInstance());
+      resetConversationForEventSwitch(chatbotInstance);
+      addAutoWelcomeMessage(chatbotInstance, true);
       renderSelectorItems("");
       closeSelectorDropdown();
 
@@ -1050,12 +1166,18 @@
     };
 
     ChatbotClass.prototype.addAssistantResponse = function (text, sources, prompts) {
-      return originalAddAssistantResponse.call(
+      var messageId = originalAddAssistantResponse.call(
         this,
         formatResponseHtml(text),
         sources,
         prompts
       );
+
+      if (!isAddingAutoWelcomeMessage) {
+        scrollAssistantMessageToTop(this, messageId);
+      }
+
+      return messageId;
     };
 
     ChatbotClass.prototype.__vfEventsChatbotPatched = true;

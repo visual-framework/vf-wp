@@ -353,6 +353,12 @@ class VF_Events {
       return false;
     }
 
+    foreach ($payload['routes'] as $route) {
+      if (!is_array($route) || !array_key_exists('chatbot_enabled', $route)) {
+        return false;
+      }
+    }
+
     return $payload;
   }
 
@@ -471,6 +477,7 @@ class VF_Events {
         'id' => get_post_field('post_name', get_the_ID()),
         'post_id' => get_the_ID(),
         'title' => get_the_title(),
+        'chatbot_enabled' => self::is_chatbot_enabled(get_the_ID()),
         'start_date' => $start_date,
         'end_date' => $end_date,
         'date_label' => self::get_chatbot_event_date_label($start_date, $end_date),
@@ -496,6 +503,7 @@ class VF_Events {
       $routes[] = array(
         'id' => $event['id'],
         'title' => $event['title'],
+        'chatbot_enabled' => $event['chatbot_enabled'],
         'start_date' => $event['start_date'],
         'end_date' => $event['end_date'],
         'date_label' => $event['date_label'],
