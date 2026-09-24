@@ -205,6 +205,9 @@ Text Domain:	 vfwp
     line-height: 1.4;
     margin: 0.5rem 0 2rem !important;
 }
+.vf-search-public-site {
+    margin-top: 1rem !important;
+}
 #load {
     width: 48px;
     height: 48px;

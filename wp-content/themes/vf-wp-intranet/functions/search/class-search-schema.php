@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Schema {
-	const VERSION = 18;
+	const VERSION = 19;
 	const OPTION_NAME = 'vfwp_intranet_search_schema_version';
 
 	/**
@@ -66,6 +66,18 @@ class VFWP_Intranet_Search_Schema {
 		return $wpdb->prefix . 'vf_search_spelling_objects';
 	}
 
+	public static function people_names_table_name() {
+		global $wpdb;
+
+		return $wpdb->prefix . 'vf_search_people_names';
+	}
+
+	public static function people_name_ngrams_table_name() {
+		global $wpdb;
+
+		return $wpdb->prefix . 'vf_search_people_name_ngrams';
+	}
+
 	/**
 	 * Install or upgrade the schema only when the stored version is stale.
 	 *
@@ -102,6 +114,8 @@ class VFWP_Intranet_Search_Schema {
 		$spelling_terms_table_name = self::spelling_terms_table_name();
 		$spelling_deletions_table_name = self::spelling_deletions_table_name();
 		$spelling_objects_table_name = self::spelling_objects_table_name();
+		$people_names_table_name = self::people_names_table_name();
+		$people_name_ngrams_table_name = self::people_name_ngrams_table_name();
 		$charset_collate = $wpdb->get_charset_collate();
 
 		$sql = "CREATE TABLE {$table_name} (
@@ -160,19 +174,19 @@ class VFWP_Intranet_Search_Schema {
 			searched_at datetime NOT NULL,
 			user_email varchar(191) NOT NULL DEFAULT '',
 			source varchar(32) NOT NULL DEFAULT 'frontend',
-				is_corrected tinyint(1) unsigned NOT NULL DEFAULT 0,
-				corrected_to varchar(191) NOT NULL DEFAULT '',
-				did_you_mean_shown tinyint(1) unsigned NOT NULL DEFAULT 0,
-				did_you_mean_suggestions text NOT NULL,
-				PRIMARY KEY  (id),
+			is_corrected tinyint(1) unsigned NOT NULL DEFAULT 0,
+			corrected_to varchar(191) NOT NULL DEFAULT '',
+			did_you_mean_shown tinyint(1) unsigned NOT NULL DEFAULT 0,
+			did_you_mean_suggestions text NOT NULL,
+			PRIMARY KEY  (id),
 			KEY searched_at (searched_at),
 			KEY normalized_query (normalized_query),
 			KEY result_count (result_count),
 			KEY filters_hash (filters_hash),
 			KEY user_email (user_email),
-				KEY source (source),
-				KEY is_corrected (is_corrected),
-				KEY did_you_mean_shown (did_you_mean_shown)
+			KEY source (source),
+			KEY is_corrected (is_corrected),
+			KEY did_you_mean_shown (did_you_mean_shown)
 		) {$charset_collate};";
 
 		dbDelta($analytics_sql);
@@ -210,9 +224,29 @@ class VFWP_Intranet_Search_Schema {
 			KEY term_id (term_id)
 		) {$charset_collate};";
 
+		$people_names_sql = "CREATE TABLE {$people_names_table_name} (
+			object_id bigint(20) unsigned NOT NULL,
+			display_name varchar(240) NOT NULL DEFAULT '',
+			normalized_name varchar(191) NOT NULL DEFAULT '',
+			variants_json longtext NOT NULL,
+			updated_at datetime NOT NULL,
+			PRIMARY KEY  (object_id),
+			KEY normalized_name (normalized_name),
+			KEY updated_at (updated_at)
+		) {$charset_collate};";
+
+		$people_name_ngrams_sql = "CREATE TABLE {$people_name_ngrams_table_name} (
+			ngram varchar(12) NOT NULL,
+			object_id bigint(20) unsigned NOT NULL,
+			PRIMARY KEY  (ngram,object_id),
+			KEY object_id (object_id)
+		) {$charset_collate};";
+
 		dbDelta($spelling_terms_sql);
 		dbDelta($spelling_deletions_sql);
 		dbDelta($spelling_objects_sql);
+		dbDelta($people_names_sql);
+		dbDelta($people_name_ngrams_sql);
 		self::ensure_fulltext_indexes();
 
 		update_option(self::OPTION_NAME, self::VERSION, false);
@@ -231,7 +265,7 @@ class VFWP_Intranet_Search_Schema {
 			return false;
 		}
 
-		return $installed_version < 17;
+		return $installed_version < 19;
 	}
 
 	/**

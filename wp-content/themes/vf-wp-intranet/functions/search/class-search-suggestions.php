@@ -14,7 +14,7 @@ class VFWP_Intranet_Search_Suggestions {
 	const PHRASE_SCAN_LIMIT = 60;
 	const DID_YOU_MEAN_LIMIT = 3;
 	const CACHE_TTL = 120;
-	const SPELLING_ALGORITHM_VERSION = 2;
+	const SPELLING_ALGORITHM_VERSION = 6;
 
 	/**
 	 * @var wpdb
@@ -193,6 +193,19 @@ class VFWP_Intranet_Search_Suggestions {
 		$candidates = $this->get_did_you_mean_candidates($parsed_query);
 		$suggestions = array();
 		$seen = array();
+
+		if (in_array('people', $filters['post_types'], true) && class_exists('VFWP_Intranet_Search_People_Name_Repository')) {
+			$people_names = new VFWP_Intranet_Search_People_Name_Repository($this->wpdb, $this->query_parser);
+
+			foreach ($people_names->find_suggestions($normalized_query, $limit) as $correction) {
+				$this->append_did_you_mean_suggestion($suggestions, $seen, $correction, $filters, $limit);
+			}
+
+			if (!empty($suggestions)) {
+				wp_cache_set($cache_key, $suggestions, 'vfwp_intranet_search', 5 * MINUTE_IN_SECONDS);
+				return $suggestions;
+			}
+		}
 
 		foreach ($this->get_phrase_corrections($normalized_query, $candidates['phrases']) as $correction) {
 			$this->append_did_you_mean_suggestion($suggestions, $seen, $correction, $filters, $limit);
@@ -901,6 +914,13 @@ class VFWP_Intranet_Search_Suggestions {
 	 */
 	private function get_term_corrections(array $parsed_query, array $terms) {
 		$query_terms = !empty($parsed_query['all_terms']) ? (array) $parsed_query['all_terms'] : array();
+		$correctable_terms = array_fill_keys(
+			array_merge(
+				!empty($parsed_query['terms']) ? (array) $parsed_query['terms'] : array(),
+				!empty($parsed_query['protected_phrase_terms']) ? (array) $parsed_query['protected_phrase_terms'] : array()
+			),
+			true
+		);
 
 		if (empty($query_terms)) {
 			return array();
@@ -917,7 +937,9 @@ class VFWP_Intranet_Search_Suggestions {
 		foreach ($query_terms as $query_term) {
 			$query_term = (string) $query_term;
 
-			if ($this->length($query_term) < 3) {
+			// Preserve stopwords and terms ignored by query parsing. They are not
+			// represented reliably in the title/keyword spelling dictionary.
+			if ($this->length($query_term) < 3 || !isset($correctable_terms[$query_term])) {
 				$corrected_terms[] = $query_term;
 				$corrected_labels[] = isset($original_labels[$query_term]) ? $original_labels[$query_term] : $query_term;
 				continue;
@@ -1037,7 +1059,7 @@ class VFWP_Intranet_Search_Suggestions {
 		$seen[$key] = true;
 		$suggestions[] = array(
 			'query' => $query,
-			'label' => !empty($correction['label']) ? (string) $correction['label'] : $query,
+			'label' => $this->lowercase(!empty($correction['label']) ? (string) $correction['label'] : $query),
 		);
 	}
 
@@ -1132,6 +1154,18 @@ class VFWP_Intranet_Search_Suggestions {
 	 */
 	private function length($text) {
 		return function_exists('mb_strlen') ? (int) mb_strlen((string) $text, 'UTF-8') : strlen((string) $text);
+	}
+
+	/**
+	 * Lowercase one suggestion label without removing accents.
+	 *
+	 * @param string $text Suggestion label.
+	 * @return string
+	 */
+	private function lowercase($text) {
+		return function_exists('mb_strtolower')
+			? (string) mb_strtolower((string) $text, 'UTF-8')
+			: strtolower((string) $text);
 	}
 
 }

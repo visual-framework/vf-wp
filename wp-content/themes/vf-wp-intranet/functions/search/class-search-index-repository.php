@@ -23,6 +23,9 @@ class VFWP_Intranet_Search_Index_Repository {
 	 */
 	private $spelling_repository;
 
+	/** @var VFWP_Intranet_Search_People_Name_Repository|null */
+	private $people_name_repository;
+
 	/**
 	 * @param wpdb|null $db WordPress database object.
 	 */
@@ -118,6 +121,7 @@ class VFWP_Intranet_Search_Index_Repository {
 			}
 
 			$this->sync_spelling_dictionary($row);
+			$this->sync_people_name_dictionary($row);
 
 			return 'updated';
 		}
@@ -129,6 +133,7 @@ class VFWP_Intranet_Search_Index_Repository {
 		}
 
 		$this->sync_spelling_dictionary($row);
+		$this->sync_people_name_dictionary($row);
 
 		return 'inserted';
 	}
@@ -152,6 +157,10 @@ class VFWP_Intranet_Search_Index_Repository {
 
 		if (false !== $result) {
 			$this->get_spelling_repository()->delete_object((int) $object_id, (string) $object_type);
+
+			if ('post' === (string) $object_type) {
+				$this->get_people_name_repository()->delete_object((int) $object_id);
+			}
 		}
 
 		return false !== $result;
@@ -196,6 +205,7 @@ class VFWP_Intranet_Search_Index_Repository {
 
 		if ($result) {
 			$this->get_spelling_repository()->truncate();
+			$this->get_people_name_repository()->truncate();
 		}
 
 		return $result;
@@ -253,6 +263,7 @@ class VFWP_Intranet_Search_Index_Repository {
 
 		if (false !== $result) {
 			$this->get_spelling_repository()->prune_missing_objects();
+			$this->get_people_name_repository()->prune_missing_objects();
 		}
 
 		return false === $result ? 0 : (int) $result;
@@ -274,6 +285,16 @@ class VFWP_Intranet_Search_Index_Repository {
 	}
 
 	/**
+	 * Synchronize the dedicated People-name dictionary after an index update.
+	 *
+	 * @param array $row Stored index row.
+	 * @return void
+	 */
+	private function sync_people_name_dictionary(array $row) {
+		$this->get_people_name_repository()->sync_object($row);
+	}
+
+	/**
 	 * Return the spelling repository lazily to keep repository construction cheap.
 	 *
 	 * @return VFWP_Intranet_Search_Spelling_Repository
@@ -284,6 +305,19 @@ class VFWP_Intranet_Search_Index_Repository {
 		}
 
 		return $this->spelling_repository;
+	}
+
+	/**
+	 * Return the People-name repository lazily.
+	 *
+	 * @return VFWP_Intranet_Search_People_Name_Repository
+	 */
+	private function get_people_name_repository() {
+		if (!$this->people_name_repository instanceof VFWP_Intranet_Search_People_Name_Repository) {
+			$this->people_name_repository = new VFWP_Intranet_Search_People_Name_Repository($this->wpdb);
+		}
+
+		return $this->people_name_repository;
 	}
 
 	/**

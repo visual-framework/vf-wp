@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
 require_once get_stylesheet_directory() . '/functions/search/class-search-schema.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-normalizer.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-settings.php';
+require_once get_stylesheet_directory() . '/functions/search/class-search-people-name-repository.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-index-repository.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-pdf-extractor.php';
 require_once get_stylesheet_directory() . '/functions/search/class-search-docx-extractor.php';

@@ -272,6 +272,9 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
               echo '<p class="vf-search-broader-search">' . $vfwp_search_broader_link . '</p>';
             }
             echo '<p>' . esc_html__('Try checking the spelling, using fewer words, or searching for a broader term.', 'vfwp') . '</p>';
+            $vfwp_public_search_url = 'https://www.embl.org/search/#stq=' . rawurlencode(get_search_query(false)) . '&stp=1';
+            echo '<p class="vf-search-public-site">' . esc_html__('This search covers intranet content only. Try the same query on', 'vfwp') . ' ';
+            echo '<a class="vf-link" href="' . esc_url($vfwp_public_search_url) . '" target="_blank" rel="noopener noreferrer">' . esc_html__('embl.org/search', 'vfwp') . '</a>.</p>';
             echo '<ul class="vf-list">';
             if (class_exists('VFWP_Intranet_Search_Frontend') && VFWP_Intranet_Search_Frontend::has_active_filters()) {
               echo '<li class="vf-list__item">' . esc_html__('Remove filters to search more content.', 'vfwp') . '</li>';
