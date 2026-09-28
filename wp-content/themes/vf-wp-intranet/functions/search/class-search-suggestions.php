@@ -14,6 +14,7 @@ class VFWP_Intranet_Search_Suggestions {
 	const PHRASE_SCAN_LIMIT = 60;
 	const DID_YOU_MEAN_LIMIT = 3;
 	const CACHE_TTL = 120;
+	const SUGGESTION_ALGORITHM_VERSION = 3;
 	const SPELLING_ALGORITHM_VERSION = 6;
 
 	/** @var bool */
@@ -193,6 +194,7 @@ class VFWP_Intranet_Search_Suggestions {
 
 		$filters = $this->normalize_filters($filters);
 		$cache_key = 'suggest_' . md5(wp_json_encode(array(
+			'version' => self::SUGGESTION_ALGORITHM_VERSION,
 			'query'   => $normalized_query,
 			'filters' => $filters,
 			'limit'   => $limit,
@@ -451,8 +453,12 @@ class VFWP_Intranet_Search_Suggestions {
 		$table_name = VFWP_Intranet_Search_Schema::table_name();
 		$normalized_query = (string) $parsed_query['normalized'];
 		$prefix = $this->wpdb->esc_like(strtolower($normalized_query)) . '%';
-		$score_parts = array('IF(LOWER(title) LIKE %s, 50, 0)');
-		$score_params = array($prefix);
+		$score_parts = array(
+			'IF(LOWER(title) = %s, 500, 0)',
+			'IF(LOWER(title) LIKE %s, 50, 0)',
+			"IF(post_type = 'page', 25, 0)",
+		);
+		$score_params = array($normalized_query, $prefix);
 		$match_conditions = array();
 		$match_params = array();
 		$where_params = array('post', 'publish', 'public');
@@ -684,7 +690,17 @@ class VFWP_Intranet_Search_Suggestions {
 
 		$key = strtolower((string) $this->query_parser->parse($suggestion['value'])['normalized']);
 
-		if ($key === '' || isset($seen[$key])) {
+		if ($key === '') {
+			return;
+		}
+
+		// Keep a direct result beside the primary search action when its title
+		// exactly matches the entered query.
+		if (isset($suggestion['type']) && $suggestion['type'] === 'result') {
+			$key = 'result:' . $key;
+		}
+
+		if (isset($seen[$key])) {
 			return;
 		}
 

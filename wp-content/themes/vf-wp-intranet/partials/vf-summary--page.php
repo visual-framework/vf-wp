@@ -319,7 +319,14 @@ if (is_search()) {
     $vfwp_result_detail_meta = implode(' | ', array_filter(array($document_display_date, $vfwp_result_match_reason)));
   } elseif ($post_type === 'training') {
     if ($training_overview !== '') {
-      $summary_text = esc_html($training_overview);
+      if (class_exists('VFWP_Intranet_Search_Query_Parser') && class_exists('VFWP_Intranet_Search_Snippet_Service')) {
+        $training_query_parser = new VFWP_Intranet_Search_Query_Parser();
+        $training_parsed_query = $training_query_parser->parse(get_search_query(false));
+        $training_snippet_service = new VFWP_Intranet_Search_Snippet_Service($training_query_parser);
+        $summary_text = $training_snippet_service->highlight_text($training_overview, $training_parsed_query);
+      } else {
+        $summary_text = esc_html($training_overview);
+      }
       $content_snippet = '';
     }
 

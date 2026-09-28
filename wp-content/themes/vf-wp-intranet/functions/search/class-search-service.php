@@ -271,10 +271,16 @@ class VFWP_Intranet_Search_Service {
 		$where_parts = $this->build_where_sql($parsed_query, $filters);
 		$score_parts = $this->build_score_sql($parsed_query);
 		$post_type_weight_sql = $this->build_post_type_weight_sql($filters['post_types']);
+		$recency_factor_sql = "CASE
+			WHEN scored.published_at IS NULL THEN 0
+			WHEN scored.post_type = 'community-blog' THEN 1 / (1 + (GREATEST(0, TIMESTAMPDIFF(DAY, scored.published_at, UTC_TIMESTAMP())) / 365.0))
+			WHEN scored.published_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) THEN 1
+			ELSE 0
+		END";
 
 		$sql = "
 			SELECT scored.*,
-				IF(scored.published_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY), 1, 0) AS recent_content_hit,
+				({$recency_factor_sql}) AS recent_content_hit,
 				(
 					(
 						(scored.exact_title_match * {$score_parts['boosts']['exact_title']})
@@ -296,7 +302,7 @@ class VFWP_Intranet_Search_Service {
 					)
 					* {$post_type_weight_sql}
 				)
-				+ IF(scored.published_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY), {$score_parts['boosts']['recency']}, 0) AS relevance
+				+ (({$recency_factor_sql}) * {$score_parts['boosts']['recency']}) AS relevance
 			FROM (
 				SELECT
 					id,
@@ -891,7 +897,7 @@ class VFWP_Intranet_Search_Service {
 					'ft_acf_keywords'  => (float) $row['ft_acf_keywords'],
 					'ft_excerpt'       => (float) $row['ft_excerpt'],
 					'ft_content'       => (float) $row['ft_content'],
-					'recent_content_hit' => isset($row['recent_content_hit']) ? (int) $row['recent_content_hit'] : 0,
+					'recent_content_hit' => isset($row['recent_content_hit']) ? (float) $row['recent_content_hit'] : 0.0,
 					'term_count'        => max(1, count($parsed_query['fulltext_terms'])),
 				),
 		);
@@ -935,7 +941,7 @@ class VFWP_Intranet_Search_Service {
 		$base_score = array_sum(array_column($components, 'points'));
 		$post_type_weight = VFWP_Intranet_Search_Settings::get_post_type_weight($result['post_type']);
 		$weighted_score = $base_score * $post_type_weight;
-		$recent_hit = !empty($signals['recent_content_hit']) ? 1 : 0;
+		$recent_hit = isset($signals['recent_content_hit']) ? (float) $signals['recent_content_hit'] : 0.0;
 		$recency_bonus = $recent_hit * (float) $boosts['recency'];
 
 		return array(

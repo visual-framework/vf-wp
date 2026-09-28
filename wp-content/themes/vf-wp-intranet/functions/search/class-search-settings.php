@@ -870,7 +870,7 @@ class VFWP_Intranet_Search_Settings {
 		}
 		?>
 		<h3><?php echo esc_html(sprintf(__('Top %d ranked results', 'vfwp'), count($response['results']))); ?></h3>
-		<p><?php echo esc_html__('Points from matching signals are added first, multiplied by the post-type weight, and then the recency bonus is added. Zero-point rows are retained so you can see which signals did not apply.', 'vfwp'); ?></p>
+		<p><?php echo esc_html__('Points from matching signals are added first, multiplied by the post-type weight, and then the recency bonus is added. Announcements use a gradually decreasing recency factor so newer posts rank higher when match quality is similar. Zero-point rows are retained so you can see which signals did not apply.', 'vfwp'); ?></p>
 		<?php foreach ($response['results'] as $index => $result) : ?>
 			<?php $breakdown = isset($result['score_breakdown']) ? $result['score_breakdown'] : array(); ?>
 			<details class="vfwp-search-settings-panel vfwp-search-ranking-result" <?php echo $index === 0 ? 'open' : ''; ?>>
@@ -912,7 +912,7 @@ class VFWP_Intranet_Search_Settings {
 					<tfoot>
 						<tr><th scope="row" colspan="3"><?php echo esc_html__('Signal subtotal', 'vfwp'); ?></th><td><?php echo esc_html($this->format_decimal($breakdown['base_score'])); ?></td></tr>
 						<tr><th scope="row" colspan="3"><?php echo esc_html(sprintf(__('Post-type multiplier × %s', 'vfwp'), $this->format_decimal($breakdown['post_type_weight']))); ?></th><td><?php echo esc_html($this->format_decimal($breakdown['weighted_score'])); ?></td></tr>
-						<tr><th scope="row" colspan="3"><?php echo esc_html__('Recent-content bonus', 'vfwp'); ?></th><td><?php echo esc_html($this->format_decimal($breakdown['recency_bonus'])); ?></td></tr>
+						<tr><th scope="row" colspan="3"><?php echo esc_html__('Recency bonus', 'vfwp'); ?></th><td><?php echo esc_html($this->format_decimal($breakdown['recency_bonus'])); ?></td></tr>
 						<tr class="vfwp-search-ranking-total"><th scope="row" colspan="3"><?php echo esc_html__('Final ranking score', 'vfwp'); ?></th><td><strong><?php echo esc_html($this->format_decimal($breakdown['database_total'])); ?></strong></td></tr>
 					</tfoot>
 				</table>
@@ -1917,9 +1917,9 @@ class VFWP_Intranet_Search_Settings {
 				'value'   => $weights['content'] * $boosts['fulltext_content'],
 			),
 			array(
-				'signal'  => __('Recent content', 'vfwp'),
-				'formula' => __('Recent-content boost', 'vfwp'),
-				'meaning' => __('Small final bonus for content published in the last 30 days.', 'vfwp'),
+				'signal'  => __('Content recency', 'vfwp'),
+				'formula' => __('Recency factor × recency boost', 'vfwp'),
+				'meaning' => __('Small final bonus. Announcements receive a gradually decreasing score based on age; other content receives the bonus only during its first 30 days.', 'vfwp'),
 				'value'   => $boosts['recency'],
 			),
 		);
@@ -3015,7 +3015,7 @@ class VFWP_Intranet_Search_Settings {
 			'fulltext_acf'     => array('label' => __('FULLTEXT ACF score', 'vfwp'), 'description' => __('Database FULLTEXT contribution from ACF keywords after an exact keyword entry match.', 'vfwp')),
 			'fulltext_excerpt' => array('label' => __('FULLTEXT excerpt score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from excerpt.', 'vfwp')),
 			'fulltext_content' => array('label' => __('FULLTEXT content score', 'vfwp'), 'description' => __('Database FULLTEXT relevance contribution from body or extracted document text.', 'vfwp')),
-			'recency'          => array('label' => __('Recent content bonus', 'vfwp'), 'description' => __('Small final bonus for content published in the last 30 days.', 'vfwp')),
+			'recency'          => array('label' => __('Recency bonus', 'vfwp'), 'description' => __('Small final bonus. For Announcements it decreases gradually with age, helping newer posts rank above older posts with similar match quality. Other content receives it only during the first 30 days.', 'vfwp')),
 		);
 	}
 

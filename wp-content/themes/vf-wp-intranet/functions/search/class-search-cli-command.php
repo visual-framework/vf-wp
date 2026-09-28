@@ -165,6 +165,11 @@ class VFWP_Intranet_Search_CLI_Command {
 		$this->assert_contains('<mark>beta</mark>', $parentheses['display']['snippet'], 'parentheses query highlights second term safely');
 		$passed++;
 
+		$hyphenated = $parser->parse('e-mail');
+		$this->assert_equals('e mail', $hyphenated['protected_phrase'], 'hyphenated word becomes a protected phrase');
+		$this->assert_equals(true, $hyphenated['is_exact_phrase_only'], 'hyphenated word is not reduced to loose terms');
+		$passed++;
+
 		$regex_chars = $this->build_snippet_test_result($parser, $snippet_service, '+ . ? * alpha net', 'Regex chars', '', 'Alpha and net appear without regex failures.', 'post');
 		$this->assert_contains('<mark>Alpha</mark>', $regex_chars['display']['snippet'], 'regex characters do not break highlighting');
 		$this->assert_contains('<mark>net</mark>', $regex_chars['display']['snippet'], 'regex-like query terms highlight safely');

@@ -63,7 +63,10 @@ class VFWP_Intranet_Search_Query_Parser {
 		$normalized_query = $synonym_parts['query'];
 		$min_word_length = $this->get_min_word_length();
 		$all_terms = $this->extract_terms($normalized_query, false);
-		$automatic_protected_phrases = $this->detect_structured_identifier_phrases($decoded_query, $normalized_query);
+		$automatic_protected_phrases = array_values(array_unique(array_merge(
+			$this->detect_structured_identifier_phrases($decoded_query, $normalized_query),
+			$this->detect_hyphenated_phrases($decoded_query)
+		)));
 		$protected_phrase_parts = $this->extract_protected_phrase_parts($normalized_query, $automatic_protected_phrases);
 		$protected_phrases = $protected_phrase_parts['phrases'];
 		$has_protected_phrases = !empty($protected_phrases);
@@ -484,6 +487,39 @@ class VFWP_Intranet_Search_Query_Parser {
 		}
 
 		return array($normalized_query);
+	}
+
+	/**
+	 * Treat words joined by a hyphen as one required search unit.
+	 *
+	 * This prevents short segments such as the "e" in "e-mail" from being
+	 * discarded and leaving an overly broad search for only "mail".
+	 *
+	 * @param string $decoded_query Raw decoded query.
+	 * @return array
+	 */
+	private function detect_hyphenated_phrases($decoded_query) {
+		preg_match_all(
+			'/[\p{L}\p{N}]+(?:[-‐‑‒–—―][\p{L}\p{N}]+)+/u',
+			(string) $decoded_query,
+			$matches
+		);
+
+		$phrases = array();
+
+		foreach (isset($matches[0]) ? $matches[0] : array() as $match) {
+			$phrase = $this->normalize_search_text($match);
+
+			if ($phrase !== '' && strpos($phrase, ' ') !== false) {
+				$phrases[$phrase] = $phrase;
+			}
+
+			if (count($phrases) >= self::MAX_PHRASES) {
+				break;
+			}
+		}
+
+		return array_values($phrases);
 	}
 
 	/**
