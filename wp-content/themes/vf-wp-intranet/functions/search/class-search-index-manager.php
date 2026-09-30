@@ -355,6 +355,7 @@ class VFWP_Intranet_Search_Index_Manager {
 		$post_types = VFWP_Intranet_Search_Settings::get_enabled_post_types();
 
 		if (empty($post_types)) {
+			$status = $this->process_virtual_entries($status);
 			$status['phase'] = in_array($status['mode'], array('full', 'clear_rebuild'), true) ? 'prune' : 'complete';
 
 			if ($status['phase'] === 'complete') {
@@ -379,6 +380,7 @@ class VFWP_Intranet_Search_Index_Manager {
 		));
 
 		if (empty($post_ids)) {
+			$status = $this->process_virtual_entries($status);
 			$status['phase'] = in_array($status['mode'], array('full', 'clear_rebuild'), true) ? 'prune' : 'complete';
 
 			if ($status['phase'] === 'complete') {
@@ -417,6 +419,25 @@ class VFWP_Intranet_Search_Index_Manager {
 		$status['last_activity_at'] = current_time('mysql', true);
 
 		return $status;
+	}
+
+	/**
+	 * Refresh synthetic archive rows before a rebuild completes or prunes.
+	 *
+	 * @param array $status Current job status.
+	 * @return array
+	 */
+	private function process_virtual_entries(array $status) {
+		if (!function_exists('vfwp_intranet_search_index_training_archive')) {
+			return $status;
+		}
+
+		$result = vfwp_intranet_search_index_training_archive(
+			in_array($status['mode'], array('full', 'clear_rebuild'), true),
+			$this->get_active_rebuild_token($status)
+		);
+
+		return $this->record_result($status, $result);
 	}
 
 	/**
@@ -595,6 +616,10 @@ class VFWP_Intranet_Search_Index_Manager {
 				'posts_per_page' => 1,
 			));
 			$post_count = (int) $post_query->found_posts;
+		}
+
+		if (in_array('training', $post_types, true)) {
+			$post_count++;
 		}
 
 		return $post_count;

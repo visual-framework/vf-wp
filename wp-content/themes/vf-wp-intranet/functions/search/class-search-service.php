@@ -190,6 +190,58 @@ class VFWP_Intranet_Search_Service {
 	}
 
 	/**
+	 * Determine whether a complete phrase occurs in one indexed search field.
+	 *
+	 * This is intentionally stricter than has_results(), which applies normal
+	 * multi-term search semantics. It is used to prevent spelling suggestions
+	 * assembled from unrelated dictionary words.
+	 *
+	 * @param mixed $phrase Raw phrase.
+	 * @param array $filters Filters.
+	 * @return bool
+	 */
+	public function has_exact_phrase_results($phrase, array $filters = array()) {
+		$phrase = $this->query_parser->normalize_search_text(is_scalar($phrase) ? (string) $phrase : '');
+		$normalized_filters = $this->normalize_filters($filters);
+
+		if (
+			$phrase === ''
+			|| strpos($phrase, ' ') === false
+			|| empty($normalized_filters['object_types'])
+			|| (in_array('post', $normalized_filters['object_types'], true) && empty($normalized_filters['post_types']))
+		) {
+			return false;
+		}
+
+		$params = array('public');
+		$conditions = array('visibility = %s');
+		$conditions[] = $this->build_exact_phrase_match_sql(
+			array('title', 'excerpt', 'content', 'acf_keywords'),
+			$phrase,
+			$params
+		);
+		$conditions[] = 'object_type IN (' . implode(',', array_fill(0, count($normalized_filters['object_types']), '%s')) . ')';
+		$params = array_merge($params, $normalized_filters['object_types']);
+
+		if (in_array('post', $normalized_filters['object_types'], true)) {
+			$post_type_condition = 'post_type IN (' . implode(',', array_fill(0, count($normalized_filters['post_types']), '%s')) . ')';
+
+			if (count($normalized_filters['object_types']) > 1) {
+				$conditions[] = "(object_type <> 'post' OR {$post_type_condition})";
+			} else {
+				$conditions[] = $post_type_condition;
+			}
+
+			$params = array_merge($params, $normalized_filters['post_types']);
+		}
+
+		$sql = 'SELECT 1 FROM ' . VFWP_Intranet_Search_Schema::table_name()
+			. ' WHERE ' . implode(' AND ', $conditions) . ' LIMIT 1';
+
+		return null !== $this->wpdb->get_var($this->prepare_sql($sql, $params));
+	}
+
+	/**
 	 * Count indexed matches grouped by object type and post type.
 	 *
 	 * @param mixed $query Raw query.

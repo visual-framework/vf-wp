@@ -72,6 +72,13 @@ class VFWP_Intranet_Search_Settings {
 			'stopwords'       => self::default_stopwords(),
 			'exact_phrases'   => array(),
 			'synonyms'        => array(),
+			'did_you_mean'    => array(
+				'minimum_confidence'        => 0.68,
+				'people_minimum_confidence' => 0.84,
+				'winning_margin'            => 0.06,
+				'preferred_corrections'      => array(),
+				'blocked_suggestions'        => array(),
+			),
 			'broader_search_enabled' => 0,
 			'analytics'       => array(
 				'enabled'        => 1,
@@ -118,6 +125,7 @@ class VFWP_Intranet_Search_Settings {
 		$settings['stopwords'] = self::parse_stopwords($settings['stopwords']);
 		$settings['exact_phrases'] = self::parse_exact_phrases($settings['exact_phrases']);
 		$settings['synonyms'] = self::parse_synonyms(isset($settings['synonyms']) ? $settings['synonyms'] : array());
+		$settings['did_you_mean'] = self::sanitize_did_you_mean_settings(isset($settings['did_you_mean']) ? $settings['did_you_mean'] : array());
 		$settings['broader_search_enabled'] = empty($settings['broader_search_enabled']) ? 0 : 1;
 		$settings['analytics'] = self::sanitize_analytics_settings(isset($settings['analytics']) ? $settings['analytics'] : array());
 
@@ -185,6 +193,15 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	public static function get_synonyms() {
 		return self::get_settings()['synonyms'];
+	}
+
+	/**
+	 * Return conservative Did-you-mean configuration.
+	 *
+	 * @return array
+	 */
+	public static function get_did_you_mean_settings() {
+		return self::get_settings()['did_you_mean'];
 	}
 
 	/**
@@ -468,6 +485,9 @@ class VFWP_Intranet_Search_Settings {
 		$sanitized['stopwords'] = self::parse_stopwords(array_key_exists('stopwords', $input) ? $input['stopwords'] : $old_settings['stopwords']);
 		$sanitized['exact_phrases'] = self::parse_exact_phrases(array_key_exists('exact_phrases', $input) ? $input['exact_phrases'] : $old_settings['exact_phrases']);
 		$sanitized['synonyms'] = self::parse_synonyms(array_key_exists('synonyms', $input) ? $input['synonyms'] : $old_settings['synonyms']);
+		$sanitized['did_you_mean'] = self::sanitize_did_you_mean_settings(
+			array_key_exists('did_you_mean', $input) ? $input['did_you_mean'] : $old_settings['did_you_mean']
+		);
 		$sanitized['broader_search_enabled'] = array_key_exists('broader_search_enabled', $input)
 			? (empty($input['broader_search_enabled']) ? 0 : 1)
 			: (empty($old_settings['broader_search_enabled']) ? 0 : 1);
@@ -710,6 +730,10 @@ class VFWP_Intranet_Search_Settings {
 					<td><?php $this->render_synonyms(); ?></td>
 				</tr>
 				<tr>
+					<th scope="row"><?php echo esc_html__('Did you mean', 'vfwp'); ?></th>
+					<td><?php $this->render_did_you_mean_settings(); ?></td>
+				</tr>
+				<tr>
 					<th scope="row"><?php echo esc_html__('Broader-search fallback', 'vfwp'); ?></th>
 					<td><?php $this->render_broader_search_setting(); ?></td>
 				</tr>
@@ -834,6 +858,83 @@ class VFWP_Intranet_Search_Settings {
 		$service = new VFWP_Intranet_Search_Service();
 		$response = $service->search_with_score_breakdown($query, $filters, 1, 10);
 		$this->render_ranking_test_response($response);
+
+		$total = isset($response['pagination']['total']) ? (int) $response['pagination']['total'] : 0;
+
+		if ($total === 0 && class_exists('VFWP_Intranet_Search_Suggestions')) {
+			$suggestions = new VFWP_Intranet_Search_Suggestions();
+			$this->render_did_you_mean_diagnostics($suggestions->diagnose_did_you_mean($query, $filters, 5));
+		}
+	}
+
+	/**
+	 * Render correction confidence decisions for a no-results ranking test.
+	 *
+	 * @param array $diagnostics Suggestion diagnostics.
+	 * @return void
+	 */
+	private function render_did_you_mean_diagnostics(array $diagnostics) {
+		$candidates = isset($diagnostics['candidates']) ? (array) $diagnostics['candidates'] : array();
+		$settings = self::get_did_you_mean_settings();
+		$reason_labels = array(
+			'validated' => __('Validated against current indexed results', 'vfwp'),
+			'blocked' => __('Blocked by an administrator rule', 'vfwp'),
+			'below_confidence' => __('Below the configured confidence threshold', 'vfwp'),
+			'ambiguous' => __('Too close to another weak candidate', 'vfwp'),
+			'too_far_below_best' => __('Too far below the strongest candidate', 'vfwp'),
+			'weaker_than_winner' => __('Weaker than a better-supported correction', 'vfwp'),
+			'people_clear_winner' => __('A substantially stronger current People-name match was found', 'vfwp'),
+			'ordinary_word_preferred' => __('A stronger or similarly reliable intranet word was found', 'vfwp'),
+			'no_indexed_results' => __('No current indexed result contains the correction', 'vfwp'),
+			'stale_people_object' => __('The source Person is no longer a current public entry', 'vfwp'),
+		);
+		?>
+		<h3><?php echo esc_html__('Did-you-mean diagnostics', 'vfwp'); ?></h3>
+		<p>
+			<?php
+			echo esc_html(
+				sprintf(
+					__('Vocabulary threshold: %1$s; People threshold: %2$s; ambiguity margin: %3$s.', 'vfwp'),
+					$this->format_decimal($settings['minimum_confidence']),
+					$this->format_decimal($settings['people_minimum_confidence']),
+					$this->format_decimal($settings['winning_margin'])
+				)
+			);
+			?>
+		</p>
+		<?php if (empty($candidates)) : ?>
+			<p><?php echo esc_html__('No correction candidates were found in the current spelling or People dictionaries.', 'vfwp'); ?></p>
+			<?php return; ?>
+		<?php endif; ?>
+		<table class="widefat striped" style="max-width: 1100px;">
+			<thead>
+				<tr>
+					<th scope="col"><?php echo esc_html__('Candidate', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Type', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Source', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Confidence', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Distance', 'vfwp'); ?></th>
+					<th scope="col"><?php echo esc_html__('Decision', 'vfwp'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php foreach ($candidates as $candidate) : ?>
+					<tr>
+						<td><code><?php echo esc_html(isset($candidate['query']) ? $candidate['query'] : ''); ?></code></td>
+						<td><?php echo esc_html(isset($candidate['type']) ? ucfirst((string) $candidate['type']) : ''); ?></td>
+						<td><?php echo esc_html(isset($candidate['source']) ? ucfirst((string) $candidate['source']) : ''); ?></td>
+						<td><?php echo esc_html($this->format_decimal(isset($candidate['confidence']) ? $candidate['confidence'] : 0)); ?></td>
+						<td><?php echo esc_html(isset($candidate['distance']) ? (int) $candidate['distance'] : 0); ?></td>
+						<td>
+							<strong><?php echo esc_html(isset($candidate['status']) && $candidate['status'] === 'accepted' ? __('Accepted', 'vfwp') : __('Rejected', 'vfwp')); ?></strong><br>
+							<?php $reason = isset($candidate['reason']) ? (string) $candidate['reason'] : ''; ?>
+							<span><?php echo esc_html(isset($reason_labels[$reason]) ? $reason_labels[$reason] : $reason); ?></span>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
+		<?php
 	}
 
 	/**
@@ -2059,6 +2160,49 @@ class VFWP_Intranet_Search_Settings {
 			placeholder="<?php echo esc_attr__('it members = it services members', 'vfwp'); ?>"
 		><?php echo esc_textarea(implode("\n", $lines)); ?></textarea>
 		<p class="description"><?php echo esc_html__('Enter one synonym per line using source = replacement. For example, searches for "it members" will be run as "it services members". Changes take effect immediately and do not require reindexing.', 'vfwp'); ?></p>
+		<?php
+	}
+
+	/**
+	 * Render Did-you-mean confidence and curation controls.
+	 *
+	 * @return void
+	 */
+	public function render_did_you_mean_settings() {
+		$settings = self::get_did_you_mean_settings();
+		$preferred_lines = array();
+
+		foreach ((array) $settings['preferred_corrections'] as $correction) {
+			if (!empty($correction['from']) && !empty($correction['to'])) {
+				$preferred_lines[] = $correction['from'] . ' = ' . $correction['to'];
+			}
+		}
+		?>
+		<fieldset style="max-width: 760px;">
+			<p>
+				<label for="vfwp-search-correction-confidence"><strong><?php echo esc_html__('Minimum vocabulary confidence', 'vfwp'); ?></strong></label><br>
+				<input id="vfwp-search-correction-confidence" type="number" min="0" max="1" step="0.01" name="<?php echo esc_attr(self::OPTION_NAME); ?>[did_you_mean][minimum_confidence]" value="<?php echo esc_attr($settings['minimum_confidence']); ?>" class="small-text">
+			</p>
+			<p>
+				<label for="vfwp-search-people-confidence"><strong><?php echo esc_html__('Minimum People confidence', 'vfwp'); ?></strong></label><br>
+				<input id="vfwp-search-people-confidence" type="number" min="0" max="1" step="0.01" name="<?php echo esc_attr(self::OPTION_NAME); ?>[did_you_mean][people_minimum_confidence]" value="<?php echo esc_attr($settings['people_minimum_confidence']); ?>" class="small-text">
+			</p>
+			<p>
+				<label for="vfwp-search-correction-margin"><strong><?php echo esc_html__('Ambiguity margin', 'vfwp'); ?></strong></label><br>
+				<input id="vfwp-search-correction-margin" type="number" min="0" max="0.5" step="0.01" name="<?php echo esc_attr(self::OPTION_NAME); ?>[did_you_mean][winning_margin]" value="<?php echo esc_attr($settings['winning_margin']); ?>" class="small-text">
+			</p>
+			<p class="description"><?php echo esc_html__('Higher confidence values reduce suggestions. People-name candidates are checked against a current public People entry and compete with ordinary vocabulary by confidence. The ambiguity margin hides weak groups whose best candidates are too close to distinguish reliably. Changes take effect immediately.', 'vfwp'); ?></p>
+			<p>
+				<label for="vfwp-search-preferred-corrections"><strong><?php echo esc_html__('Preferred corrections', 'vfwp'); ?></strong></label><br>
+				<textarea id="vfwp-search-preferred-corrections" name="<?php echo esc_attr(self::OPTION_NAME); ?>[did_you_mean][preferred_corrections]" rows="5" cols="50" class="large-text code" placeholder="<?php echo esc_attr__('selery = salary', 'vfwp'); ?>"><?php echo esc_textarea(implode("\n", $preferred_lines)); ?></textarea>
+			</p>
+			<p class="description"><?php echo esc_html__('Enter one source = correction pair per line. A preferred correction is still shown only when the corrected query has public indexed results.', 'vfwp'); ?></p>
+			<p>
+				<label for="vfwp-search-blocked-suggestions"><strong><?php echo esc_html__('Blocked suggestions', 'vfwp'); ?></strong></label><br>
+				<textarea id="vfwp-search-blocked-suggestions" name="<?php echo esc_attr(self::OPTION_NAME); ?>[did_you_mean][blocked_suggestions]" rows="5" cols="50" class="large-text code" placeholder="<?php echo esc_attr__('unwanted term', 'vfwp'); ?>"><?php echo esc_textarea(implode("\n", (array) $settings['blocked_suggestions'])); ?></textarea>
+			</p>
+			<p class="description"><?php echo esc_html__('Enter one complete suggestion per line. Blocked text is never displayed as a Did-you-mean link.', 'vfwp'); ?></p>
+		</fieldset>
 		<?php
 	}
 
@@ -3291,6 +3435,56 @@ class VFWP_Intranet_Search_Settings {
 	 */
 	public static function sanitize_min_word_length_value($value) {
 		return min(10, max(1, absint($value)));
+	}
+
+	/**
+	 * Sanitize Did-you-mean confidence and curation settings.
+	 *
+	 * @param mixed $value Raw settings.
+	 * @return array
+	 */
+	public static function sanitize_did_you_mean_settings($value) {
+		$defaults = self::defaults()['did_you_mean'];
+		$value = is_array($value) ? $value : array();
+
+		return array(
+			'minimum_confidence' => self::sanitize_confidence_value(
+				isset($value['minimum_confidence']) ? $value['minimum_confidence'] : $defaults['minimum_confidence'],
+				$defaults['minimum_confidence']
+			),
+			'people_minimum_confidence' => self::sanitize_confidence_value(
+				isset($value['people_minimum_confidence']) ? $value['people_minimum_confidence'] : $defaults['people_minimum_confidence'],
+				$defaults['people_minimum_confidence']
+			),
+			'winning_margin' => min(
+				0.5,
+				self::sanitize_confidence_value(
+					isset($value['winning_margin']) ? $value['winning_margin'] : $defaults['winning_margin'],
+					$defaults['winning_margin']
+				)
+			),
+			'preferred_corrections' => self::parse_synonyms(
+				isset($value['preferred_corrections']) ? $value['preferred_corrections'] : array()
+			),
+			'blocked_suggestions' => self::parse_exact_phrases(
+				isset($value['blocked_suggestions']) ? $value['blocked_suggestions'] : array()
+			),
+		);
+	}
+
+	/**
+	 * Clamp one confidence value to 0..1.
+	 *
+	 * @param mixed $value Raw value.
+	 * @param float $fallback Fallback.
+	 * @return float
+	 */
+	private static function sanitize_confidence_value($value, $fallback) {
+		if (!is_numeric($value)) {
+			return (float) $fallback;
+		}
+
+		return round(min(1, max(0, (float) $value)), 2);
 	}
 
 	/**

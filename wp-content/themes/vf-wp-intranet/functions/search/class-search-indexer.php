@@ -8,6 +8,9 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Indexer {
+	const TRAINING_ARCHIVE_OBJECT_ID = 0;
+	const VIRTUAL_ARCHIVE_VERSION = 1;
+
 	/**
 	 * @var VFWP_Intranet_Search_Index_Repository
 	 */
@@ -309,6 +312,67 @@ class VFWP_Intranet_Search_Indexer {
 	}
 
 	/**
+	 * Index the virtual Training catalogue archive.
+	 *
+	 * WordPress post IDs begin at 1, so object ID 0 is reserved for this
+	 * synthetic post-like row. Using post type "training" keeps existing
+	 * filters, counters, weighting, and autocomplete behavior consistent.
+	 *
+	 * @param bool   $force Force updating the row.
+	 * @param string $rebuild_token Active full-rebuild token.
+	 * @return string
+	 */
+	public function index_training_archive($force = false, $rebuild_token = '') {
+		$enabled_post_types = $this->get_indexable_post_types();
+
+		if (!post_type_exists('training') || !in_array('training', $enabled_post_types, true)) {
+			$this->repository->delete(self::TRAINING_ARCHIVE_OBJECT_ID, 'post');
+			return 'deleted';
+		}
+
+		$url = get_post_type_archive_link('training');
+
+		if (!is_string($url) || $url === '') {
+			return 'failed';
+		}
+
+		$title = $this->normalizer->normalize_text(__('Training catalogue', 'vfwp'));
+		$excerpt = $this->normalizer->normalize_text(
+			__('Browse all live and on-demand training available for EMBL staff and fellows. Continue your professional development, improve your skills in data science, or complete workplace-related courses and activities.', 'vfwp')
+		);
+		$source_hash = $this->normalizer->hash(array(
+			'title'          => $title,
+			'excerpt'        => $excerpt,
+			'url'            => $url,
+			'archive_version' => self::VIRTUAL_ARCHIVE_VERSION,
+			'schema_version'  => VFWP_Intranet_Search_Schema::VERSION,
+		));
+
+		return $this->repository->upsert(array(
+			'object_id'         => self::TRAINING_ARCHIVE_OBJECT_ID,
+			'object_type'       => 'post',
+			'post_type'         => 'training',
+			'post_status'       => 'publish',
+			'visibility'        => 'public',
+			'title'             => $title,
+			'excerpt'           => $excerpt,
+			'content'           => '',
+			'acf_keywords'      => '',
+			'url'               => esc_url_raw($url),
+			'published_at'      => null,
+			'updated_at'        => null,
+			'schema_version'    => VFWP_Intranet_Search_Schema::VERSION,
+			'content_hash'      => $source_hash,
+			'source_hash'       => $source_hash,
+			'parent_object_id'  => 0,
+			'file_name'         => 'training-archive',
+			'extraction_status' => '',
+			'extraction_error'  => '',
+			'rebuild_token'     => (string) $rebuild_token,
+		), (bool) $force);
+	}
+
+	/**
 	 * Determine whether a post should be indexed.
 	 *
 	 * @param WP_Post $post Post object.
@@ -365,6 +429,16 @@ class VFWP_Intranet_Search_Indexer {
 		$excerpt = $this->normalizer->normalize_text($post->post_excerpt);
 		$content = $this->normalizer->normalize_content($post->post_content);
 		$document_pdf_index = $this->extract_document_pdf_index_data($document_pdf_source);
+
+		if ($post->post_type === 'teams') {
+			$team_strapline = $this->normalizer->normalize_text(
+				$this->get_scalar_post_meta((int) $post->ID, 'team_strapline')
+			);
+
+			if ($team_strapline !== '') {
+				$excerpt = trim($excerpt . "\n\n" . $team_strapline);
+			}
+		}
 
 		if ($post->post_type === 'documents') {
 			$this->store_document_pdf_metadata((int) $post->ID, $document_pdf_source, $document_pdf_index);
@@ -434,6 +508,7 @@ class VFWP_Intranet_Search_Indexer {
 			'acf_keywords'     => (string) $acf_keywords,
 			'url'              => is_string($url) ? $url : '',
 			'team_exclude_from_search' => $post->post_type === 'teams' ? $this->is_team_excluded_from_search((int) $post->ID) : false,
+			'team_strapline' => $post->post_type === 'teams' ? $this->get_scalar_post_meta((int) $post->ID, 'team_strapline') : '',
 			'document_pdf'     => $document_pdf_source,
 			'schema_version'   => VFWP_Intranet_Search_Schema::VERSION,
 			'extraction_class' => get_class($this->pdf_extractor),

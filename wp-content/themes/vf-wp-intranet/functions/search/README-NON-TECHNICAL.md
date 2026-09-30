@@ -58,6 +58,8 @@ Available categories include:
 
 Each filter can show a count. The count tells users how many results are available for that category for the current search.
 
+The Training catalogue itself can appear as a Training result, alongside individual courses, so users can open the complete live and on-demand catalogue directly.
+
 Filters with no results can be disabled so users do not click into an empty category.
 
 ## Documents And Attached Files
@@ -145,7 +147,15 @@ The suggestion list is designed to appear quickly. It first shows the basic sear
 
 If a search has no results, the site may show "Did you mean" suggestions.
 
-These suggestions are based on a spelling dictionary built from indexed titles and search keywords. It can recognize common missing, extra, or misplaced letters without scanning page and document text during the search. A suggestion is only shown when the corrected search is expected to return results.
+These suggestions are based mainly on indexed titles and search keywords. The dictionary also uses short title phrases and a small selection of up to 50 useful words from each Page. Most Page-content words must occur across at least two indexed items before they can be suggested; a particularly strong same-letter ordering correction may use a word from one indexed item. Posts, custom post types, and extracted PDF/DOCX text are excluded from this spelling vocabulary. The dictionary can recognize common missing or extra letters, swapped letters, and accidentally joined words without scanning content during the visitor's search. A suggestion is only shown when the corrected search is expected to return results.
+
+Possible corrections from ordinary intranet vocabulary and People names are considered together, with up to five useful suggestions shown. The search estimates confidence from spelling similarity and how reliably the corrected text is used on the intranet. It does not fill all five positions when only one correction is trustworthy. Multi-word name searches prioritize genuine People matches; single-word searches are more cautious about treating an ordinary word as a person's name.
+
+A suggested Person must correspond to a current public People entry with that name. An old name or an unrelated page containing similar words cannot validate a People suggestion.
+
+A suggested phrase is only shown when that complete phrase occurs in searchable content. Words that merely appear separately on the same page are not enough to create a suggestion.
+
+Administrators can tune confidence, define a preferred correction for a known typo, or block an unhelpful suggestion under Settings > Search > Query parsing. The Ranking test explains why candidates were accepted or rejected.
 
 When enabled by an administrator, a search with no reliable spelling correction may offer a broader-search link with one word removed. This option is off by default. The link is only shown when that simpler search has results; the search does not silently replace the words entered by the user.
 

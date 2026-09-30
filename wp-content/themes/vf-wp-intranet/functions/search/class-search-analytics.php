@@ -284,7 +284,7 @@ class VFWP_Intranet_Search_Analytics {
 
 		$stored = array();
 
-		foreach (array_slice($suggestions, 0, 3) as $suggestion) {
+		foreach (array_slice($suggestions, 0, 5) as $suggestion) {
 			if (!is_array($suggestion) || empty($suggestion['query'])) {
 				continue;
 			}

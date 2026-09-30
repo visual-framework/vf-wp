@@ -7,7 +7,19 @@
   var debounceMs = parseInt(config.debounceMs, 10);
   var cacheTtlMs = parseInt(config.cacheTtlMs, 10) || 120000;
   var suggestionCache = {};
+  var instanceCounter = 0;
+  var observer = null;
+  var started = false;
   debounceMs = Number.isFinite(debounceMs) ? Math.max(80, debounceMs) : 120;
+
+  function refreshConfig() {
+    config = window.vfwpSearchSuggestions || config || {};
+    minLength = parseInt(config.minLength, 10) || 2;
+    lookupMinLength = parseInt(config.lookupMinLength, 10) || minLength;
+    debounceMs = parseInt(config.debounceMs, 10);
+    cacheTtlMs = parseInt(config.cacheTtlMs, 10) || 120000;
+    debounceMs = Number.isFinite(debounceMs) ? Math.max(80, debounceMs) : 120;
+  }
 
   function getSearchForLabel(query) {
     var template = config.searchForLabel || 'Search for "%s"';
@@ -46,18 +58,21 @@
     return query.trim().replace(/\s+/g, ' ');
   }
 
-  function initForm(form, formIndex) {
+  function initForm(form) {
     var input = form.querySelector('input[type="search"][name="s"]');
     var list = form.querySelector('.vf-form--search__results-list');
     var formItem;
-    var instanceId = 'vfwp-search-autocomplete-' + String(formIndex + 1);
+    var instanceId;
     var debounceTimer = null;
     var activeRequest = null;
     var requestId = 0;
 
-    if (!input || !config.ajaxUrl || !config.action) {
+    if (!input || input.getAttribute('data-vfwp-search-autocomplete') === 'ready' || !config.ajaxUrl || !config.action) {
       return;
     }
+
+    instanceCounter++;
+    instanceId = 'vfwp-search-autocomplete-' + String(instanceCounter);
 
     formItem = input.closest('.vf-form__item') || input.parentNode;
 
@@ -72,6 +87,8 @@
     if (!list) {
       return;
     }
+
+    input.setAttribute('data-vfwp-search-autocomplete', 'ready');
 
     if (!input.id) {
       input.id = instanceId + '-input';
@@ -399,7 +416,104 @@
     hideList();
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.vf-form--search').forEach(initForm);
+  function initForms(root) {
+    var forms = [];
+    var closestForm;
+
+    if (!root) {
+      return;
+    }
+
+    if (root.nodeType === 1 && root.matches('.vf-form--search')) {
+      forms.push(root);
+    }
+
+    if (root.nodeType === 1 && root.closest) {
+      closestForm = root.closest('.vf-form--search');
+
+      if (closestForm && forms.indexOf(closestForm) === -1) {
+        forms.push(closestForm);
+      }
+    }
+
+    if (root.querySelectorAll) {
+      root.querySelectorAll('.vf-form--search').forEach(function (form) {
+        if (forms.indexOf(form) === -1) {
+          forms.push(form);
+        }
+      });
+    }
+
+    forms.forEach(initForm);
+  }
+
+  function observeForms() {
+    if (observer || !window.MutationObserver || !document.body) {
+      return;
+    }
+
+    observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.nodeType === 1) {
+            initForms(node);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  function initFocusedSearch(event) {
+    var input = event.target;
+    var form;
+
+    if (!input || !input.matches || !input.matches('.vf-form--search input[type="search"][name="s"]')) {
+      return;
+    }
+
+    form = input.closest('.vf-form--search');
+
+    if (form) {
+      initForm(form);
+    }
+  }
+
+  function start(attempt) {
+    refreshConfig();
+
+    if (!config.ajaxUrl || !config.action) {
+      if ((attempt || 0) < 20) {
+        window.setTimeout(function () {
+          start((attempt || 0) + 1);
+        }, 100);
+      }
+
+      return;
+    }
+
+    initForms(document);
+
+    if (!started) {
+      started = true;
+      observeForms();
+      document.addEventListener('focusin', initFocusedSearch);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      start(0);
+    }, { once: true });
+  } else {
+    start(0);
+  }
+
+  window.addEventListener('pageshow', function () {
+    start(0);
   });
 }());

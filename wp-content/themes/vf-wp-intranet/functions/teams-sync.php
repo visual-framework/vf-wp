@@ -120,7 +120,6 @@ function vfwp_intranet_sync_teams_from_contenthub() {
                     'ID' => $post_id,
                     'post_title' => $title,
                     'post_name' => $post_name,
-                    'post_excerpt' => $manual_override && $post ? $post->post_excerpt : $fields['team_strapline'],
                     'post_content' => $manual_override && $post ? $post->post_content : $fields['team_long_description'],
                 );
 
@@ -136,6 +135,7 @@ function vfwp_intranet_sync_teams_from_contenthub() {
                 }
 
                 vfwp_intranet_update_team_meta($post_id, vfwp_intranet_prepare_team_meta_for_update($post_id, $fields, $manual_override));
+                vfwp_intranet_reindex_synced_team($post_id);
                 if ($is_trashed) {
                     $stats['restored_titles'][] = $title;
                 } else {
@@ -154,7 +154,7 @@ function vfwp_intranet_sync_teams_from_contenthub() {
             'post_name' => $post_name,
             'post_status' => 'publish',
             'post_type' => 'teams',
-            'post_excerpt' => $fields['team_strapline'],
+            'post_excerpt' => '',
             'post_content' => $fields['team_long_description'],
             'post_author' => 1,
         ), true);
@@ -165,6 +165,7 @@ function vfwp_intranet_sync_teams_from_contenthub() {
         }
 
         vfwp_intranet_update_team_meta($new_post_id, $fields);
+        vfwp_intranet_reindex_synced_team($new_post_id);
         $stats['created_titles'][] = $title;
         $existing_team_ids[$team_key] = $team_id;
         $existing_team_posts[$team_key] = (int) $new_post_id;
@@ -371,7 +372,6 @@ function vfwp_intranet_team_manual_override_enabled($post_id) {
 
 function vfwp_intranet_team_protected_manual_override_fields() {
     return array(
-        'team_strapline',
         'team_long_description',
     );
 }
@@ -398,7 +398,7 @@ function vfwp_intranet_team_post_has_changes($post_id, $fields, $title, $post_na
         return true;
     }
 
-    if (!$manual_override && ($post->post_excerpt !== $fields['team_strapline'] || $post->post_content !== $fields['team_long_description'])) {
+    if (!$manual_override && $post->post_content !== $fields['team_long_description']) {
         return true;
     }
 
@@ -424,6 +424,18 @@ function vfwp_intranet_team_post_has_changes($post_id, $fields, $title, $post_na
 function vfwp_intranet_update_team_meta($post_id, $fields) {
     foreach ($fields as $key => $value) {
         update_post_meta($post_id, $key, $value);
+    }
+}
+
+/**
+ * Refresh one Team after ContentHub metadata has been stored.
+ *
+ * The normal save_post hook runs before the sync writes Team ACF/meta fields,
+ * so index once more to include the new strapline and external URL.
+ */
+function vfwp_intranet_reindex_synced_team($post_id) {
+    if (function_exists('vfwp_intranet_search_index_post')) {
+        vfwp_intranet_search_index_post((int) $post_id, true);
     }
 }
 

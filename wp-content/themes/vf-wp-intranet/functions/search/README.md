@@ -41,7 +41,7 @@ Frontend search results should not depend on Relevanssi being installed or enabl
   Normalizes visitor queries, applies synonyms, handles exact phrase rules, stopwords, minimum word length, protected phrases, quoted phrases, and builds safe FULLTEXT boolean query terms.
 
 - `class-search-spelling-repository.php`
-  Maintains the precomputed title/ACF-keyword spelling dictionary, indexed deletion keys, source frequencies, and object mappings used by "Did you mean".
+  Maintains the precomputed title, ACF-keyword, and bounded Page-content spelling dictionary, indexed deletion keys, source frequencies, and object mappings used by "Did you mean".
 
 - `class-search-service.php`
   Runs searches against the custom index, applies filters, computes relevance, paginates efficiently, and returns structured result data.
@@ -120,7 +120,7 @@ Tables:
 - `{prefix}vf_search_spelling_deletions`
 - `{prefix}vf_search_spelling_objects`
 
-The dictionary stores bounded unique words from indexed titles and configured ACF keyword fields. It does not ingest body text, excerpts, or extracted PDF/DOCX text. Each term stores exact and one-character deletion keys, allowing misspellings to be retrieved with indexed equality lookups rather than wildcard content scans. Object mappings keep frequencies accurate when indexed content changes or is removed.
+The dictionary stores bounded unique words from indexed titles and configured ACF keyword fields. For the `page` post type only, it also stores up to 50 normalized body-content words, prioritizing repeated words and then longer words. Page-content terms must contain only letters, be at least four characters long, pass the configured stopword list, and occur in at least two indexed objects before they can be returned as spelling candidates. Excerpts, Posts/custom-post-type body text, and extracted PDF/DOCX text are not ingested into the spelling dictionary. Each normal word stores deletion keys up to distance two for words between 5 and 24 characters; shorter, longer, and title-phrase entries use distance one to keep the table bounded. Object mappings keep frequencies accurate when indexed content changes or is removed.
 
 ### Analytics
 
@@ -367,6 +367,8 @@ Current filter categories:
 - Events
 - Training
 
+The Training catalogue archive is also stored as one synthetic `training` row with reserved object ID `0`. This lets it use the normal Training filter, counters, ranking, pagination, snippets, highlighting, and autocomplete even though a WordPress archive has no post ID. Managed rebuilds refresh the row before pruning.
+
 The current content type is fixed to web/document-post results. Extracted PDF and DOCX text is searched through the Documents post type.
 
 ## Autocomplete
@@ -394,21 +396,33 @@ Server behavior:
 - Avoids indexed lookup for very short input.
 - Suggests matching indexed titles and configured/indexed keyword phrases.
 
+The search bootstrap prevents the EMBL Group Site Roles activation redirect from running during `admin-ajax.php` requests. That plugin otherwise treats a missing activation option as anonymous user ID `0` and redirects public autocomplete requests to its settings page instead of returning JSON. Normal non-AJAX activation redirects are unchanged.
+
 ## Did You Mean
 
 The no-results state can show "Did you mean" links from `VFWP_Intranet_Search_Suggestions::did_you_mean()`.
 
-Term candidates come from the precomputed spelling dictionary; phrase candidates also use bounded indexed titles, ACF keywords, and configured exact phrases. Deletion-key lookup finds likely insertions, omissions, and transpositions before edit-distance scoring. Long words also use a bounded indexed-prefix lookup so plausible three-edit corrections can be considered without scanning the dictionary. Title terms rank above keyword-only terms, frequency breaks ties, and suggestions are only added if they lead to actual indexed results under the active filters.
+Term candidates come from the precomputed spelling dictionary; phrase candidates also use bounded contiguous phrases from indexed titles and configured exact phrases. Two-edit deletion-key lookup finds likely insertions and omissions, while Unicode-aware Damerau-Levenshtein scoring treats adjacent transpositions as one edit. A bounded indexed lookup also checks dictionary words produced by one or two adjacent swaps, including when older dictionary rows do not yet have every distance-two deletion key. This high-confidence same-letter path may use a term found in one indexed object; ordinary fuzzy content terms retain the two-object frequency threshold. When edit distance is tied, candidates containing exactly the same characters as the entered word are preferred before frequency is considered, so ordering mistakes such as `soter` can prefer `store` over unrelated frequent words. Unknown concatenated words may be split into two eligible indexed terms. A split that produces an indexed exact phrase receives stronger confidence than an unrelated word substitution, so `data scienceday` prioritizes `data science day`. Long words also use a bounded indexed-prefix lookup so plausible three-edit corrections can be considered without scanning the dictionary. Title terms rank above keyword-only terms, while eligible Page-content terms remain a lower-priority vocabulary source. Suggestions are only added if they lead to actual indexed results under the active filters.
+
+General spelling and People-name corrections pass through a confidence layer before up to five final suggestions are selected. Confidence combines edit similarity, title/keyword/content provenance, bounded frequency, same-character ordering evidence, and the specialized People-name score. Weak candidates are discarded rather than used to fill the list. A configurable ambiguity margin suppresses weak groups that do not have a clear winner, while strong evidence such as reordered identical letters or repeated title use can preserve the best candidate. Multi-word searches give validated People matches display priority. For a single word, a Person wins only when its confidence is substantially higher than the best ordinary-vocabulary correction; otherwise the vocabulary correction is preferred. This prevents a real but unrelated surname from displacing a likely intranet word.
+
+Settings > Search > Query parsing exposes the vocabulary confidence threshold, People confidence threshold, ambiguity margin, preferred `source = correction` rules, and complete suggestions that must be blocked. Preferred corrections still require current indexed results. These settings affect query-time decisions and do not require reindexing.
+
+Before display, a People-name correction must still point to its originating public indexed `people` object, and both the indexed title and current WordPress title must normalize to the suggested name. Stale fuzzy-name rows or names that only produce unrelated content matches are rejected.
+
+General corrections containing multiple words must also produce an indexed exact-phrase match. This prevents unrelated words found in separate parts of a result from creating a misleading constructed suggestion. Dedicated People-name matches and single-word corrections keep their specialized validation paths.
 
 Stopwords and other terms ignored by query parsing are preserved during term-level spelling correction rather than compared with dictionary words. This prevents valid connector words such as `and` from being changed to an indexed content word such as `end`. Did-you-mean labels are displayed in lowercase consistently.
 
-People records also populate a dedicated fuzzy-name dictionary during indexing. It stores the display name, an accent-folded full name, first/last-name tokens, configured People keyword aliases, and precomputed character trigrams. On a no-results request, an indexed trigram lookup retrieves at most 50 candidates; bounded PHP scoring combines trigram Dice similarity, transposition-aware Damerau-Levenshtein similarity, token alignment, and prefix confidence. Up to three high-confidence names are then validated through SearchService under the active filters before being shown as lowercase Did-you-mean links. Successful normal searches do not run this lookup.
+People records also populate a dedicated fuzzy-name dictionary during indexing. It stores the display name, an accent-folded full name, first/last-name tokens, configured People keyword aliases, and precomputed character trigrams. On a no-results request, an indexed trigram lookup retrieves at most 50 candidates; bounded PHP scoring combines trigram Dice similarity, transposition-aware Damerau-Levenshtein similarity, token alignment, and prefix confidence. A two-part query may contain one moderately misspelled name token when the other token matches exactly, allowing corrections such as `donna watshel` to `donna washtell` without relaxing unrelated multi-word suggestions. Up to five high-confidence names are then validated through SearchService under the active filters before being shown as lowercase Did-you-mean links. Successful normal searches do not run this lookup.
+
+The Ranking test tab includes Did-you-mean diagnostics for no-results queries. It lists considered candidates, source, confidence, distance, acceptance or rejection, and the rejection reason. This makes threshold and curation changes auditable without recording the admin test in analytics.
 
 If strict AND matching returns no results and no reliable spelling correction exists, the no-results state can optionally offer one broader search. This behavior is disabled by default and can be enabled under Settings > Search > Query parsing. It removes a single query term, preserves active filters, and only displays the link after an indexed existence check confirms that the broader query has results. Normal search matching remains AND-based, and changing the toggle does not require reindexing.
 
 Strict term, phrase, and exact-keyword verification expands normalized Latin query letters to bounded accent-aware regular-expression classes. This keeps `rudiger` and `rüdiger` equivalent against stored display text such as `Rüdiger`, while preserving word boundaries and prefix behavior. The index retains original accents and no rebuild is required for this matching rule.
 
-Schema version 17 introduces the spelling tables. A full rebuild or changed-content reindex is required after deployment to populate the dictionary for all existing indexed content. Normal post saves then maintain it automatically.
+Schema version 17 introduces the spelling tables. Schema version 22 adds bounded Page-content vocabulary, version 23 adds the managed Training archive entry, and version 24 adds two-edit spelling keys plus bounded title phrases. A full rebuild is required after deploying these derived-index changes so existing content contributes the new spelling data. Normal content saves then maintain its spelling terms automatically.
 
 ## Search Analytics
 

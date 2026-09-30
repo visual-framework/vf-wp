@@ -54,7 +54,7 @@
             "name": "team_manual_override",
             "aria-label": "",
             "type": "true_false",
-            "instructions": "Turn this on to preserve the team strapline, team long description, excerpt and body content during ContentHub syncs.",
+            "instructions": "Turn this on to preserve the team long description and body content during ContentHub syncs. The excerpt is always editor-managed and is never overwritten by the sync.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {

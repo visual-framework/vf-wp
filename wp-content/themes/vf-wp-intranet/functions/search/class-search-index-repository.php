@@ -280,7 +280,9 @@ class VFWP_Intranet_Search_Index_Repository {
 			(int) $row['object_id'],
 			(string) $row['object_type'],
 			(string) $row['title'],
-			(string) $row['acf_keywords']
+			(string) $row['acf_keywords'],
+			(string) $row['post_type'],
+			(string) $row['content']
 		);
 	}
 

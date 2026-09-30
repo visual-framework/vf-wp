@@ -39,7 +39,7 @@ if (
   $vfwp_search_did_you_mean = $vfwp_search_did_you_mean_service->did_you_mean(
     get_search_query(false),
     VFWP_Intranet_Search_Frontend::get_filters_for_request(),
-    3
+    5
   );
 
   if (!empty($vfwp_search_did_you_mean) && class_exists('VFWP_Intranet_Search_Analytics')) {
@@ -235,6 +235,16 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
 
             foreach ($vfwp_indexed_search_results as $vfwp_indexed_search_result) {
               $GLOBALS['vfwp_indexed_search_result'] = $vfwp_indexed_search_result;
+
+              if (
+                isset($vfwp_indexed_search_result['object_id'], $vfwp_indexed_search_result['object_type'], $vfwp_indexed_search_result['post_type'])
+                && (int) $vfwp_indexed_search_result['object_id'] === VFWP_Intranet_Search_Indexer::TRAINING_ARCHIVE_OBJECT_ID
+                && $vfwp_indexed_search_result['object_type'] === 'post'
+                && $vfwp_indexed_search_result['post_type'] === 'training'
+              ) {
+                include(locate_template('partials/vf-summary--search-archive.php', false, false));
+                continue;
+              }
 
               $vfwp_indexed_search_post = get_post((int) $vfwp_indexed_search_result['object_id']);
 

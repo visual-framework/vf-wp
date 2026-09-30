@@ -10,10 +10,18 @@ if (!defined('ABSPATH')) {
 class VFWP_Intranet_Search_Spelling_Repository {
 	const SOURCE_TITLE = 1;
 	const SOURCE_KEYWORD = 2;
+	const SOURCE_PAGE_CONTENT = 4;
+	const SOURCE_TITLE_PHRASE = 8;
 	const MIN_TERM_LENGTH = 3;
+	const MIN_CONTENT_TERM_LENGTH = 4;
 	const MAX_TERM_LENGTH = 64;
-	const MAX_OBJECT_TERMS = 200;
+	const MAX_PRIMARY_TERMS = 200;
+	const MAX_OBJECT_TERMS = 262;
+	const MAX_CONTENT_TERMS = 50;
+	const MAX_TITLE_PHRASES = 12;
 	const MAX_CANDIDATES = 100;
+	const MAX_COMPOUND_CANDIDATES = 5;
+	const MAX_DOUBLE_DELETE_LENGTH = 24;
 
 	/**
 	 * @var wpdb
@@ -37,17 +45,20 @@ class VFWP_Intranet_Search_Spelling_Repository {
 	}
 
 	/**
-	 * Synchronize title and keyword terms for one indexed object.
+	 * Synchronize spelling terms for one indexed object.
 	 *
 	 * @param int    $object_id WordPress object ID.
 	 * @param string $object_type Indexed object type.
 	 * @param string $title Indexed title.
 	 * @param string $acf_keywords Indexed ACF keyword text.
+	 * @param string $post_type Indexed WordPress post type.
+	 * @param string $content Indexed normalized content.
 	 * @return bool
 	 */
-	public function sync_object($object_id, $object_type, $title, $acf_keywords) {
+	public function sync_object($object_id, $object_type, $title, $acf_keywords, $post_type = '', $content = '') {
 		$object_id = (int) $object_id;
 		$object_type = sanitize_key($object_type);
+		$post_type = sanitize_key($post_type);
 
 		if ($object_id <= 0 || $object_type === '') {
 			return false;
@@ -56,6 +67,11 @@ class VFWP_Intranet_Search_Spelling_Repository {
 		$terms = array();
 		$this->collect_terms($terms, $title, self::SOURCE_TITLE);
 		$this->collect_terms($terms, $acf_keywords, self::SOURCE_KEYWORD);
+		$this->collect_title_phrases($terms, $title);
+
+		if ($object_type === 'post' && $post_type === 'page') {
+			$this->collect_page_content_terms($terms, $content);
+		}
 
 		$old_term_ids = $this->get_object_term_ids($object_id, $object_type);
 
@@ -180,23 +196,29 @@ class VFWP_Intranet_Search_Spelling_Repository {
 			FROM {$deletions_table} d
 			INNER JOIN {$terms_table} t ON t.id = d.term_id
 			WHERE d.deletion_key IN ({$placeholders})
+				AND INSTR(t.term, ' ') = 0
 				AND CHAR_LENGTH(t.term) BETWEEN %d AND %d
-			ORDER BY t.title_frequency DESC, t.keyword_frequency DESC, t.document_frequency DESC, t.term ASC
+				AND (t.title_frequency > 0 OR t.keyword_frequency > 0 OR t.document_frequency >= 2)
+			ORDER BY (t.term = %s) DESC, t.title_frequency DESC, t.keyword_frequency DESC, t.document_frequency DESC, t.term ASC
 			LIMIT %d";
-		$params = array_merge($keys, array($min_length, $max_length, $limit));
+		$params = array_merge($keys, array($min_length, $max_length, $query_term, $limit));
 		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $params), ARRAY_A);
 		$rows = is_array($rows) ? $rows : array();
+		$rows = $this->merge_candidate_rows($rows, $this->find_reordered_candidates($query_term));
 
-		// Long words can contain several substitutions without sharing a one-deletion key.
-		// Add a bounded, index-friendly prefix lookup so those candidates still reach
-		// the stricter edit-distance check in the suggestion service.
-		if ($this->length($query_term) >= 9 && count($rows) < $limit) {
-			$prefix = $this->limit_string($query_term, 4);
+		// A bounded prefix lookup also covers dictionaries created before all
+		// distance-two keys were populated. Shorter words use one leading letter
+		// because an early substitution may change the second character.
+		if ($this->length($query_term) >= 5 && count($rows) < $limit) {
+			$prefix_length = $this->length($query_term) >= 9 ? 4 : 1;
+			$prefix = $this->limit_string($query_term, $prefix_length);
 			$remaining_limit = $limit - count($rows);
 			$prefix_sql = "SELECT t.term, t.display_term, t.document_frequency, t.title_frequency, t.keyword_frequency
 				FROM {$terms_table} t
 				WHERE t.term LIKE %s
+					AND INSTR(t.term, ' ') = 0
 					AND CHAR_LENGTH(t.term) BETWEEN %d AND %d
+					AND (t.title_frequency > 0 OR t.keyword_frequency > 0 OR t.document_frequency >= 2)
 				ORDER BY t.title_frequency DESC, t.keyword_frequency DESC, t.document_frequency DESC, t.term ASC
 				LIMIT %d";
 			$prefix_rows = $this->wpdb->get_results(
@@ -224,6 +246,223 @@ class VFWP_Intranet_Search_Spelling_Repository {
 		}
 
 		return $rows;
+	}
+
+	/**
+	 * Find dictionary words produced by one or two adjacent character swaps.
+	 *
+	 * This complements deletion-key lookup for ordering mistakes such as
+	 * "soter" -> "store", including dictionaries built before all distance-two
+	 * deletion keys were populated.
+	 *
+	 * @param string $query_term Normalized query term.
+	 * @return array
+	 */
+	private function find_reordered_candidates($query_term) {
+		$length = $this->length($query_term);
+
+		if ($length < 4 || $length > 12) {
+			return array();
+		}
+
+		$variants = array();
+		$level = array($query_term);
+
+		for ($depth = 1; $depth <= 2; $depth++) {
+			$next_level = array();
+
+			foreach ($level as $value) {
+				$characters = preg_split('//u', (string) $value, -1, PREG_SPLIT_NO_EMPTY);
+
+				if (!is_array($characters)) {
+					continue;
+				}
+
+				for ($index = 0; $index < count($characters) - 1; $index++) {
+					$swapped = $characters;
+					$temporary = $swapped[$index];
+					$swapped[$index] = $swapped[$index + 1];
+					$swapped[$index + 1] = $temporary;
+					$variant = implode('', $swapped);
+
+					if ($variant === $query_term || isset($variants[$variant])) {
+						continue;
+					}
+
+					$variants[$variant] = $variant;
+					$next_level[$variant] = $variant;
+				}
+			}
+
+			$level = array_values($next_level);
+		}
+
+		if (empty($variants)) {
+			return array();
+		}
+
+		$terms_table = VFWP_Intranet_Search_Schema::spelling_terms_table_name();
+		$placeholders = implode(', ', array_fill(0, count($variants), '%s'));
+		$sql = "SELECT term, display_term, document_frequency, title_frequency, keyword_frequency
+			FROM {$terms_table}
+			WHERE term IN ({$placeholders})";
+		$rows = $this->wpdb->get_results(
+			$this->wpdb->prepare($sql, array_values($variants)),
+			ARRAY_A
+		);
+
+		return is_array($rows) ? $rows : array();
+	}
+
+	/**
+	 * Merge candidate rows by normalized term.
+	 *
+	 * @param array $primary Primary rows.
+	 * @param array $additional Additional rows.
+	 * @return array
+	 */
+	private function merge_candidate_rows(array $primary, array $additional) {
+		$merged = array();
+
+		foreach (array_merge($primary, $additional) as $row) {
+			if (!empty($row['term'])) {
+				$merged[(string) $row['term']] = $row;
+			}
+		}
+
+		return array_values($merged);
+	}
+
+	/**
+	 * Return bounded title-phrase candidates for a complete no-results query.
+	 *
+	 * @param string $query Normalized query.
+	 * @param int    $limit Maximum candidates.
+	 * @return array
+	 */
+	public function find_phrase_candidates($query, $limit = 8) {
+		$query = $this->normalize_phrase($query);
+
+		if ($query === '' || strpos($query, ' ') === false) {
+			return array();
+		}
+
+		$keys = $this->build_deletion_keys($query, 1);
+		$placeholders = implode(', ', array_fill(0, count($keys), '%s'));
+		$min_length = max(self::MIN_TERM_LENGTH, $this->length($query) - 2);
+		$max_length = min(self::MAX_TERM_LENGTH, $this->length($query) + 2);
+		$limit = min(20, max(1, (int) $limit));
+		$terms_table = VFWP_Intranet_Search_Schema::spelling_terms_table_name();
+		$deletions_table = VFWP_Intranet_Search_Schema::spelling_deletions_table_name();
+		$sql = "SELECT DISTINCT t.term, t.display_term, t.document_frequency, t.title_frequency, t.keyword_frequency
+			FROM {$deletions_table} d
+			INNER JOIN {$terms_table} t ON t.id = d.term_id
+			WHERE d.deletion_key IN ({$placeholders})
+				AND INSTR(t.term, ' ') > 0
+				AND CHAR_LENGTH(t.term) BETWEEN %d AND %d
+				AND t.title_frequency > 0
+			ORDER BY t.title_frequency DESC, t.document_frequency DESC, t.term ASC
+			LIMIT %d";
+		$params = array_merge($keys, array($min_length, $max_length, $limit));
+		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $params), ARRAY_A);
+
+		return is_array($rows) ? $rows : array();
+	}
+
+	/**
+	 * Split one unknown word into two eligible indexed dictionary terms.
+	 *
+	 * @param string $query_term Normalized query term.
+	 * @param int    $limit Maximum candidates.
+	 * @return array
+	 */
+	public function find_compound_candidates($query_term, $limit = self::MAX_COMPOUND_CANDIDATES) {
+		$query_term = $this->normalize_term($query_term);
+		$length = $this->length($query_term);
+
+		if (!$this->is_allowed_term($query_term) || $length < (self::MIN_TERM_LENGTH * 2)) {
+			return array();
+		}
+
+		$parts = array($query_term);
+		$splits = array();
+
+		for ($position = self::MIN_TERM_LENGTH; $position <= $length - self::MIN_TERM_LENGTH; $position++) {
+			$left = $this->substring($query_term, 0, $position);
+			$right = $this->substring($query_term, $position, $length - $position);
+
+			if (!$this->is_allowed_term($left) || !$this->is_allowed_term($right)) {
+				continue;
+			}
+
+			$parts[] = $left;
+			$parts[] = $right;
+			$splits[] = array($left, $right);
+		}
+
+		if (empty($splits)) {
+			return array();
+		}
+
+		$parts = array_values(array_unique($parts));
+		$terms_table = VFWP_Intranet_Search_Schema::spelling_terms_table_name();
+		$placeholders = implode(', ', array_fill(0, count($parts), '%s'));
+		$sql = "SELECT term, display_term, document_frequency, title_frequency, keyword_frequency
+			FROM {$terms_table}
+			WHERE term IN ({$placeholders})
+				AND INSTR(term, ' ') = 0
+				AND (title_frequency > 0 OR keyword_frequency > 0 OR document_frequency >= 2)";
+		$rows = $this->wpdb->get_results($this->wpdb->prepare($sql, $parts), ARRAY_A);
+		$by_term = array();
+
+		foreach ((array) $rows as $row) {
+			if (!empty($row['term'])) {
+				$by_term[(string) $row['term']] = $row;
+			}
+		}
+
+		// Never split a word that is already valid in the indexed vocabulary.
+		if (isset($by_term[$query_term])) {
+			return array();
+		}
+
+		$candidates = array();
+
+		foreach ($splits as $split) {
+			if (!isset($by_term[$split[0]], $by_term[$split[1]])) {
+				continue;
+			}
+
+			$left = $by_term[$split[0]];
+			$right = $by_term[$split[1]];
+			$primary_frequency = (int) $left['title_frequency'] + (int) $left['keyword_frequency']
+				+ (int) $right['title_frequency'] + (int) $right['keyword_frequency'];
+
+			if ($primary_frequency < 1) {
+				continue;
+			}
+
+			$frequency = $this->get_frequency_score($left) + $this->get_frequency_score($right);
+			$left_label = !empty($left['display_term']) ? (string) $left['display_term'] : $split[0];
+			$right_label = !empty($right['display_term']) ? (string) $right['display_term'] : $split[1];
+
+			$candidates[] = array(
+				'terms'     => $split,
+				'query'     => implode(' ', $split),
+				'label'     => trim($left_label . ' ' . $right_label),
+				'frequency' => $frequency,
+			);
+		}
+
+		usort($candidates, static function ($a, $b) {
+			if ((int) $a['frequency'] !== (int) $b['frequency']) {
+				return (int) $b['frequency'] - (int) $a['frequency'];
+			}
+
+			return strcasecmp((string) $a['query'], (string) $b['query']);
+		});
+
+		return array_slice($candidates, 0, min(self::MAX_COMPOUND_CANDIDATES, max(1, (int) $limit)));
 	}
 
 	/**
@@ -280,7 +519,7 @@ class VFWP_Intranet_Search_Spelling_Repository {
 	 * @return void
 	 */
 	private function collect_terms(array &$terms, $text, $source) {
-		if (!is_scalar($text) || count($terms) >= self::MAX_OBJECT_TERMS) {
+		if (!is_scalar($text) || count($terms) >= self::MAX_PRIMARY_TERMS) {
 			return;
 		}
 
@@ -307,10 +546,150 @@ class VFWP_Intranet_Search_Spelling_Repository {
 				$terms[$term]['label'] = $this->limit_string($label, 100);
 			}
 
-			if (count($terms) >= self::MAX_OBJECT_TERMS) {
+			if (count($terms) >= self::MAX_PRIMARY_TERMS) {
 				break;
 			}
 		}
+	}
+
+	/**
+	 * Store a compact set of contiguous title phrases for phrase-level correction.
+	 *
+	 * @param array $terms Collected terms.
+	 * @param mixed $title Indexed title.
+	 * @return void
+	 */
+	private function collect_title_phrases(array &$terms, $title) {
+		$normalized = $this->query_parser->normalize_search_text(is_scalar($title) ? (string) $title : '');
+
+		if ($normalized === '') {
+			return;
+		}
+
+		$words = preg_split('/\s+/u', $normalized);
+
+		if (!is_array($words) || count($words) < 2) {
+			return;
+		}
+
+		$phrases = array();
+		$word_count = count($words);
+
+		if ($word_count <= 6 && $this->length($normalized) <= self::MAX_TERM_LENGTH) {
+			$phrases[$normalized] = $normalized;
+		}
+
+		for ($size = 3; $size >= 2 && count($phrases) < self::MAX_TITLE_PHRASES; $size--) {
+			for ($start = 0; $start <= $word_count - $size; $start++) {
+				$phrase = implode(' ', array_slice($words, $start, $size));
+
+				if ($this->length($phrase) <= self::MAX_TERM_LENGTH) {
+					$phrases[$phrase] = $phrase;
+				}
+
+				if (count($phrases) >= self::MAX_TITLE_PHRASES) {
+					break;
+				}
+			}
+		}
+
+		foreach ($phrases as $phrase) {
+			if (count($terms) >= self::MAX_OBJECT_TERMS) {
+				break;
+			}
+
+			$terms[$phrase] = array(
+				'label'  => $this->limit_string($phrase, 100),
+				'source' => self::SOURCE_TITLE | self::SOURCE_TITLE_PHRASE,
+			);
+		}
+	}
+
+	/**
+	 * Add a bounded set of useful terms from normalized Page content.
+	 *
+	 * Repeated words rank ahead of one-off words, with longer terms used as a
+	 * tie-breaker. Content-only terms are filtered by cross-document frequency
+	 * when candidates are read, so a one-page typo cannot become a correction.
+	 *
+	 * @param array $terms Collected object terms.
+	 * @param mixed $content Indexed normalized Page content.
+	 * @return void
+	 */
+	private function collect_page_content_terms(array &$terms, $content) {
+		if (!is_scalar($content) || trim((string) $content) === '') {
+			return;
+		}
+
+		preg_match_all('/[\p{L}\p{N}]+/u', wp_strip_all_tags((string) $content), $matches);
+		$stopwords = class_exists('VFWP_Intranet_Search_Settings') ? VFWP_Intranet_Search_Settings::get_stopwords() : array();
+		$candidates = array();
+
+		foreach ((array) $matches[0] as $label) {
+			$term = $this->normalize_term($label);
+
+			if (
+				!$this->is_allowed_content_term($term)
+				|| in_array($term, $stopwords, true)
+			) {
+				continue;
+			}
+
+			if (!isset($candidates[$term])) {
+				$candidates[$term] = array(
+					'label'     => $this->limit_string($label, 100),
+					'frequency' => 0,
+					'length'    => $this->length($term),
+				);
+			}
+
+			$candidates[$term]['frequency']++;
+		}
+
+		uasort($candidates, static function ($a, $b) {
+			if ((int) $a['frequency'] !== (int) $b['frequency']) {
+				return (int) $b['frequency'] - (int) $a['frequency'];
+			}
+
+			if ((int) $a['length'] !== (int) $b['length']) {
+				return (int) $b['length'] - (int) $a['length'];
+			}
+
+			return strcasecmp((string) $a['label'], (string) $b['label']);
+		});
+
+		$added = 0;
+
+		foreach ($candidates as $term => $candidate) {
+			if (isset($terms[$term])) {
+				$terms[$term]['source'] |= self::SOURCE_PAGE_CONTENT;
+				continue;
+			}
+
+			if ($added >= self::MAX_CONTENT_TERMS || count($terms) >= self::MAX_OBJECT_TERMS) {
+				break;
+			}
+
+			$terms[$term] = array(
+				'label'  => (string) $candidate['label'],
+				'source' => self::SOURCE_PAGE_CONTENT,
+			);
+			$added++;
+		}
+	}
+
+	/**
+	 * Whether a normalized term is suitable for the Page-content dictionary.
+	 *
+	 * @param string $term Normalized term.
+	 * @return bool
+	 */
+	private function is_allowed_content_term($term) {
+		$length = $this->length($term);
+
+		return $length >= self::MIN_CONTENT_TERM_LENGTH
+			&& $length <= self::MAX_TERM_LENGTH
+			&& preg_match('/^\p{L}+$/u', $term) === 1;
 	}
 
 	/**
@@ -357,7 +736,7 @@ class VFWP_Intranet_Search_Spelling_Repository {
 	}
 
 	/**
-	 * Ensure exact and one-character deletion keys exist for terms.
+	 * Ensure bounded deletion keys exist for terms.
 	 *
 	 * @param array $stored_terms Stored term rows.
 	 * @return void
@@ -378,13 +757,21 @@ class VFWP_Intranet_Search_Spelling_Repository {
 				$rows[] = '(%s, %d)';
 				$params[] = $deletion_key;
 				$params[] = $term_id;
+
+				if (count($rows) >= 500) {
+					$this->insert_deletion_key_batch($rows, $params);
+					$rows = array();
+					$params = array();
+				}
 			}
 		}
 
-		if (empty($rows)) {
-			return;
+		if (!empty($rows)) {
+			$this->insert_deletion_key_batch($rows, $params);
 		}
+	}
 
+	private function insert_deletion_key_batch(array $rows, array $params) {
 		$table = VFWP_Intranet_Search_Schema::spelling_deletions_table_name();
 		$sql = "INSERT IGNORE INTO {$table} (deletion_key, term_id) VALUES " . implode(', ', $rows);
 		$this->wpdb->query($this->wpdb->prepare($sql, $params));
@@ -456,30 +843,55 @@ class VFWP_Intranet_Search_Spelling_Repository {
 	}
 
 	/**
-	 * Return an exact term plus each one-character deletion.
+	 * Return an exact term plus bounded recursive deletion keys.
 	 *
 	 * @param string $term Normalized term.
 	 * @return array
 	 */
-	private function build_deletion_keys($term) {
-		$characters = preg_split('//u', (string) $term, -1, PREG_SPLIT_NO_EMPTY);
-		$keys = array((string) $term => (string) $term);
+	private function build_deletion_keys($term, $max_distance = null) {
+		$term = (string) $term;
+		$max_distance = null === $max_distance ? $this->get_delete_distance($term) : max(0, min(2, (int) $max_distance));
+		$keys = array($term => $term);
+		$level = array($term => $term);
 
-		if (!is_array($characters)) {
-			return array_values($keys);
-		}
+		for ($distance = 1; $distance <= $max_distance; $distance++) {
+			$next_level = array();
 
-		foreach ($characters as $index => $character) {
-			$deletion = $characters;
-			unset($deletion[$index]);
-			$deletion = implode('', $deletion);
+			foreach ($level as $value) {
+				$characters = preg_split('//u', $value, -1, PREG_SPLIT_NO_EMPTY);
 
-			if ($deletion !== '') {
-				$keys[$deletion] = $deletion;
+				if (!is_array($characters)) {
+					continue;
+				}
+
+				foreach ($characters as $index => $character) {
+					$deletion = $characters;
+					unset($deletion[$index]);
+					$deletion = implode('', $deletion);
+
+					if ($deletion !== '' && !isset($keys[$deletion])) {
+						$keys[$deletion] = $deletion;
+						$next_level[$deletion] = $deletion;
+					}
+				}
 			}
+
+			$level = $next_level;
 		}
 
 		return array_values($keys);
+	}
+
+	private function get_delete_distance($term) {
+		$length = $this->length($term);
+
+		return strpos((string) $term, ' ') === false && $length >= 5 && $length <= self::MAX_DOUBLE_DELETE_LENGTH ? 2 : 1;
+	}
+
+	private function get_frequency_score(array $term) {
+		return (int) $term['document_frequency']
+			+ ((int) $term['title_frequency'] * 4)
+			+ ((int) $term['keyword_frequency'] * 3);
 	}
 
 	/**
@@ -492,6 +904,12 @@ class VFWP_Intranet_Search_Spelling_Repository {
 		$normalized = $this->query_parser->normalize_search_text(is_scalar($term) ? (string) $term : '');
 
 		return strpos($normalized, ' ') === false ? $normalized : '';
+	}
+
+	private function normalize_phrase($phrase) {
+		$normalized = $this->query_parser->normalize_search_text(is_scalar($phrase) ? (string) $phrase : '');
+
+		return $this->length($normalized) <= self::MAX_TERM_LENGTH ? $normalized : '';
 	}
 
 	/**
@@ -516,6 +934,12 @@ class VFWP_Intranet_Search_Spelling_Repository {
 	 */
 	private function length($text) {
 		return function_exists('mb_strlen') ? (int) mb_strlen((string) $text, 'UTF-8') : strlen((string) $text);
+	}
+
+	private function substring($text, $start, $length) {
+		return function_exists('mb_substr')
+			? (string) mb_substr((string) $text, (int) $start, (int) $length, 'UTF-8')
+			: substr((string) $text, (int) $start, (int) $length);
 	}
 
 	/**

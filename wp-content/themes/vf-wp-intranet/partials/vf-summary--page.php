@@ -118,7 +118,6 @@ $redirect_url = '';
 $vfwp_result_type_label = '';
 $vfwp_result_meta_text = '';
 $vfwp_result_detail_meta = '';
-$vfwp_result_match_reason = '';
 $vfwp_show_result_type_badge = false;
 $vfwp_result_is_external_team = false;
 $vfwp_result_external_domain_label = '';
@@ -293,16 +292,12 @@ if (is_search() && $post_type === 'documents' && $has_indexed_search_result) {
       : '';
   } elseif ($document_title_match) {
     $summary_text = $document_excerpt_highlighted;
-    $vfwp_result_match_reason = __('Match in title', 'vfwp');
   } elseif ($document_keyword_match) {
     $summary_text = $document_excerpt_highlighted;
-    $vfwp_result_match_reason = __('Matched by search keyword', 'vfwp');
   } elseif ($document_excerpt_match) {
     $summary_text = $document_excerpt_highlighted;
-    $vfwp_result_match_reason = __('Match in description', 'vfwp');
   } else {
     $summary_text = '';
-    $vfwp_result_match_reason = __('Matched indexed document content', 'vfwp');
   }
 }
 
@@ -316,7 +311,7 @@ if (is_search()) {
     $document_display_date = $document_updated_date !== ''
       ? $document_updated_date
       : get_the_date(get_option('date_format'), $post);
-    $vfwp_result_detail_meta = implode(' | ', array_filter(array($document_display_date, $vfwp_result_match_reason)));
+    $vfwp_result_detail_meta = $document_display_date;
   } elseif ($post_type === 'training') {
     if ($training_overview !== '') {
       if (class_exists('VFWP_Intranet_Search_Query_Parser') && class_exists('VFWP_Intranet_Search_Snippet_Service')) {

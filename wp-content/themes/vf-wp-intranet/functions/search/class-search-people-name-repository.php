@@ -209,7 +209,7 @@ class VFWP_Intranet_Search_People_Name_Repository {
 	 * @param int   $limit Maximum suggestions.
 	 * @return array
 	 */
-	public function find_suggestions($query, $limit = 3) {
+	public function find_suggestions($query, $limit = 5) {
 		$normalized_query = $this->normalize_name($query);
 		$query_terms = $normalized_query === '' ? array() : preg_split('/\s+/u', $normalized_query);
 
@@ -228,7 +228,7 @@ class VFWP_Intranet_Search_People_Name_Repository {
 			return array();
 		}
 
-		$limit = min(3, max(1, (int) $limit));
+		$limit = min(5, max(1, (int) $limit));
 		$ngrams_table = VFWP_Intranet_Search_Schema::people_name_ngrams_table_name();
 		$placeholders = implode(', ', array_fill(0, count($query_ngrams), '%s'));
 		$sql = "SELECT object_id, COUNT(DISTINCT ngram) AS overlap_count
@@ -270,7 +270,12 @@ class VFWP_Intranet_Search_People_Name_Repository {
 
 			$normalized_name = isset($row['normalized_name']) ? (string) $row['normalized_name'] : '';
 			$variants[] = $normalized_name;
-			$score = $this->score_name_candidate($normalized_query, $query_terms, array_values(array_unique(array_filter($variants))));
+			$score = $this->score_name_candidate(
+				$normalized_query,
+				$query_terms,
+				array_values(array_unique(array_filter($variants))),
+				$normalized_name
+			);
 
 			if ($score < $threshold) {
 				continue;
@@ -307,7 +312,7 @@ class VFWP_Intranet_Search_People_Name_Repository {
 		$tokens = preg_split('/\s+/u', (string) $name);
 
 		foreach (is_array($tokens) ? $tokens : array() as $token) {
-			if ($this->length($token) >= 3 && count($variants) < self::MAX_VARIANTS) {
+			if ($this->length($token) >= 2 && count($variants) < self::MAX_VARIANTS) {
 				$variants[$token] = $token;
 			}
 		}
@@ -316,7 +321,11 @@ class VFWP_Intranet_Search_People_Name_Repository {
 	/**
 	 * Calculate a bounded fuzzy score for one Person.
 	 */
-	private function score_name_candidate($query, array $query_terms, array $variants) {
+	private function score_name_candidate($query, array $query_terms, array $variants, $normalized_name = '') {
+		if (count($query_terms) === 1 && $this->length($query) === 2) {
+			return $this->score_short_name_candidate($query, $variants);
+		}
+
 		if (count($query_terms) > 1) {
 			$best_sequence = 0.0;
 
@@ -329,6 +338,11 @@ class VFWP_Intranet_Search_People_Name_Repository {
 
 				$best_sequence = max($best_sequence, $this->score_token_sequence($query_terms, $candidate_terms));
 			}
+
+			$best_sequence = max(
+				$best_sequence,
+				$this->score_name_covered_by_longer_query($query_terms, $normalized_name)
+			);
 
 			return min(1.0, $best_sequence);
 		}
@@ -343,6 +357,106 @@ class VFWP_Intranet_Search_People_Name_Repository {
 	}
 
 	/**
+	 * Score a two-letter name without fuzzy substitutions.
+	 *
+	 * Exact first-name/surname tokens rank first. Longer names beginning with
+	 * the query are allowed as cautious prefix suggestions; unrelated terms
+	 * that merely differ by one character are never considered.
+	 */
+	private function score_short_name_candidate($query, array $variants) {
+		$best = 0.0;
+
+		foreach ($variants as $variant) {
+			$tokens = preg_split('/\s+/u', (string) $variant);
+
+			foreach (is_array($tokens) ? $tokens : array() as $token) {
+				$token_length = $this->length($token);
+
+				if ($token === $query) {
+					return 1.0;
+				}
+
+				if ($token_length > 2 && $token_length <= 12 && $this->substring($token, 0, 2) === $query) {
+					$best = max($best, 0.86 - min(0.08, ($token_length - 2) * 0.01));
+				}
+			}
+		}
+
+		return $best;
+	}
+
+	/**
+	 * Match a complete indexed name inside a longer entered name.
+	 *
+	 * This supports cases such as "Juan Pablo Oczkowski Czora" suggesting
+	 * "Juan Oczkowski" while keeping the rule too strict for general prose:
+	 * every indexed name token must match, the surname must be high-confidence,
+	 * at least one token must be exact, and at most two query tokens may remain.
+	 */
+	private function score_name_covered_by_longer_query(array $query_terms, $normalized_name) {
+		$candidate_terms = preg_split('/\s+/u', trim((string) $normalized_name));
+
+		if (
+			!is_array($candidate_terms)
+			|| count($candidate_terms) < 2
+			|| count($candidate_terms) >= count($query_terms)
+			|| count($query_terms) - count($candidate_terms) > 2
+		) {
+			return 0.0;
+		}
+
+		$used_query_indexes = array();
+		$scores = array();
+		$exact_matches = 0;
+		$surname_score = 0.0;
+
+		foreach ($candidate_terms as $candidate_index => $candidate_term) {
+			$best_score = 0.0;
+			$best_query_index = -1;
+			$best_is_exact = false;
+
+			foreach ($query_terms as $query_index => $query_term) {
+				if (isset($used_query_indexes[$query_index])) {
+					continue;
+				}
+
+				$score = $this->score_strings((string) $query_term, (string) $candidate_term);
+
+				if ($score > $best_score) {
+					$best_score = $score;
+					$best_query_index = (int) $query_index;
+					$best_is_exact = (string) $query_term === (string) $candidate_term;
+				}
+			}
+
+			if ($best_query_index < 0 || $best_score < 0.82) {
+				return 0.0;
+			}
+
+			$used_query_indexes[$best_query_index] = true;
+			$scores[] = $best_score;
+
+			if ($best_is_exact) {
+				$exact_matches++;
+			}
+
+			if ($candidate_index === count($candidate_terms) - 1) {
+				$surname_score = $best_score;
+			}
+		}
+
+		if ($exact_matches < 1 || $surname_score < 0.88) {
+			return 0.0;
+		}
+
+		$average_score = array_sum($scores) / count($scores);
+		$query_coverage = count($candidate_terms) / count($query_terms);
+		$extra_term_penalty = (count($query_terms) - count($candidate_terms)) * 0.05;
+
+		return max(0.0, min(1.0, ($average_score * 0.90) + ($query_coverage * 0.10) - $extra_term_penalty));
+	}
+
+	/**
 	 * Score a multi-part name while requiring every entered token to have a
 	 * credible, distinct counterpart in the candidate name.
 	 */
@@ -350,6 +464,7 @@ class VFWP_Intranet_Search_People_Name_Repository {
 		$used_indexes = array();
 		$matched_indexes = array();
 		$scores = array();
+		$exact_matches = 0;
 
 		foreach ($query_terms as $query_term) {
 			$best_score = 0.0;
@@ -368,13 +483,21 @@ class VFWP_Intranet_Search_People_Name_Repository {
 				}
 			}
 
-			if ($best_index < 0 || $best_score < 0.45) {
+			// Multi-part names can contain one substantial surname typo while
+			// another token (usually the first name) is exact. Keep that candidate
+			// long enough to assess the complete name, but never accept a token
+			// with less than modest similarity.
+			if ($best_index < 0 || $best_score < 0.38) {
 				return 0.0;
 			}
 
 			$used_indexes[$best_index] = true;
 			$matched_indexes[] = $best_index;
 			$scores[] = $best_score;
+
+			if ((string) $query_term === (string) $candidate_terms[$best_index]) {
+				$exact_matches++;
+			}
 		}
 
 		$ordered = true;
@@ -387,6 +510,10 @@ class VFWP_Intranet_Search_People_Name_Repository {
 		}
 
 		$score = array_sum($scores) / max(1, count($scores));
+
+		if (count($query_terms) === 2 && $exact_matches >= 1 && min($scores) >= 0.38) {
+			$score = max($score, 0.855);
+		}
 
 		return min(1.0, ($score * 0.97) + ($ordered ? 0.03 : 0.0));
 	}
@@ -426,10 +553,27 @@ class VFWP_Intranet_Search_People_Name_Repository {
 		}
 
 		$score = ($dice * 0.50) + ($edit_similarity * 0.40) + ($prefix * 0.10);
+		$left_length = $this->length($left);
+		$right_length = $this->length($right);
+
+		// Recognize close name-token variants such as "badaev" and "badayeva"
+		// without lowering the general fuzzy-name confidence threshold. The
+		// current-object validation in the suggestion service prevents a stale or
+		// dictionary-only name from reaching the visitor.
+		if (
+			$left_length >= 5
+			&& $right_length >= 5
+			&& abs($left_length - $right_length) <= 2
+			&& $distance <= 2
+			&& $this->substring($left, 0, 3) === $this->substring($right, 0, 3)
+		) {
+			$score = max($score, 0.86);
+		}
+
 		$left_skeleton = $this->build_consonant_skeleton($left);
 		$right_skeleton = $this->build_consonant_skeleton($right);
-		$left_length = max(1, $this->length(str_replace(' ', '', $left)));
-		$consonant_ratio = $this->length($left_skeleton) / $left_length;
+		$left_compact_length = max(1, $this->length(str_replace(' ', '', $left)));
+		$consonant_ratio = $this->length($left_skeleton) / $left_compact_length;
 
 		if ($consonant_ratio >= 0.65 && $this->length($left_skeleton) >= 3 && $left_skeleton === $right_skeleton) {
 			$score = max($score, 0.82);

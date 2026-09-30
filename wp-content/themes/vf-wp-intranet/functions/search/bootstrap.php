@@ -32,6 +32,20 @@ VFWP_Intranet_Search_Frontend::register_hooks();
 VFWP_Intranet_Search_Suggestions::register_hooks();
 VFWP_Intranet_Search_Analytics::register_hooks();
 
+/**
+ * Keep public AJAX endpoints from being intercepted by the group-roles
+ * plugin's activation-only admin redirect.
+ *
+ * That callback treats a missing activation option as user ID 0, which also
+ * represents logged-out visitors. It must never run during admin-ajax.php.
+ */
+function vfwp_intranet_search_allow_ajax_requests() {
+	if (function_exists('wp_doing_ajax') && wp_doing_ajax()) {
+		remove_action('admin_init', 'egsr_activation_redirect');
+	}
+}
+add_action('admin_init', 'vfwp_intranet_search_allow_ajax_requests', -1);
+
 function vfwp_intranet_search_bootstrap() {
 	global $vfwp_intranet_search_indexer;
 
@@ -84,6 +98,38 @@ function vfwp_intranet_search_index_post($post_id, $force = false, $rebuild_toke
 
 	return $indexer->index_post((int) $post_id, (bool) $force, (string) $rebuild_token);
 }
+
+/**
+ * Index the virtual Training catalogue archive.
+ *
+ * @param bool   $force Force rebuilding the row.
+ * @param string $rebuild_token Active full-rebuild token.
+ * @return string
+ */
+function vfwp_intranet_search_index_training_archive($force = false, $rebuild_token = '') {
+	$indexer = vfwp_intranet_search_bootstrap();
+
+	return $indexer->index_training_archive((bool) $force, (string) $rebuild_token);
+}
+
+/**
+ * Install or refresh virtual index entries once per implementation version.
+ */
+function vfwp_intranet_search_sync_virtual_entries() {
+	$option_name = 'vfwp_intranet_search_virtual_entries_version';
+	$version = (string) VFWP_Intranet_Search_Indexer::VIRTUAL_ARCHIVE_VERSION;
+
+	if ((string) get_option($option_name, '') === $version) {
+		return;
+	}
+
+	$result = vfwp_intranet_search_index_training_archive(true);
+
+	if ($result !== 'failed') {
+		update_option($option_name, $version, false);
+	}
+}
+add_action('init', 'vfwp_intranet_search_sync_virtual_entries', 20);
 
 /**
  * Re-index Documents that reference one supported attachment.
