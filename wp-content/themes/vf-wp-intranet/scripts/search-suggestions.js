@@ -308,9 +308,10 @@
       return config.ajaxUrl + '?' + params.toString();
     }
 
-    function requestSuggestions(query, requestUrl) {
+    function requestSuggestions(query, cacheKey) {
       query = normalizeLookupQuery(query || input.value);
       var currentRequestId;
+      var requestData;
 
       if (query.length < minLength) {
         if (activeRequest) {
@@ -328,8 +329,15 @@
 
       currentRequestId = ++requestId;
       activeRequest = new AbortController();
+      requestData = new URLSearchParams(new URL(cacheKey || buildRequestUrl(query)).search);
 
-      fetch(requestUrl || buildRequestUrl(query), {
+      fetch(config.ajaxUrl, {
+        method: 'POST',
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        body: requestData.toString(),
         credentials: 'same-origin',
         signal: activeRequest.signal
       })
@@ -337,12 +345,22 @@
           return response.ok ? response.json() : null;
         })
         .then(function (payload) {
-          if (currentRequestId !== requestId || !payload || !payload.success) {
+          var currentQuery = normalizeLookupQuery(input.value);
+          var responseQuery = payload && payload.data ? normalizeLookupQuery(payload.data.query || '') : '';
+
+          if (
+            currentRequestId !== requestId
+            || currentQuery !== query
+            || responseQuery !== query
+            || !payload
+            || !payload.success
+          ) {
             return;
           }
 
           var items = payload.data && payload.data.suggestions ? payload.data.suggestions : [];
-          setCachedSuggestions(requestUrl || buildRequestUrl(query), items);
+          activeRequest = null;
+          setCachedSuggestions(cacheKey || buildRequestUrl(query), items);
           render(items);
         })
         .catch(function (error) {

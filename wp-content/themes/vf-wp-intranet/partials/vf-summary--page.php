@@ -397,7 +397,7 @@ if ($post_type === 'page') {
 $vfwp_is_search_result_context = is_search();
 
 ?>
-<article class="vf-summary"<?php echo $vfwp_is_search_result_context ? '' : ' data-jplist-item'; ?>>
+<article class="vf-summary<?php echo $vfwp_is_search_result_context && !empty($vfwp_indexed_search_result['fallback']['active']) ? ' vf-summary--has-search-fallback' : ''; ?>"<?php echo $vfwp_is_search_result_context ? '' : ' data-jplist-item'; ?>>
 
   <h2 class="vf-summary__title | search | search-counter" style="margin-bottom: 4px;">
     <a href="<?php echo esc_url($summary_link_url); ?>" class="vf-summary__link"<?php echo $vfwp_result_is_external_team ? ' target="_blank" rel="noopener noreferrer"' : ''; ?>><?php echo wp_kses($title, array('mark' => array())); ?></a>
@@ -446,6 +446,16 @@ $vfwp_is_search_result_context = is_search();
     </p>
   </div>
   <?php endif; ?>
+  <?php
+  if (
+    $vfwp_is_search_result_context
+    && $has_indexed_search_result
+    && class_exists('VFWP_Intranet_Search_Frontend')
+    && !empty($vfwp_indexed_search_result['fallback'])
+  ) {
+    echo VFWP_Intranet_Search_Frontend::render_fallback_notice($vfwp_indexed_search_result['fallback']);
+  }
+  ?>
   <?php if (!$vfwp_is_search_result_context) : ?>
     <?php
     if (($post_type == 'page') || ($post_type == 'teams'))  {

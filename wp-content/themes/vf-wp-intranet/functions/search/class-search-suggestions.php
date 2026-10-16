@@ -14,8 +14,8 @@ class VFWP_Intranet_Search_Suggestions {
 	const PHRASE_SCAN_LIMIT = 60;
 	const DID_YOU_MEAN_LIMIT = 5;
 	const CACHE_TTL = 120;
-	const SUGGESTION_ALGORITHM_VERSION = 4;
-	const SPELLING_ALGORITHM_VERSION = 22;
+	const SUGGESTION_ALGORITHM_VERSION = 7;
+	const SPELLING_ALGORITHM_VERSION = 24;
 
 	/** @var bool */
 	private static $assets_enqueued = false;
@@ -162,21 +162,25 @@ class VFWP_Intranet_Search_Suggestions {
 	 * @return void
 	 */
 	public static function handle_ajax_request() {
-		$nonce = isset($_GET['nonce']) ? sanitize_text_field(wp_unslash($_GET['nonce'])) : '';
+		$request = wp_unslash($_REQUEST);
+		$nonce = isset($request['nonce']) ? sanitize_text_field($request['nonce']) : '';
 
 		if ($nonce === '' || !wp_verify_nonce($nonce, self::ACTION)) {
 			wp_send_json_error(array('message' => __('Invalid search suggestion request.', 'vfwp')), 403);
 		}
 
-		$query = isset($_GET['q']) ? wp_unslash($_GET['q']) : '';
-		$limit = isset($_GET['limit']) ? absint($_GET['limit']) : self::MAX_LIMIT;
-		$selected_filters = isset($_GET[VFWP_Intranet_Search_Frontend::FILTER_PARAM])
-			? (array) wp_unslash($_GET[VFWP_Intranet_Search_Frontend::FILTER_PARAM])
+		$query = isset($request['q']) ? $request['q'] : '';
+		$limit = isset($request['limit']) ? absint($request['limit']) : self::MAX_LIMIT;
+		$selected_filters = isset($request[VFWP_Intranet_Search_Frontend::FILTER_PARAM])
+			? (array) $request[VFWP_Intranet_Search_Frontend::FILTER_PARAM]
 			: array();
 		$filters = VFWP_Intranet_Search_Frontend::get_filters_for_raw_filter_values($selected_filters);
 		$service = new self();
+		$response_query = is_scalar($query) ? trim(sanitize_text_field((string) $query)) : '';
+		$response_query = preg_replace('/\s+/u', ' ', $response_query);
 
 		wp_send_json_success(array(
+			'query'       => is_string($response_query) ? $response_query : '',
 			'suggestions' => $service->suggest($query, $filters, $limit),
 		));
 	}
@@ -191,7 +195,10 @@ class VFWP_Intranet_Search_Suggestions {
 	 */
 	public function suggest($query, array $filters = array(), $limit = self::MAX_LIMIT) {
 		$limit = min(self::MAX_LIMIT, max(1, (int) $limit));
-		$parsed_query = $this->query_parser->parse($query);
+		// Autocomplete reflects incomplete text exactly as entered. Applying a
+		// synonym while the visitor is still typing can duplicate partial terms,
+		// for example "it ser" becoming "it services ser".
+		$parsed_query = $this->query_parser->parse($query, false);
 		$normalized_query = isset($parsed_query['normalized']) ? trim((string) $parsed_query['normalized']) : '';
 
 		if ($normalized_query === '' || $this->length($normalized_query) < 2) {
@@ -367,6 +374,12 @@ class VFWP_Intranet_Search_Suggestions {
 
 		foreach ($this->get_phrase_corrections($normalized_query, $candidates['phrases']) as $correction) {
 			$correction['candidate_type'] = 'phrase';
+			$correction['is_people_match'] = false;
+			$ranked_corrections[] = $correction;
+		}
+
+		foreach ($this->get_joined_term_corrections($parsed_query, $candidates['terms']) as $correction) {
+			$correction['candidate_type'] = 'join';
 			$correction['is_people_match'] = false;
 			$ranked_corrections[] = $correction;
 		}
@@ -583,8 +596,11 @@ class VFWP_Intranet_Search_Suggestions {
 			"IF(post_type = 'page', 25, 0)",
 		);
 		$score_params = array($normalized_query, $prefix);
-		$match_conditions = array();
-		$match_params = array();
+		$match_conditions = array(
+			'LOWER(title) = %s',
+			'LOWER(title) LIKE %s',
+		);
+		$match_params = array($normalized_query, $prefix);
 		$where_params = array('post', 'publish', 'public');
 
 		if (!empty($parsed_query['boolean_query'])) {
@@ -1288,6 +1304,29 @@ class VFWP_Intranet_Search_Suggestions {
 			}
 		}
 
+		// A query may contain one clear typo plus a valid singular/plural form that
+		// still prevents an exact indexed phrase match. Try one close title-backed
+		// alternative alongside the primary correction; final result validation
+		// below keeps this bounded expansion from producing speculative suggestions.
+		foreach ($choices as $choice_index => $term_choices) {
+			if (in_array($choice_index, $changed_indexes, true) || count($term_choices) < 2) {
+				continue;
+			}
+
+			foreach (array_slice($term_choices, 1, 2, true) as $match_index => $term_choice) {
+				if (
+					(int) ($term_choice['distance'] ?? 0) !== 1
+					|| (int) ($term_choice['title_frequency'] ?? 0) < 1
+				) {
+					continue;
+				}
+
+				$selection = array_fill(0, count($choices), 0);
+				$selection[$choice_index] = (int) $match_index;
+				$selections[] = $selection;
+			}
+		}
+
 		$corrections = array();
 		$seen = array();
 		$normalized_query = (string) $parsed_query['normalized'];
@@ -1361,6 +1400,85 @@ class VFWP_Intranet_Search_Suggestions {
 		usort($corrections, array($this, 'sort_did_you_mean_corrections'));
 
 		return array_slice($corrections, 0, 8);
+	}
+
+	/**
+	 * Return corrections that join two accidentally separated adjacent words.
+	 *
+	 * Candidate generation is deliberately bounded. The final correction is
+	 * still accepted only when it produces an actual indexed result.
+	 *
+	 * @param array $parsed_query Parsed query.
+	 * @param array $terms Dictionary term candidates.
+	 * @return array
+	 */
+	private function get_joined_term_corrections(array $parsed_query, array $terms) {
+		$query_terms = !empty($parsed_query['all_terms']) ? array_values((array) $parsed_query['all_terms']) : array();
+
+		if (count($query_terms) !== 2) {
+			return array();
+		}
+
+		$corrections = array();
+		$seen = array();
+		$normalized_query = isset($parsed_query['normalized']) ? (string) $parsed_query['normalized'] : '';
+
+		for ($index = 0; $index < count($query_terms) - 1; $index++) {
+			$left_term = (string) $query_terms[$index];
+			$right_term = (string) $query_terms[$index + 1];
+			$left_choices = array_merge(
+				array(array('term' => $left_term, 'frequency' => 0)),
+				$this->get_ranked_term_matches($left_term, $terms, 3)
+			);
+			$right_choices = array_merge(
+				array(array('term' => $right_term, 'frequency' => 0)),
+				$this->get_ranked_term_matches($right_term, $terms, 3)
+			);
+
+			foreach ($left_choices as $left_choice) {
+				foreach ($right_choices as $right_choice) {
+					$joined_term = trim((string) $left_choice['term'] . (string) $right_choice['term']);
+
+					if ($joined_term === '') {
+						continue;
+					}
+
+					$corrected_terms = $query_terms;
+					array_splice($corrected_terms, $index, 2, array($joined_term));
+					$corrected_query = trim(implode(' ', $corrected_terms));
+
+					if ($corrected_query === '' || $corrected_query === $normalized_query || isset($seen[$corrected_query])) {
+						continue;
+					}
+
+					$distance = $this->damerau_levenshtein($normalized_query, $corrected_query);
+
+					if ($distance > 2) {
+						continue;
+					}
+
+					$seen[$corrected_query] = true;
+					$corrections[] = array(
+						'query'              => $corrected_query,
+						'label'              => $corrected_query,
+						'distance'           => $distance,
+						'frequency'          => (int) ($left_choice['frequency'] ?? 0) + (int) ($right_choice['frequency'] ?? 0),
+						'title_frequency'    => (int) ($left_choice['title_frequency'] ?? 0) + (int) ($right_choice['title_frequency'] ?? 0),
+						'keyword_frequency'  => (int) ($left_choice['keyword_frequency'] ?? 0) + (int) ($right_choice['keyword_frequency'] ?? 0),
+						'document_frequency' => (int) ($left_choice['document_frequency'] ?? 0) + (int) ($right_choice['document_frequency'] ?? 0),
+						'length'              => $this->length($corrected_query),
+					);
+
+					if (count($corrections) >= 24) {
+						break 3;
+					}
+				}
+			}
+		}
+
+		usort($corrections, array($this, 'sort_did_you_mean_corrections'));
+
+		return array_slice($corrections, 0, 12);
 	}
 
 	/**
@@ -1439,7 +1557,7 @@ class VFWP_Intranet_Search_Suggestions {
 				'term'      => $term,
 				'label'     => $label,
 				'distance'  => $distance,
-				'same_characters' => $this->has_same_characters($query_term, $term) ? 1 : 0,
+				'same_characters' => $term !== $query_term && $this->has_same_characters($query_term, $term) ? 1 : 0,
 				'frequency' => (int) $frequency,
 				'title_frequency' => is_array($term_data) && isset($term_data['title_frequency']) ? (int) $term_data['title_frequency'] : 0,
 				'keyword_frequency' => is_array($term_data) && isset($term_data['keyword_frequency']) ? (int) $term_data['keyword_frequency'] : 0,
@@ -1601,7 +1719,7 @@ class VFWP_Intranet_Search_Suggestions {
 			return round(min(1, ($similarity * 0.82) + 0.16), 4);
 		}
 
-		if ('compound' === $type) {
+		if (in_array($type, array('compound', 'join'), true)) {
 			// Splitting an accidentally joined word into an indexed exact phrase is
 			// stronger evidence than substituting it with a different dictionary
 			// word (for example, "scienceday" -> "science day").
@@ -1650,14 +1768,17 @@ class VFWP_Intranet_Search_Suggestions {
 			$winner_is_people = !empty($winner['is_people_match']);
 			$winner_has_same_characters = !empty($winner['same_character_matches']);
 
-			$corrections = array_values(array_filter($corrections, function ($correction, $index) use ($minimum_relative_confidence, $winner_is_people, $winner_has_same_characters) {
+				$corrections = array_values(array_filter($corrections, function ($correction, $index) use ($minimum_relative_confidence, $winner_is_people, $winner_has_same_characters, $winner) {
 				if ($index === 0) {
 					return true;
 				}
 
-				$has_comparable_evidence = $winner_is_people
-					? (float) $correction['confidence'] >= $minimum_relative_confidence
-					: (!$winner_has_same_characters && $this->has_strong_correction_evidence($correction) && (float) $correction['confidence'] >= $minimum_relative_confidence);
+					$type = isset($correction['candidate_type']) ? (string) $correction['candidate_type'] : '';
+					$is_close_join = 'join' === $type
+						&& (float) $correction['confidence'] >= ((float) $winner['confidence'] - 0.10);
+					$has_comparable_evidence = $winner_is_people
+						? (float) $correction['confidence'] >= $minimum_relative_confidence
+						: (!$winner_has_same_characters && (($this->has_strong_correction_evidence($correction) && (float) $correction['confidence'] >= $minimum_relative_confidence) || $is_close_join));
 
 				if ($has_comparable_evidence) {
 					return true;
@@ -1681,7 +1802,7 @@ class VFWP_Intranet_Search_Suggestions {
 		$type = isset($correction['candidate_type']) ? (string) $correction['candidate_type'] : '';
 
 		return !empty($correction['same_character_matches'])
-			|| in_array($type, array('preferred', 'phrase', 'compound'), true)
+				|| in_array($type, array('preferred', 'phrase', 'compound', 'join'), true)
 			|| (isset($correction['title_frequency']) && (int) $correction['title_frequency'] >= 2)
 			|| (isset($correction['keyword_frequency']) && (int) $correction['keyword_frequency'] >= 2)
 			|| (isset($correction['confidence']) && (float) $correction['confidence'] >= 0.90);

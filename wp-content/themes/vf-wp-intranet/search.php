@@ -27,10 +27,12 @@ $vfwp_search_show_clear_filters = !is_array($vfwp_indexed_search_response) || $v
 $vfwp_search_did_you_mean = array();
 $vfwp_search_did_you_mean_links = array();
 $vfwp_search_broader_link = '';
+$vfwp_search_is_fallback = is_array($vfwp_indexed_search_response)
+  && !empty($vfwp_indexed_search_response['fallback']['active']);
 
 if (
   is_array($vfwp_indexed_search_response)
-  && $vfwp_indexed_search_total < 1
+  && ($vfwp_indexed_search_total < 1 || $vfwp_search_is_fallback)
   && trim(get_search_query(false)) !== ''
   && class_exists('VFWP_Intranet_Search_Suggestions')
   && class_exists('VFWP_Intranet_Search_Frontend')
@@ -67,7 +69,7 @@ if (
     $vfwp_search_did_you_mean_links[] = '<a class="vf-link" href="' . esc_url($vfwp_search_did_you_mean_url) . '">' . esc_html($vfwp_search_did_you_mean_label) . '</a>';
   }
 
-  if (empty($vfwp_search_did_you_mean_links)) {
+  if ($vfwp_indexed_search_total < 1 && empty($vfwp_search_did_you_mean_links)) {
     $vfwp_search_broader = $vfwp_search_did_you_mean_service->get_broader_search(
       get_search_query(false),
       VFWP_Intranet_Search_Frontend::get_filters_for_request()
@@ -215,6 +217,29 @@ if (class_exists('VF_Intranet_Breadcrumbs')) {
           if (!empty($vfwp_indexed_search_results)) {
             if (!empty($vfwp_active_search_filters) && class_exists('VFWP_Intranet_Search_Frontend')) {
               echo VFWP_Intranet_Search_Frontend::render_active_filters();
+            }
+
+            if ($vfwp_search_is_fallback) {
+              echo '<h2 class="vf-text-heading--3">';
+              echo wp_kses(
+                sprintf(
+                  /* translators: %s: search query. */
+                  __('No exact results for <strong>"%s"</strong>', 'vfwp'),
+                  esc_html(get_search_query(false))
+                ),
+                array('strong' => array())
+              );
+              echo '</h2>';
+            }
+
+            if (!empty($vfwp_search_did_you_mean_links)) {
+              echo '<p class="vf-search-did-you-mean"><span>' . esc_html__('Did you mean:', 'vfwp') . '</span> ';
+              echo implode(esc_html_x(', ', 'search correction separator', 'vfwp'), $vfwp_search_did_you_mean_links);
+              echo '</p>';
+            }
+
+            if ($vfwp_search_is_fallback) {
+              echo '<p class="vf-text-body vf-text-body--3 vf-search-fallback-intro">' . esc_html__('Below results match most, but not all, of your search terms.', 'vfwp') . '</p>';
             }
 
             if (class_exists('VFWP_Intranet_Search_Frontend')) {

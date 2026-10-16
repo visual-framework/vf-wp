@@ -51,15 +51,21 @@ class VFWP_Intranet_Search_Query_Parser {
 	 * Parse a raw visitor query into safe normalized search parts.
 	 *
 	 * @param mixed $query Raw query.
+	 * @param bool  $apply_synonyms Whether configured synonyms should expand the query.
 	 * @return array
 	 */
-	public function parse($query) {
+	public function parse($query, $apply_synonyms = true) {
 		$raw_query = is_scalar($query) ? (string) $query : '';
 		$raw_query = $this->limit_string($raw_query, self::MAX_QUERY_LENGTH);
 		$decoded_query = $this->decode($raw_query);
 		$quoted_phrases = $this->extract_quoted_phrases($decoded_query);
 		$original_normalized_query = $this->normalize_search_text($decoded_query);
-		$synonym_parts = $this->apply_synonyms($original_normalized_query);
+		$synonym_parts = $apply_synonyms
+			? $this->apply_synonyms($original_normalized_query)
+			: array(
+				'query'        => $original_normalized_query,
+				'replacements' => array(),
+			);
 		$normalized_query = $synonym_parts['query'];
 		$min_word_length = $this->get_min_word_length();
 		$all_terms = $this->extract_terms($normalized_query, false);

@@ -2223,9 +2223,9 @@ class VFWP_Intranet_Search_Settings {
 				value="1"
 				<?php checked($enabled); ?>
 			>
-			<?php echo esc_html__('Offer a broader search when strict matching returns no results and no reliable spelling correction is available.', 'vfwp'); ?>
+			<?php echo esc_html__('Show broader results when strict AND matching returns no results.', 'vfwp'); ?>
 		</label>
-		<p class="description"><?php echo esc_html__('The broader link removes one query term and is shown only when the resulting search has results. Disabled by default. Changes take effect immediately and do not require reindexing.', 'vfwp'); ?></p>
+		<p class="description"><?php echo esc_html__('The fallback allows each indexed result to omit at most one searchable query term, prioritizes results with the best term coverage, and identifies the missing term beneath each result. Visitors can request the original strict search from that notice. Disabled by default. Changes take effect immediately and do not require reindexing.', 'vfwp'); ?></p>
 		<?php
 	}
 
@@ -2339,6 +2339,10 @@ class VFWP_Intranet_Search_Settings {
 					<td><?php echo esc_html(number_format_i18n(isset($summary['zero_result_searches']) ? (int) $summary['zero_result_searches'] : 0)); ?></td>
 				</tr>
 				<tr>
+					<th scope="row"><?php echo esc_html__('Fallback searches', 'vfwp'); ?></th>
+					<td><?php echo esc_html(number_format_i18n(isset($summary['fallback_searches']) ? (int) $summary['fallback_searches'] : 0)); ?></td>
+				</tr>
+				<tr>
 					<th scope="row"><?php echo esc_html__('Successful spelling corrections', 'vfwp'); ?></th>
 					<td><?php echo esc_html(number_format_i18n(isset($summary['corrected_searches']) ? (int) $summary['corrected_searches'] : 0)); ?></td>
 				</tr>
@@ -2353,7 +2357,7 @@ class VFWP_Intranet_Search_Settings {
 			</tbody>
 		</table>
 		<p class="description" style="max-width: 920px;">
-			<?php echo esc_html__('A no-result query is counted as successful when the user clicks one of its Did you mean suggestions. It remains in total search volume but is removed from the no-results count.', 'vfwp'); ?>
+			<?php echo esc_html__('A fallback search remains a no-result query because the original strict search found nothing; fallback is reported separately. A no-result query is counted as successful when the user clicks one of its Did you mean suggestions.', 'vfwp'); ?>
 		</p>
 
 		<h3><?php echo esc_html__('Search trends', 'vfwp'); ?></h3>
@@ -2622,7 +2626,7 @@ class VFWP_Intranet_Search_Settings {
 			<details>
 				<summary><?php echo esc_html__('View chart data', 'vfwp'); ?></summary>
 				<table class="widefat striped">
-					<thead><tr><th><?php echo esc_html__('Period', 'vfwp'); ?></th><th><?php echo esc_html__('Total searches', 'vfwp'); ?></th><th><?php echo esc_html__('With results', 'vfwp'); ?></th><th><?php echo esc_html__('% with results', 'vfwp'); ?></th><th><?php echo esc_html__('No results', 'vfwp'); ?></th></tr></thead>
+					<thead><tr><th><?php echo esc_html__('Period', 'vfwp'); ?></th><th><?php echo esc_html__('Total searches', 'vfwp'); ?></th><th><?php echo esc_html__('With results', 'vfwp'); ?></th><th><?php echo esc_html__('% with results', 'vfwp'); ?></th><th><?php echo esc_html__('No results', 'vfwp'); ?></th><th><?php echo esc_html__('Fallback', 'vfwp'); ?></th></tr></thead>
 					<tbody>
 						<?php foreach ($rows as $row) : ?>
 							<tr>
@@ -2631,6 +2635,7 @@ class VFWP_Intranet_Search_Settings {
 								<td><?php echo esc_html(number_format_i18n((int) $row['searches_with_results'])); ?></td>
 								<td><?php echo esc_html(number_format_i18n((float) $row['results_rate'], 1) . '%'); ?></td>
 								<td><?php echo esc_html(number_format_i18n((int) $row['zero_result_searches'])); ?></td>
+								<td><?php echo esc_html(number_format_i18n((int) $row['fallback_searches'])); ?></td>
 							</tr>
 						<?php endforeach; ?>
 					</tbody>
@@ -2673,6 +2678,7 @@ class VFWP_Intranet_Search_Settings {
 							<th scope="col"><?php echo esc_html__('No-result searches', 'vfwp'); ?></th>
 							<th scope="col"><?php echo esc_html__('Average results', 'vfwp'); ?></th>
 						<?php endif; ?>
+						<th scope="col"><?php echo esc_html__('Fallback', 'vfwp'); ?></th>
 						<?php if ($zero_only) : ?>
 							<?php $this->render_zero_results_sort_header(__('Last searched', 'vfwp'), 'last_searched', $sort, $order); ?>
 							<th scope="col"><?php echo esc_html__('Did you mean?', 'vfwp'); ?></th>
@@ -2695,6 +2701,7 @@ class VFWP_Intranet_Search_Settings {
 								<td><?php echo esc_html(number_format_i18n((int) $row['zero_result_searches'])); ?></td>
 								<td><?php echo esc_html(number_format_i18n((float) $row['average_results'], 1)); ?></td>
 							<?php endif; ?>
+							<td><?php echo !empty($row['fallback_searches']) ? esc_html__('Yes', 'vfwp') : esc_html__('No', 'vfwp'); ?></td>
 							<td><?php echo esc_html($this->format_admin_datetime($row['last_searched_at'])); ?></td>
 							<?php if ($zero_only) : ?>
 								<td><?php $this->render_did_you_mean_analytics_value($row); ?></td>
@@ -2746,6 +2753,7 @@ class VFWP_Intranet_Search_Settings {
 					<tr>
 						<th scope="col"><?php echo esc_html__('Query', 'vfwp'); ?></th>
 						<th scope="col"><?php echo esc_html__('Results', 'vfwp'); ?></th>
+						<th scope="col"><?php echo esc_html__('Fallback', 'vfwp'); ?></th>
 						<th scope="col"><?php echo esc_html__('User email', 'vfwp'); ?></th>
 						<th scope="col"><?php echo esc_html__('Searched', 'vfwp'); ?></th>
 					</tr>
@@ -2775,6 +2783,7 @@ class VFWP_Intranet_Search_Settings {
 									<?php echo esc_html(number_format_i18n((int) $row['result_count'])); ?>
 								<?php endif; ?>
 							</td>
+							<td><?php echo !empty($row['fallback_used']) ? esc_html__('Yes', 'vfwp') : esc_html__('No', 'vfwp'); ?></td>
 							<td><?php echo esc_html(!empty($row['user_email']) ? (string) $row['user_email'] : __('Not stored', 'vfwp')); ?></td>
 							<td><?php echo esc_html($this->format_admin_datetime($row['searched_at'])); ?></td>
 						</tr>

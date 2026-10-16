@@ -119,7 +119,10 @@ class VFWP_Intranet_Search_Analytics {
 
 		$this->maybe_record_correction_click($normalized_query);
 
-		$result_count = isset($response['pagination']['total']) ? max(0, (int) $response['pagination']['total']) : 0;
+		$returned_result_count = isset($response['pagination']['total']) ? max(0, (int) $response['pagination']['total']) : 0;
+		$fallback_used = !empty($response['fallback']['active']);
+		$result_count = $fallback_used ? 0 : $returned_result_count;
+		$fallback_result_count = $fallback_used ? $returned_result_count : 0;
 		$filters = $this->sanitize_filters($filters);
 		$filters_json = wp_json_encode($filters);
 		$filters_hash = md5((string) $filters_json);
@@ -138,20 +141,22 @@ class VFWP_Intranet_Search_Analytics {
 				'query_text'       => $this->limit_string($query_text, 240),
 				'normalized_query' => $this->limit_string($normalized_query, 191),
 				'result_count'     => $result_count,
+				'fallback_used'    => $fallback_used ? 1 : 0,
+				'fallback_result_count' => $fallback_result_count,
 				'filters_hash'     => $filters_hash,
 				'filters_json'     => is_string($filters_json) ? $filters_json : '{}',
 				'page_number'      => 1,
 				'per_page'         => max(1, (int) $per_page),
 				'searched_at'      => current_time('mysql', true),
 				'user_email'       => !empty($settings['track_user_email']) ? $this->get_current_user_email() : '',
-					'source'           => 'frontend',
-					'is_corrected'     => 0,
-					'corrected_to'     => '',
-					'did_you_mean_shown' => 0,
-					'did_you_mean_suggestions' => '',
-				),
-				array('%s', '%s', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%d', '%s', '%d', '%s')
-			);
+				'source'           => 'frontend',
+				'is_corrected'     => 0,
+				'corrected_to'     => '',
+				'did_you_mean_shown' => 0,
+				'did_you_mean_suggestions' => '',
+			),
+			array('%s', '%s', '%d', '%d', '%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%d', '%s', '%d', '%s')
+		);
 
 		if (false !== $result) {
 			self::$last_logged_id = (int) $this->wpdb->insert_id;
@@ -445,6 +450,7 @@ class VFWP_Intranet_Search_Analytics {
 				COUNT(*) AS total_searches,
 				SUM(CASE WHEN result_count > 0 OR is_corrected = 1 THEN 1 ELSE 0 END) AS searches_with_results,
 				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
+				SUM(CASE WHEN fallback_used = 1 THEN 1 ELSE 0 END) AS fallback_searches,
 				SUM(CASE WHEN is_corrected = 1 THEN 1 ELSE 0 END) AS corrected_searches,
 				COUNT(DISTINCT normalized_query) AS unique_queries,
 				MAX(searched_at) AS last_search_at
@@ -464,6 +470,7 @@ class VFWP_Intranet_Search_Analytics {
 			'searches_with_results' => $searches_with_results,
 			'results_rate'        => $total_searches > 0 ? round(($searches_with_results / $total_searches) * 100, 1) : 0,
 			'zero_result_searches' => isset($row['zero_result_searches']) ? (int) $row['zero_result_searches'] : 0,
+			'fallback_searches'  => isset($row['fallback_searches']) ? (int) $row['fallback_searches'] : 0,
 			'corrected_searches'  => isset($row['corrected_searches']) ? (int) $row['corrected_searches'] : 0,
 			'unique_queries'      => isset($row['unique_queries']) ? (int) $row['unique_queries'] : 0,
 			'last_search_at'      => !empty($row['last_search_at']) ? (string) $row['last_search_at'] : '',
@@ -535,6 +542,7 @@ class VFWP_Intranet_Search_Analytics {
 				MIN(query_text) AS display_query,
 				COUNT(*) AS searches,
 				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
+				SUM(CASE WHEN fallback_used = 1 THEN 1 ELSE 0 END) AS fallback_searches,
 				ROUND(AVG(result_count), 1) AS average_results,
 					MAX(searched_at) AS last_searched_at
 					,MAX(did_you_mean_shown) AS did_you_mean_shown
@@ -593,7 +601,7 @@ class VFWP_Intranet_Search_Analytics {
 		$page = min($total_pages, max(1, (int) $page));
 		$offset = ($page - 1) * $per_page;
 		$sql = "
-			SELECT query_text, normalized_query, result_count, searched_at, user_email, source,
+			SELECT query_text, normalized_query, result_count, fallback_used, fallback_result_count, searched_at, user_email, source,
 				selected_object_id, selected_object_type, selected_post_type, selected_title, selected_url,
 				is_corrected, corrected_to
 			FROM {$this->table_name}
@@ -650,7 +658,8 @@ class VFWP_Intranet_Search_Analytics {
 				{$bucket_sql} AS bucket_start,
 				COUNT(*) AS total_searches,
 				SUM(CASE WHEN result_count > 0 OR is_corrected = 1 THEN 1 ELSE 0 END) AS searches_with_results,
-				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches
+				SUM(CASE WHEN result_count = 0 AND is_corrected = 0 THEN 1 ELSE 0 END) AS zero_result_searches,
+				SUM(CASE WHEN fallback_used = 1 THEN 1 ELSE 0 END) AS fallback_searches
 			FROM {$this->table_name}
 			WHERE searched_at >= %s
 			GROUP BY bucket_start
@@ -679,6 +688,7 @@ class VFWP_Intranet_Search_Analytics {
 				'total_searches'      => $total,
 				'searches_with_results' => $with_results,
 				'zero_result_searches' => isset($row['zero_result_searches']) ? (int) $row['zero_result_searches'] : 0,
+				'fallback_searches'  => isset($row['fallback_searches']) ? (int) $row['fallback_searches'] : 0,
 				'results_rate'        => $total > 0 ? round(($with_results / $total) * 100, 1) : 0,
 			);
 			$cursor = $cursor->modify($step);

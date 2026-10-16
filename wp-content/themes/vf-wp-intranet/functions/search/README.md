@@ -53,7 +53,7 @@ Frontend search results should not depend on Relevanssi being installed or enabl
   Connects the existing frontend search UI to `SearchService`. It preserves the existing query parameters, filter definitions, result counts, pagination, and filter counters.
 
 - `class-search-suggestions.php`
-  Provides AJAX autocomplete suggestions from the index plus configured exact phrases. It also powers "Did you mean" suggestions for no-result states.
+  Provides AJAX autocomplete suggestions from the index plus configured exact phrases. Autocomplete uses the incomplete text exactly as typed rather than expanding configured search synonyms, uses non-cacheable POST requests, and returns the request query so the browser can reject a response that no longer matches the visible input. Submitted searches still apply synonyms normally. It also powers "Did you mean" suggestions for no-result and relaxed-fallback states.
 
 - `class-search-settings.php`
   Renders Settings -> Search, including weights, query parsing, synonyms, analytics, diagnostics, index management, and document extraction issue reporting.
@@ -126,7 +126,7 @@ The dictionary stores bounded unique words from indexed titles and configured AC
 
 Table: `{prefix}vf_search_analytics`
 
-Stores normalized query text, total results, filter hash/json, page number, result page size, timestamp, optional user email, and source.
+Stores normalized query text, strict result count, fallback usage and fallback result count, filter hash/json, page number, result page size, timestamp, optional user email, and source.
 
 ## What Gets Indexed
 
@@ -343,6 +343,10 @@ VFWP_Intranet_Search_Frontend::search_current_request()
 VFWP_Intranet_Search_Service::search()
 ```
 
+When the optional broader-search fallback is enabled, the frontend always runs the normal strict AND query first. If it has zero results and the query is not a protected/exact phrase, `VFWP_Intranet_Search_Service::search_fallback()` reruns the indexed query while allowing each result to omit at most one searchable term. Term coverage is ordered before the normal relevance score, while filtering, counts, snippets, and SQL pagination still happen in the custom index. Each relaxed result records the original term absent from its indexed title, excerpt, and content, and the result template displays `Missing: ... | Show results with: ...`. The link searches for the displayed missing term and preserves active frontend filters.
+
+Relaxed fallback uses the combined FULLTEXT index to narrow candidates before its word-aware qualification. It ranks compact index rows first, avoids repeated body/PDF regular-expression scoring, and loads full snippet source text only for the requested result page. Grouped counts produced by the fallback query are reused for unfiltered frontend counters. A reliable "Did you mean" correction may be displayed above fallback results, allowing visitors to choose the corrected strict query without hiding useful broader matches.
+
 The normal WordPress main search query is short-circuited via `posts_pre_query` so frontend rendering does not force a separate `wp_posts` search scan.
 
 The frontend preserves:
@@ -400,7 +404,7 @@ The search bootstrap prevents the EMBL Group Site Roles activation redirect from
 
 ## Did You Mean
 
-The no-results state can show "Did you mean" links from `VFWP_Intranet_Search_Suggestions::did_you_mean()`.
+The no-results state and relaxed-fallback state can show "Did you mean" links from `VFWP_Intranet_Search_Suggestions::did_you_mean()`. In addition to term, phrase, People-name, and accidentally concatenated-word corrections, the spelling service can conservatively join a two-word query when a close joined form has actual indexed results, such as `tean viewer` to `teamviewer`.
 
 Term candidates come from the precomputed spelling dictionary; phrase candidates also use bounded contiguous phrases from indexed titles and configured exact phrases. Two-edit deletion-key lookup finds likely insertions and omissions, while Unicode-aware Damerau-Levenshtein scoring treats adjacent transpositions as one edit. A bounded indexed lookup also checks dictionary words produced by one or two adjacent swaps, including when older dictionary rows do not yet have every distance-two deletion key. This high-confidence same-letter path may use a term found in one indexed object; ordinary fuzzy content terms retain the two-object frequency threshold. When edit distance is tied, candidates containing exactly the same characters as the entered word are preferred before frequency is considered, so ordering mistakes such as `soter` can prefer `store` over unrelated frequent words. Unknown concatenated words may be split into two eligible indexed terms. A split that produces an indexed exact phrase receives stronger confidence than an unrelated word substitution, so `data scienceday` prioritizes `data science day`. Long words also use a bounded indexed-prefix lookup so plausible three-edit corrections can be considered without scanning the dictionary. Title terms rank above keyword-only terms, while eligible Page-content terms remain a lower-priority vocabulary source. Suggestions are only added if they lead to actual indexed results under the active filters.
 
@@ -422,7 +426,7 @@ If strict AND matching returns no results and no reliable spelling correction ex
 
 Strict term, phrase, and exact-keyword verification expands normalized Latin query letters to bounded accent-aware regular-expression classes. This keeps `rudiger` and `rüdiger` equivalent against stored display text such as `Rüdiger`, while preserving word boundaries and prefix behavior. The index retains original accents and no rebuild is required for this matching rule.
 
-Schema version 17 introduces the spelling tables. Schema version 22 adds bounded Page-content vocabulary, version 23 adds the managed Training archive entry, and version 24 adds two-edit spelling keys plus bounded title phrases. A full rebuild is required after deploying these derived-index changes so existing content contributes the new spelling data. Normal content saves then maintain its spelling terms automatically.
+Schema version 17 introduces the spelling tables. Schema version 22 adds bounded Page-content vocabulary, version 23 adds the managed Training archive entry, version 24 adds two-edit spelling keys plus bounded title phrases, and version 25 separates strict-result and fallback analytics. Version 25 does not require a search index rebuild. A full rebuild is required after deploying derived-index changes so existing content contributes the new spelling data. Normal content saves then maintain its spelling terms automatically.
 
 ## Search Analytics
 
@@ -444,7 +448,7 @@ Logged data can include:
 
 Analytics logs page 1 frontend searches and deliberate indexed-result selections from autocomplete. Autocomplete lookup requests, incomplete keystrokes, and pagination requests are not logged. A selected autocomplete result records the visitor's typed query, the selected result metadata, source `autocomplete`, and a positive result count, so it contributes to total searches and successful-search metrics. The Recent searches table displays an Autocomplete indicator and the selected title. The selected object must still exist as a public, published index row or the event is rejected.
 
-Reports include top queries, zero-result queries, recent searches, summary counts, and daily, weekly, and monthly trends. Daily, weekly, and monthly charts use separate accessible tabs; recent, no-results, and most-searched query tables use a second tab group. The selected tabs are represented in the admin URL so refreshes, sorting, and pagination preserve the active reports. Trend charts compare total search volume with the percentage of searches that produced results. The top-query, zero-result, and Recent searches reports include every retained row and use database pagination at 20 rows per page. Their count and page queries are restricted to the configured retention period in SQL.
+Reports include top queries, zero-result queries, recent searches, summary counts, and daily, weekly, and monthly trends. Daily, weekly, and monthly charts use separate accessible tabs; recent, no-results, and most-searched query tables use a second tab group. The selected tabs are represented in the admin URL so refreshes, sorting, and pagination preserve the active reports. Trend charts compare total search volume with the percentage of searches that produced strict results. A relaxed fallback remains a zero-result search for reporting purposes and is identified separately in summary, trend, grouped-query, and recent-search data. The top-query, zero-result, and Recent searches reports include every retained row and use database pagination at 20 rows per page. Their count and page queries are restricted to the configured retention period in SQL.
 
 Search settings tables are limited to 20 visible rows per page. Large database-backed reports, including document extraction issues, use SQL `LIMIT` and `OFFSET`; bounded configuration and chart-detail tables are paginated in the admin page without discarding form fields. Index action notices are dismissible, and dismissal of the current rebuild-required warning is stored per administrator until a new rebuild requirement is created.
 

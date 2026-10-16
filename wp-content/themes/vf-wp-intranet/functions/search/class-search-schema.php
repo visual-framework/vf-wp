@@ -8,7 +8,7 @@ if (!defined('ABSPATH')) {
 }
 
 class VFWP_Intranet_Search_Schema {
-	const VERSION = 24;
+	const VERSION = 25;
 	const OPTION_NAME = 'vfwp_intranet_search_schema_version';
 
 	/**
@@ -167,6 +167,8 @@ class VFWP_Intranet_Search_Schema {
 			query_text varchar(240) NOT NULL DEFAULT '',
 			normalized_query varchar(191) NOT NULL DEFAULT '',
 			result_count bigint(20) unsigned NOT NULL DEFAULT 0,
+			fallback_used tinyint(1) unsigned NOT NULL DEFAULT 0,
+			fallback_result_count bigint(20) unsigned NOT NULL DEFAULT 0,
 			filters_hash char(32) NOT NULL DEFAULT '',
 			filters_json longtext NOT NULL,
 			page_number int(11) unsigned NOT NULL DEFAULT 1,
@@ -187,6 +189,7 @@ class VFWP_Intranet_Search_Schema {
 			KEY searched_at (searched_at),
 			KEY normalized_query (normalized_query),
 			KEY result_count (result_count),
+			KEY fallback_used (fallback_used),
 			KEY filters_hash (filters_hash),
 			KEY user_email (user_email),
 			KEY source (source),

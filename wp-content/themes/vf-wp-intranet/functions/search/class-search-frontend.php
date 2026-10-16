@@ -10,7 +10,11 @@ if (!defined('ABSPATH')) {
 class VFWP_Intranet_Search_Frontend {
 	const FILTER_PARAM = 'search_type';
 	const CONTENT_TYPE_PARAM = 'content_type';
+	const STRICT_SEARCH_PARAM = 'search_strict';
 	const DEFAULT_PER_PAGE = 10;
+
+	/** @var array|null */
+	private static $current_response = null;
 
 	/**
 	 * Register frontend integration hooks.
@@ -28,11 +32,50 @@ class VFWP_Intranet_Search_Frontend {
 	 * @return array
 	 */
 	public static function search_current_request() {
+		if (is_array(self::$current_response)) {
+			return self::$current_response;
+		}
+
 		$query = self::get_query();
 		$filters = self::get_filters_for_request();
 		$page = self::get_current_page();
 		$per_page = self::get_per_page();
 		$response = vfwp_intranet_search($query, $filters, $page, $per_page);
+		$total = isset($response['pagination']['total']) ? (int) $response['pagination']['total'] : 0;
+
+		if (
+			$total < 1
+			&& !self::is_strict_search_requested()
+			&& class_exists('VFWP_Intranet_Search_Settings')
+			&& VFWP_Intranet_Search_Settings::is_broader_search_enabled()
+		) {
+			$service = new VFWP_Intranet_Search_Service();
+			$fallback_response = $service->search_fallback($query, $filters, $page, $per_page);
+			$fallback_total = isset($fallback_response['pagination']['total']) ? (int) $fallback_response['pagination']['total'] : 0;
+
+			if ($fallback_total > 0) {
+				$strict_url = self::get_strict_search_url($query);
+				$fallback_response['fallback'] = array(
+					'active'         => true,
+					'original_query' => $query,
+					'strict_url'     => $strict_url,
+				);
+
+				foreach ($fallback_response['results'] as &$result) {
+					$missing_terms = isset($result['fallback']['missing_terms'])
+						? array_values(array_unique(array_filter(array_map('strval', (array) $result['fallback']['missing_terms']))))
+						: array();
+					$result['fallback']['search_url'] = empty($missing_terms)
+						? $strict_url
+						: self::get_search_url(implode(' ', $missing_terms));
+				}
+				unset($result);
+
+				$response = $fallback_response;
+			}
+		}
+
+		self::$current_response = $response;
 
 		if (class_exists('VFWP_Intranet_Search_Analytics')) {
 			$analytics = new VFWP_Intranet_Search_Analytics();
@@ -121,7 +164,20 @@ class VFWP_Intranet_Search_Frontend {
 
 		$query = self::get_query();
 		$service = new VFWP_Intranet_Search_Service();
-		$search_type_groups = $service->count_groups($query, self::build_service_filters('web', array()));
+		$is_fallback = is_array(self::$current_response)
+			&& !empty(self::$current_response['fallback']['active']);
+		$can_reuse_fallback_groups = $is_fallback
+			&& empty(self::get_selected_filter_slugs())
+			&& !empty(self::$current_response['groups'])
+			&& is_array(self::$current_response['groups']);
+
+		if ($can_reuse_fallback_groups) {
+			$search_type_groups = self::$current_response['groups'];
+		} else {
+			$search_type_groups = $is_fallback
+				? $service->count_groups_fallback($query, self::build_service_filters('web', array()))
+				: $service->count_groups($query, self::build_service_filters('web', array()));
+		}
 		$filter_counts = array(
 			'content_type' => array(),
 			'search_type'  => array(),
@@ -710,6 +766,61 @@ class VFWP_Intranet_Search_Frontend {
 				self::FILTER_PARAM       => self::get_selected_filter_slugs(),
 			)
 		);
+	}
+
+	/**
+	 * Return the original strict-AND URL for a relaxed fallback result.
+	 *
+	 * @param mixed $query Original search query.
+	 * @return string
+	 */
+	public static function get_strict_search_url($query) {
+		return add_query_arg(self::STRICT_SEARCH_PARAM, '1', self::get_search_url($query));
+	}
+
+	/**
+	 * Determine whether the visitor explicitly requested strict results only.
+	 *
+	 * @return bool
+	 */
+	public static function is_strict_search_requested() {
+		if (!isset($_GET[self::STRICT_SEARCH_PARAM])) {
+			return false;
+		}
+
+		$value = sanitize_text_field(wp_unslash($_GET[self::STRICT_SEARCH_PARAM]));
+
+		return in_array(strtolower($value), array('1', 'true', 'yes'), true);
+	}
+
+	/**
+	 * Render terms omitted by one relaxed fallback result.
+	 *
+	 * @param array $fallback Result-level fallback metadata.
+	 * @return string
+	 */
+	public static function render_fallback_notice(array $fallback) {
+		$missing_terms = isset($fallback['missing_terms'])
+			? array_values(array_unique(array_filter(array_map('strval', (array) $fallback['missing_terms']))))
+			: array();
+		$search_url = isset($fallback['search_url']) ? (string) $fallback['search_url'] : '';
+
+		if (empty($fallback['active']) || empty($missing_terms) || $search_url === '') {
+			return '';
+		}
+
+		$missing_label = implode(', ', $missing_terms);
+		$html = '<p class="vf-search-result__fallback">';
+		$html .= '<span class="vf-search-result__fallback-missing">';
+		$html .= esc_html__('Missing:', 'vfwp') . ' <s>' . esc_html($missing_label) . '</s>';
+		$html .= '</span>';
+		$html .= '<span class="vf-search-result__fallback-separator" aria-hidden="true"> | </span>';
+		$html .= '<span class="vf-search-result__fallback-prompt">' . esc_html__('Show results with:', 'vfwp') . '</span> ';
+		$html .= '<a class="vf-link vf-search-result__fallback-link" href="' . esc_url($search_url) . '">';
+		$html .= esc_html($missing_label);
+		$html .= '</a></p>';
+
+		return $html;
 	}
 
 	/**

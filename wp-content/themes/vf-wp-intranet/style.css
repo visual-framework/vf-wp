@@ -102,6 +102,25 @@ Text Domain:	 vfwp
 .vf-search-result__breadcrumb {
     font-style: normal;
 }
+.vf-search-result__fallback {
+    color: #54585a;
+    font-size: 14px;
+    font-style: normal;
+    line-height: 1.4;
+    margin: 0.125rem 0 0 !important;
+}
+.vf-search-result__fallback-missing s {
+    text-decoration-thickness: 1px;
+}
+.vf-search-result__fallback-separator {
+    margin: 0 0.3rem;
+}
+.vf-summary--has-search-fallback .vf-summary__meta {
+    margin-bottom: 6px !important;
+}
+.vf-search-fallback-intro {
+    margin-bottom: 2rem !important;
+}
 .vf-summary__title .vf-search-result__external-pill {
     align-items: center;
     background: #f3f3f3 !important;
@@ -144,6 +163,11 @@ Text Domain:	 vfwp
 .vf-hero .vf-form--search__results-list {
     right: auto;
     width: min(30rem, calc(100vw - 2rem));
+    z-index: 6001;
+}
+.vf-hero:focus-within {
+    position: relative;
+    z-index: 6000;
 }
 .vf-form--search__results-list[hidden] {
     display: none;

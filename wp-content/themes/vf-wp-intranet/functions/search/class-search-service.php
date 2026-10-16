@@ -50,6 +50,33 @@ class VFWP_Intranet_Search_Service {
 	 * @return array
 	 */
 	public function search($query, array $filters = array(), $page = 1, $per_page = self::DEFAULT_PER_PAGE) {
+		return $this->search_internal($query, $filters, $page, $per_page, true);
+	}
+
+	/**
+	 * Search the index with OR-style term matching after strict AND returned no results.
+	 *
+	 * @param mixed $query Raw query.
+	 * @param array $filters Filters.
+	 * @param int   $page Page number.
+	 * @param int   $per_page Results per page.
+	 * @return array
+	 */
+	public function search_fallback($query, array $filters = array(), $page = 1, $per_page = self::DEFAULT_PER_PAGE) {
+		return $this->search_internal($query, $filters, $page, $per_page, false);
+	}
+
+	/**
+	 * Run an indexed search in strict or relaxed term mode.
+	 *
+	 * @param mixed $query Raw query.
+	 * @param array $filters Filters.
+	 * @param int   $page Page number.
+	 * @param int   $per_page Results per page.
+	 * @param bool  $require_all_terms Require every parsed query term.
+	 * @return array
+	 */
+	private function search_internal($query, array $filters, $page, $per_page, $require_all_terms) {
 		$parsed_query = $this->query_parser->parse($query);
 		$page = max(1, (int) $page);
 		$per_page = min(self::MAX_PER_PAGE, max(1, (int) $per_page));
@@ -71,9 +98,21 @@ class VFWP_Intranet_Search_Service {
 			return $this->empty_response($parsed_query, $normalized_filters, $page, $per_page, 'filtered_out');
 		}
 
-		$count_sql_parts = $this->build_where_sql($parsed_query, $normalized_filters);
-		$count_sql = 'SELECT COUNT(*) FROM ' . VFWP_Intranet_Search_Schema::table_name() . ' ' . $count_sql_parts['where_sql'];
-		$total = (int) $this->wpdb->get_var($this->prepare_sql($count_sql, $count_sql_parts['params']));
+		if (!$require_all_terms && (!empty($parsed_query['has_protected_phrases']) || count((array) $parsed_query['terms']) < 2)) {
+			return $this->empty_response($parsed_query, $normalized_filters, $page, $per_page, 'fallback_not_available');
+		}
+
+		$group_counts = null;
+
+		if ($require_all_terms) {
+			$count_sql_parts = $this->build_where_sql($parsed_query, $normalized_filters, true);
+			$count_sql = 'SELECT COUNT(*) FROM ' . VFWP_Intranet_Search_Schema::table_name() . ' ' . $count_sql_parts['where_sql'];
+			$total = (int) $this->wpdb->get_var($this->prepare_sql($count_sql, $count_sql_parts['params']));
+		} else {
+			$group_counts = $this->count_parsed_groups($parsed_query, $normalized_filters, false);
+			$total = (int) $group_counts['total'];
+		}
+
 		$total_pages = $total > 0 ? (int) ceil($total / $per_page) : 0;
 
 		if ($offset > self::MAX_OFFSET) {
@@ -84,15 +123,24 @@ class VFWP_Intranet_Search_Service {
 			return $this->empty_response($parsed_query, $normalized_filters, $page, $per_page, 'ok', 0);
 		}
 
-		$rows = $this->get_result_rows($parsed_query, $normalized_filters, $page, $per_page, $offset);
+		$rows = $this->get_result_rows($parsed_query, $normalized_filters, $page, $per_page, $offset, $require_all_terms);
 
 		$results = array();
 
 		foreach ($rows as $row) {
-			$results[] = $this->format_result($row, $parsed_query);
+			$result = $this->format_result($row, $parsed_query);
+
+			if (!$require_all_terms) {
+				$result['fallback'] = array(
+					'active'        => true,
+					'missing_terms' => $this->get_missing_result_terms($result, $parsed_query),
+				);
+			}
+
+			$results[] = $result;
 		}
 
-		return array(
+		$response = array(
 			'query'      => $parsed_query,
 			'filters'    => $normalized_filters,
 			'results'    => $results,
@@ -107,7 +155,14 @@ class VFWP_Intranet_Search_Service {
 				'max_offset'   => self::MAX_OFFSET,
 			),
 			'status'     => 'ok',
+			'fallback'   => array('active' => !$require_all_terms),
 		);
+
+		if (is_array($group_counts)) {
+			$response['groups'] = $group_counts;
+		}
+
+		return $response;
 	}
 
 	/**
@@ -249,6 +304,29 @@ class VFWP_Intranet_Search_Service {
 	 * @return array
 	 */
 	public function count_groups($query, array $filters = array()) {
+		return $this->count_groups_internal($query, $filters, true);
+	}
+
+	/**
+	 * Count relaxed fallback matches grouped by object and post type.
+	 *
+	 * @param mixed $query Raw query.
+	 * @param array $filters Filters.
+	 * @return array
+	 */
+	public function count_groups_fallback($query, array $filters = array()) {
+		return $this->count_groups_internal($query, $filters, false);
+	}
+
+	/**
+	 * Count grouped matches in strict or relaxed term mode.
+	 *
+	 * @param mixed $query Raw query.
+	 * @param array $filters Filters.
+	 * @param bool  $require_all_terms Require every parsed query term.
+	 * @return array
+	 */
+	private function count_groups_internal($query, array $filters, $require_all_terms) {
 		$parsed_query = $this->query_parser->parse($query);
 		$normalized_filters = $this->normalize_filters($filters);
 		$empty_counts = array(
@@ -261,6 +339,10 @@ class VFWP_Intranet_Search_Service {
 			return $empty_counts;
 		}
 
+		if (!$require_all_terms && (!empty($parsed_query['has_protected_phrases']) || count((array) $parsed_query['terms']) < 2)) {
+			return $empty_counts;
+		}
+
 		if (
 			empty($normalized_filters['object_types'])
 			|| (in_array('post', $normalized_filters['object_types'], true) && empty($normalized_filters['post_types']))
@@ -268,7 +350,24 @@ class VFWP_Intranet_Search_Service {
 			return $empty_counts;
 		}
 
-		$count_sql_parts = $this->build_where_sql($parsed_query, $normalized_filters);
+		return $this->count_parsed_groups($parsed_query, $normalized_filters, $require_all_terms);
+	}
+
+	/**
+	 * Count grouped matches for an already parsed query.
+	 *
+	 * @param array $parsed_query Parsed query.
+	 * @param array $normalized_filters Normalized filters.
+	 * @param bool  $require_all_terms Require every parsed query term.
+	 * @return array
+	 */
+	private function count_parsed_groups(array $parsed_query, array $normalized_filters, $require_all_terms) {
+		$empty_counts = array(
+			'total'        => 0,
+			'object_types' => array(),
+			'post_types'   => array(),
+		);
+		$count_sql_parts = $this->build_where_sql($parsed_query, $normalized_filters, $require_all_terms);
 		$sql = '
 			SELECT object_type, post_type, COUNT(*) AS total
 			FROM ' . VFWP_Intranet_Search_Schema::table_name() . '
@@ -318,10 +417,10 @@ class VFWP_Intranet_Search_Service {
 	 * @param int   $offset SQL offset.
 	 * @return array
 	 */
-	private function get_result_rows(array $parsed_query, array $filters, $page, $per_page, $offset) {
+	private function get_result_rows(array $parsed_query, array $filters, $page, $per_page, $offset, $require_all_terms = true) {
 		$table_name = VFWP_Intranet_Search_Schema::table_name();
-		$where_parts = $this->build_where_sql($parsed_query, $filters);
-		$score_parts = $this->build_score_sql($parsed_query);
+		$where_parts = $this->build_where_sql($parsed_query, $filters, $require_all_terms);
+		$score_parts = $this->build_score_sql($parsed_query, $require_all_terms);
 		$post_type_weight_sql = $this->build_post_type_weight_sql($filters['post_types']);
 		$recency_factor_sql = "CASE
 			WHEN scored.published_at IS NULL THEN 0
@@ -329,8 +428,17 @@ class VFWP_Intranet_Search_Service {
 			WHEN scored.published_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 30 DAY) THEN 1
 			ELSE 0
 		END";
+		$fallback_coverage_order = $require_all_terms ? '' : 'scored.all_field_term_hits DESC,';
 
 		$sql = "
+			SELECT
+				ranked.*,
+				source.title,
+				source.excerpt,
+				source.content,
+				source.acf_keywords,
+				source.url
+			FROM (
 			SELECT scored.*,
 				({$recency_factor_sql}) AS recent_content_hit,
 				(
@@ -361,11 +469,6 @@ class VFWP_Intranet_Search_Service {
 					object_id,
 					object_type,
 					post_type,
-					title,
-					excerpt,
-					content,
-					acf_keywords,
-					url,
 					published_at,
 					updated_at,
 					{$score_parts['select_sql']}
@@ -373,6 +476,7 @@ class VFWP_Intranet_Search_Service {
 				{$where_parts['where_sql']}
 			) scored
 			ORDER BY
+				{$fallback_coverage_order}
 				relevance DESC,
 				scored.exact_title_match DESC,
 				scored.title_phrase_hit DESC,
@@ -381,6 +485,17 @@ class VFWP_Intranet_Search_Service {
 				scored.published_at DESC,
 				scored.object_id ASC
 			LIMIT %d OFFSET %d
+			) ranked
+			INNER JOIN {$table_name} source ON source.id = ranked.id
+			ORDER BY
+				" . ($require_all_terms ? '' : 'ranked.all_field_term_hits DESC,') . "
+				ranked.relevance DESC,
+				ranked.exact_title_match DESC,
+				ranked.title_phrase_hit DESC,
+				ranked.all_field_term_hits DESC,
+				ranked.ft_title DESC,
+				ranked.published_at DESC,
+				ranked.object_id ASC
 		";
 
 		$params = array_merge($score_parts['params'], $where_parts['params'], array($per_page, $offset));
@@ -397,7 +512,7 @@ class VFWP_Intranet_Search_Service {
 	 * @param array $filters Normalized filters.
 	 * @return array
 	 */
-	private function build_where_sql(array $parsed_query, array $filters) {
+	private function build_where_sql(array $parsed_query, array $filters, $require_all_terms = true) {
 		$params = array();
 		$conditions = array(
 			'visibility = %s',
@@ -432,14 +547,16 @@ class VFWP_Intranet_Search_Service {
 				$normal_content_candidate = $protected_phrase_match_sql;
 			}
 
-			$all_query_terms_match_sql = $this->build_all_query_terms_match_sql(
-				"CONCAT_WS(' ', title, excerpt, content)",
-				isset($parsed_query['terms']) ? $parsed_query['terms'] : array(),
-				$params
-			);
+			if ($require_all_terms) {
+				$all_query_terms_match_sql = $this->build_all_query_terms_match_sql(
+					"CONCAT_WS(' ', title, excerpt, content)",
+					isset($parsed_query['terms']) ? $parsed_query['terms'] : array(),
+					$params
+				);
 
-			if ($all_query_terms_match_sql !== '1') {
-				$normal_content_candidate = '(' . $normal_content_candidate . ' AND ' . $all_query_terms_match_sql . ')';
+				if ($all_query_terms_match_sql !== '1') {
+					$normal_content_candidate = '(' . $normal_content_candidate . ' AND ' . $all_query_terms_match_sql . ')';
+				}
 			}
 		} else {
 			$normal_content_conditions = array(
@@ -452,22 +569,61 @@ class VFWP_Intranet_Search_Service {
 			$params[] = $parsed_query['boolean_query'];
 
 			$normal_content_candidate = '(' . implode(' OR ', $normal_content_conditions) . ')';
-			$all_query_terms_match_sql = $this->build_all_query_terms_match_sql(
-				"CONCAT_WS(' ', title, excerpt, content)",
-				isset($parsed_query['terms']) ? $parsed_query['terms'] : array(),
-				$params
-			);
+			if ($require_all_terms) {
+				$all_query_terms_match_sql = $this->build_all_query_terms_match_sql(
+					"CONCAT_WS(' ', title, excerpt, content)",
+					isset($parsed_query['terms']) ? $parsed_query['terms'] : array(),
+					$params
+				);
 
-			if ($all_query_terms_match_sql !== '1') {
-				$normal_content_candidate = '(' . $normal_content_candidate . ' AND ' . $all_query_terms_match_sql . ')';
+				if ($all_query_terms_match_sql !== '1') {
+					$normal_content_candidate = '(' . $normal_content_candidate . ' AND ' . $all_query_terms_match_sql . ')';
+				}
 			}
 		}
 
-		$candidate_conditions = array($normal_content_candidate);
+		if (!$require_all_terms) {
+			// Relaxed searches never contain protected phrases. Discard the three
+			// per-field FULLTEXT parameters because the combined index replaces them.
+			$params = array('public');
+			$fallback_terms = array_values(array_unique((array) $parsed_query['terms']));
+			$minimum_term_hits = max(1, count($fallback_terms) - 1);
+			$fallback_fulltext_sql = $this->build_fallback_fulltext_candidate_sql($parsed_query, $params);
+			$fallback_term_hits_sql = $this->build_term_hit_sql(
+				"CONCAT_WS(' ', title, excerpt, content)",
+				$fallback_terms,
+				$params
+			);
+
+			if ($fallback_fulltext_sql !== '0') {
+				$normal_content_candidate = $fallback_fulltext_sql;
+			}
+
+			if ($fallback_term_hits_sql !== '0') {
+				$normal_content_candidate = '(' . $normal_content_candidate . ' AND ' . $fallback_term_hits_sql . ' >= ' . (int) $minimum_term_hits . ')';
+			}
+		}
+
 		$acf_exact_keyword_match_sql = $this->build_acf_exact_keyword_match_sql($parsed_query, $params);
+		$candidate_conditions = array($normal_content_candidate);
 
 		if ($acf_exact_keyword_match_sql !== '0') {
-			$candidate_conditions[] = '(' . $acf_exact_keyword_match_sql . ')';
+			if (!$require_all_terms && $fallback_fulltext_sql !== '0' && $fallback_term_hits_sql !== '0') {
+				$candidate_conditions = array(
+					'(' . $fallback_fulltext_sql . ' AND ('
+						. $fallback_term_hits_sql . ' >= ' . (int) $minimum_term_hits
+						. ' OR ' . $acf_exact_keyword_match_sql
+					. '))',
+				);
+			} elseif ($parsed_query['boolean_query'] !== '') {
+				$candidate_conditions[] = '('
+					. $acf_exact_keyword_match_sql
+					. ' AND MATCH(acf_keywords) AGAINST (%s IN BOOLEAN MODE)'
+				. ')';
+				$params[] = $parsed_query['boolean_query'];
+			} else {
+				$candidate_conditions[] = '(' . $acf_exact_keyword_match_sql . ')';
+			}
 		}
 
 		$conditions[] = '(' . implode(' OR ', $candidate_conditions) . ')';
@@ -493,27 +649,76 @@ class VFWP_Intranet_Search_Service {
 	}
 
 	/**
+	 * Use the combined FULLTEXT index to find rows containing all but one term.
+	 *
+	 * The subsequent word-aware term-hit condition remains authoritative. This
+	 * clause only keeps MySQL from applying regular expressions to a broad OR
+	 * candidate set across the individual title, excerpt and content indexes.
+	 *
+	 * @param array $parsed_query Parsed query.
+	 * @param array $params SQL params.
+	 * @return string
+	 */
+	private function build_fallback_fulltext_candidate_sql(array $parsed_query, array &$params) {
+		$terms = array_values(array_unique((array) $parsed_query['fulltext_terms']));
+
+		if (empty($terms)) {
+			return '0';
+		}
+
+		$queries = array();
+		$term_count = count($terms);
+
+		if ($term_count === 1) {
+			$queries[] = '+' . $terms[0] . '*';
+		} else {
+			foreach ($terms as $omitted_index => $unused_term) {
+				$required_terms = $terms;
+				unset($required_terms[$omitted_index]);
+				$required_parts = array();
+
+				foreach ($required_terms as $required_term) {
+					$required_parts[] = '+' . $required_term . '*';
+				}
+
+				$queries[] = implode(' ', $required_parts);
+			}
+		}
+
+		$conditions = array();
+
+		foreach (array_values(array_unique($queries)) as $query) {
+			$conditions[] = 'MATCH(title, excerpt, content, acf_keywords) AGAINST (%s IN BOOLEAN MODE)';
+			$params[] = $query;
+		}
+
+		return empty($conditions) ? '0' : '(' . implode(' OR ', $conditions) . ')';
+	}
+
+	/**
 	 * Build SQL fragments for ranking signals.
 	 *
 	 * @param array $parsed_query Parsed query.
+	 * @param bool  $require_all_terms Whether this is a strict search.
 	 * @return array
 	 */
-	private function build_score_sql(array $parsed_query) {
+	private function build_score_sql(array $parsed_query, $require_all_terms = true) {
 		$params = array();
 		$term_count = max(1, count($parsed_query['fulltext_terms']));
 		$weights = $this->get_sql_weights();
+		$fallback_term_hits = max(1, count((array) $parsed_query['fulltext_terms']) - 1);
 
 		$select_parts = array(
 			'IF(title = %s, 1, 0) AS exact_title_match',
 			$this->build_phrase_hit_sql('title', $parsed_query['phrases'], $params) . ' AS title_phrase_hit',
 			$this->build_acf_exact_keyword_match_sql($parsed_query, $params) . ' AS acf_phrase_hit',
 			$this->build_phrase_hit_sql('excerpt', $parsed_query['phrases'], $params) . ' AS excerpt_phrase_hit',
-			$this->build_phrase_hit_sql('content', $parsed_query['phrases'], $params) . ' AS content_phrase_hit',
+			($require_all_terms ? $this->build_phrase_hit_sql('content', $parsed_query['phrases'], $params) : '0') . ' AS content_phrase_hit',
 			$this->build_term_hit_sql('title', $parsed_query['fulltext_terms'], $params) . ' AS title_term_hits',
 			'(' . $this->build_acf_exact_keyword_match_sql($parsed_query, $params) . ' * ' . $term_count . ') AS acf_term_hits',
 			$this->build_term_hit_sql('excerpt', $parsed_query['fulltext_terms'], $params) . ' AS excerpt_term_hits',
-			$this->build_term_hit_sql('content', $parsed_query['fulltext_terms'], $params) . ' AS content_term_hits',
-			$this->build_term_hit_sql("CONCAT_WS(' ', title, excerpt, content)", $parsed_query['fulltext_terms'], $params) . ' AS all_field_term_hits',
+			($require_all_terms ? $this->build_term_hit_sql('content', $parsed_query['fulltext_terms'], $params) : '0') . ' AS content_term_hits',
+			($require_all_terms ? $this->build_term_hit_sql("CONCAT_WS(' ', title, excerpt, content)", $parsed_query['fulltext_terms'], $params) : (string) $fallback_term_hits) . ' AS all_field_term_hits',
 		);
 
 		array_unshift($params, $parsed_query['normalized']);
@@ -955,6 +1160,53 @@ class VFWP_Intranet_Search_Service {
 		);
 
 		return $this->snippet_service->add_display_fields($result, $parsed_query);
+	}
+
+	/**
+	 * Return original searchable terms absent from one relaxed result.
+	 *
+	 * @param array $result Formatted result.
+	 * @param array $parsed_query Parsed original query.
+	 * @return array
+	 */
+	private function get_missing_result_terms(array $result, array $parsed_query) {
+		$source = isset($result['snippet_source']) && is_array($result['snippet_source'])
+			? $result['snippet_source']
+			: array();
+		$searchable_text = implode(' ', array(
+			isset($source['title']) ? (string) $source['title'] : '',
+			isset($source['excerpt']) ? (string) $source['excerpt'] : '',
+			isset($source['content']) ? (string) $source['content'] : '',
+		));
+		$searchable_text = $this->query_parser->normalize_search_text($searchable_text);
+		$missing = array();
+
+		foreach (array_values(array_unique((array) $parsed_query['terms'])) as $term) {
+			$term = trim((string) $term);
+
+			if ($term === '' || $this->normalized_text_contains_term($searchable_text, $term)) {
+				continue;
+			}
+
+			$missing[] = $term;
+		}
+
+		return $missing;
+	}
+
+	/**
+	 * Match one normalized query term using the same prefix rule as SQL.
+	 *
+	 * @param string $text Normalized indexed text.
+	 * @param string $term Normalized query term.
+	 * @return bool
+	 */
+	private function normalized_text_contains_term($text, $term) {
+		$escaped = preg_quote((string) $term, '/');
+		$suffix = $this->string_length($term) < 3 ? '' : '[\p{L}\p{N}_]*';
+		$pattern = '/(^|[^\p{L}\p{N}_])' . $escaped . $suffix . '([^\p{L}\p{N}_]|$)/u';
+
+		return preg_match($pattern, (string) $text) === 1;
 	}
 
 	/**
