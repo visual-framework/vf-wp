@@ -35,7 +35,10 @@ include( plugin_dir_path( __FILE__ ) . 'partials/hero.php');
 include( plugin_dir_path( __FILE__ ) . 'partials/event-info.php'); ?>
 </section>
 
-<?php 
+<?php
+// Testimonials
+include( plugin_dir_path( __FILE__ ) . 'partials/testimonials.php');
+
 // CPP container
 if ($cpp_container == 1 && $event_organiser == "cco_hd") { ?>
 <hr class="vf-divider">

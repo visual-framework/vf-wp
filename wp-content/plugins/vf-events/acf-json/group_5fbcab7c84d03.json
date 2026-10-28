@@ -2120,6 +2120,111 @@
                 "mime_types": "",
                 "allow_in_bindings": 1,
                 "preview_size": "medium"
+            },
+            {
+                "key": "field_vf_event_testimonials_tab",
+                "label": "Testimonials",
+                "name": "",
+                "aria-label": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_vf_event_testimonials",
+                "label": "Testimonials",
+                "name": "vf_event_testimonials",
+                "aria-label": "",
+                "type": "repeater",
+                "instructions": "Add up to three testimonials. Only entries with testimonial text are displayed.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "min": 0,
+                "max": 3,
+                "collapsed": "field_vf_event_testimonial_name",
+                "button_label": "Add testimonial",
+                "sub_fields": [
+                    {
+                        "key": "field_vf_event_testimonial_text",
+                        "label": "Text",
+                        "name": "text",
+                        "aria-label": "",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "rows": 4,
+                        "new_lines": ""
+                    },
+                    {
+                        "key": "field_vf_event_testimonial_avatar",
+                        "label": "Avatar",
+                        "name": "avatar",
+                        "aria-label": "",
+                        "type": "image",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "return_format": "id",
+                        "preview_size": "thumbnail",
+                        "library": "all",
+                        "mime_types": "jpg,jpeg,png,gif,webp,avif"
+                    },
+                    {
+                        "key": "field_vf_event_testimonial_name",
+                        "label": "Name",
+                        "name": "name",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "key": "field_vf_event_testimonial_affiliation",
+                        "label": "Affiliation",
+                        "name": "affiliation",
+                        "aria-label": "",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    }
+                ]
             }
         ],
         "location": [

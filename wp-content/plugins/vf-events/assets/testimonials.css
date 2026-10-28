@@ -1,0 +1,38 @@
+.vf-box.vf-event-testimonial {
+  --vf-box-theme-color--background: #f3f3f3;
+  --vf-box-padding--override: 1.5rem;
+  background-color: #f3f3f3;
+  padding: 1.5rem;
+}
+
+.vf-event-testimonial .vf-blockquote-small {
+  display: block !important;
+  padding-left: 0;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.vf-event-testimonial .vf-blockquote-small::before {
+  content: none;
+}
+
+.vf-event-testimonial__author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.vf-event-testimonial .vf-profile__image {
+  position: static;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  margin: 0;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.vf-event-testimonial__details {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

@@ -60,11 +60,27 @@ class VF_Events {
       'admin_enqueue_scripts',
       array($this, 'admin_enqueue_scripts')
     );
+    add_action(
+      'wp_enqueue_scripts',
+      array($this, 'enqueue_styles')
+    );
 
   }
 
   public function template() {
     return $this->template;
+  }
+
+  public function enqueue_styles() {
+    if ( ! is_singular(VF_Events::type())) {
+      return;
+    }
+    wp_enqueue_style(
+      'vf-events-testimonials',
+      plugin_dir_url(__FILE__) . 'assets/testimonials.css',
+      array(),
+      filemtime(plugin_dir_path(__FILE__) . 'assets/testimonials.css')
+    );
   }
 
   /**
