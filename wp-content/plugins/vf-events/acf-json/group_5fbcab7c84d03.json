@@ -2176,25 +2176,6 @@
                         "new_lines": ""
                     },
                     {
-                        "key": "field_vf_event_testimonial_avatar",
-                        "label": "Avatar",
-                        "name": "avatar",
-                        "aria-label": "",
-                        "type": "image",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "return_format": "id",
-                        "preview_size": "thumbnail",
-                        "library": "all",
-                        "mime_types": "jpg,jpeg,png,gif,webp,avif"
-                    },
-                    {
                         "key": "field_vf_event_testimonial_name",
                         "label": "Name",
                         "name": "name",
