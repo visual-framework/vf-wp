@@ -1,0 +1,8 @@
+html { overflow-y: hidden; }
+body { min-height: 0; display: flow-root; }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 3px solid #2684c6; outline-offset: 2px; }
+.chip { font: inherit; }
+#plot-point { margin: 12px 0 0; background: #0a5032; color: white; }
+.plot-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; padding: 10px; }
+.plot-controls label { display: grid; gap: 4px; font-size: 14px; }
+.plot-controls input { width: 120px; padding: 8px; font: inherit; border: 1px solid #54585a; border-radius: 4px; }

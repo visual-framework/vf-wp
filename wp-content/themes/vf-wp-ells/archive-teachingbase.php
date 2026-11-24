@@ -55,12 +55,19 @@ get_header();
 
   $language_options = vf_wp_ells_archive_language_options();
   $wpml_available = vf_wp_ells_is_wpml_active();
-  if ( $wpml_available ) {
+  $default_language = 'en';
+  $language_values = wp_list_pluck($language_options, 'value');
+  if ( ! in_array($default_language, $language_values, true) && ! empty($language_values) ) {
+    $default_language = $language_values[0];
+  }
+
+  if ( $wpml_available && ! empty($language_options) ) {
     $teachingbase_filters[] = array(
       'key' => 'lang',
       'label' => 'Language',
-      'all_label' => 'All languages',
       'control' => 'select',
+      'include_all_option' => false,
+      'default_value' => $default_language,
       'options' => $language_options,
     );
   }

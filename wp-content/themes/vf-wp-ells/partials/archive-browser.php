@@ -50,11 +50,14 @@ $config = array(
           if ($control === 'select') {
             $select_id = $browser_id . '-' . $field;
             $select_label_class = $field === 'year' ? 'vf-form__legend' : 'vf-form__label';
+            $include_all_option = ! isset($filter['include_all_option']) || $filter['include_all_option'];
             ?>
             <div class="filter-item filter-item--select" data-field="<?php echo esc_attr($field); ?>">
               <label for="<?php echo esc_attr($select_id); ?>" class="<?php echo esc_attr($select_label_class); ?>"><?php echo esc_html($filter['label']); ?></label>
               <select id="<?php echo esc_attr($select_id); ?>" class="vf-form__select ells-filter-select" data-field="<?php echo esc_attr($field); ?>" name="<?php echo esc_attr($field); ?>">
+                <?php if ($include_all_option) { ?>
                 <option value="" data-label="<?php echo esc_attr($filter['all_label']); ?>"><?php echo esc_html($filter['all_label']); ?></option>
+                <?php } ?>
                 <?php foreach ($options as $option) { ?>
                   <option value="<?php echo esc_attr($option['value']); ?>" data-label="<?php echo esc_attr($option['label']); ?>"><?php echo esc_html($option['label']); ?></option>
                 <?php } ?>

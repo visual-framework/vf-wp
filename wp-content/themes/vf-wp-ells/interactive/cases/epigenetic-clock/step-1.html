@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 1: Identify Age-Related CpG Loci</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: transparent;
+      color: #373A36;
+      padding: 12px 24px;
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .instruction {
+      background: #fff;
+      border-left: 3px solid #18974C;
+      padding: 10px 20px;
+      margin-bottom: 10px;
+      font-size: 20px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      color: #373A36;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.6;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 17px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: #fff;
+      min-width: 680px;
+    }
+
+    th {
+      background: #0A5032;
+      color: #D0DEBB;
+      font-weight: 500;
+      font-size: 18px;
+      padding: 10px 8px;
+      text-align: center;
+      border: 1px solid #0A5032;
+      line-height: 1.3;
+    }
+
+    td {
+      border: 1px solid #D0D0CE;
+      padding: 9px 8px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .age-col {
+      background: #D0D0CE;
+      font-weight: 600;
+      color: #373A36;
+      font-size: 17px;
+    }
+
+    .data-cell {
+      background: #fff;
+      color: #373A36;
+    }
+
+    .dropdown-row td {
+      background: #fafaf8;
+      padding: 8px 6px;
+    }
+
+    .dropdown-label {
+      font-weight: 600;
+      font-size: 17px;
+      color: #54585A;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    select {
+      width: 100%;
+      font-size: 17px;
+      padding: 8px 6px;
+      border: 1px solid #A8A99E;
+      border-radius: 5px;
+      background: #fff;
+      color: #373A36;
+      cursor: pointer;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      appearance: auto;
+    }
+
+    select:focus {
+      outline: 2px solid #18974C;
+      outline-offset: 1px;
+    }
+
+    select.correct {
+      border-color: #18974C;
+      background: #D0DEBB;
+      color: #0A5032;
+      font-weight: 600;
+    }
+
+    select.wrong {
+      border-color: #D41645;
+      background: #fff;
+      color: #A6093D;
+    }
+
+    .col-pos { background: #E58F9E !important; }
+    .col-neg { background: #8BB8E8 !important; }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    button {
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    button:active { transform: scale(0.98); }
+
+    .btn-check {
+      background: #18974C;
+      color: #fff;
+    }
+
+    .btn-check:hover { background: #0A5032; }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid #A8A99E;
+      color: #54585A;
+    }
+
+    .btn-reset:hover { background: #D0D0CE; }
+
+    .feedback {
+      margin-top: 10px;
+      font-size: 18px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      line-height: 1.7;
+      min-height: 24px;
+    }
+
+    .feedback ul {
+      margin: 8px 0 0 18px;
+    }
+
+    .feedback li {
+      margin-bottom: 4px;
+    }
+
+    .score-good { color: #0A5032; font-weight: 600; }
+    .score-bad { color: #A6093D; font-weight: 600; }
+
+    .summary-box {
+      margin-top: 16px;
+      background: #D0DEBB;
+      border: 1px solid #6CC24A;
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-size: 18px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      display: none;
+    }
+
+    .summary-box strong { color: #0A5032; }
+
+    @media (max-width: 760px) {
+      body { padding: 10px 14px; }
+      .instruction { font-size: 16px; padding: 8px 14px; }
+      table { font-size: 14px; min-width: 520px; }
+      th { font-size: 14px; padding: 7px 5px; }
+      td { padding: 6px 5px; }
+      .age-col, .data-cell { font-size: 13px; }
+      .dropdown-label { font-size: 12px; }
+      select { font-size: 13px; padding: 6px 4px; }
+      button { font-size: 14px; padding: 10px 18px; }
+      .feedback, .summary-box { font-size: 14px; }
+    }
+
+    @media (max-width: 480px) {
+      table { min-width: 440px; }
+      .btn-row { flex-wrap: wrap; }
+    }
+  </style>
+<link rel="stylesheet" href="../../assets/step.css">
+</head>
+<body>
+
+  <div class="instruction">
+    Look at each CpG locus (each column) and consider how methylation changes as age increases. Choose the correlation type for each locus. Then identify the <strong>two loci with the strongest positive correlation</strong> and the <strong>two with the strongest negative correlation</strong> — these will form the basis of your epigenetic clock.
+  </div>
+
+  <div class="table-wrapper">
+    <table id="main-table">
+      <thead>
+        <tr>
+          <th style="width:90px">Age of mouse<br>(weeks)</th>
+          <th>CpG<br>Locus 1</th>
+          <th>CpG<br>Locus 2</th>
+          <th>CpG<br>Locus 3</th>
+          <th>CpG<br>Locus 4</th>
+          <th>CpG<br>Locus 5</th>
+          <th>CpG<br>Locus 6</th>
+          <th>CpG<br>Locus 7</th>
+          <th>CpG<br>Locus 8</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="age-col">1</td>
+          <td class="data-cell" data-col="1">32</td>
+          <td class="data-cell" data-col="2">0</td>
+          <td class="data-cell" data-col="3">52</td>
+          <td class="data-cell" data-col="4">50</td>
+          <td class="data-cell" data-col="5">38</td>
+          <td class="data-cell" data-col="6">58</td>
+          <td class="data-cell" data-col="7">35</td>
+          <td class="data-cell" data-col="8">74</td>
+        </tr>
+        <tr>
+          <td class="age-col">14</td>
+          <td class="data-cell" data-col="1">46</td>
+          <td class="data-cell" data-col="2">0</td>
+          <td class="data-cell" data-col="3">30</td>
+          <td class="data-cell" data-col="4">95</td>
+          <td class="data-cell" data-col="5">58</td>
+          <td class="data-cell" data-col="6">53</td>
+          <td class="data-cell" data-col="7">14</td>
+          <td class="data-cell" data-col="8">50</td>
+        </tr>
+        <tr>
+          <td class="age-col">27</td>
+          <td class="data-cell" data-col="1">63</td>
+          <td class="data-cell" data-col="2">0</td>
+          <td class="data-cell" data-col="3">18</td>
+          <td class="data-cell" data-col="4">100</td>
+          <td class="data-cell" data-col="5">73</td>
+          <td class="data-cell" data-col="6">92</td>
+          <td class="data-cell" data-col="7">13</td>
+          <td class="data-cell" data-col="8">100</td>
+        </tr>
+        <tr>
+          <td class="age-col">41</td>
+          <td class="data-cell" data-col="1">82</td>
+          <td class="data-cell" data-col="2">0</td>
+          <td class="data-cell" data-col="3">10</td>
+          <td class="data-cell" data-col="4">80</td>
+          <td class="data-cell" data-col="5">76</td>
+          <td class="data-cell" data-col="6">70</td>
+          <td class="data-cell" data-col="7">8</td>
+          <td class="data-cell" data-col="8">63</td>
+        </tr>
+        <tr class="dropdown-row">
+          <td class="dropdown-label">Correlation<br>type</td>
+          <td><select id="l1" onchange="highlightCol(1,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+          <td><select id="l2" onchange="highlightCol(2,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+          <td><select id="l3" onchange="highlightCol(3,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+          <td><select id="l4" onchange="highlightCol(4,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+          <td><select id="l5" onchange="highlightCol(5,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+          <td><select id="l6" onchange="highlightCol(6,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+          <td><select id="l7" onchange="highlightCol(7,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+          <td><select id="l8" onchange="highlightCol(8,this.value)"><option value="">Select...</option><option value="pos">Positive</option><option value="neg">Negative</option><option value="none">No clear trend</option></select></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-check" onclick="checkAnswers()">Check answers</button>
+    <button class="btn-reset" onclick="resetAll()">Reset</button>
+  </div>
+
+  <div class="feedback" id="feedback"></div>
+
+  <div class="summary-box" id="summary">
+    <strong>All correct!</strong> You now have loci that show a change in methylation with age, and can be used to create a clock equation.
+  </div>
+
+  <script>
+    var answers = { l1:'pos', l2:'none', l3:'neg', l4:'none', l5:'pos', l6:'none', l7:'neg', l8:'none' };
+
+    var hints = {
+      l1: 'Locus 1: 32 → 46 → 63 → 82. The amount of methylation increases steadily over time.',
+      l2: 'Locus 2: 0 → 0 → 0 → 0. It\'s consistent, but it\'s not showing a change in methylation over time at all!',
+      l3: 'Locus 3: 52 → 30 → 18 → 10. The percentage methylation at that locus just keeps decreasing.',
+      l4: 'Locus 4: 50 → 95 → 100 → 80. This one may look like an increase, but what happens between 27 and 41 weeks?',
+      l5: 'Locus 5: 38 → 58 → 73 → 76. Consistent increase — looks good!',
+      l6: 'Locus 6: 58 → 53 → 92 → 70. Up and down — not very helpful data to build a clock with!',
+      l7: 'Locus 7: 35 → 14 → 13 → 8. The decreases are small between the age groups, but it\'s still a decrease!',
+      l8: 'Locus 8: 74 → 50 → 100 → 63. Dramatic changes, but not a clear correlation.'
+    };
+
+    function highlightCol(col, val) {
+      document.querySelectorAll('[data-col="' + col + '"]').forEach(function(cell) {
+        cell.classList.remove('col-pos', 'col-neg');
+        if (val === 'pos') cell.classList.add('col-pos');
+        else if (val === 'neg') cell.classList.add('col-neg');
+      });
+    }
+
+    function checkAnswers() {
+      var correct = 0;
+      var wrongHints = [];
+      var posCount = 0;
+      var negCount = 0;
+
+      Object.keys(answers).forEach(function(id) {
+        var sel = document.getElementById(id);
+        sel.classList.remove('correct', 'wrong');
+        if (sel.value === 'pos') posCount++;
+        if (sel.value === 'neg') negCount++;
+        if (!sel.value) { wrongHints.push(hints[id]); return; }
+        if (sel.value === answers[id]) { sel.classList.add('correct'); correct++; }
+        else { sel.classList.add('wrong'); wrongHints.push(hints[id]); }
+      });
+
+      var fb = document.getElementById('feedback');
+      var summary = document.getElementById('summary');
+
+      if (correct === 8) {
+        fb.innerHTML = '';
+        summary.style.display = 'block';
+        return;
+      }
+
+      summary.style.display = 'none';
+      var overSelectionNotes = [];
+      if (posCount > 2) overSelectionNotes.push('You have selected more than two loci as positive — only select the <strong>two strongest positive</strong> correlations.');
+      if (negCount > 2) overSelectionNotes.push('You have selected more than two loci as negative — only select the <strong>two strongest negative</strong> correlations.');
+      if (posCount < 2) overSelectionNotes.push('You have selected fewer than two loci as positive — look again for the <strong>two strongest positive</strong> correlations.');
+      if (negCount < 2) overSelectionNotes.push('You have selected fewer than two loci as negative — look again for the <strong>two strongest negative</strong> correlations.');
+
+      var html = '';
+      if (overSelectionNotes.length) {
+        html += '<div style="margin-bottom:10px;">' + overSelectionNotes.join('<br>') + '</div>';
+      }
+      html += '<span class="score-bad">' + correct + '/8 correct.</span> Review the highlighted columns and consider these hints:<ul>';
+      wrongHints.forEach(function(h) { html += '<li>' + h + '</li>'; });
+      html += '</ul>';
+      fb.innerHTML = html;
+    }
+
+    function resetAll() {
+      Object.keys(answers).forEach(function(id) {
+        var sel = document.getElementById(id);
+        sel.value = '';
+        sel.classList.remove('correct', 'wrong');
+      });
+      for (var i = 1; i <= 8; i++) {
+        document.querySelectorAll('[data-col="' + i + '"]').forEach(function(cell) {
+          cell.classList.remove('col-pos', 'col-neg');
+        });
+      }
+      document.getElementById('feedback').innerHTML = '';
+      document.getElementById('summary').style.display = 'none';
+    }
+  </script>
+
+  
+<script src="../../assets/step.js"></script>
+</body>
+</html>

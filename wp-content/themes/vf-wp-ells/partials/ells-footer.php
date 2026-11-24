@@ -39,15 +39,8 @@
         <h4 class="vf-text vf-text-heading--5" style="color: #fff;">
           Subscribe to our newsletter</h4>
         <div class="vf-form__item vf-stack">
-          <form action="https://embl.us20.list-manage.com/subscribe/post?u=6407e1524014635f8879568bd&amp;id=2b6803aee1"
-            method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate"
-            target="_blank" novalidate>
-            <input type="email" value="" name="EMAIL" class="vf-form__input" placeholder="Email"
-              style="padding: 3px 12px; width: 260px; display: inline-block;">
-            <input type="submit" value="Subscribe" name="subscribe"
-              class="vf-button vf-button--primary vf-button--sm | vf-u-margin__left--200"
-              style="display: inline-block;">
-          </form>
+          <a href="https://eepurl.com/ho3aIH" target="_blank" rel="noopener noreferrer"
+            class="vf-button vf-button--primary vf-button--sm">Subscribe<span class="vf-u-sr-only"> to our newsletter (opens in a new tab)</span></a>
         </div>
       </div>
       <div class="vf-links">
@@ -65,26 +58,10 @@
               <path xmlns="http://www.w3.org/2000/svg"
                 d="m18.14 7.17a.5.5 0 0 0 -.37-.17h-3.77v-1.41c0-.28.06-.6.51-.6h3a.44.44 0 0 0 .35-.15.5.5 0 0 0 .14-.34v-4a.5.5 0 0 0 -.5-.5h-4.33c-4.8 0-5.17 4.1-5.17 5.35v1.65h-2.5a.5.5 0 0 0 -.5.5v4a.5.5 0 0 0 .5.5h2.5v11.5a.5.5 0 0 0 .5.5h5a.5.5 0 0 0 .5-.5v-11.5h3.35a.5.5 0 0 0 .5-.45l.42-4a.5.5 0 0 0 -.13-.38z" />
             </g>
-            <g id="vf-social--twitter">
-              <path xmlns="http://www.w3.org/2000/svg"
-                d="M23.32,6.44a.5.5,0,0,0-.2-.87l-.79-.2A.5.5,0,0,1,22,4.67l.44-.89a.5.5,0,0,0-.58-.7l-2,.56a.5.5,0,0,1-.44-.08,5,5,0,0,0-3-1,5,5,0,0,0-5,5v.36a.25.25,0,0,1-.22.25c-2.81.33-5.5-1.1-8.4-4.44a.51.51,0,0,0-.51-.15A.5.5,0,0,0,2,4a7.58,7.58,0,0,0,.46,4.92.25.25,0,0,1-.26.36L1.08,9.06a.5.5,0,0,0-.57.59,5.15,5.15,0,0,0,2.37,3.78.25.25,0,0,1,0,.45l-.53.21a.5.5,0,0,0-.26.69,4.36,4.36,0,0,0,3.2,2.48.25.25,0,0,1,0,.47A10.94,10.94,0,0,1,1,18.56a.5.5,0,0,0-.2,1,20.06,20.06,0,0,0,8.14,1.93,12.58,12.58,0,0,0,7-2A12.5,12.5,0,0,0,21.5,9.06V8.19a.5.5,0,0,1,.18-.38Z" />
-            </g>
           </defs>
         </svg>
         <div class="vf-social-links vf-social-links--outline">
           <ul class="vf-social-links__list | vf-u-margin__top--0">
-            <li class="vf-social-links__item">
-              <a class="vf-social-links__link" href="http://www.twitter.com/ELLS_Heidelberg">
-                <span class="vf-u-sr-only">
-                  twitter
-                </span>
-                <svg aria-hidden="true" class="vf-icon vf-icon--social vf-icon--twitter" width="24" height="24"
-                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" version="1.1" preserveAspectRatio="xMinYMin">
-                  <use xlink:href="#vf-social--twitter">
-                  </use>
-                </svg>
-              </a>
-            </li>
             <li class="vf-social-links__item">
               <a class="vf-social-links__link" href="https://www.facebook.com/EMBL-ELLS-151861361512186">
                 <span class="vf-u-sr-only">

@@ -1,0 +1,20 @@
+.ells-interactive { border: 1px solid #b8c8bd; border-radius: 8px; background: #fff; color: #373a36; margin: 24px 0; max-width: 100%; overflow: hidden; }
+.ells-interactive [hidden] { display: none !important; }
+.ells-interactive__header { background: #f3f7f2; border-bottom: 1px solid #d0debb; padding: 20px; }
+.ells-interactive__header h2 { font-size: 24px; margin: 0 0 8px; }
+.ells-interactive__header p { margin: 0 0 12px; font-size: 16px; }
+.ells-interactive__header nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.ells-interactive button { font: inherit; font-size: 16px; border: 1px solid #0a5032; border-radius: 4px; background: #fff; color: #0a5032; padding: 8px 16px; cursor: pointer; }
+.ells-interactive button[aria-current], .ells-interactive button[data-activity-next] { background: #0a5032; color: #fff; }
+.ells-interactive button:hover { background: #d0debb; color: #0a5032; }
+.ells-interactive button:focus-visible { outline: 3px solid #2684c6; outline-offset: 3px; }
+.ells-interactive button:disabled { opacity: .45; cursor: default; }
+.ells-interactive__panel { padding: 20px 0 0; }
+.ells-interactive__panel h3 { font-size: 21px; padding: 0 24px; margin: 0 0 12px; }
+.ells-interactive__panel h3:focus { outline-offset: -3px; }
+.ells-interactive iframe { display: block; width: 100%; border: 0; min-width: 0; }
+.ells-interactive__footer { display: flex; justify-content: space-between; border-top: 1px solid #d0debb; padding: 16px 20px; }
+@media (max-width: 480px) {
+  .ells-interactive__header { padding: 16px; }
+  .ells-interactive button { padding: 8px 12px; }
+}

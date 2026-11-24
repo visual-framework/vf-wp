@@ -175,7 +175,7 @@ global $vf_theme;
     </div>
 
     <article class="vf-card vf-card--brand vf-card--bordered">
-      <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/ON-SITE-LEARNING-LABS-©-EMBL-ELLS.jpg"
+      <img src="https://www.embl.org/ells/wp-content/uploads/2023/10/SEPE-SpeedNetworking-10.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
@@ -193,7 +193,7 @@ global $vf_theme;
     </article>
 
     <article class="vf-card vf-card--brand vf-card--bordered">
-      <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/VIRTUAL-LEARNING-LABS-%C2%A9-ELLS.jpg"
+      <img src="https://www.embl.org/ells/wp-content/uploads/2026/06/LearningLAB_V1.png"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
@@ -215,7 +215,7 @@ global $vf_theme;
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"
-            href="<?php echo esc_url(home_url('/teacher-training/?location=online')); ?>">Online Courses
+            href="<?php echo esc_url(home_url('/online-courses')); ?>">Online Courses
             <svg aria-hidden="true" class="vf-card__heading__icon | vf-icon vf-icon-arrow--inline-end"
               width="1em" height="1em" xmlns="http://www.w3.org/2000/svg">
               <path
@@ -226,7 +226,7 @@ global $vf_theme;
       </div>
     </article>
     <article class="vf-card vf-card--brand vf-card--bordered">
-      <img src="https://wwwdev.embl.org/ells/wp-content/uploads/2021/06/CONNECT-LEARNING-LABS-©-ELLS-1.jpg"
+      <img src="https://www.embl.org/ells/wp-content/uploads/2026/06/EMBLconnect-courses.jpg"
         alt="Image alt text" class="vf-card__image" loading="lazy">
       <div class="vf-card__content | vf-stack vf-stack--400">
         <h3 class="vf-card__heading"><a class="vf-card__link"

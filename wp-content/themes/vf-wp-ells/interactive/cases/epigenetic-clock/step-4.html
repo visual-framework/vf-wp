@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 4: Plot Your Epigenetic Clock</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: transparent;
+      color: #373A36;
+      padding: 12px 24px;
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .instruction {
+      background: #fff;
+      border-left: 3px solid #18974C;
+      padding: 7px 18px;
+      margin-bottom: 6px;
+      font-size: 17px;
+      color: #373A36;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.45;
+    }
+
+    .progress-line {
+      font-size: 14px;
+      color: #54585A;
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+    .progress-line span { font-weight: 700; color: #0A5032; }
+
+    .coordinate-display {
+      font-size: 14px;
+      background: #fff;
+      border: 1.5px solid #0A5032;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      padding: 7px 16px;
+      margin-bottom: 8px;
+      display: inline-block;
+      min-width: 300px;
+    }
+    .coord-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #A8A99E; margin-bottom: 2px; font-weight: 600; }
+    .coord-value { font-size: 15px; font-weight: 700; color: #0A5032; }
+    .coord-value span { color: #A8A99E; font-weight: 400; font-size: 13px; margin: 0 6px; }
+
+    .graph-container {
+      position: relative;
+      display: block;
+      cursor: crosshair;
+      user-select: none;
+      margin-bottom: 8px;
+      max-width: 700px;
+    }
+    .graph-wrapper {
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: inline-block;
+      max-width: 100%;
+    }
+    canvas { display: block; width: 100%; height: auto; max-width: 700px; }
+
+    .btn-row { display: flex; gap: 12px; align-items: center; margin-bottom: 2px; flex-wrap: wrap; }
+
+    button {
+      padding: 9px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    button:active { transform: scale(0.98); }
+
+    .btn-bestfit { background: #18974C; color: #fff; display: none; }
+    .btn-bestfit:hover { background: #0A5032; }
+
+    .btn-reset { background: transparent; border: 1px solid #A8A99E; color: #54585A; }
+    .btn-reset:hover { background: #D0D0CE; }
+
+    .feedback-box {
+      font-size: 15px;
+      margin-top: 10px;
+      padding: 10px 16px;
+      border-radius: 6px;
+      display: none;
+      line-height: 1.6;
+    }
+    .feedback-try { background: #fff8e6; border: 1px solid #f0d080; color: #7a5c00; }
+    .feedback-snap { background: #D0DEBB; border: 1px solid #6CC24A; color: #0A5032; }
+
+    .summary-box {
+      margin-top: 16px;
+      background: #D0DEBB;
+      border: 1px solid #6CC24A;
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-size: 16px;
+      display: none;
+      line-height: 1.8;
+    }
+    .summary-box strong { color: #0A5032; }
+
+    @media (max-width: 760px) {
+      body { padding: 10px 14px; }
+      .instruction { font-size: 16px; padding: 8px 14px; }
+      .coordinate-display { font-size: 13px; min-width: 0; width: 100%; }
+      .coord-value { font-size: 15px; }
+      button { font-size: 14px; padding: 10px 18px; }
+      .feedback-box, .summary-box { font-size: 13px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../assets/step.css">
+</head>
+<body>
+
+  <div class="instruction">
+    The coordinates for each data point will appear one at a time. <strong>Click on the graph</strong> where you think the point should be plotted. If you're close enough it will snap into place — if not, try again! You can also enter coordinates in the fields below the graph. Once all four points are plotted, add your curve of best fit.
+  </div>
+
+  <div class="progress-line">Points plotted: <span id="progress">0</span> / 4</div>
+
+  <div class="coordinate-display" id="coord-display">
+    <div class="coord-label">Plot this point</div>
+    <div class="coord-value">Age: 1 week <span>→</span> Clock Score: 45.75</div>
+  </div>
+
+  <div class="graph-container" id="graph-container">
+    <div class="graph-wrapper">
+      <canvas id="graph" width="700" height="370" aria-label="Clock score on the horizontal axis, age in weeks on the vertical axis"></canvas>
+      <div class="plot-controls"><label>Clock score (x) <input id="plot-x" type="number" min="30" max="100" step="0.01" required></label><label>Age in weeks (y) <input id="plot-y" type="number" min="0" max="50" step="0.01" required></label><button type="button" id="plot-point">Plot coordinates</button></div>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-bestfit" id="btn-bestfit" onclick="drawBestFit()">Add curve of best fit</button>
+    <button class="btn-reset" onclick="resetAll()">Reset</button>
+  </div>
+
+  <div class="feedback-box" id="feedback"></div>
+
+  <div class="summary-box" id="summary">
+    <strong>Your epigenetic clock model is complete!</strong><br><br>
+    You've plotted all four data points and added the curve of best fit. This curve <em>is</em> your epigenetic clock model — you can now use it to estimate the age of any mouse from its methylation data.<br><br>
+    You have completed all four steps of this activity.
+  </div>
+
+  <script>
+    // ── DATA ── Clock Scores calculated in Activity 3 ──────────────────────────
+    var points = [
+      { clockScore: 45.75, age: 1,  label: 'Age: 1 week' },
+      { clockScore: 65,    age: 14, label: 'Age: 14 weeks' },
+      { clockScore: 76.25, age: 27, label: 'Age: 27 weeks' },
+      { clockScore: 85,    age: 41, label: 'Age: 41 weeks' }
+    ];
+
+    // Quadratic best fit through the above points: y = ax² + bx + c
+    // where x = clock score, y = age in weeks
+    var polyA = 0.017604681;
+    var polyB = -1.286945243;
+    var polyC = 23.06827477;
+
+    // ── GRAPH SETUP ───────────────────────────────────────────────────────────
+    var canvas = document.getElementById('graph');
+    var ctx    = canvas.getContext('2d');
+
+    var xMin = 30, xMax = 100;  // clock score
+    var yMin = 0,  yMax = 50;   // age in weeks
+
+    var mL = 66, mR = 20, mT = 20, mB = 54;
+    var plotW = canvas.width  - mL - mR;
+    var plotH = canvas.height - mT - mB;
+
+    function toCanvasX(val) { return mL + (val - xMin) / (xMax - xMin) * plotW; }
+    function toCanvasY(val) { return mT + plotH - (val - yMin) / (yMax - yMin) * plotH; }
+    function fromCanvasX(px) { return xMin + (px - mL) / plotW * (xMax - xMin); }
+    function fromCanvasY(py) { return yMin + (mT + plotH - py) / plotH * (yMax - yMin); }
+
+    // ── STATE ─────────────────────────────────────────────────────────────────
+    var currentIdx    = 0;
+    var plottedPoints = [];
+    var bestFitDrawn  = false;
+
+    // ── DRAW ──────────────────────────────────────────────────────────────────
+    function drawGraph() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(mL, mT, plotW, plotH);
+
+      // Grid lines
+      ctx.strokeStyle = '#E5E4DF';
+      ctx.lineWidth = 1;
+      for (var x = xMin; x <= xMax; x += 10) {
+        var cx = toCanvasX(x);
+        ctx.beginPath(); ctx.moveTo(cx, mT); ctx.lineTo(cx, mT + plotH); ctx.stroke();
+      }
+      for (var y = yMin; y <= yMax; y += 5) {
+        var cy = toCanvasY(y);
+        ctx.beginPath(); ctx.moveTo(mL, cy); ctx.lineTo(mL + plotW, cy); ctx.stroke();
+      }
+
+      // Axes
+      ctx.strokeStyle = '#373A36';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(mL, mT); ctx.lineTo(mL, mT + plotH); ctx.lineTo(mL + plotW, mT + plotH);
+      ctx.stroke();
+
+      // Axis tick labels
+      ctx.fillStyle = '#54585A';
+      ctx.font = '13px "IBM Plex Sans", Helvetica, Arial, sans-serif';
+      ctx.textAlign = 'center';
+      for (var x = xMin; x <= xMax; x += 10) {
+        ctx.fillText(x, toCanvasX(x), mT + plotH + 18);
+      }
+      ctx.textAlign = 'right';
+      for (var y = yMin; y <= yMax; y += 5) {
+        ctx.fillText(y, mL - 8, toCanvasY(y) + 4);
+      }
+
+      // Axis titles
+      ctx.fillStyle = '#373A36';
+      ctx.font = 'bold 15px "IBM Plex Sans", Helvetica, Arial, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Clock Score', mL + plotW / 2, mT + plotH + 40);
+
+      ctx.save();
+      ctx.translate(16, mT + plotH / 2);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText('Age of Mouse (Weeks)', 0, 0);
+      ctx.restore();
+
+      // Best fit curve
+      if (bestFitDrawn) {
+        var curveXStart = points[0].clockScore;
+        var curveXEnd   = points[points.length - 1].clockScore;
+
+        ctx.strokeStyle = '#18974C';
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        var first = true;
+        for (var xs = curveXStart; xs <= curveXEnd; xs += 0.5) {
+          var ys = polyA * xs * xs + polyB * xs + polyC;
+          if (ys < yMin || ys > yMax) { first = true; continue; }
+          var cx2 = toCanvasX(xs);
+          var cy2 = toCanvasY(ys);
+          if (first) { ctx.moveTo(cx2, cy2); first = false; }
+          else        { ctx.lineTo(cx2, cy2); }
+        }
+        ctx.stroke();
+      }
+
+      // Plotted points
+      plottedPoints.forEach(function(p) {
+        var cx3 = toCanvasX(p.clockScore);
+        var cy3 = toCanvasY(p.age);
+
+        ctx.strokeStyle = '#0A5032';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(cx3 - 7, cy3); ctx.lineTo(cx3 + 7, cy3);
+        ctx.moveTo(cx3, cy3 - 7); ctx.lineTo(cx3, cy3 + 7);
+        ctx.stroke();
+
+        ctx.fillStyle = '#0A5032';
+        ctx.font = '11px "IBM Plex Sans", Helvetica, Arial, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('(' + p.clockScore + ', ' + p.age + ')', cx3 + 9, cy3 - 5);
+      });
+    }
+
+    drawGraph();
+
+    // ── CLICK HANDLER ─────────────────────────────────────────────────────────
+    canvas.addEventListener('click', function(e) {
+      if (currentIdx >= points.length) return;
+
+      var rect   = canvas.getBoundingClientRect();
+      var scaleX = canvas.width  / rect.width;
+      var scaleY = canvas.height / rect.height;
+      var px = (e.clientX - rect.left) * scaleX;
+      var py = (e.clientY - rect.top)  * scaleY;
+
+      if (px < mL || px > mL + plotW || py < mT || py > mT + plotH) return;
+
+      var clickedX = fromCanvasX(px);
+      var clickedY = fromCanvasY(py);
+
+      var target    = points[currentIdx];
+      var xRange    = xMax - xMin;
+      var yRange    = yMax - yMin;
+      var tolerance = 0.10;
+
+      var xOk = Math.abs(clickedX - target.clockScore) <= xRange * tolerance;
+      var yOk = Math.abs(clickedY - target.age)        <= yRange * tolerance;
+
+      var fb = document.getElementById('feedback');
+
+      if (xOk && yOk) {
+        plottedPoints.push({ clockScore: target.clockScore, age: target.age });
+        currentIdx++;
+
+        fb.className = 'feedback-box feedback-snap';
+        fb.textContent = '✓ Snapped! (' + target.clockScore + ', ' + target.age + ') plotted correctly.';
+        fb.style.display = 'block';
+
+        document.getElementById('progress').textContent = currentIdx;
+        drawGraph();
+        updateCoordDisplay();
+
+        if (currentIdx === points.length) {
+          document.getElementById('btn-bestfit').style.display = 'inline-block';
+          fb.textContent = '✓ All four points plotted! Now add your curve of best fit.';
+        }
+      } else {
+        fb.className = 'feedback-box feedback-try';
+        var hint = '';
+        if (!xOk && !yOk) hint = 'Check both axes — the clock score (x) and the age (y) are both off.';
+        else if (!xOk)    hint = 'Your age (y-axis) looks right, but check the clock score on the x-axis.';
+        else              hint = 'Your clock score (x-axis) looks right, but check the age on the y-axis.';
+        fb.textContent = '✗ Not quite there — ' + hint + ' Try again!';
+        fb.style.display = 'block';
+      }
+    });
+
+    // ── COORDINATE DISPLAY ────────────────────────────────────────────────────
+    function updateCoordDisplay() {
+      var display = document.getElementById('coord-display');
+      if (currentIdx >= points.length) {
+        display.innerHTML = '<div class="coord-label">All points plotted!</div><div class="coord-value" style="color:#0A5032">Now add your curve of best fit ↓</div>';
+      } else {
+        var p = points[currentIdx];
+        var ageLabel = p.age === 1 ? '1 week' : p.age + ' weeks';
+        display.innerHTML =
+          '<div class="coord-label">Plot this point (' + (currentIdx + 1) + ' of 4)</div>' +
+          '<div class="coord-value">Age: ' + ageLabel + '<span>→</span>Clock Score: ' + p.clockScore + '</div>';
+      }
+    }
+
+    // ── BEST FIT ──────────────────────────────────────────────────────────────
+    function drawBestFit() {
+      bestFitDrawn = true;
+      document.getElementById('btn-bestfit').style.display = 'none';
+      drawGraph();
+      document.getElementById('summary').style.display = 'block';
+      document.getElementById('feedback').style.display = 'none';
+    }
+
+    // ── RESET ─────────────────────────────────────────────────────────────────
+    function resetAll() {
+      document.getElementById('plot-x').value = '';
+      document.getElementById('plot-y').value = '';
+      currentIdx    = 0;
+      plottedPoints = [];
+      bestFitDrawn  = false;
+      document.getElementById('progress').textContent = '0';
+      document.getElementById('btn-bestfit').style.display = 'none';
+      document.getElementById('feedback').style.display = 'none';
+      document.getElementById('summary').style.display = 'none';
+      updateCoordDisplay();
+      drawGraph();
+    }
+  </script>
+
+  
+<script>
+ document.getElementById('plot-point').addEventListener('click', function () {
+   if (currentIdx >= points.length) return;
+   var x = document.getElementById('plot-x'), y = document.getElementById('plot-y');
+   if (!x.value || !y.value || !x.checkValidity() || !y.checkValidity()) { x.reportValidity(); y.reportValidity(); return; }
+   var p = {clockScore: Number(x.value), age: Number(y.value)}, rect = canvas.getBoundingClientRect();
+   canvas.dispatchEvent(new MouseEvent('click', {clientX: rect.left + toCanvasX(p.clockScore) * rect.width / canvas.width, clientY: rect.top + toCanvasY(p.age) * rect.height / canvas.height}));
+ });
+ </script><script src="../../assets/step.js"></script>
+</body>
+</html>

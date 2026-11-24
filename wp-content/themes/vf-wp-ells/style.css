@@ -191,6 +191,16 @@ Text Domain:	 vfwp
   margin-top: 2rem;
 }
 
+.vf-form__select.course-matcher-select {
+  background-position: right 0.875rem top 50%, 0 0;
+  background-size: 1rem;
+  font-size: 16px;
+  overflow: hidden;
+  padding-right: 4.25rem !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .vf-summary__date {
   color: #000 !important;
   font-weight: 500 !important;
@@ -235,4 +245,32 @@ Text Domain:	 vfwp
 
 .teachingbase-language-link .wpml-ls-flag {
   display: block;
+}
+
+/* Editor content stays inside the archive's existing third column. */
+.ells-training-sidebar {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ells-training-sidebar__widget + .ells-training-sidebar__widget {
+  margin-top: 1.5rem;
+}
+
+.ells-training-sidebar img,
+.ells-training-sidebar video {
+  max-width: 100%;
+  height: auto;
+}
+
+.ells-training-sidebar iframe {
+  max-width: 100%;
+}
+
+.ells-training-sidebar .alignwide,
+.ells-training-sidebar .alignfull {
+  width: auto;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }

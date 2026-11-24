@@ -54,6 +54,18 @@
       filtered: []
     };
 
+    function defaultValues(filter) {
+      const value = filter.default_value || filter.defaultValue || "";
+      return Array.isArray(value) ? value.map(clean).filter(Boolean) : String(value).split(",").map(clean).filter(Boolean);
+    }
+
+    function sameValues(values, otherValues) {
+      if (values.length !== otherValues.length) return false;
+
+      const normalizedOther = otherValues.map(normalize).sort();
+      return values.map(normalize).sort().every((value, index) => value === normalizedOther[index]);
+    }
+
     function syncUrl() {
       const url = new URL(window.location.href);
       filters.forEach(filter => {
@@ -70,7 +82,7 @@
 
       filters.forEach(filter => {
         const values = state.filters[filter.key] || [];
-        if (values.length) {
+        if (values.length && !sameValues(values, defaultValues(filter))) {
           url.searchParams.set(filter.key, values.join(","));
         }
       });
@@ -91,8 +103,11 @@
 
       filters.forEach(filter => {
         const allowed = new Set((itemOptions[filter.key] || []).map(option => normalize(option.value)));
-        state.filters[filter.key] = readParamValues(params, filter.key, filter.aliases)
+        const values = readParamValues(params, filter.key, filter.aliases)
           .filter(value => !allowed.size || allowed.has(normalize(value)));
+        state.filters[filter.key] = values.length
+          ? values
+          : defaultValues(filter).filter(value => !allowed.size || allowed.has(normalize(value)));
       });
 
       const page = Number(params.get("results-page") || params.get("paged") || params.get("page") || 1);
@@ -360,7 +375,7 @@
     if (dom.clearAll) {
       dom.clearAll.addEventListener("click", () => {
         filters.forEach(filter => {
-          state.filters[filter.key] = [];
+          state.filters[filter.key] = defaultValues(filter);
         });
         state.search = "";
         state.currentPage = 1;

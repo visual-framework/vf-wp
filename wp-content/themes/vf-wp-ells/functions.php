@@ -6,7 +6,10 @@ require_once('functions/teachingbase-post.php');
 require_once('functions/insight-lecture-post.php');
 require_once('functions/ambassadors-post.php');
 require_once('functions/archive-browser.php');
+require_once('functions/archive-sidebar.php');
 require_once('functions/ells-templates.php');
+require_once('functions/interactive-activities.php');
+require_once('functions/interactive-cases-admin.php');
 
 // enable featured image
 add_theme_support( 'post-thumbnails' );
@@ -120,6 +123,37 @@ function vf_wp_ells__pre_get_posts($query) {
 }
 add_filter( 'pre_get_posts', 'vf_wp_ells__pre_get_posts' );
 
+function vf_wp_ells_teacher_training_clean_query_args($query) {
+  $obsolete_keys = array('learninglab_llabs_type');
+
+  foreach ($query as $key => $value) {
+    if ( in_array($key, $obsolete_keys, true) ) {
+      unset($query[$key]);
+      continue;
+    }
+
+    if ( is_array($value) ) {
+      $value = array_filter($value, function($item) {
+        return $item !== '';
+      });
+
+      if ( empty($value) ) {
+        unset($query[$key]);
+        continue;
+      }
+
+      $query[$key] = $value;
+      continue;
+    }
+
+    if ( $value === '' ) {
+      unset($query[$key]);
+    }
+  }
+
+  return $query;
+}
+
 function vf_wp_ells_teacher_training_legacy_redirect() {
   if ( is_admin() || wp_doing_ajax() ) {
     return;
@@ -131,8 +165,14 @@ function vf_wp_ells_teacher_training_legacy_redirect() {
   }
 
   if ( isset($_GET['post_type']) && $_GET['post_type'] === 'learninglab' ) {
-    $query = $_GET;
+    $query = vf_wp_ells_teacher_training_clean_query_args($_GET);
     unset($query['post_type']);
+    wp_safe_redirect(add_query_arg($query, $archive_url), 301);
+    exit;
+  }
+
+  if ( is_post_type_archive('learninglab') && isset($_GET['learninglab_llabs_type']) ) {
+    $query = vf_wp_ells_teacher_training_clean_query_args($_GET);
     wp_safe_redirect(add_query_arg($query, $archive_url), 301);
     exit;
   }
@@ -168,7 +208,7 @@ function vf_wp_ells_teacher_training_legacy_redirect() {
     $target = trailingslashit($target . $remaining_path);
   }
 
-  wp_safe_redirect(add_query_arg($_GET, $target), 301);
+  wp_safe_redirect(add_query_arg(vf_wp_ells_teacher_training_clean_query_args($_GET), $target), 301);
   exit;
 }
 add_action('template_redirect', 'vf_wp_ells_teacher_training_legacy_redirect', 1);

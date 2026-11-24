@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "title": "Build an epigenetic clock",
+  "steps": [
+    {
+      "title": "Identify Age-Related CpG Loci",
+      "file": "step-1.html"
+    },
+    {
+      "title": "Align CpG Loci \u2014 Inversion Table",
+      "file": "step-2.html"
+    },
+    {
+      "title": "Calculate the Clock Score",
+      "file": "step-3.html"
+    },
+    {
+      "title": "Plot Your Epigenetic Clock",
+      "file": "step-4.html"
+    }
+  ]
+}

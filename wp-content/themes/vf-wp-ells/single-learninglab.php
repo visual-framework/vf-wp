@@ -20,6 +20,11 @@ $contact_disp = get_field('labs_contact_displayed');
 $organisers = get_field('labs_organisers');
 $time = get_field('labs_time');
 $registration_link = get_field('labs_application_form_link');
+$registration_button_text = get_field('labs_button_text');
+if ( is_array($registration_button_text) && isset($registration_button_text['value']) ) {
+  $registration_button_text = $registration_button_text['value'];
+}
+$registration_button_text = 'register' === $registration_button_text ? 'Register' : 'Apply';
 $social_url = get_the_permalink();
 $title = esc_html(get_the_title());
 
@@ -117,7 +122,7 @@ $title = esc_html(get_the_title());
         <?php if ( ! empty($registration_link)) { ?>
         <div style="display: inline-block;">
           <a href="<?php echo esc_url($registration_link); ?>"><button
-              class="vf-button vf-button--primary vf-button--sm">Apply</button></a>
+              class="vf-button vf-button--primary vf-button--sm"><?php echo esc_html($registration_button_text); ?></button></a>
         </div>
         <?php } ?>
       </div>

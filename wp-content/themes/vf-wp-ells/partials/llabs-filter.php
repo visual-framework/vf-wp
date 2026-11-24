@@ -105,8 +105,7 @@ $archive = home_url('/teacher-training/');
         <?php 
       $selected = empty($type_selected) || empty($type_selected[0]) ? 'checked="checked"' : '';
     ?>
-        <input type="checkbox" value="" id="checkbox-type" class="vf-form__checkbox"
-          name="learninglab_llabs_type" <?php echo $selected ?>>
+        <input type="checkbox" value="" id="checkbox-type" class="vf-form__checkbox" <?php echo $selected ?>>
         <label for="checkbox-type" class="vf-form__label">All</label>
       </div>
       <?php

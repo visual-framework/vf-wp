@@ -202,7 +202,7 @@ class VF_WP {
         '/assets/vf-plugin.js',
         __FILE__
       ),
-      array('wp-editor', 'wp-blocks'),
+      array('wp-block-editor', 'wp-blocks', 'wp-hooks', 'wp-dom-ready', 'jquery'),
       false,
       true
     );

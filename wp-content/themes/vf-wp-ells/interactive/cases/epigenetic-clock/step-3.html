@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step 3: Calculate the Clock Score</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: transparent;
+      color: #373A36;
+      padding: 12px 24px;
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    .instruction {
+      background: #fff;
+      border-left: 3px solid #18974C;
+      padding: 8px 20px;
+      margin-bottom: 8px;
+      font-size: 20px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      color: #373A36;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.6;
+    }
+
+    .formula-line {
+      margin-top: 4px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #0A5032;
+    }
+
+    .legend {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      font-size: 18px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .legend-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      flex-shrink: 0;
+      border: 1px solid rgba(0,0,0,0.12);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 17px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: #fff;
+      min-width: 760px;
+    }
+
+    th {
+      background: #0A5032;
+      color: #D0DEBB;
+      font-weight: 500;
+      font-size: 17px;
+      padding: 8px 8px;
+      text-align: center;
+      border: 1px solid #000;
+      line-height: 1.3;
+    }
+
+    td {
+      border: 1px solid #000;
+      padding: 8px 8px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .age-col {
+      background: #D0D0CE;
+      font-weight: 600;
+      color: #373A36;
+      font-size: 17px;
+    }
+
+    th.th-inc { background: #E58F9E; color: #fff; }
+    th.th-dec { background: #6CC24A; color: #fff; }
+    th.th-clock { background: #0A5032; color: #D0DEBB; width: 240px; }
+
+    /* ── Chips (tappable values) ─────────────────────────────────── */
+    .chip-cell { padding: 9px 6px; }
+
+    .chip {
+      display: inline-block;
+      min-width: 46px;
+      padding: 9px 10px;
+      border-radius: 7px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      border: 2px solid transparent;
+      transition: transform 0.1s, box-shadow 0.15s, filter 0.15s;
+      position: relative;
+    }
+    .chip:hover { transform: scale(1.05); }
+    .chip:active { transform: scale(0.97); }
+
+    .chip.inc { background: #F6D9DE; color: #A6093D; border-color: #E58F9E; }
+    .chip.inv { background: #D0DEBB; color: #0A5032; border-color: #6CC24A; }
+
+    .chip.chip-selected {
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.15);
+      filter: brightness(0.93);
+    }
+    .chip.chip-selected::after {
+      content: '✓';
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 16px;
+      height: 16px;
+      background: #0A5032;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .row-locked .chip { cursor: default; opacity: 0.55; }
+    .row-locked .chip:hover { transform: none; }
+
+    /* ── Equation builder (Clock Score column) ───────────────────── */
+    .eq-wrap { font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif; }
+
+    .eq-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      font-size: 15px;
+      color: #54585A;
+      margin-bottom: 6px;
+    }
+
+    .eq-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 30px;
+      height: 26px;
+      padding: 0 4px;
+      border: 1.5px dashed #A8A99E;
+      border-radius: 5px;
+      background: #fafaf8;
+      color: #A8A99E;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    /* Filled slots pick up the colour of the locus group they came from */
+    .eq-slot.filled.inc { border: 1.5px solid #E58F9E; background: #F6D9DE; color: #A6093D; }
+    .eq-slot.filled.inv { border: 1.5px solid #6CC24A; background: #D0DEBB; color: #0A5032; }
+
+    .eq-op { color: #A8A99E; font-weight: 600; font-size: 14px; }
+
+    .eq-result {
+      display: none;
+      font-weight: 700;
+      color: #0A5032;
+      font-size: 14px;
+    }
+
+    .btn-divide {
+      padding: 7px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: #18974C;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .btn-divide:hover:not(:disabled) { background: #0A5032; }
+    .btn-divide:disabled { background: #D0D0CE; color: #A8A99E; cursor: not-allowed; }
+    .btn-hidden { display: none !important; }
+
+    .clock-score-display {
+      font-size: 16px;
+      color: #0A5032;
+      animation: reveal 0.35s ease;
+    }
+    @keyframes reveal {
+      from { opacity: 0; transform: translateY(4px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .clock-hint {
+      font-size: 13px;
+      color: #A8A99E;
+      font-style: italic;
+    }
+
+    .reveal-on-unlock {
+      display: none;
+    }
+    .reveal-on-unlock.shown {
+      display: table-row;
+      animation: rowFadeIn 0.4s ease;
+    }
+    @keyframes rowFadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .example-row td { background: #f3f3ef; color: #54585A; }
+    .example-row .example-label { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: #54585A; }
+    .example-eq { font-size: 15px; color: #373A36; }
+    .example-eq strong { color: #0A5032; }
+
+    /* ── "Calculate the rest" call-to-action row ─────────────────── */
+    .calc-remaining-row td {
+      background: #fafaf8;
+      padding: 14px 12px;
+    }
+    .calc-remaining-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .calc-remaining-text {
+      font-size: 15px;
+      color: #54585A;
+    }
+    .btn-calc-remaining {
+      padding: 11px 22px;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: #18974C;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-calc-remaining:hover:not(:disabled) { background: #0A5032; }
+    .btn-calc-remaining:active:not(:disabled) { transform: scale(0.98); }
+    .btn-calc-remaining:disabled { background: #D0D0CE; color: #7d7d78; cursor: not-allowed; }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 2px;
+    }
+
+    .btn-reset {
+      padding: 12px 28px;
+      border: 1px solid #A8A99E;
+      border-radius: 6px;
+      font-size: 17px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      background: transparent;
+      color: #54585A;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-reset:hover { background: #D0D0CE; }
+    .btn-reset:active { transform: scale(0.98); }
+
+    .hint-box {
+      margin-top: 10px;
+      background: #fff8e6;
+      border: 1px solid #f0d080;
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-size: 15px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      display: none;
+      color: #7a5c00;
+    }
+
+    .summary-box {
+      margin-top: 16px;
+      background: #D0DEBB;
+      border: 1px solid #6CC24A;
+      border-radius: 6px;
+      padding: 16px 20px;
+      font-size: 18px;
+      font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
+      display: none;
+      line-height: 1.8;
+    }
+    .summary-box strong { color: #0A5032; }
+
+    @media (max-width: 760px) {
+      body { padding: 10px 14px; }
+      .instruction, .formula-line { font-size: 16px; }
+      .instruction { padding: 8px 14px; }
+      .legend { font-size: 14px; }
+      table { font-size: 14px; min-width: 620px; }
+      th { font-size: 12px; padding: 6px 5px; }
+      td { padding: 6px 5px; }
+      .age-col { font-size: 13px; }
+      .chip { font-size: 14px; padding: 7px 8px; min-width: 38px; }
+      .eq-strip { font-size: 13px; }
+      .eq-slot { min-width: 24px; height: 22px; font-size: 12px; }
+      .btn-divide { font-size: 12px; padding: 6px 12px; }
+      .btn-calc-remaining { font-size: 13px; padding: 9px 16px; }
+      .calc-remaining-text { font-size: 13px; }
+      .btn-reset { font-size: 14px; padding: 10px 18px; }
+      .hint-box, .summary-box { font-size: 14px; }
+    }
+
+    @media (max-width: 480px) {
+      table { min-width: 560px; }
+      th.th-clock { width: 190px; }
+    }
+  </style>
+<link rel="stylesheet" href="../../assets/step.css">
+</head>
+<body>
+
+  <div class="instruction">
+    All four loci are now aligned so a <strong>higher value means an older mouse</strong>. For <strong>Week 1</strong>, tap all four values to build the equation, then tap <strong>÷ 4</strong> to reveal the Clock Score. Once you've got the method, use the button below to calculate the remaining three ages.
+    <div class="formula-line">Clock Score = (Locus 1 + Locus 5 + Locus 3<sub>inverted</sub> + Locus 7<sub>inverted</sub>) ÷ 4</div>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#F6D9DE; border-color:#E58F9E"></div>
+      <span style="color:#A6093D">Locus 1 &amp; Locus 5 — increasing (already aligned)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-dot" style="background:#D0DEBB; border-color:#6CC24A"></div>
+      <span style="color:#0A5032">Locus 3 &amp; Locus 7 — inverted values from Activity 2</span>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table id="main-table">
+      <thead>
+        <tr>
+          <th style="width:80px">Age of mouse<br>(weeks)</th>
+          <th class="th-inc">CpG Locus 1</th>
+          <th class="th-inc">CpG Locus 5</th>
+          <th class="th-dec">CpG Locus 3<br><strong>(inverted)</strong></th>
+          <th class="th-dec">CpG Locus 7<br><strong>(inverted)</strong></th>
+          <th class="th-clock">Clock Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="example-row">
+          <td class="age-col"><span class="example-label">Example</span></td>
+          <td>60</td>
+          <td>42</td>
+          <td>83</td>
+          <td>9</td>
+          <td class="example-eq">(60+42+83+9) ÷ 4 = <strong>48.5</strong></td>
+        </tr>
+        <tr id="row-1">
+          <td class="age-col">1</td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="1" data-slot="0" data-val="32" onclick="chipClick(this)">32</button></td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="1" data-slot="1" data-val="38" onclick="chipClick(this)">38</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="1" data-slot="2" data-val="48" onclick="chipClick(this)">48</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="1" data-slot="3" data-val="65" onclick="chipClick(this)">65</button></td>
+          <td class="eq-wrap">
+            <div class="eq-strip" id="eq-1">
+              <span class="eq-slot inc" id="slot-1-0">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inc" id="slot-1-1">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-1-2">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-1-3">?</span>
+              <span class="eq-result" id="eqres-1"></span>
+            </div>
+            <button class="btn-divide" id="div-1" onclick="divideRow(1)" disabled>÷ 4</button>
+            <div id="result-1"></div>
+          </td>
+        </tr>
+        <tr class="calc-remaining-row reveal-on-unlock" id="calc-remaining-row">
+          <td colspan="6">
+            <div class="calc-remaining-inner">
+              <span class="calc-remaining-text">Got the method? Use it to calculate the remaining three ages:</span>
+              <button class="btn-calc-remaining" id="calc-remaining-btn" onclick="calculateRemaining()">Calculate weeks 14, 27 &amp; 41 →</button>
+            </div>
+          </td>
+        </tr>
+        <tr id="row-14" class="row-locked reveal-on-unlock">
+          <td class="age-col">14</td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="14" data-slot="0" data-val="46" onclick="chipClick(this)">46</button></td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="14" data-slot="1" data-val="58" onclick="chipClick(this)">58</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="14" data-slot="2" data-val="70" onclick="chipClick(this)">70</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="14" data-slot="3" data-val="86" onclick="chipClick(this)">86</button></td>
+          <td class="eq-wrap">
+            <div class="eq-strip" id="eq-14">
+              <span class="eq-slot inc" id="slot-14-0">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inc" id="slot-14-1">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-14-2">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-14-3">?</span>
+              <span class="eq-result" id="eqres-14"></span>
+            </div>
+            <button class="btn-divide btn-hidden" id="div-14" onclick="divideRow(14)" disabled>÷ 4</button>
+            <div id="result-14"></div>
+          </td>
+        </tr>
+        <tr id="row-27" class="row-locked reveal-on-unlock">
+          <td class="age-col">27</td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="27" data-slot="0" data-val="63" onclick="chipClick(this)">63</button></td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="27" data-slot="1" data-val="73" onclick="chipClick(this)">73</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="27" data-slot="2" data-val="82" onclick="chipClick(this)">82</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="27" data-slot="3" data-val="87" onclick="chipClick(this)">87</button></td>
+          <td class="eq-wrap">
+            <div class="eq-strip" id="eq-27">
+              <span class="eq-slot inc" id="slot-27-0">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inc" id="slot-27-1">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-27-2">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-27-3">?</span>
+              <span class="eq-result" id="eqres-27"></span>
+            </div>
+            <button class="btn-divide btn-hidden" id="div-27" onclick="divideRow(27)" disabled>÷ 4</button>
+            <div id="result-27"></div>
+          </td>
+        </tr>
+        <tr id="row-41" class="row-locked reveal-on-unlock">
+          <td class="age-col">41</td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="41" data-slot="0" data-val="82" onclick="chipClick(this)">82</button></td>
+          <td class="chip-cell"><button type="button" class="chip inc" data-row="41" data-slot="1" data-val="76" onclick="chipClick(this)">76</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="41" data-slot="2" data-val="90" onclick="chipClick(this)">90</button></td>
+          <td class="chip-cell"><button type="button" class="chip inv" data-row="41" data-slot="3" data-val="92" onclick="chipClick(this)">92</button></td>
+          <td class="eq-wrap">
+            <div class="eq-strip" id="eq-41">
+              <span class="eq-slot inc" id="slot-41-0">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inc" id="slot-41-1">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-41-2">?</span><span class="eq-op">+</span>
+              <span class="eq-slot inv" id="slot-41-3">?</span>
+              <span class="eq-result" id="eqres-41"></span>
+            </div>
+            <button class="btn-divide btn-hidden" id="div-41" onclick="divideRow(41)" disabled>÷ 4</button>
+            <div id="result-41"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-reset" onclick="resetAll()">Reset all</button>
+  </div>
+
+  <div class="hint-box" id="hint-box"></div>
+
+  <div class="summary-box" id="summary">
+    <strong>All Clock Scores calculated!</strong><br>
+    Age 1 week &rarr; Clock Score: <strong>45.75</strong><br>
+    Age 14 weeks &rarr; Clock Score: <strong>65</strong><br>
+    Age 27 weeks &rarr; Clock Score: <strong>76.25</strong><br>
+    Age 41 weeks &rarr; Clock Score: <strong>85</strong><br><br>
+    You're now ready to plot these on a graph in Step 4 — Clock Score on the x-axis, mouse age on the y-axis.
+  </div>
+
+  <script>
+    var calculationTimers = [];
+    var rows = [1, 14, 27, 41];
+    var rowDone = { 1: false, 14: false, 27: false, 41: false };
+
+    function chipClick(el) {
+      var row = el.getAttribute('data-row');
+      var tr = document.getElementById('row-' + row);
+      if (tr.classList.contains('row-locked')) return;
+
+      var slot = el.getAttribute('data-slot');
+      var val = el.getAttribute('data-val');
+      var slotEl = document.getElementById('slot-' + row + '-' + slot);
+      var selected = el.classList.toggle('chip-selected');
+
+      slotEl.textContent = selected ? val : '?';
+      slotEl.classList.toggle('filled', selected);
+
+      updateEquation(row);
+    }
+
+    function updateEquation(row) {
+      var filled = document.querySelectorAll('#eq-' + row + ' .eq-slot.filled').length;
+      var eqres = document.getElementById('eqres-' + row);
+      var divBtn = document.getElementById('div-' + row);
+
+      if (filled === 4) {
+        var sum = 0;
+        for (var i = 0; i < 4; i++) {
+          sum += parseFloat(document.getElementById('slot-' + row + '-' + i).textContent);
+        }
+        eqres.textContent = '= ' + sum;
+        eqres.style.display = 'inline';
+        divBtn.disabled = false;
+        divBtn.setAttribute('data-sum', sum);
+      } else {
+        eqres.style.display = 'none';
+        divBtn.disabled = true;
+      }
+    }
+
+    function divideRow(row) {
+      var sum = parseFloat(document.getElementById('div-' + row).getAttribute('data-sum'));
+      var result = Math.round((sum / 4) * 100) / 100;
+
+      document.getElementById('result-' + row).innerHTML =
+        '<div class="clock-score-display">Clock Score = <strong>' + result + '</strong></div>';
+      document.getElementById('div-' + row).style.display = 'none';
+      document.getElementById('row-' + row).classList.add('row-locked');
+
+      rowDone[row] = true;
+      checkAllDone();
+
+      // Once Week 1 is solved, reveal the "calculate the rest" button and the remaining rows
+      if (parseInt(row, 10) === 1) {
+        document.querySelectorAll('.reveal-on-unlock').forEach(function(el) {
+          el.classList.add('shown');
+        });
+      }
+    }
+
+    function calculateRemaining() {
+      var crBtn = document.getElementById('calc-remaining-btn');
+      crBtn.disabled = true;
+      crBtn.textContent = 'Calculating…';
+
+      var remaining = [14, 27, 41];
+      remaining.forEach(function(row, idx) {
+        calculationTimers.push(setTimeout(function() { autoSolveRow(row); }, idx * 700 + 350));
+      });
+
+      calculationTimers.push(setTimeout(function() {
+        crBtn.textContent = 'Calculated ✓';
+      }, remaining.length * 700 + 400));
+    }
+
+    function autoSolveRow(row) {
+      document.querySelectorAll('.chip[data-row="' + row + '"]').forEach(function(chip) {
+        chip.classList.add('chip-selected');
+        var slot = chip.getAttribute('data-slot');
+        var val = chip.getAttribute('data-val');
+        var slotEl = document.getElementById('slot-' + row + '-' + slot);
+        slotEl.textContent = val;
+        slotEl.classList.add('filled');
+      });
+      updateEquation(row);
+      divideRow(row);
+    }
+
+    function checkAllDone() {
+      if (rows.every(function(r) { return rowDone[r]; })) {
+        document.getElementById('summary').style.display = 'block';
+      }
+    }
+
+    function resetAll() {
+      calculationTimers.forEach(clearTimeout);
+      calculationTimers = [];
+      document.getElementById('calc-remaining-btn').disabled = false;
+      rows.forEach(function(row) {
+        document.querySelectorAll('.chip[data-row="' + row + '"]').forEach(function(c) {
+          c.classList.remove('chip-selected');
+        });
+        for (var i = 0; i < 4; i++) {
+          var slotEl = document.getElementById('slot-' + row + '-' + i);
+          slotEl.textContent = '?';
+          slotEl.classList.remove('filled');
+        }
+        document.getElementById('eqres-' + row).style.display = 'none';
+        var divBtn = document.getElementById('div-' + row);
+        divBtn.disabled = true;
+        divBtn.style.display = (row === 1) ? 'inline-block' : 'none';
+
+        document.getElementById('result-' + row).innerHTML = '';
+
+        var tr = document.getElementById('row-' + row);
+        if (row === 1) {
+          tr.classList.remove('row-locked');
+        } else {
+          tr.classList.add('row-locked');
+        }
+        rowDone[row] = false;
+      });
+
+      // Re-hide the "calculate the rest" button and the remaining rows
+      document.querySelectorAll('.reveal-on-unlock').forEach(function(el) {
+        el.classList.remove('shown');
+      });
+      document.getElementById('calc-remaining-btn').textContent = 'Calculate weeks 14, 27 & 41 →';
+
+      document.getElementById('summary').style.display = 'none';
+    }
+  </script>
+
+  
+<script src="../../assets/step.js"></script>
+</body>
+</html>
