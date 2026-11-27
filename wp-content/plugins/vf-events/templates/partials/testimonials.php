@@ -18,7 +18,7 @@ if (empty($event_testimonials)) {
 
 <hr class="vf-divider vf-u-margin__top--800">
 <section class="vf-u-margin__top--800 vf-u-margin__bottom--800" aria-labelledby="event-testimonials-heading">
-  <h3 class="vf-text vf-text-heading--3 vf-u-margin__bottom--600" id="event-testimonials-heading"><?php esc_html_e('Testimonials', 'vfwp'); ?></h3>
+  <h3 class="vf-text vf-text-heading--3 vf-u-margin__bottom--600" id="event-testimonials-heading"><?php esc_html_e('What past participants say about this event', 'vfwp'); ?></h3>
   <div class="vf-grid vf-grid__col-<?php echo count($event_testimonials); ?>">
   <?php foreach ($event_testimonials as $testimonial) {
     $name = trim((string) ($testimonial['name'] ?? ''));
