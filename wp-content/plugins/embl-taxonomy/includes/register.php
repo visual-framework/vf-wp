@@ -563,21 +563,32 @@ foreach ($wp_taxonomy as $wp_term) {
       '127.0.0.1',
       '::1'
     );
-    if(in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
+    if(isset($_SERVER['REMOTE_ADDR']) && in_array($_SERVER['REMOTE_ADDR'], $whitelist, true)) {
       $embl_taxonomy_url = "https://content.embl.org/api/v1/pattern.json?pattern=embl-ontology&source=contenthub";
     } else {
       // Prod Proxy endpoint.
       $embl_taxonomy_url = embl_taxonomy_get_url();
     }
 
-    // Attempt to read the EMBL Taxonomy API
-    $data = file_get_contents($embl_taxonomy_url);
-    if ($data === false) {
+    // Use WordPress transports, proxy settings and CA certificates for API requests.
+    $response = wp_remote_get($embl_taxonomy_url, array('timeout' => 30));
+    if (is_wp_error($response)) {
       return sprintf(
-        __('The %1$s API endpoint could not be accessed.', 'embl'),
-        $this->labels['name']
+        __('The %1$s API endpoint could not be accessed: %2$s', 'embl'),
+        $this->labels['name'],
+        esc_html($response->get_error_message())
       );
     }
+
+    $status = wp_remote_retrieve_response_code($response);
+    if ($status !== 200) {
+      return sprintf(
+        __('The %1$s API endpoint returned HTTP %2$d.', 'embl'),
+        $this->labels['name'],
+        $status
+      );
+    }
+    $data = wp_remote_retrieve_body($response);
 
     // Attempt to parse API results
     $json_terms = self::decode_terms($data);
